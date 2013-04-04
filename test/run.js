@@ -3,7 +3,7 @@
 // http://orgachem.mit-license.org
 
 try {
-    var reporter = require('../node_modules/nodeunit').reporters.default;
+    var reporter = require('nodeunit').reporters.default;
 }
 catch(e) {
     console.log("Cannot find nodeunit module.");
