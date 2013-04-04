@@ -1,5 +1,5 @@
-Abstract
-========
+Jsdoc strict type parser[![Build Status](https://travis-ci.org/OrgaChem/jsdoc-strict-type-parser.png?branch=master)](https://travis-ci.org/OrgaChem/jsdoc-strict-type-parser)
+========================
 This module is Jsdoc type expression parser.
 
 This parser provide:
