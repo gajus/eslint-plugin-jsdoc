@@ -22,7 +22,7 @@ Sample
 Parsing
 -------
 ```
-var Parser = require('JsdocStrictTypeParser').Parser;
+var Parser = require('jsdoctypeparser').Parser;
 var parser = new Parser();
 var result = parser.parse('Array.<string|number, ?Object=>|string|undefined');
 ```
@@ -60,7 +60,7 @@ Publishing
 ----------
 
 ```
-var Parser = require('JsdocStrictTypeParser').Parser;
+var Parser = require('jsdoctypeparser).Parser;
 var parser = new Parser();
 var result = parser.parse('Array.<MyClass>=');
 ```
@@ -73,7 +73,7 @@ var result = parser.parse('Array.<MyClass>=');
 You can change a file URL by set ```TypeBulder.TypeName.getUrlByTypeName(typeName)```.
 
 ```
-var Builder = require('JsdocStrictTypeParser').Builder;
+var Builder = require('jsdoctypeparser').Builder;
 Bulder.TypeName.getUrlByTypeName = function(typeName) {
   // do something.
   return typeName;
