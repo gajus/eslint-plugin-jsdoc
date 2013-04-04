@@ -2,7 +2,7 @@
 // http://orgachem.mit-license.org
 
 
-var TypeLexer = require('../TypeLexer.js');
+var TypeLexer = require('../../lib/index.js').Lexer;
 
 var lexer;
 

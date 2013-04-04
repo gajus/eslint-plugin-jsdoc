@@ -2,7 +2,7 @@
 // http://orgachem.mit-license.org
 
 
-var TypeBuilder = require('../TypeBuilder.js');
+var TypeBuilder = require('../../lib/index.js').Builder;
 
 
 var builder;
