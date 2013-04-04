@@ -25,6 +25,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'boolean');
+    test.equal(union.toHtml(), 'boolean');
     test.done();
   },
   'build a global type name': function(test) {
@@ -40,6 +41,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'Window');
+    test.equal(union.toHtml(), 'Window');
     test.done();
   },
   'build an user-defined type name': function(test) {
@@ -55,6 +57,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'goog.ui.Menu');
+    test.equal(union.toHtml(), '<a href="goog.ui.Menu.html">goog.ui.Menu</a>');
     test.done();
   },
   'build a generic type has a parameter': function(test) {
@@ -83,6 +86,7 @@ var test = {
     test.equal(paramUnion.unknown, false);
 
     test.equal(union.toString(), 'Array.<string>');
+    test.equal(union.toHtml(), 'Array.&lt;string&gt;');
     test.done();
   },
   'build a generic type has 2 parameters': function(test) {
@@ -121,6 +125,7 @@ var test = {
     test.equal(paramUnion2.unknown, false);
 
     test.equal(union.toString(), 'Object.<string, number>');
+    test.equal(union.toHtml(), 'Object.&lt;string, number&gt;');
     test.done();
   },
   'build a JsDoc-formal generic type': function(test) {
@@ -149,6 +154,7 @@ var test = {
     test.equal(paramUnion.unknown, false);
 
     test.equal(union.toString(), 'Array.<String>');
+    test.equal(union.toHtml(), 'Array.&lt;String&gt;');
     test.done();
   },
   'build a formal type union': function(test) {
@@ -179,6 +185,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'number|boolean');
+    test.equal(union.toHtml(), 'number|boolean');
     test.done();
   },
   'build a informal type union': function(test) {
@@ -209,6 +216,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'number|boolean');
+    test.equal(union.toHtml(), 'number|boolean');
     test.done();
   },
   'build a record type with an entry': function(test) {
@@ -238,6 +246,7 @@ var test = {
     test.equal(valUnion.unknown, false);
 
     test.equal(union.toString(), '{ myNum: * }');
+    test.equal(union.toHtml(), '{ myNum: * }');
     test.done();
   },
   'build a record type with 2 entries': function(test) {
@@ -280,6 +289,7 @@ var test = {
     test.equal(valUnion2.unknown, false);
 
     test.equal(union.toString(), '{ myNum: number, myObject: * }');
+    test.equal(union.toHtml(), '{ myNum: number, myObject: * }');
     test.done();
   },
   'build a generic type has a parameter as a record type': function(test) {
@@ -323,6 +333,7 @@ var test = {
     test.equal(valUnion.unknown, false);
 
     test.equal(union.toString(), 'Array.<{ length: * }>');
+    test.equal(union.toHtml(), 'Array.&lt;{ length: * }&gt;');
     test.done();
   },
   'build a nullable type has a nullable type operator on the head': function(test) {
@@ -338,6 +349,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'number|null');
+    test.equal(union.toHtml(), 'number|null');
     test.done();
   },
   'build a nullable type has a nullable type operator on the tail': function(test) {
@@ -353,6 +365,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'goog.ui.Component|null');
+    test.equal(union.toHtml(), '<a href="goog.ui.Component.html">goog.ui.Component</a>|null');
     test.done();
   },
   'build a non-nullable type has a nullable type operator on the head': function(test) {
@@ -368,6 +381,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), '!Object');
+    test.equal(union.toHtml(), '!Object');
     test.done();
   },
   'build a non-nullable type has a nullable type operator on the tail': function(test) {
@@ -383,6 +397,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), '!Object');
+    test.equal(union.toHtml(), '!Object');
     test.done();
   },
   'build a function type': function(test) {
@@ -398,6 +413,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'Function');
+    test.equal(union.toHtml(), 'Function');
     test.done();
   },
   'build a function type has no parameters': function(test) {
@@ -418,6 +434,7 @@ var test = {
     test.equal(func.isConstructor, false);
 
     test.equal(union.toString(), 'function()');
+    test.equal(union.toHtml(), 'function()');
     test.done();
   },
   'build a function type has a parameter': function(test) {
@@ -448,6 +465,7 @@ var test = {
     test.equal(paramUnion.unknown, false);
 
     test.equal(union.toString(), 'function(string)');
+    test.equal(union.toHtml(), 'function(string)');
     test.done();
   },
   'build a function type has 2 parameters': function(test) {
@@ -488,6 +506,7 @@ var test = {
     test.equal(paramUnion2.unknown, false);
 
     test.equal(union.toString(), 'function(string, boolean)');
+    test.equal(union.toHtml(), 'function(string, boolean)');
     test.done();
   },
   'build a function type has a return': function(test) {
@@ -517,6 +536,7 @@ var test = {
     test.equal(returnUnion.unknown, false);
 
     test.equal(union.toString(), 'function(): number');
+    test.equal(union.toHtml(), 'function(): number');
     test.done();
   },
   'build a function type has a context': function(test) {
@@ -556,6 +576,7 @@ var test = {
     test.equal(paramUnion.unknown, false);
 
     test.equal(union.toString(), 'function(this: goog.ui.Menu, string)');
+    test.equal(union.toHtml(), 'function(this: <a href="goog.ui.Menu.html">goog.ui.Menu</a>, string)');
     test.done();
   },
   'build a constructor type': function(test) {
@@ -595,6 +616,7 @@ var test = {
     test.equal(paramUnion.unknown, false);
 
     test.equal(union.toString(), 'function(new: goog.ui.Menu, string)');
+    test.equal(union.toHtml(), 'function(new: <a href="goog.ui.Menu.html">goog.ui.Menu</a>, string)');
     test.done();
   },
   'build a function type has a variable parameter': function(test) {
@@ -644,6 +666,7 @@ var test = {
     test.equal(returnUnion.unknown, false);
 
     test.equal(union.toString(), 'function(string, ...number): number');
+    test.equal(union.toHtml(), 'function(string, ...number): number');
     test.done();
   },
   'build a function type has parameters have some type operators': function(test) {
@@ -684,6 +707,7 @@ var test = {
     test.equal(paramUnion2.unknown, false);
 
     test.equal(union.toString(), 'function(string|undefined|null, number|undefined)');
+    test.equal(union.toHtml(), 'function(string|undefined|null, number|undefined)');
     test.done();
   },
   'build a goog.ui.Component#forEachChild': function(test) {
@@ -740,6 +764,7 @@ var test = {
     test.equal(returnUnion.unknown, true);
 
     test.equal(union.toString(), 'function(this: T, ?, number): ?');
+    test.equal(union.toHtml(), 'function(this: <a href="T.html">T</a>, ?, number): ?');
     test.done();
   },
   'build a variable type': function(test) {
@@ -770,6 +795,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'number|undefined');
+    test.equal(union.toHtml(), 'number|undefined');
     test.done();
   },
   'build an optional type has an optional type operator on the tail': function(test) {
@@ -785,6 +811,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'number|undefined');
+    test.equal(union.toHtml(), 'number|undefined');
     test.done();
   },
   'build an optional type with a "undefined" keyword': function(test) {
@@ -800,6 +827,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'Object|undefined');
+    test.equal(union.toHtml(), 'Object|undefined');
     test.done();
   },
   'build an optional type with a "void" keyword': function(test) {
@@ -815,6 +843,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), 'Object|undefined');
+    test.equal(union.toHtml(), 'Object|undefined');
     test.done();
   },
   'build an all type': function(test) {
@@ -829,6 +858,7 @@ var test = {
     test.equal(union.unknown, false);
 
     test.equal(union.toString(), '*');
+    test.equal(union.toHtml(), '*');
     test.done();
   },
   'build an unknown type': function(test) {
@@ -843,6 +873,7 @@ var test = {
     test.equal(union.unknown, true);
 
     test.equal(union.toString(), '?');
+    test.equal(union.toHtml(), '?');
     test.done();
   },
   'build an unknown type with an "unknown" keyword': function(test) {
@@ -857,6 +888,7 @@ var test = {
     test.equal(union.unknown, true);
 
     test.equal(union.toString(), '?');
+    test.equal(union.toHtml(), '?');
     test.done();
   },
   'build an illegal generic type': function(test) {

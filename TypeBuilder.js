@@ -4,6 +4,8 @@
 
 var util = require('./util.js');
 var TypeLexer = require('./TypeLexer.js');
+var TypeDictionary = require('./TypeDictionary.js');
+var dict = TypeDictionary.getInstance();
 
 
 
@@ -657,6 +659,16 @@ TypeBuilder.TypeName.publisher = null;
 
 
 /**
+ * Returns a file url by a type name.
+ * @param {string} typeName Type name string.
+ * @return {string} URL string.
+ */
+TypeBuilder.TypeName.getUrlByTypeName = function(typeName) {
+  return typeName + '.html';
+};
+
+
+/**
  * Type name string.
  * @type {?string}
  */
@@ -685,6 +697,22 @@ TypeBuilder.TypeName.prototype.toString = function() {
   }
   else {
     return this.name;
+  }
+};
+
+
+/**
+ * Returns a html.
+ * @return {string} HTML string.
+ */
+TypeBuilder.TypeName.prototype.toHtml = function() {
+  // Check the type is user define object.
+  if (dict.has(this.name)) {
+    return this.name;
+  }
+  else {
+    return '<a href="' + TypeBuilder.TypeName.getUrlByTypeName(this.name) +
+        '">' + this.name + '</a>';
   }
 };
 
@@ -854,17 +882,22 @@ TypeBuilder.TypeUnion.prototype.setUnknownType = function(enable) {
 };
 
 
-/** @override */
-TypeBuilder.TypeUnion.prototype.toString = function() {
+/**
+ * Returns a type union string.
+ * @param {boolean} isHtml Whether the output string is html.
+ * @return {string} Type union string.
+ * @private
+ */
+TypeBuilder.TypeUnion.prototype.toStringInternal_ = function(isHtml) {
   if (this.all) {
     var typeName = new TypeBuilder.TypeName();
     typeName.setTypeName('*');
-    return typeName.toString();
+    return isHtml ? typeName.toHtml() : typeName.toString();
   }
   else if (this.unknown) {
     var typeName = new TypeBuilder.TypeName();
     typeName.setTypeName('?');
-    return typeName.toString();
+    return isHtml ? typeName.toHtml() : typeName.toString();
   }
   else {
     var str;
@@ -893,8 +926,25 @@ TypeBuilder.TypeUnion.prototype.toString = function() {
       str += '!';
     }
 
-    return str + types.join('|');
+    return str + (isHtml ?
+        types.map(function(type) { return type.toHtml(); }) :
+        types).join('|');
   }
+};
+
+
+/** @override */
+TypeBuilder.TypeUnion.prototype.toString = function() {
+  return this.toStringInternal_(false);
+};
+
+
+/**
+ * Returns a html string.
+ * @return {string} HTML string.
+ */
+TypeBuilder.TypeUnion.prototype.toHtml = function() {
+  return this.toStringInternal_(true);
 };
 
 
@@ -954,6 +1004,18 @@ TypeBuilder.GenericType.prototype.addParameterTypeUnion = function(type) {
 TypeBuilder.GenericType.prototype.toString = function() {
   return this.genericTypeName + '.<' + this.parameterTypeUnions.join(', ') +
       '>';
+};
+
+
+/**
+ * Returns a html string.
+ * @return {string} HTML string.
+ */
+TypeBuilder.GenericType.prototype.toHtml = function() {
+  var params = this.parameterTypeUnions.map(function(param) {
+    return param.toHtml();
+  });
+  return this.genericTypeName + '.&lt;' + params.join(', ') + '&gt;';
 };
 
 
@@ -1035,27 +1097,59 @@ TypeBuilder.FunctionType.prototype.setReturnTypeUnion = function(ret) {
 };
 
 
-/** @override */
-TypeBuilder.FunctionType.prototype.toString = function() {
+/**
+ * Returns a function type expression string.
+ * @param {boolean} isHtml Whether the output string is HTML.
+ * @return {string} Function type expression string.
+ * @private
+ */
+TypeBuilder.FunctionType.prototype.toStringInternal_ = function(isHtml) {
   var str = 'function(';
-  var arr = [].concat(this.parameterTypeUnions);
+
+  var arr;
+  if (isHtml) {
+    arr = this.parameterTypeUnions.map(function(param) {
+      return param.toHtml();
+    });
+  }
+  else {
+    arr = [].concat(this.parameterTypeUnions);
+  }
 
   if (this.contextTypeUnion) {
     if (this.isConstructor) {
-      arr.unshift('new: ' + this.contextTypeUnion);
+      arr.unshift('new: ' + (isHtml ? this.contextTypeUnion.toHtml() :
+                                      this.contextTypeUnion));
     }
     else {
-      arr.unshift('this: ' + this.contextTypeUnion);
+      arr.unshift('this: ' + (isHtml ? this.contextTypeUnion.toHtml() :
+                                       this.contextTypeUnion));
     }
   }
 
   str += arr.join(', ') + ')';
 
   if (this.returnTypeUnion) {
-    str += ': ' + this.returnTypeUnion;
+    str += ': ' + (isHtml ? this.returnTypeUnion.toHtml() :
+                            this.returnTypeUnion);
   }
 
   return str;
+};
+
+
+/** @override */
+TypeBuilder.FunctionType.prototype.toString = function() {
+  return this.toStringInternal_(false);
+};
+
+
+/**
+ * Returns a html string.
+ * @return {string} HTML string.
+ */
+TypeBuilder.FunctionType.prototype.toHtml = function() {
+  return this.toStringInternal_(true);
 };
 
 
@@ -1097,6 +1191,17 @@ TypeBuilder.RecordType.prototype.addEntry = function(entry) {
 /** @override */
 TypeBuilder.RecordType.prototype.toString = function() {
   return '{ ' + this.entries.join(', ') + ' }';
+};
+
+
+/**
+ * Returns a html string.
+ * @return {string} HTML string.
+ */
+TypeBuilder.RecordType.prototype.toHtml = function() {
+  return '{ ' + this.entries.map(function(entry) {
+    return entry.toHtml();
+  }).join(', ') + ' }';
 };
 
 
@@ -1143,6 +1248,12 @@ TypeBuilder.RecordType.Entry.prototype.setValueTypeUnion = function(type) {
 /** @override */
 TypeBuilder.RecordType.Entry.prototype.toString = function() {
   return this.name + ': ' + this.typeUnion;
+};
+
+
+/** @override */
+TypeBuilder.RecordType.Entry.prototype.toHtml = function() {
+  return this.name + ': ' + this.typeUnion.toHtml();
 };
 
 

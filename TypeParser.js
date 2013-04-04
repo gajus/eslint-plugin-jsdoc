@@ -13,10 +13,10 @@ var TypeBuilder = require('./TypeBuilder.js');
  * <dd>{@code 'foo.bar'},
  *     {@code 'String[]'}</dd>
  * <dt>Closure Compiler type expressions</dt>
- * <dd>{@code 'Array.&ltstring&gt;'},
+ * <dd>{@code 'Array.&lt;string&gt;'},
  *     {@code 'function(this: Objext, arg1, arg2): ret'}</dd>
  * <dt>Nested type expressions</dt>
- * <dd>{@code 'Array.&lt;Array.&ltstring&gt;&gt;'},
+ * <dd>{@code 'Array.&lt;Array.&lt;string&gt;&gt;'},
  *     {@code 'function(function(Function))'}</dd>
  * </dl>
  *
