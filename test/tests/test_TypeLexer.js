@@ -8,6 +8,7 @@ var lexer;
 
 var test = {
   setUp: function(callback) {
+
     var cbs = {
       handleTypeNameToken: function(arg) {},
       handleOpenTypeUnionToken: function() {},

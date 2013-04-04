@@ -3,6 +3,8 @@
 
 
 var TypeBuilder = require('../../lib/index.js').Builder;
+var util = require('../../lib/util.js');
+util.warn = function() {};
 
 
 var builder;
