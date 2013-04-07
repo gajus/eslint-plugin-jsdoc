@@ -1,5 +1,7 @@
-Jsdoc strict type parser [![Build Status](https://travis-ci.org/OrgaChem/jsdoc-strict-type-parser.png?branch=master)](https://travis-ci.org/OrgaChem/jsdoc-strict-type-parser)
+Jsdoc strict type parser
 ========================
+[![Build Status](https://travis-ci.org/OrgaChem/jsdoc-strict-type-parser.png?branch=master)](https://travis-ci.org/OrgaChem/jsdoc-strict-type-parser)
+
 This module is Jsdoc type expression parser.
 
 This parser provide:
@@ -16,11 +18,8 @@ This parser can parse:
 * Nested type expressions
   * ```Array.<Array.<string>>```, ```function(function(Function))```
 
-Sample
-======
-
 Parsing
--------
+=======
 ```
 var Parser = require('jsdoctypeparser').Parser;
 var parser = new Parser();
@@ -56,42 +55,16 @@ The ```result``` is:
 }
 ```
 
-Publishing
-----------
-
-```
-var Parser = require('jsdoctypeparser).Parser;
-var parser = new Parser();
-var result = parser.parse('Array.<MyClass>=');
-```
-
-* ```result.toString()``` ⇒ ```'Array.<MyClass>|undefined'```
-
-* ```result.toHtml()``` ⇒ ```'Array.&lt;<a href="MyClass.html">MyClass</a>&gt;|undefined'```
-
-### File name config
-You can change a file URL by set ```TypeBulder.TypeName.getUrlByTypeName(typeName)```.
-
-```
-var Builder = require('jsdoctypeparser').Builder;
-Bulder.TypeName.getUrlByTypeName = function(typeName) {
-  // do something.
-  return typeName;
-}; 
-```
-
-Specification
-=============
-Type name
----------
+DOM Specification
+-----------------
+### Type name
 ```
 TypeName = {
   name: string
 };
 ```
 
-Type Union
-----------
+### Type Union
 ```
 TypeUnion = {
   optional: boolean,
@@ -104,8 +77,7 @@ TypeUnion = {
 };
 ```
 
-Generic type
------------
+### Generic type
 ```
 GenericType = {
   genericTypeName: string,
@@ -113,8 +85,7 @@ GenericType = {
 };
 ```
 
-Function type
--------------
+### Function type
 ```
 FunctionType = {
   parameterTypeUnions: Array.<TypeUnion>,
@@ -124,8 +95,7 @@ FunctionType = {
 };
 ```
 
-Record type
------------
+### Record type
 ```
 RecordType = {
   entries: Array.<RecordEntry>
@@ -136,6 +106,31 @@ RecordEntry = {
   typeUnion: TypeUnion
 };
 ```
+
+Publishing
+==========
+```
+var Parser = require('jsdoctypeparser).Parser;
+var parser = new Parser();
+var result = parser.parse('Array.<MyClass>=');
+```
+
+* ```result.toString()``` ⇒ ```'Array.<MyClass>|undefined'```
+
+* ```result.toHtml()``` ⇒ ```'Array.&lt;<a href="MyClass.html">MyClass</a>&gt;|undefined'```
+
+File name config
+----------------
+You can change a file URL by set ```TypeBulder.TypeName.getUrlByTypeName(typeName)```.
+
+```
+var Builder = require('jsdoctypeparser').Builder;
+Bulder.TypeName.getUrlByTypeName = function(typeName) {
+  // do something.
+  return typeName;
+}; 
+```
+
 
 License
 =======
