@@ -22,14 +22,7 @@
   "scripts": {
     "test": "node test/run.js"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://orgachem.mit-license.org/"
-    }
-  ],
   "readmeFilename": "README.md",
-  "gitHead": "a50d4c5cfa3eca783d762f9b533521681bea9f10",
   "dependencies": {},
   "devDependencies": {
     "nodeunit": "~0.8.0",
