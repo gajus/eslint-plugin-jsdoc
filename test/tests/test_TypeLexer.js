@@ -140,6 +140,11 @@ var test = {
     lexer.analize('function(this:T,?,number):?');
     test.done();
   },
+  'analize a goog.ui.Component#forEachChild without callbacks': function(test) {
+    var lexer = new TypeLexer();
+    lexer.analize('function(this:T,?,number):?');
+    test.done();
+  },
   'analize a variable type': function(test) {
     lexer.analize('...number');
     test.done();
