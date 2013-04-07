@@ -30,9 +30,10 @@
   ],
   "readmeFilename": "README.md",
   "gitHead": "a50d4c5cfa3eca783d762f9b533521681bea9f10",
-  "dependencies": {
-    "nodeunit": "~0.8.0"
+  "dependencies": {},
+  "devDependencies": {
+    "nodeunit": "~0.8.0",
+    "benchmark": "~1.0.0"
   },
-  "devDependencies": {},
   "license": "MIT"
 }
