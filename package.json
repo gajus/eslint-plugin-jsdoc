@@ -1,10 +1,11 @@
 {
   "name": "jsdoctypeparser",
   "description": "Strict JsDoc type expression parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Orga Chem <orga.chem.job@gmail.com>",
   "keywords": [
     "jsdoc",
+    "type expression",
     "parser"
   ],
   "repository": {
