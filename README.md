@@ -112,7 +112,7 @@ RecordEntry = {
 ## Publishing
 
 ```
-var Parser = require('jsdoctypeparser).Parser;
+var Parser = require('jsdoctypeparser').Parser;
 var parser = new Parser();
 var result = parser.parse('Array.<MyClass>=');
 ```
