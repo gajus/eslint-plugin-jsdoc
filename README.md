@@ -1,13 +1,14 @@
-Jsdoc strict type parser
-========================
+# Jsdoc strict type parser
 [![Build Status](https://travis-ci.org/OrgaChem/jsdoc-strict-type-parser.png?branch=master)](https://travis-ci.org/OrgaChem/jsdoc-strict-type-parser)
+[![NPM version](https://badge.fury.io/js/jsdoctypeparser.png)](http://badge.fury.io/js/jsdoctypeparser)
 
 This module is Jsdoc type expression parser.
 
 This parser provide:
 
 * Parse strict
-* Convert a type name to a link by ```toHtml()```
+* Build DOM
+* Convert a type name to a link by using ```toHtml()```
 
 This parser can parse:
 
@@ -18,8 +19,9 @@ This parser can parse:
 * Nested type expressions
   * ```Array.<Array.<string>>```, ```function(function(Function))```
 
-Parsing
-=======
+
+## Parsing
+
 ```
 var Parser = require('jsdoctypeparser').Parser;
 var parser = new Parser();
@@ -55,16 +57,16 @@ The ```result``` is:
 }
 ```
 
-DOM Specification
------------------
-### Type name
+### DOM Specification
+
+#### Type name
 ```
 TypeName = {
   name: string
 };
 ```
 
-### Type Union
+#### Type Union
 ```
 TypeUnion = {
   optional: boolean,
@@ -77,7 +79,7 @@ TypeUnion = {
 };
 ```
 
-### Generic type
+#### Generic type
 ```
 GenericType = {
   genericTypeName: string,
@@ -85,7 +87,7 @@ GenericType = {
 };
 ```
 
-### Function type
+#### Function type
 ```
 FunctionType = {
   parameterTypeUnions: Array.<TypeUnion>,
@@ -95,7 +97,7 @@ FunctionType = {
 };
 ```
 
-### Record type
+#### Record type
 ```
 RecordType = {
   entries: Array.<RecordEntry>
@@ -107,8 +109,8 @@ RecordEntry = {
 };
 ```
 
-Publishing
-==========
+## Publishing
+
 ```
 var Parser = require('jsdoctypeparser).Parser;
 var parser = new Parser();
@@ -119,8 +121,7 @@ var result = parser.parse('Array.<MyClass>=');
 
 * ```result.toHtml()``` ⇒ ```'Array.&lt;<a href="MyClass.html">MyClass</a>&gt;|undefined'```
 
-File name config
-----------------
+### Customize type name URI
 You can change a file URL by set ```TypeBulder.TypeName.getUrlByTypeName(typeName)```.
 
 ```
@@ -132,7 +133,6 @@ Bulder.TypeName.getUrlByTypeName = function(typeName) {
 ```
 
 
-License
-=======
+## License
 This script licensed under the MIT.
 See: [http://orgachem.mit-license.org](http://orgachem.mit-license.org)
