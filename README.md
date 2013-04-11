@@ -1,4 +1,4 @@
-# Jsdoc strict type parser
+# Jsdoc type parser
 [![Build Status](https://travis-ci.org/OrgaChem/jsdoctypeparser.png?branch=master)](https://travis-ci.org/OrgaChem/jsdoctypeparser)
 [![NPM version](https://badge.fury.io/js/jsdoctypeparser.png)](http://badge.fury.io/js/jsdoctypeparser)
 
@@ -6,8 +6,7 @@ This module is Jsdoc type expression parser.
 
 This parser provide:
 
-* Parse strict
-* Build DOM
+* Parse to object model
 * Convert a type name to a link by using ```toHtml()```
 
 This parser can parse:
@@ -21,7 +20,7 @@ This parser can parse:
 
 
 ## Live demo
-The [live demo](http://orgachem.github.io/jsdoctypeparser) is available.
+The [live demo](http://orgachem.github.io/jsdoctypeparser/) is available.
 
 ## Parsing
 
