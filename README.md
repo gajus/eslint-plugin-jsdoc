@@ -2,12 +2,21 @@
 [![Build Status](https://travis-ci.org/OrgaChem/jsdoctypeparser.png?branch=master)](https://travis-ci.org/OrgaChem/jsdoctypeparser)
 [![NPM version](https://badge.fury.io/js/jsdoctypeparser.png)](http://badge.fury.io/js/jsdoctypeparser)
 
-This module is Jsdoc type expression parser.
+This module is Jsdoc type expression parser, it makes easy to publish a type name link by ```toHTML()```.
 
 This parser provide:
 
 * Parse to object model
 * Convert a type name to a link by using ```toHtml()```
+
+```
+var Parser = require('jsdoctypeparser').Parser;
+var parser = new Parser();
+var result = parser.parse('Array.<MyClass>=');
+
+console.log(result.toHtml()); // ⇒ 'Array.&lt;<a href="MyClass.html">MyClass</a>&gt;|undefined'
+console.log(result.toString()); // ⇒ 'Array.<MyClass>|undefined'
+```
 
 This parser can parse:
 
@@ -21,6 +30,30 @@ This parser can parse:
 
 ## Live demo
 The [live demo](http://orgachem.github.io/jsdoctypeparser/) is available.
+
+
+## Publishing
+
+```
+var Parser = require('jsdoctypeparser').Parser;
+var parser = new Parser();
+var result = parser.parse('Array.<MyClass>=');
+```
+
+* ```result.toString()``` ⇒ ```'Array.<MyClass>|undefined'```
+
+* ```result.toHtml()``` ⇒ ```'Array.&lt;<a href="MyClass.html">MyClass</a>&gt;|undefined'```
+
+### Customize type name URI
+You can change a file URL by set ```TypeBulder.TypeName.getUrlByTypeName(typeName)```.
+
+```
+var Builder = require('jsdoctypeparser').Builder;
+Bulder.TypeName.getUrlByTypeName = function(typeName) {
+  // do something.
+  return typeName;
+}; 
+```
 
 ## Parsing
 
@@ -59,7 +92,7 @@ The ```result``` is:
 }
 ```
 
-### DOM Specification
+### Specification
 
 #### Type name
 ```
@@ -109,29 +142,6 @@ RecordEntry = {
   name: string,
   typeUnion: TypeUnion
 };
-```
-
-## Publishing
-
-```
-var Parser = require('jsdoctypeparser').Parser;
-var parser = new Parser();
-var result = parser.parse('Array.<MyClass>=');
-```
-
-* ```result.toString()``` ⇒ ```'Array.<MyClass>|undefined'```
-
-* ```result.toHtml()``` ⇒ ```'Array.&lt;<a href="MyClass.html">MyClass</a>&gt;|undefined'```
-
-### Customize type name URI
-You can change a file URL by set ```TypeBulder.TypeName.getUrlByTypeName(typeName)```.
-
-```
-var Builder = require('jsdoctypeparser').Builder;
-Bulder.TypeName.getUrlByTypeName = function(typeName) {
-  // do something.
-  return typeName;
-}; 
 ```
 
 
