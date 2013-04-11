@@ -10,11 +10,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/OrgaChem/jsdoc-strict-type-parser.git"
+    "url": "git://github.com/OrgaChem/jsdoctypeparser.git"
   },
   "bugs": {
     "mail": "orga.chem.job@gmail.com",
-    "url": "https://github.com/OrgaChem/jsdoc-strict-type-parser/issues"
+    "url": "https://github.com/OrgaChem/jsdoctypeparser/issues"
   },
   "directories": {
     "test": "test"
