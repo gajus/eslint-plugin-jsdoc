@@ -1,5 +1,5 @@
 # Jsdoc strict type parser
-[![Build Status](https://travis-ci.org/OrgaChem/jsdoc-strict-type-parser.png?branch=master)](https://travis-ci.org/OrgaChem/jsdoc-strict-type-parser)
+[![Build Status](https://travis-ci.org/OrgaChem/jsdoctypeparser.png?branch=master)](https://travis-ci.org/OrgaChem/jsdoctypeparser)
 [![NPM version](https://badge.fury.io/js/jsdoctypeparser.png)](http://badge.fury.io/js/jsdoctypeparser)
 
 This module is Jsdoc type expression parser.
@@ -19,6 +19,9 @@ This parser can parse:
 * Nested type expressions
   * ```Array.<Array.<string>>```, ```function(function(Function))```
 
+
+## Live demo
+The [live demo](http://orgachem.github.io/jsdoctypeparser) is available.
 
 ## Parsing
 
