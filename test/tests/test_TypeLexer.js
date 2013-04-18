@@ -182,8 +182,20 @@ var test = {
     lexer.analize('module: foo/bar');
     test.done();
   },
+  'Analize a module type with a prefix nullable type operator': function(test) {
+    lexer.analize('?module: foo/bar');
+    test.done();
+  },
+  'Analize a module type with a postfix nullable type operator': function(test) {
+    lexer.analize('module: foo/bar?');
+    test.done();
+  },
   'Analize a module type with a file extension': function(test) {
     lexer.analize('module: foo/bar.js');
+    test.done();
+  },
+  'Analize a module type with a generic type': function(test) {
+    lexer.analize('module: foo/Bar.<string>');
     test.done();
   },
   'Analize an illegal generic type': function(test) {

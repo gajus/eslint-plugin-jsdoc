@@ -597,8 +597,8 @@ var test = {
     test.equal(paramUnion.all, false);
     test.equal(paramUnion.unknown, false);
 
-    test.equal(union.toString(), 'function(this: goog.ui.Menu, string)');
-    test.equal(union.toHtml(), 'function(this: <a href="goog.ui.Menu.html">goog.ui.Menu</a>, <code>string</code>)');
+    test.equal(union.toString(), 'function(this:goog.ui.Menu, string)');
+    test.equal(union.toHtml(), 'function(this:<a href="goog.ui.Menu.html">goog.ui.Menu</a>, <code>string</code>)');
     test.done();
   },
   'Build a constructor type': function(test) {
@@ -638,8 +638,8 @@ var test = {
     test.equal(paramUnion.all, false);
     test.equal(paramUnion.unknown, false);
 
-    test.equal(union.toString(), 'function(new: goog.ui.Menu, string)');
-    test.equal(union.toHtml(), 'function(new: <a href="goog.ui.Menu.html">goog.ui.Menu</a>, <code>string</code>)');
+    test.equal(union.toString(), 'function(new:goog.ui.Menu, string)');
+    test.equal(union.toHtml(), 'function(new:<a href="goog.ui.Menu.html">goog.ui.Menu</a>, <code>string</code>)');
     test.done();
   },
   'Build a function type has a variable parameter': function(test) {
@@ -789,8 +789,8 @@ var test = {
     test.equal(returnUnion.all, false);
     test.equal(returnUnion.unknown, true);
 
-    test.equal(union.toString(), 'function(this: T, ?, number): ?');
-    test.equal(union.toHtml(), 'function(this: <a href="T.html">T</a>, <code>?</code>, <code>number</code>): <code>?</code>');
+    test.equal(union.toString(), 'function(this:T, ?, number): ?');
+    test.equal(union.toHtml(), 'function(this:<a href="T.html">T</a>, <code>?</code>, <code>number</code>): <code>?</code>');
     test.done();
   },
   'Build a variable type': function(test) {
@@ -1004,6 +1004,22 @@ var test = {
 
     test.equal(union.toString(), 'module:foo/bar|null');
     test.equal(union.toHtml(), 'module:<a href="module%3Afoo%2Fbar.html">foo/bar</a>|<code>null</code>');
+    test.done();
+  },
+  'Build a module type with a generic type operator': function(test) {
+    builder.setTypeString('module:foo/bar.<string>');
+    union = builder.build();
+
+    test.equal(union.types.length, 1);
+    test.equal(union.optional, false);
+    test.equal(union.nullable, false);
+    test.equal(union.nonNullable, false);
+    test.equal(union.variable, false);
+    test.equal(union.all, false);
+    test.equal(union.unknown, false);
+
+    test.equal(union.toString(), 'module:foo/bar.<string>');
+    test.equal(union.toHtml(), 'module:<a href="module%3Afoo%2Fbar.html">foo/bar</a>.&lt;<code>string</code>&gt;');
     test.done();
   },
   'Build an illegal generic type': function(test) {
