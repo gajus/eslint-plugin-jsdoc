@@ -34,7 +34,8 @@ var test = {
       handleOptionalTypeOperatorToken: function() {},
       handleVariableTypeOperatorToken: function() {},
       handleAllTypeOperatorToken: function() {},
-      handleUnknownTypeOperatorToken: function() {}
+      handleUnknownTypeOperatorToken: function() {},
+      handleModuleNameToken: function(arg) {}
     };
 
     lexer = new TypeLexer(cbs);
@@ -175,6 +176,14 @@ var test = {
   },
   'Analize an unknown type with an "unknown" keyword': function(test) {
     lexer.analize('unknown');
+    test.done();
+  },
+  'Analize a module type': function(test) {
+    lexer.analize('module: foo/bar');
+    test.done();
+  },
+  'Analize a module type with a file extension': function(test) {
+    lexer.analize('module: foo/bar.js');
     test.done();
   },
   'Analize an illegal generic type': function(test) {
