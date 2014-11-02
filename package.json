@@ -2,7 +2,7 @@
   "name": "jsdoctypeparser",
   "description": "Strict JsDoc type expression parser.",
   "version": "1.1.1",
-  "author": "Orga Chem <orga.chem.job@gmail.com>",
+  "author": "Kuniwak <orga.chem.job@gmail.com>",
   "keywords": [
     "jsdoc",
     "type expression",
@@ -10,11 +10,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/OrgaChem/jsdoctypeparser.git"
+    "url": "git://github.com/Kuniwak/jsdoctypeparser.git"
   },
   "bugs": {
     "mail": "orga.chem.job@gmail.com",
-    "url": "https://github.com/OrgaChem/jsdoctypeparser/issues"
+    "url": "https://github.com/Kuniwak/jsdoctypeparser/issues"
   },
   "directories": {
     "test": "test"
