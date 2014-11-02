@@ -1,15 +1,15 @@
 # Jsdoc type parser
-[![Build Status](https://travis-ci.org/OrgaChem/jsdoctypeparser.png?branch=master)](https://travis-ci.org/Kuniwak/jsdoctypeparser)
+[![Build Status](https://travis-ci.org/Kuniwak/jsdoctypeparser.png?branch=master)](https://travis-ci.org/Kuniwak/jsdoctypeparser)
 [![NPM version](https://badge.fury.io/js/jsdoctypeparser.png)](http://badge.fury.io/js/jsdoctypeparser)
 
-This module is Jsdoc type expression parser, it makes easy to publish a type name link by ```toHTML()```.
+This module is Jsdoc type expression parser, it makes easy to publish a type name link by `toHTML()`.
 
 This parser provide:
 
 * Parse to object model
-* Convert a type name to a link by using ```toHtml()```
+* Convert a type name to a link by using `toHtml()`
 
-```
+```javascript
 var Parser = require('jsdoctypeparser').Parser;
 var parser = new Parser();
 var result = parser.parse('Array.<MyClass>=');
@@ -21,11 +21,11 @@ console.log(result.toString()); // ⇒ 'Array.<MyClass>|undefined'
 This parser can parse:
 
 * [JsDoc type expressions](https://code.google.com/p/jsdoc-toolkit/wiki/TagParam)
-  * ```foo.bar```, ```String[]```
+  * `foo.bar`, `String[]`
 * [Closure Compiler type expressions](https://developers.google.com/closure/compiler/docs/js-for-compiler)
-  * ```Array.<string>```, ```function(this: Objext, arg1, arg2): ret```
+  * `Array.<string>`, `function(this: Objext, arg1, arg2): ret`
 * Nested type expressions
-  * ```Array.<Array.<string>>```, ```function(function(Function))```
+  * `Array.<Array.<string>>`, `function(function(Function))`
 
 
 ## Live demo
@@ -34,20 +34,20 @@ The [live demo](http://kuniwak.github.io/jsdoctypeparser/) is available.
 
 ## Publishing
 
-```
+```javascript
 var Parser = require('jsdoctypeparser').Parser;
 var parser = new Parser();
 var result = parser.parse('Array.<MyClass>=');
 ```
 
-* ```result.toString()``` ⇒ ```'Array.<MyClass>|undefined'```
+* `result.toString()` ⇒ `'Array.<MyClass>|undefined'`
 
-* ```result.toHtml()``` ⇒ ```'Array.&lt;<a href="MyClass.html">MyClass</a>&gt;|undefined'```
+* `result.toHtml()` ⇒ `'Array.&lt;<a href="MyClass.html">MyClass</a>&gt;|undefined'`
 
 ### Customize type name URI
-You can change a file URL by set ```TypeBulder.TypeName.getUrlByTypeName(typeName)```.
+You can change a file URL by set `TypeBulder.TypeName.getUrlByTypeName(typeName)`.
 
-```
+```javascript
 var Builder = require('jsdoctypeparser').Builder;
 Bulder.TypeName.getUrlByTypeName = function(typeName) {
   // do something.
@@ -57,15 +57,15 @@ Bulder.TypeName.getUrlByTypeName = function(typeName) {
 
 ## Parsing
 
-```
+```javascript
 var Parser = require('jsdoctypeparser').Parser;
 var parser = new Parser();
 var result = parser.parse('Array.<string|number, ?Object=>|string|undefined');
 ```
 
-The ```result``` is:
+The `result` is:
 
-```
+```javascript
 {
   optional: true,
   types: [
@@ -95,14 +95,14 @@ The ```result``` is:
 ### Specification
 
 #### Type name
-```
+```javascript
 TypeName = {
   name: string
 };
 ```
 
 #### Type Union
-```
+```javascript
 TypeUnion = {
   optional: boolean,
   nullable: boolean,
@@ -115,7 +115,7 @@ TypeUnion = {
 ```
 
 #### Generic type
-```
+```javascript
 GenericType = {
   genericTypeName: string,
   parameterTypeUnions: Array.<TypeUnion>
@@ -123,7 +123,7 @@ GenericType = {
 ```
 
 #### Function type
-```
+```javascript
 FunctionType = {
   parameterTypeUnions: Array.<TypeUnion>,
   returnTypeUnion: TypeUnion|null,
@@ -133,7 +133,7 @@ FunctionType = {
 ```
 
 #### Record type
-```
+```javascript
 RecordType = {
   entries: Array.<RecordEntry>
 };
