@@ -1,6 +1,6 @@
 # Jsdoc type parser
-[![Build Status](https://travis-ci.org/Kuniwak/jsdoctypeparser.png?branch=master)](https://travis-ci.org/Kuniwak/jsdoctypeparser)
-[![NPM version](https://badge.fury.io/js/jsdoctypeparser.png)](http://badge.fury.io/js/jsdoctypeparser)
+[![Build Status](https://travis-ci.org/Kuniwak/jsdoctypeparser.svg?branch=master)](https://travis-ci.org/Kuniwak/jsdoctypeparser)
+[![NPM version](https://badge.fury.io/js/jsdoctypeparser.svg)](http://badge.fury.io/js/jsdoctypeparser)
 
 This module is Jsdoc type expression parser, it makes easy to publish a type name link by `toHTML()`.
 
