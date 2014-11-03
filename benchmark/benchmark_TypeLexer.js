@@ -13,97 +13,97 @@ var lexer = new TypeLexer();
 
 suite
     .add('Primitive type', function() {
-      lexer.analize('boolean');
+      lexer.analyze('boolean');
     })
     .add('Global Object', function() {
-      lexer.analize('Window');
+      lexer.analyze('Window');
     })
     .add('User Object', function() {
-      lexer.analize('goog.ui.Menu');
+      lexer.analyze('goog.ui.Menu');
     })
     .add('Generics with a parameter', function() {
-      lexer.analize('Array.<string>');
+      lexer.analyze('Array.<string>');
     })
     .add('Generics with two parameters', function() {
-      lexer.analize('Object.<string, number>');
+      lexer.analyze('Object.<string, number>');
     })
     .add('Generics in Jsdoc style', function() {
-      lexer.analize('String[]');
+      lexer.analyze('String[]');
     })
     .add('Formal type union', function() {
-      lexer.analize('(number|boolean)');
+      lexer.analyze('(number|boolean)');
     })
     .add('Informal type union', function() {
-      lexer.analize('number|boolean');
+      lexer.analyze('number|boolean');
     })
     .add('Record type', function() {
-      lexer.analize('{myNum: number, myObject}');
+      lexer.analyze('{myNum: number, myObject}');
     })
     .add('Record type in generics', function() {
-      lexer.analize('Array.<{length}>');
+      lexer.analyze('Array.<{length}>');
     })
     .add('NUllable type', function() {
-      lexer.analize('?number');
+      lexer.analyze('?number');
     })
     .add('Nullable on a tail', function() {
-      lexer.analize('goog.ui.Component?');
+      lexer.analyze('goog.ui.Component?');
     })
     .add('Non nullable type', function() {
-      lexer.analize('!Object');
+      lexer.analyze('!Object');
     })
     .add('Non nullable type on a tail', function() {
-      lexer.analize('Object!');
+      lexer.analyze('Object!');
     })
     .add('Function type', function() {
-      lexer.analize('Function');
+      lexer.analyze('Function');
     })
     .add('Function type with no parameter', function() {
-      lexer.analize('function()');
+      lexer.analyze('function()');
     })
     .add('Function type with a parameter', function() {
-      lexer.analize('function(string)');
+      lexer.analyze('function(string)');
     })
     .add('Function type with two parameters', function() {
-      lexer.analize('function(string, boolean)');
+      lexer.analyze('function(string, boolean)');
     })
     .add('Function type with a return', function() {
-      lexer.analize('function(): number');
+      lexer.analyze('function(): number');
     })
     .add('Function type with a context type', function() {
-      lexer.analize('function(this:goog.ui.Menu, string)');
+      lexer.analyze('function(this:goog.ui.Menu, string)');
     })
     .add('Function type as a constructor', function() {
-      lexer.analize('function(new:goog.ui.Menu, string)');
+      lexer.analyze('function(new:goog.ui.Menu, string)');
     })
     .add('Function type with variable parameters', function() {
-      lexer.analize('function(string, ...[number]): number');
+      lexer.analyze('function(string, ...[number]): number');
     })
     .add('Function type with nullable or optional parameters', function() {
-      lexer.analize('function(?string=, number=)');
+      lexer.analyze('function(?string=, number=)');
     })
     .add('Function type as goog.ui.Component#forEachChild', function() {
-      lexer.analize('function(this:T,?,number):?');
+      lexer.analyze('function(this:T,?,number):?');
     })
     .add('Variable type', function() {
-      lexer.analize('...number');
+      lexer.analyze('...number');
     })
     .add('Optional type', function() {
-      lexer.analize('number=');
+      lexer.analyze('number=');
     })
     .add('All type', function() {
-      lexer.analize('*');
+      lexer.analyze('*');
     })
     .add('Unknown type', function() {
-      lexer.analize('?');
+      lexer.analyze('?');
     })
     .add('Unknown type with a keyword', function() {
-      lexer.analize('unknown');
+      lexer.analyze('unknown');
     })
     .add('Optional type with a "undefined" keyword', function() {
-      lexer.analize('Object|undefined');
+      lexer.analyze('Object|undefined');
     })
     .add('Optional type with a "void" keyword', function() {
-      lexer.analize('Object|void');
+      lexer.analyze('Object|void');
     })
     .on('complete', function() {
       var elapsed = 0;
