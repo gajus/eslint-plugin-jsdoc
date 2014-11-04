@@ -66,26 +66,26 @@ var result = parser.parse('Array.<string|number, ?Object=>|string|undefined');
 The `result` is:
 
 ```javascript
-{
+{ // instanceof TypeBuilder.TypeUnion
   optional: true,
   types: [
-    {
+    { // instanceof TypeBuilder.FunctionType
       parameterTypeUnions: [
-        {
+        { // instanceof TypeBuilder.TypeUnion
           types: [
-            { name: 'string' },
-            { name: 'number' }
+            { name: 'string' }, // instanceof TypeBuilder.TypeName
+            { name: 'number' }  // instanceof TypeBuilder.TypeName
           ]
         },
-        {
+        { // instanceof TypeBuilder.TypeUnion
           nullable: true
           optional: true
           types: [
-            { name: 'Object' }
+            { name: 'Object' }  // instanceof TypeBuilder.TypeName
           ]
         }
       ]
-    }, {
+    }, { // instanceof TypeBuilder.TypeName
       { name: 'string' }
     }
   ]
@@ -138,7 +138,7 @@ RecordType = {
   entries: Array.<RecordEntry>
 };
 
-RecordEntry = {
+RecordType.Entry = {
   name: string,
   typeUnion: TypeUnion
 };
