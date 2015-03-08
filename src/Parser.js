@@ -2,6 +2,7 @@
 
 var parser = require('../peg_lib/jsdoctype.js');
 
-module.exports = function() {
-  return parser;
+module.exports = {
+  SyntaxError: parser.SyntaxError,
+  parse: parser.parse
 };
