@@ -17,11 +17,11 @@ describe('Parser', function(){
     };
   }
 
-  function createMemberTypeNode(ownerTypeExpr, memberTypeExpr) {
+  function createMemberTypeNode(ownerTypeExpr, memberTypeName) {
     return {
       type: NodeType.MEMBER,
       owner: ownerTypeExpr,
-      member: memberTypeExpr
+      name: memberTypeName
     };
   }
 
@@ -58,8 +58,8 @@ describe('Parser', function(){
   function createGenericTypeNode(genericTypeName, paramExprs) {
     return {
       type: NodeType.GENERIC,
-      generic: genericTypeName,
-      params: paramExprs
+      subject: genericTypeName,
+      objects: paramExprs
     };
   }
 
@@ -97,7 +97,7 @@ describe('Parser', function(){
 
     var expectedNode = createMemberTypeNode(
       createTypeNameNode('owner'),
-      createTypeNameNode('Member'));
+      'Member');
 
     expect(node).to.deep.equal(expectedNode);
   });
@@ -108,11 +108,9 @@ describe('Parser', function(){
     var node = parser.parse(typeExprStr);
 
     var expectedNode = createMemberTypeNode(
-      createTypeNameNode('superOwner'),
-      createMemberTypeNode(
-        createTypeNameNode('owner'),
-        createTypeNameNode('Member')
-      ));
+        createMemberTypeNode(
+          createTypeNameNode('superOwner'), 'owner'),
+        'Member');
 
     expect(node).to.deep.equal(expectedNode);
   });

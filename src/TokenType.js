@@ -1,0 +1,11 @@
+var TokenType = {
+  OPTIONAL_OPERATOR: 0,
+  NULLABLE_OPERATOR: 1,
+  NOT_NULLABLE_OPERATOR: 2,
+  VARIADIC_OPERATOR: 3,
+  ARRAY_OPERATOR: 4,
+  UNION_OPERATOR: 5
+};
+
+
+module.exports = TokenType;

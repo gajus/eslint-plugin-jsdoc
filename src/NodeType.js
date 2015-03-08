@@ -5,7 +5,8 @@ var NodeType = {
   VARIADIC: 3,
   RECORD: 4,
   RECORD_ENTRY: 5,
-  GENERIC: 6
+  GENERIC: 6,
+  MODULE: 7
 };
 
 
