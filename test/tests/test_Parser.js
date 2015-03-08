@@ -17,6 +17,34 @@ describe('Parser', function(){
     };
   }
 
+  function createModuleNameNode(moduleName) {
+    return {
+      type: NodeType.MODULE,
+      value: moduleName
+    };
+  }
+
+  function createOptionalTypeNode(optionalTypeExpr) {
+    return {
+      type: NodeType.OPTIONAL,
+      value: optionalTypeExpr
+    };
+  }
+
+  function createNullableTypeNode(nullableTypeExpr) {
+    return {
+      type: NodeType.NULLABLE,
+      value: nullableTypeExpr
+    };
+  }
+
+  function createNotNullableTypeNode(nullableTypeExpr) {
+    return {
+      type: NodeType.NOT_NULLABLE,
+      value: nullableTypeExpr
+    };
+  }
+
   function createMemberTypeNode(ownerTypeExpr, memberTypeName) {
     return {
       type: NodeType.MEMBER,
@@ -63,6 +91,16 @@ describe('Parser', function(){
     };
   }
 
+  function createFunctionTypeNode(paramNodes, returnedNode, modifierMap) {
+    return {
+      type: NodeType.FUNCTION,
+      params: paramNodes,
+      returns: returnedNode,
+      context: modifierMap.context,
+      newInstance: modifierMap.newInstance
+    };
+  }
+
 
   it('should return a type name node when "TypeName" arrived', function(){
     var typeExprStr = 'TypeName';
@@ -87,6 +125,27 @@ describe('Parser', function(){
     var node = parser.parse(typeExprStr);
 
     var expectedNode = createTypeNameNode(typeExprStr);
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a module name node when "module:path/to/file.js" arrived', function(){
+    var typeExprStr = 'module:path/to/file.js';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createModuleNameNode('path/to/file.js');
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a member  node when "(module:path/to/file.js).member" arrived', function(){
+    var typeExprStr = '(module:path/to/file.js).member';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createMemberTypeNode(
+      createModuleNameNode('path/to/file.js'),
+      'member'
+    );
     expect(node).to.deep.equal(expectedNode);
   });
 
@@ -139,6 +198,19 @@ describe('Parser', function(){
         createTypeNameNode('MiddleType'),
         createTypeNameNode('RightType')
       ));
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an union type when "(LeftType|RightType)" arrived', function() {
+    var typeExprStr = 'LeftType|RightType';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createUnionTypeNode(
+      createTypeNameNode('LeftType'),
+      createTypeNameNode('RightType')
+    );
 
     expect(node).to.deep.equal(expectedNode);
   });
@@ -252,6 +324,120 @@ describe('Parser', function(){
       createTypeNameNode('Array'), [
         createTypeNameNode('ParamType')
       ]);
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an optional type node when "string=" arrived', function(){
+    var typeExprStr = 'string=';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createOptionalTypeNode(
+      createTypeNameNode('string')
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a nullable type node when "?string" arrived', function(){
+    var typeExprStr = '?string';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createNullableTypeNode(
+      createTypeNameNode('string')
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a not nullable type node when "!Object" arrived', function(){
+    var typeExprStr = '!Object';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createNotNullableTypeNode(
+      createTypeNameNode('Object')
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a function type node when "function()" arrived', function(){
+    var typeExprStr = 'function()';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createFunctionTypeNode(
+      [], null,
+      { context: null, newInstance: null }
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a function type node with a param when "function(Param)" arrived', function(){
+    var typeExprStr = 'function(Param)';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createFunctionTypeNode(
+      [ createTypeNameNode('Param') ], null,
+      { context: null, newInstance: null }
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a function type node with several params when "function(Param1,Param2)" arrived', function(){
+    var typeExprStr = 'function(Param1,Param2)';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createFunctionTypeNode(
+      [ createTypeNameNode('Param1'), createTypeNameNode('Param2') ], null,
+      { context: null, newInstance: null }
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a function type node with returns when "function():Returned" arrived', function(){
+    var typeExprStr = 'function():Returned';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createFunctionTypeNode(
+      [], createTypeNameNode('Returned'),
+      { context: null, newInstance: null }
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a function type node with a context type when "function(this:ThisObject)" arrived', function(){
+    var typeExprStr = 'function(this:ThisObject)';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createFunctionTypeNode(
+      [], null,
+      { context: createTypeNameNode('ThisObject'), newInstance: null }
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a function type node as a constructor when "function(new:NewObject)" arrived', function(){
+    var typeExprStr = 'function(new:NewObject)';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createFunctionTypeNode(
+      [], null,
+      { context: null, newInstance: createTypeNameNode('NewObject') }
+    );
 
     expect(node).to.deep.equal(expectedNode);
   });
