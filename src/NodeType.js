@@ -10,7 +10,9 @@ var NodeType = {
   OPTIONAL: 8,
   NULLABLE: 9,
   NOT_NULLABLE: 10,
-  FUNCTION: 11
+  FUNCTION: 11,
+  ANY: 12,
+  UNKNOWN: 13
 };
 
 

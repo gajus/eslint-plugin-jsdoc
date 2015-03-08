@@ -18,8 +18,9 @@
   };
 }
 
+// unknownTypeExpr should be put here to avoid confusing with nullable type operators
 typeExpr =
-  leftNode:typeExprWithoutNotUnaryOperators _
+  leftNode:(typeExprWithoutNotUnaryOperators / unknownTypeExpr) _
   memberTypeExprParts:(_ memberTypeOperator _ memberName)* _
   genericObjects:genericTypeExpr? _
   unionTypeExprParts:(_ unionTypeOperator _ typeExpr)* {
@@ -126,53 +127,13 @@ highestPriorityTypeExprPart = funcTypeExpr
                               / recordTypeExpr
                               / parenthesisTypeExpr
                               / moduleName
+                              / anyTypeExpr
+                              / unknownTypeExpr
                               / typeName
 
 parenthesisTypeExpr = "(" _ wrapped:typeExpr _ ")" {
   return wrapped;
 }
-
-
-/*
- * Union type expressions.
- *
- * Examples:
- *   - number|undefined
- *   - Foo|Bar|Baz
- */
-unionTypeOperator = "|" {
-    return TokenType.UNION_OPERATOR;
-  }
-
-
-/*
- * Generic type expressions.
- *
- * Examples:
- *   - Function<T>
- *   - Array.<string>
- */
-genericTypeExpr =
-  genericTypeStartToken _
-  objects:genericTypeExprObjectivePart _
-  genericTypeEndToken {
-    return objects;
-  }
-
-genericTypeStartToken =
-  genericTypeEcmaScriptFlavoredStartToken /
-  genericTypeTypeScriptFlavoredStartToken
-
-genericTypeEcmaScriptFlavoredStartToken = ".<"
-
-genericTypeTypeScriptFlavoredStartToken = "<"
-
-genericTypeEndToken = ">"
-
-genericTypeExprObjectivePart = first:typeExpr restsWithComma:(_ "," _ typeExpr)* {
-    var objects = buildByFirstAndRest(first, restsWithComma, 3);
-    return objects;
-  }
 
 
 /*
@@ -209,6 +170,28 @@ moduleName = "module" _ ":" _ filePath:$(moduleNameFilePathPart) {
   }
 
 moduleNameFilePathPart = [a-zA-Z_0-9_$./-]+
+
+
+/*
+ * Any type expressions.
+ *
+ * Examples:
+ *   - *
+ */
+anyTypeExpr = "*" {
+    return { type: NodeType.ANY };
+  }
+
+
+/*
+ * Unknown type expressions.
+ *
+ * Examples:
+ *   - ?
+ */
+unknownTypeExpr = "?" {
+    return { type: NodeType.UNKNOWN };
+  }
 
 
 /*
@@ -397,6 +380,48 @@ variadicTypeOperator = "..." {
  */
 arrayOfGenericTypeOperatorJsDocFlavored = "[]" {
     return TokenType.ARRAY_OPERATOR;
+  }
+
+
+/*
+ * Union type expressions.
+ *
+ * Examples:
+ *   - number|undefined
+ *   - Foo|Bar|Baz
+ */
+unionTypeOperator = "|" {
+    return TokenType.UNION_OPERATOR;
+  }
+
+
+/*
+ * Generic type expressions.
+ *
+ * Examples:
+ *   - Function<T>
+ *   - Array.<string>
+ */
+genericTypeExpr =
+  genericTypeStartToken _
+  objects:genericTypeExprObjectivePart _
+  genericTypeEndToken {
+    return objects;
+  }
+
+genericTypeStartToken =
+  genericTypeEcmaScriptFlavoredStartToken /
+  genericTypeTypeScriptFlavoredStartToken
+
+genericTypeEcmaScriptFlavoredStartToken = ".<"
+
+genericTypeTypeScriptFlavoredStartToken = "<"
+
+genericTypeEndToken = ">"
+
+genericTypeExprObjectivePart = first:typeExpr restsWithComma:(_ "," _ typeExpr)* {
+    var objects = buildByFirstAndRest(first, restsWithComma, 3);
+    return objects;
   }
 
 

@@ -17,6 +17,18 @@ describe('Parser', function(){
     };
   }
 
+  function createAnyTypeNode() {
+    return {
+      type: NodeType.ANY
+    };
+  }
+
+  function createUnknownTypeNode() {
+    return {
+      type: NodeType.UNKNOWN
+    };
+  }
+
   function createModuleNameNode(moduleName) {
     return {
       type: NodeType.MODULE,
@@ -125,6 +137,24 @@ describe('Parser', function(){
     var node = parser.parse(typeExprStr);
 
     var expectedNode = createTypeNameNode(typeExprStr);
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an any type node when "*" arrived', function(){
+    var typeExprStr = '*';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createAnyTypeNode();
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an any type node when "?" arrived', function(){
+    var typeExprStr = '?';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createUnknownTypeNode();
     expect(node).to.deep.equal(expectedNode);
   });
 
@@ -438,6 +468,18 @@ describe('Parser', function(){
 
     var expectedNode = createNullableTypeNode(
       createTypeNameNode('string')
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a nullable type node when "?string=" arrived', function(){
+    var typeExprStr = '?string=';
+    var node = parser.parse(typeExprStr);
+
+    var expectedNode = createOptionalTypeNode(
+      createNullableTypeNode(createTypeNameNode('string'))
     );
 
     expect(node).to.deep.equal(expectedNode);
