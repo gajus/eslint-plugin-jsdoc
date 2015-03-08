@@ -407,8 +407,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a generic type node when "Generic.< ParamType1 , ParamType2 >" arrived', function(){
-    var typeExprStr = 'Generic.< ParamType1 , ParamType2 >';
+  it('should return a generic type node when "Generic .< ParamType1 , ParamType2 >" arrived', function(){
+    var typeExprStr = 'Generic .< ParamType1 , ParamType2 >';
     var node = parser.parse(typeExprStr);
 
     var expectedNode = createGenericTypeNode(
