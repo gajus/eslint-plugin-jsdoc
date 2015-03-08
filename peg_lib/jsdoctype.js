@@ -1956,8 +1956,8 @@ module.exports = (function() {
     }
 
 
-      var NodeType = require('../src/NodeType.js');
-      var TokenType = require('../src/TokenType.js');
+      var NodeType = require('../lib/NodeType.js');
+      var TokenType = require('../lib/TokenType.js');
       var FunctionModifierType = {
         CONTEXT: 0,
         NEW: 1

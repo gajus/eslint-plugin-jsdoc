@@ -21,8 +21,7 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "test": "node test/run.js",
-    "build": "$(npm bin)/pegjs peg_src/jsdoctype.pegjs lib/NewParser.js"
+    "test": "$(npm bin)/mocha test"
   },
   "readmeFilename": "README.md",
   "devDependencies": {
@@ -32,8 +31,7 @@
     "gulp-notify": "^2.2.0",
     "gulp-peg": "^0.1.2",
     "gulp-plumber": "^0.6.6",
-    "mocha": "^2.1.0",
-    "nodeunit": "~0.8.0"
+    "mocha": "^2.1.0"
   },
   "license": "MIT"
 }
