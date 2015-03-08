@@ -5,9 +5,9 @@ var chai = require('chai');
 var expect = chai.expect;
 
 var NodeType = require('../../src/NodeType.js');
+var Parser = require('../../src/Parser.js');
 
-// var Parser = require('../../lib/NewParser');
-var parser = require('../../peg_lib/jsdoctype.js');
+var parser = new Parser();
 
 describe('Parser', function(){
   function createTypeNameNode(typeName) {
