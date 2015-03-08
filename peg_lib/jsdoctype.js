@@ -83,11 +83,11 @@ module.exports = (function() {
             prefixUnaryOpTokens = prefixUnaryOpTokens || [];
             postfixUnaryOpTokens = postfixUnaryOpTokens || [];
 
-            reversedPostfixUnaryOpTokens = [].concat(postfixUnaryOpTokens);
-            postfixUnaryOpTokens.reverse();
+            reversedPrefixUnaryOpTokens = [].concat(prefixUnaryOpTokens);
+            reversedPrefixUnaryOpTokens.reverse();
 
-            // Prefix operators are prior.
-            var tokens = prefixUnaryOpTokens.concat(reversedPostfixUnaryOpTokens);
+            // Postfix operators are prior.
+            var tokens = postfixUnaryOpTokens.concat(reversedPrefixUnaryOpTokens);
 
             var node = tokens.reduce(function(prevNode, token) {
               switch (token) {

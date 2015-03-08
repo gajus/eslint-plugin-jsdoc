@@ -69,6 +69,14 @@ typeExpr =
   }
 
 
+/*
+ * Type expressions with only unary operators.
+ *
+ * Examples:
+ *   - ?string
+ *   - ?string=
+ *   - ...!Object
+ */
 typeExprWithoutNotUnaryOperators =
   prefixUnaryOpTokens:(prefixUnaryOperator)*
   priorExprPart:highestPriorityTypeExprPart
@@ -76,11 +84,11 @@ typeExprWithoutNotUnaryOperators =
     prefixUnaryOpTokens = prefixUnaryOpTokens || [];
     postfixUnaryOpTokens = postfixUnaryOpTokens || [];
 
-    reversedPostfixUnaryOpTokens = [].concat(postfixUnaryOpTokens);
-    postfixUnaryOpTokens.reverse();
+    reversedPrefixUnaryOpTokens = [].concat(prefixUnaryOpTokens);
+    reversedPrefixUnaryOpTokens.reverse();
 
-    // Prefix operators are prior.
-    var tokens = prefixUnaryOpTokens.concat(reversedPostfixUnaryOpTokens);
+    // Postfix operators are prior.
+    var tokens = postfixUnaryOpTokens.concat(reversedPrefixUnaryOpTokens);
 
     var node = tokens.reduce(function(prevNode, token) {
       switch (token) {
@@ -131,6 +139,14 @@ highestPriorityTypeExprPart = funcTypeExpr
                               / unknownTypeExpr
                               / typeName
 
+
+/*
+ * Parenthesis expressions.
+ *
+ * Examples:
+ *   - (Foo|Bar)
+ *   - (module: path/to/file).Module
+ */
 parenthesisTypeExpr = "(" _ wrapped:typeExpr _ ")" {
   return wrapped;
 }
