@@ -12,21 +12,21 @@
     };
   };
 
-  var buildByFirstAndRest = function(first, restsWithComma) {
-    var rests = restsWithComma ? restsWithComma.map(byKey(1)) : [];
+  var buildByFirstAndRest = function(first, restsWithComma, restIndex) {
+    var rests = restsWithComma ? restsWithComma.map(byKey(restIndex)) : [];
     return first ? [first].concat(rests) : [];
   };
 }
 
 typeExpr =
-  leftNode:typeExprWithoutNotUnaryOperators
-  memberTypeExprParts:(memberTypeOperator memberName)*
-  genericObjects:genericTypeExpr?
-  unionTypeExprParts:(unionTypeOperator typeExpr)* {
+  leftNode:typeExprWithoutNotUnaryOperators _
+  memberTypeExprParts:(_ memberTypeOperator _ memberName)* _
+  genericObjects:genericTypeExpr? _
+  unionTypeExprParts:(_ unionTypeOperator _ typeExpr)* {
     var rootNode = leftNode;
 
     if (memberTypeExprParts) {
-      var memberNames = memberTypeExprParts.map(byKey(1));
+      var memberNames = memberTypeExprParts.map(byKey(3));
 
       function createMemberTypeNode(memberName, ownerNode) {
         return {
@@ -55,7 +55,7 @@ typeExpr =
 
     if (unionTypeExprParts) {
       rootNode = unionTypeExprParts.reduce(function(leftNode, rightNodeWithOp) {
-        var rightNode = rightNodeWithOp[1];
+        var rightNode = rightNodeWithOp[3];
         return {
           type: NodeType.UNION,
           left: leftNode,
@@ -128,7 +128,7 @@ highestPriorityTypeExprPart = funcTypeExpr
                               / moduleName
                               / typeName
 
-parenthesisTypeExpr = "(" wrapped:typeExpr ")" {
+parenthesisTypeExpr = "(" _ wrapped:typeExpr _ ")" {
   return wrapped;
 }
 
@@ -153,8 +153,8 @@ unionTypeOperator = "|" {
  *   - Array.<string>
  */
 genericTypeExpr =
-  genericTypeStartToken
-  objects:genericTypeExprObjectivePart
+  genericTypeStartToken _
+  objects:genericTypeExprObjectivePart _
   genericTypeEndToken {
     return objects;
   }
@@ -169,8 +169,8 @@ genericTypeTypeScriptFlavoredStartToken = "<"
 
 genericTypeEndToken = ">"
 
-genericTypeExprObjectivePart = first:typeExpr restsWithComma:("," typeExpr)* {
-    var objects = buildByFirstAndRest(first, restsWithComma);
+genericTypeExprObjectivePart = first:typeExpr restsWithComma:(_ "," _ typeExpr)* {
+    var objects = buildByFirstAndRest(first, restsWithComma, 3);
     return objects;
   }
 
@@ -201,7 +201,7 @@ jsIdentifier = [a-zA-Z_$][a-zA-Z0-9_$]*
  *   - module:path/to/file
  *   - module:path/to/file.js
  */
-moduleName = "module" ":" filePath:$(moduleNameFilePathPart) {
+moduleName = "module" _ ":" _ filePath:$(moduleNameFilePathPart) {
     return {
       type: NodeType.MODULE,
       value: filePath
@@ -235,7 +235,10 @@ memberName = name:$(jsIdentifier) {
  *   - function(this:jQuery):jQuery
  *   - function(new:Error)
  */
-funcTypeExpr = "function(" modifiers:funcTypeExprModifiersPart params:funcTypeExprParamsPart ")" returnedTypePart:(":" typeExpr)? {
+funcTypeExpr = "function" _ "(" _
+               modifiers:funcTypeExprModifiersPart _
+               params:funcTypeExprParamsPart _
+               ")" _ returnedTypePart:(_ ":" _ typeExpr)? {
     var modifierMap = modifiers.reduce(function(prevModifierMap, modifier) {
       switch (modifier.modifierType) {
         case FunctionModifierType.THIS:
@@ -253,7 +256,7 @@ funcTypeExpr = "function(" modifiers:funcTypeExprModifiersPart params:funcTypeEx
       newInstance: null
     });
 
-    var returnedTypeNode = returnedTypePart ? returnedTypePart[1] : null;
+    var returnedTypeNode = returnedTypePart ? returnedTypePart[3] : null;
 
     return {
       type: NodeType.FUNCTION,
@@ -264,27 +267,27 @@ funcTypeExpr = "function(" modifiers:funcTypeExprModifiersPart params:funcTypeEx
     };
   }
 
-funcTypeExprParamsPart = firstParam:typeExpr? restParamsWithComma:("," typeExpr)* {
-    var params = buildByFirstAndRest(firstParam, restParamsWithComma);
+funcTypeExprParamsPart = firstParam:typeExpr? restParamsWithComma:(_ "," _ typeExpr)* {
+    var params = buildByFirstAndRest(firstParam, restParamsWithComma, 3);
     return params;
   }
 
 funcTypeExprModifiersPart = firstModifier:funcTypeExprModifier?
-                            restModifiersWithComma:("," funcTypeExprModifier)* {
-    var modifiers = buildByFirstAndRest(firstModifier, restModifiersWithComma);
+                            restModifiersWithComma:(_ "," _ funcTypeExprModifier)* {
+    var modifiers = buildByFirstAndRest(firstModifier, restModifiersWithComma, 3);
     return modifiers;
   }
 
 funcTypeExprModifier = contextTypeModifier / newInstanceTypeModifier
 
-contextTypeModifier = "this" ":" value:typeExpr {
+contextTypeModifier = "this" _ ":" _ value:typeExpr {
     return {
       modifierType: FunctionModifierType.THIS,
       value: value
     };
   }
 
-newInstanceTypeModifier = "new" ":" value:typeExpr {
+newInstanceTypeModifier = "new" _ ":" _ value:typeExpr {
     return {
       modifierType: FunctionModifierType.NEW,
       value: value
@@ -300,8 +303,8 @@ newInstanceTypeModifier = "new" ":" value:typeExpr {
  *   - {length:number}
  *   - {toString:Function,valueOf:Function}
  */
-recordTypeExpr = "{" firstEntry:recordEntry? restEntriesWithComma:("," recordEntry)* "}" {
-    var entries = buildByFirstAndRest(firstEntry, restEntriesWithComma);
+recordTypeExpr = "{" _ firstEntry:recordEntry? restEntriesWithComma:(_ "," _ recordEntry)* _ "}" {
+    var entries = buildByFirstAndRest(firstEntry, restEntriesWithComma, 3);
 
     return {
       type: NodeType.RECORD,
@@ -309,7 +312,7 @@ recordTypeExpr = "{" firstEntry:recordEntry? restEntriesWithComma:("," recordEnt
     };
   }
 
-recordEntry = key:$(jsIdentifier) ":" value:typeExpr {
+recordEntry = key:$(jsIdentifier) _ ":" _ value:typeExpr {
     return {
       type: NodeType.RECORD_ENTRY,
       key: key,
