@@ -350,6 +350,20 @@ describe('Parser', function(){
   });
 
 
+  it('should return a generic type node when "Generic<Inner<ParamType>>" arrived', function(){
+    var typeExprStr = 'Generic<Inner<ParamType>>';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createGenericTypeNode(
+      createTypeNameNode('Generic'), [
+        createGenericTypeNode(
+          createTypeNameNode('Inner'), [ createTypeNameNode('ParamType') ]
+        )]);
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
   it('should return a generic type node when "Generic<ParamType1,ParamType2>" arrived', function(){
     var typeExprStr = 'Generic<ParamType1,ParamType2>';
     var node = Parser.parse(typeExprStr);
