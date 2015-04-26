@@ -1,4 +1,3 @@
-/*eslint-env mocha*/
 'use strict';
 
 var chai = require('chai');
@@ -8,110 +7,6 @@ var NodeType = require('../lib/NodeType.js');
 var Parser = require('../lib/Parser.js');
 
 describe('Parser', function(){
-  function createTypeNameNode(typeName) {
-    return {
-      type: NodeType.NAME,
-      value: typeName
-    };
-  }
-
-  function createAnyTypeNode() {
-    return {
-      type: NodeType.ANY
-    };
-  }
-
-  function createUnknownTypeNode() {
-    return {
-      type: NodeType.UNKNOWN
-    };
-  }
-
-  function createModuleNameNode(moduleName) {
-    return {
-      type: NodeType.MODULE,
-      value: moduleName
-    };
-  }
-
-  function createOptionalTypeNode(optionalTypeExpr) {
-    return {
-      type: NodeType.OPTIONAL,
-      value: optionalTypeExpr
-    };
-  }
-
-  function createNullableTypeNode(nullableTypeExpr) {
-    return {
-      type: NodeType.NULLABLE,
-      value: nullableTypeExpr
-    };
-  }
-
-  function createNotNullableTypeNode(nullableTypeExpr) {
-    return {
-      type: NodeType.NOT_NULLABLE,
-      value: nullableTypeExpr
-    };
-  }
-
-  function createMemberTypeNode(ownerTypeExpr, memberTypeName) {
-    return {
-      type: NodeType.MEMBER,
-      owner: ownerTypeExpr,
-      name: memberTypeName
-    };
-  }
-
-  function createUnionTypeNode(leftTypeExpr, rightTypeExpr) {
-    return {
-      type: NodeType.UNION,
-      left: leftTypeExpr,
-      right: rightTypeExpr
-    };
-  }
-
-  function createVariadicTypeNode(variadicTypeExpr) {
-    return {
-      type: NodeType.VARIADIC,
-      value: variadicTypeExpr
-    };
-  }
-
-  function createRecordTypeNode(recordEntries) {
-    return {
-      type: NodeType.RECORD,
-      entries: recordEntries
-    };
-  }
-
-  function createRecordEntryNode(key, valueTypeExpr) {
-    return {
-      type: NodeType.RECORD_ENTRY,
-      key: key,
-      value: valueTypeExpr
-    };
-  }
-
-  function createGenericTypeNode(genericTypeName, paramExprs) {
-    return {
-      type: NodeType.GENERIC,
-      subject: genericTypeName,
-      objects: paramExprs
-    };
-  }
-
-  function createFunctionTypeNode(paramNodes, returnedNode, modifierMap) {
-    return {
-      type: NodeType.FUNCTION,
-      params: paramNodes,
-      returns: returnedNode,
-      context: modifierMap.context,
-      newInstance: modifierMap.newInstance
-    };
-  }
-
-
   it('should return a type name node when "TypeName" arrived', function(){
     var typeExprStr = 'TypeName';
     var node = Parser.parse(typeExprStr);
@@ -304,7 +199,7 @@ describe('Parser', function(){
     var node = Parser.parse(typeExprStr);
 
     var expectedNode = createRecordTypeNode([
-      createRecordEntryNode('key', createTypeNameNode('ValueType'))
+      createRecordEntryNode('key', createTypeNameNode('ValueType')),
     ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -317,7 +212,7 @@ describe('Parser', function(){
 
     var expectedNode = createRecordTypeNode([
       createRecordEntryNode('key1', createTypeNameNode('ValueType1')),
-      createRecordEntryNode('key2', createTypeNameNode('ValueType2'))
+      createRecordEntryNode('key2', createTypeNameNode('ValueType2')),
     ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -330,7 +225,7 @@ describe('Parser', function(){
 
     var expectedNode = createRecordTypeNode([
       createRecordEntryNode('key1', createTypeNameNode('ValueType1')),
-      createRecordEntryNode('key2', createTypeNameNode('ValueType2'))
+      createRecordEntryNode('key2', createTypeNameNode('ValueType2')),
     ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -343,7 +238,7 @@ describe('Parser', function(){
 
     var expectedNode = createGenericTypeNode(
       createTypeNameNode('Generic'), [
-        createTypeNameNode('ParamType')
+        createTypeNameNode('ParamType'),
       ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -358,7 +253,8 @@ describe('Parser', function(){
       createTypeNameNode('Generic'), [
         createGenericTypeNode(
           createTypeNameNode('Inner'), [ createTypeNameNode('ParamType') ]
-        )]);
+        ),
+    ]);
 
     expect(node).to.deep.equal(expectedNode);
   });
@@ -371,7 +267,7 @@ describe('Parser', function(){
     var expectedNode = createGenericTypeNode(
       createTypeNameNode('Generic'), [
         createTypeNameNode('ParamType1'),
-        createTypeNameNode('ParamType2')
+        createTypeNameNode('ParamType2'),
       ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -385,7 +281,7 @@ describe('Parser', function(){
     var expectedNode = createGenericTypeNode(
       createTypeNameNode('Generic'), [
         createTypeNameNode('ParamType1'),
-        createTypeNameNode('ParamType2')
+        createTypeNameNode('ParamType2'),
       ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -398,7 +294,7 @@ describe('Parser', function(){
 
     var expectedNode = createGenericTypeNode(
       createTypeNameNode('Generic'), [
-        createTypeNameNode('ParamType')
+        createTypeNameNode('ParamType'),
       ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -412,7 +308,7 @@ describe('Parser', function(){
     var expectedNode = createGenericTypeNode(
       createTypeNameNode('Generic'), [
         createTypeNameNode('ParamType1'),
-        createTypeNameNode('ParamType2')
+        createTypeNameNode('ParamType2'),
       ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -426,7 +322,7 @@ describe('Parser', function(){
     var expectedNode = createGenericTypeNode(
       createTypeNameNode('Generic'), [
         createTypeNameNode('ParamType1'),
-        createTypeNameNode('ParamType2')
+        createTypeNameNode('ParamType2'),
       ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -439,7 +335,7 @@ describe('Parser', function(){
 
     var expectedNode = createGenericTypeNode(
       createTypeNameNode('Array'), [
-        createTypeNameNode('ParamType')
+        createTypeNameNode('ParamType'),
       ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -454,8 +350,8 @@ describe('Parser', function(){
       createTypeNameNode('Array'), [
         createGenericTypeNode(
           createTypeNameNode('Array'), [
-            createTypeNameNode('ParamType')
-        ])
+            createTypeNameNode('ParamType'),
+        ]),
       ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -649,3 +545,107 @@ describe('Parser', function(){
     }).to.throw(Parser.SyntaxError);
   });
 });
+
+
+function createTypeNameNode(typeName) {
+  return {
+    type: NodeType.NAME,
+    value: typeName,
+  };
+}
+
+function createAnyTypeNode() {
+  return {
+    type: NodeType.ANY,
+  };
+}
+
+function createUnknownTypeNode() {
+  return {
+    type: NodeType.UNKNOWN,
+  };
+}
+
+function createModuleNameNode(moduleName) {
+  return {
+    type: NodeType.MODULE,
+    value: moduleName,
+  };
+}
+
+function createOptionalTypeNode(optionalTypeExpr) {
+  return {
+    type: NodeType.OPTIONAL,
+    value: optionalTypeExpr,
+  };
+}
+
+function createNullableTypeNode(nullableTypeExpr) {
+  return {
+    type: NodeType.NULLABLE,
+    value: nullableTypeExpr,
+  };
+}
+
+function createNotNullableTypeNode(nullableTypeExpr) {
+  return {
+    type: NodeType.NOT_NULLABLE,
+    value: nullableTypeExpr,
+  };
+}
+
+function createMemberTypeNode(ownerTypeExpr, memberTypeName) {
+  return {
+    type: NodeType.MEMBER,
+    owner: ownerTypeExpr,
+    name: memberTypeName,
+  };
+}
+
+function createUnionTypeNode(leftTypeExpr, rightTypeExpr) {
+  return {
+    type: NodeType.UNION,
+    left: leftTypeExpr,
+    right: rightTypeExpr,
+  };
+}
+
+function createVariadicTypeNode(variadicTypeExpr) {
+  return {
+    type: NodeType.VARIADIC,
+    value: variadicTypeExpr,
+  };
+}
+
+function createRecordTypeNode(recordEntries) {
+  return {
+    type: NodeType.RECORD,
+    entries: recordEntries,
+  };
+}
+
+function createRecordEntryNode(key, valueTypeExpr) {
+  return {
+    type: NodeType.RECORD_ENTRY,
+    key: key,
+    value: valueTypeExpr,
+  };
+}
+
+function createGenericTypeNode(genericTypeName, paramExprs) {
+  return {
+    type: NodeType.GENERIC,
+    subject: genericTypeName,
+    objects: paramExprs,
+  };
+}
+
+function createFunctionTypeNode(paramNodes, returnedNode, modifierMap) {
+  return {
+    type: NodeType.FUNCTION,
+    params: paramNodes,
+    returns: returnedNode,
+    context: modifierMap.context,
+    newInstance: modifierMap.newInstance,
+  };
+}
