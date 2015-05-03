@@ -6,6 +6,7 @@ var expect = chai.expect;
 var NodeType = require('../lib/NodeType.js');
 var Parser = require('../lib/Parser.js');
 
+
 describe('Parser', function(){
   it('should return a type name node when "TypeName" arrived', function(){
     var typeExprStr = 'TypeName';
