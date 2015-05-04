@@ -181,7 +181,7 @@ jsIdentifier = [a-zA-Z_$][a-zA-Z0-9_$]*
 moduleName = "module" _ ":" _ filePath:$(moduleNameFilePathPart) {
     return {
       type: NodeType.MODULE,
-      value: filePath
+      path: filePath
     };
   }
 

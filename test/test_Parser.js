@@ -570,7 +570,7 @@ function createUnknownTypeNode() {
 function createModuleNameNode(moduleName) {
   return {
     type: NodeType.MODULE,
-    value: moduleName,
+    path: moduleName,
   };
 }
 

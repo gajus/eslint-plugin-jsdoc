@@ -153,7 +153,7 @@ module.exports = (function() {
         peg$c19 = function(filePath) {
             return {
               type: NodeType.MODULE,
-              value: filePath
+              path: filePath
             };
           },
         peg$c20 = /^[a-zA-Z_0-9_$.\/\-]/,
