@@ -551,7 +551,7 @@ describe('Parser', function(){
 function createTypeNameNode(typeName) {
   return {
     type: NodeType.NAME,
-    value: typeName,
+    name: typeName,
   };
 }
 

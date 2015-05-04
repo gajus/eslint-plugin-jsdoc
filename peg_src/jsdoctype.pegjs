@@ -117,7 +117,7 @@ typeExprWithoutNotUnaryOperators =
             type: NodeType.GENERIC,
             subject: {
               type: NodeType.NAME,
-              value: 'Array'
+              name: 'Array'
             },
             objects: [
               prevNode
@@ -165,7 +165,7 @@ parenthesisTypeExpr = "(" _ wrapped:typeExpr _ ")" {
 typeName = name:$(jsIdentifier) {
     return {
       type: NodeType.NAME,
-      value: name
+      name: name
     };
   }
 jsIdentifier = [a-zA-Z_$][a-zA-Z0-9_$]*

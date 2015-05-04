@@ -116,7 +116,7 @@ module.exports = (function() {
                     type: NodeType.GENERIC,
                     subject: {
                       type: NodeType.NAME,
-                      value: 'Array'
+                      name: 'Array'
                     },
                     objects: [
                       prevNode
@@ -139,7 +139,7 @@ module.exports = (function() {
         peg$c10 = function(name) {
             return {
               type: NodeType.NAME,
-              value: name
+              name: name
             };
           },
         peg$c11 = /^[a-zA-Z_$]/,
