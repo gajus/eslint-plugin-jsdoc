@@ -7,8 +7,8 @@ var NodeType = require('../lib/NodeType.js');
 var Parser = require('../lib/Parser.js');
 
 
-describe('Parser', function(){
-  it('should return a type name node when "TypeName" arrived', function(){
+describe('Parser', function() {
+  it('should return a type name node when "TypeName" arrived', function() {
     var typeExprStr = 'TypeName';
     var node = Parser.parse(typeExprStr);
 
@@ -17,7 +17,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a type name node when "$" arrived', function(){
+  it('should return a type name node when "$" arrived', function() {
     var typeExprStr = '$';
     var node = Parser.parse(typeExprStr);
 
@@ -26,7 +26,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a type name node when "_" arrived', function(){
+  it('should return a type name node when "_" arrived', function() {
     var typeExprStr = '_';
     var node = Parser.parse(typeExprStr);
 
@@ -35,7 +35,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return an any type node when "*" arrived', function(){
+  it('should return an any type node when "*" arrived', function() {
     var typeExprStr = '*';
     var node = Parser.parse(typeExprStr);
 
@@ -44,7 +44,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return an any type node when "?" arrived', function(){
+  it('should return an any type node when "?" arrived', function() {
     var typeExprStr = '?';
     var node = Parser.parse(typeExprStr);
 
@@ -53,7 +53,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a module name node when "module:path/to/file.js" arrived', function(){
+  it('should return a module name node when "module:path/to/file.js" arrived', function() {
     var typeExprStr = 'module:path/to/file.js';
     var node = Parser.parse(typeExprStr);
 
@@ -62,7 +62,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a module name node when "module : path/to/file.js" arrived', function(){
+  it('should return a module name node when "module : path/to/file.js" arrived', function() {
     var typeExprStr = 'module : path/to/file.js';
     var node = Parser.parse(typeExprStr);
 
@@ -71,7 +71,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a member node when "(module:path/to/file.js).member" arrived', function(){
+  it('should return a member node when "(module:path/to/file.js).member" arrived', function() {
     var typeExprStr = '(module:path/to/file.js).member';
     var node = Parser.parse(typeExprStr);
 
@@ -83,7 +83,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a member type node when "owner.Member" arrived', function(){
+  it('should return a member type node when "owner.Member" arrived', function() {
     var typeExprStr = 'owner.Member';
     var node = Parser.parse(typeExprStr);
 
@@ -95,7 +95,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a member type node when "owner . Member" arrived', function(){
+  it('should return a member type node when "owner . Member" arrived', function() {
     var typeExprStr = 'owner . Member';
     var node = Parser.parse(typeExprStr);
 
@@ -107,7 +107,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a member type node when "superOwner.owner.Member" arrived', function(){
+  it('should return a member type node when "superOwner.owner.Member" arrived', function() {
     var typeExprStr = 'superOwner.owner.Member';
     var node = Parser.parse(typeExprStr);
 
@@ -174,7 +174,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a variadic type node when "...variadicType" arrived', function(){
+  it('should return a variadic type node when "...variadicType" arrived', function() {
     var typeExprStr = '...variadicType';
     var node = Parser.parse(typeExprStr);
 
@@ -185,7 +185,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a record type node when "{}" arrived', function(){
+  it('should return a record type node when "{}" arrived', function() {
     var typeExprStr = '{}';
     var node = Parser.parse(typeExprStr);
 
@@ -195,7 +195,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a record type node when "{key:ValueType}" arrived', function(){
+  it('should return a record type node when "{key:ValueType}" arrived', function() {
     var typeExprStr = '{key:ValueType}';
     var node = Parser.parse(typeExprStr);
 
@@ -207,7 +207,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a record type node when "{key1:ValueType1,key2:ValueType2}" arrived', function(){
+  it('should return a record type node when "{key1:ValueType1,key2:ValueType2}"' +
+     ' arrived', function() {
     var typeExprStr = '{key1:ValueType1,key2:ValueType2}';
     var node = Parser.parse(typeExprStr);
 
@@ -220,7 +221,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a record type node when "{ key1 : ValueType1 , key2 : ValueType2 }" arrived', function(){
+  it('should return a record type node when "{ key1 : ValueType1 , key2 : ValueType2 }"' +
+     ' arrived', function() {
     var typeExprStr = '{ key1 : ValueType1 , key2 : ValueType2 }';
     var node = Parser.parse(typeExprStr);
 
@@ -233,7 +235,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a generic type node when "Generic<ParamType>" arrived', function(){
+  it('should return a generic type node when "Generic<ParamType>" arrived', function() {
     var typeExprStr = 'Generic<ParamType>';
     var node = Parser.parse(typeExprStr);
 
@@ -246,7 +248,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a generic type node when "Generic<Inner<ParamType>>" arrived', function(){
+  it('should return a generic type node when "Generic<Inner<ParamType>>" arrived', function() {
     var typeExprStr = 'Generic<Inner<ParamType>>';
     var node = Parser.parse(typeExprStr);
 
@@ -261,7 +263,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a generic type node when "Generic<ParamType1,ParamType2>" arrived', function(){
+  it('should return a generic type node when "Generic<ParamType1,ParamType2>"' +
+     ' arrived', function() {
     var typeExprStr = 'Generic<ParamType1,ParamType2>';
     var node = Parser.parse(typeExprStr);
 
@@ -275,7 +278,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a generic type node when "Generic < ParamType1 , ParamType2 >" arrived', function(){
+  it('should return a generic type node when "Generic < ParamType1 , ParamType2 >"' +
+     ' arrived', function() {
     var typeExprStr = 'Generic < ParamType1, ParamType2 >';
     var node = Parser.parse(typeExprStr);
 
@@ -289,7 +293,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a generic type node when "Generic.<ParamType>" arrived', function(){
+  it('should return a generic type node when "Generic.<ParamType>" arrived', function() {
     var typeExprStr = 'Generic.<ParamType>';
     var node = Parser.parse(typeExprStr);
 
@@ -302,7 +306,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a generic type node when "Generic.<ParamType1,ParamType2>" arrived', function(){
+  it('should return a generic type node when "Generic.<ParamType1,ParamType2>"' +
+     ' arrived', function() {
     var typeExprStr = 'Generic.<ParamType1,ParamType2>';
     var node = Parser.parse(typeExprStr);
 
@@ -316,7 +321,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a generic type node when "Generic .< ParamType1 , ParamType2 >" arrived', function(){
+  it('should return a generic type node when "Generic .< ParamType1 , ParamType2 >"' +
+     ' arrived', function() {
     var typeExprStr = 'Generic .< ParamType1 , ParamType2 >';
     var node = Parser.parse(typeExprStr);
 
@@ -330,7 +336,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a generic type node when "ParamType[]" arrived', function(){
+  it('should return a generic type node when "ParamType[]" arrived', function() {
     var typeExprStr = 'ParamType[]';
     var node = Parser.parse(typeExprStr);
 
@@ -343,7 +349,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a generic type node when "ParamType[][]" arrived', function(){
+  it('should return a generic type node when "ParamType[][]" arrived', function() {
     var typeExprStr = 'ParamType[][]';
     var node = Parser.parse(typeExprStr);
 
@@ -359,7 +365,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return an optional type node when "string=" arrived', function(){
+  it('should return an optional type node when "string=" arrived', function() {
     var typeExprStr = 'string=';
     var node = Parser.parse(typeExprStr);
 
@@ -371,7 +377,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a nullable type node when "?string" arrived', function(){
+  it('should return a nullable type node when "?string" arrived', function() {
     var typeExprStr = '?string';
     var node = Parser.parse(typeExprStr);
 
@@ -383,7 +389,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return an optional type node when "?string=" arrived', function(){
+  it('should return an optional type node when "?string=" arrived', function() {
     var typeExprStr = '?string=';
     var node = Parser.parse(typeExprStr);
 
@@ -395,7 +401,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a variadic type node when "...!Object" arrived', function(){
+  it('should return a variadic type node when "...!Object" arrived', function() {
     var typeExprStr = '...!Object';
     var node = Parser.parse(typeExprStr);
 
@@ -407,7 +413,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a not nullable type node when "!Object" arrived', function(){
+  it('should return a not nullable type node when "!Object" arrived', function() {
     var typeExprStr = '!Object';
     var node = Parser.parse(typeExprStr);
 
@@ -419,7 +425,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a function type node when "function()" arrived', function(){
+  it('should return a function type node when "function()" arrived', function() {
     var typeExprStr = 'function()';
     var node = Parser.parse(typeExprStr);
 
@@ -432,7 +438,7 @@ describe('Parser', function(){
   });
 
 
-  it('should return a function type node with a param when "function(Param)" arrived', function(){
+  it('should return a function type node with a param when "function(Param)" arrived', function() {
     var typeExprStr = 'function(Param)';
     var node = Parser.parse(typeExprStr);
 
@@ -445,7 +451,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a function type node with several params when "function(Param1,Param2)" arrived', function(){
+  it('should return a function type node with several params when "function(Param1,Param2)"' +
+     ' arrived', function() {
     var typeExprStr = 'function(Param1,Param2)';
     var node = Parser.parse(typeExprStr);
 
@@ -458,7 +465,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a function type node with returns when "function():Returned" arrived', function(){
+  it('should return a function type node with returns when "function():Returned"' +
+     ' arrived', function() {
     var typeExprStr = 'function():Returned';
     var node = Parser.parse(typeExprStr);
 
@@ -471,7 +479,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a function type node with a context type when "function(this:ThisObject)" arrived', function(){
+  it('should return a function type node with a context type when "function(this:ThisObject)"' +
+     ' arrived', function() {
     var typeExprStr = 'function(this:ThisObject)';
     var node = Parser.parse(typeExprStr);
 
@@ -484,7 +493,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a function type node as a constructor when "function(new:NewObject)" arrived', function(){
+  it('should return a function type node as a constructor when "function(new:NewObject)"' +
+     ' arrived', function() {
     var typeExprStr = 'function(new:NewObject)';
     var node = Parser.parse(typeExprStr);
 
@@ -497,7 +507,8 @@ describe('Parser', function(){
   });
 
 
-  it('should return a function type node when "function( Param1 , Param2 ) : Returned" arrived', function(){
+  it('should return a function type node when "function( Param1 , Param2 ) : Returned"' +
+     ' arrived', function() {
     var typeExprStr = 'function( Param1 , Param2 ) : Returned';
     var node = Parser.parse(typeExprStr);
 
@@ -511,7 +522,7 @@ describe('Parser', function(){
   });
 
 
-  it('should throw a syntax error when "" arrived', function(){
+  it('should throw a syntax error when "" arrived', function() {
     var typeExprStr = '';
 
     expect(function() {
@@ -520,7 +531,7 @@ describe('Parser', function(){
   });
 
 
-  it('should throw a syntax error when "Invalid type" arrived', function(){
+  it('should throw a syntax error when "Invalid type" arrived', function() {
     var typeExprStr = 'Invalid type';
 
     expect(function() {
@@ -529,7 +540,7 @@ describe('Parser', function(){
   });
 
 
-  it('should throw a syntax error when "Promise*Error" arrived', function(){
+  it('should throw a syntax error when "Promise*Error" arrived', function() {
     var typeExprStr = 'Promise*Error';
 
     expect(function() {
@@ -538,7 +549,7 @@ describe('Parser', function(){
   });
 
 
-  it('should throw a syntax error when "(unclosedParenthesis, " arrived', function(){
+  it('should throw a syntax error when "(unclosedParenthesis, " arrived', function() {
     var typeExprStr = '(unclosedParenthesis, ';
 
     expect(function() {

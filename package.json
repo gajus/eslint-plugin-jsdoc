@@ -31,6 +31,7 @@
     "gulp-notify": "^2.2.0",
     "gulp-peg": "^0.1.2",
     "gulp-plumber": "^0.6.6",
+    "jscs": "^1.13.1",
     "mocha": "^2.2.4"
   },
   "license": "MIT",
