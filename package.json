@@ -21,12 +21,14 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "test": "$(npm bin)/mocha test"
+    "test": "npm run lint && mocha test",
+    "lint": "eslint lib test && jscs lib test"
   },
   "readmeFilename": "README.md",
   "devDependencies": {
     "benchmark": "~1.0.0",
     "chai": "^2.2.0",
+    "eslint": "^0.20.0",
     "gulp": "^3.8.11",
     "gulp-notify": "^2.2.0",
     "gulp-peg": "^0.1.2",

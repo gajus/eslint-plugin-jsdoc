@@ -1,4 +1,6 @@
 {
+  "excludeFiles": ["node_modules/**", "lib/legacy/**"],
+
   "disallowEmptyBlocks": true,
   "disallowImplicitTypeConversion": ["numeric", "boolean", "binary", "string"],
   "disallowMixedSpacesAndTabs": true,
