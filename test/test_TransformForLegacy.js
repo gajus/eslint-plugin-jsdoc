@@ -55,18 +55,18 @@ describe('TransformForLegacy', function() {
   describe('#transform', function() {
     VALID_SYNTAX_SETS.forEach(function(validTypeExpr) {
       it('should return a result is equivalent to the old parser when "' +
-         validTypeExpr + '" arrived', function() {
+        validTypeExpr + '" arrived', function() {
 
-        var origin = parse(validTypeExpr);
-        var legacy = legacyParse(validTypeExpr);
+          var origin = parse(validTypeExpr);
+          var legacy = legacyParse(validTypeExpr);
 
-        setDebugInfo(this.test, origin, legacy);
+          setDebugInfo(this.test, origin, legacy);
 
-        var transform = new TransformForLegacy();
-        var convertedLegacy = transform.transform(origin);
+          var transform = new TransformForLegacy();
+          var convertedLegacy = transform.transform(origin);
 
-        expect(convertedLegacy).to.deep.equal(legacy);
-      });
+          expect(convertedLegacy).to.deep.equal(legacy);
+        });
     });
 
 
@@ -132,6 +132,6 @@ function plainize(unknown) {
 
 
 function filterMethod(keyValuePair) {
-    var value = keyValuePair[1];
-    return !lodash.isFunction(value);
+  var value = keyValuePair[1];
+  return !lodash.isFunction(value);
 }
