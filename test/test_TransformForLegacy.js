@@ -2,7 +2,6 @@
 
 var chai = require('chai');
 var expect = chai.expect;
-var lodash = require('lodash');
 
 var Parser = require('../lib/Parser.js');
 var Legacy = require('../lib/legacy/index.js');
@@ -98,40 +97,5 @@ function legacyParse(typeExprStr) {
   var legacyParser = new Legacy.Parser();
   var legacyResult = legacyParser.parse(typeExprStr);
 
-  var plainLegacyResult = plainize(legacyResult);
-  return plainLegacyResult;
-}
-
-
-function plainize(unknown) {
-  if (lodash.isArray(unknown)) {
-    var array = unknown;
-    return array.map(function(val) {
-      return plainize(val);
-    });
-  }
-
-  if (!lodash.isObject(unknown)) {
-    var primitive = unknown;
-    return primitive;
-  }
-
-  var instance = unknown;
-  return lodash(instance)
-    .pairs()
-    .filter(filterMethod)
-    .map(function(keyValuePair) {
-      var key = keyValuePair[0];
-      var value = keyValuePair[1];
-
-      return [key, plainize(value)];
-    })
-    .zipObject()
-    .value();
-}
-
-
-function filterMethod(keyValuePair) {
-  var value = keyValuePair[1];
-  return !lodash.isFunction(value);
+  return legacyResult;
 }
