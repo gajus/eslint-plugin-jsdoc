@@ -136,6 +136,117 @@ describe('Parser', function() {
   });
 
 
+  it('should return an inner member type node when "owner~innerMember" arrived', function() {
+    var typeExprStr = 'owner~innerMember';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createInnerMemberTypeNode(
+      createTypeNameNode('owner'),
+      'innerMember');
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an inner member type node when "owner ~ innerMember" arrived', function() {
+    var typeExprStr = 'owner ~ innerMember';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createInnerMemberTypeNode(
+      createTypeNameNode('owner'),
+      'innerMember');
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an inner member type node when "superOwner~owner~innerMember" ' +
+     'arrived', function() {
+    var typeExprStr = 'superOwner~owner~innerMember';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createInnerMemberTypeNode(
+        createInnerMemberTypeNode(
+          createTypeNameNode('superOwner'), 'owner'),
+        'innerMember');
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an inner member type node when "superOwner~owner~innerMember=" ' +
+     'arrived', function() {
+    var typeExprStr = 'superOwner~owner~innerMember=';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createOptionalTypeNode(
+      createInnerMemberTypeNode(
+        createInnerMemberTypeNode(
+          createTypeNameNode('superOwner'),
+        'owner'),
+      'innerMember')
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an instance member type node when "owner#instanceMember" arrived', function() {
+    var typeExprStr = 'owner#instanceMember';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createInstanceMemberTypeNode(
+      createTypeNameNode('owner'),
+      'instanceMember');
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an instance member type node when "owner # instanceMember" ' +
+     'arrived', function() {
+    var typeExprStr = 'owner # instanceMember';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createInstanceMemberTypeNode(
+      createTypeNameNode('owner'),
+      'instanceMember');
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an instance member type node when "superOwner#owner#instanceMember" ' +
+     'arrived', function() {
+    var typeExprStr = 'superOwner#owner#instanceMember';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createInstanceMemberTypeNode(
+        createInstanceMemberTypeNode(
+          createTypeNameNode('superOwner'), 'owner'),
+        'instanceMember');
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return an instance member type node when "superOwner#owner#instanceMember=" ' +
+     'arrived', function() {
+    var typeExprStr = 'superOwner#owner#instanceMember=';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createOptionalTypeNode(
+      createInstanceMemberTypeNode(
+        createInstanceMemberTypeNode(
+          createTypeNameNode('superOwner'),
+        'owner'),
+      'instanceMember')
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
   it('should return an union type when "LeftType|RightType" arrived', function() {
     var typeExprStr = 'LeftType|RightType';
     var node = Parser.parse(typeExprStr);
@@ -722,6 +833,22 @@ function createNotNullableTypeNode(nullableTypeExpr) {
 function createMemberTypeNode(ownerTypeExpr, memberTypeName) {
   return {
     type: NodeType.MEMBER,
+    owner: ownerTypeExpr,
+    name: memberTypeName,
+  };
+}
+
+function createInnerMemberTypeNode(ownerTypeExpr, memberTypeName) {
+  return {
+    type: NodeType.INNER_MEMBER,
+    owner: ownerTypeExpr,
+    name: memberTypeName,
+  };
+}
+
+function createInstanceMemberTypeNode(ownerTypeExpr, memberTypeName) {
+  return {
+    type: NodeType.INSTANCE_MEMBER,
     owner: ownerTypeExpr,
     name: memberTypeName,
   };
