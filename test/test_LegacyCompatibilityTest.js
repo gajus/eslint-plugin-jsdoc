@@ -1049,7 +1049,13 @@ describe('Parser', function() {
 
   it('Build a module type with a generic type operator', function() {
     var parser = new Parser();
-    var union = parser.parse('module:foo/bar.<string>');
+    // Because the new generic type syntax was arrived, the old type generic
+    // with the module keyword is not equivalent to the legacy behavior.
+    //
+    // For example, we get 2 parts as 'module:foo/bar.' and '<string>', when
+    // the following type expression are arrived.
+    //   var union = parser.parse('module:foo/bar.<string>');
+    var union = parser.parse('module:foo/bar<string>');
 
     expect(union.types.length).to.equal(1);
     expect(union.optional).to.equal(false);

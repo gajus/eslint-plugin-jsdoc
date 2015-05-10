@@ -44,7 +44,7 @@ describe('Parser', function() {
   });
 
 
-  it('should return an any type node when "?" arrived', function() {
+  it('should return an unknown type node when "?" arrived', function() {
     var typeExprStr = '?';
     var node = Parser.parse(typeExprStr);
 
@@ -115,6 +115,22 @@ describe('Parser', function() {
         createMemberTypeNode(
           createTypeNameNode('superOwner'), 'owner'),
         'Member');
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a member type node when "superOwner.owner.Member=" arrived', function() {
+    var typeExprStr = 'superOwner.owner.Member=';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createOptionalTypeNode(
+      createMemberTypeNode(
+        createMemberTypeNode(
+          createTypeNameNode('superOwner'),
+        'owner'),
+      'Member')
+    );
 
     expect(node).to.deep.equal(expectedNode);
   });
@@ -207,6 +223,18 @@ describe('Parser', function() {
   });
 
 
+  it('should return a record type node when "{keyOnly}" arrived', function() {
+    var typeExprStr = '{keyOnly}';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createRecordTypeNode([
+      createRecordEntryNode('keyOnly', null),
+    ]);
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
   it('should return a record type node when "{key1:ValueType1,key2:ValueType2}"' +
      ' arrived', function() {
     var typeExprStr = '{key1:ValueType1,key2:ValueType2}';
@@ -215,6 +243,20 @@ describe('Parser', function() {
     var expectedNode = createRecordTypeNode([
       createRecordEntryNode('key1', createTypeNameNode('ValueType1')),
       createRecordEntryNode('key2', createTypeNameNode('ValueType2')),
+    ]);
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a record type node when "{key:ValueType1,keyOnly}"' +
+     ' arrived', function() {
+    var typeExprStr = '{key:ValueType1,keyOnly}';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createRecordTypeNode([
+      createRecordEntryNode('key', createTypeNameNode('ValueType1')),
+      createRecordEntryNode('keyOnly', null),
     ]);
 
     expect(node).to.deep.equal(expectedNode);
@@ -377,8 +419,32 @@ describe('Parser', function() {
   });
 
 
+  it('should return an optional type node when "=string" arrived (deprecated)', function() {
+    var typeExprStr = '=string';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createOptionalTypeNode(
+      createTypeNameNode('string')
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
   it('should return a nullable type node when "?string" arrived', function() {
     var typeExprStr = '?string';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createNullableTypeNode(
+      createTypeNameNode('string')
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a nullable type node when "string?" arrived (deprecated)', function() {
+    var typeExprStr = 'string?';
     var node = Parser.parse(typeExprStr);
 
     var expectedNode = createNullableTypeNode(
@@ -688,6 +754,7 @@ function createRecordEntryNode(key, valueTypeExpr) {
     type: NodeType.RECORD_ENTRY,
     key: key,
     value: valueTypeExpr,
+    hasValue: Boolean(valueTypeExpr),
   };
 }
 

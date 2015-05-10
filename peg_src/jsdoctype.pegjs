@@ -1,149 +1,147 @@
 {
   var lodash = require('lodash');
   var NodeType = require('../lib/NodeType.js');
-  var TokenType = require('../lib/TokenType.js');
+
+  var OperatorType = {
+    UNION: 0,
+    MEMBER: 1,
+    GENERIC: 2,
+    ARRAY: 3,
+    OPTIONAL: 4,
+    NULLABLE: 5,
+    NOT_NULLABLE: 6,
+    VARIADIC: 7,
+  };
+
   var FunctionModifierType = {
     NONE: 0,
     CONTEXT: 1,
     NEW: 2,
   };
 
-  var byKey = function(key) {
-    return function(obj) {
-      return obj[key];
-    };
-  };
-
-  var buildByFirstAndRest = function(first, restsWithComma, restIndex) {
-    var rests = restsWithComma ? restsWithComma.map(byKey(restIndex)) : [];
-    return first ? [first].concat(rests) : [];
-  };
-
-  var reportSemanticIssue = function(msg) {
-    console.warn(msg);
-  };
-}
-
-// unknownTypeExpr should be put here to avoid confusing with nullable type operators
-typeExpr =
-  leftNode:(typeExprWithoutNotUnaryOperators / unknownTypeExpr) _
-  memberTypeExprParts:(_ memberTypeOperator _ memberName)* _
-  genericObjects:genericTypeExpr? _
-  unionTypeExprParts:(_ unionTypeOperator _ typeExpr)* {
-    var rootNode = leftNode;
-
-    if (memberTypeExprParts) {
-      var memberNames = memberTypeExprParts.map(byKey(3));
-
-      function createMemberTypeNode(memberName, ownerNode) {
-        return {
-          type: NodeType.MEMBER,
-          owner: ownerNode,
-          name: memberName
-        };
-      }
-
-      var prevNode = leftNode;
-      memberNames.forEach(function(memberName) {
-        var memberNode = createMemberTypeNode(memberName, prevNode);
-        prevNode = memberNode;
-      });
-
-      rootNode = leftNode = prevNode;
-    }
-
-    if (genericObjects) {
-      rootNode = leftNode = {
-        type: NodeType.GENERIC,
-        subject: leftNode,
-        objects: genericObjects
-      };
-    }
-
-    if (unionTypeExprParts) {
-      rootNode = unionTypeExprParts.reduce(function(leftNode, rightNodeWithOp) {
-        var rightNode = rightNodeWithOp[3];
-        return {
-          type: NodeType.UNION,
-          left: leftNode,
-          right: rightNode
-        };
-      }, leftNode);
-    }
-
-    return rootNode;
+  function reverse(array) {
+    var reversed = [].concat(array);
+    reversed.reverse();
+    return reversed;
   }
 
+  function buildByFirstAndRest(first, restsWithComma, restIndex) {
+    if (!first) return [];
 
-/*
- * Type expressions with only unary operators.
- *
- * Examples:
- *   - ?string
- *   - ?string=
- *   - ...!Object
- */
-typeExprWithoutNotUnaryOperators =
-  prefixUnaryOpTokens:(prefixUnaryOperator)*
-  priorExprPart:highestPriorityTypeExprPart
-  postfixUnaryOpTokens:(postfixUnaryOperator)* {
-    prefixUnaryOpTokens = prefixUnaryOpTokens || [];
-    postfixUnaryOpTokens = postfixUnaryOpTokens || [];
+    var rests = restsWithComma ? lodash.pluck(restsWithComma, restIndex) : [];
+    return [first].concat(rests);
+  }
 
-    reversedPrefixUnaryOpTokens = [].concat(prefixUnaryOpTokens);
-    reversedPrefixUnaryOpTokens.reverse();
+  function reportSemanticIssue(msg) {
+    console.warn(msg);
+  }
+}
 
-    // Postfix operators are prior.
-    var tokens = postfixUnaryOpTokens.concat(reversedPrefixUnaryOpTokens);
 
-    var node = tokens.reduce(function(prevNode, token) {
-      switch (token) {
-        case TokenType.OPTIONAL_OPERATOR:
+// "?" is a ambiguous token. It has 2 meanings. The first meaning is a prefix
+// nullable operator. Another meaning is an unknown type keyword.
+// If "typeExpr" is equivalent to "notUnknownTypeExpr" and then "?" arrived,
+// parsing "prefixModifiers" become successful, but it make a parsing failure
+// because parsing "modifiee" is failed.
+//
+// So, the parser try to parse the assamption that it is a prefix nullable
+// operator, if the try is failed the parser try to parse under the assamption
+// that it is an unknown type keyword.
+typeExpr = notUnknownTypeExpr / unknownTypeExpr
+
+notUnknownTypeExpr = prefixModifiersWithWhiteSpaces:(prefixModifiers _)*
+                     modifieeWithWhiteSpaces:modifiee _
+                     postfixModifiersWithWhiteSpaces:(postfixModifiers _)* {
+    var prefixModifiers = lodash.pluck(prefixModifiersWithWhiteSpaces, 0);
+    var modifiee = modifieeWithWhiteSpaces;
+    var postfixModifiers = lodash.pluck(postfixModifiersWithWhiteSpaces, 0);
+
+    var modifiersOrderedByPriority = postfixModifiers.concat(reverse(prefixModifiers));
+    var rootNode = modifiersOrderedByPriority.reduce(function(prevNode, operator) {
+      switch (operator.operatorType) {
+        case OperatorType.UNION:
+          var unionOperator = operator;
           return {
-            type: NodeType.OPTIONAL,
-            value: prevNode
+            type: NodeType.UNION,
+            left: prevNode,
+            right: unionOperator.right,
           };
-        case TokenType.NULLABLE_OPERATOR:
+        case OperatorType.MEMBER:
+          var memberOperator = operator;
           return {
-            type: NodeType.NULLABLE,
-            value: prevNode
+            type: NodeType.MEMBER,
+            owner: prevNode,
+            name: memberOperator.memberName,
           };
-        case TokenType.NOT_NULLABLE_OPERATOR:
+        case OperatorType.GENERIC:
+          var genericOperator = operator;
           return {
-            type: NodeType.NOT_NULLABLE,
-            value: prevNode
-          };
-        case TokenType.VARIADIC_OPERATOR:
-          return {
-            type: NodeType.VARIADIC,
-            value: prevNode
-          };
-        case TokenType.ARRAY_OPERATOR:
+            type: NodeType.GENERIC,
+            subject: prevNode,
+            objects: genericOperator.objects,
+          }
+        case OperatorType.ARRAY:
+          var arrayOperator = operator;
           return {
             type: NodeType.GENERIC,
             subject: {
               type: NodeType.NAME,
               name: 'Array'
             },
-            objects: [
-              prevNode
-            ]
+            objects: [ prevNode ],
+          };
+        case OperatorType.OPTIONAL:
+          return {
+            type: NodeType.OPTIONAL,
+            value: prevNode,
+          };
+        case OperatorType.NULLABLE:
+          return {
+            type: NodeType.NULLABLE,
+            value: prevNode,
+          };
+        case OperatorType.NOT_NULLABLE:
+          return {
+            type: NodeType.NOT_NULLABLE,
+            value: prevNode,
+          };
+        case OperatorType.VARIADIC:
+          return {
+            type: NodeType.VARIADIC,
+            value: prevNode,
           };
         default:
           throw Error('Unexpected token: ' + token);
       }
-    }, priorExprPart);
+    }, modifiee);
 
-    return node;
+
+    return rootNode;
   }
 
-highestPriorityTypeExprPart = funcTypeExpr
-                              / recordTypeExpr
-                              / parenthesisTypeExpr
-                              / moduleName
-                              / anyTypeExpr
-                              / unknownTypeExpr
-                              / typeName
+prefixModifiers =
+    nullableTypeOperator
+    / notNullableTypeOperator
+    / variadicTypeOperator
+    / deprecatedOptionalTypeOperator
+
+modifiee =
+    funcTypeExpr
+    / recordTypeExpr
+    / parenthesisTypeExpr
+    / anyTypeExpr
+    / unknownTypeExpr
+    / moduleNameExpr
+    / typeNameExpr
+
+postfixModifiers =
+    optionalTypeOperator
+    / arrayOfGenericTypeOperatorJsDocFlavored
+    / genericTypeExpr
+    / memberTypeExpr
+    / unionTypeExpr
+    / deprecatedNullableTypeOperator
+    / deprecatedNotNullableTypeOperator
 
 
 /*
@@ -154,8 +152,8 @@ highestPriorityTypeExprPart = funcTypeExpr
  *   - (module: path/to/file).Module
  */
 parenthesisTypeExpr = "(" _ wrapped:typeExpr _ ")" {
-  return wrapped;
-}
+    return wrapped;
+  }
 
 
 /*
@@ -168,7 +166,7 @@ parenthesisTypeExpr = "(" _ wrapped:typeExpr _ ")" {
  *   - $
  *   - _
  */
-typeName = name:$(jsIdentifier) {
+typeNameExpr = name:$(jsIdentifier) {
     return {
       type: NodeType.NAME,
       name: name
@@ -184,7 +182,7 @@ jsIdentifier = [a-zA-Z_$][a-zA-Z0-9_$]*
  *   - module:path/to/file
  *   - module:path/to/file.js
  */
-moduleName = "module" _ ":" _ filePath:$(moduleNameFilePathPart) {
+moduleNameExpr = "module" _ ":" _ filePath:$(moduleNameFilePathPart) {
     return {
       type: NodeType.MODULE,
       path: filePath
@@ -213,20 +211,6 @@ anyTypeExpr = "*" {
  */
 unknownTypeExpr = "?" {
     return { type: NodeType.UNKNOWN };
-  }
-
-
-/*
- * Member type expressions.
- *
- * Examples:
- *   - owner.member
- *   - superOwner.owner.member
- */
-memberTypeOperator = "."
-
-memberName = name:$(jsIdentifier) {
-    return name;
   }
 
 
@@ -321,6 +305,7 @@ noModifier = value:typeExpr {
  *
  * Examples:
  *   - {}
+ *   - {length}
  *   - {length:number}
  *   - {toString:Function,valueOf:Function}
  */
@@ -333,22 +318,17 @@ recordTypeExpr = "{" _ firstEntry:recordEntry? restEntriesWithComma:(_ "," _ rec
     };
   }
 
-recordEntry = key:$(jsIdentifier) _ ":" _ value:typeExpr {
+recordEntry = key:$(jsIdentifier) valueWithColon:(_ ":" _ typeExpr)? {
+    var hasValue = Boolean(valueWithColon);
+    var value = hasValue ? valueWithColon[3] : null;
+
     return {
       type: NodeType.RECORD_ENTRY,
       key: key,
-      value: value
+      value: value,
+      hasValue: hasValue,
     };
   }
-
-
-/*
- * Prefix unary operators.
- */
-prefixUnaryOperator = nullableTypeOperator
-                      / notNullableTypeOperator
-                      / variadicTypeOperator
-                      / deprecatedOptionalTypeOperator
 
 
 /*
@@ -359,7 +339,7 @@ prefixUnaryOperator = nullableTypeOperator
  *   - string? (deprecated)
  */
 nullableTypeOperator = "?" {
-    return TokenType.NULLABLE_OPERATOR;
+    return { operatorType: OperatorType.NULLABLE };
   }
 
 deprecatedNullableTypeOperator = nullableTypeOperator
@@ -370,18 +350,13 @@ deprecatedNullableTypeOperator = nullableTypeOperator
  *
  * Examples:
  *   - !Object
+ *   - Object! (deprecated)
  */
 notNullableTypeOperator = "!" {
-    return TokenType.NOT_NULLABLE_OPERATOR;
+    return { operatorType: OperatorType.NOT_NULLABLE };
   }
 
-
-/*
- * Postfix unary operators.
- */
-postfixUnaryOperator = optionalTypeOperator
-                       / arrayOfGenericTypeOperatorJsDocFlavored
-                       / deprecatedNullableTypeOperator // Be careful about the left recursion
+deprecatedNotNullableTypeOperator = notNullableTypeOperator
 
 
 /*
@@ -392,7 +367,7 @@ postfixUnaryOperator = optionalTypeOperator
  *   - =string (deprecated)
  */
 optionalTypeOperator = "=" {
-    return TokenType.OPTIONAL_OPERATOR;
+    return { operatorType: OperatorType.OPTIONAL };
   }
 
 deprecatedOptionalTypeOperator = optionalTypeOperator
@@ -405,19 +380,7 @@ deprecatedOptionalTypeOperator = optionalTypeOperator
  *   - ...string
  */
 variadicTypeOperator = "..." {
-    return TokenType.VARIADIC_OPERATOR;
-  }
-
-
-/*
- * JSDoc style array of a generic type expressions.
- *
- * Examples:
- *   - string[]
- *   - number[][]
- */
-arrayOfGenericTypeOperatorJsDocFlavored = "[]" {
-    return TokenType.ARRAY_OPERATOR;
+    return { operatorType: OperatorType.VARIADIC };
   }
 
 
@@ -428,8 +391,34 @@ arrayOfGenericTypeOperatorJsDocFlavored = "[]" {
  *   - number|undefined
  *   - Foo|Bar|Baz
  */
-unionTypeOperator = "|" {
-    return TokenType.UNION_OPERATOR;
+unionTypeExpr = unionTypeOperator _ right:typeExpr {
+    return {
+      operatorType: OperatorType.UNION,
+      right: right,
+    };
+  }
+
+unionTypeOperator = "|"
+
+
+/*
+ * Member type expressions.
+ *
+ * Examples:
+ *   - owner.member
+ *   - superOwner.owner.member
+ */
+memberTypeExpr = memberTypeOperator _ memberName:memberName {
+  return {
+    operatorType: OperatorType.MEMBER,
+    memberName: memberName,
+  };
+}
+
+memberTypeOperator = "."
+
+memberName = name:$(jsIdentifier) {
+    return name;
   }
 
 
@@ -444,7 +433,10 @@ genericTypeExpr =
   genericTypeStartToken _
   objects:genericTypeExprObjectivePart _
   genericTypeEndToken {
-    return objects;
+    return {
+      operatorType: OperatorType.GENERIC,
+      objects: objects,
+    };
   }
 
 genericTypeStartToken =
@@ -460,6 +452,18 @@ genericTypeEndToken = ">"
 genericTypeExprObjectivePart = first:typeExpr restsWithComma:(_ "," _ typeExpr)* {
     var objects = buildByFirstAndRest(first, restsWithComma, 3);
     return objects;
+  }
+
+
+/*
+ * JSDoc style array of a generic type expressions.
+ *
+ * Examples:
+ *   - string[]
+ *   - number[][]
+ */
+arrayOfGenericTypeOperatorJsDocFlavored = "[]" {
+    return { operatorType: OperatorType.ARRAY };
   }
 
 
