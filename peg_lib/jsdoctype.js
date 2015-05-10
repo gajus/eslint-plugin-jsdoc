@@ -175,23 +175,40 @@ module.exports = (function() {
           },
         peg$c31 = "function",
         peg$c32 = { type: "literal", value: "function", description: "\"function\"" },
-        peg$c33 = function(modifiers, params, returnedTypePart) {
-            var modifierMap = modifiers.reduce(function(prevModifierMap, modifier) {
-              switch (modifier.modifierType) {
-                case FunctionModifierType.THIS:
-                  prevModifierMap.context = modifier.value;
-                  break;
-                case FunctionModifierType.NEW:
-                  prevModifierMap.newInstance = modifier.value;
-                  break;
-                default:
-                  throw Error('Unexpected function modifier: ' + modifier.modifierType);
+        peg$c33 = function(paramParts, returnedTypePart) {
+            var modifierGroups = lodash.groupBy(paramParts, lodash.property('modifierType'));
+
+            var params = [];
+            var noModifiers = modifierGroups[FunctionModifierType.NONE];
+            if (noModifiers) {
+              params = noModifiers.map(function(paramPartWithNoModifier) {
+                return paramPartWithNoModifier.value;
+              });
+            }
+
+
+            var context = null;
+            var contextModifiers = modifierGroups[FunctionModifierType.THIS];
+            if (contextModifiers) {
+              if (contextModifiers.length > 1) {
+                reportSemanticIssue('"this" keyword should be declared only once');
               }
-              return prevModifierMap;
-            }, {
-              context: null,
-              newInstance: null
-            });
+
+              // Enable the only first context modifier.
+              context = contextModifiers[0].value;
+            }
+
+
+            var newInstance = null;
+            var newInstanceModifiers = modifierGroups[FunctionModifierType.NEW];
+            if (newInstanceModifiers) {
+              if (newInstanceModifiers.length > 1) {
+                reportSemanticIssue('"new" keyword should be declared only once');
+              }
+
+              // Enable the only first new instance modifier.
+              newInstance = newInstanceModifiers[0].value;
+            }
 
             var returnedTypeNode = returnedTypePart ? returnedTypePart[3] : null;
 
@@ -199,8 +216,8 @@ module.exports = (function() {
               type: NodeType.FUNCTION,
               params: params,
               returns: returnedTypeNode,
-              context: modifierMap.context,
-              newInstance: modifierMap.newInstance
+              context: context,
+              newInstance: newInstance,
             };
           },
         peg$c34 = ",",
@@ -209,23 +226,25 @@ module.exports = (function() {
             var params = buildByFirstAndRest(firstParam, restParamsWithComma, 3);
             return params;
           },
-        peg$c37 = function(firstModifier, restModifiersWithComma) {
-            var modifiers = buildByFirstAndRest(firstModifier, restModifiersWithComma, 3);
-            return modifiers;
-          },
-        peg$c38 = "this",
-        peg$c39 = { type: "literal", value: "this", description: "\"this\"" },
-        peg$c40 = function(value) {
+        peg$c37 = "this",
+        peg$c38 = { type: "literal", value: "this", description: "\"this\"" },
+        peg$c39 = function(value) {
             return {
               modifierType: FunctionModifierType.THIS,
               value: value
             };
           },
-        peg$c41 = "new",
-        peg$c42 = { type: "literal", value: "new", description: "\"new\"" },
-        peg$c43 = function(value) {
+        peg$c40 = "new",
+        peg$c41 = { type: "literal", value: "new", description: "\"new\"" },
+        peg$c42 = function(value) {
             return {
               modifierType: FunctionModifierType.NEW,
+              value: value
+            };
+          },
+        peg$c43 = function(value) {
+            return {
+              modifierType: FunctionModifierType.NONE,
               value: value
             };
           },
@@ -974,7 +993,7 @@ module.exports = (function() {
     }
 
     function peg$parsefuncTypeExpr() {
-      var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15;
+      var s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13;
 
       s0 = peg$currPos;
       if (input.substr(peg$currPos, 8) === peg$c31) {
@@ -997,72 +1016,60 @@ module.exports = (function() {
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
             if (s4 !== peg$FAILED) {
-              s5 = peg$parsefuncTypeExprModifiersPart();
+              s5 = peg$parsefuncTypeExprParamsPart();
               if (s5 !== peg$FAILED) {
                 s6 = peg$parse_();
                 if (s6 !== peg$FAILED) {
-                  s7 = peg$parsefuncTypeExprParamsPart();
+                  if (input.charCodeAt(peg$currPos) === 41) {
+                    s7 = peg$c7;
+                    peg$currPos++;
+                  } else {
+                    s7 = peg$FAILED;
+                    if (peg$silentFails === 0) { peg$fail(peg$c8); }
+                  }
                   if (s7 !== peg$FAILED) {
                     s8 = peg$parse_();
                     if (s8 !== peg$FAILED) {
-                      if (input.charCodeAt(peg$currPos) === 41) {
-                        s9 = peg$c7;
-                        peg$currPos++;
-                      } else {
-                        s9 = peg$FAILED;
-                        if (peg$silentFails === 0) { peg$fail(peg$c8); }
-                      }
-                      if (s9 !== peg$FAILED) {
-                        s10 = peg$parse_();
-                        if (s10 !== peg$FAILED) {
-                          s11 = peg$currPos;
+                      s9 = peg$currPos;
+                      s10 = peg$parse_();
+                      if (s10 !== peg$FAILED) {
+                        if (input.charCodeAt(peg$currPos) === 58) {
+                          s11 = peg$c17;
+                          peg$currPos++;
+                        } else {
+                          s11 = peg$FAILED;
+                          if (peg$silentFails === 0) { peg$fail(peg$c18); }
+                        }
+                        if (s11 !== peg$FAILED) {
                           s12 = peg$parse_();
                           if (s12 !== peg$FAILED) {
-                            if (input.charCodeAt(peg$currPos) === 58) {
-                              s13 = peg$c17;
-                              peg$currPos++;
-                            } else {
-                              s13 = peg$FAILED;
-                              if (peg$silentFails === 0) { peg$fail(peg$c18); }
-                            }
+                            s13 = peg$parsetypeExpr();
                             if (s13 !== peg$FAILED) {
-                              s14 = peg$parse_();
-                              if (s14 !== peg$FAILED) {
-                                s15 = peg$parsetypeExpr();
-                                if (s15 !== peg$FAILED) {
-                                  s12 = [s12, s13, s14, s15];
-                                  s11 = s12;
-                                } else {
-                                  peg$currPos = s11;
-                                  s11 = peg$c0;
-                                }
-                              } else {
-                                peg$currPos = s11;
-                                s11 = peg$c0;
-                              }
+                              s10 = [s10, s11, s12, s13];
+                              s9 = s10;
                             } else {
-                              peg$currPos = s11;
-                              s11 = peg$c0;
+                              peg$currPos = s9;
+                              s9 = peg$c0;
                             }
                           } else {
-                            peg$currPos = s11;
-                            s11 = peg$c0;
-                          }
-                          if (s11 === peg$FAILED) {
-                            s11 = peg$c2;
-                          }
-                          if (s11 !== peg$FAILED) {
-                            peg$reportedPos = s0;
-                            s1 = peg$c33(s5, s7, s11);
-                            s0 = s1;
-                          } else {
-                            peg$currPos = s0;
-                            s0 = peg$c0;
+                            peg$currPos = s9;
+                            s9 = peg$c0;
                           }
                         } else {
-                          peg$currPos = s0;
-                          s0 = peg$c0;
+                          peg$currPos = s9;
+                          s9 = peg$c0;
                         }
+                      } else {
+                        peg$currPos = s9;
+                        s9 = peg$c0;
+                      }
+                      if (s9 === peg$FAILED) {
+                        s9 = peg$c2;
+                      }
+                      if (s9 !== peg$FAILED) {
+                        peg$reportedPos = s0;
+                        s1 = peg$c33(s5, s9);
+                        s0 = s1;
                       } else {
                         peg$currPos = s0;
                         s0 = peg$c0;
@@ -1107,7 +1114,7 @@ module.exports = (function() {
       var s0, s1, s2, s3, s4, s5, s6, s7;
 
       s0 = peg$currPos;
-      s1 = peg$parsetypeExpr();
+      s1 = peg$parsefuncTypeExprParam();
       if (s1 === peg$FAILED) {
         s1 = peg$c2;
       }
@@ -1126,7 +1133,7 @@ module.exports = (function() {
           if (s5 !== peg$FAILED) {
             s6 = peg$parse_();
             if (s6 !== peg$FAILED) {
-              s7 = peg$parsetypeExpr();
+              s7 = peg$parsefuncTypeExprParam();
               if (s7 !== peg$FAILED) {
                 s4 = [s4, s5, s6, s7];
                 s3 = s4;
@@ -1161,7 +1168,7 @@ module.exports = (function() {
             if (s5 !== peg$FAILED) {
               s6 = peg$parse_();
               if (s6 !== peg$FAILED) {
-                s7 = peg$parsetypeExpr();
+                s7 = peg$parsefuncTypeExprParam();
                 if (s7 !== peg$FAILED) {
                   s4 = [s4, s5, s6, s7];
                   s3 = s4;
@@ -1198,107 +1205,15 @@ module.exports = (function() {
       return s0;
     }
 
-    function peg$parsefuncTypeExprModifiersPart() {
-      var s0, s1, s2, s3, s4, s5, s6, s7;
-
-      s0 = peg$currPos;
-      s1 = peg$parsefuncTypeExprModifier();
-      if (s1 === peg$FAILED) {
-        s1 = peg$c2;
-      }
-      if (s1 !== peg$FAILED) {
-        s2 = [];
-        s3 = peg$currPos;
-        s4 = peg$parse_();
-        if (s4 !== peg$FAILED) {
-          if (input.charCodeAt(peg$currPos) === 44) {
-            s5 = peg$c34;
-            peg$currPos++;
-          } else {
-            s5 = peg$FAILED;
-            if (peg$silentFails === 0) { peg$fail(peg$c35); }
-          }
-          if (s5 !== peg$FAILED) {
-            s6 = peg$parse_();
-            if (s6 !== peg$FAILED) {
-              s7 = peg$parsefuncTypeExprModifier();
-              if (s7 !== peg$FAILED) {
-                s4 = [s4, s5, s6, s7];
-                s3 = s4;
-              } else {
-                peg$currPos = s3;
-                s3 = peg$c0;
-              }
-            } else {
-              peg$currPos = s3;
-              s3 = peg$c0;
-            }
-          } else {
-            peg$currPos = s3;
-            s3 = peg$c0;
-          }
-        } else {
-          peg$currPos = s3;
-          s3 = peg$c0;
-        }
-        while (s3 !== peg$FAILED) {
-          s2.push(s3);
-          s3 = peg$currPos;
-          s4 = peg$parse_();
-          if (s4 !== peg$FAILED) {
-            if (input.charCodeAt(peg$currPos) === 44) {
-              s5 = peg$c34;
-              peg$currPos++;
-            } else {
-              s5 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$c35); }
-            }
-            if (s5 !== peg$FAILED) {
-              s6 = peg$parse_();
-              if (s6 !== peg$FAILED) {
-                s7 = peg$parsefuncTypeExprModifier();
-                if (s7 !== peg$FAILED) {
-                  s4 = [s4, s5, s6, s7];
-                  s3 = s4;
-                } else {
-                  peg$currPos = s3;
-                  s3 = peg$c0;
-                }
-              } else {
-                peg$currPos = s3;
-                s3 = peg$c0;
-              }
-            } else {
-              peg$currPos = s3;
-              s3 = peg$c0;
-            }
-          } else {
-            peg$currPos = s3;
-            s3 = peg$c0;
-          }
-        }
-        if (s2 !== peg$FAILED) {
-          peg$reportedPos = s0;
-          s1 = peg$c37(s1, s2);
-          s0 = s1;
-        } else {
-          peg$currPos = s0;
-          s0 = peg$c0;
-        }
-      } else {
-        peg$currPos = s0;
-        s0 = peg$c0;
-      }
-
-      return s0;
-    }
-
-    function peg$parsefuncTypeExprModifier() {
+    function peg$parsefuncTypeExprParam() {
       var s0;
 
       s0 = peg$parsecontextTypeModifier();
       if (s0 === peg$FAILED) {
         s0 = peg$parsenewInstanceTypeModifier();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parsenoModifier();
+        }
       }
 
       return s0;
@@ -1308,12 +1223,12 @@ module.exports = (function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c38) {
-        s1 = peg$c38;
+      if (input.substr(peg$currPos, 4) === peg$c37) {
+        s1 = peg$c37;
         peg$currPos += 4;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c39); }
+        if (peg$silentFails === 0) { peg$fail(peg$c38); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -1331,7 +1246,7 @@ module.exports = (function() {
               s5 = peg$parsetypeExpr();
               if (s5 !== peg$FAILED) {
                 peg$reportedPos = s0;
-                s1 = peg$c40(s5);
+                s1 = peg$c39(s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -1361,12 +1276,12 @@ module.exports = (function() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 3) === peg$c41) {
-        s1 = peg$c41;
+      if (input.substr(peg$currPos, 3) === peg$c40) {
+        s1 = peg$c40;
         peg$currPos += 3;
       } else {
         s1 = peg$FAILED;
-        if (peg$silentFails === 0) { peg$fail(peg$c42); }
+        if (peg$silentFails === 0) { peg$fail(peg$c41); }
       }
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
@@ -1384,7 +1299,7 @@ module.exports = (function() {
               s5 = peg$parsetypeExpr();
               if (s5 !== peg$FAILED) {
                 peg$reportedPos = s0;
-                s1 = peg$c43(s5);
+                s1 = peg$c42(s5);
                 s0 = s1;
               } else {
                 peg$currPos = s0;
@@ -1406,6 +1321,20 @@ module.exports = (function() {
         peg$currPos = s0;
         s0 = peg$c0;
       }
+
+      return s0;
+    }
+
+    function peg$parsenoModifier() {
+      var s0, s1;
+
+      s0 = peg$currPos;
+      s1 = peg$parsetypeExpr();
+      if (s1 !== peg$FAILED) {
+        peg$reportedPos = s0;
+        s1 = peg$c43(s1);
+      }
+      s0 = s1;
 
       return s0;
     }
@@ -1956,11 +1885,13 @@ module.exports = (function() {
     }
 
 
+      var lodash = require('lodash');
       var NodeType = require('../lib/NodeType.js');
       var TokenType = require('../lib/TokenType.js');
       var FunctionModifierType = {
-        CONTEXT: 0,
-        NEW: 1
+        NONE: 0,
+        CONTEXT: 1,
+        NEW: 2,
       };
 
       var byKey = function(key) {
@@ -1972,6 +1903,10 @@ module.exports = (function() {
       var buildByFirstAndRest = function(first, restsWithComma, restIndex) {
         var rests = restsWithComma ? restsWithComma.map(byKey(restIndex)) : [];
         return first ? [first].concat(rests) : [];
+      };
+
+      var reportSemanticIssue = function(msg) {
+        console.warn(msg);
       };
 
 

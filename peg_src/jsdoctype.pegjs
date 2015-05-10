@@ -1,9 +1,11 @@
 {
+  var lodash = require('lodash');
   var NodeType = require('../lib/NodeType.js');
   var TokenType = require('../lib/TokenType.js');
   var FunctionModifierType = {
-    CONTEXT: 0,
-    NEW: 1
+    NONE: 0,
+    CONTEXT: 1,
+    NEW: 2,
   };
 
   var byKey = function(key) {
@@ -15,6 +17,10 @@
   var buildByFirstAndRest = function(first, restsWithComma, restIndex) {
     var rests = restsWithComma ? restsWithComma.map(byKey(restIndex)) : [];
     return first ? [first].concat(rests) : [];
+  };
+
+  var reportSemanticIssue = function(msg) {
+    console.warn(msg);
   };
 }
 
@@ -234,26 +240,41 @@ memberName = name:$(jsIdentifier) {
  *   - function(this:jQuery):jQuery
  *   - function(new:Error)
  */
-funcTypeExpr = "function" _ "(" _
-               modifiers:funcTypeExprModifiersPart _
-               params:funcTypeExprParamsPart _
-               ")" _ returnedTypePart:(_ ":" _ typeExpr)? {
-    var modifierMap = modifiers.reduce(function(prevModifierMap, modifier) {
-      switch (modifier.modifierType) {
-        case FunctionModifierType.THIS:
-          prevModifierMap.context = modifier.value;
-          break;
-        case FunctionModifierType.NEW:
-          prevModifierMap.newInstance = modifier.value;
-          break;
-        default:
-          throw Error('Unexpected function modifier: ' + modifier.modifierType);
+funcTypeExpr = "function" _ "(" _ paramParts:funcTypeExprParamsPart _ ")" _
+               returnedTypePart:(_ ":" _ typeExpr)? {
+    var modifierGroups = lodash.groupBy(paramParts, lodash.property('modifierType'));
+
+    var params = [];
+    var noModifiers = modifierGroups[FunctionModifierType.NONE];
+    if (noModifiers) {
+      params = noModifiers.map(function(paramPartWithNoModifier) {
+        return paramPartWithNoModifier.value;
+      });
+    }
+
+
+    var context = null;
+    var contextModifiers = modifierGroups[FunctionModifierType.THIS];
+    if (contextModifiers) {
+      if (contextModifiers.length > 1) {
+        reportSemanticIssue('"this" keyword should be declared only once');
       }
-      return prevModifierMap;
-    }, {
-      context: null,
-      newInstance: null
-    });
+
+      // Enable the only first context modifier.
+      context = contextModifiers[0].value;
+    }
+
+
+    var newInstance = null;
+    var newInstanceModifiers = modifierGroups[FunctionModifierType.NEW];
+    if (newInstanceModifiers) {
+      if (newInstanceModifiers.length > 1) {
+        reportSemanticIssue('"new" keyword should be declared only once');
+      }
+
+      // Enable the only first new instance modifier.
+      newInstance = newInstanceModifiers[0].value;
+    }
 
     var returnedTypeNode = returnedTypePart ? returnedTypePart[3] : null;
 
@@ -261,23 +282,17 @@ funcTypeExpr = "function" _ "(" _
       type: NodeType.FUNCTION,
       params: params,
       returns: returnedTypeNode,
-      context: modifierMap.context,
-      newInstance: modifierMap.newInstance
+      context: context,
+      newInstance: newInstance,
     };
   }
 
-funcTypeExprParamsPart = firstParam:typeExpr? restParamsWithComma:(_ "," _ typeExpr)* {
+funcTypeExprParamsPart = firstParam:funcTypeExprParam? restParamsWithComma:(_ "," _ funcTypeExprParam)* {
     var params = buildByFirstAndRest(firstParam, restParamsWithComma, 3);
     return params;
   }
 
-funcTypeExprModifiersPart = firstModifier:funcTypeExprModifier?
-                            restModifiersWithComma:(_ "," _ funcTypeExprModifier)* {
-    var modifiers = buildByFirstAndRest(firstModifier, restModifiersWithComma, 3);
-    return modifiers;
-  }
-
-funcTypeExprModifier = contextTypeModifier / newInstanceTypeModifier
+funcTypeExprParam = contextTypeModifier / newInstanceTypeModifier / noModifier
 
 contextTypeModifier = "this" _ ":" _ value:typeExpr {
     return {
@@ -289,6 +304,13 @@ contextTypeModifier = "this" _ ":" _ value:typeExpr {
 newInstanceTypeModifier = "new" _ ":" _ value:typeExpr {
     return {
       modifierType: FunctionModifierType.NEW,
+      value: value
+    };
+  }
+
+noModifier = value:typeExpr {
+    return {
+      modifierType: FunctionModifierType.NONE,
       value: value
     };
   }
