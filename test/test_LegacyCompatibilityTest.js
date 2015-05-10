@@ -4,6 +4,7 @@
 
 
 var Parser = require('../lib/index.js').Parser;
+var Lexer = require('../lib/index.js').Lexer;
 var expect = require('chai').expect;
 
 
@@ -1073,42 +1074,27 @@ describe('Parser', function() {
 
   it('Build an illegal generic type', function() {
     var parser = new Parser();
-    var union = parser.parse('Array.<a');
 
-    expect(union.types.length).to.equal(0);
-    expect(union.optional).to.equal(false);
-    expect(union.nullable).to.equal(false);
-    expect(union.nonNullable).to.equal(false);
-    expect(union.variable).to.equal(false);
-    expect(union.all).to.equal(false);
-    expect(union.unknown).to.equal(true);
+    expect(function() {
+      parser.parse('Array.<a');
+    }).to.throw(Lexer.SyntaxError);
   });
 
 
   it('Build an illegal function type', function() {
     var parser = new Parser();
-    var union = parser.parse('function(string:');
 
-    expect(union.types.length).to.equal(0);
-    expect(union.optional).to.equal(false);
-    expect(union.nullable).to.equal(false);
-    expect(union.nonNullable).to.equal(false);
-    expect(union.variable).to.equal(false);
-    expect(union.all).to.equal(false);
-    expect(union.unknown).to.equal(true);
+    expect(function() {
+      parser.parse('function(string:');
+    }).to.throw(Lexer.SyntaxError);
   });
 
 
   it('Build an illegal type union', function() {
     var parser = new Parser();
-    var union = parser.parse('|string');
 
-    expect(union.types.length).to.equal(0);
-    expect(union.optional).to.equal(false);
-    expect(union.nullable).to.equal(false);
-    expect(union.nonNullable).to.equal(false);
-    expect(union.variable).to.equal(false);
-    expect(union.all).to.equal(false);
-    expect(union.unknown).to.equal(true);
+    expect(function() {
+      parser.parse('|string');
+    }).to.throw(Lexer.SyntaxError);
   });
 });
