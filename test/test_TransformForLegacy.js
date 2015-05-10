@@ -5,7 +5,7 @@ var expect = chai.expect;
 
 var Parser = require('../lib/Parser.js');
 var Legacy = require('../lib/legacy/index.js');
-var TransformForLegacy = require('../lib/TransformForLegacy.js').TransformForLegacy;
+var transform = require('../lib/TransformForLegacy.js');
 
 
 var VALID_SYNTAX_SETS = [
@@ -51,31 +51,28 @@ var VALID_SYNTAX_SETS = [
 
 
 describe('TransformForLegacy', function() {
-  describe('#transform', function() {
-    VALID_SYNTAX_SETS.forEach(function(validTypeExpr) {
-      it('should return a result is equivalent to the old parser when "' +
-        validTypeExpr + '" arrived', function() {
+  VALID_SYNTAX_SETS.forEach(function(validTypeExpr) {
+    it('should return a result is equivalent to the old parser when "' +
+      validTypeExpr + '" arrived', function() {
 
-          var origin = parse(validTypeExpr);
-          var legacy = legacyParse(validTypeExpr);
+        var origin = parse(validTypeExpr);
+        var legacy = legacyParse(validTypeExpr);
 
-          setDebugInfo(this.test, origin, legacy);
+        setDebugInfo(this.test, origin, legacy);
 
-          var transform = new TransformForLegacy();
-          var convertedLegacy = transform.transform(origin);
+        var convertedLegacy = transform(origin);
 
-          expect(convertedLegacy).to.deep.equal(legacy);
-        });
-    });
+        expect(convertedLegacy).to.deep.equal(legacy);
+      });
+  });
 
 
-    afterEach(function() {
-      if (this.currentTest.state === 'passed') return;
-      console.log('ORIGIN:');
-      console.log(this.currentTest.debugInfo.origin);
-      console.log('LEGACY:');
-      console.log(this.currentTest.debugInfo.legacy);
-    });
+  afterEach(function() {
+    if (this.currentTest.state === 'passed') return;
+    console.log('ORIGIN:');
+    console.log(this.currentTest.debugInfo.origin);
+    console.log('LEGACY:');
+    console.log(this.currentTest.debugInfo.legacy);
   });
 });
 
