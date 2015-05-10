@@ -11,6 +11,8 @@
     NULLABLE: 5,
     NOT_NULLABLE: 6,
     VARIADIC: 7,
+    INNER_MEMBER: 8,
+    INSTANCE_MEMBER: 9,
   };
 
   var FunctionModifierType = {
@@ -70,6 +72,20 @@ notUnknownTypeExpr = prefixModifiersWithWhiteSpaces:(prefixModifiers _)*
           var memberOperator = operator;
           return {
             type: NodeType.MEMBER,
+            owner: prevNode,
+            name: memberOperator.memberName,
+          };
+        case OperatorType.INNER_MEMBER:
+          var memberOperator = operator;
+          return {
+            type: NodeType.INNER_MEMBER,
+            owner: prevNode,
+            name: memberOperator.memberName,
+          };
+        case OperatorType.INSTANCE_MEMBER:
+          var memberOperator = operator;
+          return {
+            type: NodeType.INSTANCE_MEMBER,
             owner: prevNode,
             name: memberOperator.memberName,
           };
@@ -139,6 +155,8 @@ postfixModifiers =
     / arrayOfGenericTypeOperatorJsDocFlavored
     / genericTypeExpr
     / memberTypeExpr
+    / innerMemberTypeExpr
+    / instanceMemberTypeExpr
     / unionTypeExpr
     / deprecatedNullableTypeOperator
     / deprecatedNotNullableTypeOperator
@@ -409,17 +427,51 @@ unionTypeOperator = "|"
  *   - superOwner.owner.member
  */
 memberTypeExpr = memberTypeOperator _ memberName:memberName {
-  return {
-    operatorType: OperatorType.MEMBER,
-    memberName: memberName,
-  };
-}
+    return {
+      operatorType: OperatorType.MEMBER,
+      memberName: memberName,
+    };
+  }
 
 memberTypeOperator = "."
 
 memberName = name:$(jsIdentifier) {
     return name;
   }
+
+
+/*
+ * Inner member type expressions.
+ *
+ * Examples:
+ *   - owner~innerMember
+ *   - superOwner~owner~innerMember
+ */
+innerMemberTypeExpr = innerMemberTypeOperator _ memberName:memberName {
+    return {
+      operatorType: OperatorType.INNER_MEMBER,
+      memberName: memberName,
+    };
+  }
+
+innerMemberTypeOperator = "~"
+
+
+/*
+ * Instance member type expressions.
+ *
+ * Examples:
+ *   - owner#instanceMember
+ *   - superOwner#owner#instanceMember
+ */
+instanceMemberTypeExpr = instanceMemberTypeOperator _ memberName:memberName {
+    return {
+      operatorType: OperatorType.INSTANCE_MEMBER,
+      memberName: memberName,
+    };
+  }
+
+instanceMemberTypeOperator = "#"
 
 
 /*
