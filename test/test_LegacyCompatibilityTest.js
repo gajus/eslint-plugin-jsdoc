@@ -75,12 +75,12 @@ describe('Parser', function() {
     expect(union.unknown).to.equal(false);
 
     var generic = union.types[0];
-    expect(generic.genericTypeName).to.equal('Array');
+    expect(generic.genericTypeName.name).to.equal('Array');
     expect(generic.parameterTypeUnions.length).to.equal(1);
 
     var paramUnion = generic.parameterTypeUnions[0];
     expect(paramUnion.types.length).to.equal(1);
-    expect(paramUnion.types[0]).to.equal('string');
+    expect(paramUnion.types[0].name).to.equal('string');
     expect(paramUnion.optional).to.equal(false);
     expect(paramUnion.nullable).to.equal(false);
     expect(paramUnion.nonNullable).to.equal(false);
@@ -106,7 +106,7 @@ describe('Parser', function() {
     expect(union.unknown).to.equal(false);
 
     var generic = union.types[0];
-    expect(generic.genericTypeName).to.equal('Object');
+    expect(generic.genericTypeName.name).to.equal('Object');
     expect(generic.parameterTypeUnions.length).to.equal(2);
 
     var paramUnion1 = generic.parameterTypeUnions[0];
@@ -121,7 +121,7 @@ describe('Parser', function() {
 
     var paramUnion2 = generic.parameterTypeUnions[1];
     expect(paramUnion2.types.length).to.equal(1);
-    expect(paramUnion2.types[0]).to.equal('number');
+    expect(paramUnion2.types[0].name).to.equal('number');
     expect(paramUnion2.optional).to.equal(false);
     expect(paramUnion2.nullable).to.equal(false);
     expect(paramUnion2.nonNullable).to.equal(false);
@@ -148,12 +148,12 @@ describe('Parser', function() {
     expect(union.unknown).to.equal(false);
 
     var generic = union.types[0];
-    expect(generic.genericTypeName).to.equal('Array');
+    expect(generic.genericTypeName.name).to.equal('Array');
     expect(generic.parameterTypeUnions.length).to.equal(1);
 
     var paramUnion = generic.parameterTypeUnions[0];
     expect(paramUnion.types.length).to.equal(1);
-    expect(paramUnion.types[0]).to.equal('String');
+    expect(paramUnion.types[0].name).to.equal('String');
     expect(paramUnion.optional).to.equal(false);
     expect(paramUnion.nullable).to.equal(false);
     expect(paramUnion.nonNullable).to.equal(false);
@@ -178,7 +178,7 @@ describe('Parser', function() {
     expect(union.all).to.equal(false);
     expect(union.unknown).to.equal(false);
 
-    expect(union.types[0]).to.equal('number');
+    expect(union.types[0].name).to.equal('number');
     expect(union.optional).to.equal(false);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(false);
@@ -186,7 +186,7 @@ describe('Parser', function() {
     expect(union.all).to.equal(false);
     expect(union.unknown).to.equal(false);
 
-    expect(union.types[1]).to.equal('boolean');
+    expect(union.types[1].name).to.equal('boolean');
     expect(union.optional).to.equal(false);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(false);
@@ -211,7 +211,7 @@ describe('Parser', function() {
     expect(union.all).to.equal(false);
     expect(union.unknown).to.equal(false);
 
-    expect(union.types[0]).to.equal('number');
+    expect(union.types[0].name).to.equal('number');
     expect(union.optional).to.equal(false);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(false);
@@ -219,7 +219,7 @@ describe('Parser', function() {
     expect(union.all).to.equal(false);
     expect(union.unknown).to.equal(false);
 
-    expect(union.types[1]).to.equal('boolean');
+    expect(union.types[1].name).to.equal('boolean');
     expect(union.optional).to.equal(false);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(false);
@@ -284,7 +284,7 @@ describe('Parser', function() {
 
     var valUnion1 = entry1.typeUnion;
     expect(valUnion1.types.length).to.equal(1);
-    expect(valUnion1.types[0]).to.equal('number');
+    expect(valUnion1.types[0].name).to.equal('number');
     expect(valUnion1.optional).to.equal(false);
     expect(valUnion1.nullable).to.equal(false);
     expect(valUnion1.nonNullable).to.equal(false);
@@ -322,7 +322,7 @@ describe('Parser', function() {
     expect(union.unknown).to.equal(false);
 
     var generic = union.types[0];
-    expect(generic.genericTypeName).to.equal('Array');
+    expect(generic.genericTypeName.name).to.equal('Array');
 
     expect(generic.parameterTypeUnions.length).to.equal(1);
     var valUnion = generic.parameterTypeUnions[0];
@@ -359,7 +359,7 @@ describe('Parser', function() {
     var union = parser.parse('?number');
 
     expect(union.types.length).to.equal(1);
-    expect(union.types[0]).to.equal('number');
+    expect(union.types[0].name).to.equal('number');
     expect(union.optional).to.equal(false);
     expect(union.nullable).to.equal(true);
     expect(union.nonNullable).to.equal(false);
@@ -377,7 +377,7 @@ describe('Parser', function() {
     var union = parser.parse('goog.ui.Component?');
 
     expect(union.types.length).to.equal(1);
-    expect(union.types[0]).to.equal('goog.ui.Component');
+    expect(union.types[0].name).to.equal('goog.ui.Component');
     expect(union.optional).to.equal(false);
     expect(union.nullable).to.equal(true);
     expect(union.nonNullable).to.equal(false);
@@ -396,7 +396,7 @@ describe('Parser', function() {
     var union = parser.parse('!Object');
 
     expect(union.types.length).to.equal(1);
-    expect(union.types[0]).to.equal('Object');
+    expect(union.types[0].name).to.equal('Object');
     expect(union.optional).to.equal(false);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(true);
@@ -414,7 +414,7 @@ describe('Parser', function() {
     var union = parser.parse('Object!');
 
     expect(union.types.length).to.equal(1);
-    expect(union.types[0]).to.equal('Object');
+    expect(union.types[0].name).to.equal('Object');
     expect(union.optional).to.equal(false);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(true);
@@ -432,7 +432,7 @@ describe('Parser', function() {
     var union = parser.parse('Function');
 
     expect(union.types.length).to.equal(1);
-    expect(union.types[0]).to.equal('Function');
+    expect(union.types[0].name).to.equal('Function');
     expect(union.optional).to.equal(false);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(false);
@@ -488,7 +488,7 @@ describe('Parser', function() {
 
     var paramUnion = func.parameterTypeUnions[0];
     expect(paramUnion.types.length).to.equal(1);
-    expect(paramUnion.types[0]).to.equal('string');
+    expect(paramUnion.types[0].name).to.equal('string');
     expect(paramUnion.optional).to.equal(false);
     expect(paramUnion.nullable).to.equal(false);
     expect(paramUnion.nonNullable).to.equal(false);
@@ -521,7 +521,7 @@ describe('Parser', function() {
 
     var paramUnion1 = func.parameterTypeUnions[0];
     expect(paramUnion1.types.length).to.equal(1);
-    expect(paramUnion1.types[0]).to.equal('string');
+    expect(paramUnion1.types[0].name).to.equal('string');
     expect(paramUnion1.optional).to.equal(false);
     expect(paramUnion1.nullable).to.equal(false);
     expect(paramUnion1.nonNullable).to.equal(false);
@@ -531,7 +531,7 @@ describe('Parser', function() {
 
     var paramUnion2 = func.parameterTypeUnions[1];
     expect(paramUnion2.types.length).to.equal(1);
-    expect(paramUnion2.types[0]).to.equal('boolean');
+    expect(paramUnion2.types[0].name).to.equal('boolean');
     expect(paramUnion2.optional).to.equal(false);
     expect(paramUnion2.nullable).to.equal(false);
     expect(paramUnion2.nonNullable).to.equal(false);
@@ -563,7 +563,7 @@ describe('Parser', function() {
 
     var returnUnion = func.returnTypeUnion;
     expect(returnUnion.types.length).to.equal(1);
-    expect(returnUnion.types[0]).to.equal('number');
+    expect(returnUnion.types[0].name).to.equal('number');
     expect(returnUnion.optional).to.equal(false);
     expect(returnUnion.nullable).to.equal(false);
     expect(returnUnion.nonNullable).to.equal(false);
@@ -595,7 +595,7 @@ describe('Parser', function() {
 
     var contextUnion = func.contextTypeUnion;
     expect(contextUnion.types.length).to.equal(1);
-    expect(contextUnion.types[0]).to.equal('goog.ui.Menu');
+    expect(contextUnion.types[0].name).to.equal('goog.ui.Menu');
     expect(contextUnion.optional).to.equal(false);
     expect(contextUnion.nullable).to.equal(false);
     expect(contextUnion.nonNullable).to.equal(false);
@@ -605,7 +605,7 @@ describe('Parser', function() {
 
     var paramUnion = func.parameterTypeUnions[0];
     expect(paramUnion.types.length).to.equal(1);
-    expect(paramUnion.types[0]).to.equal('string');
+    expect(paramUnion.types[0].name).to.equal('string');
     expect(paramUnion.optional).to.equal(false);
     expect(paramUnion.nullable).to.equal(false);
     expect(paramUnion.nonNullable).to.equal(false);
@@ -638,7 +638,7 @@ describe('Parser', function() {
 
     var contextUnion = func.contextTypeUnion;
     expect(contextUnion.types.length).to.equal(1);
-    expect(contextUnion.types[0]).to.equal('goog.ui.Menu');
+    expect(contextUnion.types[0].name).to.equal('goog.ui.Menu');
     expect(contextUnion.optional).to.equal(false);
     expect(contextUnion.nullable).to.equal(false);
     expect(contextUnion.nonNullable).to.equal(false);
@@ -648,7 +648,7 @@ describe('Parser', function() {
 
     var paramUnion = func.parameterTypeUnions[0];
     expect(paramUnion.types.length).to.equal(1);
-    expect(paramUnion.types[0]).to.equal('string');
+    expect(paramUnion.types[0].name).to.equal('string');
     expect(paramUnion.optional).to.equal(false);
     expect(paramUnion.nullable).to.equal(false);
     expect(paramUnion.nonNullable).to.equal(false);
@@ -664,7 +664,7 @@ describe('Parser', function() {
 
   it('Build a function type has a variable parameter', function() {
     var parser = new Parser();
-    var union = parser.parse('function(string, ...[number]): number');
+    var union = parser.parse('function(string, ...number): number');
 
     expect(union.types.length).to.equal(1);
     expect(union.optional).to.equal(false);
@@ -681,7 +681,7 @@ describe('Parser', function() {
 
     var paramUnion1 = func.parameterTypeUnions[0];
     expect(paramUnion1.types.length).to.equal(1);
-    expect(paramUnion1.types[0]).to.equal('string');
+    expect(paramUnion1.types[0].name).to.equal('string');
     expect(paramUnion1.optional).to.equal(false);
     expect(paramUnion1.nullable).to.equal(false);
     expect(paramUnion1.nonNullable).to.equal(false);
@@ -691,7 +691,7 @@ describe('Parser', function() {
 
     var paramUnion2 = func.parameterTypeUnions[1];
     expect(paramUnion2.types.length).to.equal(1);
-    expect(paramUnion2.types[0]).to.equal('number');
+    expect(paramUnion2.types[0].name).to.equal('number');
     expect(paramUnion2.optional).to.equal(false);
     expect(paramUnion2.nullable).to.equal(false);
     expect(paramUnion2.nonNullable).to.equal(false);
@@ -701,7 +701,7 @@ describe('Parser', function() {
 
     var returnUnion = func.returnTypeUnion;
     expect(returnUnion.types.length).to.equal(1);
-    expect(returnUnion.types[0]).to.equal('number');
+    expect(returnUnion.types[0].name).to.equal('number');
     expect(returnUnion.optional).to.equal(false);
     expect(returnUnion.nullable).to.equal(false);
     expect(returnUnion.nonNullable).to.equal(false);
@@ -735,7 +735,7 @@ describe('Parser', function() {
 
     var paramUnion1 = func.parameterTypeUnions[0];
     expect(paramUnion1.types.length).to.equal(1);
-    expect(paramUnion1.types[0]).to.equal('string');
+    expect(paramUnion1.types[0].name).to.equal('string');
     expect(paramUnion1.optional).to.equal(true);
     expect(paramUnion1.nullable).to.equal(true);
     expect(paramUnion1.nonNullable).to.equal(false);
@@ -745,7 +745,7 @@ describe('Parser', function() {
 
     var paramUnion2 = func.parameterTypeUnions[1];
     expect(paramUnion2.types.length).to.equal(1);
-    expect(paramUnion2.types[0]).to.equal('number');
+    expect(paramUnion2.types[0].name).to.equal('number');
     expect(paramUnion2.optional).to.equal(true);
     expect(paramUnion2.nullable).to.equal(false);
     expect(paramUnion2.nonNullable).to.equal(false);
@@ -777,7 +777,7 @@ describe('Parser', function() {
 
     var contextUnion = func.contextTypeUnion;
     expect(contextUnion.types.length).to.equal(1);
-    expect(contextUnion.types[0]).to.equal('T');
+    expect(contextUnion.types[0].name).to.equal('T');
     expect(contextUnion.optional).to.equal(false);
     expect(contextUnion.nullable).to.equal(false);
     expect(contextUnion.nonNullable).to.equal(false);
@@ -824,7 +824,7 @@ describe('Parser', function() {
     var union = parser.parse('...number');
 
     expect(union.types.length).to.equal(1);
-    expect(union.types[0]).to.equal('number');
+    expect(union.types[0].name).to.equal('number');
     expect(union.optional).to.equal(false);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(false);
@@ -842,7 +842,7 @@ describe('Parser', function() {
     var union = parser.parse('=number');
 
     expect(union.types.length).to.equal(1);
-    expect(union.types[0]).to.equal('number');
+    expect(union.types[0].name).to.equal('number');
     expect(union.optional).to.equal(true);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(false);
@@ -860,7 +860,7 @@ describe('Parser', function() {
     var union = parser.parse('number=');
 
     expect(union.types.length).to.equal(1);
-    expect(union.types[0]).to.equal('number');
+    expect(union.types[0].name).to.equal('number');
     expect(union.optional).to.equal(true);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(false);
@@ -878,7 +878,7 @@ describe('Parser', function() {
     var union = parser.parse('Object|undefined');
 
     expect(union.types.length).to.equal(1);
-    expect(union.types[0]).to.equal('Object');
+    expect(union.types[0].name).to.equal('Object');
     expect(union.optional).to.equal(true);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(false);
@@ -896,7 +896,7 @@ describe('Parser', function() {
     var union = parser.parse('Object|void');
 
     expect(union.types.length).to.equal(1);
-    expect(union.types[0]).to.equal('Object');
+    expect(union.types[0].name).to.equal('Object');
     expect(union.optional).to.equal(true);
     expect(union.nullable).to.equal(false);
     expect(union.nonNullable).to.equal(false);
