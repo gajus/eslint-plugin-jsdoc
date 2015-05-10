@@ -237,27 +237,27 @@ funcTypeExpr = "function" _ "(" _ paramParts:funcTypeExprParamsPart _ ")" _
     }
 
 
-    var context = null;
-    var contextModifiers = modifierGroups[FunctionModifierType.THIS];
-    if (contextModifiers) {
-      if (contextModifiers.length > 1) {
+    var thisValue = null;
+    var thisValueModifiers = modifierGroups[FunctionModifierType.THIS];
+    if (thisValueModifiers) {
+      if (thisValueModifiers.length > 1) {
         reportSemanticIssue('"this" keyword should be declared only once');
       }
 
-      // Enable the only first context modifier.
-      context = contextModifiers[0].value;
+      // Enable the only first thisValue modifier.
+      thisValue = thisValueModifiers[0].value;
     }
 
 
-    var newInstance = null;
-    var newInstanceModifiers = modifierGroups[FunctionModifierType.NEW];
-    if (newInstanceModifiers) {
-      if (newInstanceModifiers.length > 1) {
+    var newValue = null;
+    var newModifiers = modifierGroups[FunctionModifierType.NEW];
+    if (newModifiers) {
+      if (newModifiers.length > 1) {
         reportSemanticIssue('"new" keyword should be declared only once');
       }
 
       // Enable the only first new instance modifier.
-      newInstance = newInstanceModifiers[0].value;
+      newValue = newModifiers[0].value;
     }
 
     var returnedTypeNode = returnedTypePart ? returnedTypePart[3] : null;
@@ -266,8 +266,8 @@ funcTypeExpr = "function" _ "(" _ paramParts:funcTypeExprParamsPart _ ")" _
       type: NodeType.FUNCTION,
       params: params,
       returns: returnedTypeNode,
-      context: context,
-      newInstance: newInstance,
+      thisValue: thisValue,
+      newValue: newValue,
     };
   }
 
@@ -276,16 +276,16 @@ funcTypeExprParamsPart = firstParam:funcTypeExprParam? restParamsWithComma:(_ ",
     return params;
   }
 
-funcTypeExprParam = contextTypeModifier / newInstanceTypeModifier / noModifier
+funcTypeExprParam = thisValueTypeModifier / newTypeModifier / noModifier
 
-contextTypeModifier = "this" _ ":" _ value:typeExpr {
+thisValueTypeModifier = "this" _ ":" _ value:typeExpr {
     return {
       modifierType: FunctionModifierType.THIS,
       value: value
     };
   }
 
-newInstanceTypeModifier = "new" _ ":" _ value:typeExpr {
+newTypeModifier = "new" _ ":" _ value:typeExpr {
     return {
       modifierType: FunctionModifierType.NEW,
       value: value

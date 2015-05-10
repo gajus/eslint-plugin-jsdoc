@@ -155,27 +155,27 @@ module.exports = (function() {
             }
 
 
-            var context = null;
-            var contextModifiers = modifierGroups[FunctionModifierType.THIS];
-            if (contextModifiers) {
-              if (contextModifiers.length > 1) {
+            var thisValue = null;
+            var thisValueModifiers = modifierGroups[FunctionModifierType.THIS];
+            if (thisValueModifiers) {
+              if (thisValueModifiers.length > 1) {
                 reportSemanticIssue('"this" keyword should be declared only once');
               }
 
-              // Enable the only first context modifier.
-              context = contextModifiers[0].value;
+              // Enable the only first thisValue modifier.
+              thisValue = thisValueModifiers[0].value;
             }
 
 
-            var newInstance = null;
-            var newInstanceModifiers = modifierGroups[FunctionModifierType.NEW];
-            if (newInstanceModifiers) {
-              if (newInstanceModifiers.length > 1) {
+            var newValue = null;
+            var newModifiers = modifierGroups[FunctionModifierType.NEW];
+            if (newModifiers) {
+              if (newModifiers.length > 1) {
                 reportSemanticIssue('"new" keyword should be declared only once');
               }
 
               // Enable the only first new instance modifier.
-              newInstance = newInstanceModifiers[0].value;
+              newValue = newModifiers[0].value;
             }
 
             var returnedTypeNode = returnedTypePart ? returnedTypePart[3] : null;
@@ -184,8 +184,8 @@ module.exports = (function() {
               type: NodeType.FUNCTION,
               params: params,
               returns: returnedTypeNode,
-              context: context,
-              newInstance: newInstance,
+              thisValue: thisValue,
+              newValue: newValue,
             };
           },
         peg$c30 = ",",
@@ -1107,9 +1107,9 @@ module.exports = (function() {
     function peg$parsefuncTypeExprParam() {
       var s0;
 
-      s0 = peg$parsecontextTypeModifier();
+      s0 = peg$parsethisValueTypeModifier();
       if (s0 === peg$FAILED) {
-        s0 = peg$parsenewInstanceTypeModifier();
+        s0 = peg$parsenewTypeModifier();
         if (s0 === peg$FAILED) {
           s0 = peg$parsenoModifier();
         }
@@ -1118,7 +1118,7 @@ module.exports = (function() {
       return s0;
     }
 
-    function peg$parsecontextTypeModifier() {
+    function peg$parsethisValueTypeModifier() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;
@@ -1171,7 +1171,7 @@ module.exports = (function() {
       return s0;
     }
 
-    function peg$parsenewInstanceTypeModifier() {
+    function peg$parsenewTypeModifier() {
       var s0, s1, s2, s3, s4, s5;
 
       s0 = peg$currPos;

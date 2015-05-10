@@ -497,7 +497,7 @@ describe('Parser', function() {
 
     var expectedNode = createFunctionTypeNode(
       [], null,
-      { context: null, newInstance: null }
+      { thisValue: null, newValue: null }
     );
 
     expect(node).to.deep.equal(expectedNode);
@@ -510,7 +510,7 @@ describe('Parser', function() {
 
     var expectedNode = createFunctionTypeNode(
       [ createTypeNameNode('Param') ], null,
-      { context: null, newInstance: null }
+      { thisValue: null, newValue: null }
     );
 
     expect(node).to.deep.equal(expectedNode);
@@ -524,7 +524,7 @@ describe('Parser', function() {
 
     var expectedNode = createFunctionTypeNode(
       [ createTypeNameNode('Param1'), createTypeNameNode('Param2') ], null,
-      { context: null, newInstance: null }
+      { thisValue: null, newValue: null }
     );
 
     expect(node).to.deep.equal(expectedNode);
@@ -538,7 +538,7 @@ describe('Parser', function() {
 
     var expectedNode = createFunctionTypeNode(
       [], createTypeNameNode('Returned'),
-      { context: null, newInstance: null }
+      { thisValue: null, newValue: null }
     );
 
     expect(node).to.deep.equal(expectedNode);
@@ -552,7 +552,7 @@ describe('Parser', function() {
 
     var expectedNode = createFunctionTypeNode(
       [], null,
-      { context: createTypeNameNode('ThisObject'), newInstance: null }
+      { thisValue: createTypeNameNode('ThisObject'), newValue: null }
     );
 
     expect(node).to.deep.equal(expectedNode);
@@ -567,7 +567,7 @@ describe('Parser', function() {
     var expectedNode = createFunctionTypeNode(
       [createTypeNameNode('param1')],
       null,
-      { context: createTypeNameNode('ThisObject'), newInstance: null }
+      { thisValue: createTypeNameNode('ThisObject'), newValue: null }
     );
 
     expect(node).to.deep.equal(expectedNode);
@@ -581,7 +581,7 @@ describe('Parser', function() {
 
     var expectedNode = createFunctionTypeNode(
       [], null,
-      { context: null, newInstance: createTypeNameNode('NewObject') }
+      { thisValue: null, newValue: createTypeNameNode('NewObject') }
     );
 
     expect(node).to.deep.equal(expectedNode);
@@ -596,7 +596,7 @@ describe('Parser', function() {
     var expectedNode = createFunctionTypeNode(
       [createTypeNameNode('param1')],
       null,
-      { context: null, newInstance: createTypeNameNode('NewObject') }
+      { thisValue: null, newValue: createTypeNameNode('NewObject') }
     );
 
     expect(node).to.deep.equal(expectedNode);
@@ -611,8 +611,8 @@ describe('Parser', function() {
     var expectedNode = createFunctionTypeNode(
       [ createTypeNameNode('param1') ], null,
       {
-        context: createTypeNameNode('ThisObject'),
-        newInstance: createTypeNameNode('NewObject'),
+        thisValue: createTypeNameNode('ThisObject'),
+        newValue: createTypeNameNode('NewObject'),
       }
     );
 
@@ -628,7 +628,7 @@ describe('Parser', function() {
     var expectedNode = createFunctionTypeNode(
       [ createTypeNameNode('Param1'), createTypeNameNode('Param2') ],
       createTypeNameNode('Returned'),
-      { context: null, newInstance: null }
+      { thisValue: null, newValue: null }
     );
 
     expect(node).to.deep.equal(expectedNode);
@@ -771,7 +771,7 @@ function createFunctionTypeNode(paramNodes, returnedNode, modifierMap) {
     type: NodeType.FUNCTION,
     params: paramNodes,
     returns: returnedNode,
-    context: modifierMap.context,
-    newInstance: modifierMap.newInstance,
+    thisValue: modifierMap.thisValue,
+    newValue: modifierMap.newValue,
   };
 }
