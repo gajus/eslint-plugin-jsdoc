@@ -24,6 +24,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('boolean');
     expect(union.toHtml()).to.equal('<code>boolean</code>');
   });
+
+
   it('Build a global type name', function() {
     var parser = new Parser();
     var union = parser.parse('Window');
@@ -40,6 +42,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('Window');
     expect(union.toHtml()).to.equal('<code>Window</code>');
   });
+
+
   it('Build an user-defined type name', function() {
     var parser = new Parser();
     var union = parser.parse('goog.ui.Menu');
@@ -56,6 +60,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('goog.ui.Menu');
     expect(union.toHtml()).to.equal('<a href="goog.ui.Menu.html">goog.ui.Menu</a>');
   });
+
+
   it('Build a generic type has a parameter', function() {
     var parser = new Parser();
     var union = parser.parse('Array.<string>');
@@ -85,6 +91,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('Array.<string>');
     expect(union.toHtml()).to.equal('<code>Array</code>.&lt;<code>string</code>&gt;');
   });
+
+
   it('Build a generic type has 2 parameters', function() {
     var parser = new Parser();
     var union = parser.parse('Object.<string, number>');
@@ -125,6 +133,8 @@ describe('Parser', function() {
     expect(union.toHtml()).to.equal('<code>Object</code>.&lt;<code>string</code>' +
                  ', <code>number</code>&gt;');
   });
+
+
   it('Build a JsDoc-formal generic type', function() {
     var parser = new Parser();
     var union = parser.parse('String[]');
@@ -154,6 +164,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('Array.<String>');
     expect(union.toHtml()).to.equal('<code>Array</code>.&lt;<code>String</code>&gt;');
   });
+
+
   it('Build a formal type union', function() {
     var parser = new Parser();
     var union = parser.parse('(number|boolean)');
@@ -185,6 +197,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('number|boolean');
     expect(union.toHtml()).to.equal('<code>number</code>|<code>boolean</code>');
   });
+
+
   it('Build a informal type union', function() {
     var parser = new Parser();
     var union = parser.parse('number|boolean');
@@ -216,6 +230,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('number|boolean');
     expect(union.toHtml()).to.equal('<code>number</code>|<code>boolean</code>');
   });
+
+
   it('Build a record type with an entry', function() {
     var parser = new Parser();
     var union = parser.parse('{myNum}');
@@ -246,6 +262,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('{ myNum: * }');
     expect(union.toHtml()).to.equal('{ myNum: <code>*</code> }');
   });
+
+
   it('Build a record type with 2 entries', function() {
     var parser = new Parser();
     var union = parser.parse('{myNum: number, myObject}');
@@ -289,6 +307,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('{ myNum: number, myObject: * }');
     expect(union.toHtml()).to.equal('{ myNum: <code>number</code>, myObject: <code>*</code> }');
   });
+
+
   it('Build a generic type has a parameter as a record type', function() {
     var parser = new Parser();
     var union = parser.parse('Array.<{length}>');
@@ -332,6 +352,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('Array.<{ length: * }>');
     expect(union.toHtml()).to.equal('<code>Array</code>.&lt;{ length: <code>*</code> }&gt;');
   });
+
+
   it('Build a nullable type has a nullable type operator on the head', function() {
     var parser = new Parser();
     var union = parser.parse('?number');
@@ -348,6 +370,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('number|null');
     expect(union.toHtml()).to.equal('<code>number</code>|<code>null</code>');
   });
+
+
   it('Build a nullable type has a nullable type operator on the tail', function() {
     var parser = new Parser();
     var union = parser.parse('goog.ui.Component?');
@@ -365,6 +389,8 @@ describe('Parser', function() {
     expect(union.toHtml()).to.equal('<a href="goog.ui.Component.html">' +
                  'goog.ui.Component</a>|<code>null</code>');
   });
+
+
   it('Build a non-nullable type has a nullable type operator on the head', function() {
     var parser = new Parser();
     var union = parser.parse('!Object');
@@ -381,6 +407,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('!Object');
     expect(union.toHtml()).to.equal('!<code>Object</code>');
   });
+
+
   it('Build a non-nullable type has a nullable type operator on the tail', function() {
     var parser = new Parser();
     var union = parser.parse('Object!');
@@ -397,6 +425,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('!Object');
     expect(union.toHtml()).to.equal('!<code>Object</code>');
   });
+
+
   it('Build a function type', function() {
     var parser = new Parser();
     var union = parser.parse('Function');
@@ -413,6 +443,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('Function');
     expect(union.toHtml()).to.equal('<code>Function</code>');
   });
+
+
   it('Build a function type has no parameters', function() {
     var parser = new Parser();
     var union = parser.parse('function()');
@@ -434,6 +466,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('function()');
     expect(union.toHtml()).to.equal('function()');
   });
+
+
   it('Build a function type has a parameter', function() {
     var parser = new Parser();
     var union = parser.parse('function(string)');
@@ -465,6 +499,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('function(string)');
     expect(union.toHtml()).to.equal('function(<code>string</code>)');
   });
+
+
   it('Build a function type has 2 parameters', function() {
     var parser = new Parser();
     var union = parser.parse('function(string, boolean)');
@@ -506,6 +542,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('function(string, boolean)');
     expect(union.toHtml()).to.equal('function(<code>string</code>, <code>boolean</code>)');
   });
+
+
   it('Build a function type has a return', function() {
     var parser = new Parser();
     var union = parser.parse('function(): number');
@@ -536,6 +574,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('function(): number');
     expect(union.toHtml()).to.equal('function(): <code>number</code>');
   });
+
+
   it('Build a function type has a context', function() {
     var parser = new Parser();
     var union = parser.parse('function(this:goog.ui.Menu, string)');
@@ -577,6 +617,8 @@ describe('Parser', function() {
     expect(union.toHtml()).to.equal('function(this:<a href="goog.ui.Menu.html">' +
                  'goog.ui.Menu</a>, <code>string</code>)');
   });
+
+
   it('Build a constructor type', function() {
     var parser = new Parser();
     var union = parser.parse('function(new:goog.ui.Menu, string)');
@@ -618,6 +660,8 @@ describe('Parser', function() {
     expect(union.toHtml()).to.equal('function(new:<a href="goog.ui.Menu.html">' +
                  'goog.ui.Menu</a>, <code>string</code>)');
   });
+
+
   it('Build a function type has a variable parameter', function() {
     var parser = new Parser();
     var union = parser.parse('function(string, ...[number]): number');
@@ -669,6 +713,8 @@ describe('Parser', function() {
     expect(union.toHtml()).to.equal('function(<code>string</code>, ...<code>number' +
                  '</code>): <code>number</code>');
   });
+
+
   it('Build a function type has parameters have some type operators', function() {
     var parser = new Parser();
     var union = parser.parse('function(?string=, number=)');
@@ -711,6 +757,8 @@ describe('Parser', function() {
     expect(union.toHtml()).to.equal('function(<code>string</code>|<code>undefined' +
                  '</code>|<code>null</code>, <code>number</code>|<code>undefined</code>)');
   });
+
+
   it('Build a goog.ui.Component#forEachChild', function() {
     var parser = new Parser();
     var union = parser.parse('function(this:T,?,number):?');
@@ -769,6 +817,8 @@ describe('Parser', function() {
     expect(union.toHtml()).to.equal('function(this:<a href="T.html">T</a>, ' +
                  '<code>?</code>, <code>number</code>): <code>?</code>');
   });
+
+
   it('Build a variable type', function() {
     var parser = new Parser();
     var union = parser.parse('...number');
@@ -785,6 +835,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('...number');
     expect(union.toHtml()).to.equal('...<code>number</code>');
   });
+
+
   it('Build an optional type has an optional type operator on the head', function() {
     var parser = new Parser();
     var union = parser.parse('=number');
@@ -801,6 +853,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('number|undefined');
     expect(union.toHtml()).to.equal('<code>number</code>|<code>undefined</code>');
   });
+
+
   it('Build an optional type has an optional type operator on the tail', function() {
     var parser = new Parser();
     var union = parser.parse('number=');
@@ -817,6 +871,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('number|undefined');
     expect(union.toHtml()).to.equal('<code>number</code>|<code>undefined</code>');
   });
+
+
   it('Build an optional type with a "undefined" keyword', function() {
     var parser = new Parser();
     var union = parser.parse('Object|undefined');
@@ -833,6 +889,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('Object|undefined');
     expect(union.toHtml()).to.equal('<code>Object</code>|<code>undefined</code>');
   });
+
+
   it('Build an optional type with a "void" keyword', function() {
     var parser = new Parser();
     var union = parser.parse('Object|void');
@@ -849,6 +907,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('Object|undefined');
     expect(union.toHtml()).to.equal('<code>Object</code>|<code>undefined</code>');
   });
+
+
   it('Build an all type', function() {
     var parser = new Parser();
     var union = parser.parse('*');
@@ -864,6 +924,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('*');
     expect(union.toHtml()).to.equal('<code>*</code>');
   });
+
+
   it('Build an unknown type', function() {
     var parser = new Parser();
     var union = parser.parse('?');
@@ -879,6 +941,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('?');
     expect(union.toHtml()).to.equal('<code>?</code>');
   });
+
+
   it('Build an unknown type with an "unknown" keyword', function() {
     var parser = new Parser();
     var union = parser.parse('unknown');
@@ -894,6 +958,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('?');
     expect(union.toHtml()).to.equal('<code>?</code>');
   });
+
+
   it('Build an undefined type with an "undefined" keyword', function() {
     var parser = new Parser();
     var union = parser.parse('undefined');
@@ -909,6 +975,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('undefined');
     expect(union.toHtml()).to.equal('<code>undefined</code>');
   });
+
+
   it('Build a null type with an "null" keyword', function() {
     var parser = new Parser();
     var union = parser.parse('null');
@@ -924,6 +992,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('null');
     expect(union.toHtml()).to.equal('<code>null</code>');
   });
+
+
   it('Build a module type', function() {
     var parser = new Parser();
     var union = parser.parse('module:foo/bar');
@@ -939,6 +1009,8 @@ describe('Parser', function() {
     expect(union.toString()).to.equal('module:foo/bar');
     expect(union.toHtml()).to.equal('module:<a href="module%3Afoo%2Fbar.html">foo/bar</a>');
   });
+
+
   it('Build a module type with a prefix nullable type operator', function() {
     var parser = new Parser();
     var union = parser.parse('?module:foo/bar');
@@ -955,6 +1027,8 @@ describe('Parser', function() {
     expect(union.toHtml()).to.equal('module:<a href="module%3Afoo%2Fbar.html">' +
                  'foo/bar</a>|<code>null</code>');
   });
+
+
   it('Build a module type with a postfix nullable type operator', function() {
     var parser = new Parser();
     var union = parser.parse('module:foo/bar?');
@@ -971,6 +1045,8 @@ describe('Parser', function() {
     expect(union.toHtml()).to.equal('module:<a href="module%3Afoo%2Fbar.html">' +
                  'foo/bar</a>|<code>null</code>');
   });
+
+
   it('Build a module type with a generic type operator', function() {
     var parser = new Parser();
     var union = parser.parse('module:foo/bar.<string>');
@@ -987,6 +1063,8 @@ describe('Parser', function() {
     expect(union.toHtml()).to.equal('module:<a href="module%3Afoo%2Fbar.html">' +
                  'foo/bar</a>.&lt;<code>string</code>&gt;');
   });
+
+
   it('Build an illegal generic type', function() {
     var parser = new Parser();
     var union = parser.parse('Array.<a');
@@ -999,6 +1077,8 @@ describe('Parser', function() {
     expect(union.all).to.equal(false);
     expect(union.unknown).to.equal(true);
   });
+
+
   it('Build an illegal function type', function() {
     var parser = new Parser();
     var union = parser.parse('function(string:');
@@ -1011,6 +1091,8 @@ describe('Parser', function() {
     expect(union.all).to.equal(false);
     expect(union.unknown).to.equal(true);
   });
+
+
   it('Build an illegal type union', function() {
     var parser = new Parser();
     var union = parser.parse('|string');
