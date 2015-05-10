@@ -10,6 +10,8 @@ var transform = require('../lib/TransformForLegacy.js');
 
 var VALID_SYNTAX_SETS = [
   'TypeName',
+  'undefined',
+  'null',
   '$',
   '_',
   '*',
@@ -36,7 +38,9 @@ var VALID_SYNTAX_SETS = [
   'Generic .< ParamType1 , ParamType2 >',
   'ParamType[]',
   'string=',
+  'Object|undefined',
   '?string',
+  'string|null',
   '?string=',
   '...!Object',
   '!Object',
