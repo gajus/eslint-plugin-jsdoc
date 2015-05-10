@@ -493,6 +493,21 @@ describe('Parser', function() {
   });
 
 
+  it('should return a function type node with a context type when ' +
+     '"function(this:ThisObject, param1)" arrived', function() {
+    var typeExprStr = 'function(this:ThisObject, param1)';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createFunctionTypeNode(
+      [createTypeNameNode('param1')],
+      null,
+      { context: createTypeNameNode('ThisObject'), newInstance: null }
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
   it('should return a function type node as a constructor when "function(new:NewObject)"' +
      ' arrived', function() {
     var typeExprStr = 'function(new:NewObject)';
@@ -501,6 +516,38 @@ describe('Parser', function() {
     var expectedNode = createFunctionTypeNode(
       [], null,
       { context: null, newInstance: createTypeNameNode('NewObject') }
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a function type node as a constructor when ' +
+     '"function(new:NewObject, param1)" arrived', function() {
+    var typeExprStr = 'function(new:NewObject, param1)';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createFunctionTypeNode(
+      [createTypeNameNode('param1')],
+      null,
+      { context: null, newInstance: createTypeNameNode('NewObject') }
+    );
+
+    expect(node).to.deep.equal(expectedNode);
+  });
+
+
+  it('should return a function type node as a constructor when ' +
+     '"function(new:NewObject, this:ThisObject, param1)" arrived', function() {
+    var typeExprStr = 'function(new:NewObject, this:ThisObject, param1)';
+    var node = Parser.parse(typeExprStr);
+
+    var expectedNode = createFunctionTypeNode(
+      [ createTypeNameNode('param1') ], null,
+      {
+        context: createTypeNameNode('ThisObject'),
+        newInstance: createTypeNameNode('NewObject'),
+      }
     );
 
     expect(node).to.deep.equal(expectedNode);
