@@ -4,9 +4,13 @@ JSDoc specific linting rules for ESLint.
 
 ## Attribution
 
-Unusual, but I want to start the documentation with attribution to [JSCS: JavaScript Code Style checker](http://jscs.info/). This ESLint plugin is a wrapper around JSCS and the [`jscs-jsdoc`](https://github.com/jscs-dev/jscs-jsdoc) plugin. Thank you for your work.
+Unusual, but I want to start the documentation with attribution to [JSCS: JavaScript Code Style checker](http://jscs.info/). This ESLint plugin is a wrapper around JSCS and the [`jscs-jsdoc`](https://github.com/jscs-dev/jscs-jsdoc) plugin.
 
-## Instalation
+The reason for writing this plugin is to have all the linting rules in a consistent, plugin driven setup, that ESLint provides.
+
+Thank you for your work JSCS.
+
+## Installation
 
 Install [ESLint](https://www.github.com/eslint/eslint) either locally or globally.
 
