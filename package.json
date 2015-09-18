@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-jsdoc",
-  "description": "",
+  "description": "JSDoc specific linting rules for ESLint.",
   "version": "0.0.0",
   "main": "./dist/index.js",
   "repository": {
