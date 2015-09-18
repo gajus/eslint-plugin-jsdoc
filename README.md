@@ -2,6 +2,13 @@
 
 JSDoc specific linting rules for ESLint.
 
+* [Attribution](#attribution)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Rules](#rules)
+    * [`require-description-complete-sentence`](#require-description-complete-sentence)
+    * [`require-param-description`](#require-param-description)
+
 ## Attribution
 
 Unusual, but I want to start the documentation with attribution to [JSCS: JavaScript Code Style checker](http://jscs.info/). This ESLint plugin is a wrapper around JSCS and the [`jscs-jsdoc`](https://github.com/jscs-dev/jscs-jsdoc) plugin.
@@ -41,12 +48,81 @@ Finally, enable all of the rules that you would like to use.
 ```json
 {
     "rules": {
+        "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-param-description": 1
     }
 }
 ```
 
 ## Rules
+
+### `require-description-complete-sentence`
+
+Ensures a doc comment description is a complete sentence.
+
+A complete sentence is defined as starting with an upper case letter and ending with a period.
+
+The following patterns are considered problems:
+
+```js
+/**
+ * Description
+ * On multiple lines.
+ *
+ * @param {String} message
+ */
+function method() {}
+
+/**
+ * Description
+ * @param {String} message
+ */
+function method() {}
+
+/**
+ * description starting with a lower case letter.
+ * @param {String} message
+ */
+function method() {}
+
+/**
+ * Description period is offset .
+ * @param {String} message
+ */
+function method() {}
+
+/**
+ * Description!
+ * @param {String} message
+ */
+function method() {}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param {String} message
+ */
+function method() {}
+
+/**
+ * Description.
+ */
+function method() {}
+
+/**
+ * (Description).
+ */
+function method() {}
+
+/**
+ * Description.
+ *
+ * @param {String} message
+ */
+function method() {}
+```
 
 ### `require-param-description`
 

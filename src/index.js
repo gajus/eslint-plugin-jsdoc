@@ -31,11 +31,15 @@ validateSourceCode = (sourceCode, ruleName, ruleOptions) => {
     let results,
         errors;
 
+    // console.log('ruleName', ruleName, 'ruleOptions', ruleOptions);
+
     checker.configure({
         "jsDoc": {
             [ruleName]: ruleOptions
         }
     });
+
+    // console.log('checker._configuredRules', checker._configuredRules);
 
     results = checker.checkString(sourceCode);
 
@@ -70,6 +74,8 @@ reportValidateSourceCode = (context, ruleName, ruleOptions) => {
 
     errors = validateSourceCode(sourceCode, ruleName, ruleOptions);
 
+    // console.log('errors', errors, sourceCode, ruleName, ruleOptions);
+
     _.forEach(errors, (error) => {
         let node;
 
@@ -77,10 +83,14 @@ reportValidateSourceCode = (context, ruleName, ruleOptions) => {
             loc: {
                 start: {
                     line: error.line,
-                    column: error.column
+                    // "Ah... the parser (espree) is using 0-based column and eslint is using 1-based column, so context.report is 0-based then eslint transforms it to 1-based."
+                    // @see https://gitter.im/eslint/eslint?at=55fc8a81463feefb419d4798
+                    column: error.column - 1
                 }
             }
         };
+
+        // console.log('node', node)
 
         context.report(node, error.message);
     });
@@ -88,6 +98,11 @@ reportValidateSourceCode = (context, ruleName, ruleOptions) => {
 
 export default {
     rules: {
+        'require-description-complete-sentence': (context) => {
+            reportValidateSourceCode(context, 'requireDescriptionCompleteSentence', true);
+
+            return {};
+        },
         'require-param-description': (context) => {
             // let options;
             // options = context.options[0] || {};
@@ -95,9 +110,15 @@ export default {
             reportValidateSourceCode(context, 'requireParamDescription', true);
 
             return {};
-        }
+        },
+        /* 'require-return-description': (context) => {
+            reportValidateSourceCode(context, 'requireReturnDescription', true);
+
+            return {};
+        } */
     },
     rulesConfig: {
-        'require-param-description': 0
+        'require-param-description': 0,
+        // 'require-return-description': 0
     }
 };
