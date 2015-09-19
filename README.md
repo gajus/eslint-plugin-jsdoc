@@ -12,7 +12,6 @@ JSDoc specific linting rules for ESLint.
     * [`check-param-names`](#check-param-names)
     * [`check-redundant-params`](#check-redundant-params)
     * [`check-redundant-returns`](#check-redundant-returns)
-    * [`require-return-types`](#require-return-types)
     * [`newline-after-description`](#newline-after-description)
     * [`require-description-complete-sentence`](#require-description-complete-sentence)
     * [`require-param-description`](#require-param-description)
@@ -61,7 +60,6 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-param-names": 1,
         "jsdoc/check-redundant-params": 1,
         "jsdoc/check-redundant-returns": 1,
-        "jsdoc/require-return-types": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-param-description": 1,
@@ -164,39 +162,6 @@ The following patterns are not considered problems:
  */
 function quux () {
     return 'corge';
-}
-```
-
-### `require-return-types`
-
-Ensures returns in JSDoc contains type.
-
-The following patterns are considered problems:
-
-```js
-/**
- * @returns
- */
-function quux () {
-
-}
-```
-
-The following patterns are not considered problems:
-
-```js
-/**
- * @returns {String}
- */
-function quux () {
-
-}
-
-/**
- * no @return
- */
-function quux () {
-
 }
 ```
 
@@ -455,5 +420,38 @@ The following patterns are not considered problems:
  */
 function quux () {
     return 'corge';
+}
+```
+
+### `require-return-types`
+
+Ensures returns in JSDoc contains type.
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @returns
+ */
+function quux () {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @returns {String}
+ */
+function quux () {
+
+}
+
+/**
+ * no @return
+ */
+function quux () {
+
 }
 ```
