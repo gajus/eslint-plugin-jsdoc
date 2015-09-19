@@ -6,130 +6,64 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+var _rulesCheckParamNames = require('./rules/checkParamNames');
 
-var _jscs = require('jscs');
+var _rulesCheckParamNames2 = _interopRequireDefault(_rulesCheckParamNames);
 
-var _jscs2 = _interopRequireDefault(_jscs);
+var _rulesCheckRedundantParams = require('./rules/checkRedundantParams');
 
-var _lodash = require('lodash');
+var _rulesCheckRedundantParams2 = _interopRequireDefault(_rulesCheckRedundantParams);
 
-var _lodash2 = _interopRequireDefault(_lodash);
+var _rulesCheckRedundantReturns = require('./rules/checkRedundantReturns');
 
-var checker = undefined,
-    reportValidateSourceCode = undefined,
-    validateSourceCode = undefined;
+var _rulesCheckRedundantReturns2 = _interopRequireDefault(_rulesCheckRedundantReturns);
 
-checker = new _jscs2['default']();
-checker.configure({
-    "plugins": [require.resolve('jscs-jsdoc')]
-});
+var _rulesCheckReturnTypes = require('./rules/checkReturnTypes');
 
-/**
- * @typedef {Object} validateRule~error
- * @property {String} message
- * @property {Number} line
- * @property {Number} column
- */
+var _rulesCheckReturnTypes2 = _interopRequireDefault(_rulesCheckReturnTypes);
 
-/**
- * Validates a source code using a specific jscs-jsdoc rule and return an array of errors.
- *
- * @param {String} sourceCode
- * @param {String} ruleName
- * @param {Boolean|String|Object} ruleOptions
- * @returns {validateRule~error[]}
- */
-validateSourceCode = function (sourceCode, ruleName, ruleOptions) {
-    var results = undefined,
-        errors = undefined;
+var _rulesNewlineAfterDescription = require('./rules/newlineAfterDescription');
 
-    // console.log('ruleName', ruleName, 'ruleOptions', ruleOptions);
+var _rulesNewlineAfterDescription2 = _interopRequireDefault(_rulesNewlineAfterDescription);
 
-    checker.configure({
-        "jsDoc": _defineProperty({}, ruleName, ruleOptions)
-    });
+var _rulesRequireDescriptionCompleteSentence = require('./rules/requireDescriptionCompleteSentence');
 
-    // console.log('checker._configuredRules', checker._configuredRules);
+var _rulesRequireDescriptionCompleteSentence2 = _interopRequireDefault(_rulesRequireDescriptionCompleteSentence);
 
-    results = checker.checkString(sourceCode);
+var _rulesRequireParamDescription = require('./rules/requireParamDescription');
 
-    errors = results.getErrorList();
+var _rulesRequireParamDescription2 = _interopRequireDefault(_rulesRequireParamDescription);
 
-    // console.log('errors', errors);
+var _rulesRequireParamTypes = require('./rules/requireParamTypes');
 
-    errors = _lodash2['default'].map(errors, function (error) {
-        return {
-            message: error.message,
-            line: error.line,
-            column: error.column
-        };
-    });
+var _rulesRequireParamTypes2 = _interopRequireDefault(_rulesRequireParamTypes);
 
-    // console.log('errors', errors);
+var _rulesRequireReturnTypes = require('./rules/requireReturnTypes');
 
-    return errors;
-};
-
-/**
- * @param {Object} context
- * @param {String} ruleName
- * @param {Boolean|String|Object} ruleOptions
- * @returns {undefined}
- */
-reportValidateSourceCode = function (context, ruleName, ruleOptions) {
-    var errors = undefined,
-        sourceCode = undefined;
-
-    sourceCode = context.getSourceCode().text;
-
-    errors = validateSourceCode(sourceCode, ruleName, ruleOptions);
-
-    // console.log('errors', errors, sourceCode, ruleName, ruleOptions);
-
-    _lodash2['default'].forEach(errors, function (error) {
-        var node = undefined;
-
-        node = {
-            loc: {
-                start: {
-                    line: error.line,
-                    // "Ah... the parser (espree) is using 0-based column and eslint is using 1-based column, so context.report is 0-based then eslint transforms it to 1-based."
-                    // @see https://gitter.im/eslint/eslint?at=55fc8a81463feefb419d4798
-                    column: error.column - 1
-                }
-            }
-        };
-
-        // console.log('node', node)
-
-        context.report(node, error.message);
-    });
-};
+var _rulesRequireReturnTypes2 = _interopRequireDefault(_rulesRequireReturnTypes);
 
 exports['default'] = {
     rules: {
-        'require-description-complete-sentence': function requireDescriptionCompleteSentence(context) {
-            reportValidateSourceCode(context, 'requireDescriptionCompleteSentence', true);
-
-            return {};
-        },
-        'require-param-description': function requireParamDescription(context) {
-            // let options;
-            // options = context.options[0] || {};
-
-            reportValidateSourceCode(context, 'requireParamDescription', true);
-
-            return {};
-        }
+        'check-param-names': _rulesCheckParamNames2['default'],
+        'check-redundant-params': _rulesCheckRedundantParams2['default'],
+        'check-redundant-returns': _rulesCheckRedundantReturns2['default'],
+        'check-return-types': _rulesCheckReturnTypes2['default'],
+        'newline-after-description': _rulesNewlineAfterDescription2['default'],
+        'require-description-complete-sentence': _rulesRequireDescriptionCompleteSentence2['default'],
+        'require-param-description': _rulesRequireParamDescription2['default'],
+        'require-param-types': _rulesRequireParamTypes2['default'],
+        'require-return-types': _rulesRequireReturnTypes2['default']
     },
-    /* 'require-return-description': (context) => {
-        reportValidateSourceCode(context, 'requireReturnDescription', true);
-         return {};
-    } */
     rulesConfig: {
-        'require-param-description': 0
+        'check-param-names': 0,
+        'check-redundant-params': 0,
+        'check-redundant-returns': 0,
+        'check-return-types': 0,
+        'newline-after-description': 0,
+        'require-description-complete-sentence': 0,
+        'require-param-description': 0,
+        'require-param-types': 0,
+        'require-return-types': 0
     }
 };
 module.exports = exports['default'];
-// 'require-return-description': 0

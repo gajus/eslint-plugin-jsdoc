@@ -4,7 +4,7 @@ import {
 
 import {
     rules
-} from './../src/';
+} from './../../src/';
 
 let ruleTester;
 
@@ -15,9 +15,9 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
         {
             code: `
                 /**
-                 * @param {String} - message
+                 * @param {String} arg
                  */
-                function fn () {}
+                function fn (arg) {}
             `
         },
         {
@@ -41,9 +41,9 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
                 /**
                  * Description.
                  *
-                 * @param {String} - message
+                 * @param {String} arg
                  */
-                function fn () {}
+                function fn (arg) {}
             `
         }
     ],
@@ -52,9 +52,9 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * Description
-                 * @param {String} message
+                 * @param {String} arg
                  */
-                function fn () {}
+                function fn (arg) {}
             `,
             errors: [
                 {
@@ -66,9 +66,9 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * description starting with a lower case letter.
-                 * @param {String} message
+                 * @param {String} arg
                  */
-                function fn () {}
+                function fn (arg) {}
             `,
             errors: [
                 {
@@ -80,9 +80,9 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * Description period is offset .
-                 * @param {String} message
+                 * @param {String} arg
                  */
-                function fn () {}
+                function fn (arg) {}
             `,
             errors: [
                 {
@@ -94,9 +94,9 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * Description!
-                 * @param {String} message
+                 * @param {String} arg
                  */
-                function fn () {}
+                function fn (arg) {}
             `,
             errors: [
                 {
@@ -110,9 +110,9 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
                  * Description
                  * On multiple lines.
                  *
-                 * @param {String} - message
+                 * @param {String} arg
                  */
-                function fn () {}
+                function fn (arg) {}
             `,
             errors: [
                 {

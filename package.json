@@ -27,7 +27,7 @@
     "lodash": "^3.10.1"
   },
   "scripts": {
-    "test": "./node_modules/.bin/babel-node ./node_modules/.bin/mocha",
+    "test": "./node_modules/.bin/babel-node ./node_modules/.bin/mocha ./test/**/*.js",
     "build": "babel ./src/ --out-dir ./dist/",
     "watch": "babel --watch ./src/ --out-dir ./dist/"
   },

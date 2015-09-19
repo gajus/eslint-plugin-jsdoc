@@ -4,13 +4,13 @@ import {
 
 import {
     rules
-} from './../src/';
+} from './../../src/';
 
 let ruleTester;
 
 ruleTester = new RuleTester();
 
-ruleTester.run('require-return-description', rules['require-return-description'], {
+ruleTester.run('require-param-description', rules['require-param-description'], {
     valid: [
         {
             code: `
@@ -28,7 +28,7 @@ ruleTester.run('require-return-description', rules['require-return-description']
                  * @returns {String} method result
                  */
                 function fn () {
-                    return 'Foo.';
+                    return 'Hello!';
                 }
             `
         }
@@ -37,11 +37,9 @@ ruleTester.run('require-return-description', rules['require-return-description']
         {
             code: `
                 /**
-                 * @returns {Boolean}
+                 * @param {String} arg
                  */
-                function fn () {
-                    return false;
-                }
+                function fn (arg) {}
             `,
             errors: [
                 {
