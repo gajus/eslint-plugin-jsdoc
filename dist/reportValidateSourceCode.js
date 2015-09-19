@@ -22,6 +22,7 @@ var checker = undefined,
 
 checker = new _jscs2['default']();
 checker.configure({
+    "esnext": true,
     "plugins": [require.resolve('jscs-jsdoc')]
 });
 

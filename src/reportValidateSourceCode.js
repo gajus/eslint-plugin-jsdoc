@@ -7,6 +7,7 @@ let checker,
 
 checker = new jscs();
 checker.configure({
+    "esnext": true,
     "plugins": [
         require.resolve('jscs-jsdoc'),
     ]
