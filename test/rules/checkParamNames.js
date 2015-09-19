@@ -17,7 +17,7 @@ ruleTester.run('check-param-names', rules['check-param-names'], {
             /**
              * @param foo
              */
-            function fn (foo) {
+            function quux (foo) {
 
             }`
         },
@@ -27,7 +27,7 @@ ruleTester.run('check-param-names', rules['check-param-names'], {
              * @param foo
              * @param bar
              */
-            function fn (foo, bar) {
+            function quux (foo, bar) {
 
             }`
         }
@@ -39,7 +39,7 @@ ruleTester.run('check-param-names', rules['check-param-names'], {
                  * @param foo
                  * @param bar
                  */
-                function fn (bar, foo) {
+                function quux (bar, foo) {
 
                 }
             `,
@@ -54,7 +54,7 @@ ruleTester.run('check-param-names', rules['check-param-names'], {
                 /**
                  * @param foo
                  */
-                function fn (bar) {
+                function quux (bar) {
 
                 }
             `,

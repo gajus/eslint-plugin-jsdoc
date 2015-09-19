@@ -15,9 +15,11 @@ ruleTester.run('check-redundant-params', rules['check-redundant-params'], {
         {
             code: `
             /**
-             * @param {String} arg
+             * @param {String} foo
              */
-            function fn (arg) {}
+            function quux (foo) {
+
+            }
             `
         }
     ],
@@ -25,13 +27,15 @@ ruleTester.run('check-redundant-params', rules['check-redundant-params'], {
         {
             code: `
                 /**
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn () {}
+                function quux () {
+
+                }
             `,
             errors: [
                 {
-                    message: 'Found redundant param "arg" statement'
+                    message: 'Found redundant param "foo" statement'
                 }
             ]
         }

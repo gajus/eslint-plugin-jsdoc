@@ -17,7 +17,9 @@ ruleTester.run('require-return-types', rules['require-return-types'], {
                 /**
                  * @returns {String}
                  */
-                function fn () {}
+                function quux () {
+
+                }
             `
         },
         {
@@ -25,7 +27,9 @@ ruleTester.run('require-return-types', rules['require-return-types'], {
                 /**
                  * no @return
                  */
-                function fn () {}
+                function quux () {
+
+                }
             `
         }
     ],
@@ -35,7 +39,9 @@ ruleTester.run('require-return-types', rules['require-return-types'], {
                 /**
                  * @returns
                  */
-                function fn () {}
+                function quux () {
+
+                }
             `,
             errors: [
                 {

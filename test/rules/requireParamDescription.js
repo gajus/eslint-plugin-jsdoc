@@ -17,7 +17,7 @@ ruleTester.run('require-param-description', rules['require-param-description'], 
                 /**
                  * @returns {Boolean} Method result.
                  */
-                function fn () {
+                function quux () {
                     return false;
                 }
             `
@@ -27,8 +27,8 @@ ruleTester.run('require-param-description', rules['require-param-description'], 
                 /**
                  * @returns {String} method result
                  */
-                function fn () {
-                    return 'Hello!';
+                function quux () {
+                    return 'corge';
                 }
             `
         }
@@ -37,9 +37,11 @@ ruleTester.run('require-param-description', rules['require-param-description'], 
         {
             code: `
                 /**
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `,
             errors: [
                 {

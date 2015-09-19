@@ -15,9 +15,11 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
         {
             code: `
                 /**
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `,
             options: [
                 'never'
@@ -28,7 +30,9 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
                 /**
                  * Description
                  */
-                function fn () {}
+                function quux () {
+
+                }
             `,
             options: [
                 'never'
@@ -38,9 +42,11 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
             code: `
                 /**
                  * Description
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `,
             options: [
                 'never'
@@ -49,9 +55,11 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
         {
             code: `
             /**
-             * @param {String} arg
+             * @param {String} foo
              */
-            function fn (arg) {}
+            function quux (foo) {
+
+            }
             `,
             options: [
                 'always'
@@ -62,7 +70,9 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
             /**
              * Description
              */
-            function fn () {}
+            function quux () {
+
+            }
             `,
             options: [
                 'always'
@@ -73,9 +83,11 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
             /**
              * Description
              *
-             * @param {String} arg
+             * @param {String} foo
              */
-            function fn (arg) {}
+            function quux (foo) {
+
+            }
             `,
             options: [
                 'always'
@@ -88,9 +100,11 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
                 /**
                  * Description
                  *
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `,
             options: [
                 'never'
@@ -105,9 +119,11 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
             code: `
                 /**
                  * Description
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `,
             options: [
                 'always'

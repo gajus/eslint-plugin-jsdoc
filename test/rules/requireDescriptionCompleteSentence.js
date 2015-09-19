@@ -15,9 +15,11 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
         {
             code: `
                 /**
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `
         },
         {
@@ -25,7 +27,9 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
                 /**
                  * Description.
                  */
-                function fn () {}
+                function quux () {
+
+                }
             `
         },
         {
@@ -33,7 +37,9 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
                 /**
                  * (Description).
                  */
-                function fn () {}
+                function quux () {
+
+                }
             `
         },
         {
@@ -41,9 +47,11 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
                 /**
                  * Description.
                  *
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `
         }
     ],
@@ -52,9 +60,11 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * Description
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `,
             errors: [
                 {
@@ -66,9 +76,11 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * description starting with a lower case letter.
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `,
             errors: [
                 {
@@ -80,9 +92,11 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * Description period is offset .
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `,
             errors: [
                 {
@@ -94,9 +108,11 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * Description!
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `,
             errors: [
                 {
@@ -110,9 +126,11 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
                  * Description
                  * On multiple lines.
                  *
-                 * @param {String} arg
+                 * @param {String} foo
                  */
-                function fn (arg) {}
+                function quux (foo) {
+
+                }
             `,
             errors: [
                 {

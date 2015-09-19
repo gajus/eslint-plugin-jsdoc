@@ -15,9 +15,11 @@ ruleTester.run('require-param-types', rules['require-param-types'], {
         {
             code: `
             /**
-             * @param {String} arg
+             * @param {String} foo
              */
-            function fn (arg) {}
+            function quux (foo) {
+
+            }
             `
         }
     ],
@@ -25,9 +27,11 @@ ruleTester.run('require-param-types', rules['require-param-types'], {
         {
             code: `
                 /**
-                 * @param arg
+                 * @param foo
                  */
-                function fn () {}
+                function quux () {
+
+                }
             `,
             errors: [
                 {

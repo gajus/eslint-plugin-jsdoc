@@ -17,8 +17,8 @@ ruleTester.run('check-return-types', rules['check-return-types'], {
             /**
              * @returns {String}
              */
-            function fn () {
-                return 'foo';
+            function quux () {
+                return 'corge';
             }
             `
         }
@@ -29,7 +29,7 @@ ruleTester.run('check-return-types', rules['check-return-types'], {
                 /**
                  * @returns {String}
                  */
-                function fn () {
+                function quux () {
                     return true;
                 }
             `,

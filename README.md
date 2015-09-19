@@ -58,8 +58,15 @@ Finally, enable all of the rules that you would like to use.
 ```json
 {
     "rules": {
+        "jsdoc/check-param-names": 1,
+        "jsdoc/check-redundant-params": 1,
+        "jsdoc/check-redundant-returns": 1,
+        "jsdoc/require-return-types": 1,
+        "jsdoc/newline-after-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
-        "jsdoc/require-param-description": 1
+        "jsdoc/require-param-description": 1,
+        "jsdoc/require-param-types": 1,
+        "jsdoc/require-return-types": 1
     }
 }
 ```
@@ -77,14 +84,14 @@ The following patterns are considered problems:
  * @param foo
  * @param bar
  */
-function fn (bar, foo) {
+function quux (bar, foo) {
 
 }
 
 /**
  * @param foo
  */
-function fn (bar) {
+function quux (bar) {
 
 }
 ```
@@ -96,14 +103,14 @@ The following patterns are not considered problems:
  * @param foo
  * @param bar
  */
-function fn (foo, bar) {
+function quux (foo, bar) {
 
 }
 
 /**
  * @param foo
  */
-function fn (foo) {
+function quux (foo) {
 
 }
 ```
@@ -116,18 +123,22 @@ The following patterns are considered problems:
 
 ```js
 /**
- * @param {String} arg
+ * @param {String} foo
  */
-function fn () {}
+function quux () {
+
+}
 ```
 
 The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 ```
 
 ### `check-redundant-returns`
@@ -140,7 +151,7 @@ The following patterns are considered problems:
 /**
  * @returns {String}
  */
-function fn () {
+function quux () {
 
 }
 ```
@@ -151,8 +162,8 @@ The following patterns are not considered problems:
 /**
  * @returns {String}
  */
-function fn () {
-    return 'yes';
+function quux () {
+    return 'corge';
 }
 ```
 
@@ -166,7 +177,9 @@ The following patterns are considered problems:
 /**
  * @returns
  */
-function fn () {}
+function quux () {
+
+}
 ```
 
 The following patterns are not considered problems:
@@ -175,12 +188,16 @@ The following patterns are not considered problems:
 /**
  * @returns {String}
  */
-function fn () {}
+function quux () {
+
+}
 
 /**
  * no @return
  */
-function fn () {}
+function quux () {
+
+}
 ```
 
 ### `newline-after-description`
@@ -195,29 +212,37 @@ The following patterns are considered problems when configured `"never"`:
 /**
  * Description
  *
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 ```
 
 The following patterns are not considered problems when configured `"never"`:
 
 ```js
 /**
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 
 /**
  * Description
  */
-function fn () {}
+function quux () {
+
+}
 
 /**
  * Description
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 ```
 
 The following patterns are considered problems when configured `"always"`:
@@ -225,30 +250,38 @@ The following patterns are considered problems when configured `"always"`:
 ```js
 /**
  * Description
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 ```
 
 The following patterns are not considered problems when configured `"always"`:
 
 ```js
 /**
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 
 /**
  * Description
  */
-function fn () {}
+function quux () {
+
+}
 
 /**
  * Description
  *
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 ```
 
 ### `require-description-complete-sentence`
@@ -264,59 +297,77 @@ The following patterns are considered problems:
  * Description
  * On multiple lines.
  *
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 
 /**
  * Description
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 
 /**
  * description starting with a lower case letter.
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 
 /**
  * Description period is offset .
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 
 /**
  * Description!
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 ```
 
 The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 
 /**
  * Description.
  */
-function fn () {}
+function quux () {
+
+}
 
 /**
  * (Description).
  */
-function fn () {}
+function quux () {
+
+}
 
 /**
  * Description.
  *
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 ```
 
 ### `require-param-description`
@@ -327,28 +378,34 @@ The following patterns are considered problems:
 
 ```js
 /**
- * @param {String} arg
+ * @param {String} foo
  */
-function fn (arg) {}
+function quux (foo) {}
 
 /**
- * @param arg
+ * @param foo
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 ```
 
 The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} arg message
+ * @param {String} foo Foo.
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 
 /**
- * @param arg message
+ * @param foo Foo.
  */
-function fn (arg) {}
+function quux (foo) {
+
+}
 ```
 
 ### `require-param-types`
@@ -357,18 +414,22 @@ The following patterns are considered problems:
 
 ```js
 /**
- * @param arg
+ * @param foo
  */
-function fn () {}
+function quux () {
+
+}
 ```
 
 The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} arg
+ * @param {String} foo
  */
-function fn () {}
+function quux () {
+
+}
 ```
 
 ### `check-return-types`
@@ -381,7 +442,7 @@ The following patterns are considered problems:
 /**
  * @returns {String}
  */
-function fn () {
+function quux () {
     return true;
 }
 ```
@@ -392,7 +453,7 @@ The following patterns are not considered problems:
 /**
  * @returns {String}
  */
-function fn () {
-    return 'foo';
+function quux () {
+    return 'corge';
 }
 ```
