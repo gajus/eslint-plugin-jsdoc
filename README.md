@@ -25,7 +25,7 @@ Unusual, but I want to start the documentation with attribution to [JSCS: JavaSc
 
 The reason for writing this plugin is to have all the linting rules in a consistent, plugin driven setup, that ESLint provides.
 
-Thank you for your work JSCS.
+Thank you [@zxqfox](https://github.com/jscs-dev/jscs-jsdoc/commits/master?author=zxqfox) and [others](https://github.com/jscs-dev/jscs-jsdoc/commits/master).
 
 ## Installation
 
