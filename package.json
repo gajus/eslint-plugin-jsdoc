@@ -22,18 +22,20 @@
     "eslint": ">=0.8.0"
   },
   "dependencies": {
-    "jscs": "^2.1.1",
-    "jscs-jsdoc": "^1.1.0",
+    "jscs": "^2.2.1",
+    "jscs-jsdoc": "^1.2.0",
     "lodash": "^3.10.1"
   },
   "scripts": {
-    "test": "./node_modules/.bin/babel-node ./node_modules/.bin/mocha ./test/**/*.js",
+    "test": "node ./node_modules/.bin/babel-node ./node_modules/.bin/mocha ./test/**/*.js",
     "build": "babel ./src/ --out-dir ./dist/",
-    "watch": "babel --watch ./src/ --out-dir ./dist/"
+    "watch": "babel --watch ./src/ --out-dir ./dist/",
+    "readme": "node ./node_modules/.bin/gitdown ./.README/README.md --output-file ./README.md"
   },
   "devDependencies": {
     "babel": "^5.8.23",
-    "eslint": "^1.5.0",
-    "mocha": "^2.3.2"
+    "eslint": "^1.5.1",
+    "gitdown": "^2.1.0",
+    "mocha": "^2.3.3"
   }
 }
