@@ -15,7 +15,7 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
         {
             code: `
                 /**
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 
@@ -42,7 +42,7 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
             code: `
                 /**
                  * Description
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 
@@ -55,7 +55,7 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
         {
             code: `
             /**
-             * @param {String} foo
+             * @param {string} foo
              */
             function quux (foo) {
 
@@ -83,7 +83,7 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
             /**
              * Description
              *
-             * @param {String} foo
+             * @param {string} foo
              */
             function quux (foo) {
 
@@ -100,7 +100,7 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
                 /**
                  * Description
                  *
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 
@@ -119,7 +119,7 @@ ruleTester.run('newline-after-description', rules['newline-after-description'], 
             code: `
                 /**
                  * Description
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 

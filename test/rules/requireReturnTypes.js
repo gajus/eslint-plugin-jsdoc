@@ -15,7 +15,7 @@ ruleTester.run('require-return-types', rules['require-return-types'], {
         {
             code: `
                 /**
-                 * @returns {String}
+                 * @returns {string}
                  */
                 function quux () {
 
@@ -25,7 +25,7 @@ ruleTester.run('require-return-types', rules['require-return-types'], {
         {
             code: `
                 /**
-                 * no @return
+                 * no @returns
                  */
                 function quux () {
 

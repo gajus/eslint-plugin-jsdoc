@@ -15,7 +15,7 @@ ruleTester.run('check-redundant-returns', rules['check-redundant-returns'], {
         {
             code: `
             /**
-             * @returns {String}
+             * @returns {string}
              */
             function quux () {
                 return 'bar';
@@ -27,7 +27,7 @@ ruleTester.run('check-redundant-returns', rules['check-redundant-returns'], {
         {
             code: `
                 /**
-                 * @returns {String}
+                 * @returns {string}
                  */
                 function quux () {
 

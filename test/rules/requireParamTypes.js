@@ -15,7 +15,7 @@ ruleTester.run('require-param-types', rules['require-param-types'], {
         {
             code: `
             /**
-             * @param {String} foo
+             * @param {string} foo
              */
             function quux (foo) {
 

@@ -10,7 +10,7 @@ The following patterns are considered problems when configured `"never"`:
 /**
  * Description
  *
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -21,7 +21,7 @@ The following patterns are not considered problems when configured `"never"`:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -36,7 +36,7 @@ function quux () {
 
 /**
  * Description
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -48,7 +48,7 @@ The following patterns are considered problems when configured `"always"`:
 ```js
 /**
  * Description
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -59,7 +59,7 @@ The following patterns are not considered problems when configured `"always"`:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -75,7 +75,7 @@ function quux () {
 /**
  * Description
  *
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 

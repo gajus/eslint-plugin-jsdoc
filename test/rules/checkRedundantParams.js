@@ -15,7 +15,7 @@ ruleTester.run('check-redundant-params', rules['check-redundant-params'], {
         {
             code: `
             /**
-             * @param {String} foo
+             * @param {string} foo
              */
             function quux (foo) {
 
@@ -27,7 +27,7 @@ ruleTester.run('check-redundant-params', rules['check-redundant-params'], {
         {
             code: `
                 /**
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux () {
 

@@ -11,7 +11,7 @@ The following patterns are considered problems:
  * Description
  * On multiple lines.
  *
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -19,7 +19,7 @@ function quux (foo) {
 
 /**
  * Description
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -27,7 +27,7 @@ function quux (foo) {
 
 /**
  * description starting with a lower case letter.
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -35,7 +35,7 @@ function quux (foo) {
 
 /**
  * Description period is offset .
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -43,7 +43,7 @@ function quux (foo) {
 
 /**
  * Description!
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -54,7 +54,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -77,7 +77,7 @@ function quux () {
 /**
  * Description.
  *
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 

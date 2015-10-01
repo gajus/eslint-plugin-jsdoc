@@ -15,7 +15,7 @@ ruleTester.run('check-return-types', rules['check-return-types'], {
         {
             code: `
             /**
-             * @returns {String}
+             * @returns {string}
              */
             function quux () {
                 return 'corge';
@@ -27,7 +27,7 @@ ruleTester.run('check-return-types', rules['check-return-types'], {
         {
             code: `
                 /**
-                 * @returns {String}
+                 * @returns {string}
                  */
                 function quux () {
                     return true;

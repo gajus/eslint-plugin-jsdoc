@@ -6,7 +6,7 @@ The following patterns are considered problems:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {}
 
@@ -22,7 +22,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} foo Foo.
+ * @param {string} foo Foo.
  */
 function quux (foo) {
 

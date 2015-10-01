@@ -6,7 +6,7 @@ The following patterns are considered problems:
 
 ```js
 /**
- * @returns {String}
+ * @returns {string}
  */
 function quux () {
     return true;
@@ -17,7 +17,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @returns {String}
+ * @returns {string}
  */
 function quux () {
     return 'corge';

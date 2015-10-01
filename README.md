@@ -125,7 +125,7 @@ The following patterns are considered problems:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux () {
 
@@ -136,7 +136,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -151,7 +151,7 @@ The following patterns are considered problems:
 
 ```js
 /**
- * @returns {String}
+ * @returns {string}
  */
 function quux () {
 
@@ -162,7 +162,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @returns {String}
+ * @returns {string}
  */
 function quux () {
     return 'corge';
@@ -181,7 +181,7 @@ The following patterns are considered problems when configured `"never"`:
 /**
  * Description
  *
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -192,7 +192,7 @@ The following patterns are not considered problems when configured `"never"`:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -207,7 +207,7 @@ function quux () {
 
 /**
  * Description
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -219,7 +219,7 @@ The following patterns are considered problems when configured `"always"`:
 ```js
 /**
  * Description
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -230,7 +230,7 @@ The following patterns are not considered problems when configured `"always"`:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -246,7 +246,7 @@ function quux () {
 /**
  * Description
  *
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -266,7 +266,7 @@ The following patterns are considered problems:
  * Description
  * On multiple lines.
  *
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -274,7 +274,7 @@ function quux (foo) {
 
 /**
  * Description
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -282,7 +282,7 @@ function quux (foo) {
 
 /**
  * description starting with a lower case letter.
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -290,7 +290,7 @@ function quux (foo) {
 
 /**
  * Description period is offset .
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -298,7 +298,7 @@ function quux (foo) {
 
 /**
  * Description!
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -309,7 +309,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -332,7 +332,7 @@ function quux () {
 /**
  * Description.
  *
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {
 
@@ -373,7 +373,7 @@ The following patterns are considered problems:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux (foo) {}
 
@@ -389,7 +389,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} foo Foo.
+ * @param {string} foo Foo.
  */
 function quux (foo) {
 
@@ -420,7 +420,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux () {
 
@@ -446,14 +446,14 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @returns {String}
+ * @returns {string}
  */
 function quux () {
 
 }
 
 /**
- * no @return
+ * no @returns
  */
 function quux () {
 

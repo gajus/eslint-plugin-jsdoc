@@ -15,7 +15,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @param {String} foo
+ * @param {string} foo
  */
 function quux () {
 

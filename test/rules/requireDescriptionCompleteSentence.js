@@ -15,7 +15,7 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
         {
             code: `
                 /**
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 
@@ -47,7 +47,7 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
                 /**
                  * Description.
                  *
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 
@@ -60,7 +60,7 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * Description
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 
@@ -76,7 +76,7 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * description starting with a lower case letter.
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 
@@ -92,7 +92,7 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * Description period is offset .
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 
@@ -108,7 +108,7 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
             code: `
                 /**
                  * Description!
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 
@@ -126,7 +126,7 @@ ruleTester.run('require-description-complete-sentence', rules['require-descripti
                  * Description
                  * On multiple lines.
                  *
-                 * @param {String} foo
+                 * @param {string} foo
                  */
                 function quux (foo) {
 
