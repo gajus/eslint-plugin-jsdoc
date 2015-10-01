@@ -1,7 +1,7 @@
-# eslint-plugin-jsdoc
+<h1 id="eslint-plugin-jsdoc">eslint-plugin-jsdoc</h1>
 
-[![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-jsdoc/master.svg?style=flat)](https://travis-ci.org/gajus/eslint-plugin-jsdoc)
 [![NPM version](http://img.shields.io/npm/v/eslint-plugin-jsdoc.svg?style=flat)](https://www.npmjs.org/package/eslint-plugin-jsdoc)
+[![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-jsdoc/master.svg?style=flat)](https://travis-ci.org/gajus/eslint-plugin-jsdoc)
 
 JSDoc specific linting rules for ESLint.
 
@@ -14,11 +14,12 @@ JSDoc specific linting rules for ESLint.
     * [`check-redundant-returns`](#check-redundant-returns)
     * [`newline-after-description`](#newline-after-description)
     * [`require-description-complete-sentence`](#require-description-complete-sentence)
+    * [`require-param`](#require-param)
     * [`require-param-description`](#require-param-description)
     * [`require-param-types`](#require-param-types)
     * [`require-return-types`](#require-return-types)
 
-## Attribution
+<h2 id="eslint-plugin-jsdoc-attribution">Attribution</h2>
 
 Unusual, but I want to start the documentation with attribution to [JSCS: JavaScript Code Style checker](http://jscs.info/). This ESLint plugin is a wrapper around JSCS and the [`jscs-jsdoc`](https://github.com/jscs-dev/jscs-jsdoc) plugin.
 
@@ -26,7 +27,7 @@ The reason for writing this plugin is to have all the linting rules in a consist
 
 Thank you [@zxqfox](https://github.com/jscs-dev/jscs-jsdoc/commits/master?author=zxqfox) and [others](https://github.com/jscs-dev/jscs-jsdoc/commits/master).
 
-## Installation
+<h2 id="eslint-plugin-jsdoc-installation">Installation</h2>
 
 Install [ESLint](https://www.github.com/eslint/eslint) either locally or globally.
 
@@ -40,7 +41,7 @@ If you have installed `ESLint` globally, you have to install JSDoc plugin global
 $ npm install eslint-plugin-jsdoc
 ```
 
-## Configuration
+<h2 id="eslint-plugin-jsdoc-configuration">Configuration</h2>
 
 Add `plugins` section and specify eslint-plugin-jsdoc as a plugin.
 
@@ -62,6 +63,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-redundant-returns": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
+        "jsdoc/require-param": 1,
         "jsdoc/require-param-description": 1,
         "jsdoc/require-param-types": 1,
         "jsdoc/require-return-types": 1
@@ -69,9 +71,9 @@ Finally, enable all of the rules that you would like to use.
 }
 ```
 
-## Rules
+<h2 id="eslint-plugin-jsdoc-rules">Rules</h2>
 
-### `check-param-names`
+<h3 id="eslint-plugin-jsdoc-rules--check-param-names-">`check-param-names`</h3>
 
 Ensures param names in JSDoc and in function declaration are equal.
 
@@ -113,7 +115,7 @@ function quux (foo) {
 }
 ```
 
-### `check-redundant-params`
+<h3 id="eslint-plugin-jsdoc-rules--check-redundant-params-">`check-redundant-params`</h3>
 
 Reports redundant params in JSDoc.
 
@@ -139,7 +141,7 @@ function quux (foo) {
 }
 ```
 
-### `check-redundant-returns`
+<h3 id="eslint-plugin-jsdoc-rules--check-redundant-returns-">`check-redundant-returns`</h3>
 
 Report statements for functions with no return.
 
@@ -165,7 +167,7 @@ function quux () {
 }
 ```
 
-### `newline-after-description`
+<h3 id="eslint-plugin-jsdoc-rules--newline-after-description-">`newline-after-description`</h3>
 
 Enforces consistent padding of doc comment description.
 
@@ -249,7 +251,7 @@ function quux (foo) {
 }
 ```
 
-### `require-description-complete-sentence`
+<h3 id="eslint-plugin-jsdoc-rules--require-description-complete-sentence-">`require-description-complete-sentence`</h3>
 
 Ensures a doc comment description is a complete sentence.
 
@@ -335,7 +337,33 @@ function quux (foo) {
 }
 ```
 
-### `require-param-description`
+<h3 id="eslint-plugin-jsdoc-rules--require-param-">`require-param`</h3>
+
+Ensures all parameters are documented.
+
+The following patterns are considered problems:
+
+```js
+/**
+ *
+ */
+function quux (foo) {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param {string} foo
+ */
+function quux (foo) {
+
+}
+```
+
+<h3 id="eslint-plugin-jsdoc-rules--require-param-description-">`require-param-description`</h3>
 
 Ensures a param description exists.
 
@@ -373,7 +401,7 @@ function quux (foo) {
 }
 ```
 
-### `require-param-types`
+<h3 id="eslint-plugin-jsdoc-rules--require-param-types-">`require-param-types`</h3>
 
 The following patterns are considered problems:
 
@@ -397,33 +425,7 @@ function quux () {
 }
 ```
 
-### `check-return-types`
-
-Reports discrepancies between the claimed in JSDoc and actual type if both exist (code scan).
-
-The following patterns are considered problems:
-
-```js
-/**
- * @returns {String}
- */
-function quux () {
-    return true;
-}
-```
-
-The following patterns are not considered problems:
-
-```js
-/**
- * @returns {String}
- */
-function quux () {
-    return 'corge';
-}
-```
-
-### `require-return-types`
+<h3 id="eslint-plugin-jsdoc-rules--require-return-types-">`require-return-types`</h3>
 
 Ensures returns in JSDoc contains type.
 
@@ -455,3 +457,4 @@ function quux () {
 
 }
 ```
+

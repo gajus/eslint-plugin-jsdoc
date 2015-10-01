@@ -4,6 +4,7 @@ import checkRedundantReturns from './rules/checkRedundantReturns';
 import checkReturnTypes from './rules/checkReturnTypes';
 import newlineAfterDescription from './rules/newlineAfterDescription';
 import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
+import requireParam from './rules/requireParam';
 import requireParamDescription from './rules/requireParamDescription';
 import requireParamTypes from './rules/requireParamTypes';
 import requireReturnTypes from './rules/requireReturnTypes';
@@ -16,6 +17,7 @@ export default {
         'check-return-types': checkReturnTypes,
         'newline-after-description': newlineAfterDescription,
         'require-description-complete-sentence': requireDescriptionCompleteSentence,
+        'require-param': requireParam,
         'require-param-description': requireParamDescription,
         'require-param-types': requireParamTypes,
         'require-return-types': requireReturnTypes,
@@ -27,6 +29,7 @@ export default {
         'check-return-types': 0,
         'newline-after-description': 0,
         'require-description-complete-sentence': 0,
+        'require-param': 0,
         'require-param-description': 0,
         'require-param-types': 0,
         'require-return-types': 0,
