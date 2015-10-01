@@ -7,18 +7,21 @@ JSDoc specific linting rules for ESLint.
 
 * [eslint-plugin-jsdoc](#eslint-plugin-jsdoc)
     * [Attribution](#eslint-plugin-jsdoc-attribution)
+        * [Reference to jscs-jsdoc](#eslint-plugin-jsdoc-attribution-reference-to-jscs-jsdoc)
     * [Installation](#eslint-plugin-jsdoc-installation)
     * [Configuration](#eslint-plugin-jsdoc-configuration)
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
         * [`check-redundant-params`](#eslint-plugin-jsdoc-rules-check-redundant-params)
         * [`check-redundant-returns`](#eslint-plugin-jsdoc-rules-check-redundant-returns)
+        * [`check-returns-types`](#eslint-plugin-jsdoc-rules-check-returns-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
         * [`require-param-types`](#eslint-plugin-jsdoc-rules-require-param-types)
-        * [`require-return-types`](#eslint-plugin-jsdoc-rules-require-return-types)
+        * [`require-returns-description`](#eslint-plugin-jsdoc-rules-require-returns-description)
+        * [`require-returns-types`](#eslint-plugin-jsdoc-rules-require-returns-types)
 
 
 <h2 id="eslint-plugin-jsdoc-attribution">Attribution</h2>
@@ -28,6 +31,22 @@ Unusual, but I want to start the documentation with attribution to [JSCS: JavaSc
 The reason for writing this plugin is to have all the linting rules in a consistent, plugin driven setup, that ESLint provides.
 
 Thank you [@zxqfox](https://github.com/jscs-dev/jscs-jsdoc/commits/master?author=zxqfox) and [others](https://github.com/jscs-dev/jscs-jsdoc/commits/master).
+
+<h3 id="eslint-plugin-jsdoc-attribution-reference-to-jscs-jsdoc">Reference to jscs-jsdoc</h3>
+
+This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
+
+[`check-param-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names)
+[`check-redundant-params`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-redundant-params)
+[`check-redundant-returns`](https://github.com/gajus/eslint-plugin-jsdoc#check-redundant-returns)
+[`check-returns-types`](https://github.com/gajus/eslint-plugin-jsdoc#check-returns-types)
+[`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#newline-after-description)
+[`require-description-complete-sentence`](https://github.com/gajus/eslint-plugin-jsdoc#require-description-complete-sentence)
+[`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#require-param)
+[`require-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#require-param-description)
+[`require-param-types`](https://github.com/gajus/eslint-plugin-jsdoc#require-param-types)
+[`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#require-returns-description)
+[`require-returns-types`](https://github.com/gajus/eslint-plugin-jsdoc#require-returns-types)
 
 <h2 id="eslint-plugin-jsdoc-installation">Installation</h2>
 
@@ -63,12 +82,14 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-param-names": 1,
         "jsdoc/check-redundant-params": 1,
         "jsdoc/check-redundant-returns": 1,
+        "jsdoc/check-returns-types": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-param": 1,
         "jsdoc/require-param-description": 1,
         "jsdoc/require-param-types": 1,
-        "jsdoc/require-return-types": 1
+        "jsdoc/require-returns-description": 1,
+        "jsdoc/require-returns-types": 1
     }
 }
 ```
@@ -155,6 +176,32 @@ The following patterns are considered problems:
  */
 function quux () {
 
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @returns {string}
+ */
+function quux () {
+    return 'corge';
+}
+```
+
+<h3 id="eslint-plugin-jsdoc-rules-check-returns-types"><code>check-returns-types</code></h3>
+
+Reports discrepancies between the claimed in JSDoc and actual type if both exist (code scan).
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @returns {string}
+ */
+function quux () {
+    return true;
 }
 ```
 
@@ -427,9 +474,35 @@ function quux () {
 }
 ```
 
-<h3 id="eslint-plugin-jsdoc-rules-require-return-types"><code>require-return-types</code></h3>
+<h3 id="eslint-plugin-jsdoc-rules-require-returns-description"><code>require-returns-description</code></h3>
 
-Ensures returns in JSDoc contains type.
+Ensures a `@returns` description exists.
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @returns {string}
+ */
+function quux () {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @returns {string} Quux.
+ */
+function quux () {
+
+}
+```
+
+<h3 id="eslint-plugin-jsdoc-rules-require-returns-types"><code>require-returns-types</code></h3>
+
+Ensures `@returns` in JSDoc contains type.
 
 The following patterns are considered problems:
 
