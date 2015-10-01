@@ -5,19 +5,7 @@
 
 JSDoc specific linting rules for ESLint.
 
-* [Attribution](#attribution)
-* [Installation](#installation)
-* [Configuration](#configuration)
-* [Rules](#rules)
-    * [`check-param-names`](#check-param-names)
-    * [`check-redundant-params`](#check-redundant-params)
-    * [`check-redundant-returns`](#check-redundant-returns)
-    * [`newline-after-description`](#newline-after-description)
-    * [`require-description-complete-sentence`](#require-description-complete-sentence)
-    * [`require-param`](#require-param)
-    * [`require-param-description`](#require-param-description)
-    * [`require-param-types`](#require-param-types)
-    * [`require-return-types`](#require-return-types)
+{"gitdown": "contents"}
 
 ## Attribution
 

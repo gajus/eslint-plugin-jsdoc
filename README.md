@@ -5,19 +5,21 @@
 
 JSDoc specific linting rules for ESLint.
 
-* [Attribution](#attribution)
-* [Installation](#installation)
-* [Configuration](#configuration)
-* [Rules](#rules)
-    * [`check-param-names`](#check-param-names)
-    * [`check-redundant-params`](#check-redundant-params)
-    * [`check-redundant-returns`](#check-redundant-returns)
-    * [`newline-after-description`](#newline-after-description)
-    * [`require-description-complete-sentence`](#require-description-complete-sentence)
-    * [`require-param`](#require-param)
-    * [`require-param-description`](#require-param-description)
-    * [`require-param-types`](#require-param-types)
-    * [`require-return-types`](#require-return-types)
+* [eslint-plugin-jsdoc](#eslint-plugin-jsdoc)
+    * [Attribution](#eslint-plugin-jsdoc-attribution)
+    * [Installation](#eslint-plugin-jsdoc-installation)
+    * [Configuration](#eslint-plugin-jsdoc-configuration)
+    * [Rules](#eslint-plugin-jsdoc-rules)
+        * [`check-param-names`](#eslint-plugin-jsdoc-rules--check-param-names-)
+        * [`check-redundant-params`](#eslint-plugin-jsdoc-rules--check-redundant-params-)
+        * [`check-redundant-returns`](#eslint-plugin-jsdoc-rules--check-redundant-returns-)
+        * [`newline-after-description`](#eslint-plugin-jsdoc-rules--newline-after-description-)
+        * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules--require-description-complete-sentence-)
+        * [`require-param`](#eslint-plugin-jsdoc-rules--require-param-)
+        * [`require-param-description`](#eslint-plugin-jsdoc-rules--require-param-description-)
+        * [`require-param-types`](#eslint-plugin-jsdoc-rules--require-param-types-)
+        * [`require-return-types`](#eslint-plugin-jsdoc-rules--require-return-types-)
+
 
 <h2 id="eslint-plugin-jsdoc-attribution">Attribution</h2>
 
