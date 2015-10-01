@@ -73,7 +73,7 @@ Finally, enable all of the rules that you would like to use.
 
 <h2 id="eslint-plugin-jsdoc-rules">Rules</h2>
 
-<h3 id="eslint-plugin-jsdoc-rules--check-param-names-">`check-param-names`</h3>
+<h3 id="eslint-plugin-jsdoc-rules-check-param-names"><code>check-param-names</code></h3>
 
 Ensures param names in JSDoc and in function declaration are equal.
 
@@ -115,7 +115,7 @@ function quux (foo) {
 }
 ```
 
-<h3 id="eslint-plugin-jsdoc-rules--check-redundant-params-">`check-redundant-params`</h3>
+<h3 id="eslint-plugin-jsdoc-rules-check-redundant-params"><code>check-redundant-params</code></h3>
 
 Reports redundant params in JSDoc.
 
@@ -141,7 +141,7 @@ function quux (foo) {
 }
 ```
 
-<h3 id="eslint-plugin-jsdoc-rules--check-redundant-returns-">`check-redundant-returns`</h3>
+<h3 id="eslint-plugin-jsdoc-rules-check-redundant-returns"><code>check-redundant-returns</code></h3>
 
 Report statements for functions with no return.
 
@@ -167,7 +167,7 @@ function quux () {
 }
 ```
 
-<h3 id="eslint-plugin-jsdoc-rules--newline-after-description-">`newline-after-description`</h3>
+<h3 id="eslint-plugin-jsdoc-rules-newline-after-description"><code>newline-after-description</code></h3>
 
 Enforces consistent padding of doc comment description.
 
@@ -251,7 +251,7 @@ function quux (foo) {
 }
 ```
 
-<h3 id="eslint-plugin-jsdoc-rules--require-description-complete-sentence-">`require-description-complete-sentence`</h3>
+<h3 id="eslint-plugin-jsdoc-rules-require-description-complete-sentence"><code>require-description-complete-sentence</code></h3>
 
 Ensures a doc comment description is a complete sentence.
 
@@ -337,7 +337,7 @@ function quux (foo) {
 }
 ```
 
-<h3 id="eslint-plugin-jsdoc-rules--require-param-">`require-param`</h3>
+<h3 id="eslint-plugin-jsdoc-rules-require-param"><code>require-param</code></h3>
 
 Ensures all parameters are documented.
 
@@ -363,7 +363,7 @@ function quux (foo) {
 }
 ```
 
-<h3 id="eslint-plugin-jsdoc-rules--require-param-description-">`require-param-description`</h3>
+<h3 id="eslint-plugin-jsdoc-rules-require-param-description"><code>require-param-description</code></h3>
 
 Ensures a param description exists.
 
@@ -401,7 +401,7 @@ function quux (foo) {
 }
 ```
 
-<h3 id="eslint-plugin-jsdoc-rules--require-param-types-">`require-param-types`</h3>
+<h3 id="eslint-plugin-jsdoc-rules-require-param-types"><code>require-param-types</code></h3>
 
 The following patterns are considered problems:
 
@@ -425,7 +425,7 @@ function quux () {
 }
 ```
 
-<h3 id="eslint-plugin-jsdoc-rules--require-return-types-">`require-return-types`</h3>
+<h3 id="eslint-plugin-jsdoc-rules-require-return-types"><code>require-return-types</code></h3>
 
 Ensures returns in JSDoc contains type.
 

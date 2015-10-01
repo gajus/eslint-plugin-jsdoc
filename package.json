@@ -35,7 +35,7 @@
   "devDependencies": {
     "babel": "^5.8.23",
     "eslint": "^1.5.1",
-    "gitdown": "^2.2.1",
+    "gitdown": "^2.3.0",
     "mocha": "^2.3.3"
   }
 }
