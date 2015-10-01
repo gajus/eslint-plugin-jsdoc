@@ -36,17 +36,19 @@ Thank you [@zxqfox](https://github.com/jscs-dev/jscs-jsdoc/commits/master?author
 
 This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 
-[`check-param-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names)
-[`check-redundant-params`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-redundant-params)
-[`check-redundant-returns`](https://github.com/gajus/eslint-plugin-jsdoc#check-redundant-returns)
-[`check-returns-types`](https://github.com/gajus/eslint-plugin-jsdoc#check-returns-types)
-[`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#newline-after-description)
-[`require-description-complete-sentence`](https://github.com/gajus/eslint-plugin-jsdoc#require-description-complete-sentence)
-[`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#require-param)
-[`require-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#require-param-description)
-[`require-param-types`](https://github.com/gajus/eslint-plugin-jsdoc#require-param-types)
-[`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#require-returns-description)
-[`require-returns-types`](https://github.com/gajus/eslint-plugin-jsdoc#require-returns-types)
+| `eslint-plugin-jsdoc` | `jscs-jsdoc` |
+| --- | --- |
+| [`check-param-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`check-redundant-params`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-redundant-params) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`check-redundant-returns`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-redundant-returns) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`check-returns-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-returns-types) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`require-description-complete-sentence`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description-complete-sentence) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`require-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-description) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`require-param-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-types) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-description) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`require-returns-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-types) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
 
 <h2 id="eslint-plugin-jsdoc-installation">Installation</h2>
 
