@@ -30,6 +30,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`check-redundant-params`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-redundant-params) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
 | [`check-redundant-returns`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-redundant-returns) | [`checkRedundantParams`](https://github.com/jscs-dev/jscs-jsdoc#checkredundantparams) |
 | [`check-returns-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-returns-types) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
 | [`require-description-complete-sentence`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description-complete-sentence) | [`requireDescriptionCompleteSentence`](https://github.com/jscs-dev/jscs-jsdoc#requiredescriptioncompletesentence) |
 | [`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
@@ -38,7 +39,6 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-description) | [`requireReturnDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirereturndescription) |
 | [`require-returns-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-types) | [`requireReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#requirereturntypes) |
 | N/A | [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
-| N/A | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | N/A | [`checkRedundantAccess`](https://github.com/jscs-dev/jscs-jsdoc#checkredundantaccess) |
 | N/A | [`leadingUnderscoreAccess`](https://github.com/jscs-dev/jscs-jsdoc#leadingunderscoreaccess) |
 | N/A | [`enforceExistence`](https://github.com/jscs-dev/jscs-jsdoc#enforceexistence) |
@@ -79,6 +79,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-redundant-params": 1,
         "jsdoc/check-redundant-returns": 1,
         "jsdoc/check-returns-types": 1,
+        "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-param": 1,
@@ -96,6 +97,7 @@ Finally, enable all of the rules that you would like to use.
 {"gitdown": "include", "file": "./rules/check-redundant-params.md"}
 {"gitdown": "include", "file": "./rules/check-redundant-returns.md"}
 {"gitdown": "include", "file": "./rules/check-returns-types.md"}
+{"gitdown": "include", "file": "./rules/check-types.md"}
 {"gitdown": "include", "file": "./rules/newline-after-description.md"}
 {"gitdown": "include", "file": "./rules/require-description-complete-sentence.md"}
 {"gitdown": "include", "file": "./rules/require-param.md"}

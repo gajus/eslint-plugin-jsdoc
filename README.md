@@ -4,7 +4,7 @@
 [![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-jsdoc/master.svg?style=flat)](https://travis-ci.org/gajus/eslint-plugin-jsdoc)
 
 <!--
-[![NPM version](http://img.shields.io/npm/v/gitdown.svg?style=flat)](https://www.npmjs.org/package/gitdown)
+[![NPM version](http://img.shields.io/npm/v/eslint-plugin-jsdoc.svg?style=flat)](https://www.npmjs.org/package/eslint-plugin-jsdoc)
 [![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-jsdoc/master.svg?style=flat)](https://travis-ci.org/gajus/eslint-plugin-jsdoc)
 -->
 
@@ -20,6 +20,7 @@ JSDoc specific linting rules for ESLint.
         * [`check-redundant-params`](#eslint-plugin-jsdoc-rules-check-redundant-params)
         * [`check-redundant-returns`](#eslint-plugin-jsdoc-rules-check-redundant-returns)
         * [`check-returns-types`](#eslint-plugin-jsdoc-rules-check-returns-types)
+        * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
@@ -47,6 +48,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`check-redundant-params`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-redundant-params) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
 | [`check-redundant-returns`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-redundant-returns) | [`checkRedundantParams`](https://github.com/jscs-dev/jscs-jsdoc#checkredundantparams) |
 | [`check-returns-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-returns-types) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
+| [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
 | [`require-description-complete-sentence`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description-complete-sentence) | [`requireDescriptionCompleteSentence`](https://github.com/jscs-dev/jscs-jsdoc#requiredescriptioncompletesentence) |
 | [`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param) | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
@@ -55,7 +57,6 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-description) | [`requireReturnDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirereturndescription) |
 | [`require-returns-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-types) | [`requireReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#requirereturntypes) |
 | N/A | [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
-| N/A | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | N/A | [`checkRedundantAccess`](https://github.com/jscs-dev/jscs-jsdoc#checkredundantaccess) |
 | N/A | [`leadingUnderscoreAccess`](https://github.com/jscs-dev/jscs-jsdoc#leadingunderscoreaccess) |
 | N/A | [`enforceExistence`](https://github.com/jscs-dev/jscs-jsdoc#enforceexistence) |
@@ -96,6 +97,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-redundant-params": 1,
         "jsdoc/check-redundant-returns": 1,
         "jsdoc/check-returns-types": 1,
+        "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-param": 1,
@@ -229,6 +231,66 @@ function quux () {
 }
 ```
 
+<h3 id="eslint-plugin-jsdoc-rules-check-types"><code>check-types</code></h3>
+
+Reports invalid types. Ensures that case of natives is the same as in this list:
+
+```
+boolean
+number
+string
+Object
+Array
+Date
+RegExp
+```
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @param {Boolean} foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param {date} foo
+ */
+function quux (foo) {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param {boolean} foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param {Date} foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @typedef foo~bar
+ */
+
+/**
+ * @param {foo~bar} bar
+ */
+function quux (foo) {
+
+}
+```
 <h3 id="eslint-plugin-jsdoc-rules-newline-after-description"><code>newline-after-description</code></h3>
 
 Enforces consistent padding of doc comment description.

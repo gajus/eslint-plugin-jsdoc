@@ -2,6 +2,7 @@ import checkParamNames from './rules/checkParamNames';
 import checkRedundantParams from './rules/checkRedundantParams';
 import checkRedundantReturns from './rules/checkRedundantReturns';
 import checkReturnsTypes from './rules/checkReturnsTypes';
+import checkTypes from './rules/checkTypes';
 import newlineAfterDescription from './rules/newlineAfterDescription';
 import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
 import requireParam from './rules/requireParam';
@@ -16,6 +17,7 @@ export default {
         'check-redundant-params': checkRedundantParams,
         'check-redundant-returns': checkRedundantReturns,
         'check-returns-types': checkReturnsTypes,
+        'check-types': checkTypes,
         'newline-after-description': newlineAfterDescription,
         'require-description-complete-sentence': requireDescriptionCompleteSentence,
         'require-param': requireParam,
@@ -29,6 +31,7 @@ export default {
         'check-redundant-params': 0,
         'check-redundant-returns': 0,
         'check-returns-types': 0,
+        'check-types': 0,
         'newline-after-description': 0,
         'require-description-complete-sentence': 0,
         'require-param': 0,

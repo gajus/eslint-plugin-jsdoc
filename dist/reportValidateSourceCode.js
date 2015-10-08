@@ -76,9 +76,10 @@ validateSourceCode = function (sourceCode, ruleName, ruleOptions) {
  * @param {Object} context
  * @param {String} ruleName
  * @param {Boolean|String|Object} ruleOptions
+ * @param {undefined|function} translate
  * @returns {undefined}
  */
-reportValidateSourceCode = function (context, ruleName, ruleOptions) {
+reportValidateSourceCode = function (context, ruleName, ruleOptions, translate) {
     var errors = undefined,
         sourceCode = undefined;
 
@@ -103,6 +104,10 @@ reportValidateSourceCode = function (context, ruleName, ruleOptions) {
         };
 
         // console.log('node', node)
+
+        if (translate) {
+            error.message = translate(error.message);
+        }
 
         context.report(node, error.message);
     });
