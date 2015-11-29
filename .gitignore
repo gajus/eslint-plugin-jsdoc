@@ -1,4 +1,9 @@
-/node_modules
-/coverage
-npm-debug.log
-.coveralls.yml
+node_modules
+coverage
+dist
+*.log
+.*
+!.gitignore
+!.npmignore
+!.babelrc
+!.travis.yml

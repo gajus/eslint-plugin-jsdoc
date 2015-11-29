@@ -14,7 +14,7 @@
   ],
   "author": {
     "name": "Gajus Kuizinas",
-    "email": "gk@anuary.com",
+    "email": "gajus@gajus.com",
     "url": "http://gajus.com"
   },
   "license": "BSD-3-Clause",
@@ -27,14 +27,14 @@
     "lodash": "^3.10.1"
   },
   "scripts": {
-    "test": "node ./node_modules/.bin/babel-node ./node_modules/.bin/mocha ./test/**/*.js",
-    "build": "babel ./src/ --out-dir ./dist/",
-    "watch": "babel --watch ./src/ --out-dir ./dist/",
+    "pragmatist": "node ./node_modules/.bin/pragmatist",
+    "lint": "npm run pragmatist lint",
+    "test": "npm run pragmatist test",
+    "build": "npm run pragmatist build",
+    "watch": "npm run pragmatist watch",
     "readme": "node ./node_modules/.bin/gitdown ./.README/README.md --output-file ./README.md"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
-    "eslint": "^1.5.1",
     "gitdown": "^2.4.0",
     "mocha": "^2.3.3"
   }
