@@ -32,10 +32,14 @@
     "test": "npm run pragmatist test",
     "build": "npm run pragmatist build",
     "watch": "npm run pragmatist watch",
+    "watch-lint": "npm run pragmatist watch-lint",
+    "watch-test": "npm run pragmatist watch-test",
+    "watch-build": "npm run pragmatist watch-build",
     "readme": "node ./node_modules/.bin/gitdown ./.README/README.md --output-file ./README.md"
   },
   "devDependencies": {
     "gitdown": "^2.4.0",
-    "mocha": "^2.3.3"
+    "mocha": "^2.3.3",
+    "pragmatist": "^2.3.5"
   }
 }
