@@ -12,6 +12,11 @@ export default (iterator) => {
                 jsdocNode;
 
             jsdocNode = sourceCode.getJSDocComment(functionNode);
+
+            if (!jsdocNode) {
+                return;
+            }
+
             jsdoc = commentParser('/*' + jsdocNode.value + '*/')[0] || {};
 
             iterator(functionNode, jsdocNode, jsdoc, (message) => {
