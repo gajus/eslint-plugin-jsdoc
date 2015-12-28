@@ -25,7 +25,27 @@ _.forEach([
     'require-returns-description',
     'require-returns-type'
 ], (ruleName) => {
+    let assertions;
+
     /* eslint-disable global-require */
-    ruleTester.run(ruleName, rules[ruleName], require('./assertions/' + _.camelCase(ruleName)));
+    assertions = require('./assertions/' + _.camelCase(ruleName));
     /* eslint-enable global-require */
+
+    assertions.invalid = _.map(assertions.invalid, (assertion) => {
+        assertion.ecmaFeatures = {
+            defaultParams: true
+        };
+
+        return assertion;
+    });
+
+    assertions.valid = _.map(assertions.valid, (assertion) => {
+        assertion.ecmaFeatures = {
+            defaultParams: true
+        };
+
+        return assertion;
+    });
+
+    ruleTester.run(ruleName, rules[ruleName], assertions);
 });

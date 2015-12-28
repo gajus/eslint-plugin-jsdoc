@@ -7,6 +7,21 @@ export default {
                 /**
                  * @param Foo
                  */
+                function quux (foo = 'FOO') {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Expected @param names to be "foo". Got "Foo".'
+                }
+            ]
+        },
+        {
+            code: `
+                /**
+                 * @param Foo
+                 */
                 function quux (foo) {
 
                 }

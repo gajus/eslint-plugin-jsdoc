@@ -66,7 +66,7 @@ export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
     let functionParameterNames,
         isError;
 
-    functionParameterNames = _.map(functionNode.params, 'name');
+    functionParameterNames = jsdocUtils.getFunctionParameterNames(functionNode);
 
     isError = validateParameterNames(functionParameterNames, jsdoc, report);
 

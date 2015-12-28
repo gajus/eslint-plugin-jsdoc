@@ -1,7 +1,22 @@
 import _ from 'lodash';
 
-let getJsdocParameterNames,
+let getFunctionParameterNames,
+    getJsdocParameterNames,
     getJsdocParameterNamesDeep;
+
+getFunctionParameterNames = (functionNode) => {
+    return _.map(functionNode.params, (param) => {
+        if (_.has(param, 'name')) {
+            return param.name;
+        }
+
+        if (_.has(param, 'left.name')) {
+            return param.left.name;
+        }
+
+        throw new Error('Unsupported function signature format.');
+    });
+};
 
 getJsdocParameterNamesDeep = (jsdoc) => {
     let jsdocParameterNames;
@@ -28,6 +43,7 @@ getJsdocParameterNames = (jsdoc) => {
 };
 
 export default {
+    getFunctionParameterNames,
     getJsdocParameterNames,
     getJsdocParameterNamesDeep
 };
