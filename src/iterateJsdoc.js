@@ -20,7 +20,7 @@ export default (iterator) => {
         };
 
         return {
-            ArrowExpression: checkJsdoc,
+            ArrowFunctionExpression: checkJsdoc,
             FunctionDeclaration: checkJsdoc,
             FunctionExpression: checkJsdoc
         }
