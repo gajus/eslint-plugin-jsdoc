@@ -3,7 +3,7 @@ export default {
         {
             code: `
                 /**
-                 * @param {number} foo
+                 * @param foo
                  */
                 function quux (foo) {
 

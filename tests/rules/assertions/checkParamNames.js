@@ -59,7 +59,54 @@ export default {
         {
             code: `
                 /**
+                 * @param Foo
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Expected @param names to be "foo". Got "Foo".'
+                }
+            ]
+        },
+        {
+            code: `
+                /**
+                 * @param Foo.Bar
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: '@param path declaration ("Foo.Bar") appears before any real parameter.'
+                }
+            ]
+        },
+        {
+            code: `
+                /**
                  * @param foo
+                 * @param Foo.Bar
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: '@param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").'
+                }
+            ]
+        },
+        {
+            code: `
+                /**
+                 * @param foo
+                 * @param foo.bar
                  * @param bar
                  */
                 function quux (bar, foo) {
@@ -68,7 +115,7 @@ export default {
             `,
             errors: [
                 {
-                    message: 'Expected JSDoc @param names to be "bar, foo". Got "foo, bar".'
+                    message: 'Expected @param names to be "bar, foo". Got "foo, bar".'
                 }
             ]
         },
@@ -84,7 +131,7 @@ export default {
             `,
             errors: [
                 {
-                    message: 'Redundant JSDoc @param "bar".'
+                    message: '@param "bar" does not match an existing function parameter.'
                 }
             ]
         }
