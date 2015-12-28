@@ -10,10 +10,10 @@ validateParameterNames = (functionParameterNames, jsdoc, report) => {
 
     jsdocParameterNames = jsdocUtils.getJsdocParameterNames(jsdoc);
 
-    return _.some(jsdocParameterNames, (jsdocParameterName, i) => {
+    return _.some(jsdocParameterNames, (jsdocParameterName, index) => {
         let functionParameterName;
 
-        functionParameterName = functionParameterNames[i];
+        functionParameterName = functionParameterNames[index];
 
         if (!functionParameterName) {
             report('@param "' + jsdocParameterName + '" does not match an existing function parameter.');
@@ -31,10 +31,7 @@ validateParameterNames = (functionParameterNames, jsdoc, report) => {
 
 validateParameterNamesDeep = (functionParameterNames, jsdoc, report) => {
     let jsdocParameterNamesDeep,
-        lastRealParameter,
-        parameterCount;
-
-    parameterCount = -1;
+        lastRealParameter;
 
     jsdocParameterNamesDeep = jsdocUtils.getJsdocParameterNamesDeep(jsdoc);
 
@@ -67,8 +64,6 @@ validateParameterNamesDeep = (functionParameterNames, jsdoc, report) => {
 
 export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
     let functionParameterNames,
-        jsdocParameterNames,
-        jsdocParameterNamesDeep,
         isError;
 
     functionParameterNames = _.map(functionNode.params, 'name');

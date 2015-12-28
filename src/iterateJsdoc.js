@@ -8,8 +8,8 @@ export default (iterator) => {
         sourceCode = context.getSourceCode();
 
         checkJsdoc = (functionNode) => {
-            let jsdocNode,
-                jsdoc;
+            let jsdoc,
+                jsdocNode;
 
             jsdocNode = sourceCode.getJSDocComment(functionNode);
             jsdoc = commentParser('/*' + jsdocNode.value + '*/')[0] || {};
@@ -23,6 +23,6 @@ export default (iterator) => {
             ArrowFunctionExpression: checkJsdoc,
             FunctionDeclaration: checkJsdoc,
             FunctionExpression: checkJsdoc
-        }
-    }
+        };
+    };
 };

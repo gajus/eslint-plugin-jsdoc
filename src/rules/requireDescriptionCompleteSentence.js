@@ -1,18 +1,17 @@
 import _ from 'lodash';
-import jsdocUtils from './../jsdocUtils';
 import iterateJsdoc from './../iterateJsdoc';
 
 let extractParagraphs,
-    validateDescription,
-    isNewLinePrecededByAPeriod;
+    isNewLinePrecededByAPeriod,
+    validateDescription;
 
 extractParagraphs = (text) => {
     return text.split(/\n\n/);
 };
 
 isNewLinePrecededByAPeriod = (text) => {
-    let lines,
-        lastLineEndsSentence;
+    let lastLineEndsSentence,
+        lines;
 
     lines = text.split('\n');
 
@@ -26,8 +25,7 @@ isNewLinePrecededByAPeriod = (text) => {
 };
 
 validateDescription = (description, report) => {
-    let isError,
-        paragraphs;
+    let paragraphs;
 
     if (!description) {
         return true;
@@ -35,9 +33,9 @@ validateDescription = (description, report) => {
 
     paragraphs = extractParagraphs(description);
 
-    return _.some(paragraphs, (paragraph, i) => {
+    return _.some(paragraphs, (paragraph, index) => {
         if (!/^[A-Z]/.test(paragraph)) {
-            if (i === 0) {
+            if (index === 0) {
                 report('Description must start with an uppercase character.');
             } else {
                 report('Paragraph must start with an uppercase character.');

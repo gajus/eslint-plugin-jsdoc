@@ -7,8 +7,9 @@ getJsdocParameterNamesDeep = (jsdoc) => {
     let jsdocParameterNames;
 
     jsdocParameterNames = _.filter(jsdoc.tags, {
-            tag: 'param'
-        });
+        tag: 'param'
+    });
+
     jsdocParameterNames = _.map(jsdocParameterNames, 'name');
 
     return jsdocParameterNames;

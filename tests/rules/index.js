@@ -25,5 +25,7 @@ _.forEach([
     'require-returns-description',
     'require-returns-type'
 ], (ruleName) => {
+    /* eslint-disable global-require */
     ruleTester.run(ruleName, rules[ruleName], require('./assertions/' + _.camelCase(ruleName)));
+    /* eslint-enable global-require */
 });

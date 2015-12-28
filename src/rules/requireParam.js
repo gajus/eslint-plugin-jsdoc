@@ -9,10 +9,10 @@ export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
     functionParameterNames = _.map(functionNode.params, 'name');
     jsdocParameterNames = jsdocUtils.getJsdocParameterNames(jsdoc);
 
-    _.some(functionParameterNames, (functionParameterName, i) => {
+    _.some(functionParameterNames, (functionParameterName, index) => {
         let jsdocParameterName;
 
-        jsdocParameterName = jsdocParameterNames[i];
+        jsdocParameterName = jsdocParameterNames[index];
 
         if (!jsdocParameterName) {
             report('Missing JSDoc @param "' + functionParameterName + '" declaration.');

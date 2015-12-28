@@ -1,16 +1,6 @@
-export default {
-    valid: [
-        {
-            code: `
-                /**
-                 * @param foo
-                 */
-                function quux (foo) {
+/* eslint-disable no-restricted-syntax */
 
-                }
-            `
-        }
-    ],
+export default {
     invalid: [
         {
             code: `
@@ -41,6 +31,18 @@ export default {
                     message: 'Invalid JSDoc tag name "foo".'
                 }
             ]
+        }
+    ],
+    valid: [
+        {
+            code: `
+                /**
+                 * @param foo
+                 */
+                function quux (foo) {
+
+                }
+            `
         }
     ]
 };

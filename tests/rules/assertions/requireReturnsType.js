@@ -1,16 +1,6 @@
-export default {
-    valid: [
-        {
-            code: `
-                /**
-                 * @returns {number}
-                 */
-                function quux () {
+/* eslint-disable no-restricted-syntax */
 
-                }
-            `
-        }
-    ],
+export default {
     invalid: [
         {
             code: `
@@ -41,6 +31,18 @@ export default {
                     message: 'Missing JSDoc @returns type.'
                 }
             ]
+        }
+    ],
+    valid: [
+        {
+            code: `
+                /**
+                 * @returns {number}
+                 */
+                function quux () {
+
+                }
+            `
         }
     ]
 };

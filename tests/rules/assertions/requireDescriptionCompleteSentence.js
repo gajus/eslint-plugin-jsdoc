@@ -1,50 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+
 export default {
-    valid: [
-        {
-            code: `
-                /**
-                 * Foo.
-                 */
-                function quux () {
-
-                }
-            `
-        },
-        {
-            code: `
-                /**
-                 * Foo.
-                 * Bar.
-                 */
-                function quux () {
-
-                }
-            `
-        },
-        {
-            code: `
-                /**
-                 * Foo.
-                 *
-                 * Bar.
-                 */
-                function quux () {
-
-                }
-            `
-        },
-        {
-            code: `
-                /**
-                 * Foo
-                 * bar.
-                 */
-                function quux () {
-
-                }
-            `
-        }
-    ],
     invalid: [
         {
             code: `
@@ -142,6 +98,52 @@ export default {
                     message: 'Description must start with an uppercase character.'
                 }
             ]
+        }
+    ],
+    valid: [
+        {
+            code: `
+                /**
+                 * Foo.
+                 */
+                function quux () {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
+                 * Foo.
+                 * Bar.
+                 */
+                function quux () {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
+                 * Foo.
+                 *
+                 * Bar.
+                 */
+                function quux () {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
+                 * Foo
+                 * bar.
+                 */
+                function quux () {
+
+                }
+            `
         }
     ]
 };

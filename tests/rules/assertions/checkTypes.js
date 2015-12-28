@@ -1,18 +1,6 @@
-export default {
-    valid: [
-        {
-            code: `
-                /**
-                 * @param {number} foo
-                 * @param {Bar} bar
-                 * @param {*} baz
-                 */
-                function quux (foo, bar, baz) {
+/* eslint-disable no-restricted-syntax */
 
-                }
-            `
-        }
-    ],
+export default {
     invalid: [
         {
             code: `
@@ -28,6 +16,20 @@ export default {
                     message: 'Invalid JSDoc @param "foo" type "Number".'
                 }
             ]
+        }
+    ],
+    valid: [
+        {
+            code: `
+                /**
+                 * @param {number} foo
+                 * @param {Bar} bar
+                 * @param {*} baz
+                 */
+                function quux (foo, bar, baz) {
+
+                }
+            `
         }
     ]
 };

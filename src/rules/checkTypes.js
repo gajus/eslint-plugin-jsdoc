@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import iterateJsdoc from './../iterateJsdoc';
 
-let targetTags,
-    strictNativeTypes;
+let strictNativeTypes,
+    targetTags;
 
 targetTags = [
     'class',
@@ -34,7 +34,7 @@ export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
     let jsdocTags;
 
     jsdocTags = _.filter(jsdoc.tags, (tag) => {
-        return _.includes(targetTags, tag.tag)
+        return _.includes(targetTags, tag.tag);
     });
 
     _.forEach(jsdocTags, (jsdocTag) => {

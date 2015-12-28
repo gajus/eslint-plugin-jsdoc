@@ -1,4 +1,23 @@
+/* eslint-disable no-restricted-syntax */
+
 export default {
+    invalid: [
+        {
+            code: `
+                /**
+                 * @returns
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Missing JSDoc @returns description.'
+                }
+            ]
+        }
+    ],
     valid: [
         {
             code: `
@@ -19,23 +38,6 @@ export default {
 
                 }
             `
-        }
-    ],
-    invalid: [
-        {
-            code: `
-                /**
-                 * @returns
-                 */
-                function quux (foo) {
-
-                }
-            `,
-            errors: [
-                {
-                    message: 'Missing JSDoc @returns description.'
-                }
-            ]
         }
     ]
 };

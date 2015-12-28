@@ -1,16 +1,6 @@
-export default {
-    valid: [
-        {
-            code: `
-                /**
-                 * @param foo
-                 */
-                function quux (foo) {
+/* eslint-disable no-restricted-syntax */
 
-                }
-            `
-        }
-    ],
+export default {
     invalid: [
         {
             code: `
@@ -41,6 +31,18 @@ export default {
                     message: 'Missing JSDoc @param "bar" declaration.'
                 }
             ]
+        }
+    ],
+    valid: [
+        {
+            code: `
+                /**
+                 * @param foo
+                 */
+                function quux (foo) {
+
+                }
+            `
         }
     ]
 };

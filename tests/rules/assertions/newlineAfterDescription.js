@@ -1,4 +1,51 @@
+/* eslint-disable no-restricted-syntax */
+
 export default {
+    invalid: [
+        {
+            code: `
+                /**
+                 * Foo.
+                 *
+                 * Foo.
+                 * @foo
+                 */
+                function quux () {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'There must be a newline after the description of the JSDoc block.'
+                }
+            ],
+            options: [
+                'always'
+            ]
+        },
+        {
+            code: `
+                /**
+                 * Bar.
+                 *
+                 * Bar.
+                 *
+                 * @bar
+                 */
+                function quux () {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'There must be no newline after the description of the JSDoc block.'
+                }
+            ],
+            options: [
+                'never'
+            ]
+        }
+    ],
     valid: [
         {
             code: `
@@ -53,51 +100,6 @@ export default {
             `,
             options: [
                 'never'
-            ]
-        }
-    ],
-    invalid: [
-        {
-            code: `
-                /**
-                 * Foo.
-                 *
-                 * Foo.
-                 * @foo
-                 */
-                function quux () {
-
-                }
-            `,
-            options: [
-                'always'
-            ],
-            errors: [
-                {
-                    message: 'There must be a newline after the description of the JSDoc block.'
-                }
-            ]
-        },
-        {
-            code: `
-                /**
-                 * Bar.
-                 *
-                 * Bar.
-                 *
-                 * @bar
-                 */
-                function quux () {
-
-                }
-            `,
-            options: [
-                'never'
-            ],
-            errors: [
-                {
-                    message: 'There must be no newline after the description of the JSDoc block.'
-                }
             ]
         }
     ]

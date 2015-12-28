@@ -1,16 +1,6 @@
-export default {
-    valid: [
-        {
-            code: `
-                /**
-                 * @param foo - Foo.
-                 */
-                function quux () {
+/* eslint-disable no-restricted-syntax */
 
-                }
-            `
-        }
-    ],
+export default {
     invalid: [
         {
             code: `
@@ -26,6 +16,18 @@ export default {
                     message: 'There must be a hyphen before @param description.'
                 }
             ]
+        }
+    ],
+    valid: [
+        {
+            code: `
+                /**
+                 * @param foo - Foo.
+                 */
+                function quux () {
+
+                }
+            `
         }
     ]
 };

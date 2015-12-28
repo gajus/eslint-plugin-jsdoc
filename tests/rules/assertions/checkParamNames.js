@@ -1,60 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+
 export default {
-    valid: [
-        {
-            code: `
-                /**
-                 *
-                 */
-                function quux (foo) {
-
-                }
-            `
-        },
-        {
-            code: `
-                /**
-                 * @param foo
-                 */
-                function quux (foo) {
-
-                }
-            `
-        },
-        {
-            code: `
-                /**
-                 * @param foo
-                 * @param bar
-                 */
-                function quux (foo, bar) {
-
-                }
-            `
-        },
-        {
-            code: `
-                /**
-                 * @param foo
-                 * @param bar
-                 */
-                function quux (foo, bar, baz) {
-
-                }
-            `
-        },
-        {
-            code: `
-                /**
-                 * @param foo
-                 * @param foo.foo
-                 * @param bar
-                 */
-                function quux (foo, bar) {
-
-                }
-            `
-        }
-    ],
     invalid: [
         {
             code: `
@@ -134,6 +80,62 @@ export default {
                     message: '@param "bar" does not match an existing function parameter.'
                 }
             ]
+        }
+    ],
+    valid: [
+        {
+            code: `
+                /**
+                 *
+                 */
+                function quux (foo) {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
+                 * @param foo
+                 */
+                function quux (foo) {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
+                 * @param foo
+                 * @param bar
+                 */
+                function quux (foo, bar) {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
+                 * @param foo
+                 * @param bar
+                 */
+                function quux (foo, bar, baz) {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
+                 * @param foo
+                 * @param foo.foo
+                 * @param bar
+                 */
+                function quux (foo, bar) {
+
+                }
+            `
         }
     ]
 };
