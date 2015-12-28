@@ -2,6 +2,7 @@ import checkParamNames from './rules/checkParamNames';
 import checkTagNames from './rules/checkTagNames';
 import checkTypes from './rules/checkTypes';
 import newlineAfterDescription from './rules/newlineAfterDescription';
+import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
 import requireHyphenBeforeDescription from './rules/requireHyphenBeforeDescription';
 import requireParam from './rules/requireParam';
 import requireParamDescription from './rules/requireParamDescription';
@@ -15,6 +16,7 @@ export default {
         'check-tag-names': checkTagNames,
         'check-types': checkTypes,
         'newline-after-description': newlineAfterDescription,
+        'require-description-complete-sentence': requireDescriptionCompleteSentence,
         'require-hyphen-before-description': requireHyphenBeforeDescription,
         'require-param': requireParam,
         'require-param-description': requireParamDescription,
@@ -27,6 +29,7 @@ export default {
         'check-tag-names': 0,
         'check-types': 0,
         'newline-after-description': 0,
+        'require-description-complete-sentence': 0,
         'require-hyphen-before-description': 0,
         'require-param': 0,
         'require-param-description': 0,

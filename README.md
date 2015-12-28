@@ -3,7 +3,7 @@
 [![NPM version](http://img.shields.io/npm/v/eslint-plugin-jsdoc.svg?style=flat)](https://www.npmjs.org/package/eslint-plugin-jsdoc)
 [![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-jsdoc/master.svg?style=flat)](https://travis-ci.org/gajus/eslint-plugin-jsdoc)
 
-JSDoc specific linting rules for ESLint.
+JSDoc linting rules for ESLint.
 
 * [eslint-plugin-jsdoc](#eslint-plugin-jsdoc)
     * [Reference to jscs-jsdoc](#eslint-plugin-jsdoc-reference-to-jscs-jsdoc)
@@ -14,6 +14,7 @@ JSDoc specific linting rules for ESLint.
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
+        * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
         * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
@@ -32,6 +33,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
 | [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
+| [`require-description-complete-sentence`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description-complete-sentence) | [`requireDescriptionCompleteSentence`](https://github.com/jscs-dev/jscs-jsdoc#requiredescriptioncompletesentence) |
 | [`require-hyphen-before-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-hyphen-before-description) | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
 | [`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param) | [`checkParamExistence`](https://github.com/jscs-dev/jscs-jsdoc#checkparamexistence) |
 | [`require-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-description) | [`requireParamDescription`](https://github.com/jscs-dev/jscs-jsdoc#requireparamdescription) |
@@ -44,25 +46,24 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | N/A | [`checkRedundantAccess`](https://github.com/jscs-dev/jscs-jsdoc#checkredundantaccess) |
 | N/A | [`enforceExistence`](https://github.com/jscs-dev/jscs-jsdoc#enforceexistence) |
 | N/A | [`leadingUnderscoreAccess`](https://github.com/jscs-dev/jscs-jsdoc#leadingunderscoreaccess) |
-| N/A | [`requireDescriptionCompleteSentence`](https://github.com/jscs-dev/jscs-jsdoc#requiredescriptioncompletesentence) |
 
 <h2 id="eslint-plugin-jsdoc-installation">Installation</h2>
 
 Install [ESLint](https://www.github.com/eslint/eslint) either locally or globally.
 
 ```sh
-$ npm install eslint
+npm install eslint
 ```
 
 If you have installed `ESLint` globally, you have to install JSDoc plugin globally too. Otherwise, install it locally.
 
 ```sh
-$ npm install eslint-plugin-jsdoc
+npm install eslint-plugin-jsdoc
 ```
 
 <h2 id="eslint-plugin-jsdoc-configuration">Configuration</h2>
 
-Add `plugins` section and specify eslint-plugin-jsdoc as a plugin.
+Add `plugins` section and specify `eslint-plugin-jsdoc` as a plugin.
 
 ```json
 {
@@ -81,6 +82,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
+        "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-hyphen-before-description": 1,
         "jsdoc/require-param": 1,
         "jsdoc/require-param-description": 1,
@@ -95,13 +97,40 @@ Finally, enable all of the rules that you would like to use.
 
 <h3 id="eslint-plugin-jsdoc-rules-check-param-names"><code>check-param-names</code></h3>
 
-Ensures that parameters names in JSDoc and in function declaration are equal.
+Ensures that parameter names in JSDoc match those in the function declaration.
+
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`|
 
 The following patterns are considered problems:
 
 ```js
 /**
+ * @param Foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param Foo.Bar
+ */
+function quux (foo) {
+
+}
+
+/**
  * @param foo
+ * @param Foo.Bar
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param foo
+ * @param foo.bar
  * @param bar
  */
 function quux (bar, foo) {
@@ -232,6 +261,10 @@ variation
 version
 ```
 
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|N/A|
+
 The following patterns are considered problems:
 
 ```js
@@ -254,7 +287,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * @param {number} foo
+ * @param foo
  */
 function quux (foo) {
 
@@ -278,22 +311,9 @@ Date
 RegExp
 ```
 
-Affected tags:
-
-```
-class
-constant
-enum
-member
-module
-namespace
-param
-property
-returns
-throws
-type
-typede
-```
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`class`, `constant`, `enum`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typede`|
 
 The following patterns are considered problems:
 
@@ -326,6 +346,10 @@ Enforces a consistent padding of the block description.
 
 This rule takes one argument. If it is `"always"` then a problem is raised when there is a newline after the description. If it is `"never"` then a problem is raised when there is no newline after the description. The default value is `"always"`.
 
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|N/A|
+
 The following patterns are considered problems:
 
 ```js
@@ -387,9 +411,98 @@ function quux () {
 ```
 
 
+<h3 id="eslint-plugin-jsdoc-rules-require-description-complete-sentence"><code>require-description-complete-sentence</code></h3>
+
+Requires that block description and tag description are written in complete sentences, i.e.,
+
+* Description must start with an uppercase alphabetical character.
+* Paragraph must start with an uppercase alphabetical character.
+* Sentences must end with a period.
+* Every line that starts with a lowercase character must be preceded by a line ending the sentence.
+
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`, `returns`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ * foo.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * foo.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo
+ */
+function quux () {
+
+}
+
+/**
+ * Foo
+ * Bar.
+ */
+function quux () {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * Foo.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo
+ * bar.
+ */
+function quux () {
+
+}
+```
+
+
 <h3 id="eslint-plugin-jsdoc-rules-require-param-description"><code>require-param-description</code></h3>
 
 Requires that `@param` tag has `description` value.
+
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`|
 
 The following patterns are considered problems:
 
@@ -425,6 +538,10 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`|
+
 The following patterns are considered problems:
 
 ```js
@@ -458,6 +575,10 @@ function quux (foo) {
 <h3 id="eslint-plugin-jsdoc-rules-require-param-description"><code>require-param-description</code></h3>
 
 Requires that `@param` tag has `description` value.
+
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`|
 
 The following patterns are considered problems:
 
@@ -493,6 +614,10 @@ function quux (foo) {
 
 Requires that `@param` tag has `type` value.
 
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`|
+
 The following patterns are considered problems:
 
 ```js
@@ -527,6 +652,10 @@ function quux (foo) {
 
 Requires that `@returns` tag has `description` value.
 
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`returns`|
+
 The following patterns are considered problems:
 
 ```js
@@ -560,6 +689,10 @@ function quux () {
 <h3 id="eslint-plugin-jsdoc-rules-require-returns-type"><code>require-returns-type</code></h3>
 
 Requires that `@returns` tag has `type` value.
+
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`returns`|
 
 The following patterns are considered problems:
 
