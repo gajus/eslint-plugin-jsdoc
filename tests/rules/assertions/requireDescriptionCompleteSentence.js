@@ -108,6 +108,40 @@ export default {
                     message: 'A line of text is started with an uppercase character, but preceding line does not end the sentence.'
                 }
             ]
+        },
+        {
+            code: `
+                /**
+                 * Foo.
+                 *
+                 * @param foo foo.
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Description must start with an uppercase character.'
+                }
+            ]
+        },
+        {
+            code: `
+                /**
+                 * Foo.
+                 *
+                 * @returns foo.
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Description must start with an uppercase character.'
+                }
+            ]
         }
     ]
 };

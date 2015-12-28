@@ -61,5 +61,25 @@ validateDescription = (description, report) => {
 };
 
 export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
-    validateDescription(jsdoc.description, report);
+    let tags;
+
+    if (validateDescription(jsdoc.description, report)) {
+        return;
+    }
+
+    tags = _.filter(jsdoc.tags, (tag) => {
+        return _.includes(['param', 'returns'], tag.tag);
+    });
+
+    _.some(tags, (tag) => {
+        let description;
+
+        description = tag.description;
+
+        if (tag.tag === 'returns') {
+            description = tag.name;
+        }
+
+        return validateDescription(description, report);
+    });
 });
