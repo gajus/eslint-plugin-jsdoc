@@ -1,12 +1,9 @@
 export default {
     valid: [
         {
-            // Does not report lists.
             code: `
                 /**
-                 * - foo
-                 * - bar
-                 * - baz
+                 * @returns {number}
                  */
                 function quux () {
 
@@ -20,7 +17,7 @@ export default {
                 /**
                  * @returns
                  */
-                function quux (foo) {
+                function quux () {
 
                 }
             `,
@@ -35,7 +32,7 @@ export default {
                 /**
                  * @returns Foo.
                  */
-                function quux (foo) {
+                function quux () {
 
                 }
             `,
