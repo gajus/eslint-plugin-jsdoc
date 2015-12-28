@@ -34,8 +34,8 @@
     "watch-lint": "npm run pragmatist watch-lint",
     "watch-test": "npm run pragmatist watch-test",
     "watch-build": "npm run pragmatist watch-build",
-    "readme-assertions": "babel-node --presets es2015 ./bin/readme-assertions.js",
-    "readme": "node ./node_modules/.bin/gitdown ./.README/README.md --output-file ./README.md"
+    "readme-add-assertions": "babel-node --presets es2015 ./bin/readme-assertions.js",
+    "readme": "node ./node_modules/.bin/gitdown ./.README/README.md --output-file ./README.md; npm run readme-add-assertions"
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",

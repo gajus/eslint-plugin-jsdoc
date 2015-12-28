@@ -14,6 +14,7 @@ JSDoc specific linting rules for ESLint.
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
+        * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
         * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
         * [`require-param-type`](#eslint-plugin-jsdoc-rules-require-param-type)
@@ -31,6 +32,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
 | [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
+| [`require-hyphen-before-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-hyphen-before-description) | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
 | [`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param) | [`checkParamExistence`](https://github.com/jscs-dev/jscs-jsdoc#checkparamexistence) |
 | [`require-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-description) | [`requireParamDescription`](https://github.com/jscs-dev/jscs-jsdoc#requireparamdescription) |
 | [`require-param-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type) | [`requireParamTypes`](https://github.com/jscs-dev/jscs-jsdoc#requireparamtypes) |
@@ -43,7 +45,6 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | N/A | [`enforceExistence`](https://github.com/jscs-dev/jscs-jsdoc#enforceexistence) |
 | N/A | [`leadingUnderscoreAccess`](https://github.com/jscs-dev/jscs-jsdoc#leadingunderscoreaccess) |
 | N/A | [`requireDescriptionCompleteSentence`](https://github.com/jscs-dev/jscs-jsdoc#requiredescriptioncompletesentence) |
-| N/A | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
 
 <h2 id="eslint-plugin-jsdoc-installation">Installation</h2>
 
@@ -80,6 +81,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
+        "jsdoc/require-hyphen-before-description": 1,
         "jsdoc/require-param": 1,
         "jsdoc/require-param-description": 1,
         "jsdoc/require-param-type": 1,
@@ -380,6 +382,40 @@ function quux () {
  * @bar
  */
 function quux () {
+
+}
+```
+
+
+<h3 id="eslint-plugin-jsdoc-rules-require-param-description"><code>require-param-description</code></h3>
+
+Requires that `@param` tag has `description` value.
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ *
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param foo Foo.
+ */
+function quux (foo) {
 
 }
 ```

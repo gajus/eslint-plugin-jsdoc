@@ -17,6 +17,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
 | [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
+| [`require-hyphen-before-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-hyphen-before-description) | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
 | [`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param) | [`checkParamExistence`](https://github.com/jscs-dev/jscs-jsdoc#checkparamexistence) |
 | [`require-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-description) | [`requireParamDescription`](https://github.com/jscs-dev/jscs-jsdoc#requireparamdescription) |
 | [`require-param-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type) | [`requireParamTypes`](https://github.com/jscs-dev/jscs-jsdoc#requireparamtypes) |
@@ -29,7 +30,6 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | N/A | [`enforceExistence`](https://github.com/jscs-dev/jscs-jsdoc#enforceexistence) |
 | N/A | [`leadingUnderscoreAccess`](https://github.com/jscs-dev/jscs-jsdoc#leadingunderscoreaccess) |
 | N/A | [`requireDescriptionCompleteSentence`](https://github.com/jscs-dev/jscs-jsdoc#requiredescriptioncompletesentence) |
-| N/A | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
 
 ## Installation
 
@@ -66,6 +66,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
+        "jsdoc/require-hyphen-before-description": 1,
         "jsdoc/require-param": 1,
         "jsdoc/require-param-description": 1,
         "jsdoc/require-param-type": 1,
@@ -81,6 +82,7 @@ Finally, enable all of the rules that you would like to use.
 {"gitdown": "include", "file": "./rules/check-tag-names.md"}
 {"gitdown": "include", "file": "./rules/check-types.md"}
 {"gitdown": "include", "file": "./rules/newline-after-description.md"}
+{"gitdown": "include", "file": "./rules/require-hyphen-before-description.md"}
 {"gitdown": "include", "file": "./rules/require-param.md"}
 {"gitdown": "include", "file": "./rules/require-param-description.md"}
 {"gitdown": "include", "file": "./rules/require-param-type.md"}
