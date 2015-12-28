@@ -3,7 +3,7 @@
 [![NPM version](http://img.shields.io/npm/v/eslint-plugin-jsdoc.svg?style=flat)](https://www.npmjs.org/package/eslint-plugin-jsdoc)
 [![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-jsdoc/master.svg?style=flat)](https://travis-ci.org/gajus/eslint-plugin-jsdoc)
 
-JSDoc specific linting rules for ESLint.
+JSDoc linting rules for ESLint.
 
 {"gitdown": "contents"}
 
@@ -36,18 +36,18 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 Install [ESLint](https://www.github.com/eslint/eslint) either locally or globally.
 
 ```sh
-$ npm install eslint
+npm install eslint
 ```
 
 If you have installed `ESLint` globally, you have to install JSDoc plugin globally too. Otherwise, install it locally.
 
 ```sh
-$ npm install eslint-plugin-jsdoc
+npm install eslint-plugin-jsdoc
 ```
 
 ## Configuration
 
-Add `plugins` section and specify eslint-plugin-jsdoc as a plugin.
+Add `plugins` section and specify `eslint-plugin-jsdoc` as a plugin.
 
 ```json
 {

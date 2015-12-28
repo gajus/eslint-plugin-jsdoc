@@ -14,21 +14,8 @@ Date
 RegExp
 ```
 
-Affected tags:
-
-```
-class
-constant
-enum
-member
-module
-namespace
-param
-property
-returns
-throws
-type
-typede
-```
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`class`, `constant`, `enum`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typede`|
 
 <!-- assertions checkTypes -->
