@@ -95,7 +95,69 @@ Finally, enable all of the rules that you would like to use.
 
 Ensures that parameters names in JSDoc and in function declaration are equal.
 
-<!-- assertions checkParamNames -->
+The following patterns are considered problems:
+
+```js
+/**
+ * @param foo
+ * @param bar
+ */
+function quux (bar, foo) {
+
+}
+
+/**
+ * @param foo
+ * @param bar
+ */
+function quux (foo) {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ *
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param foo
+ * @param bar
+ */
+function quux (foo, bar) {
+
+}
+
+/**
+ * @param foo
+ * @param bar
+ */
+function quux (foo, bar, baz) {
+
+}
+
+/**
+ * @param foo
+ * @param foo.foo
+ * @param bar
+ */
+function quux (foo, bar) {
+
+}
+```
+
 
 <h3 id="eslint-plugin-jsdoc-rules-check-tag-names"><code>check-tag-names</code></h3>
 
@@ -168,7 +230,35 @@ variation
 version
 ```
 
-<!-- assertions checkTagNames -->
+The following patterns are considered problems:
+
+```js
+/**
+ * @Param
+ */
+function quux () {
+
+}
+
+/**
+ * @foo
+ */
+function quux () {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param {number} foo
+ */
+function quux (foo) {
+
+}
+```
+
 
 <h3 id="eslint-plugin-jsdoc-rules-check-types"><code>check-types</code></h3>
 
@@ -203,7 +293,30 @@ type
 typede
 ```
 
-<!-- assertions checkTypes -->
+The following patterns are considered problems:
+
+```js
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param {number} foo
+ * @param {Bar} bar
+ * @param {*} baz
+ */
+function quux (foo, bar, baz) {
+
+}
+```
+
 
 <h3 id="eslint-plugin-jsdoc-rules-newline-after-description"><code>newline-after-description</code></h3>
 
@@ -211,35 +324,236 @@ Enforces a consistent padding of the block description.
 
 This rule takes one argument. If it is `"always"` then a problem is raised when there is a newline after the description. If it is `"never"` then a problem is raised when there is no newline after the description. The default value is `"always"`.
 
-<!-- assertions newlineAfterDescription -->
+The following patterns are considered problems:
+
+```js
+/**
+ * Foo.
+ *
+ * Foo.
+ * @foo
+ */
+function quux () {
+
+}
+
+/**
+ * Bar.
+ *
+ * Bar.
+ *
+ * @bar
+ */
+function quux () {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * Foo.
+ */
+function quux () {
+
+}
+
+/**
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * @foo
+ */
+function quux () {
+
+}
+
+/**
+ * Bar.
+ * @bar
+ */
+function quux () {
+
+}
+```
+
 
 <h3 id="eslint-plugin-jsdoc-rules-require-param"><code>require-param</code></h3>
 
 Requires that all function parameters are documented.
 
-<!-- assertions requireParam -->
+The following patterns are considered problems:
+
+```js
+/**
+ *
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param foo
+ */
+function quux (foo, bar) {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+```
+
 
 <h3 id="eslint-plugin-jsdoc-rules-require-param-description"><code>require-param-description</code></h3>
 
 Requires that `@param` tag has `description` value.
 
-<!-- assertions requireParamDescription -->
+The following patterns are considered problems:
+
+```js
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ *
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param foo Foo.
+ */
+function quux (foo) {
+
+}
+```
+
 
 <h3 id="eslint-plugin-jsdoc-rules-require-param-type"><code>require-param-type</code></h3>
 
 Requires that `@param` tag has `type` value.
 
-<!-- assertions requireParamType -->
+The following patterns are considered problems:
+
+```js
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ *
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param {number} foo
+ */
+function quux (foo) {
+
+}
+```
+
 
 <h3 id="eslint-plugin-jsdoc-rules-require-returns-description"><code>require-returns-description</code></h3>
 
 Requires that `@returns` tag has `description` value.
 
-<!-- assertions requireReturnsDescription -->
+The following patterns are considered problems:
+
+```js
+/**
+ * @returns
+ */
+function quux (foo) {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ *
+ */
+function quux () {
+
+}
+
+/**
+ * @returns Foo.
+ */
+function quux () {
+
+}
+```
+
 
 <h3 id="eslint-plugin-jsdoc-rules-require-returns-type"><code>require-returns-type</code></h3>
 
 Requires that `@returns` tag has `type` value.
 
-<!-- assertions requireReturnsType -->
+The following patterns are considered problems:
+
+```js
+/**
+ * @returns
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @returns Foo.
+ */
+function quux (foo) {
+
+}
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * - foo
+ * - bar
+ * - baz
+ */
+function quux () {
+
+}
+```
+
 
