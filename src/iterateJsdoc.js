@@ -20,8 +20,9 @@ export default (iterator) => {
         };
 
         return {
-            'FunctionDeclaration': checkJsdoc,
-            'FunctionExpression': checkJsdoc
+            ArrowExpression: checkJsdoc,
+            FunctionDeclaration: checkJsdoc,
+            FunctionExpression: checkJsdoc
         }
     }
 };
