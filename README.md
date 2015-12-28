@@ -567,14 +567,14 @@ The following patterns are considered problems:
 /**
  * @returns
  */
-function quux (foo) {
+function quux () {
 
 }
 
 /**
  * @returns Foo.
  */
-function quux (foo) {
+function quux () {
 
 }
 ```
@@ -583,9 +583,7 @@ The following patterns are not considered problems:
 
 ```js
 /**
- * - foo
- * - bar
- * - baz
+ * @returns {number}
  */
 function quux () {
 
