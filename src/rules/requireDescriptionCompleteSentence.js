@@ -28,7 +28,7 @@ validateDescription = (description, report) => {
     let paragraphs;
 
     if (!description) {
-        return true;
+        return false;
     }
 
     paragraphs = extractParagraphs(description);
@@ -77,6 +77,8 @@ export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
         if (tag.tag === 'returns') {
             description = tag.name;
         }
+
+        description = _.trimLeft(description, '- ');
 
         return validateDescription(description, report);
     });
