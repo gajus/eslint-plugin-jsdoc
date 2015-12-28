@@ -54,9 +54,30 @@ trimCode = (code) => {
 };
 
 updateDocuments = (assertions) => {
-    let documents;
+    let documentBody;
 
-    documents = glob.sync(path.resolve(__dirname, './../.README/rules/*.md'));
+    documentBody = fs.readFileSync(path.join(__dirname, './../README.md'), 'utf8');
+
+    documentBody = documentBody.replace(/<!-- assertions ([a-z]+?) -->/ig, (assertionsBlock) => {
+        let assertionName,
+            ruleAssertions;
+
+        assertionName = assertionsBlock.match(/assertions ([a-z]+)/i)[1];
+
+        ruleAssertions = assertions[assertionName];
+
+        if (!ruleAssertions) {
+            return assertionsBlock;
+        }
+
+        return 'The following patterns are considered problems:\n\n```js\n' + ruleAssertions.invalid.join('\n\n') + '\n```\n\nThe following patterns are not considered problems:\n\n```js\n' + ruleAssertions.valid.join('\n\n') + '\n```\n';
+    });
+
+    console.log('documentBody', documentBody);
+
+    /*
+
+    documents = glob.sync(path.resolve();
 
     _.forEach(documents, (filePath) => {
         let ruleAssertions,
@@ -73,13 +94,13 @@ updateDocuments = (assertions) => {
         ruleAssertions = assertions[ruleName];
 
         if (ruleAssertions) {
-            assertionText = '<!-- assertions start -->\nThe following patterns are considered problems:\n\n```js\n' + ruleAssertions.invalid.join('\n\n') + '\n```\n\nThe following patterns are not considered problems:\n\n```js\n' + ruleAssertions.valid.join('\n\n') + '\n```\n<!-- assertions end -->';
+            assertionText = ;
         }
 
         documentBody = documentBody.replace(/<!-- assertions start -->([\s\S]*?)<!-- assertions end -->/, assertionText)
 
         fs.writeFileSync(filePath, documentBody)
-    });
+    }); */
 };
 
 updateDocuments(getAssertions());

@@ -1,25 +1,5 @@
 ### `require-returns-description`
 
-Ensures a `@returns` description exists.
+Requires that `@returns` tag has `description` value.
 
-The following patterns are considered problems:
-
-```js
-/**
- * @returns {string}
- */
-function quux () {
-
-}
-```
-
-The following patterns are not considered problems:
-
-```js
-/**
- * @returns {string} Quux.
- */
-function quux () {
-
-}
-```
+<!-- assertions requireReturnsDescription -->

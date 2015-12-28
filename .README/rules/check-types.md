@@ -1,6 +1,8 @@
 ### `check-types`
 
-Reports invalid types. Ensures that case of natives is the same as in this list:
+Reports invalid types.
+
+Ensures that case of native types is the same as in this list:
 
 ```
 boolean
@@ -12,49 +14,21 @@ Date
 RegExp
 ```
 
-The following patterns are considered problems:
+Affected tags:
 
-```js
-/**
- * @param {Boolean} foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @param {date} foo
- */
-function quux (foo) {
-
-}
+```
+class
+constant
+enum
+member
+module
+namespace
+param
+property
+returns
+throws
+type
+typede
 ```
 
-The following patterns are not considered problems:
-
-```js
-/**
- * @param {boolean} foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @param {Date} foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @typedef foo~bar
- */
-
-/**
- * @param {foo~bar} bar
- */
-function quux (foo) {
-
-}
-```
+<!-- assertions checkTypes -->

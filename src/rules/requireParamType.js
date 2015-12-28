@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import jsdocUtils from './../jsdocUtils';
 import iterateJsdoc from './../iterateJsdoc';
 
 export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
@@ -10,8 +9,8 @@ export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
     });
 
     _.forEach(jsdocParameters, (jsdocParameter) => {
-        if (!jsdocParameter.description) {
-            report('Missing JSDoc @param "' + jsdocParameter.name + '" description.');
+        if (!jsdocParameter.type) {
+            report('Missing JSDoc @param "' + jsdocParameter.name + '" type.');
         }
     });
 });

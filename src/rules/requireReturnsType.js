@@ -9,13 +9,8 @@ export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
     });
 
     _.forEach(jsdocTags, (jsdocTag) => {
-        let description;
-
-        // @see https://github.com/yavorskiy/comment-parser/issues/21
-        description = jsdocTag.name || jsdocTag.description;
-
-        if (!description) {
-            report('Missing JSDoc @returns description.');
+        if (!jsdocTag.type) {
+            report('Missing JSDoc @returns type.');
         }
     });
 });

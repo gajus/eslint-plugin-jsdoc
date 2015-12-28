@@ -1,23 +1,21 @@
-import {
-    RuleTester
-} from 'eslint';
-
-import {
-    rules
-} from './../../src/';
-
-let ruleTester;
-
-ruleTester = new RuleTester();
-
-ruleTester.run('require-param', rules['require-param'], {
+export default {
     valid: [
         {
             code: `
                 /**
-                 * @param {string} foo
+                 *
                  */
-                function quux (foo) {
+                function quux () {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
+                 * @returns Foo.
+                 */
+                function quux () {
 
                 }
             `
@@ -27,7 +25,7 @@ ruleTester.run('require-param', rules['require-param'], {
         {
             code: `
                 /**
-                 *
+                 * @returns
                  */
                 function quux (foo) {
 
@@ -35,9 +33,9 @@ ruleTester.run('require-param', rules['require-param'], {
             `,
             errors: [
                 {
-                    message: 'Function is missing documentation for parameter `foo`.'
+                    message: 'Missing JSDoc @returns description.'
                 }
             ]
         }
     ]
-});
+};

@@ -1,33 +1,11 @@
-import {
-    RuleTester
-} from 'eslint';
-
-import {
-    rules
-} from './../../src/';
-
-let ruleTester;
-
-ruleTester = new RuleTester();
-
-ruleTester.run('require-returns-types', rules['require-returns-types'], {
+export default {
     valid: [
         {
             code: `
                 /**
-                 * @returns {string}
+                 * @param {number} foo
                  */
-                function quux () {
-
-                }
-            `
-        },
-        {
-            code: `
-                /**
-                 * no @returns
-                 */
-                function quux () {
+                function quux (foo) {
 
                 }
             `
@@ -37,7 +15,7 @@ ruleTester.run('require-returns-types', rules['require-returns-types'], {
         {
             code: `
                 /**
-                 * @returns
+                 * @Param
                  */
                 function quux () {
 
@@ -45,9 +23,24 @@ ruleTester.run('require-returns-types', rules['require-returns-types'], {
             `,
             errors: [
                 {
-                    message: 'Missing type in @returns statement'
+                    message: 'Invalid JSDoc tag name "Param".'
+                }
+            ]
+        },
+        {
+            code: `
+                /**
+                 * @foo
+                 */
+                function quux () {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Invalid JSDoc tag name "foo".'
                 }
             ]
         }
     ]
-});
+};
