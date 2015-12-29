@@ -99,8 +99,9 @@ Finally, enable all of the rules that you would like to use.
 
 Ensures that parameter names in JSDoc match those in the function declaration.
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
 
 The following patterns are considered problems:
@@ -268,8 +269,9 @@ variation
 version
 ```
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
 
 The following patterns are considered problems:
@@ -318,8 +320,9 @@ Date
 RegExp
 ```
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`class`, `constant`, `enum`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typede`|
 
 The following patterns are considered problems:
@@ -353,8 +356,9 @@ Enforces a consistent padding of the block description.
 
 This rule takes one argument. If it is `"always"` then a problem is raised when there is a newline after the description. If it is `"never"` then a problem is raised when there is no newline after the description. The default value is `"always"`.
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
 
 The following patterns are considered problems:
@@ -427,8 +431,9 @@ Requires that block description and tag description are written in complete sent
 * Sentences must end with a period.
 * Every line that starts with a lowercase character must be preceded by a line ending the sentence.
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`, `returns`|
 
 The following patterns are considered problems:
@@ -532,8 +537,9 @@ function quux () {
 
 Requires that `@param` tag has `description` value.
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
 
 The following patterns are considered problems:
@@ -570,8 +576,9 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
 
 The following patterns are considered problems:
@@ -608,8 +615,9 @@ function quux (foo) {
 
 Requires that `@param` tag has `description` value.
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
 
 The following patterns are considered problems:
@@ -646,8 +654,9 @@ function quux (foo) {
 
 Requires that `@param` tag has `type` value.
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
 
 The following patterns are considered problems:
@@ -684,8 +693,9 @@ function quux (foo) {
 
 Requires that `@returns` tag has `description` value.
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 
 The following patterns are considered problems:
@@ -722,8 +732,9 @@ function quux () {
 
 Requires that `@returns` tag has `type` value.
 
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|||
 |---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 
 The following patterns are considered problems:
