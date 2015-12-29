@@ -2,9 +2,15 @@
 
 Requires that `@returns` tag has `description` value.
 
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`returns`|
+<table>
+    <tr>
+        <th>Context</th>
+        <td>`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`</td>
+    </tr>
+    <tr>
+        <th>Tags</th>
+        <td>`returns`</td>
+    </tr>
+</table>
 
 <!-- assertions requireReturnsDescription -->

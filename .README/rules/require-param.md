@@ -2,9 +2,15 @@
 
 Requires that all function parameters are documented.
 
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`|
+<table>
+    <tr>
+        <th>Context</th>
+        <td>`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`</td>
+    </tr>
+    <tr>
+        <th>Tags</th>
+        <td>`param`</td>
+    </tr>
+</table>
 
 <!-- assertions requireParam -->

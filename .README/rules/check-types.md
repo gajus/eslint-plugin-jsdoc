@@ -14,9 +14,16 @@ Date
 RegExp
 ```
 
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`class`, `constant`, `enum`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typede`|
+<table>
+    <tr>
+        <th>Context</th>
+        <td>`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`</td>
+    </tr>
+    <tr>
+        <th>Tags</th>
+        <td>`class`, `constant`, `enum`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`</td>
+    </tr>
+</table>
+
 
 <!-- assertions checkTypes -->
