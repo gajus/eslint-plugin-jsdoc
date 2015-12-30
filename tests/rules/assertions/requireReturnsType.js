@@ -5,7 +5,37 @@ export default {
         {
             code: `
                 /**
+                 * @return
+                 */
+                function quux () {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Missing JSDoc @returns type.'
+                }
+            ]
+        },
+        {
+            code: `
+                /**
                  * @returns
+                 */
+                function quux () {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Missing JSDoc @returns type.'
+                }
+            ]
+        },
+        {
+            code: `
+                /**
+                 * @return Foo.
                  */
                 function quux () {
 
@@ -34,6 +64,16 @@ export default {
         }
     ],
     valid: [
+        {
+            code: `
+                /**
+                 * @return {number}
+                 */
+                function quux () {
+
+                }
+            `
+        },
         {
             code: `
                 /**
