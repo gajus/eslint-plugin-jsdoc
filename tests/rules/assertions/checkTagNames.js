@@ -43,6 +43,36 @@ export default {
 
                 }
             `
+        },
+        {
+            code: `
+                /**
+                 * @return {void}
+                 */
+                function quux () {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
+                 * @method quux
+                 */
+                function quux () {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
+                 * @func quux
+                 */
+                function quux () {
+
+                }
+            `
         }
     ]
 };
