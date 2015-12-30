@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-jsdoc",
   "description": "JSDoc linting rules for ESLint.",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "main": "./dist/index.js",
   "repository": {
     "type": "git",
