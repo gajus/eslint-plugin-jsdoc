@@ -20,6 +20,28 @@ export default {
         {
             code: `
                 /**
+                 *
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Missing JSDoc @arg "foo" declaration.'
+                }
+            ],
+            settings: {
+                jsdoc: {
+                    tagNamePreference: {
+                        param: 'arg'
+                    }
+                }
+            }
+        },
+        {
+            code: `
+                /**
                  * @param foo
                  */
                 function quux (foo, bar) {
@@ -43,6 +65,23 @@ export default {
 
                 }
             `
+        },
+        {
+            code: `
+                /**
+                 * @arg foo
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            settings: {
+                jsdoc: {
+                    tagNamePreference: {
+                        param: 'arg'
+                    }
+                }
+            }
         }
     ]
 };

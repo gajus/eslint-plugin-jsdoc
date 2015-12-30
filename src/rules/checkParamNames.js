@@ -1,41 +1,33 @@
 import _ from 'lodash';
-import jsdocUtils from './../jsdocUtils';
 import iterateJsdoc from './../iterateJsdoc';
 
 let validateParameterNames,
     validateParameterNamesDeep;
 
-validateParameterNames = (functionParameterNames, jsdoc, report) => {
-    let jsdocParameterNames;
-
-    jsdocParameterNames = jsdocUtils.getJsdocParameterNames(jsdoc);
-
+validateParameterNames = (targetTagName : string, functionParameterNames : Array<string>, jsdocParameterNames : Array<string>, report : Function) => {
     return _.some(jsdocParameterNames, (jsdocParameterName, index) => {
         let functionParameterName;
 
         functionParameterName = functionParameterNames[index];
 
         if (!functionParameterName) {
-            report('@param "' + jsdocParameterName + '" does not match an existing function parameter.');
+            report('@' + targetTagName + ' "' + jsdocParameterName + '" does not match an existing function parameter.');
 
             return true;
         }
 
         if (functionParameterName !== jsdocParameterName) {
-            report('Expected @param names to be "' + functionParameterNames.join(', ') + '". Got "' + jsdocParameterNames.join(', ') + '".');
+            report('Expected @' + targetTagName + ' names to be "' + functionParameterNames.join(', ') + '". Got "' + jsdocParameterNames.join(', ') + '".');
 
             return true;
         }
     });
 };
 
-validateParameterNamesDeep = (functionParameterNames, jsdoc, report) => {
-    let jsdocParameterNamesDeep,
-        lastRealParameter;
+validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames : Array<string>, report : Function) => {
+    let lastRealParameter;
 
-    jsdocParameterNamesDeep = jsdocUtils.getJsdocParameterNamesDeep(jsdoc);
-
-    return _.some(jsdocParameterNamesDeep, (jsdocParameterName) => {
+    return _.some(jsdocParameterNames, (jsdocParameterName) => {
         let isPropertyPath;
 
         isPropertyPath = _.includes(jsdocParameterName, '.');
@@ -44,7 +36,7 @@ validateParameterNamesDeep = (functionParameterNames, jsdoc, report) => {
             let pathRootNodeName;
 
             if (!lastRealParameter) {
-                report('@param path declaration ("' + jsdocParameterName + '") appears before any real parameter.');
+                report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") appears before any real parameter.');
 
                 return true;
             }
@@ -52,7 +44,7 @@ validateParameterNamesDeep = (functionParameterNames, jsdoc, report) => {
             pathRootNodeName = jsdocParameterName.slice(0, jsdocParameterName.indexOf('.'));
 
             if (pathRootNodeName !== lastRealParameter) {
-                report('@param path declaration ("' + jsdocParameterName + '") root node name ("' + pathRootNodeName + '") does not match previous real parameter name ("' + lastRealParameter + '").');
+                report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") root node name ("' + pathRootNodeName + '") does not match previous real parameter name ("' + lastRealParameter + '").');
 
                 return true;
             }
@@ -62,17 +54,26 @@ validateParameterNamesDeep = (functionParameterNames, jsdoc, report) => {
     });
 };
 
-export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
+export default iterateJsdoc(({
+    report,
+    utils
+}) => {
     let functionParameterNames,
-        isError;
+        isError,
+        jsdocParameterNames,
+        jsdocParameterNamesDeep,
+        targetTagName;
 
-    functionParameterNames = jsdocUtils.getFunctionParameterNames(functionNode);
+    functionParameterNames = utils.getFunctionParameterNames();
+    jsdocParameterNames = utils.getJsdocParameterNames();
+    jsdocParameterNamesDeep = utils.getJsdocParameterNamesDeep();
+    targetTagName = utils.getPreferredTagName('param');
 
-    isError = validateParameterNames(functionParameterNames, jsdoc, report);
+    isError = validateParameterNames(targetTagName, functionParameterNames, jsdocParameterNames, report);
 
     if (isError) {
         return;
     }
 
-    validateParameterNamesDeep(functionParameterNames, jsdoc, report);
+    validateParameterNamesDeep(targetTagName, jsdocParameterNamesDeep, report);
 });

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import iterateJsdoc from './../iterateJsdoc';
 
 let strictNativeTypes,
+    targetTagAliases,
     targetTags;
 
 targetTags = [
@@ -19,6 +20,19 @@ targetTags = [
     'typedef'
 ];
 
+targetTagAliases = [
+    'constructor',
+    'const',
+    'var',
+    'arg',
+    'argument',
+    'prop',
+    'return',
+    'exception'
+];
+
+targetTags = targetTags.concat(targetTagAliases);
+
 strictNativeTypes = [
     'boolean',
     'number',
@@ -30,7 +44,10 @@ strictNativeTypes = [
     'Function'
 ];
 
-export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
+export default iterateJsdoc(({
+    jsdoc,
+    report
+}) => {
     let jsdocTags;
 
     jsdocTags = _.filter(jsdoc.tags, (tag) => {

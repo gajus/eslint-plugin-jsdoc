@@ -16,6 +16,28 @@ export default {
                     message: 'Missing JSDoc @param "foo" type.'
                 }
             ]
+        },
+        {
+            code: `
+                /**
+                 * @arg foo
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Missing JSDoc @arg "foo" type.'
+                }
+            ],
+            settings: {
+                jsdoc: {
+                    tagNamePreference: {
+                        param: 'arg'
+                    }
+                }
+            }
         }
     ],
     valid: [

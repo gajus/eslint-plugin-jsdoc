@@ -31,6 +31,28 @@ export default {
                     message: 'Missing JSDoc @returns type.'
                 }
             ]
+        },
+        {
+            code: `
+                /**
+                 * @return Foo.
+                 */
+                function quux () {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Missing JSDoc @return type.'
+                }
+            ],
+            settings: {
+                jsdoc: {
+                    tagNamePreference: {
+                        returns: 'return'
+                    }
+                }
+            }
         }
     ],
     valid: [

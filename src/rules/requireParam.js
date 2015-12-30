@@ -1,13 +1,15 @@
 import _ from 'lodash';
-import jsdocUtils from './../jsdocUtils';
 import iterateJsdoc from './../iterateJsdoc';
 
-export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
+export default iterateJsdoc(({
+    report,
+    utils
+}) => {
     let functionParameterNames,
         jsdocParameterNames;
 
-    functionParameterNames = _.map(functionNode.params, 'name');
-    jsdocParameterNames = jsdocUtils.getJsdocParameterNames(jsdoc);
+    functionParameterNames = utils.getFunctionParameterNames();
+    jsdocParameterNames = utils.getJsdocParameterNames();
 
     _.some(functionParameterNames, (functionParameterName, index) => {
         let jsdocParameterName;
@@ -15,7 +17,7 @@ export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
         jsdocParameterName = jsdocParameterNames[index];
 
         if (!jsdocParameterName) {
-            report('Missing JSDoc @param "' + functionParameterName + '" declaration.');
+            report('Missing JSDoc @' + utils.getPreferredTagName('param') + ' "' + functionParameterName + '" declaration.');
 
             return true;
         }

@@ -1,16 +1,23 @@
 import _ from 'lodash';
 import iterateJsdoc from './../iterateJsdoc';
 
-export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
-    let jsdocParameters;
+export default iterateJsdoc(({
+    jsdoc,
+    report,
+    utils
+}) => {
+    let jsdocParameters,
+        targetTagName;
+
+    targetTagName = utils.getPreferredTagName('param');
 
     jsdocParameters = _.filter(jsdoc.tags, {
-        tag: 'param'
+        tag: targetTagName
     });
 
     _.forEach(jsdocParameters, (jsdocParameter) => {
         if (!jsdocParameter.type) {
-            report('Missing JSDoc @param "' + jsdocParameter.name + '" type.');
+            report('Missing JSDoc @' + targetTagName + ' "' + jsdocParameter.name + '" type.');
         }
     });
 });

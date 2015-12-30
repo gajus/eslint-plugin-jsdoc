@@ -9,6 +9,8 @@ JSDoc linting rules for ESLint.
     * [Reference to jscs-jsdoc](#eslint-plugin-jsdoc-reference-to-jscs-jsdoc)
     * [Installation](#eslint-plugin-jsdoc-installation)
     * [Configuration](#eslint-plugin-jsdoc-configuration)
+    * [Settings](#eslint-plugin-jsdoc-settings)
+        * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
@@ -93,6 +95,26 @@ Finally, enable all of the rules that you would like to use.
 }
 ```
 
+<h2 id="eslint-plugin-jsdoc-settings">Settings</h2>
+
+<h3 id="eslint-plugin-jsdoc-settings-alias-preference">Alias Preference</h3>
+
+Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "param": "arg",
+                "returns": "return"
+            }
+        }
+    }
+}
+```
+
 <h2 id="eslint-plugin-jsdoc-rules">Rules</h2>
 
 <h3 id="eslint-plugin-jsdoc-rules-check-param-names"><code>check-param-names</code></h3>
@@ -109,6 +131,13 @@ The following patterns are considered problems:
 ```js
 /**
  * @param Foo
+ */
+function quux (foo = 'FOO') {
+
+}
+
+/**
+ * @arg Foo
  */
 function quux (foo = 'FOO') {
 
@@ -290,6 +319,20 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
 ```
 
 The following patterns are not considered problems:
@@ -297,6 +340,13 @@ The following patterns are not considered problems:
 ```js
 /**
  * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @arg foo
  */
 function quux (foo) {
 
@@ -334,6 +384,13 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+
+/**
+ * @arg {Number} foo
+ */
+function quux (foo) {
+
+}
 ```
 
 The following patterns are not considered problems:
@@ -343,6 +400,15 @@ The following patterns are not considered problems:
  * @param {number} foo
  * @param {Bar} bar
  * @param {*} baz
+ */
+function quux (foo, bar, baz) {
+
+}
+
+/**
+ * @arg {number} foo
+ * @arg {Bar} bar
+ * @arg {*} baz
  */
 function quux (foo, bar, baz) {
 
@@ -551,6 +617,13 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+
+/**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
 ```
 
 The following patterns are not considered problems:
@@ -592,6 +665,13 @@ function quux (foo) {
 }
 
 /**
+ *
+ */
+function quux (foo) {
+
+}
+
+/**
  * @param foo
  */
 function quux (foo, bar) {
@@ -604,6 +684,13 @@ The following patterns are not considered problems:
 ```js
 /**
  * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @arg foo
  */
 function quux (foo) {
 
@@ -625,6 +712,13 @@ The following patterns are considered problems:
 ```js
 /**
  * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @arg foo
  */
 function quux (foo) {
 
@@ -668,6 +762,13 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+
+/**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
 ```
 
 The following patterns are not considered problems:
@@ -703,6 +804,13 @@ The following patterns are considered problems:
 ```js
 /**
  * @returns
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @return
  */
 function quux (foo) {
 
@@ -749,6 +857,13 @@ function quux () {
 
 /**
  * @returns Foo.
+ */
+function quux () {
+
+}
+
+/**
+ * @return Foo.
  */
 function quux () {
 

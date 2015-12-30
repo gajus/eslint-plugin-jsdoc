@@ -1,7 +1,11 @@
 import _ from 'lodash';
 import iterateJsdoc from './../iterateJsdoc';
 
-export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report, context) => {
+export default iterateJsdoc(({
+    jsdoc,
+    report,
+    context
+}) => {
     let always,
         descriptionEndsWithANewline;
 

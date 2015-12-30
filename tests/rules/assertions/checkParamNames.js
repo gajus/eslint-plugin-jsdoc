@@ -20,6 +20,28 @@ export default {
         {
             code: `
                 /**
+                 * @arg Foo
+                 */
+                function quux (foo = 'FOO') {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Expected @arg names to be "foo". Got "Foo".'
+                }
+            ],
+            settings: {
+                jsdoc: {
+                    tagNamePreference: {
+                        param: 'arg'
+                    }
+                }
+            }
+        },
+        {
+            code: `
+                /**
                  * @param Foo
                  */
                 function quux (foo) {

@@ -58,7 +58,10 @@ validateDescription = (description, report) => {
     });
 };
 
-export default iterateJsdoc((functionNode, jsdocNode, jsdoc, report) => {
+export default iterateJsdoc(({
+    jsdoc,
+    report
+}) => {
     let tags;
 
     if (validateDescription(jsdoc.description, report)) {

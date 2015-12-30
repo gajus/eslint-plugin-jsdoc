@@ -77,6 +77,26 @@ Finally, enable all of the rules that you would like to use.
 }
 ```
 
+## Settings
+
+### Alias Preference
+
+Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "param": "arg",
+                "returns": "return"
+            }
+        }
+    }
+}
+```
+
 ## Rules
 
 {"gitdown": "include", "file": "./rules/check-param-names.md"}
