@@ -54,7 +54,20 @@ export default (iterator) => {
                 return;
             }
 
-            jsdoc = commentParser('/*' + jsdocNode.value + '*/')[0] || {};
+            jsdoc = commentParser('/*' + jsdocNode.value + '*/', {
+                // @see https://github.com/yavorskiy/comment-parser/issues/21
+                parsers: [
+                    commentParser.PARSERS.parse_tag,
+                    commentParser.PARSERS.parse_type,
+                    (str, data) => {
+                        if (_.includes(['return', 'returns'], data.tag)) {
+                            return null;
+                        }
+                        return commentParser.PARSERS.parse_name(str, data);
+                    },
+                    commentParser.PARSERS.parse_description
+                ]
+            })[0] || {};
 
             report = (message) => {
                 context.report(jsdocNode, message);
