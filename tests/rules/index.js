@@ -14,16 +14,16 @@ ruleTester = new RuleTester();
 
 _.forEach([
     'check-param-names',
-    // 'check-tag-names',
-    // 'check-types',
-    // 'newline-after-description',
-    // 'require-description-complete-sentence',
-    // 'require-hyphen-before-description',
-    // 'require-param',
-    // 'require-param-description',
-    // 'require-param-type',
-    // 'require-returns-description',
-    // 'require-returns-type'
+    'check-tag-names',
+    'check-types',
+    'newline-after-description',
+    'require-description-complete-sentence',
+    'require-hyphen-before-description',
+    'require-param',
+    'require-param-description',
+    'require-param-type',
+    'require-returns-description',
+    'require-returns-type'
 ], (ruleName) => {
     let assertions,
         ecmaFeatures;
