@@ -16,6 +16,10 @@ validateParameterNames = (targetTagName : string, functionParameterNames : Array
             return true;
         }
 
+        if (functionParameterName === '<ObjectPattern>') {
+            return;
+        }
+
         if (functionParameterName !== jsdocParameterName) {
             report('Expected @' + targetTagName + ' names to be "' + functionParameterNames.join(', ') + '". Got "' + jsdocParameterNames.join(', ') + '".');
 

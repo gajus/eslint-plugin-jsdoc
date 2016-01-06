@@ -225,8 +225,33 @@ function quux (foo, bar, baz) {
 function quux (foo, bar) {
 
 }
+
+/**
+ * @param foo
+ */
+function quux ({a, b}) {
+
+}
 ```
 
+
+<h4 id="eslint-plugin-jsdoc-rules-check-param-names-deconstructing-function-parameter">Deconstructing Function Parameter</h4>
+
+`eslint-plugin-jsdoc` does not validate names of parameters in function deconstruction, e.g.
+
+```js
+/**
+ * @param foo
+ */
+function quux ({
+    a,
+    b
+}) {
+
+}
+```
+
+`{a, b}` is an [`ObjectType`](https://github.com/estree/estree/blob/master/es6.md#objectpattern) AST type and does not have a name. Therefore, the associated parameter in JSDoc block can have any name.
 
 <h3 id="eslint-plugin-jsdoc-rules-check-tag-names"><code>check-tag-names</code></h3>
 
@@ -593,6 +618,13 @@ function quux () {
 /**
  * Foo
  * bar.
+ */
+function quux () {
+
+}
+
+/**
+ * @returns Foo bar.
  */
 function quux () {
 
