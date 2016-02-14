@@ -75,7 +75,7 @@ export default iterateJsdoc(({
     _.some(tags, (tag) => {
         let description;
 
-        description = _.trimLeft(tag.description, '- ');
+        description = _.trimStart(tag.description, '- ');
 
         return validateDescription(description, report);
     });

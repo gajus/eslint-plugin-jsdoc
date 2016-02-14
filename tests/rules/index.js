@@ -26,11 +26,10 @@ _.forEach([
     'require-returns-type'
 ], (ruleName) => {
     let assertions,
-        ecmaFeatures;
+        parserOptions;
 
-    ecmaFeatures = {
-        defaultParams: true,
-        destructuring: true
+    parserOptions = {
+        ecmaVersion: 6
     };
 
     /* eslint-disable global-require */
@@ -38,13 +37,13 @@ _.forEach([
     /* eslint-enable global-require */
 
     assertions.invalid = _.map(assertions.invalid, (assertion) => {
-        assertion.ecmaFeatures = ecmaFeatures;
+        assertion.parserOptions = parserOptions;
 
         return assertion;
     });
 
     assertions.valid = _.map(assertions.valid, (assertion) => {
-        assertion.ecmaFeatures = ecmaFeatures;
+        assertion.parserOptions = parserOptions;
 
         return assertion;
     });
