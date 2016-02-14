@@ -1,13 +1,7 @@
 import _ from 'lodash';
 import tagNames from './tagNames';
 
-let getFunctionParameterNames,
-    getJsdocParameterNames,
-    getJsdocParameterNamesDeep,
-    getPreferredTagName,
-    isValidTag;
-
-getFunctionParameterNames = (functionNode : Object) : Array<string> => {
+const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
     return _.map(functionNode.params, (param) => {
         if (_.has(param, 'name')) {
             return param.name;
@@ -28,7 +22,7 @@ getFunctionParameterNames = (functionNode : Object) : Array<string> => {
 /**
  * Gets all parameter names, including those that refer to a path, e.g. "@param foo; @param foo.bar".
  */
-getJsdocParameterNamesDeep = (jsdoc : Object, targetTagName : string) : Array<string> => {
+const getJsdocParameterNamesDeep = (jsdoc : Object, targetTagName : string) : Array<string> => {
     let jsdocParameterNames;
 
     jsdocParameterNames = _.filter(jsdoc.tags, {
@@ -40,7 +34,7 @@ getJsdocParameterNamesDeep = (jsdoc : Object, targetTagName : string) : Array<st
     return jsdocParameterNames;
 };
 
-getJsdocParameterNames = (jsdoc : Object, targetTagName : string) : Array<string> => {
+const getJsdocParameterNames = (jsdoc : Object, targetTagName : string) : Array<string> => {
     let jsdocParameterNames;
 
     jsdocParameterNames = getJsdocParameterNamesDeep(jsdoc, targetTagName);
@@ -52,14 +46,12 @@ getJsdocParameterNames = (jsdoc : Object, targetTagName : string) : Array<string
     return jsdocParameterNames;
 };
 
-getPreferredTagName = (name : string, tagPreference : Object = {}) : string => {
-    let preferredTagName;
-
+const getPreferredTagName = (name : string, tagPreference : Object = {}) : string => {
     if (_.includes(_.values(tagPreference), name)) {
         return name;
     }
 
-    preferredTagName = _.findKey(tagNames, (aliases) => {
+    const preferredTagName = _.findKey(tagNames, (aliases) => {
         return _.includes(aliases, name);
     });
 
@@ -70,10 +62,8 @@ getPreferredTagName = (name : string, tagPreference : Object = {}) : string => {
     return _.has(tagPreference, name) ? tagPreference[name] : name;
 };
 
-isValidTag = (name : string) : boolean => {
-    let validTagNames;
-
-    validTagNames = _.keys(tagNames).concat(_.flatten(_.values(tagNames)));
+const isValidTag = (name : string) : boolean => {
+    const validTagNames = _.keys(tagNames).concat(_.flatten(_.values(tagNames)));
 
     return _.includes(validTagNames, name);
 };

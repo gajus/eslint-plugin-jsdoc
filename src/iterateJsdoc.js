@@ -2,12 +2,8 @@ import _ from 'lodash';
 import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 
-let curryUtils;
-
-curryUtils = (functionNode, jsdoc, tagNamePreference) => {
-    let utils;
-
-    utils = {};
+const curryUtils = (functionNode, jsdoc, tagNamePreference) => {
+    const utils = {};
 
     utils.getFunctionParameterNames = () => {
         return jsdocUtils.getFunctionParameterNames(functionNode);
@@ -34,27 +30,17 @@ curryUtils = (functionNode, jsdoc, tagNamePreference) => {
 
 export default (iterator) => {
     return (context) => {
-        let checkJsdoc,
-            sourceCode,
-            tagNamePreference;
+        const sourceCode = context.getSourceCode();
+        const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
 
-        sourceCode = context.getSourceCode();
-
-        tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
-
-        checkJsdoc = (functionNode) => {
-            let jsdoc,
-                jsdocNode,
-                report,
-                utils;
-
-            jsdocNode = sourceCode.getJSDocComment(functionNode);
+        const checkJsdoc = (functionNode) => {
+            const jsdocNode = sourceCode.getJSDocComment(functionNode);
 
             if (!jsdocNode) {
                 return;
             }
 
-            jsdoc = commentParser('/*' + jsdocNode.value + '*/', {
+            const jsdoc = commentParser('/*' + jsdocNode.value + '*/', {
                 // @see https://github.com/yavorskiy/comment-parser/issues/21
                 parsers: [
                     commentParser.PARSERS.parse_tag,
@@ -69,11 +55,11 @@ export default (iterator) => {
                 ]
             })[0] || {};
 
-            report = (message) => {
+            const report = (message) => {
                 context.report(jsdocNode, message);
             };
 
-            utils = curryUtils(functionNode, jsdoc, tagNamePreference);
+            const utils = curryUtils(functionNode, jsdoc, tagNamePreference);
 
             iterator({
                 context,

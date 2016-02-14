@@ -8,9 +8,7 @@ export default iterateJsdoc(({
 }) => {
     _.forEach(jsdoc.tags, (jsdocTag) => {
         if (utils.isValidTag(jsdocTag.tag)) {
-            let preferredTagName;
-
-            preferredTagName = utils.getPreferredTagName(jsdocTag.tag);
+            const preferredTagName = utils.getPreferredTagName(jsdocTag.tag);
 
             if (preferredTagName !== jsdocTag.tag) {
                 report('Invalid JSDoc tag (preference). Replace "' + jsdocTag.tag + '" JSDoc tag with "' + preferredTagName + '".');

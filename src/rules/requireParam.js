@@ -5,21 +5,18 @@ export default iterateJsdoc(({
     report,
     utils
 }) => {
-    let functionParameterNames,
-        jsdocParameterNames;
-
-    functionParameterNames = utils.getFunctionParameterNames();
-    jsdocParameterNames = utils.getJsdocParameterNames();
+    const functionParameterNames = utils.getFunctionParameterNames();
+    const jsdocParameterNames = utils.getJsdocParameterNames();
 
     _.some(functionParameterNames, (functionParameterName, index) => {
-        let jsdocParameterName;
-
-        jsdocParameterName = jsdocParameterNames[index];
+        const jsdocParameterName = jsdocParameterNames[index];
 
         if (!jsdocParameterName) {
             report('Missing JSDoc @' + utils.getPreferredTagName('param') + ' "' + functionParameterName + '" declaration.');
 
             return true;
         }
+
+        return false;
     });
 });

@@ -1,19 +1,14 @@
 import _ from 'lodash';
 import iterateJsdoc from './../iterateJsdoc';
 
-let extractParagraphs,
-    isNewLinePrecededByAPeriod,
-    validateDescription;
-
-extractParagraphs = (text) => {
+const extractParagraphs = (text) => {
     return text.split(/\n\n/);
 };
 
-isNewLinePrecededByAPeriod = (text) => {
-    let lastLineEndsSentence,
-        lines;
+const isNewLinePrecededByAPeriod = (text) => {
+    let lastLineEndsSentence;
 
-    lines = text.split('\n');
+    const lines = text.split('\n');
 
     return !_.some(lines, (line) => {
         if (_.isBoolean(lastLineEndsSentence) && !lastLineEndsSentence && /^[A-Z]/.test(line)) {
@@ -21,17 +16,17 @@ isNewLinePrecededByAPeriod = (text) => {
         }
 
         lastLineEndsSentence = /\.$/.test(line);
+
+        return false;
     });
 };
 
-validateDescription = (description, report) => {
-    let paragraphs;
-
+const validateDescription = (description, report) => {
     if (!description) {
         return false;
     }
 
-    paragraphs = extractParagraphs(description);
+    const paragraphs = extractParagraphs(description);
 
     return _.some(paragraphs, (paragraph, index) => {
         if (!/^[A-Z]/.test(paragraph)) {
@@ -55,6 +50,8 @@ validateDescription = (description, report) => {
 
             return true;
         }
+
+        return false;
     });
 };
 
@@ -62,20 +59,16 @@ export default iterateJsdoc(({
     jsdoc,
     report
 }) => {
-    let tags;
-
     if (validateDescription(jsdoc.description, report)) {
         return;
     }
 
-    tags = _.filter(jsdoc.tags, (tag) => {
+    const tags = _.filter(jsdoc.tags, (tag) => {
         return _.includes(['param', 'returns'], tag.tag);
     });
 
     _.some(tags, (tag) => {
-        let description;
-
-        description = _.trimStart(tag.description, '- ');
+        const description = _.trimStart(tag.description, '- ');
 
         return validateDescription(description, report);
     });

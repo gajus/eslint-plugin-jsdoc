@@ -6,12 +6,9 @@ export default iterateJsdoc(({
     report,
     utils
 }) => {
-    let jsdocTags,
-        targetTagName;
+    const targetTagName = utils.getPreferredTagName('returns');
 
-    targetTagName = utils.getPreferredTagName('returns');
-
-    jsdocTags = _.filter(jsdoc.tags, {
+    const jsdocTags = _.filter(jsdoc.tags, {
         tag: targetTagName
     });
 

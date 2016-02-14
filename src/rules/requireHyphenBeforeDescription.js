@@ -5,9 +5,7 @@ export default iterateJsdoc(({
     jsdoc,
     report
 }) => {
-    let jsdocTags;
-
-    jsdocTags = _.filter(jsdoc.tags, {
+    const jsdocTags = _.filter(jsdoc.tags, {
         tag: 'param'
     });
 

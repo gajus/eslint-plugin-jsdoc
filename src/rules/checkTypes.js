@@ -1,11 +1,7 @@
 import _ from 'lodash';
 import iterateJsdoc from './../iterateJsdoc';
 
-let strictNativeTypes,
-    targetTagAliases,
-    targetTags;
-
-targetTags = [
+let targetTags = [
     'class',
     'constant',
     'enum',
@@ -20,7 +16,7 @@ targetTags = [
     'typedef'
 ];
 
-targetTagAliases = [
+const targetTagAliases = [
     'constructor',
     'const',
     'var',
@@ -33,7 +29,7 @@ targetTagAliases = [
 
 targetTags = targetTags.concat(targetTagAliases);
 
-strictNativeTypes = [
+const strictNativeTypes = [
     'boolean',
     'number',
     'string',
@@ -48,9 +44,7 @@ export default iterateJsdoc(({
     jsdoc,
     report
 }) => {
-    let jsdocTags;
-
-    jsdocTags = _.filter(jsdoc.tags, (tag) => {
+    const jsdocTags = _.filter(jsdoc.tags, (tag) => {
         return _.includes(targetTags, tag.tag);
     });
 

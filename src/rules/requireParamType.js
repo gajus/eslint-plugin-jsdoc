@@ -6,12 +6,9 @@ export default iterateJsdoc(({
     report,
     utils
 }) => {
-    let jsdocParameters,
-        targetTagName;
+    const targetTagName = utils.getPreferredTagName('param');
 
-    targetTagName = utils.getPreferredTagName('param');
-
-    jsdocParameters = _.filter(jsdoc.tags, {
+    const jsdocParameters = _.filter(jsdoc.tags, {
         tag: targetTagName
     });
 

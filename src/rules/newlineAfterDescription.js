@@ -6,8 +6,7 @@ export default iterateJsdoc(({
     report,
     context
 }) => {
-    let always,
-        descriptionEndsWithANewline;
+    let always;
 
     if (!jsdoc.description || !jsdoc.tags.length) {
         return;
@@ -22,7 +21,7 @@ export default iterateJsdoc(({
     // The contents of the jsdoc.source and of jsdoc.description is left trimmed.
     // The contents of the jsdoc.description is right trimmed.
     // This gets the text following the description.
-    descriptionEndsWithANewline = _.startsWith(jsdoc.source.slice(jsdoc.description.length), '\n\n');
+    const descriptionEndsWithANewline = _.startsWith(jsdoc.source.slice(jsdoc.description.length), '\n\n');
 
     if (always) {
         if (!descriptionEndsWithANewline) {

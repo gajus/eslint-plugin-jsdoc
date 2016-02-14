@@ -8,9 +8,7 @@ import {
     rules
 } from './../../src/';
 
-let ruleTester;
-
-ruleTester = new RuleTester();
+const ruleTester = new RuleTester();
 
 _.forEach([
     'check-param-names',
@@ -25,15 +23,12 @@ _.forEach([
     'require-returns-description',
     'require-returns-type'
 ], (ruleName) => {
-    let assertions,
-        parserOptions;
-
-    parserOptions = {
+    const parserOptions = {
         ecmaVersion: 6
     };
 
     /* eslint-disable global-require */
-    assertions = require('./assertions/' + _.camelCase(ruleName));
+    const assertions = require('./assertions/' + _.camelCase(ruleName));
     /* eslint-enable global-require */
 
     assertions.invalid = _.map(assertions.invalid, (assertion) => {
