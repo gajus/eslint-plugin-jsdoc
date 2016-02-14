@@ -15,6 +15,10 @@ const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
             return '<ObjectPattern>';
         }
 
+        if (param.type === 'RestElement') {
+            return param.argument.name;
+        }
+
         throw new Error('Unsupported function signature format.');
     });
 };

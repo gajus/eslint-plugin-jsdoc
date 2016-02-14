@@ -177,6 +177,16 @@ export default {
         {
             code: `
                 /**
+                 * @param args
+                 */
+                function quux (...args) {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
                  * @param foo
                  */
                 function quux ({a, b}) {
