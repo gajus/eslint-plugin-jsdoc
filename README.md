@@ -18,7 +18,7 @@ JSDoc linting rules for ESLint.
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
-        * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
+        * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
         * [`require-param-type`](#eslint-plugin-jsdoc-rules-require-param-type)
@@ -37,7 +37,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
 | [`require-description-complete-sentence`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description-complete-sentence) | [`requireDescriptionCompleteSentence`](https://github.com/jscs-dev/jscs-jsdoc#requiredescriptioncompletesentence) |
-| [`require-hyphen-before-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-hyphen-before-description) | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
+| [`require-hyphen-before-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description) | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
 | [`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param) | [`checkParamExistence`](https://github.com/jscs-dev/jscs-jsdoc#checkparamexistence) |
 | [`require-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-description) | [`requireParamDescription`](https://github.com/jscs-dev/jscs-jsdoc#requireparamdescription) |
 | [`require-param-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type) | [`requireParamTypes`](https://github.com/jscs-dev/jscs-jsdoc#requireparamtypes) |
@@ -86,7 +86,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
-        "jsdoc/require-hyphen-before-description": 1,
+        "jsdoc/require-hyphen-before-param-description": 1,
         "jsdoc/require-param": 1,
         "jsdoc/require-param-description": 1,
         "jsdoc/require-param-type": 1,
@@ -223,6 +223,13 @@ function quux (foo, bar, baz) {
  * @param bar
  */
 function quux (foo, bar) {
+
+}
+
+/**
+ * @param args
+ */
+function quux (...args) {
 
 }
 
@@ -632,27 +639,67 @@ function quux () {
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-require-param-description"><code>require-param-description</code></h3>
+<h3 id="eslint-plugin-jsdoc-rules-require-description-complete-sentence"><code>require-description-complete-sentence</code></h3>
 
-Requires that `@param` tag has `description` value.
+Requires that block description and tag description are written in complete sentences, i.e.,
+
+* Description must start with an uppercase alphabetical character.
+* Paragraph must start with an uppercase alphabetical character.
+* Sentences must end with a period.
+* Every line that starts with a lowercase character must be preceded by a line ending the sentence.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`|
+|Tags|`param`, `returns`|
 
 The following patterns are considered problems:
 
 ```js
 /**
- * @param foo
+ * foo.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * foo.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo
+ */
+function quux () {
+
+}
+
+/**
+ * Foo
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * @param foo foo.
  */
 function quux (foo) {
 
 }
 
 /**
- * @arg foo
+ * Foo.
+ *
+ * @returns foo.
  */
 function quux (foo) {
 
@@ -663,16 +710,48 @@ The following patterns are not considered problems:
 
 ```js
 /**
- *
+ * @param foo - Foo.
  */
-function quux (foo) {
+function quux () {
 
 }
 
 /**
- * @param foo Foo.
+ * Foo.
  */
-function quux (foo) {
+function quux () {
+
+}
+
+/**
+ * Foo.
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo
+ * bar.
+ */
+function quux () {
+
+}
+
+/**
+ * @returns Foo bar.
+ */
+function quux () {
 
 }
 ```
