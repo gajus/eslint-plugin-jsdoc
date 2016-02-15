@@ -476,7 +476,6 @@ This rule takes one argument. If it is `"always"` then a problem is raised when 
 The following patterns are considered problems:
 
 ```js
-// Options: ["always"]
 /**
  * Foo.
  *
@@ -486,9 +485,9 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Options: ["always"]
 // Message: There must be a newline after the description of the JSDoc block.
 
-// Options: ["never"]
 /**
  * Bar.
  *
@@ -499,29 +498,29 @@ function quux () {
 function quux () {
 
 }
+// Options: ["never"]
 // Message: There must be no newline after the description of the JSDoc block.
 ```
 
 The following patterns are not considered problems:
 
 ```js
-// Options: ["always"]
 /**
  * Foo.
  */
 function quux () {
 
 }
+// Options: ["always"]
 
-// Options: ["never"]
 /**
  * Bar.
  */
 function quux () {
 
 }
+// Options: ["never"]
 
-// Options: ["always"]
 /**
  * Foo.
  *
@@ -530,8 +529,8 @@ function quux () {
 function quux () {
 
 }
+// Options: ["always"]
 
-// Options: ["never"]
 /**
  * Bar.
  * @bar
@@ -539,6 +538,7 @@ function quux () {
 function quux () {
 
 }
+// Options: ["never"]
 ```
 
 

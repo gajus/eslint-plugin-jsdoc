@@ -9,11 +9,11 @@ import fs from 'fs';
 const formatCodeSnippet = (setup) => {
     const paragraphs = [];
 
+    paragraphs.push(trimCode(setup.code));
+
     if (setup.options) {
         paragraphs.push('// Options: ' + JSON.stringify(setup.options));
     }
-
-    paragraphs.push(trimCode(setup.code));
 
     if (setup.errors) {
         paragraphs.push('// Message: ' + setup.errors[0].message);
