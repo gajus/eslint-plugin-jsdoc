@@ -18,7 +18,7 @@ JSDoc linting rules for ESLint.
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
-        * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
+        * [`require-hyphen-before-param-description`](#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description)
         * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
         * [`require-param-type`](#eslint-plugin-jsdoc-rules-require-param-type)
@@ -639,69 +639,22 @@ function quux () {
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-require-description-complete-sentence"><code>require-description-complete-sentence</code></h3>
+<h3 id="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description"><code>require-hyphen-before-param-description</code></h3>
 
-Requires that block description and tag description are written in complete sentences, i.e.,
-
-* Description must start with an uppercase alphabetical character.
-* Paragraph must start with an uppercase alphabetical character.
-* Sentences must end with a period.
-* Every line that starts with a lowercase character must be preceded by a line ending the sentence.
+Requires a hyphen before the `@param` description.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`, `returns`|
+|Tags|`param`|
 
 The following patterns are considered problems:
 
 ```js
 /**
- * foo.
+ * @param foo Foo.
  */
 function quux () {
-
-}
-
-/**
- * Foo.
- *
- * foo.
- */
-function quux () {
-
-}
-
-/**
- * Foo
- */
-function quux () {
-
-}
-
-/**
- * Foo
- * Bar.
- */
-function quux () {
-
-}
-
-/**
- * Foo.
- *
- * @param foo foo.
- */
-function quux (foo) {
-
-}
-
-/**
- * Foo.
- *
- * @returns foo.
- */
-function quux (foo) {
 
 }
 ```
@@ -711,45 +664,6 @@ The following patterns are not considered problems:
 ```js
 /**
  * @param foo - Foo.
- */
-function quux () {
-
-}
-
-/**
- * Foo.
- */
-function quux () {
-
-}
-
-/**
- * Foo.
- * Bar.
- */
-function quux () {
-
-}
-
-/**
- * Foo.
- *
- * Bar.
- */
-function quux () {
-
-}
-
-/**
- * Foo
- * bar.
- */
-function quux () {
-
-}
-
-/**
- * @returns Foo bar.
  */
 function quux () {
 
