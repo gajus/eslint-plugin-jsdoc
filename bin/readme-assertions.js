@@ -6,41 +6,46 @@ import glob from 'glob';
 import path from 'path';
 import fs from 'fs';
 
-let getAssertions,
-    updateDocuments,
-    trimCode;
+const formatCodeSnippet = (setup) => {
+    const paragraphs = [];
 
-getAssertions = () => {
-    let assertionFiles,
-        assertionNames,
-        assertionCodes;
+    if (setup.options) {
+        paragraphs.push('// Options: ' + JSON.stringify(setup.options));
+    }
 
-    assertionFiles = glob.sync(path.resolve(__dirname, './../tests/rules/assertions/*.js'));
+    paragraphs.push(trimCode(setup.code));
 
-    assertionNames = _.map(assertionFiles, (filePath) => {
+    if (setup.errors) {
+        paragraphs.push('// Message: ' + setup.errors[0].message);
+    }
+
+    return paragraphs.join('\n');
+};
+
+const getAssertions = () => {
+    const assertionFiles = glob.sync(path.resolve(__dirname, './../tests/rules/assertions/*.js'));
+
+    const assertionNames = _.map(assertionFiles, (filePath) => {
         return path.basename(filePath, '.js');
     });
 
-    assertionCodes = _.map(assertionFiles, (filePath) => {
+    const assertionCodes = _.map(assertionFiles, (filePath) => {
         let codes;
 
         codes = require(filePath).default;
 
         return {
-            valid: _.map(_.map(codes.valid, 'code'), trimCode),
-            invalid: _.map(_.map(codes.invalid, 'code'), trimCode)
+            valid: _.map(codes.valid, formatCodeSnippet),
+            invalid: _.map(codes.invalid, formatCodeSnippet)
         };
     });
 
     return _.zipObject(assertionNames, assertionCodes);
 };
 
-trimCode = (code) => {
-    let lines,
-        indentSize;
-
-    lines = _.trim(code).split('\n');
-    indentSize = lines[lines.length - 1].match(/^\s+/)[0].length;
+const trimCode = (code) => {
+    let lines = _.trim(code).split('\n');
+    const indentSize = lines[lines.length - 1].match(/^\s+/)[0].length;
 
     lines = _.map(lines, (line, i) => {
         if (i === 0) {
@@ -53,13 +58,10 @@ trimCode = (code) => {
     return lines.join('\n');
 };
 
-updateDocuments = (assertions) => {
-    let documentBody,
-        readmeDocumentPath;
+const updateDocuments = (assertions) => {
+    const readmeDocumentPath = path.join(__dirname, './../README.md');
 
-    readmeDocumentPath = path.join(__dirname, './../README.md');
-
-    documentBody = fs.readFileSync(readmeDocumentPath, 'utf8');
+    let documentBody = fs.readFileSync(readmeDocumentPath, 'utf8');
 
     documentBody = documentBody.replace(/<!-- assertions ([a-z]+?) -->/ig, (assertionsBlock) => {
         let ruleName,

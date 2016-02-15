@@ -136,6 +136,7 @@ The following patterns are considered problems:
 function quux (foo = 'FOO') {
 
 }
+// Message: Expected @param names to be "foo". Got "Foo".
 
 /**
  * @arg Foo
@@ -143,6 +144,7 @@ function quux (foo = 'FOO') {
 function quux (foo = 'FOO') {
 
 }
+// Message: Expected @arg names to be "foo". Got "Foo".
 
 /**
  * @param Foo
@@ -150,6 +152,7 @@ function quux (foo = 'FOO') {
 function quux (foo) {
 
 }
+// Message: Expected @param names to be "foo". Got "Foo".
 
 /**
  * @param Foo.Bar
@@ -157,6 +160,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Message: @param path declaration ("Foo.Bar") appears before any real parameter.
 
 /**
  * @param foo
@@ -165,6 +169,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Message: @param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").
 
 /**
  * @param foo
@@ -174,6 +179,7 @@ function quux (foo) {
 function quux (bar, foo) {
 
 }
+// Message: Expected @param names to be "bar, foo". Got "foo, bar".
 
 /**
  * @param foo
@@ -182,6 +188,7 @@ function quux (bar, foo) {
 function quux (foo) {
 
 }
+// Message: @param "bar" does not match an existing function parameter.
 ```
 
 The following patterns are not considered problems:
@@ -345,6 +352,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Message: Invalid JSDoc tag name "Param".
 
 /**
  * @foo
@@ -352,6 +360,7 @@ function quux () {
 function quux () {
 
 }
+// Message: Invalid JSDoc tag name "foo".
 
 /**
  * @arg foo
@@ -359,6 +368,7 @@ function quux () {
 function quux (foo) {
 
 }
+// Message: Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "param".
 
 /**
  * @param foo
@@ -366,6 +376,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".
 ```
 
 The following patterns are not considered problems:
@@ -417,6 +428,7 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+// Message: Invalid JSDoc @param "foo" type "Number".
 
 /**
  * @arg {Number} foo
@@ -424,6 +436,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Message: Invalid JSDoc @arg "foo" type "Number".
 ```
 
 The following patterns are not considered problems:
@@ -463,6 +476,7 @@ This rule takes one argument. If it is `"always"` then a problem is raised when 
 The following patterns are considered problems:
 
 ```js
+// Options: ["always"]
 /**
  * Foo.
  *
@@ -472,7 +486,9 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Message: There must be a newline after the description of the JSDoc block.
 
+// Options: ["never"]
 /**
  * Bar.
  *
@@ -483,11 +499,13 @@ function quux () {
 function quux () {
 
 }
+// Message: There must be no newline after the description of the JSDoc block.
 ```
 
 The following patterns are not considered problems:
 
 ```js
+// Options: ["always"]
 /**
  * Foo.
  */
@@ -495,6 +513,7 @@ function quux () {
 
 }
 
+// Options: ["never"]
 /**
  * Bar.
  */
@@ -502,6 +521,7 @@ function quux () {
 
 }
 
+// Options: ["always"]
 /**
  * Foo.
  *
@@ -511,6 +531,7 @@ function quux () {
 
 }
 
+// Options: ["never"]
 /**
  * Bar.
  * @bar
@@ -544,6 +565,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Message: Description must start with an uppercase character.
 
 /**
  * Foo.
@@ -553,6 +575,7 @@ function quux () {
 function quux () {
 
 }
+// Message: Paragraph must start with an uppercase character.
 
 /**
  * Foo
@@ -560,6 +583,7 @@ function quux () {
 function quux () {
 
 }
+// Message: Sentence must end with a period.
 
 /**
  * Foo
@@ -568,6 +592,7 @@ function quux () {
 function quux () {
 
 }
+// Message: A line of text is started with an uppercase character, but preceding line does not end the sentence.
 
 /**
  * Foo.
@@ -577,6 +602,7 @@ function quux () {
 function quux (foo) {
 
 }
+// Message: Description must start with an uppercase character.
 
 /**
  * Foo.
@@ -586,6 +612,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Message: Description must start with an uppercase character.
 ```
 
 The following patterns are not considered problems:
@@ -657,6 +684,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Message: There must be a hyphen before @param description.
 ```
 
 The following patterns are not considered problems:
@@ -689,6 +717,7 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+// Message: Missing JSDoc @param "foo" declaration.
 
 /**
  *
@@ -696,6 +725,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Message: Missing JSDoc @arg "foo" declaration.
 
 /**
  * @param foo
@@ -703,6 +733,7 @@ function quux (foo) {
 function quux (foo, bar) {
 
 }
+// Message: Missing JSDoc @param "bar" declaration.
 ```
 
 The following patterns are not considered problems:
@@ -742,6 +773,7 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+// Message: Missing JSDoc @param "foo" description.
 
 /**
  * @arg foo
@@ -749,6 +781,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Message: Missing JSDoc @arg "foo" description.
 ```
 
 The following patterns are not considered problems:
@@ -788,6 +821,7 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+// Message: Missing JSDoc @param "foo" type.
 
 /**
  * @arg foo
@@ -795,6 +829,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Message: Missing JSDoc @arg "foo" type.
 ```
 
 The following patterns are not considered problems:
@@ -834,6 +869,7 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+// Message: Missing JSDoc @returns description.
 
 /**
  * @return
@@ -841,6 +877,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Message: Missing JSDoc @return description.
 ```
 
 The following patterns are not considered problems:
@@ -880,6 +917,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Message: Missing JSDoc @returns type.
 
 /**
  * @returns Foo.
@@ -887,6 +925,7 @@ function quux () {
 function quux () {
 
 }
+// Message: Missing JSDoc @returns type.
 
 /**
  * @return Foo.
@@ -894,6 +933,7 @@ function quux () {
 function quux () {
 
 }
+// Message: Missing JSDoc @return type.
 ```
 
 The following patterns are not considered problems:
