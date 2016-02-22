@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "comment-parser": "^0.4.0",
-    "lodash": "^4.3.0"
+    "lodash": "^4.5.1"
   },
   "scripts": {
     "pragmatist": "pragmatist --es5",
@@ -41,10 +41,10 @@
     "babel-cli": "^6.5.1",
     "babel-preset-es2015": "^6.5.0",
     "chai": "^3.5.0",
-    "eslint": "^2.0.0",
+    "eslint": "^2.2.0",
     "gitdown": "^2.4.0",
     "globby": "^4.0.0",
     "mocha": "^2.4.5",
-    "pragmatist": "^3.0.4"
+    "pragmatist": "^3.0.13"
   }
 }
