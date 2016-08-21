@@ -2,7 +2,7 @@ import _ from 'lodash';
 import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 
-const curryUtils = (functionNode, jsdoc, tagNamePreference) => {
+const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames) => {
     const utils = {};
 
     utils.getFunctionParameterNames = () => {
@@ -22,7 +22,7 @@ const curryUtils = (functionNode, jsdoc, tagNamePreference) => {
     };
 
     utils.isValidTag = (name) => {
-        return jsdocUtils.isValidTag(name);
+        return jsdocUtils.isValidTag(name, additionalTagNames);
     };
 
     return utils;
@@ -32,6 +32,7 @@ export default (iterator) => {
     return (context) => {
         const sourceCode = context.getSourceCode();
         const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
+        const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
 
         const checkJsdoc = (functionNode) => {
             const jsdocNode = sourceCode.getJSDocComment(functionNode);
@@ -59,7 +60,7 @@ export default (iterator) => {
                 context.report(jsdocNode, message);
             };
 
-            const utils = curryUtils(functionNode, jsdoc, tagNamePreference);
+            const utils = curryUtils(functionNode, jsdoc, tagNamePreference, additionalTagNames);
 
             iterator({
                 context,

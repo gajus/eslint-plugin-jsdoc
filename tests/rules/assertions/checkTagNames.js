@@ -72,7 +72,67 @@ export default {
                     }
                 }
             }
-        }
+        },
+        {
+            code: `
+                /**
+                 * @bar foo
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Invalid JSDoc tag name "bar".'
+                }
+            ],
+        },
+        {
+            code: `
+                /**
+                 * @baz @bar foo
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Invalid JSDoc tag name "baz".'
+                }
+            ],
+            settings: {
+                jsdoc: {
+                    additionalTagNames: {
+                        customTags: ['bar']
+                    }
+                }
+            }
+        },
+        {
+            code: `
+                /**
+                 * @bar
+                 * @baz
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            errors: [
+                {
+                    message: 'Invalid JSDoc tag name "baz".'
+                }
+            ],
+            settings: {
+                jsdoc: {
+                    additionalTagNames: {
+                        customTags: ['bar']
+                    }
+                }
+            }
+        },
     ],
     valid: [
         {
@@ -98,6 +158,40 @@ export default {
                 jsdoc: {
                     tagNamePreference: {
                         param: 'arg'
+                    }
+                }
+            }
+        },
+        {
+            code: `
+                /**
+                 * @bar foo
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            settings: {
+                jsdoc: {
+                    additionalTagNames: {
+                        customTags: ['bar']
+                    }
+                }
+            }
+        },
+        {
+            code: `
+                /**
+                 * @baz @bar foo
+                 */
+                function quux (foo) {
+
+                }
+            `,
+            settings: {
+                jsdoc: {
+                    additionalTagNames: {
+                        customTags: ['baz', 'bar']
                     }
                 }
             }

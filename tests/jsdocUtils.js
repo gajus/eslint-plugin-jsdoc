@@ -27,17 +27,22 @@ describe('jsdocUtils', () => {
     describe('isValidTag()', () => {
         context('tag is invalid', () => {
             it('returns false', () => {
-                expect(jsdocUtils.isValidTag('foo')).to.equal(false);
+                expect(jsdocUtils.isValidTag('foo', {})).to.equal(false);
             });
         });
         context('tag is valid', () => {
             it('returns true', () => {
-                expect(jsdocUtils.isValidTag('param')).to.equal(true);
+                expect(jsdocUtils.isValidTag('param', {})).to.equal(true);
             });
         });
         context('tag is valid alias', () => {
             it('returns true', () => {
-                expect(jsdocUtils.isValidTag('arg')).to.equal(true);
+                expect(jsdocUtils.isValidTag('arg', {})).to.equal(true);
+            });
+        });
+        context('tag is valid and customized', () => {
+            it('returns true', () => {
+                expect(jsdocUtils.isValidTag('foobar', {customTags: ['foobar']})).to.equal(true);
             });
         });
     });
