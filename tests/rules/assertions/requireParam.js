@@ -69,6 +69,16 @@ export default {
         {
             code: `
                 /**
+                 * @inheritdoc
+                 */
+                function quux (foo) {
+
+                }
+            `
+        },
+        {
+            code: `
+                /**
                  * @arg foo
                  */
                 function quux (foo) {
