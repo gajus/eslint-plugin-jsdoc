@@ -72,10 +72,18 @@ const isValidTag = (name : string) : boolean => {
     return _.includes(validTagNames, name);
 };
 
+const hasTag = (jsdoc : Object, targetTagName : string) : boolean => {
+    const targetTagLower = targetTagName.toLowerCase();
+    return _.some(jsdoc.tags, (doc : Object) => {
+        return doc.tag.toLowerCase() == targetTagLower;
+    });
+};
+
 export default {
     getFunctionParameterNames,
     getJsdocParameterNames,
     getJsdocParameterNamesDeep,
     getPreferredTagName,
-    isValidTag
+    isValidTag,
+    hasTag
 };

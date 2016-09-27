@@ -8,6 +8,11 @@ export default iterateJsdoc(({
     const functionParameterNames = utils.getFunctionParameterNames();
     const jsdocParameterNames = utils.getJsdocParameterNames();
 
+    // inheritdoc implies that all documentation is inherited; see http://usejsdoc.org/tags-inheritdoc.html
+    if (utils.hasTag('inheritdoc')) {
+        return;
+    }
+
     _.some(functionParameterNames, (functionParameterName, index) => {
         const jsdocParameterName = jsdocParameterNames[index];
 
