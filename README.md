@@ -271,6 +271,33 @@ function quux ({
 
 Reports invalid block tag names.
 
+This rule takes one argument. If it is `extra` then the passed array can specify custom tag names to ignore. If the option is not
+present or empty then it is ignored.
+
+```json
+"jsdoc/check-tag-names": [
+    2,
+    "extra": [
+        "ngdoc",
+        "methodOf",
+        "propertyOf",
+        "TODO"
+    ]
+],
+```
+
+**valid with above**
+
+```js
+/**
+ * @ngdoc service
+ * @name module.service:serviceName
+ * @methodOf module.service:serviceName
+ * @propertyOf module.service:serviceName
+ * @TODO add more detailed description
+ */
+```
+
 Valid [JSDoc 3 Block Tags](http://usejsdoc.org/#block-tags) are:
 
 ```
