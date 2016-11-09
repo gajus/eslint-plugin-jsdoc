@@ -1,11 +1,11 @@
 {
   "name": "eslint-plugin-jsdoc",
   "description": "JSDoc linting rules for ESLint.",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "main": "./dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gajus/eslint-plugin-jsdoc"
+    "url": "https://github.com/jensbodal/eslint-plugin-jsdoc"
   },
   "keywords": [
     "eslint",
@@ -13,13 +13,13 @@
     "jsdoc"
   ],
   "author": {
-    "name": "Gajus Kuizinas",
-    "email": "gajus@gajus.com",
-    "url": "http://gajus.com"
+    "name": "Jens Bodal",
+    "email": "jensbodal@gmail.com",
+    "originalAuthor": "https://github.com/gajus/eslint-plugin-jsdoc"
   },
   "license": "BSD-3-Clause",
   "peerDependencies": {
-    "eslint": ">=0.8.0"
+    "eslint": "3.9.1"
   },
   "dependencies": {
     "comment-parser": "^0.4.0",
