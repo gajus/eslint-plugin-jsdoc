@@ -14,7 +14,8 @@
   ],
   "author": {
     "name": "Jens Bodal",
-    "email": "jensbodal@gmail.com"
+    "email": "jensbodal@gmail.com",
+    "originalAuthor": "https://github.com/gajus/eslint-plugin-jsdoc"
   },
   "license": "BSD-3-Clause",
   "peerDependencies": {
