@@ -1,37 +1,14 @@
 {
-  "name": "eslint-plugin-jsdoc",
-  "description": "JSDoc linting rules for ESLint.",
-  "version": "2.3.1",
-  "main": "./dist/index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gajus/eslint-plugin-jsdoc"
-  },
-  "keywords": [
-    "eslint",
-    "plugin",
-    "jsdoc"
-  ],
   "author": {
-    "name": "Gajus Kuizinas",
     "email": "gajus@gajus.com",
+    "name": "Gajus Kuizinas",
     "url": "http://gajus.com"
-  },
-  "license": "BSD-3-Clause",
-  "peerDependencies": {
-    "eslint": ">=0.8.0"
   },
   "dependencies": {
     "comment-parser": "^0.4.0",
     "lodash": "^4.5.1"
   },
-  "scripts": {
-    "build": "babel ./src --out-dir ./dist --copy-files --source-maps",
-    "lint": "eslint ./src ./test",
-    "test": "mocha --compilers js:babel-register && npm run lint",
-    "add-assertions": "babel-node --presets es2015 ./bin/readme-assertions",
-    "generate-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run readme-add-assertions"
-  },
+  "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -44,5 +21,28 @@
     "gitdown": "^2.4.0",
     "globby": "^4.0.0",
     "mocha": "^2.5.3"
-  }
+  },
+  "keywords": [
+    "eslint",
+    "plugin",
+    "jsdoc"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "./dist/index.js",
+  "name": "eslint-plugin-jsdoc",
+  "peerDependencies": {
+    "eslint": ">=0.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gajus/eslint-plugin-jsdoc"
+  },
+  "scripts": {
+    "add-assertions": "babel-node --presets es2015 ./bin/readme-assertions",
+    "build": "babel ./src --out-dir ./dist --copy-files --source-maps",
+    "generate-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run readme-add-assertions",
+    "lint": "eslint ./src ./test",
+    "test": "mocha --compilers js:babel-register && npm run lint"
+  },
+  "version": "2.3.1"
 }
