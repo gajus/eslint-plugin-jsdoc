@@ -1,10 +1,10 @@
-node_modules
 coverage
 dist
+node_modules
 *.log
 .*
+!.babelrc
 !.gitignore
 !.npmignore
-!.babelrc
-!.travis.yml
 !.README
+!.travis.yml
