@@ -98,6 +98,24 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
+
+### Additional Tag Names
+
+Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc tags. The format of the configuration is as follows:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "additionalTagNames": {
+                "customTags": ["define", "extends", "record"]
+            }
+        }
+    }
+}
+```
+
 ## Rules
 
 {"gitdown": "include", "file": "./rules/check-param-names.md"}
