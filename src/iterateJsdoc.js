@@ -24,6 +24,10 @@ const curryUtils = (functionNode, jsdoc, tagNamePreference) => {
     utils.isValidTag = (name) => {
         return jsdocUtils.isValidTag(name);
     };
+    
+    utils.hasTag = (name) => {
+        return jsdocUtils.hasTag(jsdoc, name);
+    };
 
     return utils;
 };
