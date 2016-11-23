@@ -26,6 +26,7 @@
     "lodash": "^4.5.1"
   },
   "scripts": {
+    "build": "babel ./src --out-dir ./dist --copy-files --source-maps",
     "lint": "eslint ./src ./test",
     "test": "mocha --compilers js:babel-register && npm run lint",
     "add-assertions": "babel-node --presets es2015 ./bin/readme-assertions",
