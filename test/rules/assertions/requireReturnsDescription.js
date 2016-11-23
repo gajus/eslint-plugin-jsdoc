@@ -1,65 +1,65 @@
 /* eslint-disable no-restricted-syntax */
 
 export default {
-    invalid: [
-        {
-            code: `
-                /**
-                 * @returns
-                 */
-                function quux (foo) {
+  invalid: [
+    {
+      code: `
+          /**
+           * @returns
+           */
+          function quux (foo) {
 
-                }
-            `,
-            errors: [
-                {
-                    message: 'Missing JSDoc @returns description.'
-                }
-            ]
-        },
+          }
+      `,
+      errors: [
         {
-            code: `
-                /**
-                 * @return
-                 */
-                function quux (foo) {
-
-                }
-            `,
-            errors: [
-                {
-                    message: 'Missing JSDoc @return description.'
-                }
-            ],
-            settings: {
-                jsdoc: {
-                    tagNamePreference: {
-                        returns: 'return'
-                    }
-                }
-            }
+          message: 'Missing JSDoc @returns description.'
         }
-    ],
-    valid: [
-        {
-            code: `
-                /**
-                 *
-                 */
-                function quux () {
+      ]
+    },
+    {
+      code: `
+          /**
+           * @return
+           */
+          function quux (foo) {
 
-                }
-            `
-        },
+          }
+      `,
+      errors: [
         {
-            code: `
-                /**
-                 * @returns Foo.
-                 */
-                function quux () {
-
-                }
-            `
+          message: 'Missing JSDoc @return description.'
         }
-    ]
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            returns: 'return'
+          }
+        }
+      }
+    }
+  ],
+  valid: [
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns Foo.
+           */
+          function quux () {
+
+          }
+      `
+    }
+  ]
 };

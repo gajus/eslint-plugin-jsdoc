@@ -1,71 +1,71 @@
 import _ from 'lodash';
-import iterateJsdoc from './../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc';
 
 const validateParameterNames = (targetTagName : string, functionParameterNames : Array<string>, jsdocParameterNames : Array<string>, report : Function) => {
-    return _.some(jsdocParameterNames, (jsdocParameterName, index) => {
-        const functionParameterName = functionParameterNames[index];
+  return _.some(jsdocParameterNames, (jsdocParameterName, index) => {
+    const functionParameterName = functionParameterNames[index];
 
-        if (!functionParameterName) {
-            report('@' + targetTagName + ' "' + jsdocParameterName + '" does not match an existing function parameter.');
+    if (!functionParameterName) {
+      report('@' + targetTagName + ' "' + jsdocParameterName + '" does not match an existing function parameter.');
 
-            return true;
-        }
+      return true;
+    }
 
-        if (functionParameterName === '<ObjectPattern>') {
-            return;
-        }
+    if (functionParameterName === '<ObjectPattern>') {
+      return false;
+    }
 
-        if (functionParameterName !== jsdocParameterName) {
-            report('Expected @' + targetTagName + ' names to be "' + functionParameterNames.join(', ') + '". Got "' + jsdocParameterNames.join(', ') + '".');
+    if (functionParameterName !== jsdocParameterName) {
+      report('Expected @' + targetTagName + ' names to be "' + functionParameterNames.join(', ') + '". Got "' + jsdocParameterNames.join(', ') + '".');
 
-            return true;
-        }
+      return true;
+    }
 
-        return false;
-    });
+    return false;
+  });
 };
 
 const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames : Array<string>, report : Function) => {
-    let lastRealParameter;
+  let lastRealParameter;
 
-    return _.some(jsdocParameterNames, (jsdocParameterName) => {
-        const isPropertyPath = _.includes(jsdocParameterName, '.');
+  return _.some(jsdocParameterNames, (jsdocParameterName) => {
+    const isPropertyPath = _.includes(jsdocParameterName, '.');
 
-        if (isPropertyPath) {
-            if (!lastRealParameter) {
-                report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") appears before any real parameter.');
+    if (isPropertyPath) {
+      if (!lastRealParameter) {
+        report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") appears before any real parameter.');
 
-                return true;
-            }
+        return true;
+      }
 
-            const pathRootNodeName = jsdocParameterName.slice(0, jsdocParameterName.indexOf('.'));
+      const pathRootNodeName = jsdocParameterName.slice(0, jsdocParameterName.indexOf('.'));
 
-            if (pathRootNodeName !== lastRealParameter) {
-                report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") root node name ("' + pathRootNodeName + '") does not match previous real parameter name ("' + lastRealParameter + '").');
+      if (pathRootNodeName !== lastRealParameter) {
+        report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") root node name ("' + pathRootNodeName + '") does not match previous real parameter name ("' + lastRealParameter + '").');
 
-                return true;
-            }
-        } else {
-            lastRealParameter = jsdocParameterName;
-        }
+        return true;
+      }
+    } else {
+      lastRealParameter = jsdocParameterName;
+    }
 
-        return false;
-    });
+    return false;
+  });
 };
 
 export default iterateJsdoc(({
     report,
     utils
 }) => {
-    const functionParameterNames = utils.getFunctionParameterNames();
-    const jsdocParameterNames = utils.getJsdocParameterNames();
-    const jsdocParameterNamesDeep = utils.getJsdocParameterNamesDeep();
-    const targetTagName = utils.getPreferredTagName('param');
-    const isError = validateParameterNames(targetTagName, functionParameterNames, jsdocParameterNames, report);
+  const functionParameterNames = utils.getFunctionParameterNames();
+  const jsdocParameterNames = utils.getJsdocParameterNames();
+  const jsdocParameterNamesDeep = utils.getJsdocParameterNamesDeep();
+  const targetTagName = utils.getPreferredTagName('param');
+  const isError = validateParameterNames(targetTagName, functionParameterNames, jsdocParameterNames, report);
 
-    if (isError) {
-        return;
-    }
+  if (isError) {
+    return;
+  }
 
-    validateParameterNamesDeep(targetTagName, jsdocParameterNamesDeep, report);
+  validateParameterNamesDeep(targetTagName, jsdocParameterNamesDeep, report);
 });

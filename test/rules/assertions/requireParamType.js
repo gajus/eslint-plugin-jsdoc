@@ -1,65 +1,65 @@
 /* eslint-disable no-restricted-syntax */
 
 export default {
-    invalid: [
-        {
-            code: `
-                /**
-                 * @param foo
-                 */
-                function quux (foo) {
+  invalid: [
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
 
-                }
-            `,
-            errors: [
-                {
-                    message: 'Missing JSDoc @param "foo" type.'
-                }
-            ]
-        },
+          }
+      `,
+      errors: [
         {
-            code: `
-                /**
-                 * @arg foo
-                 */
-                function quux (foo) {
-
-                }
-            `,
-            errors: [
-                {
-                    message: 'Missing JSDoc @arg "foo" type.'
-                }
-            ],
-            settings: {
-                jsdoc: {
-                    tagNamePreference: {
-                        param: 'arg'
-                    }
-                }
-            }
+          message: 'Missing JSDoc @param "foo" type.'
         }
-    ],
-    valid: [
-        {
-            code: `
-                /**
-                 *
-                 */
-                function quux (foo) {
+      ]
+    },
+    {
+      code: `
+          /**
+           * @arg foo
+           */
+          function quux (foo) {
 
-                }
-            `
-        },
+          }
+      `,
+      errors: [
         {
-            code: `
-                /**
-                 * @param {number} foo
-                 */
-                function quux (foo) {
-
-                }
-            `
+          message: 'Missing JSDoc @arg "foo" type.'
         }
-    ]
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            param: 'arg'
+          }
+        }
+      }
+    }
+  ],
+  valid: [
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @param {number} foo
+           */
+          function quux (foo) {
+
+          }
+      `
+    }
+  ]
 };

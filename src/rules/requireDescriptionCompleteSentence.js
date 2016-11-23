@@ -1,75 +1,75 @@
 import _ from 'lodash';
-import iterateJsdoc from './../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc';
 
 const extractParagraphs = (text) => {
-    return text.split(/\n\n/);
+  return text.split(/\n\n/);
 };
 
 const isNewLinePrecededByAPeriod = (text) => {
-    let lastLineEndsSentence;
+  let lastLineEndsSentence;
 
-    const lines = text.split('\n');
+  const lines = text.split('\n');
 
-    return !_.some(lines, (line) => {
-        if (_.isBoolean(lastLineEndsSentence) && !lastLineEndsSentence && /^[A-Z]/.test(line)) {
-            return true;
-        }
+  return !_.some(lines, (line) => {
+    if (_.isBoolean(lastLineEndsSentence) && !lastLineEndsSentence && /^[A-Z]/.test(line)) {
+      return true;
+    }
 
-        lastLineEndsSentence = /\.$/.test(line);
+    lastLineEndsSentence = /\.$/.test(line);
 
-        return false;
-    });
+    return false;
+  });
 };
 
 const validateDescription = (description, report) => {
-    if (!description) {
-        return false;
+  if (!description) {
+    return false;
+  }
+
+  const paragraphs = extractParagraphs(description);
+
+  return _.some(paragraphs, (paragraph, index) => {
+    if (!/^[A-Z]/.test(paragraph)) {
+      if (index === 0) {
+        report('Description must start with an uppercase character.');
+      } else {
+        report('Paragraph must start with an uppercase character.');
+      }
+
+      return true;
     }
 
-    const paragraphs = extractParagraphs(description);
+    if (!/\.$/.test(paragraph)) {
+      report('Sentence must end with a period.');
 
-    return _.some(paragraphs, (paragraph, index) => {
-        if (!/^[A-Z]/.test(paragraph)) {
-            if (index === 0) {
-                report('Description must start with an uppercase character.');
-            } else {
-                report('Paragraph must start with an uppercase character.');
-            }
+      return true;
+    }
 
-            return true;
-        }
+    if (!isNewLinePrecededByAPeriod(paragraph)) {
+      report('A line of text is started with an uppercase character, but preceding line does not end the sentence.');
 
-        if (!/\.$/.test(paragraph)) {
-            report('Sentence must end with a period.');
+      return true;
+    }
 
-            return true;
-        }
-
-        if (!isNewLinePrecededByAPeriod(paragraph)) {
-            report('A line of text is started with an uppercase character, but preceding line does not end the sentence.');
-
-            return true;
-        }
-
-        return false;
-    });
+    return false;
+  });
 };
 
 export default iterateJsdoc(({
-    jsdoc,
-    report
+  jsdoc,
+  report
 }) => {
-    if (validateDescription(jsdoc.description, report)) {
-        return;
-    }
+  if (validateDescription(jsdoc.description, report)) {
+    return;
+  }
 
-    const tags = _.filter(jsdoc.tags, (tag) => {
-        return _.includes(['param', 'returns'], tag.tag);
-    });
+  const tags = _.filter(jsdoc.tags, (tag) => {
+    return _.includes(['param', 'returns'], tag.tag);
+  });
 
-    _.some(tags, (tag) => {
-        const description = _.trimStart(tag.description, '- ');
+  _.some(tags, (tag) => {
+    const description = _.trimStart(tag.description, '- ');
 
-        return validateDescription(description, report);
-    });
+    return validateDescription(description, report);
+  });
 });
