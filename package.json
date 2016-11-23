@@ -44,5 +44,5 @@
     "lint": "eslint ./src ./test",
     "test": "mocha --compilers js:babel-register && npm run lint"
   },
-  "version": "2.3.1"
+  "version": "2.4.0"
 }
