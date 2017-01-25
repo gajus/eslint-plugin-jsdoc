@@ -2,7 +2,9 @@ import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 const extractParagraphs = (text) => {
-  return text.split(/\n\n/);
+  return text.split(/\n\n/).map((par) => {
+    return par.replace(/[*_]+/g, '');
+  });
 };
 
 const isNewLinePrecededByAPeriod = (text) => {
