@@ -2,7 +2,7 @@ import _ from 'lodash';
 import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 
-const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames) => {
+const curryUtils = (functionNode, jsdoc, tagNamePreference, typeNamePreference, additionalTagNames) => {
   const utils = {};
 
   utils.getFunctionParameterNames = () => {
@@ -15,6 +15,12 @@ const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames) 
 
   utils.getJsdocParameterNames = () => {
     return jsdocUtils.getJsdocParameterNames(jsdoc, utils.getPreferredTagName('param'));
+  };
+
+  utils.getPreferredTypeNames = (strictTypes) => {
+    return strictTypes.map((name) => {
+      return typeNamePreference[name] || name;
+    });
   };
 
   utils.getPreferredTagName = (name) => {
@@ -36,6 +42,7 @@ export default (iterator) => {
   return (context) => {
     const sourceCode = context.getSourceCode();
     const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
+    const typeNamePreference = _.get(context, 'settings.jsdoc.typeNamePreference') || {};
     const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
 
     const checkJsdoc = (functionNode) => {
@@ -65,7 +72,7 @@ export default (iterator) => {
         context.report(jsdocNode, message);
       };
 
-      const utils = curryUtils(functionNode, jsdoc, tagNamePreference, additionalTagNames);
+      const utils = curryUtils(functionNode, jsdoc, tagNamePreference, typeNamePreference, additionalTagNames);
 
       iterator({
         context,

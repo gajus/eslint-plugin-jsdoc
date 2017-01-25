@@ -29,7 +29,7 @@ const targetTagAliases = [
 
 targetTags = targetTags.concat(targetTagAliases);
 
-const strictNativeTypes = [
+const defaultStrictNativeTypes = [
   'boolean',
   'number',
   'string',
@@ -42,11 +42,14 @@ const strictNativeTypes = [
 
 export default iterateJsdoc(({
   jsdoc,
-  report
+  report,
+  utils
 }) => {
   const jsdocTags = _.filter(jsdoc.tags, (tag) => {
     return _.includes(targetTags, tag.tag);
   });
+
+  const strictNativeTypes = utils.getPreferredTypeNames(defaultStrictNativeTypes);
 
   _.forEach(jsdocTags, (jsdocTag) => {
     _.some(strictNativeTypes, (strictNativeType) => {

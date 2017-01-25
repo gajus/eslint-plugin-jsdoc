@@ -98,6 +98,21 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
+Use `settings.jsdoc.typeNamePreference` to configure preferred type names.
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "typeNamePreference": {
+                "string": "String"
+            }
+        }
+    }
+}
+```
+
 
 ### Additional Tag Names
 
