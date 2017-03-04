@@ -13,7 +13,8 @@ Array
 Date
 RegExp
 ```
-<h4 id="eslint-plugin-jsdoc-rules-check-types-why">Why not capital case everything?</h4>
+
+#### Why not capital case everything?
 
 Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`. 
 
