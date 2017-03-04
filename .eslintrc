@@ -1,4 +1,7 @@
 {
   "extends": "canonical",
-  "root": true
+  "root": true,
+  "rules": {
+    "filenames/match-regex": 0
+  }
 }

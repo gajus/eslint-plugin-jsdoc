@@ -1,4 +1,5 @@
-<h1 id="eslint-plugin-jsdoc">eslint-plugin-jsdoc</h1>
+<a name="eslint-plugin-jsdoc"></a>
+# eslint-plugin-jsdoc
 
 [![NPM version](http://img.shields.io/npm/v/eslint-plugin-jsdoc.svg?style=flat-square)](https://www.npmjs.org/package/eslint-plugin-jsdoc)
 [![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-jsdoc/master.svg?style=flat-square)](https://travis-ci.org/gajus/eslint-plugin-jsdoc)
@@ -12,6 +13,7 @@ JSDoc linting rules for ESLint.
     * [Configuration](#eslint-plugin-jsdoc-configuration)
     * [Settings](#eslint-plugin-jsdoc-settings)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
+        * [Additional Tag Names](#eslint-plugin-jsdoc-settings-additional-tag-names)
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
@@ -26,7 +28,8 @@ JSDoc linting rules for ESLint.
         * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
 
 
-<h3 id="eslint-plugin-jsdoc-reference-to-jscs-jsdoc">Reference to jscs-jsdoc</h3>
+<a name="eslint-plugin-jsdoc-reference-to-jscs-jsdoc"></a>
+### Reference to jscs-jsdoc
 
 This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 
@@ -50,7 +53,8 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | N/A | [`enforceExistence`](https://github.com/jscs-dev/jscs-jsdoc#enforceexistence) |
 | N/A | [`leadingUnderscoreAccess`](https://github.com/jscs-dev/jscs-jsdoc#leadingunderscoreaccess) |
 
-<h2 id="eslint-plugin-jsdoc-installation">Installation</h2>
+<a name="eslint-plugin-jsdoc-installation"></a>
+## Installation
 
 Install [ESLint](https://www.github.com/eslint/eslint) either locally or globally.
 
@@ -64,7 +68,8 @@ If you have installed `ESLint` globally, you have to install JSDoc plugin global
 npm install eslint-plugin-jsdoc
 ```
 
-<h2 id="eslint-plugin-jsdoc-configuration">Configuration</h2>
+<a name="eslint-plugin-jsdoc-configuration"></a>
+## Configuration
 
 Add `plugins` section and specify `eslint-plugin-jsdoc` as a plugin.
 
@@ -96,9 +101,11 @@ Finally, enable all of the rules that you would like to use.
 }
 ```
 
-<h2 id="eslint-plugin-jsdoc-settings">Settings</h2>
+<a name="eslint-plugin-jsdoc-settings"></a>
+## Settings
 
-<h3 id="eslint-plugin-jsdoc-settings-alias-preference">Alias Preference</h3>
+<a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
+### Alias Preference
 
 Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.
 
@@ -116,9 +123,30 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
-<h2 id="eslint-plugin-jsdoc-rules">Rules</h2>
 
-<h3 id="eslint-plugin-jsdoc-rules-check-param-names"><code>check-param-names</code></h3>
+<a name="eslint-plugin-jsdoc-settings-additional-tag-names"></a>
+### Additional Tag Names
+
+Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc tags. The format of the configuration is as follows:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "additionalTagNames": {
+                "customTags": ["define", "extends", "record"]
+            }
+        }
+    }
+}
+```
+
+<a name="eslint-plugin-jsdoc-rules"></a>
+## Rules
+
+<a name="eslint-plugin-jsdoc-rules-check-param-names"></a>
+### <code>check-param-names</code>
 
 Ensures that parameter names in JSDoc match those in the function declaration.
 
@@ -249,7 +277,8 @@ function quux ({a, b}) {
 ```
 
 
-<h4 id="eslint-plugin-jsdoc-rules-check-param-names-deconstructing-function-parameter">Deconstructing Function Parameter</h4>
+<a name="eslint-plugin-jsdoc-rules-check-param-names-deconstructing-function-parameter"></a>
+#### Deconstructing Function Parameter
 
 `eslint-plugin-jsdoc` does not validate names of parameters in function deconstruction, e.g.
 
@@ -267,7 +296,8 @@ function quux ({
 
 `{a, b}` is an [`ObjectPattern`](https://github.com/estree/estree/blob/master/es6.md#objectpattern) AST type and does not have a name. Therefore, the associated parameter in JSDoc block can have any name.
 
-<h3 id="eslint-plugin-jsdoc-rules-check-tag-names"><code>check-tag-names</code></h3>
+<a name="eslint-plugin-jsdoc-rules-check-tag-names"></a>
+### <code>check-tag-names</code>
 
 Reports invalid block tag names.
 
@@ -377,6 +407,31 @@ function quux (foo) {
 
 }
 // Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".
+
+/**
+ * @bar foo
+ */
+function quux (foo) {
+
+}
+// Message: Invalid JSDoc tag name "bar".
+
+/**
+ * @baz @bar foo
+ */
+function quux (foo) {
+
+}
+// Message: Invalid JSDoc tag name "baz".
+
+/**
+ * @bar
+ * @baz
+ */
+function quux (foo) {
+
+}
+// Message: Invalid JSDoc tag name "baz".
 ```
 
 The following patterns are not considered problems:
@@ -395,10 +450,91 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+/**
+ * @bar foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @baz @bar foo
+ */
+function quux (foo) {
+
+}
+
+/** 
+ * @abstract
+ * @access
+ * @alias
+ * @augments
+ * @author
+ * @borrows
+ * @callback
+ * @class
+ * @classdesc
+ * @constant
+ * @constructs
+ * @copyright
+ * @default
+ * @deprecated
+ * @description
+ * @enum
+ * @event
+ * @example
+ * @exports
+ * @external
+ * @file
+ * @fires
+ * @function
+ * @global
+ * @ignore
+ * @implements
+ * @inheritdoc
+ * @inner
+ * @instance
+ * @interface
+ * @kind
+ * @lends
+ * @license
+ * @listens
+ * @member
+ * @memberof
+ * @mixes
+ * @mixin
+ * @module
+ * @name
+ * @namespace
+ * @override
+ * @param
+ * @private
+ * @property
+ * @protected
+ * @public
+ * @readonly
+ * @requires
+ * @returns
+ * @see
+ * @since
+ * @static
+ * @summary
+ * @this
+ * @throws
+ * @todo
+ * @tutorial
+ * @type
+ * @typedef
+ * @variation
+ * @version
+ */
+function quux (foo) {}
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-check-types"><code>check-types</code></h3>
+<a name="eslint-plugin-jsdoc-rules-check-types"></a>
+### <code>check-types</code>
 
 Reports invalid types.
 
@@ -413,6 +549,37 @@ Array
 Date
 RegExp
 ```
+
+<a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
+#### Why not capital case everything?
+
+Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`. 
+
+Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do. 
+
+So in a sense, there two types of strings in Javascript; `{string}` literals, also called primitives and `{String}` Objects. We use the primitives because it's easier to write and uses less memory. `{String}` and `{string}` are technically both valid, but they are not the same.
+
+```js
+new String('lard') // String {0: "l", 1: "a", 2: "r", 3: "d", length: 4}
+'lard' // "lard"
+new String('lard') === 'lard' // false
+```
+
+To make things more confusing, there are also object literals and object Objects. But object literals are still static Objects and object Objects are instantiated Objects. So an object primitive is still an object Object.
+
+Basically, for primitives, we want to define the type as a primitive, because that's what we use in 99.9% of cases. For everything else, we use the type rather than the primitive. Otherwise it would all just be `{object}`.
+
+In short: It's not about consistency, rather about the 99.9% use case.
+
+type name | `typeof` | check-types | testcase
+--|--|--|--
+**Object** | object | **Object** | `({}) instanceof Object` -> `true`
+**Array** | object | **Array** | `([]) instanceof Array` -> `true`
+**Date** | object | **Date** | `(new Date()) instanceof Date` -> `true`
+**RegExp** | object | **RegExp** | `(new RegExp(/.+/)) instanceof RegExp` -> `true`
+Boolean | **boolean** | **boolean** | `(true) instanceof Boolean` -> **`false`**
+Number | **number** | **number** | `(41) instanceof Number` -> **`false`**
+String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
 |||
 |---|---|
@@ -462,7 +629,8 @@ function quux (foo, bar, baz) {
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-newline-after-description"><code>newline-after-description</code></h3>
+<a name="eslint-plugin-jsdoc-rules-newline-after-description"></a>
+### <code>newline-after-description</code>
 
 Enforces a consistent padding of the block description.
 
@@ -542,7 +710,8 @@ function quux () {
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-require-description-complete-sentence"><code>require-description-complete-sentence</code></h3>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
+### <code>require-description-complete-sentence</code>
 
 Requires that block description and tag description are written in complete sentences, i.e.,
 
@@ -666,7 +835,8 @@ function quux () {
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description"><code>require-hyphen-before-param-description</code></h3>
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description"></a>
+### <code>require-hyphen-before-param-description</code>
 
 Requires a hyphen before the `@param` description.
 
@@ -699,7 +869,8 @@ function quux () {
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-require-param"><code>require-param</code></h3>
+<a name="eslint-plugin-jsdoc-rules-require-param"></a>
+### <code>require-param</code>
 
 Requires that all function parameters are documented.
 
@@ -747,6 +918,13 @@ function quux (foo) {
 }
 
 /**
+ * @inheritdoc
+ */
+function quux (foo) {
+
+}
+
+/**
  * @arg foo
  */
 function quux (foo) {
@@ -755,7 +933,8 @@ function quux (foo) {
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-require-param-description"><code>require-param-description</code></h3>
+<a name="eslint-plugin-jsdoc-rules-require-param-description"></a>
+### <code>require-param-description</code>
 
 Requires that `@param` tag has `description` value.
 
@@ -803,7 +982,8 @@ function quux (foo) {
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-require-param-type"><code>require-param-type</code></h3>
+<a name="eslint-plugin-jsdoc-rules-require-param-type"></a>
+### <code>require-param-type</code>
 
 Requires that `@param` tag has `type` value.
 
@@ -851,7 +1031,8 @@ function quux (foo) {
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-require-returns-description"><code>require-returns-description</code></h3>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description"></a>
+### <code>require-returns-description</code>
 
 Requires that `@returns` tag has `description` value.
 
@@ -899,7 +1080,8 @@ function quux () {
 ```
 
 
-<h3 id="eslint-plugin-jsdoc-rules-require-returns-type"><code>require-returns-type</code></h3>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type"></a>
+### <code>require-returns-type</code>
 
 Requires that `@returns` tag has `type` value.
 

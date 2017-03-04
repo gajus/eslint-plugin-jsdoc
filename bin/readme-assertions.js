@@ -23,7 +23,7 @@ const formatCodeSnippet = (setup) => {
 };
 
 const getAssertions = () => {
-    const assertionFiles = glob.sync(path.resolve(__dirname, './../tests/rules/assertions/*.js'));
+    const assertionFiles = glob.sync(path.resolve(__dirname, '../test/rules/assertions/*.js'));
 
     const assertionNames = _.map(assertionFiles, (filePath) => {
         return path.basename(filePath, '.js');
@@ -45,7 +45,10 @@ const getAssertions = () => {
 
 const trimCode = (code) => {
     let lines = _.trim(code).split('\n');
-    const indentSize = lines[lines.length - 1].match(/^\s+/)[0].length;
+
+    const indendation = lines[lines.length - 1].match(/^\s+/);
+
+    const indentSize = indendation ? indendation[0].length : 0;
 
     lines = _.map(lines, (line, i) => {
         if (i === 0) {
@@ -59,7 +62,7 @@ const trimCode = (code) => {
 };
 
 const updateDocuments = (assertions) => {
-    const readmeDocumentPath = path.join(__dirname, './../README.md');
+    const readmeDocumentPath = path.join(__dirname, '../README.md');
 
     let documentBody = fs.readFileSync(readmeDocumentPath, 'utf8');
 
