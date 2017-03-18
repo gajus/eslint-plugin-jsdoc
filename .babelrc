@@ -4,10 +4,13 @@
     "add-module-exports"
   ],
   "presets": [
-    ["env", {
-      "targets": {
-        "node": "current"
+    [
+      "env",
+      {
+        "targets": {
+          "node": 5
+        }
       }
-    }]
+    ]
   ]
 }
