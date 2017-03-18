@@ -4,6 +4,15 @@ node_js:
   - 6
   - 5
   - 4
+before_install:
+  - npm config set depth 0
+  - npm install --global npm@latest
 notifications:
   email: false
 sudo: false
+script:
+  - npm run test
+  - npm run lint
+  - npm run build
+after_success:
+  - rm -fr ./dist && npm run build && semantic-release pre && npm publish && semantic-release post

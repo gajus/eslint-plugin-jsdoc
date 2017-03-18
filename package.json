@@ -20,7 +20,8 @@
     "eslint-config-canonical": "^5.5.0",
     "gitdown": "^2.4.0",
     "globby": "^4.0.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "semantic-release": "^6.3.2"
   },
   "keywords": [
     "eslint",
@@ -42,7 +43,7 @@
     "build": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps",
     "generate-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run add-assertions",
     "lint": "eslint ./src ./test",
-    "test": "mocha --compilers js:babel-register && npm run lint"
+    "test": "mocha --compilers js:babel-register"
   },
   "version": "2.4.0"
 }
