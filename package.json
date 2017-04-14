@@ -24,7 +24,7 @@
     "semantic-release": "^6.3.2"
   },
   "engines": {
-    "node": ">=5"
+    "node": ">=4"
   },
   "keywords": [
     "eslint",
