@@ -12,6 +12,7 @@ _.forEach([
   'check-types',
   'newline-after-description',
   'require-description-complete-sentence',
+  'require-example',
   'require-hyphen-before-param-description',
   'require-param',
   'require-param-description',
