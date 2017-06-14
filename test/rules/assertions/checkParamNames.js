@@ -193,6 +193,16 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux ({a, b} = {}) {
+
+          }
+      `
     }
   ]
 };

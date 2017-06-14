@@ -277,6 +277,13 @@ function quux (...args) {
 function quux ({a, b}) {
 
 }
+
+/**
+ * @param foo
+ */
+function quux ({a, b} = {}) {
+
+}
 ```
 
 
