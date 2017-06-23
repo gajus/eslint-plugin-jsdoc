@@ -21,6 +21,10 @@ const isNewLinePrecededByAPeriod = (text) => {
   });
 };
 
+const isCapitalized = (str) => {
+  return str[0] === str[0].toUpperCase();
+};
+
 const validateDescription = (description, report) => {
   if (!description) {
     return false;
@@ -29,7 +33,7 @@ const validateDescription = (description, report) => {
   const paragraphs = extractParagraphs(description);
 
   return _.some(paragraphs, (paragraph, index) => {
-    if (!/^[A-Z]/.test(paragraph)) {
+    if (!isCapitalized(paragraph)) {
       if (index === 0) {
         report('Description must start with an uppercase character.');
       } else {

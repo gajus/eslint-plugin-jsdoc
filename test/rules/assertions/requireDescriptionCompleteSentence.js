@@ -37,6 +37,21 @@ export default {
     {
       code: `
           /**
+           * тест.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Description must start with an uppercase character.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
            * Foo
            */
           function quux () {
@@ -138,6 +153,16 @@ export default {
            * Foo.
            *
            * Bar.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Тест.
            */
           function quux () {
 

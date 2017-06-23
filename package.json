@@ -47,7 +47,7 @@
     "build": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps",
     "generate-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run add-assertions",
     "lint": "eslint ./src ./test",
-    "test": "mocha --compilers js:babel-register"
+    "test": "mocha --recursive --compilers js:babel-register"
   },
   "version": "2.4.0"
 }
