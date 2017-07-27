@@ -11,7 +11,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
       return param.left.name;
     }
 
-    if (param.type === 'ObjectPattern') {
+    if (param.type === 'ObjectPattern' || _.get(param, 'left.type') === 'ObjectPattern') {
       return '<ObjectPattern>';
     }
 
