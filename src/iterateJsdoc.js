@@ -45,8 +45,10 @@ export default (iterator) => {
         return;
       }
 
-      const jsdoc = commentParser('/*' + jsdocNode.value + '*/', {
-                // @see https://github.com/yavorskiy/comment-parser/issues/21
+      // Preserve JSDoc block start/end indentation.
+      const indent = _.repeat(' ', jsdocNode.loc.start.column);
+      const jsdoc = commentParser(indent + '/*' + jsdocNode.value + indent + '*/', {
+        // @see https://github.com/yavorskiy/comment-parser/issues/21
         parsers: [
           commentParser.PARSERS.parse_tag,
           commentParser.PARSERS.parse_type,
