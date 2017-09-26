@@ -5,24 +5,24 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "comment-parser": "^0.4.0",
-    "lodash": "^4.5.1"
+    "comment-parser": "^0.4.2",
+    "lodash": "^4.17.4"
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
-    "babel-cli": "^6.18.0",
+    "babel-cli": "^6.26.0",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-flow-strip-types": "^6.18.0",
-    "babel-preset-env": "^1.2.2",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.18.0",
+    "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "eslint": "^4.7.2",
     "eslint-config-canonical": "^9.3.1",
-    "gitdown": "^2.4.0",
+    "gitdown": "^2.5.1",
     "globby": "^6.1.0",
     "mocha": "^3.5.3",
-    "semantic-release": "^6.3.6"
+    "semantic-release": "^8.0.3"
   },
   "engines": {
     "node": ">=4"

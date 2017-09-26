@@ -54,8 +54,8 @@ const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames 
 };
 
 export default iterateJsdoc(({
-    report,
-    utils
+  report,
+  utils
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
   const jsdocParameterNames = utils.getJsdocParameterNames();
