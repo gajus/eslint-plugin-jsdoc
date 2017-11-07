@@ -24,6 +24,7 @@ JSDoc linting rules for ESLint.
         * [`require-hyphen-before-param-description`](#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description)
         * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
+        * [`require-param-name`](#eslint-plugin-jsdoc-rules-require-param-name)
         * [`require-param-type`](#eslint-plugin-jsdoc-rules-require-param-type)
         * [`require-returns-description`](#eslint-plugin-jsdoc-rules-require-returns-description)
         * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
@@ -45,6 +46,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`require-hyphen-before-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description) | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
 | [`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param) | [`checkParamExistence`](https://github.com/jscs-dev/jscs-jsdoc#checkparamexistence) |
 | [`require-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-description) | [`requireParamDescription`](https://github.com/jscs-dev/jscs-jsdoc#requireparamdescription) |
+| [`require-param-name`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-name) | N/A |
 | [`require-param-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type) | [`requireParamTypes`](https://github.com/jscs-dev/jscs-jsdoc#requireparamtypes) |
 | [`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-description) | [`requireReturnDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirereturndescription) |
 | [`require-returns-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-type) | [`requireReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#requirereturntypes) |
@@ -97,6 +99,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-hyphen-before-param-description": 1,
         "jsdoc/require-param": 1,
         "jsdoc/require-param-description": 1,
+        "jsdoc/require-param-name": 1,
         "jsdoc/require-param-type": 1,
         "jsdoc/require-returns-description": 1,
         "jsdoc/require-returns-type": 1
@@ -475,7 +478,7 @@ function quux (foo) {
 
 }
 
-/** 
+/**
  * @abstract
  * @access
  * @alias
@@ -563,9 +566,9 @@ RegExp
 <a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
 #### Why not capital case everything?
 
-Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`. 
+Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`.
 
-Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do. 
+Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do.
 
 So in a sense, there two types of strings in Javascript; `{string}` literals, also called primitives and `{String}` Objects. We use the primitives because it's easier to write and uses less memory. `{String}` and `{string}` are technically both valid, but they are not the same.
 
@@ -757,6 +760,14 @@ function quux () {
 // Message: Paragraph must start with an uppercase character.
 
 /**
+ * тест.
+ */
+function quux () {
+
+}
+// Message: Description must start with an uppercase character.
+
+/**
  * Foo
  */
 function quux () {
@@ -823,6 +834,13 @@ function quux () {
  * Foo.
  *
  * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Тест.
  */
 function quux () {
 
@@ -1050,6 +1068,59 @@ function quux (foo) {
 
 /**
  * @param foo Foo.
+ */
+function quux (foo) {
+
+}
+```
+
+
+<a name="eslint-plugin-jsdoc-rules-require-param-name"></a>
+### <code>require-param-name</code>
+
+Requires that all function parameters have name.
+
+> The `@param` tag requires you to specify the name of the parameter you are documenting. You can also include the parameter's type, enclosed in curly brackets, and a description of the parameter.
+>
+> [JSDoc](http://usejsdoc.org/tags-param.html#overview)
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @param
+ */
+function quux (foo) {
+
+}
+// Message: There must be an identifier after @param type.
+
+/**
+ * @param {string}
+ */
+function quux (foo) {
+
+}
+// Message: There must be an identifier after @param tag.
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param {string} foo
  */
 function quux (foo) {
 
