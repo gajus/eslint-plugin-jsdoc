@@ -5,6 +5,7 @@ import newlineAfterDescription from './rules/newlineAfterDescription';
 import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
 import requireExample from './rules/requireExample';
 import requireHyphenBeforeParamDescription from './rules/requireHyphenBeforeParamDescription';
+import requireParamName from './rules/requireParamName';
 import requireParam from './rules/requireParam';
 import requireParamDescription from './rules/requireParamDescription';
 import requireParamType from './rules/requireParamType';
@@ -22,6 +23,7 @@ export default {
     'require-hyphen-before-param-description': requireHyphenBeforeParamDescription,
     'require-param': requireParam,
     'require-param-description': requireParamDescription,
+    'require-param-name': requireParamName,
     'require-param-type': requireParamType,
     'require-returns-description': requireReturnsDescription,
     'require-returns-type': requireReturnsType
@@ -36,6 +38,7 @@ export default {
     'require-hyphen-before-param-description': 0,
     'require-param': 0,
     'require-param-description': 0,
+    'require-param-name': 0,
     'require-param-type': 0,
     'require-returns-description': 0,
     'require-returns-type': 0

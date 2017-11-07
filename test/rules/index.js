@@ -16,6 +16,7 @@ _.forEach([
   'require-hyphen-before-param-description',
   'require-param',
   'require-param-description',
+  'require-param-name',
   'require-param-type',
   'require-returns-description',
   'require-returns-type'
