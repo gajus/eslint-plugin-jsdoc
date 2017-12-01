@@ -13,6 +13,25 @@ import requireReturnsDescription from './rules/requireReturnsDescription';
 import requireReturnsType from './rules/requireReturnsType';
 
 export default {
+  configs: {
+    recommended: {
+      rules: {
+        'jsdoc/check-param-names': 'warn',
+        'jsdoc/check-tag-names': 'warn',
+        'jsdoc/check-types': 'warn',
+        'jsdoc/newline-after-description': 'warn',
+        'jsdoc/require-description-complete-sentence': 'off',
+        'jsdoc/require-example': 'off',
+        'jsdoc/require-hyphen-before-param-description': 'off',
+        'jsdoc/require-param': 'warn',
+        'jsdoc/require-param-description': 'warn',
+        'jsdoc/require-param-name': 'warn',
+        'jsdoc/require-param-type': 'warn',
+        'jsdoc/require-returns-description': 'warn',
+        'jsdoc/require-returns-type': 'warn'
+      }
+    }
+  },
   rules: {
     'check-param-names': checkParamNames,
     'check-tag-names': checkTagNames,
@@ -29,18 +48,18 @@ export default {
     'require-returns-type': requireReturnsType
   },
   rulesConfig: {
-    'check-param-names': 0,
-    'check-tag-names': 0,
-    'check-types': 0,
-    'newline-after-description': 0,
-    'require-description-complete-sentence': 0,
-    'require-example': 0,
-    'require-hyphen-before-param-description': 0,
-    'require-param': 0,
-    'require-param-description': 0,
-    'require-param-name': 0,
-    'require-param-type': 0,
-    'require-returns-description': 0,
-    'require-returns-type': 0
+    'check-param-names': 'off',
+    'check-tag-names': 'off',
+    'check-types': 'off',
+    'newline-after-description': 'off',
+    'require-description-complete-sentence': 'off',
+    'require-example': 'off',
+    'require-hyphen-before-param-description': 'off',
+    'require-param': 'off',
+    'require-param-description': 'off',
+    'require-param-name': 'off',
+    'require-param-type': 'off',
+    'require-returns-description': 'off',
+    'require-returns-type': 'off'
   }
 };
