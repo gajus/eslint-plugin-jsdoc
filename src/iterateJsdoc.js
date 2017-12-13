@@ -63,16 +63,16 @@ export default (iterator) => {
         ]
       })[0] || {};
 
-      const report = (message) => {
-        context.report(jsdocNode, message);
-      };
-
-      const reportFix = (message, fixer) => {
-        context.report({
-          fix: fixer,
-          message,
-          node: jsdocNode
-        });
+      const report = (message, fixer = null) => {
+        if(fixer === null) {
+          context.report(jsdocNode, message);
+        } else {
+          context.report({
+            fix: fixer,
+            message,
+            node: jsdocNode
+          });
+        }
       };
 
       const utils = curryUtils(functionNode, jsdoc, tagNamePreference, additionalTagNames);
@@ -84,7 +84,6 @@ export default (iterator) => {
         jsdoc,
         jsdocNode,
         report,
-        reportFix,
         utils
       });
     };

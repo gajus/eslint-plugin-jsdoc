@@ -15,7 +15,15 @@ export default {
         {
           message: 'Description must start with an uppercase character.'
         }
-      ]
+      ],
+      output: `
+          /**
+           * Foo.
+           */
+          function quux () {
+
+          }
+      `
     },
     {
       code: `
@@ -32,7 +40,17 @@ export default {
         {
           message: 'Paragraph must start with an uppercase character.'
         }
-      ]
+      ], 
+      output: `
+          /**
+           * Foo.
+           *
+           * Foo.
+           */
+          function quux () {
+
+          }
+      `
     },
     {
       code: `
@@ -47,7 +65,15 @@ export default {
         {
           message: 'Description must start with an uppercase character.'
         }
-      ]
+      ],
+      output: `
+          /**
+           * Тест.
+           */
+          function quux () {
+
+          }
+      `
     },
     {
       code: `
@@ -62,7 +88,15 @@ export default {
         {
           message: 'Sentence must end with a period.'
         }
-      ]
+      ],
+      output: `
+          /**
+           * Foo.
+           */
+          function quux () {
+
+          }
+      `
     },
     {
       code: `
@@ -95,7 +129,17 @@ export default {
         {
           message: 'Description must start with an uppercase character.'
         }
-      ]
+      ],
+      output: `
+          /**
+           * Foo.
+           *
+           * @param foo Foo.
+           */
+          function quux (foo) {
+
+          }
+      `
     },
     {
       code: `
@@ -112,7 +156,17 @@ export default {
         {
           message: 'Description must start with an uppercase character.'
         }
-      ]
+      ],
+      output: `
+          /**
+           * Foo.
+           *
+           * @returns Foo.
+           */
+          function quux (foo) {
+
+          }
+      `
     }
   ],
   valid: [

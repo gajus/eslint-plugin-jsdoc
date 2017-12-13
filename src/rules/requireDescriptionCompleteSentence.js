@@ -25,7 +25,18 @@ const isCapitalized = (str) => {
   return str[0] === str[0].toUpperCase();
 };
 
-const validateDescription = (description, report) => {
+const capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+const fixUpperCase = (fixer, paragraph, jsdocNode, sourceCode) => {
+  let line = paragraph.split('\n')[0];
+  let replacement = sourceCode.getText(jsdocNode).replace(line, capitalize(line));
+  
+  return fixer.replaceText(jsdocNode, replacement);
+}
+
+const validateDescription = (description, report, jsdocNode, sourceCode) => {
   if (!description) {
     return false;
   }
@@ -35,16 +46,25 @@ const validateDescription = (description, report) => {
   return _.some(paragraphs, (paragraph, index) => {
     if (!isCapitalized(paragraph)) {
       if (index === 0) {
-        report('Description must start with an uppercase character.');
+        report('Description must start with an uppercase character.', (fixer) => {
+          return fixUpperCase(fixer, paragraph, jsdocNode, sourceCode);
+        });
       } else {
-        report('Paragraph must start with an uppercase character.');
+        report('Paragraph must start with an uppercase character.', (fixer) => {
+          return fixUpperCase(fixer, paragraph, jsdocNode, sourceCode);
+        });
       }
 
       return true;
     }
 
     if (!/\.$/.test(paragraph)) {
-      report('Sentence must end with a period.');
+      report('Sentence must end with a period.', (fixer) => {
+        let line = _.last(paragraph.split('\n'));
+        let replacement = sourceCode.getText(jsdocNode).replace(line, line + '.');
+
+        return fixer.replaceText(jsdocNode, replacement);
+      });
 
       return true;
     }
@@ -60,10 +80,12 @@ const validateDescription = (description, report) => {
 };
 
 export default iterateJsdoc(({
+  sourceCode,  
   jsdoc,
-  report
+  report,
+  jsdocNode,
 }) => {
-  if (validateDescription(jsdoc.description, report)) {
+  if (validateDescription(jsdoc.description, report, jsdocNode, sourceCode)) {
     return;
   }
 
@@ -74,6 +96,6 @@ export default iterateJsdoc(({
   _.some(tags, (tag) => {
     const description = _.trimStart(tag.description, '- ');
 
-    return validateDescription(description, report);
+    return validateDescription(description, report, jsdocNode, sourceCode);
   });
 });
