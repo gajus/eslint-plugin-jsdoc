@@ -67,14 +67,24 @@ export default (iterator) => {
         context.report(jsdocNode, message);
       };
 
+      const reportFix = (message, fixer) => {
+        context.report({
+          fix: fixer,
+          message,
+          node: jsdocNode
+        });
+      };
+
       const utils = curryUtils(functionNode, jsdoc, tagNamePreference, additionalTagNames);
 
       iterator({
+        sourceCode,
         context,
         functionNode,
         jsdoc,
         jsdocNode,
         report,
+        reportFix,
         utils
       });
     };
