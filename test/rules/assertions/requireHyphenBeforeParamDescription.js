@@ -15,7 +15,15 @@ export default {
         {
           message: 'There must be a hyphen before @param description.'
         }
-      ]
+      ],
+      output: `
+          /**
+           * @param foo - Foo.
+           */
+          function quux () {
+
+          }
+      `
     }
   ],
   valid: [

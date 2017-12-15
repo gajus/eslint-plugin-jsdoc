@@ -15,7 +15,15 @@ export default {
         {
           message: 'Invalid JSDoc @param "foo" type "Number".'
         }
-      ]
+      ],
+      output: `
+          /**
+           * @param {number} foo
+           */
+          function quux (foo) {
+
+          }
+      `
     },
     {
       code: `
@@ -30,7 +38,15 @@ export default {
         {
           message: 'Invalid JSDoc @arg "foo" type "Number".'
         }
-      ]
+      ],
+      output: `
+          /**
+           * @arg {number} foo
+           */
+          function quux (foo) {
+
+          }
+      `
     }
   ],
   valid: [

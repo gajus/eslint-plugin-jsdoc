@@ -21,7 +21,19 @@ export default {
       ],
       options: [
         'always'
-      ]
+      ],
+      output: `
+          /**
+           * Foo.
+           *
+           * Foo.
+           * 
+           * @foo
+           */
+          function quux () {
+
+          }
+      `
     },
     {
       code: `
@@ -43,7 +55,18 @@ export default {
       ],
       options: [
         'never'
-      ]
+      ],
+      output: `
+          /**
+           * Bar.
+           *
+           * Bar.
+           * @bar
+           */
+          function quux () {
+
+          }
+      `
     }
   ],
   valid: [

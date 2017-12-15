@@ -5,6 +5,16 @@ const extractParagraphs = (text) => {
   return text.split(/\n\n/);
 };
 
+const extractSentences = (text) => {
+  return text.split(/\.\s*/).filter((sentence) => {
+    // Ignore sentences with only whitespaces.
+    return !/^\s*$/.test(sentence);
+  }).map((sentence) => {
+    // Re-add the dot.
+    return sentence + '.';
+  });
+};
+
 const isNewLinePrecededByAPeriod = (text) => {
   let lastLineEndsSentence;
 
@@ -25,26 +35,45 @@ const isCapitalized = (str) => {
   return str[0] === str[0].toUpperCase();
 };
 
-const validateDescription = (description, report) => {
+const capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+const validateDescription = (description, report, jsdocNode, sourceCode) => {
   if (!description) {
     return false;
   }
 
   const paragraphs = extractParagraphs(description);
 
-  return _.some(paragraphs, (paragraph, index) => {
-    if (!isCapitalized(paragraph)) {
-      if (index === 0) {
-        report('Description must start with an uppercase character.');
-      } else {
-        report('Paragraph must start with an uppercase character.');
-      }
+  return _.some(paragraphs, (paragraph) => {
+    const sentences = extractSentences(paragraph);
 
-      return true;
+    if (_.some(sentences, (sentence) => {
+      return !isCapitalized(sentence);
+    })) {
+      report('Sentence should start with an uppercase character.', (fixer) => {
+        let text = sourceCode.getText(jsdocNode);
+
+        for (const sentence of sentences.filter((sentence_) => {
+          return !isCapitalized(sentence_);
+        })) {
+          const beginning = sentence.split(/\n/)[0];
+
+          text = text.replace(beginning, capitalize(beginning));
+        }
+
+        return fixer.replaceText(jsdocNode, text);
+      });
     }
 
     if (!/\.$/.test(paragraph)) {
-      report('Sentence must end with a period.');
+      report('Sentence must end with a period.', (fixer) => {
+        const line = _.last(paragraph.split('\n'));
+        const replacement = sourceCode.getText(jsdocNode).replace(line, line + '.');
+
+        return fixer.replaceText(jsdocNode, replacement);
+      });
 
       return true;
     }
@@ -60,10 +89,12 @@ const validateDescription = (description, report) => {
 };
 
 export default iterateJsdoc(({
+  sourceCode,
   jsdoc,
-  report
+  report,
+  jsdocNode
 }) => {
-  if (validateDescription(jsdoc.description, report)) {
+  if (validateDescription(jsdoc.description, report, jsdocNode, sourceCode)) {
     return;
   }
 
@@ -74,6 +105,6 @@ export default iterateJsdoc(({
   _.some(tags, (tag) => {
     const description = _.trimStart(tag.description, '- ');
 
-    return validateDescription(description, report);
+    return validateDescription(description, report, jsdocNode, sourceCode);
   });
 });
