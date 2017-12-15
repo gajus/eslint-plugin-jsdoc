@@ -37,13 +37,6 @@ const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-const fixUpperCase = (fixer, paragraph, jsdocNode, sourceCode) => {
-  let line = paragraph.split('\n')[0];
-  let replacement = sourceCode.getText(jsdocNode).replace(line, capitalize(line));
-  
-  return fixer.replaceText(jsdocNode, replacement);
-}
-
 const validateDescription = (description, report, jsdocNode, sourceCode) => {
   if (!description) {
     return false;
