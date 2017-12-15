@@ -83,6 +83,7 @@ export default (iterator) => {
         functionNode,
         jsdoc,
         jsdocNode,
+        indent,
         report,
         utils
       });
