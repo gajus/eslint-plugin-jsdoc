@@ -42,6 +42,8 @@ const strictNativeTypes = [
 
 export default iterateJsdoc(({
   jsdoc,
+  jsdocNode,
+  sourceCode,
   report
 }) => {
   const jsdocTags = _.filter(jsdoc.tags, (tag) => {
@@ -51,7 +53,9 @@ export default iterateJsdoc(({
   _.forEach(jsdocTags, (jsdocTag) => {
     _.some(strictNativeTypes, (strictNativeType) => {
       if (strictNativeType.toLowerCase() === jsdocTag.type.toLowerCase() && strictNativeType !== jsdocTag.type) {
-        report('Invalid JSDoc @' + jsdocTag.tag + ' "' + jsdocTag.name + '" type "' + jsdocTag.type + '".');
+        report('Invalid JSDoc @' + jsdocTag.tag + ' "' + jsdocTag.name + '" type "' + jsdocTag.type + '".', (fixer) => {
+          return fixer.replaceText(jsdocNode, sourceCode.getText(jsdocNode).replace('{' + jsdocTag.type + '}', '{' + strictNativeType + '}'));
+        });
 
         return true;
       }
