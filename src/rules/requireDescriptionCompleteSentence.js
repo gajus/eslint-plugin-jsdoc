@@ -5,6 +5,14 @@ const extractParagraphs = (text) => {
   return text.split(/\n\n/);
 };
 
+const extractSentences = (text) => {
+  return text.split(/\.\s*/).filter((sentence) => {
+    return ! /^\s*$/.test(sentence); // Ignore sentences with only whitespaces.
+  }).map((sentence) =>{
+    return sentence + '.'; // Re-add the dot.
+  });
+}
+
 const isNewLinePrecededByAPeriod = (text) => {
   let lastLineEndsSentence;
 
@@ -44,18 +52,18 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
   const paragraphs = extractParagraphs(description);
 
   return _.some(paragraphs, (paragraph, index) => {
-    if (!isCapitalized(paragraph)) {
-      if (index === 0) {
-        report('Description must start with an uppercase character.', (fixer) => {
-          return fixUpperCase(fixer, paragraph, jsdocNode, sourceCode);
-        });
-      } else {
-        report('Paragraph must start with an uppercase character.', (fixer) => {
-          return fixUpperCase(fixer, paragraph, jsdocNode, sourceCode);
-        });
-      }
 
-      return true;
+    const sentences = extractSentences(paragraph);
+
+    if(_.some(sentences, (sentence, index) => {return !isCapitalized(sentence)})) {
+      report('Sentence should start with an uppercase character.', (fixer) => {
+        let text = sourceCode.getText(jsdocNode);
+        for (let sentence of sentences.filter((s) => {return !isCapitalized(s)})) {
+          const beginning = sentence.split(/\n/)[0];
+          text = text.replace(beginning, capitalize(beginning));
+        }
+        return fixer.replaceText(jsdocNode, text);
+      });
     }
 
     if (!/\.$/.test(paragraph)) {

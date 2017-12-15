@@ -13,7 +13,7 @@ export default {
       `,
       errors: [
         {
-          message: 'Description must start with an uppercase character.'
+          message: 'Sentence should start with an uppercase character.'
         }
       ],
       output: `
@@ -38,7 +38,7 @@ export default {
       `,
       errors: [
         {
-          message: 'Paragraph must start with an uppercase character.'
+          message: 'Sentence should start with an uppercase character.'
         }
       ], 
       output: `
@@ -63,7 +63,7 @@ export default {
       `,
       errors: [
         {
-          message: 'Description must start with an uppercase character.'
+          message: 'Sentence should start with an uppercase character.'
         }
       ],
       output: `
@@ -127,7 +127,7 @@ export default {
       `,
       errors: [
         {
-          message: 'Description must start with an uppercase character.'
+          message: 'Sentence should start with an uppercase character.'
         }
       ],
       output: `
@@ -154,7 +154,7 @@ export default {
       `,
       errors: [
         {
-          message: 'Description must start with an uppercase character.'
+          message: 'Sentence should start with an uppercase character.'
         }
       ],
       output: `
@@ -164,6 +164,40 @@ export default {
            * @returns Foo.
            */
           function quux (foo) {
+
+          }
+      `
+    },
+    
+    {
+      code: `
+          /**
+           * lorem ipsum dolor sit amet, consectetur adipiscing elit. pellentesque elit diam, 
+           * iaculis eu dignissim sed, ultrices sed nisi. nulla at ligula auctor, consectetur neque sed,
+           * tincidunt nibh. vivamus sit amet vulputate ligula. vivamus interdum elementum nisl,
+           * vitae rutrum tortor semper ut. morbi porta ante vitae dictum fermentum.
+           * proin ut nulla at quam convallis gravida in id elit. sed dolor mauris, blandit quis ante at, 
+           * consequat auctor magna. duis pharetra purus in porttitor mollis.
+           */
+          function longDescription (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence should start with an uppercase character.'
+        }
+      ],
+      output: `
+          /**
+           * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elit diam, 
+           * iaculis eu dignissim sed, ultrices sed nisi. Nulla at ligula auctor, consectetur neque sed,
+           * tincidunt nibh. Vivamus sit amet vulputate ligula. Vivamus interdum elementum nisl,
+           * vitae rutrum tortor semper ut. Morbi porta ante vitae dictum fermentum.
+           * Proin ut nulla at quam convallis gravida in id elit. Sed dolor mauris, blandit quis ante at, 
+           * consequat auctor magna. Duis pharetra purus in porttitor mollis.
+           */
+          function longDescription (foo) {
 
           }
       `
