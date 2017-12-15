@@ -37,9 +37,9 @@ export default {
       errors: [
         {
           message: 'Invalid JSDoc @arg "foo" type "Number".'
-        },
+        }
       ],
-      output:  `
+      output: `
           /**
            * @arg {number} foo
            */
