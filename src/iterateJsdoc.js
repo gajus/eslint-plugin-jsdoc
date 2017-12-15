@@ -64,7 +64,7 @@ export default (iterator) => {
       })[0] || {};
 
       const report = (message, fixer = null) => {
-        if(fixer === null) {
+        if (fixer === null) {
           context.report(jsdocNode, message);
         } else {
           context.report({
@@ -78,13 +78,13 @@ export default (iterator) => {
       const utils = curryUtils(functionNode, jsdoc, tagNamePreference, additionalTagNames);
 
       iterator({
-        sourceCode,
         context,
         functionNode,
+        indent,
         jsdoc,
         jsdocNode,
-        indent,
         report,
+        sourceCode,
         utils
       });
     };

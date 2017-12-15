@@ -40,7 +40,7 @@ export default {
         {
           message: 'Sentence should start with an uppercase character.'
         }
-      ], 
+      ],
       output: `
           /**
            * Foo.
@@ -168,7 +168,6 @@ export default {
           }
       `
     },
-    
     {
       code: `
           /**

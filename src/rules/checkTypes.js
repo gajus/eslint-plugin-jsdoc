@@ -53,9 +53,11 @@ export default iterateJsdoc(({
   _.forEach(jsdocTags, (jsdocTag) => {
     _.some(strictNativeTypes, (strictNativeType) => {
       if (strictNativeType.toLowerCase() === jsdocTag.type.toLowerCase() && strictNativeType !== jsdocTag.type) {
-        report('Invalid JSDoc @' + jsdocTag.tag + ' "' + jsdocTag.name + '" type "' + jsdocTag.type + '".', (fixer) => {
+        const fix = (fixer) => {
           return fixer.replaceText(jsdocNode, sourceCode.getText(jsdocNode).replace('{' + jsdocTag.type + '}', '{' + strictNativeType + '}'));
-        });
+        };
+
+        report('Invalid JSDoc @' + jsdocTag.tag + ' "' + jsdocTag.name + '" type "' + jsdocTag.type + '".', fix);
 
         return true;
       }

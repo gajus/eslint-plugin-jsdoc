@@ -14,7 +14,7 @@ export default iterateJsdoc(({
   _.forEach(jsdocTags, (jsdocTag) => {
     if (jsdocTag.description && !_.startsWith(jsdocTag.description, '-')) {
       report('There must be a hyphen before @param description.', (fixer) => {
-        let replacement = sourceCode.getText(jsdocNode).replace(jsdocTag.description, '- ' + jsdocTag.description);
+        const replacement = sourceCode.getText(jsdocNode).replace(jsdocTag.description, '- ' + jsdocTag.description);
 
         return fixer.replaceText(jsdocNode, replacement);
       });

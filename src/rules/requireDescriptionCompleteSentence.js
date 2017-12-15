@@ -7,11 +7,13 @@ const extractParagraphs = (text) => {
 
 const extractSentences = (text) => {
   return text.split(/\.\s*/).filter((sentence) => {
-    return ! /^\s*$/.test(sentence); // Ignore sentences with only whitespaces.
-  }).map((sentence) =>{
-    return sentence + '.'; // Re-add the dot.
+    // Ignore sentences with only whitespaces.
+    return !/^\s*$/.test(sentence);
+  }).map((sentence) => {
+    // Re-add the dot.
+    return sentence + '.';
   });
-}
+};
 
 const isNewLinePrecededByAPeriod = (text) => {
   let lastLineEndsSentence;
@@ -35,7 +37,7 @@ const isCapitalized = (str) => {
 
 const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
-}
+};
 
 const validateDescription = (description, report, jsdocNode, sourceCode) => {
   if (!description) {
@@ -44,25 +46,31 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
 
   const paragraphs = extractParagraphs(description);
 
-  return _.some(paragraphs, (paragraph, index) => {
-
+  return _.some(paragraphs, (paragraph) => {
     const sentences = extractSentences(paragraph);
 
-    if(_.some(sentences, (sentence, index) => {return !isCapitalized(sentence)})) {
+    if (_.some(sentences, (sentence) => {
+      return !isCapitalized(sentence);
+    })) {
       report('Sentence should start with an uppercase character.', (fixer) => {
         let text = sourceCode.getText(jsdocNode);
-        for (let sentence of sentences.filter((s) => {return !isCapitalized(s)})) {
+
+        for (const sentence of sentences.filter((sentence_) => {
+          return !isCapitalized(sentence_);
+        })) {
           const beginning = sentence.split(/\n/)[0];
+
           text = text.replace(beginning, capitalize(beginning));
         }
+
         return fixer.replaceText(jsdocNode, text);
       });
     }
 
     if (!/\.$/.test(paragraph)) {
       report('Sentence must end with a period.', (fixer) => {
-        let line = _.last(paragraph.split('\n'));
-        let replacement = sourceCode.getText(jsdocNode).replace(line, line + '.');
+        const line = _.last(paragraph.split('\n'));
+        const replacement = sourceCode.getText(jsdocNode).replace(line, line + '.');
 
         return fixer.replaceText(jsdocNode, replacement);
       });
@@ -81,10 +89,10 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
 };
 
 export default iterateJsdoc(({
-  sourceCode,  
+  sourceCode,
   jsdoc,
   report,
-  jsdocNode,
+  jsdocNode
 }) => {
   if (validateDescription(jsdoc.description, report, jsdocNode, sourceCode)) {
     return;
