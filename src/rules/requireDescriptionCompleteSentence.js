@@ -50,9 +50,9 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
     const sentences = extractSentences(paragraph);
 
     const fix = (fixer) => {
-      let text = sourceCode.getText(jsdocNode)
+      let text = sourceCode.getText(jsdocNode);
 
-      if(!_.endsWith(paragraph, '.')) {
+      if (!_.endsWith(paragraph, '.')) {
         const line = _.last(paragraph.split('\n'));
 
         text = text.replace(line, line + '.');
@@ -62,12 +62,12 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
         return !isCapitalized(sentence_);
       })) {
         const beginning = sentence.split('\n')[0];
-        
+
         text = text.replace(beginning, capitalize(beginning));
       }
 
       return fixer.replaceText(jsdocNode, text);
-    }
+    };
 
     if (_.some(sentences, (sentence) => {
       return !isCapitalized(sentence);

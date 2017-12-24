@@ -187,7 +187,7 @@ export default {
           message: 'Sentence should start with an uppercase character.'
         },
         {
-          message:  'Sentence must end with a period.'
+          message: 'Sentence must end with a period.'
         }
       ],
       output: `
