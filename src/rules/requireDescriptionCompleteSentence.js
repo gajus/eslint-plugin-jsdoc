@@ -49,31 +49,34 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
   return _.some(paragraphs, (paragraph) => {
     const sentences = extractSentences(paragraph);
 
+    const fix = (fixer) => {
+      let text = sourceCode.getText(jsdocNode)
+
+      if(!_.endsWith(paragraph, '.')) {
+        const line = _.last(paragraph.split('\n'));
+
+        text = text.replace(line, line + '.');
+      }
+
+      for (const sentence of sentences.filter((sentence_) => {
+        return !isCapitalized(sentence_);
+      })) {
+        const beginning = sentence.split('\n')[0];
+        
+        text = text.replace(beginning, capitalize(beginning));
+      }
+
+      return fixer.replaceText(jsdocNode, text);
+    }
+
     if (_.some(sentences, (sentence) => {
       return !isCapitalized(sentence);
     })) {
-      report('Sentence should start with an uppercase character.', (fixer) => {
-        let text = sourceCode.getText(jsdocNode);
-
-        for (const sentence of sentences.filter((sentence_) => {
-          return !isCapitalized(sentence_);
-        })) {
-          const beginning = sentence.split(/\n/)[0];
-
-          text = text.replace(beginning, capitalize(beginning));
-        }
-
-        return fixer.replaceText(jsdocNode, text);
-      });
+      report('Sentence should start with an uppercase character.', fix);
     }
 
     if (!/\.$/.test(paragraph)) {
-      report('Sentence must end with a period.', (fixer) => {
-        const line = _.last(paragraph.split('\n'));
-        const replacement = sourceCode.getText(jsdocNode).replace(line, line + '.');
-
-        return fixer.replaceText(jsdocNode, replacement);
-      });
+      report('Sentence must end with a period.', fix);
 
       return true;
     }
