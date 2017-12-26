@@ -3,9 +3,9 @@
 Requires that block description and tag description are written in complete sentences, i.e.,
 
 * Description must start with an uppercase alphabetical character.
-* Paragraph must start with an uppercase alphabetical character.
+* Paragraphs must start with an uppercase alphabetical character.
 * Sentences must end with a period.
-* Every line that starts with a lowercase character must be preceded by a line ending the sentence.
+* Every line in a paragraph (except the first) which starts with an uppercase character must be preceded by a line ending with a period.
 
 |||
 |---|---|
