@@ -6,7 +6,7 @@ const extractParagraphs = (text) => {
 };
 
 const extractSentences = (text) => {
-  return text.split(/\.\s*/).filter((sentence) => {
+  return text.split(/\.\s+/).filter((sentence) => {
     // Ignore sentences with only whitespaces.
     return !/^\s*$/.test(sentence);
   }).map((sentence) => {
