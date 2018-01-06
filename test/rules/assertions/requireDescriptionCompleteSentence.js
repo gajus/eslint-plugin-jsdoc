@@ -146,6 +146,66 @@ export default {
           /**
            * Foo.
            *
+           * @param foo bar
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence should start with an uppercase character.'
+        },
+        {
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      output: `
+          /**
+           * Foo.
+           *
+           * @param foo Bar.
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @returns {number} foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence should start with an uppercase character.'
+        },
+        {
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      output: `
+          /**
+           * Foo.
+           *
+           * @returns {number} Foo.
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
            * @returns foo.
            */
           function quux (foo) {
