@@ -174,6 +174,32 @@ export default {
     {
       code: `
           /**
+           * {@see Foo.bar} buz
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence should start with an uppercase character.'
+        },
+        {
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      output: `
+          /**
+           * {@see Foo.bar} Buz.
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
            * Foo.
            *
            * @returns {number} foo
@@ -413,7 +439,7 @@ export default {
     {
       code: `
           /**
-           * Foo. {@see Math.sin}
+           * Foo. {@see Math.sin}.
            */
           function quux () {
 

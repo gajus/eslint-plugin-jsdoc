@@ -6,13 +6,21 @@ const extractParagraphs = (text) => {
 };
 
 const extractSentences = (text) => {
-  return text.split(/[.?!:](?:\s+|$)/).filter((sentence) => {
+  return text
+
+    // Remove all {} tags.
+    .replace(/\{[\s\S]*?\}\s*/g, '')
+    .split(/[.?!:](?:\s+|$)/)
+
     // Ignore sentences with only whitespaces.
-    return !/^\s*$/.test(sentence);
-  }).map((sentence) => {
+    .filter((sentence) => {
+      return !/^\s*$/.test(sentence);
+    })
+
     // Re-add the dot.
-    return sentence + '.';
-  });
+    .map((sentence) => {
+      return sentence + '.';
+    });
 };
 
 const isNewLinePrecededByAPeriod = (text) => {
