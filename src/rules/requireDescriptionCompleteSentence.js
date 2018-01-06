@@ -102,7 +102,7 @@ export default iterateJsdoc(({
   }
 
   const tags = _.filter(jsdoc.tags, (tag) => {
-    return _.includes(['param', 'returns'], tag.tag);
+    return _.includes(['param', 'arg', 'argument', 'returns', 'return'], tag.tag);
   });
 
   _.some(tags, (tag) => {
