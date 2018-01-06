@@ -6,7 +6,7 @@ const extractParagraphs = (text) => {
 };
 
 const extractSentences = (text) => {
-  return text.split(/\.\s+|\.$/).filter((sentence) => {
+  return text.split(/[.?!:](?:\s+|$)/).filter((sentence) => {
     // Ignore sentences with only whitespaces.
     return !/^\s*$/.test(sentence);
   }).map((sentence) => {
@@ -52,7 +52,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
     const fix = (fixer) => {
       let text = sourceCode.getText(jsdocNode);
 
-      if (!_.endsWith(paragraph, '.')) {
+      if (!/[.:?!]$/.test(paragraph)) {
         const line = _.last(paragraph.split('\n'));
 
         text = text.replace(line, line + '.');
@@ -75,7 +75,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
       report('Sentence should start with an uppercase character.', fix);
     }
 
-    if (!/\.$/.test(paragraph)) {
+    if (!/[.!?]$/.test(paragraph)) {
       report('Sentence must end with a period.', fix);
 
       return true;

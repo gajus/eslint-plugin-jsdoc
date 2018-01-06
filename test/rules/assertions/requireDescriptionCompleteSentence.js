@@ -409,6 +409,32 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * Foo. {@see Math.sin}
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo?
+           * 
+           * Bar!
+           * 
+           * Baz:
+           *   1. Foo.
+           *   2. Bar.
+           */
+          function quux () {
+
+          }
+      `
     }
   ]
 };
