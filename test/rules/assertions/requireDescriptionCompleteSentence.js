@@ -174,6 +174,32 @@ export default {
     {
       code: `
           /**
+           * {@see Foo.bar} buz
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence should start with an uppercase character.'
+        },
+        {
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      output: `
+          /**
+           * {@see Foo.bar} Buz.
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
            * Foo.
            *
            * @returns {number} foo
@@ -260,6 +286,78 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @arg {number} foo - Foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      output: `
+          /**
+           * @arg {number} foo - Foo.
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @argument {number} foo - Foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      output: `
+          /**
+           * @argument {number} foo - Foo.
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @return {number} foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence should start with an uppercase character.'
+        },
+        {
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      output: `
+          /**
+           * @return {number} Foo.
+           */
+          function quux (foo) {
+
+          }
+      `
     }
   ],
   valid: [
@@ -332,6 +430,32 @@ export default {
       code: `
           /**
            * @returns Foo bar.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo. {@see Math.sin}.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo?
+           * 
+           * Bar!
+           * 
+           * Baz:
+           *   1. Foo.
+           *   2. Bar.
            */
           function quux () {
 

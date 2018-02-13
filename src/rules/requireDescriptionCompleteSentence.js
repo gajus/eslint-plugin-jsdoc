@@ -6,13 +6,21 @@ const extractParagraphs = (text) => {
 };
 
 const extractSentences = (text) => {
-  return text.split(/\.\s+|\.$/).filter((sentence) => {
+  return text
+
+    // Remove all {} tags.
+    .replace(/\{[\s\S]*?\}\s*/g, '')
+    .split(/[.?!:](?:\s+|$)/)
+
     // Ignore sentences with only whitespaces.
-    return !/^\s*$/.test(sentence);
-  }).map((sentence) => {
+    .filter((sentence) => {
+      return !/^\s*$/.test(sentence);
+    })
+
     // Re-add the dot.
-    return sentence + '.';
-  });
+    .map((sentence) => {
+      return sentence + '.';
+    });
 };
 
 const isNewLinePrecededByAPeriod = (text) => {
@@ -52,7 +60,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
     const fix = (fixer) => {
       let text = sourceCode.getText(jsdocNode);
 
-      if (!_.endsWith(paragraph, '.')) {
+      if (!/[.:?!]$/.test(paragraph)) {
         const line = _.last(paragraph.split('\n'));
 
         text = text.replace(line, line + '.');
@@ -75,7 +83,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
       report('Sentence should start with an uppercase character.', fix);
     }
 
-    if (!/\.$/.test(paragraph)) {
+    if (!/[.!?]$/.test(paragraph)) {
       report('Sentence must end with a period.', fix);
 
       return true;
@@ -102,7 +110,7 @@ export default iterateJsdoc(({
   }
 
   const tags = _.filter(jsdoc.tags, (tag) => {
-    return _.includes(['param', 'returns'], tag.tag);
+    return _.includes(['param', 'arg', 'argument', 'returns', 'return'], tag.tag);
   });
 
   _.some(tags, (tag) => {
