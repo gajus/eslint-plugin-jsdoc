@@ -69,7 +69,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode, tag) =>
       for (const sentence of sentences.filter((sentence_) => {
         return !isCapitalized(sentence_);
       })) {
-        const beginning = sentence.split(/\n|\{.*\}/)[0];
+        const beginning = sentence.split('\n')[0];
 
         if (tag) {
           const reg = new RegExp('(@' + tag + '.*)' + _.escapeRegExp(beginning));
