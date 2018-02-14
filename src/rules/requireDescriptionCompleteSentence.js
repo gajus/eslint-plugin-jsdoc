@@ -33,7 +33,7 @@ const isNewLinePrecededByAPeriod = (text) => {
       return true;
     }
 
-    lastLineEndsSentence = /\.$/.test(line);
+    lastLineEndsSentence = /[.:?!]$/.test(line);
 
     return false;
   });
@@ -47,7 +47,7 @@ const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const validateDescription = (description, report, jsdocNode, sourceCode) => {
+const validateDescription = (description, report, jsdocNode, sourceCode, tag) => {
   if (!description) {
     return false;
   }
@@ -63,15 +63,23 @@ const validateDescription = (description, report, jsdocNode, sourceCode) => {
       if (!/[.:?!]$/.test(paragraph)) {
         const line = _.last(paragraph.split('\n'));
 
-        text = text.replace(line, line + '.');
+        text = text.replace(new RegExp(line + '$', 'm'), line + '.');
       }
 
       for (const sentence of sentences.filter((sentence_) => {
         return !isCapitalized(sentence_);
       })) {
-        const beginning = sentence.split('\n')[0];
+        const beginning = sentence.split(/\n|\{.*\}/)[0];
 
-        text = text.replace(beginning, capitalize(beginning));
+        if (tag) {
+          const reg = new RegExp('(@' + tag + '.*)' + _.escapeRegExp(beginning));
+
+          text = text.replace(reg, ($0, $1) => {
+            return $1 + capitalize(beginning);
+          });
+        } else {
+          text = text.replace(beginning, capitalize(beginning));
+        }
       }
 
       return fixer.replaceText(jsdocNode, text);
@@ -116,6 +124,6 @@ export default iterateJsdoc(({
   _.some(tags, (tag) => {
     const description = _.trimStart(tag.description, '- ');
 
-    return validateDescription(description, report, jsdocNode, sourceCode);
+    return validateDescription(description, report, jsdocNode, sourceCode, tag.tag);
   });
 });
