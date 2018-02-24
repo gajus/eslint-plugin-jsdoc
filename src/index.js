@@ -11,6 +11,7 @@ import requireParamDescription from './rules/requireParamDescription';
 import requireParamType from './rules/requireParamType';
 import requireReturnsDescription from './rules/requireReturnsDescription';
 import requireReturnsType from './rules/requireReturnsType';
+import validTypes from './rules/validTypes';
 
 export default {
   configs: {
@@ -28,7 +29,8 @@ export default {
         'jsdoc/require-param-name': 'warn',
         'jsdoc/require-param-type': 'warn',
         'jsdoc/require-returns-description': 'warn',
-        'jsdoc/require-returns-type': 'warn'
+        'jsdoc/require-returns-type': 'warn',
+        'jsdoc/valid-types': 'warn'
       }
     }
   },
@@ -45,7 +47,8 @@ export default {
     'require-param-name': requireParamName,
     'require-param-type': requireParamType,
     'require-returns-description': requireReturnsDescription,
-    'require-returns-type': requireReturnsType
+    'require-returns-type': requireReturnsType,
+    'valid-types': validTypes
   },
   rulesConfig: {
     'check-param-names': 'off',
@@ -60,6 +63,7 @@ export default {
     'require-param-name': 'off',
     'require-param-type': 'off',
     'require-returns-description': 'off',
-    'require-returns-type': 'off'
+    'require-returns-type': 'off',
+    'valid-types': 'off'
   }
 };

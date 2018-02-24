@@ -19,7 +19,8 @@ _.forEach([
   'require-param-name',
   'require-param-type',
   'require-returns-description',
-  'require-returns-type'
+  'require-returns-type',
+  'valid-types'
 ], (ruleName) => {
   const parserOptions = {
     ecmaVersion: 6
