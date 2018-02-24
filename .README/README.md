@@ -27,6 +27,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`require-param-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type) | [`requireParamTypes`](https://github.com/jscs-dev/jscs-jsdoc#requireparamtypes) |
 | [`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-description) | [`requireReturnDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirereturndescription) |
 | [`require-returns-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-type) | [`requireReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#requirereturntypes) |
+| [`valid-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-valid-types) | N/A |
 | N/A | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
 | N/A | [`checkRedundantParams`](https://github.com/jscs-dev/jscs-jsdoc#checkredundantparams) |
 | N/A | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
@@ -77,7 +78,8 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-param-name": 1,
         "jsdoc/require-param-type": 1,
         "jsdoc/require-returns-description": 1,
-        "jsdoc/require-returns-type": 1
+        "jsdoc/require-returns-type": 1,
+        "jsdoc/valid-types": 1
     }
 }
 ```
@@ -135,3 +137,4 @@ Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc t
 {"gitdown": "include", "file": "./rules/require-param-type.md"}
 {"gitdown": "include", "file": "./rules/require-returns-description.md"}
 {"gitdown": "include", "file": "./rules/require-returns-type.md"}
+{"gitdown": "include", "file": "./rules/valid-types.md"}
