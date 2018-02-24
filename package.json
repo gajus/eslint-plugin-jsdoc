@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "comment-parser": "^0.4.2",
+    "jsdoctypeparser": "^2.0.0-alpha-8",
     "lodash": "^4.17.4"
   },
   "description": "JSDoc linting rules for ESLint.",
