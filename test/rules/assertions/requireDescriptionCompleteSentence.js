@@ -28,6 +28,29 @@ export default {
     {
       code: `
           /**
+           * Foo)
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      output: `
+          /**
+           * Foo).
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
            * Foo.
            *
            * foo.
