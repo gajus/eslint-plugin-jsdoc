@@ -11,6 +11,7 @@ _.forEach([
   'check-tag-names',
   'check-types',
   'newline-after-description',
+  'no-undefined-types',
   'require-description-complete-sentence',
   'require-example',
   'require-hyphen-before-param-description',
@@ -30,13 +31,13 @@ _.forEach([
   const assertions = require('./assertions/' + _.camelCase(ruleName));
 
   assertions.invalid = _.map(assertions.invalid, (assertion) => {
-    assertion.parserOptions = parserOptions;
+    assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
 
     return assertion;
   });
 
   assertions.valid = _.map(assertions.valid, (assertion) => {
-    assertion.parserOptions = parserOptions;
+    assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
 
     return assertion;
   });
