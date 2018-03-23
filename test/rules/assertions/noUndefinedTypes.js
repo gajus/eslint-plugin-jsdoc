@@ -91,6 +91,21 @@ export default {
       globals: {
         HisType: true
       }
+    },
+    {
+      code: `
+        /**
+         * @typedef {Object} hello
+         * @property {string} a - a.
+         */
+
+        /**
+         * @param {hello} foo
+         */
+        function quux(foo) {
+          
+        }
+      `
     }
   ]
 };
