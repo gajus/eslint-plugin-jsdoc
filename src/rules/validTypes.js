@@ -1,11 +1,9 @@
 import _ from 'lodash';
-import iterateJsdoc from '../iterateJsdoc';
 import {parse} from 'jsdoctypeparser';
+import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
   jsdoc,
-  jsdocNode,
-  sourceCode,
   report
 }) => {
   _.forEach(jsdoc.tags, (tag) => {
