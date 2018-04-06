@@ -106,6 +106,16 @@ export default {
           
         }
       `
+    },
+    {
+      code: `
+        /**
+         * @param {Array<syntaxError} foo
+         */
+        function quux(foo) {
+          
+        }
+      `
     }
   ]
 };

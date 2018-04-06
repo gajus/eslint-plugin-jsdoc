@@ -35,7 +35,14 @@ export default iterateJsdoc(({
     .concat(typedefDeclarations);
 
   _.forEach(jsdoc.tags, (tag) => {
-    const parsedType = parseType(tag.type);
+    let parsedType;
+
+    try {
+      parsedType = parseType(tag.type);
+    } catch (error) {
+      // On syntax error, will be handled by valid-types.
+      return;
+    }
 
     traverse(parsedType, (node) => {
       if (node.type === 'NAME') {
