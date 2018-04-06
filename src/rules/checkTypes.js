@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {parse, traverse, publish} from 'jsdoctypeparser';
 import iterateJsdoc from './../iterateJsdoc';
 
 let targetTags = [
@@ -51,18 +52,36 @@ export default iterateJsdoc(({
   });
 
   _.forEach(jsdocTags, (jsdocTag) => {
-    _.some(strictNativeTypes, (strictNativeType) => {
-      if (strictNativeType.toLowerCase() === jsdocTag.type.toLowerCase() && strictNativeType !== jsdocTag.type) {
+    const invalidTypes = [];
+    let typeAst;
+
+    try {
+      typeAst = parse(jsdocTag.type);
+    } catch (error) {
+      return;
+    }
+
+    traverse(typeAst, (node) => {
+      if (node.type === 'NAME') {
+        for (const strictNativeType of strictNativeTypes) {
+          if (strictNativeType.toLowerCase() === node.name.toLowerCase() && strictNativeType !== node.name) {
+            invalidTypes.push(node.name);
+            node.name = strictNativeType;
+          }
+        }
+      }
+    });
+
+    if (invalidTypes) {
+      const fixedType = publish(typeAst);
+
+      _.forEach(invalidTypes, (invalidType) => {
         const fix = (fixer) => {
-          return fixer.replaceText(jsdocNode, sourceCode.getText(jsdocNode).replace('{' + jsdocTag.type + '}', '{' + strictNativeType + '}'));
+          return fixer.replaceText(jsdocNode, sourceCode.getText(jsdocNode).replace('{' + jsdocTag.type + '}', '{' + fixedType + '}'));
         };
 
-        report('Invalid JSDoc @' + jsdocTag.tag + ' "' + jsdocTag.name + '" type "' + jsdocTag.type + '".', fix);
-
-        return true;
-      }
-
-      return false;
-    });
+        report('Invalid JSDoc @' + jsdocTag.tag + ' "' + jsdocTag.name + '" type "' + invalidType + '".', fix);
+      });
+    }
   });
 });

@@ -32,6 +32,27 @@ const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames) 
   return utils;
 };
 
+export const parseComment = (commentNode) => {
+  // Preserve JSDoc block start/end indentation.
+  const indent = _.repeat(' ', commentNode.loc.start.column);
+
+  return commentParser(indent + '/*' + commentNode.value + indent + '*/', {
+    // @see https://github.com/yavorskiy/comment-parser/issues/21
+    parsers: [
+      commentParser.PARSERS.parse_tag,
+      commentParser.PARSERS.parse_type,
+      (str, data) => {
+        if (_.includes(['return', 'returns'], data.tag)) {
+          return null;
+        }
+
+        return commentParser.PARSERS.parse_name(str, data);
+      },
+      commentParser.PARSERS.parse_description
+    ]
+  })[0] || {};
+};
+
 export default (iterator) => {
   return (context) => {
     const sourceCode = context.getSourceCode();
@@ -45,23 +66,9 @@ export default (iterator) => {
         return;
       }
 
-      // Preserve JSDoc block start/end indentation.
       const indent = _.repeat(' ', jsdocNode.loc.start.column);
-      const jsdoc = commentParser(indent + '/*' + jsdocNode.value + indent + '*/', {
-        // @see https://github.com/yavorskiy/comment-parser/issues/21
-        parsers: [
-          commentParser.PARSERS.parse_tag,
-          commentParser.PARSERS.parse_type,
-          (str, data) => {
-            if (_.includes(['return', 'returns'], data.tag)) {
-              return null;
-            }
 
-            return commentParser.PARSERS.parse_name(str, data);
-          },
-          commentParser.PARSERS.parse_description
-        ]
-      })[0] || {};
+      const jsdoc = parseComment(jsdocNode);
 
       const report = (message, fixer = null) => {
         if (fixer === null) {

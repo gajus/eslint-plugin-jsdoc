@@ -1,7 +1,9 @@
+/* eslint-disable import/max-dependencies */
 import checkParamNames from './rules/checkParamNames';
 import checkTagNames from './rules/checkTagNames';
 import checkTypes from './rules/checkTypes';
 import newlineAfterDescription from './rules/newlineAfterDescription';
+import noUndefinedTypes from './rules/noUndefinedTypes';
 import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
 import requireExample from './rules/requireExample';
 import requireHyphenBeforeParamDescription from './rules/requireHyphenBeforeParamDescription';
@@ -11,6 +13,7 @@ import requireParamDescription from './rules/requireParamDescription';
 import requireParamType from './rules/requireParamType';
 import requireReturnsDescription from './rules/requireReturnsDescription';
 import requireReturnsType from './rules/requireReturnsType';
+import validTypes from './rules/validTypes';
 
 export default {
   configs: {
@@ -20,6 +23,7 @@ export default {
         'jsdoc/check-tag-names': 'warn',
         'jsdoc/check-types': 'warn',
         'jsdoc/newline-after-description': 'warn',
+        'jsdoc/no-undefined-types': 'warn',
         'jsdoc/require-description-complete-sentence': 'off',
         'jsdoc/require-example': 'off',
         'jsdoc/require-hyphen-before-param-description': 'off',
@@ -28,7 +32,8 @@ export default {
         'jsdoc/require-param-name': 'warn',
         'jsdoc/require-param-type': 'warn',
         'jsdoc/require-returns-description': 'warn',
-        'jsdoc/require-returns-type': 'warn'
+        'jsdoc/require-returns-type': 'warn',
+        'jsdoc/valid-types': 'warn'
       }
     }
   },
@@ -37,6 +42,7 @@ export default {
     'check-tag-names': checkTagNames,
     'check-types': checkTypes,
     'newline-after-description': newlineAfterDescription,
+    'no-undefined-types': noUndefinedTypes,
     'require-description-complete-sentence': requireDescriptionCompleteSentence,
     'require-example': requireExample,
     'require-hyphen-before-param-description': requireHyphenBeforeParamDescription,
@@ -45,13 +51,15 @@ export default {
     'require-param-name': requireParamName,
     'require-param-type': requireParamType,
     'require-returns-description': requireReturnsDescription,
-    'require-returns-type': requireReturnsType
+    'require-returns-type': requireReturnsType,
+    'valid-types': validTypes
   },
   rulesConfig: {
     'check-param-names': 'off',
     'check-tag-names': 'off',
     'check-types': 'off',
     'newline-after-description': 'off',
+    'no-undefined-types': 'off',
     'require-description-complete-sentence': 'off',
     'require-example': 'off',
     'require-hyphen-before-param-description': 'off',
@@ -60,6 +68,7 @@ export default {
     'require-param-name': 'off',
     'require-param-type': 'off',
     'require-returns-description': 'off',
-    'require-returns-type': 'off'
+    'require-returns-type': 'off',
+    'valid-types': 'off'
   }
 };

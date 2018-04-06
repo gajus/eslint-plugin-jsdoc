@@ -11,6 +11,7 @@ _.forEach([
   'check-tag-names',
   'check-types',
   'newline-after-description',
+  'no-undefined-types',
   'require-description-complete-sentence',
   'require-example',
   'require-hyphen-before-param-description',
@@ -19,7 +20,8 @@ _.forEach([
   'require-param-name',
   'require-param-type',
   'require-returns-description',
-  'require-returns-type'
+  'require-returns-type',
+  'valid-types'
 ], (ruleName) => {
   const parserOptions = {
     ecmaVersion: 6
@@ -29,13 +31,13 @@ _.forEach([
   const assertions = require('./assertions/' + _.camelCase(ruleName));
 
   assertions.invalid = _.map(assertions.invalid, (assertion) => {
-    assertion.parserOptions = parserOptions;
+    assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
 
     return assertion;
   });
 
   assertions.valid = _.map(assertions.valid, (assertion) => {
-    assertion.parserOptions = parserOptions;
+    assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
 
     return assertion;
   });
