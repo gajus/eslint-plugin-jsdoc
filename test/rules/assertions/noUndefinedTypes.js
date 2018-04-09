@@ -67,8 +67,10 @@ export default {
 
         /**
          * @param {MyType} foo - Bar.
+         * @param {Object<string, number>} foo
+         * @param {Array<string>} baz
          */
-          function quux(foo) {
+          function quux(foo, bar, baz) {
 
         }
       `,
