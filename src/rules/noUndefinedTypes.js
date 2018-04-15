@@ -11,7 +11,7 @@ export default iterateJsdoc(({
   sourceCode
 }) => {
   const scopeManager = sourceCode.scopeManager;
-  const globalScope = scopeManager.isModule() ? scopeManager.globalScope.childScopes[0] : scopeManager.globalScope;
+  const globalScope = scopeManager.globalScope;
 
   const typedefDeclarations = _(context.getAllComments())
     .filter((comment) => {
@@ -31,6 +31,11 @@ export default iterateJsdoc(({
   const definedTypes = globalScope.variables.map((variable) => {
     return variable.name;
   })
+
+    // If the file is a module, concat the variables from the module scope.
+    .concat(scopeManager.isModule() ? globalScope.childScopes[0].variables.map((variable) => {
+      return variable.name;
+    }) : [])
     .concat(extraTypes)
     .concat(typedefDeclarations);
 
