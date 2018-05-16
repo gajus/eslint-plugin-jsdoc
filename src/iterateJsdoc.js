@@ -2,7 +2,7 @@ import _ from 'lodash';
 import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 
-const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames) => {
+const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames, allowOverrideWithoutParam) => {
   const utils = {};
 
   utils.getFunctionParameterNames = () => {
@@ -27,6 +27,10 @@ const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames) 
 
   utils.hasTag = (name) => {
     return jsdocUtils.hasTag(jsdoc, name);
+  };
+
+  utils.isOverrideAllowedWithoutParam = () => {
+    return allowOverrideWithoutParam;
   };
 
   return utils;
@@ -58,6 +62,7 @@ export default (iterator) => {
     const sourceCode = context.getSourceCode();
     const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
     const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
+    const allowOverrideWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowOverrideWithoutParam'));
 
     const checkJsdoc = (functionNode) => {
       const jsdocNode = sourceCode.getJSDocComment(functionNode);
@@ -82,7 +87,7 @@ export default (iterator) => {
         }
       };
 
-      const utils = curryUtils(functionNode, jsdoc, tagNamePreference, additionalTagNames);
+      const utils = curryUtils(functionNode, jsdoc, tagNamePreference, additionalTagNames, allowOverrideWithoutParam);
 
       iterator({
         context,
