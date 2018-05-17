@@ -13,6 +13,12 @@ export default iterateJsdoc(({
     return;
   }
 
+  // When settings.jsdoc.allowOverrideWithoutParam is true, override implies that all documentation is inherited.
+  // See https://github.com/gajus/eslint-plugin-jsdoc/issues/73
+  if (utils.hasTag('override') && utils.isOverrideAllowedWithoutParam()) {
+    return;
+  }
+
   _.some(functionParameterNames, (functionParameterName, index) => {
     const jsdocParameterName = jsdocParameterNames[index];
 

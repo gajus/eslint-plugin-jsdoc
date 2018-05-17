@@ -53,6 +53,21 @@ export default {
           message: 'Missing JSDoc @param "bar" declaration.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @override
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        }
+      ]
     }
   ],
   valid: [
@@ -90,6 +105,32 @@ export default {
           tagNamePreference: {
             param: 'arg'
           }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @override
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @override
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          allowOverrideWithoutParam: true
         }
       }
     }

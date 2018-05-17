@@ -14,6 +14,7 @@ JSDoc linting rules for ESLint.
     * [Settings](#eslint-plugin-jsdoc-settings)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [Additional Tag Names](#eslint-plugin-jsdoc-settings-additional-tag-names)
+        * [Allow `@override` Without Accompanying `@param` Tags](#eslint-plugin-jsdoc-settings-allow-override-without-param)
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
@@ -143,6 +144,22 @@ Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc t
             "additionalTagNames": {
                 "customTags": ["define", "extends", "record"]
             }
+        }
+    }
+}
+```
+
+<a name="eslint-plugin-jsdoc-settings-allow-override-without-param"></a>
+### Allow `@override` Without Accompanying `@param` Tags
+
+Use `settings.jsdoc.allowOverrideWithoutParam` to indicate whether the `@override` tag can be used without accompanying `@param` tag(s). The default value is `false`. The format of the configuration is as follows:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "allowOverrideWithoutParam": true
         }
     }
 }
@@ -998,6 +1015,14 @@ function quux (foo, bar) {
 
 }
 // Message: Missing JSDoc @param "bar" declaration.
+
+/**
+ * @override
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @arg "foo" declaration.
 ```
 
 The following patterns are not considered problems:
@@ -1023,6 +1048,22 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+/**
+ * @override
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @override
+ */
+function quux (foo) {
+
+}
+// Settings: { "allowOverrideWithoutParam": true }
 ```
 
 
