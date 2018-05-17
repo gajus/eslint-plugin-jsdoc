@@ -124,6 +124,21 @@ Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc t
 }
 ```
 
+### Allow `@override` Without Accompanying `@param` Tags
+
+Use `settings.jsdoc.allowOverrideWithoutParam` to indicate whether the `@override` tag can be used without accompanying `@param` tag(s). The default value is `false`. The format of the configuration is as follows:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "allowOverrideWithoutParam": true
+        }
+    }
+}
+```
+
 ## Rules
 
 {"gitdown": "include", "file": "./rules/check-param-names.md"}

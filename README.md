@@ -14,12 +14,13 @@ JSDoc linting rules for ESLint.
     * [Settings](#eslint-plugin-jsdoc-settings)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [Additional Tag Names](#eslint-plugin-jsdoc-settings-additional-tag-names)
-        * [Allow `@override` Without Accompanying `@param` Tags](#eslint-plugin-jsdoc-settings-allow-override-without-param)
+        * [Allow `@override` Without Accompanying `@param` Tags](#eslint-plugin-jsdoc-settings-allow-override-without-accompanying-param-tags)
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
+        * [`no-undefined-types`](#eslint-plugin-jsdoc-rules-no-undefined-types)
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-example`](#eslint-plugin-jsdoc-rules-require-example)
         * [`require-hyphen-before-param-description`](#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description)
@@ -29,6 +30,7 @@ JSDoc linting rules for ESLint.
         * [`require-param-type`](#eslint-plugin-jsdoc-rules-require-param-type)
         * [`require-returns-description`](#eslint-plugin-jsdoc-rules-require-returns-description)
         * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
+        * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
 
 
 <a name="eslint-plugin-jsdoc-reference-to-jscs-jsdoc"></a>
@@ -51,6 +53,8 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`require-param-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type) | [`requireParamTypes`](https://github.com/jscs-dev/jscs-jsdoc#requireparamtypes) |
 | [`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-description) | [`requireReturnDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirereturndescription) |
 | [`require-returns-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-type) | [`requireReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#requirereturntypes) |
+| [`valid-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-valid-types) | N/A |
+| [`no-undefined-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-undefined-types) | N/A |
 | N/A | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
 | N/A | [`checkRedundantParams`](https://github.com/jscs-dev/jscs-jsdoc#checkredundantparams) |
 | N/A | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
@@ -95,6 +99,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
+        "jsdoc/no-undefined-types": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-example": 1,
         "jsdoc/require-hyphen-before-param-description": 1,
@@ -103,7 +108,8 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-param-name": 1,
         "jsdoc/require-param-type": 1,
         "jsdoc/require-returns-description": 1,
-        "jsdoc/require-returns-type": 1
+        "jsdoc/require-returns-type": 1,
+        "jsdoc/valid-types": 1
     }
 }
 ```
@@ -149,8 +155,8 @@ Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc t
 }
 ```
 
-<a name="eslint-plugin-jsdoc-settings-allow-override-without-param"></a>
-### Allow `@override` Without Accompanying `@param` Tags
+<a name="eslint-plugin-jsdoc-settings-allow-override-without-accompanying-param-tags"></a>
+### Allow <code>@override</code> Without Accompanying <code>@param</code> Tags
 
 Use `settings.jsdoc.allowOverrideWithoutParam` to indicate whether the `@override` tag can be used without accompanying `@param` tag(s). The default value is `false`. The format of the configuration is as follows:
 
@@ -495,7 +501,7 @@ function quux (foo) {
 
 }
 
-/**
+/** 
  * @abstract
  * @access
  * @alias
@@ -583,9 +589,9 @@ RegExp
 <a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
 #### Why not capital case everything?
 
-Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`.
+Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`. 
 
-Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do.
+Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do. 
 
 So in a sense, there two types of strings in Javascript; `{string}` literals, also called primitives and `{String}` Objects. We use the primitives because it's easier to write and uses less memory. `{String}` and `{string}` are technically both valid, but they are not the same.
 
@@ -634,6 +640,22 @@ function quux (foo) {
 
 }
 // Message: Invalid JSDoc @arg "foo" type "Number".
+
+/**
+ * @param {(Number|string|Boolean)=} foo
+ */
+function quux (foo, bar, baz) {
+
+}
+// Message: Invalid JSDoc @param "foo" type "Number".
+
+/**
+ * @param {Array<Number|String>} foo
+ */
+function quux (foo, bar, baz) {
+
+}
+// Message: Invalid JSDoc @param "foo" type "Number".
 ```
 
 The following patterns are not considered problems:
@@ -652,6 +674,13 @@ function quux (foo, bar, baz) {
  * @arg {number} foo
  * @arg {Bar} bar
  * @arg {*} baz
+ */
+function quux (foo, bar, baz) {
+
+}
+
+/**
+ * @param {(number|string|boolean)=} foo
  */
 function quux (foo, bar, baz) {
 
@@ -740,15 +769,112 @@ function quux () {
 ```
 
 
+<a name="eslint-plugin-jsdoc-rules-no-undefined-types"></a>
+### <code>no-undefined-types</code>
+
+Checks that types in jsdoc comments are defined. This can be used to check unimported types.
+
+When enabling this rule, types in jsdoc comments will resolve as used variables, i.e. will not be marked as unused by `no-unused-vars`.
+
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`, `returns`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @param {strnig} foo - Bar.
+ */
+function quux(foo) {
+
+}
+// Message: The type 'strnig' is undefined.
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param {string} foo - Bar.
+ */
+function quux(foo) {
+
+}
+
+class MyClass {}
+
+/**
+ * @param {MyClass} foo - Bar.
+ */
+function quux(foo) {
+  console.log(foo);
+}
+
+quux(0);
+
+const MyType = require('my-library').MyType;
+
+/**
+ * @param {MyType} foo - Bar.
+ */
+  function quux(foo) {
+
+}
+
+import {MyType} from 'my-library';
+
+/**
+ * @param {MyType} foo - Bar.
+ * @param {Object<string, number>} foo
+ * @param {Array<string>} baz
+ */
+  function quux(foo, bar, baz) {
+
+}
+
+/*global MyType*/
+
+/**
+ * @param {MyType} foo - Bar.
+ * @param {HisType} bar - Foo.
+ */
+  function quux(foo, bar) {
+
+}
+
+/**
+ * @typedef {Object} hello
+ * @property {string} a - a.
+ */
+
+/**
+ * @param {hello} foo
+ */
+function quux(foo) {
+  
+}
+
+/**
+ * @param {Array<syntaxError} foo
+ */
+function quux(foo) {
+  
+}
+```
+
+
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
 ### <code>require-description-complete-sentence</code>
 
 Requires that block description and tag description are written in complete sentences, i.e.,
 
 * Description must start with an uppercase alphabetical character.
-* Paragraph must start with an uppercase alphabetical character.
+* Paragraphs must start with an uppercase alphabetical character.
 * Sentences must end with a period.
-* Every line that starts with a lowercase character must be preceded by a line ending the sentence.
+* Every line in a paragraph (except the first) which starts with an uppercase character must be preceded by a line ending with a period.
 
 |||
 |---|---|
@@ -764,7 +890,15 @@ The following patterns are considered problems:
 function quux () {
 
 }
-// Message: Description must start with an uppercase character.
+// Message: Sentence should start with an uppercase character.
+
+/**
+ * Foo)
+ */
+function quux () {
+
+}
+// Message: Sentence must end with a period.
 
 /**
  * Foo.
@@ -774,7 +908,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Paragraph must start with an uppercase character.
+// Message: Sentence should start with an uppercase character.
 
 /**
  * тест.
@@ -782,7 +916,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Description must start with an uppercase character.
+// Message: Sentence should start with an uppercase character.
 
 /**
  * Foo
@@ -809,7 +943,35 @@ function quux () {
 function quux (foo) {
 
 }
-// Message: Description must start with an uppercase character.
+// Message: Sentence should start with an uppercase character.
+
+/**
+ * Foo.
+ *
+ * @param foo bar
+ */
+function quux (foo) {
+
+}
+// Message: Sentence should start with an uppercase character.
+
+/**
+ * {@see Foo.bar} buz
+ */
+function quux (foo) {
+
+}
+// Message: Sentence should start with an uppercase character.
+
+/**
+ * Foo.
+ *
+ * @returns {number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Sentence should start with an uppercase character.
 
 /**
  * Foo.
@@ -819,7 +981,54 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Description must start with an uppercase character.
+// Message: Sentence should start with an uppercase character.
+
+/**
+ * lorem ipsum dolor sit amet, consectetur adipiscing elit. pellentesque elit diam, 
+ * iaculis eu dignissim sed, ultrices sed nisi. nulla at ligula auctor, consectetur neque sed,
+ * tincidunt nibh. vivamus sit amet vulputate ligula. vivamus interdum elementum nisl,
+ * vitae rutrum tortor semper ut. morbi porta ante vitae dictum fermentum.
+ * proin ut nulla at quam convallis gravida in id elit. sed dolor mauris, blandit quis ante at, 
+ * consequat auctor magna. duis pharetra purus in porttitor mollis.
+ */
+function longDescription (foo) {
+
+}
+// Message: Sentence should start with an uppercase character.
+
+/**
+ * @arg {number} foo - Foo
+ */
+function quux (foo) {
+
+}
+// Message: Sentence must end with a period.
+
+/**
+ * @argument {number} foo - Foo
+ */
+function quux (foo) {
+
+}
+// Message: Sentence must end with a period.
+
+/**
+ * @return {number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Sentence should start with an uppercase character.
+
+/**
+ * Returns bar.
+ * 
+ * @return {number} bar
+ */
+function quux (foo) {
+
+}
+// Message: Sentence should start with an uppercase character.
 ```
 
 The following patterns are not considered problems:
@@ -873,6 +1082,41 @@ function quux () {
 
 /**
  * @returns Foo bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo. {@see Math.sin}.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo {@see Math.sin} bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo?
+ * 
+ * Bar!
+ * 
+ * Baz:
+ *   1. Foo.
+ *   2. Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Hello:
+ * World.
  */
 function quux () {
 
@@ -1022,7 +1266,7 @@ function quux (foo, bar) {
 function quux (foo) {
 
 }
-// Message: Missing JSDoc @arg "foo" declaration.
+// Message: Missing JSDoc @param "foo" declaration.
 ```
 
 The following patterns are not considered problems:
@@ -1063,7 +1307,6 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: { "allowOverrideWithoutParam": true }
 ```
 
 
@@ -1313,6 +1556,54 @@ The following patterns are not considered problems:
  */
 function quux () {
 
+}
+```
+
+
+<a name="eslint-plugin-jsdoc-rules-valid-types"></a>
+### <code>valid-types</code>
+
+Requires all types to be valid JSDoc or Closure compiler types without syntax errors.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`, `returns`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @param {Array<string} foo
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: Array<string
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param {Array<string>} foo
+ */
+function quux() {
+
+}
+
+/**
+ * @param {string} foo
+ */
+function quux() {
+
+}
+
+/**
+ * @param foo
+ */
+function quux() {
+  
 }
 ```
 
