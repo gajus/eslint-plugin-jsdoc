@@ -21,6 +21,7 @@
     "eslint": "^4.19.1",
     "eslint-config-canonical": "^9.3.1",
     "gitdown": "^2.5.1",
+    "glob": "^7.1.2",
     "globby": "^6.1.0",
     "mocha": "^3.5.3",
     "semantic-release": "^8.0.3"
