@@ -45,7 +45,7 @@
     "url": "https://github.com/gajus/eslint-plugin-jsdoc"
   },
   "scripts": {
-    "add-assertions": "babel-node --presets es2015 ./bin/readme-assertions",
+    "add-assertions": "babel-node --presets es2015 ./src/bin/readme-assertions",
     "build": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps",
     "generate-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run add-assertions",
     "lint": "eslint ./src ./test",
