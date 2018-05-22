@@ -201,6 +201,7 @@ function quux (foo = 'FOO') {
 function quux (foo = 'FOO') {
 
 }
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Expected @arg names to be "foo". Got "Foo".
 
 /**
@@ -442,6 +443,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".
 
 /**
@@ -458,6 +460,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"additionalTagNames":{"customTags":["bar"]}}}
 // Message: Invalid JSDoc tag name "baz".
 
 /**
@@ -467,6 +470,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"additionalTagNames":{"customTags":["bar"]}}}
 // Message: Invalid JSDoc tag name "baz".
 ```
 
@@ -486,6 +490,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 
 /**
  * @bar foo
@@ -493,6 +498,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"additionalTagNames":{"customTags":["bar"]}}}
 
 /**
  * @baz @bar foo
@@ -500,6 +506,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"additionalTagNames":{"customTags":["baz","bar"]}}}
 
 /** 
  * @abstract
@@ -1250,6 +1257,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" declaration.
 
 /**
@@ -1292,6 +1300,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 
 /**
  * @override
@@ -1307,6 +1316,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
 ```
 
 
@@ -1337,6 +1347,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" description.
 ```
 
@@ -1439,6 +1450,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" type.
 ```
 
@@ -1488,6 +1500,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return description.
 ```
 
@@ -1545,6 +1558,7 @@ function quux () {
 function quux () {
 
 }
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return type.
 ```
 

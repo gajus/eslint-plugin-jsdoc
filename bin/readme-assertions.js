@@ -11,6 +11,10 @@ const formatCodeSnippet = (setup) => {
 
     paragraphs.push(trimCode(setup.code));
 
+    if (setup.settings) {
+        paragraphs.push('// Settings: ' + JSON.stringify(setup.settings));
+    }
+
     if (setup.options) {
         paragraphs.push('// Options: ' + JSON.stringify(setup.options));
     }
