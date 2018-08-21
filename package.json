@@ -38,7 +38,7 @@
   "main": "./dist/index.js",
   "name": "eslint-plugin-jsdoc",
   "peerDependencies": {
-    "eslint": ">=0.8.0"
+    "eslint": ">=4.14.0"
   },
   "repository": {
     "type": "git",
