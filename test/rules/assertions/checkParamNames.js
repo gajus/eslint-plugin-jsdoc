@@ -13,7 +13,7 @@ export default {
       `,
       errors: [
         {
-          message: 'Expected @param names to be "foo". Got "Foo".'
+          message: 'Expected @param name to be "foo". Got "Foo".'
         }
       ]
     },
@@ -28,7 +28,7 @@ export default {
       `,
       errors: [
         {
-          message: 'Expected @arg names to be "foo". Got "Foo".'
+          message: 'Expected @arg name to be "foo". Got "Foo".'
         }
       ],
       settings: {
@@ -50,7 +50,7 @@ export default {
       `,
       errors: [
         {
-          message: 'Expected @param names to be "foo". Got "Foo".'
+          message: 'Expected @param name to be "foo". Got "Foo".'
         }
       ]
     },
@@ -65,7 +65,7 @@ export default {
       `,
       errors: [
         {
-          message: '@param path declaration ("Foo.Bar") appears before any real parameter.'
+          message: '@param path declaration "Foo.Bar" requires previous definition of "Foo".'
         }
       ]
     },
@@ -81,7 +81,7 @@ export default {
       `,
       errors: [
         {
-          message: '@param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").'
+          message: '@param path declaration "Foo.Bar" requires previous definition of "Foo".'
         }
       ]
     },
@@ -98,7 +98,10 @@ export default {
       `,
       errors: [
         {
-          message: 'Expected @param names to be "bar, foo". Got "foo, bar".'
+          message: 'Expected @param name to be "bar". Got "foo".'
+        },
+        {
+          message: 'Expected @param name to be "foo". Got "bar".'
         }
       ]
     },
@@ -115,6 +118,39 @@ export default {
       errors: [
         {
           message: '@param "bar" does not match an existing function parameter.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @param first
+           * @param baz
+           */
+          function quux ({foo, bar}) {
+
+          }
+      `,
+      errors: [
+        {
+          message: '@param "baz" does not match an existing function parameter.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @param first
+           * @param first.foo
+           * @param first.baz
+           */
+          function quux ({foo, bar}) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Expected @param name to be "first.bar". Got "first.baz".'
         }
       ]
     }
@@ -203,6 +239,18 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @param first
+           * @param first.foo
+           * @param first.bar
+           */
+          function quux ({foo, bar}) {
+
+          }
+      `,
     }
   ]
 };

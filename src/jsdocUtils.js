@@ -1,26 +1,32 @@
 import _ from 'lodash';
 import tagNames from './tagNames';
 
+const getFunctionParameterName = (param : Object) : string => {
+  if (_.has(param, 'name')) {
+    return param.name;
+  }
+
+  if (_.has(param, 'left.name')) {
+    return param.left.name;
+  }
+
+  if (param.type === 'ObjectPattern' || _.get(param, 'left.type') === 'ObjectPattern') {
+    return '<ObjectPattern>';
+  }
+
+  if (param.type === 'RestElement') {
+    return param.argument.name;
+  }
+
+  if (param.type === 'ObjectPattern' || param.type === 'Property') {
+    return param.key.name;
+  }
+
+  throw new Error('Unsupported function signature format.');
+};
+
 const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
-  return _.map(functionNode.params, (param) => {
-    if (_.has(param, 'name')) {
-      return param.name;
-    }
-
-    if (_.has(param, 'left.name')) {
-      return param.left.name;
-    }
-
-    if (param.type === 'ObjectPattern' || _.get(param, 'left.type') === 'ObjectPattern') {
-      return '<ObjectPattern>';
-    }
-
-    if (param.type === 'RestElement') {
-      return param.argument.name;
-    }
-
-    throw new Error('Unsupported function signature format.');
-  });
+  return _.map(functionNode.params, getFunctionParameterName);
 };
 
 /**
@@ -83,6 +89,7 @@ const hasTag = (jsdoc : Object, targetTagName : string) : boolean => {
 };
 
 export default {
+  getFunctionParameterName,
   getFunctionParameterNames,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,
