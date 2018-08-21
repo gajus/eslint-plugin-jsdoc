@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {parse, traverse, publish} from 'jsdoctypeparser';
-import iterateJsdoc from './../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc';
 
 let targetTags = [
   'class',

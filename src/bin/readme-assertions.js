@@ -13,8 +13,8 @@ const trimCode = (code) => {
 
   const indentSize = indendation ? indendation[0].length : 0;
 
-  lines = _.map(lines, (line, i) => {
-    if (i === 0) {
+  lines = _.map(lines, (line, index) => {
+    if (index === 0) {
       return line;
     }
 
@@ -75,11 +75,10 @@ const updateDocuments = (assertions) => {
 
     if (!ruleAssertions) {
       throw new Error('No assertions available for rule "' + ruleName + '".');
-
-      return assertionsBlock;
     }
 
-    return 'The following patterns are considered problems:\n\n```js\n' + ruleAssertions.invalid.join('\n\n') + '\n```\n\nThe following patterns are not considered problems:\n\n```js\n' + ruleAssertions.valid.join('\n\n') + '\n```\n';
+    return 'The following patterns are considered problems:\n\n```js\n' + ruleAssertions.invalid.join('\n\n') +
+      '\n```\n\nThe following patterns are not considered problems:\n\n```js\n' + ruleAssertions.valid.join('\n\n') + '\n```\n';
   });
 
   fs.writeFileSync(readmeDocumentPath, documentBody);

@@ -41,7 +41,8 @@ const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames 
       const pathRootNodeName = jsdocParameterName.slice(0, jsdocParameterName.indexOf('.'));
 
       if (pathRootNodeName !== lastRealParameter) {
-        report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") root node name ("' + pathRootNodeName + '") does not match previous real parameter name ("' + lastRealParameter + '").');
+        report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") root node name ("' +
+          pathRootNodeName + '") does not match previous real parameter name ("' + lastRealParameter + '").');
 
         return true;
       }
