@@ -36,10 +36,8 @@ const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames, 
   return utils;
 };
 
-export const parseComment = (commentNode) => {
+export const parseComment = (commentNode, indent) => {
   // Preserve JSDoc block start/end indentation.
-  const indent = _.repeat(' ', commentNode.loc.start.column);
-
   return commentParser(indent + '/*' + commentNode.value + indent + '*/', {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
     parsers: [
@@ -73,14 +71,29 @@ export default (iterator) => {
 
       const indent = _.repeat(' ', jsdocNode.loc.start.column);
 
-      const jsdoc = parseComment(jsdocNode);
+      const jsdoc = parseComment(jsdocNode, indent);
 
-      const report = (message, fixer = null) => {
+      const report = (message, fixer = null, jsdocLine = null) => {
+        let loc;
+
+        if (jsdocLine) {
+          const lineNumber = jsdocNode.loc.start.line + jsdocLine.line;
+
+          loc = {
+            end: {line: lineNumber},
+            start: {line: lineNumber}
+          };
+        }
         if (fixer === null) {
-          context.report(jsdocNode, message);
+          context.report({
+            loc,
+            message,
+            node: jsdocNode
+          });
         } else {
           context.report({
             fix: fixer,
+            loc,
             message,
             node: jsdocNode
           });
