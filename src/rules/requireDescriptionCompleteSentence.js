@@ -19,7 +19,7 @@ const extractSentences = (text) => {
 
     // Re-add the dot.
     .map((sentence) => {
-      return sentence + '.';
+      return `${sentence}.`;
     });
 };
 
@@ -63,7 +63,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode, tag) =>
       if (!/[.:?!]$/.test(paragraph)) {
         const line = _.last(paragraph.split('\n'));
 
-        text = text.replace(new RegExp(_.escapeRegExp(line) + '$', 'm'), line + '.');
+        text = text.replace(new RegExp(`${_.escapeRegExp(line)}$`, 'm'), `${line}.`);
       }
 
       for (const sentence of sentences.filter((sentence_) => {
@@ -72,7 +72,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode, tag) =>
         const beginning = sentence.split('\n')[0];
 
         if (tag) {
-          const reg = new RegExp('(@' + _.escapeRegExp(tag) + '.*)' + _.escapeRegExp(beginning));
+          const reg = new RegExp(`(@${_.escapeRegExp(tag)}.*)${_.escapeRegExp(beginning)}`);
 
           text = text.replace(reg, ($0, $1) => {
             return $1 + capitalize(beginning);

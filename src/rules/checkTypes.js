@@ -77,10 +77,10 @@ export default iterateJsdoc(({
 
       _.forEach(invalidTypes, (invalidType) => {
         const fix = (fixer) => {
-          return fixer.replaceText(jsdocNode, sourceCode.getText(jsdocNode).replace('{' + jsdocTag.type + '}', '{' + fixedType + '}'));
+          return fixer.replaceText(jsdocNode, sourceCode.getText(jsdocNode).replace(`{${jsdocTag.type}}`, `{${fixedType}}`));
         };
 
-        report('Invalid JSDoc @' + jsdocTag.tag + ' "' + jsdocTag.name + '" type "' + invalidType + '".', fix);
+        report(`Invalid JSDoc @${jsdocTag.tag} "${jsdocTag.name}" type "${invalidType}".`, fix);
       });
     }
   });

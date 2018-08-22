@@ -3,7 +3,7 @@
 import JSDOC_3_TAGS from './jsdoc3Tags';
 
 // eslint-disable-next-line id-match
-const ALL_JSDOC_TAGS_COMMENT = '/** \n * @' + JSDOC_3_TAGS.join('\n * @') + '\n */';
+const ALL_JSDOC_TAGS_COMMENT = `/** \n * @${JSDOC_3_TAGS.join('\n * @')}\n */`;
 
 export default {
   invalid: [
@@ -198,7 +198,7 @@ export default {
       }
     },
     {
-      code: ALL_JSDOC_TAGS_COMMENT + '\nfunction quux (foo) {}'
+      code: `${ALL_JSDOC_TAGS_COMMENT}\nfunction quux (foo) {}`
     }
   ]
 };

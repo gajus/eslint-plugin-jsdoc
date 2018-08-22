@@ -13,14 +13,14 @@ export default iterateJsdoc(({
   });
 
   if (_.isEmpty(functionExamples)) {
-    return report('Missing JSDoc @' + targetTagName + ' declaration.');
+    return report(`Missing JSDoc @${targetTagName} declaration.`);
   }
 
   return _.forEach(functionExamples, (example) => {
-    const exampleContent = _.compact((example.name + ' ' + example.description).trim().split('\n'));
+    const exampleContent = _.compact(`${example.name} ${example.description}`.trim().split('\n'));
 
     if (_.isEmpty(exampleContent)) {
-      report('Missing JSDoc @' + targetTagName + ' description.');
+      report(`Missing JSDoc @${targetTagName} description.`);
     }
   });
 });

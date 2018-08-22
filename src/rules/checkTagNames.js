@@ -11,10 +11,10 @@ export default iterateJsdoc(({
       const preferredTagName = utils.getPreferredTagName(jsdocTag.tag);
 
       if (preferredTagName !== jsdocTag.tag) {
-        report('Invalid JSDoc tag (preference). Replace "' + jsdocTag.tag + '" JSDoc tag with "' + preferredTagName + '".');
+        report(`Invalid JSDoc tag (preference). Replace "${jsdocTag.tag}" JSDoc tag with "${preferredTagName}".`);
       }
     } else {
-      report('Invalid JSDoc tag name "' + jsdocTag.tag + '".');
+      report(`Invalid JSDoc tag name "${jsdocTag.tag}".`);
     }
   });
 });

@@ -14,7 +14,7 @@ export default iterateJsdoc(({
 
   _.forEach(jsdocParameters, (jsdocParameter) => {
     if (!jsdocParameter.description) {
-      report('Missing JSDoc @' + targetTagName + ' "' + jsdocParameter.name + '" description.');
+      report(`Missing JSDoc @${targetTagName} "${jsdocParameter.name}" description.`);
     }
   });
 });

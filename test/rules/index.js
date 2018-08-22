@@ -28,7 +28,7 @@ _.forEach([
   };
 
   // eslint-disable-next-line global-require, import/no-dynamic-require
-  const assertions = require('./assertions/' + _.camelCase(ruleName));
+  const assertions = require(`./assertions/${_.camelCase(ruleName)}`);
 
   assertions.invalid = _.map(assertions.invalid, (assertion) => {
     assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
