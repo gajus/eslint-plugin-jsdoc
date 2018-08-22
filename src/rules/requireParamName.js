@@ -14,7 +14,7 @@ export default iterateJsdoc(({
 
   _.forEach(jsdocParameters, (jsdocParameter) => {
     if (jsdocParameter.tag && jsdocParameter.name === '') {
-      report('There must be an identifier after @param ' + (jsdocParameter.type === '' ? 'type' : 'tag') + '.');
+      report('There must be an identifier after @param ' + (jsdocParameter.type === '' ? 'type' : 'tag') + '.', null, jsdocParameter);
     }
   });
 });
