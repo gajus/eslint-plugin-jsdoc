@@ -13,6 +13,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @param "foo" description.'
         }
       ]
@@ -28,6 +29,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @arg "foo" description.'
         }
       ],
