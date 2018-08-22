@@ -2,6 +2,8 @@
   "extends": "canonical",
   "root": true,
   "rules": {
-    "filenames/match-regex": 0
+    "filenames/match-regex": 0,
+    "prefer-template": 2,
+    "no-restricted-syntax": 0
   }
 }
