@@ -13,6 +13,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "Number".'
         }
       ],
@@ -36,6 +37,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @arg "foo" type "Number".'
         }
       ],
@@ -59,9 +61,11 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "Number".'
         },
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "Boolean".'
         }
       ],
@@ -85,9 +89,11 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "Number".'
         },
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "String".'
         }
       ],
