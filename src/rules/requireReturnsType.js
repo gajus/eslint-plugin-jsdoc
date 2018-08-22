@@ -14,7 +14,7 @@ export default iterateJsdoc(({
 
   _.forEach(jsdocTags, (jsdocTag) => {
     if (!jsdocTag.type) {
-      report('Missing JSDoc @' + targetTagName + ' type.');
+      report('Missing JSDoc @' + targetTagName + ' type.', null, jsdocTag);
     }
   });
 });
