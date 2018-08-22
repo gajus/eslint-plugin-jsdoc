@@ -13,6 +13,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'There must be a hyphen before @param description.'
         }
       ],
