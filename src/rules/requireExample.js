@@ -12,6 +12,10 @@ export default iterateJsdoc(({
     tag: targetTagName
   });
 
+  if (utils.hasTag('private')) {
+    return;
+  }
+
   if (_.isEmpty(functionExamples)) {
     return report('Missing JSDoc @' + targetTagName + ' declaration.');
   }

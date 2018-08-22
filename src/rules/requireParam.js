@@ -8,6 +8,10 @@ export default iterateJsdoc(({
   const functionParameterNames = utils.getFunctionParameterNames();
   const jsdocParameterNames = utils.getJsdocParameterNames();
 
+  if (utils.hasTag('private')) {
+    return;
+  }
+
   // inheritdoc implies that all documentation is inherited; see http://usejsdoc.org/tags-inheritdoc.html
   if (utils.hasTag('inheritdoc')) {
     return;
