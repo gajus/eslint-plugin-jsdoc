@@ -52,7 +52,7 @@ export default iterateJsdoc(({
     traverse(parsedType, (node) => {
       if (node.type === 'NAME') {
         if (!_.includes(definedTypes, node.name)) {
-          report('The type \'' + node.name + '\' is undefined.');
+          report(`The type '${node.name}' is undefined.`);
         } else if (!_.includes(extraTypes, node.name)) {
           context.markVariableAsUsed(node.name);
         }

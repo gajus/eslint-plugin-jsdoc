@@ -38,7 +38,7 @@ const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames, 
 
 export const parseComment = (commentNode, indent) => {
   // Preserve JSDoc block start/end indentation.
-  return commentParser(indent + '/*' + commentNode.value + indent + '*/', {
+  return commentParser(`${indent}/*${commentNode.value}${indent}*/`, {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
     parsers: [
       commentParser.PARSERS.parse_tag,

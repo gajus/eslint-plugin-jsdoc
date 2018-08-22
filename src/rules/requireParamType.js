@@ -14,7 +14,7 @@ export default iterateJsdoc(({
 
   _.forEach(jsdocParameters, (jsdocParameter) => {
     if (!jsdocParameter.type) {
-      report('Missing JSDoc @' + targetTagName + ' "' + jsdocParameter.name + '" type.');
+      report(`Missing JSDoc @${targetTagName} "${jsdocParameter.name}" type.`);
     }
   });
 });
