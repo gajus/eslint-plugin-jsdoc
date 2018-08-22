@@ -13,6 +13,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Syntax error in type: Array<string'
         }
       ]

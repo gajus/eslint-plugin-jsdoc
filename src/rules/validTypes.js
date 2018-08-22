@@ -12,7 +12,7 @@ export default iterateJsdoc(({
         parse(tag.type);
       } catch (error) {
         if (error.name === 'SyntaxError') {
-          report('Syntax error in type: ' + tag.type);
+          report('Syntax error in type: ' + tag.type, null, tag);
         }
       }
     }
