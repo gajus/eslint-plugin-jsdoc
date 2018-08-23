@@ -69,15 +69,6 @@ export default {
 
           }
       `
-    },
-    {
-      code: `
-          /**
-           * @private
-           */
-          function quux () {
-          }
-      `
     }
   ]
 };

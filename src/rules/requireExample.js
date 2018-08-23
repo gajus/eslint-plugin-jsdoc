@@ -12,15 +12,11 @@ export default iterateJsdoc(({
     tag: targetTagName
   });
 
-  if (utils.hasTag('private')) {
-    return;
-  }
-
   if (_.isEmpty(functionExamples)) {
-    report('Missing JSDoc @' + targetTagName + ' declaration.');
+    return report('Missing JSDoc @' + targetTagName + ' declaration.');
   }
 
-  _.forEach(functionExamples, (example) => {
+  return _.forEach(functionExamples, (example) => {
     const exampleContent = _.compact((example.name + ' ' + example.description).trim().split('\n'));
 
     if (_.isEmpty(exampleContent)) {
