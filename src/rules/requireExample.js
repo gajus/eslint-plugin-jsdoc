@@ -17,10 +17,10 @@ export default iterateJsdoc(({
   }
 
   if (_.isEmpty(functionExamples)) {
-    return report('Missing JSDoc @' + targetTagName + ' declaration.');
+    report('Missing JSDoc @' + targetTagName + ' declaration.');
   }
 
-  return _.forEach(functionExamples, (example) => {
+  _.forEach(functionExamples, (example) => {
     const exampleContent = _.compact((example.name + ' ' + example.description).trim().split('\n'));
 
     if (_.isEmpty(exampleContent)) {

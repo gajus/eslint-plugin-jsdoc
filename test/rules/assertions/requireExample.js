@@ -78,6 +78,6 @@ export default {
           function quux () {
           }
       `
-    },
+    }
   ]
 };
