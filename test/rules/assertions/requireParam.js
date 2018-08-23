@@ -133,6 +133,15 @@ export default {
           allowOverrideWithoutParam: true
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @private
+           */
+          function quux (foo) {
+          }
+      `
     }
   ]
 };
