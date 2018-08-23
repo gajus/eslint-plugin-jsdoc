@@ -13,6 +13,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'There must be an identifier after @param type.'
         }
       ]
@@ -28,6 +29,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'There must be an identifier after @param tag.'
         }
       ]

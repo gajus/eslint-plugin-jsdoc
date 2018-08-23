@@ -18,6 +18,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc tag name "Param".'
         }
       ]
@@ -33,6 +34,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc tag name "foo".'
         }
       ]
@@ -48,6 +50,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "param".'
         }
       ]
@@ -63,6 +66,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".'
         }
       ],
@@ -85,6 +89,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc tag name "bar".'
         }
       ]
@@ -100,6 +105,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc tag name "baz".'
         }
       ],
@@ -123,6 +129,7 @@ export default {
         `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc tag name "baz".'
         }
       ],

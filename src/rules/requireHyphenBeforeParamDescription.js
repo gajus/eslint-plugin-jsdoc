@@ -17,7 +17,7 @@ export default iterateJsdoc(({
         const replacement = sourceCode.getText(jsdocNode).replace(jsdocTag.description, '- ' + jsdocTag.description);
 
         return fixer.replaceText(jsdocNode, replacement);
-      });
+      }, jsdocTag);
     }
   });
 });

@@ -13,6 +13,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'The type \'strnig\' is undefined.'
         }
       ],
