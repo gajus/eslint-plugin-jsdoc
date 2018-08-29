@@ -18,6 +18,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
 | [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
+| [`require-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description) | N/A |
 | [`require-description-complete-sentence`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description-complete-sentence) | [`requireDescriptionCompleteSentence`](https://github.com/jscs-dev/jscs-jsdoc#requiredescriptioncompletesentence) |
 | [`require-example`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-example) | N/A |
 | [`require-hyphen-before-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description) | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
@@ -72,6 +73,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/no-undefined-types": 1,
+        "jsdoc/require-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-example": 1,
         "jsdoc/require-hyphen-before-param-description": 1,
@@ -146,6 +148,7 @@ Use `settings.jsdoc.allowOverrideWithoutParam` to indicate whether the `@overrid
 {"gitdown": "include", "file": "./rules/check-types.md"}
 {"gitdown": "include", "file": "./rules/newline-after-description.md"}
 {"gitdown": "include", "file": "./rules/no-undefined-types.md"}
+{"gitdown": "include", "file": "./rules/require-description.md"}
 {"gitdown": "include", "file": "./rules/require-description-complete-sentence.md"}
 {"gitdown": "include", "file": "./rules/require-example.md"}
 {"gitdown": "include", "file": "./rules/require-hyphen-before-param-description.md"}
