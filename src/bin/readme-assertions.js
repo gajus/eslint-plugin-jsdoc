@@ -45,7 +45,7 @@ const formatCodeSnippet = (setup) => {
 };
 
 const getAssertions = () => {
-  const assertionFiles = glob.sync(path.resolve(__dirname, '../test/rules/assertions/*.js'));
+  const assertionFiles = glob.sync(path.resolve(__dirname, '../../test/rules/assertions/*.js'));
 
   const assertionNames = _.map(assertionFiles, (filePath) => {
     return path.basename(filePath, '.js');
@@ -53,7 +53,7 @@ const getAssertions = () => {
 
   const assertionCodes = _.map(assertionFiles, (filePath) => {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    const codes = require(filePath).default;
+    const codes = require(filePath);
 
     return {
       invalid: _.map(codes.invalid, formatCodeSnippet),
@@ -65,7 +65,7 @@ const getAssertions = () => {
 };
 
 const updateDocuments = (assertions) => {
-  const readmeDocumentPath = path.join(__dirname, '../README.md');
+  const readmeDocumentPath = path.join(__dirname, '../../README.md');
 
   let documentBody = fs.readFileSync(readmeDocumentPath, 'utf8');
 

@@ -21,6 +21,7 @@ JSDoc linting rules for ESLint.
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
         * [`no-undefined-types`](#eslint-plugin-jsdoc-rules-no-undefined-types)
+        * [`require-description`](#eslint-plugin-jsdoc-rules-require-description)
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-example`](#eslint-plugin-jsdoc-rules-require-example)
         * [`require-hyphen-before-param-description`](#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description)
@@ -44,6 +45,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
 | [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
+| [`require-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description) | N/A |
 | [`require-description-complete-sentence`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description-complete-sentence) | [`requireDescriptionCompleteSentence`](https://github.com/jscs-dev/jscs-jsdoc#requiredescriptioncompletesentence) |
 | [`require-example`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-example) | N/A |
 | [`require-hyphen-before-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description) | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
@@ -100,6 +102,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/no-undefined-types": 1,
+        "jsdoc/require-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-example": 1,
         "jsdoc/require-hyphen-before-param-description": 1,
@@ -869,6 +872,71 @@ function quux(foo) {
  */
 function quux(foo) {
   
+}
+```
+
+
+<a name="eslint-plugin-jsdoc-rules-require-description"></a>
+### <code>require-description</code>
+
+Requires that all functions have a description.
+
+* All functions must have a `@description` tag.
+* Every description tag must have a non-empty description that explains the purpose of the method.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`class`, `example`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ *
+ */
+function quux () {
+
+}
+// Message: Missing JSDoc @description declaration.
+
+/**
+ * @description
+ */
+function quux () {
+
+}
+// Message: Missing JSDoc @description description.
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @description
+ * // arbitrary description content
+ */
+function quux () {
+
+}
+
+/**
+ * @description
+ * quux(); // does something useful
+ */
+function quux () {
+
+}
+
+/**
+ * @description <caption>Valid usage</caption>
+ * quux(); // does something useful
+ *
+ * @description <caption>Invalid usage</caption>
+ * quux('random unwanted arg'); // results in an error
+ */
+function quux () {
+
 }
 ```
 
