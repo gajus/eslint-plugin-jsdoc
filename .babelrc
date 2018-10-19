@@ -1,11 +1,11 @@
 {
   "plugins": [
-    "transform-flow-strip-types",
+    "@babel/plugin-transform-flow-strip-types",
     "add-module-exports"
   ],
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
         "targets": {
           "node": 4
