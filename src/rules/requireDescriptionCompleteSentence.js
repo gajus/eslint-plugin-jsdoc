@@ -10,7 +10,7 @@ const extractSentences = (text) => {
 
     // Remove all {} tags.
     .replace(/\{[\s\S]*?\}\s*/g, '')
-    .split(/[.?!:](?:\s+|$)/)
+    .split(/[.?!](?:\s+|$)/)
 
     // Ignore sentences with only whitespaces.
     .filter((sentence) => {
