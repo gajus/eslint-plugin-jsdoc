@@ -535,6 +535,16 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * Hello: world.
+           */
+          function quux () {
+
+          }
+      `
     }
   ]
 };
