@@ -1196,6 +1196,13 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * Hello: world.
+ */
+function quux () {
+
+}
 ```
 
 
