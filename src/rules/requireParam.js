@@ -19,6 +19,18 @@ export default iterateJsdoc(({
     return;
   }
 
+  // When settings.jsdoc.allowImplementsWithoutParam is true, implements implies that all documentation is inherited.
+  // See https://github.com/gajus/eslint-plugin-jsdoc/issues/100
+  if (utils.hasTag('implements') && utils.isImplementsAllowedWithoutParam()) {
+    return;
+  }
+
+  // When settings.jsdoc.allowAugmentsExtendsWithoutParam is true, augments or extends implies that all documentation is inherited.
+  // See https://github.com/gajus/eslint-plugin-jsdoc/issues/100
+  if ((utils.hasTag('augments') || utils.hasTag('extends')) && utils.isAugmentsExtendsAllowedWithoutParam()) {
+    return;
+  }
+
   _.some(functionParameterNames, (functionParameterName, index) => {
     const jsdocParameterName = jsdocParameterNames[index];
 

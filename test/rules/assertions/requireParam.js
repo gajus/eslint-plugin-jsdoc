@@ -66,6 +66,51 @@ export default {
           message: 'Missing JSDoc @param "foo" declaration.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @implements
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @augments
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @extends
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        }
+      ]
     }
   ],
   valid: [
@@ -131,6 +176,84 @@ export default {
           allowOverrideWithoutParam: true
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @implements
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          allowImplementsWithoutParam: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @implements
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @augments
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          allowAugmentsExtendsWithoutParam: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @augments
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @extends
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          allowAugmentsExtendsWithoutParam: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @extends
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `
     }
   ]
 };

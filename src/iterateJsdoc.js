@@ -2,7 +2,11 @@ import _ from 'lodash';
 import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 
-const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames, allowOverrideWithoutParam) => {
+const curryUtils = (
+  functionNode, jsdoc, tagNamePreference, additionalTagNames,
+  allowOverrideWithoutParam, allowImplementsWithoutParam,
+  allowAugmentsExtendsWithoutParam
+) => {
   const utils = {};
 
   utils.getFunctionParameterNames = () => {
@@ -33,6 +37,14 @@ const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames, 
     return allowOverrideWithoutParam;
   };
 
+  utils.isImplementsAllowedWithoutParam = () => {
+    return allowImplementsWithoutParam;
+  };
+
+  utils.isAugmentsExtendsAllowedWithoutParam = () => {
+    return allowAugmentsExtendsWithoutParam;
+  };
+
   return utils;
 };
 
@@ -61,6 +73,8 @@ export default (iterator) => {
     const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
     const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
     const allowOverrideWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowOverrideWithoutParam'));
+    const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
+    const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
 
     const checkJsdoc = (functionNode) => {
       const jsdocNode = sourceCode.getJSDocComment(functionNode);
@@ -100,7 +114,11 @@ export default (iterator) => {
         }
       };
 
-      const utils = curryUtils(functionNode, jsdoc, tagNamePreference, additionalTagNames, allowOverrideWithoutParam);
+      const utils = curryUtils(
+        functionNode, jsdoc, tagNamePreference, additionalTagNames,
+        allowOverrideWithoutParam, allowImplementsWithoutParam,
+        allowAugmentsExtendsWithoutParam
+      );
 
       iterator({
         context,
