@@ -11,7 +11,7 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
       return true;
     }
 
-    if (functionParameterName === '<ObjectPattern>') {
+    if (functionParameterName === '<ObjectPattern>' || functionParameterName === '<ArrayPattern>') {
       return false;
     }
 
