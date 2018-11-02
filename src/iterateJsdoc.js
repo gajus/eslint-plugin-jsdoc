@@ -2,10 +2,35 @@ import _ from 'lodash';
 import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 
+const parseComment = (commentNode, indent) => {
+  // Preserve JSDoc block start/end indentation.
+  return commentParser(indent + '/*' + commentNode.value + indent + '*/', {
+    // @see https://github.com/yavorskiy/comment-parser/issues/21
+    parsers: [
+      commentParser.PARSERS.parse_tag,
+      commentParser.PARSERS.parse_type,
+      (str, data) => {
+        if (_.includes(['return', 'returns'], data.tag)) {
+          return null;
+        }
+
+        return commentParser.PARSERS.parse_name(str, data);
+      },
+      commentParser.PARSERS.parse_description
+    ]
+  })[0] || {};
+};
+
 const curryUtils = (
-  functionNode, jsdoc, tagNamePreference, additionalTagNames,
-  allowOverrideWithoutParam, allowImplementsWithoutParam,
-  allowAugmentsExtendsWithoutParam
+  functionNode,
+  jsdoc,
+  tagNamePreference,
+  additionalTagNames,
+  allowOverrideWithoutParam,
+  allowImplementsWithoutParam,
+  allowAugmentsExtendsWithoutParam,
+  ancestors,
+  sourceCode
 ) => {
   const utils = {};
 
@@ -45,26 +70,28 @@ const curryUtils = (
     return allowAugmentsExtendsWithoutParam;
   };
 
+  utils.classHasTag = (tagName) => {
+    const greatGrandParent = ancestors.slice(-3)[0];
+    const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;
+
+    if (greatGrandParentValue === 'class') {
+      const classJsdocNode = sourceCode.getJSDocComment(greatGrandParent);
+      const indent = _.repeat(' ', classJsdocNode.loc.start.column);
+      const classJsdoc = parseComment(classJsdocNode, indent);
+
+      if (jsdocUtils.hasTag(classJsdoc, tagName)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   return utils;
 };
 
-export const parseComment = (commentNode, indent) => {
-  // Preserve JSDoc block start/end indentation.
-  return commentParser(indent + '/*' + commentNode.value + indent + '*/', {
-    // @see https://github.com/yavorskiy/comment-parser/issues/21
-    parsers: [
-      commentParser.PARSERS.parse_tag,
-      commentParser.PARSERS.parse_type,
-      (str, data) => {
-        if (_.includes(['return', 'returns'], data.tag)) {
-          return null;
-        }
-
-        return commentParser.PARSERS.parse_name(str, data);
-      },
-      commentParser.PARSERS.parse_description
-    ]
-  })[0] || {};
+export {
+  parseComment
 };
 
 export default (iterator) => {
@@ -82,6 +109,8 @@ export default (iterator) => {
       if (!jsdocNode) {
         return;
       }
+
+      const ancestors = context.getAncestors();
 
       const indent = _.repeat(' ', jsdocNode.loc.start.column);
 
@@ -115,9 +144,15 @@ export default (iterator) => {
       };
 
       const utils = curryUtils(
-        functionNode, jsdoc, tagNamePreference, additionalTagNames,
-        allowOverrideWithoutParam, allowImplementsWithoutParam,
-        allowAugmentsExtendsWithoutParam
+        functionNode,
+        jsdoc,
+        tagNamePreference,
+        additionalTagNames,
+        allowOverrideWithoutParam,
+        allowImplementsWithoutParam,
+        allowAugmentsExtendsWithoutParam,
+        ancestors,
+        sourceCode
       );
 
       iterator({
