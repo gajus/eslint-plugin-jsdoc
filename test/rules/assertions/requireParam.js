@@ -113,6 +113,86 @@ export default {
           message: 'Missing JSDoc @param "foo" declaration.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @override
+           */
+          class A {
+            /**
+              *
+              */
+            quux (foo) {
+
+            }
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @implements
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @augments
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @extends
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        }
+      ]
     }
   ],
   valid: [
@@ -254,6 +334,146 @@ export default {
            */
           function quux (foo) {
 
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @override
+           */
+          class A {
+            /**
+            * @param foo
+            */
+            quux (foo) {
+
+            }
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @override
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      settings: {
+        jsdoc: {
+          allowOverrideWithoutParam: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @implements
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      settings: {
+        jsdoc: {
+          allowImplementsWithoutParam: true
+        }
+      }
+    },
+    {
+      code: `
+        /**
+         * @implements
+         */
+        class A {
+          /**
+           * @param foo
+           */
+          quux (foo) {
+
+          }
+        }
+      `
+    },
+    {
+      code: `
+          /**
+           * @augments
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      settings: {
+        jsdoc: {
+          allowAugmentsExtendsWithoutParam: true
+        }
+      }
+    },
+    {
+      code: `
+        /**
+         * @augments
+         */
+        class A {
+          /**
+           * @param foo
+           */
+          quux (foo) {
+
+          }
+        }
+      `
+    },
+    {
+      code: `
+          /**
+           * @extends
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      settings: {
+        jsdoc: {
+          allowAugmentsExtendsWithoutParam: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @extends
+           */
+          class A {
+            /**
+             * @param foo
+             */
+            quux (foo) {
+
+            }
           }
       `
     }

@@ -1350,6 +1350,82 @@ function quux (foo) {
 
 }
 // Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @implements
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @augments
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @extends
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @override
+ */
+class A {
+  /**
+    *
+    */
+  quux (foo) {
+
+  }
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @implements
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @augments
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @extends
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Message: Missing JSDoc @param "foo" declaration.
 ```
 
 The following patterns are not considered problems:
@@ -1392,6 +1468,154 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
+
+/**
+ * @implements
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"allowImplementsWithoutParam":true}}
+
+/**
+ * @implements
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @augments
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+
+/**
+ * @augments
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @extends
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+
+/**
+ * @extends
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @override
+ */
+class A {
+  /**
+  * @param foo
+  */
+  quux (foo) {
+
+  }
+}
+
+/**
+ * @override
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
+
+/**
+ * @implements
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"allowImplementsWithoutParam":true}}
+
+/**
+ * @implements
+ */
+class A {
+  /**
+   * @param foo
+   */
+  quux (foo) {
+
+  }
+}
+
+/**
+ * @augments
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+
+/**
+ * @augments
+ */
+class A {
+  /**
+   * @param foo
+   */
+  quux (foo) {
+
+  }
+}
+
+/**
+ * @extends
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+
+/**
+ * @extends
+ */
+class A {
+  /**
+   * @param foo
+   */
+  quux (foo) {
+
+  }
+}
 ```
 
 
