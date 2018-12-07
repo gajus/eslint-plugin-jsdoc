@@ -56,23 +56,5 @@ export default {
     'require-returns-description': requireReturnsDescription,
     'require-returns-type': requireReturnsType,
     'valid-types': validTypes
-  },
-  rulesConfig: {
-    'check-param-names': 'off',
-    'check-tag-names': 'off',
-    'check-types': 'off',
-    'newline-after-description': 'off',
-    'no-undefined-types': 'off',
-    'require-description': 'off',
-    'require-description-complete-sentence': 'off',
-    'require-example': 'off',
-    'require-hyphen-before-param-description': 'off',
-    'require-param': 'off',
-    'require-param-description': 'off',
-    'require-param-name': 'off',
-    'require-param-type': 'off',
-    'require-returns-description': 'off',
-    'require-returns-type': 'off',
-    'valid-types': 'off'
   }
 };
