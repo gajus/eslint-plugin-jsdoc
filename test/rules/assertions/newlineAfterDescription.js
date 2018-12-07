@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-
 export default {
   invalid: [
     {
@@ -27,7 +25,7 @@ export default {
            * Foo.
            *
            * Foo.
-           * 
+           *
            * @foo
            */
           function quux () {

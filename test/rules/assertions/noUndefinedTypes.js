@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-
 export default {
   invalid: [
     {
@@ -106,7 +104,7 @@ export default {
          * @param {hello} foo
          */
         function quux(foo) {
-          
+
         }
       `
     },
@@ -116,10 +114,9 @@ export default {
          * @param {Array<syntaxError} foo
          */
         function quux(foo) {
-          
+
         }
       `
     }
   ]
 };
-

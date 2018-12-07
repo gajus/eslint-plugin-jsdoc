@@ -1,3 +1,6 @@
 {
-  "extends": "canonical/mocha"
+  "extends": "canonical/mocha",
+  "rules": {
+    "no-restricted-syntax": 0
+  }
 }

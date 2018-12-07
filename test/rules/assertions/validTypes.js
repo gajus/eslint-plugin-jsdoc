@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-
 export default {
   invalid: [
     {
@@ -46,7 +44,7 @@ export default {
            * @param foo
            */
           function quux() {
-            
+
           }
       `
     }

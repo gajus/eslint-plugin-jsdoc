@@ -1,9 +1,6 @@
-/* eslint-disable no-restricted-syntax */
+import JSDOC_THREE_TAGS from './jsdoc3Tags';
 
-import JSDOC_3_TAGS from './jsdoc3Tags';
-
-// eslint-disable-next-line id-match
-const ALL_JSDOC_TAGS_COMMENT = '/** \n * @' + JSDOC_3_TAGS.join('\n * @') + '\n */';
+const ALL_JSDOC_TAGS_COMMENT = '/** \n * @' + JSDOC_THREE_TAGS.join('\n * @') + '\n */';
 
 export default {
   invalid: [
