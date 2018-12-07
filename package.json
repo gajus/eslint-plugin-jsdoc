@@ -60,5 +60,5 @@
     "lint": "eslint ./src ./test",
     "test": "mocha --recursive --compilers js:@babel/register"
   },
-  "version": "2.4.0"
+  "version": "1.0.0"
 }
