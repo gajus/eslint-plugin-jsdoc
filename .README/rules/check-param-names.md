@@ -25,4 +25,6 @@ function quux ({
 }
 ```
 
-`{a, b}` is an [`ObjectPattern`](https://github.com/estree/estree/blob/master/es6.md#objectpattern) AST type and does not have a name. Therefore, the associated parameter in JSDoc block can have any name.
+`{a, b}` is an [`ObjectPattern`](https://github.com/estree/estree/blob/master/es2015.md#objectpattern) AST type and does not have a name. Therefore, the associated parameter in JSDoc block can have any name.
+
+Likewise for the pattern `[a, b]` which is an [`ArrayPattern`](https://github.com/estree/estree/blob/master/es2015.md#arraypattern).
