@@ -864,14 +864,14 @@ import {MyType} from 'my-library';
  * @param {hello} foo
  */
 function quux(foo) {
-  
+
 }
 
 /**
  * @param {Array<syntaxError} foo
  */
 function quux(foo) {
-  
+
 }
 ```
 
@@ -1059,11 +1059,11 @@ function quux (foo) {
 // Message: Sentence should start with an uppercase character.
 
 /**
- * lorem ipsum dolor sit amet, consectetur adipiscing elit. pellentesque elit diam, 
+ * lorem ipsum dolor sit amet, consectetur adipiscing elit. pellentesque elit diam,
  * iaculis eu dignissim sed, ultrices sed nisi. nulla at ligula auctor, consectetur neque sed,
  * tincidunt nibh. vivamus sit amet vulputate ligula. vivamus interdum elementum nisl,
  * vitae rutrum tortor semper ut. morbi porta ante vitae dictum fermentum.
- * proin ut nulla at quam convallis gravida in id elit. sed dolor mauris, blandit quis ante at, 
+ * proin ut nulla at quam convallis gravida in id elit. sed dolor mauris, blandit quis ante at,
  * consequat auctor magna. duis pharetra purus in porttitor mollis.
  */
 function longDescription (foo) {
@@ -1097,7 +1097,7 @@ function quux (foo) {
 
 /**
  * Returns bar.
- * 
+ *
  * @return {number} bar
  */
 function quux (foo) {
@@ -1178,9 +1178,9 @@ function quux () {
 
 /**
  * Foo?
- * 
+ *
  * Bar!
- * 
+ *
  * Baz:
  *   1. Foo.
  *   2. Bar.
@@ -1192,6 +1192,13 @@ function quux () {
 /**
  * Hello:
  * World.
+ */
+function quux () {
+
+}
+
+/**
+ * Hello: world.
  */
 function quux () {
 
@@ -1685,7 +1692,7 @@ function quux() {
  * @param foo
  */
 function quux() {
-  
+
 }
 ```
 
