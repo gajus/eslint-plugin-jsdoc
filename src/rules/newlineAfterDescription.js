@@ -35,7 +35,7 @@ export default iterateJsdoc(({
         });
 
         // Add the new line
-        sourceLines.splice(lastDescriptionLine + 1, 0, indent + ' * ');
+        sourceLines.splice(lastDescriptionLine + 1, 0, indent + ' *');
 
         return fixer.replaceText(jsdocNode, sourceLines.join('\n'));
       });
