@@ -2,7 +2,36 @@ import _ from 'lodash';
 import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 
-const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames, allowOverrideWithoutParam) => {
+const parseComment = (commentNode, indent) => {
+  // Preserve JSDoc block start/end indentation.
+  return commentParser(indent + '/*' + commentNode.value + indent + '*/', {
+    // @see https://github.com/yavorskiy/comment-parser/issues/21
+    parsers: [
+      commentParser.PARSERS.parse_tag,
+      commentParser.PARSERS.parse_type,
+      (str, data) => {
+        if (_.includes(['return', 'returns'], data.tag)) {
+          return null;
+        }
+
+        return commentParser.PARSERS.parse_name(str, data);
+      },
+      commentParser.PARSERS.parse_description
+    ]
+  })[0] || {};
+};
+
+const curryUtils = (
+  functionNode,
+  jsdoc,
+  tagNamePreference,
+  additionalTagNames,
+  allowOverrideWithoutParam,
+  allowImplementsWithoutParam,
+  allowAugmentsExtendsWithoutParam,
+  ancestors,
+  sourceCode
+) => {
   const utils = {};
 
   utils.getFunctionParameterNames = () => {
@@ -33,26 +62,36 @@ const curryUtils = (functionNode, jsdoc, tagNamePreference, additionalTagNames, 
     return allowOverrideWithoutParam;
   };
 
+  utils.isImplementsAllowedWithoutParam = () => {
+    return allowImplementsWithoutParam;
+  };
+
+  utils.isAugmentsExtendsAllowedWithoutParam = () => {
+    return allowAugmentsExtendsWithoutParam;
+  };
+
+  utils.classHasTag = (tagName) => {
+    const greatGrandParent = ancestors.slice(-3)[0];
+    const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;
+
+    if (greatGrandParentValue === 'class') {
+      const classJsdocNode = sourceCode.getJSDocComment(greatGrandParent);
+      const indent = _.repeat(' ', classJsdocNode.loc.start.column);
+      const classJsdoc = parseComment(classJsdocNode, indent);
+
+      if (jsdocUtils.hasTag(classJsdoc, tagName)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   return utils;
 };
 
-export const parseComment = (commentNode, indent) => {
-  // Preserve JSDoc block start/end indentation.
-  return commentParser(indent + '/*' + commentNode.value + indent + '*/', {
-    // @see https://github.com/yavorskiy/comment-parser/issues/21
-    parsers: [
-      commentParser.PARSERS.parse_tag,
-      commentParser.PARSERS.parse_type,
-      (str, data) => {
-        if (_.includes(['return', 'returns'], data.tag)) {
-          return null;
-        }
-
-        return commentParser.PARSERS.parse_name(str, data);
-      },
-      commentParser.PARSERS.parse_description
-    ]
-  })[0] || {};
+export {
+  parseComment
 };
 
 export default (iterator) => {
@@ -61,6 +100,8 @@ export default (iterator) => {
     const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
     const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
     const allowOverrideWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowOverrideWithoutParam'));
+    const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
+    const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
 
     const checkJsdoc = (functionNode) => {
       const jsdocNode = sourceCode.getJSDocComment(functionNode);
@@ -68,6 +109,8 @@ export default (iterator) => {
       if (!jsdocNode) {
         return;
       }
+
+      const ancestors = context.getAncestors();
 
       const indent = _.repeat(' ', jsdocNode.loc.start.column);
 
@@ -100,7 +143,17 @@ export default (iterator) => {
         }
       };
 
-      const utils = curryUtils(functionNode, jsdoc, tagNamePreference, additionalTagNames, allowOverrideWithoutParam);
+      const utils = curryUtils(
+        functionNode,
+        jsdoc,
+        tagNamePreference,
+        additionalTagNames,
+        allowOverrideWithoutParam,
+        allowImplementsWithoutParam,
+        allowAugmentsExtendsWithoutParam,
+        ancestors,
+        sourceCode
+      );
 
       iterator({
         context,
