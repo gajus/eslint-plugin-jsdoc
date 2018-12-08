@@ -195,9 +195,16 @@ syntax highlighting). The following settings determine whether a given
 `@example` tag will have the `check-examples` checks applied to it:
 
 * `settings.jsdoc.exampleCodeRegex` - Regex which whitelists lintable
-  examples
+  examples. If a parenthetical group is used, the first one will be used,
+  so you may wish to use `(?:...)` groups where you do not wish the
+  first such group treated as one to include. If no parenthetical group
+  exists or matches, the whole matching expression will be used.
+  An example might be ````"^```(?:js|javascript)([\\s\\S]*)```$"````
+  to only match explicitly fenced JavaScript blocks.
 * `settings.jsdoc.rejectExampleCodeRegex` - Regex blacklist which rejects
-  non-lintable examples (has priority over `exampleCodeRegex`)
+  non-lintable examples (has priority over `exampleCodeRegex`). An example
+  might be ```"^`"``` to avoid linting fenced blocks which may indicate
+  a non-JavaScript language.
 
 If neither is in use, all examples will be matched. Note also that even if
 `settings.jsdoc.captionRequired` is not set, any initial `<caption>`
