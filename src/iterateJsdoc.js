@@ -76,6 +76,7 @@ const curryUtils = (
 
     if (greatGrandParentValue === 'class') {
       const classJsdocNode = sourceCode.getJSDocComment(greatGrandParent);
+      
       if (classJsdocNode) {
         const indent = _.repeat(' ', classJsdocNode.loc.start.column);
         const classJsdoc = parseComment(classJsdocNode, indent);
