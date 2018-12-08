@@ -7,6 +7,7 @@ import config from '../../src';
 const ruleTester = new RuleTester();
 
 _.forEach([
+  'check-examples',
   'check-param-names',
   'check-tag-names',
   'check-types',
