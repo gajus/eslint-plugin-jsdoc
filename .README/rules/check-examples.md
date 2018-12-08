@@ -7,11 +7,13 @@ Works in conjunction with the following settings:
 * `captionRequired`
 * `exampleCodeRegex`
 * `rejectExampleCodeRegex`
+* `allowInlineConfig` - Defaults to `true`
 * `noDefaultExampleRules`
 * `matchingFileName`
 * `configFile`
 * `eslintrcForExamples` - Defaults to `true`
 * `baseConfig`
+* `reportUnusedDisableDirectives` - Defaults to `true`
 
 Inline ESLint config within `@example` JavaScript is allowed, though the
 disabling of ESLint directives which are not needed by the resolved rules

@@ -158,7 +158,7 @@ The format of the configuration is as follows:
 ### Settings to Configure `check-examples`
 
 The settings below all impact the `check-examples` rule and default to
-no-op/false except for `eslintrcForExamples` which defaults to `true`.
+no-op/false except as noted.
 
 JSDoc specs use of an optional `<caption>` element at the beginning of
 `@example`. The following setting requires its use.
@@ -192,6 +192,9 @@ applied to the JavaScript found within the `@example` tags (as determined
 to be applicable by the above regex settings). They are ordered by
 decreasing precedence:
 
+* `settings.jsdoc.allowInlineConfig` - If not set to `false`, will allow
+  inline config within the `@example` to override other config. Defaults
+  to `true`.
 * `settings.jsdoc.noDefaultExampleRules` - Setting to `true` will disable the
   default rules which are expected to be troublesome for most documentation
   use. See the section below for the specific default rules.
@@ -204,12 +207,19 @@ decreasing precedence:
   [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
   if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
   follow one's Markdown rules).
-* `settings.jsdoc.configFile` - A config file. Corresponds to `-c`.
+* `settings.jsdoc.configFile` - A config file. Corresponds to ESLint's `-c`.
 * `settings.jsdoc.eslintrcForExamples` - Defaults to `true` in adding rules
   based on an `.eslintrc.*` file. Setting to `false` corresponds to
-  `--no-eslintrc`.
+  ESLint's `--no-eslintrc`.
 * `settings.jsdoc.baseConfig` - An object of rules with the same schema
   as `.eslintrc.*` for defaults
+
+Finally, the following rule pertains to inline disable directives:
+
+- `settings.jsdoc.reportUnusedDisableDirectives` - If not set to `false`,
+  this will report disabled directives which are not used (and thus not
+  needed). Defaults to `true`. Corresponds to ESLint's
+  `--report-unused-disable-directives`.
 
 #### Rules Disabled by Default Unless `noDefaultExampleRules` is Set to `true`
 

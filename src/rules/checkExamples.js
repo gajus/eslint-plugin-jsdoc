@@ -26,10 +26,10 @@ export default iterateJsdoc(({
   const filename = utils.getMatchingFileName();
   const baseConfig = utils.getBaseConfig();
   const configFile = utils.getConfigFile();
+  const allowInlineConfig = utils.allowInlineConfig();
+  const reportUnusedDisableDirectives = utils.reportUnusedDisableDirectives();
 
-  // Make these configurable?
-  const reportUnusedDisableDirectives = true;
-  const allowInlineConfig = true;
+  // Make this configurable?
   const rulePaths = [];
 
   const rules = noDefaultExampleRules ? undefined : {

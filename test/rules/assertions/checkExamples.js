@@ -137,7 +137,6 @@ export default {
         }
       }
     },
-
     {
       code: `
           /**
@@ -207,6 +206,44 @@ export default {
           },
           eslintrcForExamples: false,
           noDefaultExampleRules: false
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @example test() // eslint-disable-line semi
+       */
+      function quux () {}
+`,
+      errors: ['@example error: Unused eslint-disable directive (no problems were reported from \'semi\').'],
+      settings: {
+        jsdoc: {
+          eslintrcForExamples: false,
+          noDefaultExampleRules: true,
+          reportUnusedDisableDirectives: true
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @example
+       test() // eslint-disable-line semi
+       */
+      function quux () {}
+`,
+      errors: ['@example error (semi): Missing semicolon.'],
+      settings: {
+        jsdoc: {
+          allowInlineConfig: false,
+          baseConfig: {
+            rules: {
+              semi: ['error', 'always']
+            }
+          },
+          eslintrcForExamples: false,
+          noDefaultExampleRules: true
         }
       }
     }
@@ -311,6 +348,42 @@ export default {
         jsdoc: {
           captionRequired: true,
           eslintrcForExamples: false
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @example test() // eslint-disable-line semi
+       */
+      function quux () {}
+`,
+      settings: {
+        jsdoc: {
+          eslintrcForExamples: false,
+          noDefaultExampleRules: true,
+          reportUnusedDisableDirectives: false
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @example
+       test() // eslint-disable-line semi
+       */
+      function quux () {}
+`,
+      settings: {
+        jsdoc: {
+          allowInlineConfig: true,
+          baseConfig: {
+            rules: {
+              semi: ['error', 'always']
+            }
+          },
+          eslintrcForExamples: false,
+          noDefaultExampleRules: true
         }
       }
     }
