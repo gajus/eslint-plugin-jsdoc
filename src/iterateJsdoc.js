@@ -76,11 +76,13 @@ const curryUtils = (
 
     if (greatGrandParentValue === 'class') {
       const classJsdocNode = sourceCode.getJSDocComment(greatGrandParent);
-      const indent = _.repeat(' ', classJsdocNode.loc.start.column);
-      const classJsdoc = parseComment(classJsdocNode, indent);
+      if (classJsdocNode) {
+        const indent = _.repeat(' ', classJsdocNode.loc.start.column);
+        const classJsdoc = parseComment(classJsdocNode, indent);
 
-      if (jsdocUtils.hasTag(classJsdoc, tagName)) {
-        return true;
+        if (jsdocUtils.hasTag(classJsdoc, tagName)) {
+          return true;
+        }
       }
     }
 
