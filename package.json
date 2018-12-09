@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "comment-parser": "^0.5.0",
+    "comment-parser": "^0.5.1",
     "jsdoctypeparser": "^2.0.0-alpha-8",
     "lodash": "^4.17.11"
   },
