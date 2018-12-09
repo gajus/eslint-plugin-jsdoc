@@ -14,6 +14,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 
 | `eslint-plugin-jsdoc` | `jscs-jsdoc` |
 | --- | --- |
+| [`check-examples`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-examples) | N/A |
 | [`check-param-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names) | [`checkParamNames`](https://github.com/jscs-dev/jscs-jsdoc#checkparamnames) |
 | [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
 | [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
@@ -68,6 +69,7 @@ Finally, enable all of the rules that you would like to use.
 ```json
 {
     "rules": {
+        "jsdoc/check-examples": 1,
         "jsdoc/check-param-names": 1,
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
@@ -107,7 +109,6 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
     }
 }
 ```
-
 
 ### Additional Tag Names
 
@@ -154,8 +155,83 @@ The format of the configuration is as follows:
 }
 ```
 
+### Settings to Configure `check-examples`
+
+The settings below all impact the `check-examples` rule and default to
+no-op/false except for `eslintrcForExamples` which defaults to `true`.
+
+JSDoc specs use of an optional `<caption>` element at the beginning of
+`@example`. The following setting requires its use.
+
+* `settings.jsdoc.captionRequired` - Require `<caption>` at beginning
+  of any `@example`
+
+JSDoc does not specify a formal means for delimiting code blocks within
+`@example` (it uses generic syntax highlighting techniques for its own
+syntax highlighting). The following settings determine whether a given
+`@example` tag will have the `check-examples` checks applied to it:
+
+* `settings.jsdoc.exampleCodeRegex` - Regex which whitelists lintable
+  examples. If a parenthetical group is used, the first one will be used,
+  so you may wish to use `(?:...)` groups where you do not wish the
+  first such group treated as one to include. If no parenthetical group
+  exists or matches, the whole matching expression will be used.
+  An example might be ````"^```(?:js|javascript)([\\s\\S]*)```$"````
+  to only match explicitly fenced JavaScript blocks.
+* `settings.jsdoc.rejectExampleCodeRegex` - Regex blacklist which rejects
+  non-lintable examples (has priority over `exampleCodeRegex`). An example
+  might be ```"^`"``` to avoid linting fenced blocks which may indicate
+  a non-JavaScript language.
+
+If neither is in use, all examples will be matched. Note also that even if
+`settings.jsdoc.captionRequired` is not set, any initial `<caption>`
+will be stripped out before doing the regex matching.
+
+The following settings determine which individual ESLint rules will be
+applied to the JavaScript found within the `@example` tags (as determined
+to be applicable by the above regex settings). They are ordered by
+decreasing precedence:
+
+* `settings.jsdoc.noDefaultExampleRules` - Setting to `true` will disable the
+  default rules which are expected to be troublesome for most documentation
+  use. See the section below for the specific default rules.
+* `settings.jsdoc.matchingFileName` - Setting for a dummy file name to trigger
+  specific rules defined in one's config; usable with ESLint `.eslintrc.*`
+  `overrides` -> `files` globs, to apply a desired subset of rules with
+  `@example` (besides allowing for rules specific to examples, this setting
+  can be useful for enabling reuse of the same rules within `@example` as
+  with JavaScript Markdown lintable by
+  [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
+  if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
+  follow one's Markdown rules).
+* `settings.jsdoc.configFile` - A config file. Corresponds to `-c`.
+* `settings.jsdoc.eslintrcForExamples` - Defaults to `true` in adding rules
+  based on an `.eslintrc.*` file. Setting to `false` corresponds to
+  `--no-eslintrc`.
+* `settings.jsdoc.baseConfig` - An object of rules with the same schema
+  as `.eslintrc.*` for defaults
+
+#### Rules Disabled by Default Unless `noDefaultExampleRules` is Set to `true`
+
+* `eol-last` - Insisting that a newline "always" be at the end is less likely
+  to be desired in sample code as with the code file convention
+* `no-console` - Unlikely to have inadvertent temporary debugging within
+  examples
+* `no-undef` - Many variables in examples will be `undefined`.
+* `no-unused-vars` - It is common to define variables for clarity without always
+  using them within examples.
+* `padded-blocks` - It can generally look nicer to pad a little even if one's
+  code follows more stringency as far as block padding.
+* `import/no-unresolved` - One wouldn't generally expect example paths to
+  resolve relative to the current JavaScript file as one would with real code.
+* `import/unambiguous` - Snippets in examples are likely too short to always
+  include full import/export info
+* `node/no-missing-import` - See `import/no-unresolved`
+* `node/no-missing-require` -  See `import/no-unresolved`
+
 ## Rules
 
+{"gitdown": "include", "file": "./rules/check-examples.md"}
 {"gitdown": "include", "file": "./rules/check-param-names.md"}
 {"gitdown": "include", "file": "./rules/check-tag-names.md"}
 {"gitdown": "include", "file": "./rules/check-types.md"}

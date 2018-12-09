@@ -25,7 +25,15 @@ const curryUtils = (
   functionNode,
   jsdoc,
   tagNamePreference,
+  exampleCodeRegex,
+  rejectExampleCodeRegex,
   additionalTagNames,
+  baseConfig,
+  configFile,
+  captionRequired,
+  matchingFileName,
+  eslintrcForExamples,
+  noDefaultExampleRules,
   allowOverrideWithoutParam,
   allowImplementsWithoutParam,
   allowAugmentsExtendsWithoutParam,
@@ -50,12 +58,44 @@ const curryUtils = (
     return jsdocUtils.getPreferredTagName(name, tagNamePreference);
   };
 
+  utils.getExampleCodeRegex = () => {
+    return exampleCodeRegex;
+  };
+
+  utils.getRejectExampleCodeRegex = () => {
+    return rejectExampleCodeRegex;
+  };
+
+  utils.getMatchingFileName = () => {
+    return matchingFileName;
+  };
+
   utils.isValidTag = (name) => {
     return jsdocUtils.isValidTag(name, additionalTagNames);
   };
 
   utils.hasTag = (name) => {
     return jsdocUtils.hasTag(jsdoc, name);
+  };
+
+  utils.useEslintrcForExamples = () => {
+    return eslintrcForExamples;
+  };
+
+  utils.hasNoDefaultExampleRules = () => {
+    return noDefaultExampleRules;
+  };
+
+  utils.getBaseConfig = () => {
+    return baseConfig;
+  };
+
+  utils.getConfigFile = () => {
+    return configFile;
+  };
+
+  utils.isCaptionRequired = () => {
+    return captionRequired;
   };
 
   utils.isOverrideAllowedWithoutParam = () => {
@@ -101,7 +141,15 @@ export default (iterator) => {
   return (context) => {
     const sourceCode = context.getSourceCode();
     const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
+    const exampleCodeRegex = _.get(context, 'settings.jsdoc.exampleCodeRegex') || null;
+    const rejectExampleCodeRegex = _.get(context, 'settings.jsdoc.rejectExampleCodeRegex') || null;
+    const matchingFileName = _.get(context, 'settings.jsdoc.matchingFileName') || null;
     const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
+    const baseConfig = _.get(context, 'settings.jsdoc.baseConfig') || {};
+    const configFile = _.get(context, 'settings.jsdoc.configFile');
+    const eslintrcForExamples = _.get(context, 'settings.jsdoc.eslintrcForExamples') !== false;
+    const captionRequired = Boolean(_.get(context, 'settings.jsdoc.captionRequired'));
+    const noDefaultExampleRules = Boolean(_.get(context, 'settings.jsdoc.noDefaultExampleRules'));
     const allowOverrideWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowOverrideWithoutParam'));
     const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
     const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
@@ -119,16 +167,22 @@ export default (iterator) => {
 
       const jsdoc = parseComment(jsdocNode, indent);
 
-      const report = (message, fixer = null, jsdocLine = null) => {
+      const report = (message, fixer = null, jsdocLoc = null) => {
         let loc;
 
-        if (jsdocLine) {
-          const lineNumber = jsdocNode.loc.start.line + jsdocLine.line;
+        if (jsdocLoc) {
+          const lineNumber = jsdocNode.loc.start.line + jsdocLoc.line;
 
           loc = {
             end: {line: lineNumber},
             start: {line: lineNumber}
           };
+          if (jsdocLoc.column) {
+            const colNumber = jsdocNode.loc.start.column + jsdocLoc.column;
+
+            loc.end.column = colNumber;
+            loc.start.column = colNumber;
+          }
         }
         if (fixer === null) {
           context.report({
@@ -150,7 +204,15 @@ export default (iterator) => {
         functionNode,
         jsdoc,
         tagNamePreference,
+        exampleCodeRegex,
+        rejectExampleCodeRegex,
         additionalTagNames,
+        baseConfig,
+        configFile,
+        captionRequired,
+        matchingFileName,
+        eslintrcForExamples,
+        noDefaultExampleRules,
         allowOverrideWithoutParam,
         allowImplementsWithoutParam,
         allowAugmentsExtendsWithoutParam,
