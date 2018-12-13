@@ -309,8 +309,8 @@ function quux () {
 
 /**
  * @example ```js
- alert('hello');
- ```
+    alert('hello');
+    ```
  */
 function quux () {
 
@@ -391,8 +391,8 @@ The following patterns are not considered problems:
 ```js
 /**
  * @example ```js
- alert('hello');
- ```
+    alert('hello');
+    ```
  */
 function quux () {
 
