@@ -7,33 +7,32 @@
 JSDoc linting rules for ESLint.
 
 * [eslint-plugin-jsdoc](#eslint-plugin-jsdoc)
-    * [Reference to jscs-jsdoc](#eslint-plugin-jsdoc-reference-to-jscs-jsdoc)
-    * [Installation](#eslint-plugin-jsdoc-installation)
-    * [Configuration](#eslint-plugin-jsdoc-configuration)
-    * [Settings](#eslint-plugin-jsdoc-settings)
-        * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
-        * [Additional Tag Names](#eslint-plugin-jsdoc-settings-additional-tag-names)
-        * [Allow `@override` Without Accompanying `@param` Tags](#eslint-plugin-jsdoc-settings-allow-override-without-accompanying-param-tags)
-        * [Settings to Configure `check-examples`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-examples)
-    * [Rules](#eslint-plugin-jsdoc-rules)
-        * [`check-examples`](#eslint-plugin-jsdoc-rules-check-examples)
-        * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
-        * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
-        * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
-        * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
-        * [`no-undefined-types`](#eslint-plugin-jsdoc-rules-no-undefined-types)
-        * [`require-description`](#eslint-plugin-jsdoc-rules-require-description)
-        * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
-        * [`require-example`](#eslint-plugin-jsdoc-rules-require-example)
-        * [`require-hyphen-before-param-description`](#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description)
-        * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
-        * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
-        * [`require-param-name`](#eslint-plugin-jsdoc-rules-require-param-name)
-        * [`require-param-type`](#eslint-plugin-jsdoc-rules-require-param-type)
-        * [`require-returns-description`](#eslint-plugin-jsdoc-rules-require-returns-description)
-        * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
-        * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
-
+    * [Reference to jscs-jsdoc](#reference-to-jscs-jsdoc)
+    * [Installation](#installation)
+    * [Configuration](#configuration)
+    * [Settings](#settings)
+        * [Alias Preference](#alias-preference)
+        * [Additional Tag Names](#additional-tag-names)
+        * [Allow `@override` Without Accompanying `@param` Tags](#allow-override-without-accompanying-param-tags)
+        * [Settings to Configure `check-examples`](#settings-to-configure-check-examples)
+    * [Rules](#rules)
+        * [`check-examples`](#check-examples)
+        * [`check-param-names`](#check-param-names)
+        * [`check-tag-names`](#check-tag-names)
+        * [`check-types`](#check-types)
+        * [`newline-after-description`](#newline-after-description)
+        * [`no-undefined-types`](#no-undefined-types)
+        * [`require-description`](#require-description)
+        * [`require-description-complete-sentence`](#require-description-complete-sentence)
+        * [`require-example`](#require-example)
+        * [`require-hyphen-before-param-description`](#require-hyphen-before-param-description)
+        * [`require-param`](#require-param)
+        * [`require-param-description`](#require-param-description)
+        * [`require-param-name`](#require-param-name)
+        * [`require-param-type`](#require-param-type)
+        * [`require-returns-description`](#require-returns-description)
+        * [`require-returns-type`](#require-returns-type)
+        * [`valid-types`](#valid-types)
 
 
 ### Reference to jscs-jsdoc
@@ -66,7 +65,6 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | N/A | [`enforceExistence`](https://github.com/jscs-dev/jscs-jsdoc#enforceexistence) |
 | N/A | [`leadingUnderscoreAccess`](https://github.com/jscs-dev/jscs-jsdoc#leadingunderscoreaccess) |
 
-
 ## Installation
 
 Install [ESLint](https://www.github.com/eslint/eslint) either locally or globally.
@@ -80,7 +78,6 @@ If you have installed `ESLint` globally, you have to install JSDoc plugin global
 ```sh
 npm install eslint-plugin-jsdoc
 ```
-
 
 ## Configuration
 
@@ -120,9 +117,7 @@ Finally, enable all of the rules that you would like to use.
 }
 ```
 
-
 ## Settings
-
 
 ### Alias Preference
 
@@ -142,7 +137,6 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
-
 ### Additional Tag Names
 
 Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc tags. The format of the configuration is as follows:
@@ -159,7 +153,6 @@ Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc t
     }
 }
 ```
-
 
 ### Allow `@override` Without Accompanying `@param` Tags
 
@@ -188,7 +181,6 @@ The format of the configuration is as follows:
     }
 }
 ```
-
 
 ### Settings to Configure `check-examples`
 
@@ -246,7 +238,6 @@ decreasing precedence:
 * `settings.jsdoc.baseConfig` - An object of rules with the same schema
   as `.eslintrc.*` for defaults
 
-
 #### Rules Disabled by Default Unless `noDefaultExampleRules` is Set to `true`
 
 * `eol-last` - Insisting that a newline "always" be at the end is less likely
@@ -265,9 +256,7 @@ decreasing precedence:
 * `node/no-missing-import` - See `import/no-unresolved`
 * `node/no-missing-require` -  See `import/no-unresolved`
 
-
 ## Rules
-
 
 ### `check-examples`
 
@@ -437,8 +426,6 @@ function quux () {
 // Settings: {"jsdoc":{"captionRequired":true,"eslintrcForExamples":false}}
 ```
 
-
-
 ### `check-param-names`
 
 Ensures that parameter names in JSDoc match those in the function declaration.
@@ -585,7 +572,6 @@ function quux ([a, b] = []) {
 ```
 
 
-
 #### Deconstructing Function Parameter
 
 `eslint-plugin-jsdoc` does not validate names of parameters in function deconstruction, e.g.
@@ -605,7 +591,6 @@ function quux ({
 `{a, b}` is an [`ObjectPattern`](https://github.com/estree/estree/blob/master/es2015.md#objectpattern) AST type and does not have a name. Therefore, the associated parameter in JSDoc block can have any name.
 
 Likewise for the pattern `[a, b]` which is an [`ArrayPattern`](https://github.com/estree/estree/blob/master/es2015.md#arraypattern).
-
 
 ### `check-tag-names`
 
@@ -849,7 +834,6 @@ function quux (foo) {}
 ```
 
 
-
 ### `check-types`
 
 Reports invalid types.
@@ -865,7 +849,6 @@ Array
 Date
 RegExp
 ```
-
 
 #### Why not capital case everything?
 
@@ -968,7 +951,6 @@ function quux (foo, bar, baz) {
 ```
 
 
-
 ### `newline-after-description`
 
 Enforces a consistent padding of the block description.
@@ -1047,7 +1029,6 @@ function quux () {
 }
 // Options: ["never"]
 ```
-
 
 
 ### `no-undefined-types`
@@ -1146,7 +1127,6 @@ function quux(foo) {
 ```
 
 
-
 ### `require-description`
 
 Requires that all functions have a description.
@@ -1209,7 +1189,6 @@ function quux () {
 
 }
 ```
-
 
 
 ### `require-description-complete-sentence`
@@ -1476,7 +1455,6 @@ function quux () {
 ```
 
 
-
 ### `require-example`
 
 Requires that all functions have examples.
@@ -1541,7 +1519,6 @@ function quux () {
 ```
 
 
-
 ### `require-hyphen-before-param-description`
 
 Requires a hyphen before the `@param` description.
@@ -1573,7 +1550,6 @@ function quux () {
 
 }
 ```
-
 
 
 ### `require-param`
@@ -1889,7 +1865,6 @@ class A {
 ```
 
 
-
 ### `require-param-description`
 
 Requires that `@param` tag has `description` value.
@@ -1937,7 +1912,6 @@ function quux (foo) {
 
 }
 ```
-
 
 
 ### `require-param-name`
@@ -1992,7 +1966,6 @@ function quux (foo) {
 ```
 
 
-
 ### `require-param-type`
 
 Requires that `@param` tag has `type` value.
@@ -2040,7 +2013,6 @@ function quux (foo) {
 
 }
 ```
-
 
 
 ### `require-returns-description`
@@ -2092,7 +2064,6 @@ function quux () {
 ```
 
 
-
 ### `require-returns-type`
 
 Requires that `@returns` tag has `type` value.
@@ -2141,7 +2112,6 @@ function quux () {
 
 }
 ```
-
 
 
 ### `valid-types`
