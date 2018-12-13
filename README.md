@@ -1,4 +1,3 @@
-<a name="eslint-plugin-jsdoc"></a>
 # eslint-plugin-jsdoc
 
 [![NPM version](http://img.shields.io/npm/v/eslint-plugin-jsdoc.svg?style=flat-square)](https://www.npmjs.org/package/eslint-plugin-jsdoc)
@@ -36,7 +35,7 @@ JSDoc linting rules for ESLint.
         * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
 
 
-<a name="eslint-plugin-jsdoc-reference-to-jscs-jsdoc"></a>
+
 ### Reference to jscs-jsdoc
 
 This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
@@ -67,7 +66,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | N/A | [`enforceExistence`](https://github.com/jscs-dev/jscs-jsdoc#enforceexistence) |
 | N/A | [`leadingUnderscoreAccess`](https://github.com/jscs-dev/jscs-jsdoc#leadingunderscoreaccess) |
 
-<a name="eslint-plugin-jsdoc-installation"></a>
+
 ## Installation
 
 Install [ESLint](https://www.github.com/eslint/eslint) either locally or globally.
@@ -82,7 +81,7 @@ If you have installed `ESLint` globally, you have to install JSDoc plugin global
 npm install eslint-plugin-jsdoc
 ```
 
-<a name="eslint-plugin-jsdoc-configuration"></a>
+
 ## Configuration
 
 Add `plugins` section and specify `eslint-plugin-jsdoc` as a plugin.
@@ -121,10 +120,10 @@ Finally, enable all of the rules that you would like to use.
 }
 ```
 
-<a name="eslint-plugin-jsdoc-settings"></a>
+
 ## Settings
 
-<a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
+
 ### Alias Preference
 
 Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.
@@ -143,7 +142,7 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
-<a name="eslint-plugin-jsdoc-settings-additional-tag-names"></a>
+
 ### Additional Tag Names
 
 Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc tags. The format of the configuration is as follows:
@@ -161,8 +160,8 @@ Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc t
 }
 ```
 
-<a name="eslint-plugin-jsdoc-settings-allow-override-without-accompanying-param-tags"></a>
-### Allow <code>@override</code> Without Accompanying <code>@param</code> Tags
+
+### Allow `@override` Without Accompanying `@param` Tags
 
 Use any of the following settings to override `require-param` and allow
 `@param` to be omitted when the specified tags are present on the JSDoc
@@ -190,8 +189,8 @@ The format of the configuration is as follows:
 }
 ```
 
-<a name="eslint-plugin-jsdoc-settings-settings-to-configure-check-examples"></a>
-### Settings to Configure <code>check-examples</code>
+
+### Settings to Configure `check-examples`
 
 The settings below all impact the `check-examples` rule and default to
 no-op/false except for `eslintrcForExamples` which defaults to `true`.
@@ -247,8 +246,8 @@ decreasing precedence:
 * `settings.jsdoc.baseConfig` - An object of rules with the same schema
   as `.eslintrc.*` for defaults
 
-<a name="eslint-plugin-jsdoc-settings-settings-to-configure-check-examples-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
-#### Rules Disabled by Default Unless <code>noDefaultExampleRules</code> is Set to <code>true</code>
+
+#### Rules Disabled by Default Unless `noDefaultExampleRules` is Set to `true`
 
 * `eol-last` - Insisting that a newline "always" be at the end is less likely
   to be desired in sample code as with the code file convention
@@ -266,11 +265,11 @@ decreasing precedence:
 * `node/no-missing-import` - See `import/no-unresolved`
 * `node/no-missing-require` -  See `import/no-unresolved`
 
-<a name="eslint-plugin-jsdoc-rules"></a>
+
 ## Rules
 
-<a name="eslint-plugin-jsdoc-rules-check-examples"></a>
-### <code>check-examples</code>
+
+### `check-examples`
 
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.
 
@@ -439,8 +438,8 @@ function quux () {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-check-param-names"></a>
-### <code>check-param-names</code>
+
+### `check-param-names`
 
 Ensures that parameter names in JSDoc match those in the function declaration.
 
@@ -586,7 +585,7 @@ function quux ([a, b] = []) {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-check-param-names-deconstructing-function-parameter"></a>
+
 #### Deconstructing Function Parameter
 
 `eslint-plugin-jsdoc` does not validate names of parameters in function deconstruction, e.g.
@@ -607,8 +606,8 @@ function quux ({
 
 Likewise for the pattern `[a, b]` which is an [`ArrayPattern`](https://github.com/estree/estree/blob/master/es2015.md#arraypattern).
 
-<a name="eslint-plugin-jsdoc-rules-check-tag-names"></a>
-### <code>check-tag-names</code>
+
+### `check-tag-names`
 
 Reports invalid block tag names.
 
@@ -850,8 +849,8 @@ function quux (foo) {}
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-check-types"></a>
-### <code>check-types</code>
+
+### `check-types`
 
 Reports invalid types.
 
@@ -867,7 +866,7 @@ Date
 RegExp
 ```
 
-<a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
+
 #### Why not capital case everything?
 
 Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`.
@@ -969,8 +968,8 @@ function quux (foo, bar, baz) {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-newline-after-description"></a>
-### <code>newline-after-description</code>
+
+### `newline-after-description`
 
 Enforces a consistent padding of the block description.
 
@@ -1050,8 +1049,8 @@ function quux () {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-no-undefined-types"></a>
-### <code>no-undefined-types</code>
+
+### `no-undefined-types`
 
 Checks that types in jsdoc comments are defined. This can be used to check unimported types.
 
@@ -1147,8 +1146,8 @@ function quux(foo) {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-description"></a>
-### <code>require-description</code>
+
+### `require-description`
 
 Requires that all functions have a description.
 
@@ -1212,8 +1211,8 @@ function quux () {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
-### <code>require-description-complete-sentence</code>
+
+### `require-description-complete-sentence`
 
 Requires that block description and tag description are written in complete sentences, i.e.,
 
@@ -1477,8 +1476,8 @@ function quux () {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-example"></a>
-### <code>require-example</code>
+
+### `require-example`
 
 Requires that all functions have examples.
 
@@ -1542,8 +1541,8 @@ function quux () {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description"></a>
-### <code>require-hyphen-before-param-description</code>
+
+### `require-hyphen-before-param-description`
 
 Requires a hyphen before the `@param` description.
 
@@ -1576,8 +1575,8 @@ function quux () {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-param"></a>
-### <code>require-param</code>
+
+### `require-param`
 
 Requires that all function parameters are documented.
 
@@ -1890,8 +1889,8 @@ class A {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-param-description"></a>
-### <code>require-param-description</code>
+
+### `require-param-description`
 
 Requires that `@param` tag has `description` value.
 
@@ -1940,8 +1939,8 @@ function quux (foo) {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-param-name"></a>
-### <code>require-param-name</code>
+
+### `require-param-name`
 
 Requires that all function parameters have name.
 
@@ -1993,8 +1992,8 @@ function quux (foo) {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-param-type"></a>
-### <code>require-param-type</code>
+
+### `require-param-type`
 
 Requires that `@param` tag has `type` value.
 
@@ -2043,8 +2042,8 @@ function quux (foo) {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description"></a>
-### <code>require-returns-description</code>
+
+### `require-returns-description`
 
 Requires that `@returns` tag has `description` value.
 
@@ -2093,8 +2092,8 @@ function quux () {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-type"></a>
-### <code>require-returns-type</code>
+
+### `require-returns-type`
 
 Requires that `@returns` tag has `type` value.
 
@@ -2144,8 +2143,8 @@ function quux () {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-valid-types"></a>
-### <code>valid-types</code>
+
+### `valid-types`
 
 Requires all types to be valid JSDoc or Closure compiler types without syntax errors.
 
