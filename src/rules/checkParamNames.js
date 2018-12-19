@@ -38,7 +38,11 @@ const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames 
         return true;
       }
 
-      const pathRootNodeName = jsdocParameterName.slice(0, jsdocParameterName.indexOf('.'));
+      let pathRootNodeName = jsdocParameterName.slice(0, jsdocParameterName.indexOf('.'));
+
+      if (pathRootNodeName.endsWith('[]')) {
+        pathRootNodeName = pathRootNodeName.slice(0, -2);
+      }
 
       if (pathRootNodeName !== lastRealParameter) {
         report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") root node name ("' +
