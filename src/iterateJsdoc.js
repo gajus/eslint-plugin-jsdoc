@@ -52,10 +52,6 @@ const curryUtils = (
     return sourceCode.getText(functionNode);
   };
 
-  utils.getFunctionReturnsNames = () => {
-    return jsdocUtils.getFunctionReturnsNames(functionNode);
-  };
-
   utils.getJsdocParameterNamesDeep = () => {
     return jsdocUtils.getJsdocParameterNamesDeep(jsdoc, utils.getPreferredTagName('param'));
   };
