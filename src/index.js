@@ -13,6 +13,7 @@ import requireParamName from './rules/requireParamName';
 import requireParam from './rules/requireParam';
 import requireParamDescription from './rules/requireParamDescription';
 import requireParamType from './rules/requireParamType';
+import requireReturns from './rules/requireReturns';
 import requireReturnsDescription from './rules/requireReturnsDescription';
 import requireReturnsType from './rules/requireReturnsType';
 import validTypes from './rules/validTypes';
@@ -35,6 +36,7 @@ export default {
         'jsdoc/require-param-description': 'warn',
         'jsdoc/require-param-name': 'warn',
         'jsdoc/require-param-type': 'warn',
+        'jsdoc/require-returns': 'warn',
         'jsdoc/require-returns-description': 'warn',
         'jsdoc/require-returns-type': 'warn',
         'jsdoc/valid-types': 'warn'
@@ -56,6 +58,7 @@ export default {
     'require-param-description': requireParamDescription,
     'require-param-name': requireParamName,
     'require-param-type': requireParamType,
+    'require-returns': requireReturns,
     'require-returns-description': requireReturnsDescription,
     'require-returns-type': requireReturnsType,
     'valid-types': validTypes

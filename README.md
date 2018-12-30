@@ -31,6 +31,7 @@ JSDoc linting rules for ESLint.
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
         * [`require-param-name`](#eslint-plugin-jsdoc-rules-require-param-name)
         * [`require-param-type`](#eslint-plugin-jsdoc-rules-require-param-type)
+        * [`require-returns`](#eslint-plugin-jsdoc-rules-require-returns)
         * [`require-returns-description`](#eslint-plugin-jsdoc-rules-require-returns-description)
         * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
         * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
@@ -56,6 +57,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`require-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-description) | [`requireParamDescription`](https://github.com/jscs-dev/jscs-jsdoc#requireparamdescription) |
 | [`require-param-name`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-name) | N/A |
 | [`require-param-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type) | [`requireParamTypes`](https://github.com/jscs-dev/jscs-jsdoc#requireparamtypes) |
+| [`require-returns`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns) | [`checkParamExistence`](https://github.com/jscs-dev/jscs-jsdoc#checkparamexistence) |
 | [`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-description) | [`requireReturnDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirereturndescription) |
 | [`require-returns-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-type) | [`requireReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#requirereturntypes) |
 | [`valid-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-valid-types) | N/A |
@@ -114,6 +116,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-param-description": 1,
         "jsdoc/require-param-name": 1,
         "jsdoc/require-param-type": 1,
+        "jsdoc/require-returns": 1,
         "jsdoc/require-returns-description": 1,
         "jsdoc/require-returns-type": 1,
         "jsdoc/valid-types": 1
@@ -2041,6 +2044,42 @@ function quux (foo) {
 
 }
 ```
+
+
+<a name="eslint-plugin-jsdoc-rules-require-returns"></a>
+### <code>require-returns</code>
+
+Requires returns params are documented.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`returns`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ *
+ */
+function quux () {
+
+  return foo;
+}
+// Message: Missing JSDoc @return "foo" declaration.
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @return foo - Foo.
+ *
+ */
+function quux () {
+
+  return foo;
+}
 
 
 <a name="eslint-plugin-jsdoc-rules-require-returns-description"></a>
