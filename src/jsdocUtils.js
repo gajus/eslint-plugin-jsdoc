@@ -27,12 +27,6 @@ const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
   });
 };
 
-const getFunctionReturnsNames = (functionNode : Object) : Array<string> => {
-  return _.map(functionNode, (param) => {
-    return param;
-  });
-};
-
 /**
  * Gets all parameter names, including those that refer to a path, e.g. "@param foo; @param foo.bar".
  */
@@ -94,7 +88,6 @@ const hasTag = (jsdoc : Object, targetTagName : string) : boolean => {
 
 export default {
   getFunctionParameterNames,
-  getFunctionReturnsNames,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,
   getPreferredTagName,
