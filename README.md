@@ -194,7 +194,7 @@ The format of the configuration is as follows:
 ### Settings to Configure <code>check-examples</code>
 
 The settings below all impact the `check-examples` rule and default to
-no-op/false except for `eslintrcForExamples` which defaults to `true`.
+no-op/false except as noted.
 
 JSDoc specs use of an optional `<caption>` element at the beginning of
 `@example`. The following setting requires its use.
@@ -228,6 +228,9 @@ applied to the JavaScript found within the `@example` tags (as determined
 to be applicable by the above regex settings). They are ordered by
 decreasing precedence:
 
+* `settings.jsdoc.allowInlineConfig` - If not set to `false`, will allow
+  inline config within the `@example` to override other config. Defaults
+  to `true`.
 * `settings.jsdoc.noDefaultExampleRules` - Setting to `true` will disable the
   default rules which are expected to be troublesome for most documentation
   use. See the section below for the specific default rules.
@@ -240,12 +243,19 @@ decreasing precedence:
   [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
   if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
   follow one's Markdown rules).
-* `settings.jsdoc.configFile` - A config file. Corresponds to `-c`.
+* `settings.jsdoc.configFile` - A config file. Corresponds to ESLint's `-c`.
 * `settings.jsdoc.eslintrcForExamples` - Defaults to `true` in adding rules
   based on an `.eslintrc.*` file. Setting to `false` corresponds to
-  `--no-eslintrc`.
+  ESLint's `--no-eslintrc`.
 * `settings.jsdoc.baseConfig` - An object of rules with the same schema
   as `.eslintrc.*` for defaults
+
+Finally, the following rule pertains to inline disable directives:
+
+- `settings.jsdoc.reportUnusedDisableDirectives` - If not set to `false`,
+  this will report disabled directives which are not used (and thus not
+  needed). Defaults to `true`. Corresponds to ESLint's
+  `--report-unused-disable-directives`.
 
 <a name="eslint-plugin-jsdoc-settings-settings-to-configure-check-examples-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
 #### Rules Disabled by Default Unless <code>noDefaultExampleRules</code> is Set to <code>true</code>
@@ -279,11 +289,13 @@ Works in conjunction with the following settings:
 * `captionRequired`
 * `exampleCodeRegex`
 * `rejectExampleCodeRegex`
+* `allowInlineConfig` - Defaults to `true`
 * `noDefaultExampleRules`
 * `matchingFileName`
 * `configFile`
 * `eslintrcForExamples` - Defaults to `true`
 * `baseConfig`
+* `reportUnusedDisableDirectives` - Defaults to `true`
 
 Inline ESLint config within `@example` JavaScript is allowed, though the
 disabling of ESLint directives which are not needed by the resolved rules
@@ -384,6 +396,21 @@ function quux () {
 }
 // Settings: {"jsdoc":{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}}
 // Message: undefined
+
+/**
+ * @example test() // eslint-disable-line semi
+ */
+function quux () {}
+// Settings: {"jsdoc":{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":true}}
+// Message: undefined
+
+/**
+ * @example
+ test() // eslint-disable-line semi
+ */
+function quux () {}
+// Settings: {"jsdoc":{"allowInlineConfig":false,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
+// Message: undefined
 ```
 
 The following patterns are not considered problems:
@@ -436,6 +463,19 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"captionRequired":true,"eslintrcForExamples":false}}
+
+/**
+ * @example test() // eslint-disable-line semi
+ */
+function quux () {}
+// Settings: {"jsdoc":{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":false}}
+
+/**
+ * @example
+ test() // eslint-disable-line semi
+ */
+function quux () {}
+// Settings: {"jsdoc":{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
 ```
 
 
@@ -583,6 +623,16 @@ function quux ({a, b} = {}) {
 function quux ([a, b] = []) {
 
 }
+
+/**
+ * Assign the project to a list of employees.
+ * @param {Object[]} employees - The employees who are responsible for the project.
+ * @param {string} employees[].name - The name of an employee.
+ * @param {string} employees[].department - The employee's department.
+ */
+function assign (employees) {
+
+};
 ```
 
 
@@ -782,7 +832,7 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"additionalTagNames":{"customTags":["baz","bar"]}}}
 
-/**
+/** 
  * @abstract
  * @access
  * @alias
@@ -870,9 +920,9 @@ RegExp
 <a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
 #### Why not capital case everything?
 
-Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`.
+Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`. 
 
-Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do.
+Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do. 
 
 So in a sense, there two types of strings in Javascript; `{string}` literals, also called primitives and `{String}` Objects. We use the primitives because it's easier to write and uses less memory. `{String}` and `{string}` are technically both valid, but they are not the same.
 
@@ -2190,3 +2240,5 @@ function quux() {
 
 }
 ```
+
+
