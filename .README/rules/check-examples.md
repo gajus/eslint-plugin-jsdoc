@@ -24,5 +24,3 @@ command.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
-
-<!-- assertions checkExamples -->
