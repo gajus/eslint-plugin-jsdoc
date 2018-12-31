@@ -48,6 +48,10 @@ const curryUtils = (
     return jsdocUtils.getFunctionParameterNames(functionNode);
   };
 
+  utils.getFunctionSourceCode = function () {
+    return sourceCode.getText(functionNode);
+  };
+
   utils.getJsdocParameterNamesDeep = () => {
     return jsdocUtils.getJsdocParameterNamesDeep(jsdoc, utils.getPreferredTagName('param'));
   };

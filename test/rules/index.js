@@ -21,6 +21,7 @@ _.forEach([
   'require-param-description',
   'require-param-name',
   'require-param-type',
+  'require-returns',
   'require-returns-description',
   'require-returns-type',
   'valid-types'
