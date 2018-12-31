@@ -23,16 +23,17 @@ JSDoc linting rules for ESLint.
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
         * [`no-undefined-types`](#eslint-plugin-jsdoc-rules-no-undefined-types)
-        * [`require-description`](#eslint-plugin-jsdoc-rules-require-description)
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
+        * [`require-description`](#eslint-plugin-jsdoc-rules-require-description)
         * [`require-example`](#eslint-plugin-jsdoc-rules-require-example)
         * [`require-hyphen-before-param-description`](#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description)
-        * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
         * [`require-param-name`](#eslint-plugin-jsdoc-rules-require-param-name)
         * [`require-param-type`](#eslint-plugin-jsdoc-rules-require-param-type)
+        * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
         * [`require-returns-description`](#eslint-plugin-jsdoc-rules-require-returns-description)
         * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
+        * [`require-returns`](#eslint-plugin-jsdoc-rules-require-returns)
         * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
 
 
@@ -1199,71 +1200,6 @@ function quux(foo) {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-description"></a>
-### <code>require-description</code>
-
-Requires that all functions have a description.
-
-* All functions must have a `@description` tag.
-* Every description tag must have a non-empty description that explains the purpose of the method.
-
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`class`, `example`|
-
-The following patterns are considered problems:
-
-```js
-/**
- *
- */
-function quux () {
-
-}
-// Message: Missing JSDoc @description declaration.
-
-/**
- * @description
- */
-function quux () {
-
-}
-// Message: Missing JSDoc @description description.
-```
-
-The following patterns are not considered problems:
-
-```js
-/**
- * @description
- * // arbitrary description content
- */
-function quux () {
-
-}
-
-/**
- * @description
- * quux(); // does something useful
- */
-function quux () {
-
-}
-
-/**
- * @description <caption>Valid usage</caption>
- * quux(); // does something useful
- *
- * @description <caption>Invalid usage</caption>
- * quux('random unwanted arg'); // results in an error
- */
-function quux () {
-
-}
-```
-
-
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
 ### <code>require-description-complete-sentence</code>
 
@@ -1529,6 +1465,71 @@ function quux () {
 ```
 
 
+<a name="eslint-plugin-jsdoc-rules-require-description"></a>
+### <code>require-description</code>
+
+Requires that all functions have a description.
+
+* All functions must have a `@description` tag.
+* Every description tag must have a non-empty description that explains the purpose of the method.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`class`, `example`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ *
+ */
+function quux () {
+
+}
+// Message: Missing JSDoc @description declaration.
+
+/**
+ * @description
+ */
+function quux () {
+
+}
+// Message: Missing JSDoc @description description.
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @description
+ * // arbitrary description content
+ */
+function quux () {
+
+}
+
+/**
+ * @description
+ * quux(); // does something useful
+ */
+function quux () {
+
+}
+
+/**
+ * @description <caption>Valid usage</caption>
+ * quux(); // does something useful
+ *
+ * @description <caption>Invalid usage</caption>
+ * quux('random unwanted arg'); // results in an error
+ */
+function quux () {
+
+}
+```
+
+
 <a name="eslint-plugin-jsdoc-rules-require-example"></a>
 ### <code>require-example</code>
 
@@ -1623,6 +1624,159 @@ The following patterns are not considered problems:
  * @param foo - Foo.
  */
 function quux () {
+
+}
+```
+
+
+<a name="eslint-plugin-jsdoc-rules-require-param-description"></a>
+### <code>require-param-description</code>
+
+Requires that `@param` tag has `description` value.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @param "foo" description.
+
+/**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
+// Message: Missing JSDoc @arg "foo" description.
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ *
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param foo Foo.
+ */
+function quux (foo) {
+
+}
+```
+
+
+<a name="eslint-plugin-jsdoc-rules-require-param-name"></a>
+### <code>require-param-name</code>
+
+Requires that all function parameters have name.
+
+> The `@param` tag requires you to specify the name of the parameter you are documenting. You can also include the parameter's type, enclosed in curly brackets, and a description of the parameter.
+>
+> [JSDoc](http://usejsdoc.org/tags-param.html#overview)
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @param
+ */
+function quux (foo) {
+
+}
+// Message: There must be an identifier after @param type.
+
+/**
+ * @param {string}
+ */
+function quux (foo) {
+
+}
+// Message: There must be an identifier after @param tag.
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param {string} foo
+ */
+function quux (foo) {
+
+}
+```
+
+
+<a name="eslint-plugin-jsdoc-rules-require-param-type"></a>
+### <code>require-param-type</code>
+
+Requires that `@param` tag has `type` value.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @param "foo" type.
+
+/**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
+// Message: Missing JSDoc @arg "foo" type.
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ *
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param {number} foo
+ */
+function quux (foo) {
 
 }
 ```
@@ -1942,159 +2096,6 @@ class A {
 ```
 
 
-<a name="eslint-plugin-jsdoc-rules-require-param-description"></a>
-### <code>require-param-description</code>
-
-Requires that `@param` tag has `description` value.
-
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`|
-
-The following patterns are considered problems:
-
-```js
-/**
- * @param foo
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @param "foo" description.
-
-/**
- * @arg foo
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
-// Message: Missing JSDoc @arg "foo" description.
-```
-
-The following patterns are not considered problems:
-
-```js
-/**
- *
- */
-function quux (foo) {
-
-}
-
-/**
- * @param foo Foo.
- */
-function quux (foo) {
-
-}
-```
-
-
-<a name="eslint-plugin-jsdoc-rules-require-param-name"></a>
-### <code>require-param-name</code>
-
-Requires that all function parameters have name.
-
-> The `@param` tag requires you to specify the name of the parameter you are documenting. You can also include the parameter's type, enclosed in curly brackets, and a description of the parameter.
->
-> [JSDoc](http://usejsdoc.org/tags-param.html#overview)
-
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`|
-
-The following patterns are considered problems:
-
-```js
-/**
- * @param
- */
-function quux (foo) {
-
-}
-// Message: There must be an identifier after @param type.
-
-/**
- * @param {string}
- */
-function quux (foo) {
-
-}
-// Message: There must be an identifier after @param tag.
-```
-
-The following patterns are not considered problems:
-
-```js
-/**
- * @param foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @param {string} foo
- */
-function quux (foo) {
-
-}
-```
-
-
-<a name="eslint-plugin-jsdoc-rules-require-param-type"></a>
-### <code>require-param-type</code>
-
-Requires that `@param` tag has `type` value.
-
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`|
-
-The following patterns are considered problems:
-
-```js
-/**
- * @param foo
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @param "foo" type.
-
-/**
- * @arg foo
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
-// Message: Missing JSDoc @arg "foo" type.
-```
-
-The following patterns are not considered problems:
-
-```js
-/**
- *
- */
-function quux (foo) {
-
-}
-
-/**
- * @param {number} foo
- */
-function quux (foo) {
-
-}
-```
-
-
 <a name="eslint-plugin-jsdoc-rules-require-returns-description"></a>
 ### <code>require-returns-description</code>
 
@@ -2192,6 +2193,320 @@ The following patterns are not considered problems:
  */
 function quux () {
 
+}
+```
+
+
+<a name="eslint-plugin-jsdoc-rules-require-returns"></a>
+### <code>require-returns</code>
+
+Requires returns are documented.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`returns`|
+
+The following patterns are considered problems:
+
+```js
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
+// Message: Missing JSDoc @arg "foo" declaration.
+
+/**
+ * @param foo
+ */
+function quux (foo, bar) {
+
+}
+// Message: Missing JSDoc @param "bar" declaration.
+
+/**
+ * @override
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @implements
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @augments
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @extends
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @override
+ */
+class A {
+  /**
+    *
+    */
+  quux (foo) {
+
+  }
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @implements
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @augments
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @extends
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Message: Missing JSDoc @param "foo" declaration.
+```
+
+The following patterns are not considered problems:
+
+```js
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @inheritdoc
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
+
+/**
+ * @override
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @override
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
+
+/**
+ * @implements
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"allowImplementsWithoutParam":true}}
+
+/**
+ * @implements
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @augments
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+
+/**
+ * @augments
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @extends
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+
+/**
+ * @extends
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @override
+ */
+class A {
+  /**
+  * @param foo
+  */
+  quux (foo) {
+
+  }
+}
+
+/**
+ * @override
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
+
+/**
+ * @implements
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"allowImplementsWithoutParam":true}}
+
+/**
+ * @implements
+ */
+class A {
+  /**
+   * @param foo
+   */
+  quux (foo) {
+
+  }
+}
+
+/**
+ * @augments
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+
+/**
+ * @augments
+ */
+class A {
+  /**
+   * @param foo
+   */
+  quux (foo) {
+
+  }
+}
+
+/**
+ * @extends
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+
+/**
+ * @extends
+ */
+class A {
+  /**
+   * @param foo
+   */
+  quux (foo) {
+
+  }
 }
 ```
 
