@@ -310,6 +310,178 @@ command.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
 
+The following patterns are considered problems:
+
+````js
+/**
+ * @example alert('hello')
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}}
+// Message: @example error (no-alert): Unexpected alert.
+
+/**
+ * @example ```js
+ alert('hello');
+ ```
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}}
+// Message: @example error (semi): Extra semicolon.
+
+/**
+ * @example
+ * ```js alert('hello'); ```
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}}
+// Message: @example error (semi): Extra semicolon.
+
+/**
+ * @example ```
+ * js alert('hello'); ```
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```\njs ([\\s\\S]*)```"}}
+// Message: @example error (semi): Extra semicolon.
+
+/**
+ * @example <b>Not JavaScript</b>
+ */
+function quux () {
+
+}
+/**
+ * @example quux2();
+ */
+function quux2 () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"rejectExampleCodeRegex":"^\\s*<.*>$"}}
+// Message: @example error (semi): Extra semicolon.
+
+/**
+ * @example
+ * quux(); // does something useful
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
+// Message: @example error (semi): Extra semicolon.
+
+/**
+ * @example <caption>Valid usage</caption>
+ * quux(); // does something useful
+ *
+ * @example
+ * quux('random unwanted arg'); // results in an error
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"captionRequired":true,"eslintrcForExamples":false}}
+// Message: Caption is expected for examples.
+
+/**
+ * @example  quux();
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}}
+// Message: @example error (indent): Expected indentation of 0 spaces but found 1.
+
+/**
+ * @example test() // eslint-disable-line semi
+ */
+function quux () {}
+// Settings: {"jsdoc":{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":true}}
+// Message: @example error: Unused eslint-disable directive (no problems were reported from 'semi').
+
+/**
+ * @example
+ test() // eslint-disable-line semi
+ */
+function quux () {}
+// Settings: {"jsdoc":{"allowInlineConfig":false,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
+// Message: @example error (semi): Missing semicolon.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @example ```js
+ alert('hello');
+ ```
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}}
+
+/**
+ * @example
+ * // arbitrary example content
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"eslintrcForExamples":false}}
+
+/**
+ * @example
+ * quux(); // does something useful
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}}
+
+/**
+ * @example quux();
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}}
+
+/**
+ * @example <caption>Valid usage</caption>
+ * quux(); // does something useful
+ *
+ * @example <caption>Invalid usage</caption>
+ * quux('random unwanted arg'); // results in an error
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"captionRequired":true,"eslintrcForExamples":false}}
+
+/**
+ * @example test() // eslint-disable-line semi
+ */
+function quux () {}
+// Settings: {"jsdoc":{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":false}}
+
+/**
+ * @example
+ test() // eslint-disable-line semi
+ */
+function quux () {}
+// Settings: {"jsdoc":{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-check-param-names"></a>
 ### <code>check-param-names</code>
 
@@ -322,7 +494,7 @@ Ensures that parameter names in JSDoc match those in the function declaration.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @param Foo
  */
@@ -383,11 +555,11 @@ function quux (foo) {
 
 }
 // Message: @param "bar" does not match an existing function parameter.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  *
  */
@@ -464,7 +636,7 @@ function quux ([a, b] = []) {
 function assign (employees) {
 
 };
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-check-param-names-deconstructing-function-parameter"></a>
@@ -567,7 +739,7 @@ version
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @Param
  */
@@ -627,11 +799,11 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"additionalTagNames":{"customTags":["bar"]}}}
 // Message: Invalid JSDoc tag name "baz".
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @param foo
  */
@@ -728,7 +900,7 @@ function quux (foo) {
  * @version
  */
 function quux (foo) {}
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-check-types"></a>
@@ -786,7 +958,7 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @param {Number} foo
  */
@@ -818,11 +990,11 @@ function quux (foo, bar, baz) {
 
 }
 // Message: Invalid JSDoc @param "foo" type "Number".
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @param {number} foo
  * @param {Bar} bar
@@ -847,7 +1019,7 @@ function quux (foo, bar, baz) {
 function quux (foo, bar, baz) {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-newline-after-description"></a>
@@ -864,7 +1036,7 @@ This rule takes one argument. If it is `"always"` then a problem is raised when 
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * Foo.
  *
@@ -889,11 +1061,11 @@ function quux () {
 }
 // Options: ["never"]
 // Message: There must be no newline after the description of the JSDoc block.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * Foo.
  */
@@ -928,7 +1100,7 @@ function quux () {
 
 }
 // Options: ["never"]
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-no-undefined-types"></a>
@@ -946,7 +1118,7 @@ When enabling this rule, types in jsdoc comments will resolve as used variables,
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @param {strnig} foo - Bar.
  */
@@ -954,11 +1126,11 @@ function quux(foo) {
 
 }
 // Message: The type 'strnig' is undefined.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @param {string} foo - Bar.
  */
@@ -1025,7 +1197,7 @@ function quux(foo) {
 function quux(foo) {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
@@ -1045,7 +1217,7 @@ Requires that block description and tag description are written in complete sent
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * foo.
  */
@@ -1191,11 +1363,11 @@ function quux (foo) {
 
 }
 // Message: Sentence should start with an uppercase character.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @param foo - Foo.
  */
@@ -1290,7 +1462,7 @@ function quux () {
 function quux () {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-description"></a>
@@ -1308,7 +1480,7 @@ Requires that all functions have a description.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  *
  */
@@ -1324,11 +1496,11 @@ function quux () {
 
 }
 // Message: Missing JSDoc @description description.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @description
  * // arbitrary description content
@@ -1355,7 +1527,7 @@ function quux () {
 function quux () {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-example"></a>
@@ -1373,7 +1545,7 @@ Requires that all functions have examples.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  *
  */
@@ -1389,11 +1561,11 @@ function quux () {
 
 }
 // Message: Missing JSDoc @example description.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @example
  * // arbitrary example content
@@ -1420,7 +1592,7 @@ function quux () {
 function quux () {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description"></a>
@@ -1435,7 +1607,7 @@ Requires a hyphen before the `@param` description.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @param foo Foo.
  */
@@ -1443,18 +1615,18 @@ function quux () {
 
 }
 // Message: There must be a hyphen before @param description.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @param foo - Foo.
  */
 function quux () {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-param-description"></a>
@@ -1469,7 +1641,7 @@ Requires that `@param` tag has `description` value.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @param foo
  */
@@ -1486,11 +1658,11 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" description.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  *
  */
@@ -1504,7 +1676,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-param-name"></a>
@@ -1523,7 +1695,7 @@ Requires that all function parameters have name.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @param
  */
@@ -1539,11 +1711,11 @@ function quux (foo) {
 
 }
 // Message: There must be an identifier after @param tag.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @param foo
  */
@@ -1557,7 +1729,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-param-type"></a>
@@ -1572,7 +1744,7 @@ Requires that `@param` tag has `type` value.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @param foo
  */
@@ -1589,11 +1761,11 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" type.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  *
  */
@@ -1607,7 +1779,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-param"></a>
@@ -1622,7 +1794,7 @@ Requires that all function parameters are documented.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  *
  */
@@ -1731,11 +1903,11 @@ class A {
   }
 }
 // Message: Missing JSDoc @param "foo" declaration.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @param foo
  */
@@ -1921,7 +2093,7 @@ class A {
 
   }
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-returns-description"></a>
@@ -1936,7 +2108,7 @@ Requires that `@returns` tag has `description` value.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @returns
  */
@@ -1953,11 +2125,11 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return description.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  *
  */
@@ -1971,7 +2143,7 @@ function quux () {
 function quux () {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-returns-type"></a>
@@ -1986,7 +2158,7 @@ Requires that `@returns` tag has `type` value.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @returns
  */
@@ -2011,18 +2183,18 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return type.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @returns {number}
  */
 function quux () {
 
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-require-returns"></a>
@@ -2037,7 +2209,7 @@ Requires returns are documented.
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  *
  */
@@ -2146,11 +2318,11 @@ class A {
   }
 }
 // Message: Missing JSDoc @param "foo" declaration.
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @param foo
  */
@@ -2336,7 +2508,7 @@ class A {
 
   }
 }
-```
+````
 
 
 <a name="eslint-plugin-jsdoc-rules-valid-types"></a>
@@ -2351,7 +2523,7 @@ Requires all types to be valid JSDoc or Closure compiler types without syntax er
 
 The following patterns are considered problems:
 
-```js
+````js
 /**
  * @param {Array<string} foo
  */
@@ -2359,11 +2531,11 @@ function quux() {
 
 }
 // Message: Syntax error in type: Array<string
-```
+````
 
 The following patterns are not considered problems:
 
-```js
+````js
 /**
  * @param {Array<string>} foo
  */
@@ -2384,6 +2556,6 @@ function quux() {
 function quux() {
 
 }
-```
+````
 
 

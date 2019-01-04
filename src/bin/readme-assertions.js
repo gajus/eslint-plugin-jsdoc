@@ -77,8 +77,8 @@ const updateDocuments = (assertions) => {
       throw new Error('No assertions available for rule "' + ruleName + '".');
     }
 
-    return 'The following patterns are considered problems:\n\n```js\n' + ruleAssertions.invalid.join('\n\n') +
-      '\n```\n\nThe following patterns are not considered problems:\n\n```js\n' + ruleAssertions.valid.join('\n\n') + '\n```\n';
+    return 'The following patterns are considered problems:\n\n````js\n' + ruleAssertions.invalid.join('\n\n') +
+      '\n````\n\nThe following patterns are not considered problems:\n\n````js\n' + ruleAssertions.valid.join('\n\n') + '\n````\n';
   });
 
   fs.writeFileSync(readmeDocumentPath, documentBody);

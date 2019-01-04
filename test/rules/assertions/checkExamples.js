@@ -43,7 +43,9 @@ export default {
           }
       `,
       errors: [
-        '@example error (semi): Extra semicolon.'
+        {
+          message: '@example error (semi): Extra semicolon.'
+        }
       ],
       settings: {
         jsdoc: {
@@ -68,7 +70,9 @@ export default {
           }
       `,
       errors: [
-        '@example error (semi): Extra semicolon.'
+        {
+          message: '@example error (semi): Extra semicolon.'
+        }
       ],
       settings: {
         jsdoc: {
@@ -93,7 +97,9 @@ export default {
           }
       `,
       errors: [
-        '@example error (semi): Extra semicolon.'
+        {
+          message: '@example error (semi): Extra semicolon.'
+        }
       ],
       settings: {
         jsdoc: {
@@ -123,7 +129,9 @@ export default {
           }
       `,
       errors: [
-        '@example error (semi): Extra semicolon.'
+        {
+          message: '@example error (semi): Extra semicolon.'
+        }
       ],
       settings: {
         jsdoc: {
@@ -148,7 +156,9 @@ export default {
           }
       `,
       errors: [
-        '@example error (no-undef): \'quux\' is not defined.'
+        {
+          message: '@example error (no-undef): \'quux\' is not defined.'
+        }
       ],
       settings: {
         jsdoc: {
@@ -176,7 +186,9 @@ export default {
           }
       `,
       errors: [
-        'Caption is expected for examples.'
+        {
+          message: 'Caption is expected for examples.'
+        }
       ],
       settings: {
         jsdoc: {
@@ -195,7 +207,9 @@ export default {
           }
       `,
       errors: [
-        '@example error (indent): Expected indentation of 0 spaces but found 1.'
+        {
+          message: '@example error (indent): Expected indentation of 0 spaces but found 1.'
+        }
       ],
       settings: {
         jsdoc: {
@@ -216,7 +230,11 @@ export default {
        */
       function quux () {}
 `,
-      errors: ['@example error: Unused eslint-disable directive (no problems were reported from \'semi\').'],
+      errors: [
+        {
+          message: '@example error: Unused eslint-disable directive (no problems were reported from \'semi\').'
+        }
+      ],
       settings: {
         jsdoc: {
           eslintrcForExamples: false,
@@ -233,7 +251,11 @@ export default {
        */
       function quux () {}
 `,
-      errors: ['@example error (semi): Missing semicolon.'],
+      errors: [
+        {
+          message: '@example error (semi): Missing semicolon.'
+        }
+      ],
       settings: {
         jsdoc: {
           allowInlineConfig: false,
