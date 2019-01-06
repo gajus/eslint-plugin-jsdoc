@@ -7,4 +7,4 @@ Requires returns are documented.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 
-<!-- assertions requireParam -->
+<!-- assertions requireReturns -->
