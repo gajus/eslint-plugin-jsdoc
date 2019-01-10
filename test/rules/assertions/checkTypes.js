@@ -139,6 +139,24 @@ export default {
 
           }
       `
-    }
+    },
+    {
+      code: `
+          /**
+           * @param {typeof bar} foo
+           */
+          function qux(foo) {
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @param {import('./foo').bar.baz} foo
+           */
+          function qux(foo) {
+          }
+      `
+    },
   ]
 };
