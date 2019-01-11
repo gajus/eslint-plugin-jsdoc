@@ -17,8 +17,4 @@ export default iterateJsdoc(({
   if (JSON.stringify(jsdocTags) === '[]' && sourcecode.indexOf('return') >= 1) {
     report('Missing JSDoc @' + targetTagName + ' declaration.');
   }
-
-  if (JSON.stringify(jsdocTags) !== '[]' && sourcecode.indexOf('return') < 1) {
-    report('Present JSDoc @' + targetTagName + ' declaration but not available return expression in function.');
-  }
 });
