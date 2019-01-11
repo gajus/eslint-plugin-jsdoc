@@ -249,14 +249,15 @@ Finally, the following rule pertains to inline disable directives:
 {"gitdown": "include", "file": "./rules/check-types.md"}
 {"gitdown": "include", "file": "./rules/newline-after-description.md"}
 {"gitdown": "include", "file": "./rules/no-undefined-types.md"}
-{"gitdown": "include", "file": "./rules/require-description.md"}
 {"gitdown": "include", "file": "./rules/require-description-complete-sentence.md"}
+{"gitdown": "include", "file": "./rules/require-description.md"}
 {"gitdown": "include", "file": "./rules/require-example.md"}
 {"gitdown": "include", "file": "./rules/require-hyphen-before-param-description.md"}
-{"gitdown": "include", "file": "./rules/require-param.md"}
 {"gitdown": "include", "file": "./rules/require-param-description.md"}
 {"gitdown": "include", "file": "./rules/require-param-name.md"}
 {"gitdown": "include", "file": "./rules/require-param-type.md"}
+{"gitdown": "include", "file": "./rules/require-param.md"}
 {"gitdown": "include", "file": "./rules/require-returns-description.md"}
 {"gitdown": "include", "file": "./rules/require-returns-type.md"}
+{"gitdown": "include", "file": "./rules/require-returns.md"}
 {"gitdown": "include", "file": "./rules/valid-types.md"}
