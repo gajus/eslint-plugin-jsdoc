@@ -1,6 +1,6 @@
 ### `require-returns-check`
 
-Check if exist return expression in function and in comment. Need exist both.
+Checks if the return expression exists in function body and in the comment.
 
 |||
 |---|---|
