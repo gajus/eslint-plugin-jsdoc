@@ -4,6 +4,7 @@ export default {
   ],
   access: [],
   alias: [],
+  async: [],
   augments: [
     'extends'
   ],
