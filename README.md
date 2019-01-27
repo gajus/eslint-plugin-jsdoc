@@ -33,6 +33,7 @@ JSDoc linting rules for ESLint.
         * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
         * [`require-returns-description`](#eslint-plugin-jsdoc-rules-require-returns-description)
         * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
+        * [`require-returns-check`](#eslint-plugin-jsdoc-rules-require-returns-check)
         * [`require-returns`](#eslint-plugin-jsdoc-rules-require-returns)
         * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
 
@@ -58,6 +59,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`require-param-name`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-name) | N/A |
 | [`require-param-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type) | [`requireParamTypes`](https://github.com/jscs-dev/jscs-jsdoc#requireparamtypes) |
 | [`require-returns`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns) | [`requireReturn`](https://github.com/jscs-dev/jscs-jsdoc#requirereturn) |
+| [`require-returns-check`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-check) | [`requireReturn`](https://github.com/jscs-dev/jscs-jsdoc#requirereturncheck) |
 | [`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-description) | [`requireReturnDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirereturndescription) |
 | [`require-returns-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-type) | [`requireReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#requirereturntypes) |
 | [`valid-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-valid-types) | N/A |
@@ -117,6 +119,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-param-name": 1,
         "jsdoc/require-param-type": 1,
         "jsdoc/require-returns": 1,
+        "jsdoc/require-returns-check": 1,
         "jsdoc/require-returns-description": 1,
         "jsdoc/require-returns-type": 1,
         "jsdoc/valid-types": 1
@@ -376,7 +379,7 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
-// Message: @example error (semi): Extra semicolon.
+// Message: @example error (no-undef): 'quux' is not defined.
 
 /**
  * @example <caption>Valid usage</caption>
@@ -2197,6 +2200,72 @@ function quux () {
 ````
 
 
+<a name="eslint-plugin-jsdoc-rules-require-returns-check"></a>
+### <code>require-returns-check</code>
+
+Checks if the return expression exists in function body and in the comment.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`returns`|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @returns
+ */
+function quux (foo) {
+
+}
+// Message: Present JSDoc @returns declaration but not available return expression in function.
+
+/**
+ * @return
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
+// Message: Present JSDoc @return declaration but not available return expression in function.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @returns Foo.
+ */
+function quux () {
+
+  return foo;
+}
+
+/**
+ * @returns {void} Foo.
+ */
+function quux () {
+
+  return foo;
+}
+
+/**
+ * @returns {undefined} Foo.
+ */
+function quux () {
+
+  return foo;
+}
+
+/**
+ *
+ */
+function quux () {
+}
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-require-returns"></a>
 ### <code>require-returns</code>
 
@@ -2215,298 +2284,36 @@ The following patterns are considered problems:
  */
 function quux (foo) {
 
+  return foo;
 }
-// Message: Missing JSDoc @param "foo" declaration.
+// Message: Missing JSDoc @returns declaration.
 
 /**
  *
  */
 function quux (foo) {
 
+  return foo;
 }
-// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
-// Message: Missing JSDoc @arg "foo" declaration.
-
-/**
- * @param foo
- */
-function quux (foo, bar) {
-
-}
-// Message: Missing JSDoc @param "bar" declaration.
-
-/**
- * @override
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @implements
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @augments
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @extends
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @override
- */
-class A {
-  /**
-    *
-    */
-  quux (foo) {
-
-  }
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @implements
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @augments
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @extends
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Message: Missing JSDoc @param "foo" declaration.
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
+// Message: Missing JSDoc @return declaration.
 ````
 
 The following patterns are not considered problems:
 
 ````js
 /**
- * @param foo
+ * @returns Foo.
  */
-function quux (foo) {
+function quux () {
 
+  return foo;
 }
 
 /**
- * @inheritdoc
+ *
  */
-function quux (foo) {
-
-}
-
-/**
- * @arg foo
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
-
-/**
- * @override
- * @param foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @override
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
-
-/**
- * @implements
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":true}}
-
-/**
- * @implements
- * @param foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @augments
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
-
-/**
- * @augments
- * @param foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @extends
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
-
-/**
- * @extends
- * @param foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @override
- */
-class A {
-  /**
-  * @param foo
-  */
-  quux (foo) {
-
-  }
-}
-
-/**
- * @override
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
-
-/**
- * @implements
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":true}}
-
-/**
- * @implements
- */
-class A {
-  /**
-   * @param foo
-   */
-  quux (foo) {
-
-  }
-}
-
-/**
- * @augments
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
-
-/**
- * @augments
- */
-class A {
-  /**
-   * @param foo
-   */
-  quux (foo) {
-
-  }
-}
-
-/**
- * @extends
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
-
-/**
- * @extends
- */
-class A {
-  /**
-   * @param foo
-   */
-  quux (foo) {
-
-  }
+function quux () {
 }
 ````
 
