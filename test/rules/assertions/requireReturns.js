@@ -138,6 +138,16 @@ export default {
            */
           const quux = (bar) => bar.filter(({ corge }) => corge())
       `
+    },
+    {
+      code: `
+          /**
+           * @inheritdoc
+           */
+          function quux (foo) {
+            return "test"
+          }
+      `
     }
   ]
 };
