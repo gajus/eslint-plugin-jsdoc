@@ -2291,6 +2291,26 @@ function quux (foo) {
 /**
  *
  */
+const foo = () => ({
+  bar: 'baz'
+})
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+const foo = bar=>({ bar })
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+const foo = bar => bar.baz()
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
 function quux (foo) {
 
   return foo;
@@ -2315,6 +2335,29 @@ function quux () {
  */
 function quux () {
 }
+
+/**
+ *
+ */
+function quux (bar) {
+  bar.filter(baz => {
+    return baz.corge();
+  })
+}
+
+/**
+ * @returns Array
+ */
+function quux (bar) {
+  return bar.filter(baz => {
+    return baz.corge();
+  })
+}
+
+/**
+ * @returns Array
+ */
+const quux = (bar) => bar.filter(({ corge }) => corge())
 ````
 
 
