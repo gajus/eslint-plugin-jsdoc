@@ -6,6 +6,14 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
+  // inheritdoc implies that all documentation is inherited
+  // see http://usejsdoc.org/tags-inheritdoc.html
+  //
+  // As we do not know the parent method, we cannot perform any checks.
+  if (utils.hasTag('inheritdoc')) {
+    return;
+  }
+
   const targetTagName = utils.getPreferredTagName('returns');
 
   const jsdocTags = _.filter(jsdoc.tags, {
