@@ -2146,6 +2146,20 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * @returns {undefined}
+ */
+function quux () {
+
+}
+
+/**
+ * @returns {void}
+ */
+function quux () {
+
+}
 ````
 
 
@@ -2358,6 +2372,13 @@ function quux (bar) {
  * @returns Array
  */
 const quux = (bar) => bar.filter(({ corge }) => corge())
+
+/**
+ * @inheritdoc
+ */
+function quux (foo) {
+  return "test"
+}
 ````
 
 
