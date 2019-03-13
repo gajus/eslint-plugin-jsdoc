@@ -60,6 +60,26 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @returns {undefined}
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          function quux () {
+
+          }
+      `
     }
   ]
 };
