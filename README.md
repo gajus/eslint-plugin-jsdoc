@@ -674,6 +674,7 @@ Valid [JSDoc 3 Block Tags](http://usejsdoc.org/#block-tags) are:
 abstract
 access
 alias
+async
 augments
 author
 borrows
@@ -694,6 +695,7 @@ external
 file
 fires
 function
+generator
 global
 hideconstructor
 ignore
@@ -714,6 +716,7 @@ module
 name
 namespace
 override
+package
 param
 private
 property
@@ -734,6 +737,7 @@ type
 typedef
 variation
 version
+yields
 ```
 
 |||
