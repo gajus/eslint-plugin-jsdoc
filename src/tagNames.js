@@ -85,6 +85,7 @@ export default {
   since: [],
   static: [],
   summary: [],
+  template: [],
   this: [],
   throws: [
     'exception'
