@@ -45,6 +45,7 @@ export default {
     'func',
     'method'
   ],
+  generator: [],
   global: [],
   hideconstructor: [],
   ignore: [],
@@ -67,6 +68,7 @@ export default {
   name: [],
   namespace: [],
   override: [],
+  package: [],
   param: [
     'arg',
     'argument'
@@ -95,5 +97,8 @@ export default {
   type: [],
   typedef: [],
   variation: [],
-  version: []
+  version: [],
+  yields: [
+    'yield'
+  ]
 };
