@@ -984,6 +984,15 @@ function quux (foo) {
 // Message: Invalid JSDoc @arg "foo" type "Number".
 
 /**
+ * @returns {Number} foo
+ * @throws {Number} foo
+ */
+function quux () {
+
+}
+// Message: Invalid JSDoc @returns type "Number".
+
+/**
  * @param {(Number|string|Boolean)=} foo
  */
 function quux (foo, bar, baz) {

@@ -10,7 +10,7 @@ const parseComment = (commentNode, indent) => {
       commentParser.PARSERS.parse_tag,
       commentParser.PARSERS.parse_type,
       (str, data) => {
-        if (_.includes(['return', 'returns'], data.tag)) {
+        if (_.includes(['return', 'returns', 'throws', 'exception'], data.tag)) {
           return null;
         }
 

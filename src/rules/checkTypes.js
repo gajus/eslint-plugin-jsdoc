@@ -80,7 +80,9 @@ export default iterateJsdoc(({
           return fixer.replaceText(jsdocNode, sourceCode.getText(jsdocNode).replace('{' + jsdocTag.type + '}', '{' + fixedType + '}'));
         };
 
-        report('Invalid JSDoc @' + jsdocTag.tag + ' "' + jsdocTag.name + '" type "' + invalidType + '".', fix, jsdocTag);
+        const name = jsdocTag.name ? ' "' + jsdocTag.name + '"' : '';
+
+        report('Invalid JSDoc @' + jsdocTag.tag + name + ' type "' + invalidType + '".', fix, jsdocTag);
       });
     }
   });
