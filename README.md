@@ -695,6 +695,7 @@ file
 fires
 function
 global
+hideconstructor
 ignore
 implements
 inheritdoc

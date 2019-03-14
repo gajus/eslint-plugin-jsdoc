@@ -46,6 +46,7 @@ export default {
     'method'
   ],
   global: [],
+  hideconstructor: [],
   ignore: [],
   implements: [],
   inheritdoc: [],
