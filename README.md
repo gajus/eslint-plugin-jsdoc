@@ -2257,6 +2257,12 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Present JSDoc @return declaration but not available return expression in function.
+
+/**
+ * @returns
+ */
+const quux = () => {}
+// Message: Present JSDoc @returns declaration but not available return expression in function.
 ````
 
 The following patterns are not considered problems:
@@ -2291,6 +2297,11 @@ function quux () {
  */
 function quux () {
 }
+
+/**
+ * @returns {*} Foo.
+ */
+const quux = () => foo;
 ````
 
 
