@@ -38,6 +38,20 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+            /**
+             * @returns
+             */
+            const quux = () => {}
+        `,
+      errors: [
+        {
+          line: 2,
+          message: 'Present JSDoc @returns declaration but not available return expression in function.'
+        }
+      ]
     }
   ],
   valid: [
@@ -81,6 +95,14 @@ export default {
            */
           function quux () {
           }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {*} Foo.
+           */
+          const quux = () => foo;
       `
     }
   ]
