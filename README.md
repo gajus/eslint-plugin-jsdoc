@@ -2302,6 +2302,16 @@ function quux () {
  * @returns {*} Foo.
  */
 const quux = () => foo;
+
+/** 
+ * @returns {Promise<void>}
+ */
+async function quux() {}
+
+/** 
+ * @returns {Promise<void>}
+ */
+async () => {}
 ````
 
 

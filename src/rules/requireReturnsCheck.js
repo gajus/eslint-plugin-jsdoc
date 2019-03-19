@@ -24,6 +24,11 @@ export default iterateJsdoc(({
     return;
   }
 
+  // Async function always returns a promise
+  if (functionNode.async) {
+    return;
+  }
+
   if (JSON.stringify(jsdocTags) !== '[]' && voidReturn && sourcecode.indexOf('return') < 1) {
     report('Present JSDoc @' + targetTagName + ' declaration but not available return expression in function.');
   }

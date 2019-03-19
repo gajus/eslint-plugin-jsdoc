@@ -104,6 +104,28 @@ export default {
            */
           const quux = () => foo;
       `
+    },
+    {
+      code: `
+          /** 
+           * @returns {Promise<void>}
+           */
+          async function quux() {}
+      `,
+      parserOptions: {
+        ecmaVersion: 8
+      }
+    },
+    {
+      code: `
+          /** 
+           * @returns {Promise<void>}
+           */
+          async () => {}
+      `,
+      parserOptions: {
+        ecmaVersion: 8
+      }
     }
   ]
 };
