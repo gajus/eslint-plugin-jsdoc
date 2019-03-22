@@ -474,6 +474,20 @@ export default {
             }
           }
       `
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param property
+           */
+          constructor(private property: string) {}
+        }
+      `,
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        sourceType: 'module'
+      }
     }
   ]
 };

@@ -17,6 +17,7 @@
     "@babel/plugin-transform-flow-strip-types": "^7.2.3",
     "@babel/preset-env": "^7.3.1",
     "@babel/register": "^7.0.0",
+    "@typescript-eslint/parser": "^1.5.0",
     "babel-plugin-add-module-exports": "^1.0.0",
     "chai": "^4.2.0",
     "cross-env": "^5.2.0",
@@ -30,7 +31,8 @@
     "mocha": "^6.0.1",
     "npm-run-all": "^4.1.5",
     "rimraf": "^2.6.3",
-    "semantic-release": "^15.13.3"
+    "semantic-release": "^15.13.3",
+    "typescript": "^3.3.4000"
   },
   "engines": {
     "node": ">=4"
