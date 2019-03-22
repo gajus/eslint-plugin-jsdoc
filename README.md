@@ -639,6 +639,13 @@ function quux ([a, b] = []) {
 function assign (employees) {
 
 };
+
+export class SomeClass {
+  /**
+   * @param property
+   */
+  constructor(private property: string) {}
+}
 ````
 
 
@@ -2109,6 +2116,13 @@ class A {
   quux (foo) {
 
   }
+}
+
+export class SomeClass {
+  /**
+   * @param property
+   */
+  constructor(private property: string) {}
 }
 ````
 
