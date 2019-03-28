@@ -843,7 +843,7 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"additionalTagNames":{"customTags":["baz","bar"]}}}
 
-/** 
+/**
  * @abstract
  * @access
  * @alias
@@ -931,9 +931,9 @@ RegExp
 <a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
 #### Why not capital case everything?
 
-Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`. 
+Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`.
 
-Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do. 
+Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do.
 
 So in a sense, there two types of strings in Javascript; `{string}` literals, also called primitives and `{String}` Objects. We use the primitives because it's easier to write and uses less memory. `{String}` and `{string}` are technically both valid, but they are not the same.
 
@@ -1617,6 +1617,8 @@ function quux () {
 
 Requires a hyphen before the `@param` description.
 
+This rule takes one argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -1631,7 +1633,17 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Options: ["always"]
 // Message: There must be a hyphen before @param description.
+
+/**
+ * @param foo - Foo.
+ */
+function quux () {
+
+}
+// Options: ["never"]
+// Message: There must be no hyphen before @param description.
 ````
 
 The following patterns are not considered problems:
@@ -1643,6 +1655,15 @@ The following patterns are not considered problems:
 function quux () {
 
 }
+// Options: ["always"]
+
+/**
+ * @param foo Foo.
+ */
+function quux () {
+
+}
+// Options: ["never"]
 ````
 
 
@@ -2303,12 +2324,12 @@ function quux () {
  */
 const quux = () => foo;
 
-/** 
+/**
  * @returns {Promise<void>}
  */
 async function quux() {}
 
-/** 
+/**
  * @returns {Promise<void>}
  */
 async () => {}
