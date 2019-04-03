@@ -18,6 +18,7 @@ import requireReturnsCheck from './rules/requireReturnsCheck';
 import requireReturnsDescription from './rules/requireReturnsDescription';
 import requireReturnsType from './rules/requireReturnsType';
 import validTypes from './rules/validTypes';
+import requireJSDoc from './rules/requireJSDoc';
 
 export default {
   configs: {
@@ -33,6 +34,7 @@ export default {
         'jsdoc/require-description-complete-sentence': 'off',
         'jsdoc/require-example': 'off',
         'jsdoc/require-hyphen-before-param-description': 'off',
+        'jsdoc/require-jsdoc': 'warn',
         'jsdoc/require-param': 'warn',
         'jsdoc/require-param-description': 'warn',
         'jsdoc/require-param-name': 'warn',
@@ -56,6 +58,7 @@ export default {
     'require-description-complete-sentence': requireDescriptionCompleteSentence,
     'require-example': requireExample,
     'require-hyphen-before-param-description': requireHyphenBeforeParamDescription,
+    'require-jsdoc': requireJSDoc,
     'require-param': requireParam,
     'require-param-description': requireParamDescription,
     'require-param-name': requireParamName,
