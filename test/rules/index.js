@@ -8,6 +8,7 @@ const ruleTester = new RuleTester();
 
 _.forEach([
   'check-examples',
+  'check-indentation',
   'check-param-names',
   'check-tag-names',
   'check-types',

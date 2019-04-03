@@ -1,5 +1,6 @@
 /* eslint-disable import/max-dependencies */
 import checkExamples from './rules/checkExamples';
+import checkIndentation from './rules/checkIndentation';
 import checkParamNames from './rules/checkParamNames';
 import checkTagNames from './rules/checkTagNames';
 import checkTypes from './rules/checkTypes';
@@ -24,6 +25,7 @@ export default {
     recommended: {
       rules: {
         'jsdoc/check-examples': 'off',
+        'jsdoc/check-indentation': 'off',
         'jsdoc/check-param-names': 'warn',
         'jsdoc/check-tag-names': 'warn',
         'jsdoc/check-types': 'warn',
@@ -47,6 +49,7 @@ export default {
   },
   rules: {
     'check-examples': checkExamples,
+    'check-indentation': checkIndentation,
     'check-param-names': checkParamNames,
     'check-tag-names': checkTagNames,
     'check-types': checkTypes,
