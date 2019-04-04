@@ -7,8 +7,11 @@ import config from '../../src';
 const ruleTester = new RuleTester();
 
 _.forEach([
+  'check-alignment',
   'check-examples',
+  'check-indentation',
   'check-param-names',
+  'check-syntax',
   'check-tag-names',
   'check-types',
   'newline-after-description',
@@ -22,6 +25,7 @@ _.forEach([
   'require-param-name',
   'require-param-type',
   'require-returns',
+  'require-returns-check',
   'require-returns-description',
   'require-returns-type',
   'valid-types'

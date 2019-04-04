@@ -6,6 +6,14 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
+  // inheritdoc implies that all documentation is inherited
+  // see http://usejsdoc.org/tags-inheritdoc.html
+  //
+  // As we do not know the parent method, we cannot perform any checks.
+  if (utils.hasTag('inheritdoc')) {
+    return;
+  }
+
   const targetTagName = utils.getPreferredTagName('returns');
 
   const jsdocTags = _.filter(jsdoc.tags, {
@@ -14,11 +22,30 @@ export default iterateJsdoc(({
 
   const sourcecode = utils.getFunctionSourceCode();
 
-  if (JSON.stringify(jsdocTags) === '[]' && sourcecode.indexOf('return') >= 1) {
-    report('Missing JSDoc @' + targetTagName + ' declaration.');
-  }
+  // build a one-liner to test against
+  const flattenedSource = sourcecode.replace(/\r?\n|\r|\s/g, '');
 
-  if (JSON.stringify(jsdocTags) !== '[]' && sourcecode.indexOf('return') < 1) {
-    report('Present JSDoc @' + targetTagName + ' declaration but not available return expression in function.');
+  const startsWithReturn = '(\\)\\s?\\{return)';
+
+  const endsWithReturn = '(return.*\\})';
+
+  const implicitReturn = '(\\s?=>\\s?\\b.*)';
+
+  const implicitObjectReturn = '(\\s?=>\\s?\\(\\{)';
+
+  const matcher = new RegExp([
+    startsWithReturn,
+    endsWithReturn,
+    implicitObjectReturn,
+    implicitReturn
+  ].join('|'), 'gim');
+
+  const positiveTest = (flattenedSource.match(matcher) || []).length > 0;
+
+  const negativeTest = (flattenedSource.match(/(\{.*\{.*return)/gim) || []).length > 0 &&
+    (flattenedSource.match(/(return)/gim) || []).length < 2;
+
+  if (JSON.stringify(jsdocTags) === '[]' && positiveTest && !negativeTest) {
+    report('Missing JSDoc @' + targetTagName + ' declaration.');
   }
 });

@@ -51,6 +51,27 @@ export default {
     {
       code: `
           /**
+           * @returns {Number} foo
+           * @throws {Number} foo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @returns type "Number".'
+        },
+        {
+          line: 4,
+          message: 'Invalid JSDoc @throws type "Number".'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
            * @param {(Number|string|Boolean)=} foo
            */
           function quux (foo, bar, baz) {

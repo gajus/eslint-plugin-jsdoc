@@ -62,7 +62,7 @@ export default iterateJsdoc(({
   exampleCodeRegex = exampleCodeRegex && new RegExp(exampleCodeRegex, '');
   rejectExampleCodeRegex = rejectExampleCodeRegex && new RegExp(rejectExampleCodeRegex, '');
 
-  _.forEach(jsdoc.tags, (tag) => { // eslint-disable-line complexity
+  _.forEach(jsdoc.tags, (tag) => {
     if (tag.tag !== 'example') {
       return;
     }

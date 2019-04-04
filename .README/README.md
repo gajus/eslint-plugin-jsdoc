@@ -14,8 +14,11 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 
 | `eslint-plugin-jsdoc` | `jscs-jsdoc` |
 | --- | --- |
+| [`check-alignment`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-alignment) | N/A |
 | [`check-examples`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-examples) | N/A |
+| [`check-indentation`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-indentation) | N/A |
 | [`check-param-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names) | [`checkParamNames`](https://github.com/jscs-dev/jscs-jsdoc#checkparamnames) |
+| [`check-syntax`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-syntax) | N/A |
 | [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
 | [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
@@ -28,6 +31,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | [`require-param-name`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-name) | N/A |
 | [`require-param-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type) | [`requireParamTypes`](https://github.com/jscs-dev/jscs-jsdoc#requireparamtypes) |
 | [`require-returns`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns) | [`requireReturn`](https://github.com/jscs-dev/jscs-jsdoc#requirereturn) |
+| [`require-returns-check`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-check) | [`requireReturn`](https://github.com/jscs-dev/jscs-jsdoc#requirereturncheck) |
 | [`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-description) | [`requireReturnDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirereturndescription) |
 | [`require-returns-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-type) | [`requireReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#requirereturntypes) |
 | [`valid-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-valid-types) | N/A |
@@ -70,8 +74,11 @@ Finally, enable all of the rules that you would like to use.
 ```json
 {
     "rules": {
+        "jsdoc/check-alignment": 1,
         "jsdoc/check-examples": 1,
+        "jsdoc/check-indentation": 1,
         "jsdoc/check-param-names": 1,
+        "jsdoc/check-syntax": 1,
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
@@ -85,6 +92,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-param-name": 1,
         "jsdoc/require-param-type": 1,
         "jsdoc/require-returns": 1,
+        "jsdoc/require-returns-check": 1,
         "jsdoc/require-returns-description": 1,
         "jsdoc/require-returns-type": 1,
         "jsdoc/valid-types": 1
@@ -243,8 +251,11 @@ Finally, the following rule pertains to inline disable directives:
 
 ## Rules
 
+{"gitdown": "include", "file": "./rules/check-alignment.md"}
 {"gitdown": "include", "file": "./rules/check-examples.md"}
+{"gitdown": "include", "file": "./rules/check-indentation.md"}
 {"gitdown": "include", "file": "./rules/check-param-names.md"}
+{"gitdown": "include", "file": "./rules/check-syntax.md"}
 {"gitdown": "include", "file": "./rules/check-tag-names.md"}
 {"gitdown": "include", "file": "./rules/check-types.md"}
 {"gitdown": "include", "file": "./rules/newline-after-description.md"}
@@ -259,5 +270,6 @@ Finally, the following rule pertains to inline disable directives:
 {"gitdown": "include", "file": "./rules/require-param.md"}
 {"gitdown": "include", "file": "./rules/require-returns-description.md"}
 {"gitdown": "include", "file": "./rules/require-returns-type.md"}
+{"gitdown": "include", "file": "./rules/require-returns-check.md"}
 {"gitdown": "include", "file": "./rules/require-returns.md"}
 {"gitdown": "include", "file": "./rules/valid-types.md"}
