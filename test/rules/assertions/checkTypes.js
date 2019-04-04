@@ -157,6 +157,24 @@ export default {
           function qux(foo) {
           }
       `
-    }
+    },
+    {
+      code: `
+          /**
+           * @param {(x: number, y: string) => string} foo
+           */
+          function qux(foo) {
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @param {() => string} foo
+           */
+          function qux(foo) {
+          }
+      `
+    },
   ]
 };
