@@ -1,6 +1,7 @@
 /* eslint-disable import/max-dependencies */
 import checkExamples from './rules/checkExamples';
 import checkParamNames from './rules/checkParamNames';
+import checkSyntax from './rules/checkSyntax';
 import checkTagNames from './rules/checkTagNames';
 import checkTypes from './rules/checkTypes';
 import newlineAfterDescription from './rules/newlineAfterDescription';
@@ -25,6 +26,7 @@ export default {
       rules: {
         'jsdoc/check-examples': 'off',
         'jsdoc/check-param-names': 'warn',
+        'jsdoc/check-syntax': 'off',
         'jsdoc/check-tag-names': 'warn',
         'jsdoc/check-types': 'warn',
         'jsdoc/newline-after-description': 'warn',
@@ -48,6 +50,7 @@ export default {
   rules: {
     'check-examples': checkExamples,
     'check-param-names': checkParamNames,
+    'check-syntax': checkSyntax,
     'check-tag-names': checkTagNames,
     'check-types': checkTypes,
     'newline-after-description': newlineAfterDescription,
