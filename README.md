@@ -19,6 +19,7 @@ JSDoc linting rules for ESLint.
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-examples`](#eslint-plugin-jsdoc-rules-check-examples)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
+        * [`check-syntax`](#eslint-plugin-jsdoc-rules-check-syntax)
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
@@ -47,6 +48,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | --- | --- |
 | [`check-examples`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-examples) | N/A |
 | [`check-param-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names) | [`checkParamNames`](https://github.com/jscs-dev/jscs-jsdoc#checkparamnames) |
+| [`check-syntax`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-syntax) | N/A |
 | [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
 | [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
@@ -106,6 +108,7 @@ Finally, enable all of the rules that you would like to use.
     "rules": {
         "jsdoc/check-examples": 1,
         "jsdoc/check-param-names": 1,
+        "jsdoc/check-syntax": 1,
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
@@ -662,6 +665,40 @@ function quux ({
 `{a, b}` is an [`ObjectPattern`](https://github.com/estree/estree/blob/master/es2015.md#objectpattern) AST type and does not have a name. Therefore, the associated parameter in JSDoc block can have any name.
 
 Likewise for the pattern `[a, b]` which is an [`ArrayPattern`](https://github.com/estree/estree/blob/master/es2015.md#arraypattern).
+
+<a name="eslint-plugin-jsdoc-rules-check-syntax"></a>
+### <code>check-syntax</code>
+
+Reports against Google Closure Compiler syntax.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|N/A|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @param {string=} foo
+ */
+function quux (foo) {
+
+}
+// Message: Syntax should not be Google Closure Compiler style.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @param {string} [foo]
+ */
+function quux (foo) {
+
+}
+````
+
 
 <a name="eslint-plugin-jsdoc-rules-check-tag-names"></a>
 ### <code>check-tag-names</code>
