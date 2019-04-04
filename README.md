@@ -19,6 +19,7 @@ JSDoc linting rules for ESLint.
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-alignment`](#eslint-plugin-jsdoc-rules-check-alignment)
         * [`check-examples`](#eslint-plugin-jsdoc-rules-check-examples)
+        * [`check-indentation`](#eslint-plugin-jsdoc-rules-check-indentation)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
         * [`check-syntax`](#eslint-plugin-jsdoc-rules-check-syntax)
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
@@ -49,6 +50,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 | --- | --- |
 | [`check-alignment`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-alignment) | N/A |
 | [`check-examples`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-examples) | N/A |
+| [`check-indentation`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-indentation) | N/A |
 | [`check-param-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names) | [`checkParamNames`](https://github.com/jscs-dev/jscs-jsdoc#checkparamnames) |
 | [`check-syntax`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-syntax) | N/A |
 | [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
@@ -110,6 +112,7 @@ Finally, enable all of the rules that you would like to use.
     "rules": {
         "jsdoc/check-alignment": 1,
         "jsdoc/check-examples": 1,
+        "jsdoc/check-indentation": 1,
         "jsdoc/check-param-names": 1,
         "jsdoc/check-syntax": 1,
         "jsdoc/check-tag-names": 1,
@@ -569,6 +572,46 @@ function quux () {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
+````
+
+
+<a name="eslint-plugin-jsdoc-rules-check-indentation"></a>
+### <code>check-indentation</code>
+
+Reports invalid padding inside JSDoc block.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|N/A|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * foo
+ *
+ * @param bar
+ *  baz
+ */
+function quux () {
+
+}
+// Message: There must be no indentation.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * foo
+ *
+ * @param bar
+ * baz
+ */
+function quux () {
+
+}
 ````
 
 

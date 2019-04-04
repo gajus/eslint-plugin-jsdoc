@@ -9,6 +9,7 @@ const ruleTester = new RuleTester();
 _.forEach([
   'check-alignment',
   'check-examples',
+  'check-indentation',
   'check-param-names',
   'check-syntax',
   'check-tag-names',

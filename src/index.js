@@ -1,6 +1,7 @@
 /* eslint-disable import/max-dependencies */
 import checkAlignment from './rules/checkAlignment';
 import checkExamples from './rules/checkExamples';
+import checkIndentation from './rules/checkIndentation';
 import checkParamNames from './rules/checkParamNames';
 import checkSyntax from './rules/checkSyntax';
 import checkTagNames from './rules/checkTagNames';
@@ -27,6 +28,7 @@ export default {
       rules: {
         'jsdoc/check-alignment': 'warn',
         'jsdoc/check-examples': 'off',
+        'jsdoc/check-indentation': 'off',
         'jsdoc/check-param-names': 'warn',
         'jsdoc/check-syntax': 'off',
         'jsdoc/check-tag-names': 'warn',
@@ -52,6 +54,7 @@ export default {
   rules: {
     'check-alignment': checkAlignment,
     'check-examples': checkExamples,
+    'check-indentation': checkIndentation,
     'check-param-names': checkParamNames,
     'check-syntax': checkSyntax,
     'check-tag-names': checkTagNames,
