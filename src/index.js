@@ -1,4 +1,5 @@
 /* eslint-disable import/max-dependencies */
+import checkAlignment from './rules/checkAlignment';
 import checkExamples from './rules/checkExamples';
 import checkParamNames from './rules/checkParamNames';
 import checkSyntax from './rules/checkSyntax';
@@ -24,6 +25,7 @@ export default {
   configs: {
     recommended: {
       rules: {
+        'jsdoc/check-alignment': 'warn',
         'jsdoc/check-examples': 'off',
         'jsdoc/check-param-names': 'warn',
         'jsdoc/check-syntax': 'off',
@@ -48,6 +50,7 @@ export default {
     }
   },
   rules: {
+    'check-alignment': checkAlignment,
     'check-examples': checkExamples,
     'check-param-names': checkParamNames,
     'check-syntax': checkSyntax,

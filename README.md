@@ -17,6 +17,7 @@ JSDoc linting rules for ESLint.
         * [Allow `@override` Without Accompanying `@param` Tags](#eslint-plugin-jsdoc-settings-allow-override-without-accompanying-param-tags)
         * [Settings to Configure `check-examples`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-examples)
     * [Rules](#eslint-plugin-jsdoc-rules)
+        * [`check-alignment`](#eslint-plugin-jsdoc-rules-check-alignment)
         * [`check-examples`](#eslint-plugin-jsdoc-rules-check-examples)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
         * [`check-syntax`](#eslint-plugin-jsdoc-rules-check-syntax)
@@ -46,6 +47,7 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 
 | `eslint-plugin-jsdoc` | `jscs-jsdoc` |
 | --- | --- |
+| [`check-alignment`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-alignment) | N/A |
 | [`check-examples`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-examples) | N/A |
 | [`check-param-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names) | [`checkParamNames`](https://github.com/jscs-dev/jscs-jsdoc#checkparamnames) |
 | [`check-syntax`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-syntax) | N/A |
@@ -106,6 +108,7 @@ Finally, enable all of the rules that you would like to use.
 ```json
 {
     "rules": {
+        "jsdoc/check-alignment": 1,
         "jsdoc/check-examples": 1,
         "jsdoc/check-param-names": 1,
         "jsdoc/check-syntax": 1,
@@ -287,6 +290,87 @@ Finally, the following rule pertains to inline disable directives:
 
 <a name="eslint-plugin-jsdoc-rules"></a>
 ## Rules
+
+<a name="eslint-plugin-jsdoc-rules-check-alignment"></a>
+### <code>check-alignment</code>
+
+Reports invalid alignment of JSDoc block asterisks.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|N/A|
+
+The following patterns are considered problems:
+
+````js
+/**
+  * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+ * @param {Number} foo
+  */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+  * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc block to be aligned.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * Desc
+ *
+ * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * Desc
+ *
+ * @param {{
+  foo: Bar,
+  bar: Baz
+ * }} foo
+ *
+ */
+function quux (foo) {
+
+}
+````
+
 
 <a name="eslint-plugin-jsdoc-rules-check-examples"></a>
 ### <code>check-examples</code>
