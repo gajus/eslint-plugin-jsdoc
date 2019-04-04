@@ -376,7 +376,7 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
-// Message: @example error (semi): Extra semicolon.
+// Message: @example error (no-undef): 'quux' is not defined.
 
 /**
  * @example <caption>Valid usage</caption>
@@ -1018,6 +1018,30 @@ function quux (foo, bar, baz) {
  */
 function quux (foo, bar, baz) {
 
+}
+
+/**
+ * @param {typeof bar} foo
+ */
+function qux(foo) {
+}
+
+/**
+ * @param {import('./foo').bar.baz} foo
+ */
+function qux(foo) {
+}
+
+/**
+ * @param {(x: number, y: string) => string} foo
+ */
+function qux(foo) {
+}
+
+/**
+ * @param {() => string} foo
+ */
+function qux(foo) {
 }
 ````
 
@@ -2215,298 +2239,36 @@ The following patterns are considered problems:
  */
 function quux (foo) {
 
+  return foo;
 }
-// Message: Missing JSDoc @param "foo" declaration.
+// Message: Missing JSDoc @returns declaration.
 
 /**
  *
  */
 function quux (foo) {
 
+  return foo;
 }
-// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
-// Message: Missing JSDoc @arg "foo" declaration.
-
-/**
- * @param foo
- */
-function quux (foo, bar) {
-
-}
-// Message: Missing JSDoc @param "bar" declaration.
-
-/**
- * @override
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @implements
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @augments
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @extends
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @override
- */
-class A {
-  /**
-    *
-    */
-  quux (foo) {
-
-  }
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @implements
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @augments
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @extends
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Message: Missing JSDoc @param "foo" declaration.
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
+// Message: Missing JSDoc @return declaration.
 ````
 
 The following patterns are not considered problems:
 
 ````js
 /**
- * @param foo
+ * @returns Foo.
  */
-function quux (foo) {
+function quux () {
 
+  return foo;
 }
 
 /**
- * @inheritdoc
+ *
  */
-function quux (foo) {
-
-}
-
-/**
- * @arg foo
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
-
-/**
- * @override
- * @param foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @override
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
-
-/**
- * @implements
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":true}}
-
-/**
- * @implements
- * @param foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @augments
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
-
-/**
- * @augments
- * @param foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @extends
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
-
-/**
- * @extends
- * @param foo
- */
-function quux (foo) {
-
-}
-
-/**
- * @override
- */
-class A {
-  /**
-  * @param foo
-  */
-  quux (foo) {
-
-  }
-}
-
-/**
- * @override
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
-
-/**
- * @implements
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":true}}
-
-/**
- * @implements
- */
-class A {
-  /**
-   * @param foo
-   */
-  quux (foo) {
-
-  }
-}
-
-/**
- * @augments
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
-
-/**
- * @augments
- */
-class A {
-  /**
-   * @param foo
-   */
-  quux (foo) {
-
-  }
-}
-
-/**
- * @extends
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
-
-/**
- * @extends
- */
-class A {
-  /**
-   * @param foo
-   */
-  quux (foo) {
-
-  }
+function quux () {
 }
 ````
 
