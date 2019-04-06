@@ -5,7 +5,7 @@
 
 /* eslint-disable sort-keys */
 /* The meta information is well defined and has a fixed structure.
-   Sorting the keys does not destroys this natural structure and creates confusion. */
+   Sorting the keys destroys this natural structure. */
 
 const OPTIONS_SCHEMA = {
   type: 'object',
