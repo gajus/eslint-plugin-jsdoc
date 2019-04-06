@@ -1,6 +1,9 @@
-//
-// This file was adopted from the eslint project
-//
+/**
+ * This file was adopted/ported from the eslint project:
+ *   https://github.com/eslint/eslint/blob/master/tests/lib/rules/require-jsdoc.js
+ *
+ * It was originally licensed under MIT.
+ */
 
 export default {
   invalid: [
