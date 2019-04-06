@@ -71,7 +71,8 @@ export default {
   package: [],
   param: [
     'arg',
-    'argument'
+    'argument',
+    'parameter'
   ],
   private: [],
   property: [
