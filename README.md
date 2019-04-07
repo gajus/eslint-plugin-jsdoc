@@ -2648,7 +2648,18 @@ const quux = (bar) => bar.filter(({ corge }) => corge())
  * @inheritdoc
  */
 function quux (foo) {
-  return "test"
+}
+
+/**
+ * @override
+ */
+function quux (foo) {
+}
+
+/**
+ * @constructor
+ */
+function quux (foo) {
 }
 ````
 
