@@ -148,6 +148,37 @@ export default {
             return "test"
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @override
+           */
+          function quux (foo) {
+
+            return foo;
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @class
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @constructor
+           */
+          function quux (foo) {
+
+          }
+      `
     }
   ]
 };
