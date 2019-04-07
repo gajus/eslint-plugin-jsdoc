@@ -2712,6 +2712,14 @@ const quux = async function () {}
  */
 const quux = async () => {}
 // Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:
@@ -2852,6 +2860,15 @@ function quux () {
 const quux = () => {
 
 }
+
+class Foo {
+  /**
+   *
+   */
+  constructor () {
+  }
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
 ````
 
 
