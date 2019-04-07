@@ -12,7 +12,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Present JSDoc @returns declaration but not available return expression in function.'
+          message: 'JSDoc @returns declaration present but return expression not available in function.'
         }
       ]
     },
@@ -28,7 +28,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Present JSDoc @return declaration but not available return expression in function.'
+          message: 'JSDoc @return declaration present but return expression not available in function.'
         }
       ],
       settings: {
@@ -49,7 +49,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Present JSDoc @returns declaration but not available return expression in function.'
+          message: 'JSDoc @returns declaration present but return expression not available in function.'
         }
       ]
     },
@@ -87,7 +87,7 @@ export default {
     {
       code: `
           /**
-           * @returns {void} Foo.
+           * @returns {string} Foo.
            */
           function quux () {
 
@@ -98,7 +98,7 @@ export default {
     {
       code: `
           /**
-           * @returns {undefined} Foo.
+           * @returns {string} Foo.
            */
           function quux () {
 
@@ -169,6 +169,45 @@ export default {
            */
           function quux () {
             throw new Error('must be implemented by subclass!');
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns Foo.
+           * @virtual
+           */
+          function quux () {
+            throw new Error('must be implemented by subclass!');
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns Foo.
+           * @constructor
+           */
+          function quux () {
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {undefined} Foo.
+           */
+          function quux () {
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {void} Foo.
+           */
+          function quux () {
           }
       `
     }

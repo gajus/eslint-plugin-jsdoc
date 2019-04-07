@@ -143,6 +143,10 @@ const curryUtils = (
     ], tag.tag);
   };
 
+  utils.isArrowExpression = () => {
+    return functionNode.type === 'ArrowFunctionExpression' && functionNode.expression;
+  };
+
   utils.getClassJsdocNode = () => {
     const greatGrandParent = ancestors.slice(-3)[0];
     const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;

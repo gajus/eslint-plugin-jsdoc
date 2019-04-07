@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
@@ -6,12 +7,30 @@ export default iterateJsdoc(({
   node,
   utils
 }) => {
-  // Implicit return like `() => foo` is ok
-  if (node.type === 'ArrowFunctionExpression' && node.expression) {
+  if (utils.hasATag([
+    // An abstract function is by definition incomplete
+    // so it is perfectly fine if the return is missing.
+    // A subclass may inherit the doc and implement the
+    // missing return.
+    'abstract',
+    'virtual',
+
+    // A constructor function returns `this` by default
+    'constructor'
+  ])) {
     return;
   }
 
-  // Async function always returns a promise
+  if (utils.isConstructor()) {
+    return;
+  }
+
+  // Implicit return like `() => foo` is ok
+  if (utils.isArrowExpression()) {
+    return;
+  }
+
+  // Async function always returns a `Promise`
   if (node.async) {
     return;
   }
@@ -43,21 +62,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  // An abstract function is by definition incomplete
-  // so it is perfectly fine if the return is missing
-  // a subclass may inherits the doc an implements the
-  // missing return.
-  const isAbstract = jsdoc.tags.some((item) => {
-    return item.tag === utils.getPreferredTagName('abstract');
-  });
-
-  if (isAbstract) {
-    return;
-  }
-
   const sourcecode = utils.getFunctionSourceCode();
 
-  if (sourcecode.indexOf('return') === -1) {
-    report('Present JSDoc @' + targetTagName + ' declaration but not available return expression in function.');
+  if (!_.includes(sourcecode, 'return')) {
+    report('JSDoc @' + targetTagName + ' declaration present but return expression not available in function.');
   }
 });
