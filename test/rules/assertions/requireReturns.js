@@ -84,6 +84,26 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
     }
   ],
   valid: [
@@ -282,6 +302,22 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+      class Foo {
+        /**
+         *
+         */
+        constructor () {
+        }
+      }
+      `,
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
     }
   ]
 };

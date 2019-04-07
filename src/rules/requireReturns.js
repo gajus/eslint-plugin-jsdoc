@@ -315,7 +315,9 @@ export default iterateJsdoc(({
   }
 
   // In case the code returns something, we expect a return value in JSDoc.
-  if (!hasReturnTag(tags[0], functionNode) && hasReturnValue(functionNode, context)) {
+  if (!hasReturnTag(tags[0], functionNode) && (
+    utils.isForceRequireReturn() || hasReturnValue(functionNode, context)
+  )) {
     report('Missing JSDoc @' + tagName + ' declaration.');
   }
 });

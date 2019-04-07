@@ -41,6 +41,7 @@ const curryUtils = (
   allowImplementsWithoutParam,
   allowAugmentsExtendsWithoutParam,
   checkSeesForNamepaths,
+  forceRequireReturn,
   ancestors,
   sourceCode
 ) => {
@@ -143,21 +144,24 @@ const curryUtils = (
     ], tag.tag);
   };
 
-  utils.getClassJsdocNode = () => {
+  utils.isForceRequireReturn = () => {
+    return forceRequireReturn;
+  };
+
+  utils.getClassNode = () => {
     const greatGrandParent = ancestors.slice(-3)[0];
     const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;
 
     if (greatGrandParentValue === 'class') {
-      const classJsdocNode = sourceCode.getJSDocComment(greatGrandParent);
-
-      return classJsdocNode;
+      return greatGrandParent;
     }
 
     return false;
   };
 
   utils.classHasTag = (tagName) => {
-    const classJsdocNode = utils.getClassJsdocNode();
+    const classNode = utils.getClassNode();
+    const classJsdocNode = sourceCode.getJSDocComment(classNode);
 
     if (classJsdocNode) {
       const indent = _.repeat(' ', classJsdocNode.loc.start.column);
@@ -198,6 +202,7 @@ export default (iterator) => {
     const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
     const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
     const checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
+    const forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
 
     const checkJsdoc = (functionNode) => {
       const jsdocNode = sourceCode.getJSDocComment(functionNode);
@@ -265,6 +270,7 @@ export default (iterator) => {
         allowImplementsWithoutParam,
         allowAugmentsExtendsWithoutParam,
         checkSeesForNamepaths,
+        forceRequireReturn,
         ancestors,
         sourceCode
       );
