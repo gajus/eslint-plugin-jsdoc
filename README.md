@@ -2048,6 +2048,15 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+class Foo {
+  /**
+   *
+   */
+  constructor () {
+  }
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
 ````
 
 
@@ -2646,6 +2655,14 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return declaration.
+
+/**
+ *
+ */
+function quux () {
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:
