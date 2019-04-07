@@ -2515,7 +2515,7 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
-// Message: Present JSDoc @returns declaration but not available return expression in function.
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
  * @return
@@ -2524,13 +2524,13 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
-// Message: Present JSDoc @return declaration but not available return expression in function.
+// Message: JSDoc @return declaration present but return expression not available in function.
 
 /**
  * @returns
  */
 const quux = () => {}
-// Message: Present JSDoc @returns declaration but not available return expression in function.
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
  * @returns {undefined} Foo.
@@ -2555,7 +2555,7 @@ function quux () {
 }
 
 /**
- * @returns {void} Foo.
+ * @returns {string} Foo.
  */
 function quux () {
 
@@ -2563,7 +2563,7 @@ function quux () {
 }
 
 /**
- * @returns {undefined} Foo.
+ * @returns {string} Foo.
  */
 function quux () {
 
@@ -2607,6 +2607,33 @@ async () => {}
  */
 function quux () {
   throw new Error('must be implemented by subclass!');
+}
+
+/**
+ * @returns Foo.
+ * @virtual
+ */
+function quux () {
+  throw new Error('must be implemented by subclass!');
+}
+
+/**
+ * @returns Foo.
+ * @constructor
+ */
+function quux () {
+}
+
+/**
+ * @returns {undefined} Foo.
+ */
+function quux () {
+}
+
+/**
+ * @returns {void} Foo.
+ */
+function quux () {
 }
 ````
 
