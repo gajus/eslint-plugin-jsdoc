@@ -48,8 +48,12 @@ const curryUtils = (
     return jsdocUtils.getFunctionParameterNames(functionNode);
   };
 
-  utils.getFunctionSourceCode = function () {
+  utils.getFunctionSourceCode = () => {
     return sourceCode.getText(functionNode);
+  };
+
+  utils.isConstructor = () => {
+    return functionNode.parent && functionNode.parent.kind === 'constructor';
   };
 
   utils.getJsdocParameterNamesDeep = () => {
@@ -78,6 +82,10 @@ const curryUtils = (
 
   utils.isValidTag = (name) => {
     return jsdocUtils.isValidTag(name, additionalTagNames);
+  };
+
+  utils.hasATag = (name) => {
+    return jsdocUtils.hasATag(jsdoc, name);
   };
 
   utils.hasTag = (name) => {
@@ -124,20 +132,28 @@ const curryUtils = (
     return allowAugmentsExtendsWithoutParam;
   };
 
-  utils.classHasTag = (tagName) => {
+  utils.getClassJsdocNode = () => {
     const greatGrandParent = ancestors.slice(-3)[0];
     const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;
 
     if (greatGrandParentValue === 'class') {
       const classJsdocNode = sourceCode.getJSDocComment(greatGrandParent);
 
-      if (classJsdocNode) {
-        const indent = _.repeat(' ', classJsdocNode.loc.start.column);
-        const classJsdoc = parseComment(classJsdocNode, indent);
+      return classJsdocNode;
+    }
 
-        if (jsdocUtils.hasTag(classJsdoc, tagName)) {
-          return true;
-        }
+    return false;
+  };
+
+  utils.classHasTag = (tagName) => {
+    const classJsdocNode = utils.getClassJsdocNode();
+
+    if (classJsdocNode) {
+      const indent = _.repeat(' ', classJsdocNode.loc.start.column);
+      const classJsdoc = parseComment(classJsdocNode, indent);
+
+      if (jsdocUtils.hasTag(classJsdoc, tagName)) {
+        return true;
       }
     }
 
