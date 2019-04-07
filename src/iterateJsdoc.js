@@ -41,6 +41,7 @@ const curryUtils = (
   allowImplementsWithoutParam,
   allowAugmentsExtendsWithoutParam,
   checkSeesForNamepaths,
+  forceRequireReturn,
   ancestors,
   sourceCode,
   context
@@ -166,6 +167,10 @@ const curryUtils = (
     });
   };
 
+  utils.isForceRequireReturn = () => {
+    return forceRequireReturn;
+  };
+
   utils.getClassJsdocNode = () => {
     const greatGrandParent = ancestors.slice(-3)[0];
     const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;
@@ -233,6 +238,7 @@ export default (iterator, options) => {
       const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
       const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
       const checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
+      const forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
 
       const checkJsdoc = (node) => {
         const jsdocNode = sourceCode.getJSDocComment(node);
@@ -300,6 +306,7 @@ export default (iterator, options) => {
           allowImplementsWithoutParam,
           allowAugmentsExtendsWithoutParam,
           checkSeesForNamepaths,
+          forceRequireReturn,
           ancestors,
           sourceCode
         );
