@@ -279,22 +279,22 @@ const canSkip = (utils) => {
   // But as we do not know the parent method, we cannot perform any checks.
   // So we bail out there instead of returning false positives.
   if (utils.hasTag('inheritdoc') || utils.hasTag('override')) {
-    return false;
+    return true;
   }
 
   // Different Tag similar story. Abstract methods are by definition in complete.
   // So it is not an error if it declares a return value but does not implement it.
   if (utils.hasTag('abstract') || utils.hasTag('virtual')) {
-    return false;
+    return true;
   }
 
   // Constructors do not have a return value by definition (http://usejsdoc.org/tags-class.html)
   // So we can bail out here, too.
   if (utils.hasTag('class') || utils.hasTag('constructor')) {
-    return false;
+    return true;
   }
 
-  return true;
+  return false;
 };
 
 export default iterateJsdoc(({
