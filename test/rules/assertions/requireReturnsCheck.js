@@ -125,7 +125,23 @@ export default {
     },
     {
       code: `
-          /** 
+          /**
+           * @returns {undefined} Foo.
+           */
+          function quux () {}
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns { void } Foo.
+           */
+          function quux () {}
+      `
+    },
+    {
+      code: `
+          /**
            * @returns {Promise<void>}
            */
           async function quux() {}
@@ -136,7 +152,7 @@ export default {
     },
     {
       code: `
-          /** 
+          /**
            * @returns {Promise<void>}
            */
           async () => {}
@@ -147,7 +163,7 @@ export default {
     },
     {
       code: `
-          /** 
+          /**
            * @returns Foo.
            * @abstract
            */

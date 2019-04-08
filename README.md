@@ -2531,17 +2531,27 @@ function quux () {
  */
 const quux = () => foo;
 
-/** 
+/**
+ * @returns {undefined} Foo.
+ */
+function quux () {}
+
+/**
+ * @returns { void } Foo.
+ */
+function quux () {}
+
+/**
  * @returns {Promise<void>}
  */
 async function quux() {}
 
-/** 
+/**
  * @returns {Promise<void>}
  */
 async () => {}
 
-/** 
+/**
  * @returns Foo.
  * @abstract
  */
