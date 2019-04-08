@@ -86,11 +86,18 @@ const hasTag = (jsdoc : Object, targetTagName : string) : boolean => {
   });
 };
 
+const hasATag = (jsdoc : Object, targetTagNames : Array) : boolean => {
+  return targetTagNames.some((targetTagName) => {
+    return hasTag(jsdoc, targetTagName);
+  });
+};
+
 export default {
   getFunctionParameterNames,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,
   getPreferredTagName,
+  hasATag,
   hasTag,
   isValidTag
 };

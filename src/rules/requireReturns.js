@@ -6,11 +6,21 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
-  // inheritdoc implies that all documentation is inherited
-  // see http://usejsdoc.org/tags-inheritdoc.html
-  //
-  // As we do not know the parent method, we cannot perform any checks.
-  if (utils.hasTag('inheritdoc')) {
+  if (utils.hasATag([
+    // inheritdoc implies that all documentation is inherited
+    // see http://usejsdoc.org/tags-inheritdoc.html
+    //
+    // As we do not know the parent method, we cannot perform any checks.
+    'inheritdoc',
+    'override',
+
+    // A constructor function is assumed to return a class instance
+    'constructor'
+  ])) {
+    return;
+  }
+
+  if (utils.isConstructor()) {
     return;
   }
 
