@@ -198,6 +198,31 @@ The format of the configuration is as follows:
 }
 ```
 
+### Settings to Configure `check-types` and `no-undefined-types`
+
+- `settings.jsdoc.preferredTypes` An option map to indicate preferred
+  or forbidden types (if default types are indicated here, these will
+  have precedence over the default recommendations for `check-types`).
+  The keys of this map are the types to be replaced (or forbidden) and
+  can include the "ANY" type, `*`.
+  The values can be:
+  - `false` to forbid the type
+  - a string to indicate the type that should be preferred in its place
+    (and which `fix` mode can replace)
+  - an object with the key `message` to provide a specific error message
+    when encountering the discouraged type and, if a type is to be preferred
+    in its place, the key `replacement` to indicate the type that should be
+    used in its place (and which `fix` mode can replace) or `false` if
+    forbidding the type. The message string will have the following
+    substrings with special meaning replaced with their corresponding
+    value (`{{tagName}}`, `{{tagValue}}`, `{{badType}}`, and
+    `{{preferredType}}`, noting that the latter is of no use when one is
+    merely forbidding a type).
+
+If `no-undefined-types` has the option key `preferredTypesDefined` set to
+`true`, the preferred types indicated in the `settings.jsdoc.preferredTypes`
+map will be assumed to be defined.
+
 ### Settings to Configure `valid-types`
 
 * `settings.jsdoc.allowEmptyNamepaths` - Set to `false` to disallow

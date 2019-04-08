@@ -18,6 +18,7 @@ JSDoc linting rules for ESLint.
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [Additional Tag Names](#eslint-plugin-jsdoc-settings-additional-tag-names)
         * [Allow `@override` Without Accompanying `@param` Tags](#eslint-plugin-jsdoc-settings-allow-override-without-accompanying-param-tags)
+        * [Settings to Configure `check-types` and `no-undefined-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types)
         * [Settings to Configure `valid-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-valid-types)
         * [Settings to Configure `require-returns`](#eslint-plugin-jsdoc-settings-settings-to-configure-require-returns)
         * [Settings to Configure `require-example`](#eslint-plugin-jsdoc-settings-settings-to-configure-require-example)
@@ -248,6 +249,32 @@ The format of the configuration is as follows:
     }
 }
 ```
+
+<a name="eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types"></a>
+### Settings to Configure <code>check-types</code> and <code>no-undefined-types</code>
+
+- `settings.jsdoc.preferredTypes` An option map to indicate preferred
+  or forbidden types (if default types are indicated here, these will
+  have precedence over the default recommendations for `check-types`).
+  The keys of this map are the types to be replaced (or forbidden) and
+  can include the "ANY" type, `*`.
+  The values can be:
+  - `false` to forbid the type
+  - a string to indicate the type that should be preferred in its place
+    (and which `fix` mode can replace)
+  - an object with the key `message` to provide a specific error message
+    when encountering the discouraged type and, if a type is to be preferred
+    in its place, the key `replacement` to indicate the type that should be
+    used in its place (and which `fix` mode can replace) or `false` if
+    forbidding the type. The message string will have the following
+    substrings with special meaning replaced with their corresponding
+    value (`{{tagName}}`, `{{tagValue}}`, `{{badType}}`, and
+    `{{preferredType}}`, noting that the latter is of no use when one is
+    merely forbidding a type).
+
+If `no-undefined-types` has the option key `preferredTypesDefined` set to
+`true`, the preferred types indicated in the `settings.jsdoc.preferredTypes`
+map will be assumed to be defined.
 
 <a name="eslint-plugin-jsdoc-settings-settings-to-configure-valid-types"></a>
 ### Settings to Configure <code>valid-types</code>
@@ -1213,7 +1240,7 @@ function quux (foo) {}
 
 Reports invalid types.
 
-Ensures that case of native types is the same as in this list:
+By default, ensures that case of native types is the same as in this list:
 
 ```
 undefined
@@ -1226,6 +1253,18 @@ Array
 Date
 RegExp
 ```
+
+<a name="eslint-plugin-jsdoc-rules-check-types-options"></a>
+#### Options
+
+`check-types` allows one option:
+
+- An option object with the key `noDefaults` to insist that only the
+  supplied option type map is to be used, and that the default preferences
+  (such as "string" over "String") will not be enforced.
+
+See also the documentation on `settings.jsdoc.preferredTypes` which impacts
+the behavior of `check-types`.
 
 <a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
 #### Why not capital case everything?
@@ -1274,7 +1313,7 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
-// Message: Invalid JSDoc @param "foo" type "Number".
+// Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
 
 /**
  * @arg {Number} foo
@@ -1282,7 +1321,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Invalid JSDoc @arg "foo" type "Number".
+// Message: Invalid JSDoc @arg "foo" type "Number"; prefer: "number".
 
 /**
  * @returns {Number} foo
@@ -1291,7 +1330,7 @@ function quux (foo) {
 function quux () {
 
 }
-// Message: Invalid JSDoc @returns type "Number".
+// Message: Invalid JSDoc @returns type "Number"; prefer: "number".
 
 /**
  * @param {(Number|string|Boolean)=} foo
@@ -1299,7 +1338,7 @@ function quux () {
 function quux (foo, bar, baz) {
 
 }
-// Message: Invalid JSDoc @param "foo" type "Number".
+// Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
 
 /**
  * @param {Array<Number|String>} foo
@@ -1307,7 +1346,117 @@ function quux (foo, bar, baz) {
 function quux (foo, bar, baz) {
 
 }
-// Message: Invalid JSDoc @param "foo" type "Number".
+// Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
+
+/**
+ * @param {abc} foo
+ */
+function qux(foo) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
+// Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
+
+/**
+ * @param {abc} foo
+ */
+function qux(foo) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"replacement":"Abc"},"string":"Str"}}}
+// Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
+
+/**
+ * @param {abc} foo
+ */
+function qux(foo) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{preferredType}}\".","replacement":"Abc"},"string":"Str"}}}
+// Message: Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".
+
+/**
+ * @param {abc} foo
+ * @param {cde} bar
+ * @param {Object} baz
+ */
+function qux(foo, bar, baz) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{preferredType}}\".","replacement":"Abc"},"cde":{"message":"More messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{preferredType}}\".","replacement":"Cde"},"Object":"object"}}}
+// Message: Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".
+
+/**
+ * @param {abc} foo
+ */
+function qux(foo) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\".","replacement":false},"string":"Str"}}}
+// Message: Messed up JSDoc @param "foo" type "abc".
+
+/**
+ * @param {abc} foo
+ */
+function qux(foo) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"."},"string":"Str"}}}
+// Message: Messed up JSDoc @param "foo" type "abc".
+
+/**
+ * @param {abc} foo
+ * @param {Number} bar
+ */
+function qux(foo, bar) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
+// Options: [{"noDefaults":true}]
+// Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
+
+/**
+ * @param {abc} foo
+ * @param {Number} bar
+ */
+function qux(foo, bar) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
+// Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
+
+/**
+ * @param {abc} foo
+ */
+function qux(foo) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":false,"string":"Str"}}}
+// Message: Invalid JSDoc @param "foo" type "abc".
+
+/**
+ * @param {abc} foo
+ */
+function qux(foo) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":false}}}
+// Message: Invalid JSDoc @param "foo" type "abc".
+
+/**
+ * @param {*} baz
+ */
+function qux(baz) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"*":false,"abc":"Abc","string":"Str"}}}
+// Message: Invalid JSDoc @param "baz" type "*".
+
+/**
+ * @param {*} baz
+ */
+function qux(baz) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"*":"aaa","abc":"Abc","string":"Str"}}}
+// Message: Invalid JSDoc @param "baz" type "*"; prefer: "aaa".
+
+/**
+ * @param {abc} foo
+ * @param {Number} bar
+ */
+function qux(foo, bar) {
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
+// Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
 ````
 
 The following patterns are not considered problems:
@@ -1361,6 +1510,23 @@ function qux(foo) {
  */
 function qux(foo) {
 }
+
+/**
+ * @returns {Number} foo
+ * @throws {Number} foo
+ */
+function quux () {
+
+}
+// Options: [{"noDefaults":true}]
+
+/**
+ * @param {object} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Object":"object"}}}
 ````
 
 
@@ -1891,10 +2057,30 @@ unimported types.
 When enabling this rule, types in jsdoc comments will resolve as used
 variables, i.e. will not be marked as unused by `no-unused-vars`.
 
-The following tags will be checked for name(paths) definitions to also serve
-as a potential "type" for checking the tag types in the table below:
+In addition to considering globals found in code (or in ESLint-indicated
+`globals`) as defined, the following tags will also be checked for
+name(path) definitions to also serve as a potential "type" for checking
+the tag types in the table below:
 
 `callback`, `class` (or `constructor`), `constant` (or `const`), `event`, `external` (or `host`), `function` (or `func` or `method`), `interface`, `member` (or `var`), `mixin`, `name`, `namespace`, `typedef`.
+
+The following types are always considered defined.
+
+- `null`, `undefined`, `string`, `boolean`
+- `number`, `NaN`, `Infinity`
+- `any`, `*`
+- `Array`, `Object`, `RegExp`, `Date`, `Function`
+
+<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-1"></a>
+#### Options
+
+An option object may have the following keys:
+
+- `preferredTypesDefined` -  If this option is set to `true` and preferred
+  types are indicated within `settings.jsdoc.preferredTypes`, any such
+  types will be assumed to be defined as well.
+- `definedTypes` - This array can be populated to indicate other types which
+  are automatically considered as defined (in addition to globals, etc.)
 
 |||
 |---|---|
@@ -1913,6 +2099,40 @@ function quux(foo) {
 
 }
 // Message: The type 'strnig' is undefined.
+
+/**
+* @param {MyType} foo - Bar.
+* @param {HisType} bar - Foo.
+*/
+function quux(foo, bar) {
+
+}
+// Options: [{"definedTypes":["MyType"]}]
+// Message: The type 'HisType' is undefined.
+
+/**
+  * @param {MyType} foo - Bar.
+  * @param {HisType} bar - Foo.
+  * @param {HerType} baz - Foo.
+  */
+function quux(foo, bar, baz) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"}}}}
+// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+// Message: The type 'HisType' is undefined.
+
+/**
+  * @param {MyType} foo - Bar.
+  * @param {HisType} bar - Foo.
+  * @param {HerType} baz - Foo.
+  */
+function quux(foo, bar, baz) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":false},"histype":"HisType"}}}
+// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+// Message: The type 'HerType' is undefined.
 ````
 
 The following patterns are not considered problems:
@@ -2023,6 +2243,26 @@ function testFunction(callback) {
 function foo () {
 
 }
+
+/**
+* @param {MyType} foo - Bar.
+* @param {HisType} bar - Foo.
+*/
+function quux(foo, bar) {
+
+}
+// Options: [{"definedTypes":["MyType","HisType"]}]
+
+/**
+  * @param {MyType} foo - Bar.
+  * @param {HisType} bar - Foo.
+  * @param {HerType} baz - Foo.
+  */
+function quux(foo, bar, baz) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"},"histype":"HisType"}}}
+// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
 ````
 
 
@@ -2300,7 +2540,7 @@ Requires that all functions have a description.
 * All functions must have a `@description` tag.
 * Every description tag must have a non-empty description that explains the purpose of the method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-2"></a>
 #### Options
 
 - `contexts` - Set to a string or array of strings representing the AST context

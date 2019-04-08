@@ -18,6 +18,89 @@ export default {
       rules: {
         'no-undef': 'error'
       }
+    },
+    {
+      code: `
+        /**
+         * @param {MyType} foo - Bar.
+         * @param {HisType} bar - Foo.
+         */
+         function quux(foo, bar) {
+
+         }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'HisType\' is undefined.'
+        }
+      ],
+      options: [{
+        definedTypes: ['MyType']
+      }]
+    },
+    {
+      code: `
+        /**
+         * @param {MyType} foo - Bar.
+         * @param {HisType} bar - Foo.
+         * @param {HerType} baz - Foo.
+         */
+       function quux(foo, bar, baz) {
+
+       }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'HisType\' is undefined.'
+        }
+      ],
+      options: [{
+        definedTypes: ['MyType'],
+        preferredTypesDefined: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            hertype: {
+              replacement: 'HerType'
+            }
+          }
+        }
+      }
+    },
+    {
+      code: `
+        /**
+         * @param {MyType} foo - Bar.
+         * @param {HisType} bar - Foo.
+         * @param {HerType} baz - Foo.
+         */
+       function quux(foo, bar, baz) {
+
+       }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'The type \'HerType\' is undefined.'
+        }
+      ],
+      options: [{
+        definedTypes: ['MyType'],
+        preferredTypesDefined: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            hertype: {
+              replacement: false
+            },
+            histype: 'HisType'
+          }
+        }
+      }
     }
   ],
   valid: [
@@ -177,6 +260,46 @@ export default {
 
       }
       `
+    },
+    {
+      code: `
+        /**
+         * @param {MyType} foo - Bar.
+         * @param {HisType} bar - Foo.
+         */
+         function quux(foo, bar) {
+
+         }
+      `,
+      options: [{
+        definedTypes: ['MyType', 'HisType']
+      }]
+    },
+    {
+      code: `
+        /**
+         * @param {MyType} foo - Bar.
+         * @param {HisType} bar - Foo.
+         * @param {HerType} baz - Foo.
+         */
+       function quux(foo, bar, baz) {
+
+       }
+      `,
+      options: [{
+        definedTypes: ['MyType'],
+        preferredTypesDefined: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            hertype: {
+              replacement: 'HerType'
+            },
+            histype: 'HisType'
+          }
+        }
+      }
     }
   ]
 };
