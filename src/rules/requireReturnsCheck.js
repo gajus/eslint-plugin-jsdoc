@@ -37,6 +37,12 @@ export default iterateJsdoc(({
     return;
   }
 
+  const returnsTagType = jsdocTags[0].type && jsdocTags[0].type.trim();
+
+  if (returnsTagType === 'void' || returnsTagType === 'undefined') {
+    return;
+  }
+
   // An abstract function is by definition incomplete
   // so it is perfectly fine if the return is missing
   // a subclass may inherits the doc an implements the
