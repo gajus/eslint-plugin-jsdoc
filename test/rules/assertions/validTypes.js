@@ -47,6 +47,16 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @see {@link foo}
+           */
+          function quux() {
+
+          }
+      `
     }
   ]
 };
