@@ -2719,6 +2719,13 @@ function quux() {
 function quux() {
 
 }
+
+/**
+ * @see {@link foo}
+ */
+function quux() {
+
+}
 ````
 
 
