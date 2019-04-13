@@ -71,7 +71,8 @@ export default {
   package: [],
   param: [
     'arg',
-    'argument'
+    'argument',
+    'parameter'
   ],
   private: [],
   property: [
@@ -88,6 +89,7 @@ export default {
   since: [],
   static: [],
   summary: [],
+  template: [],
   this: [],
   throws: [
     'exception'

@@ -17,8 +17,11 @@ JSDoc linting rules for ESLint.
         * [Allow `@override` Without Accompanying `@param` Tags](#eslint-plugin-jsdoc-settings-allow-override-without-accompanying-param-tags)
         * [Settings to Configure `check-examples`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-examples)
     * [Rules](#eslint-plugin-jsdoc-rules)
+        * [`check-alignment`](#eslint-plugin-jsdoc-rules-check-alignment)
         * [`check-examples`](#eslint-plugin-jsdoc-rules-check-examples)
+        * [`check-indentation`](#eslint-plugin-jsdoc-rules-check-indentation)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
+        * [`check-syntax`](#eslint-plugin-jsdoc-rules-check-syntax)
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
@@ -45,8 +48,11 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 
 | `eslint-plugin-jsdoc` | `jscs-jsdoc` |
 | --- | --- |
+| [`check-alignment`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-alignment) | N/A |
 | [`check-examples`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-examples) | N/A |
+| [`check-indentation`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-indentation) | N/A |
 | [`check-param-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names) | [`checkParamNames`](https://github.com/jscs-dev/jscs-jsdoc#checkparamnames) |
+| [`check-syntax`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-syntax) | N/A |
 | [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
 | [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
 | [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
@@ -104,8 +110,11 @@ Finally, enable all of the rules that you would like to use.
 ```json
 {
     "rules": {
+        "jsdoc/check-alignment": 1,
         "jsdoc/check-examples": 1,
+        "jsdoc/check-indentation": 1,
         "jsdoc/check-param-names": 1,
+        "jsdoc/check-syntax": 1,
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
         "jsdoc/newline-after-description": 1,
@@ -284,6 +293,87 @@ Finally, the following rule pertains to inline disable directives:
 
 <a name="eslint-plugin-jsdoc-rules"></a>
 ## Rules
+
+<a name="eslint-plugin-jsdoc-rules-check-alignment"></a>
+### <code>check-alignment</code>
+
+Reports invalid alignment of JSDoc block asterisks.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|N/A|
+
+The following patterns are considered problems:
+
+````js
+/**
+  * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+ * @param {Number} foo
+  */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+  * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc block to be aligned.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * Desc
+ *
+ * @param {Number} foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * Desc
+ *
+ * @param {{
+  foo: Bar,
+  bar: Baz
+ * }} foo
+ *
+ */
+function quux (foo) {
+
+}
+````
+
 
 <a name="eslint-plugin-jsdoc-rules-check-examples"></a>
 ### <code>check-examples</code>
@@ -485,6 +575,46 @@ function quux () {}
 ````
 
 
+<a name="eslint-plugin-jsdoc-rules-check-indentation"></a>
+### <code>check-indentation</code>
+
+Reports invalid padding inside JSDoc block.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|N/A|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * foo
+ *
+ * @param bar
+ *  baz
+ */
+function quux () {
+
+}
+// Message: There must be no indentation.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * foo
+ *
+ * @param bar
+ * baz
+ */
+function quux () {
+
+}
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-check-param-names"></a>
 ### <code>check-param-names</code>
 
@@ -670,6 +800,40 @@ function quux ({
 
 Likewise for the pattern `[a, b]` which is an [`ArrayPattern`](https://github.com/estree/estree/blob/master/es2015.md#arraypattern).
 
+<a name="eslint-plugin-jsdoc-rules-check-syntax"></a>
+### <code>check-syntax</code>
+
+Reports against Google Closure Compiler syntax.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|N/A|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @param {string=} foo
+ */
+function quux (foo) {
+
+}
+// Message: Syntax should not be Google Closure Compiler style.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @param {string} [foo]
+ */
+function quux (foo) {
+
+}
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-check-tag-names"></a>
 ### <code>check-tag-names</code>
 
@@ -787,6 +951,15 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"parameter"}}}
+// Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "parameter".
 
 /**
  * @bar foo
@@ -1042,6 +1215,30 @@ function quux (foo, bar, baz) {
  */
 function quux (foo, bar, baz) {
 
+}
+
+/**
+ * @param {typeof bar} foo
+ */
+function qux(foo) {
+}
+
+/**
+ * @param {import('./foo').bar.baz} foo
+ */
+function qux(foo) {
+}
+
+/**
+ * @param {(x: number, y: string) => string} foo
+ */
+function qux(foo) {
+}
+
+/**
+ * @param {() => string} foo
+ */
+function qux(foo) {
 }
 ````
 
@@ -1624,6 +1821,8 @@ function quux () {
 
 Requires a hyphen before the `@param` description.
 
+This rule takes one argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -1638,7 +1837,17 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Options: ["always"]
 // Message: There must be a hyphen before @param description.
+
+/**
+ * @param foo - Foo.
+ */
+function quux () {
+
+}
+// Options: ["never"]
+// Message: There must be no hyphen before @param description.
 ````
 
 The following patterns are not considered problems:
@@ -1650,6 +1859,15 @@ The following patterns are not considered problems:
 function quux () {
 
 }
+// Options: ["always"]
+
+/**
+ * @param foo Foo.
+ */
+function quux () {
+
+}
+// Options: ["never"]
 ````
 
 
@@ -2277,6 +2495,16 @@ function quux (foo) {
  */
 const quux = () => {}
 // Message: Present JSDoc @returns declaration but not available return expression in function.
+
+/**
+ * @returns {undefined} Foo.
+ * @returns {String} Foo.
+ */
+function quux () {
+
+  return foo;
+}
+// Message: Found more than one @returns declaration.
 ````
 
 The following patterns are not considered problems:
@@ -2317,15 +2545,33 @@ function quux () {
  */
 const quux = () => foo;
 
-/** 
+/**
+ * @returns {undefined} Foo.
+ */
+function quux () {}
+
+/**
+ * @returns { void } Foo.
+ */
+function quux () {}
+
+/**
  * @returns {Promise<void>}
  */
 async function quux() {}
 
-/** 
+/**
  * @returns {Promise<void>}
  */
 async () => {}
+
+/**
+ * @returns Foo.
+ * @abstract
+ */
+function quux () {
+  throw new Error('must be implemented by subclass!');
+}
 ````
 
 
@@ -2426,7 +2672,18 @@ const quux = (bar) => bar.filter(({ corge }) => corge())
  * @inheritdoc
  */
 function quux (foo) {
-  return "test"
+}
+
+/**
+ * @override
+ */
+function quux (foo) {
+}
+
+/**
+ * @constructor
+ */
+function quux (foo) {
 }
 ````
 
@@ -2472,6 +2729,13 @@ function quux() {
 
 /**
  * @param foo
+ */
+function quux() {
+
+}
+
+/**
+ * @see {@link foo}
  */
 function quux() {
 

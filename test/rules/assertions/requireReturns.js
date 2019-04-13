@@ -145,7 +145,24 @@ export default {
            * @inheritdoc
            */
           function quux (foo) {
-            return "test"
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @override
+           */
+          function quux (foo) {
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @constructor
+           */
+          function quux (foo) {
           }
       `
     }

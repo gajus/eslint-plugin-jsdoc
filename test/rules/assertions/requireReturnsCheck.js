@@ -52,6 +52,24 @@ export default {
           message: 'Present JSDoc @returns declaration but not available return expression in function.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @returns {undefined} Foo.
+           * @returns {String} Foo.
+           */
+          function quux () {
+
+            return foo;
+          }
+        `,
+      errors: [
+        {
+          line: 2,
+          message: 'Found more than one @returns declaration.'
+        }
+      ]
     }
   ],
   valid: [
@@ -107,7 +125,23 @@ export default {
     },
     {
       code: `
-          /** 
+          /**
+           * @returns {undefined} Foo.
+           */
+          function quux () {}
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns { void } Foo.
+           */
+          function quux () {}
+      `
+    },
+    {
+      code: `
+          /**
            * @returns {Promise<void>}
            */
           async function quux() {}
@@ -118,7 +152,7 @@ export default {
     },
     {
       code: `
-          /** 
+          /**
            * @returns {Promise<void>}
            */
           async () => {}
@@ -126,6 +160,17 @@ export default {
       parserOptions: {
         ecmaVersion: 8
       }
+    },
+    {
+      code: `
+          /**
+           * @returns Foo.
+           * @abstract
+           */
+          function quux () {
+            throw new Error('must be implemented by subclass!');
+          }
+      `
     }
   ]
 };
