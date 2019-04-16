@@ -4,7 +4,7 @@ export default iterateJsdoc(({
   jsdoc,
   report
 }) => {
-  if (!jsdoc.tags.length) {
+  if (!jsdoc.tags) {
     return;
   }
 

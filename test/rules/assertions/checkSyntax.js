@@ -26,6 +26,16 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }
+      `
     }
   ]
 };
