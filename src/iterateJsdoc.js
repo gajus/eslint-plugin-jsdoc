@@ -34,11 +34,13 @@ const curryUtils = (
   matchingFileName,
   eslintrcForExamples,
   allowInlineConfig,
+  allowEmptyNamepaths,
   reportUnusedDisableDirectives,
   noDefaultExampleRules,
   allowOverrideWithoutParam,
   allowImplementsWithoutParam,
   allowAugmentsExtendsWithoutParam,
+  checkSeesForNamepaths,
   ancestors,
   sourceCode
 ) => {
@@ -131,6 +133,15 @@ const curryUtils = (
   utils.isAugmentsExtendsAllowedWithoutParam = () => {
     return allowAugmentsExtendsWithoutParam;
   };
+  utils.isNamepathType = (tagName) => {
+    return jsdocUtils.isNamepathType(tagName, checkSeesForNamepaths);
+  };
+  utils.passesEmptyNamepathCheck = (tag) => {
+    return !tag.name && allowEmptyNamepaths && _.includes([
+      // These may serve some minor purpose when empty
+      'callback', 'event', 'listens', 'fires', 'emits'
+    ], tag.tag);
+  };
 
   utils.getClassJsdocNode = () => {
     const greatGrandParent = ancestors.slice(-3)[0];
@@ -179,12 +190,14 @@ export default (iterator) => {
     const configFile = _.get(context, 'settings.jsdoc.configFile');
     const eslintrcForExamples = _.get(context, 'settings.jsdoc.eslintrcForExamples') !== false;
     const allowInlineConfig = _.get(context, 'settings.jsdoc.allowInlineConfig') !== false;
+    const allowEmptyNamepaths = _.get(context, 'settings.jsdoc.allowEmptyNamepaths') !== false;
     const reportUnusedDisableDirectives = _.get(context, 'settings.jsdoc.reportUnusedDisableDirectives') !== false;
     const captionRequired = Boolean(_.get(context, 'settings.jsdoc.captionRequired'));
     const noDefaultExampleRules = Boolean(_.get(context, 'settings.jsdoc.noDefaultExampleRules'));
     const allowOverrideWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowOverrideWithoutParam'));
     const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
     const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
+    const checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
 
     const checkJsdoc = (functionNode) => {
       const jsdocNode = sourceCode.getJSDocComment(functionNode);
@@ -245,11 +258,13 @@ export default (iterator) => {
         matchingFileName,
         eslintrcForExamples,
         allowInlineConfig,
+        allowEmptyNamepaths,
         reportUnusedDisableDirectives,
         noDefaultExampleRules,
         allowOverrideWithoutParam,
         allowImplementsWithoutParam,
         allowAugmentsExtendsWithoutParam,
+        checkSeesForNamepaths,
         ancestors,
         sourceCode
       );

@@ -824,6 +824,13 @@ The following patterns are not considered problems:
 function quux (foo) {
 
 }
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
 ````
 
 
@@ -874,6 +881,7 @@ license
 listens
 member
 memberof
+memberof!
 mixes
 mixin
 module
@@ -993,6 +1001,13 @@ function quux (foo) {
 }
 
 /**
+ * @memberof! foo
+ */
+function quux (foo) {
+
+}
+
+/**
  * @arg foo
  */
 function quux (foo) {
@@ -1053,6 +1068,7 @@ function quux (foo) {
  * @listens
  * @member
  * @memberof
+ * @memberof!
  * @mixes
  * @mixin
  * @module
@@ -2694,6 +2710,56 @@ function quux() {
 
 }
 // Message: Syntax error in type: Array<string
+
+/**
+ * @borrows foo% as bar
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: foo%
+
+/**
+ * @borrows foo as bar%
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: bar%
+
+/**
+ * @borrows foo
+ */
+function quux() {
+
+}
+// Message: @borrows must have an "as" expression. Found ""
+
+/**
+ * @see foo%
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"checkSeesForNamepaths":true}}
+// Message: Syntax error in type: foo%
+
+/**
+ * @alias module:abc#event:foo-bar
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: module:abc#event:foo-bar
+
+/**
+ * @callback
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"allowEmptyNamepaths":false}}
+// Message: Syntax error in type: 
 ````
 
 The following patterns are not considered problems:
@@ -2715,6 +2781,34 @@ function quux() {
 
 /**
  * @param foo
+ */
+function quux() {
+
+}
+
+/**
+ * @borrows foo as bar
+ */
+function quux() {
+
+}
+
+/**
+ * @see foo%
+ */
+function quux() {
+
+}
+
+/**
+ * @alias module:svgcanvas.SvgCanvas#event:ext_langReady
+ */
+function quux() {
+
+}
+
+/**
+ * @callback
  */
 function quux() {
 
