@@ -44,6 +44,7 @@ license
 listens
 member
 memberof
+memberof!
 mixes
 mixin
 module
