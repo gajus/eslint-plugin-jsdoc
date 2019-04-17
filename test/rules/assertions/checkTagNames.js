@@ -176,6 +176,16 @@ export default {
     {
       code: `
           /**
+           * @memberof! foo
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
            * @arg foo
            */
           function quux (foo) {

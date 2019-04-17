@@ -62,6 +62,7 @@ export default {
     'var'
   ],
   memberof: [],
+  'memberof!': [],
   mixes: [],
   mixin: [],
   module: [],
