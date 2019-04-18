@@ -1,6 +1,3 @@
-// The requireJDDoc rule at eslint is deprecated and won't get any bugfixes anymore.
-// Thus this method implements a compatible requireJSDoc rule.
-
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
   properties: {
