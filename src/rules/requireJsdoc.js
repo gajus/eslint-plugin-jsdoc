@@ -1,7 +1,5 @@
-//
 // The requireJDDoc rule at eslint is deprecated and won't get any bugfixes anymore.
 // Thus this method implements a compatible requireJSDoc rule.
-//
 
 /* eslint-disable sort-keys */
 /* The meta information is well defined and has a fixed structure.
