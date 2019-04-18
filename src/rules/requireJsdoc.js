@@ -1,18 +1,12 @@
 // The requireJDDoc rule at eslint is deprecated and won't get any bugfixes anymore.
 // Thus this method implements a compatible requireJSDoc rule.
 
-/* eslint-disable sort-keys */
-/* The meta information is well defined and has a fixed structure.
-   Sorting the keys destroys this natural structure. */
-
 const OPTIONS_SCHEMA = {
-  type: 'object',
   additionalProperties: false,
   properties: {
     require: {
-      type: 'object',
-      default: {},
       additionalProperties: false,
+      default: {},
       properties: {
         ArrowFunctionExpression: {
           default: false,
@@ -34,9 +28,11 @@ const OPTIONS_SCHEMA = {
           default: false,
           type: 'boolean'
         }
-      }
+      },
+      type: 'object'
     }
-  }
+  },
+  type: 'object'
 };
 
 const getOption = (context, key) => {
@@ -79,26 +75,6 @@ const checkJsDoc = (context, node) => {
 };
 
 export default {
-
-  meta: {
-    type: 'suggestion',
-
-    doc: {
-      description: 'Require JSDoc comments',
-      category: 'Stylistic Issues',
-      recommended: 'true',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc'
-    },
-
-    schema: [
-      OPTIONS_SCHEMA
-    ],
-
-    messages: {
-      missingJsDoc: 'Missing JSDoc comment.'
-    }
-  },
-
   /**
    * The entrypoint for the JSDoc rule.
    *
@@ -160,5 +136,24 @@ export default {
         }
       }
     };
+  },
+
+  meta: {
+    doc: {
+      category: 'Stylistic Issues',
+      description: 'Require JSDoc comments',
+      recommended: 'true',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc'
+    },
+
+    messages: {
+      missingJsDoc: 'Missing JSDoc comment.'
+    },
+
+    schema: [
+      OPTIONS_SCHEMA
+    ],
+
+    type: 'suggestion'
   }
 };
