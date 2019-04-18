@@ -21,7 +21,7 @@ import requireReturnsCheck from './rules/requireReturnsCheck';
 import requireReturnsDescription from './rules/requireReturnsDescription';
 import requireReturnsType from './rules/requireReturnsType';
 import validTypes from './rules/validTypes';
-import requireJSDoc from './rules/requireJSDoc';
+import requireJsdoc from './rules/requireJsdoc';
 
 export default {
   configs: {
@@ -67,7 +67,7 @@ export default {
     'require-description-complete-sentence': requireDescriptionCompleteSentence,
     'require-example': requireExample,
     'require-hyphen-before-param-description': requireHyphenBeforeParamDescription,
-    'require-jsdoc': requireJSDoc,
+    'require-jsdoc': requireJsdoc,
     'require-param': requireParam,
     'require-param-description': requireParamDescription,
     'require-param-name': requireParamName,
