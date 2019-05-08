@@ -117,6 +117,24 @@ export default {
 
         }
       `
+    },
+    {
+      code: `
+      /**
+       * Callback test.
+       *
+       * @callback addStuffCallback
+       * @param {String} sum - An test integer.
+       */
+      /**
+       * Test Eslint.
+       *
+       * @param {addStuffCallback} callback - A callback to run.
+       */
+      function testFunction(callback) {
+        callback();
+      }
+      `
     }
   ]
 };
