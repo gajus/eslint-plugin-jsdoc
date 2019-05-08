@@ -2,7 +2,25 @@ import _ from 'lodash';
 import {parse as parseType, traverse} from 'jsdoctypeparser';
 import iterateJsdoc, {parseComment} from '../iterateJsdoc';
 
-const extraTypes = ['string', 'number', 'boolean', 'any', '*'];
+const extraTypes = [
+  'null', 'undefined', 'string', 'number', 'boolean', 'any', '*',
+  'Array', 'Object', 'RegExp', 'Date', 'Function'
+];
+const tagsWithNames = [
+  'callback',
+  'class', 'constructor',
+  'constant', 'const',
+  'event',
+  'external', 'host',
+  'function', 'func', 'method',
+  'interface',
+  'member', 'var',
+  'mixin',
+  'name',
+  'namespace',
+  'type',
+  'typedef'
+];
 
 export default iterateJsdoc(({
   context,
@@ -20,7 +38,7 @@ export default iterateJsdoc(({
     .map(parseComment)
     .flatMap((doc) => {
       return (doc.tags || []).filter((tag) => {
-        return tag.tag === 'typedef';
+        return _.includes(tagsWithNames, tag.tag);
       });
     })
     .map((tag) => {
