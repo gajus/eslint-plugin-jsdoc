@@ -31,6 +31,8 @@ const targetTagAliases = [
 targetTags = targetTags.concat(targetTagAliases);
 
 const strictNativeTypes = [
+  'undefined',
+  'null',
   'boolean',
   'number',
   'string',
