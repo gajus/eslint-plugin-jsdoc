@@ -47,7 +47,7 @@ export default {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "param".'
         }
       ]
@@ -63,7 +63,7 @@ export default {
       `,
       errors: [
         {
-          line: 3,
+          line: 2,
           message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".'
         }
       ],
@@ -71,6 +71,29 @@ export default {
         jsdoc: {
           tagNamePreference: {
             param: 'arg'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "parameter".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            param: 'parameter'
           }
         }
       }
@@ -144,6 +167,16 @@ export default {
       code: `
           /**
            * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @memberof! foo
            */
           function quux (foo) {
 

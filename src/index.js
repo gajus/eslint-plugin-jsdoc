@@ -1,6 +1,9 @@
 /* eslint-disable import/max-dependencies */
+import checkAlignment from './rules/checkAlignment';
 import checkExamples from './rules/checkExamples';
+import checkIndentation from './rules/checkIndentation';
 import checkParamNames from './rules/checkParamNames';
+import checkSyntax from './rules/checkSyntax';
 import checkTagNames from './rules/checkTagNames';
 import checkTypes from './rules/checkTypes';
 import newlineAfterDescription from './rules/newlineAfterDescription';
@@ -18,13 +21,17 @@ import requireReturnsCheck from './rules/requireReturnsCheck';
 import requireReturnsDescription from './rules/requireReturnsDescription';
 import requireReturnsType from './rules/requireReturnsType';
 import validTypes from './rules/validTypes';
+import requireJsdoc from './rules/requireJsdoc';
 
 export default {
   configs: {
     recommended: {
       rules: {
+        'jsdoc/check-alignment': 'warn',
         'jsdoc/check-examples': 'off',
+        'jsdoc/check-indentation': 'off',
         'jsdoc/check-param-names': 'warn',
+        'jsdoc/check-syntax': 'off',
         'jsdoc/check-tag-names': 'warn',
         'jsdoc/check-types': 'warn',
         'jsdoc/newline-after-description': 'warn',
@@ -33,6 +40,7 @@ export default {
         'jsdoc/require-description-complete-sentence': 'off',
         'jsdoc/require-example': 'off',
         'jsdoc/require-hyphen-before-param-description': 'off',
+        'jsdoc/require-jsdoc': 'warn',
         'jsdoc/require-param': 'warn',
         'jsdoc/require-param-description': 'warn',
         'jsdoc/require-param-name': 'warn',
@@ -46,8 +54,11 @@ export default {
     }
   },
   rules: {
+    'check-alignment': checkAlignment,
     'check-examples': checkExamples,
+    'check-indentation': checkIndentation,
     'check-param-names': checkParamNames,
+    'check-syntax': checkSyntax,
     'check-tag-names': checkTagNames,
     'check-types': checkTypes,
     'newline-after-description': newlineAfterDescription,
@@ -56,6 +67,7 @@ export default {
     'require-description-complete-sentence': requireDescriptionCompleteSentence,
     'require-example': requireExample,
     'require-hyphen-before-param-description': requireHyphenBeforeParamDescription,
+    'require-jsdoc': requireJsdoc,
     'require-param': requireParam,
     'require-param-description': requireParamDescription,
     'require-param-name': requireParamName,

@@ -35,6 +35,7 @@ export default [
   'listens',
   'member',
   'memberof',
+  'memberof!',
   'mixes',
   'mixin',
   'module',

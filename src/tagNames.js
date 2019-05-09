@@ -45,7 +45,9 @@ export default {
     'func',
     'method'
   ],
+  generator: [],
   global: [],
+  hideconstructor: [],
   ignore: [],
   implements: [],
   inheritdoc: [],
@@ -60,15 +62,18 @@ export default {
     'var'
   ],
   memberof: [],
+  'memberof!': [],
   mixes: [],
   mixin: [],
   module: [],
   name: [],
   namespace: [],
   override: [],
+  package: [],
   param: [
     'arg',
-    'argument'
+    'argument',
+    'parameter'
   ],
   private: [],
   property: [
@@ -85,6 +90,7 @@ export default {
   since: [],
   static: [],
   summary: [],
+  template: [],
   this: [],
   throws: [
     'exception'
@@ -94,5 +100,8 @@ export default {
   type: [],
   typedef: [],
   variation: [],
-  version: []
+  version: [],
+  yields: [
+    'yield'
+  ]
 };

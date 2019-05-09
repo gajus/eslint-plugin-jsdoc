@@ -6,6 +6,24 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
+  if (utils.hasATag([
+    // inheritdoc implies that all documentation is inherited
+    // see http://usejsdoc.org/tags-inheritdoc.html
+    //
+    // As we do not know the parent method, we cannot perform any checks.
+    'inheritdoc',
+    'override',
+
+    // A constructor function is assumed to return a class instance
+    'constructor'
+  ])) {
+    return;
+  }
+
+  if (utils.isConstructor()) {
+    return;
+  }
+
   const targetTagName = utils.getPreferredTagName('returns');
 
   const jsdocTags = _.filter(jsdoc.tags, {

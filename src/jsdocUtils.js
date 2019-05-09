@@ -86,11 +86,42 @@ const hasTag = (jsdoc : Object, targetTagName : string) : boolean => {
   });
 };
 
+const hasATag = (jsdoc : Object, targetTagNames : Array) : boolean => {
+  return targetTagNames.some((targetTagName) => {
+    return hasTag(jsdoc, targetTagName);
+  });
+};
+
+const namepathAsNameTags = [
+  'alias',
+  'augments',
+  'callback',
+  'extends',
+  'lends',
+  'memberof',
+  'memberof!',
+  'mixes',
+  'name',
+  'this',
+
+  'emits',
+  'event',
+  'fires',
+  'listens'
+];
+
+const isNamepathType = (tagName, checkSeesForNamepaths) => {
+  return _.includes(namepathAsNameTags, tagName) ||
+    tagName === 'see' && checkSeesForNamepaths;
+};
+
 export default {
   getFunctionParameterNames,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,
   getPreferredTagName,
+  hasATag,
   hasTag,
+  isNamepathType,
   isValidTag
 };
