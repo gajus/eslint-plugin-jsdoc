@@ -1,7 +1,7 @@
 <a name="eslint-plugin-jsdoc"></a>
 # eslint-plugin-jsdoc
 
-[![GitSpo Mentions](https://gitspo.com/badges/gajus/eslint-plugin-jsdoc?style=flat-square)](https://gitspo.com/mentions/gajus/eslint-plugin-jsdoc)
+[![GitSpo Mentions](https://gitspo.com/badges/mentions/gajus/eslint-plugin-jsdoc?style=flat-square)](https://gitspo.com/mentions/gajus/eslint-plugin-jsdoc)
 [![NPM version](http://img.shields.io/npm/v/eslint-plugin-jsdoc.svg?style=flat-square)](https://www.npmjs.org/package/eslint-plugin-jsdoc)
 [![Travis build status](http://img.shields.io/travis/gajus/eslint-plugin-jsdoc/master.svg?style=flat-square)](https://travis-ci.org/gajus/eslint-plugin-jsdoc)
 [![js-canonical-style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
@@ -1109,6 +1109,8 @@ Reports invalid types.
 Ensures that case of native types is the same as in this list:
 
 ```
+undefined
+null
 boolean
 number
 string
@@ -1121,9 +1123,9 @@ RegExp
 <a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
 #### Why not capital case everything?
 
-Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`. 
+Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`.
 
-Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do. 
+Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do.
 
 So in a sense, there two types of strings in Javascript; `{string}` literals, also called primitives and `{String}` Objects. We use the primitives because it's easier to write and uses less memory. `{String}` and `{string}` are technically both valid, but they are not the same.
 
@@ -1427,6 +1429,21 @@ function quux(foo) {
  */
 function quux(foo) {
 
+}
+
+/**
+ * Callback test.
+ *
+ * @callback addStuffCallback
+ * @param {String} sum - An test integer.
+ */
+/**
+ * Test Eslint.
+ *
+ * @param {addStuffCallback} callback - A callback to run.
+ */
+function testFunction(callback) {
+  callback();
 }
 ````
 
@@ -2695,6 +2712,18 @@ function quux (foo) {
 ### <code>valid-types</code>
 
 Requires all types to be valid JSDoc or Closure compiler types without syntax errors.
+
+Also impacts behaviors on namepath-pointing or event-pointing tags:
+
+1.  `@alias`, `@augments`, `@extends`, `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@name`, `@this`
+1.  `@callback`, `@event`, `@listens`, `@fires`, `@emits`
+1.  `@borrows`
+
+The following apply to the above sets:
+
+-   Expect tags in set 1 or 2 to have a valid namepath if present
+-   Prevent set 2 from being empty by setting `allowEmptyNamepaths` to `false` as these tags might have some indicative value without a path (but set 1 will always fail if empty)
+-   For the special case of set 3, i.e., `@borrows <that namepath> as <this namepath>`, check that both namepaths are present and valid and ensure there is an `as ` between them.
 
 |||
 |---|---|
