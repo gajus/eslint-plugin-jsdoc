@@ -1,26 +1,13 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const DEFAULT = '@default';
-const LOOP = '@loop';
-
-const RETURN_STATEMENT = 'ReturnStatement';
-const IF_STATEMENT = 'IfStatement';
-const EXPRESSION_STATEMENT = 'ExpressionStatement';
-const SWITCH_STATEMENT = 'SwitchStatement';
-const BLOCK_STATEMENT = 'BlockStatement';
-const FUNCTION_EXPRESSION = 'FunctionExpression';
-const ARROW_FUNCTION_EXPRESSION = 'ArrowFunctionExpression';
-const FUNCTION_DECLARATION = 'FunctionDeclaration';
-const TRY_STATEMENT = 'TryStatement';
-
 const LOOP_STATEMENTS = ['WhileStatement', 'DoWhileStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement'];
 
 const STATEMENTS_WITH_CHILDREN = [
-  LOOP,
-  SWITCH_STATEMENT,
-  IF_STATEMENT,
-  BLOCK_STATEMENT,
-  TRY_STATEMENT
+  '@loop',
+  'SwitchStatement',
+  'IfStatement',
+  'BlockStatement',
+  'TryStatement'
 ];
 
 const RETURNFREE_STATEMENTS = [
@@ -34,19 +21,19 @@ const RETURNFREE_STATEMENTS = [
   'EmptyStatement',
   'WithStatement',
   'ThrowStatement',
-  EXPRESSION_STATEMENT
+  'ExpressionStatement'
 ];
 
-const ENTRY_POINTS = [FUNCTION_DECLARATION, ARROW_FUNCTION_EXPRESSION, FUNCTION_EXPRESSION];
+const ENTRY_POINTS = ['FunctionDeclaration', 'ArrowFunctionExpression', 'FunctionExpression'];
 
 /* eslint-disable sort-keys */
 const lookupTable = {
-  [RETURN_STATEMENT]: {
-    is: (node) => {
-      return node.type === RETURN_STATEMENT;
+  ReturnStatement: {
+    is (node) {
+      return node.type === 'ReturnStatement';
     },
-    check: (node) => {
-      if (!lookupTable[RETURN_STATEMENT].is(node)) {
+    check (node) {
+      if (!lookupTable.ReturnStatement.is(node)) {
         return false;
       }
 
@@ -59,42 +46,42 @@ const lookupTable = {
       return true;
     }
   },
-  [IF_STATEMENT]: {
-    is: (node) => {
-      return node.type === IF_STATEMENT;
+  IfStatement: {
+    is (node) {
+      return node.type === 'IfStatement';
     },
-    check: (node) => {
-      if (!lookupTable[IF_STATEMENT].is(node)) {
+    check (node) {
+      if (!lookupTable.IfStatement.is(node)) {
         return false;
       }
 
-      if (lookupTable[DEFAULT].check(node.consequent)) {
+      if (lookupTable['@default'].check(node.consequent)) {
         return true;
       }
 
-      if (node.alternate && lookupTable[DEFAULT].check(node.alternate)) {
+      if (node.alternate && lookupTable['@default'].check(node.alternate)) {
         return true;
       }
 
       return false;
     }
   },
-  [LOOP]: {
-    is: (node) => {
+  '@loop': {
+    is (node) {
       return LOOP_STATEMENTS.indexOf(node.type) !== -1;
     },
-    check: (node) => {
-      lookupTable[DEFAULT].check(node.body);
+    check (node) {
+      return lookupTable['@default'].check(node.body);
     }
   },
-  [SWITCH_STATEMENT]: {
-    is: (node) => {
-      return node.type === SWITCH_STATEMENT;
+  SwitchStatement: {
+    is (node) {
+      return node.type === 'SwitchStatement';
     },
-    check: (node) => {
+    check (node) {
       for (const item of node.cases) {
         for (const statement of item.consequent) {
-          if (lookupTable[DEFAULT].check(statement)) {
+          if (lookupTable['@default'].check(statement)) {
             return true;
           }
         }
@@ -103,48 +90,48 @@ const lookupTable = {
       return false;
     }
   },
-  [TRY_STATEMENT]: {
-    is: (node) => {
-      return node.type === TRY_STATEMENT;
+  TryStatement: {
+    is (node) {
+      return node.type === 'TryStatement';
     },
-    check: (node) => {
-      if (!lookupTable[TRY_STATEMENT].is(node)) {
+    check (node) {
+      if (!lookupTable.TryStatement.is(node)) {
         return false;
       }
 
-      if (lookupTable[BLOCK_STATEMENT].check(node.block)) {
+      if (lookupTable.BlockStatement.check(node.block)) {
         return true;
       }
 
       if (node.handler && node.handler.block) {
-        if (lookupTable[DEFAULT].check(node)) {
+        if (lookupTable['@default'].check(node)) {
           return true;
         }
       }
 
-      if (lookupTable[BLOCK_STATEMENT].check(node.finalizer)) {
+      if (lookupTable.BlockStatement.check(node.finalizer)) {
         return true;
       }
 
       return false;
     }
   },
-  [BLOCK_STATEMENT]: {
-    is: (node) => {
-      return node.type === BLOCK_STATEMENT;
+  BlockStatement: {
+    is (node) {
+      return node.type === 'BlockStatement';
     },
-    check: (node, context) => {
+    check (node, context) {
       // E.g. the catch block statement is optional.
       if (typeof node === 'undefined' || node === null) {
         return false;
       }
 
-      if (!lookupTable[BLOCK_STATEMENT].is(node)) {
+      if (!lookupTable.BlockStatement.is(node)) {
         return false;
       }
 
       for (const item of node.body) {
-        if (lookupTable[DEFAULT].check(item, context)) {
+        if (lookupTable['@default'].check(item, context)) {
           return true;
         }
       }
@@ -152,36 +139,36 @@ const lookupTable = {
       return false;
     }
   },
-  [FUNCTION_EXPRESSION]: {
-    is: (node) => {
-      return node.type === FUNCTION_EXPRESSION;
+  FunctionExpression: {
+    is (node) {
+      return node.type === 'FunctionExpression';
     },
-    check: (node, context) => {
-      return lookupTable[BLOCK_STATEMENT].check(node.body, context);
+    check (node, context) {
+      return lookupTable.BlockStatement.check(node.body, context);
     }
   },
-  [ARROW_FUNCTION_EXPRESSION]: {
-    is: (node) => {
-      return node.type === ARROW_FUNCTION_EXPRESSION;
+  ArrowFunctionExpression: {
+    is (node) {
+      return node.type === 'ArrowFunctionExpression';
     },
-    check: (node) => {
+    check (node) {
       // An expression has always a return value.
       return node.expression;
     }
   },
-  [FUNCTION_DECLARATION]: {
-    is: (node) => {
-      return node.type === FUNCTION_DECLARATION;
+  FunctionDeclaration: {
+    is (node) {
+      return node.type === 'FunctionDeclaration';
     },
-    check: (node, context) => {
-      return lookupTable[BLOCK_STATEMENT].check(node.body, context);
+    check (node, context) {
+      return lookupTable.BlockStatement.check(node.body, context);
     }
   },
-  [DEFAULT]: {
-    check: (node) => {
+  '@default': {
+    check (node) {
       // In case it is a ReturnStatement we found what we were looking for
-      if (lookupTable[RETURN_STATEMENT].is(node)) {
-        return lookupTable[RETURN_STATEMENT].check(node);
+      if (lookupTable.ReturnStatement.is(node)) {
+        return lookupTable.ReturnStatement.check(node);
       }
 
       // In case the element has children we need to traverse the them.
