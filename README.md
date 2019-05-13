@@ -2743,6 +2743,65 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+/**
+ * @returns {Object}
+ */
+function quux () {
+
+  return {a: foo};
+}
+
+/**
+ * @returns {Object}
+ */
+const quux = () => ({a: foo});
+
+/**
+ * @returns {Object}
+ */
+const quux = () => {
+  return {a: foo}
+};
+
+/**
+ * @returns {void}
+ */
+function quux () {
+}
+
+/**
+ * @returns {void}
+ */
+const quux = () => {
+
+}
+
+/**
+ * @returns {undefined}
+ */
+function quux () {
+}
+
+/**
+ * @returns {undefined}
+ */
+const quux = () => {
+
+}
+
+/**
+ *
+ */
+function quux () {
+}
+
+/**
+ *
+ */
+const quux = () => {
+
+}
 ````
 
 
