@@ -196,6 +196,92 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @returns {Object}
+           */
+          function quux () {
+
+            return {a: foo};
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {Object}
+           */
+          const quux = () => ({a: foo});
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {Object}
+           */
+          const quux = () => {
+            return {a: foo}
+          };
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          function quux () {
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          const quux = () => {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {undefined}
+           */
+          function quux () {
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {undefined}
+           */
+          const quux = () => {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          const quux = () => {
+
+          }
+      `
     }
   ]
 };

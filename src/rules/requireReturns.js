@@ -151,9 +151,10 @@ const lookupTable = {
     is (node) {
       return node.type === 'ArrowFunctionExpression';
     },
-    check (node) {
+    check (node, context) {
       // An expression always has a return value.
-      return node.expression;
+      return node.expression ||
+        lookupTable.BlockStatement.check(node.body, context);
     }
   },
   FunctionDeclaration: {
@@ -165,17 +166,17 @@ const lookupTable = {
     }
   },
   '@default': {
-    check (node) {
+    check (node, context) {
       // In case it is a `ReturnStatement`, we found what we were looking for
       if (lookupTable.ReturnStatement.is(node)) {
-        return lookupTable.ReturnStatement.check(node);
+        return lookupTable.ReturnStatement.check(node, context);
       }
 
       // In case the element has children, we need to traverse them.
       // Examples are BlockStatement, Choices, TryStatement, Loops, ...
       for (const item of STATEMENTS_WITH_CHILDREN) {
         if (lookupTable[item].is(node)) {
-          return lookupTable[item].check(node);
+          return lookupTable[item].check(node, context);
         }
       }
 
@@ -203,11 +204,11 @@ const lookupTable = {
  * @returns {boolean}
  *   true in case the code returns a return value
  */
-const hasReturnValue = (node) => {
+const hasReturnValue = (node, context) => {
   // Loop through all of our entry points
   for (const item of ENTRY_POINTS) {
     if (lookupTable[item].is(node)) {
-      return lookupTable[item].check(node);
+      return lookupTable[item].check(node, context);
     }
   }
 
