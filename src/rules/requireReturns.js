@@ -152,7 +152,7 @@ const lookupTable = {
       return node.type === 'ArrowFunctionExpression';
     },
     check (node) {
-      // An expression has always a return value.
+      // An expression always has a return value.
       return node.expression;
     }
   },
@@ -166,12 +166,12 @@ const lookupTable = {
   },
   '@default': {
     check (node) {
-      // In case it is a ReturnStatement we found what we were looking for
+      // In case it is a `ReturnStatement`, we found what we were looking for
       if (lookupTable.ReturnStatement.is(node)) {
         return lookupTable.ReturnStatement.check(node);
       }
 
-      // In case the element has children we need to traverse the them.
+      // In case the element has children, we need to traverse them.
       // Examples are BlockStatement, Choices, TryStatement, Loops, ...
       for (const item of STATEMENTS_WITH_CHILDREN) {
         if (lookupTable[item].is(node)) {
@@ -179,12 +179,12 @@ const lookupTable = {
         }
       }
 
-      // Everything else can not return anything.
+      // Everything else cannot return anything.
       if (RETURNFREE_STATEMENTS.indexOf(node.type) !== -1) {
         return false;
       }
 
-      // If we endup here we stumbled upon an unknown elements
+      // If we end up here, we stumbled upon an unknown elements
       // Most likely it is enough to add it to the blacklist.
       //
       // throw new Error('Unknown node type: ' + node.type);
@@ -194,8 +194,8 @@ const lookupTable = {
 };
 
 /**
- * Checks if the source code returns a retrun value.
- * It traverse the parsed source code an retruns as
+ * Checks if the source code returns a return value.
+ * It traverses the parsed source code and returns as
  * soon as it stumbles upon the first return statement.
  *
  * @param {Object} node
@@ -220,21 +220,21 @@ const hasReturnValue = (node) => {
  * @param {JsDocTag} tag
  *   the tag which should be checked.
  * @returns {boolean}
- *   true in case a return value is declared otherwise false.
+ *   true in case a return value is declared; otherwise false.
  */
 const hasReturnTag = (tag) => {
-  // The function should not return in case not @retruns is defined...
+  // The function should not continue in the event @returns is not defined...
   if (typeof tag === 'undefined' || tag === null) {
     return false;
   }
 
-  // .. same applies if it declares '@returns undefined' or '@returns void'
+  // .. same applies if it declares `@returns {undefined}` or `@returns {void}`
   if (tag.type === 'undefined' || tag.type === 'void') {
     return false;
   }
 
-  // in any other it has to return something and
-  // we have to find a return statement
+  // In any other case, something must be returned, and
+  // a return statement is expected
   return true;
 };
 
@@ -257,27 +257,31 @@ const getTags = (jsdoc, tagName) => {
  * @param {*} utils
  *   a reference to the utils which are used to probe if a tag is present or not.
  * @returns {boolean}
- *   true in case deep checking can be skipped otherwise false.
+ *   true in case deep checking can be skipped; otherwise false.
  */
 const canSkip = (utils) => {
-  // Inheritdoc implies all documentation is inherited (see http://usejsdoc.org/tags-inheritdoc.html)
-  // same applies to the override tag (http://usejsdoc.org/tags-override.html)
-  //
-  // But as we do not know the parent method, we cannot perform any checks.
-  // So we bail out there instead of returning false positives.
-  if (utils.hasTag('inheritdoc') || utils.hasTag('override')) {
+  if (utils.hasATag([
+    // inheritdoc implies that all documentation is inherited
+    // see http://usejsdoc.org/tags-inheritdoc.html
+    //
+    // As we do not know the parent method, we cannot perform any checks.
+    'inheritdoc',
+    'override',
+
+    // Different Tag similar story. Abstract methods are by definition incomplete,
+    // so it is not an error if it declares a return value but does not implement it.
+    'abstract',
+    'virtual',
+
+    // Constructors do not have a return value by definition (http://usejsdoc.org/tags-class.html)
+    // So we can bail out here, too.
+    'class',
+    'constructor'
+  ])) {
     return true;
   }
 
-  // Different Tag similar story. Abstract methods are by definition in complete.
-  // So it is not an error if it declares a return value but does not implement it.
-  if (utils.hasTag('abstract') || utils.hasTag('virtual')) {
-    return true;
-  }
-
-  // Constructors do not have a return value by definition (http://usejsdoc.org/tags-class.html)
-  // So we can bail out here, too.
-  if (utils.hasTag('class') || utils.hasTag('constructor')) {
+  if (utils.isConstructor()) {
     return true;
   }
 
@@ -291,26 +295,8 @@ export default iterateJsdoc(({
   utils,
   context
 }) => {
-  if (utils.hasATag([
-    // inheritdoc implies that all documentation is inherited
-    // see http://usejsdoc.org/tags-inheritdoc.html
-    //
-    // As we do not know the parent method, we cannot perform any checks.
-    'inheritdoc',
-    'override',
-
-    // A constructor function is assumed to return a class instance
-    'constructor'
-  ])) {
-    return;
-  }
-
-  if (utils.isConstructor()) {
-    return;
-  }
-
   // A preflight check. We do not need to run a deep check
-  // in case the @retruns comment is optional or undefined.
+  // in case the @returns comment is optional or undefined.
   if (canSkip(utils)) {
     return;
   }
@@ -322,12 +308,12 @@ export default iterateJsdoc(({
     report('Found more than one  @' + tagName + ' declaration.');
   }
 
-  // In case a return value is decleared in JSDoc we also expect one in the code.
+  // In case a return value is declared in JSDoc we also expect one in the code.
   if (hasReturnTag(tags[0], functionNode) && !hasReturnValue(functionNode, context)) {
     report('Unexpected JSDoc @' + tagName + ' declaration.');
   }
 
-  // In case the code retuns something we expect a return value in JSDoc.
+  // In case the code returns something, we expect a return value in JSDoc.
   if (!hasReturnTag(tags[0], functionNode) && hasReturnValue(functionNode, context)) {
     report('Missing JSDoc @' + tagName + ' declaration.');
   }
