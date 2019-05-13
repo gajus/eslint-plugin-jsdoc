@@ -2721,6 +2721,28 @@ function quux (foo) {
  */
 function quux (foo) {
 }
+
+/**
+ * @override
+ */
+function quux (foo) {
+
+  return foo;
+}
+
+/**
+ * @class
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @constructor
+ */
+function quux (foo) {
+
+}
 ````
 
 
