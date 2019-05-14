@@ -42,6 +42,7 @@ const curryUtils = (
   allowAugmentsExtendsWithoutParam,
   checkSeesForNamepaths,
   forceRequireReturn,
+  avoidExampleOnConstructors,
   ancestors,
   sourceCode,
   context
@@ -142,6 +143,11 @@ const curryUtils = (
   utils.isNamepathType = (tagName) => {
     return jsdocUtils.isNamepathType(tagName, checkSeesForNamepaths);
   };
+
+  utils.avoidExampleOnConstructors = () => {
+    return avoidExampleOnConstructors;
+  };
+
   utils.passesEmptyNamepathCheck = (tag) => {
     return !tag.name && allowEmptyNamepaths && _.includes([
       // These may serve some minor purpose when empty
@@ -243,6 +249,7 @@ export default (iterator, options) => {
       const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
       const checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
       const forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
+      const avoidExampleOnConstructors = Boolean(_.get(context, 'settings.jsdoc.avoidExampleOnConstructors'));
 
       const checkJsdoc = (node) => {
         const jsdocNode = sourceCode.getJSDocComment(node);
@@ -311,6 +318,7 @@ export default (iterator, options) => {
           allowAugmentsExtendsWithoutParam,
           checkSeesForNamepaths,
           forceRequireReturn,
+          avoidExampleOnConstructors,
           ancestors,
           sourceCode
         );

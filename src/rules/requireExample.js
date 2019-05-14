@@ -12,11 +12,30 @@ export default iterateJsdoc(({
     tag: targetTagName
   });
 
-  if (_.isEmpty(functionExamples)) {
-    return report('Missing JSDoc @' + targetTagName + ' declaration.');
+  if (utils.hasATag([
+    'inheritdoc',
+    'override'
+  ])) {
+    return;
   }
 
-  return _.forEach(functionExamples, (example) => {
+  if (utils.avoidExampleOnConstructors() && (
+    utils.hasATag([
+      'class',
+      'constructor'
+    ]) ||
+    utils.isConstructor()
+  )) {
+    return;
+  }
+
+  if (_.isEmpty(functionExamples)) {
+    report('Missing JSDoc @' + targetTagName + ' declaration.');
+
+    return;
+  }
+
+  _.forEach(functionExamples, (example) => {
     const exampleContent = _.compact((example.name + ' ' + example.description).trim().split('\n'));
 
     if (_.isEmpty(exampleContent)) {
