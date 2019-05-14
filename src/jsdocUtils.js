@@ -284,7 +284,7 @@ const lookupTable = {
       return node.type === 'FunctionExpression';
     },
     check (node, context) {
-      return lookupTable.BlockStatement.check(node.body, context);
+      return node.async || lookupTable.BlockStatement.check(node.body, context);
     }
   },
   ArrowFunctionExpression: {
@@ -294,6 +294,7 @@ const lookupTable = {
     check (node, context) {
       // An expression always has a return value.
       return node.expression ||
+        node.async ||
         lookupTable.BlockStatement.check(node.body, context);
     }
   },
@@ -302,7 +303,7 @@ const lookupTable = {
       return node.type === 'FunctionDeclaration';
     },
     check (node, context) {
-      return lookupTable.BlockStatement.check(node.body, context);
+      return node.async || lookupTable.BlockStatement.check(node.body, context);
     }
   },
   '@default': {

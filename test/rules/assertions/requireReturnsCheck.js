@@ -155,7 +155,18 @@ export default {
           /**
            * @returns {Promise<void>}
            */
-          async () => {}
+          const quux = async function () {}
+      `,
+      parserOptions: {
+        ecmaVersion: 8
+      }
+    },
+    {
+      code: `
+          /**
+           * @returns {Promise<void>}
+           */
+          const quux = async () => {}
       `,
       parserOptions: {
         ecmaVersion: 8

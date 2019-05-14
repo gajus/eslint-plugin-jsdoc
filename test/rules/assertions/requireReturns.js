@@ -84,6 +84,57 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          async function quux() {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ],
+      parserOptions: {
+        ecmaVersion: 8
+      }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          const quux = async function () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ],
+      parserOptions: {
+        ecmaVersion: 8
+      }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          const quux = async () => {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ],
+      parserOptions: {
+        ecmaVersion: 8
+      }
     }
   ],
   valid: [
