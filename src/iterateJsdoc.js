@@ -42,7 +42,8 @@ const curryUtils = (
   allowAugmentsExtendsWithoutParam,
   checkSeesForNamepaths,
   ancestors,
-  sourceCode
+  sourceCode,
+  context
 ) => {
   const utils = {};
 
@@ -144,7 +145,25 @@ const curryUtils = (
   };
 
   utils.isArrowExpression = () => {
-    return functionNode.type === 'ArrowFunctionExpression' && functionNode.expression;
+    return node.type === 'ArrowFunctionExpression' && node.expression;
+  };
+
+  utils.hasDefinedTypeReturnTag = (tag) => {
+    return jsdocUtils.hasDefinedTypeReturnTag(tag);
+  };
+
+  utils.hasReturnValue = () => {
+    return jsdocUtils.hasReturnValue(node, context);
+  };
+
+  utils.getTags = (tagName) => {
+    if (!jsdoc.tags) {
+      return [];
+    }
+
+    return jsdoc.tags.filter((item) => {
+      return item.tag === tagName;
+    });
   };
 
   utils.getClassJsdocNode = () => {
