@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
+import jsdocUtils from '../jsdocUtils';
 
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
@@ -85,6 +87,16 @@ export default iterateJsdoc(null, {
 
       if (jsDocNode) {
         return;
+      }
+
+      const exemptEmptyFunctions = Boolean(_.get(context, 'settings.jsdoc.exemptEmptyFunctions'));
+      if (exemptEmptyFunctions) {
+        const functionParameterNames = jsdocUtils.getFunctionParameterNames(node);
+        if (!functionParameterNames.length) {
+          if (!jsdocUtils.hasReturnValue(node, context)) {
+            return;
+          }
+        }
       }
 
       context.report({

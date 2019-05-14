@@ -216,15 +216,45 @@ export default {
           FunctionExpression: true
         }
       }]
+    },
+    {
+      code: `
+        function foo (abc) {}
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      settings: {
+        jsdoc: {
+          exemptEmptyFunctions: false
+        }
+      }
+    },
+    {
+      code: `
+        function foo () {
+          return true;
+        }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      settings: {
+        jsdoc: {
+          exemptEmptyFunctions: false
+        }
+      }
     }
   ],
   valid: [{
     code: `
       var array = [1,2,3];
       array.forEach(function() {});
-      
+
       /**
-       * @class MyClass 
+       * @class MyClass
        **/
       function MyClass() {}
 
@@ -240,14 +270,14 @@ export default {
        Function doing something
        */
       Object.myFunction = function () {};
-      var obj = { 
+      var obj = {
          /**
           *  Function doing something
           **/
           myFunction: function () {} };
-  
+
       /**
-       @func myFunction 
+       @func myFunction
        */
       function myFunction() {}
       /**
@@ -258,9 +288,9 @@ export default {
        @function myFunction
        */
       function myFunction() {}
-  
+
       /**
-       @func myFunction 
+       @func myFunction
        */
       var myFunction = function () {}
       /**
@@ -271,9 +301,9 @@ export default {
        @function myFunction
        */
       var myFunction = function () {}
-  
+
       /**
-       @func myFunction 
+       @func myFunction
        */
       Object.myFunction = function() {}
       /**
@@ -285,23 +315,23 @@ export default {
        */
       Object.myFunction = function() {}
       (function(){})();
-  
+
       var object = {
         /**
-         *  @func myFunction - Some function 
+         *  @func myFunction - Some function
          */
         myFunction: function() {} }
       var object = {
         /**
-         *  @method myFunction - Some function 
+         *  @method myFunction - Some function
          */
         myFunction: function() {} }
       var object = {
         /**
-         *  @function myFunction - Some function 
+         *  @function myFunction - Some function
          */
         myFunction: function() {} }
-  
+
       var array = [1,2,3];
       array.filter(function() {});
       Object.keys(this.options.rules || {}).forEach(function(name) {}.bind(this));
@@ -533,6 +563,28 @@ export default {
     }],
     parserOptions: {
       ecmaVersion: 6
+    }
+  },
+  {
+    code: `
+      function foo () {}
+    `,
+    settings: {
+      jsdoc: {
+        exemptEmptyFunctions: true
+      }
+    }
+  },
+  {
+    code: `
+      function foo () {
+        return;
+      }
+    `,
+    settings: {
+      jsdoc: {
+        exemptEmptyFunctions: true
+      }
     }
   }
   ]
