@@ -2769,6 +2769,12 @@ function quux (foo) {
 }
 
 /**
+ * @implements
+ */
+function quux (foo) {
+}
+
+/**
  * @override
  */
 function quux (foo) {
