@@ -261,7 +261,7 @@ const getTags = (jsdoc, tagName) => {
  *   true in case deep checking can be skipped; otherwise false.
  */
 const canSkip = (utils) => {
-  if (utils.hasATag([
+  return utils.hasATag([
     // inheritdoc implies that all documentation is inherited
     // see http://usejsdoc.org/tags-inheritdoc.html
     //
@@ -278,15 +278,7 @@ const canSkip = (utils) => {
     // So we can bail out here, too.
     'class',
     'constructor'
-  ])) {
-    return true;
-  }
-
-  if (utils.isConstructor()) {
-    return true;
-  }
-
-  return false;
+  ]) || utils.isConstructor();
 };
 
 export default iterateJsdoc(({
@@ -307,11 +299,6 @@ export default iterateJsdoc(({
 
   if (tags.length > 1) {
     report('Found more than one  @' + tagName + ' declaration.');
-  }
-
-  // In case a return value is declared in JSDoc we also expect one in the code.
-  if (hasReturnTag(tags[0], functionNode) && !hasReturnValue(functionNode, context)) {
-    report('Unexpected JSDoc @' + tagName + ' declaration.');
   }
 
   // In case the code returns something, we expect a return value in JSDoc.
