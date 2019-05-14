@@ -2858,12 +2858,6 @@ function quux (foo) {
 }
 
 /**
- * @implements
- */
-function quux (foo) {
-}
-
-/**
  * @override
  */
 function quux (foo) {
@@ -2871,6 +2865,12 @@ function quux (foo) {
 
 /**
  * @constructor
+ */
+function quux (foo) {
+}
+
+/**
+ * @implements
  */
 function quux (foo) {
 }
