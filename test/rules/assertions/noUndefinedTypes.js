@@ -58,7 +58,25 @@ export default {
           function quux(foo) {
 
         }
-      `
+      `,
+      env: {
+        node: true
+      }
+    },
+    {
+      code: `
+        const MyType = require('my-library').MyType;
+
+        /**
+         * @param {MyType} foo - Bar.
+         */
+          function quux(foo) {
+
+        }
+      `,
+      env: {
+        node: false
+      }
     },
     {
       code: `

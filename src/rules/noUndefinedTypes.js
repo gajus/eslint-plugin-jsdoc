@@ -51,9 +51,20 @@ export default iterateJsdoc(({
   })
 
     // If the file is a module, concat the variables from the module scope.
-    .concat(scopeManager.isModule() ? globalScope.childScopes[0].variables.map((variable) => {
-      return variable.name;
-    }) : [])
+    .concat(
+
+      // This covers `commonjs` as well as `node`
+      scopeManager.__options.nodejsScope ||
+      scopeManager.isModule() ?
+        globalScope.childScopes.reduce((arr, {variables}) => {
+          // Flatten
+          arr.push(...variables);
+
+          return arr;
+        }, []).map(({name}) => {
+          return name;
+        }) : []
+    )
     .concat(extraTypes)
     .concat(typedefDeclarations);
 
