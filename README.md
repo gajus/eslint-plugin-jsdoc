@@ -1371,6 +1371,13 @@ function quux(foo) {
 
 }
 
+/**
+ * @param {Promise} foo - Bar.
+ */
+function quux(foo) {
+
+}
+
 class MyClass {}
 
 /**
@@ -1411,7 +1418,7 @@ import {MyType} from 'my-library';
 
 }
 
-/*global MyType*/
+/*globals MyType*/
 
 /**
  * @param {MyType} foo - Bar.
