@@ -1825,6 +1825,23 @@ function quux () {
 
 }
 // Message: Missing JSDoc @example description.
+
+/**
+ * @constructor
+ */
+function quux () {
+
+}
+// Message: Missing JSDoc @example declaration.
+
+/**
+ * @constructor
+ * @example
+ */
+function quux () {
+
+}
+// Message: Missing JSDoc @example description.
 ````
 
 The following patterns are not considered problems:
@@ -1852,6 +1869,30 @@ function quux () {
  *
  * @example <caption>Invalid usage</caption>
  * quux('random unwanted arg'); // results in an error
+ */
+function quux () {
+
+}
+
+/**
+ * @constructor
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"avoidExampleOnConstructors":true}}
+
+/**
+ * @constructor
+ * @example
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"avoidExampleOnConstructors":true}}
+
+/**
+ * @inheritdoc
  */
 function quux () {
 
