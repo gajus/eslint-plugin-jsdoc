@@ -205,6 +205,16 @@ const curryUtils = (
     return false;
   };
 
+  utils.forEachTag = (tagName, arrayHandler) => {
+    const matchingJsdocTags = _.filter(jsdoc.tags, {
+      tag: tagName
+    });
+
+    matchingJsdocTags.forEach((matchingJsdocTag) => {
+      arrayHandler(matchingJsdocTag);
+    });
+  };
+
   return utils;
 };
 

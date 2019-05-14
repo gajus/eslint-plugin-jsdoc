@@ -108,7 +108,7 @@ export default iterateJsdoc(null, {
     const options = getOptions(context);
 
     return {
-      ArrowFunctionExpression: (node) => {
+      ArrowFunctionExpression (node) {
         if (!options.ArrowFunctionExpression) {
           return;
         }
@@ -120,7 +120,7 @@ export default iterateJsdoc(null, {
         checkJsDoc(node);
       },
 
-      ClassDeclaration: (node) => {
+      ClassDeclaration (node) {
         if (!options.ClassDeclaration) {
           return;
         }
@@ -128,7 +128,7 @@ export default iterateJsdoc(null, {
         checkJsDoc(node);
       },
 
-      FunctionDeclaration: (node) => {
+      FunctionDeclaration (node) {
         if (!options.FunctionDeclaration) {
           return;
         }
@@ -136,7 +136,7 @@ export default iterateJsdoc(null, {
         checkJsDoc(node);
       },
 
-      FunctionExpression: (node) => {
+      FunctionExpression (node) {
         if (options.MethodDefinition && node.parent.type === 'MethodDefinition') {
           checkJsDoc(node);
 

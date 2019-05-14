@@ -3,16 +3,12 @@ import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
   sourceCode,
-  jsdoc,
+  utils,
   report,
   context,
   jsdocNode
 }) => {
   let always;
-
-  const jsdocTags = _.filter(jsdoc.tags, {
-    tag: 'param'
-  });
 
   if (_.has(context.options, 0)) {
     always = context.options[0] === 'always';
@@ -20,7 +16,7 @@ export default iterateJsdoc(({
     always = true;
   }
 
-  _.forEach(jsdocTags, (jsdocTag) => {
+  utils.forEachTag('param', (jsdocTag) => {
     if (!jsdocTag.description) {
       return;
     }

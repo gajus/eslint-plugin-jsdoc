@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {CLIEngine, Linter} from 'eslint';
 import iterateJsdoc from '../iterateJsdoc';
 
@@ -15,7 +14,6 @@ const countChars = (str, ch) => {
 };
 
 export default iterateJsdoc(({
-  jsdoc,
   report,
   utils
 }) => {
@@ -62,11 +60,7 @@ export default iterateJsdoc(({
   exampleCodeRegex = exampleCodeRegex && new RegExp(exampleCodeRegex, '');
   rejectExampleCodeRegex = rejectExampleCodeRegex && new RegExp(rejectExampleCodeRegex, '');
 
-  _.forEach(jsdoc.tags, (tag) => {
-    if (tag.tag !== 'example') {
-      return;
-    }
-
+  utils.forEachTag('example', (tag) => {
     // If a space is present, we should ignore it
     const initialTag = tag.source.match(/^@example ?/);
     const initialTagLength = initialTag[0].length;
