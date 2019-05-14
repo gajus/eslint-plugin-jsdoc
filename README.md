@@ -2599,7 +2599,12 @@ async function quux() {}
 /**
  * @returns {Promise<void>}
  */
-async () => {}
+const quux = async function () {}
+
+/**
+ * @returns {Promise<void>}
+ */
+const quux = async () => {}
 
 /**
  * @returns Foo.
@@ -2689,6 +2694,24 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return declaration.
+
+/**
+ *
+ */
+async function quux() {}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+const quux = async function () {}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+const quux = async () => {}
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:
