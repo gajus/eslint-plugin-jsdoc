@@ -240,6 +240,15 @@ export default {
     {
       code: `
           /**
+           * @implements
+           */
+          function quux (foo) {
+          }
+      `
+    },
+    {
+      code: `
+          /**
            * @override
            */
           function quux (foo) {

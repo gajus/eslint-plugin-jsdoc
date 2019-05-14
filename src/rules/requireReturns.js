@@ -28,7 +28,13 @@ const canSkip = (utils) => {
     // Constructors do not have a return value by definition (http://usejsdoc.org/tags-class.html)
     // So we can bail out here, too.
     'class',
-    'constructor'
+    'constructor',
+
+    // While we may, in a future rule, err in the case of (regular) functions
+    //  using @implements (see https://github.com/gajus/eslint-plugin-jsdoc/issues/201 ),
+    //  this should not error for those using the tag to indicate implementation of
+    //  a particular function signature
+    'implements'
   ]) || utils.isConstructor();
 };
 
