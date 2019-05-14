@@ -17,7 +17,7 @@ export default iterateJsdoc(({
           const replacement = sourceCode.getText(jsdocNode).replace('@' + jsdocTag.tag, '@' + preferredTagName);
 
           return fixer.replaceText(jsdocNode, replacement);
-        });
+        }, jsdocTag);
       }
     } else {
       report('Invalid JSDoc tag name "' + jsdocTag.tag + '".', null, jsdocTag);

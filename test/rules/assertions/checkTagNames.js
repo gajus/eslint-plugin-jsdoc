@@ -47,7 +47,7 @@ export default {
       `,
       errors: [
         {
-          line: 2,
+          line: 3,
           message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "param".'
         }
       ]
@@ -63,7 +63,7 @@ export default {
       `,
       errors: [
         {
-          line: 2,
+          line: 3,
           message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".'
         }
       ],
@@ -86,7 +86,7 @@ export default {
       `,
       errors: [
         {
-          line: 2,
+          line: 3,
           message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "parameter".'
         }
       ],
