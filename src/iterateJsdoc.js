@@ -22,7 +22,7 @@ const parseComment = (commentNode, indent) => {
 };
 
 const curryUtils = (
-  functionNode,
+  node,
   jsdoc,
   tagNamePreference,
   exampleCodeRegex,
@@ -47,15 +47,15 @@ const curryUtils = (
   const utils = {};
 
   utils.getFunctionParameterNames = () => {
-    return jsdocUtils.getFunctionParameterNames(functionNode);
+    return jsdocUtils.getFunctionParameterNames(node);
   };
 
   utils.getFunctionSourceCode = () => {
-    return sourceCode.getText(functionNode);
+    return sourceCode.getText(node);
   };
 
   utils.isConstructor = () => {
-    return functionNode.parent && functionNode.parent.kind === 'constructor';
+    return node.parent && node.parent.kind === 'constructor';
   };
 
   utils.getJsdocParameterNamesDeep = () => {
@@ -178,113 +178,131 @@ export {
   parseComment
 };
 
-export default (iterator) => {
-  return (context) => {
-    const sourceCode = context.getSourceCode();
-    const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
-    const exampleCodeRegex = _.get(context, 'settings.jsdoc.exampleCodeRegex') || null;
-    const rejectExampleCodeRegex = _.get(context, 'settings.jsdoc.rejectExampleCodeRegex') || null;
-    const matchingFileName = _.get(context, 'settings.jsdoc.matchingFileName') || null;
-    const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
-    const baseConfig = _.get(context, 'settings.jsdoc.baseConfig') || {};
-    const configFile = _.get(context, 'settings.jsdoc.configFile');
-    const eslintrcForExamples = _.get(context, 'settings.jsdoc.eslintrcForExamples') !== false;
-    const allowInlineConfig = _.get(context, 'settings.jsdoc.allowInlineConfig') !== false;
-    const allowEmptyNamepaths = _.get(context, 'settings.jsdoc.allowEmptyNamepaths') !== false;
-    const reportUnusedDisableDirectives = _.get(context, 'settings.jsdoc.reportUnusedDisableDirectives') !== false;
-    const captionRequired = Boolean(_.get(context, 'settings.jsdoc.captionRequired'));
-    const noDefaultExampleRules = Boolean(_.get(context, 'settings.jsdoc.noDefaultExampleRules'));
-    const allowOverrideWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowOverrideWithoutParam'));
-    const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
-    const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
-    const checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
+export default (iterator, options) => {
+  const opts = options || {};
 
-    const checkJsdoc = (functionNode) => {
-      const jsdocNode = sourceCode.getJSDocComment(functionNode);
+  return {
+    /**
+     * The entrypoint for the JSDoc rule.
+     *
+     * @param {*} context
+     *   a reference to the context which hold all important information
+     *   like settings and the sourcecode to check.
+     * @returns {Object}
+     *   a list with parser callback function.
+     */
+    create (context) {
+      const sourceCode = context.getSourceCode();
+      const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
+      const exampleCodeRegex = _.get(context, 'settings.jsdoc.exampleCodeRegex') || null;
+      const rejectExampleCodeRegex = _.get(context, 'settings.jsdoc.rejectExampleCodeRegex') || null;
+      const matchingFileName = _.get(context, 'settings.jsdoc.matchingFileName') || null;
+      const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
+      const baseConfig = _.get(context, 'settings.jsdoc.baseConfig') || {};
+      const configFile = _.get(context, 'settings.jsdoc.configFile');
+      const eslintrcForExamples = _.get(context, 'settings.jsdoc.eslintrcForExamples') !== false;
+      const allowInlineConfig = _.get(context, 'settings.jsdoc.allowInlineConfig') !== false;
+      const allowEmptyNamepaths = _.get(context, 'settings.jsdoc.allowEmptyNamepaths') !== false;
+      const reportUnusedDisableDirectives = _.get(context, 'settings.jsdoc.reportUnusedDisableDirectives') !== false;
+      const captionRequired = Boolean(_.get(context, 'settings.jsdoc.captionRequired'));
+      const noDefaultExampleRules = Boolean(_.get(context, 'settings.jsdoc.noDefaultExampleRules'));
+      const allowOverrideWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowOverrideWithoutParam'));
+      const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
+      const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
+      const checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
 
-      if (!jsdocNode) {
-        return;
-      }
+      const checkJsdoc = (node) => {
+        const jsdocNode = sourceCode.getJSDocComment(node);
 
-      const ancestors = context.getAncestors();
+        if (!jsdocNode) {
+          return;
+        }
 
-      const indent = _.repeat(' ', jsdocNode.loc.start.column);
+        const ancestors = context.getAncestors();
 
-      const jsdoc = parseComment(jsdocNode, indent);
+        const indent = _.repeat(' ', jsdocNode.loc.start.column);
 
-      const report = (message, fixer = null, jsdocLoc = null) => {
-        let loc;
+        const jsdoc = parseComment(jsdocNode, indent);
 
-        if (jsdocLoc) {
-          const lineNumber = jsdocNode.loc.start.line + jsdocLoc.line;
+        const report = (message, fixer = null, jsdocLoc = null) => {
+          let loc;
 
-          loc = {
-            end: {line: lineNumber},
-            start: {line: lineNumber}
-          };
-          if (jsdocLoc.column) {
-            const colNumber = jsdocNode.loc.start.column + jsdocLoc.column;
+          if (jsdocLoc) {
+            const lineNumber = jsdocNode.loc.start.line + jsdocLoc.line;
 
-            loc.end.column = colNumber;
-            loc.start.column = colNumber;
+            loc = {
+              end: {line: lineNumber},
+              start: {line: lineNumber}
+            };
+            if (jsdocLoc.column) {
+              const colNumber = jsdocNode.loc.start.column + jsdocLoc.column;
+
+              loc.end.column = colNumber;
+              loc.start.column = colNumber;
+            }
           }
-        }
-        if (fixer === null) {
-          context.report({
-            loc,
-            message,
-            node: jsdocNode
-          });
-        } else {
-          context.report({
-            fix: fixer,
-            loc,
-            message,
-            node: jsdocNode
-          });
-        }
+          if (fixer === null) {
+            context.report({
+              loc,
+              message,
+              node: jsdocNode
+            });
+          } else {
+            context.report({
+              fix: fixer,
+              loc,
+              message,
+              node: jsdocNode
+            });
+          }
+        };
+
+        const utils = curryUtils(
+          node,
+          jsdoc,
+          tagNamePreference,
+          exampleCodeRegex,
+          rejectExampleCodeRegex,
+          additionalTagNames,
+          baseConfig,
+          configFile,
+          captionRequired,
+          matchingFileName,
+          eslintrcForExamples,
+          allowInlineConfig,
+          allowEmptyNamepaths,
+          reportUnusedDisableDirectives,
+          noDefaultExampleRules,
+          allowOverrideWithoutParam,
+          allowImplementsWithoutParam,
+          allowAugmentsExtendsWithoutParam,
+          checkSeesForNamepaths,
+          ancestors,
+          sourceCode
+        );
+
+        iterator({
+          context,
+          indent,
+          jsdoc,
+          jsdocNode,
+          node,
+          report,
+          sourceCode,
+          utils
+        });
       };
 
-      const utils = curryUtils(
-        functionNode,
-        jsdoc,
-        tagNamePreference,
-        exampleCodeRegex,
-        rejectExampleCodeRegex,
-        additionalTagNames,
-        baseConfig,
-        configFile,
-        captionRequired,
-        matchingFileName,
-        eslintrcForExamples,
-        allowInlineConfig,
-        allowEmptyNamepaths,
-        reportUnusedDisableDirectives,
-        noDefaultExampleRules,
-        allowOverrideWithoutParam,
-        allowImplementsWithoutParam,
-        allowAugmentsExtendsWithoutParam,
-        checkSeesForNamepaths,
-        ancestors,
-        sourceCode
-      );
+      if (opts.returns) {
+        return opts.returns(context, sourceCode, checkJsdoc);
+      }
 
-      iterator({
-        context,
-        functionNode,
-        indent,
-        jsdoc,
-        jsdocNode,
-        report,
-        sourceCode,
-        utils
-      });
-    };
-
-    return {
-      ArrowFunctionExpression: checkJsdoc,
-      FunctionDeclaration: checkJsdoc,
-      FunctionExpression: checkJsdoc
-    };
+      return {
+        ArrowFunctionExpression: checkJsdoc,
+        FunctionDeclaration: checkJsdoc,
+        FunctionExpression: checkJsdoc
+      };
+    },
+    meta: opts.meta
   };
 };
