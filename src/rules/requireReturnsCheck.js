@@ -3,16 +3,16 @@ import iterateJsdoc from '../iterateJsdoc';
 export default iterateJsdoc(({
   jsdoc,
   report,
-  functionNode,
+  node,
   utils
 }) => {
   // Implicit return like `() => foo` is ok
-  if (functionNode.type === 'ArrowFunctionExpression' && functionNode.expression) {
+  if (node.type === 'ArrowFunctionExpression' && node.expression) {
     return;
   }
 
   // Async function always returns a promise
-  if (functionNode.async) {
+  if (node.async) {
     return;
   }
 

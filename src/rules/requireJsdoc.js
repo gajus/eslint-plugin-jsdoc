@@ -1,3 +1,5 @@
+import iterateJsdoc from '../iterateJsdoc';
+
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
   properties: {
@@ -58,83 +60,7 @@ const getOptions = (context) => {
   };
 };
 
-const checkJsDoc = (context, node) => {
-  const jsDocNode = context.getSourceCode().getJSDocComment(node);
-
-  if (jsDocNode) {
-    return;
-  }
-
-  context.report({
-    messageId: 'missingJsDoc',
-    node
-  });
-};
-
-export default {
-  /**
-   * The entrypoint for the JSDoc rule.
-   *
-   * @param {*} context
-   *   a reference to the context which hold all important information
-   *   like settings and the sourcecode to check.
-   * @returns {*}
-   *   a list with parser callback function.
-   */
-  create (context) {
-    const options = getOptions(context);
-
-    return {
-      ArrowFunctionExpression: (node) => {
-        if (!options.ArrowFunctionExpression) {
-          return;
-        }
-
-        if (node.parent.type !== 'VariableDeclarator') {
-          return;
-        }
-
-        checkJsDoc(context, node);
-      },
-
-      ClassDeclaration: (node) => {
-        if (!options.ClassDeclaration) {
-          return;
-        }
-
-        checkJsDoc(context, node);
-      },
-
-      FunctionDeclaration: (node) => {
-        if (!options.FunctionDeclaration) {
-          return;
-        }
-
-        checkJsDoc(context, node);
-      },
-
-      FunctionExpression: (node) => {
-        if (options.MethodDefinition && node.parent.type === 'MethodDefinition') {
-          checkJsDoc(context, node);
-
-          return;
-        }
-
-        if (!options.FunctionExpression) {
-          return;
-        }
-
-        if (node.parent.type === 'VariableDeclarator') {
-          checkJsDoc(context, node);
-        }
-
-        if (node.parent.type === 'Property' && node === node.parent.value) {
-          checkJsDoc(context, node);
-        }
-      }
-    };
-  },
-
+export default iterateJsdoc(null, {
   meta: {
     doc: {
       category: 'Stylistic Issues',
@@ -152,5 +78,71 @@ export default {
     ],
 
     type: 'suggestion'
+  },
+  returns (context, sourceCode) {
+    const checkJsDoc = (node) => {
+      const jsDocNode = sourceCode.getJSDocComment(node);
+
+      if (jsDocNode) {
+        return;
+      }
+
+      context.report({
+        messageId: 'missingJsDoc',
+        node
+      });
+    };
+
+    const options = getOptions(context);
+
+    return {
+      ArrowFunctionExpression: (node) => {
+        if (!options.ArrowFunctionExpression) {
+          return;
+        }
+
+        if (node.parent.type !== 'VariableDeclarator') {
+          return;
+        }
+
+        checkJsDoc(node);
+      },
+
+      ClassDeclaration: (node) => {
+        if (!options.ClassDeclaration) {
+          return;
+        }
+
+        checkJsDoc(node);
+      },
+
+      FunctionDeclaration: (node) => {
+        if (!options.FunctionDeclaration) {
+          return;
+        }
+
+        checkJsDoc(node);
+      },
+
+      FunctionExpression: (node) => {
+        if (options.MethodDefinition && node.parent.type === 'MethodDefinition') {
+          checkJsDoc(node);
+
+          return;
+        }
+
+        if (!options.FunctionExpression) {
+          return;
+        }
+
+        if (node.parent.type === 'VariableDeclarator') {
+          checkJsDoc(node);
+        }
+
+        if (node.parent.type === 'Property' && node === node.parent.value) {
+          checkJsDoc(node);
+        }
+      }
+    };
   }
-};
+});

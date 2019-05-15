@@ -22,7 +22,7 @@ const parseComment = (commentNode, indent) => {
 };
 
 const curryUtils = (
-  functionNode,
+  node,
   jsdoc,
   tagNamePreference,
   exampleCodeRegex,
@@ -47,15 +47,15 @@ const curryUtils = (
   const utils = {};
 
   utils.getFunctionParameterNames = () => {
-    return jsdocUtils.getFunctionParameterNames(functionNode);
+    return jsdocUtils.getFunctionParameterNames(node);
   };
 
   utils.getFunctionSourceCode = () => {
-    return sourceCode.getText(functionNode);
+    return sourceCode.getText(node);
   };
 
   utils.isConstructor = () => {
-    return functionNode.parent && functionNode.parent.kind === 'constructor';
+    return node.parent && node.parent.kind === 'constructor';
   };
 
   utils.getJsdocParameterNamesDeep = () => {
@@ -178,8 +178,19 @@ export {
   parseComment
 };
 
-export default (iterator, meta) => {
+export default (iterator, options) => {
+  const opts = options || {};
+
   return {
+    /**
+     * The entrypoint for the JSDoc rule.
+     *
+     * @param {*} context
+     *   a reference to the context which hold all important information
+     *   like settings and the sourcecode to check.
+     * @returns {Object}
+     *   a list with parser callback function.
+     */
     create (context) {
       const sourceCode = context.getSourceCode();
       const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
@@ -200,8 +211,8 @@ export default (iterator, meta) => {
       const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
       const checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
 
-      const checkJsdoc = (functionNode) => {
-        const jsdocNode = sourceCode.getJSDocComment(functionNode);
+      const checkJsdoc = (node) => {
+        const jsdocNode = sourceCode.getJSDocComment(node);
 
         if (!jsdocNode) {
           return;
@@ -247,7 +258,7 @@ export default (iterator, meta) => {
         };
 
         const utils = curryUtils(
-          functionNode,
+          node,
           jsdoc,
           tagNamePreference,
           exampleCodeRegex,
@@ -272,15 +283,19 @@ export default (iterator, meta) => {
 
         iterator({
           context,
-          functionNode,
           indent,
           jsdoc,
           jsdocNode,
+          node,
           report,
           sourceCode,
           utils
         });
       };
+
+      if (opts.returns) {
+        return opts.returns(context, sourceCode, checkJsdoc);
+      }
 
       return {
         ArrowFunctionExpression: checkJsdoc,
@@ -288,6 +303,6 @@ export default (iterator, meta) => {
         FunctionExpression: checkJsdoc
       };
     },
-    meta
+    meta: opts.meta
   };
 };
