@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Expected @param names to be "foo". Got "Foo".'
         }
       ]
@@ -112,6 +113,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: '@param "bar" does not match an existing function parameter.'
         }
       ]

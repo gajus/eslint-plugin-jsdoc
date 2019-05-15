@@ -1,12 +1,24 @@
 import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
-const validateParameterNames = (targetTagName : string, functionParameterNames : Array<string>, jsdocParameterNames : Array<string>, report : Function) => {
-  return _.some(jsdocParameterNames, (jsdocParameterName, index) => {
+const validateParameterNames = (targetTagName : string, functionParameterNames : Array<string>, jsdoc, report) => {
+  if (!jsdoc || !jsdoc.tags) {
+    return false;
+  }
+
+  const paramTags = jsdoc.tags.filter((tag) => {
+    return tag.tag === targetTagName && !tag.name.includes('.');
+  });
+
+  return _.some(paramTags, (tag, index) => {
     const functionParameterName = functionParameterNames[index];
 
     if (!functionParameterName) {
-      report('@' + targetTagName + ' "' + jsdocParameterName + '" does not match an existing function parameter.');
+      report(
+        `@${targetTagName} "${tag.name}" does not match an existing function parameter.`,
+        null,
+        tag
+      );
 
       return true;
     }
@@ -15,8 +27,17 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
       return false;
     }
 
-    if (functionParameterName !== jsdocParameterName) {
-      report('Expected @' + targetTagName + ' names to be "' + functionParameterNames.join(', ') + '". Got "' + jsdocParameterNames.join(', ') + '".');
+    if (functionParameterName !== tag.name) {
+      const expectedNames = functionParameterNames.join(', ');
+      const actualNames = paramTags.map(({name}) => {
+        return name;
+      }).join(', ');
+
+      report(
+        `Expected @${targetTagName} names to be "${expectedNames}". Got "${actualNames}".`,
+        null,
+        tag
+      );
 
       return true;
     }
@@ -59,14 +80,14 @@ const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames 
 };
 
 export default iterateJsdoc(({
+  jsdoc,
   report,
   utils
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
-  const jsdocParameterNames = utils.getJsdocParameterNames();
   const jsdocParameterNamesDeep = utils.getJsdocParameterNamesDeep();
   const targetTagName = utils.getPreferredTagName('param');
-  const isError = validateParameterNames(targetTagName, functionParameterNames, jsdocParameterNames, report);
+  const isError = validateParameterNames(targetTagName, functionParameterNames, jsdoc, report);
 
   if (isError) {
     return;
