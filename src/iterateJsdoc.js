@@ -61,7 +61,7 @@ const curryUtils = (
   };
 
   utils.isSetter = () => {
-    return functionNode.parent.kind === 'set';
+    return node.parent.kind === 'set';
   };
 
   utils.getJsdocParameterNamesDeep = () => {
