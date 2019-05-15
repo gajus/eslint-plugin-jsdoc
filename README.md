@@ -2541,6 +2541,17 @@ function quux () {
   return foo;
 }
 // Message: Found more than one @returns declaration.
+
+const language = {
+  /**
+   * @param {string} name
+   * @returns {string}
+   */
+  get name() {
+    this._name = name;
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 The following patterns are not considered problems:
@@ -2720,6 +2731,16 @@ function quux () {
 }
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
 // Message: Missing JSDoc @returns declaration.
+
+const language = {
+  /**
+   * @param {string} name
+   */
+  get name() {
+    return this._name;
+  }
+}
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:
@@ -2875,6 +2896,15 @@ class Foo {
   }
 }
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
+
+const language = {
+  /**
+   * @param {string} name
+   */
+  set name(name) {
+    this._name = name;
+  }
+}
 ````
 
 
