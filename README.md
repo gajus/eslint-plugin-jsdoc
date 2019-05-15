@@ -2848,6 +2848,14 @@ class A {
 
   }
 }
+
+/**
+ * @private
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"ignorePrivate":true}}
 ````
 
 

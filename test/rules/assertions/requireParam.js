@@ -474,6 +474,21 @@ export default {
             }
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @private
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          ignorePrivate: true
+        }
+      }
     }
   ]
 };
