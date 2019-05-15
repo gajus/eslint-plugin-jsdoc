@@ -155,6 +155,24 @@ export default {
           forceRequireReturn: true
         }
       }
+    },
+    {
+      code: `
+      const language = {
+        /**
+         * @param {string} name
+         */
+        get name() {
+          return this._name;
+        }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ]
     }
   ],
   valid: [
@@ -378,6 +396,18 @@ export default {
           forceRequireReturn: true
         }
       }
+    },
+    {
+      code: `
+      const language = {
+        /**
+         * @param {string} name
+         */
+        set name(name) {
+          this._name = name;
+        }
+      }
+      `
     }
   ]
 };

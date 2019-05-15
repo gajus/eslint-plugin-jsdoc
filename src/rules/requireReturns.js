@@ -30,12 +30,20 @@ const canSkip = (utils) => {
     'class',
     'constructor',
 
+    // This seems to imply a class as well
+    'interface',
+
     // While we may, in a future rule, err in the case of (regular) functions
     //  using @implements (see https://github.com/gajus/eslint-plugin-jsdoc/issues/201 ),
     //  this should not error for those using the tag to indicate implementation of
     //  a particular function signature
     'implements'
-  ]) || utils.isConstructor();
+  ]) ||
+    utils.isConstructor() ||
+
+    // Though ESLint avoided getters: https://github.com/eslint/eslint/blob/master/lib/rules/valid-jsdoc.js#L435
+    //  ... getters seem that they should, unlike setters, always return:
+    utils.isSetter();
 };
 
 export default iterateJsdoc(({

@@ -1,33 +1,28 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const canSkip = (utils, node) => {
+const canSkip = (utils) => {
   return utils.hasATag([
     // An abstract function is by definition incomplete
-    // so it is perfectly fine if the return is missing.
+    // so it is perfectly fine if a return is documented but
+    // not present within the function.
     // A subclass may inherit the doc and implement the
     // missing return.
     'abstract',
     'virtual',
 
-    // A constructor function returns `this` by default
-    'constructor'
-  ]) ||
-
-    utils.isConstructor() ||
-
-    // Implicit return like `() => foo` is ok
-    utils.isArrowExpression() ||
-
-    // Async function always returns a `Promise`
-    node.async;
+    // A constructor function returns `this` by default, so may be `@returns`
+    //   tag indicating this but no explicit return
+    'class',
+    'constructor',
+    'interface'
+  ]) || utils.isConstructor();
 };
 
 export default iterateJsdoc(({
   report,
-  node,
   utils
 }) => {
-  if (canSkip(utils, node)) {
+  if (canSkip(utils)) {
     return;
   }
 

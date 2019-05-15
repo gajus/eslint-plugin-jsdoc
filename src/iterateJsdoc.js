@@ -60,6 +60,10 @@ const curryUtils = (
     return node.parent && node.parent.kind === 'constructor';
   };
 
+  utils.isSetter = () => {
+    return functionNode.parent.kind === 'set';
+  };
+
   utils.getJsdocParameterNamesDeep = () => {
     return jsdocUtils.getJsdocParameterNamesDeep(jsdoc, utils.getPreferredTagName('param'));
   };

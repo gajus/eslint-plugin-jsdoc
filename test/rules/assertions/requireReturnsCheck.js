@@ -70,6 +70,25 @@ export default {
           message: 'Found more than one @returns declaration.'
         }
       ]
+    },
+    {
+      code: `
+      const language = {
+        /**
+         * @param {string} name
+         * @returns {string}
+         */
+        get name() {
+          this._name = name;
+        }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc @returns declaration present but return expression not available in function.'
+        }
+      ]
     }
   ],
   valid: [
