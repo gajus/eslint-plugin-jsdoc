@@ -14,6 +14,7 @@ _.forEach([
   'check-syntax',
   'check-tag-names',
   'check-types',
+  'match-description',
   'newline-after-description',
   'no-undefined-types',
   'require-description',
