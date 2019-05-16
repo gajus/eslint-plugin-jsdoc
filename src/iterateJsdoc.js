@@ -237,24 +237,38 @@ export default (iterator, options) => {
      */
     create (context) {
       const sourceCode = context.getSourceCode();
+
+      // `check-tag-names` and many require/param rules
       const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
+
+      // `check-tag-names` only
+      const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
+
+      // `check-examples` only
       const exampleCodeRegex = _.get(context, 'settings.jsdoc.exampleCodeRegex') || null;
       const rejectExampleCodeRegex = _.get(context, 'settings.jsdoc.rejectExampleCodeRegex') || null;
       const matchingFileName = _.get(context, 'settings.jsdoc.matchingFileName') || null;
-      const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
       const baseConfig = _.get(context, 'settings.jsdoc.baseConfig') || {};
       const configFile = _.get(context, 'settings.jsdoc.configFile');
       const eslintrcForExamples = _.get(context, 'settings.jsdoc.eslintrcForExamples') !== false;
       const allowInlineConfig = _.get(context, 'settings.jsdoc.allowInlineConfig') !== false;
-      const allowEmptyNamepaths = _.get(context, 'settings.jsdoc.allowEmptyNamepaths') !== false;
       const reportUnusedDisableDirectives = _.get(context, 'settings.jsdoc.reportUnusedDisableDirectives') !== false;
       const captionRequired = Boolean(_.get(context, 'settings.jsdoc.captionRequired'));
       const noDefaultExampleRules = Boolean(_.get(context, 'settings.jsdoc.noDefaultExampleRules'));
+
+      // `require-param` only
       const allowOverrideWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowOverrideWithoutParam'));
       const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
       const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
+
+      // `valid-types` only
+      const allowEmptyNamepaths = _.get(context, 'settings.jsdoc.allowEmptyNamepaths') !== false;
       const checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
+
+      // `require-returns` only
       const forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
+
+      // `require-example` only
       const avoidExampleOnConstructors = Boolean(_.get(context, 'settings.jsdoc.avoidExampleOnConstructors'));
 
       const checkJsdoc = (node) => {
