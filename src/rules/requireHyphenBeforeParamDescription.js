@@ -10,27 +10,29 @@ export default iterateJsdoc(({
 }) => {
   let always;
 
+  const targetTagName = utils.getPreferredTagName('param');
+
   if (_.has(context.options, 0)) {
     always = context.options[0] === 'always';
   } else {
     always = true;
   }
 
-  utils.forEachTag('param', (jsdocTag) => {
+  utils.forEachTag(targetTagName, (jsdocTag) => {
     if (!jsdocTag.description) {
       return;
     }
 
     if (always) {
       if (!jsdocTag.description.startsWith('-')) {
-        report('There must be a hyphen before @param description.', (fixer) => {
+        report('There must be a hyphen before @' + targetTagName + ' description.', (fixer) => {
           const replacement = sourceCode.getText(jsdocNode).replace(jsdocTag.description, '- ' + jsdocTag.description);
 
           return fixer.replaceText(jsdocNode, replacement);
         }, jsdocTag);
       }
     } else if (jsdocTag.description.startsWith('-')) {
-      report('There must be no hyphen before @param description.', (fixer) => {
+      report('There must be no hyphen before @' + targetTagName + ' description.', (fixer) => {
         const [unwantedPart] = /-\s*/.exec(jsdocTag.description);
 
         const replacement = sourceCode
