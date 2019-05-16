@@ -38,12 +38,12 @@ export default iterateJsdoc(({
     return;
   }
 
-  const tags = _.filter(jsdoc.tags, (tag) => {
-    return _.includes(tagsWithDescriptions, tag.tag) &&
-      {}.hasOwnProperty.call(options.tags, tag.tag) && options.tags[tag.tag];
+  const tags = jsdoc.tags.filter(({tag}) => {
+    return tagsWithDescriptions.includes(tag) &&
+      {}.hasOwnProperty.call(options.tags, tag) && options.tags[tag];
   });
 
-  _.some(tags, (tag) => {
+  tags.some((tag) => {
     const description = _.trimStart(tag.description, '- ');
 
     return validateDescription(description, tag.tag);

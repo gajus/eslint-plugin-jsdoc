@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 // eslint-disable-next-line complexity
@@ -33,7 +32,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  _.some(functionParameterNames, (functionParameterName, index) => {
+  functionParameterNames.some((functionParameterName, index) => {
     const jsdocParameterName = jsdocParameterNames[index];
 
     if (!jsdocParameterName) {

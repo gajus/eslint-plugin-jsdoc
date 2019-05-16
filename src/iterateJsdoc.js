@@ -11,7 +11,7 @@ const parseComment = (commentNode, indent) => {
       commentParser.PARSERS.parse_tag,
       commentParser.PARSERS.parse_type,
       (str, data) => {
-        if (_.includes(['return', 'returns', 'throws', 'exception'], data.tag)) {
+        if (['return', 'returns', 'throws', 'exception'].includes(data.tag)) {
           return null;
         }
 
@@ -150,10 +150,10 @@ const curryUtils = (
   };
 
   utils.passesEmptyNamepathCheck = (tag) => {
-    return !tag.name && allowEmptyNamepaths && _.includes([
+    return !tag.name && allowEmptyNamepaths && [
       // These may serve some minor purpose when empty
       'callback', 'event', 'listens', 'fires', 'emits'
-    ], tag.tag);
+    ].includes(tag.tag);
   };
 
   utils.hasDefinedTypeReturnTag = (tag) => {

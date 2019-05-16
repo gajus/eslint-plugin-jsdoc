@@ -22,14 +22,14 @@ export default iterateJsdoc(({
     }
 
     if (always) {
-      if (!_.startsWith(jsdocTag.description, '-')) {
+      if (!jsdocTag.description.startsWith('-')) {
         report('There must be a hyphen before @param description.', (fixer) => {
           const replacement = sourceCode.getText(jsdocNode).replace(jsdocTag.description, '- ' + jsdocTag.description);
 
           return fixer.replaceText(jsdocNode, replacement);
         }, jsdocTag);
       }
-    } else if (_.startsWith(jsdocTag.description, '-')) {
+    } else if (jsdocTag.description.startsWith('-')) {
       report('There must be no hyphen before @param description.', (fixer) => {
         const [unwantedPart] = /-\s*/.exec(jsdocTag.description);
 

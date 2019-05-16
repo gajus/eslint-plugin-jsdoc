@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {parse} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
 
@@ -14,7 +13,7 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
-  _.forEach(jsdoc.tags, (tag) => {
+  jsdoc.tags.forEach((tag) => {
     const validTypeParsing = function (type) {
       try {
         parse(type);

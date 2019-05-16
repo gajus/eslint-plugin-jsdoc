@@ -28,8 +28,8 @@ const isNewLinePrecededByAPeriod = (text) => {
 
   const lines = text.split('\n');
 
-  return !_.some(lines, (line) => {
-    if (_.isBoolean(lastLineEndsSentence) && !lastLineEndsSentence && /^[A-Z]/.test(line)) {
+  return !lines.some((line) => {
+    if (typeof lastLineEndsSentence === 'boolean' && !lastLineEndsSentence && /^[A-Z]/.test(line)) {
       return true;
     }
 
@@ -54,7 +54,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode, tag) =>
 
   const paragraphs = extractParagraphs(description);
 
-  return _.some(paragraphs, (paragraph) => {
+  return paragraphs.some((paragraph) => {
     const sentences = extractSentences(paragraph);
 
     const fix = (fixer) => {
@@ -85,7 +85,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode, tag) =>
       return fixer.replaceText(jsdocNode, text);
     };
 
-    if (_.some(sentences, (sentence) => {
+    if (sentences.some((sentence) => {
       return !isCapitalized(sentence);
     })) {
       report('Sentence should start with an uppercase character.', fix);
@@ -117,11 +117,11 @@ export default iterateJsdoc(({
     return;
   }
 
-  const tags = _.filter(jsdoc.tags, (tag) => {
-    return _.includes(['param', 'arg', 'argument', 'returns', 'return'], tag.tag);
+  const tags = jsdoc.tags.filter((tag) => {
+    return ['param', 'arg', 'argument', 'returns', 'return'].includes(tag.tag);
   });
 
-  _.some(tags, (tag) => {
+  tags.some((tag) => {
     const description = _.trimStart(tag.description, '- ');
 
     return validateDescription(description, report, jsdocNode, sourceCode, tag.tag);

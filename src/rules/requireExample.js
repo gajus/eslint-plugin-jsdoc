@@ -29,16 +29,16 @@ export default iterateJsdoc(({
     return;
   }
 
-  if (_.isEmpty(functionExamples)) {
+  if (!functionExamples.length) {
     report('Missing JSDoc @' + targetTagName + ' declaration.');
 
     return;
   }
 
-  _.forEach(functionExamples, (example) => {
+  functionExamples.forEach((example) => {
     const exampleContent = _.compact((example.name + ' ' + example.description).trim().split('\n'));
 
-    if (_.isEmpty(exampleContent)) {
+    if (!exampleContent.length) {
       report('Missing JSDoc @' + targetTagName + ' description.');
     }
   });

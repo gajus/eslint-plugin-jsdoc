@@ -7,13 +7,13 @@ import _ from 'lodash';
 import glob from 'glob';
 
 const trimCode = (code) => {
-  let lines = _.trim(code).split('\n');
+  let lines = code.trim().split('\n');
 
   const indendation = lines[lines.length - 1].match(/^\s+/);
 
   const indentSize = indendation ? indendation[0].length : 0;
 
-  lines = _.map(lines, (line, index) => {
+  lines = lines.map((line, index) => {
     if (index === 0) {
       return line;
     }
@@ -47,11 +47,11 @@ const formatCodeSnippet = (setup) => {
 const getAssertions = () => {
   const assertionFiles = glob.sync(path.resolve(__dirname, '../../test/rules/assertions/*.js'));
 
-  const assertionNames = _.map(assertionFiles, (filePath) => {
+  const assertionNames = assertionFiles.map((filePath) => {
     return path.basename(filePath, '.js');
   });
 
-  const assertionCodes = _.map(assertionFiles, (filePath) => {
+  const assertionCodes = assertionFiles.map((filePath) => {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     const codes = require(filePath);
 

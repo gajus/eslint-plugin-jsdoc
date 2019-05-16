@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
@@ -8,7 +7,7 @@ export default iterateJsdoc(({
   utils,
   jsdocNode
 }) => {
-  _.forEach(jsdoc.tags, (jsdocTag) => {
+  jsdoc.tags.forEach((jsdocTag) => {
     if (utils.isValidTag(jsdocTag.tag)) {
       const preferredTagName = utils.getPreferredTagName(jsdocTag.tag);
 

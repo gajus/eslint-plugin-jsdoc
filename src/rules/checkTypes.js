@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {parse, traverse, publish} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
 
@@ -49,11 +48,11 @@ export default iterateJsdoc(({
   sourceCode,
   report
 }) => {
-  const jsdocTags = _.filter(jsdoc.tags, (tag) => {
-    return _.includes(targetTags, tag.tag);
+  const jsdocTags = jsdoc.tags.filter((tag) => {
+    return targetTags.includes(tag.tag);
   });
 
-  _.forEach(jsdocTags, (jsdocTag) => {
+  jsdocTags.forEach((jsdocTag) => {
     const invalidTypes = [];
     let typeAst;
 
@@ -77,7 +76,7 @@ export default iterateJsdoc(({
     if (invalidTypes) {
       const fixedType = publish(typeAst);
 
-      _.forEach(invalidTypes, (invalidType) => {
+      invalidTypes.forEach((invalidType) => {
         const fix = (fixer) => {
           return fixer.replaceText(jsdocNode, sourceCode.getText(jsdocNode).replace('{' + jsdocTag.type + '}', '{' + fixedType + '}'));
         };

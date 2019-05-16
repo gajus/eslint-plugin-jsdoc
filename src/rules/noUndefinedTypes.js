@@ -33,12 +33,12 @@ export default iterateJsdoc(({
 
   const typedefDeclarations = _(context.getAllComments())
     .filter((comment) => {
-      return _.startsWith(comment.value, '*');
+      return comment.value.startsWith('*');
     })
     .map(parseComment)
     .flatMap((doc) => {
-      return (doc.tags || []).filter((tag) => {
-        return _.includes(tagsWithNames, tag.tag);
+      return (doc.tags || []).filter(({tag}) => {
+        return tagsWithNames.includes(tag);
       });
     })
     .map((tag) => {
@@ -68,7 +68,7 @@ export default iterateJsdoc(({
     .concat(extraTypes)
     .concat(typedefDeclarations);
 
-  _.forEach(jsdoc.tags, (tag) => {
+  jsdoc.tags.forEach((tag) => {
     let parsedType;
 
     try {
@@ -78,12 +78,12 @@ export default iterateJsdoc(({
       return;
     }
 
-    traverse(parsedType, (node) => {
-      if (node.type === 'NAME') {
-        if (!_.includes(definedTypes, node.name)) {
-          report('The type \'' + node.name + '\' is undefined.', null, tag);
-        } else if (!_.includes(extraTypes, node.name)) {
-          context.markVariableAsUsed(node.name);
+    traverse(parsedType, ({type, name}) => {
+      if (type === 'NAME') {
+        if (!definedTypes.includes(name)) {
+          report('The type \'' + name + '\' is undefined.', null, tag);
+        } else if (!_.includes(extraTypes, name)) {
+          context.markVariableAsUsed(name);
         }
       }
     });

@@ -47,20 +47,20 @@ const getJsdocParameterNames = (jsdoc : Object, targetTagName : string) : Array<
 
   jsdocParameterNames = getJsdocParameterNamesDeep(jsdoc, targetTagName);
 
-  jsdocParameterNames = _.filter(jsdocParameterNames, (name) => {
-    return name.indexOf('.') === -1;
+  jsdocParameterNames = jsdocParameterNames.filter((name) => {
+    return !name.includes('.');
   });
 
   return jsdocParameterNames;
 };
 
 const getPreferredTagName = (name : string, tagPreference : Object = {}) : string => {
-  if (_.includes(_.values(tagPreference), name)) {
+  if (_.values(tagPreference).includes(name)) {
     return name;
   }
 
   const preferredTagName = _.findKey(tagNames, (aliases) => {
-    return _.includes(aliases, name);
+    return aliases.includes(name);
   });
 
   if (preferredTagName) {
@@ -75,7 +75,7 @@ const isValidTag = (name : string, additionalTagNames : Object) : boolean => {
   const additionalTags = additionalTagNames.customTags || [];
   const allTags = validTagNames.concat(additionalTags);
 
-  return _.includes(allTags, name);
+  return allTags.includes(name);
 };
 
 const hasTag = (jsdoc : Object, targetTagName : string) : boolean => {
@@ -136,7 +136,7 @@ const namepathAsNameTags = [
 ];
 
 const isNamepathType = (tagName, checkSeesForNamepaths) => {
-  return _.includes(namepathAsNameTags, tagName) ||
+  return namepathAsNameTags.includes(tagName) ||
     tagName === 'see' && checkSeesForNamepaths;
 };
 

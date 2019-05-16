@@ -12,14 +12,16 @@ export default iterateJsdoc(({
     tag: targetTagName
   });
 
-  if (_.isEmpty(functionExamples)) {
-    return report('Missing JSDoc @' + targetTagName + ' declaration.');
+  if (!functionExamples.length) {
+    report('Missing JSDoc @' + targetTagName + ' declaration.');
+
+    return;
   }
 
-  return _.forEach(functionExamples, (example) => {
+  functionExamples.forEach((example) => {
     const exampleContent = _.compact((example.name + ' ' + example.description).trim().split('\n'));
 
-    if (_.isEmpty(exampleContent)) {
+    if (!exampleContent.length) {
       report('Missing JSDoc @' + targetTagName + ' description.');
     }
   });

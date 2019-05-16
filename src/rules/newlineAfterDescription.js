@@ -24,14 +24,14 @@ export default iterateJsdoc(({
   // The contents of the jsdoc.source and of jsdoc.description is left trimmed.
   // The contents of the jsdoc.description is right trimmed.
   // This gets the text following the description.
-  const descriptionEndsWithANewline = _.startsWith(jsdoc.source.slice(jsdoc.description.length), '\n\n');
+  const descriptionEndsWithANewline = jsdoc.source.slice(jsdoc.description.length).startsWith('\n\n');
 
   if (always) {
     if (!descriptionEndsWithANewline) {
       report('There must be a newline after the description of the JSDoc block.', (fixer) => {
         const sourceLines = sourceCode.getText(jsdocNode).split('\n');
         const lastDescriptionLine = _.findLastIndex(sourceLines, (line) => {
-          return _.includes(line, _.last(jsdoc.description.split('\n')));
+          return line.includes(_.last(jsdoc.description.split('\n')));
         });
 
         // Add the new line
@@ -44,7 +44,7 @@ export default iterateJsdoc(({
     report('There must be no newline after the description of the JSDoc block.', (fixer) => {
       const sourceLines = sourceCode.getText(jsdocNode).split('\n');
       const lastDescriptionLine = _.findLastIndex(sourceLines, (line) => {
-        return _.includes(line, _.last(jsdoc.description.split('\n')));
+        return line.includes(_.last(jsdoc.description.split('\n')));
       });
 
       // Remove the extra line

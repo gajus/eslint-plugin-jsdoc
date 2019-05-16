@@ -6,7 +6,7 @@ import config from '../../src';
 
 const ruleTester = new RuleTester();
 
-_.forEach([
+[
   'check-alignment',
   'check-examples',
   'check-indentation',
@@ -31,7 +31,7 @@ _.forEach([
   'require-returns-description',
   'require-returns-type',
   'valid-types'
-], (ruleName) => {
+].forEach((ruleName) => {
   const parserOptions = {
     ecmaVersion: 6
   };
@@ -39,13 +39,13 @@ _.forEach([
   // eslint-disable-next-line global-require, import/no-dynamic-require
   const assertions = require('./assertions/' + _.camelCase(ruleName));
 
-  assertions.invalid = _.map(assertions.invalid, (assertion) => {
+  assertions.invalid = assertions.invalid.map((assertion) => {
     assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
 
     return assertion;
   });
 
-  assertions.valid = _.map(assertions.valid, (assertion) => {
+  assertions.valid = assertions.valid.map((assertion) => {
     assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
 
     return assertion;
