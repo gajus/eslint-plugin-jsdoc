@@ -29,6 +29,37 @@ export default {
           message: 'Missing JSDoc @example description.'
         }
       ]
+    },
+    {
+      code: `
+      /**
+       * @constructor
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @example declaration.'
+        }
+      ]
+    },
+    {
+      code: `
+      /**
+       * @constructor
+       * @example
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @example description.'
+        }
+      ]
     }
   ],
   valid: [
@@ -66,6 +97,47 @@ export default {
           function quux () {
 
           }
+      `
+    },
+    {
+      code: `
+      /**
+       * @constructor
+       */
+      function quux () {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          avoidExampleOnConstructors: true
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @constructor
+       * @example
+       */
+      function quux () {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          avoidExampleOnConstructors: true
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @inheritdoc
+       */
+      function quux () {
+
+      }
       `
     }
   ]
