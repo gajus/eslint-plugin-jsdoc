@@ -117,6 +117,54 @@ export default {
           message: '@param "bar" does not match an existing function parameter.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Duplicate @param "foo"'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param foo
+           */
+          function quux (foo, bar) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Duplicate @param "foo"'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param foo
+           */
+          function quux (foo, foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Duplicate @param "foo"'
+        }
+      ]
     }
   ],
   valid: [

@@ -10,6 +10,13 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
   });
 
   return paramTags.some((tag, index) => {
+    if (paramTags.some((tg, idx) => {
+      return tg.name === tag.name && idx !== index;
+    })) {
+      report('Duplicate @' + targetTagName + ' "' + tag.name + '"');
+
+      return true;
+    }
     const functionParameterName = functionParameterNames[index];
 
     if (!functionParameterName) {
