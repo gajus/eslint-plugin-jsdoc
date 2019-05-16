@@ -6,7 +6,7 @@ package-lock.json
 .*
 !.babelrc
 !.editorconfig
-!.eslintrc
+!.eslintrc.json
 !.gitignore
 !.npmignore
 !.README
