@@ -1,63 +1,46 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+const canSkip = (utils) => {
+  return utils.hasATag([
+    // An abstract function is by definition incomplete
+    // so it is perfectly fine if a return is documented but
+    // not present within the function.
+    // A subclass may inherit the doc and implement the
+    // missing return.
+    'abstract',
+    'virtual',
+
+    // A constructor function returns `this` by default, so may be `@returns`
+    //   tag indicating this but no explicit return
+    'class',
+    'constructor',
+    'interface'
+  ]) || utils.isConstructor();
+};
+
 export default iterateJsdoc(({
-  jsdoc,
   report,
-  node,
   utils
 }) => {
-  // Implicit return like `() => foo` is ok
-  if (node.type === 'ArrowFunctionExpression' && node.expression) {
+  if (canSkip(utils)) {
     return;
   }
 
-  // Async function always returns a promise
-  if (node.async) {
+  const tagName = utils.getPreferredTagName('returns');
+  const tags = utils.getTags(tagName);
+
+  if (tags.length === 0) {
     return;
   }
 
-  const targetTagName = utils.getPreferredTagName('returns');
-
-  // We can skip in case there are no tags defined...
-  if (typeof jsdoc.tags === 'undefined') {
-    return;
-  }
-
-  const jsdocTags = jsdoc.tags.filter((item) => {
-    return item.tag === targetTagName;
-  });
-
-  if (jsdocTags.length === 0) {
-    return;
-  }
-
-  if (jsdocTags.length > 1) {
-    report('Found more than one @' + targetTagName + ' declaration.');
+  if (tags.length > 1) {
+    report('Found more than one @' + tagName + ' declaration.');
 
     return;
   }
 
-  const returnsTagType = jsdocTags[0].type && jsdocTags[0].type.trim();
-
-  if (returnsTagType === 'void' || returnsTagType === 'undefined') {
-    return;
-  }
-
-  // An abstract function is by definition incomplete
-  // so it is perfectly fine if the return is missing
-  // a subclass may inherits the doc an implements the
-  // missing return.
-  const isAbstract = jsdoc.tags.some((item) => {
-    return item.tag === utils.getPreferredTagName('abstract');
-  });
-
-  if (isAbstract) {
-    return;
-  }
-
-  const sourcecode = utils.getFunctionSourceCode();
-
-  if (sourcecode.indexOf('return') === -1) {
-    report('Present JSDoc @' + targetTagName + ' declaration but not available return expression in function.');
+  // In case a return value is declared in JSDoc, we also expect one in the code.
+  if (utils.hasDefinedTypeReturnTag(tags[0]) && !utils.hasReturnValue()) {
+    report('JSDoc @' + tagName + ' declaration present but return expression not available in function.');
   }
 });

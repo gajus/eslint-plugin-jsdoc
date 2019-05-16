@@ -2515,7 +2515,7 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
-// Message: Present JSDoc @returns declaration but not available return expression in function.
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
  * @return
@@ -2524,13 +2524,13 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
-// Message: Present JSDoc @return declaration but not available return expression in function.
+// Message: JSDoc @return declaration present but return expression not available in function.
 
 /**
  * @returns
  */
 const quux = () => {}
-// Message: Present JSDoc @returns declaration but not available return expression in function.
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
  * @returns {undefined} Foo.
@@ -2541,6 +2541,17 @@ function quux () {
   return foo;
 }
 // Message: Found more than one @returns declaration.
+
+const language = {
+  /**
+   * @param {string} name
+   * @returns {string}
+   */
+  get name() {
+    this._name = name;
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 The following patterns are not considered problems:
@@ -2555,7 +2566,7 @@ function quux () {
 }
 
 /**
- * @returns {void} Foo.
+ * @returns {string} Foo.
  */
 function quux () {
 
@@ -2563,7 +2574,7 @@ function quux () {
 }
 
 /**
- * @returns {undefined} Foo.
+ * @returns {string} Foo.
  */
 function quux () {
 
@@ -2599,7 +2610,12 @@ async function quux() {}
 /**
  * @returns {Promise<void>}
  */
-async () => {}
+const quux = async function () {}
+
+/**
+ * @returns {Promise<void>}
+ */
+const quux = async () => {}
 
 /**
  * @returns Foo.
@@ -2607,6 +2623,33 @@ async () => {}
  */
 function quux () {
   throw new Error('must be implemented by subclass!');
+}
+
+/**
+ * @returns Foo.
+ * @virtual
+ */
+function quux () {
+  throw new Error('must be implemented by subclass!');
+}
+
+/**
+ * @returns Foo.
+ * @constructor
+ */
+function quux () {
+}
+
+/**
+ * @returns {undefined} Foo.
+ */
+function quux () {
+}
+
+/**
+ * @returns {void} Foo.
+ */
+function quux () {
 }
 ````
 
@@ -2662,6 +2705,42 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return declaration.
+
+/**
+ *
+ */
+async function quux() {}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+const quux = async function () {}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+const quux = async () => {}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Message: Missing JSDoc @returns declaration.
+
+const language = {
+  /**
+   * @param {string} name
+   */
+  get name() {
+    return this._name;
+  }
+}
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:
@@ -2711,6 +2790,12 @@ function quux (foo) {
 }
 
 /**
+ * @implements
+ */
+function quux (foo) {
+}
+
+/**
  * @override
  */
 function quux (foo) {
@@ -2720,6 +2805,105 @@ function quux (foo) {
  * @constructor
  */
 function quux (foo) {
+}
+
+/**
+ * @override
+ */
+function quux (foo) {
+
+  return foo;
+}
+
+/**
+ * @class
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @constructor
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @returns {Object}
+ */
+function quux () {
+
+  return {a: foo};
+}
+
+/**
+ * @returns {Object}
+ */
+const quux = () => ({a: foo});
+
+/**
+ * @returns {Object}
+ */
+const quux = () => {
+  return {a: foo}
+};
+
+/**
+ * @returns {void}
+ */
+function quux () {
+}
+
+/**
+ * @returns {void}
+ */
+const quux = () => {
+
+}
+
+/**
+ * @returns {undefined}
+ */
+function quux () {
+}
+
+/**
+ * @returns {undefined}
+ */
+const quux = () => {
+
+}
+
+/**
+ *
+ */
+function quux () {
+}
+
+/**
+ *
+ */
+const quux = () => {
+
+}
+
+class Foo {
+  /**
+   *
+   */
+  constructor () {
+  }
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+
+const language = {
+  /**
+   * @param {string} name
+   */
+  set name(name) {
+    this._name = name;
+  }
 }
 ````
 

@@ -41,8 +41,10 @@ const curryUtils = (
   allowImplementsWithoutParam,
   allowAugmentsExtendsWithoutParam,
   checkSeesForNamepaths,
+  forceRequireReturn,
   ancestors,
-  sourceCode
+  sourceCode,
+  context
 ) => {
   const utils = {};
 
@@ -56,6 +58,10 @@ const curryUtils = (
 
   utils.isConstructor = () => {
     return node.parent && node.parent.kind === 'constructor';
+  };
+
+  utils.isSetter = () => {
+    return node.parent.kind === 'set';
   };
 
   utils.getJsdocParameterNamesDeep = () => {
@@ -143,6 +149,32 @@ const curryUtils = (
     ], tag.tag);
   };
 
+  utils.isArrowExpression = () => {
+    return node.type === 'ArrowFunctionExpression' && node.expression;
+  };
+
+  utils.hasDefinedTypeReturnTag = (tag) => {
+    return jsdocUtils.hasDefinedTypeReturnTag(tag);
+  };
+
+  utils.hasReturnValue = () => {
+    return jsdocUtils.hasReturnValue(node, context);
+  };
+
+  utils.getTags = (tagName) => {
+    if (!jsdoc.tags) {
+      return [];
+    }
+
+    return jsdoc.tags.filter((item) => {
+      return item.tag === tagName;
+    });
+  };
+
+  utils.isForceRequireReturn = () => {
+    return forceRequireReturn;
+  };
+
   utils.getClassJsdocNode = () => {
     const greatGrandParent = ancestors.slice(-3)[0];
     const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;
@@ -210,6 +242,7 @@ export default (iterator, options) => {
       const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
       const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
       const checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
+      const forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
 
       const checkJsdoc = (node) => {
         const jsdocNode = sourceCode.getJSDocComment(node);
@@ -277,6 +310,7 @@ export default (iterator, options) => {
           allowImplementsWithoutParam,
           allowAugmentsExtendsWithoutParam,
           checkSeesForNamepaths,
+          forceRequireReturn,
           ancestors,
           sourceCode
         );
