@@ -2,7 +2,7 @@ import {parse} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
 
 /** @param {string} tag */
-const isLink = (tag) => {
+const isInlineTag = (tag) => {
   return /^(@link|@linkcode|@linkplain|@tutorial) /.test(tag);
 };
 
@@ -47,7 +47,7 @@ export default iterateJsdoc(({
         return;
       }
       validTypeParsing(tag.name);
-    } else if (tag.type && !isLink(tag.type)) {
+    } else if (tag.type && !isInlineTag(tag.type)) {
       validTypeParsing(tag.type);
     }
   });

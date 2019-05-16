@@ -6,7 +6,7 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
-  const targetTagName = utils.getPreferredTagName('example');
+  const targetTagName = 'example';
 
   const functionExamples = _.filter(jsdoc.tags, {
     tag: targetTagName
