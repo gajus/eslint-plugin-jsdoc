@@ -689,6 +689,33 @@ function quux (foo) {
 
 }
 // Message: @param "bar" does not match an existing function parameter.
+
+/**
+ * @param foo
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Message: Duplicate @param "foo"
+
+/**
+ * @param foo
+ * @param foo
+ */
+function quux (foo, bar) {
+
+}
+// Message: Duplicate @param "foo"
+
+/**
+ * @param foo
+ * @param foo
+ */
+function quux (foo, foo) {
+
+}
+// Message: Duplicate @param "foo"
 ````
 
 The following patterns are not considered problems:
