@@ -79,5 +79,6 @@ yields
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
+|Settings|`tagNamePreference`, `additionalTagNames`|
 
 <!-- assertions checkTagNames -->

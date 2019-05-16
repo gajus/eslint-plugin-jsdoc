@@ -30,7 +30,7 @@ new String('lard') // String {0: "l", 1: "a", 2: "r", 3: "d", length: 4}
 new String('lard') === 'lard' // false
 ```
 
-To make things more confusing, there are also object literals and object Objects. But object literals are still static Objects and object Objects are instantiated Objects. So an object primitive is still an object Object.
+To make things more confusing, there are also object literals and object Objects. But object literals are still static Objects and object Objects are instantiated Objects. So an object primitive is still an object Object. (`Object.create(null)` objects are not, however.)
 
 Basically, for primitives, we want to define the type as a primitive, because that's what we use in 99.9% of cases. For everything else, we use the type rather than the primitive. Otherwise it would all just be `{object}`.
 
@@ -47,8 +47,9 @@ Number | **number** | **number** | `(41) instanceof Number` -> **`false`**
 String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
 |||
-|---|---|
+|---|---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`class`, `constant`, `enum`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`|
-
+|Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
+|Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`|
+|Closure-only|`package`, `private`, `protected`, `public`, `static`|
 <!-- assertions checkTypes -->

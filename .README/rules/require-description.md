@@ -8,6 +8,7 @@ Requires that all functions have a description.
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`class`, `example`|
+|Tags|`description`|
+|Aliases|`desc`|
 
 <!-- assertions requireDescription -->

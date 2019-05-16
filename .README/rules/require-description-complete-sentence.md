@@ -11,5 +11,6 @@ Requires that block description and tag description are written in complete sent
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`, `returns`|
+|Aliases|`arg`, `argument`, `return`|
 
 <!-- assertions requireDescriptionCompleteSentence -->

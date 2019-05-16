@@ -103,6 +103,17 @@ Finally, enable all of the rules that you would like to use.
 
 ## Settings
 
+### Allow `@private` to disable rules for that comment block
+
+- `settings.jsdoc.allowPrivate` - Disables all rules for the comment block
+  on which it occurs.
+
+### Exempting empty functions from `require-jsdoc`
+
+- `settings.jsdoc.exemptEmptyFunctions` - Will not report missing jsdoc blocks
+  above functions/methods with no parameters or return values (intended where
+  variable names are sufficient for themselves as documentation).
+
 ### Alias Preference
 
 Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.
@@ -121,9 +132,26 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
+This setting is utilized by the the rule for tag name checking
+(`check-tag-names`) as well as in the `@param` and `@require` rules:
+
+- `check-param-names`
+- `check-tag-names`
+- `require-hyphen-before-param-description`
+- `require-description`
+- `require-param`
+- `require-param-description`
+- `require-param-name`
+- `require-param-type`
+- `require-returns`
+- `require-returns-check`
+- `require-returns-description`
+- `require-returns-type`
+
 ### Additional Tag Names
 
-Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc tags. The format of the configuration is as follows:
+Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc
+tags in the rule `check-tag-names`. The format of the configuration is as follows:
 
 ```json
 {
@@ -165,6 +193,29 @@ The format of the configuration is as follows:
     }
 }
 ```
+
+### Settings to Configure `valid-types`
+
+* `settings.jsdoc.allowEmptyNamepaths` - Set to `false` to disallow
+  empty name paths with `@callback`, `@event`, `@listens`, `@fires`,
+  or `@emits` (these might often be expected to have an accompanying
+  name path, though they have some indicative value without one)
+* `settings.jsdoc.checkSeesForNamepaths` - Set this to `true` to insist
+  that `@see` only use name paths (the tag is normally permitted to
+  allow other text)
+
+### Settings to Configure `require-returns`
+
+* `settings.jsdoc.forceRequireReturn` - Set to `true` to always insist on
+  `@returns` documentation regardless of implicit or explicit `return`'s
+  in the function. May be desired to flag that a project is aware of an
+  `undefined`/`void` return.
+
+### Settings to Configure `require-example`
+
+* `settings.jsdoc.avoidExampleOnConstructors` - Set to `true` to avoid the
+  need for an example on a constructor (whether indicated as such by a
+  jsdoc tag or by being within an ES6 `class`).
 
 ### Settings to Configure `check-examples`
 
@@ -264,6 +315,7 @@ Finally, the following rule pertains to inline disable directives:
 {"gitdown": "include", "file": "./rules/require-description-complete-sentence.md"}
 {"gitdown": "include", "file": "./rules/require-description.md"}
 {"gitdown": "include", "file": "./rules/require-example.md"}
+{"gitdown": "include", "file": "./rules/require-jsdoc.md"}
 {"gitdown": "include", "file": "./rules/require-hyphen-before-param-description.md"}
 {"gitdown": "include", "file": "./rules/require-param-description.md"}
 {"gitdown": "include", "file": "./rules/require-param-name.md"}

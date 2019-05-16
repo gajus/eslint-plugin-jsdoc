@@ -92,10 +92,8 @@ export default iterateJsdoc(null, {
       const exemptEmptyFunctions = Boolean(_.get(context, 'settings.jsdoc.exemptEmptyFunctions'));
       if (exemptEmptyFunctions) {
         const functionParameterNames = jsdocUtils.getFunctionParameterNames(node);
-        if (!functionParameterNames.length) {
-          if (!jsdocUtils.hasReturnValue(node, context)) {
-            return;
-          }
+        if (!functionParameterNames.length && !jsdocUtils.hasReturnValue(node, context)) {
+          return;
         }
       }
 

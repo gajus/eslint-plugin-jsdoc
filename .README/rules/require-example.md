@@ -9,5 +9,6 @@ Requires that all functions have examples.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`example`|
+|Settings|`avoidExampleOnConstructors`|
 
 <!-- assertions requireExample -->

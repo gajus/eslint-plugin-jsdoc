@@ -13,9 +13,13 @@ JSDoc linting rules for ESLint.
     * [Installation](#eslint-plugin-jsdoc-installation)
     * [Configuration](#eslint-plugin-jsdoc-configuration)
     * [Settings](#eslint-plugin-jsdoc-settings)
+        * [Allow `@private` to disable rules for that comment block](#eslint-plugin-jsdoc-settings-allow-private-to-disable-rules-for-that-comment-block)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [Additional Tag Names](#eslint-plugin-jsdoc-settings-additional-tag-names)
         * [Allow `@override` Without Accompanying `@param` Tags](#eslint-plugin-jsdoc-settings-allow-override-without-accompanying-param-tags)
+        * [Settings to Configure `valid-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-valid-types)
+        * [Settings to Configure `require-returns`](#eslint-plugin-jsdoc-settings-settings-to-configure-require-returns)
+        * [Settings to Configure `require-example`](#eslint-plugin-jsdoc-settings-settings-to-configure-require-example)
         * [Settings to Configure `check-examples`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-examples)
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-alignment`](#eslint-plugin-jsdoc-rules-check-alignment)
@@ -30,6 +34,7 @@ JSDoc linting rules for ESLint.
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-description`](#eslint-plugin-jsdoc-rules-require-description)
         * [`require-example`](#eslint-plugin-jsdoc-rules-require-example)
+        * [`require-jsdoc`](#eslint-plugin-jsdoc-rules-require-jsdoc)
         * [`require-hyphen-before-param-description`](#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
         * [`require-param-name`](#eslint-plugin-jsdoc-rules-require-param-name)
@@ -140,6 +145,12 @@ Finally, enable all of the rules that you would like to use.
 <a name="eslint-plugin-jsdoc-settings"></a>
 ## Settings
 
+<a name="eslint-plugin-jsdoc-settings-allow-private-to-disable-rules-for-that-comment-block"></a>
+### Allow <code>@private</code> to disable rules for that comment block
+
+- `settings.jsdoc.allowPrivate` - Disables all rules for the comment block
+  on which it occurs.
+
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
 
@@ -159,10 +170,27 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
+This setting is utilized by the the rule for tag name checking
+(`check-tag-names`) as well as in the `@param` and `@require` rules:
+
+- `check-param-names`
+- `check-tag-names`
+- `require-hyphen-before-param-description`
+- `require-description`
+- `require-param`
+- `require-param-description`
+- `require-param-name`
+- `require-param-type`
+- `require-returns`
+- `require-returns-check`
+- `require-returns-description`
+- `require-returns-type`
+
 <a name="eslint-plugin-jsdoc-settings-additional-tag-names"></a>
 ### Additional Tag Names
 
-Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc tags. The format of the configuration is as follows:
+Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc
+tags in the rule `check-tag-names`. The format of the configuration is as follows:
 
 ```json
 {
@@ -205,6 +233,32 @@ The format of the configuration is as follows:
     }
 }
 ```
+
+<a name="eslint-plugin-jsdoc-settings-settings-to-configure-valid-types"></a>
+### Settings to Configure <code>valid-types</code>
+
+* `settings.jsdoc.allowEmptyNamepaths` - Set to `false` to disallow
+  empty name paths with `@callback`, `@event`, `@listens`, `@fires`,
+  or `@emits` (these might often be expected to have an accompanying
+  name path, though they have some indicative value without one)
+* `settings.jsdoc.checkSeesForNamepaths` - Set this to `true` to insist
+  that `@see` only use name paths (the tag is normally permitted to
+  allow other text)
+
+<a name="eslint-plugin-jsdoc-settings-settings-to-configure-require-returns"></a>
+### Settings to Configure <code>require-returns</code>
+
+* `settings.jsdoc.forceRequireReturn` - Set to `true` to always insist on
+  `@returns` documentation regardless of implicit or explicit `return`'s
+  in the function. May be desired to flag that a project is aware of an
+  `undefined`/`void` return.
+
+<a name="eslint-plugin-jsdoc-settings-settings-to-configure-require-example"></a>
+### Settings to Configure <code>require-example</code>
+
+* `settings.jsdoc.avoidExampleOnConstructors` - Set to `true` to avoid the
+  need for an example on a constructor (whether indicated as such by a
+  jsdoc tag or by being within an ES6 `class`).
 
 <a name="eslint-plugin-jsdoc-settings-settings-to-configure-check-examples"></a>
 ### Settings to Configure <code>check-examples</code>
@@ -402,7 +456,8 @@ command.
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`|
+|Tags|`example`|
+|Settings| *See above* |
 
 The following patterns are considered problems:
 
@@ -944,6 +999,7 @@ yields
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
+|Settings|`tagNamePreference`, `additionalTagNames`|
 
 The following patterns are considered problems:
 
@@ -1162,7 +1218,7 @@ new String('lard') // String {0: "l", 1: "a", 2: "r", 3: "d", length: 4}
 new String('lard') === 'lard' // false
 ```
 
-To make things more confusing, there are also object literals and object Objects. But object literals are still static Objects and object Objects are instantiated Objects. So an object primitive is still an object Object.
+To make things more confusing, there are also object literals and object Objects. But object literals are still static Objects and object Objects are instantiated Objects. So an object primitive is still an object Object. (`Object.create(null)` objects are not, however.)
 
 Basically, for primitives, we want to define the type as a primitive, because that's what we use in 99.9% of cases. For everything else, we use the type rather than the primitive. Otherwise it would all just be `{object}`.
 
@@ -1179,10 +1235,11 @@ Number | **number** | **number** | `(41) instanceof Number` -> **`false`**
 String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
 |||
-|---|---|
+|---|---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`class`, `constant`, `enum`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`|
-
+|Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
+|Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`|
+|Closure-only|`package`, `private`, `protected`, `public`, `static`|
 The following patterns are considered problems:
 
 ````js
@@ -1366,16 +1423,23 @@ function quux () {
 <a name="eslint-plugin-jsdoc-rules-no-undefined-types"></a>
 ### <code>no-undefined-types</code>
 
-Checks that types in jsdoc comments are defined. This can be used to check unimported types.
+Checks that types in jsdoc comments are defined. This can be used to check
+unimported types.
 
-When enabling this rule, types in jsdoc comments will resolve as used variables, i.e. will not be marked as unused by `no-unused-vars`.
+When enabling this rule, types in jsdoc comments will resolve as used
+variables, i.e. will not be marked as unused by `no-unused-vars`.
 
+The following tags will be checked for name(paths) definitions to also serve
+as a potential "type" for checking the tag types in the table below:
+
+`callback`, `class` (or `constructor`), `constant` (or `const`), `event`, `external` (or `host`), `function` (or `func` or `method`), `interface`, `member` (or `var`), `mixin`, `name`, `namespace`, `typedef`.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`, `returns`|
-
+|Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
+|Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
+|Closure-only|`package`, `private`, `protected`, `public`, `static`|
 The following patterns are considered problems:
 
 ````js
@@ -1505,6 +1569,7 @@ Requires that block description and tag description are written in complete sent
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`, `returns`|
+|Aliases|`arg`, `argument`, `return`|
 
 The following patterns are considered problems:
 
@@ -1767,7 +1832,8 @@ Requires that all functions have a description.
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`class`, `example`|
+|Tags|`description`|
+|Aliases|`desc`|
 
 The following patterns are considered problems:
 
@@ -1833,6 +1899,7 @@ Requires that all functions have examples.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`example`|
+|Settings|`avoidExampleOnConstructors`|
 
 The following patterns are considered problems:
 
@@ -1927,6 +1994,323 @@ function quux () {
 ````
 
 
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc"></a>
+### <code>require-jsdoc</code>
+
+Checks for presence of jsdoc comments, across a variety of contexts.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|N/A|
+
+The following patterns are considered problems:
+
+````js
+function quux (foo) {
+
+}
+// Message: Missing JSDoc comment.
+
+function myFunction() {}
+// Message: Missing JSDoc comment.
+
+/**
+ * Description for A.
+ */
+class A {
+   constructor(xs) {
+        this.a = xs;
+   }
+}
+// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+class A {
+    /**
+     * Description for constructor.
+     * @param {object[]} xs - xs
+     */
+    constructor(xs) {
+        this.a = xs;
+    }
+}
+// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+class A extends B {
+    /**
+     * Description for constructor.
+     * @param {object[]} xs - xs
+     */
+    constructor(xs) {
+        this.a = xs;
+    }
+}
+// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+export class A extends B {
+    /**
+     * Description for constructor.
+     * @param {object[]} xs - xs
+     */
+    constructor(xs) {
+        this.a = xs;
+    }
+}
+// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+export default class A extends B {
+    /**
+     * Description for constructor.
+     * @param {object[]} xs - xs
+     */
+    constructor(xs) {
+        this.a = xs;
+    }
+}
+// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+var myFunction = () => {}
+// Options: [{"require":{"ArrowFunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+var myFunction = () => () => {}
+// Options: [{"require":{"ArrowFunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+var foo = function() {}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+const foo = {bar() {}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+var foo = {bar: function() {}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+function foo (abc) {}
+// Settings: {"jsdoc":{"exemptEmptyFunctions":false}}
+// Message: Missing JSDoc comment.
+
+function foo () {
+  return true;
+}
+// Settings: {"jsdoc":{"exemptEmptyFunctions":false}}
+// Message: Missing JSDoc comment.
+````
+
+The following patterns are not considered problems:
+
+````js
+var array = [1,2,3];
+array.forEach(function() {});
+
+/**
+ * @class MyClass
+ **/
+function MyClass() {}
+
+/**
+ Function doing something
+ */
+function myFunction() {}
+/**
+ Function doing something
+ */
+var myFunction = function() {};
+/**
+ Function doing something
+ */
+Object.myFunction = function () {};
+var obj = {
+   /**
+    *  Function doing something
+    **/
+    myFunction: function () {} };
+
+/**
+ @func myFunction
+ */
+function myFunction() {}
+/**
+ @method myFunction
+ */
+function myFunction() {}
+/**
+ @function myFunction
+ */
+function myFunction() {}
+
+/**
+ @func myFunction
+ */
+var myFunction = function () {}
+/**
+ @method myFunction
+ */
+var myFunction = function () {}
+/**
+ @function myFunction
+ */
+var myFunction = function () {}
+
+/**
+ @func myFunction
+ */
+Object.myFunction = function() {}
+/**
+ @method myFunction
+ */
+Object.myFunction = function() {}
+/**
+ @function myFunction
+ */
+Object.myFunction = function() {}
+(function(){})();
+
+var object = {
+  /**
+   *  @func myFunction - Some function
+   */
+  myFunction: function() {} }
+var object = {
+  /**
+   *  @method myFunction - Some function
+   */
+  myFunction: function() {} }
+var object = {
+  /**
+   *  @function myFunction - Some function
+   */
+  myFunction: function() {} }
+
+var array = [1,2,3];
+array.filter(function() {});
+Object.keys(this.options.rules || {}).forEach(function(name) {}.bind(this));
+var object = { name: 'key'};
+Object.keys(object).forEach(function() {})
+
+function myFunction() {}
+// Options: [{"require":{"ClassDeclaration":true,"FunctionDeclaration":false,"MethodDefinition":true}}]
+
+var myFunction = function() {}
+// Options: [{"require":{"ClassDeclaration":true,"FunctionDeclaration":false,"MethodDefinition":true}}]
+
+/**
+ * Description for A.
+ */
+class A {
+    /**
+     * Description for constructor.
+     * @param {object[]} xs - xs
+     */
+    constructor(xs) {
+        this.a = xs;
+    }
+}
+// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+
+/**
+ * Description for A.
+ */
+class App extends Component {
+    /**
+     * Description for constructor.
+     * @param {object[]} xs - xs
+     */
+    constructor(xs) {
+        this.a = xs;
+    }
+}
+// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+
+/**
+ * Description for A.
+ */
+export default class App extends Component {
+    /**
+     * Description for constructor.
+     * @param {object[]} xs - xs
+     */
+    constructor(xs) {
+        this.a = xs;
+    }
+}
+// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+
+/**
+ * Description for A.
+ */
+export class App extends Component {
+    /**
+     * Description for constructor.
+     * @param {object[]} xs - xs
+     */
+    constructor(xs) {
+        this.a = xs;
+    }
+}
+// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+
+class A {
+    constructor(xs) {
+        this.a = xs;
+    }
+}
+// Options: [{"require":{"ClassDeclaration":false,"MethodDefinition":false}}]
+
+/**
+ Function doing something
+*/
+var myFunction = () => {}
+// Options: [{"require":{"ArrowFunctionExpression":true}}]
+
+/**
+ Function doing something
+*/
+var myFunction = () => () => {}
+// Options: [{"require":{"ArrowFunctionExpression":true}}]
+
+setTimeout(() => {}, 10);
+// Options: [{"require":{"ArrowFunctionExpression":true}}]
+
+/**
+JSDoc Block
+*/
+var foo = function() {}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+const foo = {/**
+JSDoc Block
+*/
+bar() {}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+var foo = {/**
+JSDoc Block
+*/
+bar: function() {}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+var foo = { [function() {}]: 1 };
+// Options: [{"require":{"FunctionExpression":true}}]
+
+function foo () {}
+// Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
+
+function foo () {
+  return;
+}
+// Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description"></a>
 ### <code>require-hyphen-before-param-description</code>
 
@@ -1938,6 +2322,7 @@ This rule takes one argument. If it is `"always"` then a problem is raised when 
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
+|Aliases|`arg`, `argument`|
 
 The following patterns are considered problems:
 
@@ -1991,6 +2376,7 @@ Requires that `@param` tag has `description` value.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
+|Aliases|`arg`, `argument`|
 
 The following patterns are considered problems:
 
@@ -2045,6 +2431,7 @@ Requires that all function parameters have name.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
+|Aliases|`arg`, `argument`|
 
 The following patterns are considered problems:
 
@@ -2094,6 +2481,7 @@ Requires that `@param` tag has `type` value.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
+|Aliases|`arg`, `argument`|
 
 The following patterns are considered problems:
 
@@ -2144,6 +2532,8 @@ Requires that all function parameters are documented.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
+|Aliases|`arg`, `argument`|
+|Settings|`allowOverrideWithoutParam`, `allowImplementsWithoutParam`, `allowAugmentsExtendsWithoutParam`|
 
 The following patterns are considered problems:
 
@@ -2458,6 +2848,7 @@ Requires that `@returns` tag has `description` value.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
+|Aliases|`return`|
 
 The following patterns are considered problems:
 
@@ -2522,6 +2913,7 @@ Requires that `@returns` tag has `type` value.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
+|Aliases|`return`|
 
 The following patterns are considered problems:
 
@@ -2573,6 +2965,7 @@ Checks if the return expression exists in function body and in the comment.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
+|Aliases|`return`|
 
 The following patterns are considered problems:
 
@@ -2731,6 +3124,8 @@ Requires returns are documented.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
+|Aliases|`return`|
+|Settings|`forceRequireReturn`|
 
 The following patterns are considered problems:
 
@@ -2996,7 +3391,11 @@ The following apply to the above sets:
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`, `returns`|
+|Tags|
+For name only unless otherwise stated: `alias`, `augments`, `borrows`, `callback`, `class` (for name and type), `constant` (for name and type), `enum` (for type), `event`, `external`, `fires`, `function`, `implements` (for type), `interface`, `lends`, `listens`, `member` (for name and type),  `memberof`, `memberof!`, `mixes`, `mixin`, `module` (for name and type), `name`, `namespace` (for name and type), `param` (for name and type), `property` (for name and type), `returns` (for type), `this`, `throws` (for type), `type` (for type), `typedef` (for name and type), `yields` (for type)|
+|Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
+|Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|
+|Settings|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
 
 The following patterns are considered problems:
 

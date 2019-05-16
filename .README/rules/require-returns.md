@@ -6,5 +6,7 @@ Requires returns are documented.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
+|Aliases|`return`|
+|Settings|`forceRequireReturn`|
 
 <!-- assertions requireReturns -->

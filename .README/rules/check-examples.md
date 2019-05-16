@@ -23,6 +23,7 @@ command.
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`|
+|Tags|`example`|
+|Settings| *See above* |
 
 <!-- assertions checkExamples -->
