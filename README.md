@@ -1371,6 +1371,13 @@ function quux(foo) {
 
 }
 
+/**
+ * @param {Promise} foo - Bar.
+ */
+function quux(foo) {
+
+}
+
 class MyClass {}
 
 /**
@@ -1381,6 +1388,15 @@ function quux(foo) {
 }
 
 quux(0);
+
+const MyType = require('my-library').MyType;
+
+/**
+ * @param {MyType} foo - Bar.
+ */
+  function quux(foo) {
+
+}
 
 const MyType = require('my-library').MyType;
 
@@ -1402,7 +1418,7 @@ import {MyType} from 'my-library';
 
 }
 
-/*global MyType*/
+/*globals MyType*/
 
 /**
  * @param {MyType} foo - Bar.

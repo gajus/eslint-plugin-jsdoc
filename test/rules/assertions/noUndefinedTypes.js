@@ -33,6 +33,19 @@ export default {
     },
     {
       code: `
+          /**
+           * @param {Promise} foo - Bar.
+           */
+          function quux(foo) {
+
+          }
+      `,
+      env: {
+        es6: true
+      }
+    },
+    {
+      code: `
           class MyClass {}
 
           /**
@@ -58,7 +71,25 @@ export default {
           function quux(foo) {
 
         }
-      `
+      `,
+      env: {
+        node: true
+      }
+    },
+    {
+      code: `
+        const MyType = require('my-library').MyType;
+
+        /**
+         * @param {MyType} foo - Bar.
+         */
+          function quux(foo) {
+
+        }
+      `,
+      env: {
+        node: false
+      }
     },
     {
       code: `
@@ -79,7 +110,7 @@ export default {
     },
     {
       code: `
-        /*global MyType*/
+        /*globals MyType*/
 
         /**
          * @param {MyType} foo - Bar.
