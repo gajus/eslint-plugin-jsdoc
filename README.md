@@ -14,6 +14,7 @@ JSDoc linting rules for ESLint.
     * [Configuration](#eslint-plugin-jsdoc-configuration)
     * [Settings](#eslint-plugin-jsdoc-settings)
         * [Allow `@private` to disable rules for that comment block](#eslint-plugin-jsdoc-settings-allow-private-to-disable-rules-for-that-comment-block)
+        * [Exempting empty functions from `require-jsdoc`](#eslint-plugin-jsdoc-settings-exempting-empty-functions-from-require-jsdoc)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [Additional Tag Names](#eslint-plugin-jsdoc-settings-additional-tag-names)
         * [Allow `@override` Without Accompanying `@param` Tags](#eslint-plugin-jsdoc-settings-allow-override-without-accompanying-param-tags)
@@ -150,6 +151,13 @@ Finally, enable all of the rules that you would like to use.
 
 - `settings.jsdoc.allowPrivate` - Disables all rules for the comment block
   on which it occurs.
+
+<a name="eslint-plugin-jsdoc-settings-exempting-empty-functions-from-require-jsdoc"></a>
+### Exempting empty functions from <code>require-jsdoc</code>
+
+- `settings.jsdoc.exemptEmptyFunctions` - Will not report missing jsdoc blocks
+  above functions/methods with no parameters or return values (intended where
+  variable names are sufficient for themselves as documentation).
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
@@ -1997,12 +2005,14 @@ function quux () {
 <a name="eslint-plugin-jsdoc-rules-require-jsdoc"></a>
 ### <code>require-jsdoc</code>
 
-Checks for presence of jsdoc comments, across a variety of contexts.
+Checks for presence of jsdoc comments, on class declarations as well as
+functions.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
+|Settings|`exemptEmptyFunctions`|
 
 The following patterns are considered problems:
 
