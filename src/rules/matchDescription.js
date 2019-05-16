@@ -1,0 +1,51 @@
+import _ from 'lodash';
+import iterateJsdoc from '../iterateJsdoc';
+
+const tagsWithDescriptions = ['param', 'arg', 'argument', 'returns', 'return'];
+
+export default iterateJsdoc(({
+  jsdoc,
+  report,
+  context
+}) => {
+  const options = context.options[0] || {};
+
+  const validateDescription = (description, tag) => {
+    const regex = new RegExp(
+      (tag && typeof options.tags[tag] === 'string' ? options.tags[tag] :
+        options.matchDescription,
+
+      // If supporting Node >= 10, we could loosen to this for the
+      //   initial letter: \\p{Upper}
+      options.matchDescription) || '^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$',
+      'u'
+    );
+
+    if (!regex.test(description)) {
+      report('JSDoc description does not satisfy the regex pattern.');
+
+      return true;
+    }
+
+    return false;
+  };
+
+  if (jsdoc.description && validateDescription(jsdoc.description)) {
+    return;
+  }
+
+  if (!options.tags || !Object.keys(options.tags).length) {
+    return;
+  }
+
+  const tags = _.filter(jsdoc.tags, (tag) => {
+    return _.includes(tagsWithDescriptions, tag.tag) &&
+      {}.hasOwnProperty.call(options.tags, tag.tag) && options.tags[tag.tag];
+  });
+
+  _.some(tags, (tag) => {
+    const description = _.trimStart(tag.description, '- ');
+
+    return validateDescription(description, tag.tag);
+  });
+});

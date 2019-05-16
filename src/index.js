@@ -6,6 +6,7 @@ import checkParamNames from './rules/checkParamNames';
 import checkSyntax from './rules/checkSyntax';
 import checkTagNames from './rules/checkTagNames';
 import checkTypes from './rules/checkTypes';
+import matchDescription from './rules/matchDescription';
 import newlineAfterDescription from './rules/newlineAfterDescription';
 import noUndefinedTypes from './rules/noUndefinedTypes';
 import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
@@ -61,6 +62,7 @@ export default {
     'check-syntax': checkSyntax,
     'check-tag-names': checkTagNames,
     'check-types': checkTypes,
+    'match-description': matchDescription,
     'newline-after-description': newlineAfterDescription,
     'no-undefined-types': noUndefinedTypes,
     'require-description': requireDescription,
