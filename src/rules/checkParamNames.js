@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 const validateParameterNames = (targetTagName : string, functionParameterNames : Array<string>, jsdoc, report) => {
@@ -10,7 +9,7 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
     return tag.tag === targetTagName && !tag.name.includes('.');
   });
 
-  return _.some(paramTags, (tag, index) => {
+  return paramTags.some((tag, index) => {
     const functionParameterName = functionParameterNames[index];
 
     if (!functionParameterName) {
@@ -49,8 +48,8 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
 const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames : Array<string>, report : Function) => {
   let lastRealParameter;
 
-  return _.some(jsdocParameterNames, (jsdocParameterName) => {
-    const isPropertyPath = _.includes(jsdocParameterName, '.');
+  return jsdocParameterNames.some((jsdocParameterName) => {
+    const isPropertyPath = jsdocParameterName.includes('.');
 
     if (isPropertyPath) {
       if (!lastRealParameter) {
