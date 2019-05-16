@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
+import getJSDocComment from './eslint/getJSDocComment';
 
 const parseComment = (commentNode, indent) => {
   // Preserve JSDoc block start/end indentation.
@@ -155,10 +156,6 @@ const curryUtils = (
     ], tag.tag);
   };
 
-  utils.isArrowExpression = () => {
-    return node.type === 'ArrowFunctionExpression' && node.expression;
-  };
-
   utils.hasDefinedTypeReturnTag = (tag) => {
     return jsdocUtils.hasDefinedTypeReturnTag(tag);
   };
@@ -181,21 +178,20 @@ const curryUtils = (
     return forceRequireReturn;
   };
 
-  utils.getClassJsdocNode = () => {
+  utils.getClassNode = () => {
     const greatGrandParent = ancestors.slice(-3)[0];
     const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;
 
     if (greatGrandParentValue === 'class') {
-      const classJsdocNode = sourceCode.getJSDocComment(greatGrandParent);
-
-      return classJsdocNode;
+      return greatGrandParent;
     }
 
     return false;
   };
 
   utils.classHasTag = (tagName) => {
-    const classJsdocNode = utils.getClassJsdocNode();
+    const classNode = utils.getClassNode();
+    const classJsdocNode = getJSDocComment(sourceCode, classNode);
 
     if (classJsdocNode) {
       const indent = _.repeat(' ', classJsdocNode.loc.start.column);
@@ -252,7 +248,7 @@ export default (iterator, options) => {
       const avoidExampleOnConstructors = Boolean(_.get(context, 'settings.jsdoc.avoidExampleOnConstructors'));
 
       const checkJsdoc = (node) => {
-        const jsdocNode = sourceCode.getJSDocComment(node);
+        const jsdocNode = getJSDocComment(sourceCode, node);
 
         if (!jsdocNode) {
           return;
