@@ -230,9 +230,7 @@ export {
   parseComment
 };
 
-export default (iterator, options) => {
-  const opts = options || {};
-
+export default (iterator, opts = {}) => {
   return {
     /**
      * The entrypoint for the JSDoc rule.
@@ -245,6 +243,9 @@ export default (iterator, options) => {
      */
     create (context) {
       const sourceCode = context.getSourceCode();
+
+      // All rules
+      const ignorePrivate = Boolean(_.get(context, 'settings.jsdoc.ignorePrivate'));
 
       // `check-tag-names` and many require/param rules
       const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
@@ -350,6 +351,13 @@ export default (iterator, options) => {
           ancestors,
           sourceCode
         );
+
+        if (
+          ignorePrivate &&
+          utils.hasTag('private')
+        ) {
+          return;
+        }
 
         iterator({
           context,
