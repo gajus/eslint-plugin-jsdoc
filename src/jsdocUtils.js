@@ -424,6 +424,13 @@ const hasReturnValue = (node, context) => {
   throw new Error('Unknown element ' + node.type);
 };
 
+/** @param {string} tag */
+/*
+const isInlineTag = (tag) => {
+  return /^(@link|@linkcode|@linkplain|@tutorial) /.test(tag);
+};
+*/
+
 export default {
   getFunctionParameterNames,
   getJsdocParameterNames,
