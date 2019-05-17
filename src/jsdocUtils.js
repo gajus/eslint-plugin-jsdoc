@@ -128,7 +128,6 @@ const namepathDefiningTags = [
   'mixin',
   'name',
   'namespace',
-  'type',
   'typedef',
 
   // MAY BE USEFUL WITHOUT NAMEPATH
@@ -174,6 +173,7 @@ let tagsWithTypes = [
   'class',
   'constant',
   'enum',
+  'implements',
   'member',
   'module',
   'namespace',
@@ -182,7 +182,12 @@ let tagsWithTypes = [
   'returns',
   'throws',
   'type',
-  'typedef'
+  'typedef',
+  'yields'
+];
+
+const closureTagsWithTypes = [
+  'package', 'private', 'protected', 'public', 'static'
 ];
 
 const tagsWithTypesAliases = [
@@ -193,10 +198,11 @@ const tagsWithTypesAliases = [
   'argument',
   'prop',
   'return',
-  'exception'
+  'exception',
+  'yield'
 ];
 
-tagsWithTypes = tagsWithTypes.concat(tagsWithTypesAliases);
+tagsWithTypes = tagsWithTypes.concat(tagsWithTypesAliases, closureTagsWithTypes);
 
 const isTagWithType = (tagName) => {
   return tagsWithTypes.includes(tagName);
