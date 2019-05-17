@@ -117,27 +117,89 @@ const hasDefinedTypeReturnTag = (tag) => {
   return true;
 };
 
-const namepathAsNameTags = [
+const namepathDefiningTags = [
+  // NOT USEFUL WITHOUT NAMEPATH
+  'class', 'constructor',
+  'constant', 'const',
+  'external', 'host',
+  'function', 'func', 'method',
+  'interface',
+  'member', 'var',
+  'mixin',
+  'name',
+  'namespace',
+  'type',
+  'typedef',
+
+  // MAY BE USEFUL WITHOUT NAMEPATH
+  'callback',
+  'event'
+];
+
+const namepathPointingTags = [
+  // NOT USEFUL WITHOUT NAMEPATH
   'alias',
   'augments',
-  'callback',
+
+  // `borrows` has a different format, however, so needs special parsing
+  'borrows',
   'extends',
   'lends',
   'memberof',
   'memberof!',
   'mixes',
-  'name',
   'this',
 
+  // MAY BE USEFUL WITHOUT NAMEPATH
   'emits',
-  'event',
   'fires',
   'listens'
 ];
 
-const isNamepathType = (tagName, checkSeesForNamepaths) => {
-  return namepathAsNameTags.includes(tagName) ||
+const isNamepathDefiningTag = (tagName) => {
+  return namepathDefiningTags.includes(tagName);
+};
+
+const isNamepathPointingTag = (tagName, checkSeesForNamepaths) => {
+  return namepathPointingTags.includes(tagName) ||
     tagName === 'see' && checkSeesForNamepaths;
+};
+
+const isNamepathTag = (tagName, checkSeesForNamepaths) => {
+  return isNamepathDefiningTag(tagName) ||
+    isNamepathPointingTag(tagName, checkSeesForNamepaths);
+};
+
+let tagsWithTypes = [
+  'class',
+  'constant',
+  'enum',
+  'member',
+  'module',
+  'namespace',
+  'param',
+  'property',
+  'returns',
+  'throws',
+  'type',
+  'typedef'
+];
+
+const tagsWithTypesAliases = [
+  'constructor',
+  'const',
+  'var',
+  'arg',
+  'argument',
+  'prop',
+  'return',
+  'exception'
+];
+
+tagsWithTypes = tagsWithTypes.concat(tagsWithTypesAliases);
+
+const isTagWithType = (tagName) => {
+  return tagsWithTypes.includes(tagName);
 };
 
 const LOOP_STATEMENTS = ['WhileStatement', 'DoWhileStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement'];
@@ -365,6 +427,8 @@ export default {
   hasDefinedTypeReturnTag,
   hasReturnValue,
   hasTag,
-  isNamepathType,
+  isNamepathDefiningTag,
+  isNamepathTag,
+  isTagWithType,
   isValidTag
 };

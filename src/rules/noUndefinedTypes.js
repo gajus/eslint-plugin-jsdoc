@@ -6,27 +6,13 @@ const extraTypes = [
   'null', 'undefined', 'string', 'number', 'boolean', 'any', '*',
   'Array', 'Object', 'RegExp', 'Date', 'Function'
 ];
-const tagsWithNames = [
-  'callback',
-  'class', 'constructor',
-  'constant', 'const',
-  'event',
-  'external', 'host',
-  'function', 'func', 'method',
-  'interface',
-  'member', 'var',
-  'mixin',
-  'name',
-  'namespace',
-  'type',
-  'typedef'
-];
 
 export default iterateJsdoc(({
   context,
   jsdoc,
   report,
-  sourceCode
+  sourceCode,
+  utils
 }) => {
   const scopeManager = sourceCode.scopeManager;
   const globalScope = scopeManager.globalScope;
@@ -38,7 +24,7 @@ export default iterateJsdoc(({
     .map(parseComment)
     .flatMap((doc) => {
       return (doc.tags || []).filter(({tag}) => {
-        return tagsWithNames.includes(tag);
+        return utils.isNamepathDefiningTag(tag);
       });
     })
     .map((tag) => {

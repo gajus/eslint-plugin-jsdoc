@@ -1,34 +1,6 @@
 import {parse, traverse, publish} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
 
-let targetTags = [
-  'class',
-  'constant',
-  'enum',
-  'member',
-  'module',
-  'namespace',
-  'param',
-  'property',
-  'returns',
-  'throws',
-  'type',
-  'typedef'
-];
-
-const targetTagAliases = [
-  'constructor',
-  'const',
-  'var',
-  'arg',
-  'argument',
-  'prop',
-  'return',
-  'exception'
-];
-
-targetTags = targetTags.concat(targetTagAliases);
-
 const strictNativeTypes = [
   'undefined',
   'null',
@@ -46,10 +18,11 @@ export default iterateJsdoc(({
   jsdoc,
   jsdocNode,
   sourceCode,
-  report
+  report,
+  utils
 }) => {
   const jsdocTags = jsdoc.tags.filter((tag) => {
-    return targetTags.includes(tag.tag);
+    return utils.isTagWithType(tag.tag);
   });
 
   jsdocTags.forEach((jsdocTag) => {

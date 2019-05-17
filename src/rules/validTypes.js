@@ -42,7 +42,7 @@ export default iterateJsdoc(({
 
         validTypeParsing(thatNamepath);
       }
-    } else if (utils.isNamepathType(tag.tag)) {
+    } else if (utils.isNamepathTag(tag.tag)) {
       if (utils.passesEmptyNamepathCheck(tag)) {
         return;
       }

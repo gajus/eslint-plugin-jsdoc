@@ -141,8 +141,16 @@ const curryUtils = (
   utils.isAugmentsExtendsAllowedWithoutParam = () => {
     return allowAugmentsExtendsWithoutParam;
   };
-  utils.isNamepathType = (tagName) => {
-    return jsdocUtils.isNamepathType(tagName, checkSeesForNamepaths);
+
+  utils.isNamepathDefiningTag = (tagName) => {
+    return jsdocUtils.isNamepathDefiningTag(tagName);
+  };
+  utils.isNamepathTag = (tagName) => {
+    return jsdocUtils.isNamepathTag(tagName, checkSeesForNamepaths);
+  };
+
+  utils.isTagWithType = (tagName) => {
+    return jsdocUtils.isTagWithType(tagName);
   };
 
   utils.avoidExampleOnConstructors = () => {
