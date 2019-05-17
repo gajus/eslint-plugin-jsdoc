@@ -14,11 +14,11 @@ export default iterateJsdoc(({
   const validateDescription = (description, tag) => {
     const regex = new RegExp(
       (tag && typeof options.tags[tag] === 'string' ? options.tags[tag] :
-        options.matchDescription,
+        options.matchDescription
 
       // If supporting Node >= 10, we could loosen to this for the
       //   initial letter: \\p{Upper}
-      options.matchDescription) || '^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$',
+      ) || '^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$',
       'u'
     );
 

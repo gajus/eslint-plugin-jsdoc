@@ -283,6 +283,27 @@ export default {
           }
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @param notRet
+           * @returns Тест.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [{
+        tags: {
+          param: '[\u0410-\u042F]+.'
+        }
+      }]
     }
   ],
   valid: [
@@ -347,6 +368,22 @@ export default {
       `,
       options: [{
         matchDescription: '[\u0410-\u042F]+.'
+      }]
+    },
+    {
+      code: `
+          /**
+           * @param notRet
+           * @returns Тест.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        tags: {
+          returns: '[\u0410-\u042F]+.'
+        }
       }]
     },
     {

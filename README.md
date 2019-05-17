@@ -30,20 +30,21 @@ JSDoc linting rules for ESLint.
         * [`check-syntax`](#eslint-plugin-jsdoc-rules-check-syntax)
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
+        * [`match-description`](#eslint-plugin-jsdoc-rules-match-description)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
         * [`no-undefined-types`](#eslint-plugin-jsdoc-rules-no-undefined-types)
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-description`](#eslint-plugin-jsdoc-rules-require-description)
         * [`require-example`](#eslint-plugin-jsdoc-rules-require-example)
-        * [`require-jsdoc`](#eslint-plugin-jsdoc-rules-require-jsdoc)
         * [`require-hyphen-before-param-description`](#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description)
+        * [`require-jsdoc`](#eslint-plugin-jsdoc-rules-require-jsdoc)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
         * [`require-param-name`](#eslint-plugin-jsdoc-rules-require-param-name)
         * [`require-param-type`](#eslint-plugin-jsdoc-rules-require-param-type)
         * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
+        * [`require-returns-check`](#eslint-plugin-jsdoc-rules-require-returns-check)
         * [`require-returns-description`](#eslint-plugin-jsdoc-rules-require-returns-description)
         * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
-        * [`require-returns-check`](#eslint-plugin-jsdoc-rules-require-returns-check)
         * [`require-returns`](#eslint-plugin-jsdoc-rules-require-returns)
         * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
 
@@ -124,12 +125,14 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-syntax": 1,
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
+        "jsdoc/match-description": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/no-undefined-types": 1,
         "jsdoc/require-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-example": 1,
         "jsdoc/require-hyphen-before-param-description": 1,
+        "jsdoc/require-jsdoc": 1,
         "jsdoc/require-param": 1,
         "jsdoc/require-param-description": 1,
         "jsdoc/require-param-name": 1,
@@ -1348,6 +1351,339 @@ function qux(foo) {
 ````
 
 
+<a name="eslint-plugin-jsdoc-rules-match-description"></a>
+### <code>match-description</code>
+
+Enforces a regular expression pattern on descriptions.
+
+The default is this basic expression to match English sentences (Support
+for Unicode upper case may be added in a future version when it can be handled
+by our supported Node versions):
+
+``^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$``
+
+You can supply your own expression passing a `matchDescription` string on
+the options object.
+
+```js
+{
+  'jsdoc/match-description': ['error', {matchDescription: '[A-Z].*\\.'}]
+}
+```
+
+If you want different regular expressions to apply to tags, you may use
+the `tags` option object:
+
+```js
+{
+  'jsdoc/match-description': ['error', {tags: {
+    param: '\\- [A-Z].*\\.',
+    returns: '[A-Z].*\\.'
+  }}]
+}
+```
+
+In place of a string, you can also add `true` to indicate that a particular
+tag should be linted with the `matchDescription` value (or the default).
+
+```js
+{
+  'jsdoc/match-description': ['error', {tags: {
+    param: true,
+    returns: true
+  }}]
+}
+```
+
+
+By default, only the main function description is linted.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|N/A by default but see `tags` options|
+|Settings||
+|Options|`tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * foo.
+ */
+function quux () {
+
+}
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo)
+ */
+function quux () {
+
+}
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * тест.
+ */
+function quux () {
+
+}
+// Options: [{"matchDescription":"[А-Я]+."}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo
+ */
+function quux () {
+
+}
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @param foo foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @param foo bar
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * {@see Foo.bar} buz
+ */
+function quux (foo) {
+
+}
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @returns {number} foo
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"returns":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @returns foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"returns":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * lorem ipsum dolor sit amet, consectetur adipiscing elit. pellentesque elit diam,
+ * iaculis eu dignissim sed, ultrices sed nisi. nulla at ligula auctor, consectetur neque sed,
+ * tincidunt nibh. vivamus sit amet vulputate ligula. vivamus interdum elementum nisl,
+ * vitae rutrum tortor semper ut. morbi porta ante vitae dictum fermentum.
+ * proin ut nulla at quam convallis gravida in id elit. sed dolor mauris, blandit quis ante at,
+ * consequat auctor magna. duis pharetra purus in porttitor mollis.
+ */
+function longDescription (foo) {
+
+}
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * @arg {number} foo - Foo
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"arg":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * @argument {number} foo - Foo
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"argument":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * @return {number} foo
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"return":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Returns bar.
+ *
+ * @return {number} bar
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"return":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * @param notRet
+ * @returns Тест.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"param":"[А-Я]+."}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @param foo - Foo.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"param":true}}]
+
+/**
+ * Foo.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Тест.
+ */
+function quux () {
+
+}
+// Options: [{"matchDescription":"[А-Я]+."}]
+
+/**
+ * @param notRet
+ * @returns Тест.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"returns":"[А-Я]+."}}]
+
+/**
+ * Foo
+ * bar.
+ */
+function quux () {
+
+}
+
+/**
+ * @returns Foo bar.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"returns":true}}]
+
+/**
+ * Foo. {@see Math.sin}.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo {@see Math.sin} bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo?
+ *
+ * Bar!
+ *
+ * Baz:
+ *   1. Foo.
+ *   2. Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Hello:
+ * World.
+ */
+function quux () {
+
+}
+
+/**
+ * Hello: world.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * foo.
+ */
+function quux () {
+
+}
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-newline-after-description"></a>
 ### <code>newline-after-description</code>
 
@@ -1561,6 +1897,14 @@ function quux(foo) {
  */
 function testFunction(callback) {
   callback();
+}
+
+/**
+ *
+ *
+ */
+function foo () {
+
 }
 ````
 
@@ -2004,6 +2348,62 @@ function quux () {
 ````
 
 
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description"></a>
+### <code>require-hyphen-before-param-description</code>
+
+Requires a hyphen before the `@param` description.
+
+This rule takes one argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`|
+|Aliases|`arg`, `argument`|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @param foo Foo.
+ */
+function quux () {
+
+}
+// Options: ["always"]
+// Message: There must be a hyphen before @param description.
+
+/**
+ * @param foo - Foo.
+ */
+function quux () {
+
+}
+// Options: ["never"]
+// Message: There must be no hyphen before @param description.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @param foo - Foo.
+ */
+function quux () {
+
+}
+// Options: ["always"]
+
+/**
+ * @param foo Foo.
+ */
+function quux () {
+
+}
+// Options: ["never"]
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-require-jsdoc"></a>
 ### <code>require-jsdoc</code>
 
@@ -2320,62 +2720,6 @@ function foo () {
   return;
 }
 // Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
-````
-
-
-<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description"></a>
-### <code>require-hyphen-before-param-description</code>
-
-Requires a hyphen before the `@param` description.
-
-This rule takes one argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
-
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`param`|
-|Aliases|`arg`, `argument`|
-
-The following patterns are considered problems:
-
-````js
-/**
- * @param foo Foo.
- */
-function quux () {
-
-}
-// Options: ["always"]
-// Message: There must be a hyphen before @param description.
-
-/**
- * @param foo - Foo.
- */
-function quux () {
-
-}
-// Options: ["never"]
-// Message: There must be no hyphen before @param description.
-````
-
-The following patterns are not considered problems:
-
-````js
-/**
- * @param foo - Foo.
- */
-function quux () {
-
-}
-// Options: ["always"]
-
-/**
- * @param foo Foo.
- */
-function quux () {
-
-}
-// Options: ["never"]
 ````
 
 
@@ -2859,123 +3203,6 @@ function quux (foo) {
 ````
 
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description"></a>
-### <code>require-returns-description</code>
-
-Requires that `@returns` tag has `description` value.
-
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`returns`|
-|Aliases|`return`|
-
-The following patterns are considered problems:
-
-````js
-/**
- * @returns
- */
-function quux (foo) {
-
-}
-// Message: Missing JSDoc @returns description.
-
-/**
- * @return
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
-// Message: Missing JSDoc @return description.
-````
-
-The following patterns are not considered problems:
-
-````js
-/**
- *
- */
-function quux () {
-
-}
-
-/**
- * @returns Foo.
- */
-function quux () {
-
-}
-
-/**
- * @returns {undefined}
- */
-function quux () {
-
-}
-
-/**
- * @returns {void}
- */
-function quux () {
-
-}
-````
-
-
-<a name="eslint-plugin-jsdoc-rules-require-returns-type"></a>
-### <code>require-returns-type</code>
-
-Requires that `@returns` tag has `type` value.
-
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Tags|`returns`|
-|Aliases|`return`|
-
-The following patterns are considered problems:
-
-````js
-/**
- * @returns
- */
-function quux () {
-
-}
-// Message: Missing JSDoc @returns type.
-
-/**
- * @returns Foo.
- */
-function quux () {
-
-}
-// Message: Missing JSDoc @returns type.
-
-/**
- * @return Foo.
- */
-function quux () {
-
-}
-// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
-// Message: Missing JSDoc @return type.
-````
-
-The following patterns are not considered problems:
-
-````js
-/**
- * @returns {number}
- */
-function quux () {
-
-}
-````
-
-
 <a name="eslint-plugin-jsdoc-rules-require-returns-check"></a>
 ### <code>require-returns-check</code>
 
@@ -3131,6 +3358,123 @@ function quux () {
  * @returns {void} Foo.
  */
 function quux () {
+}
+````
+
+
+<a name="eslint-plugin-jsdoc-rules-require-returns-description"></a>
+### <code>require-returns-description</code>
+
+Requires that `@returns` tag has `description` value.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`returns`|
+|Aliases|`return`|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @returns
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @returns description.
+
+/**
+ * @return
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
+// Message: Missing JSDoc @return description.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ *
+ */
+function quux () {
+
+}
+
+/**
+ * @returns Foo.
+ */
+function quux () {
+
+}
+
+/**
+ * @returns {undefined}
+ */
+function quux () {
+
+}
+
+/**
+ * @returns {void}
+ */
+function quux () {
+
+}
+````
+
+
+<a name="eslint-plugin-jsdoc-rules-require-returns-type"></a>
+### <code>require-returns-type</code>
+
+Requires that `@returns` tag has `type` value.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`returns`|
+|Aliases|`return`|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @returns
+ */
+function quux () {
+
+}
+// Message: Missing JSDoc @returns type.
+
+/**
+ * @returns Foo.
+ */
+function quux () {
+
+}
+// Message: Missing JSDoc @returns type.
+
+/**
+ * @return Foo.
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
+// Message: Missing JSDoc @return type.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @returns {number}
+ */
+function quux () {
+
 }
 ````
 
