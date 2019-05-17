@@ -54,7 +54,11 @@ export default iterateJsdoc(({
     .concat(extraTypes)
     .concat(typedefDeclarations);
 
-  jsdoc.tags.forEach((tag) => {
+  const jsdocTags = jsdoc.tags.filter((tag) => {
+    return utils.isTagWithType(tag.tag);
+  });
+
+  jsdocTags.forEach((tag) => {
     let parsedType;
 
     try {

@@ -1,11 +1,6 @@
 import {parse} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
 
-/** @param {string} tag */
-const isInlineTag = (tag) => {
-  return /^(@link|@linkcode|@linkplain|@tutorial) /.test(tag);
-};
-
 const asExpression = /as\s+/;
 
 export default iterateJsdoc(({
@@ -47,7 +42,7 @@ export default iterateJsdoc(({
         return;
       }
       validTypeParsing(tag.name);
-    } else if (tag.type && !isInlineTag(tag.type)) {
+    } else if (tag.type && utils.isTagWithType(tag.tag)) {
       validTypeParsing(tag.type);
     }
   });
