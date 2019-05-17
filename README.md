@@ -466,7 +466,7 @@ command.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`example`|
 |Settings| *See above* |
 
@@ -477,6 +477,15 @@ The following patterns are considered problems:
  * @example alert('hello')
  */
 function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}}
+// Message: @example error (no-alert): Unexpected alert.
+
+/**
+ * @example alert('hello')
+ */
+class quux {
 
 }
 // Settings: {"jsdoc":{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}}
