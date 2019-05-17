@@ -47,9 +47,10 @@ Number | **number** | **number** | `(41) instanceof Number` -> **`false`**
 String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
 |||
-|---|---|---|
+|---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
+
 <!-- assertions checkTypes -->
