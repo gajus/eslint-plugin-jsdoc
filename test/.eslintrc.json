@@ -1,6 +1,7 @@
 {
   "extends": "canonical/mocha",
   "rules": {
-    "no-restricted-syntax": 0
+    "no-restricted-syntax": 0,
+    "unicorn/prevent-abbreviations": 0
   }
 }

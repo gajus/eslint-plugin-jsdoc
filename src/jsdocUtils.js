@@ -276,7 +276,7 @@ const lookupTable = {
   },
   '@loop': {
     is (node) {
-      return LOOP_STATEMENTS.indexOf(node.type) !== -1;
+      return LOOP_STATEMENTS.includes(node.type);
     },
     check (node) {
       return lookupTable['@default'].check(node.body);
@@ -390,7 +390,7 @@ const lookupTable = {
       }
 
       // Everything else cannot return anything.
-      if (RETURNFREE_STATEMENTS.indexOf(node.type) !== -1) {
+      if (RETURNFREE_STATEMENTS.includes(node.type)) {
         return false;
       }
 
