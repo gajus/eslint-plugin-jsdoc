@@ -188,4 +188,9 @@ export default iterateJsdoc(({
       );
     });
   });
-});
+}, {returns: [
+  'ArrowFunctionExpression',
+  'ClassDeclaration',
+  'FunctionDeclaration',
+  'FunctionExpression'
+]});

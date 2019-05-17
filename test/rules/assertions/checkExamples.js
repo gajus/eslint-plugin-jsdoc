@@ -34,6 +34,35 @@ export default {
     {
       code: `
           /**
+           * @example alert('hello')
+           */
+          class quux {
+
+          }
+      `,
+      errors: [
+        {
+          message: '@example error (no-alert): Unexpected alert.'
+        },
+        {
+          message: '@example error (semi): Missing semicolon.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          baseConfig: {
+            rules: {
+              'no-alert': 2,
+              semi: ['error', 'always']
+            }
+          },
+          eslintrcForExamples: false
+        }
+      }
+    },
+    {
+      code: `
+          /**
            * @example \`\`\`js
            alert('hello');
            \`\`\`
