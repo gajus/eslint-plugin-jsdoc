@@ -9,7 +9,6 @@ const extraTypes = [
 
 export default iterateJsdoc(({
   context,
-  jsdoc,
   report,
   sourceCode,
   utils
@@ -54,7 +53,7 @@ export default iterateJsdoc(({
     .concat(extraTypes)
     .concat(typedefDeclarations);
 
-  const jsdocTags = jsdoc.tags.filter((tag) => {
+  const jsdocTags = utils.filterTags((tag) => {
     return utils.isTagWithType(tag.tag);
   });
 

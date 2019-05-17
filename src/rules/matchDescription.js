@@ -6,7 +6,8 @@ const tagsWithDescriptions = ['param', 'arg', 'argument', 'returns', 'return'];
 export default iterateJsdoc(({
   jsdoc,
   report,
-  context
+  context,
+  utils
 }) => {
   const options = context.options[0] || {};
 
@@ -38,7 +39,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  const tags = jsdoc.tags.filter(({tag}) => {
+  const tags = utils.filterTags(({tag}) => {
     return tagsWithDescriptions.includes(tag) &&
       {}.hasOwnProperty.call(options.tags, tag) && options.tags[tag];
   });

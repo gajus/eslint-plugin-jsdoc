@@ -166,6 +166,17 @@ export default {
         callback();
       }
       `
+    },
+    {
+      code: `
+      /**
+       *
+       *
+       */
+      function foo () {
+
+      }
+      `
     }
   ]
 };

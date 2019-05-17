@@ -15,13 +15,12 @@ const strictNativeTypes = [
 ];
 
 export default iterateJsdoc(({
-  jsdoc,
   jsdocNode,
   sourceCode,
   report,
   utils
 }) => {
-  const jsdocTags = jsdoc.tags.filter((tag) => {
+  const jsdocTags = utils.filterTags((tag) => {
     return utils.isTagWithType(tag.tag);
   });
 

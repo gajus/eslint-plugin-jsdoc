@@ -173,17 +173,17 @@ const curryUtils = (
   };
 
   utils.getTags = (tagName) => {
-    if (!jsdoc.tags) {
-      return [];
-    }
-
-    return jsdoc.tags.filter((item) => {
+    return utils.filterTags((item) => {
       return item.tag === tagName;
     });
   };
 
   utils.isForceRequireReturn = () => {
     return forceRequireReturn;
+  };
+
+  utils.filterTags = (filter) => {
+    return (jsdoc.tags || []).filter(filter);
   };
 
   utils.getClassNode = () => {
