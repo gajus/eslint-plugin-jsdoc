@@ -371,8 +371,16 @@ export default (iterator, opts = {}) => {
         });
       };
 
-      if (opts.returns) {
+      if (typeof opts.returns === 'function') {
         return opts.returns(context, sourceCode, checkJsdoc);
+      }
+
+      if (Array.isArray(opts.returns)) {
+        return opts.returns.reduce((obj, prop) => {
+          obj[prop] = checkJsdoc;
+
+          return obj;
+        }, {});
       }
 
       return {
