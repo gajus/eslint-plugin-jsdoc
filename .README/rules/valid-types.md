@@ -4,8 +4,8 @@ Requires all types to be valid JSDoc or Closure compiler types without syntax er
 
 Also impacts behaviors on namepath (or event)-defining and pointing tags:
 
-1. Name(path)-defining tags: `@alias`, `@augments`, `@extends`, `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@this`
-1. Name(path)-pointing tags: `@class`, `@constructor`, `@constant`, `@const`, `@external`, `@host`, `@function`, `@func`, `@method`, `@interface`, `@member`, `@var`, `@mixin`, `@name`, `@namespace`, `@type`, `@typedef`
+1. Name(path)-defining tags: `@class`, `@constructor`, `@constant`, `@const`, `@external`, `@host`, `@function`, `@func`, `@method`, `@interface`, `@member`, `@var`, `@mixin`, `@name`, `@namespace`, `@typedef`
+1. Name(path)-pointing tags: `@alias`, `@augments`, `@extends`, `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@this`
 1. Name(path)-defining tags (which may have value without namepath): `@callback`, `@event`
 1. Name(path)-pointing tags (which may have value without namepath): `@listens`, `@fires`, `@emits`
 1. Name(path)-pointing tags (multiple names in one): `@borrows`
