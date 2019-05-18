@@ -25,4 +25,23 @@ export default iterateJsdoc(({
       report('Missing JSDoc @' + targetTagName + ' description.');
     }
   });
+}, {
+  returns (context) {
+    const defaultContexts = [
+      'ArrowFunctionExpression',
+      'FunctionDeclaration',
+      'FunctionExpression'
+    ];
+
+    const {
+      noDefaults,
+      contexts: ctxts = []
+    } = context.options[0] || {};
+
+    const contexts = typeof ctxts === 'string' ? [ctxts] : ctxts;
+
+    return noDefaults ?
+      contexts :
+      [...new Set([...defaultContexts, ...contexts])];
+  }
 });

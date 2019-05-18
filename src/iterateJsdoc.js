@@ -371,16 +371,19 @@ export default (iterator, opts = {}) => {
         });
       };
 
+      let contexts = opts.returns;
       if (typeof opts.returns === 'function') {
-        return opts.returns(context, sourceCode, checkJsdoc);
+        contexts = opts.returns(context, sourceCode, checkJsdoc);
       }
 
-      if (Array.isArray(opts.returns)) {
-        return opts.returns.reduce((obj, prop) => {
+      if (Array.isArray(contexts)) {
+        return contexts.reduce((obj, prop) => {
           obj[prop] = checkJsdoc;
 
           return obj;
         }, {});
+      } else if (contexts) {
+        return contexts;
       }
 
       return {
