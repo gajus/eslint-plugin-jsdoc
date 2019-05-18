@@ -82,6 +82,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-syntax": 1,
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
+        "jsdoc/implements-on-classes": 1,
         "jsdoc/match-description": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/no-undefined-types": 1,
@@ -312,6 +313,7 @@ Finally, the following rule pertains to inline disable directives:
 {"gitdown": "include", "file": "./rules/check-syntax.md"}
 {"gitdown": "include", "file": "./rules/check-tag-names.md"}
 {"gitdown": "include", "file": "./rules/check-types.md"}
+{"gitdown": "include", "file": "./rules/implements-on-classes.md"}
 {"gitdown": "include", "file": "./rules/match-description.md"}
 {"gitdown": "include", "file": "./rules/newline-after-description.md"}
 {"gitdown": "include", "file": "./rules/no-undefined-types.md"}

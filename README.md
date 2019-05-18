@@ -30,6 +30,7 @@ JSDoc linting rules for ESLint.
         * [`check-syntax`](#eslint-plugin-jsdoc-rules-check-syntax)
         * [`check-tag-names`](#eslint-plugin-jsdoc-rules-check-tag-names)
         * [`check-types`](#eslint-plugin-jsdoc-rules-check-types)
+        * [`implements-on-classes`](#eslint-plugin-jsdoc-rules-implements-on-classes)
         * [`match-description`](#eslint-plugin-jsdoc-rules-match-description)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
         * [`no-undefined-types`](#eslint-plugin-jsdoc-rules-no-undefined-types)
@@ -125,6 +126,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-syntax": 1,
         "jsdoc/check-tag-names": 1,
         "jsdoc/check-types": 1,
+        "jsdoc/implements-on-classes": 1,
         "jsdoc/match-description": 1,
         "jsdoc/newline-after-description": 1,
         "jsdoc/no-undefined-types": 1,
@@ -1356,6 +1358,64 @@ function qux(foo) {
  * @param {() => string} foo
  */
 function qux(foo) {
+}
+````
+
+
+<a name="eslint-plugin-jsdoc-rules-implements-on-classes"></a>
+### <code>implements-on-classes</code>
+
+Reports an issue with any non-constructor function using `@implements`.
+
+Constructor functions, whether marked with `@class`, `@constructs`, or being
+an ES6 class constructor, will not be flagged.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`implements` (prevented)|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @implements {SomeClass}
+ */
+function quux () {
+
+}
+// Message: @implements used on a non-constructor function
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @implements {SomeClass}
+ * @class
+ */
+function quux () {
+
+}
+
+/**
+ * @implements {SomeClass}
+ * @constructor
+ */
+function quux () {
+
+}
+
+/**
+ *
+ */
+class quux {
+  /**
+   * @implements {SomeClass}
+   */
+  constructor () {
+
+  }
 }
 ````
 
