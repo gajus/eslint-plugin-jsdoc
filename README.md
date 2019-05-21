@@ -33,6 +33,7 @@ JSDoc linting rules for ESLint.
         * [`implements-on-classes`](#eslint-plugin-jsdoc-rules-implements-on-classes)
         * [`match-description`](#eslint-plugin-jsdoc-rules-match-description)
         * [`newline-after-description`](#eslint-plugin-jsdoc-rules-newline-after-description)
+        * [`no-types`](#eslint-plugin-jsdoc-rules-no-types)
         * [`no-undefined-types`](#eslint-plugin-jsdoc-rules-no-undefined-types)
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-description`](#eslint-plugin-jsdoc-rules-require-description)
@@ -129,6 +130,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/implements-on-classes": 1,
         "jsdoc/match-description": 1,
         "jsdoc/newline-after-description": 1,
+        "jsdoc/no-types": 1,
         "jsdoc/no-undefined-types": 1,
         "jsdoc/require-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
@@ -1831,6 +1833,52 @@ function quux () {
 
 }
 // Options: ["never"]
+````
+
+
+<a name="eslint-plugin-jsdoc-rules-no-types"></a>
+### <code>no-types</code>
+
+This rule reports types being used on `@param` or `@returns`.
+
+The rule is intended to prevent the indication of types on tags where
+the type information would be redundant with TypeScript.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`param`, `returns`|
+|Aliases|`arg`, `argument`, `return`|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @param {number} foo
+ */
+function quux (foo) {
+
+}
+// Message: Types are not permitted on @param.
+
+/**
+ * @returns {number}
+ */
+function quux () {
+
+}
+// Message: Types are not permitted on @returns.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
 ````
 
 
@@ -3869,7 +3917,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 1. Name(path)-pointing tags (which may have value without namepath): `@listens`, `@fires`, `@emits`
 1. Name(path)-pointing tags (multiple names in one): `@borrows`
 
-The following apply to the above sets:
+...with the following applying to the above sets:
 
 - Expect tags in set 1-4 to have a valid namepath if present
 - Prevent sets 3-4 from being empty by setting `allowEmptyNamepaths` to `false` as these tags might have some indicative value without a path (but sets 1-2 will always fail if empty)
