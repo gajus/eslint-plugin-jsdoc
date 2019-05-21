@@ -9,6 +9,7 @@ import checkTypes from './rules/checkTypes';
 import implementsOnClasses from './rules/implementsOnClasses';
 import matchDescription from './rules/matchDescription';
 import newlineAfterDescription from './rules/newlineAfterDescription';
+import noTypes from './rules/noTypes';
 import noUndefinedTypes from './rules/noUndefinedTypes';
 import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
 import requireDescription from './rules/requireDescription';
@@ -39,6 +40,7 @@ export default {
         'jsdoc/implements-on-classes': 'warn',
         'jsdoc/match-description': 'off',
         'jsdoc/newline-after-description': 'warn',
+        'jsdoc/no-types': 'off',
         'jsdoc/no-undefined-types': 'warn',
         'jsdoc/require-description': 'off',
         'jsdoc/require-description-complete-sentence': 'off',
@@ -68,6 +70,7 @@ export default {
     'implements-on-classes': implementsOnClasses,
     'match-description': matchDescription,
     'newline-after-description': newlineAfterDescription,
+    'no-types': noTypes,
     'no-undefined-types': noUndefinedTypes,
     'require-description': requireDescription,
     'require-description-complete-sentence': requireDescriptionCompleteSentence,
