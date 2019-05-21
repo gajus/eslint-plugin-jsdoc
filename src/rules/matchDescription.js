@@ -51,6 +51,35 @@ export default iterateJsdoc(({
   });
 }, {
   meta: {
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          matchDescription: {
+            format: 'regex',
+            type: 'string'
+          },
+          tags: {
+            patternProperties: {
+              '.*': {
+                oneOf: [
+                  {
+                    format: 'regex',
+                    type: 'string'
+                  },
+                  {
+                    enum: [true],
+                    type: 'boolean'
+                  }
+                ]
+              }
+            },
+            type: 'object'
+          }
+        },
+        type: 'object'
+      }
+    ],
     type: 'suggestion'
   }
 });

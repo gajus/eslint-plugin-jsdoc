@@ -47,5 +47,11 @@ export default iterateJsdoc(({
   meta: {
     fixable: 'code',
     type: 'layout'
-  }
+  },
+  schema: [
+    {
+      enum: ['always'],
+      type: 'string'
+    }
+  ]
 });
