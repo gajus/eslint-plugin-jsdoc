@@ -49,4 +49,8 @@ export default iterateJsdoc(({
 
     return validateDescription(description, tag.tag);
   });
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });

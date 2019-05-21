@@ -11,4 +11,8 @@ export default iterateJsdoc(({
   if (reg.test(text)) {
     report('There must be no indentation.');
   }
+}, {
+  meta: {
+    type: 'layout'
+  }
 });

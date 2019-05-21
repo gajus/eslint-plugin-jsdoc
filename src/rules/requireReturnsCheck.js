@@ -43,4 +43,8 @@ export default iterateJsdoc(({
   if (utils.hasDefinedTypeReturnTag(tags[0]) && !utils.hasReturnValue()) {
     report('JSDoc @' + tagName + ' declaration present but return expression not available in function.');
   }
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });

@@ -55,6 +55,7 @@ export default iterateJsdoc(({
   }
 }, {
   meta: {
-    fixable: 'whitespace'
+    fixable: 'whitespace',
+    type: 'layout'
   }
 });

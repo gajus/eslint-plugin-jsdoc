@@ -23,4 +23,8 @@ export default iterateJsdoc(({
       break;
     }
   }
+}, {
+  meta: {
+    type: 'layout'
+  }
 });

@@ -15,4 +15,8 @@ export default iterateJsdoc(({
   }
 
   report('@implements used on a non-constructor function');
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });

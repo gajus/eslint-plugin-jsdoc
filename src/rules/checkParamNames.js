@@ -100,4 +100,8 @@ export default iterateJsdoc(({
   }
 
   validateParameterNamesDeep(targetTagName, jsdocParameterNamesDeep, report);
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });

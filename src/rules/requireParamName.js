@@ -11,4 +11,8 @@ export default iterateJsdoc(({
       report('There must be an identifier after @param ' + (jsdocParameter.type === '' ? 'type' : 'tag') + '.', null, jsdocParameter);
     }
   });
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });
