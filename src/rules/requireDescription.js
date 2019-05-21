@@ -44,5 +44,29 @@ export default iterateJsdoc(({
       contexts :
       [...new Set([...defaultContexts, ...contexts])];
   },
+  schema: [
+    {
+      additionalProperties: false,
+      properties: {
+        contexts: {
+          oneOf: [
+            {
+              items: {
+                type: 'string'
+              },
+              type: 'array'
+            },
+            {
+              type: 'string'
+            }
+          ]
+        },
+        noDefaults: {
+          type: 'boolean'
+        }
+      },
+      type: 'object'
+    }
+  ],
   type: 'suggestion'
 });
