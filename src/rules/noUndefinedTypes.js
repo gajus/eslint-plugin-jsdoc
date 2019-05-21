@@ -77,4 +77,8 @@ export default iterateJsdoc(({
       }
     });
   });
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });

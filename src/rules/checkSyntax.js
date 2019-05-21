@@ -14,4 +14,8 @@ export default iterateJsdoc(({
       break;
     }
   }
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });

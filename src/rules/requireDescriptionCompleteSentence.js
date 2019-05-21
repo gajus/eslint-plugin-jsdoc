@@ -128,6 +128,7 @@ export default iterateJsdoc(({
   });
 }, {
   meta: {
-    fixable: 'code'
+    fixable: 'code',
+    type: 'suggestion'
   }
 });

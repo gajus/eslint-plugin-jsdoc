@@ -17,4 +17,8 @@ export default iterateJsdoc(({
       report('Missing JSDoc @' + targetTagName + ' description.', null, jsdocTag);
     }
   });
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });

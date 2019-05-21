@@ -43,5 +43,6 @@ export default iterateJsdoc(({
     return noDefaults ?
       contexts :
       [...new Set([...defaultContexts, ...contexts])];
-  }
+  },
+  type: 'suggestion'
 });

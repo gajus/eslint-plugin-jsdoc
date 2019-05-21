@@ -46,4 +46,8 @@ export default iterateJsdoc(({
       validTypeParsing(tag.type);
     }
   });
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });

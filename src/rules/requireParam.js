@@ -43,4 +43,8 @@ export default iterateJsdoc(({
 
     return false;
   });
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });
