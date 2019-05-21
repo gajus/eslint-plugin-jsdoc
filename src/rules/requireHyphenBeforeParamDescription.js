@@ -43,4 +43,8 @@ export default iterateJsdoc(({
       }, jsdocTag);
     }
   });
+}, {
+  meta: {
+    fixable: 'code'
+  }
 });

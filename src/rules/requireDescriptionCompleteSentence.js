@@ -126,4 +126,8 @@ export default iterateJsdoc(({
 
     return validateDescription(description, report, jsdocNode, sourceCode, tag.tag);
   });
+}, {
+  meta: {
+    fixable: 'code'
+  }
 });

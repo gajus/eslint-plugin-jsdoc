@@ -53,4 +53,8 @@ export default iterateJsdoc(({
       return fixer.replaceText(jsdocNode, sourceLines.join('\n'));
     });
   }
+}, {
+  meta: {
+    fixable: 'whitespace'
+  }
 });

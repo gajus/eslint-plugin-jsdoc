@@ -59,4 +59,8 @@ export default iterateJsdoc(({
       });
     }
   });
+}, {
+  meta: {
+    fixable: 'code'
+  }
 });

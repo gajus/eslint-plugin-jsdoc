@@ -22,4 +22,8 @@ export default iterateJsdoc(({
       report('Invalid JSDoc tag name "' + jsdocTag.tag + '".', null, jsdocTag);
     }
   });
+}, {
+  meta: {
+    fixable: 'code'
+  }
 });
