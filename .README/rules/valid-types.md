@@ -10,7 +10,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 1. Name(path)-pointing tags (which may have value without namepath): `@listens`, `@fires`, `@emits`
 1. Name(path)-pointing tags (multiple names in one): `@borrows`
 
-The following apply to the above sets:
+...with the following applying to the above sets:
 
 - Expect tags in set 1-4 to have a valid namepath if present
 - Prevent sets 3-4 from being empty by setting `allowEmptyNamepaths` to `false` as these tags might have some indicative value without a path (but sets 1-2 will always fail if empty)

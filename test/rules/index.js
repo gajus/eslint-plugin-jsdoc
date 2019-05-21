@@ -17,6 +17,7 @@ const ruleTester = new RuleTester();
   'implements-on-classes',
   'match-description',
   'newline-after-description',
+  'no-types',
   'no-undefined-types',
   'require-description',
   'require-description-complete-sentence',

@@ -85,6 +85,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/implements-on-classes": 1,
         "jsdoc/match-description": 1,
         "jsdoc/newline-after-description": 1,
+        "jsdoc/no-types": 1,
         "jsdoc/no-undefined-types": 1,
         "jsdoc/require-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
@@ -316,6 +317,7 @@ Finally, the following rule pertains to inline disable directives:
 {"gitdown": "include", "file": "./rules/implements-on-classes.md"}
 {"gitdown": "include", "file": "./rules/match-description.md"}
 {"gitdown": "include", "file": "./rules/newline-after-description.md"}
+{"gitdown": "include", "file": "./rules/no-types.md"}
 {"gitdown": "include", "file": "./rules/no-undefined-types.md"}
 {"gitdown": "include", "file": "./rules/require-description-complete-sentence.md"}
 {"gitdown": "include", "file": "./rules/require-description.md"}
