@@ -3,7 +3,9 @@ import {parse as parseType, traverse} from 'jsdoctypeparser';
 import iterateJsdoc, {parseComment} from '../iterateJsdoc';
 
 const extraTypes = [
-  'null', 'undefined', 'string', 'number', 'boolean', 'any', '*',
+  'null', 'undefined', 'string', 'boolean',
+  'number', 'NaN', 'Infinity',
+  'any', '*',
   'Array', 'Object', 'RegExp', 'Date', 'Function'
 ];
 
@@ -13,8 +15,30 @@ export default iterateJsdoc(({
   sourceCode,
   utils
 }) => {
-  const scopeManager = sourceCode.scopeManager;
-  const globalScope = scopeManager.globalScope;
+  const {scopeManager} = sourceCode;
+  const {globalScope} = scopeManager;
+
+  const {preferredTypesDefined, definedTypes = []} = context.options[0] || {};
+
+  let definedPreferredTypes = [];
+  if (preferredTypesDefined) {
+    const preferredTypes = _.get(context, 'settings.jsdoc.preferredTypes');
+    if (preferredTypes) {
+      // Replace `_.values` with `Object.values` when we may start requiring Node 7+
+      definedPreferredTypes = _.values(preferredTypes).map((preferredType) => {
+        if (typeof preferredType === 'string') {
+          return preferredType;
+        }
+        if (!preferredType || typeof preferredType !== 'object') {
+          return undefined;
+        }
+
+        return preferredType.replacement;
+      }).filter((preferredType) => {
+        return preferredType;
+      });
+    }
+  }
 
   const typedefDeclarations = _(context.getAllComments())
     .filter((comment) => {
@@ -31,7 +55,7 @@ export default iterateJsdoc(({
     })
     .value();
 
-  const definedTypes = globalScope.variables.map((variable) => {
+  const allDefinedTypes = globalScope.variables.map((variable) => {
     return variable.name;
   })
 
@@ -51,7 +75,9 @@ export default iterateJsdoc(({
         }) : []
     )
     .concat(extraTypes)
-    .concat(typedefDeclarations);
+    .concat(typedefDeclarations)
+    .concat(definedTypes)
+    .concat(definedPreferredTypes);
 
   const jsdocTags = utils.filterTags((tag) => {
     return utils.isTagWithType(tag.tag);
@@ -69,7 +95,7 @@ export default iterateJsdoc(({
 
     traverse(parsedType, ({type, name}) => {
       if (type === 'NAME') {
-        if (!definedTypes.includes(name)) {
+        if (!allDefinedTypes.includes(name)) {
           report('The type \'' + name + '\' is undefined.', null, tag);
         } else if (!_.includes(extraTypes, name)) {
           context.markVariableAsUsed(name);

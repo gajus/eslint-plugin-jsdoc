@@ -12,7 +12,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "Number".'
+          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".'
         }
       ],
       output: `
@@ -36,7 +36,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @arg "foo" type "Number".'
+          message: 'Invalid JSDoc @arg "foo" type "Number"; prefer: "number".'
         }
       ],
       output: `
@@ -61,11 +61,11 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @returns type "Number".'
+          message: 'Invalid JSDoc @returns type "Number"; prefer: "number".'
         },
         {
           line: 4,
-          message: 'Invalid JSDoc @throws type "Number".'
+          message: 'Invalid JSDoc @throws type "Number"; prefer: "number".'
         }
       ]
     },
@@ -81,11 +81,11 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "Number".'
+          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".'
         },
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "Boolean".'
+          message: 'Invalid JSDoc @param "foo" type "Boolean"; prefer: "boolean".'
         }
       ],
       output: `
@@ -109,11 +109,11 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "Number".'
+          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".'
         },
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "String".'
+          message: 'Invalid JSDoc @param "foo" type "String"; prefer: "string".'
         }
       ],
       output: `
@@ -124,6 +124,369 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           */
+          function qux(foo) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: 'Abc',
+            string: 'Str'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           */
+          function qux(foo) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: {
+              replacement: 'Abc'
+            },
+            string: 'Str'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           */
+          function qux(foo) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: {
+              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}"; prefer: "{{preferredType}}".',
+              replacement: 'Abc'
+            },
+            string: 'Str'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           * @param {cde} bar
+           * @param {Object} baz
+           */
+          function qux(foo, bar, baz) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".'
+        },
+        {
+          line: 4,
+          message: 'More messed up JSDoc @param "bar" type "cde"; prefer: "Cde".'
+        },
+        {
+          line: 5,
+          message: 'Invalid JSDoc @param "baz" type "Object"; prefer: "object".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: {
+              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}"; prefer: "{{preferredType}}".',
+              replacement: 'Abc'
+            },
+            cde: {
+              message: 'More messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}"; prefer: "{{preferredType}}".',
+              replacement: 'Cde'
+            },
+            Object: 'object'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           */
+          function qux(foo) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Messed up JSDoc @param "foo" type "abc".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: {
+              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}".',
+              replacement: false
+            },
+            string: 'Str'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           */
+          function qux(foo) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Messed up JSDoc @param "foo" type "abc".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: {
+              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}".'
+            },
+            string: 'Str'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           * @param {Number} bar
+           */
+          function qux(foo, bar) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".'
+        }
+      ],
+      options: [{
+        noDefaults: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: 'Abc',
+            string: 'Str'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           * @param {Number} bar
+           */
+          function qux(foo, bar) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".'
+        },
+        {
+          line: 4,
+          message: 'Invalid JSDoc @param "bar" type "Number"; prefer: "number".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: 'Abc',
+            string: 'Str'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           */
+          function qux(foo) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "abc".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: false,
+            string: 'Str'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           */
+          function qux(foo) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "abc".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: false
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {*} baz
+           */
+          function qux(baz) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "baz" type "*".'
+        }
+      ],
+      output: `
+          /**
+           * @param {*} baz
+           */
+          function qux(baz) {
+          }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            '*': false,
+            abc: 'Abc',
+            string: 'Str'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {*} baz
+           */
+          function qux(baz) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "baz" type "*"; prefer: "aaa".'
+        }
+      ],
+      output: `
+          /**
+           * @param {aaa} baz
+           */
+          function qux(baz) {
+          }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            '*': 'aaa',
+            abc: 'Abc',
+            string: 'Str'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @param {abc} foo
+           * @param {Number} bar
+           */
+          function qux(foo, bar) {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".'
+        },
+        {
+          line: 4,
+          message: 'Invalid JSDoc @param "bar" type "Number"; prefer: "number".'
+        }
+      ],
+      output: `
+          /**
+           * @param {Abc} foo
+           * @param {Number} bar
+           */
+          function qux(foo, bar) {
+          }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: 'Abc',
+            string: 'Str'
+          }
+        }
+      }
     }
   ],
   valid: [
@@ -196,6 +559,37 @@ export default {
           function qux(foo) {
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @returns {Number} foo
+           * @throws {Number} foo
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        noDefaults: true
+      }]
+    },
+    {
+      code: `
+        /**
+         * @param {object} foo
+         */
+        function quux (foo) {
+
+        }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            Object: 'object'
+          }
+        }
+      }
     }
   ]
 };

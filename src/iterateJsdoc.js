@@ -293,7 +293,7 @@ export default (iterator, opts = {}) => {
 
         const jsdoc = parseComment(jsdocNode, indent);
 
-        const report = (message, fixer = null, jsdocLoc = null) => {
+        const report = (message, fixer = null, jsdocLoc = null, data = null) => {
           let loc;
 
           if (jsdocLoc) {
@@ -312,12 +312,14 @@ export default (iterator, opts = {}) => {
           }
           if (fixer === null) {
             context.report({
+              data,
               loc,
               message,
               node: jsdocNode
             });
           } else {
             context.report({
+              data,
               fix: fixer,
               loc,
               message,

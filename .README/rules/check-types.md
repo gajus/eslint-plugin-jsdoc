@@ -2,7 +2,7 @@
 
 Reports invalid types.
 
-Ensures that case of native types is the same as in this list:
+By default, ensures that case of native types is the same as in this list:
 
 ```
 undefined
@@ -15,6 +15,17 @@ Array
 Date
 RegExp
 ```
+
+#### Options
+
+`check-types` allows one option:
+
+- An option object with the key `noDefaults` to insist that only the
+  supplied option type map is to be used, and that the default preferences
+  (such as "string" over "String") will not be enforced.
+
+See also the documentation on `settings.jsdoc.preferredTypes` which impacts
+the behavior of `check-types`.
 
 #### Why not capital case everything?
 
