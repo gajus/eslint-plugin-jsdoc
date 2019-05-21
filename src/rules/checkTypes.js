@@ -9,7 +9,7 @@ const strictNativeTypes = [
   'number',
   'string',
   'Array',
-  'Object',
+  'object',
   'RegExp',
   'Date',
   'Function'
