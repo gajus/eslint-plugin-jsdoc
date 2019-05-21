@@ -204,7 +204,7 @@ export default {
           /**
            * @param {abc} foo
            * @param {cde} bar
-           * @param {Object} baz
+           * @param {object} baz
            */
           function qux(foo, bar, baz) {
           }
@@ -220,7 +220,7 @@ export default {
         },
         {
           line: 5,
-          message: 'Invalid JSDoc @param "baz" type "Object"; prefer: "object".'
+          message: 'Invalid JSDoc @param "baz" type "object"; prefer: "Object".'
         }
       ],
       settings: {
@@ -234,7 +234,7 @@ export default {
               message: 'More messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}"; prefer: "{{preferredType}}".',
               replacement: 'Cde'
             },
-            Object: 'object'
+            object: 'Object'
           }
         }
       }
@@ -577,7 +577,7 @@ export default {
     {
       code: `
         /**
-         * @param {object} foo
+         * @param {Object} foo
          */
         function quux (foo) {
 
@@ -586,7 +586,7 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            Object: 'object'
+            object: 'Object'
           }
         }
       }

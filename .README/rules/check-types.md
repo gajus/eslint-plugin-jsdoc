@@ -10,7 +10,7 @@ null
 boolean
 number
 string
-Object
+object
 Array
 Date
 RegExp
@@ -41,18 +41,23 @@ new String('lard') // String {0: "l", 1: "a", 2: "r", 3: "d", length: 4}
 new String('lard') === 'lard' // false
 ```
 
-To make things more confusing, there are also object literals and object Objects. But object literals are still static Objects and object Objects are instantiated Objects. So an object primitive is still an object Object. (`Object.create(null)` objects are not, however.)
+To make things more confusing, there are also object literals and object Objects. But object literals are still static Objects and object Objects are instantiated Objects. So an object primitive is still an object Object.
+
+However, `Object.create(null)` objects are not `instanceof Object`, however, so
+in the case of this Object we lower-case to indicate possible support for
+these objects.
 
 Basically, for primitives, we want to define the type as a primitive, because that's what we use in 99.9% of cases. For everything else, we use the type rather than the primitive. Otherwise it would all just be `{object}`.
 
-In short: It's not about consistency, rather about the 99.9% use case.
+In short: It's not about consistency, rather about the 99.9% use case. (And some
+functions might not even support the objects if they are checking for identity.)
 
 type name | `typeof` | check-types | testcase
 --|--|--|--
-**Object** | object | **Object** | `({}) instanceof Object` -> `true`
 **Array** | object | **Array** | `([]) instanceof Array` -> `true`
 **Date** | object | **Date** | `(new Date()) instanceof Date` -> `true`
 **RegExp** | object | **RegExp** | `(new RegExp(/.+/)) instanceof RegExp` -> `true`
+**Object** | object | **object** | `({}) instanceof Object` -> `true` but `Object.create(null) instanceof Object` -> `false`
 Boolean | **boolean** | **boolean** | `(true) instanceof Boolean` -> **`false`**
 Number | **number** | **number** | `(41) instanceof Number` -> **`false`**
 String | **string** | **string** | `("test") instanceof String` -> **`false`**
