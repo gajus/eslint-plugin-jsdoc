@@ -12,10 +12,10 @@
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
-    "@babel/node": "^7.2.2",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
     "@babel/plugin-transform-flow-strip-types": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^5.1.4",
@@ -29,7 +29,7 @@
     "marked": "^0.6.2",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
-    "semantic-release": "^15.13.12"
+    "semantic-release": "^15.13.14"
   },
   "engines": {
     "node": ">=6"
