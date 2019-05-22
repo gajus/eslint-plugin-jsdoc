@@ -1590,6 +1590,13 @@ class quux {
 
   }
 }
+
+/**
+ *
+ */
+function quux () {
+
+}
 ````
 
 
