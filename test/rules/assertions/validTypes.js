@@ -165,7 +165,7 @@ export default {
     {
       code: `
           /**
-           * @alias module:svgcanvas.SvgCanvas#event:ext_langReady
+           * @alias module:namespace.SomeClass#event:ext_anevent
            */
           function quux() {
 
@@ -185,7 +185,28 @@ export default {
     {
       code: `
           /**
+           * @class
+           */
+          function quux() {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
            * @see {@link foo}
+           */
+          function quux() {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           *
+           * @fires {module:namespace.SomeClass#event:ext_anevent}
            */
           function quux() {
 

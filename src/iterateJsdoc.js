@@ -158,10 +158,8 @@ const curryUtils = (
   };
 
   utils.passesEmptyNamepathCheck = (tag) => {
-    return !tag.name && allowEmptyNamepaths && [
-      // These may serve some minor purpose when empty
-      'callback', 'event', 'listens', 'fires', 'emits'
-    ].includes(tag.tag);
+    return !tag.name && allowEmptyNamepaths &&
+      jsdocUtils.isPotentiallyEmptyNamepathTag(tag.tag);
   };
 
   utils.hasDefinedTypeReturnTag = (tag) => {

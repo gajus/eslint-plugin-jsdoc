@@ -119,30 +119,32 @@ const hasDefinedTypeReturnTag = (tag) => {
 
 const namepathDefiningTags = [
   // NOT USEFUL WITHOUT NAMEPATH
+  'external', 'host',
+  'name',
+  'typedef',
+
+  // MAY BE USEFUL WITHOUT NAMEPATH
+  'event',
+
+  // MAY BE USEFUL WITHOUT NAMEPATH (OR
+  //  BLOCK CAN USE NAMEPATH FROM ELSEWHERE)
   'class', 'constructor',
   'constant', 'const',
-  'external', 'host',
+  'callback',
   'function', 'func', 'method',
   'interface',
   'member', 'var',
   'mixin',
-  'name',
-  'namespace',
-  'typedef',
-
-  // MAY BE USEFUL WITHOUT NAMEPATH
-  'callback',
-  'event'
+  'namespace'
 ];
 
 const namepathPointingTags = [
   // NOT USEFUL WITHOUT NAMEPATH
   'alias',
-  'augments',
+  'augments', 'extends',
 
   // `borrows` has a different format, however, so needs special parsing
   'borrows',
-  'extends',
   'lends',
   'memberof',
   'memberof!',
@@ -167,6 +169,25 @@ const isNamepathPointingTag = (tagName, checkSeesForNamepaths) => {
 const isNamepathTag = (tagName, checkSeesForNamepaths) => {
   return isNamepathDefiningTag(tagName) ||
     isNamepathPointingTag(tagName, checkSeesForNamepaths);
+};
+
+const potentiallyEmptyNamepathTags = [
+  // These may serve some minor purpose when empty or
+  //  their namepath can be expressed elsewhere on the block
+  'event',
+  'callback',
+  'class', 'constructor',
+  'constant', 'const',
+  'function', 'func', 'method',
+  'interface',
+  'member', 'var',
+  'mixin',
+  'namespace',
+  'listens', 'fires', 'emits'
+];
+
+const isPotentiallyEmptyNamepathTag = (tag) => {
+  return potentiallyEmptyNamepathTags.includes(tag);
 };
 
 let tagsWithTypes = [
@@ -442,6 +463,7 @@ export default {
   hasTag,
   isNamepathDefiningTag,
   isNamepathTag,
+  isPotentiallyEmptyNamepathTag,
   isTagWithType,
   isValidTag
 };
