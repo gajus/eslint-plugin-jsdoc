@@ -18,7 +18,7 @@ export default iterateJsdoc(({
 
       // If supporting Node >= 10, we could loosen to this for the
       //   initial letter: \\p{Upper}
-      ) || '^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$',
+      ) || '^[A-Z`\\d_](?:[\\s\\S]*[.?!`])?$',
       'u'
     );
 
