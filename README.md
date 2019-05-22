@@ -4153,6 +4153,13 @@ const language = {
     this._name = name;
   }
 }
+
+/**
+ * @returns {void}
+ */
+function quux () {
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
 ````
 
 
