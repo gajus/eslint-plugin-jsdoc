@@ -2078,7 +2078,7 @@ the tag types in the table below:
 
 The following types are always considered defined.
 
-- `null`, `undefined`, `string`, `boolean`
+- `null`, `undefined`, `string`, `boolean`, `object`
 - `number`, `NaN`, `Infinity`
 - `any`, `*`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
