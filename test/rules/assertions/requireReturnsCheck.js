@@ -240,6 +240,56 @@ export default {
           function quux () {
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @returns {void} Foo.
+           */
+          function quux () {
+            return undefined;
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {void} Foo.
+           */
+          function quux () {
+            return;
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return undefined;
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return;
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {boolean} Foo.
+           */
+          function quux () {
+            return true;
+          }
+      `
     }
   ]
 };
