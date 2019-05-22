@@ -280,16 +280,6 @@ export default {
             return;
           }
       `
-    },
-    {
-      code: `
-          /**
-           * @returns {boolean} Foo.
-           */
-          function quux () {
-            return true;
-          }
-      `
     }
   ]
 };

@@ -3780,6 +3780,41 @@ function quux () {
  */
 function quux () {
 }
+
+/**
+ * @returns {void} Foo.
+ */
+function quux () {
+  return undefined;
+}
+
+/**
+ * @returns {void} Foo.
+ */
+function quux () {
+  return;
+}
+
+/**
+ *
+ */
+function quux () {
+  return undefined;
+}
+
+/**
+ *
+ */
+function quux () {
+  return;
+}
+
+/**
+ * @returns {boolean} Foo.
+ */
+function quux () {
+  return true;
+}
 ````
 
 
