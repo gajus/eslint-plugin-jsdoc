@@ -3,7 +3,7 @@ import {parse as parseType, traverse} from 'jsdoctypeparser';
 import iterateJsdoc, {parseComment} from '../iterateJsdoc';
 
 const extraTypes = [
-  'null', 'undefined', 'string', 'boolean',
+  'null', 'undefined', 'string', 'boolean', 'object',
   'number', 'NaN', 'Infinity',
   'any', '*',
   'Array', 'Object', 'RegExp', 'Date', 'Function'
