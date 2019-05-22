@@ -3808,13 +3808,6 @@ function quux () {
 function quux () {
   return;
 }
-
-/**
- * @returns {boolean} Foo.
- */
-function quux () {
-  return true;
-}
 ````
 
 
