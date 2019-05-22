@@ -408,6 +408,20 @@ export default {
         }
       }
       `
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          function quux () {
+          }
+      `,
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
     }
   ]
 };

@@ -64,9 +64,10 @@ export default iterateJsdoc(({
   }
 
   // In case the code returns something, we expect a return value in JSDoc.
-  if (!utils.hasDefinedTypeReturnTag(tags[0]) && (
-    utils.isForceRequireReturn() || utils.hasReturnValue()
-  )) {
+  const [tag] = tags;
+  if (!utils.hasDefinedTypeReturnTag(tag) && utils.hasReturnValue() ||
+    (typeof tag === 'undefined' || tag === null) && utils.isForceRequireReturn()
+  ) {
     report('Missing JSDoc @' + tagName + ' declaration.');
   }
 }, {
