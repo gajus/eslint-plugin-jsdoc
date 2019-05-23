@@ -2,7 +2,16 @@
  * Obtained from {@link https://github.com/eslint/eslint/blob/master/lib/util/source-code.js#L313}
  * @license MIT
  */
-import astUtils from 'eslint/lib/util/ast-utils';
+
+/**
+ * Checks if the given token is a comment token or not.
+ *
+ * @param {Token} token - The token to check.
+ * @returns {boolean} `true` if the token is a comment token.
+ */
+const isCommentToken = (token) => {
+  return token.type === 'Line' || token.type === 'Block' || token.type === 'Shebang';
+};
 
 /**
  * Check to see if its a ES6 export declaration.
@@ -40,7 +49,7 @@ const getJSDocComment = function (sourceCode, node) {
 
     if (
       tokenBefore &&
-      astUtils.isCommentToken(tokenBefore) &&
+      isCommentToken(tokenBefore) &&
       tokenBefore.type === 'Block' &&
       tokenBefore.value.charAt(0) === '*' &&
       astNode.loc.start.line - tokenBefore.loc.end.line <= 1
