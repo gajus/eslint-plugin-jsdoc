@@ -186,6 +186,26 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
+The defaults in `eslint-plugin-jsdoc` (for tags which offer
+aliases) are as follows:
+
+- `@abstract` (over `@virtual`)
+- `@augments` (over `@extends`)
+- `@class` (over `@constructor`)
+- `@constant` (over `@const`)
+- `@default` (over `@defaultvalue`)
+- `@description` (over `@desc`)
+- `@external` (over `@host`)
+- `@file` (over `@fileoverview`, `@overview`)
+- `@fires` (over `@emits`)
+- `@function` (over `@func`, `@method`)
+- `@member` (over `@var`)
+- `@param` (over `@arg`, `@argument`)
+- `@property` (over `@prop`)
+- `@returns` (over `@return`)
+- `@throws` (over `@exception`)
+- `@yields` (over `@yield`)
+
 This setting is utilized by the the rule for tag name checking
 (`check-tag-names`) as well as in the `@param` and `@require` rules:
 
@@ -214,7 +234,7 @@ tags in the rule `check-tag-names`. The format of the configuration is as follow
     "settings": {
         "jsdoc": {
             "additionalTagNames": {
-                "customTags": ["define", "extends", "record"]
+                "customTags": ["define", "record"]
             }
         }
     }
