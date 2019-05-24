@@ -694,6 +694,78 @@ export default {
     {
       code: `
       /**
+       * @param {object} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
+        }
+      ],
+      options: [{
+        unifyParentAndChildTypeChecks: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'GenericObject'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object".'
+        }
+      ],
+      options: [{
+        unifyParentAndChildTypeChecks: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: false
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: false
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
        * @param {object.<string, number>} foo
        */
       function quux (foo) {

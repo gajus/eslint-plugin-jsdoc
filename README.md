@@ -1587,6 +1587,35 @@ function quux (foo) {
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
 /**
+ * @param {object} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ * @param {object} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":false}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+// Message: Invalid JSDoc @param "foo" type "object".
+
+/**
+ * @param {object} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":false}}}
+// Message: Invalid JSDoc @param "foo" type "object".
+
+/**
  * @param {object.<string, number>} foo
  */
 function quux (foo) {
@@ -3543,6 +3572,7 @@ function quux (foo, bar) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"allowOverrideWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -3551,6 +3581,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"allowImplementsWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -3580,6 +3611,7 @@ class A {
 
   }
 }
+// Settings: {"jsdoc":{"allowOverrideWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -3593,6 +3625,7 @@ class A {
 
   }
 }
+// Settings: {"jsdoc":{"allowImplementsWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -3661,7 +3694,45 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+/**
+ * @override
+ */
+class A {
+  /**
+    *
+    */
+  quux (foo) {
+
+  }
+}
+
+/**
+ * @override
+ */
+function quux (foo) {
+
+}
 // Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
+
+/**
+ * @implements
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+
+/**
+ * @implements
+ */
+function quux (foo) {
+
+}
 
 /**
  * @implements
