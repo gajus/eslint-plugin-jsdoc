@@ -8,8 +8,8 @@ const strictNativeTypes = [
   'boolean',
   'number',
   'string',
-  'Array',
   'object',
+  'Array',
   'RegExp',
   'Date',
   'Function'
