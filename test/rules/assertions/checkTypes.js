@@ -487,6 +487,234 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+      /**
+       * @param {Array} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            Array: 'GenericArray'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {Array} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            Array: 'GenericArray',
+            'Array<>': 'GenericArray'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {Array.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'Array<>': 'GenericArray'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {string[]} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'Array<>': 'GenericArray'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'GenericObject'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'GenericObject',
+            'object<>': 'GenericObject'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'object<>': 'GenericObject'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object.<string, number>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'object<>': 'GenericObject'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
+        }
+      ],
+      options: [{
+        unifyParentAndChildTypeChecks: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'GenericObject'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object.<string, number>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
+        }
+      ],
+      options: [{
+        unifyParentAndChildTypeChecks: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'GenericObject'
+          }
+        }
+      }
     }
   ],
   valid: [
@@ -587,6 +815,128 @@ export default {
         jsdoc: {
           preferredTypes: {
             object: 'Object'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {Array} foo
+       */
+      function quux (foo) {
+
+      }
+      `
+    },
+    {
+      code: `
+      /**
+       * @param {Array.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            Array: 'GenericArray'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {string[]} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            Array: 'GenericArray'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {Array} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'Array<>': 'GenericArray'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object} foo
+       */
+      function quux (foo) {
+
+      }
+      `
+    },
+    {
+      code: `
+      /**
+       * @param {object.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'GenericObject'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object.<string, number>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'GenericObject'
+          }
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @param {object} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'object<>': 'GenericObject'
           }
         }
       }
