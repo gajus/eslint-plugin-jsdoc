@@ -168,12 +168,17 @@ Finally, enable all of the rules that you would like to use.
   above functions/methods with no parameters or return values (intended where
   variable names are sufficient for themselves as documentation).
 
-<a name="eslint-plugin-jsdoc-settings-requiring-jsdoc-comments-for-exported-functions-in-require-jsdoc"></a>
 <a name="eslint-plugin-jsdoc-settings-requiring-jsdoc-comments-for-exported-functions-in-code-require-jsdoc-code"></a>
 ### Requiring JSDoc comments for exported functions in <code>require-jsdoc</code>
 
 - `settings.jsdoc.publicFunctionsOnly` - Missing jsdoc blocks
   are only reported for function bodies that are exported from the module.
+
+  This setting object supports the following keys:
+
+  - `exports`
+  - `modules`
+  - `browserEnv`
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
@@ -3428,11 +3433,7 @@ functions.
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
-|Settings|`exemptEmptyFunctions`|
-|Settings|`publicFunctionsOnly`|
-|Settings|`publicFunctionsOnly.exports`|
-|Settings|`publicFunctionsOnly.modules`|
-|Settings|`publicFunctionsOnly.browserEnv`|
+|Settings|`exemptEmptyFunctions`, `publicFunctionsOnly`|
 
 The following patterns are considered problems:
 
