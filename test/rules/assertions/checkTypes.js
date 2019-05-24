@@ -191,7 +191,7 @@ export default {
         jsdoc: {
           preferredTypes: {
             abc: {
-              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}"; prefer: "{{preferredType}}".',
+              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}"; prefer: "{{replacement}}".',
               replacement: 'Abc'
             },
             string: 'Str'
