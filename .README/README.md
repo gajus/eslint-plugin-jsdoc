@@ -190,18 +190,16 @@ tags in the rule `check-tag-names`. The format of the configuration is as follow
 }
 ```
 
-### Allow `@override` Without Accompanying `@param` Tags
+### `@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`
 
-Use any of the following settings to override `require-param` and allow
-`@param` to be omitted when the specified tags are present on the JSDoc
-comment or the parent class comment. The default value for each is `false`.
+The following settings allows the element(s) they reference to be omitted
+on the JSDoc comment block of the function or that of its parent class
+for any of the "require" rules (i.e., `require-param`, `require-description`,
+`require-example`, or `require-returns`).
 
-* `settings.jsdoc.allowOverrideWithoutParam` - Enables behavior with
-  `@override` tag
-* `settings.jsdoc.allowImplementsWithoutParam` - Enables behavior with
-  `@implements` tag
-* `settings.jsdoc.allowAugmentsExtendsWithoutParam` - Enables behavior with
-  `@augments` tag or its synonym `@extends`
+* `settings.jsdoc.overrideReplacesDocs` (`@override`) - Defaults to `true`
+* `settings.jsdoc.augmentsExtendsReplacesDocs` (`@augments` or its alias `@extends`) - Defaults to `false`.
+* `settings.jsdoc.implementsReplacesDocs` (`@implements`) - Defaults to `false`
 
 The format of the configuration is as follows:
 
@@ -210,13 +208,18 @@ The format of the configuration is as follows:
     "rules": {},
     "settings": {
         "jsdoc": {
-            "allowOverrideWithoutParam": true,
-            "allowImplementsWithoutParam": true,
-            "allowAugmentsExtendsWithoutParam": true
+            "overrideReplacesDocs": true,
+            "augmentsExtendsReplacesDocs": true,
+            "implementsReplacesDocs": true
         }
     }
 }
 ```
+
+`settings.jsdoc.allowOverrideWithoutParam`,
+`settings.jsdoc.allowImplementsWithoutParam`, and
+`settings.jsdoc.allowAugmentsExtendsWithoutParam` performed a similar function
+but restricted to `@param`. These settings are now deprecated.
 
 ### Settings to Configure `check-types` and `no-undefined-types`
 

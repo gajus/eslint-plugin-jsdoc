@@ -38,6 +38,9 @@ const curryUtils = (
   allowEmptyNamepaths,
   reportUnusedDisableDirectives,
   noDefaultExampleRules,
+  overrideReplacesDocs,
+  implementsReplacesDocs,
+  augmentsExtendsReplacesDocs,
   allowOverrideWithoutParam,
   allowImplementsWithoutParam,
   allowAugmentsExtendsWithoutParam,
@@ -130,16 +133,46 @@ const curryUtils = (
     return captionRequired;
   };
 
-  utils.isOverrideAllowedWithoutParam = () => {
-    return allowOverrideWithoutParam;
+  // These settings are deprecated and may be removed in the future along with this method.
+  utils.avoidDocsParamOnly = () => {
+    // These three checks are all for deprecated settings and may be removed in the future
+
+    // When settings.jsdoc.allowOverrideWithoutParam is true, override implies that all documentation is inherited.
+    if ((utils.hasTag('override') || utils.classHasTag('override')) && allowOverrideWithoutParam !== false) {
+      return true;
+    }
+
+    // When settings.jsdoc.allowImplementsWithoutParam is true, implements implies that all documentation is inherited.
+    // See https://github.com/gajus/eslint-plugin-jsdoc/issues/100
+    if ((utils.hasTag('implements') || utils.classHasTag('implements')) && allowImplementsWithoutParam !== false) {
+      return true;
+    }
+
+    // When settings.jsdoc.allowAugmentsExtendsWithoutParam is true, augments or extends implies that all documentation is inherited.
+    if ((utils.hasTag('augments') || utils.hasTag('extends') ||
+      utils.classHasTag('augments') || utils.classHasTag('extends')) && allowAugmentsExtendsWithoutParam) {
+      return true;
+    }
+
+    return false;
   };
 
-  utils.isImplementsAllowedWithoutParam = () => {
-    return allowImplementsWithoutParam;
-  };
+  utils.avoidDocs = (param) => {
+    return param && utils.avoidDocsParamOnly() ||
 
-  utils.isAugmentsExtendsAllowedWithoutParam = () => {
-    return allowAugmentsExtendsWithoutParam;
+      // inheritdoc implies that all documentation is inherited; see http://usejsdoc.org/tags-inheritdoc.html
+      utils.hasTag('inheritdoc') ||
+
+      // After deprecation, the `param` parameter can be removed, but for now,
+      //  don't default for `param` as it may have its own explicit settings to the contrary
+      (param && overrideReplacesDocs || !param && overrideReplacesDocs !== false) &&
+        (utils.hasTag('override') || utils.classHasTag('override')) ||
+      (param && implementsReplacesDocs || !param && implementsReplacesDocs !== false) &&
+        (utils.hasTag('implements') || utils.classHasTag('implements')) ||
+      augmentsExtendsReplacesDocs &&
+        (utils.hasATag(['augments', 'extends']) ||
+          utils.classHasTag('augments') ||
+            utils.classHasTag('extends'));
   };
 
   utils.isNamepathDefiningTag = (tagName) => {
@@ -263,10 +296,15 @@ export default (iterator, opts = {}) => {
       const captionRequired = Boolean(_.get(context, 'settings.jsdoc.captionRequired'));
       const noDefaultExampleRules = Boolean(_.get(context, 'settings.jsdoc.noDefaultExampleRules'));
 
-      // `require-param` only
-      const allowOverrideWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowOverrideWithoutParam'));
-      const allowImplementsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowImplementsWithoutParam'));
-      const allowAugmentsExtendsWithoutParam = Boolean(_.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam'));
+      // `require-param`, `require-description`, `require-example`, `require-returns`
+      const overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
+      const implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
+      const augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
+
+      // `require-param` only (deprecated)
+      const allowOverrideWithoutParam = _.get(context, 'settings.jsdoc.allowOverrideWithoutParam');
+      const allowImplementsWithoutParam = _.get(context, 'settings.jsdoc.allowImplementsWithoutParam');
+      const allowAugmentsExtendsWithoutParam = _.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam');
 
       // `valid-types` only
       const allowEmptyNamepaths = _.get(context, 'settings.jsdoc.allowEmptyNamepaths') !== false;
@@ -342,6 +380,9 @@ export default (iterator, opts = {}) => {
           allowEmptyNamepaths,
           reportUnusedDisableDirectives,
           noDefaultExampleRules,
+          overrideReplacesDocs,
+          implementsReplacesDocs,
+          augmentsExtendsReplacesDocs,
           allowOverrideWithoutParam,
           allowImplementsWithoutParam,
           allowAugmentsExtendsWithoutParam,

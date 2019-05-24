@@ -6,18 +6,15 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
+  if (utils.avoidDocs()) {
+    return;
+  }
+
   const targetTagName = 'example';
 
   const functionExamples = _.filter(jsdoc.tags, {
     tag: targetTagName
   });
-
-  if (utils.hasATag([
-    'inheritdoc',
-    'override'
-  ])) {
-    return;
-  }
 
   if (utils.avoidExampleOnConstructors() && (
     utils.hasATag([
