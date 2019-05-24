@@ -2,7 +2,7 @@
 
 Reports invalid types.
 
-By default, ensures that case of native types is the same as in this list:
+By default, ensures that the casing of native types is the same as in this list:
 
 ```
 undefined
@@ -12,6 +12,7 @@ number
 string
 object
 Array
+Function
 Date
 RegExp
 ```
@@ -55,9 +56,10 @@ functions might not even support the objects if they are checking for identity.)
 type name | `typeof` | check-types | testcase
 --|--|--|--
 **Array** | object | **Array** | `([]) instanceof Array` -> `true`
+**Function** | function | **function** | `(function f () {}) instanceof Function` -> `true`
 **Date** | object | **Date** | `(new Date()) instanceof Date` -> `true`
 **RegExp** | object | **RegExp** | `(new RegExp(/.+/)) instanceof RegExp` -> `true`
-**Object** | object | **object** | `({}) instanceof Object` -> `true` but `Object.create(null) instanceof Object` -> `false`
+Object | **object** | **object** | `({}) instanceof Object` -> `true` but `Object.create(null) instanceof Object` -> `false`
 Boolean | **boolean** | **boolean** | `(true) instanceof Boolean` -> **`false`**
 Number | **number** | **number** | `(41) instanceof Number` -> **`false`**
 String | **string** | **string** | `("test") instanceof String` -> **`false`**

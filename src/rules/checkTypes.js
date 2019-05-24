@@ -10,9 +10,9 @@ const strictNativeTypes = [
   'string',
   'object',
   'Array',
-  'RegExp',
+  'Function',
   'Date',
-  'Function'
+  'RegExp'
 ];
 
 export default iterateJsdoc(({
