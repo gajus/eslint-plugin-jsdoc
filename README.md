@@ -4385,6 +4385,43 @@ const language = {
 function quux () {
 }
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
+
+/**
+ * @returns {void}
+ */
+function quux () {
+  return undefined;
+}
+
+/**
+ * @returns {void}
+ */
+function quux () {
+  return undefined;
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+
+/**
+ * @returns {void}
+ */
+function quux () {
+  return;
+}
+
+/**
+ * @returns {void}
+ */
+function quux () {
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+
+/**
+ * @returns {void}
+ */
+function quux () {
+  return;
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
 ````
 
 
