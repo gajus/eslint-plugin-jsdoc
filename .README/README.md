@@ -118,6 +118,17 @@ Finally, enable all of the rules that you would like to use.
   above functions/methods with no parameters or return values (intended where
   variable names are sufficient for themselves as documentation).
 
+### Requiring JSDoc comments for exported functions in <code>require-jsdoc</code>
+
+- `settings.jsdoc.publicFunctionsOnly` - Missing jsdoc blocks
+  are only reported for function bodies that are exported from the module.
+
+  This setting object supports the following keys:
+
+  - `exports`
+  - `modules`
+  - `browserEnv`
+
 ### Alias Preference
 
 Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.

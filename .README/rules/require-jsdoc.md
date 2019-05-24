@@ -7,6 +7,6 @@ functions.
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
-|Settings|`exemptEmptyFunctions`|
+|Settings|`exemptEmptyFunctions`, `publicFunctionsOnly`|
 
 <!-- assertions requireJsdoc -->

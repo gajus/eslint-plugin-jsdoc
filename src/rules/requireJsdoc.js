@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
+import exportParser from '../exportParser';
 
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
@@ -82,6 +83,8 @@ export default iterateJsdoc(null, {
     type: 'suggestion'
   },
   returns (context, sourceCode) {
+    const options = getOptions(context);
+
     const checkJsDoc = (node) => {
       const jsDocNode = sourceCode.getJSDocComment(node);
 
@@ -97,13 +100,29 @@ export default iterateJsdoc(null, {
         }
       }
 
-      context.report({
-        messageId: 'missingJsDoc',
-        node
-      });
-    };
+      const publicFunctionsOnly = _.get(context, 'settings.jsdoc.publicFunctionsOnly');
+      if (publicFunctionsOnly) {
+        const opt = {
+          exports: Boolean(_.get(publicFunctionsOnly, 'exports', true)),
+          initModuleExports: Boolean(_.get(publicFunctionsOnly, 'modules', true)),
+          initWindow: Boolean(_.get(publicFunctionsOnly, 'browserEnv', false))
+        };
+        const parseResult = exportParser.parse(sourceCode.ast, opt);
+        const exported = exportParser.isExported(node, parseResult, opt);
 
-    const options = getOptions(context);
+        if (exported && !jsDocNode) {
+          context.report({
+            messageId: 'missingJsDoc',
+            node
+          });
+        }
+      } else {
+        context.report({
+          messageId: 'missingJsDoc',
+          node
+        });
+      }
+    };
 
     return {
       ArrowFunctionExpression (node) {
@@ -145,7 +164,7 @@ export default iterateJsdoc(null, {
           return;
         }
 
-        if (node.parent.type === 'VariableDeclarator') {
+        if (node.parent.type === 'VariableDeclarator' || node.parent.type === 'AssignmentExpression') {
           checkJsDoc(node);
         }
 

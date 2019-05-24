@@ -15,6 +15,7 @@ JSDoc linting rules for ESLint.
     * [Settings](#eslint-plugin-jsdoc-settings)
         * [Allow `@private` to disable rules for that comment block](#eslint-plugin-jsdoc-settings-allow-private-to-disable-rules-for-that-comment-block)
         * [Exempting empty functions from `require-jsdoc`](#eslint-plugin-jsdoc-settings-exempting-empty-functions-from-require-jsdoc)
+        * [Requiring JSDoc comments for exported functions in <code>require-jsdoc</code>](#eslint-plugin-jsdoc-settings-requiring-jsdoc-comments-for-exported-functions-in-code-require-jsdoc-code)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [Additional Tag Names](#eslint-plugin-jsdoc-settings-additional-tag-names)
         * [`@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`](#eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns)
@@ -166,6 +167,13 @@ Finally, enable all of the rules that you would like to use.
 - `settings.jsdoc.exemptEmptyFunctions` - Will not report missing jsdoc blocks
   above functions/methods with no parameters or return values (intended where
   variable names are sufficient for themselves as documentation).
+
+<a name="eslint-plugin-jsdoc-settings-requiring-jsdoc-comments-for-exported-functions-in-require-jsdoc"></a>
+<a name="eslint-plugin-jsdoc-settings-requiring-jsdoc-comments-for-exported-functions-in-code-require-jsdoc-code"></a>
+### Requiring JSDoc comments for exported functions in <code>require-jsdoc</code>
+
+- `settings.jsdoc.publicFunctionsOnly` - Missing jsdoc blocks
+  are only reported for function bodies that are exported from the module.
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
@@ -3421,6 +3429,10 @@ functions.
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
 |Settings|`exemptEmptyFunctions`|
+|Settings|`publicFunctionsOnly`|
+|Settings|`publicFunctionsOnly.exports`|
+|Settings|`publicFunctionsOnly.modules`|
+|Settings|`publicFunctionsOnly.browserEnv`|
 
 The following patterns are considered problems:
 
@@ -3520,6 +3532,121 @@ function foo () {
   return true;
 }
 // Settings: {"jsdoc":{"exemptEmptyFunctions":false}}
+// Message: Missing JSDoc comment.
+
+module.exports = function quux () {
+
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+module.exports = {
+  method: function() {
+
+  }
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+module.exports = {
+  test: {
+    test2: function() {
+
+    }
+  }
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+const test = module.exports = function () {
+
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+/**
+*
+*/
+const test = module.exports = function () {
+
+}
+
+test.prototype.method = function() {}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+const test = function () {
+
+}
+module.exports = {
+  test: test
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+const test = () => {
+
+}
+module.exports = {
+  test: test
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"ArrowFunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+class Test {
+    method() {
+
+    }
+}
+module.exports = Test;
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+export default function quux () {
+
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+function quux () {
+
+}
+export default quux;
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export function test() {
+
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+var test = function () {
+
+}
+var test2 = 2;
+export { test, test2 }
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+var test = function () {
+
+}
+export { test as test2 }
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -3726,6 +3853,181 @@ function foo () {
   return;
 }
 // Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
+
+const test = {};
+/**
+ * test
+ */
+ test.method = function () {
+
+}
+module.exports = {
+  prop: { prop2: test.method }
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+*
+*/
+function test() {
+
+}
+
+module.exports = {
+prop: { prop2: test }
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+test = function() {
+
+}
+
+module.exports = {
+prop: { prop2: test }
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":{"browserEnv":false,"modules":true}}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+const test = () => {
+
+}
+
+module.exports = {
+prop: { prop2: test }
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"ArrowFunctionExpression":true}}]
+
+/**
+ *
+ */
+window.test = function() {
+
+}
+
+module.exports = {
+prop: window
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+test = function() {
+
+}
+
+/**
+ *
+ */
+test = function() {
+
+}
+
+module.exports = {
+prop: { prop2: test }
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+test = function() {
+
+}
+
+test = 2;
+
+module.exports = {
+prop: { prop2: test }
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+function test() {
+
+}
+
+/**
+ *
+ */
+test.prototype.method = function() {
+
+}
+
+module.exports = {
+prop: { prop2: test }
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+class Test {
+  /**
+   * Test
+   */
+  method() {
+
+  }
+}
+module.exports = Test;
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"MethodDefinition":true}}]
+
+/**
+ *
+ */
+export default function quux () {
+
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+function quux () {
+
+}
+export default quux;
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+export function test() {
+
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+var test = function () {
+
+}
+var test2 = 2;
+export { test, test2 }
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+var test = function () {
+
+}
+export { test as test2 }
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
 ````
 
 
@@ -3931,7 +4233,6 @@ function quux (foo, bar) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -3940,7 +4241,6 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -3970,7 +4270,6 @@ class A {
 
   }
 }
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -3984,7 +4283,6 @@ class A {
 
   }
 }
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -4053,45 +4351,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-
-/**
- * @override
- */
-class A {
-  /**
-    *
-    */
-  quux (foo) {
-
-  }
-}
-
-/**
- * @override
- */
-function quux (foo) {
-
-}
 // Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
-
-/**
- * @implements
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-
-/**
- * @implements
- */
-function quux (foo) {
-
-}
 
 /**
  * @implements
