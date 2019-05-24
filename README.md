@@ -173,6 +173,7 @@ Finally, enable all of the rules that you would like to use.
 
 - `settings.jsdoc.publicFunctionsOnly` - Missing jsdoc blocks
   are only reported for function bodies that are exported from the module.
+  May be a boolean or object.
 
   This setting object supports the following keys:
 
@@ -3889,9 +3890,22 @@ test = function() {
 }
 
 module.exports = {
-prop: { prop2: test }
+  prop: { prop2: test }
 }
 // Settings: {"jsdoc":{"publicFunctionsOnly":{"browserEnv":false,"modules":true}}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+test = function() {
+
+}
+
+exports.someMethod = {
+  prop: { prop2: test }
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":{"browserEnv":false,"exports":true}}}
 // Options: [{"require":{"FunctionExpression":true}}]
 
 /**

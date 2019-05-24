@@ -988,7 +988,7 @@ export default {
       }
 
       module.exports = {
-      prop: { prop2: test }
+        prop: { prop2: test }
       }
     `,
     env: {
@@ -1004,6 +1004,36 @@ export default {
         publicFunctionsOnly: {
           browserEnv: false,
           modules: true
+        }
+      }
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      test = function() {
+
+      }
+
+      exports.someMethod = {
+        prop: { prop2: test }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    settings: {
+      jsdoc: {
+        publicFunctionsOnly: {
+          browserEnv: false,
+          exports: true
         }
       }
     }
