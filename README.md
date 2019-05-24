@@ -289,8 +289,8 @@ The format of the configuration is as follows:
     forbidding the type. The message string will have the following
     substrings with special meaning replaced with their corresponding
     value (`{{tagName}}`, `{{tagValue}}`, `{{badType}}`, and
-    `{{preferredType}}`, noting that the latter is of no use when one is
-    merely forbidding a type).
+    `{{preferredType}}` (or `{{replacement}}`), noting that the latter is
+    of no use when one is merely forbidding a type).
 
 If `no-undefined-types` has the option key `preferredTypesDefined` set to
 `true`, the preferred types indicated in the `settings.jsdoc.preferredTypes`
@@ -1402,7 +1402,7 @@ function qux(foo) {
  */
 function qux(foo) {
 }
-// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{preferredType}}\".","replacement":"Abc"},"string":"Str"}}}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{replacement}}\".","replacement":"Abc"},"string":"Str"}}}
 // Message: Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".
 
 /**

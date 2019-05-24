@@ -109,6 +109,7 @@ export default iterateJsdoc(({
           message ? {
             badType,
             preferredType,
+            replacement: preferredType,
             tagName,
             tagValue
           } : null

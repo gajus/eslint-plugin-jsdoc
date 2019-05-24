@@ -236,8 +236,8 @@ The format of the configuration is as follows:
     forbidding the type. The message string will have the following
     substrings with special meaning replaced with their corresponding
     value (`{{tagName}}`, `{{tagValue}}`, `{{badType}}`, and
-    `{{preferredType}}`, noting that the latter is of no use when one is
-    merely forbidding a type).
+    `{{preferredType}}` (or `{{replacement}}`), noting that the latter is
+    of no use when one is merely forbidding a type).
 
 If `no-undefined-types` has the option key `preferredTypesDefined` set to
 `true`, the preferred types indicated in the `settings.jsdoc.preferredTypes`
