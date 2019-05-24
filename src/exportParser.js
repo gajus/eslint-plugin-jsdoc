@@ -46,9 +46,10 @@ let createSymbol = null;
 const getSymbol = function (node, globals, scope, opt) {
   const opts = opt || {};
   let block = scope;
-  if (node.type === 'Identifier') {
+  switch (node.type) {
+  case 'Identifier': {
     return getIdentifier(node, globals, scope, opts);
-  } else if (node.type === 'MemberExpression') {
+  } case 'MemberExpression': {
     const obj = getSymbol(node.object, globals, scope, opts);
     const propertySymbol = getSymbol(node.property, globals, scope, {simpleIdentifier: !node.computed});
     const propertyValue = getSymbolValue(propertySymbol);
@@ -57,16 +58,16 @@ const getSymbol = function (node, globals, scope, opt) {
       block = obj.props[propertyValue];
 
       return block;
-    } else if (opts.createMissingProps && propertyValue) {
+    }
+    if (opts.createMissingProps && propertyValue) {
       obj.props[propertyValue] = createNode();
 
       return obj.props[propertyValue];
-    } else {
-      debug('MemberExpression: Missing property ' + node.property.name);
-
-      return null;
     }
-  } else if (node.type === 'FunctionExpression' || node.type === 'FunctionDeclaration' || node.type === 'ArrowFunctionExpression') {
+    debug('MemberExpression: Missing property ' + node.property.name);
+
+    return null;
+  } case 'FunctionExpression': case 'FunctionDeclaration': case 'ArrowFunctionExpression': {
     const val = createNode();
     val.props.prototype = createNode();
     val.props.prototype.type = 'object';
@@ -74,9 +75,9 @@ const getSymbol = function (node, globals, scope, opt) {
     val.value = node;
 
     return val;
-  } else if (node.type === 'AssignmentExpression') {
+  } case 'AssignmentExpression': {
     return createSymbol(node.left, globals, node.right, scope, opts);
-  } else if (node.type === 'ClassBody') {
+  } case 'ClassBody': {
     const val = createNode();
     node.body.forEach((method) => {
       val.props[method.key.name] = createNode();
@@ -87,7 +88,7 @@ const getSymbol = function (node, globals, scope, opt) {
     val.value = node;
 
     return val;
-  } else if (node.type === 'ObjectExpression') {
+  } case 'ObjectExpression': {
     const val = createNode();
     val.type = 'object';
     node.properties.forEach((prop) => {
@@ -98,12 +99,13 @@ const getSymbol = function (node, globals, scope, opt) {
     });
 
     return val;
-  } else if (node.type === 'Literal') {
+  } case 'Literal': {
     const val = createNode();
     val.type = 'literal';
     val.value = node;
 
     return val;
+  }
   }
 
   return null;
@@ -112,22 +114,23 @@ const getSymbol = function (node, globals, scope, opt) {
 createSymbol = function (node, globals, value, scope) {
   const block = scope || globals;
   let symbol;
-  if (node.type === 'Identifier') {
+  switch (node.type) {
+  case 'Identifier': {
     if (value) {
       const valueSymbol = getSymbol(value, globals, block);
       if (valueSymbol) {
         block.props[node.name] = valueSymbol;
 
         return block.props[node.name];
-      } else {
-        debug('Identifier: Missing value symbol for %s', node.name);
       }
+      debug('Identifier: Missing value symbol for %s', node.name);
     } else {
       block.props[node.name] = createNode();
 
       return block.props[node.name];
     }
-  } else if (node.type === 'MemberExpression') {
+    break;
+  } case 'MemberExpression': {
     symbol = getSymbol(node.object, globals, block);
 
     const propertySymbol = getSymbol(node.property, globals, block, {simpleIdentifier: !node.computed});
@@ -136,13 +139,15 @@ createSymbol = function (node, globals, value, scope) {
       symbol.props[propertyValue] = getSymbol(value, globals, block);
 
       return symbol.props[propertyValue];
-    } else {
-      debug('MemberExpression: Missing symbol: %s', node.property.name);
     }
-  } else if (node.type === 'FunctionDeclaration') {
+    debug('MemberExpression: Missing symbol: %s', node.property.name);
+    break;
+  } case 'FunctionDeclaration': {
     if (node.id.type === 'Identifier') {
       return createSymbol(node.id, globals, node, globals);
     }
+    break;
+  }
   }
 
   return null;
@@ -150,13 +155,16 @@ createSymbol = function (node, globals, value, scope) {
 
 // Creates variables from variable definitions
 const initVariables = function (node, globals) {
-  if (node.type === 'Program') {
+  switch (node.type) {
+  case 'Program': {
     node.body.forEach((childNode) => {
       initVariables(childNode, globals);
     });
-  } else if (node.type === 'ExpressionStatement') {
+    break;
+  } case 'ExpressionStatement': {
     initVariables(node.expression, globals);
-  } else if (node.type === 'VariableDeclaration') {
+    break;
+  } case 'VariableDeclaration': {
     node.declarations.forEach((declaration) => {
       // let and const
       const symbol = createSymbol(declaration.id, globals, null, globals);
@@ -165,31 +173,40 @@ const initVariables = function (node, globals) {
         globals.props.window.props[declaration.id.name] = symbol;
       }
     });
+    break;
+  }
   }
 };
 
 // Populates variable maps using AST
 const mapVariables = function (node, globals) {
-  if (node.type === 'Program') {
+  switch (node.type) {
+  case 'Program': {
     node.body.forEach((childNode) => {
       mapVariables(childNode, globals);
     });
-  } else if (node.type === 'ExpressionStatement') {
+    break;
+  } case 'ExpressionStatement': {
     mapVariables(node.expression, globals);
-  } else if (node.type === 'AssignmentExpression') {
+    break;
+  } case 'AssignmentExpression': {
     createSymbol(node.left, globals, node.right);
-  } else if (node.type === 'VariableDeclaration') {
+    break;
+  } case 'VariableDeclaration': {
     node.declarations.forEach((declaration) => {
       createSymbol(declaration.id, globals, declaration.init);
     });
-  } else if (node.type === 'FunctionDeclaration') {
+    break;
+  } case 'FunctionDeclaration': {
     if (node.id.type === 'Identifier') {
       createSymbol(node.id, globals, node, globals);
     }
-  } else if (node.type === 'ExportDefaultDeclaration') {
+    break;
+  } case 'ExportDefaultDeclaration': {
     const symbol = createSymbol(node.declaration, globals, node.declaration);
     symbol.exported = true;
-  } else if (node.type === 'ExportNamedDeclaration') {
+    break;
+  } case 'ExportNamedDeclaration': {
     if (node.declaration) {
       const symbol = createSymbol(node.declaration, globals, node.declaration);
       symbol.exported = true;
@@ -197,11 +214,15 @@ const mapVariables = function (node, globals) {
     node.specifiers.forEach((specifier) => {
       mapVariables(specifier, globals);
     });
-  } else if (node.type === 'ExportSpecifier') {
+    break;
+  } case 'ExportSpecifier': {
     const symbol = getSymbol(node.local, globals, globals);
     symbol.exported = true;
-  } else if (node.type === 'ClassDeclaration') {
+    break;
+  } case 'ClassDeclaration': {
     createSymbol(node.id, globals, node.body, globals);
+    break;
+  }
   }
 };
 
