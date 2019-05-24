@@ -36,6 +36,7 @@ An option object may have the following keys:
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
+|Options|`preferredTypesDefined`, `definedTypes`|
 |Settings|`preferredTypes`|
 
 <!-- assertions noUndefinedTypes -->
