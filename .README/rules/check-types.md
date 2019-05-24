@@ -21,12 +21,20 @@ RegExp
 
 `check-types` allows one option:
 
-- An option object with the key `noDefaults` to insist that only the
-  supplied option type map is to be used, and that the default preferences
-  (such as "string" over "String") will not be enforced.
+- An option object:
+  - with the key `noDefaults` to insist that only the supplied option type
+    map is to be used, and that the default preferences (such as "string"
+    over "String") will not be enforced.
+  - with the key `unifyParentAndChildTypeChecks` to treat
+    `settings.jsdoc.preferredTypes` keys the same whether they are of the form
+    `SomeType` or `SomeType<>`. If this is `false` or unset, the former
+    will only apply to types which are not parent types/unions whereas the
+    latter will only apply for parent types/unions.
 
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
+
+
 
 #### Why not capital case everything?
 
@@ -70,7 +78,7 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
-|Options|`noDefaults`|
+|Options|`noDefaults`, `unifyParentAndChildTypeChecks`|
 |Settings|`preferredTypes`|
 
 <!-- assertions checkTypes -->

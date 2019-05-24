@@ -296,6 +296,11 @@ If `no-undefined-types` has the option key `preferredTypesDefined` set to
 `true`, the preferred types indicated in the `settings.jsdoc.preferredTypes`
 map will be assumed to be defined.
 
+See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
+how the keys of `preferredTypes` may have `<>` appended and its bearing
+on whether types are checked as parents/children only (e.g., to match `Array`
+if the type is `Array` vs. `Array.<string>`).
+
 <a name="eslint-plugin-jsdoc-settings-settings-to-configure-valid-types"></a>
 ### Settings to Configure <code>valid-types</code>
 
@@ -1284,12 +1289,20 @@ RegExp
 
 `check-types` allows one option:
 
-- An option object with the key `noDefaults` to insist that only the
-  supplied option type map is to be used, and that the default preferences
-  (such as "string" over "String") will not be enforced.
+- An option object:
+  - with the key `noDefaults` to insist that only the supplied option type
+    map is to be used, and that the default preferences (such as "string"
+    over "String") will not be enforced.
+  - with the key `unifyParentAndChildTypeChecks` to treat
+    `settings.jsdoc.preferredTypes` keys the same whether they are of the form
+    `SomeType` or `SomeType<>`. If this is `false` or unset, the former
+    will only apply to types which are not parent types/unions whereas the
+    latter will only apply for parent types/unions.
 
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
+
+
 
 <a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
 #### Why not capital case everything?
@@ -1334,7 +1347,7 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
-|Options|`noDefaults`|
+|Options|`noDefaults`, `unifyParentAndChildTypeChecks`|
 |Settings|`preferredTypes`|
 
 The following patterns are considered problems:
@@ -1490,6 +1503,98 @@ function qux(foo, bar) {
 }
 // Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
 // Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
+
+/**
+ * @param {Array} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
+
+/**
+ * @param {Array} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray","Array<>":"GenericArray"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
+
+/**
+ * @param {Array.<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array<>":"GenericArray"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
+
+/**
+ * @param {string[]} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array<>":"GenericArray"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
+
+/**
+ * @param {object} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ * @param {object} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject","object<>":"GenericObject"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ * @param {object.<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object<>":"GenericObject"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ * @param {object.<string, number>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object<>":"GenericObject"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ * @param {object.<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ * @param {object.<string, number>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 ````
 
 The following patterns are not considered problems:
@@ -1560,6 +1665,68 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"object":"Object"}}}
+
+/**
+ * @param {Array} foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param {Array.<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray"}}}
+
+/**
+ * @param {string[]} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray"}}}
+
+/**
+ * @param {Array} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array<>":"GenericArray"}}}
+
+/**
+ * @param {object} foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param {object.<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+
+/**
+ * @param {object.<string, number>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+
+/**
+ * @param {object} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object<>":"GenericObject"}}}
 ````
 
 

@@ -29,6 +29,7 @@ export default iterateJsdoc(({
   const preferredTypes = _.get(context, 'settings.jsdoc.preferredTypes');
   const optionObj = context.options[0];
   const noDefaults = _.get(optionObj, 'noDefaults');
+  const unifyParentAndChildTypeChecks = _.get(optionObj, 'unifyParentAndChildTypeChecks');
 
   jsdocTags.forEach((jsdocTag) => {
     const invalidTypes = [];
@@ -40,12 +41,34 @@ export default iterateJsdoc(({
       return;
     }
 
+    const getPreferredTypeInfo = (type, nodeName) => {
+      let hasMatchingPreferredType;
+      let isGenericMatch;
+      if (preferredTypes) {
+        const nonparentType = type === 'ANY' || typeAst.type === 'NAME';
+        isGenericMatch = _.get(preferredTypes, nodeName + '<>') !== undefined &&
+          (unifyParentAndChildTypeChecks || !nonparentType);
+        hasMatchingPreferredType =
+          _.get(preferredTypes, nodeName) !== undefined &&
+            (nonparentType || unifyParentAndChildTypeChecks) ||
+          isGenericMatch;
+      }
+
+      return [hasMatchingPreferredType, isGenericMatch];
+    };
+
     traverse(typeAst, (node) => {
-      if (['NAME', 'ANY'].includes(node.type)) {
-        const nodeName = node.type === 'ANY' ? '*' : node.name;
+      const {type, name} = node;
+      if (['NAME', 'ANY'].includes(type)) {
+        const nodeName = type === 'ANY' ? '*' : name;
+
+        const [hasMatchingPreferredType, isGenericMatch] = getPreferredTypeInfo(type, nodeName);
+
         let preferred;
-        if (preferredTypes && _.get(preferredTypes, nodeName) !== undefined) {
-          const preferredSetting = preferredTypes[nodeName];
+        if (hasMatchingPreferredType) {
+          const preferredSetting = preferredTypes[nodeName + (
+            isGenericMatch ? '<>' : ''
+          )];
 
           if (!preferredSetting) {
             invalidTypes.push([nodeName]);
@@ -60,7 +83,7 @@ export default iterateJsdoc(({
               _.get(preferredSetting, 'message')
             ]);
           }
-        } else if (!noDefaults && node.type === 'NAME') {
+        } else if (!noDefaults && type === 'NAME') {
           for (const strictNativeType of strictNativeTypes) {
             if (strictNativeType.toLowerCase() === nodeName.toLowerCase() &&
               strictNativeType !== nodeName &&
@@ -75,7 +98,7 @@ export default iterateJsdoc(({
           }
         }
         if (preferred) {
-          if (node.type === 'ANY') {
+          if (type === 'ANY') {
             node.type = 'NAME';
           }
           node.name = preferred;

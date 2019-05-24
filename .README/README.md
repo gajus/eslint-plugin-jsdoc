@@ -243,6 +243,11 @@ If `no-undefined-types` has the option key `preferredTypesDefined` set to
 `true`, the preferred types indicated in the `settings.jsdoc.preferredTypes`
 map will be assumed to be defined.
 
+See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
+how the keys of `preferredTypes` may have `<>` appended and its bearing
+on whether types are checked as parents/children only (e.g., to match `Array`
+if the type is `Array` vs. `Array.<string>`).
+
 ### Settings to Configure `valid-types`
 
 * `settings.jsdoc.allowEmptyNamepaths` - Set to `false` to disallow
