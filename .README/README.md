@@ -246,9 +246,13 @@ map will be assumed to be defined.
 ### Settings to Configure `valid-types`
 
 * `settings.jsdoc.allowEmptyNamepaths` - Set to `false` to disallow
-  empty name paths with `@callback`, `@event`, `@listens`, `@fires`,
+  empty name paths with `@callback`, `@event`, `@class`, `@constructor`,
+  `@constant`, `@const`, `@function`, `@func`, `@method`, `@interface`,
+  `@member`, `@var`, `@mixin`, `@namespace`, `@listens`, `@fires`,
   or `@emits` (these might often be expected to have an accompanying
-  name path, though they have some indicative value without one)
+  name path, though they have some indicative value without one; these
+  may also allow names to be defined in another manner elsewhere in
+  the block)
 * `settings.jsdoc.checkSeesForNamepaths` - Set this to `true` to insist
   that `@see` only use name paths (the tag is normally permitted to
   allow other text)
