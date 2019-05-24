@@ -8,6 +8,9 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
+  if (!jsdoc.tags) {
+    return;
+  }
   jsdoc.tags.forEach((tag) => {
     const validTypeParsing = function (type) {
       try {

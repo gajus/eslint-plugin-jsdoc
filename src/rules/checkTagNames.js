@@ -7,6 +7,9 @@ export default iterateJsdoc(({
   utils,
   jsdocNode
 }) => {
+  if (!jsdoc.tags) {
+    return;
+  }
   jsdoc.tags.forEach((jsdocTag) => {
     if (utils.isValidTag(jsdocTag.tag)) {
       const preferredTagName = utils.getPreferredTagName(jsdocTag.tag);

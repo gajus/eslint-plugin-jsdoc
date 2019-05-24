@@ -106,7 +106,7 @@ export default iterateJsdoc(({
       }
     });
 
-    if (invalidTypes) {
+    if (invalidTypes.length) {
       const fixedType = publish(typeAst);
 
       const tagName = jsdocTag.tag;

@@ -212,7 +212,7 @@ const curryUtils = (
   };
 
   utils.forEachTag = (tagName, arrayHandler) => {
-    const matchingJsdocTags = _.filter(jsdoc.tags, {
+    const matchingJsdocTags = _.filter(jsdoc.tags || [], {
       tag: tagName
     });
 

@@ -1,10 +1,10 @@
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
-  jsdoc,
+  utils,
   report
 }) => {
-  const tags = jsdoc.tags.filter((tag) => {
+  const tags = utils.filterTags((tag) => {
     return ['param', 'arg', 'argument', 'returns', 'return'].includes(tag.tag);
   });
   tags.forEach((tag) => {
