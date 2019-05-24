@@ -422,6 +422,70 @@ export default {
           forceRequireReturn: true
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          function quux () {
+            return undefined;
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          function quux () {
+            return undefined;
+          }
+      `,
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          function quux () {
+            return;
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          function quux () {
+          }
+      `,
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          function quux () {
+            return;
+          }
+      `,
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
     }
   ]
 };
