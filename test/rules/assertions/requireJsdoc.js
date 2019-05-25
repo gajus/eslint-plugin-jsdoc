@@ -583,6 +583,30 @@ export default {
           publicFunctionsOnly: true
         }
       }
+    },
+    {
+      code: `
+         export default class A {
+
+         }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'ClassDeclaration'
+      }],
+      options: [{
+        require: {
+          ClassDeclaration: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      },
+      settings: {
+        jsdoc: {
+          publicFunctionsOnly: true
+        }
+      }
     }
   ],
   valid: [{

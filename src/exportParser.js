@@ -67,7 +67,7 @@ const getSymbol = function (node, globals, scope, opt) {
     debug('MemberExpression: Missing property ' + node.property.name);
 
     return null;
-  } case 'FunctionExpression': case 'FunctionDeclaration': case 'ArrowFunctionExpression': {
+  } case 'ClassDeclaration': case 'FunctionExpression': case 'FunctionDeclaration': case 'ArrowFunctionExpression': {
     const val = createNode();
     val.props.prototype = createNode();
     val.props.prototype.type = 'object';
@@ -115,7 +115,12 @@ createSymbol = function (node, globals, value, scope) {
   const block = scope || globals;
   let symbol;
   switch (node.type) {
-  case 'Identifier': {
+  case 'ClassDeclaration': {
+    if (node.id.type === 'Identifier') {
+      return createSymbol(node.id, globals, node, globals);
+    }
+    break;
+  } case 'Identifier': {
     if (value) {
       const valueSymbol = getSymbol(value, globals, block);
       if (valueSymbol) {
@@ -204,7 +209,9 @@ const mapVariables = function (node, globals) {
     break;
   } case 'ExportDefaultDeclaration': {
     const symbol = createSymbol(node.declaration, globals, node.declaration);
-    symbol.exported = true;
+    if (symbol) {
+      symbol.exported = true;
+    }
     break;
   } case 'ExportNamedDeclaration': {
     if (node.declaration) {
@@ -217,7 +224,9 @@ const mapVariables = function (node, globals) {
     break;
   } case 'ExportSpecifier': {
     const symbol = getSymbol(node.local, globals, globals);
-    symbol.exported = true;
+    if (symbol) {
+      symbol.exported = true;
+    }
     break;
   } case 'ClassDeclaration': {
     createSymbol(node.id, globals, node.body, globals);
