@@ -126,9 +126,9 @@ Finally, enable all of the rules that you would like to use.
 
   This setting object supports the following keys:
 
-  - `exports`
-  - `modules`
-  - `browserEnv`
+  - `exports` - ESM exports are checked for JSDoc comments
+  - `modules` - CommonJS exports are checked for JSDoc comments
+  - `browserEnv` - Populates window variable
 
 ### Alias Preference
 

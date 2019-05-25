@@ -177,9 +177,9 @@ Finally, enable all of the rules that you would like to use.
 
   This setting object supports the following keys:
 
-  - `exports`
-  - `modules`
-  - `browserEnv`
+  - `exports` - ESM exports are checked for JSDoc comments
+  - `modules` - CommonJS exports are checked for JSDoc comments
+  - `browserEnv` - Populates window variable
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
@@ -3649,6 +3649,13 @@ var test = function () {
 export { test as test2 }
 // Settings: {"jsdoc":{"publicFunctionsOnly":true}}
 // Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export default class A {
+
+}
+// Settings: {"jsdoc":{"publicFunctionsOnly":true}}
+// Options: [{"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 ````
 
