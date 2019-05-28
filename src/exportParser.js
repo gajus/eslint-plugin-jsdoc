@@ -216,7 +216,9 @@ const mapVariables = function (node, globals) {
   } case 'ExportNamedDeclaration': {
     if (node.declaration) {
       const symbol = createSymbol(node.declaration, globals, node.declaration);
-      symbol.exported = true;
+      if (symbol) {
+        symbol.exported = true;
+      }
     }
     node.specifiers.forEach((specifier) => {
       mapVariables(specifier, globals);
@@ -237,7 +239,7 @@ const mapVariables = function (node, globals) {
 
 const findNode = function (node, block, cache) {
   let blockCache = cache || [];
-  if (blockCache.includes(block)) {
+  if (!block || blockCache.includes(block)) {
     return false;
   }
   blockCache = blockCache.slice();
@@ -263,6 +265,9 @@ const findNode = function (node, block, cache) {
 };
 
 const findExportedNode = function (block, node, cache) {
+  if (block === null) {
+    return false;
+  }
   const blockCache = cache || [];
   for (const key in block.props) {
     if (Object.prototype.hasOwnProperty.call(block.props, key)) {
