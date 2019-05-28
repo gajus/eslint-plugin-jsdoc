@@ -65,7 +65,12 @@ export default {
         {
           message: 'Missing JSDoc @param "foo" declaration.'
         }
-      ]
+      ],
+      settings: {
+        jsdoc: {
+          allowOverrideWithoutParam: false
+        }
+      }
     },
     {
       code: `
@@ -80,7 +85,12 @@ export default {
         {
           message: 'Missing JSDoc @param "foo" declaration.'
         }
-      ]
+      ],
+      settings: {
+        jsdoc: {
+          allowImplementsWithoutParam: false
+        }
+      }
     },
     {
       code: `
@@ -130,7 +140,12 @@ export default {
         {
           message: 'Missing JSDoc @param "foo" declaration.'
         }
-      ]
+      ],
+      settings: {
+        jsdoc: {
+          allowOverrideWithoutParam: false
+        }
+      }
     },
     {
       code: `
@@ -150,7 +165,12 @@ export default {
         {
           message: 'Missing JSDoc @param "foo" declaration.'
         }
-      ]
+      ],
+      settings: {
+        jsdoc: {
+          allowImplementsWithoutParam: false
+        }
+      }
     },
     {
       code: `
@@ -250,12 +270,62 @@ export default {
           function quux (foo) {
 
           }
+      `
+    },
+    {
+      code: `
+          /**
+           * @override
+           */
+          class A {
+            /**
+              *
+              */
+            quux (foo) {
+
+            }
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @override
+           */
+          function quux (foo) {
+
+          }
       `,
       settings: {
         jsdoc: {
           allowOverrideWithoutParam: true
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @implements
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @implements
+           */
+          function quux (foo) {
+
+          }
+      `
     },
     {
       code: `

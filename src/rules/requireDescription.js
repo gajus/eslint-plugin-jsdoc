@@ -6,6 +6,10 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
+  if (utils.avoidDocs()) {
+    return;
+  }
+
   const targetTagName = utils.getPreferredTagName('description');
 
   const functionExamples = _.filter(jsdoc.tags, {
