@@ -41,68 +41,136 @@ export default iterateJsdoc(({
       return;
     }
 
-    const getPreferredTypeInfo = (type, nodeName) => {
+    const getPreferredTypeInfo = (type, nodeName, parentName, parentNode) => {
       let hasMatchingPreferredType;
       let isGenericMatch;
+      let typeName = nodeName;
       if (preferredTypes) {
-        const nonparentType = type === 'ANY' || typeAst.type === 'NAME';
-        isGenericMatch = _.get(preferredTypes, nodeName + '<>') !== undefined &&
-          (unifyParentAndChildTypeChecks || !nonparentType);
-        hasMatchingPreferredType =
-          _.get(preferredTypes, nodeName) !== undefined &&
-            (nonparentType || unifyParentAndChildTypeChecks) ||
-          isGenericMatch;
+        const parentType = parentName === 'subject';
+        if (unifyParentAndChildTypeChecks || parentType) {
+          const syntax = _.get(parentNode, 'meta.syntax');
+
+          [
+            ['.', 'ANGLE_BRACKET_WITH_DOT'],
+            ['.<>', 'ANGLE_BRACKET_WITH_DOT'],
+            ['<>', 'ANGLE_BRACKET']
+          ].some(([checkPostFix, syn]) => {
+            isGenericMatch = _.get(
+              preferredTypes,
+              nodeName + checkPostFix
+            ) !== undefined &&
+              syntax === syn;
+            if (isGenericMatch) {
+              typeName += checkPostFix;
+            }
+
+            return isGenericMatch;
+          });
+          if (!isGenericMatch && parentType) {
+            [
+              ['[]', 'SQUARE_BRACKET'],
+              ['.', 'ANGLE_BRACKET_WITH_DOT'],
+              ['.<>', 'ANGLE_BRACKET_WITH_DOT'],
+              ['<>', 'ANGLE_BRACKET']
+            ].some(([checkPostFix, syn]) => {
+              isGenericMatch = _.get(preferredTypes, checkPostFix) !== undefined &&
+                syntax === syn;
+              if (isGenericMatch) {
+                typeName = checkPostFix;
+              }
+
+              return isGenericMatch;
+            });
+          }
+        }
+        const directNameMatch = _.get(preferredTypes, nodeName) !== undefined;
+        const unifiedSyntaxParentMatch = parentType && directNameMatch && unifyParentAndChildTypeChecks;
+        isGenericMatch = isGenericMatch || unifiedSyntaxParentMatch;
+
+        hasMatchingPreferredType = isGenericMatch ||
+          directNameMatch && !parentType;
       }
 
-      return [hasMatchingPreferredType, isGenericMatch];
+      return [hasMatchingPreferredType, typeName, isGenericMatch];
     };
 
-    traverse(typeAst, (node) => {
-      const {type, name} = node;
-      if (['NAME', 'ANY'].includes(type)) {
-        const nodeName = type === 'ANY' ? '*' : name;
-
-        const [hasMatchingPreferredType, isGenericMatch] = getPreferredTypeInfo(type, nodeName);
-
-        let preferred;
-        if (hasMatchingPreferredType) {
-          const preferredSetting = preferredTypes[nodeName + (
-            isGenericMatch ? '<>' : ''
-          )];
-
-          if (!preferredSetting) {
-            invalidTypes.push([nodeName]);
-          } else if (typeof preferredSetting === 'string') {
-            preferred = preferredSetting;
-            invalidTypes.push([nodeName, preferred]);
-          } else if (typeof preferredSetting === 'object') {
-            preferred = _.get(preferredSetting, 'replacement');
-            invalidTypes.push([
-              nodeName,
-              preferred,
-              _.get(preferredSetting, 'message')
-            ]);
-          }
-        } else if (!noDefaults && type === 'NAME') {
-          for (const strictNativeType of strictNativeTypes) {
-            if (strictNativeType.toLowerCase() === nodeName.toLowerCase() &&
-              strictNativeType !== nodeName &&
-
-              // Don't report if user has own map for a strict native type
-              (!preferredTypes || _.get(preferredTypes, strictNativeType) === undefined)
-            ) {
-              preferred = strictNativeType;
-              invalidTypes.push([nodeName, preferred]);
-              break;
+    const adjustNames = (type, preferred, isGenericMatch, nodeName, node, parentNode) => {
+      let ret = preferred;
+      if (isGenericMatch) {
+        if (preferred === '[]') {
+          parentNode.meta.syntax = 'SQUARE_BRACKET';
+          ret = 'Array';
+        } else {
+          const dotBracketEnd = preferred.match(/\.(?:<>)?$/);
+          if (dotBracketEnd) {
+            parentNode.meta.syntax = 'ANGLE_BRACKET_WITH_DOT';
+            ret = preferred.slice(0, -dotBracketEnd[0].length);
+          } else {
+            const bracketEnd = preferred.endsWith('<>');
+            if (bracketEnd) {
+              parentNode.meta.syntax = 'ANGLE_BRACKET';
+              ret = preferred.slice(0, -2);
             }
           }
         }
-        if (preferred) {
-          if (type === 'ANY') {
-            node.type = 'NAME';
-          }
-          node.name = preferred;
+      } else if (type === 'ANY') {
+        node.type = 'NAME';
+      }
+      node.name = ret.replace(/(?:\.|<>|\.<>|\[])$/, '');
+
+      // For bare pseudo-types like `<>`
+      if (!ret) {
+        node.name = nodeName;
+      }
+
+      return ret;
+    };
+
+    traverse(typeAst, (node, parentName, parentNode) => {
+      const {type, name} = node;
+      if (!['NAME', 'ANY'].includes(type)) {
+        return;
+      }
+      let nodeName = type === 'ANY' ? '*' : name;
+
+      const [hasMatchingPreferredType, typeName, isGenericMatch] = getPreferredTypeInfo(type, nodeName, parentName, parentNode);
+
+      let preferred;
+      if (hasMatchingPreferredType) {
+        const preferredSetting = preferredTypes[typeName];
+        nodeName = typeName === '[]' ? typeName : nodeName;
+
+        if (!preferredSetting) {
+          invalidTypes.push([nodeName]);
+        } else if (typeof preferredSetting === 'string') {
+          preferred = preferredSetting;
+          invalidTypes.push([nodeName, preferred]);
+        } else if (typeof preferredSetting === 'object') {
+          preferred = _.get(preferredSetting, 'replacement');
+          invalidTypes.push([
+            nodeName,
+            preferred,
+            _.get(preferredSetting, 'message')
+          ]);
         }
+      } else if (!noDefaults && type === 'NAME') {
+        for (const strictNativeType of strictNativeTypes) {
+          if (strictNativeType.toLowerCase() === nodeName.toLowerCase() &&
+            strictNativeType !== nodeName &&
+
+            // Don't report if user has own map for a strict native type
+            (!preferredTypes || _.get(preferredTypes, strictNativeType) === undefined)
+          ) {
+            preferred = strictNativeType;
+            invalidTypes.push([nodeName, preferred]);
+            break;
+          }
+        }
+      }
+
+      // For fixer
+      if (preferred) {
+        preferred = adjustNames(type, preferred, isGenericMatch, nodeName, node, parentNode);
       }
     });
 

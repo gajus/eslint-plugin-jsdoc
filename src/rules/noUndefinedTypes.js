@@ -10,13 +10,16 @@ const extraTypes = [
   'Array', 'Object', 'RegExp', 'Date', 'Function'
 ];
 
+const stripPseudoTypes = (str) => {
+  return str && str.replace(/(?:\.|<>|\.<>|\[])$/, '');
+};
+
 export default iterateJsdoc(({
   context,
   report,
-  sourceCode,
+  sourceCode: {scopeManager},
   utils
 }) => {
-  const {scopeManager} = sourceCode;
   const {globalScope} = scopeManager;
 
   const {preferredTypesDefined, definedTypes = []} = context.options[0] || {};
@@ -28,13 +31,14 @@ export default iterateJsdoc(({
       // Replace `_.values` with `Object.values` when we may start requiring Node 7+
       definedPreferredTypes = _.values(preferredTypes).map((preferredType) => {
         if (typeof preferredType === 'string') {
-          return preferredType;
+          // May become an empty string but will be filtered out below
+          return stripPseudoTypes(preferredType);
         }
         if (!preferredType || typeof preferredType !== 'object') {
           return undefined;
         }
 
-        return preferredType.replacement;
+        return stripPseudoTypes(preferredType.replacement);
       }).filter((preferredType) => {
         return preferredType;
       });

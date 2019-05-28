@@ -25,16 +25,24 @@ RegExp
   - with the key `noDefaults` to insist that only the supplied option type
     map is to be used, and that the default preferences (such as "string"
     over "String") will not be enforced.
-  - with the key `unifyParentAndChildTypeChecks` to treat
-    `settings.jsdoc.preferredTypes` keys the same whether they are of the form
-    `SomeType` or `SomeType<>`. If this is `false` or unset, the former
-    will only apply to types which are not parent types/unions whereas the
-    latter will only apply for parent types/unions.
+  - with the key `unifyParentAndChildTypeChecks` which will treat
+    `settings.jsdoc.preferredTypes` keys such as `SomeType` as matching
+    not only child types such as an unadorned `SomeType` but also
+    `SomeType<aChildType>`, `SomeType.<aChildType>`, or if `SomeType` is
+    `Array` (or `[]`), it will match `aChildType[]`. If this is `false` or
+    unset, the former format will only apply to types which are not parent
+    types/unions whereas the latter formats will only apply for parent
+    types/unions. The special types `[]`, `.<>` (or `.`), and `<>`
+    act only as parent types (and will not match a bare child type such as
+    `Array` even when unified, though, as mentioned, `Array` will match
+    say `string[]` or `Array.<string>` when unified). The special type
+    `*` is only a child type. Note that there is no detection of parent
+    and child type together, e.g., you cannot specify preferences for
+    `string[]` specifically as distinct from say `number[]`, but you can
+    target both with `[]` or the child types `number` or `string`.
 
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
-
-
 
 #### Why not capital case everything?
 

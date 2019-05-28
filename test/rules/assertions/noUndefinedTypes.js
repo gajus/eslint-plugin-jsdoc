@@ -300,6 +300,32 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+        /**
+         * @param {MyType} foo - Bar.
+         * @param {HisType} bar - Foo.
+         * @param {HerType} baz - Foo.
+         */
+       function quux(foo, bar, baz) {
+
+       }
+      `,
+      options: [{
+        definedTypes: ['MyType'],
+        preferredTypesDefined: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            hertype: {
+              replacement: 'HerType<>'
+            },
+            histype: 'HisType.<>'
+          }
+        }
+      }
     }
   ]
 };

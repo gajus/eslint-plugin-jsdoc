@@ -279,12 +279,37 @@ but restricted to `@param`. These settings are now deprecated.
 - `settings.jsdoc.preferredTypes` An option map to indicate preferred
   or forbidden types (if default types are indicated here, these will
   have precedence over the default recommendations for `check-types`).
-  The keys of this map are the types to be replaced (or forbidden) and
-  can include the "ANY" type, `*`.
+  The keys of this map are the types to be replaced (or forbidden).
+  These keys may include:
+  1. The "ANY" type, `*`
+  1. The pseudo-type `[]` which we use to denote the parent (array)
+    types used in the syntax `string[]`, `number[]`, etc.
+  1. The pseudo-type `.<>` (or `.`) to represent the format `Array.<value>`
+    or `Object.<key, value>`
+  1. The pseudo-type `<>` to represent the format `Array<value>` or
+    `Object<key, value>`
+  1. A plain string type, e.g., `MyType`
+  1. A plain string type followed by one of the above pseudo-types (except
+    for `[]` which is always assumed to be an `Array`), e.g., `Array.`, or
+    `SpecialObject<>`.
+
+  If a bare pseudo-type is used, it will match all parent types of that form.
+  If a pseudo-type prefixed with a type name is used, it will only match
+  parent types of that form and type name.
+
   The values can be:
   - `false` to forbid the type
   - a string to indicate the type that should be preferred in its place
-    (and which `fix` mode can replace)
+    (and which `fix` mode can replace); this can be one of the formats
+    of the keys described above. Note that the format will not be changed
+    unless you use a pseudo-type in the replacement (e.g.,
+    `'Array.<>': 'MyArray'` will change `Array.<string>` to `MyArray.<string>`,
+    preserving the dot; to get rid of the dot, you must use the pseudo-type:
+    `'Array.<>': 'MyArray<>'` which will change `Array.<string>` to
+    `MyArray<string>`). If you use a bare pseudo-type in the replacement,
+    e.g., `'MyArray.<>': '<>'`, the type will be converted to the format
+    of the pseudo-type without changing the type name, i.e., `MyArray.<string>`
+    will become `MyArray<string>` but `Array.<string>` will not be modified.
   - an object with the key `message` to provide a specific error message
     when encountering the discouraged type and, if a type is to be preferred
     in its place, the key `replacement` to indicate the type that should be
@@ -300,9 +325,9 @@ If `no-undefined-types` has the option key `preferredTypesDefined` set to
 map will be assumed to be defined.
 
 See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
-how the keys of `preferredTypes` may have `<>` appended and its bearing
-on whether types are checked as parents/children only (e.g., to match `Array`
-if the type is `Array` vs. `Array.<string>`).
+how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
+appended and its bearing on whether types are checked as parents/children
+only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
 
 <a name="eslint-plugin-jsdoc-settings-settings-to-configure-valid-types"></a>
 ### Settings to Configure <code>valid-types</code>
@@ -1296,16 +1321,24 @@ RegExp
   - with the key `noDefaults` to insist that only the supplied option type
     map is to be used, and that the default preferences (such as "string"
     over "String") will not be enforced.
-  - with the key `unifyParentAndChildTypeChecks` to treat
-    `settings.jsdoc.preferredTypes` keys the same whether they are of the form
-    `SomeType` or `SomeType<>`. If this is `false` or unset, the former
-    will only apply to types which are not parent types/unions whereas the
-    latter will only apply for parent types/unions.
+  - with the key `unifyParentAndChildTypeChecks` which will treat
+    `settings.jsdoc.preferredTypes` keys such as `SomeType` as matching
+    not only child types such as an unadorned `SomeType` but also
+    `SomeType<aChildType>`, `SomeType.<aChildType>`, or if `SomeType` is
+    `Array` (or `[]`), it will match `aChildType[]`. If this is `false` or
+    unset, the former format will only apply to types which are not parent
+    types/unions whereas the latter formats will only apply for parent
+    types/unions. The special types `[]`, `.<>` (or `.`), and `<>`
+    act only as parent types (and will not match a bare child type such as
+    `Array` even when unified, though, as mentioned, `Array` will match
+    say `string[]` or `Array.<string>` when unified). The special type
+    `*` is only a child type. Note that there is no detection of parent
+    and child type together, e.g., you cannot specify preferences for
+    `string[]` specifically as distinct from say `number[]`, but you can
+    target both with `[]` or the child types `number` or `string`.
 
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
-
-
 
 <a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
 #### Why not capital case everything?
@@ -1390,7 +1423,15 @@ function quux (foo, bar, baz) {
 // Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
 
 /**
- * @param {Array<Number|String>} foo
+ * @param {Array.<Number|String>} foo
+ */
+function quux (foo, bar, baz) {
+
+}
+// Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
+
+/**
+ * @param {(Number|String)[]} foo
  */
 function quux (foo, bar, baz) {
 
@@ -1522,11 +1563,20 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray","Array<>":"GenericArray"}}}
+// Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray","Array.<>":"GenericArray"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
 
 /**
  * @param {Array.<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array.<>":"GenericArray"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
+
+/**
+ * @param {Array<string>} foo
  */
 function quux (foo) {
 
@@ -1540,8 +1590,28 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"preferredTypes":{"Array<>":"GenericArray"}}}
-// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
+// Settings: {"jsdoc":{"preferredTypes":{"[]":"SpecialTypeArray"}}}
+// Message: Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".
+
+/**
+ * @param {string[]} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"[]":"SpecialTypeArray"}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+// Message: Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".
+
+/**
+ * @param {string[]} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array":"SpecialTypeArray"}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "SpecialTypeArray".
 
 /**
  * @param {object} foo
@@ -1550,6 +1620,15 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ * @param {object} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject","object.<>":"GenericObject"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
 /**
@@ -1567,11 +1646,29 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"preferredTypes":{"object.<>":"GenericObject"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ * @param {object<string>} foo
+ */
+function quux (foo) {
+
+}
 // Settings: {"jsdoc":{"preferredTypes":{"object<>":"GenericObject"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
 /**
  * @param {object.<string, number>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object.<>":"GenericObject"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ * @param {object<string, number>} foo
  */
 function quux (foo) {
 
@@ -1590,6 +1687,16 @@ function quux (foo) {
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
 /**
+ * @param {object<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
  * @param {object} foo
  */
 function quux (foo) {
@@ -1627,6 +1734,157 @@ function quux (foo) {
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ * @param {object<string, number>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
+
+/**
+ *
+ * @param {string[][]} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"[]":"Array."}}}
+// Message: Invalid JSDoc @param "foo" type "[]"; prefer: "Array.".
+
+/**
+ *
+ * @param {string[][]} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"[]":"Array.<>"}}}
+// Message: Invalid JSDoc @param "foo" type "[]"; prefer: "Array.<>".
+
+/**
+ *
+ * @param {string[][]} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"[]":"Array<>"}}}
+// Message: Invalid JSDoc @param "foo" type "[]"; prefer: "Array<>".
+
+/**
+ *
+ * @param {object.<string, object.<string, string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object.":"Object"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object".
+
+/**
+ *
+ * @param {object.<string, object.<string, string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object.":"Object<>"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
+
+/**
+ *
+ * @param {object<string, object<string, string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object<>":"Object."}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object.".
+
+/**
+ *
+ * @param {Array.<Array.<string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array.":"[]"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "[]".
+
+/**
+ *
+ * @param {Array.<Array.<string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array.":"Array<>"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "Array<>".
+
+/**
+ *
+ * @param {Array.<Array.<string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array.":"<>"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "<>".
+
+/**
+ *
+ * @param {Array.<MyArray.<string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array.":"<>"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "<>".
+
+/**
+ *
+ * @param {Array.<MyArray.<string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"MyArray.":"<>"}}}
+// Message: Invalid JSDoc @param "foo" type "MyArray"; prefer: "<>".
+
+/**
+ *
+ * @param {Array<Array<string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"<>":"Array."}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".
+
+/**
+ *
+ * @param {Array<Array<string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array":"Array."}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".
+
+/**
+ *
+ * @param {Array<Array<string>>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"<>":"[]"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "[]".
 ````
 
 The following patterns are not considered problems:
@@ -1714,12 +1972,54 @@ function quux (foo) {
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray"}}}
 
 /**
- * @param {string[]} foo
+ * @param {Array<string>} foo
  */
 function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray"}}}
+
+/**
+ * @param {string[]} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array":"SpecialTypeArray","Array.<>":"SpecialTypeArray","Array<>":"SpecialTypeArray"}}}
+
+/**
+ * @param {string[]} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array.<>":"SpecialTypeArray","Array<>":"SpecialTypeArray"}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+
+/**
+ * @param {Array} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"[]":"SpecialTypeArray"}}}
+
+/**
+ * @param {Array} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"[]":"SpecialTypeArray"}}}
+// Options: [{"unifyParentAndChildTypeChecks":true}]
+
+/**
+ * @param {Array} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array.<>":"GenericArray"}}}
 
 /**
  * @param {Array} foo
@@ -1745,12 +2045,36 @@ function quux (foo) {
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 
 /**
+ * @param {object<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+
+/**
  * @param {object.<string, number>} foo
  */
 function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+
+/**
+ * @param {object<string, number>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
+
+/**
+ * @param {object} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"object.<>":"GenericObject"}}}
 
 /**
  * @param {object} foo
@@ -2503,6 +2827,17 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"},"histype":"HisType"}}}
+// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+
+/**
+  * @param {MyType} foo - Bar.
+  * @param {HisType} bar - Foo.
+  * @param {HerType} baz - Foo.
+  */
+function quux(foo, bar, baz) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType<>"},"histype":"HisType.<>"}}}
 // Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
 ````
 
