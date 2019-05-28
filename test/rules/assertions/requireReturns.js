@@ -486,6 +486,23 @@ export default {
           forceRequireReturn: true
         }
       }
+    },
+    {
+      code: `
+      /** foo class */
+      class foo {
+        /** foo constructor */
+        constructor () {
+          // =>
+          this.bar = true;
+        }
+      }
+
+      export default foo;
+      `,
+      parserOptions: {
+        sourceType: 'module'
+      }
     }
   ]
 };
