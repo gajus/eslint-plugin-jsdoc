@@ -159,21 +159,21 @@ createSymbol = function (node, globals, value, scope) {
 };
 
 // Creates variables from variable definitions
-const initVariables = function (node, globals) {
+const initVariables = function (node, globals, opts) {
   switch (node.type) {
   case 'Program': {
     node.body.forEach((childNode) => {
-      initVariables(childNode, globals);
+      initVariables(childNode, globals, opts);
     });
     break;
   } case 'ExpressionStatement': {
-    initVariables(node.expression, globals);
+    initVariables(node.expression, globals, opts);
     break;
   } case 'VariableDeclaration': {
     node.declarations.forEach((declaration) => {
       // let and const
       const symbol = createSymbol(declaration.id, globals, null, globals);
-      if (node.kind === 'var' && globals.props.window) {
+      if (opts.initWindow && node.kind === 'var' && globals.props.window) {
         // If var, also add to window
         globals.props.window.props[declaration.id.name] = symbol;
       }
@@ -315,7 +315,7 @@ const parse = function (ast, opt) {
   if (opts.initWindow) {
     globalVars.props.window = globalVars;
   }
-  initVariables(ast, globalVars);
+  initVariables(ast, globalVars, opts);
   mapVariables(ast, globalVars);
 
   return {
