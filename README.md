@@ -4496,6 +4496,17 @@ function quux () {
   return;
 }
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
+
+/** foo class */
+class foo {
+  /** foo constructor */
+  constructor () {
+    // =>
+    this.bar = true;
+  }
+}
+
+export default foo;
 ````
 
 
