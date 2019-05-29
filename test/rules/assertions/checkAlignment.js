@@ -13,15 +13,7 @@ export default {
         {
           message: 'Expected JSDoc block to be aligned.'
         }
-      ],
-      output: `
-        /**
-         * @param {Number} foo
-         */
-        function quux (foo) {
-
-        }
-      `
+      ]
     },
     {
       code: `
@@ -36,15 +28,7 @@ export default {
         {
           message: 'Expected JSDoc block to be aligned.'
         }
-      ],
-      output: `
-        /**
-         * @param {Number} foo
-         */
-        function quux (foo) {
-
-        }
-      `
+      ]
     },
     {
       code: `
@@ -59,15 +43,7 @@ export default {
         {
           message: 'Expected JSDoc block to be aligned.'
         }
-      ],
-      output: `
-         /**
-          * @param {Number} foo
-          */
-        function quux (foo) {
-
-        }
-      `
+      ]
     },
     {
       code: `
@@ -82,15 +58,7 @@ export default {
         {
           message: 'Expected JSDoc block to be aligned.'
         }
-      ],
-      output: `
-         /**
-          * @param {Number} foo
-          */
-        function quux (foo) {
-
-        }
-      `
+      ]
     },
     {
       code: `
@@ -105,15 +73,7 @@ export default {
         {
           message: 'Expected JSDoc block to be aligned.'
         }
-      ],
-      output: `
-       /**
-        * @param {Number} foo
-        */
-        function quux (foo) {
-
-        }
-      `
+      ]
     }
   ],
   valid: [

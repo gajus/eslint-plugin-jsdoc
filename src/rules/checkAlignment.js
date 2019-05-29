@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
@@ -18,28 +17,14 @@ export default iterateJsdoc(({
       return !line.trim().length;
     });
 
-  const fix = (fixer) => {
-    const replacement = sourceCode.getText(jsdocNode).split('\n')
-      .map((line, index) => {
-        // Ignore the first line and all lines not starting with `*`
-        const ignored = !index || line.split('*')[0].trim().length;
-
-        return ignored ? line : indent + ' ' + _.trimStart(line);
-      })
-      .join('\n');
-
-    return fixer.replaceText(jsdocNode, replacement);
-  };
-
   for (const line of sourceLines) {
     if (line.length !== indentLevel) {
-      report('Expected JSDoc block to be aligned.', fix);
+      report('Expected JSDoc block to be aligned.');
       break;
     }
   }
 }, {
   meta: {
-    fixable: 'code',
     type: 'layout'
   }
 });
