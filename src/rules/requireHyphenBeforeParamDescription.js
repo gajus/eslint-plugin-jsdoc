@@ -28,8 +28,13 @@ export default iterateJsdoc(({
         report('There must be a hyphen before @' + targetTagName + ' description.', (fixer) => {
           const lineIndex = jsdocTag.line;
           const sourceLines = sourceCode.getText(jsdocNode).split('\n');
+
+          // Get start index of description, accounting for multi-line descriptions
+          const description = jsdocTag.description.split('\n')[0];
+          const descriptionIndex = sourceLines[lineIndex].lastIndexOf(description);
+
           const replacementLine = sourceLines[lineIndex]
-            .replace(jsdocTag.description, '- ' + jsdocTag.description);
+            .substring(0, descriptionIndex) + '- ' + description;
           sourceLines.splice(lineIndex, 1, replacementLine);
           const replacement = sourceLines.join('\n');
 
