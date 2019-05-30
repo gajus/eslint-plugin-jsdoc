@@ -58,7 +58,7 @@ export default {
       code: `
           /**
            * @param foo - Foo.
-           * @param foo Foo.
+           * @param bar Foo.
            */
           function quux () {
 
@@ -76,7 +76,7 @@ export default {
       output: `
           /**
            * @param foo - Foo.
-           * @param foo - Foo.
+           * @param bar - Foo.
            */
           function quux () {
 
