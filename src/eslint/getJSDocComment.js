@@ -71,7 +71,11 @@ const getJSDocComment = function (sourceCode, node) {
 
   case 'ArrowFunctionExpression':
   case 'FunctionExpression':
-    if (parent.type !== 'CallExpression' && parent.type !== 'NewExpression') {
+    if (
+      parent.type !== 'CallExpression' &&
+      parent.type !== 'OptionalCallExpression' &&
+      parent.type !== 'NewExpression'
+    ) {
       while (
         !sourceCode.getCommentsBefore(parent).length &&
         !/Function/u.test(parent.type) &&

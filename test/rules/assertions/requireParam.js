@@ -559,6 +559,14 @@ export default {
           ignorePrivate: true
         }
       }
+    },
+    {
+      code: `
+          // issue 182: optional chaining
+          /** @const {boolean} test */
+          const test = something?.find(_ => _)
+      `,
+      parser: 'babel-eslint'
     }
   ]
 };
