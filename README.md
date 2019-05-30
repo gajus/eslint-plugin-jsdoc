@@ -3034,7 +3034,7 @@ function quux () {
 
 /**
  * @param foo - Foo.
- * @param foo Foo.
+ * @param bar Foo.
  */
 function quux () {
 
