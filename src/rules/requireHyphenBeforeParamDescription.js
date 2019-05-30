@@ -26,7 +26,12 @@ export default iterateJsdoc(({
     if (always) {
       if (!jsdocTag.description.startsWith('-')) {
         report('There must be a hyphen before @' + targetTagName + ' description.', (fixer) => {
-          const replacement = sourceCode.getText(jsdocNode).replace(jsdocTag.description, '- ' + jsdocTag.description);
+          const lineIndex = jsdocTag.line;
+          const sourceLines = sourceCode.getText(jsdocNode).split('\n');
+          const replacementLine = sourceLines[lineIndex]
+            .replace(jsdocTag.description, '- ' + jsdocTag.description);
+          sourceLines.splice(lineIndex, 1, replacementLine);
+          const replacement = sourceLines.join('\n');
 
           return fixer.replaceText(jsdocNode, replacement);
         }, jsdocTag);
