@@ -3913,6 +3913,10 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"ignorePrivate":true}}
+
+// issue 182: optional chaining
+/** @const {boolean} test */
+const test = something?.find(_ => _)
 ````
 
 
