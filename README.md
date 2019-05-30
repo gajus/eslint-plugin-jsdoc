@@ -3031,6 +3031,16 @@ function quux () {
 }
 // Options: ["never"]
 // Message: There must be no hyphen before @param description.
+
+/**
+ * @param foo - Foo.
+ * @param foo Foo.
+ */
+function quux () {
+
+}
+// Options: ["always"]
+// Message: There must be a hyphen before @param description.
 ````
 
 The following patterns are not considered problems:
