@@ -3033,8 +3033,19 @@ function quux () {
 // Message: There must be no hyphen before @param description.
 
 /**
- * @param foo - Foo.
- * @param bar Foo.
+ * @param foo - foo
+ * @param foo foo
+ */
+function quux () {
+
+}
+// Options: ["always"]
+// Message: There must be a hyphen before @param description.
+
+/**
+ * @param foo foo
+ * bar
+ * @param bar - bar
  */
 function quux () {
 
