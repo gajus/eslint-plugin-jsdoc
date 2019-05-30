@@ -57,8 +57,8 @@ export default {
     {
       code: `
           /**
-           * @param foo - Foo.
-           * @param bar Foo.
+           * @param foo - foo
+           * @param foo foo
            */
           function quux () {
 
@@ -75,8 +75,39 @@ export default {
       ],
       output: `
           /**
-           * @param foo - Foo.
-           * @param bar - Foo.
+           * @param foo - foo
+           * @param foo - foo
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @param foo foo
+           * bar
+           * @param bar - bar
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a hyphen before @param description.'
+        }
+      ],
+      options: [
+        'always'
+      ],
+      output: `
+          /**
+           * @param foo - foo
+           * bar
+           * @param bar - bar
            */
           function quux () {
 
