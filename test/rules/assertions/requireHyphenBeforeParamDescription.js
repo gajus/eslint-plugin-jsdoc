@@ -53,6 +53,35 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @param foo - Foo.
+           * @param foo Foo.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'There must be a hyphen before @param description.'
+        }
+      ],
+      options: [
+        'always'
+      ],
+      output: `
+          /**
+           * @param foo - Foo.
+           * @param foo - Foo.
+           */
+          function quux () {
+
+          }
+      `
     }
   ],
   valid: [
