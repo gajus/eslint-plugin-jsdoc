@@ -567,6 +567,12 @@ export default {
           const test = something?.find(_ => _)
       `,
       parser: 'babel-eslint'
+    },
+    {
+      code: `
+          /** @type {RequestHandler} */
+          function foo(req, res, next) {}
+      `
     }
   ]
 };
