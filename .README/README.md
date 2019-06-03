@@ -120,8 +120,8 @@ Finally, enable all of the rules that you would like to use.
 
 ### Requiring JSDoc comments for exported functions in <code>require-jsdoc</code>
 
-- `settings.jsdoc.publicFunctionsOnly` - Missing jsdoc blocks
-  are only reported for function bodies that are exported from the module.
+- `settings.jsdoc.publicOnly` - Missing jsdoc blocks
+  are only reported for function bodies / class declarations that are exported from the module.
   May be a boolean or object.
 
   This setting object supports the following keys:

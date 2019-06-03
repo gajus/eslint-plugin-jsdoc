@@ -267,7 +267,7 @@ export default {
       }],
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -293,7 +293,7 @@ export default {
       }],
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -321,7 +321,7 @@ export default {
       }],
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -345,7 +345,7 @@ export default {
       }],
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -374,7 +374,7 @@ export default {
       }],
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -401,7 +401,7 @@ export default {
       }],
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -428,7 +428,7 @@ export default {
       }],
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -455,7 +455,7 @@ export default {
       }],
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -479,7 +479,7 @@ export default {
       },
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -504,7 +504,7 @@ export default {
       },
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -528,7 +528,7 @@ export default {
       },
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -555,7 +555,7 @@ export default {
       },
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -580,7 +580,7 @@ export default {
       },
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     },
@@ -604,7 +604,7 @@ export default {
       },
       settings: {
         jsdoc: {
-          publicFunctionsOnly: true
+          publicOnly: true
         }
       }
     }
@@ -971,7 +971,7 @@ export default {
     }],
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -998,7 +998,7 @@ export default {
     }],
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1025,7 +1025,7 @@ export default {
     }],
     settings: {
       jsdoc: {
-        publicFunctionsOnly: {
+        publicOnly: {
           browserEnv: false,
           modules: true
         }
@@ -1055,7 +1055,7 @@ export default {
     }],
     settings: {
       jsdoc: {
-        publicFunctionsOnly: {
+        publicOnly: {
           browserEnv: false,
           exports: true
         }
@@ -1085,7 +1085,7 @@ export default {
     }],
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1112,7 +1112,7 @@ export default {
     }],
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1143,7 +1143,7 @@ export default {
     }],
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1169,7 +1169,7 @@ export default {
     }],
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1203,7 +1203,7 @@ export default {
     }],
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1229,7 +1229,7 @@ export default {
     }],
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1252,7 +1252,7 @@ export default {
     },
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1276,7 +1276,7 @@ export default {
     },
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1299,7 +1299,7 @@ export default {
     },
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1324,7 +1324,7 @@ export default {
     },
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   },
@@ -1348,7 +1348,7 @@ export default {
     },
     settings: {
       jsdoc: {
-        publicFunctionsOnly: true
+        publicOnly: true
       }
     }
   }]
