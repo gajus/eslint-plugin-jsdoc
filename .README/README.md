@@ -49,13 +49,13 @@ This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
 Install [ESLint](https://www.github.com/eslint/eslint) either locally or globally.
 
 ```sh
-npm install eslint
+npm install --save-dev eslint
 ```
 
 If you have installed `ESLint` globally, you have to install JSDoc plugin globally too. Otherwise, install it locally.
 
 ```sh
-npm install eslint-plugin-jsdoc
+npm install --save-dev eslint-plugin-jsdoc
 ```
 
 ## Configuration
