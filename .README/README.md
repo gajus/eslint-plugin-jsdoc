@@ -109,7 +109,7 @@ Finally, enable all of the rules that you would like to use.
 
 ### Allow `@private` to disable rules for that comment block
 
-- `settings.jsdoc.allowPrivate` - Disables all rules for the comment block
+- `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
   on which it occurs.
 
 ### Exempting empty functions from `require-jsdoc`
