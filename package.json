@@ -23,7 +23,7 @@
     "chai": "^4.2.0",
     "eslint": "^5.14.1",
     "eslint-config-canonical": "^17.1.0",
-    "gitdown": "^2.5.7",
+    "gitdown": "^2.5.8",
     "glob": "^7.1.4",
     "globby": "^9.2.0",
     "husky": "^2.4.0",
