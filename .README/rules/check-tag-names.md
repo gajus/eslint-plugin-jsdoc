@@ -2,7 +2,7 @@
 
 Reports invalid block tag names.
 
-Valid [JSDoc 3 Block Tags](http://usejsdoc.org/#block-tags) are:
+Valid [JSDoc 3 Block Tags](https://jsdoc.app/#block-tags) are:
 
 ```
 abstract

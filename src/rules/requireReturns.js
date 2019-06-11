@@ -14,14 +14,14 @@ import iterateJsdoc from '../iterateJsdoc';
 const canSkip = (utils) => {
   return utils.hasATag([
     // inheritdoc implies that all documentation is inherited
-    // see http://usejsdoc.org/tags-inheritdoc.html
+    // see https://jsdoc.app/tags-inheritdoc.html
     //
     // Abstract methods are by definition incomplete,
     // so it is not an error if it declares a return value but does not implement it.
     'abstract',
     'virtual',
 
-    // Constructors do not have a return value by definition (http://usejsdoc.org/tags-class.html)
+    // Constructors do not have a return value by definition (https://jsdoc.app/tags-class.html)
     // So we can bail out here, too.
     'class',
     'constructor',

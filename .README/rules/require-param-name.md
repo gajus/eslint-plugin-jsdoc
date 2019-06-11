@@ -4,7 +4,7 @@ Requires that all function parameters have name.
 
 > The `@param` tag requires you to specify the name of the parameter you are documenting. You can also include the parameter's type, enclosed in curly brackets, and a description of the parameter.
 >
-> [JSDoc](http://usejsdoc.org/tags-param.html#overview)
+> [JSDoc](https://jsdoc.app/tags-param.html#overview)
 
 |||
 |---|---|

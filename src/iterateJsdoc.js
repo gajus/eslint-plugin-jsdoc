@@ -160,7 +160,7 @@ const curryUtils = (
   utils.avoidDocs = (param) => {
     return param && utils.avoidDocsParamOnly() ||
 
-      // inheritdoc implies that all documentation is inherited; see http://usejsdoc.org/tags-inheritdoc.html
+      // inheritdoc implies that all documentation is inherited; see https://jsdoc.app/tags-inheritdoc.html
       utils.hasTag('inheritdoc') ||
 
       // After deprecation, the `param` parameter can be removed, but for now,
