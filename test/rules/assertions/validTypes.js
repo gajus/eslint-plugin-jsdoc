@@ -94,6 +94,20 @@ export default {
     {
       code: `
           /**
+           * @mixes module:namespace.SomeClass~
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [{
+        line: 3,
+        message: 'Syntax error in type: module:namespace.SomeClass~'
+      }]
+    },
+    {
+      code: `
+          /**
            * @callback
            */
           function quux() {
@@ -207,6 +221,26 @@ export default {
           /**
            *
            * @fires {module:namespace.SomeClass#event:ext_anevent}
+           */
+          function quux() {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @memberof module:namespace.SomeClass~
+           */
+          function quux() {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @memberof! module:namespace.SomeClass.
            */
           function quux() {
 

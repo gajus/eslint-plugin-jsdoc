@@ -4896,7 +4896,13 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
   `false` as these tags might have some indicative value without a path
   or may allow a name expressed elsewhere on the block (but sets 1 and 3 will
   always fail if empty)
-- For the special case of set 5, i.e., `@borrows <that namepath> as <this namepath>`, check that both namepaths are present and valid and ensure there is an `as ` between them.
+- For the special case of set 5, i.e., `@borrows <that namepath> as <this namepath>`,
+  check that both namepaths are present and valid and ensure there is an `as `
+  between them.
+- For the special case of `@memberof` and `@memberof!` (part of set 3), as
+   per the [specification](https://jsdoc.app/tags-memberof.html), they also
+   allow `#`, `.`, or `~` at the end (which is not allowed at the end of
+   normal paths).
 
 |||
 |---|---|
@@ -4957,6 +4963,14 @@ function quux() {
 
 }
 // Message: Syntax error in type: module:abc#event:foo-bar
+
+/**
+ * @mixes module:namespace.SomeClass~
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: module:namespace.SomeClass~
 
 /**
  * @callback
@@ -5037,6 +5051,20 @@ function quux() {
 /**
  *
  * @fires {module:namespace.SomeClass#event:ext_anevent}
+ */
+function quux() {
+
+}
+
+/**
+ * @memberof module:namespace.SomeClass~
+ */
+function quux() {
+
+}
+
+/**
+ * @memberof! module:namespace.SomeClass.
  */
 function quux() {
 

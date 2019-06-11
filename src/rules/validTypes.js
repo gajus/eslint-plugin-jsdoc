@@ -12,10 +12,25 @@ export default iterateJsdoc(({
     return;
   }
   jsdoc.tags.forEach((tag) => {
-    const validTypeParsing = function (type) {
+    const validTypeParsing = function (type, tagName) {
       try {
         parse(type);
-      } catch (error) {
+      } catch (err) {
+        let error = err;
+
+        let endChar;
+        if (tagName && ['memberof', 'memberof!'].includes(tagName)) {
+          endChar = type.slice(-1);
+          if (['#', '.', '~'].includes(endChar)) {
+            try {
+              parse(type.slice(0, -1));
+              error = {};
+            } catch (memberofError) {
+              error = memberofError;
+            }
+          }
+        }
+
         if (error.name === 'SyntaxError') {
           report('Syntax error in type: ' + type, null, tag);
 
@@ -44,7 +59,7 @@ export default iterateJsdoc(({
       if (utils.passesEmptyNamepathCheck(tag)) {
         return;
       }
-      validTypeParsing(tag.name);
+      validTypeParsing(tag.name, tag.tag);
     } else if (tag.type && utils.isTagWithType(tag.tag)) {
       validTypeParsing(tag.type);
     }
