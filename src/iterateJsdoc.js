@@ -46,6 +46,7 @@ const curryUtils = (
   allowAugmentsExtendsWithoutParam,
   checkSeesForNamepaths,
   forceRequireReturn,
+  forceReturnsWithAsync,
   avoidExampleOnConstructors,
   ancestors,
   sourceCode,
@@ -199,8 +200,12 @@ const curryUtils = (
     return jsdocUtils.hasDefinedTypeReturnTag(tag);
   };
 
-  utils.hasReturnValue = () => {
-    return jsdocUtils.hasReturnValue(node, context);
+  utils.hasReturnValue = (ignoreAsync = false) => {
+    return jsdocUtils.hasReturnValue(node, context, ignoreAsync);
+  };
+
+  utils.isAsync = () => {
+    return node.async;
   };
 
   utils.getTags = (tagName) => {
@@ -211,6 +216,10 @@ const curryUtils = (
 
   utils.isForceRequireReturn = () => {
     return forceRequireReturn;
+  };
+
+  utils.isForceReturnsWithAsync = () => {
+    return forceReturnsWithAsync;
   };
 
   utils.filterTags = (filter) => {
@@ -312,6 +321,7 @@ export default (iterator, opts = {}) => {
 
       // `require-returns` only
       const forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
+      const forceReturnsWithAsync = Boolean(_.get(context, 'settings.jsdoc.forceReturnsWithAsync'));
 
       // `require-example` only
       const avoidExampleOnConstructors = Boolean(_.get(context, 'settings.jsdoc.avoidExampleOnConstructors'));
@@ -388,6 +398,7 @@ export default (iterator, opts = {}) => {
           allowAugmentsExtendsWithoutParam,
           checkSeesForNamepaths,
           forceRequireReturn,
+          forceReturnsWithAsync,
           avoidExampleOnConstructors,
           ancestors,
           sourceCode

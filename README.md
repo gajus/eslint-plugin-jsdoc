@@ -351,6 +351,10 @@ only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
   `@returns` documentation regardless of implicit or explicit `return`'s
   in the function. May be desired to flag that a project is aware of an
   `undefined`/`void` return.
+* `settings.jsdoc.forceReturnsWithAsync` - Set to `true` to always insist on
+  `@returns` documentation regardless of implicit or explicit `return`'s
+  in an async function. May be desired to flag that a project is aware of an
+  `Promise<void>` return.
 
 <a name="eslint-plugin-jsdoc-settings-settings-to-configure-require-example"></a>
 ### Settings to Configure <code>require-example</code>
@@ -4569,7 +4573,7 @@ Requires returns are documented.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 |Aliases|`return`|
-|Settings|`forceRequireReturn`|
+|Settings|`forceRequireReturn`, `forceReturnsWithAsync`|
 
 The following patterns are considered problems:
 
@@ -4616,27 +4620,17 @@ function quux (foo) {
 /**
  *
  */
-async function quux() {}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-const quux = async function () {}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-const quux = async () => {}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
 function quux () {
 }
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+async function quux () {
+}
+// Settings: {"jsdoc":{"forceReturnsWithAsync":true}}
 // Message: Missing JSDoc @returns declaration.
 
 const language = {
@@ -4856,6 +4850,35 @@ function quux () {
   return;
 }
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
+
+/**
+ * @returns {Promise}
+ */
+async function quux () {
+}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+
+/**
+ * @returns {Promise}
+ */
+async function quux () {
+}
+// Settings: {"jsdoc":{"forceReturnsWithAsync":true}}
+
+/**
+ *
+ */
+async function quux () {}
+
+/**
+ *
+ */
+const quux = async function () {}
+
+/**
+ *
+ */
+const quux = async () => {}
 
 /** foo class */
 class foo {
