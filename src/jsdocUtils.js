@@ -372,18 +372,18 @@ const lookupTable = {
     is (node) {
       return node.type === 'FunctionExpression';
     },
-    check (node, context) {
-      return node.async || lookupTable.BlockStatement.check(node.body, context);
+    check (node, context, ignoreAsync) {
+      return !ignoreAsync && node.async || lookupTable.BlockStatement.check(node.body, context);
     }
   },
   ArrowFunctionExpression: {
     is (node) {
       return node.type === 'ArrowFunctionExpression';
     },
-    check (node, context) {
+    check (node, context, ignoreAsync) {
       // An expression always has a return value.
       return node.expression ||
-        node.async ||
+        !ignoreAsync && node.async ||
         lookupTable.BlockStatement.check(node.body, context);
     }
   },
@@ -391,8 +391,8 @@ const lookupTable = {
     is (node) {
       return node.type === 'FunctionDeclaration';
     },
-    check (node, context) {
-      return node.async || lookupTable.BlockStatement.check(node.body, context);
+    check (node, context, ignoreAsync) {
+      return !ignoreAsync && node.async || lookupTable.BlockStatement.check(node.body, context);
     }
   },
   '@default': {
@@ -431,14 +431,17 @@ const lookupTable = {
  *
  * @param {Object} node
  *   the node which should be checked.
+ * @param {Object} context
+ * @param {boolean} ignoreAsync
+ *   ignore implicit async return.
  * @returns {boolean}
  *   true in case the code returns a return value
  */
-const hasReturnValue = (node, context) => {
+const hasReturnValue = (node, context, ignoreAsync) => {
   // Loop through all of our entry points
   for (const item of ENTRY_POINTS) {
     if (lookupTable[item].is(node)) {
-      return lookupTable[item].check(node, context);
+      return lookupTable[item].check(node, context, ignoreAsync);
     }
   }
 
