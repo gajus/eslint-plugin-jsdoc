@@ -26,12 +26,12 @@
     "gitdown": "^2.5.8",
     "glob": "^7.1.4",
     "globby": "^9.2.0",
-    "husky": "^2.4.0",
+    "husky": "^2.4.1",
     "marked": "^0.6.2",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "semantic-release": "^15.13.16",
-    "typescript": "^3.5.1"
+    "typescript": "^3.5.2"
   },
   "engines": {
     "node": ">=6"
