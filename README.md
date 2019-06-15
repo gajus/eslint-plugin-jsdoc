@@ -1227,7 +1227,7 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"additionalTagNames":{"customTags":["baz","bar"]}}}
 
-/**
+/** 
  * @abstract
  * @access
  * @alias
@@ -4635,14 +4635,15 @@ const quux = async function () {}
 /**
  *
  */
-const quux = async () => {}
+async function quux () {
+}
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
 // Message: Missing JSDoc @returns declaration.
 
 /**
  *
  */
-async function quux () {
+function quux () {
 }
 // Settings: {"jsdoc":{"forceReturnsWithAsync":true}}
 // Message: Missing JSDoc @returns declaration.
@@ -5024,7 +5025,7 @@ function quux() {
 
 }
 // Settings: {"jsdoc":{"allowEmptyNamepaths":false}}
-// Message: Syntax error in type:
+// Message: Syntax error in type: 
 ````
 
 The following patterns are not considered problems:
