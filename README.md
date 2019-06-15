@@ -4638,10 +4638,8 @@ const quux = async function () {}
 /**
  *
  */
-async function quux () {
-}
+const quux = async () => {}
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
-// Options: [{"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -4649,7 +4647,7 @@ async function quux () {
  */
 function quux () {
 }
-// Options: [{"forceReturnsWithAsync":true}]
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
 // Message: Missing JSDoc @returns declaration.
 
 const language = {
@@ -4667,7 +4665,7 @@ const language = {
  */
 async function quux () {
 }
-// Settings: {"jsdoc":{"forceReturnsWithAsync":true}}
+// Options: [{"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 ````
 
