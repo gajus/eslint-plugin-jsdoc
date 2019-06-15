@@ -353,7 +353,7 @@ only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
   `undefined`/`void` return.
 * `settings.jsdoc.forceReturnsWithAsync` - Set to `true` to always insist on
   `@returns` documentation regardless of implicit or explicit `return`'s
-  in an async function. May be desired to flag that a project is aware of an
+  in an async function. May be desired to flag that a project is aware of a
   `Promise<void>` return.
 
 <a name="eslint-plugin-jsdoc-settings-settings-to-configure-require-example"></a>
@@ -1227,7 +1227,7 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"additionalTagNames":{"customTags":["baz","bar"]}}}
 
-/** 
+/**
  * @abstract
  * @access
  * @alias
@@ -4620,8 +4620,22 @@ function quux (foo) {
 /**
  *
  */
-function quux () {
+async function quux() {
 }
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+const quux = async function () {}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+const quux = async () => {}
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
 // Message: Missing JSDoc @returns declaration.
 
@@ -4641,6 +4655,14 @@ const language = {
     return this._name;
   }
 }
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+async function quux () {
+}
+// Settings: {"jsdoc":{"forceReturnsWithAsync":true}}
 // Message: Missing JSDoc @returns declaration.
 ````
 
@@ -5002,7 +5024,7 @@ function quux() {
 
 }
 // Settings: {"jsdoc":{"allowEmptyNamepaths":false}}
-// Message: Syntax error in type: 
+// Message: Syntax error in type:
 ````
 
 The following patterns are not considered problems:

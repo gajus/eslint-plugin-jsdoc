@@ -298,7 +298,7 @@ only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
   `undefined`/`void` return.
 * `settings.jsdoc.forceReturnsWithAsync` - Set to `true` to always insist on
   `@returns` documentation regardless of implicit or explicit `return`'s
-  in an async function. May be desired to flag that a project is aware of an
+  in an async function. May be desired to flag that a project is aware of a
   `Promise<void>` return.
 
 ### Settings to Configure `require-example`

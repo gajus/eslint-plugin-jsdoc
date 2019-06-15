@@ -90,7 +90,7 @@ export default {
           /**
            *
            */
-          function quux () {
+          async function quux() {
           }
       `,
       errors: [
@@ -99,6 +99,31 @@ export default {
           message: 'Missing JSDoc @returns declaration.'
         }
       ],
+      parserOptions: {
+        ecmaVersion: 8
+      },
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          const quux = async function () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ],
+      parserOptions: {
+        ecmaVersion: 8
+      },
       settings: {
         jsdoc: {
           forceRequireReturn: true
@@ -124,6 +149,26 @@ export default {
       },
       settings: {
         jsdoc: {
+          forceRequireReturn: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ],
+      settings: {
+        jsdoc: {
           forceReturnsWithAsync: true
         }
       }
@@ -145,6 +190,29 @@ export default {
           message: 'Missing JSDoc @returns declaration.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          async function quux () {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ],
+      parserOptions: {
+        ecmaVersion: 8
+      },
+      settings: {
+        jsdoc: {
+          forceReturnsWithAsync: true
+        }
+      }
     }
   ],
   valid: [
