@@ -27,27 +27,15 @@ const curryUtils = (
   jsdoc,
   {
     tagNamePreference,
-    exampleCodeRegex,
-    rejectExampleCodeRegex,
     additionalTagNames,
-    baseConfig,
-    configFile,
-    captionRequired,
-    matchingFileName,
-    eslintrcForExamples,
-    allowInlineConfig,
     allowEmptyNamepaths,
-    reportUnusedDisableDirectives,
-    noDefaultExampleRules,
     overrideReplacesDocs,
     implementsReplacesDocs,
     augmentsExtendsReplacesDocs,
     allowOverrideWithoutParam,
     allowImplementsWithoutParam,
     allowAugmentsExtendsWithoutParam,
-    checkSeesForNamepaths,
-    forceRequireReturn,
-    avoidExampleOnConstructors
+    checkSeesForNamepaths
   },
   ancestors,
   sourceCode,
@@ -83,18 +71,6 @@ const curryUtils = (
     return jsdocUtils.getPreferredTagName(name, tagNamePreference);
   };
 
-  utils.getExampleCodeRegex = () => {
-    return exampleCodeRegex;
-  };
-
-  utils.getRejectExampleCodeRegex = () => {
-    return rejectExampleCodeRegex;
-  };
-
-  utils.getMatchingFileName = () => {
-    return matchingFileName;
-  };
-
   utils.isValidTag = (name) => {
     return jsdocUtils.isValidTag(name, additionalTagNames);
   };
@@ -105,34 +81,6 @@ const curryUtils = (
 
   utils.hasTag = (name) => {
     return jsdocUtils.hasTag(jsdoc, name);
-  };
-
-  utils.useEslintrcForExamples = () => {
-    return eslintrcForExamples;
-  };
-
-  utils.allowInlineConfig = () => {
-    return allowInlineConfig;
-  };
-
-  utils.reportUnusedDisableDirectives = () => {
-    return reportUnusedDisableDirectives;
-  };
-
-  utils.hasNoDefaultExampleRules = () => {
-    return noDefaultExampleRules;
-  };
-
-  utils.getBaseConfig = () => {
-    return baseConfig;
-  };
-
-  utils.getConfigFile = () => {
-    return configFile;
-  };
-
-  utils.isCaptionRequired = () => {
-    return captionRequired;
   };
 
   // These settings are deprecated and may be removed in the future along with this method.
@@ -188,10 +136,6 @@ const curryUtils = (
     return jsdocUtils.isTagWithType(tagName);
   };
 
-  utils.avoidExampleOnConstructors = () => {
-    return avoidExampleOnConstructors;
-  };
-
   utils.passesEmptyNamepathCheck = (tag) => {
     return !tag.name && allowEmptyNamepaths &&
       jsdocUtils.isPotentiallyEmptyNamepathTag(tag.tag);
@@ -209,10 +153,6 @@ const curryUtils = (
     return utils.filterTags((item) => {
       return item.tag === tagName;
     });
-  };
-
-  utils.isForceRequireReturn = () => {
-    return forceRequireReturn;
   };
 
   utils.filterTags = (filter) => {
@@ -310,7 +250,14 @@ export {
   parseComment
 };
 
-export default (iterator, opts = {}) => {
+/**
+ * @typedef {ReturnType<typeof curryUtils>} Utils
+ * @typedef {ReturnType<typeof getSettings>} Settings
+ *
+ * @param {(arg: {utils: Utils, settings: Settings}) => any} iterator
+ * @param {{returns?: any}} opts
+ */
+export default function iterateJsdoc (iterator, opts = {}) {
   return {
     /**
      * The entrypoint for the JSDoc rule.
@@ -396,6 +343,7 @@ export default (iterator, opts = {}) => {
           jsdocNode,
           node,
           report,
+          settings,
           sourceCode,
           utils
         });
@@ -424,4 +372,4 @@ export default (iterator, opts = {}) => {
     },
     meta: opts.meta
   };
-};
+}

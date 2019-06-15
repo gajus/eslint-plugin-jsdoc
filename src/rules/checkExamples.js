@@ -15,17 +15,19 @@ const countChars = (str, ch) => {
 
 export default iterateJsdoc(({
   report,
-  utils
+  utils,
+  settings
 }) => {
-  let exampleCodeRegex = utils.getExampleCodeRegex();
-  let rejectExampleCodeRegex = utils.getRejectExampleCodeRegex();
-  const noDefaultExampleRules = utils.hasNoDefaultExampleRules();
-  const eslintrcForExamples = utils.useEslintrcForExamples();
-  const filename = utils.getMatchingFileName();
-  const baseConfig = utils.getBaseConfig();
-  const configFile = utils.getConfigFile();
-  const allowInlineConfig = utils.allowInlineConfig();
-  const reportUnusedDisableDirectives = utils.reportUnusedDisableDirectives();
+  let {exampleCodeRegex, rejectExampleCodeRegex} = settings;
+  const {
+    noDefaultExampleRules,
+    eslintrcForExamples,
+    matchingFileName: filename,
+    baseConfig,
+    configFile,
+    allowInlineConfig,
+    reportUnusedDisableDirectives
+  } = settings;
 
   // Make this configurable?
   const rulePaths = [];
@@ -69,7 +71,7 @@ export default iterateJsdoc(({
     let source = tag.source.slice(initialTagLength);
     const match = source.match(hasCaptionRegex);
 
-    if (utils.isCaptionRequired() && !match) {
+    if (settings.captionRequired && !match) {
       report('Caption is expected for examples.', null, tag);
     }
 
