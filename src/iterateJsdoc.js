@@ -25,28 +25,30 @@ const parseComment = (commentNode, indent) => {
 const curryUtils = (
   node,
   jsdoc,
-  tagNamePreference,
-  exampleCodeRegex,
-  rejectExampleCodeRegex,
-  additionalTagNames,
-  baseConfig,
-  configFile,
-  captionRequired,
-  matchingFileName,
-  eslintrcForExamples,
-  allowInlineConfig,
-  allowEmptyNamepaths,
-  reportUnusedDisableDirectives,
-  noDefaultExampleRules,
-  overrideReplacesDocs,
-  implementsReplacesDocs,
-  augmentsExtendsReplacesDocs,
-  allowOverrideWithoutParam,
-  allowImplementsWithoutParam,
-  allowAugmentsExtendsWithoutParam,
-  checkSeesForNamepaths,
-  forceRequireReturn,
-  avoidExampleOnConstructors,
+  {
+    tagNamePreference,
+    exampleCodeRegex,
+    rejectExampleCodeRegex,
+    additionalTagNames,
+    baseConfig,
+    configFile,
+    captionRequired,
+    matchingFileName,
+    eslintrcForExamples,
+    allowInlineConfig,
+    allowEmptyNamepaths,
+    reportUnusedDisableDirectives,
+    noDefaultExampleRules,
+    overrideReplacesDocs,
+    implementsReplacesDocs,
+    augmentsExtendsReplacesDocs,
+    allowOverrideWithoutParam,
+    allowImplementsWithoutParam,
+    allowAugmentsExtendsWithoutParam,
+    checkSeesForNamepaths,
+    forceRequireReturn,
+    avoidExampleOnConstructors
+  },
   ancestors,
   sourceCode,
   context
@@ -257,6 +259,53 @@ const curryUtils = (
   return utils;
 };
 
+const getSettings = (context) => {
+  const settings = {};
+
+  // All rules
+  settings.ignorePrivate = Boolean(_.get(context, 'settings.jsdoc.ignorePrivate'));
+
+  // `check-tag-names` and many require/param rules
+  settings.tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
+
+  // `check-tag-names` only
+  settings.additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
+
+  // `check-examples` only
+  settings.exampleCodeRegex = _.get(context, 'settings.jsdoc.exampleCodeRegex') || null;
+  settings.rejectExampleCodeRegex = _.get(context, 'settings.jsdoc.rejectExampleCodeRegex') || null;
+  settings.matchingFileName = _.get(context, 'settings.jsdoc.matchingFileName') || null;
+  settings.baseConfig = _.get(context, 'settings.jsdoc.baseConfig') || {};
+  settings.configFile = _.get(context, 'settings.jsdoc.configFile');
+  settings.eslintrcForExamples = _.get(context, 'settings.jsdoc.eslintrcForExamples') !== false;
+  settings.allowInlineConfig = _.get(context, 'settings.jsdoc.allowInlineConfig') !== false;
+  settings.reportUnusedDisableDirectives = _.get(context, 'settings.jsdoc.reportUnusedDisableDirectives') !== false;
+  settings.captionRequired = Boolean(_.get(context, 'settings.jsdoc.captionRequired'));
+  settings.noDefaultExampleRules = Boolean(_.get(context, 'settings.jsdoc.noDefaultExampleRules'));
+
+  // `require-param`, `require-description`, `require-example`, `require-returns`
+  settings.overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
+  settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
+  settings.augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
+
+  // `require-param` only (deprecated)
+  settings.allowOverrideWithoutParam = _.get(context, 'settings.jsdoc.allowOverrideWithoutParam');
+  settings.allowImplementsWithoutParam = _.get(context, 'settings.jsdoc.allowImplementsWithoutParam');
+  settings.allowAugmentsExtendsWithoutParam = _.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam');
+
+  // `valid-types` only
+  settings.allowEmptyNamepaths = _.get(context, 'settings.jsdoc.allowEmptyNamepaths') !== false;
+  settings.checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
+
+  // `require-returns` only
+  settings.forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
+
+  // `require-example` only
+  settings.avoidExampleOnConstructors = Boolean(_.get(context, 'settings.jsdoc.avoidExampleOnConstructors'));
+
+  return settings;
+};
+
 export {
   parseComment
 };
@@ -275,46 +324,7 @@ export default (iterator, opts = {}) => {
     create (context) {
       const sourceCode = context.getSourceCode();
 
-      // All rules
-      const ignorePrivate = Boolean(_.get(context, 'settings.jsdoc.ignorePrivate'));
-
-      // `check-tag-names` and many require/param rules
-      const tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
-
-      // `check-tag-names` only
-      const additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
-
-      // `check-examples` only
-      const exampleCodeRegex = _.get(context, 'settings.jsdoc.exampleCodeRegex') || null;
-      const rejectExampleCodeRegex = _.get(context, 'settings.jsdoc.rejectExampleCodeRegex') || null;
-      const matchingFileName = _.get(context, 'settings.jsdoc.matchingFileName') || null;
-      const baseConfig = _.get(context, 'settings.jsdoc.baseConfig') || {};
-      const configFile = _.get(context, 'settings.jsdoc.configFile');
-      const eslintrcForExamples = _.get(context, 'settings.jsdoc.eslintrcForExamples') !== false;
-      const allowInlineConfig = _.get(context, 'settings.jsdoc.allowInlineConfig') !== false;
-      const reportUnusedDisableDirectives = _.get(context, 'settings.jsdoc.reportUnusedDisableDirectives') !== false;
-      const captionRequired = Boolean(_.get(context, 'settings.jsdoc.captionRequired'));
-      const noDefaultExampleRules = Boolean(_.get(context, 'settings.jsdoc.noDefaultExampleRules'));
-
-      // `require-param`, `require-description`, `require-example`, `require-returns`
-      const overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
-      const implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
-      const augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
-
-      // `require-param` only (deprecated)
-      const allowOverrideWithoutParam = _.get(context, 'settings.jsdoc.allowOverrideWithoutParam');
-      const allowImplementsWithoutParam = _.get(context, 'settings.jsdoc.allowImplementsWithoutParam');
-      const allowAugmentsExtendsWithoutParam = _.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam');
-
-      // `valid-types` only
-      const allowEmptyNamepaths = _.get(context, 'settings.jsdoc.allowEmptyNamepaths') !== false;
-      const checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
-
-      // `require-returns` only
-      const forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
-
-      // `require-example` only
-      const avoidExampleOnConstructors = Boolean(_.get(context, 'settings.jsdoc.avoidExampleOnConstructors'));
+      const settings = getSettings(context);
 
       const checkJsdoc = (node) => {
         const jsdocNode = getJSDocComment(sourceCode, node);
@@ -367,34 +377,13 @@ export default (iterator, opts = {}) => {
         const utils = curryUtils(
           node,
           jsdoc,
-          tagNamePreference,
-          exampleCodeRegex,
-          rejectExampleCodeRegex,
-          additionalTagNames,
-          baseConfig,
-          configFile,
-          captionRequired,
-          matchingFileName,
-          eslintrcForExamples,
-          allowInlineConfig,
-          allowEmptyNamepaths,
-          reportUnusedDisableDirectives,
-          noDefaultExampleRules,
-          overrideReplacesDocs,
-          implementsReplacesDocs,
-          augmentsExtendsReplacesDocs,
-          allowOverrideWithoutParam,
-          allowImplementsWithoutParam,
-          allowAugmentsExtendsWithoutParam,
-          checkSeesForNamepaths,
-          forceRequireReturn,
-          avoidExampleOnConstructors,
+          settings,
           ancestors,
           sourceCode
         );
 
         if (
-          ignorePrivate &&
+          settings.ignorePrivate &&
           utils.hasTag('private')
         ) {
           return;
