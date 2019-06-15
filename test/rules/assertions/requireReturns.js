@@ -135,8 +135,7 @@ export default {
           /**
            *
            */
-          async function quux () {
-          }
+          const quux = async () => {}
       `,
       errors: [
         {
@@ -169,7 +168,7 @@ export default {
       ],
       settings: {
         jsdoc: {
-          forceReturnsWithAsync: true
+          forceRequireReturn: true
         }
       }
     },
@@ -205,13 +204,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.'
         }
       ],
+      options: [{
+        forceReturnsWithAsync: true
+      }],
       parserOptions: {
         ecmaVersion: 8
-      },
-      settings: {
-        jsdoc: {
-          forceReturnsWithAsync: true
-        }
       }
     }
   ],
@@ -552,13 +549,11 @@ export default {
           async function quux () {
           }
       `,
+      options: [{
+        forceReturnsWithAsync: true
+      }],
       parserOptions: {
         ecmaVersion: 8
-      },
-      settings: {
-        jsdoc: {
-          forceReturnsWithAsync: true
-        }
       }
     },
     {

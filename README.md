@@ -351,10 +351,6 @@ only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
   `@returns` documentation regardless of implicit or explicit `return`'s
   in the function. May be desired to flag that a project is aware of an
   `undefined`/`void` return.
-* `settings.jsdoc.forceReturnsWithAsync` - Set to `true` to always insist on
-  `@returns` documentation regardless of implicit or explicit `return`'s
-  in an async function. May be desired to flag that a project is aware of a
-  `Promise<void>` return.
 
 <a name="eslint-plugin-jsdoc-settings-settings-to-configure-require-example"></a>
 ### Settings to Configure <code>require-example</code>
@@ -4568,12 +4564,19 @@ function quux () {
 
 Requires returns are documented.
 
+By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` as true on the options object. This maybe useful as an `async` function will always return a Promise, even if the Promise returns void.
+
+```js
+'jsdoc/require-jsdoc': ['error', {forceReturnsWithAsync: true}]
+```
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 |Aliases|`return`|
-|Settings|`forceRequireReturn`, `forceReturnsWithAsync`|
+|Settings|`forceRequireReturn`|
+|Options|`forceReturnsWithAsync`|
 
 The following patterns are considered problems:
 
@@ -4638,6 +4641,7 @@ const quux = async function () {}
 async function quux () {
 }
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -4645,7 +4649,7 @@ async function quux () {
  */
 function quux () {
 }
-// Settings: {"jsdoc":{"forceReturnsWithAsync":true}}
+// Options: [{"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 const language = {
@@ -4886,7 +4890,7 @@ async function quux () {
  */
 async function quux () {
 }
-// Settings: {"jsdoc":{"forceReturnsWithAsync":true}}
+// Options: [{"forceReturnsWithAsync":true}]
 
 /**
  *

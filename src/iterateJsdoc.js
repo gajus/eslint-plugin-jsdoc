@@ -46,7 +46,6 @@ const curryUtils = (
   allowAugmentsExtendsWithoutParam,
   checkSeesForNamepaths,
   forceRequireReturn,
-  forceReturnsWithAsync,
   avoidExampleOnConstructors,
   ancestors,
   sourceCode,
@@ -218,10 +217,6 @@ const curryUtils = (
     return forceRequireReturn;
   };
 
-  utils.isForceReturnsWithAsync = () => {
-    return forceReturnsWithAsync;
-  };
-
   utils.filterTags = (filter) => {
     return (jsdoc.tags || []).filter(filter);
   };
@@ -321,7 +316,6 @@ export default (iterator, opts = {}) => {
 
       // `require-returns` only
       const forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
-      const forceReturnsWithAsync = Boolean(_.get(context, 'settings.jsdoc.forceReturnsWithAsync'));
 
       // `require-example` only
       const avoidExampleOnConstructors = Boolean(_.get(context, 'settings.jsdoc.avoidExampleOnConstructors'));
@@ -398,7 +392,6 @@ export default (iterator, opts = {}) => {
           allowAugmentsExtendsWithoutParam,
           checkSeesForNamepaths,
           forceRequireReturn,
-          forceReturnsWithAsync,
           avoidExampleOnConstructors,
           ancestors,
           sourceCode
