@@ -329,7 +329,7 @@ export default (iterator, opts = {}) => {
 
         const jsdoc = parseComment(jsdocNode, indent);
 
-        const report = (message, fixer = null, jsdocLoc = null, data = null) => {
+        const report = (message, fix = null, jsdocLoc = null, data = null) => {
           let loc;
 
           if (jsdocLoc) {
@@ -346,22 +346,14 @@ export default (iterator, opts = {}) => {
               loc.start.column = colNumber;
             }
           }
-          if (fixer === null) {
-            context.report({
-              data,
-              loc,
-              message,
-              node: jsdocNode
-            });
-          } else {
-            context.report({
-              data,
-              fix: fixer,
-              loc,
-              message,
-              node: jsdocNode
-            });
-          }
+
+          context.report({
+            data,
+            fix,
+            loc,
+            message,
+            node: jsdocNode
+          });
         };
 
         const utils = curryUtils(
