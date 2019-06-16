@@ -43,6 +43,7 @@ const canSkip = (utils) => {
 export default iterateJsdoc(({
   report,
   utils,
+  context,
   settings
 }) => {
   // A preflight check. We do not need to run a deep check
@@ -50,6 +51,8 @@ export default iterateJsdoc(({
   if (canSkip(utils)) {
     return;
   }
+
+  const options = context.options[0] || {};
 
   const tagName = utils.getPreferredTagName('returns');
   const tags = utils.getTags(tagName);
@@ -62,7 +65,7 @@ export default iterateJsdoc(({
   const [tag] = tags;
   const missingReturnTag = typeof tag === 'undefined' || tag === null;
   if (missingReturnTag &&
-    (utils.hasReturnValue() || settings.forceRequireReturn)
+    ((utils.isAsync() && !utils.hasReturnValue(true) ? Boolean(options.forceReturnsWithAsync) : utils.hasReturnValue()) || settings.forceRequireReturn)
   ) {
     report('Missing JSDoc @' + tagName + ' declaration.');
   }

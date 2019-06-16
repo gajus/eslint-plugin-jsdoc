@@ -90,7 +90,8 @@ export default {
           /**
            *
            */
-          async function quux() {}
+          async function quux() {
+          }
       `,
       errors: [
         {
@@ -100,6 +101,11 @@ export default {
       ],
       parserOptions: {
         ecmaVersion: 8
+      },
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
       }
     },
     {
@@ -117,6 +123,11 @@ export default {
       ],
       parserOptions: {
         ecmaVersion: 8
+      },
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
       }
     },
     {
@@ -134,6 +145,33 @@ export default {
       ],
       parserOptions: {
         ecmaVersion: 8
+      },
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+           async function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ],
+      parserOptions: {
+        ecmaVersion: 8
+      },
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
       }
     },
     {
@@ -173,6 +211,27 @@ export default {
           message: 'Missing JSDoc @returns declaration.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          async function quux () {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ],
+      options: [{
+        forceReturnsWithAsync: true
+      }],
+      parserOptions: {
+        ecmaVersion: 8
+      }
     }
   ],
   valid: [
@@ -497,6 +556,71 @@ export default {
     },
     {
       code: `
+          /**
+           * @returns {Promise}
+           */
+          async function quux () {
+          }
+      `,
+      parserOptions: {
+        ecmaVersion: 8
+      },
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @returns {Promise}
+           */
+          async function quux () {
+          }
+      `,
+      options: [{
+        forceReturnsWithAsync: true
+      }],
+      parserOptions: {
+        ecmaVersion: 8
+      }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          async function quux () {}
+      `,
+      parserOptions: {
+        ecmaVersion: 8
+      }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          const quux = async function () {}
+      `,
+      parserOptions: {
+        ecmaVersion: 8
+      }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          const quux = async () => {}
+      `,
+      parserOptions: {
+        ecmaVersion: 8
+      }
+    },
+    {
+      code: `
       /** foo class */
       class foo {
         /** foo constructor */
@@ -511,6 +635,18 @@ export default {
       parserOptions: {
         sourceType: 'module'
       }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+          }
+      `,
+      options: [{
+        forceReturnsWithAsync: true
+      }]
     }
   ]
 };

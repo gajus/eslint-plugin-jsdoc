@@ -145,8 +145,12 @@ const curryUtils = (
     return jsdocUtils.hasDefinedTypeReturnTag(tag);
   };
 
-  utils.hasReturnValue = () => {
-    return jsdocUtils.hasReturnValue(node, context);
+  utils.hasReturnValue = (ignoreAsync = false) => {
+    return jsdocUtils.hasReturnValue(node, context, ignoreAsync);
+  };
+
+  utils.isAsync = () => {
+    return node.async;
   };
 
   utils.getTags = (tagName) => {
