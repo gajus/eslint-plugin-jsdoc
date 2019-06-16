@@ -489,6 +489,14 @@ export default {
     },
     {
       code: `
+          /** @type {RequestHandler} */
+          function quux (req, res , next) {
+            return;
+          }
+      `
+    },
+    {
+      code: `
       /** foo class */
       class foo {
         /** foo constructor */

@@ -4252,6 +4252,9 @@ function quux (foo) {
 // issue 182: optional chaining
 /** @const {boolean} test */
 const test = something?.find(_ => _)
+
+/** @type {RequestHandler} */
+function foo(req, res, next) {}
 ````
 
 
@@ -4856,6 +4859,11 @@ function quux () {
   return;
 }
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
+
+/** @type {RequestHandler} */
+function quux (req, res , next) {
+  return;
+}
 
 /** foo class */
 class foo {

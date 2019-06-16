@@ -12,6 +12,11 @@ export default iterateJsdoc(({
     return;
   }
 
+  // Param type is specified by type in @type
+  if (utils.hasTag('type')) {
+    return;
+  }
+
   functionParameterNames.some((functionParameterName, index) => {
     const jsdocParameterName = jsdocParameterNames[index];
 

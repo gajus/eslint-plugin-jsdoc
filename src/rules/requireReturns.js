@@ -26,6 +26,9 @@ const canSkip = (utils) => {
     'class',
     'constructor',
 
+    // Return type is specified by type in @type
+    'type',
+
     // This seems to imply a class as well
     'interface'
   ]) ||
