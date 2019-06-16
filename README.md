@@ -4564,7 +4564,7 @@ function quux () {
 
 Requires returns are documented.
 
-By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` as true on the options object. This maybe useful as an `async` function will always return a Promise, even if the Promise returns void.
+By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` as true on the options object. This may be useful as an `async` function will always return a Promise, even if the Promise returns void.
 
 ```js
 'jsdoc/require-jsdoc': ['error', {forceReturnsWithAsync: true}]
@@ -4639,6 +4639,13 @@ const quux = async function () {}
  *
  */
 const quux = async () => {}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+*
+*/
+async function quux () {}
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
 // Message: Missing JSDoc @returns declaration.
 
@@ -4915,6 +4922,13 @@ class foo {
 }
 
 export default foo;
+
+/**
+ *
+ */
+function quux () {
+}
+// Options: [{"forceReturnsWithAsync":true}]
 ````
 
 

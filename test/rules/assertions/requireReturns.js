@@ -157,6 +157,28 @@ export default {
           /**
            *
            */
+           async function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.'
+        }
+      ],
+      parserOptions: {
+        ecmaVersion: 8
+      },
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           *
+           */
           function quux () {
           }
       `,
@@ -605,6 +627,18 @@ export default {
       parserOptions: {
         sourceType: 'module'
       }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+          }
+      `,
+      options: [{
+        forceReturnsWithAsync: true
+      }]
     }
   ]
 };
