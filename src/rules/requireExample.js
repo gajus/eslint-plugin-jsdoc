@@ -4,7 +4,8 @@ import iterateJsdoc from '../iterateJsdoc';
 export default iterateJsdoc(({
   jsdoc,
   report,
-  utils
+  utils,
+  settings
 }) => {
   if (utils.avoidDocs()) {
     return;
@@ -16,7 +17,7 @@ export default iterateJsdoc(({
     tag: targetTagName
   });
 
-  if (utils.avoidExampleOnConstructors() && (
+  if (settings.avoidExampleOnConstructors && (
     utils.hasATag([
       'class',
       'constructor'

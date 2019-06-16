@@ -39,7 +39,8 @@ const canSkip = (utils) => {
 
 export default iterateJsdoc(({
   report,
-  utils
+  utils,
+  settings
 }) => {
   // A preflight check. We do not need to run a deep check
   // in case the @returns comment is optional or undefined.
@@ -58,7 +59,7 @@ export default iterateJsdoc(({
   const [tag] = tags;
   const missingReturnTag = typeof tag === 'undefined' || tag === null;
   if (missingReturnTag &&
-    (utils.hasReturnValue() || utils.isForceRequireReturn())
+    (utils.hasReturnValue() || settings.forceRequireReturn)
   ) {
     report('Missing JSDoc @' + tagName + ' declaration.');
   }
