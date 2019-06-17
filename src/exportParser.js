@@ -184,15 +184,20 @@ const initVariables = function (node, globals, opts) {
 };
 
 // Populates variable maps using AST
-const mapVariables = function (node, globals) {
+const mapVariables = function (node, globals, opt) {
+  const opts = opt || {};
   switch (node.type) {
   case 'Program': {
-    node.body.forEach((childNode) => {
-      mapVariables(childNode, globals);
-    });
+    if (opts.ancestorsOnly) {
+      node.body.forEach((childNode) => {
+        mapVariables(childNode, globals, opts);
+      });
+    } else {
+      return false;
+    }
     break;
   } case 'ExpressionStatement': {
-    mapVariables(node.expression, globals);
+    mapVariables(node.expression, globals, opts);
     break;
   } case 'AssignmentExpression': {
     createSymbol(node.left, globals, node.right);
@@ -221,7 +226,7 @@ const mapVariables = function (node, globals) {
       }
     }
     node.specifiers.forEach((specifier) => {
-      mapVariables(specifier, globals);
+      mapVariables(specifier, globals, opts);
     });
     break;
   } case 'ExportSpecifier': {
@@ -233,8 +238,12 @@ const mapVariables = function (node, globals) {
   } case 'ClassDeclaration': {
     createSymbol(node.id, globals, node.body, globals);
     break;
+  } default: {
+    return false;
   }
   }
+
+  return true;
 };
 
 const findNode = function (node, block, cache) {
@@ -300,12 +309,25 @@ const isNodeExported = function (node, globals, opt) {
   return false;
 };
 
-const parse = function (ast, opt) {
+const parseRecursive = function (node, globalVars, opts) {
+  // Iterate from top using recursion - stop at first processed node from top
+  if (node.parent) {
+    if (parseRecursive(node.parent, globalVars, opts)) {
+      return true;
+    }
+  }
+
+  return mapVariables(node, globalVars);
+};
+
+const parse = function (ast, node, opt) {
   const opts = opt || {
+    ancestorsOnly: false,
     exports: true,
     initModuleExports: true,
     initWindow: true
   };
+
   const globalVars = createNode();
   if (opts.initModuleExports) {
     globalVars.props.module = createNode();
@@ -315,8 +337,13 @@ const parse = function (ast, opt) {
   if (opts.initWindow) {
     globalVars.props.window = globalVars;
   }
-  initVariables(ast, globalVars, opts);
-  mapVariables(ast, globalVars);
+
+  if (opts.ancestorsOnly) {
+    parseRecursive(node, globalVars, opts);
+  } else {
+    initVariables(ast, globalVars, opts);
+    mapVariables(ast, globalVars, {ancestorsOnly: true});
+  }
 
   return {
     globalVars

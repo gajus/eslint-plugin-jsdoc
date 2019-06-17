@@ -103,11 +103,12 @@ export default iterateJsdoc(null, {
       const publicOnly = _.get(context, 'settings.jsdoc.publicOnly');
       if (publicOnly) {
         const opt = {
+          ancestorsOnly: Boolean(_.get(publicOnly, 'ancestorsOnly', false)),
           exports: Boolean(_.get(publicOnly, 'exports', true)),
           initModuleExports: Boolean(_.get(publicOnly, 'modules', true)),
           initWindow: Boolean(_.get(publicOnly, 'browserEnv', false))
         };
-        const parseResult = exportParser.parse(sourceCode.ast, opt);
+        const parseResult = exportParser.parse(sourceCode.ast, node, opt);
         const exported = exportParser.isExported(node, parseResult, opt);
 
         if (exported && !jsDocNode) {

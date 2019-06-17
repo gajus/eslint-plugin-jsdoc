@@ -273,6 +273,32 @@ export default {
     },
     {
       code: `
+          module.exports = function quux () {
+
+          }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      settings: {
+        jsdoc: {
+          publicOnly: {
+            ancestorsOnly: true
+          }
+        }
+      }
+    },
+    {
+      code: `
           module.exports = {
             method: function() {
 
@@ -322,6 +348,36 @@ export default {
       settings: {
         jsdoc: {
           publicOnly: true
+        }
+      }
+    },
+    {
+      code: `
+          module.exports = {
+            test: {
+              test2: function() {
+
+              }
+            }
+          }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      settings: {
+        jsdoc: {
+          publicOnly: {
+            ancestorsOnly: true
+          }
         }
       }
     },
@@ -485,6 +541,32 @@ export default {
     },
     {
       code: `
+          export default function quux () {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      },
+      settings: {
+        jsdoc: {
+          publicOnly: {
+            ancestorsOnly: true
+          }
+        }
+      }
+    },
+    {
+      code: `
           function quux () {
 
           }
@@ -529,6 +611,32 @@ export default {
       settings: {
         jsdoc: {
           publicOnly: true
+        }
+      }
+    },
+    {
+      code: `
+          export function test() {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      },
+      settings: {
+        jsdoc: {
+          publicOnly: {
+            ancestorsOnly: true
+          }
         }
       }
     },
@@ -605,6 +713,32 @@ export default {
       settings: {
         jsdoc: {
           publicOnly: true
+        }
+      }
+    },
+    {
+      code: `
+         export default class A {
+
+         }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'ClassDeclaration'
+      }],
+      options: [{
+        require: {
+          ClassDeclaration: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      },
+      settings: {
+        jsdoc: {
+          publicOnly: {
+            ancestorsOnly: true
+          }
         }
       }
     }
@@ -1091,6 +1225,31 @@ export default {
   },
   {
     code: `
+      const test = () => {
+
+      }
+      module.exports = {
+        prop: { prop2: test }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      require: {
+        ArrowFunctionExpression: true
+      }
+    }],
+    settings: {
+      jsdoc: {
+        publicOnly: {
+          ancestorsOnly: true
+        }
+      }
+    }
+  },
+  {
+    code: `
       /**
        *
        */
@@ -1261,10 +1420,81 @@ export default {
       /**
        *
        */
+      export default function quux () {
+
+      }
+    `,
+    options: [{
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    },
+    settings: {
+      jsdoc: {
+        publicOnly: {
+          ancestorsOnly: true
+        }
+      }
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
       function quux () {
 
       }
       export default quux;
+    `,
+    options: [{
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    },
+    settings: {
+      jsdoc: {
+        publicOnly: true
+      }
+    }
+  },
+  {
+    code: `
+      function quux () {
+
+      }
+      export default quux;
+    `,
+    options: [{
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    },
+    settings: {
+      jsdoc: {
+        publicOnly: {
+          ancestorsOnly: true
+        }
+      }
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      export function test() {
+
+      }
     `,
     options: [{
       require: {
@@ -1299,7 +1529,9 @@ export default {
     },
     settings: {
       jsdoc: {
-        publicOnly: true
+        publicOnly: {
+          ancestorsOnly: true
+        }
       }
     }
   },
@@ -1349,6 +1581,31 @@ export default {
     settings: {
       jsdoc: {
         publicOnly: true
+      }
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      export default class A {
+
+      }
+    `,
+    options: [{
+      require: {
+        ClassDeclaration: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    },
+    settings: {
+      jsdoc: {
+        publicOnly: {
+          ancestorsOnly: true
+        }
       }
     }
   }]

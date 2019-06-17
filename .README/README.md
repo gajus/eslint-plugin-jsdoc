@@ -126,6 +126,7 @@ Finally, enable all of the rules that you would like to use.
 
   This setting object supports the following keys:
 
+  - `ancestorsOnly` - Only check node ancestors to check if node is exported
   - `exports` - ESM exports are checked for JSDoc comments
   - `modules` - CommonJS exports are checked for JSDoc comments
   - `browserEnv` - Populates window variable

@@ -177,6 +177,7 @@ Finally, enable all of the rules that you would like to use.
 
   This setting object supports the following keys:
 
+  - `ancestorsOnly` - Only check node ancestors to check if node is exported
   - `exports` - ESM exports are checked for JSDoc comments
   - `modules` - CommonJS exports are checked for JSDoc comments
   - `browserEnv` - Populates window variable
@@ -3543,6 +3544,13 @@ module.exports = function quux () {
 // Options: [{"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
+module.exports = function quux () {
+
+}
+// Settings: {"jsdoc":{"publicOnly":{"ancestorsOnly":true}}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
 module.exports = {
   method: function() {
 
@@ -3560,6 +3568,17 @@ module.exports = {
   }
 }
 // Settings: {"jsdoc":{"publicOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+module.exports = {
+  test: {
+    test2: function() {
+
+    }
+  }
+}
+// Settings: {"jsdoc":{"publicOnly":{"ancestorsOnly":true}}}
 // Options: [{"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
@@ -3619,6 +3638,13 @@ export default function quux () {
 // Options: [{"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
+export default function quux () {
+
+}
+// Settings: {"jsdoc":{"publicOnly":{"ancestorsOnly":true}}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
 function quux () {
 
 }
@@ -3631,6 +3657,13 @@ export function test() {
 
 }
 // Settings: {"jsdoc":{"publicOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export function test() {
+
+}
+// Settings: {"jsdoc":{"publicOnly":{"ancestorsOnly":true}}}
 // Options: [{"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
@@ -3655,6 +3688,13 @@ export default class A {
 
 }
 // Settings: {"jsdoc":{"publicOnly":true}}
+// Options: [{"require":{"ClassDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
+export default class A {
+
+}
+// Settings: {"jsdoc":{"publicOnly":{"ancestorsOnly":true}}}
 // Options: [{"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 ````
@@ -3928,6 +3968,15 @@ prop: { prop2: test }
 // Settings: {"jsdoc":{"publicOnly":true}}
 // Options: [{"require":{"ArrowFunctionExpression":true}}]
 
+const test = () => {
+
+}
+module.exports = {
+  prop: { prop2: test }
+}
+// Settings: {"jsdoc":{"publicOnly":{"ancestorsOnly":true}}}
+// Options: [{"require":{"ArrowFunctionExpression":true}}]
+
 /**
  *
  */
@@ -4014,11 +4063,27 @@ export default function quux () {
 /**
  *
  */
+export default function quux () {
+
+}
+// Settings: {"jsdoc":{"publicOnly":{"ancestorsOnly":true}}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
 function quux () {
 
 }
 export default quux;
 // Settings: {"jsdoc":{"publicOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+function quux () {
+
+}
+export default quux;
+// Settings: {"jsdoc":{"publicOnly":{"ancestorsOnly":true}}}
 // Options: [{"require":{"FunctionExpression":true}}]
 
 /**
@@ -4028,6 +4093,15 @@ export function test() {
 
 }
 // Settings: {"jsdoc":{"publicOnly":true}}
+// Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+export function test() {
+
+}
+// Settings: {"jsdoc":{"publicOnly":{"ancestorsOnly":true}}}
 // Options: [{"require":{"FunctionExpression":true}}]
 
 /**
@@ -4050,6 +4124,15 @@ var test = function () {
 export { test as test2 }
 // Settings: {"jsdoc":{"publicOnly":true}}
 // Options: [{"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+export default class A {
+
+}
+// Settings: {"jsdoc":{"publicOnly":{"ancestorsOnly":true}}}
+// Options: [{"require":{"ClassDeclaration":true}}]
 ````
 
 
@@ -4230,7 +4313,6 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -4256,7 +4338,7 @@ function quux (foo, bar) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":false}}
+// Settings: {"jsdoc":{"allowOverrideWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -4265,6 +4347,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Settings: {"jsdoc":{"allowImplementsWithoutParam":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
