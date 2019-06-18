@@ -261,15 +261,11 @@ export default {
         type: 'FunctionExpression'
       }],
       options: [{
+        publicOnly: true,
         require: {
           FunctionExpression: true
         }
-      }],
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
-      }
+      }]
     },
     {
       code: `
@@ -285,17 +281,13 @@ export default {
         type: 'FunctionExpression'
       }],
       options: [{
+        publicOnly: {
+          ancestorsOnly: true
+        },
         require: {
           FunctionExpression: true
         }
-      }],
-      settings: {
-        jsdoc: {
-          publicOnly: {
-            ancestorsOnly: true
-          }
-        }
-      }
+      }]
     },
     {
       code: `
@@ -313,15 +305,11 @@ export default {
         type: 'FunctionExpression'
       }],
       options: [{
+        publicOnly: true,
         require: {
           FunctionExpression: true
         }
-      }],
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
-      }
+      }]
     },
     {
       code: `
@@ -341,15 +329,11 @@ export default {
         type: 'FunctionExpression'
       }],
       options: [{
+        publicOnly: true,
         require: {
           FunctionExpression: true
         }
-      }],
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
-      }
+      }]
     },
     {
       code: `
@@ -369,17 +353,13 @@ export default {
         type: 'FunctionExpression'
       }],
       options: [{
+        publicOnly: {
+          ancestorsOnly: true
+        },
         require: {
           FunctionExpression: true
         }
-      }],
-      settings: {
-        jsdoc: {
-          publicOnly: {
-            ancestorsOnly: true
-          }
-        }
-      }
+      }]
     },
     {
       code: `
@@ -395,15 +375,11 @@ export default {
         type: 'FunctionExpression'
       }],
       options: [{
+        publicOnly: true,
         require: {
           FunctionExpression: true
         }
-      }],
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
-      }
+      }]
     },
     {
       code: `
@@ -424,15 +400,11 @@ export default {
         type: 'FunctionExpression'
       }],
       options: [{
+        publicOnly: true,
         require: {
           FunctionExpression: true
         }
-      }],
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
-      }
+      }]
     },
     {
       code: `
@@ -451,15 +423,11 @@ export default {
         type: 'FunctionExpression'
       }],
       options: [{
+        publicOnly: true,
         require: {
           FunctionExpression: true
         }
-      }],
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
-      }
+      }]
     },
     {
       code: `
@@ -478,15 +446,11 @@ export default {
         type: 'ArrowFunctionExpression'
       }],
       options: [{
+        publicOnly: true,
         require: {
           ArrowFunctionExpression: true
         }
-      }],
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
-      }
+      }]
     },
     {
       code: `
@@ -505,14 +469,30 @@ export default {
         type: 'FunctionExpression'
       }],
       options: [{
+        publicOnly: true,
         require: {
           MethodDefinition: true
         }
+      }]
+    },
+    {
+      code: `
+          export default function quux () {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
       }],
-      settings: {
-        jsdoc: {
-          publicOnly: true
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
         }
+      }],
+      parserOptions: {
+        sourceType: 'module'
       }
     },
     {
@@ -526,43 +506,15 @@ export default {
         type: 'FunctionDeclaration'
       }],
       options: [{
+        publicOnly: {
+          ancestorsOnly: true
+        },
         require: {
           FunctionExpression: true
         }
       }],
       parserOptions: {
         sourceType: 'module'
-      },
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
-      }
-    },
-    {
-      code: `
-          export default function quux () {
-
-          }
-      `,
-      errors: [{
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
-      }],
-      options: [{
-        require: {
-          FunctionExpression: true
-        }
-      }],
-      parserOptions: {
-        sourceType: 'module'
-      },
-      settings: {
-        jsdoc: {
-          publicOnly: {
-            ancestorsOnly: true
-          }
-        }
       }
     },
     {
@@ -577,17 +529,13 @@ export default {
         type: 'FunctionDeclaration'
       }],
       options: [{
+        publicOnly: true,
         require: {
           FunctionExpression: true
         }
       }],
       parserOptions: {
         sourceType: 'module'
-      },
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
       }
     },
     {
@@ -601,17 +549,13 @@ export default {
         type: 'FunctionDeclaration'
       }],
       options: [{
+        publicOnly: true,
         require: {
           FunctionExpression: true
         }
       }],
       parserOptions: {
         sourceType: 'module'
-      },
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
       }
     },
     {
@@ -625,19 +569,15 @@ export default {
         type: 'FunctionDeclaration'
       }],
       options: [{
+        publicOnly: {
+          ancestorsOnly: true
+        },
         require: {
           FunctionExpression: true
         }
       }],
       parserOptions: {
         sourceType: 'module'
-      },
-      settings: {
-        jsdoc: {
-          publicOnly: {
-            ancestorsOnly: true
-          }
-        }
       }
     },
     {
@@ -654,17 +594,13 @@ export default {
         }
       ],
       options: [{
+        publicOnly: true,
         require: {
           FunctionExpression: true
         }
       }],
       parserOptions: {
         sourceType: 'module'
-      },
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
       }
     },
     {
@@ -679,17 +615,13 @@ export default {
         type: 'FunctionExpression'
       }],
       options: [{
+        publicOnly: true,
         require: {
           FunctionExpression: true
         }
       }],
       parserOptions: {
         sourceType: 'module'
-      },
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
       }
     },
     {
@@ -703,17 +635,13 @@ export default {
         type: 'ClassDeclaration'
       }],
       options: [{
+        publicOnly: true,
         require: {
           ClassDeclaration: true
         }
       }],
       parserOptions: {
         sourceType: 'module'
-      },
-      settings: {
-        jsdoc: {
-          publicOnly: true
-        }
       }
     },
     {
@@ -727,19 +655,15 @@ export default {
         type: 'ClassDeclaration'
       }],
       options: [{
+        publicOnly: {
+          ancestorsOnly: true
+        },
         require: {
           ClassDeclaration: true
         }
       }],
       parserOptions: {
         sourceType: 'module'
-      },
-      settings: {
-        jsdoc: {
-          publicOnly: {
-            ancestorsOnly: true
-          }
-        }
       }
     }
   ],
@@ -1099,15 +1023,11 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: true,
       require: {
         FunctionExpression: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
-    }
+    }]
   },
   {
     code: `
@@ -1126,15 +1046,11 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: true,
       require: {
         FunctionExpression: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
-    }
+    }]
   },
   {
     code: `
@@ -1153,18 +1069,14 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: {
+        browserEnv: false,
+        modules: true
+      },
       require: {
         FunctionExpression: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: {
-          browserEnv: false,
-          modules: true
-        }
-      }
-    }
+    }]
   },
   {
     code: `
@@ -1183,18 +1095,14 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: {
+        browserEnv: false,
+        exports: true
+      },
       require: {
         FunctionExpression: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: {
-          browserEnv: false,
-          exports: true
-        }
-      }
-    }
+    }]
   },
   {
     code: `
@@ -1213,15 +1121,11 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: true,
       require: {
         ArrowFunctionExpression: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
-    }
+    }]
   },
   {
     code: `
@@ -1236,17 +1140,13 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: {
+        ancestorsOnly: true
+      },
       require: {
         ArrowFunctionExpression: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: {
-          ancestorsOnly: true
-        }
-      }
-    }
+    }]
   },
   {
     code: `
@@ -1265,15 +1165,11 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: true,
       require: {
         FunctionExpression: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
-    }
+    }]
   },
   {
     code: `
@@ -1296,15 +1192,11 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: true,
       require: {
         FunctionExpression: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
-    }
+    }]
   },
   {
     code: `
@@ -1322,15 +1214,11 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: true,
       require: {
         FunctionExpression: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
-    }
+    }]
   },
   {
     code: `
@@ -1356,15 +1244,11 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: true,
       require: {
         FunctionExpression: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
-    }
+    }]
   },
   {
     code: `
@@ -1382,14 +1266,29 @@ export default {
       node: true
     },
     options: [{
+      publicOnly: true,
       require: {
         MethodDefinition: true
       }
-    }],
-    settings: {
-      jsdoc: {
-        publicOnly: true
+    }]
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      export default function quux () {
+
       }
+    `,
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
     }
   },
   {
@@ -1402,42 +1301,15 @@ export default {
       }
     `,
     options: [{
+      publicOnly: {
+        ancestorsOnly: true
+      },
       require: {
         FunctionExpression: true
       }
     }],
     parserOptions: {
       sourceType: 'module'
-    },
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
-    }
-  },
-  {
-    code: `
-      /**
-       *
-       */
-      export default function quux () {
-
-      }
-    `,
-    options: [{
-      require: {
-        FunctionExpression: true
-      }
-    }],
-    parserOptions: {
-      sourceType: 'module'
-    },
-    settings: {
-      jsdoc: {
-        publicOnly: {
-          ancestorsOnly: true
-        }
-      }
     }
   },
   {
@@ -1451,17 +1323,13 @@ export default {
       export default quux;
     `,
     options: [{
+      publicOnly: true,
       require: {
         FunctionExpression: true
       }
     }],
     parserOptions: {
       sourceType: 'module'
-    },
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
     }
   },
   {
@@ -1472,19 +1340,15 @@ export default {
       export default quux;
     `,
     options: [{
+      publicOnly: {
+        ancestorsOnly: true
+      },
       require: {
         FunctionExpression: true
       }
     }],
     parserOptions: {
       sourceType: 'module'
-    },
-    settings: {
-      jsdoc: {
-        publicOnly: {
-          ancestorsOnly: true
-        }
-      }
     }
   },
   {
@@ -1497,17 +1361,13 @@ export default {
       }
     `,
     options: [{
+      publicOnly: true,
       require: {
         FunctionExpression: true
       }
     }],
     parserOptions: {
       sourceType: 'module'
-    },
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
     }
   },
   {
@@ -1520,19 +1380,15 @@ export default {
       }
     `,
     options: [{
+      publicOnly: {
+        ancestorsOnly: true
+      },
       require: {
         FunctionExpression: true
       }
     }],
     parserOptions: {
       sourceType: 'module'
-    },
-    settings: {
-      jsdoc: {
-        publicOnly: {
-          ancestorsOnly: true
-        }
-      }
     }
   },
   {
@@ -1547,17 +1403,13 @@ export default {
       export { test, test2 }
     `,
     options: [{
+      publicOnly: true,
       require: {
         FunctionExpression: true
       }
     }],
     parserOptions: {
       sourceType: 'module'
-    },
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
     }
   },
   {
@@ -1571,17 +1423,13 @@ export default {
       export { test as test2 }
     `,
     options: [{
+      publicOnly: true,
       require: {
         FunctionExpression: true
       }
     }],
     parserOptions: {
       sourceType: 'module'
-    },
-    settings: {
-      jsdoc: {
-        publicOnly: true
-      }
     }
   },
   {
@@ -1594,19 +1442,15 @@ export default {
       }
     `,
     options: [{
+      publicOnly: {
+        ancestorsOnly: true
+      },
       require: {
         ClassDeclaration: true
       }
     }],
     parserOptions: {
       sourceType: 'module'
-    },
-    settings: {
-      jsdoc: {
-        publicOnly: {
-          ancestorsOnly: true
-        }
-      }
     }
   }]
 };

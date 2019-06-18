@@ -6,6 +6,37 @@ import exportParser from '../exportParser';
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
   properties: {
+    publicOnly: {
+      oneOf: [
+        {
+          default: false,
+          type: 'boolean'
+        },
+        {
+          additionalProperties: false,
+          default: {},
+          properties: {
+            ancestorsOnly: {
+              default: false,
+              type: 'boolean'
+            },
+            browserEnv: {
+              default: false,
+              type: 'boolean'
+            },
+            exports: {
+              default: true,
+              type: 'boolean'
+            },
+            modules: {
+              default: true,
+              type: 'boolean'
+            }
+          },
+          type: 'object'
+        }
+      ]
+    },
     require: {
       additionalProperties: false,
       default: {},
@@ -37,29 +68,37 @@ const OPTIONS_SCHEMA = {
   type: 'object'
 };
 
-const getOption = (context, key) => {
-  if (!context.options.length) {
-    return OPTIONS_SCHEMA.properties.require.properties[key].default;
+const getOption = (context, baseObject, option, key) => {
+  if (!_.has(context, `options[0][${option}][${key}]`)) {
+    return baseObject.properties[key].default;
   }
 
-  if (!context.options[0] || !context.options[0].require) {
-    return OPTIONS_SCHEMA.properties.require.properties[key].default;
-  }
-
-  if (!context.options[0].require.hasOwnProperty(key)) {
-    return OPTIONS_SCHEMA.properties.require.properties[key].default;
-  }
-
-  return context.options[0].require[key];
+  return context.options[0][option][key];
 };
 
 const getOptions = (context) => {
   return {
-    ArrowFunctionExpression: getOption(context, 'ArrowFunctionExpression'),
-    ClassDeclaration: getOption(context, 'ClassDeclaration'),
-    FunctionDeclaration: getOption(context, 'FunctionDeclaration'),
-    FunctionExpression: getOption(context, 'FunctionExpression'),
-    MethodDefinition: getOption(context, 'MethodDefinition')
+    publicOnly: ((baseObj) => {
+      const publicOnly = _.get(context, 'options[0].publicOnly');
+      if (!publicOnly) {
+        return false;
+      }
+
+      return Object.keys(baseObj.properties).reduce((obj, prop) => {
+        const opt = getOption(context, baseObj, 'publicOnly', prop);
+        obj[prop] = opt;
+
+        return obj;
+      }, {});
+    })(OPTIONS_SCHEMA.properties.publicOnly.oneOf[1]),
+    require: ((baseObj) => {
+      return Object.keys(baseObj.properties).reduce((obj, prop) => {
+        const opt = getOption(context, baseObj, 'require', prop);
+        obj[prop] = opt;
+
+        return obj;
+      }, {});
+    })(OPTIONS_SCHEMA.properties.require)
   };
 };
 
@@ -83,7 +122,7 @@ export default iterateJsdoc(null, {
     type: 'suggestion'
   },
   returns (context, sourceCode) {
-    const options = getOptions(context);
+    const {require: requireOption, publicOnly} = getOptions(context);
 
     const checkJsDoc = (node) => {
       const jsDocNode = sourceCode.getJSDocComment(node);
@@ -100,13 +139,12 @@ export default iterateJsdoc(null, {
         }
       }
 
-      const publicOnly = _.get(context, 'settings.jsdoc.publicOnly');
       if (publicOnly) {
         const opt = {
-          ancestorsOnly: Boolean(_.get(publicOnly, 'ancestorsOnly', false)),
-          exports: Boolean(_.get(publicOnly, 'exports', true)),
-          initModuleExports: Boolean(_.get(publicOnly, 'modules', true)),
-          initWindow: Boolean(_.get(publicOnly, 'browserEnv', false))
+          ancestorsOnly: publicOnly.ancestorsOnly,
+          exports: publicOnly.exports,
+          initModuleExports: publicOnly.modules,
+          initWindow: publicOnly.browserEnv
         };
         const parseResult = exportParser.parse(sourceCode.ast, node, opt);
         const exported = exportParser.isExported(node, parseResult, opt);
@@ -127,7 +165,7 @@ export default iterateJsdoc(null, {
 
     return {
       ArrowFunctionExpression (node) {
-        if (!options.ArrowFunctionExpression) {
+        if (!requireOption.ArrowFunctionExpression) {
           return;
         }
 
@@ -139,7 +177,7 @@ export default iterateJsdoc(null, {
       },
 
       ClassDeclaration (node) {
-        if (!options.ClassDeclaration) {
+        if (!requireOption.ClassDeclaration) {
           return;
         }
 
@@ -147,7 +185,7 @@ export default iterateJsdoc(null, {
       },
 
       FunctionDeclaration (node) {
-        if (!options.FunctionDeclaration) {
+        if (!requireOption.FunctionDeclaration) {
           return;
         }
 
@@ -155,13 +193,13 @@ export default iterateJsdoc(null, {
       },
 
       FunctionExpression (node) {
-        if (options.MethodDefinition && node.parent.type === 'MethodDefinition') {
+        if (requireOption.MethodDefinition && node.parent.type === 'MethodDefinition') {
           checkJsDoc(node);
 
           return;
         }
 
-        if (!options.FunctionExpression) {
+        if (!requireOption.FunctionExpression) {
           return;
         }
 
