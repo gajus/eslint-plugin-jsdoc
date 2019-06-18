@@ -3438,6 +3438,15 @@ be checked by the rule.
   - `modules` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
   - `browserEnv` - Populates window variable
 
+- `require` - An object with the following optional boolean keys which all
+    default to `false` except as noted:
+
+  - `ArrowFunctionExpression`
+  - `ClassDeclaration`
+  - `FunctionDeclaration` (defaults to `true`)
+  - `FunctionExpression`
+  - `MethodDefinition`
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
