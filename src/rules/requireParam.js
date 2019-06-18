@@ -31,5 +31,19 @@ export default iterateJsdoc(({
 }, {
   meta: {
     type: 'suggestion'
-  }
+  },
+  schema: [
+    {
+      additionalProperties: false,
+      properties: {
+        exemptedBy: {
+          items: {
+            type: 'string'
+          },
+          type: 'array'
+        }
+      },
+      type: 'object'
+    }
+  ]
 });

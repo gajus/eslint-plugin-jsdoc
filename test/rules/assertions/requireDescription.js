@@ -153,6 +153,21 @@ export default {
           noDefaults: true
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @type {MyCallback}
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          exemptedBy: ['type']
+        }
+      ]
     }
   ]
 };

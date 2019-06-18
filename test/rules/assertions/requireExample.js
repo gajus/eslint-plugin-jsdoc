@@ -139,6 +139,21 @@ export default {
 
       }
       `
+    },
+    {
+      code: `
+          /**
+           * @type {MyCallback}
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          exemptedBy: ['type']
+        }
+      ]
     }
   ]
 };

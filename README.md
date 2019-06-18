@@ -3119,8 +3119,12 @@ Requires that all functions have a description.
 <a name="eslint-plugin-jsdoc-rules-require-description-options-2"></a>
 #### Options
 
+An options object may have any of the following properties:
+
 - `contexts` - Set to a string or array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
+    block avoids the need for a `@description`.
 - `noDefaults` - By default, `contexts` will permit `ArrowFunctionExpression`,
   `FunctionDeclaration`, and `FunctionExpression`. Set this instead to `true` to
   have `contexts` override these.
@@ -3130,7 +3134,7 @@ Requires that all functions have a description.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`description`|
 |Aliases|`desc`|
-|Options|`contexts`, `noDefaults`|
+|Options|`contexts`, `exemptedBy`, `noDefaults`|
 
 The following patterns are considered problems:
 
@@ -3223,6 +3227,14 @@ function quux () {
 
 }
 // Options: [{"noDefaults":true}]
+
+/**
+ * @type {MyCallback}
+ */
+function quux () {
+
+}
+// Options: [{"exemptedBy":["type"]}]
 ````
 
 
@@ -3234,10 +3246,19 @@ Requires that all functions have examples.
 * All functions must have one or more `@example` tags.
 * Every example tag must have a non-empty description that explains the method's usage.
 
+<a name="eslint-plugin-jsdoc-rules-require-example-options-3"></a>
+#### Options
+
+Has an object option with one optional property:
+
+- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
+  block avoids the need for an `@example`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`example`|
+|Options|`exemptedBy`|
 |Settings|`avoidExampleOnConstructors`|
 
 The following patterns are considered problems:
@@ -3330,6 +3351,14 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * @type {MyCallback}
+ */
+function quux () {
+
+}
+// Options: [{"exemptedBy":["type"]}]
 ````
 
 
@@ -3416,7 +3445,7 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-4"></a>
 #### Options
 
 Accepts one optional options object, with two optional keys, `publicOnly`
@@ -4339,11 +4368,20 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
+<a name="eslint-plugin-jsdoc-rules-require-param-options-5"></a>
+#### Options
+
+An options object accepts one optional property:
+
+- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
+    block avoids the need for a `@param`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Options|`exemptedBy`|
 |Settings|`allowOverrideWithoutParam`, `allowImplementsWithoutParam`, `allowAugmentsExtendsWithoutParam`|
 
 The following patterns are considered problems:
@@ -4704,6 +4742,14 @@ const test = something?.find(_ => _)
 
 /** @type {RequestHandler} */
 function foo(req, res, next) {}
+
+/**
+ * @type {MyCallback}
+ */
+function quux () {
+
+}
+// Options: [{"exemptedBy":["type"]}]
 ````
 
 
@@ -5016,7 +5062,12 @@ function quux () {
 
 Requires returns are documented.
 
-By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` as true on the options object. This may be useful as an `async` function will always return a Promise, even if the Promise returns void.
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-6"></a>
+#### Options
+
+- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
+    block avoids the need for a `@returns`.
+- `forceReturnsWithAsync` - By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` as true on the options object. This may be useful as an `async` function will always return a Promise, even if the Promise returns void.
 
 ```js
 'jsdoc/require-jsdoc': ['error', {forceReturnsWithAsync: true}]
@@ -5028,7 +5079,7 @@ By default `async` functions that do not explicitly return a value pass this rul
 |Tags|`returns`|
 |Aliases|`return`|
 |Settings|`forceRequireReturn`|
-|Options|`forceReturnsWithAsync`|
+|Options|`exemptedBy`, `forceReturnsWithAsync`|
 
 The following patterns are considered problems:
 
@@ -5386,6 +5437,14 @@ export default foo;
 function quux () {
 }
 // Options: [{"forceReturnsWithAsync":true}]
+
+/**
+ * @type {MyCallback}
+ */
+function quux () {
+
+}
+// Options: [{"exemptedBy":["type"]}]
 ````
 
 

@@ -65,12 +65,30 @@ export default iterateJsdoc(({
   const [tag] = tags;
   const missingReturnTag = typeof tag === 'undefined' || tag === null;
   if (missingReturnTag &&
-    ((utils.isAsync() && !utils.hasReturnValue(true) ? Boolean(options.forceReturnsWithAsync) : utils.hasReturnValue()) || settings.forceRequireReturn)
+    ((utils.isAsync() && !utils.hasReturnValue(true) ? options.forceReturnsWithAsync : utils.hasReturnValue()) || settings.forceRequireReturn)
   ) {
     report('Missing JSDoc @' + tagName + ' declaration.');
   }
 }, {
   meta: {
     type: 'suggestion'
-  }
+  },
+  schema: [
+    {
+      additionalProperties: false,
+      properties: {
+        exemptedBy: {
+          items: {
+            type: 'string'
+          },
+          type: 'array'
+        },
+        forceReturnsWithAsync: {
+          default: false,
+          type: 'boolean'
+        }
+      },
+      type: 'object'
+    }
+  ]
 });

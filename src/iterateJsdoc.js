@@ -117,7 +117,7 @@ const curryUtils = (
   };
 
   utils.avoidDocs = (param) => {
-    return param && utils.avoidDocsParamOnly() ||
+    if (param && utils.avoidDocsParamOnly() ||
       utils.avoidDocsParamConditionally(param) ||
 
       // inheritdoc implies that all documentation is inherited; see https://jsdoc.app/tags-inheritdoc.html
@@ -126,7 +126,16 @@ const curryUtils = (
       augmentsExtendsReplacesDocs &&
         (utils.hasATag(['augments', 'extends']) ||
           utils.classHasTag('augments') ||
-            utils.classHasTag('extends'));
+            utils.classHasTag('extends'))) {
+      return true;
+    }
+
+    const exemptedBy = _.get(context, 'options[0].exemptedBy');
+    if (exemptedBy && exemptedBy.length && utils.getPresentTags(exemptedBy).length) {
+      return true;
+    }
+
+    return false;
   };
 
   utils.isNamepathDefiningTag = (tagName) => {
@@ -160,6 +169,12 @@ const curryUtils = (
   utils.getTags = (tagName) => {
     return utils.filterTags((item) => {
       return item.tag === tagName;
+    });
+  };
+
+  utils.getPresentTags = (tagList) => {
+    return utils.filterTags((tag) => {
+      return tagList.includes(tag.tag);
     });
   };
 
@@ -326,7 +341,8 @@ export default function iterateJsdoc (iterator, opts = {}) {
           jsdoc,
           settings,
           ancestors,
-          sourceCode
+          sourceCode,
+          context
         );
 
         if (
