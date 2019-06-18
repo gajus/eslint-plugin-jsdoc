@@ -188,7 +188,7 @@ const mapVariables = function (node, globals, opt) {
   const opts = opt || {};
   switch (node.type) {
   case 'Program': {
-    if (opts.ancestorsOnly) {
+    if (!opts.ancestorsOnly) {
       node.body.forEach((childNode) => {
         mapVariables(childNode, globals, opts);
       });
@@ -317,7 +317,7 @@ const parseRecursive = function (node, globalVars, opts) {
     }
   }
 
-  return mapVariables(node, globalVars);
+  return mapVariables(node, globalVars, opts);
 };
 
 const parse = function (ast, node, opt) {
@@ -342,7 +342,7 @@ const parse = function (ast, node, opt) {
     parseRecursive(node, globalVars, opts);
   } else {
     initVariables(ast, globalVars, opts);
-    mapVariables(ast, globalVars, {ancestorsOnly: true});
+    mapVariables(ast, globalVars, opts);
   }
 
   return {
