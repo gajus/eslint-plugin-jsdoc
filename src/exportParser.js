@@ -111,7 +111,14 @@ const getSymbol = function (node, globals, scope, opt) {
   return null;
 };
 
-createSymbol = function (node, globals, value, scope) {
+const createBlockSymbol = function(block, name, value, globals, isGlobal) {
+  block.props[name] = value;
+  if (isGlobal && globals.props.window && globals.props.window.special) {
+    globals.props.window.props[name] = value;
+  }
+};
+
+createSymbol = function (node, globals, value, scope, isGlobal) {
   const block = scope || globals;
   let symbol;
   switch (node.type) {
@@ -124,13 +131,13 @@ createSymbol = function (node, globals, value, scope) {
     if (value) {
       const valueSymbol = getSymbol(value, globals, block);
       if (valueSymbol) {
-        block.props[node.name] = valueSymbol;
+        createBlockSymbol(block, node.name, valueSymbol, globals, isGlobal);
 
         return block.props[node.name];
       }
       debug('Identifier: Missing value symbol for %s', node.name);
     } else {
-      block.props[node.name] = createNode();
+      createBlockSymbol(block, node.name, createNode(), globals, isGlobal);
 
       return block.props[node.name];
     }
@@ -141,7 +148,7 @@ createSymbol = function (node, globals, value, scope) {
     const propertySymbol = getSymbol(node.property, globals, block, {simpleIdentifier: !node.computed});
     const propertyValue = getSymbolValue(propertySymbol);
     if (symbol && propertyValue) {
-      symbol.props[propertyValue] = getSymbol(value, globals, block);
+      createBlockSymbol(symbol, propertyValue, getSymbol(value, globals, block), globals, isGlobal);
 
       return symbol.props[propertyValue];
     }
@@ -204,12 +211,13 @@ const mapVariables = function (node, globals, opt) {
     break;
   } case 'VariableDeclaration': {
     node.declarations.forEach((declaration) => {
-      createSymbol(declaration.id, globals, declaration.init);
+      const isGlobal = opts.initWindow && node.kind === 'var' && globals.props.window;
+      createSymbol(declaration.id, globals, declaration.init, globals, isGlobal);
     });
     break;
   } case 'FunctionDeclaration': {
     if (node.id.type === 'Identifier') {
-      createSymbol(node.id, globals, node, globals);
+      createSymbol(node.id, globals, node, globals, true);
     }
     break;
   } case 'ExportDefaultDeclaration': {
@@ -302,6 +310,12 @@ const isNodeExported = function (node, globals, opt) {
     }
   }
 
+  if (opt.initWindow && globals.props.window) {
+    if (findNode(node, globals.props.window)) {
+      return true;
+    }
+  }
+
   if (opt.exports && findExportedNode(globals, node)) {
     return true;
   }
@@ -335,7 +349,8 @@ const parse = function (ast, node, opt) {
     globalVars.props.exports = globalVars.props.module.props.exports;
   }
   if (opts.initWindow) {
-    globalVars.props.window = globalVars;
+    globalVars.props.window = createNode();
+    globalVars.props.window.special = true;
   }
 
   if (opts.ancestorsOnly) {

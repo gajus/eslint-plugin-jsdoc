@@ -665,6 +665,69 @@ export default {
       parserOptions: {
         sourceType: 'module'
       }
+    },
+    {
+      code: `
+          var test = function () {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: {
+          browserEnv: true
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          window.test = function () {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: {
+          browserEnv: true
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          function test () {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: {
+          browserEnv: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
     }
   ],
   valid: [{
@@ -1447,6 +1510,45 @@ export default {
       },
       require: {
         ClassDeclaration: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      var test = function () {
+
+      }
+    `,
+    options: [{
+      publicOnly: {
+        browserEnv: true
+      },
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      let test = function () {
+
+      }
+    `,
+    options: [{
+      publicOnly: {
+        browserEnv: true
+      },
+      require: {
+        FunctionExpression: true
       }
     }],
     parserOptions: {

@@ -3436,7 +3436,7 @@ be checked by the rule.
   - `ancestorsOnly` - Only check node ancestors to check if node is exported
   - `exports` - ESM exports are checked for JSDoc comments (Defaults to `true`)
   - `modules` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
-  - `browserEnv` - Populates window variable
+  - `browserEnv` - Window global exports are checked for JSDoc comments
 
 - `require` - An object with the following optional boolean keys which all
     default to `false` except as noted:
@@ -3694,6 +3694,24 @@ export default class A {
 
 }
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
+var test = function () {
+
+}
+// Options: [{"publicOnly":{"browserEnv":true},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+window.test = function () {
+
+}
+// Options: [{"publicOnly":{"browserEnv":true},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+function test () {
+
+}
+// Options: [{"publicOnly":{"browserEnv":true}}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -4111,6 +4129,19 @@ export default class A {
 
 }
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true}}]
+
+/**
+ *
+ */
+var test = function () {
+
+}
+// Options: [{"publicOnly":{"browserEnv":true},"require":{"FunctionExpression":true}}]
+
+let test = function () {
+
+}
+// Options: [{"publicOnly":{"browserEnv":true},"require":{"FunctionExpression":true}}]
 ````
 
 
