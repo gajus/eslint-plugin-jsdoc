@@ -111,7 +111,7 @@ const getSymbol = function (node, globals, scope, opt) {
   return null;
 };
 
-const createBlockSymbol = function(block, name, value, globals, isGlobal) {
+const createBlockSymbol = function (block, name, value, globals, isGlobal) {
   block.props[name] = value;
   if (isGlobal && globals.props.window && globals.props.window.special) {
     globals.props.window.props[name] = value;
@@ -195,12 +195,12 @@ const mapVariables = function (node, globals, opt) {
   const opts = opt || {};
   switch (node.type) {
   case 'Program': {
-    if (!opts.ancestorsOnly) {
+    if (opts.ancestorsOnly) {
+      return false;
+    } else {
       node.body.forEach((childNode) => {
         mapVariables(childNode, globals, opts);
       });
-    } else {
-      return false;
     }
     break;
   } case 'ExpressionStatement': {
