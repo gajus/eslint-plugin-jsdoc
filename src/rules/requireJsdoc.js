@@ -1,10 +1,42 @@
 import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
+import exportParser from '../exportParser';
 
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
   properties: {
+    publicOnly: {
+      oneOf: [
+        {
+          default: false,
+          type: 'boolean'
+        },
+        {
+          additionalProperties: false,
+          default: {},
+          properties: {
+            ancestorsOnly: {
+              default: false,
+              type: 'boolean'
+            },
+            cjs: {
+              default: true,
+              type: 'boolean'
+            },
+            esm: {
+              default: true,
+              type: 'boolean'
+            },
+            window: {
+              default: false,
+              type: 'boolean'
+            }
+          },
+          type: 'object'
+        }
+      ]
+    },
     require: {
       additionalProperties: false,
       default: {},
@@ -36,29 +68,37 @@ const OPTIONS_SCHEMA = {
   type: 'object'
 };
 
-const getOption = (context, key) => {
-  if (!context.options.length) {
-    return OPTIONS_SCHEMA.properties.require.properties[key].default;
+const getOption = (context, baseObject, option, key) => {
+  if (!_.has(context, `options[0][${option}][${key}]`)) {
+    return baseObject.properties[key].default;
   }
 
-  if (!context.options[0] || !context.options[0].require) {
-    return OPTIONS_SCHEMA.properties.require.properties[key].default;
-  }
-
-  if (!context.options[0].require.hasOwnProperty(key)) {
-    return OPTIONS_SCHEMA.properties.require.properties[key].default;
-  }
-
-  return context.options[0].require[key];
+  return context.options[0][option][key];
 };
 
 const getOptions = (context) => {
   return {
-    ArrowFunctionExpression: getOption(context, 'ArrowFunctionExpression'),
-    ClassDeclaration: getOption(context, 'ClassDeclaration'),
-    FunctionDeclaration: getOption(context, 'FunctionDeclaration'),
-    FunctionExpression: getOption(context, 'FunctionExpression'),
-    MethodDefinition: getOption(context, 'MethodDefinition')
+    publicOnly: ((baseObj) => {
+      const publicOnly = _.get(context, 'options[0].publicOnly');
+      if (!publicOnly) {
+        return false;
+      }
+
+      return Object.keys(baseObj.properties).reduce((obj, prop) => {
+        const opt = getOption(context, baseObj, 'publicOnly', prop);
+        obj[prop] = opt;
+
+        return obj;
+      }, {});
+    })(OPTIONS_SCHEMA.properties.publicOnly.oneOf[1]),
+    require: ((baseObj) => {
+      return Object.keys(baseObj.properties).reduce((obj, prop) => {
+        const opt = getOption(context, baseObj, 'require', prop);
+        obj[prop] = opt;
+
+        return obj;
+      }, {});
+    })(OPTIONS_SCHEMA.properties.require)
   };
 };
 
@@ -82,6 +122,8 @@ export default iterateJsdoc(null, {
     type: 'suggestion'
   },
   returns (context, sourceCode) {
+    const {require: requireOption, publicOnly} = getOptions(context);
+
     const checkJsDoc = (node) => {
       const jsDocNode = sourceCode.getJSDocComment(node);
 
@@ -97,17 +139,33 @@ export default iterateJsdoc(null, {
         }
       }
 
-      context.report({
-        messageId: 'missingJsDoc',
-        node
-      });
-    };
+      if (publicOnly) {
+        const opt = {
+          ancestorsOnly: publicOnly.ancestorsOnly,
+          esm: publicOnly.esm,
+          initModuleExports: publicOnly.cjs,
+          initWindow: publicOnly.window
+        };
+        const parseResult = exportParser.parse(sourceCode.ast, node, opt);
+        const exported = exportParser.isExported(node, parseResult, opt);
 
-    const options = getOptions(context);
+        if (exported && !jsDocNode) {
+          context.report({
+            messageId: 'missingJsDoc',
+            node
+          });
+        }
+      } else {
+        context.report({
+          messageId: 'missingJsDoc',
+          node
+        });
+      }
+    };
 
     return {
       ArrowFunctionExpression (node) {
-        if (!options.ArrowFunctionExpression) {
+        if (!requireOption.ArrowFunctionExpression) {
           return;
         }
 
@@ -119,7 +177,7 @@ export default iterateJsdoc(null, {
       },
 
       ClassDeclaration (node) {
-        if (!options.ClassDeclaration) {
+        if (!requireOption.ClassDeclaration) {
           return;
         }
 
@@ -127,7 +185,7 @@ export default iterateJsdoc(null, {
       },
 
       FunctionDeclaration (node) {
-        if (!options.FunctionDeclaration) {
+        if (!requireOption.FunctionDeclaration) {
           return;
         }
 
@@ -135,17 +193,17 @@ export default iterateJsdoc(null, {
       },
 
       FunctionExpression (node) {
-        if (options.MethodDefinition && node.parent.type === 'MethodDefinition') {
+        if (requireOption.MethodDefinition && node.parent.type === 'MethodDefinition') {
           checkJsDoc(node);
 
           return;
         }
 
-        if (!options.FunctionExpression) {
+        if (!requireOption.FunctionExpression) {
           return;
         }
 
-        if (node.parent.type === 'VariableDeclarator') {
+        if (node.parent.type === 'VariableDeclarator' || node.parent.type === 'AssignmentExpression') {
           checkJsDoc(node);
         }
 

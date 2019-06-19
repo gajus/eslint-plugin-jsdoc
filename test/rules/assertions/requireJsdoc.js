@@ -246,6 +246,568 @@ export default {
           exemptEmptyFunctions: false
         }
       }
+    },
+    {
+      code: `
+          module.exports = function quux () {
+
+          }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+          module.exports = function quux () {
+
+          }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: {
+          ancestorsOnly: true
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+          module.exports = {
+            method: function() {
+
+            }
+          }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+          module.exports = {
+            test: {
+              test2: function() {
+
+              }
+            }
+          }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+          module.exports = {
+            test: {
+              test2: function() {
+
+              }
+            }
+          }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: {
+          ancestorsOnly: true
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+          const test = module.exports = function () {
+
+          }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+          /**
+          *
+          */
+          const test = module.exports = function () {
+
+          }
+
+          test.prototype.method = function() {}
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+          const test = function () {
+
+          }
+          module.exports = {
+            test: test
+          }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+          const test = () => {
+
+          }
+          module.exports = {
+            test: test
+          }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'ArrowFunctionExpression'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          ArrowFunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+        class Test {
+            method() {
+
+            }
+        }
+        module.exports = Test;
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          MethodDefinition: true
+        }
+      }]
+    },
+    {
+      code: `
+          export default function quux () {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          export default function quux () {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: {
+          ancestorsOnly: true
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          function quux () {
+
+          }
+          export default quux;
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          export function test() {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          export function test() {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: {
+          ancestorsOnly: true
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          var test = function () {
+
+          }
+          var test2 = 2;
+          export { test, test2 }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.'
+        }
+      ],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          var test = function () {
+
+          }
+          export { test as test2 }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+         export default class A {
+
+         }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'ClassDeclaration'
+      }],
+      options: [{
+        publicOnly: true,
+        require: {
+          ClassDeclaration: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+         export default class A {
+
+         }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'ClassDeclaration'
+      }],
+      options: [{
+        publicOnly: {
+          ancestorsOnly: true
+        },
+        require: {
+          ClassDeclaration: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          var test = function () {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: {
+          window: true
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          window.test = function () {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: {
+          window: true
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          function test () {
+
+          }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: {
+          window: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        module.exports = function() {
+
+        }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: {
+          cjs: true,
+          esm: false,
+          window: false
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+        export function someMethod() {
+
+        }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: {
+          cjs: false,
+          esm: true,
+          window: false
+        },
+        require: {
+          FunctionDeclaration: true
+        }
+      }],
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        export function someMethod() {
+
+        }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: {
+          cjs: false,
+          esm: true,
+          window: false
+        },
+        require: {
+          FunctionDeclaration: true
+        }
+      }],
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
     }
   ],
   valid: [{
@@ -586,6 +1148,559 @@ export default {
         exemptEmptyFunctions: true
       }
     }
-  }
-  ]
+  },
+  {
+    code: `
+      const test = {};
+      /**
+       * test
+       */
+       test.method = function () {
+
+      }
+      module.exports = {
+        prop: { prop2: test.method }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }]
+  },
+  {
+    code: `
+     /**
+      *
+      */
+      function test() {
+
+      }
+
+      module.exports = {
+      prop: { prop2: test }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }]
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      test = function() {
+
+      }
+
+      module.exports = {
+        prop: { prop2: test }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: {
+        cjs: true,
+        esm: false,
+        window: false
+      },
+      require: {
+        FunctionExpression: true
+      }
+    }]
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      test = function() {
+
+      }
+
+      exports.someMethod = {
+        prop: { prop2: test }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: {
+        cjs: false,
+        esm: true,
+        window: false
+      },
+      require: {
+        FunctionExpression: true
+      }
+    }]
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      const test = () => {
+
+      }
+
+      module.exports = {
+      prop: { prop2: test }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: true,
+      require: {
+        ArrowFunctionExpression: true
+      }
+    }]
+  },
+  {
+    code: `
+      const test = () => {
+
+      }
+      module.exports = {
+        prop: { prop2: test }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: {
+        ancestorsOnly: true
+      },
+      require: {
+        ArrowFunctionExpression: true
+      }
+    }]
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      window.test = function() {
+
+      }
+
+      module.exports = {
+      prop: window
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }]
+  },
+  {
+    code: `
+      test = function() {
+
+      }
+
+      /**
+       *
+       */
+      test = function() {
+
+      }
+
+      module.exports = {
+      prop: { prop2: test }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }]
+  },
+  {
+    code: `
+      test = function() {
+
+      }
+
+      test = 2;
+
+      module.exports = {
+      prop: { prop2: test }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }]
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      function test() {
+
+      }
+
+      /**
+       *
+       */
+      test.prototype.method = function() {
+
+      }
+
+      module.exports = {
+      prop: { prop2: test }
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }]
+  },
+  {
+    code: `
+    class Test {
+      /**
+       * Test
+       */
+      method() {
+
+      }
+    }
+    module.exports = Test;
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: true,
+      require: {
+        MethodDefinition: true
+      }
+    }]
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      export default function quux () {
+
+      }
+    `,
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      export default function quux () {
+
+      }
+    `,
+    options: [{
+      publicOnly: {
+        ancestorsOnly: true
+      },
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      function quux () {
+
+      }
+      export default quux;
+    `,
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      function quux () {
+
+      }
+      export default quux;
+    `,
+    options: [{
+      publicOnly: {
+        ancestorsOnly: true
+      },
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      export function test() {
+
+      }
+    `,
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      export function test() {
+
+      }
+    `,
+    options: [{
+      publicOnly: {
+        ancestorsOnly: true
+      },
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      var test = function () {
+
+      }
+      var test2 = 2;
+      export { test, test2 }
+    `,
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      var test = function () {
+
+      }
+      export { test as test2 }
+    `,
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      export default class A {
+
+      }
+    `,
+    options: [{
+      publicOnly: {
+        ancestorsOnly: true
+      },
+      require: {
+        ClassDeclaration: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      var test = function () {
+
+      }
+    `,
+    options: [{
+      publicOnly: {
+        window: true
+      },
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      let test = function () {
+
+      }
+    `,
+    options: [{
+      publicOnly: {
+        window: true
+      },
+      require: {
+        FunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      sourceType: 'module'
+    }
+  },
+  {
+    code: `
+      export function someMethod() {
+
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: {
+        cjs: true,
+        esm: false,
+        window: false
+      },
+      require: {
+        FunctionDeclaration: true
+      }
+    }],
+    parserOptions: {
+      ecmaVersion: 6,
+      sourceType: 'module'
+    }
+  }, {
+    code: `
+      export function someMethod() {
+
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: {
+        cjs: true,
+        esm: false,
+        window: false
+      },
+      require: {
+        FunctionDeclaration: true
+      }
+    }],
+    parserOptions: {
+      ecmaVersion: 6,
+      sourceType: 'module'
+    }
+  }, {
+    code: `
+      exports.someMethod = function() {
+
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: {
+        cjs: false,
+        esm: true,
+        window: false
+      },
+      require: {
+        FunctionExpression: true
+      }
+    }]
+  }]
 };

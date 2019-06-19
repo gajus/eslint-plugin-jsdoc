@@ -3416,10 +3416,42 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-3"></a>
+#### Options
+
+Accepts one optional options object, with two optional keys, `publicOnly`
+for confining JSDoc comments to be checked to exported functions (with "exported"
+allowing for ESM exports, CJS exports, or browser window global export)
+in `require-jsdoc`, and `require` for limiting the contexts which are to
+be checked by the rule.
+
+- `publicOnly` - Missing jsdoc blocks are only reported for function
+  bodies / class declarations that are exported from the module.
+  May be a boolean or object. If set to `true`, the defaults below will
+  be used.
+
+  This object supports the following optional boolean keys (`false` unless
+  otherwise noted):
+
+  - `ancestorsOnly` - Only check node ancestors to check if node is exported
+  - `esm` - ESM exports are checked for JSDoc comments (Defaults to `true`)
+  - `cjs` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
+  - `window` - Window global exports are checked for JSDoc comments
+
+- `require` - An object with the following optional boolean keys which all
+    default to `false` except as noted:
+
+  - `ArrowFunctionExpression`
+  - `ClassDeclaration`
+  - `FunctionDeclaration` (defaults to `true`)
+  - `FunctionExpression`
+  - `MethodDefinition`
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
+|Options|`publicOnly`|
 |Settings|`exemptEmptyFunctions`|
 
 The following patterns are considered problems:
@@ -3520,6 +3552,184 @@ function foo () {
   return true;
 }
 // Settings: {"jsdoc":{"exemptEmptyFunctions":false}}
+// Message: Missing JSDoc comment.
+
+module.exports = function quux () {
+
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+module.exports = function quux () {
+
+}
+// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+module.exports = {
+  method: function() {
+
+  }
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+module.exports = {
+  test: {
+    test2: function() {
+
+    }
+  }
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+module.exports = {
+  test: {
+    test2: function() {
+
+    }
+  }
+}
+// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+const test = module.exports = function () {
+
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+/**
+*
+*/
+const test = module.exports = function () {
+
+}
+
+test.prototype.method = function() {}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+const test = function () {
+
+}
+module.exports = {
+  test: test
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+const test = () => {
+
+}
+module.exports = {
+  test: test
+}
+// Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+class Test {
+    method() {
+
+    }
+}
+module.exports = Test;
+// Options: [{"publicOnly":true,"require":{"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+export default function quux () {
+
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export default function quux () {
+
+}
+// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+function quux () {
+
+}
+export default quux;
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export function test() {
+
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export function test() {
+
+}
+// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+var test = function () {
+
+}
+var test2 = 2;
+export { test, test2 }
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+var test = function () {
+
+}
+export { test as test2 }
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export default class A {
+
+}
+// Options: [{"publicOnly":true,"require":{"ClassDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
+export default class A {
+
+}
+// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
+var test = function () {
+
+}
+// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+window.test = function () {
+
+}
+// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+function test () {
+
+}
+// Options: [{"publicOnly":{"window":true}}]
+// Message: Missing JSDoc comment.
+
+module.exports = function() {
+
+}
+// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export function someMethod() {
+
+}
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
+export function someMethod() {
+
+}
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -3726,6 +3936,245 @@ function foo () {
   return;
 }
 // Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
+
+const test = {};
+/**
+ * test
+ */
+ test.method = function () {
+
+}
+module.exports = {
+  prop: { prop2: test.method }
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+/**
+*
+*/
+function test() {
+
+}
+
+module.exports = {
+prop: { prop2: test }
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+test = function() {
+
+}
+
+module.exports = {
+  prop: { prop2: test }
+}
+// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+test = function() {
+
+}
+
+exports.someMethod = {
+  prop: { prop2: test }
+}
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+const test = () => {
+
+}
+
+module.exports = {
+prop: { prop2: test }
+}
+// Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
+
+const test = () => {
+
+}
+module.exports = {
+  prop: { prop2: test }
+}
+// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ArrowFunctionExpression":true}}]
+
+/**
+ *
+ */
+window.test = function() {
+
+}
+
+module.exports = {
+prop: window
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+test = function() {
+
+}
+
+/**
+ *
+ */
+test = function() {
+
+}
+
+module.exports = {
+prop: { prop2: test }
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+test = function() {
+
+}
+
+test = 2;
+
+module.exports = {
+prop: { prop2: test }
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+function test() {
+
+}
+
+/**
+ *
+ */
+test.prototype.method = function() {
+
+}
+
+module.exports = {
+prop: { prop2: test }
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+class Test {
+  /**
+   * Test
+   */
+  method() {
+
+  }
+}
+module.exports = Test;
+// Options: [{"publicOnly":true,"require":{"MethodDefinition":true}}]
+
+/**
+ *
+ */
+export default function quux () {
+
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+export default function quux () {
+
+}
+// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+function quux () {
+
+}
+export default quux;
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+function quux () {
+
+}
+export default quux;
+// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+export function test() {
+
+}
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+export function test() {
+
+}
+// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+var test = function () {
+
+}
+var test2 = 2;
+export { test, test2 }
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+var test = function () {
+
+}
+export { test as test2 }
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+/**
+ *
+ */
+export default class A {
+
+}
+// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true}}]
+
+/**
+ *
+ */
+var test = function () {
+
+}
+// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
+
+let test = function () {
+
+}
+// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
+
+export function someMethod() {
+
+}
+// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
+
+export function someMethod() {
+
+}
+// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
+
+exports.someMethod = function() {
+
+}
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
 ````
 
 
