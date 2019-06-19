@@ -316,7 +316,7 @@ const isNodeExported = function (node, globals, opt) {
     }
   }
 
-  if (opt.exports && findExportedNode(globals, node)) {
+  if (opt.esm && findExportedNode(globals, node)) {
     return true;
   }
 
@@ -337,7 +337,7 @@ const parseRecursive = function (node, globalVars, opts) {
 const parse = function (ast, node, opt) {
   const opts = opt || {
     ancestorsOnly: false,
-    exports: true,
+    esm: true,
     initModuleExports: true,
     initWindow: true
   };

@@ -24,11 +24,11 @@ const OPTIONS_SCHEMA = {
               default: false,
               type: 'boolean'
             },
-            exports: {
+            cjs: {
               default: true,
               type: 'boolean'
             },
-            modules: {
+            esm: {
               default: true,
               type: 'boolean'
             }
@@ -142,8 +142,8 @@ export default iterateJsdoc(null, {
       if (publicOnly) {
         const opt = {
           ancestorsOnly: publicOnly.ancestorsOnly,
-          exports: publicOnly.exports,
-          initModuleExports: publicOnly.modules,
+          esm: publicOnly.esm,
+          initModuleExports: publicOnly.cjs,
           initWindow: publicOnly.browserEnv
         };
         const parseResult = exportParser.parse(sourceCode.ast, node, opt);

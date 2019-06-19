@@ -20,8 +20,8 @@ be checked by the rule.
   otherwise noted):
 
   - `ancestorsOnly` - Only check node ancestors to check if node is exported
-  - `exports` - ESM exports are checked for JSDoc comments (Defaults to `true`)
-  - `modules` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
+  - `esm` - ESM exports are checked for JSDoc comments (Defaults to `true`)
+  - `cjs` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
   - `browserEnv` - Window global exports are checked for JSDoc comments
 
 - `require` - An object with the following optional boolean keys which all

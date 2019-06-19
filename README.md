@@ -3434,8 +3434,8 @@ be checked by the rule.
   otherwise noted):
 
   - `ancestorsOnly` - Only check node ancestors to check if node is exported
-  - `exports` - ESM exports are checked for JSDoc comments (Defaults to `true`)
-  - `modules` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
+  - `esm` - ESM exports are checked for JSDoc comments (Defaults to `true`)
+  - `cjs` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
   - `browserEnv` - Window global exports are checked for JSDoc comments
 
 - `require` - An object with the following optional boolean keys which all
@@ -3713,6 +3713,24 @@ function test () {
 }
 // Options: [{"publicOnly":{"browserEnv":true}}]
 // Message: Missing JSDoc comment.
+
+module.exports = function() {
+
+}
+// Options: [{"publicOnly":{"browserEnv":false,"cjs":true,"esm":false},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export function someMethod() {
+
+}
+// Options: [{"publicOnly":{"browserEnv":false,"cjs":false,"esm":true},"require":{"FunctionDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
+export function someMethod() {
+
+}
+// Options: [{"publicOnly":{"browserEnv":false,"cjs":false,"esm":true},"require":{"FunctionDeclaration":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:
@@ -3953,7 +3971,7 @@ test = function() {
 module.exports = {
   prop: { prop2: test }
 }
-// Options: [{"publicOnly":{"browserEnv":false,"modules":true},"require":{"FunctionExpression":true}}]
+// Options: [{"publicOnly":{"browserEnv":false,"cjs":true,"esm":false},"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -3965,7 +3983,7 @@ test = function() {
 exports.someMethod = {
   prop: { prop2: test }
 }
-// Options: [{"publicOnly":{"browserEnv":false,"exports":true},"require":{"FunctionExpression":true}}]
+// Options: [{"publicOnly":{"browserEnv":false,"cjs":false,"esm":true},"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -4142,6 +4160,21 @@ let test = function () {
 
 }
 // Options: [{"publicOnly":{"browserEnv":true},"require":{"FunctionExpression":true}}]
+
+export function someMethod() {
+
+}
+// Options: [{"publicOnly":{"browserEnv":false,"cjs":true,"esm":false},"require":{"FunctionDeclaration":true}}]
+
+export function someMethod() {
+
+}
+// Options: [{"publicOnly":{"browserEnv":false,"cjs":true,"esm":false},"require":{"FunctionDeclaration":true}}]
+
+exports.someMethod = function() {
+
+}
+// Options: [{"publicOnly":{"browserEnv":false,"cjs":false,"esm":true},"require":{"FunctionExpression":true}}]
 ````
 
 

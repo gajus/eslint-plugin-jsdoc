@@ -728,6 +728,86 @@ export default {
       parserOptions: {
         sourceType: 'module'
       }
+    },
+    {
+      code: `
+        module.exports = function() {
+
+        }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionExpression'
+      }],
+      options: [{
+        publicOnly: {
+          browserEnv: false,
+          cjs: true,
+          esm: false
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }]
+    },
+    {
+      code: `
+        export function someMethod() {
+
+        }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: {
+          browserEnv: false,
+          cjs: false,
+          esm: true
+        },
+        require: {
+          FunctionDeclaration: true
+        }
+      }],
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        export function someMethod() {
+
+        }
+      `,
+      env: {
+        node: true
+      },
+      errors: [{
+        message: 'Missing JSDoc comment.',
+        type: 'FunctionDeclaration'
+      }],
+      options: [{
+        publicOnly: {
+          browserEnv: false,
+          cjs: false,
+          esm: true
+        },
+        require: {
+          FunctionDeclaration: true
+        }
+      }],
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module'
+      }
     }
   ],
   valid: [{
@@ -1134,7 +1214,8 @@ export default {
     options: [{
       publicOnly: {
         browserEnv: false,
-        modules: true
+        cjs: true,
+        esm: false
       },
       require: {
         FunctionExpression: true
@@ -1160,7 +1241,8 @@ export default {
     options: [{
       publicOnly: {
         browserEnv: false,
-        exports: true
+        cjs: false,
+        esm: true
       },
       require: {
         FunctionExpression: true
@@ -1554,5 +1636,71 @@ export default {
     parserOptions: {
       sourceType: 'module'
     }
+  },
+  {
+    code: `
+      export function someMethod() {
+
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: {
+        browserEnv: false,
+        cjs: true,
+        esm: false
+      },
+      require: {
+        FunctionDeclaration: true
+      }
+    }],
+    parserOptions: {
+      ecmaVersion: 6,
+      sourceType: 'module'
+    }
+  }, {
+    code: `
+      export function someMethod() {
+
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: {
+        browserEnv: false,
+        cjs: true,
+        esm: false
+      },
+      require: {
+        FunctionDeclaration: true
+      }
+    }],
+    parserOptions: {
+      ecmaVersion: 6,
+      sourceType: 'module'
+    }
+  }, {
+    code: `
+      exports.someMethod = function() {
+
+      }
+    `,
+    env: {
+      node: true
+    },
+    options: [{
+      publicOnly: {
+        browserEnv: false,
+        cjs: false,
+        esm: true
+      },
+      require: {
+        FunctionExpression: true
+      }
+    }]
   }]
 };
