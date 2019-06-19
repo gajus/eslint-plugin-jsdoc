@@ -65,6 +65,12 @@ export default iterateJsdoc(({
             }
           ]
         },
+        exemptedBy: {
+          items: {
+            type: 'string'
+          },
+          type: 'array'
+        },
         noDefaults: {
           type: 'boolean'
         }

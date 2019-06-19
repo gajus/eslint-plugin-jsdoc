@@ -573,6 +573,21 @@ export default {
           /** @type {RequestHandler} */
           function foo(req, res, next) {}
       `
+    },
+    {
+      code: `
+          /**
+           * @type {MyCallback}
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          exemptedBy: ['type']
+        }
+      ]
     }
   ]
 };

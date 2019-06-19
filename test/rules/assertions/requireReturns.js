@@ -647,6 +647,21 @@ export default {
       options: [{
         forceReturnsWithAsync: true
       }]
+    },
+    {
+      code: `
+          /**
+           * @type {MyCallback}
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          exemptedBy: ['type']
+        }
+      ]
     }
   ]
 };
