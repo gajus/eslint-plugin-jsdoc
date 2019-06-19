@@ -107,18 +107,22 @@ const curryUtils = (
     return false;
   };
 
+  utils.avoidDocsParamConditionally = (param) => {
+    // After deprecation, the `param` parameter can be removed, but for now,
+    //  don't default for `param` as it may have its own explicit settings to the contrary
+    return (param && overrideReplacesDocs || !param && overrideReplacesDocs !== false) &&
+      (utils.hasTag('override') || utils.classHasTag('override')) ||
+    (param && implementsReplacesDocs || !param && implementsReplacesDocs !== false) &&
+      (utils.hasTag('implements') || utils.classHasTag('implements'));
+  };
+
   utils.avoidDocs = (param) => {
     return param && utils.avoidDocsParamOnly() ||
+      utils.avoidDocsParamConditionally(param) ||
 
       // inheritdoc implies that all documentation is inherited; see https://jsdoc.app/tags-inheritdoc.html
       utils.hasTag('inheritdoc') ||
 
-      // After deprecation, the `param` parameter can be removed, but for now,
-      //  don't default for `param` as it may have its own explicit settings to the contrary
-      (param && overrideReplacesDocs || !param && overrideReplacesDocs !== false) &&
-        (utils.hasTag('override') || utils.classHasTag('override')) ||
-      (param && implementsReplacesDocs || !param && implementsReplacesDocs !== false) &&
-        (utils.hasTag('implements') || utils.classHasTag('implements')) ||
       augmentsExtendsReplacesDocs &&
         (utils.hasATag(['augments', 'extends']) ||
           utils.classHasTag('augments') ||
