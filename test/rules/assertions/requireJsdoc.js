@@ -678,7 +678,7 @@ export default {
       }],
       options: [{
         publicOnly: {
-          browserEnv: true
+          window: true
         },
         require: {
           FunctionExpression: true
@@ -700,7 +700,7 @@ export default {
       }],
       options: [{
         publicOnly: {
-          browserEnv: true
+          window: true
         },
         require: {
           FunctionExpression: true
@@ -722,7 +722,7 @@ export default {
       }],
       options: [{
         publicOnly: {
-          browserEnv: true
+          window: true
         }
       }],
       parserOptions: {
@@ -744,9 +744,9 @@ export default {
       }],
       options: [{
         publicOnly: {
-          browserEnv: false,
           cjs: true,
-          esm: false
+          esm: false,
+          window: false
         },
         require: {
           FunctionExpression: true
@@ -768,9 +768,9 @@ export default {
       }],
       options: [{
         publicOnly: {
-          browserEnv: false,
           cjs: false,
-          esm: true
+          esm: true,
+          window: false
         },
         require: {
           FunctionDeclaration: true
@@ -796,9 +796,9 @@ export default {
       }],
       options: [{
         publicOnly: {
-          browserEnv: false,
           cjs: false,
-          esm: true
+          esm: true,
+          window: false
         },
         require: {
           FunctionDeclaration: true
@@ -1213,9 +1213,9 @@ export default {
     },
     options: [{
       publicOnly: {
-        browserEnv: false,
         cjs: true,
-        esm: false
+        esm: false,
+        window: false
       },
       require: {
         FunctionExpression: true
@@ -1240,9 +1240,9 @@ export default {
     },
     options: [{
       publicOnly: {
-        browserEnv: false,
         cjs: false,
-        esm: true
+        esm: true,
+        window: false
       },
       require: {
         FunctionExpression: true
@@ -1609,7 +1609,7 @@ export default {
     `,
     options: [{
       publicOnly: {
-        browserEnv: true
+        window: true
       },
       require: {
         FunctionExpression: true
@@ -1627,7 +1627,7 @@ export default {
     `,
     options: [{
       publicOnly: {
-        browserEnv: true
+        window: true
       },
       require: {
         FunctionExpression: true
@@ -1648,9 +1648,9 @@ export default {
     },
     options: [{
       publicOnly: {
-        browserEnv: false,
         cjs: true,
-        esm: false
+        esm: false,
+        window: false
       },
       require: {
         FunctionDeclaration: true
@@ -1671,9 +1671,9 @@ export default {
     },
     options: [{
       publicOnly: {
-        browserEnv: false,
         cjs: true,
-        esm: false
+        esm: false,
+        window: false
       },
       require: {
         FunctionDeclaration: true
@@ -1694,9 +1694,9 @@ export default {
     },
     options: [{
       publicOnly: {
-        browserEnv: false,
         cjs: false,
-        esm: true
+        esm: true,
+        window: false
       },
       require: {
         FunctionExpression: true

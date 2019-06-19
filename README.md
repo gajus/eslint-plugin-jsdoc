@@ -3436,7 +3436,7 @@ be checked by the rule.
   - `ancestorsOnly` - Only check node ancestors to check if node is exported
   - `esm` - ESM exports are checked for JSDoc comments (Defaults to `true`)
   - `cjs` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
-  - `browserEnv` - Window global exports are checked for JSDoc comments
+  - `window` - Window global exports are checked for JSDoc comments
 
 - `require` - An object with the following optional boolean keys which all
     default to `false` except as noted:
@@ -3699,37 +3699,37 @@ export default class A {
 var test = function () {
 
 }
-// Options: [{"publicOnly":{"browserEnv":true},"require":{"FunctionExpression":true}}]
+// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 window.test = function () {
 
 }
-// Options: [{"publicOnly":{"browserEnv":true},"require":{"FunctionExpression":true}}]
+// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 function test () {
 
 }
-// Options: [{"publicOnly":{"browserEnv":true}}]
+// Options: [{"publicOnly":{"window":true}}]
 // Message: Missing JSDoc comment.
 
 module.exports = function() {
 
 }
-// Options: [{"publicOnly":{"browserEnv":false,"cjs":true,"esm":false},"require":{"FunctionExpression":true}}]
+// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export function someMethod() {
 
 }
-// Options: [{"publicOnly":{"browserEnv":false,"cjs":false,"esm":true},"require":{"FunctionDeclaration":true}}]
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 export function someMethod() {
 
 }
-// Options: [{"publicOnly":{"browserEnv":false,"cjs":false,"esm":true},"require":{"FunctionDeclaration":true}}]
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -3971,7 +3971,7 @@ test = function() {
 module.exports = {
   prop: { prop2: test }
 }
-// Options: [{"publicOnly":{"browserEnv":false,"cjs":true,"esm":false},"require":{"FunctionExpression":true}}]
+// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -3983,7 +3983,7 @@ test = function() {
 exports.someMethod = {
   prop: { prop2: test }
 }
-// Options: [{"publicOnly":{"browserEnv":false,"cjs":false,"esm":true},"require":{"FunctionExpression":true}}]
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -4154,27 +4154,27 @@ export default class A {
 var test = function () {
 
 }
-// Options: [{"publicOnly":{"browserEnv":true},"require":{"FunctionExpression":true}}]
+// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 
 let test = function () {
 
 }
-// Options: [{"publicOnly":{"browserEnv":true},"require":{"FunctionExpression":true}}]
+// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 
 export function someMethod() {
 
 }
-// Options: [{"publicOnly":{"browserEnv":false,"cjs":true,"esm":false},"require":{"FunctionDeclaration":true}}]
+// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
 
 export function someMethod() {
 
 }
-// Options: [{"publicOnly":{"browserEnv":false,"cjs":true,"esm":false},"require":{"FunctionDeclaration":true}}]
+// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
 
 exports.someMethod = function() {
 
 }
-// Options: [{"publicOnly":{"browserEnv":false,"cjs":false,"esm":true},"require":{"FunctionExpression":true}}]
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
 ````
 
 

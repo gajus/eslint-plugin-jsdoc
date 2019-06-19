@@ -20,16 +20,16 @@ const OPTIONS_SCHEMA = {
               default: false,
               type: 'boolean'
             },
-            browserEnv: {
-              default: false,
-              type: 'boolean'
-            },
             cjs: {
               default: true,
               type: 'boolean'
             },
             esm: {
               default: true,
+              type: 'boolean'
+            },
+            window: {
+              default: false,
               type: 'boolean'
             }
           },
@@ -144,7 +144,7 @@ export default iterateJsdoc(null, {
           ancestorsOnly: publicOnly.ancestorsOnly,
           esm: publicOnly.esm,
           initModuleExports: publicOnly.cjs,
-          initWindow: publicOnly.browserEnv
+          initWindow: publicOnly.window
         };
         const parseResult = exportParser.parse(sourceCode.ast, node, opt);
         const exported = exportParser.isExported(node, parseResult, opt);
