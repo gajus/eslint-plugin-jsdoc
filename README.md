@@ -2934,6 +2934,17 @@ function quux(foo, bar, baz) {
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType<>"},"histype":"HisType.<>"}}}
 // Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+
+/**
+ * @template TEMPLATE_TYPE
+ */
+class Foo {
+  /**
+   * @return {TEMPLATE_TYPE}
+   */
+  bar () {
+  }
+}
 ````
 
 
