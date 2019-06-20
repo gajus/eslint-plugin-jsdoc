@@ -226,6 +226,20 @@ export default {
     {
       code: `
           /**
+           * @interface
+           */
+          class Foo {
+            /**
+             * @returns {string}
+             */
+            bar () {
+            }
+          }
+      `
+    },
+    {
+      code: `
+          /**
            * @returns {undefined} Foo.
            */
           function quux () {

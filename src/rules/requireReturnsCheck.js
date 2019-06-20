@@ -15,7 +15,7 @@ const canSkip = (utils) => {
     'class',
     'constructor',
     'interface'
-  ]) || utils.isConstructor();
+  ]) || utils.isConstructor() || utils.classHasTag('interface');
 };
 
 export default iterateJsdoc(({
