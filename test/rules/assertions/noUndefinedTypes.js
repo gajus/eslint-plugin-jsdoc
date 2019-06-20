@@ -393,6 +393,20 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+      /**
+       * @template TEMPLATE_TYPE
+       */
+      class Foo {
+        /**
+         * @return {TEMPLATE_TYPE}
+         */
+        bar () {
+        }
+      }
+      `
     }
   ]
 };

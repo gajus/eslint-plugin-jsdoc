@@ -67,6 +67,18 @@ export default iterateJsdoc(({
     })
     .value();
 
+  let closureGenericTypes = [];
+  const classJsdoc = utils.getClassJsdoc();
+  if (classJsdoc && classJsdoc.tags) {
+    closureGenericTypes = classJsdoc.tags
+      .filter((tag) => {
+        return tag.tag === 'template';
+      })
+      .map((tag) => {
+        return tag.name;
+      });
+  }
+
   const allDefinedTypes = globalScope.variables.map((variable) => {
     return variable.name;
   })
@@ -89,7 +101,8 @@ export default iterateJsdoc(({
     .concat(extraTypes)
     .concat(typedefDeclarations)
     .concat(definedTypes)
-    .concat(definedPreferredTypes);
+    .concat(definedPreferredTypes)
+    .concat(closureGenericTypes);
 
   const jsdocTags = utils.filterTags((tag) => {
     return utils.isTagWithType(tag.tag);
