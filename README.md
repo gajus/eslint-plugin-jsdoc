@@ -5143,6 +5143,17 @@ function quux () {
 }
 
 /**
+ * @interface
+ */
+class Foo {
+  /**
+   * @returns {string}
+   */
+  bar () {
+  }
+}
+
+/**
  * @returns {undefined} Foo.
  */
 function quux () {
