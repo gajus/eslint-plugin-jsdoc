@@ -407,6 +407,21 @@ export default {
         }
       }
       `
+    },
+    {
+      code: `
+      /**
+       * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
+       */
+      class Foo {
+        /**
+         * @param {TEMPLATE_TYPE_A} baz
+         * @return {TEMPLATE_TYPE_B}
+         */
+        bar (baz) {
+        }
+      }
+      `
     }
   ]
 };

@@ -3,6 +3,7 @@ import 'flat-map-polyfill';
 import _ from 'lodash';
 import {parse as parseType, traverse} from 'jsdoctypeparser';
 import iterateJsdoc, {parseComment} from '../iterateJsdoc';
+import jsdocUtils from '../jsdocUtils';
 
 const extraTypes = [
   'null', 'undefined', 'string', 'boolean', 'object',
@@ -70,12 +71,12 @@ export default iterateJsdoc(({
   let closureGenericTypes = [];
   const classJsdoc = utils.getClassJsdoc();
   if (classJsdoc && classJsdoc.tags) {
-    closureGenericTypes = classJsdoc.tags
+    classJsdoc.tags
       .filter((tag) => {
         return tag.tag === 'template';
       })
-      .map((tag) => {
-        return tag.name;
+      .forEach((tag) => {
+        closureGenericTypes = closureGenericTypes.concat(jsdocUtils.parseClosureTemplateTag(tag));
       });
   }
 
