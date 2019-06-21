@@ -1289,6 +1289,13 @@ function quux (foo) {
  * @version
  */
 function quux (foo) {}
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
 ````
 
 
@@ -2083,6 +2090,13 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"object<>":"GenericObject"}}}
+
+/**
+ * @param {Number<} Ignore the error as not a validating rule
+ */
+function quux (foo) {
+
+}
 ````
 
 
@@ -2134,6 +2148,18 @@ function quux () {
  *
  */
 class quux {
+  /**
+   * @implements {SomeClass}
+   */
+  constructor () {
+
+  }
+}
+
+/**
+ *
+ */
+const quux = class {
   /**
    * @implements {SomeClass}
    */
@@ -2509,6 +2535,17 @@ function quux () {
 
 }
 // Options: ["always"]
+// Message: There must be a newline after the description of the JSDoc block.
+
+/**
+ * Foo.
+ *
+ * Foo.
+ * @foo
+ */
+function quux () {
+
+}
 // Message: There must be a newline after the description of the JSDoc block.
 
 /**
@@ -3345,6 +3382,16 @@ function quux () {
 }
 // Settings: {"jsdoc":{"avoidExampleOnConstructors":true}}
 
+class Foo {
+  /**
+   *
+   */
+  constructor () {
+
+  }
+}
+// Settings: {"jsdoc":{"avoidExampleOnConstructors":true}}
+
 /**
  * @inheritdoc
  */
@@ -3385,6 +3432,14 @@ function quux () {
 
 }
 // Options: ["always"]
+// Message: There must be a hyphen before @param description.
+
+/**
+ * @param foo Foo.
+ */
+function quux () {
+
+}
 // Message: There must be a hyphen before @param description.
 
 /**
@@ -3436,6 +3491,13 @@ function quux () {
 
 }
 // Options: ["never"]
+
+/**
+ * @param foo
+ */
+function quux () {
+
+}
 ````
 
 
@@ -3489,6 +3551,12 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+// Message: Missing JSDoc comment.
+
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
 // Message: Missing JSDoc comment.
 
 function myFunction() {}
@@ -3923,10 +3991,22 @@ class A {
 // Options: [{"require":{"ClassDeclaration":false,"MethodDefinition":false}}]
 
 /**
- Function doing something
+* Function doing something
 */
 var myFunction = () => {}
 // Options: [{"require":{"ArrowFunctionExpression":true}}]
+
+/**
+* Function doing something
+*/
+var myFunction = function () {}
+// Options: [{"require":{"ArrowFunctionExpression":true}}]
+
+/**
+* Function doing something
+*/
+var myFunction = () => {}
+// Options: [{"require":{"ArrowFunctionExpression":false}}]
 
 /**
  Function doing something
@@ -5177,6 +5257,16 @@ async function quux () {
 }
 // Options: [{"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
+
+/**
+ * @returns {undefined}
+ * @returns {void}
+ */
+function quux (foo) {
+
+  return foo;
+}
+// Message: Found more than one @returns declaration.
 ````
 
 The following patterns are not considered problems:
@@ -5502,6 +5592,22 @@ function quux() {
 // Message: Syntax error in type: Array<string
 
 /**
+ * @memberof module:namespace.SomeClass<~
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: module:namespace.SomeClass<~
+
+/**
+ * @memberof module:namespace.SomeClass~<
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: module:namespace.SomeClass~<
+
+/**
  * @borrows foo% as bar
  */
 function quux() {
@@ -5643,6 +5749,13 @@ function quux() {
 
 /**
  * @memberof! module:namespace.SomeClass.
+ */
+function quux() {
+
+}
+
+/**
+ *
  */
 function quux() {
 
