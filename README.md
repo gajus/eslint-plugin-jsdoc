@@ -5129,6 +5129,114 @@ function quux () {
 function quux () {
   return;
 }
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+    return true;
+  } catch (err) {
+  }
+  return;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+  } finally {
+    return true;
+  }
+  return;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+    return;
+  } catch (err) {
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+    something();
+  } catch (err) {
+    return true;
+  }
+  return;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  switch (true) {
+  case 'abc':
+    return true;
+  }
+  return;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  switch (true) {
+  case 'abc':
+    return;
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  for (const i of abc) {
+    return true;
+  }
+  return;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    return;
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    return true;
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    return;
+  } else {
+    return true;
+  }
+  return;
+}
 ````
 
 
