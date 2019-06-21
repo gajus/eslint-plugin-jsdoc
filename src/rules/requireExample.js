@@ -42,20 +42,20 @@ export default iterateJsdoc(({
   });
 }, {
   meta: {
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          exemptedBy: {
+            items: {
+              type: 'string'
+            },
+            type: 'array'
+          }
+        },
+        type: 'object'
+      }
+    ],
     type: 'suggestion'
-  },
-  schema: [
-    {
-      additionalProperties: false,
-      properties: {
-        exemptedBy: {
-          items: {
-            type: 'string'
-          },
-          type: 'array'
-        }
-      },
-      type: 'object'
-    }
-  ]
+  }
 });

@@ -71,24 +71,24 @@ export default iterateJsdoc(({
   }
 }, {
   meta: {
-    type: 'suggestion'
-  },
-  schema: [
-    {
-      additionalProperties: false,
-      properties: {
-        exemptedBy: {
-          items: {
-            type: 'string'
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          exemptedBy: {
+            items: {
+              type: 'string'
+            },
+            type: 'array'
           },
-          type: 'array'
+          forceReturnsWithAsync: {
+            default: false,
+            type: 'boolean'
+          }
         },
-        forceReturnsWithAsync: {
-          default: false,
-          type: 'boolean'
-        }
-      },
-      type: 'object'
-    }
-  ]
+        type: 'object'
+      }
+    ],
+    type: 'suggestion'
+  }
 });
