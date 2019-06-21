@@ -408,6 +408,36 @@ export default {
     {
       code: `
           /**
+           * @augments
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          augmentsExtendsReplacesDocs: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @extends
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          augmentsExtendsReplacesDocs: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
            * @override
            */
           class A {
@@ -544,6 +574,46 @@ export default {
             }
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @augments
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      settings: {
+        jsdoc: {
+          augmentsExtendsReplacesDocs: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @extends
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      settings: {
+        jsdoc: {
+          augmentsExtendsReplacesDocs: true
+        }
+      }
     },
     {
       code: `

@@ -277,8 +277,12 @@ export {
  * @param {{meta: any, returns?: any}} opts
  */
 export default function iterateJsdoc (iterator, opts) {
-  if (!opts.meta || !opts.meta.type || !['problem', 'suggestion', 'layout'].includes(opts.meta.type)) {
+  const metaType = _.get(opts, 'meta.type');
+  if (!metaType || !['problem', 'suggestion', 'layout'].includes(metaType)) {
     throw new TypeError('Rule must include `meta.type` option (with value "problem", "suggestion", or "layout")');
+  }
+  if (typeof iterator !== 'function' && (!opts || typeof opts.returns !== 'function')) {
+    throw new TypeError('The iterator argument must be a function or an object with a `returns` method.');
   }
 
   return {
@@ -296,6 +300,14 @@ export default function iterateJsdoc (iterator, opts) {
 
       const settings = getSettings(context);
 
+      let contexts = opts.returns;
+      if (typeof opts.returns === 'function') {
+        contexts = opts.returns(context, sourceCode);
+      }
+
+      if (!Array.isArray(contexts) && contexts) {
+        return contexts;
+      }
       const checkJsdoc = (node) => {
         const jsdocNode = getJSDocComment(sourceCode, node);
 
@@ -364,27 +376,19 @@ export default function iterateJsdoc (iterator, opts) {
           utils
         });
       };
-
-      let contexts = opts.returns;
-      if (typeof opts.returns === 'function') {
-        contexts = opts.returns(context, sourceCode, checkJsdoc);
+      if (!contexts) {
+        return {
+          ArrowFunctionExpression: checkJsdoc,
+          FunctionDeclaration: checkJsdoc,
+          FunctionExpression: checkJsdoc
+        };
       }
 
-      if (Array.isArray(contexts)) {
-        return contexts.reduce((obj, prop) => {
-          obj[prop] = checkJsdoc;
+      return contexts.reduce((obj, prop) => {
+        obj[prop] = checkJsdoc;
 
-          return obj;
-        }, {});
-      } else if (contexts) {
-        return contexts;
-      }
-
-      return {
-        ArrowFunctionExpression: checkJsdoc,
-        FunctionDeclaration: checkJsdoc,
-        FunctionExpression: checkJsdoc
-      };
+        return obj;
+      }, {});
     },
     meta: opts.meta
   };
