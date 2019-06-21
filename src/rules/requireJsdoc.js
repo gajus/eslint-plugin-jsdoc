@@ -2,6 +2,7 @@ import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
 import exportParser from '../exportParser';
+import getJSDocComment from '../eslint/getJSDocComment';
 
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
@@ -125,7 +126,7 @@ export default iterateJsdoc(null, {
     const {require: requireOption, publicOnly} = getOptions(context);
 
     const checkJsDoc = (node) => {
-      const jsDocNode = sourceCode.getJSDocComment(node);
+      const jsDocNode = getJSDocComment(sourceCode, node);
 
       if (jsDocNode) {
         return;

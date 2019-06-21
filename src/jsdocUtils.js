@@ -415,7 +415,7 @@ const lookupTable = {
         return false;
       }
 
-      // If we end up here, we stumbled upon an unknown elements
+      // If we end up here, we stumbled upon an unknown element.
       // Most likely it is enough to add it to the blacklist.
       //
       // throw new Error('Unknown node type: ' + node.type);
