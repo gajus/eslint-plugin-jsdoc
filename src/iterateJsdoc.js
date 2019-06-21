@@ -274,9 +274,13 @@ export {
  * @typedef {ReturnType<typeof getSettings>} Settings
  *
  * @param {(arg: {utils: Utils, settings: Settings}) => any} iterator
- * @param {{returns?: any}} opts
+ * @param {{meta: any, returns?: any}} opts
  */
-export default function iterateJsdoc (iterator, opts = {}) {
+export default function iterateJsdoc (iterator, opts) {
+  if (!opts.meta || !opts.meta.type || !['problem', 'suggestion', 'layout'].includes(opts.meta.type)) {
+    throw new TypeError('Rule must include `meta.type` option (with value "problem", "suggestion", or "layout")');
+  }
+
   return {
     /**
      * The entrypoint for the JSDoc rule.

@@ -11,4 +11,8 @@ export default iterateJsdoc(({
       report(`Types are not permitted on @${tag.tag}.`, null, tag);
     }
   });
+}, {
+  meta: {
+    type: 'suggestion'
+  }
 });

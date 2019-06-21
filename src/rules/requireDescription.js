@@ -30,6 +30,9 @@ export default iterateJsdoc(({
     }
   });
 }, {
+  meta: {
+    type: 'suggestion'
+  },
   returns (context) {
     const defaultContexts = [
       'ArrowFunctionExpression',
@@ -77,6 +80,5 @@ export default iterateJsdoc(({
       },
       type: 'object'
     }
-  ],
-  type: 'suggestion'
+  ]
 });
