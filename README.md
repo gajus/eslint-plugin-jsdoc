@@ -1397,6 +1397,15 @@ The following patterns are considered problems:
 
 ````js
 /**
+ * @param {abc} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":100}}}
+// Message: Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.
+
+/**
  * @param {Number} foo
  */
 function quux (foo) {
@@ -2695,6 +2704,26 @@ The following patterns are considered problems:
 
 ````js
 /**
+  * @param {HerType} baz - Foo.
+  */
+function quux(foo, bar, baz) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"HerType":1000}}}
+// Options: [{"preferredTypesDefined":true}]
+// Message: Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.
+
+/**
+  * @param {HerType} baz - Foo.
+  */
+function quux(foo, bar, baz) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"HerType":false}}}
+// Options: [{"preferredTypesDefined":true}]
+// Message: The type 'HerType' is undefined.
+
+/**
  * @param {strnig} foo - Bar.
  */
 function quux(foo) {
@@ -2845,6 +2874,15 @@ function testFunction(callback) {
 function foo () {
 
 }
+
+/**
+ *
+ *
+ */
+function foo () {
+
+}
+// Options: [{"preferredTypesDefined":true}]
 
 /**
 * @param {MyType} foo - Bar.
@@ -4830,6 +4868,18 @@ function quux () {
 
 }
 // Options: [{"exemptedBy":["type"]}]
+
+/**
+ * @override
+ */
+var A = class {
+  /**
+    *
+    */
+  quux (foo) {
+
+  }
+}
 ````
 
 
