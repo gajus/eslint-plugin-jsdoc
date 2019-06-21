@@ -671,6 +671,26 @@ function quux () {}
 function quux () {}
 // Settings: {"jsdoc":{"allowInlineConfig":false,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
 // Message: @example error (semi): Missing semicolon.
+
+/**
+ * @example quux2()
+ */
+function quux2 () {
+
+}
+// Settings: {"jsdoc":{"matchingFileName":"test/jsdocUtils.js"}}
+// Message: @example error (semi): Missing semicolon.
+
+/**
+ * @example // begin
+ alert('hello')
+ // end
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["warn","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"// begin[\\s\\S]*// end","noDefaultExampleRules":true}}
+// Message: @example warning (semi): Missing semicolon.
 ````
 
 The following patterns are not considered problems:
