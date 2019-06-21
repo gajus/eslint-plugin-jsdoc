@@ -71,12 +71,12 @@ export default iterateJsdoc(({
   let closureGenericTypes = [];
   const classJsdoc = utils.getClassJsdoc();
   if (classJsdoc && classJsdoc.tags) {
-    classJsdoc.tags
+    closureGenericTypes = classJsdoc.tags
       .filter((tag) => {
         return tag.tag === 'template';
       })
-      .forEach((tag) => {
-        closureGenericTypes = closureGenericTypes.concat(jsdocUtils.parseClosureTemplateTag(tag));
+      .flatMap((tag) => {
+        return jsdocUtils.parseClosureTemplateTag(tag);
       });
   }
 
