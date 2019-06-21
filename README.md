@@ -4747,6 +4747,22 @@ function quux (foo) {
 }
 
 /**
+ * @augments
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
+
+/**
+ * @extends
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
+
+/**
  * @override
  */
 class A {
@@ -4845,6 +4861,32 @@ class A {
 
   }
 }
+
+/**
+ * @augments
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
+
+/**
+ * @extends
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
 /**
  * @private
