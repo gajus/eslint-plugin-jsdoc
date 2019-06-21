@@ -154,6 +154,51 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+      class Foo {
+        /**
+         * @return {TEMPLATE_TYPE}
+         */
+        bar () {
+        }
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'TEMPLATE_TYPE\' is undefined.'
+        }
+      ]
+    },
+    {
+      code: `
+      class Foo {
+        /**
+         * @return {TEMPLATE_TYPE}
+         */
+        invalidTemplateReference () {
+        }
+      }
+      
+      /**
+       * @template TEMPLATE_TYPE
+       */
+      class Bar {
+        /**
+         * @return {TEMPLATE_TYPE}
+         */
+        validTemplateReference () {
+        }
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'TEMPLATE_TYPE\' is undefined.'
+        }
+      ]
     }
   ],
   valid: [
