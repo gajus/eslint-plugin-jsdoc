@@ -297,6 +297,55 @@ export default {
           noDefaultExampleRules: true
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @example quux2()
+           */
+          function quux2 () {
+
+          }
+      `,
+      errors: [
+        {
+          message: '@example error (semi): Missing semicolon.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          matchingFileName: 'test/jsdocUtils.js'
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @example // begin
+           alert('hello')
+           // end
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: '@example warning (semi): Missing semicolon.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          baseConfig: {
+            rules: {
+              semi: ['warn', 'always']
+            }
+          },
+          eslintrcForExamples: false,
+          exampleCodeRegex: '// begin[\\s\\S]*// end',
+          noDefaultExampleRules: true
+        }
+      }
     }
   ],
   valid: [

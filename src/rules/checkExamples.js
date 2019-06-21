@@ -108,13 +108,16 @@ export default iterateJsdoc(({
       source = source.slice(idx);
 
       source = source.replace(exampleCodeRegex, (n0, n1) => {
-        if (!n1) {
-          return n0;
+        let nonJSPreface;
+        let nonJSPrefaceLineCount;
+        if (n1) {
+          const index = n0.indexOf(n1);
+          nonJSPreface = n0.slice(0, index);
+          nonJSPrefaceLineCount = countChars(nonJSPreface, '\n');
+        } else {
+          nonJSPreface = '';
+          nonJSPrefaceLineCount = 0;
         }
-
-        const index = n0.indexOf(n1);
-        const nonJSPreface = n0.slice(0, index);
-        const nonJSPrefaceLineCount = countChars(nonJSPreface, '\n');
 
         nonJSPrefacingLines += nonJSPrefaceLineCount;
 
@@ -127,7 +130,7 @@ export default iterateJsdoc(({
           nonJSPrefacingCols += colDelta + nonJSPreface.length;
         }
 
-        return n1;
+        return n1 || n0;
       });
     }
 
