@@ -36,8 +36,13 @@ export default iterateJsdoc(({
           // May become an empty string but will be filtered out below
           return stripPseudoTypes(preferredType);
         }
-        if (!preferredType || typeof preferredType !== 'object') {
+        if (!preferredType) {
           return undefined;
+        }
+        if (typeof preferredType !== 'object') {
+          report(
+            'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
+          );
         }
 
         return stripPseudoTypes(preferredType.replacement);

@@ -152,6 +152,14 @@ export default iterateJsdoc(({
             preferred,
             _.get(preferredSetting, 'message')
           ]);
+        } else {
+          report(
+            'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
+            null,
+            jsdocTag
+          );
+
+          return;
         }
       } else if (!noDefaults && type === 'NAME') {
         for (const strictNativeType of strictNativeTypes) {

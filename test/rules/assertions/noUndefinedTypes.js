@@ -2,6 +2,59 @@ export default {
   invalid: [
     {
       code: `
+        /**
+         * @param {HerType} baz - Foo.
+         */
+       function quux(foo, bar, baz) {
+
+       }
+      `,
+      errors: [
+        {
+          message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
+        },
+        {
+          message: 'The type \'HerType\' is undefined.'
+        }
+      ],
+      options: [{
+        preferredTypesDefined: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            HerType: 1000
+          }
+        }
+      }
+    },
+    {
+      code: `
+        /**
+         * @param {HerType} baz - Foo.
+         */
+       function quux(foo, bar, baz) {
+
+       }
+      `,
+      errors: [
+        {
+          message: 'The type \'HerType\' is undefined.'
+        }
+      ],
+      options: [{
+        preferredTypesDefined: true
+      }],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            HerType: false
+          }
+        }
+      }
+    },
+    {
+      code: `
           /**
            * @param {strnig} foo - Bar.
            */
@@ -260,6 +313,20 @@ export default {
 
       }
       `
+    },
+    {
+      code: `
+      /**
+       *
+       *
+       */
+      function foo () {
+
+      }
+      `,
+      options: [{
+        preferredTypesDefined: true
+      }]
     },
     {
       code: `

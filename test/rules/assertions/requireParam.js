@@ -588,6 +588,21 @@ export default {
           exemptedBy: ['type']
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @override
+           */
+          var A = class {
+            /**
+              *
+              */
+            quux (foo) {
+
+            }
+          }
+      `
     }
   ]
 };

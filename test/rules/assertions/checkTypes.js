@@ -3,6 +3,28 @@ export default {
     {
       code: `
           /**
+           * @param {abc} foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            abc: 100
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
            * @param {Number} foo
            */
           function quux (foo) {
