@@ -89,6 +89,23 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.'
         }
       ]
+    },
+    {
+      code: `
+          class Foo {
+            /**
+             * @returns {string}
+             */
+            bar () {
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc @returns declaration present but return expression not available in function.'
+        }
+      ]
     }
   ],
   valid: [
@@ -220,6 +237,20 @@ export default {
            * @constructor
            */
           function quux () {
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @interface
+           */
+          class Foo {
+            /**
+             * @returns {string}
+             */
+            bar () {
+            }
           }
       `
     },
