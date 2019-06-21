@@ -18,15 +18,14 @@ export default iterateJsdoc(({
       } catch (err) {
         let error = err;
 
-        let endChar;
         if (tagName && ['memberof', 'memberof!'].includes(tagName)) {
-          endChar = type.slice(-1);
+          const endChar = type.slice(-1);
           if (['#', '.', '~'].includes(endChar)) {
             try {
               parse(type.slice(0, -1));
               error = {};
             } catch (memberofError) {
-              error = memberofError;
+              // Use the original error for including the whole type
             }
           }
         }

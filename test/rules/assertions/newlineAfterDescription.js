@@ -36,6 +36,36 @@ export default {
     {
       code: `
           /**
+           * Foo.
+           *
+           * Foo.
+           * @foo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'There must be a newline after the description of the JSDoc block.'
+        }
+      ],
+      output: `
+          /**
+           * Foo.
+           *
+           * Foo.
+           *
+           * @foo
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
            * Bar.
            *
            * Bar.

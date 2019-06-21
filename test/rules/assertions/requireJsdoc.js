@@ -18,6 +18,23 @@ export default {
       ]
     },
     {
+      code: `
+        function quux (foo) {
+
+        }`,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          exemptEmptyFunctions: true
+        }
+      }
+    },
+    {
       code: 'function myFunction() {}',
       errors: [{
         message: 'Missing JSDoc comment.',
@@ -972,17 +989,17 @@ export default {
   {
     code:
       `/**
-             * Description for A.
-             */
-            export default class App extends Component {
-                /**
-                 * Description for constructor.
-                 * @param {object[]} xs - xs
-                 */
-                constructor(xs) {
-                    this.a = xs;
-                }
-            }`,
+       * Description for A.
+       */
+      export default class App extends Component {
+          /**
+           * Description for constructor.
+           * @param {object[]} xs - xs
+           */
+          constructor(xs) {
+              this.a = xs;
+          }
+      }`,
     options: [{
       require: {
         ClassDeclaration: true,
@@ -997,17 +1014,17 @@ export default {
   {
     code:
       `/**
-             * Description for A.
+         * Description for A.
+         */
+        export class App extends Component {
+            /**
+             * Description for constructor.
+             * @param {object[]} xs - xs
              */
-            export class App extends Component {
-                /**
-                 * Description for constructor.
-                 * @param {object[]} xs - xs
-                 */
-                constructor(xs) {
-                    this.a = xs;
-                }
-            }`,
+            constructor(xs) {
+                this.a = xs;
+            }
+        }`,
     options: [{
       require: {
         ClassDeclaration: true,
@@ -1022,10 +1039,10 @@ export default {
   {
     code:
       `class A {
-                  constructor(xs) {
-                      this.a = xs;
-                  }
-              }`,
+          constructor(xs) {
+              this.a = xs;
+          }
+      }`,
     options: [{
       require: {
         ClassDeclaration: false,
@@ -1039,12 +1056,42 @@ export default {
   {
     code:
       `/**
-        Function doing something
+       * Function doing something
        */
        var myFunction = () => {}`,
     options: [{
       require: {
         ArrowFunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      ecmaVersion: 6
+    }
+  },
+  {
+    code:
+      `/**
+       * Function doing something
+       */
+       var myFunction = function () {}`,
+    options: [{
+      require: {
+        ArrowFunctionExpression: true
+      }
+    }],
+    parserOptions: {
+      ecmaVersion: 6
+    }
+  },
+  {
+    code:
+      `/**
+       * Function doing something
+       */
+       var myFunction = () => {}`,
+    options: [{
+      require: {
+        ArrowFunctionExpression: false
       }
     }],
     parserOptions: {

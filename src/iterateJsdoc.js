@@ -47,10 +47,6 @@ const curryUtils = (
     return jsdocUtils.getFunctionParameterNames(node);
   };
 
-  utils.getFunctionSourceCode = () => {
-    return sourceCode.getText(node);
-  };
-
   utils.isConstructor = () => {
     return node.parent && node.parent.kind === 'constructor';
   };

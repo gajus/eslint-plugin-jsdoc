@@ -59,6 +59,21 @@ export default {
       /**
        *
        */
+      const quux = class {
+        /**
+         * @implements {SomeClass}
+         */
+        constructor () {
+
+        }
+      }
+      `
+    },
+    {
+      code: `
+      /**
+       *
+       */
       function quux () {
 
       }

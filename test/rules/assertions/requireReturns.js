@@ -232,6 +232,24 @@ export default {
       parserOptions: {
         ecmaVersion: 8
       }
+    },
+    {
+      code: `
+          /**
+           * @returns {undefined}
+           * @returns {void}
+           */
+          function quux (foo) {
+
+            return foo;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Found more than one @returns declaration.'
+        }
+      ]
     }
   ],
   valid: [

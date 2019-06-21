@@ -58,7 +58,7 @@ export default iterateJsdoc(({
   const tags = utils.getTags(tagName);
 
   if (tags.length > 1) {
-    report('Found more than one  @' + tagName + ' declaration.');
+    report('Found more than one @' + tagName + ' declaration.');
   }
 
   // In case the code returns something, we expect a return value in JSDoc.

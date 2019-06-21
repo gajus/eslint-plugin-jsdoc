@@ -236,6 +236,16 @@ export default {
     },
     {
       code: ALL_JSDOC_TAGS_COMMENT + '\nfunction quux (foo) {}'
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }
+      `
     }
   ]
 };

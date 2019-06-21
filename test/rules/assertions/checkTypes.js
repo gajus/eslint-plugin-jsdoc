@@ -2042,6 +2042,16 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @param {Number<} Ignore the error as not a validating rule
+           */
+          function quux (foo) {
+
+          }
+      `
     }
   ]
 };

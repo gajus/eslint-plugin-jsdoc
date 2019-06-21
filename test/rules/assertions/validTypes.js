@@ -19,6 +19,38 @@ export default {
     {
       code: `
           /**
+           * @memberof module:namespace.SomeClass<~
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: module:namespace.SomeClass<~'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @memberof module:namespace.SomeClass~<
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: module:namespace.SomeClass~<'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
            * @borrows foo% as bar
            */
           function quux() {
@@ -241,6 +273,16 @@ export default {
       code: `
           /**
            * @memberof! module:namespace.SomeClass.
+           */
+          function quux() {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           *
            */
           function quux() {
 

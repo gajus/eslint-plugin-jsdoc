@@ -132,6 +132,23 @@ export default {
     },
     {
       code: `
+      class Foo {
+        /**
+         *
+         */
+        constructor () {
+
+        }
+      }
+      `,
+      settings: {
+        jsdoc: {
+          avoidExampleOnConstructors: true
+        }
+      }
+    },
+    {
+      code: `
       /**
        * @inheritdoc
        */
