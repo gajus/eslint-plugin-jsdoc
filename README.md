@@ -5054,6 +5054,15 @@ const language = {
   }
 }
 // Message: JSDoc @returns declaration present but return expression not available in function.
+
+class Foo {
+  /**
+   * @returns {string}
+   */
+  bar () {
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 The following patterns are not considered problems:
