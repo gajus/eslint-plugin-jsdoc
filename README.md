@@ -2784,6 +2784,35 @@ function quux(foo, bar, baz) {
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":false},"histype":"HisType"}}}
 // Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
 // Message: The type 'HerType' is undefined.
+
+class Foo {
+  /**
+   * @return {TEMPLATE_TYPE}
+   */
+  bar () {
+  }
+}
+// Message: The type 'TEMPLATE_TYPE' is undefined.
+
+class Foo {
+  /**
+   * @return {TEMPLATE_TYPE}
+   */
+  invalidTemplateReference () {
+  }
+}
+
+/**
+ * @template TEMPLATE_TYPE
+ */
+class Bar {
+  /**
+   * @return {TEMPLATE_TYPE}
+   */
+  validTemplateReference () {
+  }
+}
+// Message: The type 'TEMPLATE_TYPE' is undefined.
 ````
 
 The following patterns are not considered problems:
@@ -2934,6 +2963,29 @@ function quux(foo, bar, baz) {
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType<>"},"histype":"HisType.<>"}}}
 // Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+
+/**
+ * @template TEMPLATE_TYPE
+ */
+class Foo {
+  /**
+   * @return {TEMPLATE_TYPE}
+   */
+  bar () {
+  }
+}
+
+/**
+ * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
+ */
+class Foo {
+  /**
+   * @param {TEMPLATE_TYPE_A} baz
+   * @return {TEMPLATE_TYPE_B}
+   */
+  bar (baz) {
+  }
+}
 ````
 
 

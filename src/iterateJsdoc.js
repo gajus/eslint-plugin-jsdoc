@@ -189,20 +189,23 @@ const curryUtils = (
     return false;
   };
 
-  utils.classHasTag = (tagName) => {
+  utils.getClassJsdoc = () => {
     const classNode = utils.getClassNode();
     const classJsdocNode = getJSDocComment(sourceCode, classNode);
 
     if (classJsdocNode) {
       const indent = _.repeat(' ', classJsdocNode.loc.start.column);
-      const classJsdoc = parseComment(classJsdocNode, indent);
 
-      if (jsdocUtils.hasTag(classJsdoc, tagName)) {
-        return true;
-      }
+      return parseComment(classJsdocNode, indent);
     }
 
-    return false;
+    return null;
+  };
+
+  utils.classHasTag = (tagName) => {
+    const classJsdoc = utils.getClassJsdoc();
+
+    return classJsdoc && jsdocUtils.hasTag(classJsdoc, tagName);
   };
 
   utils.forEachTag = (tagName, arrayHandler) => {

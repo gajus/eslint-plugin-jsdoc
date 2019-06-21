@@ -154,6 +154,51 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+      class Foo {
+        /**
+         * @return {TEMPLATE_TYPE}
+         */
+        bar () {
+        }
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'TEMPLATE_TYPE\' is undefined.'
+        }
+      ]
+    },
+    {
+      code: `
+      class Foo {
+        /**
+         * @return {TEMPLATE_TYPE}
+         */
+        invalidTemplateReference () {
+        }
+      }
+      
+      /**
+       * @template TEMPLATE_TYPE
+       */
+      class Bar {
+        /**
+         * @return {TEMPLATE_TYPE}
+         */
+        validTemplateReference () {
+        }
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'TEMPLATE_TYPE\' is undefined.'
+        }
+      ]
     }
   ],
   valid: [
@@ -393,6 +438,35 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+      /**
+       * @template TEMPLATE_TYPE
+       */
+      class Foo {
+        /**
+         * @return {TEMPLATE_TYPE}
+         */
+        bar () {
+        }
+      }
+      `
+    },
+    {
+      code: `
+      /**
+       * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
+       */
+      class Foo {
+        /**
+         * @param {TEMPLATE_TYPE_A} baz
+         * @return {TEMPLATE_TYPE_B}
+         */
+        bar (baz) {
+        }
+      }
+      `
     }
   ]
 };
