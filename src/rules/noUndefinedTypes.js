@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unassigned-import
-import 'core-js/stable/array/flat-map';
+import 'flat-map-polyfill';
 import _ from 'lodash';
 import {parse as parseType, traverse} from 'jsdoctypeparser';
 import iterateJsdoc, {parseComment} from '../iterateJsdoc';

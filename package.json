@@ -7,6 +7,7 @@
   "dependencies": {
     "comment-parser": "^0.5.5",
     "debug": "^4.1.1",
+    "flat-map-polyfill": "^0.3.8",
     "jsdoctypeparser": "4.0.0",
     "lodash": "^4.17.11"
   },
@@ -22,7 +23,6 @@
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^5.1.4",
     "chai": "^4.2.0",
-    "core-js": "^3.1.4",
     "eslint": "^5.14.1",
     "eslint-config-canonical": "^17.1.1",
     "gitdown": "^2.5.8",
