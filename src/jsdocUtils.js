@@ -262,6 +262,7 @@ const lookupTable = {
       return node.type === 'ReturnStatement';
     },
     check (node) {
+      /* istanbul ignore next */
       if (!lookupTable.ReturnStatement.is(node)) {
         return false;
       }
@@ -280,6 +281,7 @@ const lookupTable = {
       return node.type === 'IfStatement';
     },
     check (node) {
+      /* istanbul ignore next */
       if (!lookupTable.IfStatement.is(node)) {
         return false;
       }
@@ -324,6 +326,7 @@ const lookupTable = {
       return node.type === 'TryStatement';
     },
     check (node) {
+      /* istanbul ignore next */
       if (!lookupTable.TryStatement.is(node)) {
         return false;
       }
@@ -332,12 +335,11 @@ const lookupTable = {
         return true;
       }
 
-      if (node.handler && node.handler.block) {
-        if (lookupTable['@default'].check(node)) {
+      if (node.handler && node.handler.body) {
+        if (lookupTable['@default'].check(node.handler.body)) {
           return true;
         }
       }
-
       if (lookupTable.BlockStatement.check(node.finalizer)) {
         return true;
       }
@@ -351,10 +353,12 @@ const lookupTable = {
     },
     check (node, context) {
       // E.g. the catch block statement is optional.
+      /* istanbul ignore next */
       if (typeof node === 'undefined' || node === null) {
         return false;
       }
 
+      /* istanbul ignore next */
       if (!lookupTable.BlockStatement.is(node)) {
         return false;
       }
@@ -411,10 +415,12 @@ const lookupTable = {
       }
 
       // Everything else cannot return anything.
+      /* istanbul ignore next */
       if (RETURNFREE_STATEMENTS.includes(node.type)) {
         return false;
       }
 
+      /* istanbul ignore next */
       // If we end up here, we stumbled upon an unknown element.
       // Most likely it is enough to add it to the blacklist.
       //
@@ -444,7 +450,7 @@ const hasReturnValue = (node, context, ignoreAsync) => {
       return lookupTable[item].check(node, context, ignoreAsync);
     }
   }
-
+  /* istanbul ignore next */
   throw new Error('Unknown element ' + node.type);
 };
 

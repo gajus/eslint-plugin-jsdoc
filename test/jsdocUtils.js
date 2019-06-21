@@ -45,4 +45,24 @@ describe('jsdocUtils', () => {
       });
     });
   });
+  describe('getFunctionParameterNames()', () => {
+    context('Unhandled param type', () => {
+      it('should throw with an unknown param type', () => {
+        expect(() => {
+          jsdocUtils.getFunctionParameterNames({params: [
+            {
+              type: 'AssignmentPattern'
+            }
+          ]});
+        }).to.throw('Unsupported function signature format.');
+      });
+    });
+  });
+  describe('hasDefinedTypeReturnTag()', () => {
+    context('Missing tag', () => {
+      it('should return `false` with a missing tag', () => {
+        expect(jsdocUtils.hasDefinedTypeReturnTag(null)).to.equal(false);
+      });
+    });
+  });
 });
