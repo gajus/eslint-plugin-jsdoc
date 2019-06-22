@@ -43,6 +43,11 @@ See ESLint's [RuleTester](https://eslint.org/docs/developer-guide/nodejs-api#rul
 for more on the allowable properties (e.g., `code`, `errors` (for invalid rules),
 `options`, `settings`, etc.).
 
+Note that besides `npm test`, there is `npm run test-cov` which shows more detailed
+information on coverage. Coverage should be maintained at 100%, and if there are
+a few guards in place for future use, the code block in question can be ignored
+by being preceded by `/* istanbul ignore next */`.
+
 ## Requirements for PRs
 
 PRs should be mergeable, [rebasing](https://git-scm.com/book/en/v2/Git-Branching-Rebasing)

@@ -64,8 +64,8 @@
     "build": "rm -fr ./dist && NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps",
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run add-assertions",
     "lint": "eslint ./src ./test",
-    "test-cov": "BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 5000",
-    "test": "BABEL_ENV=test nyc --reporter text-summary mocha --recursive --require @babel/register --reporter progress --timeout 5000"
+    "test-cov": "BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 7000",
+    "test": "BABEL_ENV=test nyc --reporter text-summary mocha --recursive --require @babel/register --reporter progress --timeout 7000"
   },
   "nyc": {
     "require": [
@@ -75,7 +75,12 @@
     "instrument": false,
     "include": [
       "src/"
-    ]
+    ],
+    "check-coverage": true,
+    "branches": 95,
+    "lines": 95,
+    "functions": 100,
+    "statements": 95
   },
   "version": "1.0.0"
 }
