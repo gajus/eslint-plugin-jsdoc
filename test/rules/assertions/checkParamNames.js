@@ -1,3 +1,10 @@
+// After `importMeta` no longer experimental, we can use this ESM
+//   approach over `__dirname`?
+// import {fileURLToPath} from 'url';
+// import {join, dirname} from 'path';
+// join(dirname(fileURLToPath(import.meta.url)), 'babel-eslint')
+import {join} from 'path';
+
 export default {
   invalid: [
     {
@@ -284,7 +291,7 @@ export default {
           constructor(private property: string) {}
         }
       `,
-      parser: '@typescript-eslint/parser',
+      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
       parserOptions: {
         sourceType: 'module'
       }

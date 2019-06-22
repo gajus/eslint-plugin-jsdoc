@@ -690,7 +690,7 @@ export default {
           constructor(private property: string) {}
         }
       `,
-      parser: '@typescript-eslint/parser',
+      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
       parserOptions: {
         sourceType: 'module'
       }
