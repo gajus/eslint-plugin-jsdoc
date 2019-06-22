@@ -172,6 +172,25 @@ export default {
           message: 'Duplicate @param "foo"'
         }
       ]
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param prop
+           */
+          constructor(private property: string) {}
+        }
+      `,
+      errors: [
+        {
+          message: 'Expected @param names to be "property". Got "prop".'
+        }
+      ],
+      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module'
+      }
     }
   ],
   valid: [
