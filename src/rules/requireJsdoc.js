@@ -18,19 +18,15 @@ const OPTIONS_SCHEMA = {
           default: {},
           properties: {
             ancestorsOnly: {
-              default: false,
               type: 'boolean'
             },
             cjs: {
-              default: true,
               type: 'boolean'
             },
             esm: {
-              default: true,
               type: 'boolean'
             },
             window: {
-              default: false,
               type: 'boolean'
             }
           },
@@ -142,10 +138,10 @@ export default iterateJsdoc(null, {
 
       if (publicOnly) {
         const opt = {
-          ancestorsOnly: publicOnly.ancestorsOnly,
-          esm: publicOnly.esm,
-          initModuleExports: publicOnly.cjs,
-          initWindow: publicOnly.window
+          ancestorsOnly: Boolean(_.get(publicOnly, 'ancestorsOnly', false)),
+          esm: Boolean(_.get(publicOnly, 'esm', true)),
+          initModuleExports: Boolean(_.get(publicOnly, 'cjs', true)),
+          initWindow: Boolean(_.get(publicOnly, 'window', false))
         };
         const parseResult = exportParser.parse(sourceCode.ast, node, opt);
         const exported = exportParser.isExported(node, parseResult, opt);
