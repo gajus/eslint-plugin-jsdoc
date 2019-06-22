@@ -89,7 +89,14 @@ export default {
   since: [],
   static: [],
   summary: [],
+
+  // `@template` is not part of standard jsdoc on https://jsdoc.app but is
+  //    used by Closure per:
+  //      https://github.com/google/closure-compiler/wiki/Generic-Types
+  //    and by TypeScript per:
+  //      https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc
   template: [],
+
   this: [],
   throws: [
     'exception'
