@@ -1,5 +1,12 @@
 /* eslint-disable no-restricted-syntax */
 
+// After `importMeta` no longer experimental, we can use this ESM
+//   approach over `__dirname`?
+// import {fileURLToPath} from 'url';
+// import {join, dirname} from 'path';
+// join(dirname(fileURLToPath(import.meta.url)), 'babel-eslint')
+import {join} from 'path';
+
 export default {
   invalid: [
     {
@@ -314,7 +321,7 @@ export default {
       ],
       settings: {
         jsdoc: {
-          matchingFileName: 'test/jsdocUtils.js'
+          matchingFileName: join(__dirname, '../', 'data/test.js')
         }
       }
     },

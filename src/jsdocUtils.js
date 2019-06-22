@@ -467,6 +467,22 @@ const isInlineTag = (tag) => {
 };
 */
 
+/**
+ * Parses GCC Generic/Template types
+ *
+ * @see {https://github.com/google/closure-compiler/wiki/Generic-Types}
+ * @param {JsDocTag} tag
+ * @returns {Array<string>}
+ */
+const parseClosureTemplateTag = (tag) => {
+  return tag.source
+    .split('@template')[1]
+    .split(',')
+    .map((type) => {
+      return type.trim();
+    });
+};
+
 export default {
   getFunctionParameterNames,
   getJsdocParameterNames,
@@ -480,5 +496,6 @@ export default {
   isNamepathTag,
   isPotentiallyEmptyNamepathTag,
   isTagWithType,
-  isValidTag
+  isValidTag,
+  parseClosureTemplateTag
 };

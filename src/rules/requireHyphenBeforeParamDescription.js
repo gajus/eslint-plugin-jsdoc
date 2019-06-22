@@ -56,12 +56,12 @@ export default iterateJsdoc(({
 }, {
   meta: {
     fixable: 'code',
+    schema: [
+      {
+        enum: ['always', 'never'],
+        type: 'string'
+      }
+    ],
     type: 'layout'
-  },
-  schema: [
-    {
-      enum: ['always'],
-      type: 'string'
-    }
-  ]
+  }
 });

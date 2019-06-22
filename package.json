@@ -24,7 +24,7 @@
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^5.1.4",
     "chai": "^4.2.0",
-    "eslint": "^5.14.1",
+    "eslint": "^6.0.0",
     "eslint-config-canonical": "^17.1.1",
     "gitdown": "^2.5.8",
     "glob": "^7.1.4",
@@ -54,7 +54,7 @@
   "main": "./dist/index.js",
   "name": "eslint-plugin-jsdoc",
   "peerDependencies": {
-    "eslint": ">=5.16.0"
+    "eslint": "^5.0.0 || ^6.0.0"
   },
   "repository": {
     "type": "git",
@@ -65,8 +65,8 @@
     "build": "rm -fr ./dist && NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps",
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run add-assertions",
     "lint": "eslint ./src ./test",
-    "test-cov": "BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 5000",
-    "test": "BABEL_ENV=test nyc --reporter text-summary mocha --recursive --require @babel/register --reporter progress --timeout 5000"
+    "test-cov": "BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 7000",
+    "test": "BABEL_ENV=test nyc --reporter text-summary mocha --recursive --require @babel/register --reporter progress --timeout 7000"
   },
   "nyc": {
     "require": [
@@ -76,7 +76,12 @@
     "instrument": false,
     "include": [
       "src/"
-    ]
+    ],
+    "check-coverage": true,
+    "branches": 95,
+    "lines": 95,
+    "functions": 100,
+    "statements": 95
   },
   "version": "1.0.0"
 }

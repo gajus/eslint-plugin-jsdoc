@@ -31,6 +31,36 @@ export default iterateJsdoc(({
   });
 }, {
   meta: {
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          contexts: {
+            oneOf: [
+              {
+                items: {
+                  type: 'string'
+                },
+                type: 'array'
+              },
+              {
+                type: 'string'
+              }
+            ]
+          },
+          exemptedBy: {
+            items: {
+              type: 'string'
+            },
+            type: 'array'
+          },
+          noDefaults: {
+            type: 'boolean'
+          }
+        },
+        type: 'object'
+      }
+    ],
     type: 'suggestion'
   },
   returns (context) {
@@ -50,35 +80,6 @@ export default iterateJsdoc(({
     return noDefaults ?
       contexts :
       [...new Set([...defaultContexts, ...contexts])];
-  },
-  schema: [
-    {
-      additionalProperties: false,
-      properties: {
-        contexts: {
-          oneOf: [
-            {
-              items: {
-                type: 'string'
-              },
-              type: 'array'
-            },
-            {
-              type: 'string'
-            }
-          ]
-        },
-        exemptedBy: {
-          items: {
-            type: 'string'
-          },
-          type: 'array'
-        },
-        noDefaults: {
-          type: 'boolean'
-        }
-      },
-      type: 'object'
-    }
-  ]
+  }
+
 });

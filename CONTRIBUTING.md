@@ -43,6 +43,11 @@ See ESLint's [RuleTester](https://eslint.org/docs/developer-guide/nodejs-api#rul
 for more on the allowable properties (e.g., `code`, `errors` (for invalid rules),
 `options`, `settings`, etc.).
 
+Note that besides `npm test`, there is `npm run test-cov` which shows more detailed
+information on coverage. Coverage should be maintained at 100%, and if there are
+a few guards in place for future use, the code block in question can be ignored
+by being preceded by `/* istanbul ignore next */`.
+
 ## Requirements for PRs
 
 PRs should be mergeable, [rebasing](https://git-scm.com/book/en/v2/Git-Branching-Rebasing)
@@ -53,3 +58,12 @@ can better show a progression of features.
 
 Commit messages should be worded clearly and the reason for any PR made clear
 by linking to an issue or giving a full description of what it achieves.
+
+## Merging
+
+We use [semantic-release](https://github.com/semantic-release/semantic-release)
+for preparing releases, so the commit messages (or at least the merge that
+brings them into `master`) must follow the
+[AngularJS commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines) with a special format such as `feat: describe new feature`
+in order for the releasing to occur and for the described items to be added
+to the release notes.
