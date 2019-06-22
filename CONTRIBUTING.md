@@ -58,3 +58,10 @@ can better show a progression of features.
 
 Commit messages should be worded clearly and the reason for any PR made clear
 by linking to an issue or giving a full description of what it achieves.
+
+## Merging
+
+We use [semantic-release](https://github.com/semantic-release/semantic-release)
+for preparing releases, so the commit messages (or at least the merge that
+brings them into `master`) ought to follow the
+[AngularJS commit guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines) with a special format such as `feat: describe new feature`.
