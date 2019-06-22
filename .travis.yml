@@ -1,17 +1,32 @@
 language: node_js
 node_js:
-  - node
+  - 12
   - 10
   - 8
+  - 6
 before_install:
   - npm config set depth 0
+before_script:
+  - 'if [ -n "${ESLINT-}" ]; then npm install --no-save "eslint@${ESLINT}" ; fi'
 notifications:
   email: false
 sudo: false
 script:
   - npm run test
-  - npm run lint
+  - 'if [ -n "${LINT-}" ]; then npm run lint; fi'
   - npm run build
+env:
+  matrix:
+    - ESLINT=6
+    - ESLINT=5
+matrix:
+  fast_finish: true
+  include:
+    - node_js: 'lts/*'
+      env: LINT=true
+  exclude:
+    - node_js: 6
+      env: ESLINT=6
 after_success:
   - export NODE_ENV=production
   - npm run build

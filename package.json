@@ -53,7 +53,7 @@
   "main": "./dist/index.js",
   "name": "eslint-plugin-jsdoc",
   "peerDependencies": {
-    "eslint": ">=6.0.0"
+    "eslint": "^5.0.0 || ^6.0.0"
   },
   "repository": {
     "type": "git",
