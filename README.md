@@ -678,7 +678,7 @@ function quux () {}
 function quux2 () {
 
 }
-// Settings: {"jsdoc":{"matchingFileName":"test/jsdocUtils.js"}}
+// Settings: {"jsdoc":{"matchingFileName":"/Users/brett/eslint-plugin-jsdoc/test/rules/data/test.js"}}
 // Message: @example error (semi): Missing semicolon.
 
 /**
