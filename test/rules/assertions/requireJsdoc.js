@@ -6,6 +6,73 @@ export default {
   invalid: [
     {
       code: `
+          export var test = function () {
+
+          };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression'
+        }
+      ],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          function test () {
+
+          }
+          export var test2 = test;
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration'
+        }
+      ],
+      options: [{
+        publicOnly: true,
+        require: {
+          FunctionDeclaration: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+          export const test = () => {
+
+          };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'ArrowFunctionExpression'
+        }
+      ],
+      options: [{
+        publicOnly: true,
+        require: {
+          ArrowFunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
         export default function () {}
       `,
       errors: [

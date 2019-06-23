@@ -3673,6 +3673,25 @@ be checked by the rule.
 The following patterns are considered problems:
 
 ````js
+export var test = function () {
+
+};
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+function test () {
+
+}
+export var test2 = test;
+// Options: [{"publicOnly":true,"require":{"FunctionDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
+export const test = () => {
+
+};
+// Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
 export default function () {}
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.

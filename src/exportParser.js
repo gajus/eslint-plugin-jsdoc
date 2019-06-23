@@ -206,12 +206,17 @@ const initVariables = function (node, globals, opts) {
       }
     });
     break;
+  } case 'ExportNamedDeclaration': {
+    if (node.declaration) {
+      initVariables(node.declaration, globals, opts);
+    }
+    break;
   }
   }
 };
 
 // Populates variable maps using AST
-const mapVariables = function (node, globals, opt) {
+const mapVariables = function (node, globals, opt, isExport) {
   /* istanbul ignore next */
   const opts = opt || {};
   /* istanbul ignore next */
@@ -234,7 +239,10 @@ const mapVariables = function (node, globals, opt) {
   } case 'VariableDeclaration': {
     node.declarations.forEach((declaration) => {
       const isGlobal = opts.initWindow && node.kind === 'var' && globals.props.window;
-      createSymbol(declaration.id, globals, declaration.init, globals, isGlobal);
+      const symbol = createSymbol(declaration.id, globals, declaration.init, globals, isGlobal);
+      if (symbol && isExport) {
+        symbol.exported = true;
+      }
     });
     break;
   } case 'FunctionDeclaration': {
@@ -253,10 +261,14 @@ const mapVariables = function (node, globals, opt) {
     break;
   } case 'ExportNamedDeclaration': {
     if (node.declaration) {
-      const symbol = createSymbol(node.declaration, globals, node.declaration);
-      /* istanbul ignore next */
-      if (symbol) {
-        symbol.exported = true;
+      if (node.declaration.type === 'VariableDeclaration') {
+        mapVariables(node.declaration, globals, opts, true);
+      } else {
+        const symbol = createSymbol(node.declaration, globals, node.declaration);
+        /* istanbul ignore next */
+        if (symbol) {
+          symbol.exported = true;
+        }
       }
     }
     node.specifiers.forEach((specifier) => {
@@ -314,7 +326,7 @@ const findNode = function (node, block, cache) {
 };
 
 const findExportedNode = function (block, node, cache) {
-  if (block.ANONYMOUS_DEFAULT) {
+  if (block.ANONYMOUS_DEFAULT === node) {
     return true;
   }
   /* istanbul ignore next */
