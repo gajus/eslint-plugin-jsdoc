@@ -46,6 +46,10 @@ const OPTIONS_SCHEMA = {
           default: false,
           type: 'boolean'
         },
+        ClassExpression: {
+          default: false,
+          type: 'boolean'
+        },
         FunctionDeclaration: {
           default: true,
           type: 'boolean'
@@ -175,6 +179,14 @@ export default iterateJsdoc(null, {
 
       ClassDeclaration (node) {
         if (!requireOption.ClassDeclaration) {
+          return;
+        }
+
+        checkJsDoc(node);
+      },
+
+      ClassExpression (node) {
+        if (!requireOption.ClassExpression) {
           return;
         }
 
