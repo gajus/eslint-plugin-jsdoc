@@ -3,7 +3,6 @@
 // import {fileURLToPath} from 'url';
 // import {join, dirname} from 'path';
 // join(dirname(fileURLToPath(import.meta.url)), 'babel-eslint')
-import {join} from 'path';
 
 export default {
   invalid: [
@@ -233,7 +232,7 @@ export default {
           message: 'Missing JSDoc @param "foo" declaration.'
         }
       ],
-      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
         sourceType: 'module'
       }
@@ -662,7 +661,7 @@ export default {
           /** @const {boolean} test */
           const test = something?.find(_ => _)
       `,
-      parser: join(__dirname, '../../../node_modules', 'babel-eslint')
+      parser: require.resolve('babel-eslint')
     },
     {
       code: `
@@ -709,7 +708,7 @@ export default {
           constructor(private property: string) {}
         }
       `,
-      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
         sourceType: 'module'
       }

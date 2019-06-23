@@ -3,7 +3,6 @@
 // import {fileURLToPath} from 'url';
 // import {join, dirname} from 'path';
 // join(dirname(fileURLToPath(import.meta.url)), 'babel-eslint')
-import {join} from 'path';
 
 export default {
   invalid: [
@@ -187,7 +186,7 @@ export default {
           message: 'Expected @param names to be "property". Got "prop".'
         }
       ],
-      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
         sourceType: 'module'
       }
@@ -310,7 +309,7 @@ export default {
           constructor(private property: string) {}
         }
       `,
-      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
         sourceType: 'module'
       }

@@ -5,7 +5,6 @@
 // import {fileURLToPath} from 'url';
 // import {join, dirname} from 'path';
 // join(dirname(fileURLToPath(import.meta.url)), 'babel-eslint')
-import {join} from 'path';
 
 export default {
   invalid: [
@@ -321,7 +320,7 @@ export default {
       ],
       settings: {
         jsdoc: {
-          matchingFileName: join(__dirname, '../', 'data/test.js')
+          matchingFileName: require.resolve('../data/test.js')
         }
       }
     },
