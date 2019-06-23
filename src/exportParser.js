@@ -282,21 +282,23 @@ const findNode = function (node, block, cache) {
 };
 
 const findExportedNode = function (block, node, cache) {
+  /* istanbul ignore next */
   if (block === null) {
     return false;
   }
   const blockCache = cache || [];
-  for (const key in block.props) {
-    if (Object.prototype.hasOwnProperty.call(block.props, key)) {
-      blockCache.push(block.props[key]);
-      if (block.props[key].exported) {
+  const {props} = block;
+  for (const key in props) {
+    if (Object.prototype.hasOwnProperty.call(props, key)) {
+      blockCache.push(props[key]);
+      if (props[key].exported) {
         if (findNode(node, block)) {
           return true;
         }
       }
-      if (!blockCache.includes(block.props[key]) && findExportedNode(block.props[key], node, blockCache)) {
-        return true;
-      }
+
+      // No need to check `props[key]` for exported nodes as ESM
+      //  exports are only global
     }
   }
 
