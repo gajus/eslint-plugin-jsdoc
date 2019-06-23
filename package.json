@@ -66,6 +66,8 @@
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run add-assertions",
     "lint": "eslint ./src ./test",
     "test-cov": "BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 7000",
+    "test-no-cov": "BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 7000",
+    "test-index": "BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 7000 test/rules/index.js",
     "test": "BABEL_ENV=test nyc --reporter text-summary mocha --recursive --require @babel/register --reporter progress --timeout 7000"
   },
   "nyc": {

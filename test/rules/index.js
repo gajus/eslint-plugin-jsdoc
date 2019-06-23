@@ -6,7 +6,8 @@ import config from '../../src';
 
 const ruleTester = new RuleTester();
 
-[
+// eslint-disable-next-line no-process-env
+(process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : [
   'check-alignment',
   'check-examples',
   'check-indentation',
@@ -33,7 +34,7 @@ const ruleTester = new RuleTester();
   'require-returns-description',
   'require-returns-type',
   'valid-types'
-].forEach((ruleName) => {
+]).forEach((ruleName) => {
   const parserOptions = {
     ecmaVersion: 6
   };
@@ -52,6 +53,27 @@ const ruleTester = new RuleTester();
 
     return assertion;
   });
+
+  /* eslint-disable no-process-env */
+  if (process.env.npm_config_invalid) {
+    const indexes = process.env.npm_config_invalid.split(',');
+    assertions.invalid = assertions.invalid.filter((assertion, idx) => {
+      return indexes.includes(String(idx));
+    });
+    if (!process.env.npm_config_valid) {
+      assertions.valid = [];
+    }
+  }
+  if (process.env.npm_config_valid) {
+    const indexes = process.env.npm_config_valid.split(',');
+    assertions.valid = assertions.valid.filter((assertion, idx) => {
+      return indexes.includes(String(idx));
+    });
+    if (!process.env.npm_config_invalid) {
+      assertions.invalid = [];
+    }
+  }
+  /* eslint-enable no-process-env */
 
   ruleTester.run(ruleName, config.rules[ruleName], assertions);
 });
