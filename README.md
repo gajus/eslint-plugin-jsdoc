@@ -899,6 +899,14 @@ function quux (foo, foo) {
 
 }
 // Message: Duplicate @param "foo"
+
+export class SomeClass {
+  /**
+   * @param prop
+   */
+  constructor(private property: string) {}
+}
+// Message: Expected @param names to be "property". Got "prop".
 ````
 
 The following patterns are not considered problems:
@@ -980,6 +988,13 @@ function quux ([a, b] = []) {
 function assign (employees) {
 
 };
+
+export class SomeClass {
+  /**
+   * @param property
+   */
+  constructor(private property: string) {}
+}
 ````
 
 
@@ -4689,6 +4704,14 @@ class A {
   }
 }
 // Message: Missing JSDoc @param "foo" declaration.
+
+export class SomeClass {
+  /**
+   * @param property
+   */
+  constructor(private property: string, private foo: number) {}
+}
+// Message: Missing JSDoc @param "foo" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -4993,6 +5016,13 @@ var A = class {
   quux (foo) {
 
   }
+}
+
+export class SomeClass {
+  /**
+   * @param property
+   */
+  constructor(private property: string) {}
 }
 ````
 

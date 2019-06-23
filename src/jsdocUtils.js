@@ -2,7 +2,7 @@ import _ from 'lodash';
 import tagNames from './tagNames';
 
 const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
-  return _.map(functionNode.params, (param) => {
+  const getParamName = (param) => {
     if (_.has(param, 'name')) {
       return param.name;
     }
@@ -23,8 +23,14 @@ const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
       return param.argument.name;
     }
 
+    if (param.type === 'TSParameterProperty') {
+      return getParamName(param.parameter);
+    }
+
     throw new Error('Unsupported function signature format.');
-  });
+  };
+
+  return functionNode.params.map(getParamName);
 };
 
 /**

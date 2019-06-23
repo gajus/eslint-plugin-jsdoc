@@ -1,3 +1,10 @@
+// After `importMeta` no longer experimental, we can use this ESM
+//   approach over `__dirname`?
+// import {fileURLToPath} from 'url';
+// import {join, dirname} from 'path';
+// join(dirname(fileURLToPath(import.meta.url)), 'babel-eslint')
+import {join} from 'path';
+
 export default {
   invalid: [
     {
@@ -165,6 +172,25 @@ export default {
           message: 'Duplicate @param "foo"'
         }
       ]
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param prop
+           */
+          constructor(private property: string) {}
+        }
+      `,
+      errors: [
+        {
+          message: 'Expected @param names to be "property". Got "prop".'
+        }
+      ],
+      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module'
+      }
     }
   ],
   valid: [
@@ -274,6 +300,20 @@ export default {
 
           };
       `
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param property
+           */
+          constructor(private property: string) {}
+        }
+      `,
+      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module'
+      }
     }
   ]
 };

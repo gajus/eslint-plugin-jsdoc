@@ -218,6 +218,25 @@ export default {
           message: 'Missing JSDoc @param "foo" declaration.'
         }
       ]
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param property
+           */
+          constructor(private property: string, private foo: number) {}
+        }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        }
+      ],
+      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module'
+      }
     }
   ],
   valid: [
@@ -680,6 +699,20 @@ export default {
             }
           }
       `
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param property
+           */
+          constructor(private property: string) {}
+        }
+      `,
+      parser: join(__dirname, '../../../node_modules', '@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module'
+      }
     }
   ]
 };
