@@ -73,6 +73,28 @@ export default {
     },
     {
       code: `
+          export let test = class {
+
+          };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'ClassExpression'
+        }
+      ],
+      options: [{
+        publicOnly: true,
+        require: {
+          ClassExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
         export default function () {}
       `,
       errors: [
@@ -1846,6 +1868,35 @@ export default {
     parserOptions: {
       sourceType: 'module'
     }
+  },
+  {
+    code: `
+      let test = class {
+
+      }
+    `,
+    options: [{
+      publicOnly: true,
+      require: {
+        ClassExpression: false
+      }
+    }]
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      let test = class {
+
+      }
+    `,
+    options: [{
+      publicOnly: true,
+      require: {
+        ClassExpression: true
+      }
+    }]
   },
   {
     code: `

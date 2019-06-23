@@ -29,13 +29,14 @@ be checked by the rule.
 
   - `ArrowFunctionExpression`
   - `ClassDeclaration`
+  - `ClassExpression`
   - `FunctionDeclaration` (defaults to `true`)
   - `FunctionExpression`
   - `MethodDefinition`
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
 |Options|`publicOnly`|
 |Settings|`exemptEmptyFunctions`|

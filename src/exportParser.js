@@ -81,7 +81,7 @@ const getSymbol = function (node, globals, scope, opt) {
 
     /* istanbul ignore next */
     return null;
-  } case 'ClassDeclaration': case 'FunctionExpression': case 'FunctionDeclaration': case 'ArrowFunctionExpression': {
+  } case 'ClassDeclaration': case 'ClassExpression': case 'FunctionExpression': case 'FunctionDeclaration': case 'ArrowFunctionExpression': {
     const val = createNode();
     val.props.prototype = createNode();
     val.props.prototype.type = 'object';

@@ -3659,13 +3659,14 @@ be checked by the rule.
 
   - `ArrowFunctionExpression`
   - `ClassDeclaration`
+  - `ClassExpression`
   - `FunctionDeclaration` (defaults to `true`)
   - `FunctionExpression`
   - `MethodDefinition`
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
 |Options|`publicOnly`|
 |Settings|`exemptEmptyFunctions`|
@@ -3690,6 +3691,12 @@ export const test = () => {
 
 };
 // Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export let test = class {
+
+};
+// Options: [{"publicOnly":true,"require":{"ClassExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export default function () {}
@@ -4429,6 +4436,19 @@ let test = function () {
 
 }
 // Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
+
+let test = class {
+
+}
+// Options: [{"publicOnly":true,"require":{"ClassExpression":false}}]
+
+/**
+ *
+ */
+let test = class {
+
+}
+// Options: [{"publicOnly":true,"require":{"ClassExpression":true}}]
 
 export function someMethod() {
 
