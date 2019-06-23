@@ -123,7 +123,7 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
   let symbol;
   switch (node.type) {
   case 'ClassDeclaration': {
-    if (node.id.type === 'Identifier') {
+    if (node.id && node.id.type === 'Identifier') {
       return createSymbol(node.id, globals, node, globals);
     }
     break;
@@ -155,7 +155,7 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
     debug('MemberExpression: Missing symbol: %s', node.property.name);
     break;
   } case 'FunctionDeclaration': {
-    if (node.id.type === 'Identifier') {
+    if (node.id && node.id.type === 'Identifier') {
       return createSymbol(node.id, globals, node, globals);
     }
     break;
