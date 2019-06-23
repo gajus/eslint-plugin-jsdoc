@@ -3673,6 +3673,22 @@ be checked by the rule.
 The following patterns are considered problems:
 
 ````js
+export default function () {}
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
+export default () => {}
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"ArrowFunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export default (function () {})
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+export default class {}
+// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"ClassDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
 function quux (foo) {
 
 }

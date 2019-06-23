@@ -43,12 +43,14 @@ See ESLint's [RuleTester](https://eslint.org/docs/developer-guide/nodejs-api#rul
 for more on the allowable properties (e.g., `code`, `errors` (for invalid rules),
 `options`, `settings`, etc.).
 
-Note that besides `npm test`, there is `npm run test-cov` which shows more detailed
-information on coverage. Coverage should be maintained at 100%, and if there are
-a few guards in place for future use, the code block in question can be ignored
-by being preceded by `/* istanbul ignore next */`. If you want to test without
-coverage at all, you can use `npm run test-no-cov`. To only test rules rather than
-other files, you can use `npm run test-index`.
+Note that besides `npm test`, there is `npm run test-cov` which shows more
+detailed information on coverage. Coverage should be maintained at 100%, and
+if there are a few guards in place for future use, the code block in question
+can be ignored by being preceded by `/* istanbul ignore next */` (including
+for warnings where the block is never passed over (i.e., the block is always
+entered)). If you want to test without coverage at all, you can use
+`npm run test-no-cov`. To only test rules rather than other files, you
+can use `npm run test-index`.
 
 To test specific rules, you can supply a comma-separated list with the `--rule`
 flag passed to `test-index`, e.g., for `check-examples` and `require-example`:

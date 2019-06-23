@@ -166,7 +166,7 @@ export default iterateJsdoc(null, {
           return;
         }
 
-        if (node.parent.type !== 'VariableDeclarator') {
+        if (!['VariableDeclarator', 'ExportDefaultDeclaration'].includes(node.parent.type)) {
           return;
         }
 
@@ -200,11 +200,9 @@ export default iterateJsdoc(null, {
           return;
         }
 
-        if (node.parent.type === 'VariableDeclarator' || node.parent.type === 'AssignmentExpression') {
+        if (['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type)) {
           checkJsDoc(node);
-        }
-
-        if (node.parent.type === 'Property' && node === node.parent.value) {
+        } else if (node.parent.type === 'Property' && node === node.parent.value) {
           checkJsDoc(node);
         }
       }

@@ -5,6 +5,102 @@
 export default {
   invalid: [
     {
+      code: `
+        export default function () {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration'
+        }
+      ],
+      options: [{
+        publicOnly: {
+          cjs: false,
+          esm: true,
+          window: false
+        },
+        require: {
+          FunctionDeclaration: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        export default () => {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'ArrowFunctionExpression'
+        }
+      ],
+      options: [{
+        publicOnly: {
+          cjs: false,
+          esm: true,
+          window: false
+        },
+        require: {
+          ArrowFunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+      export default (function () {})
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression'
+        }
+      ],
+      options: [{
+        publicOnly: {
+          cjs: false,
+          esm: true,
+          window: false
+        },
+        require: {
+          FunctionExpression: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      code: `
+        export default class {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'ClassDeclaration'
+        }
+      ],
+      options: [{
+        publicOnly: {
+          cjs: false,
+          esm: true,
+          window: false
+        },
+        require: {
+          ClassDeclaration: true
+        }
+      }],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
       code:
         `
           function quux (foo) {

@@ -80,10 +80,10 @@
       "src/"
     ],
     "check-coverage": true,
-    "branches": 95,
-    "lines": 95,
+    "branches": 100,
+    "lines": 100,
     "functions": 100,
-    "statements": 95
+    "statements": 100
   },
   "version": "1.0.0"
 }
