@@ -543,6 +543,16 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+
+          }
+      `
     }
   ]
 };

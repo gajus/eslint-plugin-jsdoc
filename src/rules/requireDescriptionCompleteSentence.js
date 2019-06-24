@@ -113,7 +113,9 @@ export default iterateJsdoc(({
   report,
   jsdocNode
 }) => {
-  if (validateDescription(jsdoc.description, report, jsdocNode, sourceCode)) {
+  if (!jsdoc.tags ||
+    validateDescription(jsdoc.description, report, jsdocNode, sourceCode)
+  ) {
     return;
   }
 

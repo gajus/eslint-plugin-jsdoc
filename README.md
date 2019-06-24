@@ -3267,6 +3267,13 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ *
+ */
+function quux () {
+
+}
 ````
 
 
