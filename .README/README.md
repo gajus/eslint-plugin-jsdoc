@@ -105,7 +105,7 @@ Finally, enable all of the rules that you would like to use.
 }
 ```
 
-You may also use the following which enables the rules commented
+Or you can simply use the following which enables the rules commented
 above as "recommended":
 
 ```json
