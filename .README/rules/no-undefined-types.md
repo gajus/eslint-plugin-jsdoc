@@ -11,7 +11,7 @@ In addition to considering globals found in code (or in ESLint-indicated
 name(path) definitions to also serve as a potential "type" for checking
 the tag types in the table below:
 
-`@callback`, `@class` (or `@constructor`), `@constant` (or `@const`), `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`), `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`, `@typedef`.
+`@callback`, `@class` (or `@constructor`), `@constant` (or `@const`), `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`), `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`, `@template` (for Closure/TypeScript), `@typedef`.
 
 The following types are always considered defined.
 
