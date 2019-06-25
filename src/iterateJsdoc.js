@@ -22,7 +22,7 @@ const parseComment = (commentNode, indent) => {
   })[0] || {};
 };
 
-const curryUtils = (
+const getUtils = (
   node,
   jsdoc,
   {
@@ -37,10 +37,11 @@ const curryUtils = (
     allowAugmentsExtendsWithoutParam,
     checkSeesForNamepaths
   },
-  ancestors,
-  sourceCode,
   context
 ) => {
+  const ancestors = context.getAncestors();
+  const sourceCode = context.getSourceCode();
+
   const utils = {};
 
   utils.getFunctionParameterNames = () => {
@@ -273,7 +274,7 @@ export {
 };
 
 /**
- * @typedef {ReturnType<typeof curryUtils>} Utils
+ * @typedef {ReturnType<typeof getUtils>} Utils
  * @typedef {ReturnType<typeof getSettings>} Settings
  *
  * @param {(arg: {utils: Utils, settings: Settings}) => any} iterator
@@ -320,8 +321,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           return;
         }
 
-        const ancestors = context.getAncestors();
-
         const indent = _.repeat(' ', jsdocNode.loc.start.column);
 
         const jsdoc = parseComment(jsdocNode, indent);
@@ -353,12 +352,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           });
         };
 
-        const utils = curryUtils(
+        const utils = getUtils(
           node,
           jsdoc,
           settings,
-          ancestors,
-          sourceCode,
           context
         );
 
