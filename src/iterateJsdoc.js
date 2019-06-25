@@ -277,14 +277,14 @@ export {
  * @typedef {ReturnType<typeof getSettings>} Settings
  *
  * @param {(arg: {utils: Utils, settings: Settings}) => any} iterator
- * @param {{meta: any, returns?: any}} opts
+ * @param {{contextDefaults: (true|string[]), meta: any, returns?: any}} ruleConfig
  */
-export default function iterateJsdoc (iterator, opts) {
-  const metaType = _.get(opts, 'meta.type');
+export default function iterateJsdoc (iterator, ruleConfig) {
+  const metaType = _.get(ruleConfig, 'meta.type');
   if (!metaType || !['problem', 'suggestion', 'layout'].includes(metaType)) {
     throw new TypeError('Rule must include `meta.type` option (with value "problem", "suggestion", or "layout")');
   }
-  if (typeof iterator !== 'function' && (!opts || typeof opts.returns !== 'function')) {
+  if (typeof iterator !== 'function' && (!ruleConfig || typeof ruleConfig.returns !== 'function')) {
     throw new TypeError('The iterator argument must be a function or an object with a `returns` method.');
   }
 
@@ -303,9 +303,11 @@ export default function iterateJsdoc (iterator, opts) {
 
       const settings = getSettings(context);
 
-      let contexts = opts.returns;
-      if (typeof opts.returns === 'function') {
-        contexts = opts.returns(context, sourceCode);
+      let contexts = ruleConfig.returns;
+      if (typeof ruleConfig.returns === 'function') {
+        contexts = ruleConfig.returns(context, sourceCode);
+      } else if (ruleConfig.contextDefaults) {
+        contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
       }
 
       if (!Array.isArray(contexts) && contexts) {
@@ -393,6 +395,6 @@ export default function iterateJsdoc (iterator, opts) {
         return obj;
       }, {});
     },
-    meta: opts.meta
+    meta: ruleConfig.meta
   };
 }

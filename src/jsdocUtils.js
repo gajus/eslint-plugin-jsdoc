@@ -483,7 +483,36 @@ const parseClosureTemplateTag = (tag) => {
     });
 };
 
+/**
+ * Checks user option for `contexts` array, defaulting to
+ *   contexts designated by the rule. Returns an array of
+ *   ESTree AST types, indicating allowable contexts.
+ *
+ * @param {*} context
+ * @param {true|string[]} defaultContexts
+ * @returns {string[]}
+ */
+const enforcedContexts = (context, defaultContexts) => {
+  /* istanbul ignore next */
+  const defltContexts = defaultContexts === true ? [
+    'ArrowFunctionExpression',
+    'FunctionDeclaration',
+    'FunctionExpression'
+  ] : defaultContexts;
+  const {
+    noDefaults,
+    contexts: ctxts = []
+  } = context.options[0] || {};
+
+  const contexts = typeof ctxts === 'string' ? [ctxts] : ctxts;
+
+  return noDefaults ?
+    contexts :
+    [...new Set([...defltContexts, ...contexts])];
+};
+
 export default {
+  enforcedContexts,
   getFunctionParameterNames,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,
