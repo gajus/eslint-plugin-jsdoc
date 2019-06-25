@@ -2323,20 +2323,14 @@ it by setting it to `false`.
 
 Set this to a string or array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-
-<a name="eslint-plugin-jsdoc-rules-match-description-options-1-nodefaults"></a>
-##### <code>noDefaults</code>
-
-By default, `contexts` will permit `ArrowFunctionExpression`,
-`FunctionDeclaration`, and `FunctionExpression`. Set this instead to `true` to
-have `contexts` override these.
+Overrides the defaults.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `noDefaults`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
 
 The following patterns are considered problems:
 
@@ -2347,7 +2341,7 @@ The following patterns are considered problems:
 const q = class {
 
 }
-// Options: [{"contexts":["ClassExpression"],"noDefaults":true}]
+// Options: [{"contexts":["ClassExpression"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2356,7 +2350,7 @@ const q = class {
 const q = {
 
 };
-// Options: [{"contexts":["ObjectExpression"],"noDefaults":true}]
+// Options: [{"contexts":["ObjectExpression"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2551,8 +2545,12 @@ function quux () {
 class quux {
 
 }
+<<<<<<< HEAD
 // Options: [{"contexts":["ClassDeclaration"],"noDefaults":true}]
 >>>>>>> feat(match-description): allow `main description: string|boolean` to override or disable main description separate from default
+=======
+// Options: [{"contexts":["ClassDeclaration"]}]
+>>>>>>> docs: generate docs
 // Message: JSDoc description does not satisfy the regex pattern.
 
 class MyClass {
@@ -2561,7 +2559,7 @@ class MyClass {
    */
   myClassField = 1
 }
-// Options: [{"contexts":["ClassProperty"],"noDefaults":true}]
+// Options: [{"contexts":["ClassProperty"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2570,7 +2568,7 @@ class MyClass {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 const myObject = {
@@ -2579,7 +2577,7 @@ const myObject = {
    */
   myProp: true
 };
-// Options: [{"contexts":["Property"],"noDefaults":true}]
+// Options: [{"contexts":["Property"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 ````
 
@@ -2740,7 +2738,7 @@ class MyClass {
    */
   myClassField = 1
 }
-// Options: [{"contexts":["ClassProperty"],"noDefaults":true}]
+// Options: [{"contexts":["ClassProperty"]}]
 
 /**
  * Foo.
@@ -2748,7 +2746,7 @@ class MyClass {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
 
 const myObject = {
   /**
@@ -2756,7 +2754,7 @@ const myObject = {
    */
   myProp: true
 };
-// Options: [{"contexts":[],"noDefaults":true}]
+// Options: [{"contexts":[]}]
 
 /**
  * foo.
@@ -2764,7 +2762,7 @@ const myObject = {
 const q = class {
 
 }
-// Options: [{"contexts":[],"noDefaults":true}]
+// Options: [{"contexts":[]}]
 
 /**
  * foo.
@@ -2772,7 +2770,7 @@ const q = class {
 const q = {
 
 };
-// Options: [{"contexts":[],"noDefaults":true}]
+// Options: [{"contexts":[]}]
 ````
 
 
@@ -3514,18 +3512,16 @@ An options object may have any of the following properties:
 
 - `contexts` - Set to a string or array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+  Overrides the defaults.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
     block avoids the need for a `@description`.
-- `noDefaults` - By default, `contexts` will permit `ArrowFunctionExpression`,
-  `FunctionDeclaration`, and `FunctionExpression`. Set this instead to `true` to
-  have `contexts` override these.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`description`|
 |Aliases|`desc`|
-|Options|`contexts`, `exemptedBy`, `noDefaults`|
+|Options|`contexts`, `exemptedBy`|
 
 The following patterns are considered problems:
 
@@ -3544,7 +3540,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"contexts":"ClassDeclaration"}]
+// Options: [{"contexts":["ClassDeclaration"]}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3553,7 +3549,7 @@ class quux {
 class quux {
 
 }
-// Options: [{"contexts":"ClassDeclaration","noDefaults":true}]
+// Options: [{"contexts":["ClassDeclaration"]}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3579,7 +3575,7 @@ function quux () {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
 // Message: Missing JSDoc @description declaration.
 <<<<<<< HEAD
 
@@ -3647,7 +3643,7 @@ class quux {
 function quux () {
 
 }
-// Options: [{"noDefaults":true}]
+// Options: [{"contexts":["ClassDeclaration"]}]
 
 /**
  * @type {MyCallback}
@@ -3947,8 +3943,6 @@ be checked by the rule.
 
 - `contexts` - Set this to a string or array of strings representing the additional
   AST context where you wish the rule to be applied (e.g., `Property` for properties).
-  Note that unlike `require-description` and `match-description`, this rule has no
-  `noDefaults` option because its defaults are instead set up by `require`.
 
 |||
 |---|---|
