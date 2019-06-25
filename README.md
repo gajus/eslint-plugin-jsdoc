@@ -804,6 +804,15 @@ function quux () {
 
 }
 // Message: There must be no indentation.
+
+/**
+ * foo
+ *
+ * @param bar
+ *  baz
+ */
+var a = {}
+// Message: There must be no indentation.
 ````
 
 The following patterns are not considered problems:
