@@ -70,6 +70,7 @@ const getJSDocComment = function (sourceCode, node) {
     return findJSDocComment(parent.parent);
 
   case 'ArrowFunctionExpression':
+  case 'ObjectExpression':
   case 'FunctionExpression':
     if (
       parent.type !== 'CallExpression' &&
