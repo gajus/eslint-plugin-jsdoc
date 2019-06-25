@@ -2252,7 +2252,7 @@ The default is this basic expression to match English sentences (Support
 for Unicode upper case may be added in a future version when it can be handled
 by our supported Node versions):
 
-``^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$``
+``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]$``
 
 <a name="eslint-plugin-jsdoc-rules-match-description-options-1"></a>
 #### Options
@@ -2367,7 +2367,7 @@ function quux () {
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
- * тест.
+ * Abc.
  */
 function quux () {
 
@@ -2530,6 +2530,33 @@ class quux {
 // Options: [{"contexts":["ClassDeclaration"],"noDefaults":true}]
 >>>>>>> feat(match-description): allow `main description: string|boolean` to override or disable main description separate from default
 // Message: JSDoc description does not satisfy the regex pattern.
+
+class MyClass {
+  /**
+   * Abc
+   */
+  myClassField = 1
+}
+// Options: [{"contexts":["ClassProperty"],"noDefaults":true}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+interface quux {
+
+}
+// Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+const myObject = {
+  /**
+   * Bad description
+   */
+  myProp: true
+};
+// Options: [{"contexts":["Property"],"noDefaults":true}]
+// Message: JSDoc description does not satisfy the regex pattern.
 ````
 
 The following patterns are not considered problems:
@@ -2682,6 +2709,30 @@ class quux {
 
 }
 // Options: [{"tags":{"main description":true}}]
+
+class MyClass {
+  /**
+   * Abc.
+   */
+  myClassField = 1
+}
+// Options: [{"contexts":["ClassProperty"],"noDefaults":true}]
+
+/**
+ * Foo.
+ */
+interface quux {
+
+}
+// Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
+
+const myObject = {
+  /**
+   * Bad description
+   */
+  myProp: true
+};
+// Options: [{"contexts":[],"noDefaults":true}]
 ````
 
 
@@ -3490,6 +3541,7 @@ interface quux {
 }
 // Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
 // Message: Missing JSDoc @description declaration.
+<<<<<<< HEAD
 
 /**
  *
@@ -3508,6 +3560,8 @@ var quux = {
 };
 // Options: [{"contexts":["ObjectExpression"]}]
 // Message: Missing JSDoc @description declaration.
+=======
+>>>>>>> fix(match-description): tighten default regex to require punctuation at the end even if only a single character
 ````
 
 The following patterns are not considered problems:
@@ -3583,6 +3637,7 @@ var quux = class {
 var quux = {
 
 };
+// Message: Missing JSDoc @description declaration.
 ````
 
 
@@ -3849,6 +3904,11 @@ be checked by the rule.
   - `FunctionDeclaration` (defaults to `true`)
   - `FunctionExpression`
   - `MethodDefinition`
+
+- `contexts` - Set this to a string or array of strings representing the additional
+  AST context where you wish the rule to be applied (e.g., `Property` for properties).
+  Note that unlike `require-description` and `match-description`, this rule has no
+  `noDefaults` option because its defaults are instead set up by `require`.
 
 |||
 |---|---|
@@ -4180,6 +4240,12 @@ export function someMethod() {
 
 }
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
+const myObject = {
+  myProp: true
+};
+// Options: [{"contexts":["Property"]}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -4650,6 +4716,11 @@ exports.someMethod = function() {
 
 }
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
+
+const myObject = {
+  myProp: true
+};
+// Options: [{"contexts":[]}]
 ````
 
 

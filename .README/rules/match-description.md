@@ -6,7 +6,7 @@ The default is this basic expression to match English sentences (Support
 for Unicode upper case may be added in a future version when it can be handled
 by our supported Node versions):
 
-``^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$``
+``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]$``
 
 #### Options
 

@@ -266,7 +266,13 @@ export default {
           var quux = {
 
           };
-      `
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.'
+        }
+      ],
+      parser: require.resolve('@typescript-eslint/parser')
     }
   ]
 };

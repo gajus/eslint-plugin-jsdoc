@@ -417,6 +417,80 @@ export default {
           noDefaults: true
         }
       ]
+    },
+    {
+      code: `
+      class MyClass {
+        /**
+         * Abc
+         */
+        myClassField = 1
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'ClassProperty'
+          ],
+          noDefaults: true
+        }
+      ],
+      parser: require.resolve('@typescript-eslint/parser')
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
+          interface quux {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration'
+          ],
+          noDefaults: true
+        }
+      ],
+      parser: require.resolve('@typescript-eslint/parser')
+    },
+    {
+      code: `
+          const myObject = {
+            /**
+             * Bad description
+             */
+            myProp: true
+          };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'Property'
+          ],
+          noDefaults: true
+        }
+      ]
     }
   ],
   valid: [
@@ -651,6 +725,61 @@ export default {
         {tags: {
           'main description': true
         }}
+      ]
+    },
+    {
+      code: `
+      class MyClass {
+        /**
+         * Abc.
+         */
+        myClassField = 1
+      }
+      `,
+      options: [
+        {
+          contexts: [
+            'ClassProperty'
+          ],
+          noDefaults: true
+        }
+      ],
+      parser: require.resolve('@typescript-eslint/parser')
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           */
+          interface quux {
+
+          }
+      `,
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration'
+          ],
+          noDefaults: true
+        }
+      ],
+      parser: require.resolve('@typescript-eslint/parser')
+    },
+    {
+      code: `
+          const myObject = {
+            /**
+             * Bad description
+             */
+            myProp: true
+          };
+      `,
+      options: [
+        {
+          contexts: [
+          ],
+          noDefaults: true
+        }
       ]
     }
   ]
