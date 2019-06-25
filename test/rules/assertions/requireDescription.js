@@ -31,7 +31,7 @@ export default {
       ],
       options: [
         {
-          contexts: 'ClassDeclaration'
+          contexts: ['ClassDeclaration']
         }
       ]
     },
@@ -51,8 +51,7 @@ export default {
       ],
       options: [
         {
-          contexts: 'ClassDeclaration',
-          noDefaults: true
+          contexts: ['ClassDeclaration']
         }
       ]
     },
@@ -109,8 +108,7 @@ export default {
         {
           contexts: [
             'TSInterfaceDeclaration'
-          ],
-          noDefaults: true
+          ]
         }
       ],
       parser: require.resolve('@typescript-eslint/parser')
@@ -218,7 +216,7 @@ export default {
       `,
       options: [
         {
-          noDefaults: true
+          contexts: ['ClassDeclaration']
         }
       ]
     },

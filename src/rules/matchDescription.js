@@ -71,17 +71,10 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           contexts: {
-            oneOf: [
-              {
-                items: {
-                  type: 'string'
-                },
-                type: 'array'
-              },
-              {
-                type: 'string'
-              }
-            ]
+            items: {
+              type: 'string'
+            },
+            type: 'array'
           },
           mainDescription: {
             oneOf: [
@@ -97,10 +90,6 @@ export default iterateJsdoc(({
           matchDescription: {
             format: 'regex',
             type: 'string'
-          },
-          noDefaults: {
-            default: false,
-            type: 'boolean'
           },
           tags: {
             patternProperties: {

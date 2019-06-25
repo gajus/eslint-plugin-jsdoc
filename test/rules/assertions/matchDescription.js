@@ -19,8 +19,7 @@ export default {
         {
           contexts: [
             'ClassExpression'
-          ],
-          noDefaults: true
+          ]
         }
       ]
     },
@@ -43,8 +42,7 @@ export default {
         {
           contexts: [
             'ObjectExpression'
-          ],
-          noDefaults: true
+          ]
         }
       ]
     },
@@ -461,8 +459,7 @@ export default {
         {
           contexts: [
             'ClassDeclaration'
-          ],
-          noDefaults: true
+          ]
         }
       ]
     },
@@ -485,8 +482,7 @@ export default {
         {
           contexts: [
             'ClassProperty'
-          ],
-          noDefaults: true
+          ]
         }
       ],
       parser: require.resolve('@typescript-eslint/parser')
@@ -510,8 +506,7 @@ export default {
         {
           contexts: [
             'TSInterfaceDeclaration'
-          ],
-          noDefaults: true
+          ]
         }
       ],
       parser: require.resolve('@typescript-eslint/parser')
@@ -535,8 +530,7 @@ export default {
         {
           contexts: [
             'Property'
-          ],
-          noDefaults: true
+          ]
         }
       ]
     }
@@ -784,8 +778,7 @@ export default {
         {
           contexts: [
             'ClassProperty'
-          ],
-          noDefaults: true
+          ]
         }
       ],
       parser: require.resolve('@typescript-eslint/parser')
@@ -803,8 +796,7 @@ export default {
         {
           contexts: [
             'TSInterfaceDeclaration'
-          ],
-          noDefaults: true
+          ]
         }
       ],
       parser: require.resolve('@typescript-eslint/parser')
@@ -821,8 +813,7 @@ export default {
       options: [
         {
           contexts: [
-          ],
-          noDefaults: true
+          ]
         }
       ]
     },
@@ -838,8 +829,7 @@ export default {
       options: [
         {
           contexts: [
-          ],
-          noDefaults: true
+          ]
         }
       ]
     },
@@ -855,8 +845,7 @@ export default {
       options: [
         {
           contexts: [
-          ],
-          noDefaults: true
+          ]
         }
       ]
     }
