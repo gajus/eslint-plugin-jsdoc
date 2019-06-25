@@ -17,6 +17,22 @@ export default {
           message: 'There must be no indentation.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * foo
+           *
+           * @param bar
+           *  baz
+           */
+          var a = {}
+      `,
+      errors: [
+        {
+          message: 'There must be no indentation.'
+        }
+      ]
     }
   ],
   valid: [
