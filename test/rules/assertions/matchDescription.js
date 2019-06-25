@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ]
@@ -26,6 +27,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ]
@@ -41,11 +43,34 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
       options: [{
         matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.'
+      }]
+    },
+    {
+      code: `
+          /**
+           * Abc.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [{
+        tags: {
+          'main description': '[\u0410-\u042F][\u0410-\u044F]+\\.',
+          param: true
+        }
       }]
     },
     {
@@ -59,6 +84,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ]
@@ -76,12 +102,65 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
       options: [
         {
           tags: {
+            param: true
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Foo
+           *
+           * @param foo foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          tags: {
+            'main description': '^[a-zA-Z]*$',
+            param: true
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Foo
+           *
+           * @param foo foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          tags: {
+            'main description': false,
             param: true
           }
         }
@@ -100,6 +179,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -122,6 +202,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ]
@@ -139,6 +220,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -163,6 +245,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -190,6 +273,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ]
@@ -205,6 +289,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -227,6 +312,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -249,6 +335,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -273,6 +360,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -296,6 +384,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -304,6 +393,30 @@ export default {
           param: '[\u0410-\u042F][\u0410-\u044F]+\\.'
         }
       }]
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
+          class quux {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'ClassDeclaration'
+          ],
+          noDefaults: true
+        }
+      ]
     }
   ],
   valid: [
@@ -493,6 +606,52 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {tags: {
+          'main description': false
+        }}
+      ]
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
+          class quux {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
+          class quux {
+
+          }
+      `,
+      options: [
+        {tags: {
+          'main description': true
+        }}
+      ]
     }
   ]
 };

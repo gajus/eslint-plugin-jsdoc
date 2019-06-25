@@ -12,8 +12,13 @@ export default iterateJsdoc(({
   const options = context.options[0] || {};
 
   const validateDescription = (description, tag) => {
+    const tagName = tag.tag;
+    const tagOptions = options.tags || {};
+    if (tagOptions[tagName] === false) {
+      return;
+    }
     const regex = new RegExp(
-      (tag && typeof options.tags[tag] === 'string' ? options.tags[tag] :
+      (typeof tagOptions[tagName] === 'string' ? tagOptions[tagName] :
         options.matchDescription
 
       // If supporting Node >= 10, we could loosen to this for the
@@ -23,16 +28,16 @@ export default iterateJsdoc(({
     );
 
     if (!regex.test(description)) {
-      report('JSDoc description does not satisfy the regex pattern.');
-
-      return true;
+      report('JSDoc description does not satisfy the regex pattern.', null, tag);
     }
-
-    return false;
   };
 
-  if (jsdoc.description && validateDescription(jsdoc.description)) {
-    return;
+  if (jsdoc.description) {
+    validateDescription(jsdoc.description, {
+      // Add one as description would typically be into block
+      line: jsdoc.line + 1,
+      tag: 'main description'
+    });
   }
 
   if (!options.tags || !Object.keys(options.tags).length) {
@@ -47,17 +52,35 @@ export default iterateJsdoc(({
   tags.some((tag) => {
     const description = _.trimStart(tag.description, '- ');
 
-    return validateDescription(description, tag.tag);
+    return validateDescription(description, tag);
   });
 }, {
+  contextDefaults: true,
   meta: {
     schema: [
       {
         additionalProperties: false,
         properties: {
+          contexts: {
+            oneOf: [
+              {
+                items: {
+                  type: 'string'
+                },
+                type: 'array'
+              },
+              {
+                type: 'string'
+              }
+            ]
+          },
           matchDescription: {
             format: 'regex',
             type: 'string'
+          },
+          noDefaults: {
+            default: false,
+            type: 'boolean'
           },
           tags: {
             patternProperties: {
@@ -68,7 +91,6 @@ export default iterateJsdoc(({
                     type: 'string'
                   },
                   {
-                    enum: [true],
                     type: 'boolean'
                   }
                 ]

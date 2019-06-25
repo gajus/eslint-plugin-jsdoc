@@ -2299,15 +2299,42 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+If you wish to override the main function description without changing the
+default `mainDescription`, you may use `tags` with `main description`:
 
-By default, only the main function description is linted.
+```js
+{
+  'jsdoc/match-description': ['error', {tags: {
+    'main description': '[A-Z].*\\.',
+    param: true,
+    returns: true
+  }}]
+}
+```
+
+There is no need to add `"main description": true`, as by default, the main
+function (and only the main function) is linted, though you may disable checking
+it by setting it to `false`.
+
+<a name="eslint-plugin-jsdoc-rules-match-description-options-1-contexts"></a>
+##### <code>contexts</code>
+
+Set this to a string or array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+
+<a name="eslint-plugin-jsdoc-rules-match-description-options-1-nodefaults"></a>
+##### <code>noDefaults</code>
+
+By default, `contexts` will permit `ArrowFunctionExpression`,
+`FunctionDeclaration`, and `FunctionExpression`. Set this instead to `true` to
+have `contexts` override these.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+|Options|`contexts`, `noDefaults`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
 
 The following patterns are considered problems:
 
@@ -2335,6 +2362,18 @@ function quux () {
 
 }
 // Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
+<<<<<<< HEAD
+=======
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * тест.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"main description":"[А-Я][А-я]+\\.","param":true}}]
+>>>>>>> feat(match-description): allow `main description: string|boolean` to override or disable main description separate from default
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2354,6 +2393,28 @@ function quux (foo) {
 
 }
 // Options: [{"tags":{"param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo
+ *
+ * @param foo foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"main description":"^[a-zA-Z]*$","param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo
+ *
+ * @param foo foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"main description":false,"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2456,6 +2517,18 @@ function quux () {
 
 }
 // Options: [{"tags":{"param":"[А-Я][А-я]+\\."}}]
+<<<<<<< HEAD
+=======
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+class quux {
+
+}
+// Options: [{"contexts":["ClassDeclaration"],"noDefaults":true}]
+>>>>>>> feat(match-description): allow `main description: string|boolean` to override or disable main description separate from default
 // Message: JSDoc description does not satisfy the regex pattern.
 ````
 
@@ -2585,6 +2658,30 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * foo.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"main description":false}}]
+
+/**
+ * foo.
+ */
+class quux {
+
+}
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+class quux {
+
+}
+// Options: [{"tags":{"main description":true}}]
 ````
 
 

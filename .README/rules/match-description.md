@@ -50,14 +50,39 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+If you wish to override the main function description without changing the
+default `mainDescription`, you may use `tags` with `main description`:
 
-By default, only the main function description is linted.
+```js
+{
+  'jsdoc/match-description': ['error', {tags: {
+    'main description': '[A-Z].*\\.',
+    param: true,
+    returns: true
+  }}]
+}
+```
+
+There is no need to add `"main description": true`, as by default, the main
+function (and only the main function) is linted, though you may disable checking
+it by setting it to `false`.
+
+##### `contexts`
+
+Set this to a string or array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+
+##### `noDefaults`
+
+By default, `contexts` will permit `ArrowFunctionExpression`,
+`FunctionDeclaration`, and `FunctionExpression`. Set this instead to `true` to
+have `contexts` override these.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+|Options|`contexts`, `noDefaults`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
 
 <!-- assertions matchDescription -->
