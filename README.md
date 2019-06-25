@@ -2300,19 +2300,21 @@ tag should be linted with the `matchDescription` value (or the default).
 ```
 
 If you wish to override the main function description without changing the
-default `mainDescription`, you may use `tags` with `main description`:
+default `match-description`, you may use `mainDescription`:
 
 ```js
 {
-  'jsdoc/match-description': ['error', {tags: {
-    'main description': '[A-Z].*\\.',
-    param: true,
-    returns: true
-  }}]
+  'jsdoc/match-description': ['error', {
+    mainDescription: '[A-Z].*\\.',
+    tags: {
+      param: true,
+      returns: true
+    }
+  }]
 }
 ```
 
-There is no need to add `"main description": true`, as by default, the main
+There is no need to add `mainDescription: true`, as by default, the main
 function (and only the main function) is linted, though you may disable checking
 it by setting it to `false`.
 
@@ -2372,8 +2374,12 @@ function quux () {
 function quux () {
 
 }
+<<<<<<< HEAD
 // Options: [{"tags":{"main description":"[А-Я][А-я]+\\.","param":true}}]
 >>>>>>> feat(match-description): allow `main description: string|boolean` to override or disable main description separate from default
+=======
+// Options: [{"mainDescription":"[А-Я][А-я]+\\.","tags":{"param":true}}]
+>>>>>>> Switch "main description" on `tags` to its own option as `mainDescription`
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2403,7 +2409,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"main description":"^[a-zA-Z]*$","param":true}}]
+// Options: [{"mainDescription":"^[a-zA-Z]*$","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2414,7 +2420,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"main description":false,"param":true}}]
+// Options: [{"mainDescription":false,"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2692,7 +2698,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"main description":false}}]
+// Options: [{"mainDescription":false}]
 
 /**
  * foo.
@@ -2708,7 +2714,7 @@ class quux {
 class quux {
 
 }
-// Options: [{"tags":{"main description":true}}]
+// Options: [{"mainDescription":true}]
 
 class MyClass {
   /**
