@@ -58,7 +58,8 @@ flag passed to `test-index`, e.g., for `check-examples` and `require-example`:
 `npm run --rule=check-examples,require-example test-index`.
 
 You can further limit this by providing `--invalid` and/or `--valid` flags
-with a comma-separated list of 0-based indexes that you wish to include. For
+with a comma-separated list of 0-based indexes that you wish to include (also
+accepts negative offsets from the end, e.g., `-1` for the last item). For
 example, to check the first and third invalid tests of `check-examples`
 alon with the second valid test, you can run:
 
