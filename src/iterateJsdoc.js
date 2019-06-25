@@ -385,8 +385,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         return {
           ArrowFunctionExpression: checkJsdoc,
           FunctionDeclaration: checkJsdoc,
-          FunctionExpression: checkJsdoc,
-          ObjectExpression: checkJsdoc
+          FunctionExpression: checkJsdoc
         };
       }
 
