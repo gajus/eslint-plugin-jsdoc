@@ -5,6 +5,54 @@ export default {
           /**
            * foo.
            */
+          const q = class {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'ClassExpression'
+          ],
+          noDefaults: true
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
+          const q = {
+
+          };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'ObjectExpression'
+          ],
+          noDefaults: true
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
           function quux () {
 
           }
@@ -768,6 +816,40 @@ export default {
              * Bad description
              */
             myProp: true
+          };
+      `,
+      options: [
+        {
+          contexts: [
+          ],
+          noDefaults: true
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
+          const q = class {
+
+          }
+      `,
+      options: [
+        {
+          contexts: [
+          ],
+          noDefaults: true
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
+          const q = {
+
           };
       `,
       options: [

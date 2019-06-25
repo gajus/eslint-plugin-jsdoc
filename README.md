@@ -2344,6 +2344,24 @@ The following patterns are considered problems:
 /**
  * foo.
  */
+const q = class {
+
+}
+// Options: [{"contexts":["ClassExpression"],"noDefaults":true}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+const q = {
+
+};
+// Options: [{"contexts":["ObjectExpression"],"noDefaults":true}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
 function quux () {
 
 }
@@ -2737,6 +2755,22 @@ const myObject = {
    * Bad description
    */
   myProp: true
+};
+// Options: [{"contexts":[],"noDefaults":true}]
+
+/**
+ * foo.
+ */
+const q = class {
+
+}
+// Options: [{"contexts":[],"noDefaults":true}]
+
+/**
+ * foo.
+ */
+const q = {
+
 };
 // Options: [{"contexts":[],"noDefaults":true}]
 ````
