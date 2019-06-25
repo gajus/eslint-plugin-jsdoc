@@ -71,7 +71,7 @@ it by setting it to `false`.
 
 ##### `contexts`
 
-Set this to a string or array of strings representing the AST context
+Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
 Overrides the defaults.
 

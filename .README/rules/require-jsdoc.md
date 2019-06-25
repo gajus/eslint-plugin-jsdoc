@@ -34,7 +34,7 @@ be checked by the rule.
   - `FunctionExpression`
   - `MethodDefinition`
 
-- `contexts` - Set this to a string or array of strings representing the additional
+- `contexts` - Set this to an array of strings representing the additional
   AST context where you wish the rule to be applied (e.g., `Property` for properties).
 
 |||

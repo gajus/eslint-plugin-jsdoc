@@ -2321,7 +2321,7 @@ it by setting it to `false`.
 <a name="eslint-plugin-jsdoc-rules-match-description-options-1-contexts"></a>
 ##### <code>contexts</code>
 
-Set this to a string or array of strings representing the AST context
+Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
 Overrides the defaults.
 
@@ -3510,7 +3510,7 @@ Requires that all functions have a description.
 
 An options object may have any of the following properties:
 
-- `contexts` - Set to a string or array of strings representing the AST context
+- `contexts` - Set to an array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
   Overrides the defaults.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -3941,7 +3941,7 @@ be checked by the rule.
   - `FunctionExpression`
   - `MethodDefinition`
 
-- `contexts` - Set this to a string or array of strings representing the additional
+- `contexts` - Set this to an array of strings representing the additional
   AST context where you wish the rule to be applied (e.g., `Property` for properties).
 
 |||
