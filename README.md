@@ -511,6 +511,20 @@ function quux (foo) {
 
 }
 // Message: Expected JSDoc block to be aligned.
+
+/**
+  * A jsdoc not attached to any node.
+*/
+// Message: Expected JSDoc block to be aligned.
+
+class Foo {
+  /**
+   *  Some method
+    * @param a
+   */
+  quux(a) {}
+}
+// Message: Expected JSDoc block to be aligned.
 ````
 
 The following patterns are not considered problems:
@@ -537,6 +551,11 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+/*  <- JSDoc must start with 2 stars.
+  *    So this is unchecked.
+ */
+function quux (foo) {}
 ````
 
 
@@ -788,7 +807,7 @@ Reports invalid padding inside JSDoc block.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 
 The following patterns are considered problems:
@@ -803,6 +822,13 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Message: There must be no indentation.
+
+/**
+ * Foo
+ *   bar
+ */
+class Moo {}
 // Message: There must be no indentation.
 ````
 
@@ -1048,7 +1074,7 @@ Reports against Google Closure Compiler syntax.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 
 The following patterns are considered problems:
@@ -1162,13 +1188,17 @@ yields
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 |Settings|`tagNamePreference`, `additionalTagNames`|
 
 The following patterns are considered problems:
 
 ````js
+/** @typoo {string} */
+let a;
+// Message: Invalid JSDoc tag name "typoo".
+
 /**
  * @Param
  */
@@ -1443,7 +1473,7 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
@@ -1958,6 +1988,9 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"preferredTypes":{"<>":"[]"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "[]".
+
+/** @typedef {String} foo */
+// Message: Invalid JSDoc @typedef "foo" type "String"; prefer: "string".
 ````
 
 The following patterns are not considered problems:
@@ -2597,7 +2630,7 @@ This rule takes one argument. If it is `"always"` then a problem is raised when 
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 
 The following patterns are considered problems:
@@ -2762,7 +2795,7 @@ An option object may have the following keys:
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
@@ -3050,7 +3083,7 @@ Requires that block description and tag description are written in complete sent
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`param`, `returns`|
 |Aliases|`arg`, `argument`, `return`|
 
@@ -3632,7 +3665,7 @@ This rule takes one argument. If it is `"always"` then a problem is raised when 
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 
@@ -6040,7 +6073,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|For name only unless otherwise stated: `alias`, `augments`, `borrows`, `callback`, `class` (for name and type), `constant` (for name and type), `enum` (for type), `event`, `external`, `fires`, `function`, `implements` (for type), `interface`, `lends`, `listens`, `member` (for name and type),  `memberof`, `memberof!`, `mixes`, `mixin`, `module` (for name and type), `name`, `namespace` (for name and type), `param` (for name and type), `property` (for name and type), `returns` (for type), `this`, `throws` (for type), `type` (for type), `typedef` (for name and type), `yields` (for type)|
 |Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|

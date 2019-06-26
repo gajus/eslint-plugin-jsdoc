@@ -17,6 +17,20 @@ export default {
           message: 'There must be no indentation.'
         }
       ]
+    },
+    {
+      code: `
+        /**
+         * Foo
+         *   bar
+         */
+        class Moo {}
+      `,
+      errors: [
+        {
+          message: 'There must be no indentation.'
+        }
+      ]
     }
   ],
   valid: [

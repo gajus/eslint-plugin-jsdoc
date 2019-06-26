@@ -269,16 +269,115 @@ const getSettings = (context) => {
   return settings;
 };
 
-export {
-  parseComment
+/**
+ * Create the report function
+ *
+ * @param {Object} context
+ * @param {Object} commentNode
+ */
+const makeReport = (context, commentNode) => {
+  const report = (message, fix = null, jsdocLoc = null, data = null) => {
+    let loc;
+
+    if (jsdocLoc) {
+      const lineNumber = commentNode.loc.start.line + jsdocLoc.line;
+
+      loc = {
+        end: {line: lineNumber},
+        start: {line: lineNumber}
+      };
+      if (jsdocLoc.column) {
+        const colNumber = commentNode.loc.start.column + jsdocLoc.column;
+
+        loc.end.column = colNumber;
+        loc.start.column = colNumber;
+      }
+    }
+
+    context.report({
+      data,
+      fix,
+      loc,
+      message,
+      node: commentNode
+    });
+  };
+
+  return report;
 };
 
 /**
  * @typedef {ReturnType<typeof getUtils>} Utils
  * @typedef {ReturnType<typeof getSettings>} Settings
+ * @typedef {(
+ *   arg: {
+ *     context: Object,
+ *     sourceCode: Object,
+ *     indent: string,
+ *     jsdoc: Object,
+ *     jsdocNode: Object,
+ *     node: Object | null,
+ *     report: ReturnType<typeof makeReport>,
+ *     settings: Settings,
+ *     utils: Utils,
+ *   }
+ * ) => any } JsdocVisitor
+ */
+
+/**
+ * Create a eslint rule that iterate over all JSDocs, regardless of whether
+ * it is attached to a function-like node.
  *
- * @param {(arg: {utils: Utils, settings: Settings}) => any} iterator
- * @param {{contextDefaults: (true|string[]), meta: any, returns?: any}} ruleConfig
+ * @param {JsdocVisitor} iterator
+ * @param {{meta: any}} ruleConfig
+ */
+const iterateAllJsdocs = (iterator, ruleConfig) => {
+  return {
+    create (context) {
+      return {
+        'Program:exit' () {
+          const comments = context.getSourceCode().getAllComments();
+
+          comments.forEach((comment) => {
+            if (!context.getSourceCode().getText(comment).startsWith('/**')) {
+              return;
+            }
+
+            const indent = _.repeat(' ', comment.loc.start.column);
+            const jsdoc = parseComment(comment, indent);
+            const settings = getSettings(context);
+
+            iterator({
+              context,
+              indent,
+              jsdoc,
+              jsdocNode: comment,
+              node: null,
+              report: makeReport(context, comment),
+              settings: getSettings(context),
+              sourceCode: context.getSourceCode(),
+              utils: getUtils(null, jsdoc, settings, context)
+            });
+          });
+        }
+      };
+    },
+    meta: ruleConfig.meta
+  };
+};
+
+export {
+  parseComment
+};
+
+/**
+ * @param {JsdocVisitor} iterator
+ * @param {{
+ *   meta: any,
+ *   contextDefaults?: true | string[],
+ *   returns?: any,
+ *   iterateAllJsdocs?: true,
+ * }} ruleConfig
  */
 export default function iterateJsdoc (iterator, ruleConfig) {
   const metaType = _.get(ruleConfig, 'meta.type');
@@ -287,6 +386,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   }
   if (typeof iterator !== 'function' && (!ruleConfig || typeof ruleConfig.returns !== 'function')) {
     throw new TypeError('The iterator argument must be a function or an object with a `returns` method.');
+  }
+
+  if (ruleConfig.iterateAllJsdocs) {
+    return iterateAllJsdocs(iterator, {meta: ruleConfig.meta});
   }
 
   return {
@@ -325,32 +428,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
 
         const jsdoc = parseComment(jsdocNode, indent);
 
-        const report = (message, fix = null, jsdocLoc = null, data = null) => {
-          let loc;
-
-          if (jsdocLoc) {
-            const lineNumber = jsdocNode.loc.start.line + jsdocLoc.line;
-
-            loc = {
-              end: {line: lineNumber},
-              start: {line: lineNumber}
-            };
-            if (jsdocLoc.column) {
-              const colNumber = jsdocNode.loc.start.column + jsdocLoc.column;
-
-              loc.end.column = colNumber;
-              loc.start.column = colNumber;
-            }
-          }
-
-          context.report({
-            data,
-            fix,
-            loc,
-            message,
-            node: jsdocNode
-          });
-        };
+        const report = makeReport(context, jsdocNode);
 
         const utils = getUtils(
           node,
