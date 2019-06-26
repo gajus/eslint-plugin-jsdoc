@@ -90,6 +90,74 @@ export default {
           message: 'Missing JSDoc @description description.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          interface quux {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration'
+          ],
+          noDefaults: true
+        }
+      ],
+      parser: require.resolve('@typescript-eslint/parser')
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          var quux = class {
+
+          };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'ClassExpression'
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          var quux = {
+
+          };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'ObjectExpression'
+          ]
+        }
+      ]
     }
   ],
   valid: [
@@ -168,6 +236,37 @@ export default {
           exemptedBy: ['type']
         }
       ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          interface quux {
+
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser')
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          var quux = class {
+
+          };
+      `
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          var quux = {
+
+          };
+      `
     }
   ]
 };
