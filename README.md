@@ -2322,7 +2322,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"matchDescription":"[А-Я]+."}]
+// Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2443,7 +2443,7 @@ function quux (foo) {
 function quux () {
 
 }
-// Options: [{"tags":{"param":"[А-Я]+."}}]
+// Options: [{"tags":{"param":"[А-Я][А-я]+\\."}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 ````
 
@@ -2488,7 +2488,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"matchDescription":"[А-Я]+."}]
+// Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
 
 /**
  * @param notRet
@@ -2497,7 +2497,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"returns":"[А-Я]+."}}]
+// Options: [{"tags":{"returns":"[А-Я][А-я]+\\."}}]
 
 /**
  * Foo

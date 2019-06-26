@@ -45,7 +45,7 @@ export default {
         }
       ],
       options: [{
-        matchDescription: '[\u0410-\u042F]+.'
+        matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.'
       }]
     },
     {
@@ -301,7 +301,7 @@ export default {
       ],
       options: [{
         tags: {
-          param: '[\u0410-\u042F]+.'
+          param: '[\u0410-\u042F][\u0410-\u044F]+\\.'
         }
       }]
     }
@@ -367,7 +367,7 @@ export default {
           }
       `,
       options: [{
-        matchDescription: '[\u0410-\u042F]+.'
+        matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.'
       }]
     },
     {
@@ -382,7 +382,7 @@ export default {
       `,
       options: [{
         tags: {
-          returns: '[\u0410-\u042F]+.'
+          returns: '[\u0410-\u042F][\u0410-\u044F]+\\.'
         }
       }]
     },
