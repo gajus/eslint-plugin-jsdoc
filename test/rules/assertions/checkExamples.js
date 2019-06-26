@@ -301,7 +301,32 @@ export default {
     {
       code: `
           /**
-           * @example quux2()
+           * @example const i = 5;
+           *          quux2()
+           */
+          function quux2 () {
+
+          }
+      `,
+      errors: [
+        {
+          message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).'
+        },
+        {
+          message: '@example error (semi): Missing semicolon.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          matchingFileName: 'test/jsdocUtils.js'
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @example const i = 5;
+           *          quux2()
            */
           function quux2 () {
 

@@ -149,15 +149,41 @@ export default iterateJsdoc(({
 
     if (filename) {
       const config = cli.getConfigForFile(filename);
+
+      // We need a new instance to ensure that the rules that may only
+      //  be available to `filename` (if it has its own `.eslintrc`),
+      //  will be defined.
+      const cliFile = new CLIEngine({
+        allowInlineConfig,
+        baseConfig: config,
+        configFile,
+        reportUnusedDisableDirectives,
+        rulePaths,
+        rules,
+        useEslintrc: eslintrcForExamples
+      });
+
       const linter = new Linter();
 
-      const linterRules = [...cli.getRules().entries()].reduce((obj, [key, val]) => {
+      // Force external rules to become available on `cli`
+      try {
+        cliFile.executeOnText('');
+      } catch (error) {
+        // Ignore
+      }
+
+      const linterRules = [...cliFile.getRules().entries()].reduce((obj, [key, val]) => {
         obj[key] = val;
 
         return obj;
       }, {});
 
       linter.defineRules(linterRules);
+
+      if (config.parser) {
+        // eslint-disable-next-line global-require, import/no-dynamic-require
+        linter.defineParser(config.parser, require(config.parser));
+      }
 
       // Could also support `disableFixes` and `allowInlineConfig`
       messages = linter.verify(source, config, {

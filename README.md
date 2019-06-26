@@ -684,7 +684,18 @@ function quux () {}
 // Message: @example error (semi): Missing semicolon.
 
 /**
- * @example quux2()
+ * @example const i = 5;
+ *          quux2()
+ */
+function quux2 () {
+
+}
+// Settings: {"jsdoc":{"matchingFileName":"test/jsdocUtils.js"}}
+// Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
+
+/**
+ * @example const i = 5;
+ *          quux2()
  */
 function quux2 () {
 
