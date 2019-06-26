@@ -689,7 +689,7 @@ function quux () {}
 function quux2 () {
 
 }
-// Settings: {"jsdoc":{"matchingFileName":"test/rules/data/dummyfile.js"}}
+// Settings: {"jsdoc":{"matchingFileName":"test/rules/data/dummy.js"}}
 // Message: @example error (semi): Missing semicolon.
 
 /**

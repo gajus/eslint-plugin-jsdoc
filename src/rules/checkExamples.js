@@ -159,6 +159,7 @@ export default iterateJsdoc(({
 
       linter.defineRules(linterRules);
 
+      // Could also support `disableFixes` and `allowInlineConfig`
       messages = linter.verify(source, config, {
         filename,
         reportUnusedDisableDirectives
