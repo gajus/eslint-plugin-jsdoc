@@ -49,6 +49,9 @@ const ruleTester = new RuleTester();
   });
 
   assertions.valid = assertions.valid.map((assertion) => {
+    if (assertion.errors) {
+      throw new Error(`Valid assertions for rule ${ruleName} should not have an \`errors\` array.`);
+    }
     assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
 
     return assertion;

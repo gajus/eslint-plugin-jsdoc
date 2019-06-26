@@ -3372,6 +3372,33 @@ function quux () {
 
 }
 // Message: Missing JSDoc @description description.
+
+/**
+ *
+ */
+interface quux {
+
+}
+// Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
+// Message: Missing JSDoc @description declaration.
+
+/**
+ *
+ */
+var quux = class {
+
+};
+// Options: [{"contexts":["ClassExpression"]}]
+// Message: Missing JSDoc @description declaration.
+
+/**
+ *
+ */
+var quux = {
+
+};
+// Options: [{"contexts":["ObjectExpression"]}]
+// Message: Missing JSDoc @description declaration.
 ````
 
 The following patterns are not considered problems:
@@ -3426,6 +3453,27 @@ function quux () {
 
 }
 // Options: [{"exemptedBy":["type"]}]
+
+/**
+ *
+ */
+interface quux {
+
+}
+
+/**
+ *
+ */
+var quux = class {
+
+};
+
+/**
+ *
+ */
+var quux = {
+
+};
 ````
 
 
