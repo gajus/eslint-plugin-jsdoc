@@ -389,7 +389,11 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         };
       }
 
-      return jsdocUtils.getContextObject(contexts, checkJsdoc);
+      return contexts.reduce((obj, prop) => {
+        obj[prop] = checkJsdoc;
+
+        return obj;
+      }, {});
     },
     meta: ruleConfig.meta
   };

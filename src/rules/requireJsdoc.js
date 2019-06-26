@@ -7,12 +7,6 @@ import getJSDocComment from '../eslint/getJSDocComment';
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
   properties: {
-    contexts: {
-      items: {
-        type: 'string'
-      },
-      type: 'array'
-    },
     publicOnly: {
       oneOf: [
         {
@@ -170,64 +164,60 @@ export default iterateJsdoc(null, {
       }
     };
 
-    // eslint-disable-next-line fp/no-mutating-assign
-    return Object.assign(
-      jsdocUtils.getContextObject(jsdocUtils.enforcedContexts(context, []), checkJsDoc),
-      {
-        ArrowFunctionExpression (node) {
-          if (!requireOption.ArrowFunctionExpression) {
-            return;
-          }
+    return {
+      ArrowFunctionExpression (node) {
+        if (!requireOption.ArrowFunctionExpression) {
+          return;
+        }
 
-          if (!['VariableDeclarator', 'ExportDefaultDeclaration'].includes(node.parent.type)) {
-            return;
-          }
+        if (!['VariableDeclarator', 'ExportDefaultDeclaration'].includes(node.parent.type)) {
+          return;
+        }
 
+        checkJsDoc(node);
+      },
+
+      ClassDeclaration (node) {
+        if (!requireOption.ClassDeclaration) {
+          return;
+        }
+
+        checkJsDoc(node);
+      },
+
+      ClassExpression (node) {
+        if (!requireOption.ClassExpression) {
+          return;
+        }
+
+        checkJsDoc(node);
+      },
+
+      FunctionDeclaration (node) {
+        if (!requireOption.FunctionDeclaration) {
+          return;
+        }
+
+        checkJsDoc(node);
+      },
+
+      FunctionExpression (node) {
+        if (requireOption.MethodDefinition && node.parent.type === 'MethodDefinition') {
           checkJsDoc(node);
-        },
 
-        ClassDeclaration (node) {
-          if (!requireOption.ClassDeclaration) {
-            return;
-          }
+          return;
+        }
 
+        if (!requireOption.FunctionExpression) {
+          return;
+        }
+
+        if (['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type)) {
           checkJsDoc(node);
-        },
-
-        ClassExpression (node) {
-          if (!requireOption.ClassExpression) {
-            return;
-          }
-
+        } else if (node.parent.type === 'Property' && node === node.parent.value) {
           checkJsDoc(node);
-        },
-
-        FunctionDeclaration (node) {
-          if (!requireOption.FunctionDeclaration) {
-            return;
-          }
-
-          checkJsDoc(node);
-        },
-
-        FunctionExpression (node) {
-          if (requireOption.MethodDefinition && node.parent.type === 'MethodDefinition') {
-            checkJsDoc(node);
-
-            return;
-          }
-
-          if (!requireOption.FunctionExpression) {
-            return;
-          }
-
-          if (['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type)) {
-            checkJsDoc(node);
-          } else if (node.parent.type === 'Property' && node === node.parent.value) {
-            checkJsDoc(node);
-          }
         }
       }
-    );
+    };
   }
 });

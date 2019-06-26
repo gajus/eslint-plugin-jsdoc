@@ -37,16 +37,26 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           contexts: {
-            items: {
-              type: 'string'
-            },
-            type: 'array'
+            oneOf: [
+              {
+                items: {
+                  type: 'string'
+                },
+                type: 'array'
+              },
+              {
+                type: 'string'
+              }
+            ]
           },
           exemptedBy: {
             items: {
               type: 'string'
             },
             type: 'array'
+          },
+          noDefaults: {
+            type: 'boolean'
           }
         },
         type: 'object'

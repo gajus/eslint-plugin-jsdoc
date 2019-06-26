@@ -1010,26 +1010,6 @@ export default {
         ecmaVersion: 6,
         sourceType: 'module'
       }
-    },
-    {
-      code: `
-          const myObject = {
-            myProp: true
-          };
-      `,
-      errors: [
-        {
-          message: 'Missing JSDoc comment.',
-          type: 'Property'
-        }
-      ],
-      options: [
-        {
-          contexts: [
-            'Property'
-          ]
-        }
-      ]
     }
   ],
   valid: [{
@@ -1983,16 +1963,5 @@ export default {
         FunctionExpression: true
       }
     }]
-  }, {
-    code: `
-        const myObject = {
-          myProp: true
-        };
-    `,
-    options: [
-      {
-        contexts: []
-      }
-    ]
   }]
 };

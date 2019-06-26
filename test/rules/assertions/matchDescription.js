@@ -5,59 +5,12 @@ export default {
           /**
            * foo.
            */
-          const q = class {
-
-          }
-      `,
-      errors: [
-        {
-          line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ],
-      options: [
-        {
-          contexts: [
-            'ClassExpression'
-          ]
-        }
-      ]
-    },
-    {
-      code: `
-          /**
-           * foo.
-           */
-          const q = {
-
-          };
-      `,
-      errors: [
-        {
-          line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ],
-      options: [
-        {
-          contexts: [
-            'ObjectExpression'
-          ]
-        }
-      ]
-    },
-    {
-      code: `
-          /**
-           * foo.
-           */
           function quux () {
 
           }
       `,
       errors: [
         {
-          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ]
@@ -73,7 +26,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ]
@@ -89,34 +41,11 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
       options: [{
         matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.'
-      }]
-    },
-    {
-      code: `
-          /**
-           * Abc.
-           */
-          function quux () {
-
-          }
-      `,
-      errors: [
-        {
-          line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ],
-      options: [{
-        mainDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
-        tags: {
-          param: true
-        }
       }]
     },
     {
@@ -130,7 +59,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ]
@@ -148,64 +76,11 @@ export default {
       `,
       errors: [
         {
-          line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
       options: [
         {
-          tags: {
-            param: true
-          }
-        }
-      ]
-    },
-    {
-      code: `
-          /**
-           * Foo
-           *
-           * @param foo foo.
-           */
-          function quux (foo) {
-
-          }
-      `,
-      errors: [
-        {
-          line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ],
-      options: [
-        {
-          mainDescription: '^[a-zA-Z]*$',
-          tags: {
-            param: true
-          }
-        }
-      ]
-    },
-    {
-      code: `
-          /**
-           * Foo
-           *
-           * @param foo foo.
-           */
-          function quux (foo) {
-
-          }
-      `,
-      errors: [
-        {
-          line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ],
-      options: [
-        {
-          mainDescription: false,
           tags: {
             param: true
           }
@@ -225,7 +100,6 @@ export default {
       `,
       errors: [
         {
-          line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -248,7 +122,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ]
@@ -266,7 +139,6 @@ export default {
       `,
       errors: [
         {
-          line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -291,7 +163,6 @@ export default {
       `,
       errors: [
         {
-          line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -319,7 +190,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ]
@@ -335,7 +205,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -358,7 +227,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -381,7 +249,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -406,7 +273,6 @@ export default {
       `,
       errors: [
         {
-          line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -430,7 +296,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'JSDoc description does not satisfy the regex pattern.'
         }
       ],
@@ -439,100 +304,6 @@ export default {
           param: '[\u0410-\u042F][\u0410-\u044F]+\\.'
         }
       }]
-    },
-    {
-      code: `
-          /**
-           * foo.
-           */
-          class quux {
-
-          }
-      `,
-      errors: [
-        {
-          line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ],
-      options: [
-        {
-          contexts: [
-            'ClassDeclaration'
-          ]
-        }
-      ]
-    },
-    {
-      code: `
-      class MyClass {
-        /**
-         * Abc
-         */
-        myClassField = 1
-      }
-      `,
-      errors: [
-        {
-          line: 4,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ],
-      options: [
-        {
-          contexts: [
-            'ClassProperty'
-          ]
-        }
-      ],
-      parser: require.resolve('@typescript-eslint/parser')
-    },
-    {
-      code: `
-          /**
-           * foo.
-           */
-          interface quux {
-
-          }
-      `,
-      errors: [
-        {
-          line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ],
-      options: [
-        {
-          contexts: [
-            'TSInterfaceDeclaration'
-          ]
-        }
-      ],
-      parser: require.resolve('@typescript-eslint/parser')
-    },
-    {
-      code: `
-          const myObject = {
-            /**
-             * Bad description
-             */
-            myProp: true
-          };
-      `,
-      errors: [
-        {
-          line: 4,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ],
-      options: [
-        {
-          contexts: [
-            'Property'
-          ]
-        }
-      ]
     }
   ],
   valid: [
@@ -722,132 +493,6 @@ export default {
 
           }
       `
-    },
-    {
-      code: `
-          /**
-           * foo.
-           */
-          function quux () {
-
-          }
-      `,
-      options: [
-        {mainDescription: false}
-      ]
-    },
-    {
-      code: `
-          /**
-           * foo.
-           */
-          class quux {
-
-          }
-      `,
-      errors: [
-        {
-          line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ]
-    },
-    {
-      code: `
-          /**
-           * foo.
-           */
-          class quux {
-
-          }
-      `,
-      options: [
-        {mainDescription: true}
-      ]
-    },
-    {
-      code: `
-      class MyClass {
-        /**
-         * Abc.
-         */
-        myClassField = 1
-      }
-      `,
-      options: [
-        {
-          contexts: [
-            'ClassProperty'
-          ]
-        }
-      ],
-      parser: require.resolve('@typescript-eslint/parser')
-    },
-    {
-      code: `
-          /**
-           * Foo.
-           */
-          interface quux {
-
-          }
-      `,
-      options: [
-        {
-          contexts: [
-            'TSInterfaceDeclaration'
-          ]
-        }
-      ],
-      parser: require.resolve('@typescript-eslint/parser')
-    },
-    {
-      code: `
-          const myObject = {
-            /**
-             * Bad description
-             */
-            myProp: true
-          };
-      `,
-      options: [
-        {
-          contexts: [
-          ]
-        }
-      ]
-    },
-    {
-      code: `
-          /**
-           * foo.
-           */
-          const q = class {
-
-          }
-      `,
-      options: [
-        {
-          contexts: [
-          ]
-        }
-      ]
-    },
-    {
-      code: `
-          /**
-           * foo.
-           */
-          const q = {
-
-          };
-      `,
-      options: [
-        {
-          contexts: [
-          ]
-        }
-      ]
     }
   ]
 };

@@ -2252,7 +2252,7 @@ The default is this basic expression to match English sentences (Support
 for Unicode upper case may be added in a future version when it can be handled
 by our supported Node versions):
 
-``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]$``
+``^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$``
 
 <a name="eslint-plugin-jsdoc-rules-match-description-options-1"></a>
 #### Options
@@ -2299,60 +2299,19 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
-If you wish to override the main function description without changing the
-default `match-description`, you may use `mainDescription`:
 
-```js
-{
-  'jsdoc/match-description': ['error', {
-    mainDescription: '[A-Z].*\\.',
-    tags: {
-      param: true,
-      returns: true
-    }
-  }]
-}
-```
-
-There is no need to add `mainDescription: true`, as by default, the main
-function (and only the main function) is linted, though you may disable checking
-it by setting it to `false`.
-
-<a name="eslint-plugin-jsdoc-rules-match-description-options-1-contexts"></a>
-##### <code>contexts</code>
-
-Set this to an array of strings representing the AST context
-where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the defaults.
+By default, only the main function description is linted.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+|Options|`tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
 
 The following patterns are considered problems:
 
 ````js
-/**
- * foo.
- */
-const q = class {
-
-}
-// Options: [{"contexts":["ClassExpression"]}]
-// Message: JSDoc description does not satisfy the regex pattern.
-
-/**
- * foo.
- */
-const q = {
-
-};
-// Options: [{"contexts":["ObjectExpression"]}]
-// Message: JSDoc description does not satisfy the regex pattern.
-
 /**
  * foo.
  */
@@ -2376,22 +2335,6 @@ function quux () {
 
 }
 // Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
-<<<<<<< HEAD
-=======
-// Message: JSDoc description does not satisfy the regex pattern.
-
-/**
- * Abc.
- */
-function quux () {
-
-}
-<<<<<<< HEAD
-// Options: [{"tags":{"main description":"[А-Я][А-я]+\\.","param":true}}]
->>>>>>> feat(match-description): allow `main description: string|boolean` to override or disable main description separate from default
-=======
-// Options: [{"mainDescription":"[А-Я][А-я]+\\.","tags":{"param":true}}]
->>>>>>> Switch "main description" on `tags` to its own option as `mainDescription`
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2411,28 +2354,6 @@ function quux (foo) {
 
 }
 // Options: [{"tags":{"param":true}}]
-// Message: JSDoc description does not satisfy the regex pattern.
-
-/**
- * Foo
- *
- * @param foo foo.
- */
-function quux (foo) {
-
-}
-// Options: [{"mainDescription":"^[a-zA-Z]*$","tags":{"param":true}}]
-// Message: JSDoc description does not satisfy the regex pattern.
-
-/**
- * Foo
- *
- * @param foo foo.
- */
-function quux (foo) {
-
-}
-// Options: [{"mainDescription":false,"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2535,49 +2456,6 @@ function quux () {
 
 }
 // Options: [{"tags":{"param":"[А-Я][А-я]+\\."}}]
-<<<<<<< HEAD
-=======
-// Message: JSDoc description does not satisfy the regex pattern.
-
-/**
- * foo.
- */
-class quux {
-
-}
-<<<<<<< HEAD
-// Options: [{"contexts":["ClassDeclaration"],"noDefaults":true}]
->>>>>>> feat(match-description): allow `main description: string|boolean` to override or disable main description separate from default
-=======
-// Options: [{"contexts":["ClassDeclaration"]}]
->>>>>>> docs: generate docs
-// Message: JSDoc description does not satisfy the regex pattern.
-
-class MyClass {
-  /**
-   * Abc
-   */
-  myClassField = 1
-}
-// Options: [{"contexts":["ClassProperty"]}]
-// Message: JSDoc description does not satisfy the regex pattern.
-
-/**
- * foo.
- */
-interface quux {
-
-}
-// Options: [{"contexts":["TSInterfaceDeclaration"]}]
-// Message: JSDoc description does not satisfy the regex pattern.
-
-const myObject = {
-  /**
-   * Bad description
-   */
-  myProp: true
-};
-// Options: [{"contexts":["Property"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 ````
 
@@ -2707,70 +2585,6 @@ function quux () {
 function quux () {
 
 }
-
-/**
- * foo.
- */
-function quux () {
-
-}
-// Options: [{"mainDescription":false}]
-
-/**
- * foo.
- */
-class quux {
-
-}
-// Message: JSDoc description does not satisfy the regex pattern.
-
-/**
- * foo.
- */
-class quux {
-
-}
-// Options: [{"mainDescription":true}]
-
-class MyClass {
-  /**
-   * Abc.
-   */
-  myClassField = 1
-}
-// Options: [{"contexts":["ClassProperty"]}]
-
-/**
- * Foo.
- */
-interface quux {
-
-}
-// Options: [{"contexts":["TSInterfaceDeclaration"]}]
-
-const myObject = {
-  /**
-   * Bad description
-   */
-  myProp: true
-};
-// Options: [{"contexts":[]}]
-
-/**
- * foo.
- */
-const q = class {
-
-}
-// Options: [{"contexts":[]}]
-
-/**
- * foo.
- */
-const q = {
-
-};
-// Options: [{"contexts":[]}]
 ````
 
 
@@ -3510,18 +3324,20 @@ Requires that all functions have a description.
 
 An options object may have any of the following properties:
 
-- `contexts` - Set to an array of strings representing the AST context
+- `contexts` - Set to a string or array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-  Overrides the defaults.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
     block avoids the need for a `@description`.
+- `noDefaults` - By default, `contexts` will permit `ArrowFunctionExpression`,
+  `FunctionDeclaration`, and `FunctionExpression`. Set this instead to `true` to
+  have `contexts` override these.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`description`|
 |Aliases|`desc`|
-|Options|`contexts`, `exemptedBy`|
+|Options|`contexts`, `exemptedBy`, `noDefaults`|
 
 The following patterns are considered problems:
 
@@ -3540,7 +3356,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"contexts":["ClassDeclaration"]}]
+// Options: [{"contexts":"ClassDeclaration"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3549,7 +3365,7 @@ class quux {
 class quux {
 
 }
-// Options: [{"contexts":["ClassDeclaration"]}]
+// Options: [{"contexts":"ClassDeclaration","noDefaults":true}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3575,9 +3391,8 @@ function quux () {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"]}]
+// Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
 // Message: Missing JSDoc @description declaration.
-<<<<<<< HEAD
 
 /**
  *
@@ -3596,8 +3411,6 @@ var quux = {
 };
 // Options: [{"contexts":["ObjectExpression"]}]
 // Message: Missing JSDoc @description declaration.
-=======
->>>>>>> fix(match-description): tighten default regex to require punctuation at the end even if only a single character
 ````
 
 The following patterns are not considered problems:
@@ -3643,7 +3456,7 @@ class quux {
 function quux () {
 
 }
-// Options: [{"contexts":["ClassDeclaration"]}]
+// Options: [{"noDefaults":true}]
 
 /**
  * @type {MyCallback}
@@ -3673,7 +3486,6 @@ var quux = class {
 var quux = {
 
 };
-// Message: Missing JSDoc @description declaration.
 ````
 
 
@@ -3940,9 +3752,6 @@ be checked by the rule.
   - `FunctionDeclaration` (defaults to `true`)
   - `FunctionExpression`
   - `MethodDefinition`
-
-- `contexts` - Set this to an array of strings representing the additional
-  AST context where you wish the rule to be applied (e.g., `Property` for properties).
 
 |||
 |---|---|
@@ -4274,12 +4083,6 @@ export function someMethod() {
 
 }
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
-// Message: Missing JSDoc comment.
-
-const myObject = {
-  myProp: true
-};
-// Options: [{"contexts":["Property"]}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -4750,11 +4553,6 @@ exports.someMethod = function() {
 
 }
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
-
-const myObject = {
-  myProp: true
-};
-// Options: [{"contexts":[]}]
 ````
 
 

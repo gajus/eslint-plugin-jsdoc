@@ -493,29 +493,26 @@ const parseClosureTemplateTag = (tag) => {
  * @returns {string[]}
  */
 const enforcedContexts = (context, defaultContexts) => {
+  /* istanbul ignore next */
+  const defltContexts = defaultContexts === true ? [
+    'ArrowFunctionExpression',
+    'FunctionDeclaration',
+    'FunctionExpression'
+  ] : defaultContexts;
   const {
-    /* istanbul ignore next */
-    contexts = defaultContexts === true ? [
-      'ArrowFunctionExpression',
-      'FunctionDeclaration',
-      'FunctionExpression'
-    ] : defaultContexts
+    noDefaults,
+    contexts: ctxts = []
   } = context.options[0] || {};
 
-  return contexts;
-};
+  const contexts = typeof ctxts === 'string' ? [ctxts] : ctxts;
 
-const getContextObject = (contexts, checkJsdoc) => {
-  return contexts.reduce((obj, prop) => {
-    obj[prop] = checkJsdoc;
-
-    return obj;
-  }, {});
+  return noDefaults ?
+    contexts :
+    [...new Set([...defltContexts, ...contexts])];
 };
 
 export default {
   enforcedContexts,
-  getContextObject,
   getFunctionParameterNames,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,
