@@ -96,9 +96,12 @@ const getJSDocComment = function (sourceCode, node) {
 
     return findJSDocComment(node);
 
-  // falls through
   default:
-    return null;
+    if (!node) {
+      return null;
+    }
+
+    return findJSDocComment(node);
   }
 };
 /* eslint-enable complexity */
