@@ -8,14 +8,23 @@ by our supported Node versions):
 
 ``^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$``
 
-You can supply your own expression passing a `matchDescription` string on
-the options object.
+#### Options
+
+##### `matchDescription`
+
+You can supply your own expression to override the default, passing a
+`matchDescription` string on the options object.
 
 ```js
 {
   'jsdoc/match-description': ['error', {matchDescription: '[A-Z].*\\.'}]
 }
 ```
+
+As with the default, the supplied regular expression will be applied with the
+Unicode (`"u"`) flag and is *not* case-insensitive.
+
+##### `tags`
 
 If you want different regular expressions to apply to tags, you may use
 the `tags` option object:

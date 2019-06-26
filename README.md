@@ -2254,14 +2254,26 @@ by our supported Node versions):
 
 ``^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$``
 
-You can supply your own expression passing a `matchDescription` string on
-the options object.
+<a name="eslint-plugin-jsdoc-rules-match-description-options-1"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-match-description-options-1-matchdescription"></a>
+##### <code>matchDescription</code>
+
+You can supply your own expression to override the default, passing a
+`matchDescription` string on the options object.
 
 ```js
 {
   'jsdoc/match-description': ['error', {matchDescription: '[A-Z].*\\.'}]
 }
 ```
+
+As with the default, the supplied regular expression will be applied with the
+Unicode (`"u"`) flag and is *not* case-insensitive.
+
+<a name="eslint-plugin-jsdoc-rules-match-description-options-1-tags"></a>
+##### <code>tags</code>
 
 If you want different regular expressions to apply to tags, you may use
 the `tags` option object:
@@ -2737,7 +2749,7 @@ The following types are always considered defined.
 - `any`, `*`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
 
-<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-1"></a>
+<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-2"></a>
 #### Options
 
 An option object may have the following keys:
@@ -3307,7 +3319,7 @@ Requires that all functions have a description.
 * All functions must have a `@description` tag.
 * Every description tag must have a non-empty description that explains the purpose of the method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-3"></a>
 #### Options
 
 An options object may have any of the following properties:
@@ -3485,7 +3497,7 @@ Requires that all functions have examples.
 * All functions must have one or more `@example` tags.
 * Every example tag must have a non-empty description that explains the method's usage.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-4"></a>
 #### Options
 
 Has an object option with one optional property:
@@ -3709,7 +3721,7 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-5"></a>
 #### Options
 
 Accepts one optional options object, with two optional keys, `publicOnly`
@@ -4705,7 +4717,7 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-5"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-6"></a>
 #### Options
 
 An options object accepts one optional property:
@@ -5596,7 +5608,7 @@ function quux () {
 
 Requires returns are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-7"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
