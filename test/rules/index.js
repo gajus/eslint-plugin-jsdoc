@@ -39,7 +39,7 @@ const ruleTester = new RuleTester();
     ecmaVersion: 6
   };
 
-  // eslint-disable-next-line global-require, import/no-dynamic-require
+  // eslint-disable-next-line import/no-dynamic-require, global-require
   const assertions = require('./assertions/' + _.camelCase(ruleName));
 
   assertions.invalid = assertions.invalid.map((assertion) => {
