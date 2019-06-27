@@ -71,17 +71,10 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           contexts: {
-            oneOf: [
-              {
-                items: {
-                  type: 'string'
-                },
-                type: 'array'
-              },
-              {
-                type: 'string'
-              }
-            ]
+            items: {
+              type: 'string'
+            },
+            type: 'array'
           },
           mainDescription: {
             oneOf: [
