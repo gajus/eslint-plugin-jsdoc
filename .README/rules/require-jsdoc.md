@@ -36,8 +36,6 @@ be checked by the rule.
 
 - `contexts` - Set this to a string or array of strings representing the additional
   AST context where you wish the rule to be applied (e.g., `Property` for properties).
-  Note that unlike `require-description` and `match-description`, this rule has no
-  `noDefaults` option because its defaults are instead set up by `require`.
 
 |||
 |---|---|

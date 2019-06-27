@@ -73,18 +73,13 @@ it by setting it to `false`.
 
 Set this to a string or array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-
-##### `noDefaults`
-
-By default, `contexts` will permit `ArrowFunctionExpression`,
-`FunctionDeclaration`, and `FunctionExpression`. Set this instead to `true` to
-have `contexts` override these.
+Overrides the defaults.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `noDefaults`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
 
 <!-- assertions matchDescription -->

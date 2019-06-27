@@ -98,10 +98,6 @@ export default iterateJsdoc(({
             format: 'regex',
             type: 'string'
           },
-          noDefaults: {
-            default: false,
-            type: 'boolean'
-          },
           tags: {
             patternProperties: {
               '.*': {
