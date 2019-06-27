@@ -511,8 +511,17 @@ const enforcedContexts = (context, defaultContexts) => {
     [...new Set([...defltContexts, ...contexts])];
 };
 
+const getContextObject = (contexts, checkJsdoc) => {
+  return contexts.reduce((obj, prop) => {
+    obj[prop] = checkJsdoc;
+
+    return obj;
+  }, {});
+};
+
 export default {
   enforcedContexts,
+  getContextObject,
   getFunctionParameterNames,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,
