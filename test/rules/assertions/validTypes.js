@@ -65,6 +65,20 @@ export default {
     {
       code: `
           /**
+           * @borrows #foo as bar
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [{
+        line: 3,
+        message: 'Syntax error in type: #foo'
+      }]
+    },
+    {
+      code: `
+          /**
            * @borrows foo as bar%
            */
           function quux() {
@@ -192,6 +206,16 @@ export default {
       code: `
           /**
            * @borrows foo as bar
+           */
+          function quux() {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @borrows foo as #bar
            */
           function quux() {
 
