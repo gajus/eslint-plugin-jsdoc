@@ -33,7 +33,7 @@
     "marked": "^0.6.2",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
-    "semantic-release": "^15.13.17",
+    "semantic-release": "^15.13.18",
     "typescript": "^3.5.2"
   },
   "engines": {
