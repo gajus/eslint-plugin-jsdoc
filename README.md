@@ -2333,45 +2333,59 @@ tag should be linted with the `matchDescription` value (or the default).
 ```
 
 If you wish to override the main function description without changing the
-default `mainDescription`, you may use `tags` with `main description`:
+default `match-description`, you may use `mainDescription`:
 
 ```js
 {
-  'jsdoc/match-description': ['error', {tags: {
-    'main description': '[A-Z].*\\.',
-    param: true,
-    returns: true
-  }}]
+  'jsdoc/match-description': ['error', {
+    mainDescription: '[A-Z].*\\.',
+    tags: {
+      param: true,
+      returns: true
+    }
+  }]
 }
 ```
 
-There is no need to add `"main description": true`, as by default, the main
+There is no need to add `mainDescription: true`, as by default, the main
 function (and only the main function) is linted, though you may disable checking
 it by setting it to `false`.
 
 <a name="eslint-plugin-jsdoc-rules-match-description-options-1-contexts"></a>
 ##### <code>contexts</code>
 
-Set this to a string or array of strings representing the AST context
+Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-
-<a name="eslint-plugin-jsdoc-rules-match-description-options-1-nodefaults"></a>
-##### <code>noDefaults</code>
-
-By default, `contexts` will permit `ArrowFunctionExpression`,
-`FunctionDeclaration`, and `FunctionExpression`. Set this instead to `true` to
-have `contexts` override these.
+Overrides the defaults.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `noDefaults`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
 
 The following patterns are considered problems:
 
 ````js
+/**
+ * foo.
+ */
+const q = class {
+
+}
+// Options: [{"contexts":["ClassExpression"]}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+const q = {
+
+};
+// Options: [{"contexts":["ObjectExpression"]}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
 /**
  * foo.
  */
@@ -2395,8 +2409,6 @@ function quux () {
 
 }
 // Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
-<<<<<<< HEAD
-=======
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2405,8 +2417,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"main description":"[А-Я][А-я]+\\.","param":true}}]
->>>>>>> feat(match-description): allow `main description: string|boolean` to override or disable main description separate from default
+// Options: [{"mainDescription":"[А-Я][А-я]+\\.","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2436,7 +2447,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"main description":"^[a-zA-Z]*$","param":true}}]
+// Options: [{"mainDescription":"^[a-zA-Z]*$","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2447,7 +2458,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"main description":false,"param":true}}]
+// Options: [{"mainDescription":false,"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2550,8 +2561,6 @@ function quux () {
 
 }
 // Options: [{"tags":{"param":"[А-Я][А-я]+\\."}}]
-<<<<<<< HEAD
-=======
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2560,8 +2569,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"contexts":["ClassDeclaration"],"noDefaults":true}]
->>>>>>> feat(match-description): allow `main description: string|boolean` to override or disable main description separate from default
+// Options: [{"contexts":["ClassDeclaration"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 class MyClass {
@@ -2570,7 +2578,7 @@ class MyClass {
    */
   myClassField = 1
 }
-// Options: [{"contexts":["ClassProperty"],"noDefaults":true}]
+// Options: [{"contexts":["ClassProperty"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2579,7 +2587,7 @@ class MyClass {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 const myObject = {
@@ -2588,7 +2596,7 @@ const myObject = {
    */
   myProp: true
 };
-// Options: [{"contexts":["Property"],"noDefaults":true}]
+// Options: [{"contexts":["Property"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 ````
 
@@ -2725,7 +2733,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"main description":false}}]
+// Options: [{"mainDescription":false}]
 
 /**
  * foo.
@@ -2733,7 +2741,6 @@ function quux () {
 class quux {
 
 }
-// Message: JSDoc description does not satisfy the regex pattern.
 
 /**
  * foo.
@@ -2741,7 +2748,7 @@ class quux {
 class quux {
 
 }
-// Options: [{"tags":{"main description":true}}]
+// Options: [{"mainDescription":true}]
 
 class MyClass {
   /**
@@ -2749,7 +2756,7 @@ class MyClass {
    */
   myClassField = 1
 }
-// Options: [{"contexts":["ClassProperty"],"noDefaults":true}]
+// Options: [{"contexts":["ClassProperty"]}]
 
 /**
  * Foo.
@@ -2757,7 +2764,7 @@ class MyClass {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
 
 const myObject = {
   /**
@@ -2765,7 +2772,23 @@ const myObject = {
    */
   myProp: true
 };
-// Options: [{"contexts":[],"noDefaults":true}]
+// Options: [{"contexts":[]}]
+
+/**
+ * foo.
+ */
+const q = class {
+
+}
+// Options: [{"contexts":[]}]
+
+/**
+ * foo.
+ */
+const q = {
+
+};
+// Options: [{"contexts":[]}]
 ````
 
 
@@ -3505,20 +3528,18 @@ Requires that all functions have a description.
 
 An options object may have any of the following properties:
 
-- `contexts` - Set to a string or array of strings representing the AST context
+- `contexts` - Set to an array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+  Overrides the defaults.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
     block avoids the need for a `@description`.
-- `noDefaults` - By default, `contexts` will permit `ArrowFunctionExpression`,
-  `FunctionDeclaration`, and `FunctionExpression`. Set this instead to `true` to
-  have `contexts` override these.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`description`|
 |Aliases|`desc`|
-|Options|`contexts`, `exemptedBy`, `noDefaults`|
+|Options|`contexts`, `exemptedBy`|
 
 The following patterns are considered problems:
 
@@ -3537,7 +3558,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"contexts":"ClassDeclaration"}]
+// Options: [{"contexts":["ClassDeclaration"]}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3546,7 +3567,7 @@ class quux {
 class quux {
 
 }
-// Options: [{"contexts":"ClassDeclaration","noDefaults":true}]
+// Options: [{"contexts":["ClassDeclaration"]}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3572,9 +3593,8 @@ function quux () {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"],"noDefaults":true}]
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
 // Message: Missing JSDoc @description declaration.
-<<<<<<< HEAD
 
 /**
  *
@@ -3593,8 +3613,6 @@ var quux = {
 };
 // Options: [{"contexts":["ObjectExpression"]}]
 // Message: Missing JSDoc @description declaration.
-=======
->>>>>>> fix(match-description): tighten default regex to require punctuation at the end even if only a single character
 ````
 
 The following patterns are not considered problems:
@@ -3640,7 +3658,7 @@ class quux {
 function quux () {
 
 }
-// Options: [{"noDefaults":true}]
+// Options: [{"contexts":["ClassDeclaration"]}]
 
 /**
  * @type {MyCallback}
@@ -3656,7 +3674,6 @@ function quux () {
 interface quux {
 
 }
-<<<<<<< HEAD
 
 /**
  *
@@ -3671,9 +3688,6 @@ var quux = class {
 var quux = {
 
 };
-=======
-// Message: Missing JSDoc @description declaration.
->>>>>>> fix(match-description): tighten default regex to require punctuation at the end even if only a single character
 ````
 
 
@@ -3941,10 +3955,8 @@ be checked by the rule.
   - `FunctionExpression`
   - `MethodDefinition`
 
-- `contexts` - Set this to a string or array of strings representing the additional
+- `contexts` - Set this to an array of strings representing the additional
   AST context where you wish the rule to be applied (e.g., `Property` for properties).
-  Note that unlike `require-description` and `match-description`, this rule has no
-  `noDefaults` option because its defaults are instead set up by `require`.
 
 |||
 |---|---|
