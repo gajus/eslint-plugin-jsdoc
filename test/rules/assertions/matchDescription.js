@@ -54,6 +54,28 @@ export default {
     {
       code: `
           /**
+           * Abc.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [{
+        mainDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+        tags: {
+          param: true
+        }
+      }]
+    },
+    {
+      code: `
+          /**
            * Foo
            */
           function quux () {
@@ -111,8 +133,8 @@ export default {
       ],
       options: [
         {
+          mainDescription: '^[a-zA-Z]*$',
           tags: {
-            'main description': '^[a-zA-Z]*$',
             param: true
           }
         }
@@ -137,8 +159,8 @@ export default {
       ],
       options: [
         {
+          mainDescription: false,
           tags: {
-            'main description': false,
             param: true
           }
         }
@@ -669,9 +691,7 @@ export default {
           }
       `,
       options: [
-        {tags: {
-          'main description': false
-        }}
+        {mainDescription: false}
       ]
     },
     {
@@ -694,9 +714,7 @@ export default {
           }
       `,
       options: [
-        {tags: {
-          'main description': true
-        }}
+        {mainDescription: true}
       ]
     },
     {

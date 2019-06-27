@@ -3,6 +3,16 @@ import iterateJsdoc from '../iterateJsdoc';
 
 const tagsWithDescriptions = ['param', 'arg', 'argument', 'returns', 'return'];
 
+// If supporting Node >= 10, we could loosen the default to this for the
+//   initial letter: \\p{Upper}
+const matchDescriptionDefault = '^[A-Z`\\d_][\\s\\S]*[.?!`]$';
+
+const stringOrDefault = (value, userDefault) => {
+  return typeof value === 'string' ?
+    value :
+    userDefault || matchDescriptionDefault;
+};
+
 export default iterateJsdoc(({
   jsdoc,
   report,
@@ -12,32 +22,31 @@ export default iterateJsdoc(({
   const options = context.options[0] || {};
 
   const validateDescription = (description, tag) => {
-    const tagName = tag.tag;
-    const tagOptions = options.tags || {};
-    if (tagOptions[tagName] === false) {
+    if (!tag && options.mainDescription === false) {
       return;
     }
-    const regex = new RegExp(
-      (typeof tagOptions[tagName] === 'string' ? tagOptions[tagName] :
-        options.matchDescription
 
-      // If supporting Node >= 10, we could loosen to this for the
-      //   initial letter: \\p{Upper}
-      ) || '^[A-Z`\\d_][\\s\\S]*[.?!`]$',
+    let tagValue = options.mainDescription;
+    if (tag) {
+      const tagName = tag.tag;
+      tagValue = options.tags[tagName];
+    }
+
+    const regex = new RegExp(
+      stringOrDefault(tagValue, options.matchDescription),
       'u'
     );
 
     if (!regex.test(description)) {
-      report('JSDoc description does not satisfy the regex pattern.', null, tag);
+      report('JSDoc description does not satisfy the regex pattern.', null, tag || {
+        // Add one as description would typically be into block
+        line: jsdoc.line + 1
+      });
     }
   };
 
   if (jsdoc.description) {
-    validateDescription(jsdoc.description, {
-      // Add one as description would typically be into block
-      line: jsdoc.line + 1,
-      tag: 'main description'
-    });
+    validateDescription(jsdoc.description);
   }
 
   if (!options.tags || !Object.keys(options.tags).length) {
@@ -74,6 +83,17 @@ export default iterateJsdoc(({
               }
             ]
           },
+          mainDescription: {
+            oneOf: [
+              {
+                format: 'regex',
+                type: 'string'
+              },
+              {
+                type: 'boolean'
+              }
+            ]
+          },
           matchDescription: {
             format: 'regex',
             type: 'string'
@@ -91,6 +111,7 @@ export default iterateJsdoc(({
                     type: 'string'
                   },
                   {
+                    enum: [true],
                     type: 'boolean'
                   }
                 ]
