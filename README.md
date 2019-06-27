@@ -6065,7 +6065,8 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
   always fail if empty)
 - For the special case of set 5, i.e., `@borrows <that namepath> as <this namepath>`,
   check that both namepaths are present and valid and ensure there is an `as `
-  between them.
+  between them. In the case of `<this namepath>`, it can be preceded by
+  one of the name path operators, `#`, `.`, or `~`.
 - For the special case of `@memberof` and `@memberof!` (part of set 3), as
    per the [specification](https://jsdoc.app/tags-memberof.html), they also
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
