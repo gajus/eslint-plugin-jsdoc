@@ -6115,6 +6115,14 @@ function quux() {
 // Message: Syntax error in type: foo%
 
 /**
+ * @borrows #foo as bar
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: #foo
+
+/**
  * @borrows foo as bar%
  */
 function quux() {
@@ -6191,6 +6199,13 @@ function quux() {
 
 /**
  * @borrows foo as bar
+ */
+function quux() {
+
+}
+
+/**
+ * @borrows foo as #bar
  */
 function quux() {
 
