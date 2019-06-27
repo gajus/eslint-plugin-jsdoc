@@ -6,6 +6,18 @@ export default {
   invalid: [
     {
       code: `
+        /** @typoo {string} */
+        let a;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Invalid JSDoc tag name "typoo".'
+        }
+      ]
+    },
+    {
+      code: `
           /**
            * @Param
            */

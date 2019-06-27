@@ -114,6 +114,30 @@ export default {
 
         }
       `
+    },
+    {
+      code: `
+        /**
+           * A jsdoc not attached to any node.
+         */
+      `,
+      errors: [
+        {message: 'Expected JSDoc block to be aligned.'}
+      ]
+    },
+    {
+      code: `
+        class Foo {
+          /**
+           *  Some method
+            * @param a
+           */
+          quux(a) {}
+        }
+      `,
+      errors: [
+        {message: 'Expected JSDoc block to be aligned.'}
+      ]
     }
   ],
   valid: [
@@ -143,6 +167,14 @@ export default {
         function quux (foo) {
 
         }
+      `
+    },
+    {
+      code: `
+        /*  <- JSDoc must start with 2 stars.
+          *    So this is unchecked.
+         */
+        function quux (foo) {}
       `
     }
   ]

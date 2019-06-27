@@ -12,6 +12,7 @@ export default iterateJsdoc(({
     report('There must be no indentation.');
   }
 }, {
+  iterateAllJsdocs: true,
   meta: {
     type: 'layout'
   }

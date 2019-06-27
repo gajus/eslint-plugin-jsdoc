@@ -9,7 +9,7 @@ Requires that block description and tag description are written in complete sent
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`param`, `returns`|
 |Aliases|`arg`, `argument`, `return`|
 

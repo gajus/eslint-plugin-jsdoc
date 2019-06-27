@@ -15,6 +15,7 @@ export default iterateJsdoc(({
     }
   }
 }, {
+  iterateAllJsdocs: true,
   meta: {
     type: 'suggestion'
   }
