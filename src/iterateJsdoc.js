@@ -325,8 +325,8 @@ const makeReport = (context, commentNode) => {
  */
 
 /**
- * Create a eslint rule that iterate over all JSDocs, regardless of whether
- * it is attached to a function-like node.
+ * Create an eslint rule that iterates over all JSDocs, regardless of whether
+ * they are attached to a function-like node.
  *
  * @param {JsdocVisitor} iterator
  * @param {{meta: any}} ruleConfig
