@@ -3239,6 +3239,15 @@ class Foo {
   bar (baz) {
   }
 }
+
+/****/
+
+/**
+ *
+ */
+function quux () {
+
+}
 ````
 
 
