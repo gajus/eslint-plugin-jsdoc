@@ -199,6 +199,8 @@ Or one may set the targeted tag to an object with a custom `message`, but withou
 }
 ```
 
+Note that the preferred tags indicated in the `settings.jsdoc.tagNamePreference`
+map will be assumed to be defined by `check-tag-names`.
 
 The defaults in `eslint-plugin-jsdoc` (for tags which offer
 aliases) are as follows:
@@ -235,24 +237,6 @@ This setting is utilized by the the rule for tag name checking
 - `require-returns-check`
 - `require-returns-description`
 - `require-returns-type`
-
-### Additional Tag Names
-
-Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc
-tags in the rule `check-tag-names`. The format of the configuration is as follows:
-
-```json
-{
-    "rules": {},
-    "settings": {
-        "jsdoc": {
-            "additionalTagNames": {
-                "customTags": ["define", "record"]
-            }
-        }
-    }
-}
-```
 
 ### `@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`
 

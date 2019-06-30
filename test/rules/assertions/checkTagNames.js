@@ -164,13 +164,9 @@ export default {
           message: 'Invalid JSDoc tag name "baz".'
         }
       ],
-      settings: {
-        jsdoc: {
-          additionalTagNames: {
-            customTags: ['bar']
-          }
-        }
-      }
+      options: [{
+        definedTags: ['bar']
+      }]
     },
     {
       code: `
@@ -188,13 +184,9 @@ export default {
           message: 'Invalid JSDoc tag name "baz".'
         }
       ],
-      settings: {
-        jsdoc: {
-          additionalTagNames: {
-            customTags: ['bar']
-          }
-        }
-      }
+      options: [{
+        definedTags: ['bar']
+      }]
     },
     {
       code: `
@@ -291,6 +283,31 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.'
+        },
+        {
+          message: 'Invalid JSDoc tag (preference). Replace "todo" JSDoc tag with "55".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: 55
+          }
+        }
+      }
     }
   ],
   valid: [
@@ -340,13 +357,22 @@ export default {
 
           }
       `,
-      settings: {
-        jsdoc: {
-          additionalTagNames: {
-            customTags: ['bar']
+      options: [{
+        definedTags: ['bar']
+      }]
+    },
+    {
+      code: `
+          /**
+           * @baz @bar foo
+           */
+          function quux (foo) {
+
           }
-        }
-      }
+      `,
+      options: [{
+        definedTags: ['baz', 'bar']
+      }]
     },
     {
       code: `
@@ -359,8 +385,13 @@ export default {
       `,
       settings: {
         jsdoc: {
-          additionalTagNames: {
-            customTags: ['baz', 'bar']
+          tagNamePreference: {
+            param: 'baz',
+            returns: {
+              message: 'Prefer `bar`',
+              replacement: 'bar'
+            },
+            todo: false
           }
         }
       }
