@@ -65,15 +65,18 @@ const getPreferredTagName = (name : string, tagPreference : Object = {}) : strin
     return name;
   }
 
+  if (_.has(tagPreference, name)) {
+    return tagPreference[name];
+  }
+
   const preferredTagName = _.findKey(tagNames, (aliases) => {
     return aliases.includes(name);
   });
-
   if (preferredTagName) {
     return preferredTagName;
   }
 
-  return _.has(tagPreference, name) ? tagPreference[name] : name;
+  return name;
 };
 
 const isValidTag = (name : string, additionalTagNames : Object) : boolean => {

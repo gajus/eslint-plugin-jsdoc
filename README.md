@@ -1233,6 +1233,15 @@ function quux (foo) {
 // Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".
 
 /**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"arg":"somethingDifferent"}}}
+// Message: Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "somethingDifferent".
+
+/**
  * @param foo
  */
 function quux (foo) {

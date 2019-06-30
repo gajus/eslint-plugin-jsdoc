@@ -90,6 +90,29 @@ export default {
     {
       code: `
           /**
+           * @arg foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "somethingDifferent".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            arg: 'somethingDifferent'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
            * @param foo
            */
           function quux (foo) {
