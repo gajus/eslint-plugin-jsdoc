@@ -197,6 +197,60 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
+One may also use an object with a `message` and `replacement`, with `{{tagName}}` and `{{preferredType}}` (or its alias `{{replacement}}`) as template variables to be
+substituted within `message`.
+
+The following will report the message `@extends is to be used over @augments as it is more evocative of classes than @augments` upon encountering `@augments`.
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "augments": {
+                  "message": "@{{replacement}} is to be used over @{{tagName}} as it is more evocative of classes than @augments",
+                  "replacement": "extends"
+                }
+            }
+        }
+    }
+}
+```
+
+If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the tag to `false`:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "todo": false
+            }
+        }
+    }
+}
+```
+
+Or one may set the targeted tag to an object with a custom `message`, but without a `replacement` property:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "todo": {
+                  "message": "We expect immediate perfection, so don't leave to-dos in your code."
+                }
+            }
+        }
+    }
+}
+```
+
+
 The defaults in `eslint-plugin-jsdoc` (for tags which offer
 aliases) are as follows:
 
@@ -955,6 +1009,15 @@ export class SomeClass {
   constructor(private property: string) {}
 }
 // Message: Expected @param names to be "property". Got "prop".
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -1276,6 +1339,42 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"additionalTagNames":{"customTags":["bar"]}}}
 // Message: Invalid JSDoc tag name "baz".
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":false}}}
+// Message: Blacklisted tag found (`@todo`)
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please resolve to-dos or add to the tracker"}}}}
+// Message: Please resolve to-dos or add to the tracker
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use {{replacement}} instead of {{tagName}}","replacement":"x-todo"}}}}
+// Message: Please use x-todo instead of todo
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use {{preferredTagName}} instead of {{tagName}}","replacement":"x-todo"}}}}
+// Message: Please use x-todo instead of todo
 ````
 
 The following patterns are not considered problems:
@@ -1390,6 +1489,13 @@ function quux (foo) {}
  *
  */
 function quux (foo) {
+
+}
+
+/**
+ * @todo
+ */
+function quux () {
 
 }
 ````
@@ -3631,6 +3737,24 @@ var quux = {
 };
 // Options: [{"contexts":["ObjectExpression"]}]
 // Message: Missing JSDoc @description declaration.
+
+/**
+ * @someDesc
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":{"message":"Please avoid `{{tagName}}`; use `{{replacement}}` instead","replacement":"someDesc"}}}}
+// Message: Missing JSDoc @someDesc description.
+
+/**
+ * @description
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+// Message: Unexpected tag `@description`
 ````
 
 The following patterns are not considered problems:
@@ -3905,6 +4029,15 @@ function quux () {
 }
 // Options: ["always"]
 // Message: There must be a hyphen before @param description.
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -4820,6 +4953,15 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" description.
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -4874,6 +5016,15 @@ function quux (foo) {
 
 }
 // Message: There must be an identifier after @param tag.
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -4925,6 +5076,15 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" type.
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -5090,6 +5250,15 @@ export class SomeClass {
   constructor(private property: string, private foo: number) {}
 }
 // Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -5471,6 +5640,15 @@ class Foo {
   }
 }
 // Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
+// Message: Unexpected tag `@returns`
 ````
 
 The following patterns are not considered problems:
@@ -5750,6 +5928,15 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return description.
+
+/**
+ * @returns
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
+// Message: Unexpected tag `@returns`
 ````
 
 The following patterns are not considered problems:
@@ -5823,6 +6010,15 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return type.
+
+/**
+ * @returns
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
+// Message: Unexpected tag `@returns`
 ````
 
 The following patterns are not considered problems:
@@ -5967,6 +6163,15 @@ function quux (foo) {
   return foo;
 }
 // Message: Found more than one @returns declaration.
+
+/**
+ * @returns
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
+// Message: Unexpected tag `@returns`
 ````
 
 The following patterns are not considered problems:

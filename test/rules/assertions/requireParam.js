@@ -236,6 +236,28 @@ export default {
       parserOptions: {
         sourceType: 'module'
       }
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Unexpected tag `@param`'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            param: false
+          }
+        }
+      }
     }
   ],
   valid: [

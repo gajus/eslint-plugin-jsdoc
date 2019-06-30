@@ -92,6 +92,9 @@ export default iterateJsdoc(({
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
   const jsdocParameterNamesDeep = utils.getJsdocParameterNamesDeep();
+  if (!jsdocParameterNamesDeep) {
+    return;
+  }
   const targetTagName = utils.getPreferredTagName('param');
   const isError = validateParameterNames(targetTagName, functionParameterNames, jsdoc, report);
 

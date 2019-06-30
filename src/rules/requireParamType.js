@@ -5,6 +5,9 @@ export default iterateJsdoc(({
   utils
 }) => {
   const targetTagName = utils.getPreferredTagName('param');
+  if (!targetTagName) {
+    return;
+  }
 
   utils.forEachTag(targetTagName, (jsdocParameter) => {
     if (!jsdocParameter.type) {

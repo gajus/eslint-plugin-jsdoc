@@ -106,6 +106,28 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @returns
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Unexpected tag `@returns`'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            returns: false
+          }
+        }
+      }
     }
   ],
   valid: [

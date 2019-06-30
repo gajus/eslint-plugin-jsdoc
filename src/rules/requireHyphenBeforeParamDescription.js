@@ -11,6 +11,9 @@ export default iterateJsdoc(({
   let always;
 
   const targetTagName = utils.getPreferredTagName('param');
+  if (!targetTagName) {
+    return;
+  }
 
   if (_.has(context.options, 0)) {
     always = context.options[0] === 'always';

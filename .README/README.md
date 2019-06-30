@@ -147,6 +147,60 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
+One may also use an object with a `message` and `replacement`, with `{{tagName}}` and `{{preferredType}}` (or its alias `{{replacement}}`) as template variables to be
+substituted within `message`.
+
+The following will report the message `@extends is to be used over @augments as it is more evocative of classes than @augments` upon encountering `@augments`.
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "augments": {
+                  "message": "@{{replacement}} is to be used over @{{tagName}} as it is more evocative of classes than @augments",
+                  "replacement": "extends"
+                }
+            }
+        }
+    }
+}
+```
+
+If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the tag to `false`:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "todo": false
+            }
+        }
+    }
+}
+```
+
+Or one may set the targeted tag to an object with a custom `message`, but without a `replacement` property:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "todo": {
+                  "message": "We expect immediate perfection, so don't leave to-dos in your code."
+                }
+            }
+        }
+    }
+}
+```
+
+
 The defaults in `eslint-plugin-jsdoc` (for tags which offer
 aliases) are as follows:
 

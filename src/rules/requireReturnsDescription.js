@@ -5,6 +5,9 @@ export default iterateJsdoc(({
   utils
 }) => {
   const targetTagName = utils.getPreferredTagName('returns');
+  if (!targetTagName) {
+    return;
+  }
 
   utils.forEachTag(targetTagName, (jsdocTag) => {
     const type = jsdocTag.type && jsdocTag.type.trim();

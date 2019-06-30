@@ -156,6 +156,53 @@ export default {
           ]
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @someDesc
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @someDesc description.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: {
+              message: 'Please avoid `{{tagName}}`; use `{{replacement}}` instead',
+              replacement: 'someDesc'
+            }
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @description
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Unexpected tag `@description`'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false
+          }
+        }
+      }
     }
   ],
   valid: [
