@@ -232,13 +232,17 @@ const getUtils = (
     return classJsdoc && jsdocUtils.hasTag(classJsdoc, tagName);
   };
 
-  utils.forEachTag = (tagName, arrayHandler) => {
+  utils.forEachPreferredTag = (tagName, arrayHandler) => {
+    const targetTagName = utils.getPreferredTagName(tagName);
+    if (!targetTagName) {
+      return;
+    }
     const matchingJsdocTags = _.filter(jsdoc.tags || [], {
-      tag: tagName
+      tag: targetTagName
     });
 
     matchingJsdocTags.forEach((matchingJsdocTag) => {
-      arrayHandler(matchingJsdocTag);
+      arrayHandler(matchingJsdocTag, targetTagName);
     });
   };
 

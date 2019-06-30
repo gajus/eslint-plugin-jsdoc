@@ -9,19 +9,13 @@ export default iterateJsdoc(({
   jsdocNode
 }) => {
   let always;
-
-  const targetTagName = utils.getPreferredTagName('param');
-  if (!targetTagName) {
-    return;
-  }
-
   if (_.has(context.options, 0)) {
     always = context.options[0] === 'always';
   } else {
     always = true;
   }
 
-  utils.forEachTag(targetTagName, (jsdocTag) => {
+  utils.forEachPreferredTag('param', (jsdocTag, targetTagName) => {
     if (!jsdocTag.description) {
       return;
     }
