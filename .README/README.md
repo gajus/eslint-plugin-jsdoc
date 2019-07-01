@@ -365,7 +365,8 @@ decreasing precedence:
   with JavaScript Markdown lintable by
   [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
   if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
-  follow one's Markdown rules).
+  follow one's Markdown rules). Note that this option may come at somewhat
+  of a performance penalty as the file's existence is checked by eslint.
 * `settings.jsdoc.configFile` - A config file. Corresponds to ESLint's `-c`.
 * `settings.jsdoc.eslintrcForExamples` - Defaults to `true` in adding rules
   based on an `.eslintrc.*` file. Setting to `false` corresponds to
