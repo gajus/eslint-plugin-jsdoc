@@ -147,7 +147,7 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
-One may also use an object with a `message` and `replacement`, with `{{tagName}}` and `{{preferredType}}` (or its alias `{{replacement}}`) as template variables to be
+One may also use an object with a `message` and `replacement`, with `{{tagName}}` and `{{preferredTag}}` (or its alias `{{replacement}}`) as template variables to be
 substituted within `message`.
 
 The following will report the message `@extends is to be used over @augments as it is more evocative of classes than @augments` upon encountering `@augments`.
