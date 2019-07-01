@@ -159,7 +159,7 @@ The following will report the message `@extends is to be used over @augments as 
         "jsdoc": {
             "tagNamePreference": {
                 "augments": {
-                  "message": "@{{replacement}} is to be used over @{{tagName}} as it is more evocative of classes than @augments",
+                  "message": "@{{replacement}} is to be used over @{{tagName}} as it is more evocative of classes than @{{tagName}}",
                   "replacement": "extends"
                 }
             }
