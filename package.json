@@ -28,7 +28,7 @@
     "eslint-config-canonical": "^17.1.1",
     "gitdown": "^2.6.1",
     "glob": "^7.1.4",
-    "husky": "^2.7.0",
+    "husky": "^3.0.0",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "semantic-release": "^15.13.18",
