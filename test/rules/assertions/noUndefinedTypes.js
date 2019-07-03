@@ -443,6 +443,17 @@ export default {
       code: `
       /**
        * @template TEMPLATE_TYPE
+       * @param {TEMPLATE_TYPE} bar
+       * @return {TEMPLATE_TYPE}
+       */
+      function foo (bar) {
+      };
+      `
+    },
+    {
+      code: `
+      /**
+       * @template TEMPLATE_TYPE
        */
       class Foo {
         /**

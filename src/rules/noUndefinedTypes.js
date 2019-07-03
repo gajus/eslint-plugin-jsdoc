@@ -68,17 +68,20 @@ export default iterateJsdoc(({
     })
     .value();
 
-  let closureGenericTypes = [];
+  let templateTags = utils.getPresentTags('template');
   const classJsdoc = utils.getClassJsdoc();
   if (classJsdoc && classJsdoc.tags) {
-    closureGenericTypes = classJsdoc.tags
-      .filter((tag) => {
-        return tag.tag === 'template';
-      })
-      .flatMap((tag) => {
-        return jsdocUtils.parseClosureTemplateTag(tag);
-      });
+    templateTags = templateTags.concat(
+      classJsdoc.tags
+        .filter((tag) => {
+          return tag.tag === 'template';
+        })
+    );
   }
+
+  const closureGenericTypes = templateTags.flatMap((tag) => {
+    return jsdocUtils.parseClosureTemplateTag(tag);
+  });
 
   const allDefinedTypes = globalScope.variables.map((variable) => {
     return variable.name;
