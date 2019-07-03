@@ -3229,6 +3229,14 @@ function quux(foo, bar, baz) {
 
 /**
  * @template TEMPLATE_TYPE
+ * @param {TEMPLATE_TYPE} bar
+ * @return {TEMPLATE_TYPE}
+ */
+function foo (bar) {
+};
+
+/**
+ * @template TEMPLATE_TYPE
  */
 class Foo {
   /**
