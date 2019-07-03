@@ -30,56 +30,28 @@ export default iterateJsdoc(({
     }
   });
 }, {
+  contextDefaults: true,
   meta: {
     schema: [
       {
         additionalProperties: false,
         properties: {
           contexts: {
-            oneOf: [
-              {
-                items: {
-                  type: 'string'
-                },
-                type: 'array'
-              },
-              {
-                type: 'string'
-              }
-            ]
+            items: {
+              type: 'string'
+            },
+            type: 'array'
           },
           exemptedBy: {
             items: {
               type: 'string'
             },
             type: 'array'
-          },
-          noDefaults: {
-            type: 'boolean'
           }
         },
         type: 'object'
       }
     ],
     type: 'suggestion'
-  },
-  returns (context) {
-    const defaultContexts = [
-      'ArrowFunctionExpression',
-      'FunctionDeclaration',
-      'FunctionExpression'
-    ];
-
-    const {
-      noDefaults,
-      contexts: ctxts = []
-    } = context.options[0] || {};
-
-    const contexts = typeof ctxts === 'string' ? [ctxts] : ctxts;
-
-    return noDefaults ?
-      contexts :
-      [...new Set([...defaultContexts, ...contexts])];
   }
-
 });

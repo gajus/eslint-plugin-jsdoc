@@ -181,7 +181,7 @@ export default {
         invalidTemplateReference () {
         }
       }
-      
+
       /**
        * @template TEMPLATE_TYPE
        */
@@ -467,6 +467,18 @@ export default {
         }
       }
       `
+    },
+    {
+      code: `
+      /****/
+
+      /**
+       *
+       */
+      function quux () {
+
+      }
+       `
     }
   ]
 };

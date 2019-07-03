@@ -31,7 +31,7 @@ export default {
       ],
       options: [
         {
-          contexts: 'ClassDeclaration'
+          contexts: ['ClassDeclaration']
         }
       ]
     },
@@ -51,8 +51,7 @@ export default {
       ],
       options: [
         {
-          contexts: 'ClassDeclaration',
-          noDefaults: true
+          contexts: ['ClassDeclaration']
         }
       ]
     },
@@ -88,6 +87,73 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc @description description.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          interface quux {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration'
+          ]
+        }
+      ],
+      parser: require.resolve('@typescript-eslint/parser')
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          var quux = class {
+
+          };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'ClassExpression'
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          var quux = {
+
+          };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.'
+        }
+      ],
+      options: [
+        {
+          contexts: [
+            'ObjectExpression'
+          ]
         }
       ]
     }
@@ -150,7 +216,7 @@ export default {
       `,
       options: [
         {
-          noDefaults: true
+          contexts: ['ClassDeclaration']
         }
       ]
     },
@@ -168,6 +234,37 @@ export default {
           exemptedBy: ['type']
         }
       ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          interface quux {
+
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser')
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          var quux = class {
+
+          };
+      `
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          var quux = {
+
+          };
+      `
     }
   ]
 };

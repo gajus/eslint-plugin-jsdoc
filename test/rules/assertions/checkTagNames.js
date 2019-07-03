@@ -6,6 +6,18 @@ export default {
   invalid: [
     {
       code: `
+        /** @typoo {string} */
+        let a;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Invalid JSDoc tag name "typoo".'
+        }
+      ]
+    },
+    {
+      code: `
           /**
            * @Param
            */
@@ -71,6 +83,29 @@ export default {
         jsdoc: {
           tagNamePreference: {
             param: 'arg'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @arg foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "somethingDifferent".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            arg: 'somethingDifferent'
           }
         }
       }

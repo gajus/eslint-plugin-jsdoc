@@ -49,6 +49,9 @@ const ruleTester = new RuleTester();
   });
 
   assertions.valid = assertions.valid.map((assertion) => {
+    if (assertion.errors) {
+      throw new Error(`Valid assertions for rule ${ruleName} should not have an \`errors\` array.`);
+    }
     assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
 
     return assertion;
@@ -58,7 +61,8 @@ const ruleTester = new RuleTester();
   if (process.env.npm_config_invalid) {
     const indexes = process.env.npm_config_invalid.split(',');
     assertions.invalid = assertions.invalid.filter((assertion, idx) => {
-      return indexes.includes(String(idx));
+      return indexes.includes(String(idx)) ||
+        indexes.includes(String(idx - assertions.invalid.length));
     });
     if (!process.env.npm_config_valid) {
       assertions.valid = [];
@@ -67,7 +71,8 @@ const ruleTester = new RuleTester();
   if (process.env.npm_config_valid) {
     const indexes = process.env.npm_config_valid.split(',');
     assertions.valid = assertions.valid.filter((assertion, idx) => {
-      return indexes.includes(String(idx));
+      return indexes.includes(String(idx)) ||
+        indexes.includes(String(idx - assertions.valid.length));
     });
     if (!process.env.npm_config_invalid) {
       assertions.invalid = [];

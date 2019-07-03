@@ -29,6 +29,7 @@ import requireJsdoc from './rules/requireJsdoc';
 export default {
   configs: {
     recommended: {
+      plugins: ['jsdoc'],
       rules: {
         'jsdoc/check-alignment': 'warn',
         'jsdoc/check-examples': 'off',

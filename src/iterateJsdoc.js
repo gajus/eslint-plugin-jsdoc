@@ -22,7 +22,7 @@ const parseComment = (commentNode, indent) => {
   })[0] || {};
 };
 
-const curryUtils = (
+const getUtils = (
   node,
   jsdoc,
   {
@@ -37,10 +37,11 @@ const curryUtils = (
     allowAugmentsExtendsWithoutParam,
     checkSeesForNamepaths
   },
-  ancestors,
-  sourceCode,
   context
 ) => {
+  const ancestors = context.getAncestors();
+  const sourceCode = context.getSourceCode();
+
   const utils = {};
 
   utils.getFunctionParameterNames = () => {
@@ -268,24 +269,127 @@ const getSettings = (context) => {
   return settings;
 };
 
+/**
+ * Create the report function
+ *
+ * @param {Object} context
+ * @param {Object} commentNode
+ */
+const makeReport = (context, commentNode) => {
+  const report = (message, fix = null, jsdocLoc = null, data = null) => {
+    let loc;
+
+    if (jsdocLoc) {
+      const lineNumber = commentNode.loc.start.line + jsdocLoc.line;
+
+      loc = {
+        end: {line: lineNumber},
+        start: {line: lineNumber}
+      };
+      if (jsdocLoc.column) {
+        const colNumber = commentNode.loc.start.column + jsdocLoc.column;
+
+        loc.end.column = colNumber;
+        loc.start.column = colNumber;
+      }
+    }
+
+    context.report({
+      data,
+      fix,
+      loc,
+      message,
+      node: commentNode
+    });
+  };
+
+  return report;
+};
+
+/**
+ * @typedef {ReturnType<typeof getUtils>} Utils
+ * @typedef {ReturnType<typeof getSettings>} Settings
+ * @typedef {(
+ *   arg: {
+ *     context: Object,
+ *     sourceCode: Object,
+ *     indent: string,
+ *     jsdoc: Object,
+ *     jsdocNode: Object,
+ *     node: Object | null,
+ *     report: ReturnType<typeof makeReport>,
+ *     settings: Settings,
+ *     utils: Utils,
+ *   }
+ * ) => any } JsdocVisitor
+ */
+
+/**
+ * Create an eslint rule that iterates over all JSDocs, regardless of whether
+ * they are attached to a function-like node.
+ *
+ * @param {JsdocVisitor} iterator
+ * @param {{meta: any}} ruleConfig
+ */
+const iterateAllJsdocs = (iterator, ruleConfig) => {
+  return {
+    create (context) {
+      return {
+        'Program:exit' () {
+          const comments = context.getSourceCode().getAllComments();
+
+          comments.forEach((comment) => {
+            if (!context.getSourceCode().getText(comment).startsWith('/**')) {
+              return;
+            }
+
+            const indent = _.repeat(' ', comment.loc.start.column);
+            const jsdoc = parseComment(comment, indent);
+            const settings = getSettings(context);
+
+            iterator({
+              context,
+              indent,
+              jsdoc,
+              jsdocNode: comment,
+              node: null,
+              report: makeReport(context, comment),
+              settings: getSettings(context),
+              sourceCode: context.getSourceCode(),
+              utils: getUtils(null, jsdoc, settings, context)
+            });
+          });
+        }
+      };
+    },
+    meta: ruleConfig.meta
+  };
+};
+
 export {
   parseComment
 };
 
 /**
- * @typedef {ReturnType<typeof curryUtils>} Utils
- * @typedef {ReturnType<typeof getSettings>} Settings
- *
- * @param {(arg: {utils: Utils, settings: Settings}) => any} iterator
- * @param {{meta: any, returns?: any}} opts
+ * @param {JsdocVisitor} iterator
+ * @param {{
+ *   meta: any,
+ *   contextDefaults?: true | string[],
+ *   returns?: any,
+ *   iterateAllJsdocs?: true,
+ * }} ruleConfig
  */
-export default function iterateJsdoc (iterator, opts) {
-  const metaType = _.get(opts, 'meta.type');
+export default function iterateJsdoc (iterator, ruleConfig) {
+  const metaType = _.get(ruleConfig, 'meta.type');
   if (!metaType || !['problem', 'suggestion', 'layout'].includes(metaType)) {
     throw new TypeError('Rule must include `meta.type` option (with value "problem", "suggestion", or "layout")');
   }
-  if (typeof iterator !== 'function' && (!opts || typeof opts.returns !== 'function')) {
+  if (typeof iterator !== 'function' && (!ruleConfig || typeof ruleConfig.returns !== 'function')) {
     throw new TypeError('The iterator argument must be a function or an object with a `returns` method.');
+  }
+
+  if (ruleConfig.iterateAllJsdocs) {
+    return iterateAllJsdocs(iterator, {meta: ruleConfig.meta});
   }
 
   return {
@@ -303,9 +407,11 @@ export default function iterateJsdoc (iterator, opts) {
 
       const settings = getSettings(context);
 
-      let contexts = opts.returns;
-      if (typeof opts.returns === 'function') {
-        contexts = opts.returns(context, sourceCode);
+      let contexts = ruleConfig.returns;
+      if (typeof ruleConfig.returns === 'function') {
+        contexts = ruleConfig.returns(context, sourceCode);
+      } else if (ruleConfig.contextDefaults) {
+        contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
       }
 
       if (!Array.isArray(contexts) && contexts) {
@@ -318,45 +424,16 @@ export default function iterateJsdoc (iterator, opts) {
           return;
         }
 
-        const ancestors = context.getAncestors();
-
         const indent = _.repeat(' ', jsdocNode.loc.start.column);
 
         const jsdoc = parseComment(jsdocNode, indent);
 
-        const report = (message, fix = null, jsdocLoc = null, data = null) => {
-          let loc;
+        const report = makeReport(context, jsdocNode);
 
-          if (jsdocLoc) {
-            const lineNumber = jsdocNode.loc.start.line + jsdocLoc.line;
-
-            loc = {
-              end: {line: lineNumber},
-              start: {line: lineNumber}
-            };
-            if (jsdocLoc.column) {
-              const colNumber = jsdocNode.loc.start.column + jsdocLoc.column;
-
-              loc.end.column = colNumber;
-              loc.start.column = colNumber;
-            }
-          }
-
-          context.report({
-            data,
-            fix,
-            loc,
-            message,
-            node: jsdocNode
-          });
-        };
-
-        const utils = curryUtils(
+        const utils = getUtils(
           node,
           jsdoc,
           settings,
-          ancestors,
-          sourceCode,
           context
         );
 
@@ -387,12 +464,8 @@ export default function iterateJsdoc (iterator, opts) {
         };
       }
 
-      return contexts.reduce((obj, prop) => {
-        obj[prop] = checkJsdoc;
-
-        return obj;
-      }, {});
+      return jsdocUtils.getContextObject(contexts, checkJsdoc);
     },
-    meta: opts.meta
+    meta: ruleConfig.meta
   };
 }

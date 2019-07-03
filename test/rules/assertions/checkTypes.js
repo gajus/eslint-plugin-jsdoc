@@ -1694,6 +1694,13 @@ export default {
           }
         }
       }
+    },
+    {
+      code: '/** @typedef {String} foo */',
+      errors: [
+        {message: 'Invalid JSDoc @typedef "foo" type "String"; prefer: "string".'}
+      ],
+      output: '/** @typedef {string} foo */'
     }
   ],
   valid: [

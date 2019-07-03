@@ -77,7 +77,7 @@ yields
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 |Settings|`tagNamePreference`, `additionalTagNames`|
 

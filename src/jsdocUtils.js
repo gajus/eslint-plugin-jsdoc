@@ -65,15 +65,18 @@ const getPreferredTagName = (name : string, tagPreference : Object = {}) : strin
     return name;
   }
 
+  if (_.has(tagPreference, name)) {
+    return tagPreference[name];
+  }
+
   const preferredTagName = _.findKey(tagNames, (aliases) => {
     return aliases.includes(name);
   });
-
   if (preferredTagName) {
     return preferredTagName;
   }
 
-  return _.has(tagPreference, name) ? tagPreference[name] : name;
+  return name;
 };
 
 const isValidTag = (name : string, additionalTagNames : Object) : boolean => {
@@ -483,7 +486,39 @@ const parseClosureTemplateTag = (tag) => {
     });
 };
 
+/**
+ * Checks user option for `contexts` array, defaulting to
+ *   contexts designated by the rule. Returns an array of
+ *   ESTree AST types, indicating allowable contexts.
+ *
+ * @param {*} context
+ * @param {true|string[]} defaultContexts
+ * @returns {string[]}
+ */
+const enforcedContexts = (context, defaultContexts) => {
+  const {
+    /* istanbul ignore next */
+    contexts = defaultContexts === true ? [
+      'ArrowFunctionExpression',
+      'FunctionDeclaration',
+      'FunctionExpression'
+    ] : defaultContexts
+  } = context.options[0] || {};
+
+  return contexts;
+};
+
+const getContextObject = (contexts, checkJsdoc) => {
+  return contexts.reduce((obj, prop) => {
+    obj[prop] = checkJsdoc;
+
+    return obj;
+  }, {});
+};
+
 export default {
+  enforcedContexts,
+  getContextObject,
   getFunctionParameterNames,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,

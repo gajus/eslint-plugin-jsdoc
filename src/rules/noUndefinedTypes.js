@@ -59,7 +59,7 @@ export default iterateJsdoc(({
     })
     .map(parseComment)
     .flatMap((doc) => {
-      return doc.tags.filter(({tag}) => {
+      return (doc.tags || []).filter(({tag}) => {
         return utils.isNamepathDefiningTag(tag);
       });
     })
@@ -131,6 +131,23 @@ export default iterateJsdoc(({
   });
 }, {
   meta: {
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          definedTypes: {
+            items: {
+              type: 'string'
+            },
+            type: 'array'
+          },
+          preferredTypesDefined: {
+            type: 'boolean'
+          }
+        },
+        type: 'object'
+      }
+    ],
     type: 'suggestion'
   }
 });

@@ -4,7 +4,7 @@ Reports invalid padding inside JSDoc block.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 
 <!-- assertions checkIndentation -->

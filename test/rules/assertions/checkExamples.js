@@ -1,11 +1,5 @@
 /* eslint-disable no-restricted-syntax */
 
-// After `importMeta` no longer experimental, we can use this ESM
-//   approach over `__dirname`?
-// import {fileURLToPath} from 'url';
-// import {join, dirname} from 'path';
-// join(dirname(fileURLToPath(import.meta.url)), 'babel-eslint')
-
 export default {
   invalid: [
     {
@@ -307,7 +301,32 @@ export default {
     {
       code: `
           /**
-           * @example quux2()
+           * @example const i = 5;
+           *          quux2()
+           */
+          function quux2 () {
+
+          }
+      `,
+      errors: [
+        {
+          message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).'
+        },
+        {
+          message: '@example error (semi): Missing semicolon.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          matchingFileName: 'test/jsdocUtils.js'
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @example const i = 5;
+           *          quux2()
            */
           function quux2 () {
 
@@ -320,7 +339,7 @@ export default {
       ],
       settings: {
         jsdoc: {
-          matchingFileName: require.resolve('../data/test.js')
+          matchingFileName: 'test/rules/data/dummy.js'
         }
       }
     },

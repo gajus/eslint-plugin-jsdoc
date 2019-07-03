@@ -18,14 +18,26 @@ export default iterateJsdoc(({
       } catch (err) {
         let error = err;
 
-        if (tagName && ['memberof', 'memberof!'].includes(tagName)) {
-          const endChar = type.slice(-1);
-          if (['#', '.', '~'].includes(endChar)) {
-            try {
-              parse(type.slice(0, -1));
-              error = {};
-            } catch (memberofError) {
-              // Use the original error for including the whole type
+        if (tagName) {
+          if (['memberof', 'memberof!'].includes(tagName)) {
+            const endChar = type.slice(-1);
+            if (['#', '.', '~'].includes(endChar)) {
+              try {
+                parse(type.slice(0, -1));
+                error = {};
+              } catch (memberofError) {
+                // Use the original error for including the whole type
+              }
+            }
+          } else if (tagName === 'borrows') {
+            const startChar = type.charAt();
+            if (['#', '.', '~'].includes(startChar)) {
+              try {
+                parse(type.slice(1));
+                error = {};
+              } catch (memberofError) {
+                // Use the original error for including the whole type
+              }
             }
           }
         }
@@ -49,7 +61,7 @@ export default iterateJsdoc(({
         return;
       }
 
-      if (validTypeParsing(thisNamepath)) {
+      if (validTypeParsing(thisNamepath, 'borrows')) {
         const thatNamepath = tag.name;
 
         validTypeParsing(thatNamepath);
@@ -64,6 +76,7 @@ export default iterateJsdoc(({
     }
   });
 }, {
+  iterateAllJsdocs: true,
   meta: {
     type: 'suggestion'
   }

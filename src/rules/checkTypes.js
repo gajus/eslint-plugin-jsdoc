@@ -217,8 +217,23 @@ export default iterateJsdoc(({
     }
   });
 }, {
+  iterateAllJsdocs: true,
   meta: {
     fixable: 'code',
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          noDefaults: {
+            type: 'boolean'
+          },
+          unifyParentAndChildTypeChecks: {
+            type: 'boolean'
+          }
+        },
+        type: 'object'
+      }
+    ],
     type: 'suggestion'
   }
 });

@@ -118,38 +118,49 @@ Add `plugins` section and specify `eslint-plugin-jsdoc` as a plugin.
 
 Finally, enable all of the rules that you would like to use.
 
-```json
+```javascript
 {
     "rules": {
-        "jsdoc/check-alignment": 1,
+        "jsdoc/check-alignment": 1, // Recommended
         "jsdoc/check-examples": 1,
         "jsdoc/check-indentation": 1,
-        "jsdoc/check-param-names": 1,
+        "jsdoc/check-param-names": 1, // Recommended
         "jsdoc/check-syntax": 1,
-        "jsdoc/check-tag-names": 1,
-        "jsdoc/check-types": 1,
-        "jsdoc/implements-on-classes": 1,
+        "jsdoc/check-tag-names": 1, // Recommended
+        "jsdoc/check-types": 1, // Recommended
+        "jsdoc/implements-on-classes": 1, // Recommended
         "jsdoc/match-description": 1,
-        "jsdoc/newline-after-description": 1,
+        "jsdoc/newline-after-description": 1, // Recommended
         "jsdoc/no-types": 1,
-        "jsdoc/no-undefined-types": 1,
+        "jsdoc/no-undefined-types": 1, // Recommended
         "jsdoc/require-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-example": 1,
         "jsdoc/require-hyphen-before-param-description": 1,
-        "jsdoc/require-jsdoc": 1,
-        "jsdoc/require-param": 1,
-        "jsdoc/require-param-description": 1,
-        "jsdoc/require-param-name": 1,
-        "jsdoc/require-param-type": 1,
-        "jsdoc/require-returns": 1,
-        "jsdoc/require-returns-check": 1,
-        "jsdoc/require-returns-description": 1,
-        "jsdoc/require-returns-type": 1,
-        "jsdoc/valid-types": 1
+        "jsdoc/require-jsdoc": 1, // Recommended
+        "jsdoc/require-param": 1, // Recommended
+        "jsdoc/require-param-description": 1, // Recommended
+        "jsdoc/require-param-name": 1, // Recommended
+        "jsdoc/require-param-type": 1, // Recommended
+        "jsdoc/require-returns": 1, // Recommended
+        "jsdoc/require-returns-check": 1, // Recommended
+        "jsdoc/require-returns-description": 1, // Recommended
+        "jsdoc/require-returns-type": 1, // Recommended
+        "jsdoc/valid-types": 1 // Recommended
     }
 }
 ```
+
+Or you can simply use the following which enables the rules commented
+above as "recommended":
+
+```json
+{
+  "extends": ["plugin:jsdoc/recommended"]
+}
+```
+
+You can then selectively add to or override the recommended rules.
 
 <a name="eslint-plugin-jsdoc-settings"></a>
 ## Settings
@@ -411,7 +422,8 @@ decreasing precedence:
   with JavaScript Markdown lintable by
   [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
   if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
-  follow one's Markdown rules).
+  follow one's Markdown rules). Note that this option may come at somewhat
+  of a performance penalty as the file's existence is checked by eslint.
 * `settings.jsdoc.configFile` - A config file. Corresponds to ESLint's `-c`.
 * `settings.jsdoc.eslintrcForExamples` - Defaults to `true` in adding rules
   based on an `.eslintrc.*` file. Setting to `false` corresponds to
@@ -500,6 +512,20 @@ function quux (foo) {
 
 }
 // Message: Expected JSDoc block to be aligned.
+
+/**
+  * A jsdoc not attached to any node.
+*/
+// Message: Expected JSDoc block to be aligned.
+
+class Foo {
+  /**
+   *  Some method
+    * @param a
+   */
+  quux(a) {}
+}
+// Message: Expected JSDoc block to be aligned.
 ````
 
 The following patterns are not considered problems:
@@ -526,6 +552,11 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+/*  <- JSDoc must start with 2 stars.
+  *    So this is unchecked.
+ */
+function quux (foo) {}
 ````
 
 
@@ -673,12 +704,23 @@ function quux () {}
 // Message: @example error (semi): Missing semicolon.
 
 /**
- * @example quux2()
+ * @example const i = 5;
+ *          quux2()
  */
 function quux2 () {
 
 }
-// Settings: {"jsdoc":{"matchingFileName":"/Users/brett/eslint-plugin-jsdoc/test/rules/data/test.js"}}
+// Settings: {"jsdoc":{"matchingFileName":"test/jsdocUtils.js"}}
+// Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
+
+/**
+ * @example const i = 5;
+ *          quux2()
+ */
+function quux2 () {
+
+}
+// Settings: {"jsdoc":{"matchingFileName":"test/rules/data/dummy.js"}}
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -766,7 +808,7 @@ Reports invalid padding inside JSDoc block.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 
 The following patterns are considered problems:
@@ -781,6 +823,13 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Message: There must be no indentation.
+
+/**
+ * Foo
+ *   bar
+ */
+class Moo {}
 // Message: There must be no indentation.
 ````
 
@@ -1026,7 +1075,7 @@ Reports against Google Closure Compiler syntax.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 
 The following patterns are considered problems:
@@ -1140,13 +1189,17 @@ yields
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 |Settings|`tagNamePreference`, `additionalTagNames`|
 
 The following patterns are considered problems:
 
 ````js
+/** @typoo {string} */
+let a;
+// Message: Invalid JSDoc tag name "typoo".
+
 /**
  * @Param
  */
@@ -1179,6 +1232,15 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".
+
+/**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"arg":"somethingDifferent"}}}
+// Message: Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "somethingDifferent".
 
 /**
  * @param foo
@@ -1421,7 +1483,7 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
@@ -1936,6 +1998,9 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"preferredTypes":{"<>":"[]"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "[]".
+
+/** @typedef {String} foo */
+// Message: Invalid JSDoc @typedef "foo" type "String"; prefer: "string".
 ````
 
 The following patterns are not considered problems:
@@ -2230,16 +2295,28 @@ The default is this basic expression to match English sentences (Support
 for Unicode upper case may be added in a future version when it can be handled
 by our supported Node versions):
 
-``^([A-Z]|[`\\d_])([\\s\\S]*[.?!`])?$``
+``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]$``
 
-You can supply your own expression passing a `matchDescription` string on
-the options object.
+<a name="eslint-plugin-jsdoc-rules-match-description-options-1"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-match-description-options-1-matchdescription"></a>
+##### <code>matchDescription</code>
+
+You can supply your own expression to override the default, passing a
+`matchDescription` string on the options object.
 
 ```js
 {
   'jsdoc/match-description': ['error', {matchDescription: '[A-Z].*\\.'}]
 }
 ```
+
+As with the default, the supplied regular expression will be applied with the
+Unicode (`"u"`) flag and is *not* case-insensitive.
+
+<a name="eslint-plugin-jsdoc-rules-match-description-options-1-tags"></a>
+##### <code>tags</code>
 
 If you want different regular expressions to apply to tags, you may use
 the `tags` option object:
@@ -2265,19 +2342,60 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+If you wish to override the main function description without changing the
+default `match-description`, you may use `mainDescription`:
 
-By default, only the main function description is linted.
+```js
+{
+  'jsdoc/match-description': ['error', {
+    mainDescription: '[A-Z].*\\.',
+    tags: {
+      param: true,
+      returns: true
+    }
+  }]
+}
+```
+
+There is no need to add `mainDescription: true`, as by default, the main
+function (and only the main function) is linted, though you may disable checking
+it by setting it to `false`.
+
+<a name="eslint-plugin-jsdoc-rules-match-description-options-1-contexts"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+Overrides the defaults.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
 
 The following patterns are considered problems:
 
 ````js
+/**
+ * foo.
+ */
+const q = class {
+
+}
+// Options: [{"contexts":["ClassExpression"]}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+const q = {
+
+};
+// Options: [{"contexts":["ObjectExpression"]}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
 /**
  * foo.
  */
@@ -2300,7 +2418,16 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"matchDescription":"[А-Я]+."}]
+// Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Abc.
+ */
+function quux () {
+
+}
+// Options: [{"mainDescription":"[А-Я][А-я]+\\.","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2320,6 +2447,28 @@ function quux (foo) {
 
 }
 // Options: [{"tags":{"param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo
+ *
+ * @param foo foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"mainDescription":"^[a-zA-Z]*$","tags":{"param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo
+ *
+ * @param foo foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"mainDescription":false,"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2421,7 +2570,43 @@ function quux (foo) {
 function quux () {
 
 }
-// Options: [{"tags":{"param":"[А-Я]+."}}]
+// Options: [{"tags":{"param":"[А-Я][А-я]+\\."}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+class quux {
+
+}
+// Options: [{"contexts":["ClassDeclaration"]}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+class MyClass {
+  /**
+   * Abc
+   */
+  myClassField = 1
+}
+// Options: [{"contexts":["ClassProperty"]}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+interface quux {
+
+}
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+const myObject = {
+  /**
+   * Bad description
+   */
+  myProp: true
+};
+// Options: [{"contexts":["Property"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 ````
 
@@ -2466,7 +2651,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"matchDescription":"[А-Я]+."}]
+// Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
 
 /**
  * @param notRet
@@ -2475,7 +2660,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"returns":"[А-Я]+."}}]
+// Options: [{"tags":{"returns":"[А-Я][А-я]+\\."}}]
 
 /**
  * Foo
@@ -2551,6 +2736,69 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * foo.
+ */
+function quux () {
+
+}
+// Options: [{"mainDescription":false}]
+
+/**
+ * foo.
+ */
+class quux {
+
+}
+
+/**
+ * foo.
+ */
+class quux {
+
+}
+// Options: [{"mainDescription":true}]
+
+class MyClass {
+  /**
+   * Abc.
+   */
+  myClassField = 1
+}
+// Options: [{"contexts":["ClassProperty"]}]
+
+/**
+ * Foo.
+ */
+interface quux {
+
+}
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
+
+const myObject = {
+  /**
+   * Bad description
+   */
+  myProp: true
+};
+// Options: [{"contexts":[]}]
+
+/**
+ * foo.
+ */
+const q = class {
+
+}
+// Options: [{"contexts":[]}]
+
+/**
+ * foo.
+ */
+const q = {
+
+};
+// Options: [{"contexts":[]}]
 ````
 
 
@@ -2563,7 +2811,7 @@ This rule takes one argument. If it is `"always"` then a problem is raised when 
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 
 The following patterns are considered problems:
@@ -2706,7 +2954,7 @@ In addition to considering globals found in code (or in ESLint-indicated
 name(path) definitions to also serve as a potential "type" for checking
 the tag types in the table below:
 
-`@callback`, `@class` (or `@constructor`), `@constant` (or `@const`), `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`), `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`, `@template`, `@typedef`.
+`@callback`, `@class` (or `@constructor`), `@constant` (or `@const`), `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`), `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`, `@template` (for Closure/TypeScript), `@typedef`.
 
 The following types are always considered defined.
 
@@ -2715,7 +2963,7 @@ The following types are always considered defined.
 - `any`, `*`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
 
-<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-1"></a>
+<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-2"></a>
 #### Options
 
 An option object may have the following keys:
@@ -2728,7 +2976,7 @@ An option object may have the following keys:
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
@@ -3001,6 +3249,15 @@ class Foo {
   bar (baz) {
   }
 }
+
+/****/
+
+/**
+ *
+ */
+function quux () {
+
+}
 ````
 
 
@@ -3016,7 +3273,7 @@ Requires that block description and tag description are written in complete sent
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`param`, `returns`|
 |Aliases|`arg`, `argument`, `return`|
 
@@ -3285,25 +3542,23 @@ Requires that all functions have a description.
 * All functions must have a `@description` tag.
 * Every description tag must have a non-empty description that explains the purpose of the method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-3"></a>
 #### Options
 
 An options object may have any of the following properties:
 
-- `contexts` - Set to a string or array of strings representing the AST context
+- `contexts` - Set to an array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+  Overrides the defaults.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
     block avoids the need for a `@description`.
-- `noDefaults` - By default, `contexts` will permit `ArrowFunctionExpression`,
-  `FunctionDeclaration`, and `FunctionExpression`. Set this instead to `true` to
-  have `contexts` override these.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`description`|
 |Aliases|`desc`|
-|Options|`contexts`, `exemptedBy`, `noDefaults`|
+|Options|`contexts`, `exemptedBy`|
 
 The following patterns are considered problems:
 
@@ -3322,7 +3577,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"contexts":"ClassDeclaration"}]
+// Options: [{"contexts":["ClassDeclaration"]}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3331,7 +3586,7 @@ class quux {
 class quux {
 
 }
-// Options: [{"contexts":"ClassDeclaration","noDefaults":true}]
+// Options: [{"contexts":["ClassDeclaration"]}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3350,6 +3605,33 @@ function quux () {
 
 }
 // Message: Missing JSDoc @description description.
+
+/**
+ *
+ */
+interface quux {
+
+}
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
+// Message: Missing JSDoc @description declaration.
+
+/**
+ *
+ */
+var quux = class {
+
+};
+// Options: [{"contexts":["ClassExpression"]}]
+// Message: Missing JSDoc @description declaration.
+
+/**
+ *
+ */
+var quux = {
+
+};
+// Options: [{"contexts":["ObjectExpression"]}]
+// Message: Missing JSDoc @description declaration.
 ````
 
 The following patterns are not considered problems:
@@ -3395,7 +3677,7 @@ class quux {
 function quux () {
 
 }
-// Options: [{"noDefaults":true}]
+// Options: [{"contexts":["ClassDeclaration"]}]
 
 /**
  * @type {MyCallback}
@@ -3404,6 +3686,27 @@ function quux () {
 
 }
 // Options: [{"exemptedBy":["type"]}]
+
+/**
+ *
+ */
+interface quux {
+
+}
+
+/**
+ *
+ */
+var quux = class {
+
+};
+
+/**
+ *
+ */
+var quux = {
+
+};
 ````
 
 
@@ -3415,7 +3718,7 @@ Requires that all functions have examples.
 * All functions must have one or more `@example` tags.
 * Every example tag must have a non-empty description that explains the method's usage.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-4"></a>
 #### Options
 
 Has an object option with one optional property:
@@ -3550,7 +3853,7 @@ This rule takes one argument. If it is `"always"` then a problem is raised when 
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 
@@ -3639,7 +3942,7 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-5"></a>
 #### Options
 
 Accepts one optional options object, with two optional keys, `publicOnly`
@@ -3670,6 +3973,9 @@ be checked by the rule.
   - `FunctionDeclaration` (defaults to `true`)
   - `FunctionExpression`
   - `MethodDefinition`
+
+- `contexts` - Set this to an array of strings representing the additional
+  AST context where you wish the rule to be applied (e.g., `Property` for properties).
 
 |||
 |---|---|
@@ -4001,6 +4307,12 @@ export function someMethod() {
 
 }
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
+const myObject = {
+  myProp: true
+};
+// Options: [{"contexts":["Property"]}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -4471,6 +4783,11 @@ exports.someMethod = function() {
 
 }
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
+
+const myObject = {
+  myProp: true
+};
+// Options: [{"contexts":[]}]
 ````
 
 
@@ -4635,7 +4952,7 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-5"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-6"></a>
 #### Options
 
 An options object accepts one optional property:
@@ -5526,7 +5843,7 @@ function quux () {
 
 Requires returns are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-7"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -5950,7 +6267,8 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
   always fail if empty)
 - For the special case of set 5, i.e., `@borrows <that namepath> as <this namepath>`,
   check that both namepaths are present and valid and ensure there is an `as `
-  between them.
+  between them. In the case of `<this namepath>`, it can be preceded by
+  one of the name path operators, `#`, `.`, or `~`.
 - For the special case of `@memberof` and `@memberof!` (part of set 3), as
    per the [specification](https://jsdoc.app/tags-memberof.html), they also
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
@@ -5958,7 +6276,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|For name only unless otherwise stated: `alias`, `augments`, `borrows`, `callback`, `class` (for name and type), `constant` (for name and type), `enum` (for type), `event`, `external`, `fires`, `function`, `implements` (for type), `interface`, `lends`, `listens`, `member` (for name and type),  `memberof`, `memberof!`, `mixes`, `mixin`, `module` (for name and type), `name`, `namespace` (for name and type), `param` (for name and type), `property` (for name and type), `returns` (for type), `this`, `throws` (for type), `type` (for type), `typedef` (for name and type), `yields` (for type)|
 |Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|
@@ -5998,6 +6316,14 @@ function quux() {
 
 }
 // Message: Syntax error in type: foo%
+
+/**
+ * @borrows #foo as bar
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: #foo
 
 /**
  * @borrows foo as bar%
@@ -6076,6 +6402,13 @@ function quux() {
 
 /**
  * @borrows foo as bar
+ */
+function quux() {
+
+}
+
+/**
+ * @borrows foo as #bar
  */
 function quux() {
 

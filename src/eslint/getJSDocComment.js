@@ -25,6 +25,7 @@ const looksLikeExport = function (astNode) {
     astNode.type === 'ExportAllDeclaration' || astNode.type === 'ExportSpecifier';
 };
 
+/* eslint-disable complexity */
 /**
  * Retrieves the JSDoc comment for a given node.
  *
@@ -67,8 +68,7 @@ const getJSDocComment = function (sourceCode, node) {
     return findJSDocComment(looksLikeExport(parent) ? parent : node);
 
   case 'ClassExpression':
-    return findJSDocComment(parent.parent);
-
+  case 'ObjectExpression':
   case 'ArrowFunctionExpression':
   case 'FunctionExpression':
     if (
@@ -96,10 +96,14 @@ const getJSDocComment = function (sourceCode, node) {
 
     return findJSDocComment(node);
 
-  // falls through
   default:
-    return null;
+    if (!node) {
+      return null;
+    }
+
+    return findJSDocComment(node);
   }
 };
+/* eslint-enable complexity */
 
 export default getJSDocComment;

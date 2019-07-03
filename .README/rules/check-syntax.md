@@ -4,7 +4,7 @@ Reports against Google Closure Compiler syntax.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 
 <!-- assertions checkSyntax -->
