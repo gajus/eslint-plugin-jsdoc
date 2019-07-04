@@ -52,6 +52,15 @@ export default iterateJsdoc(({
       return true;
     };
 
+    const hasType = Boolean(tag.type);
+    const mustHaveType = utils.isTagWithType(tag.tag) && !utils.isPotentiallyEmptyTypeTag(tag.tag);
+
+    const hasNamePath = Boolean(tag.name);
+    const mustHaveNamepath = utils.isNamepathTag(tag.tag) && !utils.passesEmptyNamepathCheck(tag);
+
+    const hasEither = hasType || hasNamePath;
+    const mustHaveEither = utils.isTagWithMandatoryNamepathOrType(tag.tag);
+
     if (tag.tag === 'borrows') {
       const thisNamepath = tag.description.replace(asExpression, '');
 
@@ -66,13 +75,24 @@ export default iterateJsdoc(({
 
         validTypeParsing(thatNamepath);
       }
-    } else if (utils.isNamepathTag(tag.tag)) {
-      if (utils.passesEmptyNamepathCheck(tag)) {
+    } else {
+      if (mustHaveEither && !hasEither) {
+        report(`Tag @${tag.tag} must have either a type or namepath`);
+
         return;
       }
-      validTypeParsing(tag.name, tag.tag);
-    } else if (tag.type && utils.isTagWithType(tag.tag)) {
-      validTypeParsing(tag.type);
+
+      if (hasType) {
+        validTypeParsing(tag.type);
+      } else if (mustHaveType) {
+        report(`Tag @${tag.tag} must have a type`);
+      }
+
+      if (hasNamePath) {
+        validTypeParsing(tag.name, tag.tag);
+      } else if (mustHaveNamepath) {
+        report(`Tag @${tag.tag} must have a namepath`);
+      }
     }
   });
 }, {

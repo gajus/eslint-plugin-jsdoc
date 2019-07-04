@@ -161,14 +161,82 @@ export default {
           }
       `,
       errors: [{
-        line: 3,
-        message: 'Syntax error in type: '
+        line: 2,
+        message: 'Tag @callback must have a namepath'
       }],
       settings: {
         jsdoc: {
           allowEmptyNamepaths: false
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @constant {str%ng}
+           */
+           const FOO = 'foo';
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: str%ng'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @typedef {str%ng} UserString
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: str%ng'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @typedef {string} UserStr%ng
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: UserStr%ng'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @extends
+           */
+           class Bar {};
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Tag @extends must have either a type or namepath'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @type
+           */
+           let foo;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Tag @type must have a type'
+        }
+      ]
     }
   ],
   valid: [
@@ -225,16 +293,6 @@ export default {
     {
       code: `
           /**
-           * @see foo%
-           */
-          function quux() {
-
-          }
-      `
-    },
-    {
-      code: `
-          /**
            * @alias module:namespace.SomeClass#event:ext_anevent
            */
           function quux() {
@@ -245,7 +303,7 @@ export default {
     {
       code: `
           /**
-           * @callback
+           * @callback foo
            */
           function quux() {
 
@@ -311,6 +369,45 @@ export default {
           function quux() {
 
           }
+      `
+    },
+    {
+      code: `
+          /**
+           * @constant {string}
+           */
+           const FOO = 'foo';
+      `
+    },
+    {
+      code: `
+          /**
+           * @extends Foo
+           */
+           class Bar {};
+      `
+    },
+    {
+      code: `
+          /**
+           * @extends {Foo<String>}
+           */
+           class Bar {};
+      `
+    },
+    {
+      code: `
+          /**
+           * @typedef {number|string} UserDefinedType
+           */
+      `
+    },
+    {
+      code: `
+          /**
+           * @typedef {number|string}
+           */
+          let UserDefinedGCCType;
       `
     }
   ]

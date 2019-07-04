@@ -186,13 +186,18 @@ const potentiallyEmptyNamepathTags = [
   'event',
   'callback',
   'class', 'constructor',
+  'extends', 'augments',
   'constant', 'const',
   'function', 'func', 'method',
   'interface',
   'member', 'var',
   'mixin',
   'namespace',
-  'listens', 'fires', 'emits'
+  'listens', 'fires', 'emits',
+  'see',
+
+  // GCC syntax allows typedef to be named through variable declaration rather than jsdoc name
+  'typedef'
 ];
 
 const isPotentiallyEmptyNamepathTag = (tag) => {
@@ -200,6 +205,7 @@ const isPotentiallyEmptyNamepathTag = (tag) => {
 };
 
 let tagsWithTypes = [
+  'augments', 'extends',
   'class',
   'constant',
   'enum',
@@ -234,8 +240,33 @@ const tagsWithTypesAliases = [
 
 tagsWithTypes = tagsWithTypes.concat(tagsWithTypesAliases, closureTagsWithTypes);
 
+const potentiallyEmptyTypeTags = [
+  'class', 'constructor',
+  'constant', 'const',
+  'extends', 'augments',
+  'namespace',
+  'param', 'arg',
+  'return', 'returns',
+  'throws', 'exception',
+  'yields', 'yield',
+  'package', 'private', 'protected', 'public', 'static'
+];
+
+const isPotentiallyEmptyTypeTag = (tag) => {
+  return potentiallyEmptyTypeTags.includes(tag);
+};
+
 const isTagWithType = (tagName) => {
   return tagsWithTypes.includes(tagName);
+};
+
+const tagsWithMandatoryNamepathOrType = [
+  'augments', 'extends',
+  'param', 'arg',
+  'typedef'
+];
+const isTagWithMandatoryNamepathOrType = (tagName) => {
+  return tagsWithMandatoryNamepathOrType.includes(tagName);
 };
 
 const LOOP_STATEMENTS = ['WhileStatement', 'DoWhileStatement', 'ForStatement', 'ForInStatement', 'ForOfStatement'];
@@ -530,6 +561,8 @@ export default {
   isNamepathDefiningTag,
   isNamepathTag,
   isPotentiallyEmptyNamepathTag,
+  isPotentiallyEmptyTypeTag,
+  isTagWithMandatoryNamepathOrType,
   isTagWithType,
   isValidTag,
   parseClosureTemplateTag

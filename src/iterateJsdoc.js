@@ -9,9 +9,19 @@ const parseComment = (commentNode, indent) => {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
     parsers: [
       commentParser.PARSERS.parse_tag,
-      commentParser.PARSERS.parse_type,
+      (str, data) => {
+        if (data.tag === 'see') {
+          // @see can't contain types, only names or links which might be confused with types
+          return null;
+        }
+
+        return commentParser.PARSERS.parse_type(str, data);
+      },
       (str, data) => {
         if (['return', 'returns', 'throws', 'exception'].includes(data.tag)) {
+          return null;
+        }
+        if (data.tag === 'see' && str.match(/{@link.+?}/)) {
           return null;
         }
 
@@ -145,10 +155,17 @@ const getUtils = (
   utils.isTagWithType = (tagName) => {
     return jsdocUtils.isTagWithType(tagName);
   };
+  utils.isPotentiallyEmptyTypeTag = (tagName) => {
+    return jsdocUtils.isPotentiallyEmptyTypeTag(tagName);
+  };
 
   utils.passesEmptyNamepathCheck = (tag) => {
     return !tag.name && allowEmptyNamepaths &&
       jsdocUtils.isPotentiallyEmptyNamepathTag(tag.tag);
+  };
+
+  utils.isTagWithMandatoryNamepathOrType = (tagName) => {
+    return jsdocUtils.isTagWithMandatoryNamepathOrType(tagName);
   };
 
   utils.hasDefinedTypeReturnTag = (tag) => {
