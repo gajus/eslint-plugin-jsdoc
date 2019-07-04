@@ -3048,6 +3048,14 @@ function quux(foo, bar, baz) {
 // Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
 // Message: The type 'HerType' is undefined.
 
+/**
+ * @template TEMPLATE_TYPE
+ * @param {WRONG_TEMPLATE_TYPE} bar
+ */
+function foo (bar) {
+};
+// Message: The type 'WRONG_TEMPLATE_TYPE' is undefined.
+
 class Foo {
   /**
    * @return {TEMPLATE_TYPE}
@@ -3226,6 +3234,14 @@ function quux(foo, bar, baz) {
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType<>"},"histype":"HisType.<>"}}}
 // Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+
+/**
+ * @template TEMPLATE_TYPE
+ * @param {TEMPLATE_TYPE} bar
+ * @return {TEMPLATE_TYPE}
+ */
+function foo (bar) {
+};
 
 /**
  * @template TEMPLATE_TYPE

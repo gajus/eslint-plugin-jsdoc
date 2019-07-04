@@ -157,6 +157,22 @@ export default {
     },
     {
       code: `
+      /**
+       * @template TEMPLATE_TYPE
+       * @param {WRONG_TEMPLATE_TYPE} bar
+       */
+      function foo (bar) {
+      };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'WRONG_TEMPLATE_TYPE\' is undefined.'
+        }
+      ]
+    },
+    {
+      code: `
       class Foo {
         /**
          * @return {TEMPLATE_TYPE}
@@ -438,6 +454,17 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+      /**
+       * @template TEMPLATE_TYPE
+       * @param {TEMPLATE_TYPE} bar
+       * @return {TEMPLATE_TYPE}
+       */
+      function foo (bar) {
+      };
+      `
     },
     {
       code: `
