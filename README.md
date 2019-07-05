@@ -197,8 +197,7 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
-One may also use an object with a `message` and `replacement`, with `{{tagName}}` and `{{preferredTag}}` (or its alias `{{replacement}}`) as template variables to be
-substituted within `message`.
+One may also use an object with a `message` and `replacement`.
 
 The following will report the message `@extends is to be used over @augments as it is more evocative of classes than @augments` upon encountering `@augments`.
 
@@ -209,7 +208,7 @@ The following will report the message `@extends is to be used over @augments as 
         "jsdoc": {
             "tagNamePreference": {
                 "augments": {
-                  "message": "@{{replacement}} is to be used over @{{tagName}} as it is more evocative of classes than @{{tagName}}",
+                  "message": "@extends is to be used over @augments as it is more evocative of classes than @augments",
                   "replacement": "extends"
                 }
             }
@@ -1364,7 +1363,7 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use {{replacement}} instead of {{tagName}}","replacement":"x-todo"}}}}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use x-todo instead of todo","replacement":"x-todo"}}}}
 // Message: Please use x-todo instead of todo
 
 /**
@@ -1373,7 +1372,7 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use {{preferredTagName}} instead of {{tagName}}","replacement":"x-todo"}}}}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use x-todo instead of todo","replacement":"x-todo"}}}}
 // Message: Please use x-todo instead of todo
 ````
 
