@@ -76,14 +76,12 @@ const getUtils = (
     return jsdocUtils.getJsdocParameterNames(jsdoc, param);
   };
 
-  utils.getPreferredTagName = (name, allowObjectReturn = false, defaultMessage = 'Unexpected tag `@{{tagName}}`') => {
+  utils.getPreferredTagName = (name, allowObjectReturn = false, defaultMessage = `Unexpected tag \`@${name}\``) => {
     const ret = jsdocUtils.getPreferredTagName(name, tagNamePreference);
     const isObject = ret && typeof ret === 'object';
     if (ret === false || isObject && !ret.replacement) {
       const message = isObject && ret.message || defaultMessage;
-      report(message, null, utils.getTags(name)[0], {
-        tagName: name
-      });
+      report(message, null, utils.getTags(name)[0]);
 
       return false;
     }

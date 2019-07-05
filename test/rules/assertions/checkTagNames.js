@@ -260,7 +260,7 @@ export default {
         jsdoc: {
           tagNamePreference: {
             todo: {
-              message: 'Please use {{replacement}} instead of {{tagName}}',
+              message: 'Please use x-todo instead of todo',
               replacement: 'x-todo'
             }
           }
@@ -285,7 +285,7 @@ export default {
         jsdoc: {
           tagNamePreference: {
             todo: {
-              message: 'Please use {{preferredTagName}} instead of {{tagName}}',
+              message: 'Please use x-todo instead of todo',
               replacement: 'x-todo'
             }
           }

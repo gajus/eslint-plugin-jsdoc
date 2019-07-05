@@ -13,12 +13,12 @@ export default iterateJsdoc(({
   jsdoc.tags.forEach((jsdocTag) => {
     const tagName = jsdocTag.tag;
     if (utils.isValidTag(tagName)) {
-      let message = 'Invalid JSDoc tag (preference). Replace "{{tagName}}" JSDoc tag with "{{preferredTagName}}".';
       let preferredTagName = utils.getPreferredTagName(
         tagName,
         true,
-        'Blacklisted tag found (`@{{tagName}}`)'
+        `Blacklisted tag found (\`@${tagName}\`)`
       );
+      let message = `Invalid JSDoc tag (preference). Replace "${tagName}" JSDoc tag with "${preferredTagName}".`;
       if (!preferredTagName) {
         return;
       }
@@ -31,11 +31,7 @@ export default iterateJsdoc(({
           const replacement = sourceCode.getText(jsdocNode).replace('@' + tagName, '@' + preferredTagName);
 
           return fixer.replaceText(jsdocNode, replacement);
-        }, jsdocTag, {
-          preferredTagName,
-          replacement: preferredTagName,
-          tagName
-        });
+        }, jsdocTag);
       }
     } else {
       report('Invalid JSDoc tag name "' + tagName + '".', null, jsdocTag);
