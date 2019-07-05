@@ -161,7 +161,7 @@ export default {
           }
       `,
       errors: [{
-        line: 2,
+        line: 3,
         message: 'Tag @callback must have a namepath'
       }],
       settings: {
@@ -219,7 +219,7 @@ export default {
       `,
       errors: [
         {
-          line: 2,
+          line: 3,
           message: 'Tag @extends must have either a type or namepath'
         }
       ]
@@ -233,7 +233,7 @@ export default {
       `,
       errors: [
         {
-          line: 2,
+          line: 3,
           message: 'Tag @type must have a type'
         }
       ]

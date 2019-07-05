@@ -77,7 +77,7 @@ export default iterateJsdoc(({
       }
     } else {
       if (mustHaveEither && !hasEither) {
-        report(`Tag @${tag.tag} must have either a type or namepath`);
+        report(`Tag @${tag.tag} must have either a type or namepath`, null, tag);
 
         return;
       }
@@ -85,13 +85,13 @@ export default iterateJsdoc(({
       if (hasType) {
         validTypeParsing(tag.type);
       } else if (mustHaveType) {
-        report(`Tag @${tag.tag} must have a type`);
+        report(`Tag @${tag.tag} must have a type`, null, tag);
       }
 
       if (hasNamePath) {
         validTypeParsing(tag.name, tag.tag);
       } else if (mustHaveNamepath) {
-        report(`Tag @${tag.tag} must have a namepath`);
+        report(`Tag @${tag.tag} must have a namepath`, null, tag);
       }
     }
   });
