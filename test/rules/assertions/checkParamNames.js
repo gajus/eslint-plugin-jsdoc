@@ -190,6 +190,28 @@ export default {
       parserOptions: {
         sourceType: 'module'
       }
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Unexpected tag `@param`'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            param: false
+          }
+        }
+      }
     }
   ],
   valid: [

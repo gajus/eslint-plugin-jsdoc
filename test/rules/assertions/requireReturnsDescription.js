@@ -38,6 +38,28 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @returns
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Unexpected tag `@returns`'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            returns: false
+          }
+        }
+      }
     }
   ],
   valid: [

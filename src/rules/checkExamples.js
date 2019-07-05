@@ -1,4 +1,5 @@
 import {CLIEngine, Linter} from 'eslint';
+import escapeRegexString from 'escape-regex-string';
 import iterateJsdoc from '../iterateJsdoc';
 
 const zeroBasedLineIndexAdjust = -1;
@@ -62,9 +63,11 @@ export default iterateJsdoc(({
   exampleCodeRegex = exampleCodeRegex && new RegExp(exampleCodeRegex, '');
   rejectExampleCodeRegex = rejectExampleCodeRegex && new RegExp(rejectExampleCodeRegex, '');
 
-  utils.forEachTag('example', (tag) => {
+  utils.forEachPreferredTag('example', (tag, targetTagName) => {
     // If a space is present, we should ignore it
-    const initialTag = tag.source.match(/^@example ?/);
+    const initialTag = tag.source.match(
+      new RegExp('^@' + escapeRegexString(targetTagName) + ' ?', 'u')
+    );
     const initialTagLength = initialTag[0].length;
     const firstLinePrefixLength = preTagSpaceLength + initialTagLength;
 
@@ -209,7 +212,7 @@ export default iterateJsdoc(({
 
       // Could perhaps make fixable
       report(
-        '@example ' + (severity === 2 ? 'error' : 'warning') +
+        '@' + targetTagName + ' ' + (severity === 2 ? 'error' : 'warning') +
           (ruleId ? ' (' + ruleId + ')' : '') + ': ' +
           message,
         null,

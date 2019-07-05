@@ -4,9 +4,7 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
-  const targetTagName = utils.getPreferredTagName('returns');
-
-  utils.forEachTag(targetTagName, (jsdocTag) => {
+  utils.forEachPreferredTag('returns', (jsdocTag, targetTagName) => {
     if (!jsdocTag.type) {
       report('Missing JSDoc @' + targetTagName + ' type.', null, jsdocTag);
     }

@@ -195,6 +195,102 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Blacklisted tag found (`@todo`)'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: false
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Please resolve to-dos or add to the tracker'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: {
+              message: 'Please resolve to-dos or add to the tracker'
+            }
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Please use x-todo instead of todo'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: {
+              message: 'Please use x-todo instead of todo',
+              replacement: 'x-todo'
+            }
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Please use x-todo instead of todo'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: {
+              message: 'Please use x-todo instead of todo',
+              replacement: 'x-todo'
+            }
+          }
+        }
+      }
     }
   ],
   valid: [
@@ -278,6 +374,16 @@ export default {
            *
            */
           function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
 
           }
       `

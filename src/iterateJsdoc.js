@@ -25,6 +25,7 @@ const parseComment = (commentNode, indent) => {
 const getUtils = (
   node,
   jsdoc,
+  jsdocNode,
   {
     tagNamePreference,
     additionalTagNames,
@@ -37,6 +38,7 @@ const getUtils = (
     allowAugmentsExtendsWithoutParam,
     checkSeesForNamepaths
   },
+  report,
   context
 ) => {
   const ancestors = context.getAncestors();
@@ -57,15 +59,34 @@ const getUtils = (
   };
 
   utils.getJsdocParameterNamesDeep = () => {
-    return jsdocUtils.getJsdocParameterNamesDeep(jsdoc, utils.getPreferredTagName('param'));
+    const param = utils.getPreferredTagName('param');
+    if (!param) {
+      return false;
+    }
+
+    return jsdocUtils.getJsdocParameterNamesDeep(jsdoc, param);
   };
 
   utils.getJsdocParameterNames = () => {
-    return jsdocUtils.getJsdocParameterNames(jsdoc, utils.getPreferredTagName('param'));
+    const param = utils.getPreferredTagName('param');
+    if (!param) {
+      return false;
+    }
+
+    return jsdocUtils.getJsdocParameterNames(jsdoc, param);
   };
 
-  utils.getPreferredTagName = (name) => {
-    return jsdocUtils.getPreferredTagName(name, tagNamePreference);
+  utils.getPreferredTagName = (name, allowObjectReturn = false, defaultMessage = `Unexpected tag \`@${name}\``) => {
+    const ret = jsdocUtils.getPreferredTagName(name, tagNamePreference);
+    const isObject = ret && typeof ret === 'object';
+    if (ret === false || isObject && !ret.replacement) {
+      const message = isObject && ret.message || defaultMessage;
+      report(message, null, utils.getTags(name)[0]);
+
+      return false;
+    }
+
+    return isObject && !allowObjectReturn ? ret.replacement : ret;
   };
 
   utils.isValidTag = (name) => {
@@ -209,13 +230,17 @@ const getUtils = (
     return classJsdoc && jsdocUtils.hasTag(classJsdoc, tagName);
   };
 
-  utils.forEachTag = (tagName, arrayHandler) => {
+  utils.forEachPreferredTag = (tagName, arrayHandler) => {
+    const targetTagName = utils.getPreferredTagName(tagName);
+    if (!targetTagName) {
+      return;
+    }
     const matchingJsdocTags = _.filter(jsdoc.tags || [], {
-      tag: tagName
+      tag: targetTagName
     });
 
     matchingJsdocTags.forEach((matchingJsdocTag) => {
-      arrayHandler(matchingJsdocTag);
+      arrayHandler(matchingJsdocTag, targetTagName);
     });
   };
 
@@ -346,17 +371,19 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
             const indent = _.repeat(' ', comment.loc.start.column);
             const jsdoc = parseComment(comment, indent);
             const settings = getSettings(context);
+            const report = makeReport(context, comment);
+            const jsdocNode = comment;
 
             iterator({
               context,
               indent,
               jsdoc,
-              jsdocNode: comment,
+              jsdocNode,
               node: null,
-              report: makeReport(context, comment),
+              report,
               settings: getSettings(context),
               sourceCode: context.getSourceCode(),
-              utils: getUtils(null, jsdoc, settings, context)
+              utils: getUtils(null, jsdoc, jsdocNode, settings, report, context)
             });
           });
         }
@@ -433,7 +460,9 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         const utils = getUtils(
           node,
           jsdoc,
+          jsdocNode,
           settings,
+          report,
           context
         );
 
