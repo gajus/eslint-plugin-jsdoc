@@ -26,9 +26,10 @@ An option object may have the following keys:
 
 - `preferredTypesDefined` -  If this option is set to `true` and preferred
   types are indicated within `settings.jsdoc.preferredTypes`, any such
-  types will be assumed to be defined as well.
+  types will be assumed to be defined as well. Defaults to `false`.
 - `definedTypes` - This array can be populated to indicate other types which
-  are automatically considered as defined (in addition to globals, etc.)
+  are automatically considered as defined (in addition to globals, etc.).
+  Defaults to an empty array.
 
 |||
 |---|---|

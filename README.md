@@ -1424,7 +1424,7 @@ RegExp
 - An option object:
   - with the key `noDefaults` to insist that only the supplied option type
     map is to be used, and that the default preferences (such as "string"
-    over "String") will not be enforced.
+    over "String") will not be enforced. The option's default is `false`.
   - with the key `unifyParentAndChildTypeChecks` which will treat
     `settings.jsdoc.preferredTypes` keys such as `SomeType` as matching
     not only child types such as an unadorned `SomeType` but also
@@ -2342,6 +2342,9 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+<a name="eslint-plugin-jsdoc-rules-match-description-options-1-maindescription"></a>
+##### <code>mainDescription</code>
+
 If you wish to override the main function description without changing the
 default `match-description`, you may use `mainDescription`:
 
@@ -2366,14 +2369,14 @@ it by setting it to `false`.
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the defaults.
+Overrides the default contexts (see below).
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `mainDescription`, `matchDescription`|
 
 The following patterns are considered problems:
 
@@ -2807,11 +2810,15 @@ const q = {
 
 Enforces a consistent padding of the block description.
 
-This rule takes one argument. If it is `"always"` then a problem is raised when there is a newline after the description. If it is `"never"` then a problem is raised when there is no newline after the description. The default value is `"always"`.
+<a name="eslint-plugin-jsdoc-rules-newline-after-description-options-2"></a>
+#### Options
+
+This rule allows one optional string argument. If it is `"always"` then a problem is raised when there is a newline after the description. If it is `"never"` then a problem is raised when there is no newline after the description. The default value is `"always"`.
 
 |||
 |---|---|
 |Context|everywhere|
+|Options|(a string matching `"always"|"never"`)|
 |Tags|N/A|
 
 The following patterns are considered problems:
@@ -2963,16 +2970,17 @@ The following types are always considered defined.
 - `any`, `*`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
 
-<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-2"></a>
+<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-3"></a>
 #### Options
 
 An option object may have the following keys:
 
 - `preferredTypesDefined` -  If this option is set to `true` and preferred
   types are indicated within `settings.jsdoc.preferredTypes`, any such
-  types will be assumed to be defined as well.
+  types will be assumed to be defined as well. Defaults to `false`.
 - `definedTypes` - This array can be populated to indicate other types which
-  are automatically considered as defined (in addition to globals, etc.)
+  are automatically considered as defined (in addition to globals, etc.).
+  Defaults to an empty array.
 
 |||
 |---|---|
@@ -3558,16 +3566,16 @@ Requires that all functions have a description.
 * All functions must have a `@description` tag.
 * Every description tag must have a non-empty description that explains the purpose of the method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-4"></a>
 #### Options
 
 An options object may have any of the following properties:
 
 - `contexts` - Set to an array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-  Overrides the defaults.
+  Overrides the default contexts (see below).
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@description`.
+    block avoids the need for a `@description`. Defaults to an empty array.
 
 |||
 |---|---|
@@ -3734,13 +3742,13 @@ Requires that all functions have examples.
 * All functions must have one or more `@example` tags.
 * Every example tag must have a non-empty description that explains the method's usage.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-5"></a>
 #### Options
 
 Has an object option with one optional property:
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-  block avoids the need for an `@example`.
+  block avoids the need for an `@example`. Defaults to an empty array.
 
 |||
 |---|---|
@@ -3865,13 +3873,17 @@ function quux () {
 
 Requires a hyphen before the `@param` description.
 
-This rule takes one argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-6"></a>
+#### Options
+
+This rule takes one optional string argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
 
 |||
 |---|---|
 |Context|everywhere|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Options|(a string matching `"always"|"never"`)|
 
 The following patterns are considered problems:
 
@@ -3958,19 +3970,16 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-5"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-7"></a>
 #### Options
 
-Accepts one optional options object, with two optional keys, `publicOnly`
-for confining JSDoc comments to be checked to exported functions (with "exported"
-allowing for ESM exports, CJS exports, or browser window global export)
-in `require-jsdoc`, and `require` for limiting the contexts which are to
-be checked by the rule.
+Accepts one optional options object with the following optional keys.
 
-- `publicOnly` - Missing jsdoc blocks are only reported for function
-  bodies / class declarations that are exported from the module.
-  May be a boolean or object. If set to `true`, the defaults below will
-  be used.
+- `publicOnly` - This option will insist that missing jsdoc blocks are
+  only reported for function bodies / class declarations that are exported
+  from the module. May be a boolean or object. If set to `true`, the defaults
+  below will be used. If unset, jsdoc block reporting will not be limited to
+  exports.
 
   This object supports the following optional boolean keys (`false` unless
   otherwise noted):
@@ -3981,7 +3990,8 @@ be checked by the rule.
   - `window` - Window global exports are checked for JSDoc comments
 
 - `require` - An object with the following optional boolean keys which all
-    default to `false` except as noted:
+    default to `false` except as noted, indicating the contexts where the rule
+    will apply:
 
   - `ArrowFunctionExpression`
   - `ClassDeclaration`
@@ -3991,13 +4001,14 @@ be checked by the rule.
   - `MethodDefinition`
 
 - `contexts` - Set this to an array of strings representing the additional
-  AST context where you wish the rule to be applied (e.g., `Property` for properties).
+  AST contexts where you wish the rule to be applied (e.g., `Property` for
+  properties). Defaults to an empty array.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
-|Options|`publicOnly`|
+|Options|`publicOnly`, `require`, `contexts`|
 |Settings|`exemptEmptyFunctions`|
 
 The following patterns are considered problems:
@@ -4968,13 +4979,13 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-8"></a>
 #### Options
 
 An options object accepts one optional property:
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@param`.
+    block avoids the need for a `@param`. Defaults to an empty array.
 
 |||
 |---|---|
@@ -5859,12 +5870,12 @@ function quux () {
 
 Requires returns are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-9"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@returns`.
-- `forceReturnsWithAsync` - By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` as true on the options object. This may be useful as an `async` function will always return a Promise, even if the Promise returns void.
+    block avoids the need for a `@returns`. Defaults to an empty array.
+- `forceReturnsWithAsync` - By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` to `true` on the options object. This may be useful as an `async` function will always return a `Promise`, even if the `Promise` returns void. Defaults to `false`.
 
 ```js
 'jsdoc/require-jsdoc': ['error', {forceReturnsWithAsync: true}]

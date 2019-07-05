@@ -50,6 +50,8 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+##### `mainDescription`
+
 If you wish to override the main function description without changing the
 default `match-description`, you may use `mainDescription`:
 
@@ -73,13 +75,13 @@ it by setting it to `false`.
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the defaults.
+Overrides the default contexts (see below).
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `mainDescription`, `matchDescription`|
 
 <!-- assertions matchDescription -->

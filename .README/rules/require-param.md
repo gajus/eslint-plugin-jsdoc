@@ -7,7 +7,7 @@ Requires that all function parameters are documented.
 An options object accepts one optional property:
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@param`.
+    block avoids the need for a `@param`. Defaults to an empty array.
 
 |||
 |---|---|

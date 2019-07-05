@@ -5,16 +5,13 @@ functions.
 
 #### Options
 
-Accepts one optional options object, with two optional keys, `publicOnly`
-for confining JSDoc comments to be checked to exported functions (with "exported"
-allowing for ESM exports, CJS exports, or browser window global export)
-in `require-jsdoc`, and `require` for limiting the contexts which are to
-be checked by the rule.
+Accepts one optional options object with the following optional keys.
 
-- `publicOnly` - Missing jsdoc blocks are only reported for function
-  bodies / class declarations that are exported from the module.
-  May be a boolean or object. If set to `true`, the defaults below will
-  be used.
+- `publicOnly` - This option will insist that missing jsdoc blocks are
+  only reported for function bodies / class declarations that are exported
+  from the module. May be a boolean or object. If set to `true`, the defaults
+  below will be used. If unset, jsdoc block reporting will not be limited to
+  exports.
 
   This object supports the following optional boolean keys (`false` unless
   otherwise noted):
@@ -25,7 +22,8 @@ be checked by the rule.
   - `window` - Window global exports are checked for JSDoc comments
 
 - `require` - An object with the following optional boolean keys which all
-    default to `false` except as noted:
+    default to `false` except as noted, indicating the contexts where the rule
+    will apply:
 
   - `ArrowFunctionExpression`
   - `ClassDeclaration`
@@ -35,13 +33,14 @@ be checked by the rule.
   - `MethodDefinition`
 
 - `contexts` - Set this to an array of strings representing the additional
-  AST context where you wish the rule to be applied (e.g., `Property` for properties).
+  AST contexts where you wish the rule to be applied (e.g., `Property` for
+  properties). Defaults to an empty array.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
-|Options|`publicOnly`|
+|Options|`publicOnly`, `require`, `contexts`|
 |Settings|`exemptEmptyFunctions`|
 
 <!-- assertions requireJsdoc -->
