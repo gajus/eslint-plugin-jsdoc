@@ -256,6 +256,11 @@ const getSettings = (context) => {
   // `check-tag-names` and many require/param rules
   settings.tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
 
+  // `require-param`, `require-description`, `require-example`, `require-returns`
+  settings.overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
+  settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
+  settings.augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
+
   // `check-tag-names` only
   settings.additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
 
@@ -270,11 +275,6 @@ const getSettings = (context) => {
   settings.reportUnusedDisableDirectives = _.get(context, 'settings.jsdoc.reportUnusedDisableDirectives') !== false;
   settings.captionRequired = Boolean(_.get(context, 'settings.jsdoc.captionRequired'));
   settings.noDefaultExampleRules = Boolean(_.get(context, 'settings.jsdoc.noDefaultExampleRules'));
-
-  // `require-param`, `require-description`, `require-example`, `require-returns`
-  settings.overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
-  settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
-  settings.augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
 
   // `require-param` only (deprecated)
   settings.allowOverrideWithoutParam = _.get(context, 'settings.jsdoc.allowOverrideWithoutParam');
