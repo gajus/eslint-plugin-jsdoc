@@ -6373,7 +6373,35 @@ function quux() {
 
 }
 // Settings: {"jsdoc":{"allowEmptyNamepaths":false}}
-// Message: Syntax error in type: 
+// Message: Tag @callback must have a namepath
+
+/**
+* @constant {str%ng}
+*/
+const FOO = 'foo';
+// Message: Syntax error in type: str%ng
+
+/**
+* @typedef {str%ng} UserString
+*/
+// Message: Syntax error in type: str%ng
+
+/**
+* @typedef {string} UserStr%ng
+*/
+// Message: Syntax error in type: UserStr%ng
+
+/**
+* @extends
+*/
+class Bar {};
+// Message: Tag @extends must have either a type or namepath
+
+/**
+* @type
+*/
+let foo;
+// Message: Tag @type must have a type
 ````
 
 The following patterns are not considered problems:
@@ -6415,13 +6443,6 @@ function quux() {
 }
 
 /**
- * @see foo%
- */
-function quux() {
-
-}
-
-/**
  * @alias module:namespace.SomeClass#event:ext_anevent
  */
 function quux() {
@@ -6429,7 +6450,7 @@ function quux() {
 }
 
 /**
- * @callback
+ * @callback foo
  */
 function quux() {
 
@@ -6477,6 +6498,30 @@ function quux() {
 function quux() {
 
 }
+
+/**
+* @constant {string}
+*/
+const FOO = 'foo';
+
+/**
+* @extends Foo
+*/
+class Bar {};
+
+/**
+* @extends {Foo<String>}
+*/
+class Bar {};
+
+/**
+* @typedef {number|string} UserDefinedType
+*/
+
+/**
+ * @typedef {number|string}
+ */
+let UserDefinedGCCType;
 ````
 
 
