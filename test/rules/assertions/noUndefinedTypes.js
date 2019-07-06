@@ -17,9 +17,6 @@ export default {
           message: 'The type \'HerType\' is undefined.'
         }
       ],
-      options: [{
-        preferredTypesDefined: true
-      }],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -42,9 +39,6 @@ export default {
           message: 'The type \'HerType\' is undefined.'
         }
       ],
-      options: [{
-        preferredTypesDefined: true
-      }],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -110,8 +104,7 @@ export default {
         }
       ],
       options: [{
-        definedTypes: ['MyType'],
-        preferredTypesDefined: true
+        definedTypes: ['MyType']
       }],
       settings: {
         jsdoc: {
@@ -141,8 +134,7 @@ export default {
         }
       ],
       options: [{
-        definedTypes: ['MyType'],
-        preferredTypesDefined: true
+        definedTypes: ['MyType']
       }],
       settings: {
         jsdoc: {
@@ -154,6 +146,22 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+      /**
+       * @template TEMPLATE_TYPE
+       * @param {WRONG_TEMPLATE_TYPE} bar
+       */
+      function foo (bar) {
+      };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'WRONG_TEMPLATE_TYPE\' is undefined.'
+        }
+      ]
     },
     {
       code: `
@@ -368,10 +376,7 @@ export default {
       function foo () {
 
       }
-      `,
-      options: [{
-        preferredTypesDefined: true
-      }]
+      `
     },
     {
       code: `
@@ -399,8 +404,7 @@ export default {
        }
       `,
       options: [{
-        definedTypes: ['MyType'],
-        preferredTypesDefined: true
+        definedTypes: ['MyType']
       }],
       settings: {
         jsdoc: {
@@ -425,8 +429,7 @@ export default {
        }
       `,
       options: [{
-        definedTypes: ['MyType'],
-        preferredTypesDefined: true
+        definedTypes: ['MyType']
       }],
       settings: {
         jsdoc: {
@@ -438,6 +441,17 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+      /**
+       * @template TEMPLATE_TYPE
+       * @param {TEMPLATE_TYPE} bar
+       * @return {TEMPLATE_TYPE}
+       */
+      function foo (bar) {
+      };
+      `
     },
     {
       code: `

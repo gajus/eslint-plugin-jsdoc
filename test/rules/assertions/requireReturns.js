@@ -250,6 +250,28 @@ export default {
           message: 'Found more than one @returns declaration.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @returns
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Unexpected tag `@returns`'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            returns: false
+          }
+        }
+      }
     }
   ],
   valid: [

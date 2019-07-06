@@ -27,6 +27,9 @@ export default iterateJsdoc(({
   }
 
   const tagName = utils.getPreferredTagName('returns');
+  if (!tagName) {
+    return;
+  }
   const tags = utils.getTags(tagName);
 
   if (tags.length === 0) {

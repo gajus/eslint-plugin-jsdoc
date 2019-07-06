@@ -206,9 +206,6 @@ export default iterateJsdoc(({
           preferredType ? fix : null,
           jsdocTag,
           message ? {
-            badType,
-            preferredType,
-            replacement: preferredType,
             tagName,
             tagValue
           } : null

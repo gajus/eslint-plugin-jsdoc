@@ -24,7 +24,7 @@ RegExp
 - An option object:
   - with the key `noDefaults` to insist that only the supplied option type
     map is to be used, and that the default preferences (such as "string"
-    over "String") will not be enforced.
+    over "String") will not be enforced. The option's default is `false`.
   - with the key `unifyParentAndChildTypeChecks` which will treat
     `settings.jsdoc.preferredTypes` keys such as `SomeType` as matching
     not only child types such as an unadorned `SomeType` but also

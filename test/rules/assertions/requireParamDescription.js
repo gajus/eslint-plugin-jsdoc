@@ -38,6 +38,28 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Unexpected tag `@param`'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            param: false
+          }
+        }
+      }
     }
   ],
   valid: [

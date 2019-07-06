@@ -11,9 +11,9 @@ An options object may have any of the following properties:
 
 - `contexts` - Set to an array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-  Overrides the defaults.
+  Overrides the default contexts (see below).
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@description`.
+    block avoids the need for a `@description`. Defaults to an empty array.
 
 |||
 |---|---|

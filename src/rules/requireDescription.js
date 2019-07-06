@@ -11,6 +11,9 @@ export default iterateJsdoc(({
   }
 
   const targetTagName = utils.getPreferredTagName('description');
+  if (!targetTagName) {
+    return;
+  }
 
   const functionExamples = _.filter(jsdoc.tags, {
     tag: targetTagName

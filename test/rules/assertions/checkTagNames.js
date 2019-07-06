@@ -164,13 +164,9 @@ export default {
           message: 'Invalid JSDoc tag name "baz".'
         }
       ],
-      settings: {
-        jsdoc: {
-          additionalTagNames: {
-            customTags: ['bar']
-          }
-        }
-      }
+      options: [{
+        definedTags: ['bar']
+      }]
     },
     {
       code: `
@@ -188,10 +184,127 @@ export default {
           message: 'Invalid JSDoc tag name "baz".'
         }
       ],
+      options: [{
+        definedTags: ['bar']
+      }]
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Blacklisted tag found (`@todo`)'
+        }
+      ],
       settings: {
         jsdoc: {
-          additionalTagNames: {
-            customTags: ['bar']
+          tagNamePreference: {
+            todo: false
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Please resolve to-dos or add to the tracker'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: {
+              message: 'Please resolve to-dos or add to the tracker'
+            }
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Please use x-todo instead of todo'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: {
+              message: 'Please use x-todo instead of todo',
+              replacement: 'x-todo'
+            }
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Please use x-todo instead of todo'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: {
+              message: 'Please use x-todo instead of todo',
+              replacement: 'x-todo'
+            }
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.'
+        },
+        {
+          message: 'Invalid JSDoc tag (preference). Replace "todo" JSDoc tag with "55".'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: 55
           }
         }
       }
@@ -244,13 +357,22 @@ export default {
 
           }
       `,
-      settings: {
-        jsdoc: {
-          additionalTagNames: {
-            customTags: ['bar']
+      options: [{
+        definedTags: ['bar']
+      }]
+    },
+    {
+      code: `
+          /**
+           * @baz @bar foo
+           */
+          function quux (foo) {
+
           }
-        }
-      }
+      `,
+      options: [{
+        definedTags: ['baz', 'bar']
+      }]
     },
     {
       code: `
@@ -263,8 +385,13 @@ export default {
       `,
       settings: {
         jsdoc: {
-          additionalTagNames: {
-            customTags: ['baz', 'bar']
+          tagNamePreference: {
+            param: 'baz',
+            returns: {
+              message: 'Prefer `bar`',
+              replacement: 'bar'
+            },
+            todo: false
           }
         }
       }
@@ -278,6 +405,16 @@ export default {
            *
            */
           function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
 
           }
       `

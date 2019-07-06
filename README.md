@@ -16,7 +16,6 @@ JSDoc linting rules for ESLint.
         * [Allow `@private` to disable rules for that comment block](#eslint-plugin-jsdoc-settings-allow-private-to-disable-rules-for-that-comment-block)
         * [Exempting empty functions from `require-jsdoc`](#eslint-plugin-jsdoc-settings-exempting-empty-functions-from-require-jsdoc)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
-        * [Additional Tag Names](#eslint-plugin-jsdoc-settings-additional-tag-names)
         * [`@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`](#eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns)
         * [Settings to Configure `check-types` and `no-undefined-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types)
         * [Settings to Configure `valid-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-valid-types)
@@ -197,6 +196,61 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
+One may also use an object with a `message` and `replacement`.
+
+The following will report the message `@extends is to be used over @augments as it is more evocative of classes than @augments` upon encountering `@augments`.
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "augments": {
+                  "message": "@extends is to be used over @augments as it is more evocative of classes than @augments",
+                  "replacement": "extends"
+                }
+            }
+        }
+    }
+}
+```
+
+If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the tag to `false`:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "todo": false
+            }
+        }
+    }
+}
+```
+
+Or one may set the targeted tag to an object with a custom `message`, but without a `replacement` property:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "todo": {
+                  "message": "We expect immediate perfection, so don't leave to-dos in your code."
+                }
+            }
+        }
+    }
+}
+```
+
+Note that the preferred tags indicated in the `settings.jsdoc.tagNamePreference`
+map will be assumed to be defined by `check-tag-names`.
+
 The defaults in `eslint-plugin-jsdoc` (for tags which offer
 aliases) are as follows:
 
@@ -232,25 +286,6 @@ This setting is utilized by the the rule for tag name checking
 - `require-returns-check`
 - `require-returns-description`
 - `require-returns-type`
-
-<a name="eslint-plugin-jsdoc-settings-additional-tag-names"></a>
-### Additional Tag Names
-
-Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc
-tags in the rule `check-tag-names`. The format of the configuration is as follows:
-
-```json
-{
-    "rules": {},
-    "settings": {
-        "jsdoc": {
-            "additionalTagNames": {
-                "customTags": ["define", "record"]
-            }
-        }
-    }
-}
-```
 
 <a name="eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns"></a>
 ### <code>@override</code>/<code>@augments</code>/<code>@extends</code>/<code>@implements</code> Without Accompanying <code>@param</code>/<code>@description</code>/<code>@example</code>/<code>@returns</code>
@@ -325,15 +360,12 @@ but restricted to `@param`. These settings are now deprecated.
     when encountering the discouraged type and, if a type is to be preferred
     in its place, the key `replacement` to indicate the type that should be
     used in its place (and which `fix` mode can replace) or `false` if
-    forbidding the type. The message string will have the following
-    substrings with special meaning replaced with their corresponding
-    value (`{{tagName}}`, `{{tagValue}}`, `{{badType}}`, and
-    `{{preferredType}}` (or `{{replacement}}`), noting that the latter is
-    of no use when one is merely forbidding a type).
+    forbidding the type. The message string will have the substrings with
+    special meaning, `{{tagName}}` and `{{tagValue}}`, replaced with their
+    corresponding value.
 
-If `no-undefined-types` has the option key `preferredTypesDefined` set to
-`true`, the preferred types indicated in the `settings.jsdoc.preferredTypes`
-map will be assumed to be defined.
+Note that the preferred types indicated as targets in `settings.jsdoc.preferredTypes`
+map will be assumed to be defined by `no-undefined-types`.
 
 See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
 how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
@@ -956,6 +988,15 @@ export class SomeClass {
   constructor(private property: string) {}
 }
 // Message: Expected @param names to be "property". Got "prop".
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -1187,11 +1228,29 @@ version
 yields
 ```
 
+Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreference` will automatically be considered as valid.
+
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-options"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-definedtags"></a>
+##### <code>definedTags</code>
+
+Use an array of `definedTags` strings to configure additional, allowed JSDoc tags.
+The format is as follows:
+
+```json
+{
+  "definedTags": ["define", "record"]
+}
+```
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
-|Settings|`tagNamePreference`, `additionalTagNames`|
+|Options|`definedTags`|
+|Settings|`tagNamePreference`|
 
 The following patterns are considered problems:
 
@@ -1265,7 +1324,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"additionalTagNames":{"customTags":["bar"]}}}
+// Options: [{"definedTags":["bar"]}]
 // Message: Invalid JSDoc tag name "baz".
 
 /**
@@ -1275,8 +1334,53 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"additionalTagNames":{"customTags":["bar"]}}}
+// Options: [{"definedTags":["bar"]}]
 // Message: Invalid JSDoc tag name "baz".
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":false}}}
+// Message: Blacklisted tag found (`@todo`)
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please resolve to-dos or add to the tracker"}}}}
+// Message: Please resolve to-dos or add to the tracker
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use x-todo instead of todo","replacement":"x-todo"}}}}
+// Message: Please use x-todo instead of todo
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use x-todo instead of todo","replacement":"x-todo"}}}}
+// Message: Please use x-todo instead of todo
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":55}}}
+// Message: Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.
 ````
 
 The following patterns are not considered problems:
@@ -1310,7 +1414,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"additionalTagNames":{"customTags":["bar"]}}}
+// Options: [{"definedTags":["bar"]}]
 
 /**
  * @baz @bar foo
@@ -1318,7 +1422,15 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"additionalTagNames":{"customTags":["baz","bar"]}}}
+// Options: [{"definedTags":["baz","bar"]}]
+
+/**
+ * @baz @bar foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"baz","returns":{"message":"Prefer `bar`","replacement":"bar"},"todo":false}}}
 
 /** 
  * @abstract
@@ -1393,6 +1505,13 @@ function quux (foo) {}
 function quux (foo) {
 
 }
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
 ````
 
 
@@ -1416,7 +1535,7 @@ Date
 RegExp
 ```
 
-<a name="eslint-plugin-jsdoc-rules-check-types-options"></a>
+<a name="eslint-plugin-jsdoc-rules-check-types-options-1"></a>
 #### Options
 
 `check-types` allows one option:
@@ -1424,7 +1543,7 @@ RegExp
 - An option object:
   - with the key `noDefaults` to insist that only the supplied option type
     map is to be used, and that the default preferences (such as "string"
-    over "String") will not be enforced.
+    over "String") will not be enforced. The option's default is `false`.
   - with the key `unifyParentAndChildTypeChecks` which will treat
     `settings.jsdoc.preferredTypes` keys such as `SomeType` as matching
     not only child types such as an unadorned `SomeType` but also
@@ -1572,7 +1691,7 @@ function qux(foo) {
  */
 function qux(foo) {
 }
-// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{replacement}}\".","replacement":"Abc"},"string":"Str"}}}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\"; prefer: \"Abc\".","replacement":"Abc"},"string":"Str"}}}
 // Message: Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".
 
 /**
@@ -1582,7 +1701,7 @@ function qux(foo) {
  */
 function qux(foo, bar, baz) {
 }
-// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{preferredType}}\".","replacement":"Abc"},"cde":{"message":"More messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{preferredType}}\".","replacement":"Cde"},"object":"Object"}}}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\"; prefer: \"Abc\".","replacement":"Abc"},"cde":{"message":"More messed up JSDoc @{{tagName}}{{tagValue}} type \"cde\"; prefer: \"Cde\".","replacement":"Cde"},"object":"Object"}}}
 // Message: Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".
 
 /**
@@ -1590,7 +1709,7 @@ function qux(foo, bar, baz) {
  */
 function qux(foo) {
 }
-// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\".","replacement":false},"string":"Str"}}}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\".","replacement":false},"string":"Str"}}}
 // Message: Messed up JSDoc @param "foo" type "abc".
 
 /**
@@ -1598,7 +1717,7 @@ function qux(foo) {
  */
 function qux(foo) {
 }
-// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"."},"string":"Str"}}}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\"."},"string":"Str"}}}
 // Message: Messed up JSDoc @param "foo" type "abc".
 
 /**
@@ -2297,10 +2416,10 @@ by our supported Node versions):
 
 ``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]$``
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-1"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-2"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-1-matchdescription"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-2-matchdescription"></a>
 ##### <code>matchDescription</code>
 
 You can supply your own expression to override the default, passing a
@@ -2315,7 +2434,7 @@ You can supply your own expression to override the default, passing a
 As with the default, the supplied regular expression will be applied with the
 Unicode (`"u"`) flag and is *not* case-insensitive.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-1-tags"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-2-tags"></a>
 ##### <code>tags</code>
 
 If you want different regular expressions to apply to tags, you may use
@@ -2342,6 +2461,9 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+<a name="eslint-plugin-jsdoc-rules-match-description-options-2-maindescription"></a>
+##### <code>mainDescription</code>
+
 If you wish to override the main function description without changing the
 default `match-description`, you may use `mainDescription`:
 
@@ -2361,19 +2483,19 @@ There is no need to add `mainDescription: true`, as by default, the main
 function (and only the main function) is linted, though you may disable checking
 it by setting it to `false`.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-1-contexts"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-2-contexts"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the defaults.
+Overrides the default contexts (see below).
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `mainDescription`, `matchDescription`|
 
 The following patterns are considered problems:
 
@@ -2807,11 +2929,15 @@ const q = {
 
 Enforces a consistent padding of the block description.
 
-This rule takes one argument. If it is `"always"` then a problem is raised when there is a newline after the description. If it is `"never"` then a problem is raised when there is no newline after the description. The default value is `"always"`.
+<a name="eslint-plugin-jsdoc-rules-newline-after-description-options-3"></a>
+#### Options
+
+This rule allows one optional string argument. If it is `"always"` then a problem is raised when there is a newline after the description. If it is `"never"` then a problem is raised when there is no newline after the description. The default value is `"always"`.
 
 |||
 |---|---|
 |Context|everywhere|
+|Options|(a string matching `"always"|"never"`)|
 |Tags|N/A|
 
 The following patterns are considered problems:
@@ -2963,16 +3089,17 @@ The following types are always considered defined.
 - `any`, `*`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
 
-<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-2"></a>
+Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
+also be assumed to be defined.
+
+<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-4"></a>
 #### Options
 
-An option object may have the following keys:
+An option object may have the following key:
 
-- `preferredTypesDefined` -  If this option is set to `true` and preferred
-  types are indicated within `settings.jsdoc.preferredTypes`, any such
-  types will be assumed to be defined as well.
 - `definedTypes` - This array can be populated to indicate other types which
-  are automatically considered as defined (in addition to globals, etc.)
+  are automatically considered as defined (in addition to globals, etc.).
+  Defaults to an empty array.
 
 |||
 |---|---|
@@ -2980,7 +3107,7 @@ An option object may have the following keys:
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
-|Options|`preferredTypesDefined`, `definedTypes`|
+|Options|`definedTypes`|
 |Settings|`preferredTypes`|
 
 The following patterns are considered problems:
@@ -2993,7 +3120,6 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"HerType":1000}}}
-// Options: [{"preferredTypesDefined":true}]
 // Message: Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.
 
 /**
@@ -3003,7 +3129,6 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"HerType":false}}}
-// Options: [{"preferredTypesDefined":true}]
 // Message: The type 'HerType' is undefined.
 
 /**
@@ -3033,7 +3158,7 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"}}}}
-// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+// Options: [{"definedTypes":["MyType"]}]
 // Message: The type 'HisType' is undefined.
 
 /**
@@ -3045,8 +3170,16 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":false},"histype":"HisType"}}}
-// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+// Options: [{"definedTypes":["MyType"]}]
 // Message: The type 'HerType' is undefined.
+
+/**
+ * @template TEMPLATE_TYPE
+ * @param {WRONG_TEMPLATE_TYPE} bar
+ */
+function foo (bar) {
+};
+// Message: The type 'WRONG_TEMPLATE_TYPE' is undefined.
 
 class Foo {
   /**
@@ -3194,7 +3327,6 @@ function foo () {
 function foo () {
 
 }
-// Options: [{"preferredTypesDefined":true}]
 
 /**
 * @param {MyType} foo - Bar.
@@ -3214,7 +3346,7 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"},"histype":"HisType"}}}
-// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+// Options: [{"definedTypes":["MyType"]}]
 
 /**
   * @param {MyType} foo - Bar.
@@ -3225,7 +3357,15 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType<>"},"histype":"HisType.<>"}}}
-// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+// Options: [{"definedTypes":["MyType"]}]
+
+/**
+ * @template TEMPLATE_TYPE
+ * @param {TEMPLATE_TYPE} bar
+ * @return {TEMPLATE_TYPE}
+ */
+function foo (bar) {
+};
 
 /**
  * @template TEMPLATE_TYPE
@@ -3264,24 +3404,34 @@ function quux () {
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
 ### <code>require-description-complete-sentence</code>
 
-Requires that block description and tag description are written in complete sentences, i.e.,
+Requires that block description, explicit `@description`, and `@param`/`@returns`
+tag descriptions are written in complete sentences, i.e.,
 
 * Description must start with an uppercase alphabetical character.
 * Paragraphs must start with an uppercase alphabetical character.
 * Sentences must end with a period.
-* Every line in a paragraph (except the first) which starts with an uppercase character must be preceded by a line ending with a period.
+* Every line in a paragraph (except the first) which starts with an uppercase
+  character must be preceded by a line ending with a period.
 
 |||
 |---|---|
 |Context|everywhere|
-|Tags|`param`, `returns`|
-|Aliases|`arg`, `argument`, `return`|
+|Tags|`param`, `returns`, `description`|
+|Aliases|`arg`, `argument`, `return`, `desc`|
 
 The following patterns are considered problems:
 
 ````js
 /**
  * foo.
+ */
+function quux () {
+
+}
+// Message: Sentence should start with an uppercase character.
+
+/**
+ * @description foo.
  */
 function quux () {
 
@@ -3531,6 +3681,13 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * @description Foo.
+ */
+function quux () {
+
+}
 ````
 
 
@@ -3542,16 +3699,16 @@ Requires that all functions have a description.
 * All functions must have a `@description` tag.
 * Every description tag must have a non-empty description that explains the purpose of the method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-5"></a>
 #### Options
 
 An options object may have any of the following properties:
 
 - `contexts` - Set to an array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-  Overrides the defaults.
+  Overrides the default contexts (see below).
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@description`.
+    block avoids the need for a `@description`. Defaults to an empty array.
 
 |||
 |---|---|
@@ -3632,6 +3789,24 @@ var quux = {
 };
 // Options: [{"contexts":["ObjectExpression"]}]
 // Message: Missing JSDoc @description declaration.
+
+/**
+ * @someDesc
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":{"message":"Please avoid `{{tagName}}`; use `{{replacement}}` instead","replacement":"someDesc"}}}}
+// Message: Missing JSDoc @someDesc description.
+
+/**
+ * @description
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+// Message: Unexpected tag `@description`
 ````
 
 The following patterns are not considered problems:
@@ -3718,13 +3893,13 @@ Requires that all functions have examples.
 * All functions must have one or more `@example` tags.
 * Every example tag must have a non-empty description that explains the method's usage.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-6"></a>
 #### Options
 
 Has an object option with one optional property:
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-  block avoids the need for an `@example`.
+  block avoids the need for an `@example`. Defaults to an empty array.
 
 |||
 |---|---|
@@ -3849,13 +4024,17 @@ function quux () {
 
 Requires a hyphen before the `@param` description.
 
-This rule takes one argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-7"></a>
+#### Options
+
+This rule takes one optional string argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
 
 |||
 |---|---|
 |Context|everywhere|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Options|(a string matching `"always"|"never"`)|
 
 The following patterns are considered problems:
 
@@ -3906,6 +4085,15 @@ function quux () {
 }
 // Options: ["always"]
 // Message: There must be a hyphen before @param description.
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -3942,19 +4130,16 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-5"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-8"></a>
 #### Options
 
-Accepts one optional options object, with two optional keys, `publicOnly`
-for confining JSDoc comments to be checked to exported functions (with "exported"
-allowing for ESM exports, CJS exports, or browser window global export)
-in `require-jsdoc`, and `require` for limiting the contexts which are to
-be checked by the rule.
+Accepts one optional options object with the following optional keys.
 
-- `publicOnly` - Missing jsdoc blocks are only reported for function
-  bodies / class declarations that are exported from the module.
-  May be a boolean or object. If set to `true`, the defaults below will
-  be used.
+- `publicOnly` - This option will insist that missing jsdoc blocks are
+  only reported for function bodies / class declarations that are exported
+  from the module. May be a boolean or object. If set to `true`, the defaults
+  below will be used. If unset, jsdoc block reporting will not be limited to
+  exports.
 
   This object supports the following optional boolean keys (`false` unless
   otherwise noted):
@@ -3965,7 +4150,8 @@ be checked by the rule.
   - `window` - Window global exports are checked for JSDoc comments
 
 - `require` - An object with the following optional boolean keys which all
-    default to `false` except as noted:
+    default to `false` except as noted, indicating the contexts where the rule
+    will apply:
 
   - `ArrowFunctionExpression`
   - `ClassDeclaration`
@@ -3975,13 +4161,14 @@ be checked by the rule.
   - `MethodDefinition`
 
 - `contexts` - Set this to an array of strings representing the additional
-  AST context where you wish the rule to be applied (e.g., `Property` for properties).
+  AST contexts where you wish the rule to be applied (e.g., `Property` for
+  properties). Defaults to an empty array.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
-|Options|`publicOnly`|
+|Options|`publicOnly`, `require`, `contexts`|
 |Settings|`exemptEmptyFunctions`|
 
 The following patterns are considered problems:
@@ -4821,6 +5008,15 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" description.
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -4875,6 +5071,15 @@ function quux (foo) {
 
 }
 // Message: There must be an identifier after @param tag.
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -4926,6 +5131,15 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" type.
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -4952,13 +5166,13 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-9"></a>
 #### Options
 
 An options object accepts one optional property:
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@param`.
+    block avoids the need for a `@param`. Defaults to an empty array.
 
 |||
 |---|---|
@@ -5091,6 +5305,15 @@ export class SomeClass {
   constructor(private property: string, private foo: number) {}
 }
 // Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
+// Message: Unexpected tag `@param`
 ````
 
 The following patterns are not considered problems:
@@ -5472,6 +5695,15 @@ class Foo {
   }
 }
 // Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
+// Message: Unexpected tag `@returns`
 ````
 
 The following patterns are not considered problems:
@@ -5751,6 +5983,15 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return description.
+
+/**
+ * @returns
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
+// Message: Unexpected tag `@returns`
 ````
 
 The following patterns are not considered problems:
@@ -5824,6 +6065,15 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return type.
+
+/**
+ * @returns
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
+// Message: Unexpected tag `@returns`
 ````
 
 The following patterns are not considered problems:
@@ -5843,12 +6093,12 @@ function quux () {
 
 Requires returns are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-10"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@returns`.
-- `forceReturnsWithAsync` - By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` as true on the options object. This may be useful as an `async` function will always return a Promise, even if the Promise returns void.
+    block avoids the need for a `@returns`. Defaults to an empty array.
+- `forceReturnsWithAsync` - By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` to `true` on the options object. This may be useful as an `async` function will always return a `Promise`, even if the `Promise` returns void. Defaults to `false`.
 
 ```js
 'jsdoc/require-jsdoc': ['error', {forceReturnsWithAsync: true}]
@@ -5968,6 +6218,15 @@ function quux (foo) {
   return foo;
 }
 // Message: Found more than one @returns declaration.
+
+/**
+ * @returns
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
+// Message: Unexpected tag `@returns`
 ````
 
 The following patterns are not considered problems:

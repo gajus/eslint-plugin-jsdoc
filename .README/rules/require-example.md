@@ -10,7 +10,7 @@ Requires that all functions have examples.
 Has an object option with one optional property:
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-  block avoids the need for an `@example`.
+  block avoids the need for an `@example`. Defaults to an empty array.
 
 |||
 |---|---|

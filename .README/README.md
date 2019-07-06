@@ -147,6 +147,61 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
+One may also use an object with a `message` and `replacement`.
+
+The following will report the message `@extends is to be used over @augments as it is more evocative of classes than @augments` upon encountering `@augments`.
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "augments": {
+                  "message": "@extends is to be used over @augments as it is more evocative of classes than @augments",
+                  "replacement": "extends"
+                }
+            }
+        }
+    }
+}
+```
+
+If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the tag to `false`:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "todo": false
+            }
+        }
+    }
+}
+```
+
+Or one may set the targeted tag to an object with a custom `message`, but without a `replacement` property:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "todo": {
+                  "message": "We expect immediate perfection, so don't leave to-dos in your code."
+                }
+            }
+        }
+    }
+}
+```
+
+Note that the preferred tags indicated in the `settings.jsdoc.tagNamePreference`
+map will be assumed to be defined by `check-tag-names`.
+
 The defaults in `eslint-plugin-jsdoc` (for tags which offer
 aliases) are as follows:
 
@@ -182,24 +237,6 @@ This setting is utilized by the the rule for tag name checking
 - `require-returns-check`
 - `require-returns-description`
 - `require-returns-type`
-
-### Additional Tag Names
-
-Use `settings.jsdoc.additionalTagNames` to configure additional, allowed JSDoc
-tags in the rule `check-tag-names`. The format of the configuration is as follows:
-
-```json
-{
-    "rules": {},
-    "settings": {
-        "jsdoc": {
-            "additionalTagNames": {
-                "customTags": ["define", "record"]
-            }
-        }
-    }
-}
-```
 
 ### `@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`
 
@@ -272,15 +309,12 @@ but restricted to `@param`. These settings are now deprecated.
     when encountering the discouraged type and, if a type is to be preferred
     in its place, the key `replacement` to indicate the type that should be
     used in its place (and which `fix` mode can replace) or `false` if
-    forbidding the type. The message string will have the following
-    substrings with special meaning replaced with their corresponding
-    value (`{{tagName}}`, `{{tagValue}}`, `{{badType}}`, and
-    `{{preferredType}}` (or `{{replacement}}`), noting that the latter is
-    of no use when one is merely forbidding a type).
+    forbidding the type. The message string will have the substrings with
+    special meaning, `{{tagName}}` and `{{tagValue}}`, replaced with their
+    corresponding value.
 
-If `no-undefined-types` has the option key `preferredTypesDefined` set to
-`true`, the preferred types indicated in the `settings.jsdoc.preferredTypes`
-map will be assumed to be defined.
+Note that the preferred types indicated as targets in `settings.jsdoc.preferredTypes`
+map will be assumed to be defined by `no-undefined-types`.
 
 See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
 how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)

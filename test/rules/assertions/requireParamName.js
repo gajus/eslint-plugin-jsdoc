@@ -31,6 +31,28 @@ export default {
           message: 'There must be an identifier after @param tag.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Unexpected tag `@param`'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            param: false
+          }
+        }
+      }
     }
   ],
   valid: [

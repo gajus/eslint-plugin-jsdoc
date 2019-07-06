@@ -4,9 +4,7 @@ export default iterateJsdoc(({
   report,
   utils
 }) => {
-  const targetTagName = utils.getPreferredTagName('returns');
-
-  utils.forEachTag(targetTagName, (jsdocTag) => {
+  utils.forEachPreferredTag('returns', (jsdocTag, targetTagName) => {
     const type = jsdocTag.type && jsdocTag.type.trim();
 
     if (type === 'void' || type === 'undefined') {
