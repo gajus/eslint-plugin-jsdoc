@@ -111,13 +111,19 @@ export default iterateJsdoc(({
   sourceCode,
   jsdoc,
   report,
-  jsdocNode
+  jsdocNode,
+  utils
 }) => {
   if (!jsdoc.tags ||
     validateDescription(jsdoc.description, report, jsdocNode, sourceCode)
   ) {
     return;
   }
+
+  utils.forEachPreferredTag('description', (matchingJsdocTag, targetTagName) => {
+    const description = (matchingJsdocTag.name + ' ' + matchingJsdocTag.description).trim();
+    validateDescription(description, report, jsdocNode, sourceCode, targetTagName);
+  });
 
   const tags = jsdoc.tags.filter((tag) => {
     return ['param', 'arg', 'argument', 'returns', 'return'].includes(tag.tag);
