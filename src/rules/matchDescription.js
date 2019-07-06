@@ -54,7 +54,7 @@ export default iterateJsdoc(({
   }
 
   const hasOptionTag = (tagName) => {
-    return {}.hasOwnProperty.call(options.tags, tagName) && options.tags[tagName];
+    return Boolean(options.tags[tagName]);
   };
 
   utils.forEachPreferredTag('description', (matchingJsdocTag, targetTagName) => {
