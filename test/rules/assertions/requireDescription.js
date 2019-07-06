@@ -13,6 +13,51 @@ export default {
         {
           message: 'Missing JSDoc @description declaration.'
         }
+      ],
+      options: [
+        {
+          descriptionStyle: 'tag'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc block description or @description declaration.'
+        }
+      ],
+      options: [
+        {
+          descriptionStyle: 'any'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc block description.'
+        }
+      ],
+      options: [
+        {
+          descriptionStyle: 'body'
+        }
       ]
     },
     {
@@ -31,7 +76,8 @@ export default {
       ],
       options: [
         {
-          contexts: ['ClassDeclaration']
+          contexts: ['ClassDeclaration'],
+          descriptionStyle: 'tag'
         }
       ]
     },
@@ -51,7 +97,8 @@ export default {
       ],
       options: [
         {
-          contexts: ['ClassDeclaration']
+          contexts: ['ClassDeclaration'],
+          descriptionStyle: 'tag'
         }
       ]
     },
@@ -71,7 +118,8 @@ export default {
       ],
       options: [
         {
-          contexts: ['ClassDeclaration']
+          contexts: ['ClassDeclaration'],
+          descriptionStyle: 'tag'
         }
       ]
     },
@@ -87,6 +135,11 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc @description description.'
+        }
+      ],
+      options: [
+        {
+          descriptionStyle: 'tag'
         }
       ]
     },
@@ -108,7 +161,8 @@ export default {
         {
           contexts: [
             'TSInterfaceDeclaration'
-          ]
+          ],
+          descriptionStyle: 'tag'
         }
       ],
       parser: require.resolve('@typescript-eslint/parser')
@@ -131,7 +185,8 @@ export default {
         {
           contexts: [
             'ClassExpression'
-          ]
+          ],
+          descriptionStyle: 'tag'
         }
       ]
     },
@@ -153,7 +208,8 @@ export default {
         {
           contexts: [
             'ObjectExpression'
-          ]
+          ],
+          descriptionStyle: 'tag'
         }
       ]
     },
@@ -169,6 +225,11 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc @someDesc description.'
+        }
+      ],
+      options: [
+        {
+          descriptionStyle: 'tag'
         }
       ],
       settings: {
@@ -196,6 +257,11 @@ export default {
           message: 'Unexpected tag `@description`'
         }
       ],
+      options: [
+        {
+          descriptionStyle: 'tag'
+        }
+      ],
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -215,7 +281,12 @@ export default {
           function quux () {
 
           }
-      `
+      `,
+      options: [
+        {
+          descriptionStyle: 'tag'
+        }
+      ]
     },
     {
       code: `
@@ -226,7 +297,12 @@ export default {
           function quux () {
 
           }
-      `
+      `,
+      options: [
+        {
+          descriptionStyle: 'tag'
+        }
+      ]
     },
     {
       code: `
@@ -240,7 +316,12 @@ export default {
           function quux () {
 
           }
-      `
+      `,
+      options: [
+        {
+          descriptionStyle: 'tag'
+        }
+      ]
     },
     {
       code: `
@@ -250,7 +331,12 @@ export default {
           class quux {
 
           }
-      `
+      `,
+      options: [
+        {
+          descriptionStyle: 'tag'
+        }
+      ]
     },
     {
       code: `
@@ -291,6 +377,11 @@ export default {
 
           }
       `,
+      options: [
+        {
+          descriptionStyle: 'tag'
+        }
+      ],
       parser: require.resolve('@typescript-eslint/parser')
     },
     {
@@ -301,7 +392,12 @@ export default {
           var quux = class {
 
           };
-      `
+      `,
+      options: [
+        {
+          descriptionStyle: 'tag'
+        }
+      ]
     },
     {
       code: `
@@ -311,7 +407,67 @@ export default {
           var quux = {
 
           };
+      `,
+      options: [
+        {
+          descriptionStyle: 'tag'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Has an implicit description
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          descriptionStyle: 'body'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Has an implicit description
+           */
+          function quux () {
+
+          }
       `
+    },
+    {
+      code: `
+          /**
+           * Has an implicit description
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          descriptionStyle: 'any'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @description Has an explicit description
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          descriptionStyle: 'any'
+        }
+      ]
     }
   ]
 };
