@@ -460,7 +460,7 @@ const hasReturnValue = (node, context, ignoreAsync) => {
     }
   }
   /* istanbul ignore next */
-  throw new Error('Unknown element ' + node.type);
+  throw new Error(`Unknown element ${node.type}`);
 };
 
 /** @param {string} tag */

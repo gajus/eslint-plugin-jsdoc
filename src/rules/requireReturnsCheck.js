@@ -37,14 +37,14 @@ export default iterateJsdoc(({
   }
 
   if (tags.length > 1) {
-    report('Found more than one @' + tagName + ' declaration.');
+    report(`Found more than one @${tagName} declaration.`);
 
     return;
   }
 
   // In case a return value is declared in JSDoc, we also expect one in the code.
   if (utils.hasDefinedTypeReturnTag(tags[0]) && !utils.hasReturnValue()) {
-    report('JSDoc @' + tagName + ' declaration present but return expression not available in function.');
+    report(`JSDoc @${tagName} declaration present but return expression not available in function.`);
   }
 }, {
   meta: {

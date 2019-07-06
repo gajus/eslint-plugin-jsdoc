@@ -12,7 +12,7 @@ export default iterateJsdoc(({
     }
 
     if (!jsdocTag.description) {
-      report('Missing JSDoc @' + targetTagName + ' description.', null, jsdocTag);
+      report(`Missing JSDoc @${targetTagName} description.`, null, jsdocTag);
     }
   });
 }, {

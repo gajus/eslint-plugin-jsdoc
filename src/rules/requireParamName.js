@@ -6,7 +6,11 @@ export default iterateJsdoc(({
 }) => {
   utils.forEachPreferredTag('param', (jsdocParameter, targetTagName) => {
     if (jsdocParameter.tag && jsdocParameter.name === '') {
-      report('There must be an identifier after @' + targetTagName + ' ' + (jsdocParameter.type === '' ? 'type' : 'tag') + '.', null, jsdocParameter);
+      report(
+        `There must be an identifier after @${targetTagName} ${jsdocParameter.type === '' ? 'type' : 'tag'}.`,
+        null,
+        jsdocParameter
+      );
     }
   });
 }, {

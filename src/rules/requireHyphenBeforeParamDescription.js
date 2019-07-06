@@ -22,7 +22,7 @@ export default iterateJsdoc(({
 
     if (always) {
       if (!jsdocTag.description.startsWith('-')) {
-        report('There must be a hyphen before @' + targetTagName + ' description.', (fixer) => {
+        report(`There must be a hyphen before @${targetTagName} description.`, (fixer) => {
           const lineIndex = jsdocTag.line;
           const sourceLines = sourceCode.getText(jsdocNode).split('\n');
 
@@ -39,7 +39,7 @@ export default iterateJsdoc(({
         }, jsdocTag);
       }
     } else if (jsdocTag.description.startsWith('-')) {
-      report('There must be no hyphen before @' + targetTagName + ' description.', (fixer) => {
+      report(`There must be no hyphen before @${targetTagName} description.`, (fixer) => {
         const [unwantedPart] = /-\s*/.exec(jsdocTag.description);
 
         const replacement = sourceCode

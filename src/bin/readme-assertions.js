@@ -30,15 +30,15 @@ const formatCodeSnippet = (setup) => {
   paragraphs.push(trimCode(setup.code));
 
   if (setup.settings) {
-    paragraphs.push('// Settings: ' + JSON.stringify(setup.settings));
+    paragraphs.push(`// Settings: ${JSON.stringify(setup.settings)}`);
   }
 
   if (setup.options) {
-    paragraphs.push('// Options: ' + JSON.stringify(setup.options));
+    paragraphs.push(`// Options: ${JSON.stringify(setup.options)}`);
   }
 
   if (setup.errors) {
-    paragraphs.push('// Message: ' + setup.errors[0].message);
+    paragraphs.push(`// Message: ${setup.errors[0].message}`);
   }
 
   return paragraphs.join('\n');
@@ -74,7 +74,7 @@ const updateDocuments = (assertions) => {
     const ruleAssertions = assertions[ruleName];
 
     if (!ruleAssertions) {
-      throw new Error('No assertions available for rule "' + ruleName + '".');
+      throw new Error(`No assertions available for rule "${ruleName}".`);
     }
 
     return 'The following patterns are considered problems:\n\n````js\n' + ruleAssertions.invalid.join('\n\n') +
