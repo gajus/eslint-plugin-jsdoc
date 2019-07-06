@@ -25,32 +25,30 @@ export default iterateJsdoc(({
 }) => {
   const {globalScope} = scopeManager;
 
-  const {preferredTypesDefined, definedTypes = []} = context.options[0] || {};
+  const {definedTypes = []} = context.options[0] || {};
 
   let definedPreferredTypes = [];
-  if (preferredTypesDefined) {
-    const preferredTypes = _.get(context, 'settings.jsdoc.preferredTypes');
-    if (preferredTypes) {
-      // Replace `_.values` with `Object.values` when we may start requiring Node 7+
-      definedPreferredTypes = _.values(preferredTypes).map((preferredType) => {
-        if (typeof preferredType === 'string') {
-          // May become an empty string but will be filtered out below
-          return stripPseudoTypes(preferredType);
-        }
-        if (!preferredType) {
-          return undefined;
-        }
-        if (typeof preferredType !== 'object') {
-          report(
-            'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
-          );
-        }
+  const preferredTypes = _.get(context, 'settings.jsdoc.preferredTypes');
+  if (preferredTypes) {
+    // Replace `_.values` with `Object.values` when we may start requiring Node 7+
+    definedPreferredTypes = _.values(preferredTypes).map((preferredType) => {
+      if (typeof preferredType === 'string') {
+        // May become an empty string but will be filtered out below
+        return stripPseudoTypes(preferredType);
+      }
+      if (!preferredType) {
+        return undefined;
+      }
+      if (typeof preferredType !== 'object') {
+        report(
+          'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
+        );
+      }
 
-        return stripPseudoTypes(preferredType.replacement);
-      }).filter((preferredType) => {
-        return preferredType;
-      });
-    }
+      return stripPseudoTypes(preferredType.replacement);
+    }).filter((preferredType) => {
+      return preferredType;
+    });
   }
 
   const typedefDeclarations = _(context.getAllComments())
@@ -143,9 +141,6 @@ export default iterateJsdoc(({
               type: 'string'
             },
             type: 'array'
-          },
-          preferredTypesDefined: {
-            type: 'boolean'
           }
         },
         type: 'object'

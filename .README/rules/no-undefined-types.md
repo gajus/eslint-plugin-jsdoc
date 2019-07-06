@@ -20,13 +20,13 @@ The following types are always considered defined.
 - `any`, `*`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
 
+Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
+also be assumed to be defined.
+
 #### Options
 
-An option object may have the following keys:
+An option object may have the following key:
 
-- `preferredTypesDefined` -  If this option is set to `true` and preferred
-  types are indicated within `settings.jsdoc.preferredTypes`, any such
-  types will be assumed to be defined as well. Defaults to `false`.
 - `definedTypes` - This array can be populated to indicate other types which
   are automatically considered as defined (in addition to globals, etc.).
   Defaults to an empty array.
@@ -37,7 +37,7 @@ An option object may have the following keys:
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
-|Options|`preferredTypesDefined`, `definedTypes`|
+|Options|`definedTypes`|
 |Settings|`preferredTypes`|
 
 <!-- assertions noUndefinedTypes -->

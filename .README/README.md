@@ -315,9 +315,8 @@ but restricted to `@param`. These settings are now deprecated.
     `{{preferredType}}` (or `{{replacement}}`), noting that the latter is
     of no use when one is merely forbidding a type).
 
-If `no-undefined-types` has the option key `preferredTypesDefined` set to
-`true`, the preferred types indicated in the `settings.jsdoc.preferredTypes`
-map will be assumed to be defined.
+Note that the preferred types indicated as targets in `settings.jsdoc.preferredTypes`
+map will be assumed to be defined by `no-undefined-types`.
 
 See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
 how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)

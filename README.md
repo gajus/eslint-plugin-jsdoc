@@ -366,9 +366,8 @@ but restricted to `@param`. These settings are now deprecated.
     `{{preferredType}}` (or `{{replacement}}`), noting that the latter is
     of no use when one is merely forbidding a type).
 
-If `no-undefined-types` has the option key `preferredTypesDefined` set to
-`true`, the preferred types indicated in the `settings.jsdoc.preferredTypes`
-map will be assumed to be defined.
+Note that the preferred types indicated as targets in `settings.jsdoc.preferredTypes`
+map will be assumed to be defined by `no-undefined-types`.
 
 See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
 how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
@@ -3092,14 +3091,14 @@ The following types are always considered defined.
 - `any`, `*`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
 
+Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
+also be assumed to be defined.
+
 <a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-4"></a>
 #### Options
 
-An option object may have the following keys:
+An option object may have the following key:
 
-- `preferredTypesDefined` -  If this option is set to `true` and preferred
-  types are indicated within `settings.jsdoc.preferredTypes`, any such
-  types will be assumed to be defined as well. Defaults to `false`.
 - `definedTypes` - This array can be populated to indicate other types which
   are automatically considered as defined (in addition to globals, etc.).
   Defaults to an empty array.
@@ -3110,7 +3109,7 @@ An option object may have the following keys:
 |Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
-|Options|`preferredTypesDefined`, `definedTypes`|
+|Options|`definedTypes`|
 |Settings|`preferredTypes`|
 
 The following patterns are considered problems:
@@ -3123,7 +3122,6 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"HerType":1000}}}
-// Options: [{"preferredTypesDefined":true}]
 // Message: Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.
 
 /**
@@ -3133,7 +3131,6 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"HerType":false}}}
-// Options: [{"preferredTypesDefined":true}]
 // Message: The type 'HerType' is undefined.
 
 /**
@@ -3163,7 +3160,7 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"}}}}
-// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+// Options: [{"definedTypes":["MyType"]}]
 // Message: The type 'HisType' is undefined.
 
 /**
@@ -3175,7 +3172,7 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":false},"histype":"HisType"}}}
-// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+// Options: [{"definedTypes":["MyType"]}]
 // Message: The type 'HerType' is undefined.
 
 /**
@@ -3332,7 +3329,6 @@ function foo () {
 function foo () {
 
 }
-// Options: [{"preferredTypesDefined":true}]
 
 /**
 * @param {MyType} foo - Bar.
@@ -3352,7 +3348,7 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"},"histype":"HisType"}}}
-// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+// Options: [{"definedTypes":["MyType"]}]
 
 /**
   * @param {MyType} foo - Bar.
@@ -3363,7 +3359,7 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType<>"},"histype":"HisType.<>"}}}
-// Options: [{"definedTypes":["MyType"],"preferredTypesDefined":true}]
+// Options: [{"definedTypes":["MyType"]}]
 
 /**
  * @template TEMPLATE_TYPE

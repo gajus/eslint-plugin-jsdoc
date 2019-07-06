@@ -17,9 +17,6 @@ export default {
           message: 'The type \'HerType\' is undefined.'
         }
       ],
-      options: [{
-        preferredTypesDefined: true
-      }],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -42,9 +39,6 @@ export default {
           message: 'The type \'HerType\' is undefined.'
         }
       ],
-      options: [{
-        preferredTypesDefined: true
-      }],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -110,8 +104,7 @@ export default {
         }
       ],
       options: [{
-        definedTypes: ['MyType'],
-        preferredTypesDefined: true
+        definedTypes: ['MyType']
       }],
       settings: {
         jsdoc: {
@@ -141,8 +134,7 @@ export default {
         }
       ],
       options: [{
-        definedTypes: ['MyType'],
-        preferredTypesDefined: true
+        definedTypes: ['MyType']
       }],
       settings: {
         jsdoc: {
@@ -384,10 +376,7 @@ export default {
       function foo () {
 
       }
-      `,
-      options: [{
-        preferredTypesDefined: true
-      }]
+      `
     },
     {
       code: `
@@ -415,8 +404,7 @@ export default {
        }
       `,
       options: [{
-        definedTypes: ['MyType'],
-        preferredTypesDefined: true
+        definedTypes: ['MyType']
       }],
       settings: {
         jsdoc: {
@@ -441,8 +429,7 @@ export default {
        }
       `,
       options: [{
-        definedTypes: ['MyType'],
-        preferredTypesDefined: true
+        definedTypes: ['MyType']
       }],
       settings: {
         jsdoc: {
