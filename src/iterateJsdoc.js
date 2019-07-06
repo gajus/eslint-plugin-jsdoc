@@ -281,9 +281,6 @@ const getSettings = (context) => {
   settings.allowEmptyNamepaths = _.get(context, 'settings.jsdoc.allowEmptyNamepaths') !== false;
   settings.checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
 
-  // `require-returns` only
-  settings.forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
-
   // `require-example` only
   settings.avoidExampleOnConstructors = Boolean(_.get(context, 'settings.jsdoc.avoidExampleOnConstructors'));
 
