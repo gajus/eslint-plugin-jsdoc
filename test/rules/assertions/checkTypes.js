@@ -262,7 +262,7 @@ export default {
         jsdoc: {
           preferredTypes: {
             abc: {
-              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}"; prefer: "{{replacement}}".',
+              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "abc"; prefer: "Abc".',
               replacement: 'Abc'
             },
             string: 'Str'
@@ -298,11 +298,11 @@ export default {
         jsdoc: {
           preferredTypes: {
             abc: {
-              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}"; prefer: "{{preferredType}}".',
+              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "abc"; prefer: "Abc".',
               replacement: 'Abc'
             },
             cde: {
-              message: 'More messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}"; prefer: "{{preferredType}}".',
+              message: 'More messed up JSDoc @{{tagName}}{{tagValue}} type "cde"; prefer: "Cde".',
               replacement: 'Cde'
             },
             object: 'Object'
@@ -328,7 +328,7 @@ export default {
         jsdoc: {
           preferredTypes: {
             abc: {
-              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}".',
+              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "abc".',
               replacement: false
             },
             string: 'Str'
@@ -354,7 +354,7 @@ export default {
         jsdoc: {
           preferredTypes: {
             abc: {
-              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "{{badType}}".'
+              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "abc".'
             },
             string: 'Str'
           }
