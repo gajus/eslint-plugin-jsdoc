@@ -4,7 +4,8 @@ import iterateJsdoc from '../iterateJsdoc';
 export default iterateJsdoc(({
   jsdoc,
   report,
-  utils
+  utils,
+  context
 }) => {
   if (utils.avoidDocs()) {
     return;
@@ -15,20 +16,42 @@ export default iterateJsdoc(({
     return;
   }
 
+  const checkDescription = (description) => {
+    const exampleContent = _.compact(description.trim().split('\n'));
+
+    return exampleContent.length;
+  };
+
+  const {descriptionStyle = 'body'} = context.options[0] || {};
+
+  if (descriptionStyle !== 'tag') {
+    if (checkDescription(jsdoc.description || '')) {
+      return;
+    }
+
+    if (descriptionStyle === 'body') {
+      report('Missing JSDoc block description.');
+
+      return;
+    }
+  }
+
   const functionExamples = _.filter(jsdoc.tags, {
     tag: targetTagName
   });
 
   if (!functionExamples.length) {
-    report(`Missing JSDoc @${targetTagName} declaration.`);
+    report(
+      descriptionStyle === 'any' ?
+        `Missing JSDoc block description or @${targetTagName} declaration.` :
+        `Missing JSDoc @${targetTagName} declaration.`
+    );
 
     return;
   }
 
   functionExamples.forEach((example) => {
-    const exampleContent = _.compact(`${example.name} ${example.description}`.trim().split('\n'));
-
-    if (!exampleContent.length) {
+    if (!checkDescription(`${example.name} ${example.description}`)) {
       report(`Missing JSDoc @${targetTagName} description.`);
     }
   });
@@ -44,6 +67,10 @@ export default iterateJsdoc(({
               type: 'string'
             },
             type: 'array'
+          },
+          descriptionStyle: {
+            enum: ['body', 'tag', 'any'],
+            type: 'string'
           },
           exemptedBy: {
             items: {
