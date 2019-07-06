@@ -3404,24 +3404,34 @@ function quux () {
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
 ### <code>require-description-complete-sentence</code>
 
-Requires that block description and tag description are written in complete sentences, i.e.,
+Requires that block description, explicit `@description`, and `@param`/`@returns`
+tag descriptions are written in complete sentences, i.e.,
 
 * Description must start with an uppercase alphabetical character.
 * Paragraphs must start with an uppercase alphabetical character.
 * Sentences must end with a period.
-* Every line in a paragraph (except the first) which starts with an uppercase character must be preceded by a line ending with a period.
+* Every line in a paragraph (except the first) which starts with an uppercase
+  character must be preceded by a line ending with a period.
 
 |||
 |---|---|
 |Context|everywhere|
-|Tags|`param`, `returns`|
-|Aliases|`arg`, `argument`, `return`|
+|Tags|`param`, `returns`, `description`|
+|Aliases|`arg`, `argument`, `return`, `desc`|
 
 The following patterns are considered problems:
 
 ````js
 /**
  * foo.
+ */
+function quux () {
+
+}
+// Message: Sentence should start with an uppercase character.
+
+/**
+ * @description foo.
  */
 function quux () {
 
@@ -3667,6 +3677,13 @@ function quux () {
 
 /**
  *
+ */
+function quux () {
+
+}
+
+/**
+ * @description Foo.
  */
 function quux () {
 
