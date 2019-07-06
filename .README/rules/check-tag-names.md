@@ -75,10 +75,26 @@ version
 yields
 ```
 
+Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreference` will automatically be considered as valid.
+
+#### Options
+
+##### `definedTags`
+
+Use an array of `definedTags` strings to configure additional, allowed JSDoc tags.
+The format is as follows:
+
+```json
+{
+  "definedTags": ["define", "record"]
+}
+```
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
-|Settings|`tagNamePreference`, `additionalTagNames`|
+|Options|`definedTags`|
+|Settings|`tagNamePreference`|
 
 <!-- assertions checkTagNames -->

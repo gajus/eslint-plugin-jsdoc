@@ -28,7 +28,6 @@ const getUtils = (
   jsdocNode,
   {
     tagNamePreference,
-    additionalTagNames,
     allowEmptyNamepaths,
     overrideReplacesDocs,
     implementsReplacesDocs,
@@ -89,8 +88,8 @@ const getUtils = (
     return isObject && !allowObjectReturn ? ret.replacement : ret;
   };
 
-  utils.isValidTag = (name) => {
-    return jsdocUtils.isValidTag(name, additionalTagNames);
+  utils.isValidTag = (name, definedTags) => {
+    return jsdocUtils.isValidTag(name, definedTags);
   };
 
   utils.hasATag = (name) => {
@@ -260,9 +259,6 @@ const getSettings = (context) => {
   settings.overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
   settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
   settings.augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
-
-  // `check-tag-names` only
-  settings.additionalTagNames = _.get(context, 'settings.jsdoc.additionalTagNames') || {};
 
   // `check-examples` only
   settings.exampleCodeRegex = _.get(context, 'settings.jsdoc.exampleCodeRegex') || null;
