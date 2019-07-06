@@ -77,7 +77,7 @@ const getSymbol = function (node, globals, scope, opt) {
     }
     */
     /* istanbul ignore next */
-    debug('MemberExpression: Missing property ' + node.property.name);
+    debug(`MemberExpression: Missing property ${node.property.name}`);
 
     /* istanbul ignore next */
     return null;

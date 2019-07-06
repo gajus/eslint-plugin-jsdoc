@@ -6,7 +6,7 @@ export default iterateJsdoc(({
 }) => {
   utils.forEachPreferredTag('returns', (jsdocTag, targetTagName) => {
     if (!jsdocTag.type) {
-      report('Missing JSDoc @' + targetTagName + ' type.', null, jsdocTag);
+      report(`Missing JSDoc @${targetTagName} type.`, null, jsdocTag);
     }
   });
 }, {

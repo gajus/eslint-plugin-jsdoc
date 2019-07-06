@@ -191,18 +191,19 @@ export default iterateJsdoc(({
           return fixer.replaceText(
             jsdocNode,
             sourceCode.getText(jsdocNode).replace(
-              '{' + jsdocTag.type + '}', '{' + fixedType + '}'
+              `{${jsdocTag.type}}`,
+              `{${fixedType}}`
             )
           );
         };
 
-        const tagValue = jsdocTag.name ? ' "' + jsdocTag.name + '"' : '';
+        const tagValue = jsdocTag.name ? ` "${jsdocTag.name}"` : '';
 
         report(
           message ||
-            'Invalid JSDoc @' + tagName + tagValue + ' type "' + badType +
-              (preferredType ? '"; prefer: "' + preferredType : '') +
-              '".',
+            `Invalid JSDoc @${tagName}${tagValue} type "${badType}"` +
+            (preferredType ? '; ' : '.') +
+            (preferredType ? `prefer: "${preferredType}".` : ''),
           preferredType ? fix : null,
           jsdocTag,
           message ? {

@@ -123,7 +123,7 @@ export default iterateJsdoc(({
     traverse(parsedType, ({type, name}) => {
       if (type === 'NAME') {
         if (!allDefinedTypes.includes(name)) {
-          report('The type \'' + name + '\' is undefined.', null, tag);
+          report(`The type '${name}' is undefined.`, null, tag);
         } else if (!_.includes(extraTypes, name)) {
           context.markVariableAsUsed(name);
         }

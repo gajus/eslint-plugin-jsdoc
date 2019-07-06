@@ -61,7 +61,7 @@ export default iterateJsdoc(({
   const tags = utils.getTags(tagName);
 
   if (tags.length > 1) {
-    report('Found more than one @' + tagName + ' declaration.');
+    report(`Found more than one @${tagName} declaration.`);
   }
 
   // In case the code returns something, we expect a return value in JSDoc.
@@ -70,7 +70,7 @@ export default iterateJsdoc(({
   if (missingReturnTag &&
     ((utils.isAsync() && !utils.hasReturnValue(true) ? options.forceReturnsWithAsync : utils.hasReturnValue()) || settings.forceRequireReturn)
   ) {
-    report('Missing JSDoc @' + tagName + ' declaration.');
+    report(`Missing JSDoc @${tagName} declaration.`);
   }
 }, {
   meta: {

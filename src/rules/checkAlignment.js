@@ -24,7 +24,7 @@ export default iterateJsdoc(({
         // Ignore the first line and all lines not starting with `*`
         const ignored = !index || line.split('*')[0].trim().length;
 
-        return ignored ? line : indent + ' ' + _.trimStart(line);
+        return ignored ? line : `${indent} ${_.trimStart(line)}`;
       })
       .join('\n');
 

@@ -66,7 +66,7 @@ export default iterateJsdoc(({
   utils.forEachPreferredTag('example', (tag, targetTagName) => {
     // If a space is present, we should ignore it
     const initialTag = tag.source.match(
-      new RegExp('^@' + escapeRegexString(targetTagName) + ' ?', 'u')
+      new RegExp(`^@${escapeRegexString(targetTagName)} ?`, 'u')
     );
     const initialTagLength = initialTag[0].length;
     const firstLinePrefixLength = preTagSpaceLength + initialTagLength;

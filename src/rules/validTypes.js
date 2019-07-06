@@ -43,7 +43,7 @@ export default iterateJsdoc(({
         }
 
         if (error.name === 'SyntaxError') {
-          report('Syntax error in type: ' + type, null, tag);
+          report(`Syntax error in type: ${type}`, null, tag);
 
           return false;
         }
@@ -65,7 +65,7 @@ export default iterateJsdoc(({
       const thisNamepath = tag.description.replace(asExpression, '');
 
       if (!asExpression.test(tag.description) || !thisNamepath) {
-        report('@borrows must have an "as" expression. Found "' + tag.description + '"', null, tag);
+        report(`@borrows must have an "as" expression. Found "${tag.description}"`, null, tag);
 
         return;
       }

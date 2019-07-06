@@ -163,6 +163,31 @@ export default {
     {
       code: `
           /**
+           * Foo.
+           *
+           * @description foo foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          tags: {
+            description: true
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
            * Foo
            *
            * @param foo foo.
@@ -443,6 +468,28 @@ export default {
     {
       code: `
           /**
+           * @description notRet
+           * @returns Тест.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [{
+        tags: {
+          description: '[\u0410-\u042F][\u0410-\u044F]+\\.'
+        }
+      }]
+    },
+    {
+      code: `
+          /**
            * foo.
            */
           class quux {
@@ -618,6 +665,22 @@ export default {
     {
       code: `
           /**
+           * @param notRet
+           * @description Тест.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        tags: {
+          description: '[\u0410-\u042F][\u0410-\u044F]+\\.'
+        }
+      }]
+    },
+    {
+      code: `
+          /**
            * Foo
            * bar.
            */
@@ -639,6 +702,23 @@ export default {
         {
           tags: {
             returns: true
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @description Foo bar.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          tags: {
+            description: true
           }
         }
       ]
@@ -841,6 +921,21 @@ export default {
           contexts: [
           ]
         }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @description foo.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {tags: {
+          param: true
+        }}
       ]
     }
   ]

@@ -6,7 +6,11 @@ export default iterateJsdoc(({
 }) => {
   utils.forEachPreferredTag('param', (jsdocParameter, targetTagName) => {
     if (!jsdocParameter.type) {
-      report('Missing JSDoc @' + targetTagName + ' "' + jsdocParameter.name + '" type.', null, jsdocParameter);
+      report(
+        `Missing JSDoc @${targetTagName} "${jsdocParameter.name}" type.`,
+        null,
+        jsdocParameter
+      );
     }
   });
 }, {

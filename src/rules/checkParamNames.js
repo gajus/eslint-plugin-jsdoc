@@ -13,7 +13,7 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
     if (paramTags.some((tg, idx) => {
       return tg.name === tag.name && idx !== index;
     })) {
-      report('Duplicate @' + targetTagName + ' "' + tag.name + '"');
+      report(`Duplicate @${targetTagName} "${tag.name}"`);
 
       return true;
     }
@@ -60,7 +60,7 @@ const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames 
 
     if (isPropertyPath) {
       if (!lastRealParameter) {
-        report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") appears before any real parameter.');
+        report(`@${targetTagName} path declaration ("${jsdocParameterName}") appears before any real parameter.`);
 
         return true;
       }
@@ -72,8 +72,10 @@ const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames 
       }
 
       if (pathRootNodeName !== lastRealParameter) {
-        report('@' + targetTagName + ' path declaration ("' + jsdocParameterName + '") root node name ("' +
-          pathRootNodeName + '") does not match previous real parameter name ("' + lastRealParameter + '").');
+        report(
+          `@${targetTagName} path declaration ("${jsdocParameterName}") root node name ("${pathRootNodeName}") ` +
+          `does not match previous real parameter name ("${lastRealParameter}").`
+        );
 
         return true;
       }

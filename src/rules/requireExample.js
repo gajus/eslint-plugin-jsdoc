@@ -28,16 +28,16 @@ export default iterateJsdoc(({
   }
 
   if (!functionExamples.length) {
-    report('Missing JSDoc @' + targetTagName + ' declaration.');
+    report(`Missing JSDoc @${targetTagName} declaration.`);
 
     return;
   }
 
   functionExamples.forEach((example) => {
-    const exampleContent = _.compact((example.name + ' ' + example.description).trim().split('\n'));
+    const exampleContent = _.compact(`${example.name} ${example.description}`.trim().split('\n'));
 
     if (!exampleContent.length) {
-      report('Missing JSDoc @' + targetTagName + ' description.');
+      report(`Missing JSDoc @${targetTagName} description.`);
     }
   });
 }, {

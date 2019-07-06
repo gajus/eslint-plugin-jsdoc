@@ -397,7 +397,7 @@ export default {
       }
     },
     {
-      code: ALL_JSDOC_TAGS_COMMENT + '\nfunction quux (foo) {}'
+      code: `${ALL_JSDOC_TAGS_COMMENT}\nfunction quux (foo) {}`
     },
     {
       code: `

@@ -40,7 +40,7 @@ const ruleTester = new RuleTester();
   };
 
   // eslint-disable-next-line global-require, import/no-dynamic-require
-  const assertions = require('./assertions/' + _.camelCase(ruleName));
+  const assertions = require(`./assertions/${_.camelCase(ruleName)}`);
 
   assertions.invalid = assertions.invalid.map((assertion) => {
     assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
