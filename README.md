@@ -2495,7 +2495,7 @@ Overrides the default contexts (see below).
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `mainDescription`, `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return', 'description', 'desc'), `mainDescription`, `matchDescription`|
 
 The following patterns are considered problems:
 
@@ -2569,6 +2569,17 @@ function quux (foo) {
 
 }
 // Options: [{"tags":{"param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @description foo foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"description":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2696,6 +2707,16 @@ function quux () {
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
+ * @description notRet
+ * @returns Тест.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"description":"[А-Я][А-я]+\\."}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
  * foo.
  */
 class quux {
@@ -2785,6 +2806,15 @@ function quux () {
 // Options: [{"tags":{"returns":"[А-Я][А-я]+\\."}}]
 
 /**
+ * @param notRet
+ * @description Тест.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"description":"[А-Я][А-я]+\\."}}]
+
+/**
  * Foo
  * bar.
  */
@@ -2799,6 +2829,14 @@ function quux () {
 
 }
 // Options: [{"tags":{"returns":true}}]
+
+/**
+ * @description Foo bar.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"description":true}}]
 
 /**
  * Foo. {@see Math.sin}.
@@ -2921,6 +2959,14 @@ const q = {
 
 };
 // Options: [{"contexts":[]}]
+
+/**
+ * @description foo.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"param":true}}]
 ````
 
 

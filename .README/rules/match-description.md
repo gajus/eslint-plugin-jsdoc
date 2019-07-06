@@ -82,6 +82,6 @@ Overrides the default contexts (see below).
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return'), `mainDescription`, `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return', 'description', 'desc'), `mainDescription`, `matchDescription`|
 
 <!-- assertions matchDescription -->

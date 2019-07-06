@@ -53,9 +53,19 @@ export default iterateJsdoc(({
     return;
   }
 
+  const hasOptionTag = (tagName) => {
+    return {}.hasOwnProperty.call(options.tags, tagName) && options.tags[tagName];
+  };
+
+  utils.forEachPreferredTag('description', (matchingJsdocTag, targetTagName) => {
+    const description = (matchingJsdocTag.name + ' ' + matchingJsdocTag.description).trim();
+    if (hasOptionTag(targetTagName)) {
+      validateDescription(description, matchingJsdocTag);
+    }
+  });
+
   const tags = utils.filterTags(({tag}) => {
-    return tagsWithDescriptions.includes(tag) &&
-      {}.hasOwnProperty.call(options.tags, tag) && options.tags[tag];
+    return tagsWithDescriptions.includes(tag) && hasOptionTag(tag);
   });
 
   tags.some((tag) => {
