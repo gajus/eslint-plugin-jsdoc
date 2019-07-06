@@ -360,11 +360,9 @@ but restricted to `@param`. These settings are now deprecated.
     when encountering the discouraged type and, if a type is to be preferred
     in its place, the key `replacement` to indicate the type that should be
     used in its place (and which `fix` mode can replace) or `false` if
-    forbidding the type. The message string will have the following
-    substrings with special meaning replaced with their corresponding
-    value (`{{tagName}}`, `{{tagValue}}`, `{{badType}}`, and
-    `{{preferredType}}` (or `{{replacement}}`), noting that the latter is
-    of no use when one is merely forbidding a type).
+    forbidding the type. The message string will have the substrings with
+    special meaning, `{{tagName}}` and `{{tagValue}}`, replaced with their
+    corresponding value.
 
 Note that the preferred types indicated as targets in `settings.jsdoc.preferredTypes`
 map will be assumed to be defined by `no-undefined-types`.
@@ -1693,7 +1691,7 @@ function qux(foo) {
  */
 function qux(foo) {
 }
-// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{replacement}}\".","replacement":"Abc"},"string":"Str"}}}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\"; prefer: \"Abc\".","replacement":"Abc"},"string":"Str"}}}
 // Message: Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".
 
 /**
@@ -1703,7 +1701,7 @@ function qux(foo) {
  */
 function qux(foo, bar, baz) {
 }
-// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{preferredType}}\".","replacement":"Abc"},"cde":{"message":"More messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"; prefer: \"{{preferredType}}\".","replacement":"Cde"},"object":"Object"}}}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\"; prefer: \"Abc\".","replacement":"Abc"},"cde":{"message":"More messed up JSDoc @{{tagName}}{{tagValue}} type \"cde\"; prefer: \"Cde\".","replacement":"Cde"},"object":"Object"}}}
 // Message: Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".
 
 /**
@@ -1711,7 +1709,7 @@ function qux(foo, bar, baz) {
  */
 function qux(foo) {
 }
-// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\".","replacement":false},"string":"Str"}}}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\".","replacement":false},"string":"Str"}}}
 // Message: Messed up JSDoc @param "foo" type "abc".
 
 /**
@@ -1719,7 +1717,7 @@ function qux(foo) {
  */
 function qux(foo) {
 }
-// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"{{badType}}\"."},"string":"Str"}}}
+// Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\"."},"string":"Str"}}}
 // Message: Messed up JSDoc @param "foo" type "abc".
 
 /**

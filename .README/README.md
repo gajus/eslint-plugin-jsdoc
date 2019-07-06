@@ -309,11 +309,9 @@ but restricted to `@param`. These settings are now deprecated.
     when encountering the discouraged type and, if a type is to be preferred
     in its place, the key `replacement` to indicate the type that should be
     used in its place (and which `fix` mode can replace) or `false` if
-    forbidding the type. The message string will have the following
-    substrings with special meaning replaced with their corresponding
-    value (`{{tagName}}`, `{{tagValue}}`, `{{badType}}`, and
-    `{{preferredType}}` (or `{{replacement}}`), noting that the latter is
-    of no use when one is merely forbidding a type).
+    forbidding the type. The message string will have the substrings with
+    special meaning, `{{tagName}}` and `{{tagValue}}`, replaced with their
+    corresponding value.
 
 Note that the preferred types indicated as targets in `settings.jsdoc.preferredTypes`
 map will be assumed to be defined by `no-undefined-types`.
