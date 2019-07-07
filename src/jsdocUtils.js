@@ -508,6 +508,10 @@ const enforcedContexts = (context, defaultContexts) => {
   return contexts;
 };
 
+/**
+ * @param {string[]} contexts
+ * @param {Function} checkJsdoc
+ */
 const getContextObject = (contexts, checkJsdoc) => {
   return contexts.reduce((obj, prop) => {
     obj[prop] = checkJsdoc;

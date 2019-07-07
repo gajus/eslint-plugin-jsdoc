@@ -1,17 +1,19 @@
 import {
   RuleTester
 } from 'eslint';
-import iterateJsdoc from '../../src/iterateJsdoc';
 import getJSDocComment from '../../src/eslint/getJSDocComment';
 
-const rule = iterateJsdoc(null, {
+/* eslint-disable sort-keys */
+const rule = {
   meta: {
     messages: {
       missingJsDoc: 'Missing JSDoc comment.'
     },
     type: 'layout'
   },
-  returns (context, sourceCode) {
+  create (context) {
+    const sourceCode = context.getSourceCode();
+
     return {
       ObjectExpression: (node) => {
         const comment = getJSDocComment(sourceCode, node);
@@ -25,7 +27,7 @@ const rule = iterateJsdoc(null, {
       }
     };
   }
-});
+};
 
 const ruleTester = new RuleTester();
 
