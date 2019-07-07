@@ -261,18 +261,6 @@ const getSettings = (context) => {
   settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
   settings.augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
 
-  // `check-examples` only
-  settings.exampleCodeRegex = _.get(context, 'settings.jsdoc.exampleCodeRegex') || null;
-  settings.rejectExampleCodeRegex = _.get(context, 'settings.jsdoc.rejectExampleCodeRegex') || null;
-  settings.matchingFileName = _.get(context, 'settings.jsdoc.matchingFileName') || null;
-  settings.baseConfig = _.get(context, 'settings.jsdoc.baseConfig') || {};
-  settings.configFile = _.get(context, 'settings.jsdoc.configFile');
-  settings.eslintrcForExamples = _.get(context, 'settings.jsdoc.eslintrcForExamples') !== false;
-  settings.allowInlineConfig = _.get(context, 'settings.jsdoc.allowInlineConfig') !== false;
-  settings.reportUnusedDisableDirectives = _.get(context, 'settings.jsdoc.reportUnusedDisableDirectives') !== false;
-  settings.captionRequired = Boolean(_.get(context, 'settings.jsdoc.captionRequired'));
-  settings.noDefaultExampleRules = Boolean(_.get(context, 'settings.jsdoc.noDefaultExampleRules'));
-
   // `require-param` only (deprecated)
   settings.allowOverrideWithoutParam = _.get(context, 'settings.jsdoc.allowOverrideWithoutParam');
   settings.allowImplementsWithoutParam = _.get(context, 'settings.jsdoc.allowImplementsWithoutParam');
