@@ -20,6 +20,7 @@ const stripPseudoTypes = (str) => {
 export default iterateJsdoc(({
   context,
   report,
+  settings,
   sourceCode: {scopeManager},
   utils
 }) => {
@@ -28,8 +29,8 @@ export default iterateJsdoc(({
   const {definedTypes = []} = context.options[0] || {};
 
   let definedPreferredTypes = [];
-  const preferredTypes = _.get(context, 'settings.jsdoc.preferredTypes');
-  if (preferredTypes) {
+  const {preferredTypes} = settings;
+  if (Object.keys(preferredTypes).length) {
     // Replace `_.values` with `Object.values` when we may start requiring Node 7+
     definedPreferredTypes = _.values(preferredTypes).map((preferredType) => {
       if (typeof preferredType === 'string') {

@@ -253,6 +253,9 @@ const getSettings = (context) => {
   // `check-tag-names` and many require/param rules
   settings.tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
 
+  // `check-types` and `no-undefined-types`
+  settings.preferredTypes = _.get(context, 'settings.jsdoc.preferredTypes') || {};
+
   // `require-param`, `require-description`, `require-example`, `require-returns`
   settings.overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
   settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
