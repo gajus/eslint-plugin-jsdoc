@@ -1,6 +1,7 @@
 import {CLIEngine, Linter} from 'eslint';
 import escapeRegexString from 'escape-regex-string';
 import iterateJsdoc from '../iterateJsdoc';
+import warnRemovedSettings from '../warnRemovedSettings';
 
 const zeroBasedLineIndexAdjust = -1;
 const likelyNestedJSDocIndentSpace = 1;
@@ -17,18 +18,24 @@ const countChars = (str, ch) => {
 export default iterateJsdoc(({
   report,
   utils,
-  settings
+  context
 }) => {
-  let {exampleCodeRegex, rejectExampleCodeRegex} = settings;
+  warnRemovedSettings(context, 'check-examples');
+  const options = context.options[0] || {};
+  let {
+    exampleCodeRegex = null,
+    rejectExampleCodeRegex = null
+  } = options;
   const {
-    noDefaultExampleRules,
-    eslintrcForExamples,
-    matchingFileName: filename,
-    baseConfig,
+    noDefaultExampleRules = false,
+    eslintrcForExamples = true,
+    matchingFileName: filename = null,
+    baseConfig = {},
     configFile,
-    allowInlineConfig,
-    reportUnusedDisableDirectives
-  } = settings;
+    allowInlineConfig = true,
+    reportUnusedDisableDirectives = true,
+    captionRequired = false
+  } = options;
 
   // Make this configurable?
   const rulePaths = [];
@@ -74,7 +81,7 @@ export default iterateJsdoc(({
     let source = tag.source.slice(initialTagLength);
     const match = source.match(hasCaptionRegex);
 
-    if (settings.captionRequired && !match) {
+    if (captionRequired && !match) {
       report('Caption is expected for examples.', null, tag);
     }
 
@@ -225,6 +232,49 @@ export default iterateJsdoc(({
   });
 }, {
   meta: {
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          allowInlineConfig: {
+            default: true,
+            type: 'boolean'
+          },
+          baseConfig: {
+            type: 'object'
+          },
+          captionRequired: {
+            default: false,
+            type: 'boolean'
+          },
+          configFile: {
+            type: 'string'
+          },
+          eslintrcForExamples: {
+            default: true,
+            type: 'boolean'
+          },
+          exampleCodeRegex: {
+            type: 'string'
+          },
+          matchingFileName: {
+            type: 'string'
+          },
+          noDefaultExampleRules: {
+            default: false,
+            type: 'boolean'
+          },
+          rejectExampleCodeRegex: {
+            type: 'string'
+          },
+          reportUnusedDisableDirectives: {
+            default: true,
+            type: 'boolean'
+          }
+        },
+        type: 'object'
+      }
+    ],
     type: 'suggestion'
   },
   returns: [

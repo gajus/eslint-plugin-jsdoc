@@ -53,9 +53,6 @@ const getMovedSettings = (ruleName) => {
     return ['allowEmptyNamepaths', 'checkSeesForNamepaths'];
   case 'require-example':
     return ['avoidExampleOnConstructors'];
-
-  // TODO: move settings of check-examples to options
-  /* istanbul ignore next */
   case 'check-examples':
     return [
       'captionRequired',

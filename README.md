@@ -17,10 +17,10 @@ JSDoc linting rules for ESLint.
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [`@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`](#eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns)
         * [Settings to Configure `check-types` and `no-undefined-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types)
-        * [Settings to Configure `check-examples`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-examples)
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-alignment`](#eslint-plugin-jsdoc-rules-check-alignment)
         * [`check-examples`](#eslint-plugin-jsdoc-rules-check-examples)
+        * [Options](#eslint-plugin-jsdoc-rules-options)
         * [`check-indentation`](#eslint-plugin-jsdoc-rules-check-indentation)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
         * [`check-syntax`](#eslint-plugin-jsdoc-rules-check-syntax)
@@ -361,93 +361,6 @@ how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
 appended and its bearing on whether types are checked as parents/children
 only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
 
-<a name="eslint-plugin-jsdoc-settings-settings-to-configure-check-examples"></a>
-### Settings to Configure <code>check-examples</code>
-
-The settings below all impact the `check-examples` rule and default to
-no-op/false except as noted.
-
-JSDoc specs use of an optional `<caption>` element at the beginning of
-`@example`. The following setting requires its use.
-
-* `settings.jsdoc.captionRequired` - Require `<caption>` at beginning
-  of any `@example`
-
-JSDoc does not specify a formal means for delimiting code blocks within
-`@example` (it uses generic syntax highlighting techniques for its own
-syntax highlighting). The following settings determine whether a given
-`@example` tag will have the `check-examples` checks applied to it:
-
-* `settings.jsdoc.exampleCodeRegex` - Regex which whitelists lintable
-  examples. If a parenthetical group is used, the first one will be used,
-  so you may wish to use `(?:...)` groups where you do not wish the
-  first such group treated as one to include. If no parenthetical group
-  exists or matches, the whole matching expression will be used.
-  An example might be ````"^```(?:js|javascript)([\\s\\S]*)```$"````
-  to only match explicitly fenced JavaScript blocks.
-* `settings.jsdoc.rejectExampleCodeRegex` - Regex blacklist which rejects
-  non-lintable examples (has priority over `exampleCodeRegex`). An example
-  might be ```"^`"``` to avoid linting fenced blocks which may indicate
-  a non-JavaScript language.
-
-If neither is in use, all examples will be matched. Note also that even if
-`settings.jsdoc.captionRequired` is not set, any initial `<caption>`
-will be stripped out before doing the regex matching.
-
-The following settings determine which individual ESLint rules will be
-applied to the JavaScript found within the `@example` tags (as determined
-to be applicable by the above regex settings). They are ordered by
-decreasing precedence:
-
-* `settings.jsdoc.allowInlineConfig` - If not set to `false`, will allow
-  inline config within the `@example` to override other config. Defaults
-  to `true`.
-* `settings.jsdoc.noDefaultExampleRules` - Setting to `true` will disable the
-  default rules which are expected to be troublesome for most documentation
-  use. See the section below for the specific default rules.
-* `settings.jsdoc.matchingFileName` - Setting for a dummy file name to trigger
-  specific rules defined in one's config; usable with ESLint `.eslintrc.*`
-  `overrides` -> `files` globs, to apply a desired subset of rules with
-  `@example` (besides allowing for rules specific to examples, this setting
-  can be useful for enabling reuse of the same rules within `@example` as
-  with JavaScript Markdown lintable by
-  [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
-  if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
-  follow one's Markdown rules). Note that this option may come at somewhat
-  of a performance penalty as the file's existence is checked by eslint.
-* `settings.jsdoc.configFile` - A config file. Corresponds to ESLint's `-c`.
-* `settings.jsdoc.eslintrcForExamples` - Defaults to `true` in adding rules
-  based on an `.eslintrc.*` file. Setting to `false` corresponds to
-  ESLint's `--no-eslintrc`.
-* `settings.jsdoc.baseConfig` - An object of rules with the same schema
-  as `.eslintrc.*` for defaults
-
-Finally, the following rule pertains to inline disable directives:
-
-- `settings.jsdoc.reportUnusedDisableDirectives` - If not set to `false`,
-  this will report disabled directives which are not used (and thus not
-  needed). Defaults to `true`. Corresponds to ESLint's
-  `--report-unused-disable-directives`.
-
-<a name="eslint-plugin-jsdoc-settings-settings-to-configure-check-examples-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
-#### Rules Disabled by Default Unless <code>noDefaultExampleRules</code> is Set to <code>true</code>
-
-* `eol-last` - Insisting that a newline "always" be at the end is less likely
-  to be desired in sample code as with the code file convention
-* `no-console` - Unlikely to have inadvertent temporary debugging within
-  examples
-* `no-undef` - Many variables in examples will be `undefined`.
-* `no-unused-vars` - It is common to define variables for clarity without always
-  using them within examples.
-* `padded-blocks` - It can generally look nicer to pad a little even if one's
-  code follows more stringency as far as block padding.
-* `import/no-unresolved` - One wouldn't generally expect example paths to
-  resolve relative to the current JavaScript file as one would with real code.
-* `import/unambiguous` - Snippets in examples are likely too short to always
-  include full import/export info
-* `node/no-missing-import` - See `import/no-unresolved`
-* `node/no-missing-require` -  See `import/no-unresolved`
-
 <a name="eslint-plugin-jsdoc-rules"></a>
 ## Rules
 
@@ -556,29 +469,111 @@ function quux (foo) {}
 
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.
 
-Works in conjunction with the following settings:
+<a name="eslint-plugin-jsdoc-rules-options"></a>
+### Options
 
-* `captionRequired`
-* `exampleCodeRegex`
-* `rejectExampleCodeRegex`
-* `allowInlineConfig` - Defaults to `true`
-* `noDefaultExampleRules`
-* `matchingFileName`
-* `configFile`
-* `eslintrcForExamples` - Defaults to `true`
-* `baseConfig`
-* `reportUnusedDisableDirectives` - Defaults to `true`
+The options below all default to no-op/`false` except as noted.
+
+<a name="eslint-plugin-jsdoc-rules-options-captionrequired"></a>
+#### <code>captionRequired</code>
+
+JSDoc specs use of an optional `<caption>` element at the beginning of
+`@example`.
+
+The option `captionRequired` insists on a `<caption>` being present at
+the beginning of any `@example`.
+
+<a name="eslint-plugin-jsdoc-rules-options-examplecoderegex-and-rejectexamplecoderegex"></a>
+#### <code>exampleCodeRegex</code> and <code>rejectExampleCodeRegex</code>
+
+JSDoc does not specify a formal means for delimiting code blocks within
+`@example` (it uses generic syntax highlighting techniques for its own
+syntax highlighting). The following options determine whether a given
+`@example` tag will have the `check-examples` checks applied to it:
+
+* `exampleCodeRegex` - Regex which whitelists lintable
+  examples. If a parenthetical group is used, the first one will be used,
+  so you may wish to use `(?:...)` groups where you do not wish the
+  first such group treated as one to include. If no parenthetical group
+  exists or matches, the whole matching expression will be used.
+  An example might be ````"^```(?:js|javascript)([\\s\\S]*)```$"````
+  to only match explicitly fenced JavaScript blocks.
+* `rejectExampleCodeRegex` - Regex blacklist which rejects
+  non-lintable examples (has priority over `exampleCodeRegex`). An example
+  might be ```"^`"``` to avoid linting fenced blocks which may indicate
+  a non-JavaScript language.
+
+If neither is in use, all examples will be matched. Note also that even if
+`captionRequired` is not set, any initial `<caption>` will be stripped out
+before doing the regex matching.
+
+<a name="eslint-plugin-jsdoc-rules-options-reportunuseddisabledirectives"></a>
+#### <code>reportUnusedDisableDirectives</code>
+
+If not set to `false`, `reportUnusedDisableDirectives` will report disabled
+directives which are not used (and thus not needed). Defaults to `true`.
+Corresponds to ESLint's [`--report-unused-disable-directives`](https://eslint.org/docs/user-guide/command-line-interface#--report-unused-disable-directives).
 
 Inline ESLint config within `@example` JavaScript is allowed, though the
 disabling of ESLint directives which are not needed by the resolved rules
 will be reported as with the ESLint `--report-unused-disable-directives`
 command.
 
+<a name="eslint-plugin-jsdoc-rules-options-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig"></a>
+#### Options for Determining ESLint Rule Applicability (<code>allowInlineConfig</code>, <code>noDefaultExampleRules</code>, <code>matchingFileName</code>, <code>configFile</code>, <code>eslintrcForExamples</code>, and <code>baseConfig</code>)
+
+The following options determine which individual ESLint rules will be
+applied to the JavaScript found within the `@example` tags (as determined
+to be applicable by the above regex options). They are ordered by
+decreasing precedence:
+
+* `allowInlineConfig` - If not set to `false`, will allow
+  inline config within the `@example` to override other config. Defaults
+  to `true`.
+* `noDefaultExampleRules` - Setting to `true` will disable the
+  default rules which are expected to be troublesome for most documentation
+  use. See the section below for the specific default rules.
+* `matchingFileName` - Option for a file name (even non-existent) to trigger
+  specific rules defined in one's config; usable with ESLint `.eslintrc.*`
+  `overrides` -> `files` globs, to apply a desired subset of rules with
+  `@example` (besides allowing for rules specific to examples, this option
+  can be useful for enabling reuse of the same rules within `@example` as
+  with JavaScript Markdown lintable by
+  [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
+  if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
+  follow one's Markdown rules). Note that this option may come at somewhat
+  of a performance penalty as the file's existence is checked by eslint.
+* `configFile` - A config file. Corresponds to ESLint's [`-c`](https://eslint.org/docs/user-guide/command-line-interface#-c---config).
+* `eslintrcForExamples` - Defaults to `true` in adding rules
+  based on an `.eslintrc.*` file. Setting to `false` corresponds to
+  ESLint's [`--no-eslintrc`](https://eslint.org/docs/user-guide/command-line-interface#--no-eslintrc).
+* `baseConfig` - An object of rules with the same schema
+  as `.eslintrc.*` for defaults
+
+<a name="eslint-plugin-jsdoc-rules-options-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
+##### Rules Disabled by Default Unless <code>noDefaultExampleRules</code> is Set to <code>true</code>
+
+* `eol-last` - Insisting that a newline "always" be at the end is less likely
+  to be desired in sample code as with the code file convention
+* `no-console` - Unlikely to have inadvertent temporary debugging within
+  examples
+* `no-undef` - Many variables in examples will be `undefined`.
+* `no-unused-vars` - It is common to define variables for clarity without always
+  using them within examples.
+* `padded-blocks` - It can generally look nicer to pad a little even if one's
+  code follows more stringency as far as block padding.
+* `import/no-unresolved` - One wouldn't generally expect example paths to
+  resolve relative to the current JavaScript file as one would with real code.
+* `import/unambiguous` - Snippets in examples are likely too short to always
+  include full import/export info
+* `node/no-missing-import` - See `import/no-unresolved`
+* `node/no-missing-require` -  See `import/no-unresolved`
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`example`|
-|Settings| *See above* |
+|Options| *See above* |
 
 The following patterns are considered problems:
 
@@ -589,7 +584,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}}
+// Options: [{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}]
 // Message: @example error (no-alert): Unexpected alert.
 
 /**
@@ -598,7 +593,7 @@ function quux () {
 class quux {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}}
+// Options: [{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}]
 // Message: @example error (no-alert): Unexpected alert.
 
 /**
@@ -609,7 +604,7 @@ class quux {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}}
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -619,7 +614,7 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}}
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -629,7 +624,7 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```\njs ([\\s\\S]*)```"}}
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```\njs ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -644,7 +639,7 @@ function quux () {
 function quux2 () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"rejectExampleCodeRegex":"^\\s*<.*>$"}}
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"rejectExampleCodeRegex":"^\\s*<.*>$"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -654,7 +649,7 @@ function quux2 () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
+// Options: [{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
 // Message: @example error (no-undef): 'quux' is not defined.
 
 /**
@@ -667,7 +662,7 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"captionRequired":true,"eslintrcForExamples":false}}
+// Options: [{"captionRequired":true,"eslintrcForExamples":false}]
 // Message: Caption is expected for examples.
 
 /**
@@ -676,14 +671,14 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}}
+// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
 // Message: @example error (indent): Expected indentation of 0 spaces but found 1.
 
 /**
  * @example test() // eslint-disable-line semi
  */
 function quux () {}
-// Settings: {"jsdoc":{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":true}}
+// Options: [{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":true}]
 // Message: @example error: Unused eslint-disable directive (no problems were reported from 'semi').
 
 /**
@@ -691,7 +686,7 @@ function quux () {}
  test() // eslint-disable-line semi
  */
 function quux () {}
-// Settings: {"jsdoc":{"allowInlineConfig":false,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
+// Options: [{"allowInlineConfig":false,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -701,7 +696,7 @@ function quux () {}
 function quux2 () {
 
 }
-// Settings: {"jsdoc":{"matchingFileName":"test/jsdocUtils.js"}}
+// Options: [{"matchingFileName":"test/jsdocUtils.js"}]
 // Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
 
 /**
@@ -711,7 +706,16 @@ function quux2 () {
 function quux2 () {
 
 }
-// Settings: {"jsdoc":{"matchingFileName":"test/rules/data/dummy.js"}}
+// Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
+
+/**
+ * @example const i = 5;
+ *          quux2()
+ */
+function quux2 () {
+
+}
+// Options: [{"matchingFileName":"test/rules/data/dummy.js"}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -722,8 +726,17 @@ function quux2 () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["warn","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"// begin[\\s\\S]*// end","noDefaultExampleRules":true}}
+// Options: [{"baseConfig":{"rules":{"semi":["warn","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"// begin[\\s\\S]*// end","noDefaultExampleRules":true}]
 // Message: @example warning (semi): Missing semicolon.
+
+/**
+ *
+ */
+function f () {
+
+}
+// Settings: {"jsdoc":{"allowInlineConfig":true,"baseConfig":{},"captionRequired":false,"configFile":"configFile.js","eslintrcForExamples":true,"exampleCodeRegex":".*?","matchingFileName":"test.md","noDefaultExampleRules":false,"rejectExampleCodeRegex":"\\W*","reportUnusedDisableDirectives":true}}
+// Message: `settings.jsdoc.captionRequired` has been removed, use options in the rule `check-examples` instead.
 ````
 
 The following patterns are not considered problems:
@@ -737,7 +750,7 @@ The following patterns are not considered problems:
 function quux () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}}
+// Options: [{"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 
 /**
  * @example
@@ -746,7 +759,7 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"eslintrcForExamples":false}}
+// Options: [{"eslintrcForExamples":false}]
 
 /**
  * @example
@@ -755,7 +768,7 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}}
+// Options: [{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
 
 /**
  * @example quux();
@@ -763,7 +776,7 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}}
+// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
 
 /**
  * @example <caption>Valid usage</caption>
@@ -775,20 +788,20 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"captionRequired":true,"eslintrcForExamples":false}}
+// Options: [{"captionRequired":true,"eslintrcForExamples":false}]
 
 /**
  * @example test() // eslint-disable-line semi
  */
 function quux () {}
-// Settings: {"jsdoc":{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":false}}
+// Options: [{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":false}]
 
 /**
  * @example
  test() // eslint-disable-line semi
  */
 function quux () {}
-// Settings: {"jsdoc":{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}}
+// Options: [{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
 ````
 
 
@@ -1189,10 +1202,10 @@ yields
 
 Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreference` will automatically be considered as valid.
 
-<a name="eslint-plugin-jsdoc-rules-check-tag-names-options"></a>
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-1"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-definedtags"></a>
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-1-definedtags"></a>
 ##### <code>definedTags</code>
 
 Use an array of `definedTags` strings to configure additional, allowed JSDoc tags.
@@ -1494,7 +1507,7 @@ Date
 RegExp
 ```
 
-<a name="eslint-plugin-jsdoc-rules-check-types-options-1"></a>
+<a name="eslint-plugin-jsdoc-rules-check-types-options-2"></a>
 #### Options
 
 `check-types` allows one option:
@@ -2375,10 +2388,10 @@ by our supported Node versions):
 
 ``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]$``
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-2"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-3"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-2-matchdescription"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-3-matchdescription"></a>
 ##### <code>matchDescription</code>
 
 You can supply your own expression to override the default, passing a
@@ -2393,7 +2406,7 @@ You can supply your own expression to override the default, passing a
 As with the default, the supplied regular expression will be applied with the
 Unicode (`"u"`) flag and is *not* case-insensitive.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-2-tags"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-3-tags"></a>
 ##### <code>tags</code>
 
 If you want different regular expressions to apply to tags, you may use
@@ -2420,7 +2433,7 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-2-maindescription"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-3-maindescription"></a>
 ##### <code>mainDescription</code>
 
 If you wish to override the main function description without changing the
@@ -2442,7 +2455,7 @@ There is no need to add `mainDescription: true`, as by default, the main
 function (and only the main function) is linted, though you may disable checking
 it by setting it to `false`.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-2-contexts"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-3-contexts"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -2934,7 +2947,7 @@ function quux () {
 
 Enforces a consistent padding of the block description.
 
-<a name="eslint-plugin-jsdoc-rules-newline-after-description-options-3"></a>
+<a name="eslint-plugin-jsdoc-rules-newline-after-description-options-4"></a>
 #### Options
 
 This rule allows one optional string argument. If it is `"always"` then a problem is raised when there is a newline after the description. If it is `"never"` then a problem is raised when there is no newline after the description. The default value is `"always"`.
@@ -3097,7 +3110,7 @@ The following types are always considered defined.
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
 also be assumed to be defined.
 
-<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-4"></a>
+<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-5"></a>
 #### Options
 
 An option object may have the following key:
@@ -3704,7 +3717,7 @@ Requires that all functions have a description.
 * All functions must have a `@description` tag.
 * Every description tag must have a non-empty description that explains the purpose of the method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options-5"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-6"></a>
 #### Options
 
 An options object may have any of the following properties:
@@ -3899,7 +3912,7 @@ Requires that all functions have examples.
 * All functions must have one or more `@example` tags.
 * Every example tag must have a non-empty description that explains the method's usage.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-7"></a>
 #### Options
 
 This rule has an object option:
@@ -4043,7 +4056,7 @@ function quux () {
 
 Requires a hyphen before the `@param` description.
 
-<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-8"></a>
 #### Options
 
 This rule takes one optional string argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
@@ -4149,7 +4162,7 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-8"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-9"></a>
 #### Options
 
 Accepts one optional options object with the following optional keys.
@@ -5192,7 +5205,7 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-9"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-10"></a>
 #### Options
 
 An options object accepts one optional property:
@@ -6119,7 +6132,7 @@ function quux () {
 
 Requires returns are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-10"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-11"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -6575,7 +6588,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-11"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-12"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to disallow
