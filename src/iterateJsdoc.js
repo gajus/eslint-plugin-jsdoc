@@ -267,7 +267,7 @@ const getSettings = (context) => {
   // All rules
   settings.ignorePrivate = Boolean(_.get(context, 'settings.jsdoc.ignorePrivate'));
 
-  // `check-tag-names` and many require/param rules
+  // `check-tag-names` and many returns/param rules
   settings.tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
 
   // `check-types` and `no-undefined-types`

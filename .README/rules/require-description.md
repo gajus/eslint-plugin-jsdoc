@@ -21,5 +21,6 @@ An options object may have any of the following properties:
 |Tags|`description`|
 |Aliases|`desc`|
 |Options|`contexts`, `exemptedBy`|
+|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <!-- assertions requireDescription -->

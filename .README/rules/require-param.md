@@ -15,6 +15,6 @@ An options object accepts one optional property:
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Options|`exemptedBy`|
-|Settings|`allowOverrideWithoutParam`, `allowImplementsWithoutParam`, `allowAugmentsExtendsWithoutParam`|
+|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <!-- assertions requireParam -->

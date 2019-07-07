@@ -21,5 +21,6 @@ This rule has an object option:
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`example`|
 |Options|`exemptedBy`, `avoidExampleOnConstructors`|
+|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <!-- assertions requireExample -->
