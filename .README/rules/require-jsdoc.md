@@ -44,7 +44,6 @@ Accepts one optional options object with the following optional keys.
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
-|Options|`publicOnly`, `require`, `contexts`|
-|Settings|`exemptEmptyFunctions`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyFunctions`|
 
 <!-- assertions requireJsdoc -->

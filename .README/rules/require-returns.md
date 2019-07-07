@@ -21,7 +21,6 @@ Requires returns are documented.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 |Aliases|`return`|
-|Settings|`forceRequireReturn`|
-|Options|`exemptedBy`, `forceReturnsWithAsync`|
+|Options|`exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
 
 <!-- assertions requireReturns -->

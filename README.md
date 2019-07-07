@@ -3914,8 +3914,7 @@ This rule has an object option:
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`example`|
-|Options|`exemptedBy`|
-|Settings|`avoidExampleOnConstructors`|
+|Options|`exemptedBy`, `avoidExampleOnConstructors`|
 
 The following patterns are considered problems:
 
@@ -4190,8 +4189,7 @@ Accepts one optional options object with the following optional keys.
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
-|Options|`publicOnly`, `require`, `contexts`|
-|Settings|`exemptEmptyFunctions`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyFunctions`|
 
 The following patterns are considered problems:
 
@@ -6139,8 +6137,7 @@ Requires returns are documented.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 |Aliases|`return`|
-|Settings|`forceRequireReturn`|
-|Options|`exemptedBy`, `forceReturnsWithAsync`|
+|Options|`exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
 
 The following patterns are considered problems:
 
@@ -6597,7 +6594,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 |Tags|For name only unless otherwise stated: `alias`, `augments`, `borrows`, `callback`, `class` (for name and type), `constant` (for name and type), `enum` (for type), `event`, `external`, `fires`, `function`, `implements` (for type), `interface`, `lends`, `listens`, `member` (for name and type),  `memberof`, `memberof!`, `mixes`, `mixin`, `module` (for name and type), `name`, `namespace` (for name and type), `param` (for name and type), `property` (for name and type), `returns` (for type), `this`, `throws` (for type), `type` (for type), `typedef` (for name and type), `yields` (for type)|
 |Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|
-|Settings|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
+|Options|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
 
 The following patterns are considered problems:
 

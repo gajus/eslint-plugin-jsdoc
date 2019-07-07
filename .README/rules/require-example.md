@@ -20,7 +20,6 @@ This rule has an object option:
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`example`|
-|Options|`exemptedBy`|
-|Settings|`avoidExampleOnConstructors`|
+|Options|`exemptedBy`, `avoidExampleOnConstructors`|
 
 <!-- assertions requireExample -->
