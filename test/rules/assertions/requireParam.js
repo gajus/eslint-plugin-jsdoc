@@ -74,7 +74,7 @@ export default {
       ],
       settings: {
         jsdoc: {
-          allowOverrideWithoutParam: false
+          overrideReplacesDocs: false
         }
       }
     },
@@ -94,7 +94,7 @@ export default {
       ],
       settings: {
         jsdoc: {
-          allowImplementsWithoutParam: false
+          implementsReplacesDocs: false
         }
       }
     },
@@ -149,7 +149,7 @@ export default {
       ],
       settings: {
         jsdoc: {
-          allowOverrideWithoutParam: false
+          overrideReplacesDocs: false
         }
       }
     },
@@ -174,7 +174,7 @@ export default {
       ],
       settings: {
         jsdoc: {
-          allowImplementsWithoutParam: false
+          implementsReplacesDocs: false
         }
       }
     },
@@ -345,7 +345,7 @@ export default {
       `,
       settings: {
         jsdoc: {
-          allowOverrideWithoutParam: true
+          overrideReplacesDocs: true
         }
       }
     },
@@ -385,7 +385,7 @@ export default {
       `,
       settings: {
         jsdoc: {
-          allowImplementsWithoutParam: true
+          implementsReplacesDocs: true
         }
       }
     },
@@ -411,7 +411,7 @@ export default {
       `,
       settings: {
         jsdoc: {
-          allowAugmentsExtendsWithoutParam: true
+          augmentsExtendsReplacesDocs: true
         }
       }
     },
@@ -437,7 +437,7 @@ export default {
       `,
       settings: {
         jsdoc: {
-          allowAugmentsExtendsWithoutParam: true
+          augmentsExtendsReplacesDocs: true
         }
       }
     },
@@ -513,7 +513,7 @@ export default {
       `,
       settings: {
         jsdoc: {
-          allowOverrideWithoutParam: true
+          overrideReplacesDocs: true
         }
       }
     },
@@ -533,7 +533,7 @@ export default {
       `,
       settings: {
         jsdoc: {
-          allowImplementsWithoutParam: true
+          implementsReplacesDocs: true
         }
       }
     },
@@ -568,7 +568,7 @@ export default {
       `,
       settings: {
         jsdoc: {
-          allowAugmentsExtendsWithoutParam: true
+          augmentsExtendsReplacesDocs: true
         }
       }
     },
@@ -603,7 +603,7 @@ export default {
       `,
       settings: {
         jsdoc: {
-          allowAugmentsExtendsWithoutParam: true
+          augmentsExtendsReplacesDocs: true
         }
       }
     },

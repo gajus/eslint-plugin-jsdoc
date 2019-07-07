@@ -11,7 +11,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  if (utils.avoidDocs('param')) {
+  if (utils.avoidDocs()) {
     return;
   }
 
