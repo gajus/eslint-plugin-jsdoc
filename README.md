@@ -3721,6 +3721,7 @@ An options object may have any of the following properties:
 |Tags|`description`|
 |Aliases|`desc`|
 |Options|`contexts`, `exemptedBy`|
+|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
 
@@ -3915,6 +3916,7 @@ This rule has an object option:
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`example`|
 |Options|`exemptedBy`, `avoidExampleOnConstructors`|
+|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
 
@@ -5204,7 +5206,7 @@ An options object accepts one optional property:
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Options|`exemptedBy`|
-|Settings|`allowOverrideWithoutParam`, `allowImplementsWithoutParam`, `allowAugmentsExtendsWithoutParam`|
+|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
 
@@ -6138,6 +6140,7 @@ Requires returns are documented.
 |Tags|`returns`|
 |Aliases|`return`|
 |Options|`exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
+|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
 

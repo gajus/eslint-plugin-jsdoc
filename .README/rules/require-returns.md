@@ -22,5 +22,6 @@ Requires returns are documented.
 |Tags|`returns`|
 |Aliases|`return`|
 |Options|`exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
+|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <!-- assertions requireReturns -->
