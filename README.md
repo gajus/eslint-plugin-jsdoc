@@ -14,13 +14,9 @@ JSDoc linting rules for ESLint.
     * [Configuration](#eslint-plugin-jsdoc-configuration)
     * [Settings](#eslint-plugin-jsdoc-settings)
         * [Allow `@private` to disable rules for that comment block](#eslint-plugin-jsdoc-settings-allow-private-to-disable-rules-for-that-comment-block)
-        * [Exempting empty functions from `require-jsdoc`](#eslint-plugin-jsdoc-settings-exempting-empty-functions-from-require-jsdoc)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [`@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`](#eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns)
         * [Settings to Configure `check-types` and `no-undefined-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types)
-        * [Settings to Configure `valid-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-valid-types)
-        * [Settings to Configure `require-returns`](#eslint-plugin-jsdoc-settings-settings-to-configure-require-returns)
-        * [Settings to Configure `require-example`](#eslint-plugin-jsdoc-settings-settings-to-configure-require-example)
         * [Settings to Configure `check-examples`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-examples)
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-alignment`](#eslint-plugin-jsdoc-rules-check-alignment)
@@ -169,13 +165,6 @@ You can then selectively add to or override the recommended rules.
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
   on which it occurs.
-
-<a name="eslint-plugin-jsdoc-settings-exempting-empty-functions-from-require-jsdoc"></a>
-### Exempting empty functions from <code>require-jsdoc</code>
-
-- `settings.jsdoc.exemptEmptyFunctions` - Will not report missing jsdoc blocks
-  above functions/methods with no parameters or return values (intended where
-  variable names are sufficient for themselves as documentation).
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
@@ -371,36 +360,6 @@ See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
 how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
 appended and its bearing on whether types are checked as parents/children
 only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
-
-<a name="eslint-plugin-jsdoc-settings-settings-to-configure-valid-types"></a>
-### Settings to Configure <code>valid-types</code>
-
-* `settings.jsdoc.allowEmptyNamepaths` - Set to `false` to disallow
-  empty name paths with `@callback`, `@event`, `@class`, `@constructor`,
-  `@constant`, `@const`, `@function`, `@func`, `@method`, `@interface`,
-  `@member`, `@var`, `@mixin`, `@namespace`, `@listens`, `@fires`,
-  or `@emits` (these might often be expected to have an accompanying
-  name path, though they have some indicative value without one; these
-  may also allow names to be defined in another manner elsewhere in
-  the block)
-* `settings.jsdoc.checkSeesForNamepaths` - Set this to `true` to insist
-  that `@see` only use name paths (the tag is normally permitted to
-  allow other text)
-
-<a name="eslint-plugin-jsdoc-settings-settings-to-configure-require-returns"></a>
-### Settings to Configure <code>require-returns</code>
-
-* `settings.jsdoc.forceRequireReturn` - Set to `true` to always insist on
-  `@returns` documentation regardless of implicit or explicit `return`'s
-  in the function. May be desired to flag that a project is aware of an
-  `undefined`/`void` return.
-
-<a name="eslint-plugin-jsdoc-settings-settings-to-configure-require-example"></a>
-### Settings to Configure <code>require-example</code>
-
-* `settings.jsdoc.avoidExampleOnConstructors` - Set to `true` to avoid the
-  need for an example on a constructor (whether indicated as such by a
-  jsdoc tag or by being within an ES6 `class`).
 
 <a name="eslint-plugin-jsdoc-settings-settings-to-configure-check-examples"></a>
 ### Settings to Configure <code>check-examples</code>
@@ -3942,10 +3901,14 @@ Requires that all functions have examples.
 <a name="eslint-plugin-jsdoc-rules-require-example-options-6"></a>
 #### Options
 
-Has an object option with one optional property:
+This rule has an object option:
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
   block avoids the need for an `@example`. Defaults to an empty array.
+
+- `avoidExampleOnConstructors` (default: false) - Set to `true` to avoid the
+  need for an example on a constructor (whether indicated as such by a
+  jsdoc tag or by being within an ES6 `class`).
 
 |||
 |---|---|
@@ -3972,6 +3935,15 @@ function quux () {
 
 }
 // Message: Missing JSDoc @example description.
+
+/**
+ * @constructor
+ */
+function f () {
+
+}
+// Settings: {"jsdoc":{"avoidExampleOnConstructors":true}}
+// Message: `settings.jsdoc.avoidExampleOnConstructors` has been removed, use options in the rule `require-example` instead.
 
 /**
  * @constructor
@@ -4027,7 +3999,7 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"avoidExampleOnConstructors":true}}
+// Options: [{"avoidExampleOnConstructors":true}]
 
 /**
  * @constructor
@@ -4036,7 +4008,7 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"avoidExampleOnConstructors":true}}
+// Options: [{"avoidExampleOnConstructors":true}]
 
 class Foo {
   /**
@@ -4046,7 +4018,7 @@ class Foo {
 
   }
 }
-// Settings: {"jsdoc":{"avoidExampleOnConstructors":true}}
+// Options: [{"avoidExampleOnConstructors":true}]
 
 /**
  * @inheritdoc
@@ -4210,6 +4182,10 @@ Accepts one optional options object with the following optional keys.
   AST contexts where you wish the rule to be applied (e.g., `Property` for
   properties). Defaults to an empty array.
 
+- `exemptEmptyFunctions` (default: false) - When `true`, the rule will not report
+  missing jsdoc blocks above functions/methods with no parameters or return values
+  (intended where variable names are sufficient for themselves as documentation).
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -4266,10 +4242,14 @@ function quux (foo) {
 }
 // Message: Missing JSDoc comment.
 
+
+// Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
+// Message: `settings.jsdoc.exemptEmptyFunctions` has been removed, use options in the rule `require-jsdoc` instead.
+
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
+// Options: [{"exemptEmptyFunctions":true}]
 // Message: Missing JSDoc comment.
 
 function myFunction() {}
@@ -4355,13 +4335,13 @@ var foo = {bar: function() {}}
 // Message: Missing JSDoc comment.
 
 function foo (abc) {}
-// Settings: {"jsdoc":{"exemptEmptyFunctions":false}}
+// Options: [{"exemptEmptyFunctions":false}]
 // Message: Missing JSDoc comment.
 
 function foo () {
   return true;
 }
-// Settings: {"jsdoc":{"exemptEmptyFunctions":false}}
+// Options: [{"exemptEmptyFunctions":false}]
 // Message: Missing JSDoc comment.
 
 module.exports = function quux () {
@@ -4758,12 +4738,12 @@ var foo = { [function() {}]: 1 };
 // Options: [{"require":{"FunctionExpression":true}}]
 
 function foo () {}
-// Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
+// Options: [{"exemptEmptyFunctions":true}]
 
 function foo () {
   return;
 }
-// Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
+// Options: [{"exemptEmptyFunctions":true}]
 
 const test = {};
 /**
@@ -6144,6 +6124,10 @@ Requires returns are documented.
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
     block avoids the need for a `@returns`. Defaults to an empty array.
+- `forceRequireReturn` - Set to `true` to always insist on
+  `@returns` documentation regardless of implicit or explicit `return`'s
+  in the function. May be desired to flag that a project is aware of an
+  `undefined`/`void` return. Defaults to `false`.
 - `forceReturnsWithAsync` - By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` to `true` on the options object. This may be useful as an `async` function will always return a `Promise`, even if the `Promise` returns void. Defaults to `false`.
 
 ```js
@@ -6203,30 +6187,42 @@ function quux (foo) {
 /**
  *
  */
+function foo() {}
+
+/**
+ *
+ */
+function bar() {}
+// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Message: `settings.jsdoc.forceRequireReturn` has been removed, use options in the rule `require-returns` instead.
+
+/**
+ *
+ */
 async function quux() {
 }
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
  *
  */
 const quux = async function () {}
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
  *
  */
 const quux = async () => {}
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
 *
 */
 async function quux () {}
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -6234,7 +6230,7 @@ async function quux () {}
  */
 function quux () {
 }
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 const language = {
@@ -6427,7 +6423,7 @@ class Foo {
   constructor () {
   }
 }
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 
 const language = {
   /**
@@ -6443,7 +6439,7 @@ const language = {
  */
 function quux () {
 }
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 
 /**
  * @returns {void}
@@ -6458,7 +6454,7 @@ function quux () {
 function quux () {
   return undefined;
 }
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 
 /**
  * @returns {void}
@@ -6472,7 +6468,7 @@ function quux () {
  */
 function quux () {
 }
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 
 /**
  * @returns {void}
@@ -6480,7 +6476,7 @@ function quux () {
 function quux () {
   return;
 }
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 
 /** @type {RequestHandler} */
 function quux (req, res , next) {
@@ -6492,7 +6488,7 @@ function quux (req, res , next) {
  */
 async function quux () {
 }
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
+// Options: [{"forceRequireReturn":true}]
 
 /**
  * @returns {Promise}
@@ -6579,6 +6575,22 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-11"></a>
+#### Options
+
+- `allowEmptyNamepaths` (default: true) - Set to `false` to disallow
+  empty name paths with `@callback`, `@event`, `@class`, `@constructor`,
+  `@constant`, `@const`, `@function`, `@func`, `@method`, `@interface`,
+  `@member`, `@var`, `@mixin`, `@namespace`, `@listens`, `@fires`,
+  or `@emits` (these might often be expected to have an accompanying
+  name path, though they have some indicative value without one; these
+  may also allow names to be defined in another manner elsewhere in
+  the block)
+- `checkSeesForNamepaths` (default: false) - Set this to `true` to insist
+  that `@see` only use name paths (the tag is normally permitted to
+  allow other text)
+
+
 |||
 |---|---|
 |Context|everywhere|
@@ -6652,8 +6664,13 @@ function quux() {
 function quux() {
 
 }
-// Settings: {"jsdoc":{"checkSeesForNamepaths":true}}
+// Options: [{"checkSeesForNamepaths":true}]
 // Message: Syntax error in type: foo%
+
+/** */
+function foo() {}
+// Settings: {"jsdoc":{"allowEmptyNamepaths":true,"checkSeesForNamepaths":true}}
+// Message: `settings.jsdoc.allowEmptyNamepaths` has been removed, use options in the rule `valid-types` instead.
 
 /**
  * @alias module:abc#event:foo-bar
@@ -6677,7 +6694,7 @@ function quux() {
 function quux() {
 
 }
-// Settings: {"jsdoc":{"allowEmptyNamepaths":false}}
+// Options: [{"allowEmptyNamepaths":false}]
 // Message: Syntax error in type: 
 ````
 
