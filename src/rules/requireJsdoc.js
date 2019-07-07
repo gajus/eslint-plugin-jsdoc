@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import iterateJsdoc from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
 import exportParser from '../exportParser';
 import getJSDocComment from '../eslint/getJSDocComment';
@@ -115,7 +114,8 @@ const getOptions = (context) => {
   };
 };
 
-export default iterateJsdoc(null, {
+/* eslint-disable sort-keys */
+export default {
   meta: {
     doc: {
       category: 'Stylistic Issues',
@@ -134,8 +134,10 @@ export default iterateJsdoc(null, {
 
     type: 'suggestion'
   },
-  returns (context, sourceCode) {
+  create (context) {
     warnRemovedSettings(context, 'require-jsdoc');
+
+    const sourceCode = context.getSourceCode();
 
     const {require: requireOption, publicOnly, exemptEmptyFunctions} = getOptions(context);
 
@@ -237,4 +239,4 @@ export default iterateJsdoc(null, {
       }
     );
   }
-});
+};

@@ -406,7 +406,7 @@ export {
  * @param {{
  *   meta: any,
  *   contextDefaults?: true | string[],
- *   returns?: any,
+ *   returns?: string[],
  *   iterateAllJsdocs?: true,
  * }} ruleConfig
  */
@@ -439,15 +439,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       const settings = getSettings(context);
 
       let contexts = ruleConfig.returns;
-      if (typeof ruleConfig.returns === 'function') {
-        contexts = ruleConfig.returns(context, sourceCode);
-      } else if (ruleConfig.contextDefaults) {
+      if (ruleConfig.contextDefaults) {
         contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
       }
 
-      if (!Array.isArray(contexts) && contexts) {
-        return contexts;
-      }
       const checkJsdoc = (node) => {
         const jsdocNode = getJSDocComment(sourceCode, node);
 
