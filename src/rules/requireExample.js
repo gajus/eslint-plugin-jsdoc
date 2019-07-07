@@ -14,9 +14,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  const options = context.options[0] || {
-    avoidExampleOnConstructors: false
-  };
+  const {avoidExampleOnConstructors = false} = context.options[0] || {};
 
   const targetTagName = 'example';
 
@@ -24,7 +22,7 @@ export default iterateJsdoc(({
     tag: targetTagName
   });
 
-  if (options.avoidExampleOnConstructors && (
+  if (avoidExampleOnConstructors && (
     utils.hasATag([
       'class',
       'constructor'

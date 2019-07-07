@@ -12,10 +12,10 @@ export default iterateJsdoc(({
 }) => {
   warnRemovedSettings(context, 'valid-types');
 
-  const options = context.options[0] || {
-    allowEmptyNamepaths: true,
-    checkSeesForNamepaths: false
-  };
+  const {
+    allowEmptyNamepaths = true,
+    checkSeesForNamepaths = false
+  } = context.options[0] || {};
 
   if (!jsdoc.tags) {
     return;
@@ -75,8 +75,8 @@ export default iterateJsdoc(({
 
         validTypeParsing(thatNamepath);
       }
-    } else if (utils.isNamepathTag(tag.tag, options.checkSeesForNamepaths)) {
-      if (utils.passesEmptyNamepathCheck(tag, options.allowEmptyNamepaths)) {
+    } else if (utils.isNamepathTag(tag.tag, checkSeesForNamepaths)) {
+      if (utils.passesEmptyNamepathCheck(tag, allowEmptyNamepaths)) {
         return;
       }
       validTypeParsing(tag.name, tag.tag);
