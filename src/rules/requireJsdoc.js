@@ -3,6 +3,7 @@ import iterateJsdoc from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
 import exportParser from '../exportParser';
 import getJSDocComment from '../eslint/getJSDocComment';
+import warnRemovedSettings from '../warnRemovedSettings';
 
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
@@ -12,6 +13,10 @@ const OPTIONS_SCHEMA = {
         type: 'string'
       },
       type: 'array'
+    },
+    exemptEmptyFunctions: {
+      default: false,
+      type: 'boolean'
     },
     publicOnly: {
       oneOf: [
@@ -85,6 +90,7 @@ const getOption = (context, baseObject, option, key) => {
 
 const getOptions = (context) => {
   return {
+    exemptEmptyFunctions: context.options[0] ? context.options[0].exemptEmptyFunctions : false,
     publicOnly: ((baseObj) => {
       const publicOnly = _.get(context, 'options[0].publicOnly');
       if (!publicOnly) {
@@ -129,7 +135,9 @@ export default iterateJsdoc(null, {
     type: 'suggestion'
   },
   returns (context, sourceCode) {
-    const {require: requireOption, publicOnly} = getOptions(context);
+    warnRemovedSettings(context, 'require-jsdoc');
+
+    const {require: requireOption, publicOnly, exemptEmptyFunctions} = getOptions(context);
 
     const checkJsDoc = (node) => {
       const jsDocNode = getJSDocComment(sourceCode, node);
@@ -138,7 +146,6 @@ export default iterateJsdoc(null, {
         return;
       }
 
-      const exemptEmptyFunctions = Boolean(_.get(context, 'settings.jsdoc.exemptEmptyFunctions'));
       if (exemptEmptyFunctions) {
         const functionParameterNames = jsdocUtils.getFunctionParameterNames(node);
         if (!functionParameterNames.length && !jsdocUtils.hasReturnValue(node, context)) {

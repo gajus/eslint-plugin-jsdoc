@@ -38,14 +38,12 @@ const getUtils = (
   jsdocNode,
   {
     tagNamePreference,
-    allowEmptyNamepaths,
     overrideReplacesDocs,
     implementsReplacesDocs,
     augmentsExtendsReplacesDocs,
     allowOverrideWithoutParam,
     allowImplementsWithoutParam,
-    allowAugmentsExtendsWithoutParam,
-    checkSeesForNamepaths
+    allowAugmentsExtendsWithoutParam
   },
   report,
   context
@@ -168,7 +166,7 @@ const getUtils = (
   utils.isNamepathDefiningTag = (tagName) => {
     return jsdocUtils.isNamepathDefiningTag(tagName);
   };
-  utils.isNamepathTag = (tagName) => {
+  utils.isNamepathTag = (tagName, checkSeesForNamepaths) => {
     return jsdocUtils.isNamepathTag(tagName, checkSeesForNamepaths);
   };
 
@@ -179,7 +177,7 @@ const getUtils = (
     return jsdocUtils.isPotentiallyEmptyTypeTag(tagName);
   };
 
-  utils.passesEmptyNamepathCheck = (tag) => {
+  utils.passesEmptyNamepathCheck = (tag, allowEmptyNamepaths) => {
     return !tag.name && allowEmptyNamepaths &&
       jsdocUtils.isPotentiallyEmptyNamepathTag(tag.tag);
   };
@@ -272,6 +270,9 @@ const getSettings = (context) => {
   // `check-tag-names` and many require/param rules
   settings.tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
 
+  // `check-types` and `no-undefined-types`
+  settings.preferredTypes = _.get(context, 'settings.jsdoc.preferredTypes') || {};
+
   // `require-param`, `require-description`, `require-example`, `require-returns`
   settings.overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
   settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
@@ -293,16 +294,6 @@ const getSettings = (context) => {
   settings.allowOverrideWithoutParam = _.get(context, 'settings.jsdoc.allowOverrideWithoutParam');
   settings.allowImplementsWithoutParam = _.get(context, 'settings.jsdoc.allowImplementsWithoutParam');
   settings.allowAugmentsExtendsWithoutParam = _.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam');
-
-  // `valid-types` only
-  settings.allowEmptyNamepaths = _.get(context, 'settings.jsdoc.allowEmptyNamepaths') !== false;
-  settings.checkSeesForNamepaths = Boolean(_.get(context, 'settings.jsdoc.checkSeesForNamepaths'));
-
-  // `require-returns` only
-  settings.forceRequireReturn = Boolean(_.get(context, 'settings.jsdoc.forceRequireReturn'));
-
-  // `require-example` only
-  settings.avoidExampleOnConstructors = Boolean(_.get(context, 'settings.jsdoc.avoidExampleOnConstructors'));
 
   return settings;
 };

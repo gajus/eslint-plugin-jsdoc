@@ -32,12 +32,27 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
+#### Options
+
+- `allowEmptyNamepaths` (default: true) - Set to `false` to disallow
+  empty name paths with `@callback`, `@event`, `@class`, `@constructor`,
+  `@constant`, `@const`, `@function`, `@func`, `@method`, `@interface`,
+  `@member`, `@var`, `@mixin`, `@namespace`, `@listens`, `@fires`,
+  or `@emits` (these might often be expected to have an accompanying
+  name path, though they have some indicative value without one; these
+  may also allow names to be defined in another manner elsewhere in
+  the block)
+- `checkSeesForNamepaths` (default: false) - Set this to `true` to insist
+  that `@see` only use name paths (the tag is normally permitted to
+  allow other text)
+
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|For name only unless otherwise stated: `alias`, `augments`, `borrows`, `callback`, `class` (for name and type), `constant` (for name and type), `enum` (for type), `event`, `external`, `fires`, `function`, `implements` (for type), `interface`, `lends`, `listens`, `member` (for name and type),  `memberof`, `memberof!`, `mixes`, `mixin`, `module` (for name and type), `name`, `namespace` (for name and type), `param` (for name and type), `property` (for name and type), `returns` (for type), `this`, `throws` (for type), `type` (for type), `typedef` (for name and type), `yields` (for type)|
 |Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|
-|Settings|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
+|Options|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
 
 <!-- assertions validTypes -->

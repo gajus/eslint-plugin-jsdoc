@@ -20,13 +20,14 @@ export default iterateJsdoc(({
   sourceCode,
   report,
   utils,
+  settings,
   context
 }) => {
   const jsdocTags = utils.filterTags((tag) => {
     return utils.isTagWithType(tag.tag);
   });
 
-  const preferredTypes = _.get(context, 'settings.jsdoc.preferredTypes');
+  const {preferredTypes} = settings;
   const optionObj = context.options[0];
   const noDefaults = _.get(optionObj, 'noDefaults');
   const unifyParentAndChildTypeChecks = _.get(optionObj, 'unifyParentAndChildTypeChecks');
@@ -45,7 +46,7 @@ export default iterateJsdoc(({
       let hasMatchingPreferredType;
       let isGenericMatch;
       let typeName = nodeName;
-      if (preferredTypes) {
+      if (Object.keys(preferredTypes).length) {
         const parentType = parentName === 'subject';
         if (unifyParentAndChildTypeChecks || parentType) {
           const syntax = _.get(parentNode, 'meta.syntax');

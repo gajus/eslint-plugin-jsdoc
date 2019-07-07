@@ -1,13 +1,22 @@
 import {parse} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
+import warnRemovedSettings from '../warnRemovedSettings';
 
 const asExpression = /as\s+/;
 
 export default iterateJsdoc(({
   jsdoc,
   report,
-  utils
+  utils,
+  context
 }) => {
+  warnRemovedSettings(context, 'valid-types');
+
+  const {
+    allowEmptyNamepaths = true,
+    checkSeesForNamepaths = false
+  } = context.options[0] || {};
+
   if (!jsdoc.tags) {
     return;
   }
@@ -56,7 +65,8 @@ export default iterateJsdoc(({
     const mustHaveType = utils.isTagWithType(tag.tag) && !utils.isPotentiallyEmptyTypeTag(tag.tag);
 
     const hasNamePath = Boolean(tag.name);
-    const mustHaveNamepath = utils.isNamepathTag(tag.tag) && !utils.passesEmptyNamepathCheck(tag);
+    const mustHaveNamepath = utils.isNamepathTag(tag.tag, checkSeesForNamepaths) &&
+      !utils.passesEmptyNamepathCheck(tag, allowEmptyNamepaths);
 
     const hasEither = hasType || hasNamePath;
     const mustHaveEither = utils.isTagWithMandatoryNamepathOrType(tag.tag);
@@ -98,6 +108,22 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    schema: [
+      {
+        additionalProperies: false,
+        properties: {
+          allowEmptyNamepaths: {
+            default: true,
+            type: 'boolean'
+          },
+          checkSeesForNamepaths: {
+            default: false,
+            type: 'boolean'
+          }
+        },
+        type: 'object'
+      }
+    ],
     type: 'suggestion'
   }
 });

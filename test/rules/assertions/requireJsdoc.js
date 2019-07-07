@@ -203,6 +203,19 @@ export default {
       ]
     },
     {
+      code: '',
+      errors: [
+        {
+          message: '`settings.jsdoc.exemptEmptyFunctions` has been removed, use options in the rule `require-jsdoc` instead.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          exemptEmptyFunctions: true
+        }
+      }
+    },
+    {
       code: `
         function quux (foo) {
 
@@ -213,11 +226,9 @@ export default {
           message: 'Missing JSDoc comment.'
         }
       ],
-      settings: {
-        jsdoc: {
-          exemptEmptyFunctions: true
-        }
-      }
+      options: [
+        {exemptEmptyFunctions: true}
+      ]
     },
     {
       code: 'function myFunction() {}',
@@ -427,11 +438,9 @@ export default {
         message: 'Missing JSDoc comment.',
         type: 'FunctionDeclaration'
       }],
-      settings: {
-        jsdoc: {
-          exemptEmptyFunctions: false
-        }
-      }
+      options: [
+        {exemptEmptyFunctions: false}
+      ]
     },
     {
       code: `
@@ -443,11 +452,9 @@ export default {
         message: 'Missing JSDoc comment.',
         type: 'FunctionDeclaration'
       }],
-      settings: {
-        jsdoc: {
-          exemptEmptyFunctions: false
-        }
-      }
+      options: [
+        {exemptEmptyFunctions: false}
+      ]
     },
     {
       code: `
@@ -1383,11 +1390,9 @@ export default {
     code: `
       function foo () {}
     `,
-    settings: {
-      jsdoc: {
-        exemptEmptyFunctions: true
-      }
-    }
+    options: [
+      {exemptEmptyFunctions: true}
+    ]
   },
   {
     code: `
@@ -1395,11 +1400,9 @@ export default {
         return;
       }
     `,
-    settings: {
-      jsdoc: {
-        exemptEmptyFunctions: true
-      }
-    }
+    options: [
+      {exemptEmptyFunctions: true}
+    ]
   },
   {
     code: `
