@@ -164,7 +164,7 @@ You can then selectively add to or override the recommended rules.
 ### Allow <code>@private</code> to disable rules for that comment block
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
-  on which it occurs.
+  on which a `@private` tag occurs. Defaults to `false`.
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference

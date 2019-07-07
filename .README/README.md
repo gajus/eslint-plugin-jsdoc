@@ -121,7 +121,7 @@ You can then selectively add to or override the recommended rules.
 ### Allow `@private` to disable rules for that comment block
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
-  on which it occurs.
+  on which a `@private` tag occurs. Defaults to `false`.
 
 ### Alias Preference
 
