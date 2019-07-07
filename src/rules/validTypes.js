@@ -1,13 +1,22 @@
 import {parse} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
+import warnRemovedSettings from '../warnRemovedSettings';
 
 const asExpression = /as\s+/;
 
 export default iterateJsdoc(({
   jsdoc,
   report,
-  utils
+  utils,
+  context
 }) => {
+  warnRemovedSettings(context, 'valid-types');
+
+  const options = context.options[0] || {
+    allowEmptyNamepaths: true,
+    checkSeesForNamepaths: false
+  };
+
   if (!jsdoc.tags) {
     return;
   }
@@ -66,8 +75,8 @@ export default iterateJsdoc(({
 
         validTypeParsing(thatNamepath);
       }
-    } else if (utils.isNamepathTag(tag.tag)) {
-      if (utils.passesEmptyNamepathCheck(tag)) {
+    } else if (utils.isNamepathTag(tag.tag, options.checkSeesForNamepaths)) {
+      if (utils.passesEmptyNamepathCheck(tag, options.allowEmptyNamepaths)) {
         return;
       }
       validTypeParsing(tag.name, tag.tag);
@@ -78,6 +87,22 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    schema: [
+      {
+        additionalProperies: false,
+        properties: {
+          allowEmptyNamepaths: {
+            default: true,
+            type: 'boolean'
+          },
+          checkSeesForNamepaths: {
+            default: false,
+            type: 'boolean'
+          }
+        },
+        type: 'object'
+      }
+    ],
     type: 'suggestion'
   }
 });
