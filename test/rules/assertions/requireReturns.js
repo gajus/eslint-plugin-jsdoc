@@ -90,6 +90,29 @@ export default {
           /**
            *
            */
+          function foo() {}
+
+          /**
+           *
+           */
+          function bar() {}
+          `,
+      errors: [
+        {
+          message: '`settings.jsdoc.forceRequireReturn` has been removed, use options in the rule `require-returns` instead.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          forceRequireReturn: true
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           *
+           */
           async function quux() {
           }
       `,
@@ -99,13 +122,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.'
         }
       ],
+      options: [{
+        forceRequireReturn: true
+      }],
       parserOptions: {
         ecmaVersion: 8
-      },
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
       }
     },
     {
@@ -121,13 +142,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.'
         }
       ],
+      options: [{
+        forceRequireReturn: true
+      }],
       parserOptions: {
         ecmaVersion: 8
-      },
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
       }
     },
     {
@@ -143,13 +162,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.'
         }
       ],
+      options: [{
+        forceRequireReturn: true
+      }],
       parserOptions: {
         ecmaVersion: 8
-      },
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
       }
     },
     {
@@ -165,13 +182,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.'
         }
       ],
+      options: [{
+        forceRequireReturn: true
+      }],
       parserOptions: {
         ecmaVersion: 8
-      },
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
       }
     },
     {
@@ -188,11 +203,9 @@ export default {
           message: 'Missing JSDoc @returns declaration.'
         }
       ],
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
-      }
+      options: [{
+        forceRequireReturn: true
+      }]
     },
     {
       code: `
@@ -490,11 +503,9 @@ export default {
         }
       }
       `,
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
-      }
+      options: [{
+        forceRequireReturn: true
+      }]
     },
     {
       code: `
@@ -516,11 +527,9 @@ export default {
           function quux () {
           }
       `,
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
-      }
+      options: [{
+        forceRequireReturn: true
+      }]
     },
     {
       code: `
@@ -541,11 +550,9 @@ export default {
             return undefined;
           }
       `,
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
-      }
+      options: [{
+        forceRequireReturn: true
+      }]
     },
     {
       code: `
@@ -565,11 +572,9 @@ export default {
           function quux () {
           }
       `,
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
-      }
+      options: [{
+        forceRequireReturn: true
+      }]
     },
     {
       code: `
@@ -580,11 +585,9 @@ export default {
             return;
           }
       `,
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
-      }
+      options: [{
+        forceRequireReturn: true
+      }]
     },
     {
       code: `
@@ -602,13 +605,11 @@ export default {
           async function quux () {
           }
       `,
+      options: [{
+        forceRequireReturn: true
+      }],
       parserOptions: {
         ecmaVersion: 8
-      },
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true
-        }
       }
     },
     {

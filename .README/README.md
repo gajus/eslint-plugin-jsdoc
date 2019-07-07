@@ -123,12 +123,6 @@ You can then selectively add to or override the recommended rules.
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
   on which it occurs.
 
-### Exempting empty functions from `require-jsdoc`
-
-- `settings.jsdoc.exemptEmptyFunctions` - Will not report missing jsdoc blocks
-  above functions/methods with no parameters or return values (intended where
-  variable names are sufficient for themselves as documentation).
-
 ### Alias Preference
 
 Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.
@@ -320,33 +314,6 @@ See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
 how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
 appended and its bearing on whether types are checked as parents/children
 only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
-
-### Settings to Configure `valid-types`
-
-* `settings.jsdoc.allowEmptyNamepaths` - Set to `false` to disallow
-  empty name paths with `@callback`, `@event`, `@class`, `@constructor`,
-  `@constant`, `@const`, `@function`, `@func`, `@method`, `@interface`,
-  `@member`, `@var`, `@mixin`, `@namespace`, `@listens`, `@fires`,
-  or `@emits` (these might often be expected to have an accompanying
-  name path, though they have some indicative value without one; these
-  may also allow names to be defined in another manner elsewhere in
-  the block)
-* `settings.jsdoc.checkSeesForNamepaths` - Set this to `true` to insist
-  that `@see` only use name paths (the tag is normally permitted to
-  allow other text)
-
-### Settings to Configure `require-returns`
-
-* `settings.jsdoc.forceRequireReturn` - Set to `true` to always insist on
-  `@returns` documentation regardless of implicit or explicit `return`'s
-  in the function. May be desired to flag that a project is aware of an
-  `undefined`/`void` return.
-
-### Settings to Configure `require-example`
-
-* `settings.jsdoc.avoidExampleOnConstructors` - Set to `true` to avoid the
-  need for an example on a constructor (whether indicated as such by a
-  jsdoc tag or by being within an ES6 `class`).
 
 ### Settings to Configure `check-examples`
 

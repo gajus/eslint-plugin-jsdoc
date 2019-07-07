@@ -36,11 +36,14 @@ Accepts one optional options object with the following optional keys.
   AST contexts where you wish the rule to be applied (e.g., `Property` for
   properties). Defaults to an empty array.
 
+- `exemptEmptyFunctions` (default: false) - When `true`, the rule will not report
+  missing jsdoc blocks above functions/methods with no parameters or return values
+  (intended where variable names are sufficient for themselves as documentation).
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|N/A|
-|Options|`publicOnly`, `require`, `contexts`|
-|Settings|`exemptEmptyFunctions`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyFunctions`|
 
 <!-- assertions requireJsdoc -->

@@ -1,4 +1,5 @@
 import iterateJsdoc from '../iterateJsdoc';
+import warnRemovedSettings from '../warnRemovedSettings';
 
 /**
  * We can skip checking for a return value, in case the documentation is inherited
@@ -43,16 +44,20 @@ const canSkip = (utils) => {
 export default iterateJsdoc(({
   report,
   utils,
-  context,
-  settings
+  context
 }) => {
+  warnRemovedSettings(context, 'require-returns');
+
   // A preflight check. We do not need to run a deep check
   // in case the @returns comment is optional or undefined.
   if (canSkip(utils)) {
     return;
   }
 
-  const options = context.options[0] || {};
+  const {
+    forceRequireReturn = false,
+    forceReturnsWithAsync = false
+  } = context.options[0] || {};
 
   const tagName = utils.getPreferredTagName('returns');
   if (!tagName) {
@@ -68,7 +73,7 @@ export default iterateJsdoc(({
   const [tag] = tags;
   const missingReturnTag = typeof tag === 'undefined' || tag === null;
   if (missingReturnTag &&
-    ((utils.isAsync() && !utils.hasReturnValue(true) ? options.forceReturnsWithAsync : utils.hasReturnValue()) || settings.forceRequireReturn)
+    ((utils.isAsync() && !utils.hasReturnValue(true) ? forceReturnsWithAsync : utils.hasReturnValue()) || forceRequireReturn)
   ) {
     report(`Missing JSDoc @${tagName} declaration.`);
   }
@@ -83,6 +88,10 @@ export default iterateJsdoc(({
               type: 'string'
             },
             type: 'array'
+          },
+          forceRequireReturn: {
+            default: false,
+            type: 'boolean'
           },
           forceReturnsWithAsync: {
             default: false,

@@ -117,8 +117,26 @@ export default {
         line: 3,
         message: 'Syntax error in type: foo%'
       }],
+      options: [{
+        checkSeesForNamepaths: true
+      }]
+    },
+    {
+      code: `
+          /** */
+          function foo() {}
+      `,
+      errors: [
+        {
+          message: '`settings.jsdoc.allowEmptyNamepaths` has been removed, use options in the rule `valid-types` instead.'
+        },
+        {
+          message: '`settings.jsdoc.checkSeesForNamepaths` has been removed, use options in the rule `valid-types` instead.'
+        }
+      ],
       settings: {
         jsdoc: {
+          allowEmptyNamepaths: true,
           checkSeesForNamepaths: true
         }
       }
@@ -164,11 +182,9 @@ export default {
         line: 3,
         message: 'Syntax error in type: '
       }],
-      settings: {
-        jsdoc: {
-          allowEmptyNamepaths: false
-        }
-      }
+      options: [{
+        allowEmptyNamepaths: false
+      }]
     }
   ],
   valid: [

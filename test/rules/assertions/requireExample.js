@@ -35,6 +35,29 @@ export default {
       /**
        * @constructor
        */
+      function f () {
+
+      }
+      `,
+      errors: [
+        {
+          message: '`settings.jsdoc.avoidExampleOnConstructors` has been removed, use options in the rule `require-example` instead.'
+        },
+        {
+          message: 'Missing JSDoc @example declaration.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          avoidExampleOnConstructors: true
+        }
+      }
+    },
+    {
+      code: `
+      /**
+       * @constructor
+       */
       function quux () {
 
       }
@@ -108,11 +131,9 @@ export default {
 
       }
       `,
-      settings: {
-        jsdoc: {
-          avoidExampleOnConstructors: true
-        }
-      }
+      options: [
+        {avoidExampleOnConstructors: true}
+      ]
     },
     {
       code: `
@@ -124,11 +145,9 @@ export default {
 
       }
       `,
-      settings: {
-        jsdoc: {
-          avoidExampleOnConstructors: true
-        }
-      }
+      options: [
+        {avoidExampleOnConstructors: true}
+      ]
     },
     {
       code: `
@@ -141,11 +160,9 @@ export default {
         }
       }
       `,
-      settings: {
-        jsdoc: {
-          avoidExampleOnConstructors: true
-        }
-      }
+      options: [
+        {avoidExampleOnConstructors: true}
+      ]
     },
     {
       code: `

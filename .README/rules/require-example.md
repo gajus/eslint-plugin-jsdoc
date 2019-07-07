@@ -7,16 +7,19 @@ Requires that all functions have examples.
 
 #### Options
 
-Has an object option with one optional property:
+This rule has an object option:
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
   block avoids the need for an `@example`. Defaults to an empty array.
+
+- `avoidExampleOnConstructors` (default: false) - Set to `true` to avoid the
+  need for an example on a constructor (whether indicated as such by a
+  jsdoc tag or by being within an ES6 `class`).
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`example`|
-|Options|`exemptedBy`|
-|Settings|`avoidExampleOnConstructors`|
+|Options|`exemptedBy`, `avoidExampleOnConstructors`|
 
 <!-- assertions requireExample -->
