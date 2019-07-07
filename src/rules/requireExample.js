@@ -1,15 +1,22 @@
 import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
+import warnRemovedSettings from '../warnRemovedSettings';
 
 export default iterateJsdoc(({
   jsdoc,
   report,
   utils,
-  settings
+  context
 }) => {
+  warnRemovedSettings(context, 'require-example');
+
   if (utils.avoidDocs()) {
     return;
   }
+
+  const options = context.options[0] || {
+    avoidExampleOnConstructors: false
+  };
 
   const targetTagName = 'example';
 
@@ -17,7 +24,7 @@ export default iterateJsdoc(({
     tag: targetTagName
   });
 
-  if (settings.avoidExampleOnConstructors && (
+  if (options.avoidExampleOnConstructors && (
     utils.hasATag([
       'class',
       'constructor'
@@ -46,6 +53,10 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          avoidExampleOnConstructors: {
+            default: false,
+            type: 'boolean'
+          },
           exemptedBy: {
             items: {
               type: 'string'

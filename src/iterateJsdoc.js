@@ -275,9 +275,6 @@ const getSettings = (context) => {
   settings.allowImplementsWithoutParam = _.get(context, 'settings.jsdoc.allowImplementsWithoutParam');
   settings.allowAugmentsExtendsWithoutParam = _.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam');
 
-  // `require-example` only
-  settings.avoidExampleOnConstructors = Boolean(_.get(context, 'settings.jsdoc.avoidExampleOnConstructors'));
-
   return settings;
 };
 
