@@ -7,6 +7,7 @@ export default iterateJsdoc(({
   report,
   utils,
   context,
+  settings,
   jsdocNode
 }) => {
   if (!jsdoc.tags) {
@@ -15,10 +16,10 @@ export default iterateJsdoc(({
   const {definedTags = []} = context.options[0] || {};
 
   let definedPreferredTags = [];
-  const preferredTags = _.get(context, 'settings.jsdoc.tagNamePreference');
-  if (preferredTags) {
+  const {tagNamePreference} = settings;
+  if (Object.keys(tagNamePreference).length) {
     // Replace `_.values` with `Object.values` when we may start requiring Node 7+
-    definedPreferredTags = _.values(preferredTags).map((preferredTag) => {
+    definedPreferredTags = _.values(tagNamePreference).map((preferredTag) => {
       if (typeof preferredTag === 'string') {
         // May become an empty string but will be filtered out below
         return preferredTag;
