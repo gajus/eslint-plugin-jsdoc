@@ -30,10 +30,7 @@ const getUtils = (
     tagNamePreference,
     overrideReplacesDocs,
     implementsReplacesDocs,
-    augmentsExtendsReplacesDocs,
-    allowOverrideWithoutParam,
-    allowImplementsWithoutParam,
-    allowAugmentsExtendsWithoutParam
+    augmentsExtendsReplacesDocs
   },
   report,
   context
@@ -98,42 +95,12 @@ const getUtils = (
     return jsdocUtils.hasTag(jsdoc, name);
   };
 
-  // These settings are deprecated and may be removed in the future along with this method.
-  utils.avoidDocsParamOnly = () => {
-    // These three checks are all for deprecated settings and may be removed in the future
-
-    // When settings.jsdoc.allowOverrideWithoutParam is true, override implies that all documentation is inherited.
-    if ((utils.hasTag('override') || utils.classHasTag('override')) && allowOverrideWithoutParam !== false) {
-      return true;
-    }
-
-    // When settings.jsdoc.allowImplementsWithoutParam is true, implements implies that all documentation is inherited.
-    // See https://github.com/gajus/eslint-plugin-jsdoc/issues/100
-    if ((utils.hasTag('implements') || utils.classHasTag('implements')) && allowImplementsWithoutParam !== false) {
-      return true;
-    }
-
-    // When settings.jsdoc.allowAugmentsExtendsWithoutParam is true, augments or extends implies that all documentation is inherited.
-    if ((utils.hasTag('augments') || utils.hasTag('extends') ||
-      utils.classHasTag('augments') || utils.classHasTag('extends')) && allowAugmentsExtendsWithoutParam) {
-      return true;
-    }
-
-    return false;
-  };
-
-  utils.avoidDocsParamConditionally = (param) => {
-    // After deprecation, the `param` parameter can be removed, but for now,
-    //  don't default for `param` as it may have its own explicit settings to the contrary
-    return (param && overrideReplacesDocs || !param && overrideReplacesDocs !== false) &&
-      (utils.hasTag('override') || utils.classHasTag('override')) ||
-    (param && implementsReplacesDocs || !param && implementsReplacesDocs !== false) &&
-      (utils.hasTag('implements') || utils.classHasTag('implements'));
-  };
-
-  utils.avoidDocs = (param) => {
-    if (param && utils.avoidDocsParamOnly() ||
-      utils.avoidDocsParamConditionally(param) ||
+  utils.avoidDocs = () => {
+    if (
+      overrideReplacesDocs !== false &&
+        (utils.hasTag('override') || utils.classHasTag('override')) ||
+      implementsReplacesDocs !== false &&
+        (utils.hasTag('implements') || utils.classHasTag('implements')) ||
 
       // inheritdoc implies that all documentation is inherited; see https://jsdoc.app/tags-inheritdoc.html
       utils.hasTag('inheritdoc') ||
@@ -260,11 +227,6 @@ const getSettings = (context) => {
   settings.overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
   settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
   settings.augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
-
-  // `require-param` only (deprecated)
-  settings.allowOverrideWithoutParam = _.get(context, 'settings.jsdoc.allowOverrideWithoutParam');
-  settings.allowImplementsWithoutParam = _.get(context, 'settings.jsdoc.allowImplementsWithoutParam');
-  settings.allowAugmentsExtendsWithoutParam = _.get(context, 'settings.jsdoc.allowAugmentsExtendsWithoutParam');
 
   return settings;
 };

@@ -303,11 +303,6 @@ The format of the configuration is as follows:
 }
 ```
 
-`settings.jsdoc.allowOverrideWithoutParam`,
-`settings.jsdoc.allowImplementsWithoutParam`, and
-`settings.jsdoc.allowAugmentsExtendsWithoutParam` performed a similar function
-but restricted to `@param`. These settings are now deprecated.
-
 <a name="eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types"></a>
 ### Settings to Configure <code>check-types</code> and <code>no-undefined-types</code>
 
@@ -5255,7 +5250,7 @@ function quux (foo, bar) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":false}}
+// Settings: {"jsdoc":{"overrideReplacesDocs":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -5264,7 +5259,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":false}}
+// Settings: {"jsdoc":{"implementsReplacesDocs":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -5294,7 +5289,7 @@ class A {
 
   }
 }
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":false}}
+// Settings: {"jsdoc":{"overrideReplacesDocs":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -5308,7 +5303,7 @@ class A {
 
   }
 }
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":false}}
+// Settings: {"jsdoc":{"implementsReplacesDocs":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -5413,7 +5408,7 @@ class A {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
+// Settings: {"jsdoc":{"overrideReplacesDocs":true}}
 
 /**
  * @implements
@@ -5440,7 +5435,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":true}}
+// Settings: {"jsdoc":{"implementsReplacesDocs":true}}
 
 /**
  * @implements
@@ -5456,7 +5451,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
 /**
  * @augments
@@ -5472,7 +5467,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
 /**
  * @extends
@@ -5521,7 +5516,7 @@ class A {
 
   }
 }
-// Settings: {"jsdoc":{"allowOverrideWithoutParam":true}}
+// Settings: {"jsdoc":{"overrideReplacesDocs":true}}
 
 /**
  * @implements
@@ -5534,7 +5529,7 @@ class A {
 
   }
 }
-// Settings: {"jsdoc":{"allowImplementsWithoutParam":true}}
+// Settings: {"jsdoc":{"implementsReplacesDocs":true}}
 
 /**
  * @implements
@@ -5559,7 +5554,7 @@ class A {
 
   }
 }
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
 /**
  * @augments
@@ -5584,7 +5579,7 @@ class A {
 
   }
 }
-// Settings: {"jsdoc":{"allowAugmentsExtendsWithoutParam":true}}
+// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
 /**
  * @extends
