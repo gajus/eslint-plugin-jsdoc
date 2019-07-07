@@ -258,11 +258,6 @@ The format of the configuration is as follows:
 }
 ```
 
-`settings.jsdoc.allowOverrideWithoutParam`,
-`settings.jsdoc.allowImplementsWithoutParam`, and
-`settings.jsdoc.allowAugmentsExtendsWithoutParam` performed a similar function
-but restricted to `@param`. These settings are now deprecated.
-
 ### Settings to Configure `check-types` and `no-undefined-types`
 
 - `settings.jsdoc.preferredTypes` An option map to indicate preferred
