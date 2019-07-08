@@ -231,6 +231,7 @@ export default iterateJsdoc(({
     });
   });
 }, {
+  iterateAllJsdocs: true,
   meta: {
     schema: [
       {
@@ -276,11 +277,5 @@ export default iterateJsdoc(({
       }
     ],
     type: 'suggestion'
-  },
-  returns: [
-    'ArrowFunctionExpression',
-    'ClassDeclaration',
-    'FunctionDeclaration',
-    'FunctionExpression'
-  ]
+  }
 });

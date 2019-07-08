@@ -110,6 +110,31 @@ export default {
     {
       code: `
           /**
+           * @example
+           * \`\`\`js alert('hello'); \`\`\`
+           */
+          var quux = {
+
+          };
+      `,
+      errors: [
+        {
+          message: '@example error (semi): Extra semicolon.'
+        }
+      ],
+      options: [{
+        baseConfig: {
+          rules: {
+            semi: ['error', 'never']
+          }
+        },
+        eslintrcForExamples: false,
+        exampleCodeRegex: '```js ([\\s\\S]*)```'
+      }]
+    },
+    {
+      code: `
+          /**
            * @example \`\`\`
            * js alert('hello'); \`\`\`
            */
@@ -543,6 +568,27 @@ export default {
         },
         eslintrcForExamples: false,
         noDefaultExampleRules: true
+      }]
+    },
+    {
+      code: `
+          /**
+           * @example \`\`\`js
+           alert('hello')
+           \`\`\`
+           */
+          var quux = {
+
+          };
+      `,
+      options: [{
+        baseConfig: {
+          rules: {
+            semi: ['error', 'never']
+          }
+        },
+        eslintrcForExamples: false,
+        exampleCodeRegex: '```js([\\s\\S]*)```'
       }]
     }
   ]
