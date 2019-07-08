@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
-const tagsWithDescriptions = ['param', 'arg', 'argument', 'returns', 'return'];
+const tagsWithNamesAndDescriptions = ['param', 'arg', 'argument'];
 
 // If supporting Node >= 10, we could loosen the default to this for the
 //   initial letter: \\p{Upper}
@@ -57,19 +57,37 @@ export default iterateJsdoc(({
     return Boolean(options.tags[tagName]);
   };
 
+  let descName;
   utils.forEachPreferredTag('description', (matchingJsdocTag, targetTagName) => {
+    descName = targetTagName;
     const description = (matchingJsdocTag.name + ' ' + matchingJsdocTag.description).trim();
     if (hasOptionTag(targetTagName)) {
       validateDescription(description, matchingJsdocTag);
     }
   });
 
-  const tags = utils.filterTags(({tag}) => {
-    return tagsWithDescriptions.includes(tag) && hasOptionTag(tag);
+  const tagsWithoutNames = [];
+  const tagsWithNames = utils.filterTags((tag) => {
+    const {tag: tagName} = tag;
+    if (!hasOptionTag(tagName)) {
+      return false;
+    }
+    const tagWithName = tagsWithNamesAndDescriptions.includes(tagName);
+    if (!tagWithName && tagName !== descName) {
+      tagsWithoutNames.push(tag);
+    }
+
+    return tagWithName;
   });
 
-  tags.some((tag) => {
+  tagsWithNames.some((tag) => {
     const description = _.trimStart(tag.description, '- ');
+
+    return validateDescription(description, tag);
+  });
+
+  tagsWithoutNames.some((tag) => {
+    const description = (tag.name + ' ' + tag.description).trim();
 
     return validateDescription(description, tag);
   });

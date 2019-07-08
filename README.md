@@ -2428,6 +2428,14 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+The tags `@param`/`@arg`/`@argument` will be properly parsed to ensure that
+the matched "description" text includes only the text after the name.
+All other tags will treat the text following the tag name, a space, and
+an optional curly-bracketed type expression (and another space) as part of
+its "description" (e.g., for `@returns {someType} some description`, the
+description is `some description` while for `@some-tag xyz`, the description
+is `xyz`).
+
 <a name="eslint-plugin-jsdoc-rules-match-description-options-3-maindescription"></a>
 ##### <code>mainDescription</code>
 
@@ -2462,7 +2470,7 @@ Overrides the default contexts (see below).
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return', 'description', 'desc'), `mainDescription`, `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'description', 'desc', and any added to `tags` option, e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
 The following patterns are considered problems:
 
@@ -2536,6 +2544,39 @@ function quux (foo) {
 
 }
 // Options: [{"tags":{"param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @summary foo.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"summary":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @author
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"author":".+"}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @x-tag
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"x-tag":".+"}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2798,6 +2839,14 @@ function quux () {
 // Options: [{"tags":{"returns":true}}]
 
 /**
+ * @returns {type1} Foo bar.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"returns":true}}]
+
+/**
  * @description Foo bar.
  */
 function quux () {
@@ -2934,6 +2983,36 @@ function quux () {
 
 }
 // Options: [{"tags":{"param":true}}]
+
+/**
+ * Foo.
+ *
+ * @summary Foo.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"summary":true}}]
+
+/**
+ * Foo.
+ *
+ * @author Somebody
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"author":".+"}}]
+
+/**
+ * Foo.
+ *
+ * @x-tag something
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"x-tag":".+"}}]
 ````
 
 
