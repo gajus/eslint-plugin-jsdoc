@@ -83,6 +83,26 @@ export default {
           message: 'Missing JSDoc @example description.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          class quux {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @example declaration.'
+        }
+      ],
+      options: [
+        {
+          contexts: ['ClassDeclaration']
+        }
+      ]
     }
   ],
   valid: [
@@ -186,6 +206,36 @@ export default {
       options: [
         {
           exemptedBy: ['type']
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @example Some example code
+           */
+          class quux {
+
+          }
+      `,
+      options: [
+        {
+          contexts: ['ClassDeclaration']
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          contexts: ['ClassDeclaration']
         }
       ]
     }

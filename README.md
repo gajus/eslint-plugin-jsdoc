@@ -4076,20 +4076,33 @@ Requires that all functions have examples.
 <a name="eslint-plugin-jsdoc-rules-require-example-options-7"></a>
 #### Options
 
-This rule has an object option:
+This rule has an object option.
 
-- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-  block avoids the need for an `@example`. Defaults to an empty array.
+<a name="eslint-plugin-jsdoc-rules-require-example-options-7-exemptedby"></a>
+##### <code>exemptedBy</code>
 
-- `avoidExampleOnConstructors` (default: false) - Set to `true` to avoid the
-  need for an example on a constructor (whether indicated as such by a
-  jsdoc tag or by being within an ES6 `class`).
+Array of tags (e.g., `['type']`) whose presence on the document
+block avoids the need for an `@example`. Defaults to an empty array.
+
+<a name="eslint-plugin-jsdoc-rules-require-example-options-7-avoidexampleonconstructors"></a>
+##### <code>avoidExampleOnConstructors</code>
+
+Set to `true` to avoid the need for an example on a constructor (whether
+indicated as such by a jsdoc tag or by being within an ES6 `class`).
+Defaults to `false`.
+
+<a name="eslint-plugin-jsdoc-rules-require-example-options-7-contexts-1"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+Overrides the default contexts (see below).
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`example`|
-|Options|`exemptedBy`, `avoidExampleOnConstructors`|
+|Options|`exemptedBy`, `avoidExampleOnConstructors`, `contexts`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
@@ -4136,6 +4149,15 @@ function quux () {
 
 }
 // Message: Missing JSDoc @example description.
+
+/**
+ *
+ */
+class quux {
+
+}
+// Options: [{"contexts":["ClassDeclaration"]}]
+// Message: Missing JSDoc @example declaration.
 ````
 
 The following patterns are not considered problems:
@@ -4209,6 +4231,22 @@ function quux () {
 
 }
 // Options: [{"exemptedBy":["type"]}]
+
+/**
+ * @example Some example code
+ */
+class quux {
+
+}
+// Options: [{"contexts":["ClassDeclaration"]}]
+
+/**
+ *
+ */
+function quux () {
+
+}
+// Options: [{"contexts":["ClassDeclaration"]}]
 ````
 
 

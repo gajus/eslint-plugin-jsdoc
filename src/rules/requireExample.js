@@ -46,6 +46,7 @@ export default iterateJsdoc(({
     }
   });
 }, {
+  contextDefaults: true,
   meta: {
     schema: [
       {
@@ -54,6 +55,12 @@ export default iterateJsdoc(({
           avoidExampleOnConstructors: {
             default: false,
             type: 'boolean'
+          },
+          contexts: {
+            items: {
+              type: 'string'
+            },
+            type: 'array'
           },
           exemptedBy: {
             items: {
