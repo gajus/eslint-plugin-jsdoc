@@ -53,16 +53,6 @@ describe('iterateJsdoc', () => {
             iterateJsdoc(() => {}, {meta: {type: 'suggestion'}});
           }).to.not.throw();
         });
-        it('Does not throw with object and options', () => {
-          expect(() => {
-            iterateJsdoc(undefined, {
-              meta: {type: 'suggestion'},
-              returns () {
-                return {};
-              }
-            });
-          }).to.not.throw();
-        });
       });
     });
   });

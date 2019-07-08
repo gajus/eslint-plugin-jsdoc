@@ -348,8 +348,8 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   if (!metaType || !['problem', 'suggestion', 'layout'].includes(metaType)) {
     throw new TypeError('Rule must include `meta.type` option (with value "problem", "suggestion", or "layout")');
   }
-  if (typeof iterator !== 'function' && (!ruleConfig || typeof ruleConfig.returns !== 'function')) {
-    throw new TypeError('The iterator argument must be a function or an object with a `returns` method.');
+  if (typeof iterator !== 'function') {
+    throw new TypeError('The iterator argument must be a function.');
   }
 
   if (ruleConfig.iterateAllJsdocs) {
