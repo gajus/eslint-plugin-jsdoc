@@ -566,7 +566,7 @@ decreasing precedence:
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`example`|
 |Options| *See above* |
 
@@ -609,6 +609,16 @@ function quux () {
 function quux () {
 
 }
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
+// Message: @example error (semi): Extra semicolon.
+
+/**
+ * @example
+ * ```js alert('hello'); ```
+ */
+var quux = {
+
+};
 // Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
@@ -797,6 +807,16 @@ function quux () {}
  */
 function quux () {}
 // Options: [{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
+
+/**
+ * @example ```js
+ alert('hello')
+ ```
+ */
+var quux = {
+
+};
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 ````
 
 

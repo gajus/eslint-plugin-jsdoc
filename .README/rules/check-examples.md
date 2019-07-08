@@ -98,7 +98,7 @@ decreasing precedence:
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`example`|
 |Options| *See above* |
 
