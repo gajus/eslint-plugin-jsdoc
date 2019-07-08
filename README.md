@@ -2428,6 +2428,14 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+The tags `@param`/`@arg`/`@argument` will be properly parsed to ensure that
+the matched "description" text includes only the text after the name.
+All other tags will treat the text following the tag name, a space, and
+an optional curly-bracketed type expression (and another space) as part of
+its "description" (e.g., for `@returns {someType} some description`, the
+description is `some description` while for `@some-tag xyz`, the description
+is `xyz`).
+
 <a name="eslint-plugin-jsdoc-rules-match-description-options-3-maindescription"></a>
 ##### <code>mainDescription</code>
 
@@ -2462,7 +2470,7 @@ Overrides the default contexts (see below).
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return', 'description', 'desc'), `mainDescription`, `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'description', 'desc', and any added to `tags` option, e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
 The following patterns are considered problems:
 
@@ -2536,6 +2544,39 @@ function quux (foo) {
 
 }
 // Options: [{"tags":{"param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @summary foo.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"summary":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @author
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"author":".+"}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @x-tag
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"x-tag":".+"}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -2798,6 +2839,14 @@ function quux () {
 // Options: [{"tags":{"returns":true}}]
 
 /**
+ * @returns {type1} Foo bar.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"returns":true}}]
+
+/**
  * @description Foo bar.
  */
 function quux () {
@@ -2934,6 +2983,36 @@ function quux () {
 
 }
 // Options: [{"tags":{"param":true}}]
+
+/**
+ * Foo.
+ *
+ * @summary Foo.
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"summary":true}}]
+
+/**
+ * Foo.
+ *
+ * @author Somebody
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"author":".+"}}]
+
+/**
+ * Foo.
+ *
+ * @x-tag something
+ */
+function quux () {
+
+}
+// Options: [{"tags":{"x-tag":".+"}}]
 ````
 
 
@@ -3709,8 +3788,11 @@ function quux () {
 
 Requires that all functions have a description.
 
-* All functions must have a `@description` tag.
-* Every description tag must have a non-empty description that explains the purpose of the method.
+* All functions must have an implicit description or have the option
+  `descriptionStyle` set to `tag`.
+* Every jsdoc block description (or description tag if `descriptionStyle` is
+  `"tag"`) must have a non-empty description that explains the purpose of the
+  method.
 
 <a name="eslint-plugin-jsdoc-rules-require-description-options-6"></a>
 #### Options
@@ -3718,17 +3800,21 @@ Requires that all functions have a description.
 An options object may have any of the following properties:
 
 - `contexts` - Set to an array of strings representing the AST context
-  where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-  Overrides the default contexts (see below).
-- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@description`. Defaults to an empty array.
+  where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6
+  classes). Overrides the default contexts (see below).
+- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
+    document block avoids the need for a `@description`. Defaults to an
+    empty array.
+- `descriptionStyle` - Whether to accept implicit descriptions (`"body"`) or
+    `@description` tags (`"tag"`) as satisfying the rule. Set to `"any"` to
+    accept either style. Defaults to `"body"`.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
-|Tags|`description`|
+|Tags|`description` or jsdoc block|
 |Aliases|`desc`|
-|Options|`contexts`, `exemptedBy`|
+|Options|`contexts`, `exemptedBy`, `descriptionStyle`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
@@ -3740,6 +3826,34 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Options: [{"descriptionStyle":"tag"}]
+// Message: Missing JSDoc @description declaration.
+
+/**
+ *
+ */
+function quux () {
+
+}
+// Options: [{"descriptionStyle":"any"}]
+// Message: Missing JSDoc block description or @description declaration.
+
+/**
+ *
+ */
+function quux () {
+
+}
+// Options: [{"descriptionStyle":"body"}]
+// Message: Missing JSDoc block description.
+
+/**
+ *
+ */
+class quux {
+
+}
+// Options: [{"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3748,7 +3862,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"contexts":["ClassDeclaration"]}]
+// Options: [{"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3757,16 +3871,7 @@ class quux {
 class quux {
 
 }
-// Options: [{"contexts":["ClassDeclaration"]}]
-// Message: Missing JSDoc @description declaration.
-
-/**
- *
- */
-class quux {
-
-}
-// Options: [{"contexts":["ClassDeclaration"]}]
+// Options: [{"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3775,6 +3880,7 @@ class quux {
 function quux () {
 
 }
+// Options: [{"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description description.
 
 /**
@@ -3783,7 +3889,7 @@ function quux () {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"]}]
+// Options: [{"contexts":["TSInterfaceDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3792,7 +3898,7 @@ interface quux {
 var quux = class {
 
 };
-// Options: [{"contexts":["ClassExpression"]}]
+// Options: [{"contexts":["ClassExpression"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3801,7 +3907,7 @@ var quux = class {
 var quux = {
 
 };
-// Options: [{"contexts":["ObjectExpression"]}]
+// Options: [{"contexts":["ObjectExpression"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -3811,6 +3917,7 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":{"message":"Please avoid `{{tagName}}`; use `{{replacement}}` instead","replacement":"someDesc"}}}}
+// Options: [{"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @someDesc description.
 
 /**
@@ -3820,6 +3927,7 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+// Options: [{"descriptionStyle":"tag"}]
 // Message: Unexpected tag `@description`
 ````
 
@@ -3833,6 +3941,7 @@ The following patterns are not considered problems:
 function quux () {
 
 }
+// Options: [{"descriptionStyle":"tag"}]
 
 /**
  * @description
@@ -3841,6 +3950,7 @@ function quux () {
 function quux () {
 
 }
+// Options: [{"descriptionStyle":"tag"}]
 
 /**
  * @description <caption>Valid usage</caption>
@@ -3852,6 +3962,7 @@ function quux () {
 function quux () {
 
 }
+// Options: [{"descriptionStyle":"tag"}]
 
 /**
  *
@@ -3859,6 +3970,7 @@ function quux () {
 class quux {
 
 }
+// Options: [{"descriptionStyle":"tag"}]
 
 /**
  *
@@ -3882,6 +3994,7 @@ function quux () {
 interface quux {
 
 }
+// Options: [{"descriptionStyle":"tag"}]
 
 /**
  *
@@ -3889,6 +4002,7 @@ interface quux {
 var quux = class {
 
 };
+// Options: [{"descriptionStyle":"tag"}]
 
 /**
  *
@@ -3896,6 +4010,38 @@ var quux = class {
 var quux = {
 
 };
+// Options: [{"descriptionStyle":"tag"}]
+
+/**
+ * Has an implicit description
+ */
+function quux () {
+
+}
+// Options: [{"descriptionStyle":"body"}]
+
+/**
+ * Has an implicit description
+ */
+function quux () {
+
+}
+
+/**
+ * Has an implicit description
+ */
+function quux () {
+
+}
+// Options: [{"descriptionStyle":"any"}]
+
+/**
+ * @description Has an explicit description
+ */
+function quux () {
+
+}
+// Options: [{"descriptionStyle":"any"}]
 ````
 
 

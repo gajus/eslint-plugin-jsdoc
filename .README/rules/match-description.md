@@ -50,6 +50,14 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+The tags `@param`/`@arg`/`@argument` will be properly parsed to ensure that
+the matched "description" text includes only the text after the name.
+All other tags will treat the text following the tag name, a space, and
+an optional curly-bracketed type expression (and another space) as part of
+its "description" (e.g., for `@returns {someType} some description`, the
+description is `some description` while for `@some-tag xyz`, the description
+is `xyz`).
+
 ##### `mainDescription`
 
 If you wish to override the main function description without changing the
@@ -82,6 +90,6 @@ Overrides the default contexts (see below).
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A by default but see `tags` options|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'returns', 'return', 'description', 'desc'), `mainDescription`, `matchDescription`|
+|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'description', 'desc', and any added to `tags` option, e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
 <!-- assertions matchDescription -->
