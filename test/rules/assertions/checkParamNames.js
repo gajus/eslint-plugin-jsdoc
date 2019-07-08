@@ -33,6 +33,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Expected @arg names to be "foo". Got "Foo".'
         }
       ],
@@ -55,6 +56,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Expected @param names to be "foo". Got "Foo".'
         }
       ]
@@ -70,6 +72,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@param path declaration ("Foo.Bar") appears before any real parameter.'
         }
       ]
@@ -86,6 +89,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: '@param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").'
         }
       ]
@@ -103,6 +107,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Expected @param names to be "bar, foo". Got "foo, bar".'
         }
       ]
@@ -136,6 +141,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Duplicate @param "foo"'
         }
       ]
@@ -152,6 +158,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Duplicate @param "foo"'
         }
       ]
@@ -168,6 +175,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Duplicate @param "foo"'
         }
       ]
@@ -183,6 +191,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Expected @param names to be "property". Got "prop".'
         }
       ],
@@ -202,6 +211,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Unexpected tag `@param`'
         }
       ],
