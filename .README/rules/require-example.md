@@ -7,20 +7,30 @@ Requires that all functions have examples.
 
 #### Options
 
-This rule has an object option:
+This rule has an object option.
 
-- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-  block avoids the need for an `@example`. Defaults to an empty array.
+##### `exemptedBy`
 
-- `avoidExampleOnConstructors` (default: false) - Set to `true` to avoid the
-  need for an example on a constructor (whether indicated as such by a
-  jsdoc tag or by being within an ES6 `class`).
+Array of tags (e.g., `['type']`) whose presence on the document
+block avoids the need for an `@example`. Defaults to an empty array.
+
+##### `avoidExampleOnConstructors`
+
+Set to `true` to avoid the need for an example on a constructor (whether
+indicated as such by a jsdoc tag or by being within an ES6 `class`).
+Defaults to `false`.
+
+##### `contexts`
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+Overrides the default contexts (see below).
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`example`|
-|Options|`exemptedBy`, `avoidExampleOnConstructors`|
+|Options|`exemptedBy`, `avoidExampleOnConstructors`, `contexts`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <!-- assertions requireExample -->
