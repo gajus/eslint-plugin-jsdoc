@@ -165,6 +165,81 @@ export default {
           /**
            * Foo.
            *
+           * @summary foo.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          tags: {
+            summary: true
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @author
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          tags: {
+            author: '.+'
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @x-tag
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          tags: {
+            'x-tag': '.+'
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
            * @description foo foo.
            */
           function quux (foo) {
@@ -709,6 +784,23 @@ export default {
     {
       code: `
           /**
+           * @returns {type1} Foo bar.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          tags: {
+            returns: true
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
            * @description Foo bar.
            */
           function quux () {
@@ -936,6 +1028,63 @@ export default {
         {tags: {
           param: true
         }}
+      ]
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @summary Foo.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          tags: {
+            summary: true
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @author Somebody
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          tags: {
+            author: '.+'
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @x-tag something
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          tags: {
+            'x-tag': '.+'
+          }
+        }
       ]
     }
   ]
