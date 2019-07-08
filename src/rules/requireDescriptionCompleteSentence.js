@@ -51,14 +51,14 @@ const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const validateDescription = (description, report, jsdocNode, sourceCode, tag) => {
+const validateDescription = (description, reportOrig, jsdocNode, sourceCode, tag) => {
   if (!description) {
     return false;
   }
 
   const paragraphs = extractParagraphs(description);
 
-  return paragraphs.some((paragraph) => {
+  return paragraphs.some((paragraph, parIdx) => {
     const sentences = extractSentences(paragraph);
 
     const fix = (fixer) => {
@@ -75,8 +75,8 @@ const validateDescription = (description, report, jsdocNode, sourceCode, tag) =>
       })) {
         const beginning = sentence.split('\n')[0];
 
-        if (tag) {
-          const reg = new RegExp(`(@${_.escapeRegExp(tag)}.*)${_.escapeRegExp(beginning)}`);
+        if (tag.tag) {
+          const reg = new RegExp(`(@${_.escapeRegExp(tag.tag)}.*)${_.escapeRegExp(beginning)}`);
 
           text = text.replace(reg, ($0, $1) => {
             return $1 + capitalize(beginning);
@@ -89,20 +89,28 @@ const validateDescription = (description, report, jsdocNode, sourceCode, tag) =>
       return fixer.replaceText(jsdocNode, text);
     };
 
+    const report = (msg, fixer, tagObj) => {
+      tagObj.line += parIdx * 2;
+
+      // Avoid errors if old column doesn't exist here
+      tagObj.column = 0;
+      reportOrig(msg, fixer, tagObj);
+    };
+
     if (sentences.some((sentence) => {
       return !(/^\s*$/).test(sentence) && !isCapitalized(sentence);
     })) {
-      report('Sentence should start with an uppercase character.', fix);
+      report('Sentence should start with an uppercase character.', fix, tag);
     }
 
     if (!/[.!?]$/.test(paragraph)) {
-      report('Sentence must end with a period.', fix);
+      report('Sentence must end with a period.', fix, tag);
 
       return true;
     }
 
     if (!isNewLinePrecededByAPeriod(paragraph)) {
-      report('A line of text is started with an uppercase character, but preceding line does not end the sentence.');
+      report('A line of text is started with an uppercase character, but preceding line does not end the sentence.', null, tag);
 
       return true;
     }
@@ -119,14 +127,16 @@ export default iterateJsdoc(({
   utils
 }) => {
   if (!jsdoc.tags ||
-    validateDescription(jsdoc.description, report, jsdocNode, sourceCode)
+    validateDescription(jsdoc.description, report, jsdocNode, sourceCode, {
+      line: jsdoc.line + 1
+    })
   ) {
     return;
   }
 
-  utils.forEachPreferredTag('description', (matchingJsdocTag, targetTagName) => {
+  utils.forEachPreferredTag('description', (matchingJsdocTag) => {
     const description = `${matchingJsdocTag.name} ${matchingJsdocTag.description}`.trim();
-    validateDescription(description, report, jsdocNode, sourceCode, targetTagName);
+    validateDescription(description, report, jsdocNode, sourceCode, matchingJsdocTag);
   });
 
   const tags = jsdoc.tags.filter((tag) => {
@@ -136,7 +146,7 @@ export default iterateJsdoc(({
   tags.some((tag) => {
     const description = _.trimStart(tag.description, '- ');
 
-    return validateDescription(description, report, jsdocNode, sourceCode, tag.tag);
+    return validateDescription(description, report, jsdocNode, sourceCode, tag);
   });
 }, {
   iterateAllJsdocs: true,
