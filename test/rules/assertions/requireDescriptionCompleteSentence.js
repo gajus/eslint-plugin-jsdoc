@@ -95,6 +95,29 @@ export default {
     {
       code: `
           /**
+           * \`foo\` is a variable
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      output: `
+          /**
+           * \`foo\` is a variable.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
            * Foo.
            *
            * foo.
@@ -604,6 +627,59 @@ export default {
       code: `
           /**
            * @description Foo.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * \`foo\` is a variable.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * \`foo\`.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @param foo - \`bar\`.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {number} \`foo\`.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo
+           * \`bar\`.
            */
           function quux () {
 

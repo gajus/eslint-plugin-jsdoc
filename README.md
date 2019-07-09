@@ -3567,6 +3567,14 @@ function quux () {
 // Message: Sentence must end with a period.
 
 /**
+ * `foo` is a variable
+ */
+function quux () {
+
+}
+// Message: Sentence must end with a period.
+
+/**
  * Foo.
  *
  * foo.
@@ -3804,6 +3812,44 @@ function quux () {
 
 /**
  * @description Foo.
+ */
+function quux () {
+
+}
+
+/**
+ * `foo` is a variable.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * `foo`.
+ */
+function quux () {
+
+}
+
+/**
+ * @param foo - `bar`.
+ */
+function quux () {
+
+}
+
+/**
+ * @returns {number} `foo`.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo
+ * `bar`.
  */
 function quux () {
 
