@@ -3543,6 +3543,14 @@ function quux () {
 // Message: Sentence should start with an uppercase character.
 
 /**
+ * foo?
+ */
+function quux () {
+
+}
+// Message: Sentence should start with an uppercase character.
+
+/**
  * @description foo.
  */
 function quux () {

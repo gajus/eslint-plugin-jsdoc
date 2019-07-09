@@ -10,7 +10,8 @@
     "escape-regex-string": "^1.0.6",
     "flat-map-polyfill": "^0.3.8",
     "jsdoctypeparser": "5.0.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "regextras": "^0.6.1"
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {

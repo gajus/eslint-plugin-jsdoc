@@ -26,6 +26,29 @@ export default {
     {
       code: `
           /**
+           * foo?
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence should start with an uppercase character.'
+        }
+      ],
+      output: `
+          /**
+           * Foo?
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
            * @description foo.
            */
           function quux () {

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {RegExtras} from 'regextras/dist/main-umd';
 import iterateJsdoc from '../iterateJsdoc';
 
 const extractParagraphs = (text) => {
@@ -6,20 +7,23 @@ const extractParagraphs = (text) => {
 };
 
 const extractSentences = (text) => {
-  return text
+  const txt = text
 
     // Remove all {} tags.
-    .replace(/\{[\s\S]*?\}\s*/g, '')
+    .replace(/\{[\s\S]*?\}\s*/g, '');
+
+  const sentenceEndGrouping = /([.?!])(?:\s+|$)/;
+  const puncts = RegExtras(sentenceEndGrouping).map(txt, (punct) => {
+    return punct;
+  });
+
+  return txt
+
     .split(/[.?!](?:\s+|$)/)
 
-    // Ignore sentences with only whitespaces.
-    .filter((sentence) => {
-      return !/^\s*$/.test(sentence);
-    })
-
     // Re-add the dot.
-    .map((sentence) => {
-      return `${sentence}.`;
+    .map((sentence, idx) => {
+      return /^\s*$/.test(sentence) ? sentence : `${sentence}${puncts[idx] || ''}`;
     });
 };
 
@@ -67,7 +71,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode, tag) =>
       }
 
       for (const sentence of sentences.filter((sentence_) => {
-        return !isCapitalized(sentence_);
+        return !(/^\s*$/).test(sentence_) && !isCapitalized(sentence_);
       })) {
         const beginning = sentence.split('\n')[0];
 
@@ -86,7 +90,7 @@ const validateDescription = (description, report, jsdocNode, sourceCode, tag) =>
     };
 
     if (sentences.some((sentence) => {
-      return !isCapitalized(sentence);
+      return !(/^\s*$/).test(sentence) && !isCapitalized(sentence);
     })) {
       report('Sentence should start with an uppercase character.', fix);
     }
