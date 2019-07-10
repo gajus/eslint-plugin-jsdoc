@@ -208,6 +208,18 @@ const getUtils = (
     });
   };
 
+  utils.reportSettings = (message) => {
+    context.report({
+      loc: {
+        start: {
+          column: 1,
+          line: 1
+        }
+      },
+      message
+    });
+  };
+
   return utils;
 };
 

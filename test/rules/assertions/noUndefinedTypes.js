@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          line: 1,
           message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
         },
         {

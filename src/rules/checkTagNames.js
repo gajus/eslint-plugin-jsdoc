@@ -28,7 +28,7 @@ export default iterateJsdoc(({
         return undefined;
       }
       if (typeof preferredTag !== 'object') {
-        report(
+        utils.reportSettings(
           'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.'
         );
       }

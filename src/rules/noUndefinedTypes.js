@@ -41,7 +41,7 @@ export default iterateJsdoc(({
         return undefined;
       }
       if (typeof preferredType !== 'object') {
-        report(
+        utils.reportSettings(
           'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
         );
       }

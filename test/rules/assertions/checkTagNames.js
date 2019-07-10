@@ -295,6 +295,7 @@ export default {
       `,
       errors: [
         {
+          line: 1,
           message: 'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.'
         },
         {
