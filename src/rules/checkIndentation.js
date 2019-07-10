@@ -5,7 +5,7 @@ export default iterateJsdoc(({
   jsdocNode,
   report
 }) => {
-  const reg = new RegExp(/^[ \t]+\*[ \t]{2}/gm);
+  const reg = new RegExp(/^(?:\/?\**|[ \t]*)\*[ \t]{2}/gm);
   const text = sourceCode.getText(jsdocNode);
 
   if (reg.test(text)) {

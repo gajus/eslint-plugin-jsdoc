@@ -833,6 +833,12 @@ Reports invalid padding inside JSDoc block.
 The following patterns are considered problems:
 
 ````js
+/***  foo */
+function quux () {
+
+}
+// Message: There must be no indentation.
+
 /**
  * foo
  *
@@ -861,6 +867,11 @@ The following patterns are not considered problems:
  * @param bar
  * baz
  */
+function quux () {
+
+}
+
+/*** foo */
 function quux () {
 
 }
