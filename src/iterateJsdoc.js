@@ -351,7 +351,6 @@ export {
  * @param {{
  *   meta: any,
  *   contextDefaults?: true | string[],
- *   returns?: string[],
  *   iterateAllJsdocs?: true,
  * }} ruleConfig
  */
@@ -382,11 +381,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       const sourceCode = context.getSourceCode();
 
       const settings = getSettings(context);
-
-      let contexts = ruleConfig.returns;
-      if (ruleConfig.contextDefaults) {
-        contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
-      }
 
       const checkJsdoc = (node) => {
         const jsdocNode = getJSDocComment(sourceCode, node);
@@ -429,15 +423,18 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           utils
         });
       };
-      if (!contexts) {
-        return {
-          ArrowFunctionExpression: checkJsdoc,
-          FunctionDeclaration: checkJsdoc,
-          FunctionExpression: checkJsdoc
-        };
+
+      if (ruleConfig.contextDefaults) {
+        const contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
+
+        return jsdocUtils.getContextObject(contexts, checkJsdoc);
       }
 
-      return jsdocUtils.getContextObject(contexts, checkJsdoc);
+      return {
+        ArrowFunctionExpression: checkJsdoc,
+        FunctionDeclaration: checkJsdoc,
+        FunctionExpression: checkJsdoc
+      };
     },
     meta: ruleConfig.meta
   };
