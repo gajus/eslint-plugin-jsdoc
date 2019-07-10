@@ -10,7 +10,7 @@ export default iterateJsdoc(({
 
   for (const tag of jsdoc.tags) {
     if (tag.type.slice(-1) === '=') {
-      report('Syntax should not be Google Closure Compiler style.');
+      report('Syntax should not be Google Closure Compiler style.', null, tag);
       break;
     }
   }

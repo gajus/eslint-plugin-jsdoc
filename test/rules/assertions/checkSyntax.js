@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Syntax should not be Google Closure Compiler style.'
         }
       ]

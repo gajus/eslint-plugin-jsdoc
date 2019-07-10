@@ -14,9 +14,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  if (utils.hasTag('implements')) {
-    report('@implements used on a non-constructor function');
-  }
+  utils.forEachPreferredTag('implements', (tag) => {
+    report('@implements used on a non-constructor function', null, tag);
+  });
 }, {
   meta: {
     type: 'suggestion'
