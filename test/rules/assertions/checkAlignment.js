@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Expected JSDoc block to be aligned.'
         }
       ],
@@ -34,6 +35,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Expected JSDoc block to be aligned.'
         }
       ],
@@ -57,6 +59,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Expected JSDoc block to be aligned.'
         }
       ],
@@ -80,6 +83,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Expected JSDoc block to be aligned.'
         }
       ],
@@ -103,6 +107,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Expected JSDoc block to be aligned.'
         }
       ],
@@ -122,7 +127,10 @@ export default {
          */
       `,
       errors: [
-        {message: 'Expected JSDoc block to be aligned.'}
+        {
+          line: 3,
+          message: 'Expected JSDoc block to be aligned.'
+        }
       ]
     },
     {
@@ -136,7 +144,10 @@ export default {
         }
       `,
       errors: [
-        {message: 'Expected JSDoc block to be aligned.'}
+        {
+          line: 5,
+          message: 'Expected JSDoc block to be aligned.'
+        }
       ]
     }
   ],

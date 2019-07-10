@@ -31,12 +31,17 @@ export default iterateJsdoc(({
     return fixer.replaceText(jsdocNode, replacement);
   };
 
-  for (const line of sourceLines) {
+  sourceLines.some((line, lineNum) => {
     if (line.length !== indentLevel) {
-      report('Expected JSDoc block to be aligned.', fix);
-      break;
+      report('Expected JSDoc block to be aligned.', fix, {
+        line: lineNum + 1
+      });
+
+      return true;
     }
-  }
+
+    return false;
+  });
 }, {
   iterateAllJsdocs: true,
   meta: {

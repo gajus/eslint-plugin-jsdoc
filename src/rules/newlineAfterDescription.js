@@ -28,29 +28,31 @@ export default iterateJsdoc(({
 
   if (always) {
     if (!descriptionEndsWithANewline) {
-      report('There must be a newline after the description of the JSDoc block.', (fixer) => {
-        const sourceLines = sourceCode.getText(jsdocNode).split('\n');
-        const lastDescriptionLine = _.findLastIndex(sourceLines, (line) => {
-          return line.includes(_.last(jsdoc.description.split('\n')));
-        });
-
-        // Add the new line
-        sourceLines.splice(lastDescriptionLine + 1, 0, `${indent} *`);
-
-        return fixer.replaceText(jsdocNode, sourceLines.join('\n'));
-      });
-    }
-  } else if (descriptionEndsWithANewline) {
-    report('There must be no newline after the description of the JSDoc block.', (fixer) => {
       const sourceLines = sourceCode.getText(jsdocNode).split('\n');
       const lastDescriptionLine = _.findLastIndex(sourceLines, (line) => {
         return line.includes(_.last(jsdoc.description.split('\n')));
       });
+      report('There must be a newline after the description of the JSDoc block.', (fixer) => {
+        // Add the new line
+        sourceLines.splice(lastDescriptionLine + 1, 0, `${indent} *`);
 
+        return fixer.replaceText(jsdocNode, sourceLines.join('\n'));
+      }, {
+        line: lastDescriptionLine
+      });
+    }
+  } else if (descriptionEndsWithANewline) {
+    const sourceLines = sourceCode.getText(jsdocNode).split('\n');
+    const lastDescriptionLine = _.findLastIndex(sourceLines, (line) => {
+      return line.includes(_.last(jsdoc.description.split('\n')));
+    });
+    report('There must be no newline after the description of the JSDoc block.', (fixer) => {
       // Remove the extra line
       sourceLines.splice(lastDescriptionLine + 1, 1);
 
       return fixer.replaceText(jsdocNode, sourceLines.join('\n'));
+    }, {
+      line: lastDescriptionLine + 1
     });
   }
 }, {

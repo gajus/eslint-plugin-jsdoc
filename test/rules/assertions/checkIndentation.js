@@ -14,6 +14,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'There must be no indentation.'
         }
       ]
@@ -28,6 +29,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'There must be no indentation.'
         }
       ]

@@ -14,6 +14,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'There must be a newline after the description of the JSDoc block.'
         }
       ],
@@ -47,6 +48,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'There must be a newline after the description of the JSDoc block.'
         }
       ],
@@ -78,6 +80,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'There must be no newline after the description of the JSDoc block.'
         }
       ],
