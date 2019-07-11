@@ -309,6 +309,32 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @property {object} a
+           * @prop {boolean} b
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".'
+        }
+      ],
+      output: `
+          /**
+           * @property {object} a
+           * @property {boolean} b
+           */
+          function quux () {
+
+          }
+      `
     }
   ],
   valid: [
