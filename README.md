@@ -1399,6 +1399,16 @@ function quux () {
 // Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
 // Options: [{"definedTags":["abcd"]}]
 // Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
+
+/**
+ * @abc
+ * @abcd
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
+// Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
 ````
 
 The following patterns are not considered problems:
