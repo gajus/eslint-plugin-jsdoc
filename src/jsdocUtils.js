@@ -444,9 +444,9 @@ const lookupTable = {
  * It traverses the parsed source code and returns as
  * soon as it stumbles upon the first return statement.
  *
- * @param {Object} node
+ * @param {object} node
  *   the node which should be checked.
- * @param {Object} context
+ * @param {object} context
  * @param {boolean} ignoreAsync
  *   ignore implicit async return.
  * @returns {boolean}

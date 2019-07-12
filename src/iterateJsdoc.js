@@ -250,8 +250,8 @@ const getSettings = (context) => {
 /**
  * Create the report function
  *
- * @param {Object} context
- * @param {Object} commentNode
+ * @param {object} context
+ * @param {object} commentNode
  */
 const makeReport = (context, commentNode) => {
   const report = (message, fix = null, jsdocLoc = null, data = null) => {
@@ -378,7 +378,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
      * @param {*} context
      *   a reference to the context which hold all important information
      *   like settings and the sourcecode to check.
-     * @returns {Object}
+     * @returns {object}
      *   a list with parser callback function.
      */
     create (context) {
