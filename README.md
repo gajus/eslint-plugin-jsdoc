@@ -3752,6 +3752,12 @@ function quux (foo) {
 
 }
 // Message: Sentence should start with an uppercase character.
+
+/**
+ * @typedef {Object} Hello World
+ * hello world
+*/
+// Message: Sentence must end with a period.
 ````
 
 The following patterns are not considered problems:

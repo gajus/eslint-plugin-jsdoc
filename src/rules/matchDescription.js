@@ -1,8 +1,6 @@
 import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
-const tagsWithNamesAndDescriptions = ['param', 'arg', 'argument'];
-
 // If supporting Node >= 10, we could loosen the default to this for the
 //   initial letter: \\p{Upper}
 const matchDescriptionDefault = '^[A-Z`\\d_][\\s\\S]*[.?!`]$';
@@ -57,28 +55,17 @@ export default iterateJsdoc(({
     return Boolean(options.tags[tagName]);
   };
 
-  let descName;
   utils.forEachPreferredTag('description', (matchingJsdocTag, targetTagName) => {
-    descName = targetTagName;
     const description = (matchingJsdocTag.name + ' ' + matchingJsdocTag.description).trim();
     if (hasOptionTag(targetTagName)) {
       validateDescription(description, matchingJsdocTag);
     }
   });
 
-  const tagsWithoutNames = [];
-  const tagsWithNames = utils.filterTags((tag) => {
-    const {tag: tagName} = tag;
-    if (!hasOptionTag(tagName)) {
-      return false;
-    }
-    const tagWithName = tagsWithNamesAndDescriptions.includes(tagName);
-    if (!tagWithName && tagName !== descName) {
-      tagsWithoutNames.push(tag);
-    }
-
-    return tagWithName;
+  const whitelistedTags = utils.filterTags(({tag: tagName}) => {
+    return hasOptionTag(tagName);
   });
+  const {tagsWithNames, tagsWithoutNames} = utils.getTagsByType(whitelistedTags);
 
   tagsWithNames.some((tag) => {
     const description = _.trimStart(tag.description, '- ');

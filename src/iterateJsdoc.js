@@ -161,7 +161,11 @@ const getUtils = (
   };
 
   utils.filterTags = (filter) => {
-    return (jsdoc.tags || []).filter(filter);
+    return jsdocUtils.filterTags(jsdoc.tags, filter);
+  };
+
+  utils.getTagsByType = (tags) => {
+    return jsdocUtils.getTagsByType(tags, tagNamePreference);
   };
 
   utils.getClassNode = () => {

@@ -520,13 +520,40 @@ const getContextObject = (contexts, checkJsdoc) => {
   }, {});
 };
 
+const filterTags = (tags = [], filter) => {
+  return tags.filter(filter);
+};
+
+const tagsWithNamesAndDescriptions = ['param', 'arg', 'argument', 'returns', 'return'];
+
+const getTagsByType = (tags, tagPreference) => {
+  const descName = getPreferredTagName('description', tagPreference);
+  const tagsWithoutNames = [];
+  const tagsWithNames = filterTags(tags, (tag) => {
+    const {tag: tagName} = tag;
+    const tagWithName = tagsWithNamesAndDescriptions.includes(tagName);
+    if (!tagWithName && tagName !== descName) {
+      tagsWithoutNames.push(tag);
+    }
+
+    return tagWithName;
+  });
+
+  return {
+    tagsWithoutNames,
+    tagsWithNames
+  };
+};
+
 export default {
   enforcedContexts,
+  filterTags,
   getContextObject,
   getFunctionParameterNames,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,
   getPreferredTagName,
+  getTagsByType,
   hasATag,
   hasDefinedTypeReturnTag,
   hasReturnValue,
