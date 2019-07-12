@@ -443,6 +443,24 @@ export default {
           reportUnusedDisableDirectives: true
         }
       }
+    },
+    {
+      code: `
+      /**
+       * @typedef {string} Foo
+       * @example <caption></caption>
+       * 'foo'
+       */
+     `,
+      errors: [
+        {
+          message: 'Caption is expected for examples.'
+        }
+      ],
+      options: [{
+        captionRequired: true,
+        eslintrcForExamples: false
+      }]
     }
   ],
   valid: [

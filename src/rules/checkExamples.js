@@ -6,7 +6,7 @@ import warnRemovedSettings from '../warnRemovedSettings';
 const zeroBasedLineIndexAdjust = -1;
 const likelyNestedJSDocIndentSpace = 1;
 const preTagSpaceLength = 1;
-const hasCaptionRegex = /^\s*<caption>.*?<\/caption>/;
+const hasCaptionRegex = /^\s*<caption>(.*?)<\/caption>/;
 
 const escapeStringRegexp = (str) => {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -81,7 +81,7 @@ export default iterateJsdoc(({
     let source = tag.source.slice(initialTagLength);
     const match = source.match(hasCaptionRegex);
 
-    if (captionRequired && !match) {
+    if (captionRequired && (!match || !match[1].trim())) {
       report('Caption is expected for examples.', null, tag);
     }
 
