@@ -1379,6 +1379,26 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"todo":55}}}
 // Message: Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.
+
+/**
+ * @property {object} a
+ * @prop {boolean} b
+ */
+function quux () {
+
+}
+// Message: Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".
+
+/**
+ * @abc foo
+ * @abcd bar
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
+// Options: [{"definedTags":["abcd"]}]
+// Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
 ````
 
 The following patterns are not considered problems:
