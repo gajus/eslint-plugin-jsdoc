@@ -139,12 +139,16 @@ export default iterateJsdoc(({
     validateDescription(description, report, jsdocNode, sourceCode, matchingJsdocTag);
   });
 
-  const tags = jsdoc.tags.filter((tag) => {
-    return ['param', 'arg', 'argument', 'returns', 'return'].includes(tag.tag);
+  const {tagsWithNames, tagsWithoutNames} = utils.getTagsByType(jsdoc.tags);
+
+  tagsWithNames.some((tag) => {
+    const description = _.trimStart(tag.description, '- ');
+
+    return validateDescription(description, report, jsdocNode, sourceCode, tag);
   });
 
-  tags.some((tag) => {
-    const description = _.trimStart(tag.description, '- ');
+  tagsWithoutNames.some((tag) => {
+    const description = (tag.name + ' ' + tag.description).trim();
 
     return validateDescription(description, report, jsdocNode, sourceCode, tag);
   });

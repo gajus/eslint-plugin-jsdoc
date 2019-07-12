@@ -500,6 +500,20 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+        /**
+         * @typedef {Object} Hello World
+         * hello world
+        */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.'
+        }
+      ]
     }
   ],
   valid: [
