@@ -742,6 +742,14 @@ function f () {
 }
 // Settings: {"jsdoc":{"allowInlineConfig":true,"baseConfig":{},"captionRequired":false,"configFile":"configFile.js","eslintrcForExamples":true,"exampleCodeRegex":".*?","matchingFileName":"test.md","noDefaultExampleRules":false,"rejectExampleCodeRegex":"\\W*","reportUnusedDisableDirectives":true}}
 // Message: `settings.jsdoc.captionRequired` has been removed, use options in the rule `check-examples` instead.
+
+/**
+* @typedef {string} Foo
+* @example <caption></caption>
+* 'foo'
+*/
+// Options: [{"captionRequired":true,"eslintrcForExamples":false}]
+// Message: Caption is expected for examples.
 ````
 
 The following patterns are not considered problems:
