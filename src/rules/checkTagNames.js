@@ -60,7 +60,10 @@ export default iterateJsdoc(({
 
       if (preferredTagName !== tagName) {
         report(message, (fixer) => {
-          const replacement = sourceCode.getText(jsdocNode).replace(`@${tagName} `, `@${preferredTagName} `);
+          const replacement = sourceCode.getText(jsdocNode).replace(
+            new RegExp(`@${_.escapeRegExp(tagName)}\\b`),
+            `@${preferredTagName}`
+          );
 
           return fixer.replaceText(jsdocNode, replacement);
         }, jsdocTag);

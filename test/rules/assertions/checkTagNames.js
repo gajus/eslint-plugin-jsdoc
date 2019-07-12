@@ -373,6 +373,39 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @abc
+           * @abcd
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".'
+        }
+      ],
+      output: `
+          /**
+           * @abcd
+           * @abcd
+           */
+          function quux () {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            abc: 'abcd'
+          }
+        }
+      }
     }
   ],
   valid: [
