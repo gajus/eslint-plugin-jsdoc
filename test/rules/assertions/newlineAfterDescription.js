@@ -98,6 +98,56 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+        /**
+         * A.
+         *
+         * @typedef {Object} A
+         * @prop {boolean} a A.
+         */
+      `,
+      errors: [
+        {
+          message: 'There must be no newline after the description of the JSDoc block.'
+        }
+      ],
+      options: [
+        'never'
+      ],
+      output: `
+        /**
+         * A.
+         * @typedef {Object} A
+         * @prop {boolean} a A.
+         */
+      `
+    },
+    {
+      code: `
+        /**
+         * A.
+         * @typedef {Object} A
+         * @prop {boolean} a A.
+         */
+      `,
+      errors: [
+        {
+          message: 'There must be a newline after the description of the JSDoc block.'
+        }
+      ],
+      options: [
+        'always'
+      ],
+      output: `
+        /**
+         * A.
+         *
+         * @typedef {Object} A
+         * @prop {boolean} a A.
+         */
+      `
     }
   ],
   valid: [

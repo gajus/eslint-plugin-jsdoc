@@ -30,7 +30,7 @@ export default iterateJsdoc(({
     if (!descriptionEndsWithANewline) {
       const sourceLines = sourceCode.getText(jsdocNode).split('\n');
       const lastDescriptionLine = _.findLastIndex(sourceLines, (line) => {
-        return line.includes(_.last(jsdoc.description.split('\n')));
+        return line.replace(/^\s*\*\s*/, '') === _.last(jsdoc.description.split('\n'));
       });
       report('There must be a newline after the description of the JSDoc block.', (fixer) => {
         // Add the new line
@@ -44,7 +44,7 @@ export default iterateJsdoc(({
   } else if (descriptionEndsWithANewline) {
     const sourceLines = sourceCode.getText(jsdocNode).split('\n');
     const lastDescriptionLine = _.findLastIndex(sourceLines, (line) => {
-      return line.includes(_.last(jsdoc.description.split('\n')));
+      return line.replace(/^\s*\*\s*/, '') === _.last(jsdoc.description.split('\n'));
     });
     report('There must be no newline after the description of the JSDoc block.', (fixer) => {
       // Remove the extra line
