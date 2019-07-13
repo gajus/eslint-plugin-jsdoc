@@ -351,10 +351,11 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
     create (context) {
       return {
         'Program:exit' () {
-          const comments = context.getSourceCode().getAllComments();
+          const sourceCode = context.getSourceCode();
+          const comments = sourceCode.getAllComments();
 
           comments.forEach((comment) => {
-            if (!context.getSourceCode().getText(comment).startsWith('/**')) {
+            if (!sourceCode.getText(comment).startsWith('/**')) {
               return;
             }
 
@@ -371,8 +372,8 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
               jsdocNode,
               node: null,
               report,
-              settings: getSettings(context),
-              sourceCode: context.getSourceCode(),
+              settings,
+              sourceCode,
               utils: getUtils(null, jsdoc, jsdocNode, settings, report, context)
             });
           });
