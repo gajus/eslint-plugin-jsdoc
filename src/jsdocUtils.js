@@ -545,9 +545,22 @@ const getTagsByType = (tags, tagPreference) => {
   };
 };
 
+const getAncestor = (sourceCode, nde, depth, idx = 0) => {
+  if (idx === depth) {
+    return nde;
+  }
+  const prevToken = sourceCode.getTokenBefore(nde);
+  if (prevToken) {
+    return getAncestor(sourceCode, prevToken, depth, idx + 1);
+  }
+
+  return null;
+};
+
 export default {
   enforcedContexts,
   filterTags,
+  getAncestor,
   getContextObject,
   getFunctionParameterNames,
   getJsdocParameterNames,

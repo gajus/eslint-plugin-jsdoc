@@ -206,7 +206,11 @@ const getUtils = (
   };
 
   utils.getClassNode = () => {
-    const greatGrandParent = ancestors.slice(-3)[0];
+    // Ancestors missing in `Program` comment iteration
+    const greatGrandParent = ancestors.length ?
+      ancestors.slice(-3)[0] :
+      jsdocUtils.getAncestor(sourceCode, jsdocNode, 3);
+
     const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;
 
     if (greatGrandParentValue === 'class') {
@@ -350,7 +354,7 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
   return {
     create (context) {
       return {
-        'Program:exit' () {
+        'Program' () {
           const sourceCode = context.getSourceCode();
           const comments = sourceCode.getAllComments();
 

@@ -132,6 +132,7 @@ export default iterateJsdoc(({
     });
   });
 }, {
+  iterateAllJsdocs: true,
   meta: {
     schema: [
       {
