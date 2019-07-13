@@ -2,6 +2,8 @@
 
 Requires returns are documented.
 
+Will also report if multiple `@returns` tags are present.
+
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
