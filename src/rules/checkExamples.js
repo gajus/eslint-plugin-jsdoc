@@ -1,5 +1,4 @@
 import {CLIEngine, Linter} from 'eslint';
-import escapeRegexString from 'escape-regex-string';
 import iterateJsdoc from '../iterateJsdoc';
 import warnRemovedSettings from '../warnRemovedSettings';
 
@@ -72,13 +71,9 @@ export default iterateJsdoc(({
 
   utils.forEachPreferredTag('example', (tag, targetTagName) => {
     // If a space is present, we should ignore it
-    const initialTag = tag.source.match(
-      new RegExp(`^@${escapeRegexString(targetTagName)} ?`, 'u')
-    );
-    const initialTagLength = initialTag[0].length;
-    const firstLinePrefixLength = preTagSpaceLength + initialTagLength;
+    const firstLinePrefixLength = preTagSpaceLength;
 
-    let source = tag.source.slice(initialTagLength);
+    let source = tag.description;
     const match = source.match(hasCaptionRegex);
 
     if (captionRequired && (!match || !match[1].trim())) {
@@ -101,16 +96,14 @@ export default iterateJsdoc(({
       const idx = source.search(exampleCodeRegex);
 
       // Strip out anything preceding user regex match (can affect line numbering)
-      let preMatchLines = 0;
-
       const preMatch = source.slice(0, idx);
 
-      preMatchLines = countChars(preMatch, '\n');
+      const preMatchLines = countChars(preMatch, '\n');
 
       nonJSPrefacingLines = preMatchLines;
 
       const colDelta = preMatchLines ?
-        preMatch.slice(preMatch.lastIndexOf('\n') + 1).length - initialTagLength :
+        preMatch.slice(preMatch.lastIndexOf('\n') + 1).length :
         preMatch.length;
 
       // Get rid of text preceding user regex match (even if it leaves valid JS, it
@@ -135,7 +128,7 @@ export default iterateJsdoc(({
         if (nonJSPrefaceLineCount) {
           const charsInLastLine = nonJSPreface.slice(nonJSPreface.lastIndexOf('\n') + 1).length;
 
-          nonJSPrefacingCols += charsInLastLine - initialTagLength;
+          nonJSPrefacingCols += charsInLastLine;
         } else {
           nonJSPrefacingCols += colDelta + nonJSPreface.length;
         }
@@ -277,5 +270,6 @@ export default iterateJsdoc(({
       }
     ],
     type: 'suggestion'
-  }
+  },
+  noTrim: true
 });
