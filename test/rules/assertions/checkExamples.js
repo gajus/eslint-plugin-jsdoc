@@ -86,6 +86,7 @@ export default {
       code: `
           /**
            * @example
+           *
            * \`\`\`js alert('hello'); \`\`\`
            */
           function quux () {
@@ -184,7 +185,7 @@ export default {
           }
         },
         eslintrcForExamples: false,
-        rejectExampleCodeRegex: '^\\s*<.*>$'
+        rejectExampleCodeRegex: '^\\s*<.*>\\s*$'
       }]
     },
     {
@@ -305,7 +306,7 @@ export default {
       code: `
           /**
            * @example const i = 5;
-           *          quux2()
+           * quux2()
            */
           function quux2 () {
 
@@ -327,7 +328,32 @@ export default {
       code: `
           /**
            * @example const i = 5;
-           *          quux2()
+           *   quux2()
+           */
+          function quux2 () {
+
+          }
+      `,
+      errors: [
+        {
+          message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).'
+        },
+        {
+          message: '@example error (semi): Missing semicolon.'
+        }
+      ],
+      options: [
+        {
+          paddedIndent: 2
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @example
+           * const i = 5;
+           * quux2()
            */
           function quux2 () {
 
@@ -346,7 +372,7 @@ export default {
       code: `
           /**
            * @example const i = 5;
-           *          quux2()
+           * quux2()
            */
           function quux2 () {
 
@@ -607,6 +633,26 @@ export default {
         },
         eslintrcForExamples: false,
         exampleCodeRegex: '```js([\\s\\S]*)```'
+      }]
+    },
+    {
+      code: `
+      /**
+      * @example
+      * foo(function (err) {
+      *     throw err;
+      * });
+      */
+     function quux () {}
+`,
+      options: [{
+        baseConfig: {
+          rules: {
+            indent: ['error']
+          }
+        },
+        eslintrcForExamples: false,
+        noDefaultExampleRules: false
       }]
     }
   ]

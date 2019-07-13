@@ -3,7 +3,13 @@ import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 import getJSDocComment from './eslint/getJSDocComment';
 
-const parseComment = (commentNode, indent) => {
+/**
+ *
+ * @param {object} commentNode
+ * @param {string} indent Whitespace
+ * @returns {object}
+ */
+const parseComment = (commentNode, indent, trim = true) => {
   // Preserve JSDoc block start/end indentation.
   return commentParser(`${indent}/*${commentNode.value}${indent}*/`, {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
@@ -11,14 +17,45 @@ const parseComment = (commentNode, indent) => {
       commentParser.PARSERS.parse_tag,
       commentParser.PARSERS.parse_type,
       (str, data) => {
-        if (['return', 'returns', 'throws', 'exception'].includes(data.tag)) {
+        if (['example', 'return', 'returns', 'throws', 'exception'].includes(data.tag)) {
           return null;
         }
 
         return commentParser.PARSERS.parse_name(str, data);
       },
-      commentParser.PARSERS.parse_description
-    ]
+      trim ?
+        commentParser.PARSERS.parse_description :
+
+        // parse_description
+        (str, data) => {
+          // Only expected throw in previous step is if bad name (i.e.,
+          //   missing end bracket on optional name), but `@example`
+          //  skips name parsing
+          /* istanbul ignore next */
+          if (data.errors && data.errors.length) {
+            return null;
+          }
+
+          // Tweak original regex to capture only single optional space
+          const result = str.match(/^\s?((.|\s)+)?/);
+
+          // Always has at least whitespace due to `indent` we've added
+          /* istanbul ignore next */
+          if (result) {
+            return {
+              data: {
+                description: result[1] === undefined ? '' : result[1]
+              },
+              source: result[0]
+            };
+          }
+
+          // Always has at least whitespace due to `indent` we've added
+          /* istanbul ignore next */
+          return null;
+        }
+    ],
+    trim
   })[0] || {};
 };
 
@@ -322,7 +359,7 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
             }
 
             const indent = ' '.repeat(comment.loc.start.column);
-            const jsdoc = parseComment(comment, indent);
+            const jsdoc = parseComment(comment, indent, !ruleConfig.noTrim);
             const settings = getSettings(context);
             const report = makeReport(context, comment);
             const jsdocNode = comment;
@@ -368,7 +405,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   }
 
   if (ruleConfig.iterateAllJsdocs) {
-    return iterateAllJsdocs(iterator, {meta: ruleConfig.meta});
+    return iterateAllJsdocs(iterator, {
+      meta: ruleConfig.meta,
+      noTrim: ruleConfig.noTrim
+    });
   }
 
   return {
