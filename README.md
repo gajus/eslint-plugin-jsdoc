@@ -5606,7 +5606,7 @@ function quux (foo) {
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
- *
+ * @param
  */
 function quux (foo) {
 
