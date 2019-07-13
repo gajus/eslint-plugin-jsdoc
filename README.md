@@ -5719,7 +5719,7 @@ export class SomeClass {
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
- *
+ * @param
  */
 function quux (foo) {
 
