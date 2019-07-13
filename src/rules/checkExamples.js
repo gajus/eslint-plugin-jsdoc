@@ -29,6 +29,7 @@ export default iterateJsdoc(({
     noDefaultExampleRules = false,
     eslintrcForExamples = true,
     matchingFileName: filename = null,
+    paddedIndent = 0,
     baseConfig = {},
     configFile,
     allowInlineConfig = true,
@@ -150,6 +151,10 @@ export default iterateJsdoc(({
 
     let messages;
 
+    if (paddedIndent) {
+      source = source.replace(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'g'), '\n');
+    }
+
     if (filename) {
       const config = cli.getConfigForFile(filename);
 
@@ -257,6 +262,10 @@ export default iterateJsdoc(({
           noDefaultExampleRules: {
             default: false,
             type: 'boolean'
+          },
+          paddedIndent: {
+            default: 0,
+            type: 'integer'
           },
           rejectExampleCodeRegex: {
             type: 'string'

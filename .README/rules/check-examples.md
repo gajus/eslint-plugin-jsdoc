@@ -37,6 +37,24 @@ If neither is in use, all examples will be matched. Note also that even if
 `captionRequired` is not set, any initial `<caption>` will be stripped out
 before doing the regex matching.
 
+#### `paddedIndent`
+
+This integer property allows one to add a fixed amount of whitespace at the
+beginning of the second or later lines of the example to be stripped so as
+to avoid linting issues with the decorative whitespace. For example, if set
+to a value of `4`, the initial whitespace below will not trigger `indent`
+rule errors as the extra 4 spaces on each subsequent line will be stripped
+out before evaluation.
+
+```js
+/**
+ * @example
+ *     anArray.filter((a) => {
+ *      return a.b;
+ *     });
+ */
+```
+
 #### `reportUnusedDisableDirectives`
 
 If not set to `false`, `reportUnusedDisableDirectives` will report disabled
