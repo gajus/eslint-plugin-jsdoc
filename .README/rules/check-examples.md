@@ -26,7 +26,7 @@ syntax highlighting). The following options determine whether a given
   so you may wish to use `(?:...)` groups where you do not wish the
   first such group treated as one to include. If no parenthetical group
   exists or matches, the whole matching expression will be used.
-  An example might be ````"^```(?:js|javascript)([\\s\\S]*)```$"````
+  An example might be ````"^```(?:js|javascript)([\\s\\S]*)```\s*$"````
   to only match explicitly fenced JavaScript blocks.
 * `rejectExampleCodeRegex` - Regex blacklist which rejects
   non-lintable examples (has priority over `exampleCodeRegex`). An example
