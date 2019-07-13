@@ -184,7 +184,7 @@ const getUtils = (
     const classJsdocNode = getJSDocComment(sourceCode, classNode);
 
     if (classJsdocNode) {
-      const indent = _.repeat(' ', classJsdocNode.loc.start.column);
+      const indent = ' '.repeat(classJsdocNode.loc.start.column);
 
       return parseComment(classJsdocNode, indent);
     }
@@ -321,7 +321,7 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
               return;
             }
 
-            const indent = _.repeat(' ', comment.loc.start.column);
+            const indent = ' '.repeat(comment.loc.start.column);
             const jsdoc = parseComment(comment, indent);
             const settings = getSettings(context);
             const report = makeReport(context, comment);
@@ -393,7 +393,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           return;
         }
 
-        const indent = _.repeat(' ', jsdocNode.loc.start.column);
+        const indent = ' '.repeat(jsdocNode.loc.start.column);
 
         const jsdoc = parseComment(jsdocNode, indent);
 
