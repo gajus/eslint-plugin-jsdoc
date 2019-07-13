@@ -269,6 +269,33 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+          /**
+           * @description
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc block description or @description declaration.'
+        }
+      ],
+      options: [
+        {
+          descriptionStyle: 'any'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false
+          }
+        }
+      }
     }
   ],
   valid: [
@@ -468,6 +495,23 @@ export default {
           descriptionStyle: 'any'
         }
       ]
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        function quux () {
+
+        }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false
+          }
+        }
+      }
     }
   ]
 };

@@ -138,7 +138,7 @@ export default iterateJsdoc(({
   utils.forEachPreferredTag('description', (matchingJsdocTag) => {
     const description = `${matchingJsdocTag.name} ${matchingJsdocTag.description}`.trim();
     validateDescription(description, report, jsdocNode, sourceCode, matchingJsdocTag);
-  });
+  }, true);
 
   const options = context.options[0] || {};
 

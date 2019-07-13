@@ -26,7 +26,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  const tagName = utils.getPreferredTagName('returns');
+  const tagName = utils.getPreferredTagName({tagName: 'returns'});
   if (!tagName) {
     return;
   }

@@ -24,7 +24,7 @@ export default iterateJsdoc(({
     const jsdocParameterName = jsdocParameterNames[index];
 
     if (!jsdocParameterName) {
-      report(`Missing JSDoc @${utils.getPreferredTagName('param')} "${functionParameterName}" declaration.`);
+      report(`Missing JSDoc @${utils.getPreferredTagName({tagName: 'param'})} "${functionParameterName}" declaration.`);
 
       return true;
     }
