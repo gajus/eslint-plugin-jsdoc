@@ -3166,7 +3166,7 @@ This rule allows one optional string argument. If it is `"always"` then a proble
 |---|---|
 |Context|everywhere|
 |Options|(a string matching `"always"|"never"`)|
-|Tags|N/A|
+|Tags|N/A (doc block)|
 
 The following patterns are considered problems:
 
