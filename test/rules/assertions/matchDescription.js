@@ -680,6 +680,57 @@ export default {
           ]
         }
       ]
+    },
+    {
+      code: `
+        /**
+         * @param foo Foo bar
+         */
+        function quux (foo) {
+
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [{
+        tags: {
+          param: true
+        }
+      }],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false
+          }
+        }
+      }
+    },
+    {
+      code: `
+        /**
+         * Foo bar
+         */
+        function quux (foo) {
+
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false
+          }
+        }
+      }
     }
   ],
   valid: [
@@ -1130,6 +1181,40 @@ export default {
           }
         }
       ]
+    },
+    {
+      code: `
+        /**
+         * @param foo Foo bar.
+         */
+        function quux (foo) {
+
+        }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false
+          }
+        }
+      }
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        function quux () {
+
+        }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false
+          }
+        }
+      }
     }
   ]
 };
