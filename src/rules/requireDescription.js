@@ -10,10 +10,22 @@ export default iterateJsdoc(({
   if (utils.avoidDocs()) {
     return;
   }
+  const {descriptionStyle = 'body'} = context.options[0] || {};
 
-  const targetTagName = utils.getPreferredTagName('description');
+  let targetTagName = utils.getPreferredTagName({
+    // We skip reporting except when `@description` is essential to the rule,
+    //  so user can block the tag and still meaningfully use this rule
+    //  even if the tag is present (and `check-tag-names` is the one to
+    //  normally report the fact that it is blocked but present)
+    skipReportingBlockedTag: descriptionStyle !== 'tag',
+    tagName: 'description'
+  });
   if (!targetTagName) {
     return;
+  }
+  const isBlocked = typeof targetTagName === 'object' && targetTagName.blocked;
+  if (isBlocked) {
+    targetTagName = targetTagName.tagName;
   }
 
   const checkDescription = (description) => {
@@ -21,8 +33,6 @@ export default iterateJsdoc(({
 
     return exampleContent.length;
   };
-
-  const {descriptionStyle = 'body'} = context.options[0] || {};
 
   if (descriptionStyle !== 'tag') {
     if (checkDescription(jsdoc.description || '')) {
@@ -36,9 +46,11 @@ export default iterateJsdoc(({
     }
   }
 
-  const functionExamples = _.filter(jsdoc.tags, {
-    tag: targetTagName
-  });
+  const functionExamples = isBlocked ?
+    [] :
+    _.filter(jsdoc.tags, {
+      tag: targetTagName
+    });
 
   if (!functionExamples.length) {
     report(

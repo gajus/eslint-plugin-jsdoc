@@ -2427,6 +2427,15 @@ function quux () {
 
 }
 // Message: @implements used on a non-constructor function
+
+/**
+ * @implements {SomeClass}
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"implements":false}}}
+// Message: Unexpected tag `@implements`
 ````
 
 The following patterns are not considered problems:
@@ -2478,6 +2487,14 @@ const quux = class {
 function quux () {
 
 }
+
+/**
+ *
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"implements":false}}}
 ````
 
 
@@ -2885,6 +2902,25 @@ const myObject = {
 };
 // Options: [{"contexts":["Property"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * @param foo Foo bar
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+// Options: [{"tags":{"param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo bar
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+// Message: JSDoc description does not satisfy the regex pattern.
 ````
 
 The following patterns are not considered problems:
@@ -3149,6 +3185,22 @@ function quux (foo) {
 
 }
 // Options: [{"tags":{"prop":true}}]
+
+/**
+ * @param foo Foo bar.
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+
+/**
+ *
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 ````
 
 
@@ -3900,6 +3952,16 @@ function quux () {
 }
 // Options: [{"tags":["see"]}]
 // Message: Sentence must end with a period.
+
+/**
+ * @param foo Foo bar
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+// Options: [{"tags":["param"]}]
+// Message: Sentence must end with a period.
 ````
 
 The following patterns are not considered problems:
@@ -4084,6 +4146,23 @@ function quux (foo) {
 
 }
 // Options: [{"tags":["param"]}]
+
+/**
+ * @param foo Foo bar.
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+// Options: [{"tags":["param"]}]
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 ````
 
 
@@ -4233,6 +4312,16 @@ function quux () {
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 // Options: [{"descriptionStyle":"tag"}]
 // Message: Unexpected tag `@description`
+
+/**
+ * @description
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+// Options: [{"descriptionStyle":"any"}]
+// Message: Missing JSDoc block description or @description declaration.
 ````
 
 The following patterns are not considered problems:
@@ -4346,6 +4435,14 @@ function quux () {
 
 }
 // Options: [{"descriptionStyle":"any"}]
+
+/**
+ *
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 ````
 
 
