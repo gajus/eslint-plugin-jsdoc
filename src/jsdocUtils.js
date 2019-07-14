@@ -524,7 +524,9 @@ const filterTags = (tags = [], filter) => {
   return tags.filter(filter);
 };
 
-const tagsWithNamesAndDescriptions = ['param', 'arg', 'argument', 'returns', 'return'];
+const tagsWithNamesAndDescriptions = [
+  'param', 'arg', 'argument', 'property', 'prop', 'returns', 'return'
+];
 
 const getTagsByType = (tags, tagPreference) => {
   const descName = getPreferredTagName('description', tagPreference);

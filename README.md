@@ -2658,6 +2658,17 @@ function quux (foo) {
 /**
  * Foo.
  *
+ * @prop foo foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"prop":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
  * @summary foo.
  */
 function quux () {
@@ -3122,6 +3133,16 @@ function quux () {
 
 }
 // Options: [{"tags":{"x-tag":".+"}}]
+
+/**
+ * Foo.
+ *
+ * @prop foo Foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"prop":true}}]
 ````
 
 
