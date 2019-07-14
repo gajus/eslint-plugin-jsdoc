@@ -525,7 +525,10 @@ const filterTags = (tags = [], filter) => {
 };
 
 const tagsWithNamesAndDescriptions = [
-  'param', 'arg', 'argument', 'property', 'prop', 'returns', 'return'
+  'param', 'arg', 'argument', 'property', 'prop',
+
+  // These two are parsed by our custom parser as though having a `name`
+  'returns', 'return'
 ];
 
 const getTagsByType = (tags, tagPreference) => {

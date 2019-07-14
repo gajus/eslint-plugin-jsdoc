@@ -3666,12 +3666,37 @@ tag descriptions are written in complete sentences, i.e.,
 * Every line in a paragraph (except the first) which starts with an uppercase
   character must be preceded by a line ending with a period.
 
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-6"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-6-tags-1"></a>
+##### <code>tags</code>
+
+If you want additional tags to be checked for their descriptions, you may
+add them within this option.
+
+```js
+{
+  'jsdoc/require-description-complete-sentence': ['error', {tags: ['see', 'copyright']}]
+}
+```
+
+The tags `@param`/`@arg`/`@argument` and `@property`/`@prop` will be properly
+parsed to ensure that the checked "description" text includes only the text
+after the name.
+
+All other tags will treat the text following the tag name, a space, and
+an optional curly-bracketed type expression (and another space) as part of
+its "description" (e.g., for `@returns {someType} some description`, the
+description is `some description` while for `@some-tag xyz`, the description
+is `xyz`).
+
 |||
 |---|---|
 |Context|everywhere|
-|Tags|`param`, `returns`, `description`|
-|Aliases|`arg`, `argument`, `return`, `desc`|
-
+|Tags|doc block, `param`, `returns`, `description`, `property`, `summary`, `file`, `classdesc`, `todo`, `deprecated`, `throws`, 'yields' and others added by `tags`|
+|Aliases|`arg`, `argument`, `return`, `desc`, `prop`, `fileoverview`, `overview`, `exception`, `yield`|
+|Options|`tags`|
 The following patterns are considered problems:
 
 ````js
@@ -3846,9 +3871,34 @@ function quux (foo) {
 // Message: Sentence should start with an uppercase character.
 
 /**
- * @typedef {Object} Hello World
+ * @throws {Object} Hello World
  * hello world
 */
+// Message: Sentence must end with a period.
+
+/**
+ * @summary Foo
+ */
+function quux () {
+
+}
+// Message: Sentence must end with a period.
+
+/**
+ * @throws {SomeType} Foo
+ */
+function quux () {
+
+}
+// Message: Sentence must end with a period.
+
+/**
+ * @see Foo
+ */
+function quux () {
+
+}
+// Options: [{"tags":["see"]}]
 // Message: Sentence must end with a period.
 ````
 
@@ -4001,6 +4051,39 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * @example Foo
+ */
+function quux () {
+
+}
+
+/**
+ * @see Foo
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * @param foo Foo.
+ */
+function quux (foo) {
+
+}
+
+/**
+ * Foo.
+ *
+ * @param foo Foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":["param"]}]
 ````
 
 
@@ -4015,7 +4098,7 @@ Requires that all functions have a description.
   `"tag"`) must have a non-empty description that explains the purpose of the
   method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-7"></a>
 #### Options
 
 An options object may have any of the following properties:
@@ -4274,25 +4357,25 @@ Requires that all functions have examples.
 * All functions must have one or more `@example` tags.
 * Every example tag must have a non-empty description that explains the method's usage.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-8"></a>
 #### Options
 
 This rule has an object option.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-7-exemptedby"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-8-exemptedby"></a>
 ##### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document
 block avoids the need for an `@example`. Defaults to an empty array.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-7-avoidexampleonconstructors"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-8-avoidexampleonconstructors"></a>
 ##### <code>avoidExampleOnConstructors</code>
 
 Set to `true` to avoid the need for an example on a constructor (whether
 indicated as such by a jsdoc tag or by being within an ES6 `class`).
 Defaults to `false`.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-7-contexts-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-8-contexts-1"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -4456,7 +4539,7 @@ function quux () {
 
 Requires a hyphen before the `@param` description.
 
-<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-8"></a>
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-9"></a>
 #### Options
 
 This rule takes one optional string argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
@@ -4562,7 +4645,7 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-9"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-10"></a>
 #### Options
 
 Accepts one optional options object with the following optional keys.
@@ -5605,7 +5688,7 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-10"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-11"></a>
 #### Options
 
 An options object accepts one optional property:
@@ -6536,7 +6619,7 @@ Requires returns are documented.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-11"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-12"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -6992,7 +7075,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-12"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-13"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to disallow

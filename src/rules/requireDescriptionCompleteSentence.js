@@ -124,6 +124,7 @@ export default iterateJsdoc(({
   jsdoc,
   report,
   jsdocNode,
+  context,
   utils
 }) => {
   if (!jsdoc.tags ||
@@ -139,7 +140,27 @@ export default iterateJsdoc(({
     validateDescription(description, report, jsdocNode, sourceCode, matchingJsdocTag);
   });
 
-  const {tagsWithNames, tagsWithoutNames} = utils.getTagsByType(jsdoc.tags);
+  const options = context.options[0] || {};
+
+  const hasOptionTag = (tagName) => {
+    return Boolean(options.tags && options.tags.includes(tagName));
+  };
+
+  const {tagsWithNames} = utils.getTagsByType(jsdoc.tags);
+  const tagsWithoutNames = utils.filterTags(({tag: tagName}) => {
+    return [
+      // 'copyright' and 'see' might be good addition, but as the former may be
+      //   sensitive text, and the latter may have just a link, they are not
+      //   included by default
+      'summary', 'file', 'fileoverview', 'overview', 'classdesc', 'todo',
+      'deprecated', 'throws', 'exception', 'yields', 'yield'
+    ].includes(tagName) ||
+      hasOptionTag(tagName) && !tagsWithNames.some(({tag}) => {
+        // If user accidentally adds tags with names (or like `returns`
+        //  get parsed as having names), do not add to this list
+        return tag === tagName;
+      });
+  });
 
   tagsWithNames.some((tag) => {
     const description = _.trimStart(tag.description, '- ');
@@ -148,7 +169,7 @@ export default iterateJsdoc(({
   });
 
   tagsWithoutNames.some((tag) => {
-    const description = (tag.name + ' ' + tag.description).trim();
+    const description = `${tag.name} ${tag.description}`.trim();
 
     return validateDescription(description, report, jsdocNode, sourceCode, tag);
   });
@@ -156,6 +177,20 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     fixable: 'code',
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          tags: {
+            items: {
+              type: 'string'
+            },
+            type: 'array'
+          }
+        },
+        type: 'object'
+      }
+    ],
     type: 'suggestion'
   }
 });
