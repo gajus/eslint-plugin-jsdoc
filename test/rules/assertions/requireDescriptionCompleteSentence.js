@@ -504,7 +504,7 @@ export default {
     {
       code: `
         /**
-         * @typedef {Object} Hello World
+         * @throws {Object} Hello World
          * hello world
         */
       `,
@@ -512,6 +512,59 @@ export default {
         {
           line: 3,
           message: 'Sentence must end with a period.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @summary Foo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @throws {SomeType} Foo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @see Foo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      options: [
+        {
+          tags: ['see']
         }
       ]
     }
@@ -721,6 +774,55 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * @example Foo
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @see Foo
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @param foo Foo.
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @param foo Foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          tags: ['param']
+        }
+      ]
     }
   ]
 };
