@@ -8,6 +8,9 @@ by our supported Node versions):
 
 ``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]$``
 
+Applies to the jsdoc block description and `@description` (or `@desc`)
+by default but the `tags` option (see below) may be used to match other tags.
+
 #### Options
 
 ##### `matchDescription`
@@ -50,8 +53,10 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
-The tags `@param`/`@arg`/`@argument` will be properly parsed to ensure that
-the matched "description" text includes only the text after the name.
+The tags `@param`/`@arg`/`@argument` and `@property`/`@prop` will be properly
+parsed to ensure that the matched "description" text includes only the text
+after the name.
+
 All other tags will treat the text following the tag name, a space, and
 an optional curly-bracketed type expression (and another space) as part of
 its "description" (e.g., for `@returns {someType} some description`, the
@@ -88,8 +93,8 @@ Overrides the default contexts (see below).
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
-|Tags|N/A by default but see `tags` options|
+|Tags|docblock and `@description` (or `@desc`) by default but more with `tags`|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'description', 'desc', and any added to `tags` option, e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
+|Options|`contexts`, `tags` (accepts tags with names and optional type such as 'param', 'arg', 'argument', 'property', and 'prop', and accepts arbitrary list of other tags with an optional type (but without names), e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
 <!-- assertions matchDescription -->
