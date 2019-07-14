@@ -491,7 +491,7 @@ syntax highlighting). The following options determine whether a given
   so you may wish to use `(?:...)` groups where you do not wish the
   first such group treated as one to include. If no parenthetical group
   exists or matches, the whole matching expression will be used.
-  An example might be ````"^```(?:js|javascript)([\\s\\S]*)```$"````
+  An example might be ````"^```(?:js|javascript)([\\s\\S]*)```\s*$"````
   to only match explicitly fenced JavaScript blocks.
 * `rejectExampleCodeRegex` - Regex blacklist which rejects
   non-lintable examples (has priority over `exampleCodeRegex`). An example
@@ -501,6 +501,25 @@ syntax highlighting). The following options determine whether a given
 If neither is in use, all examples will be matched. Note also that even if
 `captionRequired` is not set, any initial `<caption>` will be stripped out
 before doing the regex matching.
+
+<a name="eslint-plugin-jsdoc-rules-options-paddedindent"></a>
+#### <code>paddedIndent</code>
+
+This integer property allows one to add a fixed amount of whitespace at the
+beginning of the second or later lines of the example to be stripped so as
+to avoid linting issues with the decorative whitespace. For example, if set
+to a value of `4`, the initial whitespace below will not trigger `indent`
+rule errors as the extra 4 spaces on each subsequent line will be stripped
+out before evaluation.
+
+```js
+/**
+ * @example
+ *     anArray.filter((a) => {
+ *      return a.b;
+ *     });
+ */
+```
 
 <a name="eslint-plugin-jsdoc-rules-options-reportunuseddisabledirectives"></a>
 #### <code>reportUnusedDisableDirectives</code>
@@ -566,7 +585,7 @@ decreasing precedence:
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|`example`|
 |Options| *See above* |
 
@@ -604,11 +623,22 @@ function quux () {
 
 /**
  * @example
+ *
  * ```js alert('hello'); ```
  */
 function quux () {
 
 }
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
+// Message: @example error (semi): Extra semicolon.
+
+/**
+ * @example
+ * ```js alert('hello'); ```
+ */
+var quux = {
+
+};
 // Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
@@ -634,7 +664,7 @@ function quux () {
 function quux2 () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"rejectExampleCodeRegex":"^\\s*<.*>$"}]
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"rejectExampleCodeRegex":"^\\s*<.*>\\s*$"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -686,7 +716,7 @@ function quux () {}
 
 /**
  * @example const i = 5;
- *          quux2()
+ * quux2()
  */
 function quux2 () {
 
@@ -696,7 +726,18 @@ function quux2 () {
 
 /**
  * @example const i = 5;
- *          quux2()
+ *   quux2()
+ */
+function quux2 () {
+
+}
+// Options: [{"paddedIndent":2}]
+// Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
+
+/**
+ * @example
+ * const i = 5;
+ * quux2()
  */
 function quux2 () {
 
@@ -705,7 +746,7 @@ function quux2 () {
 
 /**
  * @example const i = 5;
- *          quux2()
+ * quux2()
  */
 function quux2 () {
 
@@ -732,6 +773,14 @@ function f () {
 }
 // Settings: {"jsdoc":{"allowInlineConfig":true,"baseConfig":{},"captionRequired":false,"configFile":"configFile.js","eslintrcForExamples":true,"exampleCodeRegex":".*?","matchingFileName":"test.md","noDefaultExampleRules":false,"rejectExampleCodeRegex":"\\W*","reportUnusedDisableDirectives":true}}
 // Message: `settings.jsdoc.captionRequired` has been removed, use options in the rule `check-examples` instead.
+
+/**
+* @typedef {string} Foo
+* @example <caption></caption>
+* 'foo'
+*/
+// Options: [{"captionRequired":true,"eslintrcForExamples":false}]
+// Message: Caption is expected for examples.
 ````
 
 The following patterns are not considered problems:
@@ -797,6 +846,25 @@ function quux () {}
  */
 function quux () {}
 // Options: [{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
+
+/**
+ * @example ```js
+ alert('hello')
+ ```
+ */
+var quux = {
+
+};
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
+
+/**
+ * @example
+ * foo(function (err) {
+ *     throw err;
+ * });
+ */
+function quux () {}
+// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
 ````
 
 
@@ -813,6 +881,12 @@ Reports invalid padding inside JSDoc block.
 The following patterns are considered problems:
 
 ````js
+/***  foo */
+function quux () {
+
+}
+// Message: There must be no indentation.
+
 /**
  * foo
  *
@@ -841,6 +915,11 @@ The following patterns are not considered problems:
  * @param bar
  * baz
  */
+function quux () {
+
+}
+
+/*** foo */
 function quux () {
 
 }
@@ -1348,6 +1427,36 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"todo":55}}}
 // Message: Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.
+
+/**
+ * @property {object} a
+ * @prop {boolean} b
+ */
+function quux () {
+
+}
+// Message: Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".
+
+/**
+ * @abc foo
+ * @abcd bar
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
+// Options: [{"definedTags":["abcd"]}]
+// Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
+
+/**
+ * @abc
+ * @abcd
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
+// Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
 ````
 
 The following patterns are not considered problems:
@@ -2383,6 +2492,9 @@ by our supported Node versions):
 
 ``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]$``
 
+Applies to the jsdoc block description and `@description` (or `@desc`)
+by default but the `tags` option (see below) may be used to match other tags.
+
 <a name="eslint-plugin-jsdoc-rules-match-description-options-3"></a>
 #### Options
 
@@ -2428,8 +2540,10 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
-The tags `@param`/`@arg`/`@argument` will be properly parsed to ensure that
-the matched "description" text includes only the text after the name.
+The tags `@param`/`@arg`/`@argument` and `@property`/`@prop` will be properly
+parsed to ensure that the matched "description" text includes only the text
+after the name.
+
 All other tags will treat the text following the tag name, a space, and
 an optional curly-bracketed type expression (and another space) as part of
 its "description" (e.g., for `@returns {someType} some description`, the
@@ -2468,9 +2582,10 @@ Overrides the default contexts (see below).
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
-|Tags|N/A by default but see `tags` options|
+|Tags|docblock and `@description` by default but more with `tags`|
+|Aliases|`@desc`|
 |Settings||
-|Options|`contexts`, `tags` (allows for 'param', 'arg', 'argument', 'description', 'desc', and any added to `tags` option, e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
+|Options|`contexts`, `tags` (accepts tags with names and optional type such as 'param', 'arg', 'argument', 'property', and 'prop', and accepts arbitrary list of other tags with an optional type (but without names), e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
 The following patterns are considered problems:
 
@@ -2544,6 +2659,17 @@ function quux (foo) {
 
 }
 // Options: [{"tags":{"param":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
+ * @prop foo foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"prop":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -3013,6 +3139,16 @@ function quux () {
 
 }
 // Options: [{"tags":{"x-tag":".+"}}]
+
+/**
+ * Foo.
+ *
+ * @prop foo Foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"prop":true}}]
 ````
 
 
@@ -3030,7 +3166,7 @@ This rule allows one optional string argument. If it is `"always"` then a proble
 |---|---|
 |Context|everywhere|
 |Options|(a string matching `"always"|"never"`)|
-|Tags|N/A|
+|Tags|N/A (doc block)|
 
 The following patterns are considered problems:
 
@@ -3070,6 +3206,23 @@ function quux () {
 }
 // Options: ["never"]
 // Message: There must be no newline after the description of the JSDoc block.
+
+/**
+* A.
+*
+* @typedef {Object} A
+* @prop {boolean} a A.
+*/
+// Options: ["never"]
+// Message: There must be no newline after the description of the JSDoc block.
+
+/**
+* A.
+* @typedef {Object} A
+* @prop {boolean} a A.
+*/
+// Options: ["always"]
+// Message: There must be a newline after the description of the JSDoc block.
 ````
 
 The following patterns are not considered problems:
@@ -3301,6 +3454,14 @@ class Bar {
   }
 }
 // Message: The type 'TEMPLATE_TYPE' is undefined.
+
+/**
+ * @type {strnig}
+ */
+var quux = {
+
+};
+// Message: The type 'strnig' is undefined.
 ````
 
 The following patterns are not considered problems:
@@ -3505,17 +3666,50 @@ tag descriptions are written in complete sentences, i.e.,
 * Every line in a paragraph (except the first) which starts with an uppercase
   character must be preceded by a line ending with a period.
 
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-6"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-6-tags-1"></a>
+##### <code>tags</code>
+
+If you want additional tags to be checked for their descriptions, you may
+add them within this option.
+
+```js
+{
+  'jsdoc/require-description-complete-sentence': ['error', {tags: ['see', 'copyright']}]
+}
+```
+
+The tags `@param`/`@arg`/`@argument` and `@property`/`@prop` will be properly
+parsed to ensure that the checked "description" text includes only the text
+after the name.
+
+All other tags will treat the text following the tag name, a space, and
+an optional curly-bracketed type expression (and another space) as part of
+its "description" (e.g., for `@returns {someType} some description`, the
+description is `some description` while for `@some-tag xyz`, the description
+is `xyz`).
+
 |||
 |---|---|
 |Context|everywhere|
-|Tags|`param`, `returns`, `description`|
-|Aliases|`arg`, `argument`, `return`, `desc`|
-
+|Tags|doc block, `param`, `returns`, `description`, `property`, `summary`, `file`, `classdesc`, `todo`, `deprecated`, `throws`, 'yields' and others added by `tags`|
+|Aliases|`arg`, `argument`, `return`, `desc`, `prop`, `fileoverview`, `overview`, `exception`, `yield`|
+|Options|`tags`|
 The following patterns are considered problems:
 
 ````js
 /**
  * foo.
+ */
+function quux () {
+
+}
+// Message: Sentence should start with an uppercase character.
+
+/**
+ * foo?
  */
 function quux () {
 
@@ -3532,6 +3726,14 @@ function quux () {
 
 /**
  * Foo)
+ */
+function quux () {
+
+}
+// Message: Sentence must end with a period.
+
+/**
+ * `foo` is a variable
  */
 function quux () {
 
@@ -3667,6 +3869,37 @@ function quux (foo) {
 
 }
 // Message: Sentence should start with an uppercase character.
+
+/**
+ * @throws {Object} Hello World
+ * hello world
+*/
+// Message: Sentence must end with a period.
+
+/**
+ * @summary Foo
+ */
+function quux () {
+
+}
+// Message: Sentence must end with a period.
+
+/**
+ * @throws {SomeType} Foo
+ */
+function quux () {
+
+}
+// Message: Sentence must end with a period.
+
+/**
+ * @see Foo
+ */
+function quux () {
+
+}
+// Options: [{"tags":["see"]}]
+// Message: Sentence must end with a period.
 ````
 
 The following patterns are not considered problems:
@@ -3780,6 +4013,77 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * `foo` is a variable.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * `foo`.
+ */
+function quux () {
+
+}
+
+/**
+ * @param foo - `bar`.
+ */
+function quux () {
+
+}
+
+/**
+ * @returns {number} `foo`.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo
+ * `bar`.
+ */
+function quux () {
+
+}
+
+/**
+ * @example Foo
+ */
+function quux () {
+
+}
+
+/**
+ * @see Foo
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * @param foo Foo.
+ */
+function quux (foo) {
+
+}
+
+/**
+ * Foo.
+ *
+ * @param foo Foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":["param"]}]
 ````
 
 
@@ -3794,7 +4098,7 @@ Requires that all functions have a description.
   `"tag"`) must have a non-empty description that explains the purpose of the
   method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-7"></a>
 #### Options
 
 An options object may have any of the following properties:
@@ -4053,23 +4357,36 @@ Requires that all functions have examples.
 * All functions must have one or more `@example` tags.
 * Every example tag must have a non-empty description that explains the method's usage.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-8"></a>
 #### Options
 
-This rule has an object option:
+This rule has an object option.
 
-- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-  block avoids the need for an `@example`. Defaults to an empty array.
+<a name="eslint-plugin-jsdoc-rules-require-example-options-8-exemptedby"></a>
+##### <code>exemptedBy</code>
 
-- `avoidExampleOnConstructors` (default: false) - Set to `true` to avoid the
-  need for an example on a constructor (whether indicated as such by a
-  jsdoc tag or by being within an ES6 `class`).
+Array of tags (e.g., `['type']`) whose presence on the document
+block avoids the need for an `@example`. Defaults to an empty array.
+
+<a name="eslint-plugin-jsdoc-rules-require-example-options-8-avoidexampleonconstructors"></a>
+##### <code>avoidExampleOnConstructors</code>
+
+Set to `true` to avoid the need for an example on a constructor (whether
+indicated as such by a jsdoc tag or by being within an ES6 `class`).
+Defaults to `false`.
+
+<a name="eslint-plugin-jsdoc-rules-require-example-options-8-contexts-1"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+Overrides the default contexts (see below).
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`example`|
-|Options|`exemptedBy`, `avoidExampleOnConstructors`|
+|Options|`exemptedBy`, `avoidExampleOnConstructors`, `contexts`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
@@ -4116,6 +4433,15 @@ function quux () {
 
 }
 // Message: Missing JSDoc @example description.
+
+/**
+ *
+ */
+class quux {
+
+}
+// Options: [{"contexts":["ClassDeclaration"]}]
+// Message: Missing JSDoc @example declaration.
 ````
 
 The following patterns are not considered problems:
@@ -4189,6 +4515,22 @@ function quux () {
 
 }
 // Options: [{"exemptedBy":["type"]}]
+
+/**
+ * @example Some example code
+ */
+class quux {
+
+}
+// Options: [{"contexts":["ClassDeclaration"]}]
+
+/**
+ *
+ */
+function quux () {
+
+}
+// Options: [{"contexts":["ClassDeclaration"]}]
 ````
 
 
@@ -4197,7 +4539,7 @@ function quux () {
 
 Requires a hyphen before the `@param` description.
 
-<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-8"></a>
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-9"></a>
 #### Options
 
 This rule takes one optional string argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
@@ -4303,7 +4645,7 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-9"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-10"></a>
 #### Options
 
 Accepts one optional options object with the following optional keys.
@@ -5346,7 +5688,7 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-10"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-11"></a>
 #### Options
 
 An options object accepts one optional property:
@@ -5374,7 +5716,7 @@ function quux (foo) {
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
- *
+ * @param
  */
 function quux (foo) {
 
@@ -5487,7 +5829,7 @@ export class SomeClass {
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
- *
+ * @param
  */
 function quux (foo) {
 
@@ -5813,6 +6155,8 @@ export class SomeClass {
 ### <code>require-returns-check</code>
 
 Checks if the return expression exists in function body and in the comment.
+
+Will also report if multiple `@returns` tags are present.
 
 |||
 |---|---|
@@ -6273,7 +6617,9 @@ function quux () {
 
 Requires returns are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-11"></a>
+Will also report if multiple `@returns` tags are present.
+
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-12"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -6729,7 +7075,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-12"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-13"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to disallow

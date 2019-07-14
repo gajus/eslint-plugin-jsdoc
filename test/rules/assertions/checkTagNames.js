@@ -295,6 +295,7 @@ export default {
       `,
       errors: [
         {
+          line: 1,
           message: 'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.'
         },
         {
@@ -305,6 +306,103 @@ export default {
         jsdoc: {
           tagNamePreference: {
             todo: 55
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @property {object} a
+           * @prop {boolean} b
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".'
+        }
+      ],
+      output: `
+          /**
+           * @property {object} a
+           * @property {boolean} b
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @abc foo
+           * @abcd bar
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".'
+        }
+      ],
+      options: [
+        {
+          definedTags: ['abcd']
+        }
+      ],
+      output: `
+          /**
+           * @abcd foo
+           * @abcd bar
+           */
+          function quux () {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            abc: 'abcd'
+          }
+        }
+      }
+    },
+    {
+      code: `
+          /**
+           * @abc
+           * @abcd
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".'
+        }
+      ],
+      output: `
+          /**
+           * @abcd
+           * @abcd
+           */
+          function quux () {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            abc: 'abcd'
           }
         }
       }

@@ -11,12 +11,36 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence should start with an uppercase character.'
         }
       ],
       output: `
           /**
            * Foo.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * foo?
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence should start with an uppercase character.'
+        }
+      ],
+      output: `
+          /**
+           * Foo?
            */
           function quux () {
 
@@ -34,6 +58,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence should start with an uppercase character.'
         }
       ],
@@ -57,12 +82,36 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence must end with a period.'
         }
       ],
       output: `
           /**
            * Foo).
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * \`foo\` is a variable
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      output: `
+          /**
+           * \`foo\` is a variable.
            */
           function quux () {
 
@@ -82,6 +131,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'Sentence should start with an uppercase character.'
         }
       ],
@@ -107,6 +157,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence should start with an uppercase character.'
         }
       ],
@@ -130,6 +181,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence must end with a period.'
         }
       ],
@@ -154,6 +206,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'A line of text is started with an uppercase character, but preceding line does not end the sentence.'
         }
       ]
@@ -171,6 +224,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'Sentence should start with an uppercase character.'
         }
       ],
@@ -198,9 +252,11 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'Sentence should start with an uppercase character.'
         },
         {
+          line: 5,
           message: 'Sentence must end with a period.'
         }
       ],
@@ -226,9 +282,11 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence should start with an uppercase character.'
         },
         {
+          line: 3,
           message: 'Sentence must end with a period.'
         }
       ],
@@ -254,9 +312,11 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'Sentence should start with an uppercase character.'
         },
         {
+          line: 5,
           message: 'Sentence must end with a period.'
         }
       ],
@@ -284,6 +344,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'Sentence should start with an uppercase character.'
         }
       ],
@@ -314,6 +375,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence should start with an uppercase character.'
         }
       ],
@@ -342,6 +404,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence must end with a period.'
         }
       ],
@@ -365,6 +428,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence must end with a period.'
         }
       ],
@@ -388,9 +452,11 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence should start with an uppercase character.'
         },
         {
+          line: 3,
           message: 'Sentence must end with a period.'
         }
       ],
@@ -416,9 +482,11 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'Sentence should start with an uppercase character.'
         },
         {
+          line: 5,
           message: 'Sentence must end with a period.'
         }
       ],
@@ -432,6 +500,73 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+        /**
+         * @throws {Object} Hello World
+         * hello world
+        */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @summary Foo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @throws {SomeType} Foo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @see Foo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      options: [
+        {
+          tags: ['see']
+        }
+      ]
     }
   ],
   valid: [
@@ -586,6 +721,108 @@ export default {
 
           }
       `
+    },
+    {
+      code: `
+          /**
+           * \`foo\` is a variable.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * \`foo\`.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @param foo - \`bar\`.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {number} \`foo\`.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo
+           * \`bar\`.
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @example Foo
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @see Foo
+           */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @param foo Foo.
+           */
+          function quux (foo) {
+
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @param foo Foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          tags: ['param']
+        }
+      ]
     }
   ]
 };

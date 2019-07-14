@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@implements used on a non-constructor function'
         }
       ]

@@ -16,8 +16,11 @@ export default iterateJsdoc(({
   const {definedTags = []} = context.options[0] || {};
 
   let definedPreferredTags = [];
+  let definedNonPreferredTags = [];
   const {tagNamePreference} = settings;
   if (Object.keys(tagNamePreference).length) {
+    definedNonPreferredTags = _.keys(tagNamePreference);
+
     // Replace `_.values` with `Object.values` when we may start requiring Node 7+
     definedPreferredTags = _.values(tagNamePreference).map((preferredTag) => {
       if (typeof preferredTag === 'string') {
@@ -28,7 +31,7 @@ export default iterateJsdoc(({
         return undefined;
       }
       if (typeof preferredTag !== 'object') {
-        report(
+        utils.reportSettings(
           'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.'
         );
       }
@@ -41,7 +44,7 @@ export default iterateJsdoc(({
 
   jsdoc.tags.forEach((jsdocTag) => {
     const tagName = jsdocTag.tag;
-    if (utils.isValidTag(tagName, [...definedTags, ...definedPreferredTags])) {
+    if (utils.isValidTag(tagName, [...definedTags, ...definedPreferredTags, ...definedNonPreferredTags])) {
       let preferredTagName = utils.getPreferredTagName(
         tagName,
         true,
@@ -57,7 +60,10 @@ export default iterateJsdoc(({
 
       if (preferredTagName !== tagName) {
         report(message, (fixer) => {
-          const replacement = sourceCode.getText(jsdocNode).replace(`@${tagName}`, `@${preferredTagName}`);
+          const replacement = sourceCode.getText(jsdocNode).replace(
+            new RegExp(`@${_.escapeRegExp(tagName)}\\b`),
+            `@${preferredTagName}`
+          );
 
           return fixer.replaceText(jsdocNode, replacement);
         }, jsdocTag);

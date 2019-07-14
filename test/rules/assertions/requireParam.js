@@ -24,7 +24,7 @@ export default {
     {
       code: `
           /**
-           *
+           * @param
            */
           function quux (foo) {
 
@@ -240,7 +240,7 @@ export default {
     {
       code: `
           /**
-           *
+           * @param
            */
           function quux (foo) {
 

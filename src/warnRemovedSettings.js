@@ -8,13 +8,13 @@
  * )} RulesWithMovedSettings
  */
 
-/** @type {WeakMap<Object, Set<string>>} */
+/** @type {WeakMap<object, Set<string>>} */
 const warnedSettings = new WeakMap();
 
 /**
  * Warn only once for each context and setting
  *
- * @param {Object} context
+ * @param {object} context
  * @param {string} setting
  */
 const hasBeenWarned = (context, setting) => {
@@ -30,7 +30,7 @@ const markSettingAsWarned = (context, setting) => {
 };
 
 /**
- * @param {Object} obj
+ * @param {object} obj
  * @param {string} property
  * @returns {boolean}
  */
@@ -73,7 +73,7 @@ const getMovedSettings = (ruleName) => {
 };
 
 /**
- * @param {Object} context
+ * @param {object} context
  * @param {RulesWithMovedSettings} ruleName
  */
 export default function warnRemovedSettings (context, ruleName) {

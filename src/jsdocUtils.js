@@ -475,9 +475,9 @@ const lookupTable = {
  * It traverses the parsed source code and returns as
  * soon as it stumbles upon the first return statement.
  *
- * @param {Object} node
+ * @param {object} node
  *   the node which should be checked.
- * @param {Object} context
+ * @param {object} context
  * @param {boolean} ignoreAsync
  *   ignore implicit async return.
  * @returns {boolean}
@@ -551,13 +551,58 @@ const getContextObject = (contexts, checkJsdoc) => {
   }, {});
 };
 
+const filterTags = (tags = [], filter) => {
+  return tags.filter(filter);
+};
+
+const tagsWithNamesAndDescriptions = [
+  'param', 'arg', 'argument', 'property', 'prop',
+
+  // These two are parsed by our custom parser as though having a `name`
+  'returns', 'return'
+];
+
+const getTagsByType = (tags, tagPreference) => {
+  const descName = getPreferredTagName('description', tagPreference);
+  const tagsWithoutNames = [];
+  const tagsWithNames = filterTags(tags, (tag) => {
+    const {tag: tagName} = tag;
+    const tagWithName = tagsWithNamesAndDescriptions.includes(tagName);
+    if (!tagWithName && tagName !== descName) {
+      tagsWithoutNames.push(tag);
+    }
+
+    return tagWithName;
+  });
+
+  return {
+    tagsWithoutNames,
+    tagsWithNames
+  };
+};
+
+const getAncestor = (sourceCode, nde, depth, idx = 0) => {
+  if (idx === depth) {
+    return nde;
+  }
+  const prevToken = sourceCode.getTokenBefore(nde);
+  if (prevToken) {
+    return getAncestor(sourceCode, prevToken, depth, idx + 1);
+  }
+
+  return null;
+};
+
 export default {
   enforcedContexts,
+  filterTags,
+  getAncestor,
   getContextObject,
   getFunctionParameterNames,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,
   getPreferredTagName,
+  getTagsByType,
   hasATag,
   hasDefinedTypeReturnTag,
   hasReturnValue,

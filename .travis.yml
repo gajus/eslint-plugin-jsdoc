@@ -7,7 +7,8 @@ node_js:
 before_install:
   - npm config set depth 0
 before_script:
-  - 'if [ -n "${ESLINT-}" ]; then npm install --no-save "eslint@${ESLINT}" ; fi'
+  - 'if [ "${ESLINT-}" == "6" ]; then npm install --no-save "eslint@${ESLINT}" ; fi'
+  - 'if [ "${ESLINT-}" == "5" ]; then npm install --no-save "eslint@${ESLINT}" eslint-config-canonical@17.1.2 eslint-plugin-unicorn@8.0.2 ; fi'
 notifications:
   email: false
 sudo: false

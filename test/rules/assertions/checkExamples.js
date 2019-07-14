@@ -86,11 +86,37 @@ export default {
       code: `
           /**
            * @example
+           *
            * \`\`\`js alert('hello'); \`\`\`
            */
           function quux () {
 
           }
+      `,
+      errors: [
+        {
+          message: '@example error (semi): Extra semicolon.'
+        }
+      ],
+      options: [{
+        baseConfig: {
+          rules: {
+            semi: ['error', 'never']
+          }
+        },
+        eslintrcForExamples: false,
+        exampleCodeRegex: '```js ([\\s\\S]*)```'
+      }]
+    },
+    {
+      code: `
+          /**
+           * @example
+           * \`\`\`js alert('hello'); \`\`\`
+           */
+          var quux = {
+
+          };
       `,
       errors: [
         {
@@ -159,7 +185,7 @@ export default {
           }
         },
         eslintrcForExamples: false,
-        rejectExampleCodeRegex: '^\\s*<.*>$'
+        rejectExampleCodeRegex: '^\\s*<.*>\\s*$'
       }]
     },
     {
@@ -280,7 +306,7 @@ export default {
       code: `
           /**
            * @example const i = 5;
-           *          quux2()
+           * quux2()
            */
           function quux2 () {
 
@@ -302,7 +328,32 @@ export default {
       code: `
           /**
            * @example const i = 5;
-           *          quux2()
+           *   quux2()
+           */
+          function quux2 () {
+
+          }
+      `,
+      errors: [
+        {
+          message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).'
+        },
+        {
+          message: '@example error (semi): Missing semicolon.'
+        }
+      ],
+      options: [
+        {
+          paddedIndent: 2
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @example
+           * const i = 5;
+           * quux2()
            */
           function quux2 () {
 
@@ -321,7 +372,7 @@ export default {
       code: `
           /**
            * @example const i = 5;
-           *          quux2()
+           * quux2()
            */
           function quux2 () {
 
@@ -418,6 +469,24 @@ export default {
           reportUnusedDisableDirectives: true
         }
       }
+    },
+    {
+      code: `
+      /**
+       * @typedef {string} Foo
+       * @example <caption></caption>
+       * 'foo'
+       */
+     `,
+      errors: [
+        {
+          message: 'Caption is expected for examples.'
+        }
+      ],
+      options: [{
+        captionRequired: true,
+        eslintrcForExamples: false
+      }]
     }
   ],
   valid: [
@@ -543,6 +612,47 @@ export default {
         },
         eslintrcForExamples: false,
         noDefaultExampleRules: true
+      }]
+    },
+    {
+      code: `
+          /**
+           * @example \`\`\`js
+           alert('hello')
+           \`\`\`
+           */
+          var quux = {
+
+          };
+      `,
+      options: [{
+        baseConfig: {
+          rules: {
+            semi: ['error', 'never']
+          }
+        },
+        eslintrcForExamples: false,
+        exampleCodeRegex: '```js([\\s\\S]*)```'
+      }]
+    },
+    {
+      code: `
+      /**
+      * @example
+      * foo(function (err) {
+      *     throw err;
+      * });
+      */
+     function quux () {}
+`,
+      options: [{
+        baseConfig: {
+          rules: {
+            indent: ['error']
+          }
+        },
+        eslintrcForExamples: false,
+        noDefaultExampleRules: false
       }]
     }
   ]

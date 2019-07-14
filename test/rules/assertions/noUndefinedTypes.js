@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          line: 1,
           message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
         },
         {
@@ -207,6 +208,25 @@ export default {
           message: 'The type \'TEMPLATE_TYPE\' is undefined.'
         }
       ]
+    },
+    {
+      code: `
+          /**
+           * @type {strnig}
+           */
+          var quux = {
+
+          };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The type \'strnig\' is undefined.'
+        }
+      ],
+      rules: {
+        'no-undef': 'error'
+      }
     }
   ],
   valid: [

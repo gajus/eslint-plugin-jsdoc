@@ -3,7 +3,13 @@ import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 import getJSDocComment from './eslint/getJSDocComment';
 
-const parseComment = (commentNode, indent) => {
+/**
+ *
+ * @param {object} commentNode
+ * @param {string} indent Whitespace
+ * @returns {object}
+ */
+const parseComment = (commentNode, indent, trim = true) => {
   // Preserve JSDoc block start/end indentation.
   return commentParser(`${indent}/*${commentNode.value}${indent}*/`, {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
@@ -18,7 +24,7 @@ const parseComment = (commentNode, indent) => {
         return commentParser.PARSERS.parse_type(str, data);
       },
       (str, data) => {
-        if (['return', 'returns', 'throws', 'exception'].includes(data.tag)) {
+        if (['example', 'return', 'returns', 'throws', 'exception'].includes(data.tag)) {
           return null;
         }
         if (data.tag === 'see' && str.match(/{@link.+?}/)) {
@@ -27,8 +33,39 @@ const parseComment = (commentNode, indent) => {
 
         return commentParser.PARSERS.parse_name(str, data);
       },
-      commentParser.PARSERS.parse_description
-    ]
+      trim ?
+        commentParser.PARSERS.parse_description :
+
+        // parse_description
+        (str, data) => {
+          // Only expected throw in previous step is if bad name (i.e.,
+          //   missing end bracket on optional name), but `@example`
+          //  skips name parsing
+          /* istanbul ignore next */
+          if (data.errors && data.errors.length) {
+            return null;
+          }
+
+          // Tweak original regex to capture only single optional space
+          const result = str.match(/^\s?((.|\s)+)?/);
+
+          // Always has at least whitespace due to `indent` we've added
+          /* istanbul ignore next */
+          if (result) {
+            return {
+              data: {
+                description: result[1] === undefined ? '' : result[1]
+              },
+              source: result[0]
+            };
+          }
+
+          // Always has at least whitespace due to `indent` we've added
+          /* istanbul ignore next */
+          return null;
+        }
+    ],
+    trim
   })[0] || {};
 };
 
@@ -178,11 +215,19 @@ const getUtils = (
   };
 
   utils.filterTags = (filter) => {
-    return (jsdoc.tags || []).filter(filter);
+    return jsdocUtils.filterTags(jsdoc.tags, filter);
+  };
+
+  utils.getTagsByType = (tags) => {
+    return jsdocUtils.getTagsByType(tags, tagNamePreference);
   };
 
   utils.getClassNode = () => {
-    const greatGrandParent = ancestors.slice(-3)[0];
+    // Ancestors missing in `Program` comment iteration
+    const greatGrandParent = ancestors.length ?
+      ancestors.slice(-3)[0] :
+      jsdocUtils.getAncestor(sourceCode, jsdocNode, 3);
+
     const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;
 
     if (greatGrandParentValue === 'class') {
@@ -197,7 +242,7 @@ const getUtils = (
     const classJsdocNode = getJSDocComment(sourceCode, classNode);
 
     if (classJsdocNode) {
-      const indent = _.repeat(' ', classJsdocNode.loc.start.column);
+      const indent = ' '.repeat(classJsdocNode.loc.start.column);
 
       return parseComment(classJsdocNode, indent);
     }
@@ -222,6 +267,18 @@ const getUtils = (
 
     matchingJsdocTags.forEach((matchingJsdocTag) => {
       arrayHandler(matchingJsdocTag, targetTagName);
+    });
+  };
+
+  utils.reportSettings = (message) => {
+    context.report({
+      loc: {
+        start: {
+          column: 1,
+          line: 1
+        }
+      },
+      message
     });
   };
 
@@ -251,8 +308,8 @@ const getSettings = (context) => {
 /**
  * Create the report function
  *
- * @param {Object} context
- * @param {Object} commentNode
+ * @param {object} context
+ * @param {object} commentNode
  */
 const makeReport = (context, commentNode) => {
   const report = (message, fix = null, jsdocLoc = null, data = null) => {
@@ -314,16 +371,17 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
   return {
     create (context) {
       return {
-        'Program:exit' () {
-          const comments = context.getSourceCode().getAllComments();
+        'Program' () {
+          const sourceCode = context.getSourceCode();
+          const comments = sourceCode.getAllComments();
 
           comments.forEach((comment) => {
-            if (!context.getSourceCode().getText(comment).startsWith('/**')) {
+            if (!sourceCode.getText(comment).startsWith('/**')) {
               return;
             }
 
-            const indent = _.repeat(' ', comment.loc.start.column);
-            const jsdoc = parseComment(comment, indent);
+            const indent = ' '.repeat(comment.loc.start.column);
+            const jsdoc = parseComment(comment, indent, !ruleConfig.noTrim);
             const settings = getSettings(context);
             const report = makeReport(context, comment);
             const jsdocNode = comment;
@@ -335,8 +393,8 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
               jsdocNode,
               node: null,
               report,
-              settings: getSettings(context),
-              sourceCode: context.getSourceCode(),
+              settings,
+              sourceCode,
               utils: getUtils(null, jsdoc, jsdocNode, settings, report, context)
             });
           });
@@ -356,7 +414,6 @@ export {
  * @param {{
  *   meta: any,
  *   contextDefaults?: true | string[],
- *   returns?: string[],
  *   iterateAllJsdocs?: true,
  * }} ruleConfig
  */
@@ -365,12 +422,15 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   if (!metaType || !['problem', 'suggestion', 'layout'].includes(metaType)) {
     throw new TypeError('Rule must include `meta.type` option (with value "problem", "suggestion", or "layout")');
   }
-  if (typeof iterator !== 'function' && (!ruleConfig || typeof ruleConfig.returns !== 'function')) {
-    throw new TypeError('The iterator argument must be a function or an object with a `returns` method.');
+  if (typeof iterator !== 'function') {
+    throw new TypeError('The iterator argument must be a function.');
   }
 
   if (ruleConfig.iterateAllJsdocs) {
-    return iterateAllJsdocs(iterator, {meta: ruleConfig.meta});
+    return iterateAllJsdocs(iterator, {
+      meta: ruleConfig.meta,
+      noTrim: ruleConfig.noTrim
+    });
   }
 
   return {
@@ -380,18 +440,13 @@ export default function iterateJsdoc (iterator, ruleConfig) {
      * @param {*} context
      *   a reference to the context which hold all important information
      *   like settings and the sourcecode to check.
-     * @returns {Object}
+     * @returns {object}
      *   a list with parser callback function.
      */
     create (context) {
       const sourceCode = context.getSourceCode();
 
       const settings = getSettings(context);
-
-      let contexts = ruleConfig.returns;
-      if (ruleConfig.contextDefaults) {
-        contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
-      }
 
       const checkJsdoc = (node) => {
         const jsdocNode = getJSDocComment(sourceCode, node);
@@ -400,7 +455,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           return;
         }
 
-        const indent = _.repeat(' ', jsdocNode.loc.start.column);
+        const indent = ' '.repeat(jsdocNode.loc.start.column);
 
         const jsdoc = parseComment(jsdocNode, indent);
 
@@ -434,15 +489,18 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           utils
         });
       };
-      if (!contexts) {
-        return {
-          ArrowFunctionExpression: checkJsdoc,
-          FunctionDeclaration: checkJsdoc,
-          FunctionExpression: checkJsdoc
-        };
+
+      if (ruleConfig.contextDefaults) {
+        const contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
+
+        return jsdocUtils.getContextObject(contexts, checkJsdoc);
       }
 
-      return jsdocUtils.getContextObject(contexts, checkJsdoc);
+      return {
+        ArrowFunctionExpression: checkJsdoc,
+        FunctionDeclaration: checkJsdoc,
+        FunctionExpression: checkJsdoc
+      };
     },
     meta: ruleConfig.meta
   };

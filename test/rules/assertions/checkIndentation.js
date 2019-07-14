@@ -2,6 +2,20 @@ export default {
   invalid: [
     {
       code: `
+          /***  foo */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'There must be no indentation.'
+        }
+      ]
+    },
+    {
+      code: `
           /**
            * foo
            *
@@ -14,6 +28,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'There must be no indentation.'
         }
       ]
@@ -28,6 +43,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'There must be no indentation.'
         }
       ]
@@ -42,6 +58,14 @@ export default {
            * @param bar
            * baz
            */
+          function quux () {
+
+          }
+      `
+    },
+    {
+      code: `
+          /*** foo */
           function quux () {
 
           }

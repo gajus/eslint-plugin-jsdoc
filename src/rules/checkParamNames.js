@@ -10,10 +10,11 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
   });
 
   return paramTags.some((tag, index) => {
-    if (paramTags.some((tg, idx) => {
+    const dupeTag = paramTags.find((tg, idx) => {
       return tg.name === tag.name && idx !== index;
-    })) {
-      report(`Duplicate @${targetTagName} "${tag.name}"`);
+    });
+    if (dupeTag) {
+      report(`Duplicate @${targetTagName} "${tag.name}"`, null, dupeTag);
 
       return true;
     }
@@ -52,15 +53,15 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
   });
 };
 
-const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames : Array<string>, report : Function) => {
+const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames : Array<string>, jsdoc, report : Function) => {
   let lastRealParameter;
 
-  return jsdocParameterNames.some((jsdocParameterName) => {
+  return jsdocParameterNames.some((jsdocParameterName, idx) => {
     const isPropertyPath = jsdocParameterName.includes('.');
 
     if (isPropertyPath) {
       if (!lastRealParameter) {
-        report(`@${targetTagName} path declaration ("${jsdocParameterName}") appears before any real parameter.`);
+        report(`@${targetTagName} path declaration ("${jsdocParameterName}") appears before any real parameter.`, null, jsdoc.tags[idx]);
 
         return true;
       }
@@ -74,7 +75,9 @@ const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames 
       if (pathRootNodeName !== lastRealParameter) {
         report(
           `@${targetTagName} path declaration ("${jsdocParameterName}") root node name ("${pathRootNodeName}") ` +
-          `does not match previous real parameter name ("${lastRealParameter}").`
+          `does not match previous real parameter name ("${lastRealParameter}").`,
+          null,
+          jsdoc.tags[idx]
         );
 
         return true;
@@ -104,7 +107,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  validateParameterNamesDeep(targetTagName, jsdocParameterNamesDeep, report);
+  validateParameterNamesDeep(targetTagName, jsdocParameterNamesDeep, jsdoc, report);
 }, {
   meta: {
     type: 'suggestion'

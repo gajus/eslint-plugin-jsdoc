@@ -165,6 +165,31 @@ export default {
           /**
            * Foo.
            *
+           * @prop foo foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'JSDoc description does not satisfy the regex pattern.'
+        }
+      ],
+      options: [
+        {
+          tags: {
+            prop: true
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
            * @summary foo.
            */
           function quux () {
@@ -1083,6 +1108,25 @@ export default {
         {
           tags: {
             'x-tag': '.+'
+          }
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @prop foo Foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          tags: {
+            prop: true
           }
         }
       ]

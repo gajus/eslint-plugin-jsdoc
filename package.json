@@ -7,33 +7,33 @@
   "dependencies": {
     "comment-parser": "^0.5.5",
     "debug": "^4.1.1",
-    "escape-regex-string": "^1.0.6",
     "flat-map-polyfill": "^0.3.8",
-    "jsdoctypeparser": "4.0.0",
-    "lodash": "^4.17.11"
+    "jsdoctypeparser": "5.0.1",
+    "lodash": "^4.17.14",
+    "regextras": "^0.6.1"
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
     "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.0",
+    "@babel/core": "^7.5.4",
     "@babel/node": "^7.5.0",
     "@babel/plugin-transform-flow-strip-types": "^7.4.4",
-    "@babel/preset-env": "^7.5.0",
+    "@babel/preset-env": "^7.5.4",
     "@babel/register": "^7.4.4",
-    "@typescript-eslint/parser": "^1.11.0",
+    "@typescript-eslint/parser": "^1.12.0",
     "babel-eslint": "^10.0.2",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^5.1.4",
     "chai": "^4.2.0",
     "eslint": "^6.0.1",
-    "eslint-config-canonical": "^17.1.1",
-    "gitdown": "^2.6.1",
+    "eslint-config-canonical": "^17.1.4",
+    "gitdown": "^2.6.2",
     "glob": "^7.1.4",
     "husky": "^3.0.0",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "semantic-release": "^15.13.18",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   },
   "engines": {
     "node": ">=6"
@@ -63,6 +63,7 @@
     "add-assertions": "babel-node ./src/bin/readme-assertions",
     "build": "rm -fr ./dist && NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps",
     "create-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run add-assertions",
+    "lint-fix": "eslint --fix ./src ./test",
     "lint": "eslint ./src ./test",
     "test-cov": "BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 9000",
     "test-no-cov": "BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 9000",
