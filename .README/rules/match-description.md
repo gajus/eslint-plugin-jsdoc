@@ -93,7 +93,8 @@ Overrides the default contexts (see below).
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
-|Tags|docblock and `@description` (or `@desc`) by default but more with `tags`|
+|Tags|docblock and `@description` by default but more with `tags`|
+|Aliases|`@desc`|
 |Settings||
 |Options|`contexts`, `tags` (accepts tags with names and optional type such as 'param', 'arg', 'argument', 'property', and 'prop', and accepts arbitrary list of other tags with an optional type (but without names), e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
