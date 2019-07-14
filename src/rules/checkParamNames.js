@@ -100,7 +100,7 @@ export default iterateJsdoc(({
   if (!jsdocParameterNamesDeep) {
     return;
   }
-  const targetTagName = utils.getPreferredTagName('param');
+  const targetTagName = utils.getPreferredTagName({tagName: 'param'});
   const isError = validateParameterNames(targetTagName, functionParameterNames, jsdoc, report);
 
   if (isError) {

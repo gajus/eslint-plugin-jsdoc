@@ -100,7 +100,7 @@ const getUtils = (
   };
 
   utils.getJsdocParameterNamesDeep = () => {
-    const param = utils.getPreferredTagName('param');
+    const param = utils.getPreferredTagName({tagName: 'param'});
     if (!param) {
       return false;
     }
@@ -109,7 +109,7 @@ const getUtils = (
   };
 
   utils.getJsdocParameterNames = () => {
-    const param = utils.getPreferredTagName('param');
+    const param = utils.getPreferredTagName({tagName: 'param'});
     if (!param) {
       return false;
     }
@@ -117,12 +117,18 @@ const getUtils = (
     return jsdocUtils.getJsdocParameterNames(jsdoc, param);
   };
 
-  utils.getPreferredTagName = (name, allowObjectReturn = false, defaultMessage = `Unexpected tag \`@${name}\``) => {
-    const ret = jsdocUtils.getPreferredTagName(name, tagNamePreference);
+  utils.getPreferredTagName = ({tagName, skipReportingBlockedTag = false, allowObjectReturn = false, defaultMessage = `Unexpected tag \`@${tagName}\``}) => {
+    const ret = jsdocUtils.getPreferredTagName(tagName, tagNamePreference);
     const isObject = ret && typeof ret === 'object';
-    if (ret === false || isObject && !ret.replacement) {
+    if (utils.hasTag(tagName) && (ret === false || isObject && !ret.replacement)) {
+      if (skipReportingBlockedTag) {
+        return {
+          blocked: true,
+          tagName
+        };
+      }
       const message = isObject && ret.message || defaultMessage;
-      report(message, null, utils.getTags(name)[0]);
+      report(message, null, utils.getTags(tagName)[0]);
 
       return false;
     }
@@ -256,9 +262,14 @@ const getUtils = (
     return classJsdoc && jsdocUtils.hasTag(classJsdoc, tagName);
   };
 
-  utils.forEachPreferredTag = (tagName, arrayHandler) => {
-    const targetTagName = utils.getPreferredTagName(tagName);
-    if (!targetTagName) {
+  utils.forEachPreferredTag = (tagName, arrayHandler, skipReportingBlockedTag = false) => {
+    const targetTagName = utils.getPreferredTagName({
+      skipReportingBlockedTag,
+      tagName
+    });
+    if (!targetTagName ||
+      skipReportingBlockedTag && targetTagName && typeof targetTagName === 'object'
+    ) {
       return;
     }
     const matchingJsdocTags = _.filter(jsdoc.tags || [], {

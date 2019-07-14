@@ -45,11 +45,11 @@ export default iterateJsdoc(({
   jsdoc.tags.forEach((jsdocTag) => {
     const tagName = jsdocTag.tag;
     if (utils.isValidTag(tagName, [...definedTags, ...definedPreferredTags, ...definedNonPreferredTags])) {
-      let preferredTagName = utils.getPreferredTagName(
-        tagName,
-        true,
-        `Blacklisted tag found (\`@${tagName}\`)`
-      );
+      let preferredTagName = utils.getPreferredTagName({
+        allowObjectReturn: true,
+        defaultMessage: `Blacklisted tag found (\`@${tagName}\`)`,
+        tagName
+      });
       let message = `Invalid JSDoc tag (preference). Replace "${tagName}" JSDoc tag with "${preferredTagName}".`;
       if (!preferredTagName) {
         return;

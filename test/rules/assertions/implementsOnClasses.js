@@ -15,6 +15,29 @@ export default {
           message: '@implements used on a non-constructor function'
         }
       ]
+    },
+    {
+      code: `
+        /**
+         * @implements {SomeClass}
+         */
+        function quux () {
+
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Unexpected tag `@implements`'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            implements: false
+          }
+        }
+      }
     }
   ],
   valid: [
@@ -79,6 +102,23 @@ export default {
 
       }
       `
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        function quux () {
+
+        }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            implements: false
+          }
+        }
+      }
     }
   ]
 };

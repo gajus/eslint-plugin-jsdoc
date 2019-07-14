@@ -59,7 +59,7 @@ export default iterateJsdoc(({
     forceReturnsWithAsync = false
   } = context.options[0] || {};
 
-  const tagName = utils.getPreferredTagName('returns');
+  const tagName = utils.getPreferredTagName({tagName: 'returns'});
   if (!tagName) {
     return;
   }

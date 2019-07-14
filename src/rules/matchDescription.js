@@ -60,7 +60,7 @@ export default iterateJsdoc(({
     if (hasOptionTag(targetTagName)) {
       validateDescription(description, matchingJsdocTag);
     }
-  });
+  }, true);
 
   const whitelistedTags = utils.filterTags(({tag: tagName}) => {
     return hasOptionTag(tagName);
