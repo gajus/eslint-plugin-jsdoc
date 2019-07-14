@@ -567,6 +567,32 @@ export default {
           tags: ['see']
         }
       ]
+    },
+    {
+      code: `
+        /**
+         * @param foo Foo bar
+         */
+        function quux (foo) {
+
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.'
+        }
+      ],
+      options: [{
+        tags: ['param']
+      }],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false
+          }
+        }
+      }
     }
   ],
   valid: [
@@ -823,6 +849,43 @@ export default {
           tags: ['param']
         }
       ]
+    },
+    {
+      code: `
+        /**
+         * @param foo Foo bar.
+         */
+        function quux (foo) {
+
+        }
+      `,
+      options: [{
+        tags: ['param']
+      }],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false
+          }
+        }
+      }
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        function quux (foo) {
+
+        }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            description: false
+          }
+        }
+      }
     }
   ]
 };
