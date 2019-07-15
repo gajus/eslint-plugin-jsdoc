@@ -7,18 +7,20 @@ import _ from 'lodash';
 import glob from 'glob';
 
 const trimCode = (code) => {
-  let lines = code.trim().split('\n');
+  let lines = code.replace(/^\n|\s+$/, '').split('\n');
 
-  const indendation = lines[lines.length - 1].match(/^\s+/);
+  const firsLineIndentation = lines[0].match(/^\s+/);
+  const lastLineIndentation = lines[lines.length - 1].match(/^\s+/);
 
-  const indentSize = indendation ? indendation[0].length : 0;
+  const firstIndentSize = firsLineIndentation ? firsLineIndentation[0].length : 0;
+  const lastIndentSize = lastLineIndentation ? lastLineIndentation[0].length : 0;
 
   lines = lines.map((line, index) => {
     if (index === 0) {
-      return line;
+      return line.slice(Math.min(firstIndentSize, lastIndentSize));
     }
 
-    return line.slice(indentSize);
+    return line.slice(lastIndentSize);
   });
 
   return lines.join('\n');
