@@ -388,7 +388,7 @@ function quux (foo) {
 }
 // Message: Expected JSDoc block to be aligned.
 
-/**
+ /**
  * @param {Number} foo
  */
 function quux (foo) {
@@ -396,7 +396,7 @@ function quux (foo) {
 }
 // Message: Expected JSDoc block to be aligned.
 
-/**
+ /**
   * @param {Number} foo
  */
 function quux (foo) {
@@ -3410,7 +3410,7 @@ An option object may have the following key:
 The following patterns are considered problems:
 
 ````js
-/**
+ /**
   * @param {HerType} baz - Foo.
   */
 function quux(foo, bar, baz) {
@@ -3419,7 +3419,7 @@ function quux(foo, bar, baz) {
 // Settings: {"jsdoc":{"preferredTypes":{"HerType":1000}}}
 // Message: Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.
 
-/**
+ /**
   * @param {HerType} baz - Foo.
   */
 function quux(foo, bar, baz) {
@@ -3446,7 +3446,7 @@ function quux(foo, bar) {
 // Options: [{"definedTypes":["MyType"]}]
 // Message: The type 'HisType' is undefined.
 
-/**
+ /**
   * @param {MyType} foo - Bar.
   * @param {HisType} bar - Foo.
   * @param {HerType} baz - Foo.
@@ -3458,7 +3458,7 @@ function quux(foo, bar, baz) {
 // Options: [{"definedTypes":["MyType"]}]
 // Message: The type 'HisType' is undefined.
 
-/**
+ /**
   * @param {MyType} foo - Bar.
   * @param {HisType} bar - Foo.
   * @param {HerType} baz - Foo.
@@ -3642,7 +3642,7 @@ function quux(foo, bar) {
 }
 // Options: [{"definedTypes":["MyType","HisType"]}]
 
-/**
+ /**
   * @param {MyType} foo - Bar.
   * @param {HisType} bar - Foo.
   * @param {HerType} baz - Foo.
@@ -3653,7 +3653,7 @@ function quux(foo, bar, baz) {
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"},"histype":"HisType"}}}
 // Options: [{"definedTypes":["MyType"]}]
 
-/**
+ /**
   * @param {MyType} foo - Bar.
   * @param {HisType} bar - Foo.
   * @param {HerType} baz - Foo.
