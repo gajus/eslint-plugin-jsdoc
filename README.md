@@ -372,90 +372,100 @@ Reports invalid alignment of JSDoc block asterisks.
 The following patterns are considered problems:
 
 ````js
-/**
-  * @param {Number} foo
- */
-function quux (foo) {
-
-}
-// Message: Expected JSDoc block to be aligned.
-
-/**
- * @param {Number} foo
-  */
-function quux (foo) {
-
-}
-// Message: Expected JSDoc block to be aligned.
-
-/**
- * @param {Number} foo
- */
-function quux (foo) {
-
-}
-// Message: Expected JSDoc block to be aligned.
-
-/**
-  * @param {Number} foo
- */
-function quux (foo) {
-
-}
-// Message: Expected JSDoc block to be aligned.
-
-/**
- * @param {Number} foo
- */
-function quux (foo) {
-
-}
-// Message: Expected JSDoc block to be aligned.
-
-/**
-  * A jsdoc not attached to any node.
-*/
-// Message: Expected JSDoc block to be aligned.
-
-class Foo {
   /**
-   *  Some method
-    * @param a
+    * @param {Number} foo
    */
-  quux(a) {}
-}
+  function quux (foo) {
+
+  }
+
+// Message: Expected JSDoc block to be aligned.
+
+  /**
+   * @param {Number} foo
+    */
+  function quux (foo) {
+
+  }
+
+// Message: Expected JSDoc block to be aligned.
+
+   /**
+   * @param {Number} foo
+   */
+  function quux (foo) {
+
+  }
+
+// Message: Expected JSDoc block to be aligned.
+
+   /**
+    * @param {Number} foo
+   */
+  function quux (foo) {
+
+  }
+
+// Message: Expected JSDoc block to be aligned.
+
+ /**
+   * @param {Number} foo
+   */
+  function quux (foo) {
+
+  }
+
+// Message: Expected JSDoc block to be aligned.
+
+  /**
+     * A jsdoc not attached to any node.
+   */
+
+// Message: Expected JSDoc block to be aligned.
+
+  class Foo {
+    /**
+     *  Some method
+      * @param a
+     */
+    quux(a) {}
+  }
+
 // Message: Expected JSDoc block to be aligned.
 ````
 
 The following patterns are not considered problems:
 
 ````js
-/**
- * Desc
- *
- * @param {Number} foo
- */
-function quux (foo) {
+  /**
+   * Desc
+   *
+   * @param {Number} foo
+   */
+  function quux (foo) {
 
-}
+  }
 
-/**
- * Desc
- *
- * @param {{
-  foo: Bar,
-  bar: Baz
- * }} foo
- *
- */
-function quux (foo) {
 
-}
+  /**
+   * Desc
+   *
+   * @param {{
+    foo: Bar,
+    bar: Baz
+   * }} foo
+   *
+   */
+  function quux (foo) {
 
-/*  <- JSDoc must start with 2 stars.
-  *    So this is unchecked.
- */
-function quux (foo) {}
+  }
+
+
+  /*  <- JSDoc must start with 2 stars.
+    *    So this is unchecked.
+   */
+  function quux (foo) {}
+
 ````
 
 
@@ -592,176 +602,193 @@ decreasing precedence:
 The following patterns are considered problems:
 
 ````js
-/**
- * @example alert('hello')
- */
-function quux () {
+    /**
+     * @example alert('hello')
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}]
 // Message: @example error (no-alert): Unexpected alert.
 
-/**
- * @example alert('hello')
- */
-class quux {
+    /**
+     * @example alert('hello')
+     */
+    class quux {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}]
 // Message: @example error (no-alert): Unexpected alert.
 
-/**
- * @example ```js
- alert('hello');
- ```
- */
-function quux () {
+    /**
+     * @example ```js
+     alert('hello');
+     ```
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
-/**
- * @example
- *
- * ```js alert('hello'); ```
- */
-function quux () {
+    /**
+     * @example
+     *
+     * ```js alert('hello'); ```
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
-/**
- * @example
- * ```js alert('hello'); ```
- */
-var quux = {
+    /**
+     * @example
+     * ```js alert('hello'); ```
+     */
+    var quux = {
 
-};
+    };
+
 // Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
-/**
- * @example ```
- * js alert('hello'); ```
- */
-function quux () {
+    /**
+     * @example ```
+     * js alert('hello'); ```
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```\njs ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
-/**
- * @example <b>Not JavaScript</b>
- */
-function quux () {
+    /**
+     * @example <b>Not JavaScript</b>
+     */
+    function quux () {
 
-}
-/**
- * @example quux2();
- */
-function quux2 () {
+    }
+    /**
+     * @example quux2();
+     */
+    function quux2 () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"rejectExampleCodeRegex":"^\\s*<.*>\\s*$"}]
 // Message: @example error (semi): Extra semicolon.
 
-/**
- * @example
- * quux(); // does something useful
- */
-function quux () {
+    /**
+     * @example
+     * quux(); // does something useful
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
 // Message: @example error (no-undef): 'quux' is not defined.
 
-/**
- * @example <caption>Valid usage</caption>
- * quux(); // does something useful
- *
- * @example
- * quux('random unwanted arg'); // results in an error
- */
-function quux () {
+    /**
+     * @example <caption>Valid usage</caption>
+     * quux(); // does something useful
+     *
+     * @example
+     * quux('random unwanted arg'); // results in an error
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"captionRequired":true,"eslintrcForExamples":false}]
 // Message: Caption is expected for examples.
 
-/**
- * @example  quux();
- */
-function quux () {
+    /**
+     * @example  quux();
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
 // Message: @example error (indent): Expected indentation of 0 spaces but found 1.
 
-/**
- * @example test() // eslint-disable-line semi
- */
-function quux () {}
+      /**
+       * @example test() // eslint-disable-line semi
+       */
+      function quux () {}
+
 // Options: [{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":true}]
 // Message: @example error: Unused eslint-disable directive (no problems were reported from 'semi').
 
-/**
- * @example
- test() // eslint-disable-line semi
- */
-function quux () {}
+      /**
+       * @example
+       test() // eslint-disable-line semi
+       */
+      function quux () {}
+
 // Options: [{"allowInlineConfig":false,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
 // Message: @example error (semi): Missing semicolon.
 
-/**
- * @example const i = 5;
- * quux2()
- */
-function quux2 () {
+    /**
+     * @example const i = 5;
+     * quux2()
+     */
+    function quux2 () {
 
-}
+    }
+
 // Options: [{"matchingFileName":"test/jsdocUtils.js"}]
 // Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
 
-/**
- * @example const i = 5;
- *   quux2()
- */
-function quux2 () {
+    /**
+     * @example const i = 5;
+     *   quux2()
+     */
+    function quux2 () {
 
-}
+    }
+
 // Options: [{"paddedIndent":2}]
 // Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
 
-/**
- * @example
- * const i = 5;
- * quux2()
- */
-function quux2 () {
+    /**
+     * @example
+     * const i = 5;
+     * quux2()
+     */
+    function quux2 () {
 
-}
+    }
+
 // Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
 
-/**
- * @example const i = 5;
- * quux2()
- */
-function quux2 () {
+    /**
+     * @example const i = 5;
+     * quux2()
+     */
+    function quux2 () {
 
-}
+    }
+
 // Options: [{"matchingFileName":"test/rules/data/dummy.js"}]
 // Message: @example error (semi): Missing semicolon.
 
-/**
- * @example // begin
- alert('hello')
- // end
- */
-function quux () {
+    /**
+     * @example // begin
+     alert('hello')
+     // end
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"semi":["warn","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"// begin[\\s\\S]*// end","noDefaultExampleRules":true}]
 // Message: @example warning (semi): Missing semicolon.
 
@@ -771,14 +798,16 @@ function quux () {
 function f () {
 
 }
+
 // Settings: {"jsdoc":{"allowInlineConfig":true,"baseConfig":{},"captionRequired":false,"configFile":"configFile.js","eslintrcForExamples":true,"exampleCodeRegex":".*?","matchingFileName":"test.md","noDefaultExampleRules":false,"rejectExampleCodeRegex":"\\W*","reportUnusedDisableDirectives":true}}
 // Message: `settings.jsdoc.captionRequired` has been removed, use options in the rule `check-examples` instead.
 
-/**
-* @typedef {string} Foo
-* @example <caption></caption>
-* 'foo'
-*/
+ /**
+  * @typedef {string} Foo
+  * @example <caption></caption>
+  * 'foo'
+  */
+
 // Options: [{"captionRequired":true,"eslintrcForExamples":false}]
 // Message: Caption is expected for examples.
 ````
@@ -786,84 +815,93 @@ function f () {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @example ```js
- alert('hello');
- ```
- */
-function quux () {
+    /**
+     * @example ```js
+     alert('hello');
+     ```
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 
-/**
- * @example
- * // arbitrary example content
- */
-function quux () {
+    /**
+     * @example
+     * // arbitrary example content
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"eslintrcForExamples":false}]
 
-/**
- * @example
- * quux(); // does something useful
- */
-function quux () {
+    /**
+     * @example
+     * quux(); // does something useful
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
 
-/**
- * @example quux();
- */
-function quux () {
+    /**
+     * @example quux();
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
 
-/**
- * @example <caption>Valid usage</caption>
- * quux(); // does something useful
- *
- * @example <caption>Invalid usage</caption>
- * quux('random unwanted arg'); // results in an error
- */
-function quux () {
+    /**
+     * @example <caption>Valid usage</caption>
+     * quux(); // does something useful
+     *
+     * @example <caption>Invalid usage</caption>
+     * quux('random unwanted arg'); // results in an error
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"captionRequired":true,"eslintrcForExamples":false}]
 
-/**
- * @example test() // eslint-disable-line semi
- */
-function quux () {}
+      /**
+       * @example test() // eslint-disable-line semi
+       */
+      function quux () {}
+
 // Options: [{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":false}]
 
-/**
- * @example
- test() // eslint-disable-line semi
- */
-function quux () {}
+      /**
+       * @example
+       test() // eslint-disable-line semi
+       */
+      function quux () {}
+
 // Options: [{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
 
-/**
- * @example ```js
- alert('hello')
- ```
- */
-var quux = {
+    /**
+     * @example ```js
+     alert('hello')
+     ```
+     */
+    var quux = {
 
-};
+    };
+
 // Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 
-/**
- * @example
- * foo(function (err) {
- *     throw err;
- * });
- */
-function quux () {}
+     /**
+      * @example
+      * foo(function (err) {
+      *     throw err;
+      * });
+      */
+     function quux () {}
+
 // Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
 ````
 
@@ -881,48 +919,53 @@ Reports invalid padding inside JSDoc block.
 The following patterns are considered problems:
 
 ````js
-/***  foo */
-function quux () {
+    /***  foo */
+    function quux () {
 
-}
+    }
+
 // Message: There must be no indentation.
 
-/**
- * foo
- *
- * @param bar
- *  baz
- */
-function quux () {
+    /**
+     * foo
+     *
+     * @param bar
+     *  baz
+     */
+    function quux () {
 
-}
+    }
+
 // Message: There must be no indentation.
 
-/**
- * Foo
- *   bar
- */
-class Moo {}
+  /**
+   * Foo
+   *   bar
+   */
+  class Moo {}
+
 // Message: There must be no indentation.
 ````
 
 The following patterns are not considered problems:
 
 ````js
-/**
- * foo
- *
- * @param bar
- * baz
- */
-function quux () {
+    /**
+     * foo
+     *
+     * @param bar
+     * baz
+     */
+    function quux () {
 
-}
+    }
 
-/*** foo */
-function quux () {
 
-}
+    /*** foo */
+    function quux () {
+
+    }
+
 ````
 
 
@@ -939,108 +982,120 @@ Ensures that parameter names in JSDoc match those in the function declaration.
 The following patterns are considered problems:
 
 ````js
-/**
- * @param Foo
- */
-function quux (foo = 'FOO') {
+    /**
+     * @param Foo
+     */
+    function quux (foo = 'FOO') {
 
-}
+    }
+
 // Message: Expected @param names to be "foo". Got "Foo".
 
-/**
- * @arg Foo
- */
-function quux (foo = 'FOO') {
+    /**
+     * @arg Foo
+     */
+    function quux (foo = 'FOO') {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Expected @arg names to be "foo". Got "Foo".
 
-/**
- * @param Foo
- */
-function quux (foo) {
+    /**
+     * @param Foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Expected @param names to be "foo". Got "Foo".
 
-/**
- * @param Foo.Bar
- */
-function quux (foo) {
+    /**
+     * @param Foo.Bar
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: @param path declaration ("Foo.Bar") appears before any real parameter.
 
-/**
- * @param foo
- * @param Foo.Bar
- */
-function quux (foo) {
+    /**
+     * @param foo
+     * @param Foo.Bar
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: @param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").
 
-/**
- * @param foo
- * @param foo.bar
- * @param bar
- */
-function quux (bar, foo) {
+    /**
+     * @param foo
+     * @param foo.bar
+     * @param bar
+     */
+    function quux (bar, foo) {
 
-}
+    }
+
 // Message: Expected @param names to be "bar, foo". Got "foo, bar".
 
-/**
- * @param foo
- * @param bar
- */
-function quux (foo) {
+    /**
+     * @param foo
+     * @param bar
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: @param "bar" does not match an existing function parameter.
 
-/**
- * @param foo
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Duplicate @param "foo"
 
-/**
- * @param foo
- * @param foo
- */
-function quux (foo, bar) {
+    /**
+     * @param foo
+     * @param foo
+     */
+    function quux (foo, bar) {
 
-}
+    }
+
 // Message: Duplicate @param "foo"
 
-/**
- * @param foo
- * @param foo
- */
-function quux (foo, foo) {
+    /**
+     * @param foo
+     * @param foo
+     */
+    function quux (foo, foo) {
 
-}
+    }
+
 // Message: Duplicate @param "foo"
 
-export class SomeClass {
-  /**
-   * @param prop
-   */
-  constructor(private property: string) {}
-}
+  export class SomeClass {
+    /**
+     * @param prop
+     */
+    constructor(private property: string) {}
+  }
+
 // Message: Expected @param names to be "property". Got "prop".
 
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
 ````
@@ -1048,89 +1103,100 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
-/**
- *
- */
-function quux (foo) {
+    /**
+     *
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @param foo
- */
-function quux (foo) {
 
-}
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-/**
- * @param foo
- * @param bar
- */
-function quux (foo, bar) {
+    }
 
-}
 
-/**
- * @param foo
- * @param bar
- */
-function quux (foo, bar, baz) {
+    /**
+     * @param foo
+     * @param bar
+     */
+    function quux (foo, bar) {
 
-}
+    }
 
-/**
- * @param foo
- * @param foo.foo
- * @param bar
- */
-function quux (foo, bar) {
 
-}
+    /**
+     * @param foo
+     * @param bar
+     */
+    function quux (foo, bar, baz) {
 
-/**
- * @param args
- */
-function quux (...args) {
+    }
 
-}
 
-/**
- * @param foo
- */
-function quux ({a, b}) {
+    /**
+     * @param foo
+     * @param foo.foo
+     * @param bar
+     */
+    function quux (foo, bar) {
 
-}
+    }
 
-/**
- * @param foo
- */
-function quux ({a, b} = {}) {
 
-}
+    /**
+     * @param args
+     */
+    function quux (...args) {
 
-/**
- * @param foo
- */
-function quux ([a, b] = []) {
+    }
 
-}
 
-/**
- * Assign the project to a list of employees.
- * @param {Object[]} employees - The employees who are responsible for the project.
- * @param {string} employees[].name - The name of an employee.
- * @param {string} employees[].department - The employee's department.
- */
-function assign (employees) {
+    /**
+     * @param foo
+     */
+    function quux ({a, b}) {
 
-};
+    }
 
-export class SomeClass {
-  /**
-   * @param property
-   */
-  constructor(private property: string) {}
-}
+
+    /**
+     * @param foo
+     */
+    function quux ({a, b} = {}) {
+
+    }
+
+
+    /**
+     * @param foo
+     */
+    function quux ([a, b] = []) {
+
+    }
+
+
+    /**
+     * Assign the project to a list of employees.
+     * @param {Object[]} employees - The employees who are responsible for the project.
+     * @param {string} employees[].name - The name of an employee.
+     * @param {string} employees[].department - The employee's department.
+     */
+    function assign (employees) {
+
+    };
+
+
+  export class SomeClass {
+    /**
+     * @param property
+     */
+    constructor(private property: string) {}
+  }
+
 ````
 
 
@@ -1168,31 +1234,34 @@ Reports against Google Closure Compiler syntax.
 The following patterns are considered problems:
 
 ````js
-/**
- * @param {string=} foo
- */
-function quux (foo) {
+    /**
+     * @param {string=} foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Syntax should not be Google Closure Compiler style.
 ````
 
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param {string} [foo]
- */
-function quux (foo) {
+    /**
+     * @param {string} [foo]
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- *
- */
-function quux (foo) {
 
-}
+    /**
+     *
+     */
+    function quux (foo) {
+
+    }
+
 ````
 
 
@@ -1301,160 +1370,178 @@ The format is as follows:
 The following patterns are considered problems:
 
 ````js
-/** @typoo {string} */
-let a;
+  /** @typoo {string} */
+  let a;
+
 // Message: Invalid JSDoc tag name "typoo".
 
-/**
- * @Param
- */
-function quux () {
+    /**
+     * @Param
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Invalid JSDoc tag name "Param".
 
-/**
- * @foo
- */
-function quux () {
+    /**
+     * @foo
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Invalid JSDoc tag name "foo".
 
-/**
- * @arg foo
- */
-function quux (foo) {
+    /**
+     * @arg foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "param".
 
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".
 
-/**
- * @arg foo
- */
-function quux (foo) {
+    /**
+     * @arg foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"arg":"somethingDifferent"}}}
 // Message: Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "somethingDifferent".
 
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"parameter"}}}
 // Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "parameter".
 
-/**
- * @bar foo
- */
-function quux (foo) {
+    /**
+     * @bar foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Invalid JSDoc tag name "bar".
 
-/**
- * @baz @bar foo
- */
-function quux (foo) {
+    /**
+     * @baz @bar foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"definedTags":["bar"]}]
 // Message: Invalid JSDoc tag name "baz".
 
-/**
- * @bar
- * @baz
- */
-function quux (foo) {
+    /**
+     * @bar
+     * @baz
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"definedTags":["bar"]}]
 // Message: Invalid JSDoc tag name "baz".
 
-/**
- * @todo
- */
-function quux () {
+    /**
+     * @todo
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"todo":false}}}
 // Message: Blacklisted tag found (`@todo`)
 
-/**
- * @todo
- */
-function quux () {
+    /**
+     * @todo
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please resolve to-dos or add to the tracker"}}}}
 // Message: Please resolve to-dos or add to the tracker
 
-/**
- * @todo
- */
-function quux () {
+    /**
+     * @todo
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use x-todo instead of todo","replacement":"x-todo"}}}}
 // Message: Please use x-todo instead of todo
 
-/**
- * @todo
- */
-function quux () {
+    /**
+     * @todo
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use x-todo instead of todo","replacement":"x-todo"}}}}
 // Message: Please use x-todo instead of todo
 
-/**
- * @todo
- */
-function quux () {
+    /**
+     * @todo
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"todo":55}}}
 // Message: Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.
 
-/**
- * @property {object} a
- * @prop {boolean} b
- */
-function quux () {
+    /**
+     * @property {object} a
+     * @prop {boolean} b
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".
 
-/**
- * @abc foo
- * @abcd bar
- */
-function quux () {
+    /**
+     * @abc foo
+     * @abcd bar
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
 // Options: [{"definedTags":["abcd"]}]
 // Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
 
-/**
- * @abc
- * @abcd
- */
-function quux () {
+    /**
+     * @abc
+     * @abcd
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
 // Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
 ````
@@ -1462,50 +1549,56 @@ function quux () {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @memberof! foo
- */
-function quux (foo) {
 
-}
+    /**
+     * @memberof! foo
+     */
+    function quux (foo) {
 
-/**
- * @arg foo
- */
-function quux (foo) {
+    }
 
-}
+
+    /**
+     * @arg foo
+     */
+    function quux (foo) {
+
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 
-/**
- * @bar foo
- */
-function quux (foo) {
+    /**
+     * @bar foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"definedTags":["bar"]}]
 
-/**
- * @baz @bar foo
- */
-function quux (foo) {
+    /**
+     * @baz @bar foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"definedTags":["baz","bar"]}]
 
-/**
- * @baz @bar foo
- */
-function quux (foo) {
+    /**
+     * @baz @bar foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"baz","returns":{"message":"Prefer `bar`","replacement":"bar"},"todo":false}}}
 
 /** 
@@ -1575,19 +1668,21 @@ function quux (foo) {
  */
 function quux (foo) {}
 
-/**
- *
- */
-function quux (foo) {
+    /**
+     *
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @todo
- */
-function quux () {
 
-}
+    /**
+     * @todo
+     */
+    function quux () {
+
+    }
+
 ````
 
 
@@ -1688,171 +1783,191 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 The following patterns are considered problems:
 
 ````js
-/**
- * @param {abc} foo
- */
-function quux (foo) {
+    /**
+     * @param {abc} foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":100}}}
 // Message: Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.
 
-/**
- * @param {Number} foo
- */
-function quux (foo) {
+    /**
+     * @param {Number} foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
 
-/**
- * @arg {Number} foo
- */
-function quux (foo) {
+    /**
+     * @arg {Number} foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Invalid JSDoc @arg "foo" type "Number"; prefer: "number".
 
-/**
- * @returns {Number} foo
- * @throws {Number} foo
- */
-function quux () {
+    /**
+     * @returns {Number} foo
+     * @throws {Number} foo
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Invalid JSDoc @returns type "Number"; prefer: "number".
 
-/**
- * @param {(Number|string|Boolean)=} foo
- */
-function quux (foo, bar, baz) {
+    /**
+     * @param {(Number|string|Boolean)=} foo
+     */
+    function quux (foo, bar, baz) {
 
-}
+    }
+
 // Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
 
-/**
- * @param {Array.<Number|String>} foo
- */
-function quux (foo, bar, baz) {
+    /**
+     * @param {Array.<Number|String>} foo
+     */
+    function quux (foo, bar, baz) {
 
-}
+    }
+
 // Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
 
-/**
- * @param {(Number|String)[]} foo
- */
-function quux (foo, bar, baz) {
+    /**
+     * @param {(Number|String)[]} foo
+     */
+    function quux (foo, bar, baz) {
 
-}
+    }
+
 // Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
 
-/**
- * @param {abc} foo
- */
-function qux(foo) {
-}
+    /**
+     * @param {abc} foo
+     */
+    function qux(foo) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
 // Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
 
-/**
- * @param {abc} foo
- */
-function qux(foo) {
-}
+    /**
+     * @param {abc} foo
+     */
+    function qux(foo) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":{"replacement":"Abc"},"string":"Str"}}}
 // Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
 
-/**
- * @param {abc} foo
- */
-function qux(foo) {
-}
+    /**
+     * @param {abc} foo
+     */
+    function qux(foo) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\"; prefer: \"Abc\".","replacement":"Abc"},"string":"Str"}}}
 // Message: Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".
 
-/**
- * @param {abc} foo
- * @param {cde} bar
- * @param {object} baz
- */
-function qux(foo, bar, baz) {
-}
+    /**
+     * @param {abc} foo
+     * @param {cde} bar
+     * @param {object} baz
+     */
+    function qux(foo, bar, baz) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\"; prefer: \"Abc\".","replacement":"Abc"},"cde":{"message":"More messed up JSDoc @{{tagName}}{{tagValue}} type \"cde\"; prefer: \"Cde\".","replacement":"Cde"},"object":"Object"}}}
 // Message: Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".
 
-/**
- * @param {abc} foo
- */
-function qux(foo) {
-}
+    /**
+     * @param {abc} foo
+     */
+    function qux(foo) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\".","replacement":false},"string":"Str"}}}
 // Message: Messed up JSDoc @param "foo" type "abc".
 
-/**
- * @param {abc} foo
- */
-function qux(foo) {
-}
+    /**
+     * @param {abc} foo
+     */
+    function qux(foo) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":{"message":"Messed up JSDoc @{{tagName}}{{tagValue}} type \"abc\"."},"string":"Str"}}}
 // Message: Messed up JSDoc @param "foo" type "abc".
 
-/**
- * @param {abc} foo
- * @param {Number} bar
- */
-function qux(foo, bar) {
-}
+    /**
+     * @param {abc} foo
+     * @param {Number} bar
+     */
+    function qux(foo, bar) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
 // Options: [{"noDefaults":true}]
 // Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
 
-/**
- * @param {abc} foo
- * @param {Number} bar
- */
-function qux(foo, bar) {
-}
+    /**
+     * @param {abc} foo
+     * @param {Number} bar
+     */
+    function qux(foo, bar) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
 // Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
 
-/**
- * @param {abc} foo
- */
-function qux(foo) {
-}
+    /**
+     * @param {abc} foo
+     */
+    function qux(foo) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":false,"string":"Str"}}}
 // Message: Invalid JSDoc @param "foo" type "abc".
 
-/**
- * @param {abc} foo
- */
-function qux(foo) {
-}
+    /**
+     * @param {abc} foo
+     */
+    function qux(foo) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":false}}}
 // Message: Invalid JSDoc @param "foo" type "abc".
 
-/**
- * @param {*} baz
- */
-function qux(baz) {
-}
+    /**
+     * @param {*} baz
+     */
+    function qux(baz) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"*":false,"abc":"Abc","string":"Str"}}}
 // Message: Invalid JSDoc @param "baz" type "*".
 
-/**
- * @param {*} baz
- */
-function qux(baz) {
-}
+    /**
+     * @param {*} baz
+     */
+    function qux(baz) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"*":"aaa","abc":"Abc","string":"Str"}}}
 // Message: Invalid JSDoc @param "baz" type "*"; prefer: "aaa".
 
-/**
- * @param {abc} foo
- * @param {Number} bar
- */
-function qux(foo, bar) {
-}
+    /**
+     * @param {abc} foo
+     * @param {Number} bar
+     */
+    function qux(foo, bar) {
+    }
+
 // Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
 // Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
 
@@ -1862,6 +1977,7 @@ function qux(foo, bar) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
 
@@ -1871,6 +1987,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray","Array.<>":"GenericArray"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
 
@@ -1880,6 +1997,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array.<>":"GenericArray"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
 
@@ -1889,6 +2007,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array<>":"GenericArray"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".
 
@@ -1898,6 +2017,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"[]":"SpecialTypeArray"}}}
 // Message: Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".
 
@@ -1907,6 +2027,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"[]":"SpecialTypeArray"}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".
@@ -1917,6 +2038,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"SpecialTypeArray"}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "SpecialTypeArray".
@@ -1927,6 +2049,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
@@ -1936,6 +2059,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject","object.<>":"GenericObject"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
@@ -1945,6 +2069,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject","object<>":"GenericObject"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
@@ -1954,6 +2079,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object.<>":"GenericObject"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
@@ -1963,6 +2089,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object<>":"GenericObject"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
@@ -1972,6 +2099,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object.<>":"GenericObject"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
@@ -1981,6 +2109,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object<>":"GenericObject"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
@@ -1990,6 +2119,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
@@ -2000,6 +2130,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
@@ -2010,6 +2141,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
@@ -2020,6 +2152,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":false}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object".
@@ -2030,6 +2163,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":false}}}
 // Message: Invalid JSDoc @param "foo" type "object".
 
@@ -2039,6 +2173,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
@@ -2049,6 +2184,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
@@ -2060,6 +2196,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"[]":"Array."}}}
 // Message: Invalid JSDoc @param "foo" type "[]"; prefer: "Array.".
 
@@ -2070,6 +2207,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"[]":"Array.<>"}}}
 // Message: Invalid JSDoc @param "foo" type "[]"; prefer: "Array.<>".
 
@@ -2080,6 +2218,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"[]":"Array<>"}}}
 // Message: Invalid JSDoc @param "foo" type "[]"; prefer: "Array<>".
 
@@ -2090,6 +2229,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object.":"Object"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object".
 
@@ -2100,6 +2240,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object.":"Object<>"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
 
@@ -2110,6 +2251,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object<>":"Object."}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object.".
 
@@ -2120,6 +2262,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array.":"[]"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "[]".
 
@@ -2130,6 +2273,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array.":"Array<>"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "Array<>".
 
@@ -2140,6 +2284,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array.":"<>"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "<>".
 
@@ -2150,6 +2295,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array.":"<>"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "<>".
 
@@ -2160,6 +2306,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"MyArray.":"<>"}}}
 // Message: Invalid JSDoc @param "foo" type "MyArray"; prefer: "<>".
 
@@ -2170,6 +2317,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"<>":"Array."}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".
 
@@ -2180,6 +2328,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"Array."}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".
@@ -2191,6 +2340,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"<>":"[]"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "[]".
 
@@ -2201,70 +2351,79 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param {number} foo
- * @param {Bar} bar
- * @param {*} baz
- */
-function quux (foo, bar, baz) {
+    /**
+     * @param {number} foo
+     * @param {Bar} bar
+     * @param {*} baz
+     */
+    function quux (foo, bar, baz) {
 
-}
+    }
 
-/**
- * @arg {number} foo
- * @arg {Bar} bar
- * @arg {*} baz
- */
-function quux (foo, bar, baz) {
 
-}
+    /**
+     * @arg {number} foo
+     * @arg {Bar} bar
+     * @arg {*} baz
+     */
+    function quux (foo, bar, baz) {
 
-/**
- * @param {(number|string|boolean)=} foo
- */
-function quux (foo, bar, baz) {
+    }
 
-}
 
-/**
- * @param {typeof bar} foo
- */
-function qux(foo) {
-}
+    /**
+     * @param {(number|string|boolean)=} foo
+     */
+    function quux (foo, bar, baz) {
 
-/**
- * @param {import('./foo').bar.baz} foo
- */
-function qux(foo) {
-}
+    }
 
-/**
- * @param {(x: number, y: string) => string} foo
- */
-function qux(foo) {
-}
 
-/**
- * @param {() => string} foo
- */
-function qux(foo) {
-}
+    /**
+     * @param {typeof bar} foo
+     */
+    function qux(foo) {
+    }
 
-/**
- * @returns {Number} foo
- * @throws {Number} foo
- */
-function quux () {
 
-}
+    /**
+     * @param {import('./foo').bar.baz} foo
+     */
+    function qux(foo) {
+    }
+
+
+    /**
+     * @param {(x: number, y: string) => string} foo
+     */
+    function qux(foo) {
+    }
+
+
+    /**
+     * @param {() => string} foo
+     */
+    function qux(foo) {
+    }
+
+
+    /**
+     * @returns {Number} foo
+     * @throws {Number} foo
+     */
+    function quux () {
+
+    }
+
 // Options: [{"noDefaults":true}]
 
-/**
- * @param {Object} foo
- */
-function quux (foo) {
+  /**
+   * @param {Object} foo
+   */
+  function quux (foo) {
 
-}
+  }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"Object"}}}
 
 /**
@@ -2274,12 +2433,14 @@ function quux (foo) {
 
 }
 
+
 /**
  * @param {Array.<string>} foo
  */
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray"}}}
 
 /**
@@ -2288,6 +2449,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"GenericArray"}}}
 
 /**
@@ -2296,6 +2458,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"SpecialTypeArray","Array.<>":"SpecialTypeArray","Array<>":"SpecialTypeArray"}}}
 
 /**
@@ -2304,6 +2467,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array.<>":"SpecialTypeArray","Array<>":"SpecialTypeArray"}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 
@@ -2313,6 +2477,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"[]":"SpecialTypeArray"}}}
 
 /**
@@ -2321,6 +2486,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"[]":"SpecialTypeArray"}}}
 // Options: [{"unifyParentAndChildTypeChecks":true}]
 
@@ -2330,6 +2496,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array.<>":"GenericArray"}}}
 
 /**
@@ -2338,6 +2505,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"Array<>":"GenericArray"}}}
 
 /**
@@ -2347,12 +2515,14 @@ function quux (foo) {
 
 }
 
+
 /**
  * @param {object.<string>} foo
  */
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 
 /**
@@ -2361,6 +2531,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 
 /**
@@ -2369,6 +2540,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 
 /**
@@ -2377,6 +2549,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
 
 /**
@@ -2385,6 +2558,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object.<>":"GenericObject"}}}
 
 /**
@@ -2393,14 +2567,16 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
 // Settings: {"jsdoc":{"preferredTypes":{"object<>":"GenericObject"}}}
 
-/**
- * @param {Number<} Ignore the error as not a validating rule
- */
-function quux (foo) {
+    /**
+     * @param {Number<} Ignore the error as not a validating rule
+     */
+    function quux (foo) {
 
-}
+    }
+
 ````
 
 
@@ -2426,14 +2602,16 @@ The following patterns are considered problems:
 function quux () {
 
 }
+
 // Message: @implements used on a non-constructor function
 
-/**
- * @implements {SomeClass}
- */
-function quux () {
+  /**
+   * @implements {SomeClass}
+   */
+  function quux () {
 
-}
+  }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"implements":false}}}
 // Message: Unexpected tag `@implements`
 ````
@@ -2449,6 +2627,7 @@ function quux () {
 
 }
 
+
 /**
  * @implements {SomeClass}
  * @constructor
@@ -2456,6 +2635,7 @@ function quux () {
 function quux () {
 
 }
+
 
 /**
  *
@@ -2469,6 +2649,7 @@ class quux {
   }
 }
 
+
 /**
  *
  */
@@ -2481,12 +2662,6 @@ const quux = class {
   }
 }
 
-/**
- *
- */
-function quux () {
-
-}
 
 /**
  *
@@ -2494,6 +2669,15 @@ function quux () {
 function quux () {
 
 }
+
+
+  /**
+   *
+   */
+  function quux () {
+
+  }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"implements":false}}}
 ````
 
@@ -2607,272 +2791,299 @@ Overrides the default contexts (see below).
 The following patterns are considered problems:
 
 ````js
-/**
- * foo.
- */
-const q = class {
+    /**
+     * foo.
+     */
+    const q = class {
 
-}
+    }
+
 // Options: [{"contexts":["ClassExpression"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * foo.
- */
-const q = {
+    /**
+     * foo.
+     */
+    const q = {
 
-};
+    };
+
 // Options: [{"contexts":["ObjectExpression"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * foo.
- */
-function quux () {
+    /**
+     * foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo)
- */
-function quux () {
+    /**
+     * Foo)
+     */
+    function quux () {
 
-}
+    }
+
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * тест.
- */
-function quux () {
+    /**
+     * тест.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Abc.
- */
-function quux () {
+    /**
+     * Abc.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"mainDescription":"[А-Я][А-я]+\\.","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo
- */
-function quux () {
+    /**
+     * Foo
+     */
+    function quux () {
 
-}
+    }
+
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo.
- *
- * @param foo foo.
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @param foo foo.
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo.
- *
- * @prop foo foo.
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @prop foo foo.
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"prop":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo.
- *
- * @summary foo.
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * @summary foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"summary":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo.
- *
- * @author
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * @author
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"author":".+"}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo.
- *
- * @x-tag
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * @x-tag
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"x-tag":".+"}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo.
- *
- * @description foo foo.
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @description foo foo.
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"description":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo
- *
- * @param foo foo.
- */
-function quux (foo) {
+    /**
+     * Foo
+     *
+     * @param foo foo.
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"mainDescription":"^[a-zA-Z]*$","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo
- *
- * @param foo foo.
- */
-function quux (foo) {
+    /**
+     * Foo
+     *
+     * @param foo foo.
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"mainDescription":false,"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo.
- *
- * @param foo bar
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @param foo bar
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * {@see Foo.bar} buz
- */
-function quux (foo) {
+    /**
+     * {@see Foo.bar} buz
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo.
- *
- * @returns {number} foo
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @returns {number} foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"returns":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo.
- *
- * @returns foo.
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @returns foo.
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"returns":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * lorem ipsum dolor sit amet, consectetur adipiscing elit. pellentesque elit diam,
- * iaculis eu dignissim sed, ultrices sed nisi. nulla at ligula auctor, consectetur neque sed,
- * tincidunt nibh. vivamus sit amet vulputate ligula. vivamus interdum elementum nisl,
- * vitae rutrum tortor semper ut. morbi porta ante vitae dictum fermentum.
- * proin ut nulla at quam convallis gravida in id elit. sed dolor mauris, blandit quis ante at,
- * consequat auctor magna. duis pharetra purus in porttitor mollis.
- */
-function longDescription (foo) {
+    /**
+     * lorem ipsum dolor sit amet, consectetur adipiscing elit. pellentesque elit diam,
+     * iaculis eu dignissim sed, ultrices sed nisi. nulla at ligula auctor, consectetur neque sed,
+     * tincidunt nibh. vivamus sit amet vulputate ligula. vivamus interdum elementum nisl,
+     * vitae rutrum tortor semper ut. morbi porta ante vitae dictum fermentum.
+     * proin ut nulla at quam convallis gravida in id elit. sed dolor mauris, blandit quis ante at,
+     * consequat auctor magna. duis pharetra purus in porttitor mollis.
+     */
+    function longDescription (foo) {
 
-}
+    }
+
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * @arg {number} foo - Foo
- */
-function quux (foo) {
+    /**
+     * @arg {number} foo - Foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"arg":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * @argument {number} foo - Foo
- */
-function quux (foo) {
+    /**
+     * @argument {number} foo - Foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"argument":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * @return {number} foo
- */
-function quux (foo) {
+    /**
+     * @return {number} foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"return":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Returns bar.
- *
- * @return {number} bar
- */
-function quux (foo) {
+    /**
+     * Returns bar.
+     *
+     * @return {number} bar
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"return":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * @param notRet
- * @returns Тест.
- */
-function quux () {
+    /**
+     * @param notRet
+     * @returns Тест.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"param":"[А-Я][А-я]+\\."}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * @description notRet
- * @returns Тест.
- */
-function quux () {
+    /**
+     * @description notRet
+     * @returns Тест.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"description":"[А-Я][А-я]+\\."}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * foo.
- */
-class quux {
+    /**
+     * foo.
+     */
+    class quux {
 
-}
+    }
+
 // Options: [{"contexts":["ClassDeclaration"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
@@ -2882,43 +3093,48 @@ class MyClass {
    */
   myClassField = 1
 }
+
 // Options: [{"contexts":["ClassProperty"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * foo.
- */
-interface quux {
+    /**
+     * foo.
+     */
+    interface quux {
 
-}
+    }
+
 // Options: [{"contexts":["TSInterfaceDeclaration"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-const myObject = {
-  /**
-   * Bad description
-   */
-  myProp: true
-};
+    const myObject = {
+      /**
+       * Bad description
+       */
+      myProp: true
+    };
+
 // Options: [{"contexts":["Property"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * @param foo Foo bar
- */
-function quux (foo) {
+  /**
+   * @param foo Foo bar
+   */
+  function quux (foo) {
 
-}
+  }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 // Options: [{"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
-/**
- * Foo bar
- */
-function quux (foo) {
+  /**
+   * Foo bar
+   */
+  function quux (foo) {
 
-}
+  }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 // Message: JSDoc description does not satisfy the regex pattern.
 ````
@@ -2926,176 +3142,197 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param foo - Foo.
- */
-function quux () {
+    /**
+     * @param foo - Foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"param":true}}]
 
-/**
- * Foo.
- */
-function quux () {
+    /**
+     * Foo.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * Foo.
- * Bar.
- */
-function quux () {
 
-}
+    /**
+     * Foo.
+     * Bar.
+     */
+    function quux () {
 
-/**
- * Foo.
- *
- * Bar.
- */
-function quux () {
+    }
 
-}
 
-/**
- * Тест.
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * Bar.
+     */
+    function quux () {
 
-}
+    }
+
+
+    /**
+     * Тест.
+     */
+    function quux () {
+
+    }
+
 // Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
 
-/**
- * @param notRet
- * @returns Тест.
- */
-function quux () {
+    /**
+     * @param notRet
+     * @returns Тест.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"returns":"[А-Я][А-я]+\\."}}]
 
-/**
- * @param notRet
- * @description Тест.
- */
-function quux () {
+    /**
+     * @param notRet
+     * @description Тест.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"description":"[А-Я][А-я]+\\."}}]
 
-/**
- * Foo
- * bar.
- */
-function quux () {
+    /**
+     * Foo
+     * bar.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * @returns Foo bar.
- */
-function quux () {
 
-}
+    /**
+     * @returns Foo bar.
+     */
+    function quux () {
+
+    }
+
 // Options: [{"tags":{"returns":true}}]
 
-/**
- * @returns {type1} Foo bar.
- */
-function quux () {
+    /**
+     * @returns {type1} Foo bar.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"returns":true}}]
 
-/**
- * @description Foo bar.
- */
-function quux () {
+    /**
+     * @description Foo bar.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"description":true}}]
 
-/**
- * Foo. {@see Math.sin}.
- */
-function quux () {
+    /**
+     * Foo. {@see Math.sin}.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * Foo {@see Math.sin} bar.
- */
-function quux () {
 
-}
+    /**
+     * Foo {@see Math.sin} bar.
+     */
+    function quux () {
 
-/**
- * Foo?
- *
- * Bar!
- *
- * Baz:
- *   1. Foo.
- *   2. Bar.
- */
-function quux () {
+    }
 
-}
 
-/**
- * Hello:
- * World.
- */
-function quux () {
+    /**
+     * Foo?
+     *
+     * Bar!
+     *
+     * Baz:
+     *   1. Foo.
+     *   2. Bar.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * Hello: world.
- */
-function quux () {
 
-}
+    /**
+     * Hello:
+     * World.
+     */
+    function quux () {
 
-/**
- * Foo
- * Bar.
- */
-function quux () {
+    }
 
-}
 
-/**
- * Foo.
- *
- * foo.
- */
-function quux () {
+    /**
+     * Hello: world.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * foo.
- */
-function quux () {
 
-}
+    /**
+     * Foo
+     * Bar.
+     */
+    function quux () {
+
+    }
+
+
+    /**
+     * Foo.
+     *
+     * foo.
+     */
+    function quux () {
+
+    }
+
+
+    /**
+     * foo.
+     */
+    function quux () {
+
+    }
+
 // Options: [{"mainDescription":false}]
 
-/**
- * foo.
- */
-class quux {
+    /**
+     * foo.
+     */
+    class quux {
 
-}
+    }
 
-/**
- * foo.
- */
-class quux {
 
-}
+    /**
+     * foo.
+     */
+    class quux {
+
+    }
+
 // Options: [{"mainDescription":true}]
 
 class MyClass {
@@ -3104,102 +3341,114 @@ class MyClass {
    */
   myClassField = 1
 }
+
 // Options: [{"contexts":["ClassProperty"]}]
 
-/**
- * Foo.
- */
-interface quux {
+    /**
+     * Foo.
+     */
+    interface quux {
 
-}
+    }
+
 // Options: [{"contexts":["TSInterfaceDeclaration"]}]
 
-const myObject = {
-  /**
-   * Bad description
-   */
-  myProp: true
-};
+    const myObject = {
+      /**
+       * Bad description
+       */
+      myProp: true
+    };
+
 // Options: [{"contexts":[]}]
 
-/**
- * foo.
- */
-const q = class {
+    /**
+     * foo.
+     */
+    const q = class {
 
-}
+    }
+
 // Options: [{"contexts":[]}]
 
-/**
- * foo.
- */
-const q = {
+    /**
+     * foo.
+     */
+    const q = {
 
-};
+    };
+
 // Options: [{"contexts":[]}]
 
-/**
- * @description foo.
- */
-function quux () {
+    /**
+     * @description foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"param":true}}]
 
-/**
- * Foo.
- *
- * @summary Foo.
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * @summary Foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"summary":true}}]
 
-/**
- * Foo.
- *
- * @author Somebody
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * @author Somebody
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"author":".+"}}]
 
-/**
- * Foo.
- *
- * @x-tag something
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * @x-tag something
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":{"x-tag":".+"}}]
 
-/**
- * Foo.
- *
- * @prop foo Foo.
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @prop foo Foo.
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Options: [{"tags":{"prop":true}}]
 
-/**
- * @param foo Foo bar.
- */
-function quux (foo) {
+  /**
+   * @param foo Foo bar.
+   */
+  function quux (foo) {
 
-}
+  }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 
-/**
- *
- */
-function quux () {
+  /**
+   *
+   */
+  function quux () {
 
-}
+  }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 ````
 
@@ -3223,56 +3472,61 @@ This rule allows one optional string argument. If it is `"always"` then a proble
 The following patterns are considered problems:
 
 ````js
-/**
- * Foo.
- *
- * Foo.
- * @foo
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * Foo.
+     * @foo
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["always"]
 // Message: There must be a newline after the description of the JSDoc block.
 
-/**
- * Foo.
- *
- * Foo.
- * @foo
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * Foo.
+     * @foo
+     */
+    function quux () {
 
-}
+    }
+
 // Message: There must be a newline after the description of the JSDoc block.
 
-/**
- * Bar.
- *
- * Bar.
- *
- * @bar
- */
-function quux () {
+    /**
+     * Bar.
+     *
+     * Bar.
+     *
+     * @bar
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["never"]
 // Message: There must be no newline after the description of the JSDoc block.
 
-/**
-* A.
-*
-* @typedef {Object} A
-* @prop {boolean} a A.
-*/
+  /**
+   * A.
+   *
+   * @typedef {Object} A
+   * @prop {boolean} a A.
+   */
+
 // Options: ["never"]
 // Message: There must be no newline after the description of the JSDoc block.
 
-/**
-* A.
-* @typedef {Object} A
-* @prop {boolean} a A.
-*/
+  /**
+   * A.
+   * @typedef {Object} A
+   * @prop {boolean} a A.
+   */
+
 // Options: ["always"]
 // Message: There must be a newline after the description of the JSDoc block.
 ````
@@ -3280,39 +3534,43 @@ function quux () {
 The following patterns are not considered problems:
 
 ````js
-/**
- * Foo.
- */
-function quux () {
+    /**
+     * Foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["always"]
 
-/**
- * Bar.
- */
-function quux () {
+    /**
+     * Bar.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["never"]
 
-/**
- * Foo.
- *
- * @foo
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * @foo
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["always"]
 
-/**
- * Bar.
- * @bar
- */
-function quux () {
+    /**
+     * Bar.
+     * @bar
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["never"]
 ````
 
@@ -3334,32 +3592,35 @@ the type information would be redundant with TypeScript.
 The following patterns are considered problems:
 
 ````js
-/**
- * @param {number} foo
- */
-function quux (foo) {
+    /**
+     * @param {number} foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Types are not permitted on @param.
 
-/**
- * @returns {number}
- */
-function quux () {
+    /**
+     * @returns {number}
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Types are not permitted on @returns.
 ````
 
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 ````
 
 
@@ -3410,62 +3671,68 @@ An option object may have the following key:
 The following patterns are considered problems:
 
 ````js
-/**
-  * @param {HerType} baz - Foo.
-  */
-function quux(foo, bar, baz) {
+  /**
+   * @param {HerType} baz - Foo.
+   */
+ function quux(foo, bar, baz) {
 
-}
+ }
+
 // Settings: {"jsdoc":{"preferredTypes":{"HerType":1000}}}
 // Message: Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.
 
-/**
-  * @param {HerType} baz - Foo.
-  */
-function quux(foo, bar, baz) {
+  /**
+   * @param {HerType} baz - Foo.
+   */
+ function quux(foo, bar, baz) {
 
-}
+ }
+
 // Settings: {"jsdoc":{"preferredTypes":{"HerType":false}}}
 // Message: The type 'HerType' is undefined.
 
-/**
- * @param {strnig} foo - Bar.
- */
-function quux(foo) {
+    /**
+     * @param {strnig} foo - Bar.
+     */
+    function quux(foo) {
 
-}
+    }
+
 // Message: The type 'strnig' is undefined.
 
-/**
-* @param {MyType} foo - Bar.
-* @param {HisType} bar - Foo.
-*/
-function quux(foo, bar) {
+  /**
+   * @param {MyType} foo - Bar.
+   * @param {HisType} bar - Foo.
+   */
+   function quux(foo, bar) {
 
-}
+   }
+
 // Options: [{"definedTypes":["MyType"]}]
 // Message: The type 'HisType' is undefined.
 
-/**
-  * @param {MyType} foo - Bar.
-  * @param {HisType} bar - Foo.
-  * @param {HerType} baz - Foo.
-  */
-function quux(foo, bar, baz) {
+  /**
+   * @param {MyType} foo - Bar.
+   * @param {HisType} bar - Foo.
+   * @param {HerType} baz - Foo.
+   */
+ function quux(foo, bar, baz) {
 
-}
+ }
+
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"}}}}
 // Options: [{"definedTypes":["MyType"]}]
 // Message: The type 'HisType' is undefined.
 
-/**
-  * @param {MyType} foo - Bar.
-  * @param {HisType} bar - Foo.
-  * @param {HerType} baz - Foo.
-  */
-function quux(foo, bar, baz) {
+  /**
+   * @param {MyType} foo - Bar.
+   * @param {HisType} bar - Foo.
+   * @param {HerType} baz - Foo.
+   */
+ function quux(foo, bar, baz) {
 
-}
+ }
+
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":false},"histype":"HisType"}}}
 // Options: [{"definedTypes":["MyType"]}]
 // Message: The type 'HerType' is undefined.
@@ -3476,6 +3743,7 @@ function quux(foo, bar, baz) {
  */
 function foo (bar) {
 };
+
 // Message: The type 'WRONG_TEMPLATE_TYPE' is undefined.
 
 class Foo {
@@ -3485,6 +3753,7 @@ class Foo {
   bar () {
   }
 }
+
 // Message: The type 'TEMPLATE_TYPE' is undefined.
 
 class Foo {
@@ -3505,102 +3774,113 @@ class Bar {
   validTemplateReference () {
   }
 }
+
 // Message: The type 'TEMPLATE_TYPE' is undefined.
 
-/**
- * @type {strnig}
- */
-var quux = {
+    /**
+     * @type {strnig}
+     */
+    var quux = {
 
-};
+    };
+
 // Message: The type 'strnig' is undefined.
 ````
 
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param {string} foo - Bar.
- */
-function quux(foo) {
+    /**
+     * @param {string} foo - Bar.
+     */
+    function quux(foo) {
 
-}
+    }
 
-/**
- * @param {Promise} foo - Bar.
- */
-function quux(foo) {
 
-}
+    /**
+     * @param {Promise} foo - Bar.
+     */
+    function quux(foo) {
 
-class MyClass {}
+    }
 
-/**
- * @param {MyClass} foo - Bar.
- */
-function quux(foo) {
-  console.log(foo);
-}
 
-quux(0);
+    class MyClass {}
 
-const MyType = require('my-library').MyType;
+    /**
+     * @param {MyClass} foo - Bar.
+     */
+    function quux(foo) {
+      console.log(foo);
+    }
 
-/**
- * @param {MyType} foo - Bar.
- */
+    quux(0);
+
+
+  const MyType = require('my-library').MyType;
+
+  /**
+   * @param {MyType} foo - Bar.
+   */
+    function quux(foo) {
+
+  }
+
+
+  const MyType = require('my-library').MyType;
+
+  /**
+   * @param {MyType} foo - Bar.
+   */
+    function quux(foo) {
+
+  }
+
+
+  import {MyType} from 'my-library';
+
+  /**
+   * @param {MyType} foo - Bar.
+   * @param {Object<string, number>} foo
+   * @param {Array<string>} baz
+   */
+    function quux(foo, bar, baz) {
+
+  }
+
+
+  /*globals MyType*/
+
+  /**
+   * @param {MyType} foo - Bar.
+   * @param {HisType} bar - Foo.
+   */
+    function quux(foo, bar) {
+
+  }
+
+
+  /**
+   * @typedef {Object} hello
+   * @property {string} a - a.
+   */
+
+  /**
+   * @param {hello} foo
+   */
   function quux(foo) {
 
-}
+  }
 
-const MyType = require('my-library').MyType;
 
-/**
- * @param {MyType} foo - Bar.
- */
+  /**
+   * @param {Array<syntaxError} foo
+   */
   function quux(foo) {
 
-}
+  }
 
-import {MyType} from 'my-library';
-
-/**
- * @param {MyType} foo - Bar.
- * @param {Object<string, number>} foo
- * @param {Array<string>} baz
- */
-  function quux(foo, bar, baz) {
-
-}
-
-/*globals MyType*/
-
-/**
- * @param {MyType} foo - Bar.
- * @param {HisType} bar - Foo.
- */
-  function quux(foo, bar) {
-
-}
-
-/**
- * @typedef {Object} hello
- * @property {string} a - a.
- */
-
-/**
- * @param {hello} foo
- */
-function quux(foo) {
-
-}
-
-/**
- * @param {Array<syntaxError} foo
- */
-function quux(foo) {
-
-}
 
 /**
  * Callback test.
@@ -3617,13 +3897,6 @@ function testFunction(callback) {
   callback();
 }
 
-/**
- *
- *
- */
-function foo () {
-
-}
 
 /**
  *
@@ -3633,34 +3906,47 @@ function foo () {
 
 }
 
+
 /**
-* @param {MyType} foo - Bar.
-* @param {HisType} bar - Foo.
-*/
-function quux(foo, bar) {
+ *
+ *
+ */
+function foo () {
 
 }
+
+
+  /**
+   * @param {MyType} foo - Bar.
+   * @param {HisType} bar - Foo.
+   */
+   function quux(foo, bar) {
+
+   }
+
 // Options: [{"definedTypes":["MyType","HisType"]}]
 
-/**
-  * @param {MyType} foo - Bar.
-  * @param {HisType} bar - Foo.
-  * @param {HerType} baz - Foo.
-  */
-function quux(foo, bar, baz) {
+  /**
+   * @param {MyType} foo - Bar.
+   * @param {HisType} bar - Foo.
+   * @param {HerType} baz - Foo.
+   */
+ function quux(foo, bar, baz) {
 
-}
+ }
+
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"},"histype":"HisType"}}}
 // Options: [{"definedTypes":["MyType"]}]
 
-/**
-  * @param {MyType} foo - Bar.
-  * @param {HisType} bar - Foo.
-  * @param {HerType} baz - Foo.
-  */
-function quux(foo, bar, baz) {
+  /**
+   * @param {MyType} foo - Bar.
+   * @param {HisType} bar - Foo.
+   * @param {HerType} baz - Foo.
+   */
+ function quux(foo, bar, baz) {
 
-}
+ }
+
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType<>"},"histype":"HisType.<>"}}}
 // Options: [{"definedTypes":["MyType"]}]
 
@@ -3672,6 +3958,7 @@ function quux(foo, bar, baz) {
 function foo (bar) {
 };
 
+
 /**
  * @template TEMPLATE_TYPE
  */
@@ -3682,6 +3969,7 @@ class Foo {
   bar () {
   }
 }
+
 
 /**
  * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
@@ -3695,14 +3983,16 @@ class Foo {
   }
 }
 
+
 /****/
 
-/**
- *
- */
-function quux () {
+**
+*
+*/
+unction quux () {
 
-}
+
+
 ````
 
 
@@ -3752,213 +4042,237 @@ is `xyz`).
 The following patterns are considered problems:
 
 ````js
-/**
- * foo.
- */
-function quux () {
+    /**
+     * foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * foo?
- */
-function quux () {
+    /**
+     * foo?
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * @description foo.
- */
-function quux () {
+    /**
+     * @description foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * Foo)
- */
-function quux () {
+    /**
+     * Foo)
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Sentence must end with a period.
 
-/**
- * `foo` is a variable
- */
-function quux () {
+    /**
+     * `foo` is a variable
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Sentence must end with a period.
 
-/**
- * Foo.
- *
- * foo.
- */
-function quux () {
+    /**
+     * Foo.
+     *
+     * foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * тест.
- */
-function quux () {
+    /**
+     * тест.
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * Foo
- */
-function quux () {
+    /**
+     * Foo
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Sentence must end with a period.
 
-/**
- * Foo
- * Bar.
- */
-function quux () {
+    /**
+     * Foo
+     * Bar.
+     */
+    function quux () {
 
-}
+    }
+
 // Message: A line of text is started with an uppercase character, but preceding line does not end the sentence.
 
-/**
- * Foo.
- *
- * @param foo foo.
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @param foo foo.
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * Foo.
- *
- * @param foo bar
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @param foo bar
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * {@see Foo.bar} buz
- */
-function quux (foo) {
+    /**
+     * {@see Foo.bar} buz
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * Foo.
- *
- * @returns {number} foo
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @returns {number} foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * Foo.
- *
- * @returns foo.
- */
-function quux (foo) {
+    /**
+     * Foo.
+     *
+     * @returns foo.
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * lorem ipsum dolor sit amet, consectetur adipiscing elit. pellentesque elit diam,
- * iaculis eu dignissim sed, ultrices sed nisi. nulla at ligula auctor, consectetur neque sed,
- * tincidunt nibh. vivamus sit amet vulputate ligula. vivamus interdum elementum nisl,
- * vitae rutrum tortor semper ut. morbi porta ante vitae dictum fermentum.
- * proin ut nulla at quam convallis gravida in id elit. sed dolor mauris, blandit quis ante at,
- * consequat auctor magna. duis pharetra purus in porttitor mollis.
- */
-function longDescription (foo) {
+    /**
+     * lorem ipsum dolor sit amet, consectetur adipiscing elit. pellentesque elit diam,
+     * iaculis eu dignissim sed, ultrices sed nisi. nulla at ligula auctor, consectetur neque sed,
+     * tincidunt nibh. vivamus sit amet vulputate ligula. vivamus interdum elementum nisl,
+     * vitae rutrum tortor semper ut. morbi porta ante vitae dictum fermentum.
+     * proin ut nulla at quam convallis gravida in id elit. sed dolor mauris, blandit quis ante at,
+     * consequat auctor magna. duis pharetra purus in porttitor mollis.
+     */
+    function longDescription (foo) {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * @arg {number} foo - Foo
- */
-function quux (foo) {
+    /**
+     * @arg {number} foo - Foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Sentence must end with a period.
 
-/**
- * @argument {number} foo - Foo
- */
-function quux (foo) {
+    /**
+     * @argument {number} foo - Foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Sentence must end with a period.
 
-/**
- * @return {number} foo
- */
-function quux (foo) {
+    /**
+     * @return {number} foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * Returns bar.
- *
- * @return {number} bar
- */
-function quux (foo) {
+    /**
+     * Returns bar.
+     *
+     * @return {number} bar
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Sentence should start with an uppercase character.
 
-/**
- * @throws {Object} Hello World
- * hello world
-*/
+  /**
+   * @throws {Object} Hello World
+   * hello world
+  */
+
 // Message: Sentence must end with a period.
 
-/**
- * @summary Foo
- */
-function quux () {
+    /**
+     * @summary Foo
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Sentence must end with a period.
 
-/**
- * @throws {SomeType} Foo
- */
-function quux () {
+    /**
+     * @throws {SomeType} Foo
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Sentence must end with a period.
 
-/**
- * @see Foo
- */
-function quux () {
+    /**
+     * @see Foo
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"tags":["see"]}]
 // Message: Sentence must end with a period.
 
-/**
- * @param foo Foo bar
- */
-function quux (foo) {
+  /**
+   * @param foo Foo bar
+   */
+  function quux (foo) {
 
-}
+  }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 // Options: [{"tags":["param"]}]
 // Message: Sentence must end with a period.
@@ -3967,201 +4281,226 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param foo - Foo.
- */
-function quux () {
+    /**
+     * @param foo - Foo.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * Foo.
- */
-function quux () {
 
-}
+    /**
+     * Foo.
+     */
+    function quux () {
 
-/**
- * Foo.
- * Bar.
- */
-function quux () {
+    }
 
-}
 
-/**
- * Foo.
- *
- * Bar.
- */
-function quux () {
+    /**
+     * Foo.
+     * Bar.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * Тест.
- */
-function quux () {
 
-}
+    /**
+     * Foo.
+     *
+     * Bar.
+     */
+    function quux () {
 
-/**
- * Foo
- * bar.
- */
-function quux () {
+    }
 
-}
 
-/**
- * @returns Foo bar.
- */
-function quux () {
+    /**
+     * Тест.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * Foo. {@see Math.sin}.
- */
-function quux () {
 
-}
+    /**
+     * Foo
+     * bar.
+     */
+    function quux () {
 
-/**
- * Foo {@see Math.sin} bar.
- */
-function quux () {
+    }
 
-}
 
-/**
- * Foo?
- *
- * Bar!
- *
- * Baz:
- *   1. Foo.
- *   2. Bar.
- */
-function quux () {
+    /**
+     * @returns Foo bar.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * Hello:
- * World.
- */
-function quux () {
 
-}
+    /**
+     * Foo. {@see Math.sin}.
+     */
+    function quux () {
 
-/**
- * Hello: world.
- */
-function quux () {
+    }
 
-}
 
-/**
- *
- */
-function quux () {
+    /**
+     * Foo {@see Math.sin} bar.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * @description Foo.
- */
-function quux () {
 
-}
+    /**
+     * Foo?
+     *
+     * Bar!
+     *
+     * Baz:
+     *   1. Foo.
+     *   2. Bar.
+     */
+    function quux () {
 
-/**
- * `foo` is a variable.
- */
-function quux () {
+    }
 
-}
 
-/**
- * Foo.
- *
- * `foo`.
- */
-function quux () {
+    /**
+     * Hello:
+     * World.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * @param foo - `bar`.
- */
-function quux () {
 
-}
+    /**
+     * Hello: world.
+     */
+    function quux () {
 
-/**
- * @returns {number} `foo`.
- */
-function quux () {
+    }
 
-}
 
-/**
- * Foo
- * `bar`.
- */
-function quux () {
+    /**
+     *
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * @example Foo
- */
-function quux () {
 
-}
+    /**
+     * @description Foo.
+     */
+    function quux () {
 
-/**
- * @see Foo
- */
-function quux () {
+    }
 
-}
 
-/**
- * Foo.
- *
- * @param foo Foo.
- */
-function quux (foo) {
+    /**
+     * `foo` is a variable.
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * Foo.
- *
- * @param foo Foo.
- */
-function quux (foo) {
 
-}
+    /**
+     * Foo.
+     *
+     * `foo`.
+     */
+    function quux () {
+
+    }
+
+
+    /**
+     * @param foo - `bar`.
+     */
+    function quux () {
+
+    }
+
+
+    /**
+     * @returns {number} `foo`.
+     */
+    function quux () {
+
+    }
+
+
+    /**
+     * Foo
+     * `bar`.
+     */
+    function quux () {
+
+    }
+
+
+    /**
+     * @example Foo
+     */
+    function quux () {
+
+    }
+
+
+    /**
+     * @see Foo
+     */
+    function quux () {
+
+    }
+
+
+    /**
+     * Foo.
+     *
+     * @param foo Foo.
+     */
+    function quux (foo) {
+
+    }
+
+
+    /**
+     * Foo.
+     *
+     * @param foo Foo.
+     */
+    function quux (foo) {
+
+    }
+
 // Options: [{"tags":["param"]}]
 
-/**
- * @param foo Foo bar.
- */
-function quux (foo) {
+  /**
+   * @param foo Foo bar.
+   */
+  function quux (foo) {
 
-}
+  }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 // Options: [{"tags":["param"]}]
 
-/**
- *
- */
-function quux (foo) {
+  /**
+   *
+   */
+  function quux (foo) {
 
-}
+  }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 ````
 
@@ -4203,122 +4542,135 @@ An options object may have any of the following properties:
 The following patterns are considered problems:
 
 ````js
-/**
- *
- */
-function quux () {
+    /**
+     *
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
-/**
- *
- */
-function quux () {
+    /**
+     *
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"any"}]
 // Message: Missing JSDoc block description or @description declaration.
 
-/**
- *
- */
-function quux () {
+    /**
+     *
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"body"}]
 // Message: Missing JSDoc block description.
 
-/**
- *
- */
-class quux {
+    /**
+     *
+     */
+    class quux {
 
-}
+    }
+
 // Options: [{"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
-/**
- *
- */
-class quux {
+    /**
+     *
+     */
+    class quux {
 
-}
+    }
+
 // Options: [{"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
-/**
- *
- */
-class quux {
+    /**
+     *
+     */
+    class quux {
 
-}
+    }
+
 // Options: [{"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
-/**
- * @description
- */
-function quux () {
+    /**
+     * @description
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description description.
 
-/**
- *
- */
-interface quux {
+    /**
+     *
+     */
+    interface quux {
 
-}
+    }
+
 // Options: [{"contexts":["TSInterfaceDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
-/**
- *
- */
-var quux = class {
+    /**
+     *
+     */
+    var quux = class {
 
-};
+    };
+
 // Options: [{"contexts":["ClassExpression"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
-/**
- *
- */
-var quux = {
+    /**
+     *
+     */
+    var quux = {
 
-};
+    };
+
 // Options: [{"contexts":["ObjectExpression"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
-/**
- * @someDesc
- */
-function quux () {
+    /**
+     * @someDesc
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":{"message":"Please avoid `{{tagName}}`; use `{{replacement}}` instead","replacement":"someDesc"}}}}
 // Options: [{"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @someDesc description.
 
-/**
- * @description
- */
-function quux () {
+    /**
+     * @description
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 // Options: [{"descriptionStyle":"tag"}]
 // Message: Unexpected tag `@description`
 
-/**
- * @description
- */
-function quux () {
+    /**
+     * @description
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 // Options: [{"descriptionStyle":"any"}]
 // Message: Missing JSDoc block description or @description declaration.
@@ -4327,121 +4679,135 @@ function quux () {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @description
- * // arbitrary description content
- */
-function quux () {
+    /**
+     * @description
+     * // arbitrary description content
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"tag"}]
 
-/**
- * @description
- * quux(); // does something useful
- */
-function quux () {
+    /**
+     * @description
+     * quux(); // does something useful
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"tag"}]
 
-/**
- * @description <caption>Valid usage</caption>
- * quux(); // does something useful
- *
- * @description <caption>Invalid usage</caption>
- * quux('random unwanted arg'); // results in an error
- */
-function quux () {
+    /**
+     * @description <caption>Valid usage</caption>
+     * quux(); // does something useful
+     *
+     * @description <caption>Invalid usage</caption>
+     * quux('random unwanted arg'); // results in an error
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"tag"}]
 
-/**
- *
- */
-class quux {
+    /**
+     *
+     */
+    class quux {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"tag"}]
 
-/**
- *
- */
-function quux () {
+    /**
+     *
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"contexts":["ClassDeclaration"]}]
 
-/**
- * @type {MyCallback}
- */
-function quux () {
+    /**
+     * @type {MyCallback}
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"exemptedBy":["type"]}]
 
-/**
- *
- */
-interface quux {
+    /**
+     *
+     */
+    interface quux {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"tag"}]
 
-/**
- *
- */
-var quux = class {
+    /**
+     *
+     */
+    var quux = class {
 
-};
+    };
+
 // Options: [{"descriptionStyle":"tag"}]
 
-/**
- *
- */
-var quux = {
+    /**
+     *
+     */
+    var quux = {
 
-};
+    };
+
 // Options: [{"descriptionStyle":"tag"}]
 
-/**
- * Has an implicit description
- */
-function quux () {
+    /**
+     * Has an implicit description
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"body"}]
 
-/**
- * Has an implicit description
- */
-function quux () {
+    /**
+     * Has an implicit description
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * Has an implicit description
- */
-function quux () {
 
-}
+    /**
+     * Has an implicit description
+     */
+    function quux () {
+
+    }
+
 // Options: [{"descriptionStyle":"any"}]
 
-/**
- * @description Has an explicit description
- */
-function quux () {
+    /**
+     * @description Has an explicit description
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"descriptionStyle":"any"}]
 
-/**
- *
- */
-function quux () {
+  /**
+   *
+   */
+  function quux () {
 
-}
+  }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 ````
 
@@ -4489,20 +4855,22 @@ Overrides the default contexts (see below).
 The following patterns are considered problems:
 
 ````js
-/**
- *
- */
-function quux () {
+    /**
+     *
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Missing JSDoc @example declaration.
 
-/**
- * @example
- */
-function quux () {
+    /**
+     * @example
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Missing JSDoc @example description.
 
 /**
@@ -4511,6 +4879,7 @@ function quux () {
 function f () {
 
 }
+
 // Settings: {"jsdoc":{"avoidExampleOnConstructors":true}}
 // Message: `settings.jsdoc.avoidExampleOnConstructors` has been removed, use options in the rule `require-example` instead.
 
@@ -4520,6 +4889,7 @@ function f () {
 function quux () {
 
 }
+
 // Message: Missing JSDoc @example declaration.
 
 /**
@@ -4529,14 +4899,16 @@ function quux () {
 function quux () {
 
 }
+
 // Message: Missing JSDoc @example description.
 
-/**
- *
- */
-class quux {
+    /**
+     *
+     */
+    class quux {
 
-}
+    }
+
 // Options: [{"contexts":["ClassDeclaration"]}]
 // Message: Missing JSDoc @example declaration.
 ````
@@ -4544,32 +4916,35 @@ class quux {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @example
- * // arbitrary example content
- */
-function quux () {
+    /**
+     * @example
+     * // arbitrary example content
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * @example
- * quux(); // does something useful
- */
-function quux () {
 
-}
+    /**
+     * @example
+     * quux(); // does something useful
+     */
+    function quux () {
 
-/**
- * @example <caption>Valid usage</caption>
- * quux(); // does something useful
- *
- * @example <caption>Invalid usage</caption>
- * quux('random unwanted arg'); // results in an error
- */
-function quux () {
+    }
 
-}
+
+    /**
+     * @example <caption>Valid usage</caption>
+     * quux(); // does something useful
+     *
+     * @example <caption>Invalid usage</caption>
+     * quux('random unwanted arg'); // results in an error
+     */
+    function quux () {
+
+    }
+
 
 /**
  * @constructor
@@ -4577,6 +4952,7 @@ function quux () {
 function quux () {
 
 }
+
 // Options: [{"avoidExampleOnConstructors":true}]
 
 /**
@@ -4586,6 +4962,7 @@ function quux () {
 function quux () {
 
 }
+
 // Options: [{"avoidExampleOnConstructors":true}]
 
 class Foo {
@@ -4596,6 +4973,7 @@ class Foo {
 
   }
 }
+
 // Options: [{"avoidExampleOnConstructors":true}]
 
 /**
@@ -4605,28 +4983,32 @@ function quux () {
 
 }
 
-/**
- * @type {MyCallback}
- */
-function quux () {
 
-}
+    /**
+     * @type {MyCallback}
+     */
+    function quux () {
+
+    }
+
 // Options: [{"exemptedBy":["type"]}]
 
-/**
- * @example Some example code
- */
-class quux {
+    /**
+     * @example Some example code
+     */
+    class quux {
 
-}
+    }
+
 // Options: [{"contexts":["ClassDeclaration"]}]
 
-/**
- *
- */
-function quux () {
+    /**
+     *
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"contexts":["ClassDeclaration"]}]
 ````
 
@@ -4651,59 +5033,65 @@ This rule takes one optional string argument. If it is `"always"` then a problem
 The following patterns are considered problems:
 
 ````js
-/**
- * @param foo Foo.
- */
-function quux () {
+    /**
+     * @param foo Foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["always"]
 // Message: There must be a hyphen before @param description.
 
-/**
- * @param foo Foo.
- */
-function quux () {
+    /**
+     * @param foo Foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Message: There must be a hyphen before @param description.
 
-/**
- * @param foo - Foo.
- */
-function quux () {
+    /**
+     * @param foo - Foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["never"]
 // Message: There must be no hyphen before @param description.
 
-/**
- * @param foo - foo
- * @param foo foo
- */
-function quux () {
+    /**
+     * @param foo - foo
+     * @param foo foo
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["always"]
 // Message: There must be a hyphen before @param description.
 
-/**
- * @param foo foo
- * bar
- * @param bar - bar
- */
-function quux () {
+    /**
+     * @param foo foo
+     * bar
+     * @param bar - bar
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["always"]
 // Message: There must be a hyphen before @param description.
 
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
 ````
@@ -4711,28 +5099,31 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param foo - Foo.
- */
-function quux () {
+    /**
+     * @param foo - Foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["always"]
 
-/**
- * @param foo Foo.
- */
-function quux () {
+    /**
+     * @param foo Foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Options: ["never"]
 
-/**
- * @param foo
- */
-function quux () {
+    /**
+     * @param foo
+     */
+    function quux () {
 
-}
+    }
+
 ````
 
 
@@ -4789,44 +5180,52 @@ Accepts one optional options object with the following optional keys.
 The following patterns are considered problems:
 
 ````js
-export var test = function () {
+    export var test = function () {
 
-};
+    };
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-function test () {
+    function test () {
 
-}
-export var test2 = test;
+    }
+    export var test2 = test;
+
 // Options: [{"publicOnly":true,"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
-export const test = () => {
+    export const test = () => {
 
-};
+    };
+
 // Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-export let test = class {
+    export let test = class {
 
-};
+    };
+
 // Options: [{"publicOnly":true,"require":{"ClassExpression":true}}]
 // Message: Missing JSDoc comment.
 
-export default function () {}
+  export default function () {}
+
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
-export default () => {}
+  export default () => {}
+
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"ArrowFunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export default (function () {})
+
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-export default class {}
+  export default class {}
+
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
@@ -4927,197 +5326,225 @@ var foo = {bar: function() {}}
 // Options: [{"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-function foo (abc) {}
+  function foo (abc) {}
+
 // Options: [{"exemptEmptyFunctions":false}]
 // Message: Missing JSDoc comment.
 
-function foo () {
-  return true;
-}
+  function foo () {
+    return true;
+  }
+
 // Options: [{"exemptEmptyFunctions":false}]
 // Message: Missing JSDoc comment.
 
-module.exports = function quux () {
+    module.exports = function quux () {
 
-}
+    }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-module.exports = function quux () {
+    module.exports = function quux () {
 
-}
+    }
+
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-module.exports = {
-  method: function() {
+    module.exports = {
+      method: function() {
 
-  }
-}
+      }
+    }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-module.exports = {
-  test: {
-    test2: function() {
+    module.exports = {
+      test: {
+        test2: function() {
 
+        }
+      }
     }
-  }
-}
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-module.exports = {
-  test: {
-    test2: function() {
+    module.exports = {
+      test: {
+        test2: function() {
 
+        }
+      }
     }
-  }
-}
+
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-const test = module.exports = function () {
+    const test = module.exports = function () {
 
-}
+    }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-/**
-*
-*/
-const test = module.exports = function () {
+    /**
+    *
+    */
+    const test = module.exports = function () {
 
-}
+    }
 
-test.prototype.method = function() {}
+    test.prototype.method = function() {}
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-const test = function () {
+    const test = function () {
 
-}
-module.exports = {
-  test: test
-}
+    }
+    module.exports = {
+      test: test
+    }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-const test = () => {
+    const test = () => {
 
-}
-module.exports = {
-  test: test
-}
+    }
+    module.exports = {
+      test: test
+    }
+
 // Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-class Test {
-    method() {
+  class Test {
+      method() {
 
-    }
-}
-module.exports = Test;
+      }
+  }
+  module.exports = Test;
+
 // Options: [{"publicOnly":true,"require":{"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
-export default function quux () {
+    export default function quux () {
 
-}
+    }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-export default function quux () {
+    export default function quux () {
 
-}
+    }
+
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-function quux () {
+    function quux () {
 
-}
-export default quux;
+    }
+    export default quux;
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-export function test() {
+    export function test() {
 
-}
+    }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-export function test() {
+    export function test() {
 
-}
+    }
+
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-var test = function () {
+    var test = function () {
 
-}
-var test2 = 2;
-export { test, test2 }
+    }
+    var test2 = 2;
+    export { test, test2 }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-var test = function () {
+    var test = function () {
 
-}
-export { test as test2 }
+    }
+    export { test as test2 }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-export default class A {
+   export default class A {
 
-}
+   }
+
 // Options: [{"publicOnly":true,"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
-export default class A {
+   export default class A {
 
-}
+   }
+
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
-var test = function () {
+    var test = function () {
 
-}
+    }
+
 // Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-window.test = function () {
+    window.test = function () {
 
-}
+    }
+
 // Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-function test () {
+    function test () {
 
-}
+    }
+
 // Options: [{"publicOnly":{"window":true}}]
 // Message: Missing JSDoc comment.
 
-module.exports = function() {
+  module.exports = function() {
 
-}
+  }
+
 // Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
-export function someMethod() {
+  export function someMethod() {
 
-}
+  }
+
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
-export function someMethod() {
+  export function someMethod() {
 
-}
+  }
+
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
-const myObject = {
-  myProp: true
-};
+    const myObject = {
+      myProp: true
+    };
+
 // Options: [{"contexts":["Property"]}]
 // Message: Missing JSDoc comment.
 ````
@@ -5125,93 +5552,94 @@ const myObject = {
 The following patterns are not considered problems:
 
 ````js
-var array = [1,2,3];
-array.forEach(function() {});
+  var array = [1,2,3];
+  array.forEach(function() {});
 
-/**
- * @class MyClass
- **/
-function MyClass() {}
-
-/**
- Function doing something
- */
-function myFunction() {}
-/**
- Function doing something
- */
-var myFunction = function() {};
-/**
- Function doing something
- */
-Object.myFunction = function () {};
-var obj = {
-   /**
-    *  Function doing something
-    **/
-    myFunction: function () {} };
-
-/**
- @func myFunction
- */
-function myFunction() {}
-/**
- @method myFunction
- */
-function myFunction() {}
-/**
- @function myFunction
- */
-function myFunction() {}
-
-/**
- @func myFunction
- */
-var myFunction = function () {}
-/**
- @method myFunction
- */
-var myFunction = function () {}
-/**
- @function myFunction
- */
-var myFunction = function () {}
-
-/**
- @func myFunction
- */
-Object.myFunction = function() {}
-/**
- @method myFunction
- */
-Object.myFunction = function() {}
-/**
- @function myFunction
- */
-Object.myFunction = function() {}
-(function(){})();
-
-var object = {
   /**
-   *  @func myFunction - Some function
-   */
-  myFunction: function() {} }
-var object = {
-  /**
-   *  @method myFunction - Some function
-   */
-  myFunction: function() {} }
-var object = {
-  /**
-   *  @function myFunction - Some function
-   */
-  myFunction: function() {} }
+   * @class MyClass
+   **/
+  function MyClass() {}
 
-var array = [1,2,3];
-array.filter(function() {});
-Object.keys(this.options.rules || {}).forEach(function(name) {}.bind(this));
-var object = { name: 'key'};
-Object.keys(object).forEach(function() {})
+  /**
+   Function doing something
+   */
+  function myFunction() {}
+  /**
+   Function doing something
+   */
+  var myFunction = function() {};
+  /**
+   Function doing something
+   */
+  Object.myFunction = function () {};
+  var obj = {
+     /**
+      *  Function doing something
+      **/
+      myFunction: function () {} };
+
+  /**
+   @func myFunction
+   */
+  function myFunction() {}
+  /**
+   @method myFunction
+   */
+  function myFunction() {}
+  /**
+   @function myFunction
+   */
+  function myFunction() {}
+
+  /**
+   @func myFunction
+   */
+  var myFunction = function () {}
+  /**
+   @method myFunction
+   */
+  var myFunction = function () {}
+  /**
+   @function myFunction
+   */
+  var myFunction = function () {}
+
+  /**
+   @func myFunction
+   */
+  Object.myFunction = function() {}
+  /**
+   @method myFunction
+   */
+  Object.myFunction = function() {}
+  /**
+   @function myFunction
+   */
+  Object.myFunction = function() {}
+  (function(){})();
+
+  var object = {
+    /**
+     *  @func myFunction - Some function
+     */
+    myFunction: function() {} }
+  var object = {
+    /**
+     *  @method myFunction - Some function
+     */
+    myFunction: function() {} }
+  var object = {
+    /**
+     *  @function myFunction - Some function
+     */
+    myFunction: function() {} }
+
+  var array = [1,2,3];
+  array.filter(function() {});
+  Object.keys(this.options.rules || {}).forEach(function(name) {}.bind(this));
+  var object = { name: 'key'};
+  Object.keys(object).forEach(function() {})
+
 
 function myFunction() {}
 // Options: [{"require":{"ClassDeclaration":true,"FunctionDeclaration":false,"MethodDefinition":true}}]
@@ -5330,138 +5758,150 @@ bar: function() {}}
 var foo = { [function() {}]: 1 };
 // Options: [{"require":{"FunctionExpression":true}}]
 
-function foo () {}
+  function foo () {}
+
 // Options: [{"exemptEmptyFunctions":true}]
 
-function foo () {
-  return;
-}
+  function foo () {
+    return;
+  }
+
 // Options: [{"exemptEmptyFunctions":true}]
 
-const test = {};
-/**
- * test
- */
- test.method = function () {
+  const test = {};
+  /**
+   * test
+   */
+   test.method = function () {
 
-}
-module.exports = {
-  prop: { prop2: test.method }
-}
+  }
+  module.exports = {
+    prop: { prop2: test.method }
+  }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
-/**
-*
-*/
-function test() {
+ /**
+  *
+  */
+  function test() {
 
-}
+  }
 
-module.exports = {
-prop: { prop2: test }
-}
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
-
-/**
- *
- */
-test = function() {
-
-}
-
-module.exports = {
+  module.exports = {
   prop: { prop2: test }
-}
+  }
+
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+  /**
+   *
+   */
+  test = function() {
+
+  }
+
+  module.exports = {
+    prop: { prop2: test }
+  }
+
 // Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
 
-/**
- *
- */
-test = function() {
+  /**
+   *
+   */
+  test = function() {
 
-}
+  }
 
-exports.someMethod = {
-  prop: { prop2: test }
-}
+  exports.someMethod = {
+    prop: { prop2: test }
+  }
+
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
 
-/**
- *
- */
-const test = () => {
+  /**
+   *
+   */
+  const test = () => {
 
-}
+  }
 
-module.exports = {
-prop: { prop2: test }
-}
+  module.exports = {
+  prop: { prop2: test }
+  }
+
 // Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
 
-const test = () => {
+  const test = () => {
 
-}
-module.exports = {
-  prop: { prop2: test }
-}
+  }
+  module.exports = {
+    prop: { prop2: test }
+  }
+
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ArrowFunctionExpression":true}}]
 
-/**
- *
- */
-window.test = function() {
+  /**
+   *
+   */
+  window.test = function() {
 
-}
+  }
 
-module.exports = {
-prop: window
-}
+  module.exports = {
+  prop: window
+  }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
-test = function() {
+  test = function() {
 
-}
+  }
 
-/**
- *
- */
-test = function() {
+  /**
+   *
+   */
+  test = function() {
 
-}
+  }
 
-module.exports = {
-prop: { prop2: test }
-}
+  module.exports = {
+  prop: { prop2: test }
+  }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
-test = function() {
+  test = function() {
 
-}
+  }
 
-test = 2;
+  test = 2;
 
-module.exports = {
-prop: { prop2: test }
-}
+  module.exports = {
+  prop: { prop2: test }
+  }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
-/**
- *
- */
-function test() {
+  /**
+   *
+   */
+  function test() {
 
-}
+  }
 
-/**
- *
- */
-test.prototype.method = function() {
+  /**
+   *
+   */
+  test.prototype.method = function() {
 
-}
+  }
 
-module.exports = {
-prop: { prop2: test }
-}
+  module.exports = {
+  prop: { prop2: test }
+  }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 class Test {
@@ -5473,126 +5913,144 @@ class Test {
   }
 }
 module.exports = Test;
+
 // Options: [{"publicOnly":true,"require":{"MethodDefinition":true}}]
 
-/**
- *
- */
-export default function quux () {
+  /**
+   *
+   */
+  export default function quux () {
 
-}
+  }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
-/**
- *
- */
-export default function quux () {
+  /**
+   *
+   */
+  export default function quux () {
 
-}
+  }
+
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 
-/**
- *
- */
-function quux () {
+  /**
+   *
+   */
+  function quux () {
 
-}
-export default quux;
+  }
+  export default quux;
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
-function quux () {
+  function quux () {
 
-}
-export default quux;
+  }
+  export default quux;
+
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 
-/**
- *
- */
-export function test() {
+  /**
+   *
+   */
+  export function test() {
 
-}
+  }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
-/**
- *
- */
-export function test() {
+  /**
+   *
+   */
+  export function test() {
 
-}
+  }
+
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 
-/**
- *
- */
-var test = function () {
+  /**
+   *
+   */
+  var test = function () {
 
-}
-var test2 = 2;
-export { test, test2 }
+  }
+  var test2 = 2;
+  export { test, test2 }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
-/**
- *
- */
-var test = function () {
+  /**
+   *
+   */
+  var test = function () {
 
-}
-export { test as test2 }
+  }
+  export { test as test2 }
+
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
-/**
- *
- */
-export default class A {
+  /**
+   *
+   */
+  export default class A {
 
-}
+  }
+
 // Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true}}]
 
-/**
- *
- */
-var test = function () {
+  /**
+   *
+   */
+  var test = function () {
 
-}
+  }
+
 // Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 
-let test = function () {
+  let test = function () {
 
-}
+  }
+
 // Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 
-let test = class {
+  let test = class {
 
-}
+  }
+
 // Options: [{"publicOnly":true,"require":{"ClassExpression":false}}]
 
-/**
- *
- */
-let test = class {
+  /**
+   *
+   */
+  let test = class {
 
-}
+  }
+
 // Options: [{"publicOnly":true,"require":{"ClassExpression":true}}]
 
-export function someMethod() {
+  export function someMethod() {
 
-}
+  }
+
 // Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
 
-export function someMethod() {
+  export function someMethod() {
 
-}
+  }
+
 // Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
 
-exports.someMethod = function() {
+  exports.someMethod = function() {
 
-}
+  }
+
 // Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
 
-const myObject = {
-  myProp: true
-};
+    const myObject = {
+      myProp: true
+    };
+
 // Options: [{"contexts":[]}]
 ````
 
@@ -5611,29 +6069,32 @@ Requires that `@param` tag has `description` value.
 The following patterns are considered problems:
 
 ````js
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Missing JSDoc @param "foo" description.
 
-/**
- * @arg foo
- */
-function quux (foo) {
+    /**
+     * @arg foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" description.
 
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
 ````
@@ -5641,19 +6102,21 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
-/**
- *
- */
-function quux (foo) {
+    /**
+     *
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @param foo Foo.
- */
-function quux (foo) {
 
-}
+    /**
+     * @param foo Foo.
+     */
+    function quux (foo) {
+
+    }
+
 ````
 
 
@@ -5675,28 +6138,31 @@ Requires that all function parameters have name.
 The following patterns are considered problems:
 
 ````js
-/**
- * @param
- */
-function quux (foo) {
+    /**
+     * @param
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: There must be an identifier after @param type.
 
-/**
- * @param {string}
- */
-function quux (foo) {
+    /**
+     * @param {string}
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: There must be an identifier after @param tag.
 
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
 ````
@@ -5704,19 +6170,21 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @param {string} foo
- */
-function quux (foo) {
 
-}
+    /**
+     * @param {string} foo
+     */
+    function quux (foo) {
+
+    }
+
 ````
 
 
@@ -5734,29 +6202,32 @@ Requires that `@param` tag has `type` value.
 The following patterns are considered problems:
 
 ````js
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Missing JSDoc @param "foo" type.
 
-/**
- * @arg foo
- */
-function quux (foo) {
+    /**
+     * @arg foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" type.
 
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
 ````
@@ -5764,19 +6235,21 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
-/**
- *
- */
-function quux (foo) {
+    /**
+     *
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @param {number} foo
- */
-function quux (foo) {
 
-}
+    /**
+     * @param {number} foo
+     */
+    function quux (foo) {
+
+    }
+
 ````
 
 
@@ -5804,133 +6277,146 @@ An options object accepts one optional property:
 The following patterns are considered problems:
 
 ````js
-/**
- *
- */
-function quux (foo) {
+    /**
+     *
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Missing JSDoc @param "foo" declaration.
 
-/**
- * @param
- */
-function quux (foo) {
+    /**
+     * @param
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 // Message: Missing JSDoc @arg "foo" declaration.
 
-/**
- * @param foo
- */
-function quux (foo, bar) {
+    /**
+     * @param foo
+     */
+    function quux (foo, bar) {
 
-}
+    }
+
 // Message: Missing JSDoc @param "bar" declaration.
 
-/**
- * @override
- */
-function quux (foo) {
+    /**
+     * @override
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"overrideReplacesDocs":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
-/**
- * @implements
- */
-function quux (foo) {
+    /**
+     * @implements
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"implementsReplacesDocs":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
-/**
- * @augments
- */
-function quux (foo) {
+    /**
+     * @augments
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Missing JSDoc @param "foo" declaration.
 
-/**
- * @extends
- */
-function quux (foo) {
+    /**
+     * @extends
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Missing JSDoc @param "foo" declaration.
 
-/**
- * @override
- */
-class A {
-  /**
-    *
-    */
-  quux (foo) {
+    /**
+     * @override
+     */
+    class A {
+      /**
+        *
+        */
+      quux (foo) {
 
-  }
-}
+      }
+    }
+
 // Settings: {"jsdoc":{"overrideReplacesDocs":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
-/**
- * @implements
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
+    /**
+     * @implements
+     */
+    class A {
+      /**
+       *
+       */
+      quux (foo) {
 
-  }
-}
+      }
+    }
+
 // Settings: {"jsdoc":{"implementsReplacesDocs":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
-/**
- * @augments
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
+    /**
+     * @augments
+     */
+    class A {
+      /**
+       *
+       */
+      quux (foo) {
 
+      }
+    }
+
+// Message: Missing JSDoc @param "foo" declaration.
+
+    /**
+     * @extends
+     */
+    class A {
+      /**
+       *
+       */
+      quux (foo) {
+
+      }
+    }
+
+// Message: Missing JSDoc @param "foo" declaration.
+
+  export class SomeClass {
+    /**
+     * @param property
+     */
+    constructor(private property: string, private foo: number) {}
   }
-}
+
 // Message: Missing JSDoc @param "foo" declaration.
 
-/**
- * @extends
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
+    /**
+     * @param
+     */
+    function quux (foo) {
 
-  }
-}
-// Message: Missing JSDoc @param "foo" declaration.
+    }
 
-export class SomeClass {
-  /**
-   * @param property
-   */
-  constructor(private property: string, private foo: number) {}
-}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
- * @param
- */
-function quux (foo) {
-
-}
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
 ````
@@ -5938,313 +6424,346 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @inheritdoc
- */
-function quux (foo) {
 
-}
+    /**
+     * @inheritdoc
+     */
+    function quux (foo) {
 
-/**
- * @arg foo
- */
-function quux (foo) {
+    }
 
-}
+
+    /**
+     * @arg foo
+     */
+    function quux (foo) {
+
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
 
-/**
- * @override
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @override
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @override
- */
-function quux (foo) {
 
-}
+    /**
+     * @override
+     */
+    function quux (foo) {
 
-/**
- * @override
- */
-class A {
-  /**
-    *
-    */
-  quux (foo) {
+    }
 
-  }
-}
 
-/**
- * @override
- */
-function quux (foo) {
+    /**
+     * @override
+     */
+    class A {
+      /**
+        *
+        */
+      quux (foo) {
 
-}
+      }
+    }
+
+
+    /**
+     * @override
+     */
+    function quux (foo) {
+
+    }
+
 // Settings: {"jsdoc":{"overrideReplacesDocs":true}}
 
-/**
- * @implements
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
+    /**
+     * @implements
+     */
+    class A {
+      /**
+       *
+       */
+      quux (foo) {
 
-  }
-}
+      }
+    }
 
-/**
- * @implements
- */
-function quux (foo) {
 
-}
+    /**
+     * @implements
+     */
+    function quux (foo) {
 
-/**
- * @implements
- */
-function quux (foo) {
+    }
 
-}
+
+    /**
+     * @implements
+     */
+    function quux (foo) {
+
+    }
+
 // Settings: {"jsdoc":{"implementsReplacesDocs":true}}
 
-/**
- * @implements
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @implements
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @augments
- */
-function quux (foo) {
 
-}
+    /**
+     * @augments
+     */
+    function quux (foo) {
+
+    }
+
 // Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
-/**
- * @augments
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @augments
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @extends
- */
-function quux (foo) {
 
-}
+    /**
+     * @extends
+     */
+    function quux (foo) {
+
+    }
+
 // Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
-/**
- * @extends
- * @param foo
- */
-function quux (foo) {
+    /**
+     * @extends
+     * @param foo
+     */
+    function quux (foo) {
 
-}
+    }
 
-/**
- * @augments
- */
-function quux (foo) {
 
-}
+    /**
+     * @augments
+     */
+    function quux (foo) {
+
+    }
+
 // Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
-/**
- * @extends
- */
-function quux (foo) {
+    /**
+     * @extends
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
-/**
- * @override
- */
-class A {
-  /**
-  * @param foo
-  */
-  quux (foo) {
+    /**
+     * @override
+     */
+    class A {
+      /**
+      * @param foo
+      */
+      quux (foo) {
 
-  }
-}
+      }
+    }
 
-/**
- * @override
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
 
-  }
-}
+    /**
+     * @override
+     */
+    class A {
+      /**
+       *
+       */
+      quux (foo) {
+
+      }
+    }
+
 // Settings: {"jsdoc":{"overrideReplacesDocs":true}}
 
-/**
- * @implements
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
+    /**
+     * @implements
+     */
+    class A {
+      /**
+       *
+       */
+      quux (foo) {
 
-  }
-}
+      }
+    }
+
 // Settings: {"jsdoc":{"implementsReplacesDocs":true}}
 
-/**
- * @implements
- */
-class A {
   /**
-   * @param foo
+   * @implements
    */
-  quux (foo) {
+  class A {
+    /**
+     * @param foo
+     */
+    quux (foo) {
 
+    }
   }
-}
 
-/**
- * @augments
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
 
-  }
-}
+    /**
+     * @augments
+     */
+    class A {
+      /**
+       *
+       */
+      quux (foo) {
+
+      }
+    }
+
 // Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
-/**
- * @augments
- */
-class A {
   /**
-   * @param foo
+   * @augments
    */
-  quux (foo) {
+  class A {
+    /**
+     * @param foo
+     */
+    quux (foo) {
 
+    }
   }
-}
 
-/**
- * @extends
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
 
-  }
-}
+    /**
+     * @extends
+     */
+    class A {
+      /**
+       *
+       */
+      quux (foo) {
+
+      }
+    }
+
 // Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
-/**
- * @extends
- */
-class A {
-  /**
-   * @param foo
-   */
-  quux (foo) {
+    /**
+     * @extends
+     */
+    class A {
+      /**
+       * @param foo
+       */
+      quux (foo) {
 
-  }
-}
+      }
+    }
 
-/**
- * @augments
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
 
-  }
-}
+    /**
+     * @augments
+     */
+    class A {
+      /**
+       *
+       */
+      quux (foo) {
+
+      }
+    }
+
 // Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
-/**
- * @extends
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
+    /**
+     * @extends
+     */
+    class A {
+      /**
+       *
+       */
+      quux (foo) {
 
-  }
-}
+      }
+    }
+
 // Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
-/**
- * @private
- */
-function quux (foo) {
+    /**
+     * @private
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"ignorePrivate":true}}
 
-// issue 182: optional chaining
-/** @const {boolean} test */
-const test = something?.find(_ => _)
+    // issue 182: optional chaining
+    /** @const {boolean} test */
+    const test = something?.find(_ => _)
 
-/** @type {RequestHandler} */
-function foo(req, res, next) {}
 
-/**
- * @type {MyCallback}
- */
-function quux () {
+    /** @type {RequestHandler} */
+    function foo(req, res, next) {}
 
-}
+
+    /**
+     * @type {MyCallback}
+     */
+    function quux () {
+
+    }
+
 // Options: [{"exemptedBy":["type"]}]
 
-/**
- * @override
- */
-var A = class {
-  /**
-    *
-    */
-  quux (foo) {
+    /**
+     * @override
+     */
+    var A = class {
+      /**
+        *
+        */
+      quux (foo) {
 
+      }
+    }
+
+
+  export class SomeClass {
+    /**
+     * @param property
+     */
+    constructor(private property: string) {}
   }
-}
 
-export class SomeClass {
-  /**
-   * @param property
-   */
-  constructor(private property: string) {}
-}
 ````
 
 
@@ -6264,37 +6783,41 @@ Will also report if multiple `@returns` tags are present.
 The following patterns are considered problems:
 
 ````js
-/**
- * @returns
- */
-function quux (foo) {
+    /**
+     * @returns
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
-/**
- * @return
- */
-function quux (foo) {
+    /**
+     * @return
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: JSDoc @return declaration present but return expression not available in function.
 
-/**
- * @returns
- */
-const quux = () => {}
+    /**
+     * @returns
+     */
+    const quux = () => {}
+
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
-/**
- * @returns {undefined} Foo.
- * @returns {String} Foo.
- */
-function quux () {
+  /**
+   * @returns {undefined} Foo.
+   * @returns {String} Foo.
+   */
+  function quux () {
 
-  return foo;
-}
+    return foo;
+  }
+
 // Message: Found more than one @returns declaration.
 
 const language = {
@@ -6306,23 +6829,26 @@ const language = {
     this._name = name;
   }
 }
+
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
-class Foo {
-  /**
-   * @returns {string}
-   */
-  bar () {
-  }
-}
+    class Foo {
+      /**
+       * @returns {string}
+       */
+      bar () {
+      }
+    }
+
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
-/**
- * @returns
- */
-function quux () {
+    /**
+     * @returns
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
 // Message: Unexpected tag `@returns`
 ````
@@ -6330,247 +6856,277 @@ function quux () {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @returns Foo.
- */
-function quux () {
+    /**
+     * @returns Foo.
+     */
+    function quux () {
 
-  return foo;
-}
+      return foo;
+    }
 
-/**
- * @returns {string} Foo.
- */
-function quux () {
 
-  return foo;
-}
+    /**
+     * @returns {string} Foo.
+     */
+    function quux () {
 
-/**
- * @returns {string} Foo.
- */
-function quux () {
+      return foo;
+    }
 
-  return foo;
-}
 
-/**
- *
- */
-function quux () {
-}
+    /**
+     * @returns {string} Foo.
+     */
+    function quux () {
 
-/**
- * @returns {*} Foo.
- */
-const quux = () => foo;
+      return foo;
+    }
 
-/**
- * @returns {undefined} Foo.
- */
-function quux () {}
 
-/**
- * @returns { void } Foo.
- */
-function quux () {}
+    /**
+     *
+     */
+    function quux () {
+    }
 
-/**
- * @returns {Promise<void>}
- */
-async function quux() {}
 
-/**
- * @returns {Promise<void>}
- */
-const quux = async function () {}
+    /**
+     * @returns {*} Foo.
+     */
+    const quux = () => foo;
 
-/**
- * @returns {Promise<void>}
- */
-const quux = async () => {}
 
-/**
- * @returns Foo.
- * @abstract
- */
-function quux () {
-  throw new Error('must be implemented by subclass!');
-}
+    /**
+     * @returns {undefined} Foo.
+     */
+    function quux () {}
 
-/**
- * @returns Foo.
- * @virtual
- */
-function quux () {
-  throw new Error('must be implemented by subclass!');
-}
 
-/**
- * @returns Foo.
- * @constructor
- */
-function quux () {
-}
+    /**
+     * @returns { void } Foo.
+     */
+    function quux () {}
 
-/**
- * @interface
- */
-class Foo {
-  /**
-   * @returns {string}
-   */
-  bar () {
-  }
-}
 
-/**
- * @returns {undefined} Foo.
- */
-function quux () {
-}
+    /**
+     * @returns {Promise<void>}
+     */
+    async function quux() {}
 
-/**
- * @returns {void} Foo.
- */
-function quux () {
-}
 
-/**
- * @returns {void} Foo.
- */
-function quux () {
-  return undefined;
-}
+    /**
+     * @returns {Promise<void>}
+     */
+    const quux = async function () {}
 
-/**
- * @returns {void} Foo.
- */
-function quux () {
-  return;
-}
 
-/**
- *
- */
-function quux () {
-  return undefined;
-}
+    /**
+     * @returns {Promise<void>}
+     */
+    const quux = async () => {}
 
-/**
- *
- */
-function quux () {
-  return;
-}
 
-/**
- * @returns {true}
- */
-function quux () {
-  try {
-    return true;
-  } catch (err) {
-  }
-  return;
-}
+    /**
+     * @returns Foo.
+     * @abstract
+     */
+    function quux () {
+      throw new Error('must be implemented by subclass!');
+    }
 
-/**
- * @returns {true}
- */
-function quux () {
-  try {
-  } finally {
-    return true;
-  }
-  return;
-}
 
-/**
- * @returns {true}
- */
-function quux () {
-  try {
-    return;
-  } catch (err) {
-  }
-  return true;
-}
+    /**
+     * @returns Foo.
+     * @virtual
+     */
+    function quux () {
+      throw new Error('must be implemented by subclass!');
+    }
 
-/**
- * @returns {true}
- */
-function quux () {
-  try {
-    something();
-  } catch (err) {
-    return true;
-  }
-  return;
-}
 
-/**
- * @returns {true}
- */
-function quux () {
-  switch (true) {
-  case 'abc':
-    return true;
-  }
-  return;
-}
+    /**
+     * @returns Foo.
+     * @constructor
+     */
+    function quux () {
+    }
 
-/**
- * @returns {true}
- */
-function quux () {
-  switch (true) {
-  case 'abc':
-    return;
-  }
-  return true;
-}
 
-/**
- * @returns {true}
- */
-function quux () {
-  for (const i of abc) {
-    return true;
-  }
-  return;
-}
+    /**
+     * @interface
+     */
+    class Foo {
+      /**
+       * @returns {string}
+       */
+      bar () {
+      }
+    }
 
-/**
- * @returns {true}
- */
-function quux () {
-  if (true) {
-    return;
-  }
-  return true;
-}
 
-/**
- * @returns {true}
- */
-function quux () {
-  if (true) {
-    return true;
-  }
-}
+    /**
+     * @returns {undefined} Foo.
+     */
+    function quux () {
+    }
 
-/**
- * @returns {true}
- */
-function quux () {
-  if (true) {
-    return;
-  } else {
-    return true;
-  }
-  return;
-}
+
+    /**
+     * @returns {void} Foo.
+     */
+    function quux () {
+    }
+
+
+    /**
+     * @returns {void} Foo.
+     */
+    function quux () {
+      return undefined;
+    }
+
+
+    /**
+     * @returns {void} Foo.
+     */
+    function quux () {
+      return;
+    }
+
+
+    /**
+     *
+     */
+    function quux () {
+      return undefined;
+    }
+
+
+    /**
+     *
+     */
+    function quux () {
+      return;
+    }
+
+
+    /**
+     * @returns {true}
+     */
+    function quux () {
+      try {
+        return true;
+      } catch (err) {
+      }
+      return;
+    }
+
+
+    /**
+     * @returns {true}
+     */
+    function quux () {
+      try {
+      } finally {
+        return true;
+      }
+      return;
+    }
+
+
+    /**
+     * @returns {true}
+     */
+    function quux () {
+      try {
+        return;
+      } catch (err) {
+      }
+      return true;
+    }
+
+
+    /**
+     * @returns {true}
+     */
+    function quux () {
+      try {
+        something();
+      } catch (err) {
+        return true;
+      }
+      return;
+    }
+
+
+    /**
+     * @returns {true}
+     */
+    function quux () {
+      switch (true) {
+      case 'abc':
+        return true;
+      }
+      return;
+    }
+
+
+    /**
+     * @returns {true}
+     */
+    function quux () {
+      switch (true) {
+      case 'abc':
+        return;
+      }
+      return true;
+    }
+
+
+    /**
+     * @returns {true}
+     */
+    function quux () {
+      for (const i of abc) {
+        return true;
+      }
+      return;
+    }
+
+
+    /**
+     * @returns {true}
+     */
+    function quux () {
+      if (true) {
+        return;
+      }
+      return true;
+    }
+
+
+    /**
+     * @returns {true}
+     */
+    function quux () {
+      if (true) {
+        return true;
+      }
+    }
+
+
+    /**
+     * @returns {true}
+     */
+    function quux () {
+      if (true) {
+        return;
+      } else {
+        return true;
+      }
+      return;
+    }
+
 ````
 
 
@@ -6588,29 +7144,32 @@ Requires that `@returns` tag has `description` value.
 The following patterns are considered problems:
 
 ````js
-/**
- * @returns
- */
-function quux (foo) {
+    /**
+     * @returns
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Message: Missing JSDoc @returns description.
 
-/**
- * @return
- */
-function quux (foo) {
+    /**
+     * @return
+     */
+    function quux (foo) {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return description.
 
-/**
- * @returns
- */
-function quux () {
+    /**
+     * @returns
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
 // Message: Unexpected tag `@returns`
 ````
@@ -6618,33 +7177,37 @@ function quux () {
 The following patterns are not considered problems:
 
 ````js
-/**
- *
- */
-function quux () {
+    /**
+     *
+     */
+    function quux () {
 
-}
+    }
 
-/**
- * @returns Foo.
- */
-function quux () {
 
-}
+    /**
+     * @returns Foo.
+     */
+    function quux () {
 
-/**
- * @returns {undefined}
- */
-function quux () {
+    }
 
-}
 
-/**
- * @returns {void}
- */
-function quux () {
+    /**
+     * @returns {undefined}
+     */
+    function quux () {
 
-}
+    }
+
+
+    /**
+     * @returns {void}
+     */
+    function quux () {
+
+    }
+
 ````
 
 
@@ -6662,37 +7225,41 @@ Requires that `@returns` tag has `type` value.
 The following patterns are considered problems:
 
 ````js
-/**
- * @returns
- */
-function quux () {
+    /**
+     * @returns
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Missing JSDoc @returns type.
 
-/**
- * @returns Foo.
- */
-function quux () {
+    /**
+     * @returns Foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Message: Missing JSDoc @returns type.
 
-/**
- * @return Foo.
- */
-function quux () {
+    /**
+     * @return Foo.
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return type.
 
-/**
- * @returns
- */
-function quux () {
+    /**
+     * @returns
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
 // Message: Unexpected tag `@returns`
 ````
@@ -6700,12 +7267,13 @@ function quux () {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @returns {number}
- */
-function quux () {
+    /**
+     * @returns {number}
+     */
+    function quux () {
 
-}
+    }
+
 ````
 
 
@@ -6742,42 +7310,47 @@ Will also report if multiple `@returns` tags are present.
 The following patterns are considered problems:
 
 ````js
-/**
- *
- */
-function quux (foo) {
+    /**
+     *
+     */
+    function quux (foo) {
 
-  return foo;
-}
+      return foo;
+    }
+
 // Message: Missing JSDoc @returns declaration.
 
-/**
- *
- */
-const foo = () => ({
-  bar: 'baz'
-})
+    /**
+     *
+     */
+    const foo = () => ({
+      bar: 'baz'
+    })
+
 // Message: Missing JSDoc @returns declaration.
 
-/**
- *
- */
-const foo = bar=>({ bar })
+    /**
+     *
+     */
+    const foo = bar=>({ bar })
+
 // Message: Missing JSDoc @returns declaration.
 
-/**
- *
- */
-const foo = bar => bar.baz()
+    /**
+     *
+     */
+    const foo = bar => bar.baz()
+
 // Message: Missing JSDoc @returns declaration.
 
-/**
- *
- */
-function quux (foo) {
+    /**
+     *
+     */
+    function quux (foo) {
 
-  return foo;
-}
+      return foo;
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Missing JSDoc @return declaration.
 
@@ -6790,43 +7363,49 @@ function foo() {}
  *
  */
 function bar() {}
+
 // Settings: {"jsdoc":{"forceRequireReturn":true}}
 // Message: `settings.jsdoc.forceRequireReturn` has been removed, use options in the rule `require-returns` instead.
 
-/**
- *
- */
-async function quux() {
-}
+    /**
+     *
+     */
+    async function quux() {
+    }
+
 // Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
-/**
- *
- */
-const quux = async function () {}
+    /**
+     *
+     */
+    const quux = async function () {}
+
 // Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
-/**
- *
- */
-const quux = async () => {}
+    /**
+     *
+     */
+    const quux = async () => {}
+
 // Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
-/**
-*
-*/
-async function quux () {}
+    /**
+     *
+     */
+     async function quux () {}
+
 // Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
-/**
- *
- */
-function quux () {
-}
+    /**
+     *
+     */
+    function quux () {
+    }
+
 // Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
@@ -6838,32 +7417,36 @@ const language = {
     return this._name;
   }
 }
+
 // Message: Missing JSDoc @returns declaration.
 
-/**
- *
- */
-async function quux () {
-}
+    /**
+     *
+     */
+    async function quux () {
+    }
+
 // Options: [{"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
-/**
- * @returns {undefined}
- * @returns {void}
- */
-function quux (foo) {
+    /**
+     * @returns {undefined}
+     * @returns {void}
+     */
+    function quux (foo) {
 
-  return foo;
-}
+      return foo;
+    }
+
 // Message: Found more than one @returns declaration.
 
-/**
- * @returns
- */
-function quux () {
+    /**
+     * @returns
+     */
+    function quux () {
 
-}
+    }
+
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
 // Message: Unexpected tag `@returns`
 ````
@@ -6871,147 +7454,168 @@ function quux () {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @returns Foo.
- */
-function quux () {
+    /**
+     * @returns Foo.
+     */
+    function quux () {
 
-  return foo;
-}
+      return foo;
+    }
 
-/**
- *
- */
-function quux () {
-}
 
-/**
- *
- */
-function quux (bar) {
-  bar.filter(baz => {
-    return baz.corge();
-  })
-}
+    /**
+     *
+     */
+    function quux () {
+    }
 
-/**
- * @returns Array
- */
-function quux (bar) {
-  return bar.filter(baz => {
-    return baz.corge();
-  })
-}
 
-/**
- * @returns Array
- */
-const quux = (bar) => bar.filter(({ corge }) => corge())
+    /**
+     *
+     */
+    function quux (bar) {
+      bar.filter(baz => {
+        return baz.corge();
+      })
+    }
 
-/**
- * @inheritdoc
- */
-function quux (foo) {
-}
 
-/**
- * @override
- */
-function quux (foo) {
-}
+    /**
+     * @returns Array
+     */
+    function quux (bar) {
+      return bar.filter(baz => {
+        return baz.corge();
+      })
+    }
 
-/**
- * @constructor
- */
-function quux (foo) {
-}
 
-/**
- * @implements
- */
-function quux (foo) {
-}
+    /**
+     * @returns Array
+     */
+    const quux = (bar) => bar.filter(({ corge }) => corge())
 
-/**
- * @override
- */
-function quux (foo) {
 
-  return foo;
-}
+    /**
+     * @inheritdoc
+     */
+    function quux (foo) {
+    }
 
-/**
- * @class
- */
-function quux (foo) {
 
-}
+    /**
+     * @override
+     */
+    function quux (foo) {
+    }
 
-/**
- * @constructor
- */
-function quux (foo) {
 
-}
+    /**
+     * @constructor
+     */
+    function quux (foo) {
+    }
 
-/**
- * @returns {Object}
- */
-function quux () {
 
-  return {a: foo};
-}
+    /**
+     * @implements
+     */
+    function quux (foo) {
+    }
 
-/**
- * @returns {Object}
- */
-const quux = () => ({a: foo});
 
-/**
- * @returns {Object}
- */
-const quux = () => {
-  return {a: foo}
-};
+    /**
+     * @override
+     */
+    function quux (foo) {
 
-/**
- * @returns {void}
- */
-function quux () {
-}
+      return foo;
+    }
 
-/**
- * @returns {void}
- */
-const quux = () => {
 
-}
+    /**
+     * @class
+     */
+    function quux (foo) {
 
-/**
- * @returns {undefined}
- */
-function quux () {
-}
+    }
 
-/**
- * @returns {undefined}
- */
-const quux = () => {
 
-}
+    /**
+     * @constructor
+     */
+    function quux (foo) {
 
-/**
- *
- */
-function quux () {
-}
+    }
 
-/**
- *
- */
-const quux = () => {
 
-}
+    /**
+     * @returns {Object}
+     */
+    function quux () {
+
+      return {a: foo};
+    }
+
+
+    /**
+     * @returns {Object}
+     */
+    const quux = () => ({a: foo});
+
+
+    /**
+     * @returns {Object}
+     */
+    const quux = () => {
+      return {a: foo}
+    };
+
+
+    /**
+     * @returns {void}
+     */
+    function quux () {
+    }
+
+
+    /**
+     * @returns {void}
+     */
+    const quux = () => {
+
+    }
+
+
+    /**
+     * @returns {undefined}
+     */
+    function quux () {
+    }
+
+
+    /**
+     * @returns {undefined}
+     */
+    const quux = () => {
+
+    }
+
+
+    /**
+     *
+     */
+    function quux () {
+    }
+
+
+    /**
+     *
+     */
+    const quux = () => {
+
+    }
+
 
 class Foo {
   /**
@@ -7020,6 +7624,7 @@ class Foo {
   constructor () {
   }
 }
+
 // Options: [{"forceRequireReturn":true}]
 
 const language = {
@@ -7031,83 +7636,96 @@ const language = {
   }
 }
 
-/**
- * @returns {void}
- */
-function quux () {
-}
+
+    /**
+     * @returns {void}
+     */
+    function quux () {
+    }
+
 // Options: [{"forceRequireReturn":true}]
 
-/**
- * @returns {void}
- */
-function quux () {
-  return undefined;
-}
+    /**
+     * @returns {void}
+     */
+    function quux () {
+      return undefined;
+    }
 
-/**
- * @returns {void}
- */
-function quux () {
-  return undefined;
-}
+
+    /**
+     * @returns {void}
+     */
+    function quux () {
+      return undefined;
+    }
+
 // Options: [{"forceRequireReturn":true}]
 
-/**
- * @returns {void}
- */
-function quux () {
-  return;
-}
+    /**
+     * @returns {void}
+     */
+    function quux () {
+      return;
+    }
 
-/**
- * @returns {void}
- */
-function quux () {
-}
+
+    /**
+     * @returns {void}
+     */
+    function quux () {
+    }
+
 // Options: [{"forceRequireReturn":true}]
 
-/**
- * @returns {void}
- */
-function quux () {
-  return;
-}
+    /**
+     * @returns {void}
+     */
+    function quux () {
+      return;
+    }
+
 // Options: [{"forceRequireReturn":true}]
 
-/** @type {RequestHandler} */
-function quux (req, res , next) {
-  return;
-}
+    /** @type {RequestHandler} */
+    function quux (req, res , next) {
+      return;
+    }
 
-/**
- * @returns {Promise}
- */
-async function quux () {
-}
+
+    /**
+     * @returns {Promise}
+     */
+    async function quux () {
+    }
+
 // Options: [{"forceRequireReturn":true}]
 
-/**
- * @returns {Promise}
- */
-async function quux () {
-}
+    /**
+     * @returns {Promise}
+     */
+    async function quux () {
+    }
+
 // Options: [{"forceReturnsWithAsync":true}]
 
-/**
- *
- */
-async function quux () {}
+    /**
+     *
+     */
+    async function quux () {}
 
-/**
- *
- */
-const quux = async function () {}
 
-/**
- *
- */
-const quux = async () => {}
+    /**
+     *
+     */
+    const quux = async function () {}
+
+
+    /**
+     *
+     */
+    const quux = async () => {}
+
 
 /** foo class */
 class foo {
@@ -7120,19 +7738,22 @@ class foo {
 
 export default foo;
 
-/**
- *
- */
-function quux () {
-}
+
+    /**
+     *
+     */
+    function quux () {
+    }
+
 // Options: [{"forceReturnsWithAsync":true}]
 
-/**
- * @type {MyCallback}
- */
-function quux () {
+    /**
+     * @type {MyCallback}
+     */
+    function quux () {
 
-}
+    }
+
 // Options: [{"exemptedBy":["type"]}]
 ````
 
@@ -7199,98 +7820,110 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 The following patterns are considered problems:
 
 ````js
-/**
- * @param {Array<string} foo
- */
-function quux() {
+    /**
+     * @param {Array<string} foo
+     */
+    function quux() {
 
-}
+    }
+
 // Message: Syntax error in type: Array<string
 
-/**
- * @memberof module:namespace.SomeClass<~
- */
-function quux() {
+    /**
+     * @memberof module:namespace.SomeClass<~
+     */
+    function quux() {
 
-}
+    }
+
 // Message: Syntax error in type: module:namespace.SomeClass<~
 
-/**
- * @memberof module:namespace.SomeClass~<
- */
-function quux() {
+    /**
+     * @memberof module:namespace.SomeClass~<
+     */
+    function quux() {
 
-}
+    }
+
 // Message: Syntax error in type: module:namespace.SomeClass~<
 
-/**
- * @borrows foo% as bar
- */
-function quux() {
+    /**
+     * @borrows foo% as bar
+     */
+    function quux() {
 
-}
+    }
+
 // Message: Syntax error in type: foo%
 
-/**
- * @borrows #foo as bar
- */
-function quux() {
+    /**
+     * @borrows #foo as bar
+     */
+    function quux() {
 
-}
+    }
+
 // Message: Syntax error in type: #foo
 
-/**
- * @borrows foo as bar%
- */
-function quux() {
+    /**
+     * @borrows foo as bar%
+     */
+    function quux() {
 
-}
+    }
+
 // Message: Syntax error in type: bar%
 
-/**
- * @borrows foo
- */
-function quux() {
+    /**
+     * @borrows foo
+     */
+    function quux() {
 
-}
+    }
+
 // Message: @borrows must have an "as" expression. Found ""
 
-/**
- * @see foo%
- */
-function quux() {
+    /**
+     * @see foo%
+     */
+    function quux() {
 
-}
+    }
+
 // Options: [{"checkSeesForNamepaths":true}]
 // Message: Syntax error in type: foo%
 
-/** */
-function foo() {}
+    /** */
+    function foo() {}
+
 // Settings: {"jsdoc":{"allowEmptyNamepaths":true,"checkSeesForNamepaths":true}}
 // Message: `settings.jsdoc.allowEmptyNamepaths` has been removed, use options in the rule `valid-types` instead.
 
-/**
- * @alias module:abc#event:foo-bar
- */
-function quux() {
+    /**
+     * @alias module:abc#event:foo-bar
+     */
+    function quux() {
 
-}
+    }
+
 // Message: Syntax error in type: module:abc#event:foo-bar
 
-/**
- * @mixes module:namespace.SomeClass~
- */
-function quux() {
+    /**
+     * @mixes module:namespace.SomeClass~
+     */
+    function quux() {
 
-}
+    }
+
 // Message: Syntax error in type: module:namespace.SomeClass~
 
-/**
- * @callback
- */
-function quux() {
+    /**
+     * @callback
+     */
+    function quux() {
 
-}
+    }
+
 // Options: [{"allowEmptyNamepaths":false}]
 // Message: Syntax error in type: 
 ````
@@ -7298,104 +7931,118 @@ function quux() {
 The following patterns are not considered problems:
 
 ````js
-/**
- * @param {Array<string>} foo
- */
-function quux() {
+    /**
+     * @param {Array<string>} foo
+     */
+    function quux() {
 
-}
+    }
 
-/**
- * @param {string} foo
- */
-function quux() {
 
-}
+    /**
+     * @param {string} foo
+     */
+    function quux() {
 
-/**
- * @param foo
- */
-function quux() {
+    }
 
-}
 
-/**
- * @borrows foo as bar
- */
-function quux() {
+    /**
+     * @param foo
+     */
+    function quux() {
 
-}
+    }
 
-/**
- * @borrows foo as #bar
- */
-function quux() {
 
-}
+    /**
+     * @borrows foo as bar
+     */
+    function quux() {
 
-/**
- * @see foo%
- */
-function quux() {
+    }
 
-}
 
-/**
- * @alias module:namespace.SomeClass#event:ext_anevent
- */
-function quux() {
+    /**
+     * @borrows foo as #bar
+     */
+    function quux() {
 
-}
+    }
 
-/**
- * @callback
- */
-function quux() {
 
-}
+    /**
+     * @see foo%
+     */
+    function quux() {
 
-/**
- * @class
- */
-function quux() {
+    }
 
-}
 
-/**
- * @see {@link foo}
- */
-function quux() {
+    /**
+     * @alias module:namespace.SomeClass#event:ext_anevent
+     */
+    function quux() {
 
-}
+    }
 
-/**
- *
- * @fires {module:namespace.SomeClass#event:ext_anevent}
- */
-function quux() {
 
-}
+    /**
+     * @callback
+     */
+    function quux() {
 
-/**
- * @memberof module:namespace.SomeClass~
- */
-function quux() {
+    }
 
-}
 
-/**
- * @memberof! module:namespace.SomeClass.
- */
-function quux() {
+    /**
+     * @class
+     */
+    function quux() {
 
-}
+    }
 
-/**
- *
- */
-function quux() {
 
-}
+    /**
+     * @see {@link foo}
+     */
+    function quux() {
+
+    }
+
+
+    /**
+     *
+     * @fires {module:namespace.SomeClass#event:ext_anevent}
+     */
+    function quux() {
+
+    }
+
+
+    /**
+     * @memberof module:namespace.SomeClass~
+     */
+    function quux() {
+
+    }
+
+
+    /**
+     * @memberof! module:namespace.SomeClass.
+     */
+    function quux() {
+
+    }
+
+
+    /**
+     *
+     */
+    function quux() {
+
+    }
+
 ````
 
 
