@@ -389,23 +389,7 @@ function quux (foo) {
 // Message: Expected JSDoc block to be aligned.
 
 /**
- * @param {Number} foo
- */
-function quux (foo) {
-
-}
-// Message: Expected JSDoc block to be aligned.
-
-/**
   * @param {Number} foo
- */
-function quux (foo) {
-
-}
-// Message: Expected JSDoc block to be aligned.
-
-/**
- * @param {Number} foo
  */
 function quux (foo) {
 
