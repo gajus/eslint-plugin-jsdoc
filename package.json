@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "comment-parser": "^0.5.5",
+    "comment-parser": "^0.6.0",
     "debug": "^4.1.1",
     "flat-map-polyfill": "^0.3.8",
     "jsdoctypeparser": "5.0.1",
@@ -27,7 +27,7 @@
     "chai": "^4.2.0",
     "eslint": "^6.0.1",
     "eslint-config-canonical": "^17.1.4",
-    "gitdown": "^2.6.2",
+    "gitdown": "^3.1.1",
     "glob": "^7.1.4",
     "husky": "^3.0.0",
     "mocha": "^6.1.4",
