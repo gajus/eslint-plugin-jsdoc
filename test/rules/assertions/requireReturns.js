@@ -171,9 +171,9 @@ export default {
     },
     {
       code: `
-          /**
-           *
-           */
+           /**
+            *
+            */
            async function quux () {}
       `,
       errors: [
