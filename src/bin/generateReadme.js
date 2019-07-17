@@ -5,6 +5,7 @@ import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
 import glob from 'glob';
+import Gitdown from 'gitdown';
 
 const trimCode = (code) => {
   let lines = code.replace(/^\n/, '').trimEnd().split('\n');
@@ -66,10 +67,24 @@ const getAssertions = () => {
   return _.zipObject(assertionNames, assertionCodes);
 };
 
-const updateDocuments = (assertions) => {
-  const readmeDocumentPath = path.join(__dirname, '../../README.md');
+const getSomeBranch = () => {
+  const gitConfig = fs.readFileSync(path.join(__dirname, '../../.git/config')).toString();
+  const [, branch] = /\[branch "([^"]+)"\]/.exec(gitConfig) || [];
 
-  let documentBody = fs.readFileSync(readmeDocumentPath, 'utf8');
+  return branch;
+};
+
+const generateReadme = async () => {
+  const assertions = getAssertions();
+  const gitdown = Gitdown.readFile(path.join(__dirname, '../../.README/README.md'));
+
+  gitdown.setConfig({
+    gitinfo: {
+      defaultBranchName: getSomeBranch() || 'master',
+      gitPath: path.join(__dirname, '../../.git')
+    }
+  });
+  let documentBody = await gitdown.get();
 
   documentBody = documentBody.replace(/<!-- assertions ([a-z]+?) -->/ig, (assertionsBlock) => {
     const ruleName = assertionsBlock.match(/assertions ([a-z]+)/i)[1];
@@ -83,7 +98,45 @@ const updateDocuments = (assertions) => {
       '\n````\n\nThe following patterns are not considered problems:\n\n````js\n' + ruleAssertions.valid.join('\n\n') + '\n````\n';
   });
 
-  fs.writeFileSync(readmeDocumentPath, documentBody);
+  return documentBody;
 };
 
-updateDocuments(getAssertions());
+const generateReadmeAndWriteToDisk = async () => {
+  const readme = await generateReadme();
+  const dist = path.join(__dirname, '..', '..', 'README.md');
+  fs.writeFileSync(dist, readme);
+};
+
+const assertReadmeIsUpToDate = async () => {
+  const readme = await generateReadme();
+  const readmePath = path.join(__dirname, '..', '..', 'README.md');
+
+  const isUpToDate = fs.readFileSync(readmePath).toString() === readme;
+
+  if (!isUpToDate) {
+    throw new Error('Readme is not up to date, please run `npm run create-readme` to update it.');
+  }
+};
+
+const main = async () => {
+  try {
+    const hasCheckFlag = process.argv.some((arg) => {
+      return arg === '--check';
+    });
+
+    if (hasCheckFlag) {
+      await assertReadmeIsUpToDate();
+    } else {
+      await generateReadmeAndWriteToDisk();
+    }
+  } catch (error) {
+    /* eslint-disable-next-line no-console */
+    console.error(error);
+    /* eslint-disable-next-line no-process-exit */
+    process.exit(1);
+  }
+};
+
+main();
+
+export default generateReadme;
