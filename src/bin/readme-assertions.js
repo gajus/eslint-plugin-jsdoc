@@ -16,11 +16,11 @@ const trimCode = (code) => {
   const lastIndentSize = lastLineIndentation ? lastLineIndentation[0].length : 0;
 
   lines = lines.map((line, index) => {
-    if (index === 0) {
-      return line.slice(Math.min(firstIndentSize, lastIndentSize));
-    }
+    const lineIndentSize = firstIndentSize !== 0 || index === 0 ?
+      Math.min(firstIndentSize, lastIndentSize) :
+      lastIndentSize;
 
-    return line.slice(lastIndentSize);
+    return line.slice(lineIndentSize);
   });
 
   return lines.join('\n');
