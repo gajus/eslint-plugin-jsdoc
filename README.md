@@ -405,16 +405,16 @@ function quux (foo) {
 // Message: Expected JSDoc block to be aligned.
 
 /**
- * @param {Number} foo
- */
-function quux (foo) {
+  * @param {Number} foo
+  */
+ function quux (foo) {
 
-}
+ }
 // Message: Expected JSDoc block to be aligned.
 
 /**
-  * A jsdoc not attached to any node.
-*/
+   * A jsdoc not attached to any node.
+ */
 // Message: Expected JSDoc block to be aligned.
 
 class Foo {
@@ -775,10 +775,10 @@ function f () {
 // Message: `settings.jsdoc.captionRequired` has been removed, use options in the rule `check-examples` instead.
 
 /**
-* @typedef {string} Foo
-* @example <caption></caption>
-* 'foo'
-*/
+ * @typedef {string} Foo
+ * @example <caption></caption>
+ * 'foo'
+ */
 // Options: [{"captionRequired":true,"eslintrcForExamples":false}]
 // Message: Caption is expected for examples.
 ````
@@ -3260,19 +3260,19 @@ function quux () {
 // Message: There must be no newline after the description of the JSDoc block.
 
 /**
-* A.
-*
-* @typedef {Object} A
-* @prop {boolean} a A.
-*/
+ * A.
+ *
+ * @typedef {Object} A
+ * @prop {boolean} a A.
+ */
 // Options: ["never"]
 // Message: There must be no newline after the description of the JSDoc block.
 
 /**
-* A.
-* @typedef {Object} A
-* @prop {boolean} a A.
-*/
+ * A.
+ * @typedef {Object} A
+ * @prop {boolean} a A.
+ */
 // Options: ["always"]
 // Message: There must be a newline after the description of the JSDoc block.
 ````
@@ -3410,18 +3410,18 @@ An option object may have the following key:
 The following patterns are considered problems:
 
 ````js
- /**
-  * @param {HerType} baz - Foo.
-  */
+/**
+ * @param {HerType} baz - Foo.
+ */
 function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"HerType":1000}}}
 // Message: Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.
 
- /**
-  * @param {HerType} baz - Foo.
-  */
+/**
+ * @param {HerType} baz - Foo.
+ */
 function quux(foo, bar, baz) {
 
 }
@@ -3437,20 +3437,20 @@ function quux(foo) {
 // Message: The type 'strnig' is undefined.
 
 /**
-* @param {MyType} foo - Bar.
-* @param {HisType} bar - Foo.
-*/
+ * @param {MyType} foo - Bar.
+ * @param {HisType} bar - Foo.
+ */
 function quux(foo, bar) {
 
 }
 // Options: [{"definedTypes":["MyType"]}]
 // Message: The type 'HisType' is undefined.
 
- /**
-  * @param {MyType} foo - Bar.
-  * @param {HisType} bar - Foo.
-  * @param {HerType} baz - Foo.
-  */
+/**
+ * @param {MyType} foo - Bar.
+ * @param {HisType} bar - Foo.
+ * @param {HerType} baz - Foo.
+ */
 function quux(foo, bar, baz) {
 
 }
@@ -3634,30 +3634,30 @@ function foo () {
 }
 
 /**
-* @param {MyType} foo - Bar.
-* @param {HisType} bar - Foo.
-*/
+ * @param {MyType} foo - Bar.
+ * @param {HisType} bar - Foo.
+ */
 function quux(foo, bar) {
 
 }
 // Options: [{"definedTypes":["MyType","HisType"]}]
 
- /**
-  * @param {MyType} foo - Bar.
-  * @param {HisType} bar - Foo.
-  * @param {HerType} baz - Foo.
-  */
+/**
+ * @param {MyType} foo - Bar.
+ * @param {HisType} bar - Foo.
+ * @param {HerType} baz - Foo.
+ */
 function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"},"histype":"HisType"}}}
 // Options: [{"definedTypes":["MyType"]}]
 
- /**
-  * @param {MyType} foo - Bar.
-  * @param {HisType} bar - Foo.
-  * @param {HerType} baz - Foo.
-  */
+/**
+ * @param {MyType} foo - Bar.
+ * @param {HisType} bar - Foo.
+ * @param {HerType} baz - Foo.
+ */
 function quux(foo, bar, baz) {
 
 }
@@ -5351,14 +5351,14 @@ module.exports = {
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 /**
-*
-*/
+ *
+ */
 function test() {
 
 }
 
 module.exports = {
-prop: { prop2: test }
+  prop: { prop2: test }
 }
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 
@@ -6816,8 +6816,8 @@ const quux = async () => {}
 // Message: Missing JSDoc @returns declaration.
 
 /**
-*
-*/
+ *
+ */
 async function quux () {}
 // Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
