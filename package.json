@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "comment-parser": "^0.5.5",
+    "comment-parser": "^0.6.0",
     "debug": "^4.1.1",
     "flat-map-polyfill": "^0.3.8",
     "jsdoctypeparser": "5.0.1",
@@ -27,7 +27,7 @@
     "chai": "^4.2.0",
     "eslint": "^6.0.1",
     "eslint-config-canonical": "^17.1.4",
-    "gitdown": "^2.6.2",
+    "gitdown": "^3.1.1",
     "glob": "^7.1.4",
     "husky": "^3.0.0",
     "mocha": "^6.1.4",
@@ -40,8 +40,7 @@
   },
   "husky": {
     "hooks": {
-      "post-commit": "npm run create-readme && git add README.md && git commit -m 'docs: generate docs' --no-verify",
-      "pre-commit": "npm run lint && npm run test && npm run build"
+      "pre-push": "npm run lint && npm run test && npm run build && npm run check-readme"
     }
   },
   "keywords": [
@@ -60,9 +59,9 @@
     "url": "https://github.com/gajus/eslint-plugin-jsdoc"
   },
   "scripts": {
-    "add-assertions": "babel-node ./src/bin/readme-assertions",
     "build": "rm -fr ./dist && NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps",
-    "create-readme": "gitdown ./.README/README.md --output-file ./README.md && npm run add-assertions",
+    "check-readme": "babel-node ./src/bin/generateReadme.js --check",
+    "create-readme": "babel-node ./src/bin/generateReadme.js",
     "lint-fix": "eslint --fix ./src ./test",
     "lint": "eslint ./src ./test",
     "test-cov": "BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 9000",

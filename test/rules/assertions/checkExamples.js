@@ -637,7 +637,7 @@ export default {
     },
     {
       code: `
-      /**
+     /**
       * @example
       * foo(function (err) {
       *     throw err;

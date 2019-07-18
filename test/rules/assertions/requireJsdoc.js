@@ -1432,13 +1432,13 @@ export default {
      /**
       *
       */
-      function test() {
+     function test() {
 
-      }
+     }
 
-      module.exports = {
-      prop: { prop2: test }
-      }
+     module.exports = {
+       prop: { prop2: test }
+     }
     `,
     env: {
       node: true

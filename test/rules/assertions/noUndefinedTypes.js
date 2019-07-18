@@ -2,9 +2,9 @@ export default {
   invalid: [
     {
       code: `
-        /**
-         * @param {HerType} baz - Foo.
-         */
+       /**
+        * @param {HerType} baz - Foo.
+        */
        function quux(foo, bar, baz) {
 
        }
@@ -28,9 +28,9 @@ export default {
     },
     {
       code: `
-        /**
-         * @param {HerType} baz - Foo.
-         */
+       /**
+        * @param {HerType} baz - Foo.
+        */
        function quux(foo, bar, baz) {
 
        }
@@ -73,9 +73,9 @@ export default {
          * @param {MyType} foo - Bar.
          * @param {HisType} bar - Foo.
          */
-         function quux(foo, bar) {
+        function quux(foo, bar) {
 
-         }
+        }
       `,
       errors: [
         {
@@ -89,11 +89,11 @@ export default {
     },
     {
       code: `
-        /**
-         * @param {MyType} foo - Bar.
-         * @param {HisType} bar - Foo.
-         * @param {HerType} baz - Foo.
-         */
+       /**
+        * @param {MyType} foo - Bar.
+        * @param {HisType} bar - Foo.
+        * @param {HerType} baz - Foo.
+        */
        function quux(foo, bar, baz) {
 
        }
@@ -404,9 +404,9 @@ export default {
          * @param {MyType} foo - Bar.
          * @param {HisType} bar - Foo.
          */
-         function quux(foo, bar) {
+        function quux(foo, bar) {
 
-         }
+        }
       `,
       options: [{
         definedTypes: ['MyType', 'HisType']
@@ -419,9 +419,9 @@ export default {
          * @param {HisType} bar - Foo.
          * @param {HerType} baz - Foo.
          */
-       function quux(foo, bar, baz) {
+        function quux(foo, bar, baz) {
 
-       }
+        }
       `,
       options: [{
         definedTypes: ['MyType']
@@ -444,9 +444,9 @@ export default {
          * @param {HisType} bar - Foo.
          * @param {HerType} baz - Foo.
          */
-       function quux(foo, bar, baz) {
+        function quux(foo, bar, baz) {
 
-       }
+        }
       `,
       options: [{
         definedTypes: ['MyType']
