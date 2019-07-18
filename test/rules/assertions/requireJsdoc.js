@@ -1050,6 +1050,12 @@ export default {
       function MyClass() {}
 
       /**
+        Empty line between jsdoc and functions is allowed
+       */
+       
+      function myFunction() {}
+
+      /**
        Function doing something
        */
       function myFunction() {}

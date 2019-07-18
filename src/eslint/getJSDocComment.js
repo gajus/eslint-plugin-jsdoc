@@ -54,7 +54,7 @@ const getJSDocComment = function (sourceCode, node) {
       isCommentToken(tokenBefore) &&
       tokenBefore.type === 'Block' &&
       tokenBefore.value.charAt(0) === '*' &&
-      astNode.loc.start.line - tokenBefore.loc.end.line <= 1
+      astNode.loc.start.line > tokenBefore.loc.end.line
     ) {
       return tokenBefore;
     }
