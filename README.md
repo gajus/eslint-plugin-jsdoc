@@ -19,7 +19,6 @@ JSDoc linting rules for ESLint.
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-alignment`](#eslint-plugin-jsdoc-rules-check-alignment)
         * [`check-examples`](#eslint-plugin-jsdoc-rules-check-examples)
-        * [Options](#eslint-plugin-jsdoc-rules-options)
         * [`check-indentation`](#eslint-plugin-jsdoc-rules-check-indentation)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
         * [`check-syntax`](#eslint-plugin-jsdoc-rules-check-syntax)
@@ -427,13 +426,13 @@ function quux (foo) {}
 
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.
 
-<a name="eslint-plugin-jsdoc-rules-options"></a>
-### Options
+<a name="eslint-plugin-jsdoc-rules-check-examples-options"></a>
+#### Options
 
 The options below all default to no-op/`false` except as noted.
 
-<a name="eslint-plugin-jsdoc-rules-options-captionrequired"></a>
-#### <code>captionRequired</code>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-captionrequired"></a>
+##### <code>captionRequired</code>
 
 JSDoc specs use of an optional `<caption>` element at the beginning of
 `@example`.
@@ -441,8 +440,8 @@ JSDoc specs use of an optional `<caption>` element at the beginning of
 The option `captionRequired` insists on a `<caption>` being present at
 the beginning of any `@example`.
 
-<a name="eslint-plugin-jsdoc-rules-options-examplecoderegex-and-rejectexamplecoderegex"></a>
-#### <code>exampleCodeRegex</code> and <code>rejectExampleCodeRegex</code>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-examplecoderegex-and-rejectexamplecoderegex"></a>
+##### <code>exampleCodeRegex</code> and <code>rejectExampleCodeRegex</code>
 
 JSDoc does not specify a formal means for delimiting code blocks within
 `@example` (it uses generic syntax highlighting techniques for its own
@@ -465,8 +464,8 @@ If neither is in use, all examples will be matched. Note also that even if
 `captionRequired` is not set, any initial `<caption>` will be stripped out
 before doing the regex matching.
 
-<a name="eslint-plugin-jsdoc-rules-options-paddedindent"></a>
-#### <code>paddedIndent</code>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-paddedindent"></a>
+##### <code>paddedIndent</code>
 
 This integer property allows one to add a fixed amount of whitespace at the
 beginning of the second or later lines of the example to be stripped so as
@@ -484,8 +483,8 @@ out before evaluation.
  */
 ```
 
-<a name="eslint-plugin-jsdoc-rules-options-reportunuseddisabledirectives"></a>
-#### <code>reportUnusedDisableDirectives</code>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-reportunuseddisabledirectives"></a>
+##### <code>reportUnusedDisableDirectives</code>
 
 If not set to `false`, `reportUnusedDisableDirectives` will report disabled
 directives which are not used (and thus not needed). Defaults to `true`.
@@ -496,7 +495,7 @@ disabling of ESLint directives which are not needed by the resolved rules
 will be reported as with the ESLint `--report-unused-disable-directives`
 command.
 
-<a name="eslint-plugin-jsdoc-rules-options-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig"></a>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig"></a>
 #### Options for Determining ESLint Rule Applicability (<code>allowInlineConfig</code>, <code>noDefaultExampleRules</code>, <code>matchingFileName</code>, <code>configFile</code>, <code>eslintrcForExamples</code>, and <code>baseConfig</code>)
 
 The following options determine which individual ESLint rules will be
@@ -527,7 +526,7 @@ decreasing precedence:
 * `baseConfig` - An object of rules with the same schema
   as `.eslintrc.*` for defaults
 
-<a name="eslint-plugin-jsdoc-rules-options-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
 ##### Rules Disabled by Default Unless <code>noDefaultExampleRules</code> is Set to <code>true</code>
 
 * `eol-last` - Insisting that a newline "always" be at the end is less likely

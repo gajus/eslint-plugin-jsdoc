@@ -2,11 +2,11 @@
 
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.
 
-### Options
+#### Options
 
 The options below all default to no-op/`false` except as noted.
 
-#### `captionRequired`
+##### `captionRequired`
 
 JSDoc specs use of an optional `<caption>` element at the beginning of
 `@example`.
@@ -14,7 +14,7 @@ JSDoc specs use of an optional `<caption>` element at the beginning of
 The option `captionRequired` insists on a `<caption>` being present at
 the beginning of any `@example`.
 
-#### `exampleCodeRegex` and `rejectExampleCodeRegex`
+##### `exampleCodeRegex` and `rejectExampleCodeRegex`
 
 JSDoc does not specify a formal means for delimiting code blocks within
 `@example` (it uses generic syntax highlighting techniques for its own
@@ -37,7 +37,7 @@ If neither is in use, all examples will be matched. Note also that even if
 `captionRequired` is not set, any initial `<caption>` will be stripped out
 before doing the regex matching.
 
-#### `paddedIndent`
+##### `paddedIndent`
 
 This integer property allows one to add a fixed amount of whitespace at the
 beginning of the second or later lines of the example to be stripped so as
@@ -55,7 +55,7 @@ out before evaluation.
  */
 ```
 
-#### `reportUnusedDisableDirectives`
+##### `reportUnusedDisableDirectives`
 
 If not set to `false`, `reportUnusedDisableDirectives` will report disabled
 directives which are not used (and thus not needed). Defaults to `true`.
