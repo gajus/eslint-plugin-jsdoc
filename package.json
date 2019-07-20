@@ -5,11 +5,11 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "comment-parser": "^0.6.0",
+    "comment-parser": "^0.6.1",
     "debug": "^4.1.1",
     "flat-map-polyfill": "^0.3.8",
     "jsdoctypeparser": "5.0.1",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "regextras": "^0.6.1"
   },
   "description": "JSDoc linting rules for ESLint.",
@@ -29,8 +29,8 @@
     "eslint-config-canonical": "^17.1.4",
     "gitdown": "^3.1.1",
     "glob": "^7.1.4",
-    "husky": "^3.0.0",
-    "mocha": "^6.1.4",
+    "husky": "^3.0.1",
+    "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "semantic-release": "^15.13.18",
     "typescript": "^3.5.3"
