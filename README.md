@@ -3311,6 +3311,14 @@ function quux () {
 
 }
 // Message: Types are not permitted on @returns.
+
+/**
+ * @param {number} foo {number}
+ */
+function quux (foo) {
+
+}
+// Message: Types are not permitted on @param.
 ````
 
 The following patterns are not considered problems:
