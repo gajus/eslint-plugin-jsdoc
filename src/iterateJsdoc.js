@@ -1,5 +1,6 @@
+// eslint-disable-next-line import/no-named-default
+import {default as commentParser, stringify as commentStringify} from 'comment-parser';
 import _ from 'lodash';
-import commentParser from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 import getJSDocComment from './eslint/getJSDocComment';
 
@@ -76,6 +77,23 @@ const getUtils = (
   const sourceCode = context.getSourceCode();
 
   const utils = {};
+
+  utils.stringify = (tagBlock) => {
+    let indent = sourceCode.text.match(/^\n*([ \t]+)/);
+    /* istanbul ignore next */
+    indent = indent ? indent[1] + indent[1].charAt() : ' ';
+
+    return commentStringify([tagBlock], {indent}).slice(indent.length - 1);
+  };
+
+  utils.reportJSDoc = (msg, tag, handler) => {
+    report(msg, (fixer) => {
+      handler();
+      const replacement = utils.stringify(jsdoc);
+
+      return fixer.replaceText(jsdocNode, replacement);
+    }, tag);
+  };
 
   utils.getFunctionParameterNames = () => {
     return jsdocUtils.getFunctionParameterNames(node);

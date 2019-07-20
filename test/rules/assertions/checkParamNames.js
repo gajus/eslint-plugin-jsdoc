@@ -144,7 +144,15 @@ export default {
           line: 4,
           message: 'Duplicate @param "foo"'
         }
-      ]
+      ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `
     },
     {
       code: `
