@@ -24,6 +24,60 @@ export default {
     {
       code: `
           /**
+           *
+           */
+          function quux (foo, bar) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        },
+        {
+          message: 'Missing JSDoc @param "bar" declaration.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @param bar
+           */
+          function quux (foo, bar, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        },
+        {
+          message: 'Missing JSDoc @param "baz" declaration.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
+           * @param baz
+           */
+          function quux (foo, bar, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.'
+        },
+        {
+          message: 'Missing JSDoc @param "bar" declaration.'
+        }
+      ]
+    },
+    {
+      code: `
+          /**
            * @param
            */
           function quux (foo) {
