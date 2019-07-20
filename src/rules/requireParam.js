@@ -20,16 +20,10 @@ export default iterateJsdoc(({
     return;
   }
 
-  functionParameterNames.some((functionParameterName, index) => {
-    const jsdocParameterName = jsdocParameterNames[index];
-
-    if (!jsdocParameterName) {
+  functionParameterNames.forEach((functionParameterName) => {
+    if (!jsdocParameterNames.includes(functionParameterName)) {
       report(`Missing JSDoc @${utils.getPreferredTagName({tagName: 'param'})} "${functionParameterName}" declaration.`);
-
-      return true;
     }
-
-    return false;
   });
 }, {
   meta: {
