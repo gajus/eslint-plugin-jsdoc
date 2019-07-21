@@ -9,7 +9,6 @@
 JSDoc linting rules for ESLint.
 
 * [eslint-plugin-jsdoc](#eslint-plugin-jsdoc)
-    * [Reference to jscs-jsdoc](#eslint-plugin-jsdoc-reference-to-jscs-jsdoc)
     * [Installation](#eslint-plugin-jsdoc-installation)
     * [Configuration](#eslint-plugin-jsdoc-configuration)
     * [Settings](#eslint-plugin-jsdoc-settings)
@@ -20,7 +19,6 @@ JSDoc linting rules for ESLint.
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-alignment`](#eslint-plugin-jsdoc-rules-check-alignment)
         * [`check-examples`](#eslint-plugin-jsdoc-rules-check-examples)
-        * [Options](#eslint-plugin-jsdoc-rules-options)
         * [`check-indentation`](#eslint-plugin-jsdoc-rules-check-indentation)
         * [`check-param-names`](#eslint-plugin-jsdoc-rules-check-param-names)
         * [`check-syntax`](#eslint-plugin-jsdoc-rules-check-syntax)
@@ -46,42 +44,6 @@ JSDoc linting rules for ESLint.
         * [`require-returns`](#eslint-plugin-jsdoc-rules-require-returns)
         * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
 
-
-<a name="eslint-plugin-jsdoc-reference-to-jscs-jsdoc"></a>
-### Reference to jscs-jsdoc
-
-This table maps the rules between `eslint-plugin-jsdoc` and `jscs-jsdoc`.
-
-| `eslint-plugin-jsdoc` | `jscs-jsdoc` |
-| --- | --- |
-| [`check-alignment`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-alignment) | N/A |
-| [`check-examples`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-examples) | N/A |
-| [`check-indentation`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-indentation) | N/A |
-| [`check-param-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names) | [`checkParamNames`](https://github.com/jscs-dev/jscs-jsdoc#checkparamnames) |
-| [`check-syntax`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-syntax) | N/A |
-| [`check-tag-names`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names) | N/A ~ [`checkAnnotations`](https://github.com/jscs-dev/jscs-jsdoc#checkannotations) |
-| [`check-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types) | [`checkTypes`](https://github.com/jscs-dev/jscs-jsdoc#checktypes) |
-| [`newline-after-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description) | [`requireNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirenewlineafterdescription) and [`disallowNewlineAfterDescription`](https://github.com/jscs-dev/jscs-jsdoc#disallownewlineafterdescription) |
-| [`require-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description) | N/A |
-| [`require-description-complete-sentence`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-description-complete-sentence) | [`requireDescriptionCompleteSentence`](https://github.com/jscs-dev/jscs-jsdoc#requiredescriptioncompletesentence) |
-| [`require-example`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-example) | N/A |
-| [`require-hyphen-before-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description) | [`requireHyphenBeforeDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirehyphenbeforedescription) |
-| [`require-param`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param) | [`checkParamExistence`](https://github.com/jscs-dev/jscs-jsdoc#checkparamexistence) |
-| [`require-param-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-description) | [`requireParamDescription`](https://github.com/jscs-dev/jscs-jsdoc#requireparamdescription) |
-| [`require-param-name`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-name) | N/A |
-| [`require-param-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type) | [`requireParamTypes`](https://github.com/jscs-dev/jscs-jsdoc#requireparamtypes) |
-| [`require-returns`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns) | [`requireReturn`](https://github.com/jscs-dev/jscs-jsdoc#requirereturn) |
-| [`require-returns-check`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-check) | [`requireReturn`](https://github.com/jscs-dev/jscs-jsdoc#requirereturncheck) |
-| [`require-returns-description`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-description) | [`requireReturnDescription`](https://github.com/jscs-dev/jscs-jsdoc#requirereturndescription) |
-| [`require-returns-type`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-type) | [`requireReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#requirereturntypes) |
-| [`valid-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-valid-types) | N/A |
-| [`no-undefined-types`](https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-undefined-types) | N/A |
-| N/A | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
-| N/A | [`checkRedundantParams`](https://github.com/jscs-dev/jscs-jsdoc#checkredundantparams) |
-| N/A | [`checkReturnTypes`](https://github.com/jscs-dev/jscs-jsdoc#checkreturntypes) |
-| N/A | [`checkRedundantAccess`](https://github.com/jscs-dev/jscs-jsdoc#checkredundantaccess) |
-| N/A | [`enforceExistence`](https://github.com/jscs-dev/jscs-jsdoc#enforceexistence) |
-| N/A | [`leadingUnderscoreAccess`](https://github.com/jscs-dev/jscs-jsdoc#leadingunderscoreaccess) |
 
 <a name="eslint-plugin-jsdoc-installation"></a>
 ## Installation
@@ -464,13 +426,13 @@ function quux (foo) {}
 
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.
 
-<a name="eslint-plugin-jsdoc-rules-options"></a>
-### Options
+<a name="eslint-plugin-jsdoc-rules-check-examples-options"></a>
+#### Options
 
 The options below all default to no-op/`false` except as noted.
 
-<a name="eslint-plugin-jsdoc-rules-options-captionrequired"></a>
-#### <code>captionRequired</code>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-captionrequired"></a>
+##### <code>captionRequired</code>
 
 JSDoc specs use of an optional `<caption>` element at the beginning of
 `@example`.
@@ -478,8 +440,8 @@ JSDoc specs use of an optional `<caption>` element at the beginning of
 The option `captionRequired` insists on a `<caption>` being present at
 the beginning of any `@example`.
 
-<a name="eslint-plugin-jsdoc-rules-options-examplecoderegex-and-rejectexamplecoderegex"></a>
-#### <code>exampleCodeRegex</code> and <code>rejectExampleCodeRegex</code>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-examplecoderegex-and-rejectexamplecoderegex"></a>
+##### <code>exampleCodeRegex</code> and <code>rejectExampleCodeRegex</code>
 
 JSDoc does not specify a formal means for delimiting code blocks within
 `@example` (it uses generic syntax highlighting techniques for its own
@@ -502,8 +464,8 @@ If neither is in use, all examples will be matched. Note also that even if
 `captionRequired` is not set, any initial `<caption>` will be stripped out
 before doing the regex matching.
 
-<a name="eslint-plugin-jsdoc-rules-options-paddedindent"></a>
-#### <code>paddedIndent</code>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-paddedindent"></a>
+##### <code>paddedIndent</code>
 
 This integer property allows one to add a fixed amount of whitespace at the
 beginning of the second or later lines of the example to be stripped so as
@@ -521,8 +483,8 @@ out before evaluation.
  */
 ```
 
-<a name="eslint-plugin-jsdoc-rules-options-reportunuseddisabledirectives"></a>
-#### <code>reportUnusedDisableDirectives</code>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-reportunuseddisabledirectives"></a>
+##### <code>reportUnusedDisableDirectives</code>
 
 If not set to `false`, `reportUnusedDisableDirectives` will report disabled
 directives which are not used (and thus not needed). Defaults to `true`.
@@ -533,7 +495,7 @@ disabling of ESLint directives which are not needed by the resolved rules
 will be reported as with the ESLint `--report-unused-disable-directives`
 command.
 
-<a name="eslint-plugin-jsdoc-rules-options-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig"></a>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig"></a>
 #### Options for Determining ESLint Rule Applicability (<code>allowInlineConfig</code>, <code>noDefaultExampleRules</code>, <code>matchingFileName</code>, <code>configFile</code>, <code>eslintrcForExamples</code>, and <code>baseConfig</code>)
 
 The following options determine which individual ESLint rules will be
@@ -564,7 +526,7 @@ decreasing precedence:
 * `baseConfig` - An object of rules with the same schema
   as `.eslintrc.*` for defaults
 
-<a name="eslint-plugin-jsdoc-rules-options-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
 ##### Rules Disabled by Default Unless <code>noDefaultExampleRules</code> is Set to <code>true</code>
 
 * `eol-last` - Insisting that a newline "always" be at the end is less likely
@@ -5813,6 +5775,30 @@ function quux (foo) {
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
+ *
+ */
+function quux (foo, bar) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @param bar
+ */
+function quux (foo, bar, baz) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @param baz
+ */
+function quux (foo, bar, baz) {
+
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
  * @param
  */
 function quux (foo) {
@@ -7295,31 +7281,31 @@ function quux() {
 // Message: Tag @callback must have a namepath
 
 /**
-* @constant {str%ng}
-*/
-const FOO = 'foo';
+ * @constant {str%ng}
+ */
+ const FOO = 'foo';
 // Message: Syntax error in type: str%ng
 
 /**
-* @typedef {str%ng} UserString
-*/
+ * @typedef {str%ng} UserString
+ */
 // Message: Syntax error in type: str%ng
 
 /**
-* @typedef {string} UserStr%ng
-*/
+ * @typedef {string} UserStr%ng
+ */
 // Message: Syntax error in type: UserStr%ng
 
 /**
-* @extends
-*/
-class Bar {};
+ * @extends
+ */
+ class Bar {};
 // Message: Tag @extends must have either a type or namepath
 
 /**
-* @type
-*/
-let foo;
+ * @type
+ */
+ let foo;
 // Message: Tag @type must have a type
 ````
 
@@ -7419,23 +7405,23 @@ function quux() {
 }
 
 /**
-* @constant {string}
-*/
-const FOO = 'foo';
+ * @constant {string}
+ */
+ const FOO = 'foo';
 
 /**
-* @extends Foo
-*/
-class Bar {};
+ * @extends Foo
+ */
+ class Bar {};
 
 /**
-* @extends {Foo<String>}
-*/
-class Bar {};
+ * @extends {Foo<String>}
+ */
+ class Bar {};
 
 /**
-* @typedef {number|string} UserDefinedType
-*/
+ * @typedef {number|string} UserDefinedType
+ */
 
 /**
  * @typedef {number|string}

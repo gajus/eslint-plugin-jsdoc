@@ -1,20 +1,31 @@
+import entries from 'object.entries-ponyfill';
 import iterateJsdoc from '../iterateJsdoc';
 
-const validateParameterNames = (targetTagName : string, functionParameterNames : Array<string>, jsdoc, report) => {
+/* istanbul ignore next */
+if (!Object.entries) {
+  Object.entries = entries;
+}
+
+const validateParameterNames = (targetTagName : string, functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report) => {
   if (!jsdoc || !jsdoc.tags) {
     return false;
   }
 
-  const paramTags = jsdoc.tags.filter((tag) => {
+  const paramTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
     return tag.tag === targetTagName && !tag.name.includes('.');
   });
 
-  return paramTags.some((tag, index) => {
-    const dupeTag = paramTags.find((tg, idx) => {
+  return paramTags.some(([, tag], index) => {
+    let tagsIndex;
+    const dupeTagInfo = paramTags.find(([tgsIndex, tg], idx) => {
+      tagsIndex = tgsIndex;
+
       return tg.name === tag.name && idx !== index;
     });
-    if (dupeTag) {
-      report(`Duplicate @${targetTagName} "${tag.name}"`, null, dupeTag);
+    if (dupeTagInfo) {
+      utils.reportJSDoc(`Duplicate @${targetTagName} "${tag.name}"`, dupeTagInfo[1], () => {
+        jsdoc.tags.splice(tagsIndex, 1);
+      });
 
       return true;
     }
@@ -36,7 +47,7 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
 
     if (functionParameterName !== tag.name) {
       const expectedNames = functionParameterNames.join(', ');
-      const actualNames = paramTags.map(({name}) => {
+      const actualNames = paramTags.map(([, {name}]) => {
         return name;
       }).join(', ');
 
@@ -92,6 +103,7 @@ const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames 
 
 export default iterateJsdoc(({
   jsdoc,
+  jsdocNode,
   report,
   utils
 }) => {
@@ -101,7 +113,7 @@ export default iterateJsdoc(({
     return;
   }
   const targetTagName = utils.getPreferredTagName({tagName: 'param'});
-  const isError = validateParameterNames(targetTagName, functionParameterNames, jsdoc, report);
+  const isError = validateParameterNames(targetTagName, functionParameterNames, jsdoc, jsdocNode, utils, report);
 
   if (isError) {
     return;
@@ -110,6 +122,7 @@ export default iterateJsdoc(({
   validateParameterNamesDeep(targetTagName, jsdocParameterNamesDeep, jsdoc, report);
 }, {
   meta: {
+    fixable: 'code',
     type: 'suggestion'
   }
 });
