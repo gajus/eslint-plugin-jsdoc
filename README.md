@@ -4441,6 +4441,12 @@ Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
 Overrides the default contexts (see below).
 
+<a name="eslint-plugin-jsdoc-rules-require-example-fixer"></a>
+#### Fixer
+
+The fixer for `require-example` will add an empty `@example`, but it will still
+report a missing example description after this is added.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
