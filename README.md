@@ -6237,6 +6237,17 @@ export class SomeClass {
    */
   constructor(private property: string) {}
 }
+
+/**
+ * Assign the project to an employee.
+ *
+ * @param {object} employee - The employee who is responsible for the project.
+ * @param {string} employee.name - The name of the employee.
+ * @param {string} employee.department - The employee's department.
+ */
+function assign({name, department}) {
+  // ...
+}
 ````
 
 
