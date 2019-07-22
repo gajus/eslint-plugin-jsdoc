@@ -5181,6 +5181,25 @@ Object.keys(this.options.rules || {}).forEach(function(name) {}.bind(this));
 var object = { name: 'key'};
 Object.keys(object).forEach(function() {})
 
+/**
+ * @func myFunction
+ */
+
+function myFunction() {
+
+}
+// Settings: {"jsdoc":{"maxLines":2,"minLines":0}}
+
+/**
+ * @func myFunction
+ */
+
+
+function myFunction() {
+
+}
+// Settings: {"jsdoc":{"maxLines":3,"minLines":0}}
+
 function myFunction() {}
 // Options: [{"require":{"ClassDeclaration":true,"FunctionDeclaration":false,"MethodDefinition":true}}]
 
