@@ -21,6 +21,9 @@ export default iterateJsdoc(({
   }
 
   functionParameterNames.forEach((functionParameterName) => {
+    if (['<ObjectPattern>', '<ArrayPattern>'].includes(functionParameterName)) {
+      return;
+    }
     if (!jsdocParameterNames.includes(functionParameterName)) {
       report(`Missing JSDoc @${utils.getPreferredTagName({tagName: 'param'})} "${functionParameterName}" declaration.`);
     }
