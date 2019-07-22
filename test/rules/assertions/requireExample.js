@@ -13,7 +13,15 @@ export default {
         {
           message: 'Missing JSDoc @example declaration.'
         }
-      ]
+      ],
+      output: `
+          /**
+           * @example
+           */
+          function quux () {
+
+          }
+      `
     },
     {
       code: `

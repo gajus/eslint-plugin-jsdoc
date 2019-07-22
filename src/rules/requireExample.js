@@ -33,7 +33,20 @@ export default iterateJsdoc(({
   }
 
   if (!functionExamples.length) {
-    report(`Missing JSDoc @${targetTagName} declaration.`);
+    utils.reportJSDoc(`Missing JSDoc @${targetTagName} declaration.`, null, () => {
+      if (!jsdoc.tags) {
+        jsdoc.tags = [];
+      }
+      const line = jsdoc.tags.length ? jsdoc.tags[jsdoc.tags.length - 1].line + 1 : 0;
+      jsdoc.tags.push({
+        description: '',
+        line,
+        name: '',
+        optional: false,
+        tag: targetTagName,
+        type: ''
+      });
+    });
 
     return;
   }
@@ -48,6 +61,7 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    fixable: 'code',
     schema: [
       {
         additionalProperties: false,
