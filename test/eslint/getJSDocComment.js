@@ -2,6 +2,7 @@ import {
   RuleTester
 } from 'eslint';
 import getJSDocComment from '../../src/eslint/getJSDocComment';
+import {getSettings} from '../../src/iterateJsdoc';
 
 /* eslint-disable sort-keys */
 const rule = {
@@ -13,10 +14,11 @@ const rule = {
   },
   create (context) {
     const sourceCode = context.getSourceCode();
+    const settings = getSettings(context);
 
     return {
       ObjectExpression: (node) => {
-        const comment = getJSDocComment(sourceCode, node);
+        const comment = getJSDocComment(sourceCode, node, settings);
         if (comment !== null) {
           return;
         }

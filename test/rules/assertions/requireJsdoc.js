@@ -1131,6 +1131,41 @@ export default {
     `
   },
   {
+    code: `
+       /**
+        * @func myFunction
+        */
+       
+       function myFunction() {
+       
+       }
+       `,
+    settings: {
+      jsdoc: {
+        maxLines: 2,
+        minLines: 0
+      }
+    }
+  },
+  {
+    code: `
+     /**
+      * @func myFunction
+      */
+     
+     
+     function myFunction() {
+     
+     }
+     `,
+    settings: {
+      jsdoc: {
+        maxLines: 3,
+        minLines: 0
+      }
+    }
+  },
+  {
     code: 'function myFunction() {}',
     options: [{
       require: {

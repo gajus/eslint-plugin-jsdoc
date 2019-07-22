@@ -3,6 +3,7 @@ import jsdocUtils from '../jsdocUtils';
 import exportParser from '../exportParser';
 import getJSDocComment from '../eslint/getJSDocComment';
 import warnRemovedSettings from '../warnRemovedSettings';
+import {getSettings} from '../iterateJsdoc';
 
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
@@ -141,8 +142,10 @@ export default {
 
     const {require: requireOption, publicOnly, exemptEmptyFunctions} = getOptions(context);
 
+    const settings = getSettings(context);
+
     const checkJsDoc = (node) => {
-      const jsDocNode = getJSDocComment(sourceCode, node);
+      const jsDocNode = getJSDocComment(sourceCode, node, settings);
 
       if (jsDocNode) {
         return;
