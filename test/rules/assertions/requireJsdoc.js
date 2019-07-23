@@ -6,6 +6,66 @@ export default {
   invalid: [
     {
       code: `
+       /**
+        * @func myFunction
+        */
+       function myFunction() {
+       
+       }
+       `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          maxLines: 3,
+          minLines: 2
+        }
+      }
+    },
+    {
+      code: `
+       /**
+        * @func myFunction
+        */
+        
+        
+       function myFunction() {
+       
+       }
+       `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          maxLines: 2
+        }
+      }
+    },
+    {
+      code: `
+       /** @func myFunction */ function myFunction() {
+       
+       }
+       `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.'
+        }
+      ],
+      settings: {
+        jsdoc: {
+          minLines: 1
+        }
+      }
+    },
+    {
+      code: `
           export var test = function () {
 
           };
@@ -1129,6 +1189,71 @@ export default {
       var object = { name: 'key'};
       Object.keys(object).forEach(function() {})
     `
+  },
+  {
+    code: `
+       /**
+        * @func myFunction
+        */
+       
+       function myFunction() {
+       
+       }
+       `,
+    settings: {
+      jsdoc: {
+        maxLines: 2,
+        minLines: 0
+      }
+    }
+  },
+  {
+    code: `
+     /**
+      * @func myFunction
+      */
+     
+     
+     function myFunction() {
+     
+     }
+     `,
+    settings: {
+      jsdoc: {
+        maxLines: 3,
+        minLines: 0
+      }
+    }
+  },
+  {
+    code: `
+        /** @func myFunction */  function myFunction() {
+   
+        }
+   `,
+    settings: {
+      jsdoc: {
+        maxLines: 0,
+        minLines: 0
+      }
+    }
+  },
+  {
+    code: `
+        /** 
+         * @func myFunction
+         */
+         
+        function myFunction() {
+ 
+        }
+    `,
+    settings: {
+      jsdoc: {
+        maxLines: 3,
+        minLines: 2
+      }
+    }
   },
   {
     code: 'function myFunction() {}',

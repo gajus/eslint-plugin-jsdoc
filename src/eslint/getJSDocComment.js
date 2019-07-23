@@ -32,12 +32,13 @@ const looksLikeExport = function (astNode) {
  *
  * @param {SourceCode} sourceCode The ESLint SourceCode
  * @param {ASTNode} node The AST node to get the comment for.
+ * @param {object} settings The settings in context
  * @returns {Token|null} The Block comment token containing the JSDoc comment
  *    for the given node or null if not found.
  * @public
  * @deprecated
  */
-const getJSDocComment = function (sourceCode, node) {
+const getJSDocComment = function (sourceCode, node, settings) {
   /**
    * Checks for the presence of a JSDoc comment for the given node and returns it.
    *
@@ -48,13 +49,14 @@ const getJSDocComment = function (sourceCode, node) {
    */
   const findJSDocComment = (astNode) => {
     const tokenBefore = sourceCode.getTokenBefore(astNode, {includeComments: true});
-
+    const {minLines, maxLines} = settings;
     if (
       tokenBefore &&
       isCommentToken(tokenBefore) &&
       tokenBefore.type === 'Block' &&
       tokenBefore.value.charAt(0) === '*' &&
-      astNode.loc.start.line - tokenBefore.loc.end.line <= 1
+      astNode.loc.start.line - tokenBefore.loc.end.line >= minLines &&
+      astNode.loc.start.line - tokenBefore.loc.end.line <= maxLines
     ) {
       return tokenBefore;
     }
