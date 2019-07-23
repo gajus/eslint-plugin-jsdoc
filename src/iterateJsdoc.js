@@ -78,7 +78,9 @@ const getUtils = (
     tagNamePreference,
     overrideReplacesDocs,
     implementsReplacesDocs,
-    augmentsExtendsReplacesDocs
+    augmentsExtendsReplacesDocs,
+    maxLines,
+    minLines
   },
   report,
   context
@@ -263,7 +265,10 @@ const getUtils = (
 
   utils.getClassJsdoc = () => {
     const classNode = utils.getClassNode();
-    const classJsdocNode = getJSDocComment(sourceCode, classNode);
+    const classJsdocNode = getJSDocComment(sourceCode, classNode, {
+      maxLines,
+      minLines
+    });
 
     if (classJsdocNode) {
       const indent = ' '.repeat(classJsdocNode.loc.start.column);
@@ -319,6 +324,8 @@ const getSettings = (context) => {
 
   // All rules
   settings.ignorePrivate = Boolean(_.get(context, 'settings.jsdoc.ignorePrivate'));
+  settings.minLines = Number(_.get(context, 'settings.jsdoc.minLines', 0));
+  settings.maxLines = Number(_.get(context, 'settings.jsdoc.maxLines', 1));
 
   // `check-tag-names` and many returns/param rules
   settings.tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
@@ -435,6 +442,7 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
 };
 
 export {
+  getSettings,
   parseComment
 };
 
@@ -478,7 +486,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       const settings = getSettings(context);
 
       const checkJsdoc = (node) => {
-        const jsdocNode = getJSDocComment(sourceCode, node);
+        const jsdocNode = getJSDocComment(sourceCode, node, settings);
 
         if (!jsdocNode) {
           return;

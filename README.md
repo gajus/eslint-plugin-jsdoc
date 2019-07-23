@@ -4757,6 +4757,32 @@ Accepts one optional options object with the following optional keys.
 The following patterns are considered problems:
 
 ````js
+/**
+ * @func myFunction
+ */
+function myFunction() {
+
+}
+// Settings: {"jsdoc":{"maxLines":3,"minLines":2}}
+// Message: Missing JSDoc comment.
+
+/**
+ * @func myFunction
+ */
+ 
+ 
+function myFunction() {
+
+}
+// Settings: {"jsdoc":{"maxLines":2}}
+// Message: Missing JSDoc comment.
+
+/** @func myFunction */ function myFunction() {
+
+}
+// Settings: {"jsdoc":{"minLines":1}}
+// Message: Missing JSDoc comment.
+
 export var test = function () {
 
 };
@@ -5180,6 +5206,39 @@ array.filter(function() {});
 Object.keys(this.options.rules || {}).forEach(function(name) {}.bind(this));
 var object = { name: 'key'};
 Object.keys(object).forEach(function() {})
+
+/**
+ * @func myFunction
+ */
+
+function myFunction() {
+
+}
+// Settings: {"jsdoc":{"maxLines":2,"minLines":0}}
+
+/**
+ * @func myFunction
+ */
+
+
+function myFunction() {
+
+}
+// Settings: {"jsdoc":{"maxLines":3,"minLines":0}}
+
+/** @func myFunction */  function myFunction() {
+
+}
+// Settings: {"jsdoc":{"maxLines":0,"minLines":0}}
+
+/** 
+ * @func myFunction
+ */
+ 
+function myFunction() {
+
+}
+// Settings: {"jsdoc":{"maxLines":3,"minLines":2}}
 
 function myFunction() {}
 // Options: [{"require":{"ClassDeclaration":true,"FunctionDeclaration":false,"MethodDefinition":true}}]
