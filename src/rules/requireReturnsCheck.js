@@ -19,9 +19,13 @@ const canSkip = (utils) => {
 };
 
 export default iterateJsdoc(({
+  context,
   report,
+  settings,
   utils
 }) => {
+  const {yieldAsReturn} = context.options[0] || {};
+
   if (canSkip(utils)) {
     return;
   }
@@ -43,11 +47,25 @@ export default iterateJsdoc(({
   }
 
   // In case a return value is declared in JSDoc, we also expect one in the code.
-  if (utils.hasDefinedTypeReturnTag(tags[0]) && !utils.hasReturnValue()) {
+  if (utils.hasDefinedTypeReturnTag(tags[0]) && !utils.hasReturnValue({
+    yieldAsReturn: ['typescript', 'gcc'].includes(settings.mode) && yieldAsReturn
+  })) {
     report(`JSDoc @${tagName} declaration present but return expression not available in function.`);
   }
 }, {
   meta: {
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          yieldAsReturn: {
+            enum: ['always', 'argument'],
+            type: 'string'
+          }
+        },
+        type: 'object'
+      }
+    ],
     type: 'suggestion'
   }
 });

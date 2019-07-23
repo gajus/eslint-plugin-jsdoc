@@ -201,8 +201,11 @@ const getUtils = (
     return jsdocUtils.hasDefinedTypeReturnTag(tag);
   };
 
-  utils.hasReturnValue = (ignoreAsync = false) => {
-    return jsdocUtils.hasReturnValue(node, context, ignoreAsync);
+  utils.hasReturnValue = ({ignoreAsync = false, yieldAsReturn} = {}) => {
+    return jsdocUtils.hasReturnValue(node, context, {
+      ignoreAsync,
+      yieldAsReturn
+    });
   };
 
   utils.isAsync = () => {
@@ -318,6 +321,9 @@ const getSettings = (context) => {
   settings.overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
   settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
   settings.augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
+
+  // currently `require-returns-check` only, but to add to other rules
+  settings.mode = _.get(context, 'settings.jsdoc.mode');
 
   return settings;
 };

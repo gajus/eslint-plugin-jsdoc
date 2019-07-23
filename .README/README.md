@@ -83,6 +83,12 @@ You can then selectively add to or override the recommended rules.
 
 ## Settings
 
+### Mode
+
+While TypeScript and the Google Closure Compiler (GCC) support some jsdoc tags,
+there are some differences. The `settings.jsdoc.mode` lets you choose the precise
+mode (`"typescript"`, `"gcc"`, or `"jsdoc"` (the default)).
+
 ### Allow `@private` to disable rules for that comment block
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block

@@ -73,7 +73,9 @@ export default iterateJsdoc(({
   const [tag] = tags;
   const missingReturnTag = typeof tag === 'undefined' || tag === null;
   if (missingReturnTag &&
-    ((utils.isAsync() && !utils.hasReturnValue(true) ? forceReturnsWithAsync : utils.hasReturnValue()) || forceRequireReturn)
+    ((utils.isAsync() && !utils.hasReturnValue({ignoreAsync: true}) ?
+      forceReturnsWithAsync :
+      utils.hasReturnValue()) || forceRequireReturn)
   ) {
     report(`Missing JSDoc @${tagName} declaration.`);
   }
