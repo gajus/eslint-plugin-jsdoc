@@ -276,7 +276,8 @@ const STATEMENTS_WITH_CHILDREN = [
   'SwitchStatement',
   'IfStatement',
   'BlockStatement',
-  'TryStatement'
+  'TryStatement',
+  'WithStatement'
 ];
 
 const RETURNFREE_STATEMENTS = [
@@ -288,7 +289,6 @@ const RETURNFREE_STATEMENTS = [
   'LabeledStatement',
   'DebuggerStatement',
   'EmptyStatement',
-  'WithStatement',
   'ThrowStatement',
   'ExpressionStatement'
 ];
@@ -314,6 +314,14 @@ const lookupTable = {
       }
 
       return true;
+    }
+  },
+  WithStatement: {
+    is (node) {
+      return node.type === 'WithStatement';
+    },
+    check (node, context) {
+      return lookupTable.BlockStatement.check(node.body, context);
     }
   },
   IfStatement: {
