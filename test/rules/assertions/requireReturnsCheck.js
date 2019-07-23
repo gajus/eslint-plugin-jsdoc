@@ -463,6 +463,19 @@ export default {
            * @returns {true}
            */
           function quux () {
+            var a = {};
+            with (a) {
+              return true;
+            }
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
             if (true) {
               return;
             } else {

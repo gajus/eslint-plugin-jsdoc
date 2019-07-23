@@ -6626,6 +6626,16 @@ function quux () {
  * @returns {true}
  */
 function quux () {
+  var a = {};
+  with (a) {
+    return true;
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
   if (true) {
     return;
   } else {
