@@ -4769,8 +4769,8 @@ function myFunction() {
 /**
  * @func myFunction
  */
- 
- 
+
+
 function myFunction() {
 
 }
@@ -4836,6 +4836,13 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Options: [{"exemptEmptyFunctions":true}]
+// Message: Missing JSDoc comment.
+
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"minLines":2}}
 // Options: [{"exemptEmptyFunctions":true}]
 // Message: Missing JSDoc comment.
 
@@ -5231,10 +5238,10 @@ function myFunction() {
 }
 // Settings: {"jsdoc":{"maxLines":0,"minLines":0}}
 
-/** 
+/**
  * @func myFunction
  */
- 
+
 function myFunction() {
 
 }

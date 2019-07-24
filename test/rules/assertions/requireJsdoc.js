@@ -10,7 +10,7 @@ export default {
         * @func myFunction
         */
        function myFunction() {
-       
+
        }
        `,
       errors: [
@@ -30,10 +30,10 @@ export default {
        /**
         * @func myFunction
         */
-        
-        
+
+
        function myFunction() {
-       
+
        }
        `,
       errors: [
@@ -50,7 +50,7 @@ export default {
     {
       code: `
        /** @func myFunction */ function myFunction() {
-       
+
        }
        `,
       errors: [
@@ -245,6 +245,12 @@ export default {
           ClassDeclaration: true
         }
       }],
+      output: `
+        /**
+         *
+         */
+        export default class {}
+      `,
       parserOptions: {
         sourceType: 'module'
       }
@@ -288,7 +294,42 @@ export default {
       ],
       options: [
         {exemptEmptyFunctions: true}
-      ]
+      ],
+      output: `
+        /**
+         *
+         */
+        function quux (foo) {
+
+        }`
+    },
+    {
+      code: `
+        function quux (foo) {
+
+        }`,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.'
+        }
+      ],
+      options: [
+        {exemptEmptyFunctions: true}
+      ],
+      output: `
+        /**
+         *
+         */
+
+        function quux (foo) {
+
+        }`,
+      settings: {
+        jsdoc: {
+          minLines: 2
+        }
+      }
     },
     {
       code: 'function myFunction() {}',
@@ -1195,9 +1236,9 @@ export default {
        /**
         * @func myFunction
         */
-       
+
        function myFunction() {
-       
+
        }
        `,
     settings: {
@@ -1212,10 +1253,10 @@ export default {
      /**
       * @func myFunction
       */
-     
-     
+
+
      function myFunction() {
-     
+
      }
      `,
     settings: {
@@ -1228,7 +1269,7 @@ export default {
   {
     code: `
         /** @func myFunction */  function myFunction() {
-   
+
         }
    `,
     settings: {
@@ -1240,12 +1281,12 @@ export default {
   },
   {
     code: `
-        /** 
+        /**
          * @func myFunction
          */
-         
+
         function myFunction() {
- 
+
         }
     `,
     settings: {

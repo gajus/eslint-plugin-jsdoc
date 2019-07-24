@@ -81,9 +81,7 @@ const getUtils = (
   const utils = {};
 
   utils.stringify = (tagBlock) => {
-    let indent = sourceCode.text.match(/^\n*([ \t]+)/);
-    /* istanbul ignore next */
-    indent = indent ? indent[1] + indent[1].charAt() : ' ';
+    const indent = jsdocUtils.getIndent(sourceCode);
 
     return commentStringify([tagBlock], {indent}).slice(indent.length - 1);
   };
