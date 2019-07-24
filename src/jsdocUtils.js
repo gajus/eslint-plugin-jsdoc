@@ -601,12 +601,21 @@ const getAncestor = (sourceCode, nde, depth, idx = 0) => {
   return null;
 };
 
+const getIndent = (sourceCode) => {
+  let indent = sourceCode.text.match(/^\n*([ \t]+)/);
+  /* istanbul ignore next */
+  indent = indent ? indent[1] + indent[1].charAt() : ' ';
+
+  return indent;
+};
+
 export default {
   enforcedContexts,
   filterTags,
   getAncestor,
   getContextObject,
   getFunctionParameterNames,
+  getIndent,
   getJsdocParameterNames,
   getJsdocParameterNamesDeep,
   getPreferredTagName,

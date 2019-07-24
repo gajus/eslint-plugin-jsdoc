@@ -125,6 +125,8 @@ export default {
       url: 'https://github.com/gajus/eslint-plugin-jsdoc'
     },
 
+    fixable: 'code',
+
     messages: {
       missingJsDoc: 'Missing JSDoc comment.'
     },
@@ -158,6 +160,18 @@ export default {
         }
       }
 
+      const fix = (fixer) => {
+        // Default to one line break if the `minLines`/`maxLines` settings allow
+        const lines = settings.minLines === 0 && settings.maxLines >= 1 ? 1 : settings.minLines;
+        const indent = jsdocUtils.getIndent(sourceCode);
+        const insertion = `/**\n${indent}*\n${indent}*/${'\n'.repeat(lines)}${indent.slice(0, -1)}`;
+        const baseNode = [
+          'ExportDefaultDeclaration', 'ExportNamedDeclaration'
+        ].includes(node.parent && node.parent.type) ? node.parent : node;
+
+        return fixer.insertTextBefore(baseNode, insertion);
+      };
+
       if (publicOnly) {
         const opt = {
           ancestorsOnly: Boolean(_.get(publicOnly, 'ancestorsOnly', false)),
@@ -170,12 +184,14 @@ export default {
 
         if (exported && !jsDocNode) {
           context.report({
+            fix,
             messageId: 'missingJsDoc',
             node
           });
         }
       } else {
         context.report({
+          fix,
           messageId: 'missingJsDoc',
           node
         });
