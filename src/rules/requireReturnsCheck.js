@@ -26,6 +26,10 @@ export default iterateJsdoc(({
     return;
   }
 
+  if (utils.isAsync()) {
+    return;
+  }
+
   const tagName = utils.getPreferredTagName({tagName: 'returns'});
   if (!tagName) {
     return;

@@ -128,6 +128,28 @@ export default {
           }
         }
       }
+    },
+    {
+      code: `
+        /**
+         * @returns {string}
+         */
+        function f () {
+          function g() {
+            return 'foo'
+          }
+
+          () => {
+            return 5
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.'
+        }
+      ]
     }
   ],
   valid: [
@@ -429,6 +451,55 @@ export default {
               return true;
             }
             return;
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            for (const a in b) {
+              return true;
+            }
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            for (let i=0; i<n; i+=1) {
+              return true;
+            }
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            while(true) {
+              return true
+            }
+          }
+      `
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            do {
+              return true
+            }
+            while(true)
           }
       `
     },
