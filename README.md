@@ -6394,6 +6394,20 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
 // Message: Unexpected tag `@returns`
+
+/**
+ * @returns {string}
+ */
+function f () {
+  function g() {
+    return 'foo'
+  }
+
+  () => {
+    return 5
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 The following patterns are not considered problems:
@@ -6608,6 +6622,43 @@ function quux () {
     return true;
   }
   return;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  for (const a in b) {
+    return true;
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  for (let i=0; i<n; i+=1) {
+    return true;
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  while(true) {
+    return true
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  do {
+    return true
+  }
+  while(true)
 }
 
 /**
