@@ -201,8 +201,8 @@ const getUtils = (
     return jsdocUtils.hasDefinedTypeReturnTag(tag);
   };
 
-  utils.hasReturnValue = (ignoreAsync = false) => {
-    return jsdocUtils.hasReturnValue(node, context, ignoreAsync);
+  utils.hasReturnValue = () => {
+    return jsdocUtils.hasReturnValue(node);
   };
 
   utils.isAsync = () => {

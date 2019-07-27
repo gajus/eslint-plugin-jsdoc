@@ -72,9 +72,24 @@ export default iterateJsdoc(({
   // In case the code returns something, we expect a return value in JSDoc.
   const [tag] = tags;
   const missingReturnTag = typeof tag === 'undefined' || tag === null;
-  if (missingReturnTag &&
-    ((utils.isAsync() && !utils.hasReturnValue(true) ? forceReturnsWithAsync : utils.hasReturnValue()) || forceRequireReturn)
-  ) {
+
+  const shouldReport = () => {
+    if (!missingReturnTag) {
+      return false;
+    }
+
+    if (forceRequireReturn) {
+      return true;
+    }
+
+    if (forceReturnsWithAsync && utils.isAsync() && !utils.hasReturnValue()) {
+      return true;
+    }
+
+    return utils.hasReturnValue();
+  };
+
+  if (shouldReport()) {
     report(`Missing JSDoc @${tagName} declaration.`);
   }
 }, {
