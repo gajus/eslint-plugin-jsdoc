@@ -1565,7 +1565,9 @@ undefined
 null
 boolean
 number
+bigint
 string
+symbol
 object
 Array
 Function
