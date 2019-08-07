@@ -125,11 +125,11 @@ export default iterateJsdoc(({
   report,
   jsdocNode,
   context,
-  utils
+  utils,
 }) => {
   if (!jsdoc.tags ||
     validateDescription(jsdoc.description, report, jsdocNode, sourceCode, {
-      line: jsdoc.line + 1
+      line: jsdoc.line + 1,
     })
   ) {
     return;
@@ -153,7 +153,7 @@ export default iterateJsdoc(({
       //   sensitive text, and the latter may have just a link, they are not
       //   included by default
       'summary', 'file', 'fileoverview', 'overview', 'classdesc', 'todo',
-      'deprecated', 'throws', 'exception', 'yields', 'yield'
+      'deprecated', 'throws', 'exception', 'yields', 'yield',
     ].includes(tagName) ||
       hasOptionTag(tagName) && !tagsWithNames.some(({tag}) => {
         // If user accidentally adds tags with names (or like `returns`
@@ -183,14 +183,14 @@ export default iterateJsdoc(({
         properties: {
           tags: {
             items: {
-              type: 'string'
+              type: 'string',
             },
-            type: 'array'
-          }
+            type: 'array',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

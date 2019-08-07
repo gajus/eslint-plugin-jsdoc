@@ -17,13 +17,13 @@ const countChars = (str, ch) => {
 export default iterateJsdoc(({
   report,
   utils,
-  context
+  context,
 }) => {
   warnRemovedSettings(context, 'check-examples');
   const options = context.options[0] || {};
   let {
     exampleCodeRegex = null,
-    rejectExampleCodeRegex = null
+    rejectExampleCodeRegex = null,
   } = options;
   const {
     noDefaultExampleRules = false,
@@ -34,7 +34,7 @@ export default iterateJsdoc(({
     configFile,
     allowInlineConfig = true,
     reportUnusedDisableDirectives = true,
-    captionRequired = false
+    captionRequired = false,
   } = options;
 
   // Make this configurable?
@@ -64,7 +64,7 @@ export default iterateJsdoc(({
     'node/no-missing-require': 0,
 
     // Can generally look nicer to pad a little even if code imposes more stringency
-    'padded-blocks': 0
+    'padded-blocks': 0,
   };
 
   exampleCodeRegex = exampleCodeRegex && new RegExp(exampleCodeRegex, '');
@@ -146,7 +146,7 @@ export default iterateJsdoc(({
       reportUnusedDisableDirectives,
       rulePaths,
       rules,
-      useEslintrc: eslintrcForExamples
+      useEslintrc: eslintrcForExamples,
     });
 
     let messages;
@@ -168,7 +168,7 @@ export default iterateJsdoc(({
         reportUnusedDisableDirectives,
         rulePaths,
         rules,
-        useEslintrc: eslintrcForExamples
+        useEslintrc: eslintrcForExamples,
       });
 
       const linter = new Linter();
@@ -196,7 +196,7 @@ export default iterateJsdoc(({
       // Could also support `disableFixes` and `allowInlineConfig`
       messages = linter.verify(source, config, {
         filename,
-        reportUnusedDisableDirectives
+        reportUnusedDisableDirectives,
       });
     } else {
       ({results: [{messages}]} =
@@ -223,7 +223,7 @@ export default iterateJsdoc(({
         null,
         {
           column: startCol,
-          line: startLine
+          line: startLine,
         }
       );
     });
@@ -237,48 +237,48 @@ export default iterateJsdoc(({
         properties: {
           allowInlineConfig: {
             default: true,
-            type: 'boolean'
+            type: 'boolean',
           },
           baseConfig: {
-            type: 'object'
+            type: 'object',
           },
           captionRequired: {
             default: false,
-            type: 'boolean'
+            type: 'boolean',
           },
           configFile: {
-            type: 'string'
+            type: 'string',
           },
           eslintrcForExamples: {
             default: true,
-            type: 'boolean'
+            type: 'boolean',
           },
           exampleCodeRegex: {
-            type: 'string'
+            type: 'string',
           },
           matchingFileName: {
-            type: 'string'
+            type: 'string',
           },
           noDefaultExampleRules: {
             default: false,
-            type: 'boolean'
+            type: 'boolean',
           },
           paddedIndent: {
             default: 0,
-            type: 'integer'
+            type: 'integer',
           },
           rejectExampleCodeRegex: {
-            type: 'string'
+            type: 'string',
           },
           reportUnusedDisableDirectives: {
             default: true,
-            type: 'boolean'
-          }
+            type: 'boolean',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
+    type: 'suggestion',
   },
-  noTrim: true
+  noTrim: true,
 });

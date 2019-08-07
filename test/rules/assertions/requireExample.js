@@ -11,8 +11,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @example declaration.'
-        }
+          message: 'Missing JSDoc @example declaration.',
+        },
       ],
       output: `
           /**
@@ -21,7 +21,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -34,9 +34,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @example description.'
-        }
-      ]
+          message: 'Missing JSDoc @example description.',
+        },
+      ],
     },
     {
       code: `
@@ -49,17 +49,17 @@ export default {
       `,
       errors: [
         {
-          message: '`settings.jsdoc.avoidExampleOnConstructors` has been removed, use options in the rule `require-example` instead.'
+          message: '`settings.jsdoc.avoidExampleOnConstructors` has been removed, use options in the rule `require-example` instead.',
         },
         {
-          message: 'Missing JSDoc @example declaration.'
-        }
+          message: 'Missing JSDoc @example declaration.',
+        },
       ],
       settings: {
         jsdoc: {
-          avoidExampleOnConstructors: true
-        }
-      }
+          avoidExampleOnConstructors: true,
+        },
+      },
     },
     {
       code: `
@@ -72,9 +72,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @example declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -88,9 +88,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @example description.'
-        }
-      ]
+          message: 'Missing JSDoc @example description.',
+        },
+      ],
     },
     {
       code: `
@@ -103,15 +103,15 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @example declaration.'
-        }
+          message: 'Missing JSDoc @example declaration.',
+        },
       ],
       options: [
         {
-          contexts: ['ClassDeclaration']
-        }
-      ]
-    }
+          contexts: ['ClassDeclaration'],
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -123,7 +123,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -134,7 +134,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -148,7 +148,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -160,8 +160,8 @@ export default {
       }
       `,
       options: [
-        {avoidExampleOnConstructors: true}
-      ]
+        {avoidExampleOnConstructors: true},
+      ],
     },
     {
       code: `
@@ -174,8 +174,8 @@ export default {
       }
       `,
       options: [
-        {avoidExampleOnConstructors: true}
-      ]
+        {avoidExampleOnConstructors: true},
+      ],
     },
     {
       code: `
@@ -189,8 +189,8 @@ export default {
       }
       `,
       options: [
-        {avoidExampleOnConstructors: true}
-      ]
+        {avoidExampleOnConstructors: true},
+      ],
     },
     {
       code: `
@@ -200,7 +200,7 @@ export default {
       function quux () {
 
       }
-      `
+      `,
     },
     {
       code: `
@@ -213,9 +213,9 @@ export default {
       `,
       options: [
         {
-          exemptedBy: ['type']
-        }
-      ]
+          exemptedBy: ['type'],
+        },
+      ],
     },
     {
       code: `
@@ -228,9 +228,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['ClassDeclaration']
-        }
-      ]
+          contexts: ['ClassDeclaration'],
+        },
+      ],
     },
     {
       code: `
@@ -243,9 +243,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['ClassDeclaration']
-        }
-      ]
-    }
-  ]
+          contexts: ['ClassDeclaration'],
+        },
+      ],
+    },
+  ],
 };

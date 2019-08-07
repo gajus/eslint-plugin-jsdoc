@@ -12,16 +12,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           contexts: [
-            'ClassExpression'
-          ]
-        }
-      ]
+            'ClassExpression',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -35,16 +35,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           contexts: [
-            'ObjectExpression'
-          ]
-        }
-      ]
+            'ObjectExpression',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -58,9 +58,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ]
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
     },
     {
       code: `
@@ -74,9 +74,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ]
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
     },
     {
       code: `
@@ -90,12 +90,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [{
-        matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.'
-      }]
+        matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+      }],
     },
     {
       code: `
@@ -109,15 +109,15 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [{
         mainDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
         tags: {
-          param: true
-        }
-      }]
+          param: true,
+        },
+      }],
     },
     {
       code: `
@@ -131,9 +131,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ]
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
     },
     {
       code: `
@@ -149,16 +149,16 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            param: true
-          }
-        }
-      ]
+            param: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -174,16 +174,16 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            prop: true
-          }
-        }
-      ]
+            prop: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -199,16 +199,16 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            summary: true
-          }
-        }
-      ]
+            summary: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -224,16 +224,16 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            author: '.+'
-          }
-        }
-      ]
+            author: '.+',
+          },
+        },
+      ],
     },
     {
       code: `
@@ -249,16 +249,16 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            'x-tag': '.+'
-          }
-        }
-      ]
+            'x-tag': '.+',
+          },
+        },
+      ],
     },
     {
       code: `
@@ -274,16 +274,16 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            description: true
-          }
-        }
-      ]
+            description: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -299,17 +299,17 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           mainDescription: '^[a-zA-Z]*$',
           tags: {
-            param: true
-          }
-        }
-      ]
+            param: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -325,17 +325,17 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           mainDescription: false,
           tags: {
-            param: true
-          }
-        }
-      ]
+            param: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -351,16 +351,16 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            param: true
-          }
-        }
-      ]
+            param: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -374,9 +374,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ]
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
     },
     {
       code: `
@@ -392,16 +392,16 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            returns: true
-          }
-        }
-      ]
+            returns: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -417,16 +417,16 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            returns: true
-          }
-        }
-      ]
+            returns: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -445,9 +445,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
-      ]
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
     },
     {
       code: `
@@ -461,16 +461,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            arg: true
-          }
-        }
-      ]
+            arg: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -484,16 +484,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            argument: true
-          }
-        }
-      ]
+            argument: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -507,16 +507,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            return: true
-          }
-        }
-      ]
+            return: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -532,16 +532,16 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           tags: {
-            return: true
-          }
-        }
-      ]
+            return: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -556,14 +556,14 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [{
         tags: {
-          param: '[\u0410-\u042F][\u0410-\u044F]+\\.'
-        }
-      }]
+          param: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+        },
+      }],
     },
     {
       code: `
@@ -578,14 +578,14 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [{
         tags: {
-          description: '[\u0410-\u042F][\u0410-\u044F]+\\.'
-        }
-      }]
+          description: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+        },
+      }],
     },
     {
       code: `
@@ -599,16 +599,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           contexts: [
-            'ClassDeclaration'
-          ]
-        }
-      ]
+            'ClassDeclaration',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -622,17 +622,17 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           contexts: [
-            'ClassProperty'
-          ]
-        }
+            'ClassProperty',
+          ],
+        },
       ],
-      parser: require.resolve('@typescript-eslint/parser')
+      parser: require.resolve('@typescript-eslint/parser'),
     },
     {
       code: `
@@ -646,17 +646,17 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           contexts: [
-            'TSInterfaceDeclaration'
-          ]
-        }
+            'TSInterfaceDeclaration',
+          ],
+        },
       ],
-      parser: require.resolve('@typescript-eslint/parser')
+      parser: require.resolve('@typescript-eslint/parser'),
     },
     {
       code: `
@@ -670,16 +670,16 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [
         {
           contexts: [
-            'Property'
-          ]
-        }
-      ]
+            'Property',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -693,21 +693,21 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       options: [{
         tags: {
-          param: true
-        }
+          param: true,
+        },
       }],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            description: false
-          }
-        }
-      }
+            description: false,
+          },
+        },
+      },
     },
     {
       code: `
@@ -721,17 +721,17 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc description does not satisfy the regex pattern.'
-        }
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            description: false
-          }
-        }
-      }
-    }
+            description: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -746,10 +746,10 @@ export default {
       options: [
         {
           tags: {
-            param: true
-          }
-        }
-      ]
+            param: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -759,7 +759,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -770,7 +770,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -782,7 +782,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -794,8 +794,8 @@ export default {
           }
       `,
       options: [{
-        matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.'
-      }]
+        matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+      }],
     },
     {
       code: `
@@ -809,9 +809,9 @@ export default {
       `,
       options: [{
         tags: {
-          returns: '[\u0410-\u042F][\u0410-\u044F]+\\.'
-        }
-      }]
+          returns: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+        },
+      }],
     },
     {
       code: `
@@ -825,9 +825,9 @@ export default {
       `,
       options: [{
         tags: {
-          description: '[\u0410-\u042F][\u0410-\u044F]+\\.'
-        }
-      }]
+          description: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+        },
+      }],
     },
     {
       code: `
@@ -838,7 +838,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -852,10 +852,10 @@ export default {
       options: [
         {
           tags: {
-            returns: true
-          }
-        }
-      ]
+            returns: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -869,10 +869,10 @@ export default {
       options: [
         {
           tags: {
-            returns: true
-          }
-        }
-      ]
+            returns: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -886,10 +886,10 @@ export default {
       options: [
         {
           tags: {
-            description: true
-          }
-        }
-      ]
+            description: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -899,7 +899,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -909,7 +909,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -925,7 +925,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -936,7 +936,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -946,7 +946,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -957,7 +957,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -969,7 +969,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -981,8 +981,8 @@ export default {
           }
       `,
       options: [
-        {mainDescription: false}
-      ]
+        {mainDescription: false},
+      ],
     },
     {
       code: `
@@ -992,7 +992,7 @@ export default {
           class quux {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -1004,8 +1004,8 @@ export default {
           }
       `,
       options: [
-        {mainDescription: true}
-      ]
+        {mainDescription: true},
+      ],
     },
     {
       code: `
@@ -1019,11 +1019,11 @@ export default {
       options: [
         {
           contexts: [
-            'ClassProperty'
-          ]
-        }
+            'ClassProperty',
+          ],
+        },
       ],
-      parser: require.resolve('@typescript-eslint/parser')
+      parser: require.resolve('@typescript-eslint/parser'),
     },
     {
       code: `
@@ -1037,11 +1037,11 @@ export default {
       options: [
         {
           contexts: [
-            'TSInterfaceDeclaration'
-          ]
-        }
+            'TSInterfaceDeclaration',
+          ],
+        },
       ],
-      parser: require.resolve('@typescript-eslint/parser')
+      parser: require.resolve('@typescript-eslint/parser'),
     },
     {
       code: `
@@ -1055,9 +1055,9 @@ export default {
       options: [
         {
           contexts: [
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1071,9 +1071,9 @@ export default {
       options: [
         {
           contexts: [
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1087,9 +1087,9 @@ export default {
       options: [
         {
           contexts: [
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1102,9 +1102,9 @@ export default {
       `,
       options: [
         {tags: {
-          param: true
-        }}
-      ]
+          param: true,
+        }},
+      ],
     },
     {
       code: `
@@ -1120,10 +1120,10 @@ export default {
       options: [
         {
           tags: {
-            summary: true
-          }
-        }
-      ]
+            summary: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -1139,10 +1139,10 @@ export default {
       options: [
         {
           tags: {
-            author: '.+'
-          }
-        }
-      ]
+            author: '.+',
+          },
+        },
+      ],
     },
     {
       code: `
@@ -1158,10 +1158,10 @@ export default {
       options: [
         {
           tags: {
-            'x-tag': '.+'
-          }
-        }
-      ]
+            'x-tag': '.+',
+          },
+        },
+      ],
     },
     {
       code: `
@@ -1177,10 +1177,10 @@ export default {
       options: [
         {
           tags: {
-            prop: true
-          }
-        }
-      ]
+            prop: true,
+          },
+        },
+      ],
     },
     {
       code: `
@@ -1194,10 +1194,10 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            description: false
-          }
-        }
-      }
+            description: false,
+          },
+        },
+      },
     },
     {
       code: `
@@ -1211,10 +1211,10 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            description: false
-          }
-        }
-      }
-    }
-  ]
+            description: false,
+          },
+        },
+      },
+    },
+  ],
 };

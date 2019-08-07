@@ -15,7 +15,7 @@ export default iterateJsdoc(({
   jsdoc,
   report,
   context,
-  utils
+  utils,
 }) => {
   const options = context.options[0] || {};
 
@@ -38,7 +38,7 @@ export default iterateJsdoc(({
     if (!regex.test(description)) {
       report('JSDoc description does not satisfy the regex pattern.', null, tag || {
         // Add one as description would typically be into block
-        line: jsdoc.line + 1
+        line: jsdoc.line + 1,
       });
     }
   };
@@ -87,24 +87,24 @@ export default iterateJsdoc(({
         properties: {
           contexts: {
             items: {
-              type: 'string'
+              type: 'string',
             },
-            type: 'array'
+            type: 'array',
           },
           mainDescription: {
             oneOf: [
               {
                 format: 'regex',
-                type: 'string'
+                type: 'string',
               },
               {
-                type: 'boolean'
-              }
-            ]
+                type: 'boolean',
+              },
+            ],
           },
           matchDescription: {
             format: 'regex',
-            type: 'string'
+            type: 'string',
           },
           tags: {
             patternProperties: {
@@ -112,21 +112,21 @@ export default iterateJsdoc(({
                 oneOf: [
                   {
                     format: 'regex',
-                    type: 'string'
+                    type: 'string',
                   },
                   {
                     enum: [true],
-                    type: 'boolean'
-                  }
-                ]
-              }
+                    type: 'boolean',
+                  },
+                ],
+              },
             },
-            type: 'object'
-          }
+            type: 'object',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

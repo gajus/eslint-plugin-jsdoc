@@ -13,9 +13,9 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @returns declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -29,9 +29,9 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @returns declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -43,9 +43,9 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @returns declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -57,9 +57,9 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @returns declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -74,16 +74,16 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @return declaration.'
-        }
+          message: 'Missing JSDoc @return declaration.',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            returns: 'return'
-          }
-        }
-      }
+            returns: 'return',
+          },
+        },
+      },
     },
     {
       code: `
@@ -99,14 +99,14 @@ export default {
           `,
       errors: [
         {
-          message: '`settings.jsdoc.forceRequireReturn` has been removed, use options in the rule `require-returns` instead.'
-        }
+          message: '`settings.jsdoc.forceRequireReturn` has been removed, use options in the rule `require-returns` instead.',
+        },
       ],
       settings: {
         jsdoc: {
-          forceRequireReturn: true
-        }
-      }
+          forceRequireReturn: true,
+        },
+      },
     },
     {
       code: `
@@ -119,15 +119,15 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @returns declaration.'
-        }
+          message: 'Missing JSDoc @returns declaration.',
+        },
       ],
       options: [{
-        forceRequireReturn: true
+        forceRequireReturn: true,
       }],
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -139,15 +139,15 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @returns declaration.'
-        }
+          message: 'Missing JSDoc @returns declaration.',
+        },
       ],
       options: [{
-        forceRequireReturn: true
+        forceRequireReturn: true,
       }],
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -159,15 +159,15 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @returns declaration.'
-        }
+          message: 'Missing JSDoc @returns declaration.',
+        },
       ],
       options: [{
-        forceRequireReturn: true
+        forceRequireReturn: true,
       }],
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -179,15 +179,15 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @returns declaration.'
-        }
+          message: 'Missing JSDoc @returns declaration.',
+        },
       ],
       options: [{
-        forceRequireReturn: true
+        forceRequireReturn: true,
       }],
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -200,12 +200,12 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @returns declaration.'
-        }
+          message: 'Missing JSDoc @returns declaration.',
+        },
       ],
       options: [{
-        forceRequireReturn: true
-      }]
+        forceRequireReturn: true,
+      }],
     },
     {
       code: `
@@ -221,9 +221,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @returns declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -236,15 +236,15 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc @returns declaration.'
-        }
+          message: 'Missing JSDoc @returns declaration.',
+        },
       ],
       options: [{
-        forceReturnsWithAsync: true
+        forceReturnsWithAsync: true,
       }],
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -260,9 +260,9 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Found more than one @returns declaration.'
-        }
-      ]
+          message: 'Found more than one @returns declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -275,17 +275,17 @@ export default {
       `,
       errors: [
         {
-          message: 'Unexpected tag `@returns`'
-        }
+          message: 'Unexpected tag `@returns`',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            returns: false
-          }
-        }
-      }
-    }
+            returns: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -297,7 +297,7 @@ export default {
 
             return foo;
           }
-      `
+      `,
     },
     {
       code: `
@@ -306,7 +306,7 @@ export default {
            */
           function quux () {
           }
-      `
+      `,
     },
     {
       code: `
@@ -318,7 +318,7 @@ export default {
               return baz.corge();
             })
           }
-      `
+      `,
     },
     {
       code: `
@@ -330,7 +330,7 @@ export default {
               return baz.corge();
             })
           }
-      `
+      `,
     },
     {
       code: `
@@ -338,7 +338,7 @@ export default {
            * @returns Array
            */
           const quux = (bar) => bar.filter(({ corge }) => corge())
-      `
+      `,
     },
     {
       code: `
@@ -347,7 +347,7 @@ export default {
            */
           function quux (foo) {
           }
-      `
+      `,
     },
     {
       code: `
@@ -356,7 +356,7 @@ export default {
            */
           function quux (foo) {
           }
-      `
+      `,
     },
     {
       code: `
@@ -365,7 +365,7 @@ export default {
            */
           function quux (foo) {
           }
-      `
+      `,
     },
     {
       code: `
@@ -374,7 +374,7 @@ export default {
            */
           function quux (foo) {
           }
-      `
+      `,
     },
     {
       code: `
@@ -385,7 +385,7 @@ export default {
 
             return foo;
           }
-      `
+      `,
     },
     {
       code: `
@@ -395,7 +395,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -405,7 +405,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -416,7 +416,7 @@ export default {
 
             return {a: foo};
           }
-      `
+      `,
     },
     {
       code: `
@@ -424,7 +424,7 @@ export default {
            * @returns {Object}
            */
           const quux = () => ({a: foo});
-      `
+      `,
     },
     {
       code: `
@@ -434,7 +434,7 @@ export default {
           const quux = () => {
             return {a: foo}
           };
-      `
+      `,
     },
     {
       code: `
@@ -443,7 +443,7 @@ export default {
            */
           function quux () {
           }
-      `
+      `,
     },
     {
       code: `
@@ -453,7 +453,7 @@ export default {
           const quux = () => {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -462,7 +462,7 @@ export default {
            */
           function quux () {
           }
-      `
+      `,
     },
     {
       code: `
@@ -472,7 +472,7 @@ export default {
           const quux = () => {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -481,7 +481,7 @@ export default {
            */
           function quux () {
           }
-      `
+      `,
     },
     {
       code: `
@@ -491,7 +491,7 @@ export default {
           const quux = () => {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -504,8 +504,8 @@ export default {
       }
       `,
       options: [{
-        forceRequireReturn: true
-      }]
+        forceRequireReturn: true,
+      }],
     },
     {
       code: `
@@ -517,7 +517,7 @@ export default {
           this._name = name;
         }
       }
-      `
+      `,
     },
     {
       code: `
@@ -528,18 +528,8 @@ export default {
           }
       `,
       options: [{
-        forceRequireReturn: true
-      }]
-    },
-    {
-      code: `
-          /**
-           * @returns {void}
-           */
-          function quux () {
-            return undefined;
-          }
-      `
+        forceRequireReturn: true,
+      }],
     },
     {
       code: `
@@ -550,9 +540,6 @@ export default {
             return undefined;
           }
       `,
-      options: [{
-        forceRequireReturn: true
-      }]
     },
     {
       code: `
@@ -560,21 +547,12 @@ export default {
            * @returns {void}
            */
           function quux () {
-            return;
-          }
-      `
-    },
-    {
-      code: `
-          /**
-           * @returns {void}
-           */
-          function quux () {
+            return undefined;
           }
       `,
       options: [{
-        forceRequireReturn: true
-      }]
+        forceRequireReturn: true,
+      }],
     },
     {
       code: `
@@ -585,9 +563,31 @@ export default {
             return;
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          function quux () {
+          }
+      `,
       options: [{
-        forceRequireReturn: true
-      }]
+        forceRequireReturn: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @returns {void}
+           */
+          function quux () {
+            return;
+          }
+      `,
+      options: [{
+        forceRequireReturn: true,
+      }],
     },
     {
       code: `
@@ -595,7 +595,7 @@ export default {
           function quux (req, res , next) {
             return;
           }
-      `
+      `,
     },
     {
       code: `
@@ -606,11 +606,11 @@ export default {
           }
       `,
       options: [{
-        forceRequireReturn: true
+        forceRequireReturn: true,
       }],
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -621,11 +621,11 @@ export default {
           }
       `,
       options: [{
-        forceReturnsWithAsync: true
+        forceReturnsWithAsync: true,
       }],
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -635,8 +635,8 @@ export default {
           async function quux () {}
       `,
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -646,8 +646,8 @@ export default {
           const quux = async function () {}
       `,
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -657,8 +657,8 @@ export default {
           const quux = async () => {}
       `,
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -674,8 +674,8 @@ export default {
       export default foo;
       `,
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -686,8 +686,8 @@ export default {
           }
       `,
       options: [{
-        forceReturnsWithAsync: true
-      }]
+        forceReturnsWithAsync: true,
+      }],
     },
     {
       code: `
@@ -700,9 +700,9 @@ export default {
       `,
       options: [
         {
-          exemptedBy: ['type']
-        }
-      ]
-    }
-  ]
+          exemptedBy: ['type'],
+        },
+      ],
+    },
+  ],
 };

@@ -2,7 +2,7 @@ import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
   report,
-  utils
+  utils,
 }) => {
   utils.forEachPreferredTag('returns', (jsdocTag, targetTagName) => {
     const type = jsdocTag.type && jsdocTag.type.trim();
@@ -17,6 +17,6 @@ export default iterateJsdoc(({
   });
 }, {
   meta: {
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

@@ -11,8 +11,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Types are not permitted on @param.'
-        }
+          message: 'Types are not permitted on @param.',
+        },
       ],
       output: `
           /**
@@ -21,7 +21,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -34,8 +34,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Types are not permitted on @returns.'
-        }
+          message: 'Types are not permitted on @returns.',
+        },
       ],
       output: `
           /**
@@ -44,8 +44,8 @@ export default {
           function quux () {
 
           }
-      `
-    }
+      `,
+    },
   ],
   valid: [
     {
@@ -56,7 +56,7 @@ export default {
           function quux (foo) {
 
           }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };

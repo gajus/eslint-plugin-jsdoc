@@ -12,19 +12,19 @@ export default {
       errors: [
         {
           line: 1,
-          message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
+          message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
         },
         {
-          message: 'The type \'HerType\' is undefined.'
-        }
+          message: 'The type \'HerType\' is undefined.',
+        },
       ],
       settings: {
         jsdoc: {
           preferredTypes: {
-            HerType: 1000
-          }
-        }
-      }
+            HerType: 1000,
+          },
+        },
+      },
     },
     {
       code: `
@@ -37,16 +37,16 @@ export default {
       `,
       errors: [
         {
-          message: 'The type \'HerType\' is undefined.'
-        }
+          message: 'The type \'HerType\' is undefined.',
+        },
       ],
       settings: {
         jsdoc: {
           preferredTypes: {
-            HerType: false
-          }
-        }
-      }
+            HerType: false,
+          },
+        },
+      },
     },
     {
       code: `
@@ -60,12 +60,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'The type \'strnig\' is undefined.'
-        }
+          message: 'The type \'strnig\' is undefined.',
+        },
       ],
       rules: {
-        'no-undef': 'error'
-      }
+        'no-undef': 'error',
+      },
     },
     {
       code: `
@@ -80,12 +80,12 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'The type \'HisType\' is undefined.'
-        }
+          message: 'The type \'HisType\' is undefined.',
+        },
       ],
       options: [{
-        definedTypes: ['MyType']
-      }]
+        definedTypes: ['MyType'],
+      }],
     },
     {
       code: `
@@ -101,21 +101,21 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'The type \'HisType\' is undefined.'
-        }
+          message: 'The type \'HisType\' is undefined.',
+        },
       ],
       options: [{
-        definedTypes: ['MyType']
+        definedTypes: ['MyType'],
       }],
       settings: {
         jsdoc: {
           preferredTypes: {
             hertype: {
-              replacement: 'HerType'
-            }
-          }
-        }
-      }
+              replacement: 'HerType',
+            },
+          },
+        },
+      },
     },
     {
       code: `
@@ -131,22 +131,22 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'The type \'HerType\' is undefined.'
-        }
+          message: 'The type \'HerType\' is undefined.',
+        },
       ],
       options: [{
-        definedTypes: ['MyType']
+        definedTypes: ['MyType'],
       }],
       settings: {
         jsdoc: {
           preferredTypes: {
             hertype: {
-              replacement: false
+              replacement: false,
             },
-            histype: 'HisType'
-          }
-        }
-      }
+            histype: 'HisType',
+          },
+        },
+      },
     },
     {
       code: `
@@ -160,9 +160,9 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'The type \'WRONG_TEMPLATE_TYPE\' is undefined.'
-        }
-      ]
+          message: 'The type \'WRONG_TEMPLATE_TYPE\' is undefined.',
+        },
+      ],
     },
     {
       code: `
@@ -177,9 +177,9 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'The type \'TEMPLATE_TYPE\' is undefined.'
-        }
-      ]
+          message: 'The type \'TEMPLATE_TYPE\' is undefined.',
+        },
+      ],
     },
     {
       code: `
@@ -205,9 +205,9 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'The type \'TEMPLATE_TYPE\' is undefined.'
-        }
-      ]
+          message: 'The type \'TEMPLATE_TYPE\' is undefined.',
+        },
+      ],
     },
     {
       code: `
@@ -221,13 +221,13 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'The type \'strnig\' is undefined.'
-        }
+          message: 'The type \'strnig\' is undefined.',
+        },
       ],
       rules: {
-        'no-undef': 'error'
-      }
-    }
+        'no-undef': 'error',
+      },
+    },
   ],
   valid: [
     {
@@ -238,7 +238,7 @@ export default {
           function quux(foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -250,8 +250,8 @@ export default {
           }
       `,
       env: {
-        es6: true
-      }
+        es6: true,
+      },
     },
     {
       code: `
@@ -267,8 +267,8 @@ export default {
           quux(0);
       `,
       rules: {
-        'no-unused-vars': 'error'
-      }
+        'no-unused-vars': 'error',
+      },
     },
     {
       code: `
@@ -282,8 +282,8 @@ export default {
         }
       `,
       env: {
-        node: true
-      }
+        node: true,
+      },
     },
     {
       code: `
@@ -297,8 +297,8 @@ export default {
         }
       `,
       env: {
-        node: false
-      }
+        node: false,
+      },
     },
     {
       code: `
@@ -314,8 +314,8 @@ export default {
         }
       `,
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -330,8 +330,8 @@ export default {
         }
       `,
       globals: {
-        HisType: true
-      }
+        HisType: true,
+      },
     },
     {
       code: `
@@ -346,7 +346,7 @@ export default {
         function quux(foo) {
 
         }
-      `
+      `,
     },
     {
       code: `
@@ -356,7 +356,7 @@ export default {
         function quux(foo) {
 
         }
-      `
+      `,
     },
     {
       code: `
@@ -374,7 +374,7 @@ export default {
       function testFunction(callback) {
         callback();
       }
-      `
+      `,
     },
     {
       code: `
@@ -385,7 +385,7 @@ export default {
       function foo () {
 
       }
-      `
+      `,
     },
     {
       code: `
@@ -396,7 +396,7 @@ export default {
       function foo () {
 
       }
-      `
+      `,
     },
     {
       code: `
@@ -409,8 +409,8 @@ export default {
         }
       `,
       options: [{
-        definedTypes: ['MyType', 'HisType']
-      }]
+        definedTypes: ['MyType', 'HisType'],
+      }],
     },
     {
       code: `
@@ -424,18 +424,18 @@ export default {
         }
       `,
       options: [{
-        definedTypes: ['MyType']
+        definedTypes: ['MyType'],
       }],
       settings: {
         jsdoc: {
           preferredTypes: {
             hertype: {
-              replacement: 'HerType'
+              replacement: 'HerType',
             },
-            histype: 'HisType'
-          }
-        }
-      }
+            histype: 'HisType',
+          },
+        },
+      },
     },
     {
       code: `
@@ -449,18 +449,18 @@ export default {
         }
       `,
       options: [{
-        definedTypes: ['MyType']
+        definedTypes: ['MyType'],
       }],
       settings: {
         jsdoc: {
           preferredTypes: {
             hertype: {
-              replacement: 'HerType<>'
+              replacement: 'HerType<>',
             },
-            histype: 'HisType.<>'
-          }
-        }
-      }
+            histype: 'HisType.<>',
+          },
+        },
+      },
     },
     {
       code: `
@@ -471,7 +471,7 @@ export default {
        */
       function foo (bar) {
       };
-      `
+      `,
     },
     {
       code: `
@@ -485,7 +485,7 @@ export default {
         bar () {
         }
       }
-      `
+      `,
     },
     {
       code: `
@@ -500,7 +500,7 @@ export default {
         bar (baz) {
         }
       }
-      `
+      `,
     },
     {
       code: `
@@ -512,7 +512,7 @@ export default {
       function quux () {
 
       }
-       `
-    }
-  ]
+       `,
+    },
+  ],
 };

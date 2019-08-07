@@ -2,7 +2,7 @@ import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
   report,
-  utils
+  utils,
 }) => {
   utils.forEachPreferredTag('returns', (jsdocTag, targetTagName) => {
     if (!jsdocTag.type) {
@@ -11,6 +11,6 @@ export default iterateJsdoc(({
   });
 }, {
   meta: {
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

@@ -12,9 +12,9 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'JSDoc @returns declaration present but return expression not available in function.'
-        }
-      ]
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
     },
     {
       code: `
@@ -28,16 +28,16 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'JSDoc @return declaration present but return expression not available in function.'
-        }
+          message: 'JSDoc @return declaration present but return expression not available in function.',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            returns: 'return'
-          }
-        }
-      }
+            returns: 'return',
+          },
+        },
+      },
     },
     {
       code: `
@@ -49,9 +49,9 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'JSDoc @returns declaration present but return expression not available in function.'
-        }
-      ]
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
     },
     {
       code: `
@@ -67,9 +67,9 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Found more than one @returns declaration.'
-        }
-      ]
+          message: 'Found more than one @returns declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -86,9 +86,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc @returns declaration present but return expression not available in function.'
-        }
-      ]
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
     },
     {
       code: `
@@ -103,9 +103,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'JSDoc @returns declaration present but return expression not available in function.'
-        }
-      ]
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
     },
     {
       code: `
@@ -118,16 +118,16 @@ export default {
       `,
       errors: [
         {
-          message: 'Unexpected tag `@returns`'
-        }
+          message: 'Unexpected tag `@returns`',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            returns: false
-          }
-        }
-      }
+            returns: false,
+          },
+        },
+      },
     },
     {
       code: `
@@ -147,10 +147,10 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'JSDoc @returns declaration present but return expression not available in function.'
-        }
-      ]
-    }
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -162,7 +162,7 @@ export default {
 
             return foo;
           }
-      `
+      `,
     },
     {
       code: `
@@ -173,7 +173,7 @@ export default {
 
             return foo;
           }
-      `
+      `,
     },
     {
       code: `
@@ -184,7 +184,7 @@ export default {
 
             return foo;
           }
-      `
+      `,
     },
     {
       code: `
@@ -193,7 +193,7 @@ export default {
            */
           function quux () {
           }
-      `
+      `,
     },
     {
       code: `
@@ -201,7 +201,7 @@ export default {
            * @returns {*} Foo.
            */
           const quux = () => foo;
-      `
+      `,
     },
     {
       code: `
@@ -209,7 +209,7 @@ export default {
            * @returns {undefined} Foo.
            */
           function quux () {}
-      `
+      `,
     },
     {
       code: `
@@ -217,7 +217,7 @@ export default {
            * @returns { void } Foo.
            */
           function quux () {}
-      `
+      `,
     },
     {
       code: `
@@ -227,8 +227,8 @@ export default {
           async function quux() {}
       `,
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -238,8 +238,8 @@ export default {
           const quux = async function () {}
       `,
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -249,8 +249,8 @@ export default {
           const quux = async () => {}
       `,
       parserOptions: {
-        ecmaVersion: 8
-      }
+        ecmaVersion: 8,
+      },
     },
     {
       code: `
@@ -261,7 +261,7 @@ export default {
           function quux () {
             throw new Error('must be implemented by subclass!');
           }
-      `
+      `,
     },
     {
       code: `
@@ -272,7 +272,7 @@ export default {
           function quux () {
             throw new Error('must be implemented by subclass!');
           }
-      `
+      `,
     },
     {
       code: `
@@ -282,7 +282,7 @@ export default {
            */
           function quux () {
           }
-      `
+      `,
     },
     {
       code: `
@@ -296,7 +296,7 @@ export default {
             bar () {
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -305,7 +305,7 @@ export default {
            */
           function quux () {
           }
-      `
+      `,
     },
     {
       code: `
@@ -314,7 +314,7 @@ export default {
            */
           function quux () {
           }
-      `
+      `,
     },
     {
       code: `
@@ -324,7 +324,7 @@ export default {
           function quux () {
             return undefined;
           }
-      `
+      `,
     },
     {
       code: `
@@ -334,7 +334,7 @@ export default {
           function quux () {
             return;
           }
-      `
+      `,
     },
     {
       code: `
@@ -344,7 +344,7 @@ export default {
           function quux () {
             return undefined;
           }
-      `
+      `,
     },
     {
       code: `
@@ -354,7 +354,7 @@ export default {
           function quux () {
             return;
           }
-      `
+      `,
     },
     {
       code: `
@@ -368,7 +368,7 @@ export default {
             }
             return;
           }
-      `
+      `,
     },
     {
       code: `
@@ -382,7 +382,7 @@ export default {
             }
             return;
           }
-      `
+      `,
     },
     {
       code: `
@@ -396,7 +396,7 @@ export default {
             }
             return true;
           }
-      `
+      `,
     },
     {
       code: `
@@ -411,7 +411,7 @@ export default {
             }
             return;
           }
-      `
+      `,
     },
     {
       code: `
@@ -425,7 +425,7 @@ export default {
             }
             return;
           }
-      `
+      `,
     },
     {
       code: `
@@ -439,7 +439,7 @@ export default {
             }
             return true;
           }
-      `
+      `,
     },
     {
       code: `
@@ -452,7 +452,7 @@ export default {
             }
             return;
           }
-      `
+      `,
     },
     {
       code: `
@@ -464,7 +464,7 @@ export default {
               return true;
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -476,7 +476,7 @@ export default {
               return true;
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -488,7 +488,7 @@ export default {
               return true
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -501,7 +501,7 @@ export default {
             }
             while(true)
           }
-      `
+      `,
     },
     {
       code: `
@@ -514,7 +514,7 @@ export default {
             }
             return true;
           }
-      `
+      `,
     },
     {
       code: `
@@ -526,7 +526,7 @@ export default {
               return true;
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -539,7 +539,7 @@ export default {
               return true;
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -554,7 +554,7 @@ export default {
             }
             return;
           }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };

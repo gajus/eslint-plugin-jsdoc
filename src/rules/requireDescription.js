@@ -5,7 +5,7 @@ export default iterateJsdoc(({
   jsdoc,
   report,
   utils,
-  context
+  context,
 }) => {
   if (utils.avoidDocs()) {
     return;
@@ -18,7 +18,7 @@ export default iterateJsdoc(({
     //  even if the tag is present (and `check-tag-names` is the one to
     //  normally report the fact that it is blocked but present)
     skipReportingBlockedTag: descriptionStyle !== 'tag',
-    tagName: 'description'
+    tagName: 'description',
   });
   if (!targetTagName) {
     return;
@@ -49,7 +49,7 @@ export default iterateJsdoc(({
   const functionExamples = isBlocked ?
     [] :
     _.filter(jsdoc.tags, {
-      tag: targetTagName
+      tag: targetTagName,
     });
 
   if (!functionExamples.length) {
@@ -76,24 +76,24 @@ export default iterateJsdoc(({
         properties: {
           contexts: {
             items: {
-              type: 'string'
+              type: 'string',
             },
-            type: 'array'
+            type: 'array',
           },
           descriptionStyle: {
             enum: ['body', 'tag', 'any'],
-            type: 'string'
+            type: 'string',
           },
           exemptedBy: {
             items: {
-              type: 'string'
+              type: 'string',
             },
-            type: 'array'
-          }
+            type: 'array',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

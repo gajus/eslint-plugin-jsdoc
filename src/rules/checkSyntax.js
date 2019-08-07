@@ -2,7 +2,7 @@ import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
   jsdoc,
-  report
+  report,
 }) => {
   if (!jsdoc.tags) {
     return;
@@ -17,6 +17,6 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

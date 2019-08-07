@@ -12,9 +12,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: Array<string'
-        }
-      ]
+          message: 'Syntax error in type: Array<string',
+        },
+      ],
     },
     {
       code: `
@@ -28,9 +28,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: module:namespace.SomeClass<~'
-        }
-      ]
+          message: 'Syntax error in type: module:namespace.SomeClass<~',
+        },
+      ],
     },
     {
       code: `
@@ -44,9 +44,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: module:namespace.SomeClass~<'
-        }
-      ]
+          message: 'Syntax error in type: module:namespace.SomeClass~<',
+        },
+      ],
     },
     {
       code: `
@@ -59,8 +59,8 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: foo%'
-      }]
+        message: 'Syntax error in type: foo%',
+      }],
     },
     {
       code: `
@@ -73,8 +73,8 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: #foo'
-      }]
+        message: 'Syntax error in type: #foo',
+      }],
     },
     {
       code: `
@@ -87,8 +87,8 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: bar%'
-      }]
+        message: 'Syntax error in type: bar%',
+      }],
     },
     {
       code: `
@@ -101,8 +101,8 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: '@borrows must have an "as" expression. Found ""'
-      }]
+        message: '@borrows must have an "as" expression. Found ""',
+      }],
     },
     {
       code: `
@@ -115,11 +115,11 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: foo%'
+        message: 'Syntax error in type: foo%',
       }],
       options: [{
-        checkSeesForNamepaths: true
-      }]
+        checkSeesForNamepaths: true,
+      }],
     },
     {
       code: `
@@ -128,18 +128,18 @@ export default {
       `,
       errors: [
         {
-          message: '`settings.jsdoc.allowEmptyNamepaths` has been removed, use options in the rule `valid-types` instead.'
+          message: '`settings.jsdoc.allowEmptyNamepaths` has been removed, use options in the rule `valid-types` instead.',
         },
         {
-          message: '`settings.jsdoc.checkSeesForNamepaths` has been removed, use options in the rule `valid-types` instead.'
-        }
+          message: '`settings.jsdoc.checkSeesForNamepaths` has been removed, use options in the rule `valid-types` instead.',
+        },
       ],
       settings: {
         jsdoc: {
           allowEmptyNamepaths: true,
-          checkSeesForNamepaths: true
-        }
-      }
+          checkSeesForNamepaths: true,
+        },
+      },
     },
     {
       code: `
@@ -152,8 +152,8 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: module:abc#event:foo-bar'
-      }]
+        message: 'Syntax error in type: module:abc#event:foo-bar',
+      }],
     },
     {
       code: `
@@ -166,8 +166,8 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: module:namespace.SomeClass~'
-      }]
+        message: 'Syntax error in type: module:namespace.SomeClass~',
+      }],
     },
     {
       code: `
@@ -180,11 +180,11 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Tag @callback must have a namepath'
+        message: 'Tag @callback must have a namepath',
       }],
       options: [{
         allowEmptyNamepaths: false
-      }]
+      }],
     },
     {
       code: `
@@ -264,7 +264,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -274,7 +274,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -284,7 +284,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -294,7 +294,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -304,7 +304,17 @@ export default {
           function quux() {
 
           }
-      `
+      `,
+    },
+    {
+      code: `
+          /**
+           * @see foo%
+           */
+          function quux() {
+
+          }
+      `,
     },
     {
       code: `
@@ -314,7 +324,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -324,7 +334,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -334,7 +344,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -344,7 +354,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -355,7 +365,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -365,7 +375,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -375,7 +385,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -385,7 +395,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -426,5 +436,5 @@ export default {
           let UserDefinedGCCType;
       `
     }
-  ]
+  ],
 };

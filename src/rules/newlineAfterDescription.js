@@ -7,7 +7,7 @@ export default iterateJsdoc(({
   context,
   jsdocNode,
   sourceCode,
-  indent
+  indent,
 }) => {
   let always;
 
@@ -38,7 +38,7 @@ export default iterateJsdoc(({
 
         return fixer.replaceText(jsdocNode, sourceLines.join('\n'));
       }, {
-        line: lastDescriptionLine
+        line: lastDescriptionLine,
       });
     }
   } else if (descriptionEndsWithANewline) {
@@ -52,7 +52,7 @@ export default iterateJsdoc(({
 
       return fixer.replaceText(jsdocNode, sourceLines.join('\n'));
     }, {
-      line: lastDescriptionLine + 1
+      line: lastDescriptionLine + 1,
     });
   }
 }, {
@@ -62,9 +62,9 @@ export default iterateJsdoc(({
     schema: [
       {
         enum: ['always', 'never'],
-        type: 'string'
-      }
+        type: 'string',
+      },
     ],
-    type: 'layout'
-  }
+    type: 'layout',
+  },
 });

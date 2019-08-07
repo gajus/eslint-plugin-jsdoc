@@ -64,7 +64,7 @@ const getMovedSettings = (ruleName) => {
       'configFile',
       'eslintrcForExamples',
       'baseConfig',
-      'reportUnusedDisableDirectives'
+      'reportUnusedDisableDirectives',
     ];
   }
 
@@ -92,11 +92,11 @@ export default function warnRemovedSettings (context, ruleName) {
         loc: {
           start: {
             column: 1,
-            line: 1
-          }
+            line: 1,
+          },
         },
         message: `\`settings.jsdoc.${setting}\` has been removed, ` +
-          `use options in the rule \`${ruleName}\` instead.`
+          `use options in the rule \`${ruleName}\` instead.`,
       });
       markSettingAsWarned(context, setting);
     }

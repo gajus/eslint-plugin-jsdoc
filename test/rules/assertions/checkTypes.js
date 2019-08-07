@@ -12,16 +12,16 @@ export default {
       errors: [
         {
           line: 1,
-          message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
-        }
+          message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
+        },
       ],
       settings: {
         jsdoc: {
           preferredTypes: {
-            abc: 100
-          }
-        }
-      }
+            abc: 100,
+          },
+        },
+      },
     },
     {
       code: `
@@ -35,8 +35,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".',
+        },
       ],
       output: `
           /**
@@ -45,7 +45,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -59,8 +59,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @arg "foo" type "Number"; prefer: "number".'
-        }
+          message: 'Invalid JSDoc @arg "foo" type "Number"; prefer: "number".',
+        },
       ],
       output: `
           /**
@@ -69,7 +69,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -84,13 +84,13 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @returns type "Number"; prefer: "number".'
+          message: 'Invalid JSDoc @returns type "Number"; prefer: "number".',
         },
         {
           line: 4,
-          message: 'Invalid JSDoc @throws type "Number"; prefer: "number".'
-        }
-      ]
+          message: 'Invalid JSDoc @throws type "Number"; prefer: "number".',
+        },
+      ],
     },
     {
       code: `
@@ -104,12 +104,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".'
+          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".',
         },
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "Boolean"; prefer: "boolean".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Boolean"; prefer: "boolean".',
+        },
       ],
       output: `
           /**
@@ -118,7 +118,7 @@ export default {
           function quux (foo, bar, baz) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -132,12 +132,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".'
+          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".',
         },
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "String"; prefer: "string".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "String"; prefer: "string".',
+        },
       ],
       output: `
           /**
@@ -146,7 +146,7 @@ export default {
           function quux (foo, bar, baz) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -160,12 +160,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".'
+          message: 'Invalid JSDoc @param "foo" type "Number"; prefer: "number".',
         },
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "String"; prefer: "string".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "String"; prefer: "string".',
+        },
       ],
       output: `
           /**
@@ -174,7 +174,7 @@ export default {
           function quux (foo, bar, baz) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -187,8 +187,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".',
+        },
       ],
       output: `
           /**
@@ -201,10 +201,10 @@ export default {
         jsdoc: {
           preferredTypes: {
             abc: 'Abc',
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -217,8 +217,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".',
+        },
       ],
       output: `
           /**
@@ -231,12 +231,12 @@ export default {
         jsdoc: {
           preferredTypes: {
             abc: {
-              replacement: 'Abc'
+              replacement: 'Abc',
             },
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -249,8 +249,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".'
-        }
+          message: 'Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".',
+        },
       ],
       output: `
           /**
@@ -264,12 +264,12 @@ export default {
           preferredTypes: {
             abc: {
               message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "abc"; prefer: "Abc".',
-              replacement: 'Abc'
+              replacement: 'Abc',
             },
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -284,32 +284,32 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".'
+          message: 'Messed up JSDoc @param "foo" type "abc"; prefer: "Abc".',
         },
         {
           line: 4,
-          message: 'More messed up JSDoc @param "bar" type "cde"; prefer: "Cde".'
+          message: 'More messed up JSDoc @param "bar" type "cde"; prefer: "Cde".',
         },
         {
           line: 5,
-          message: 'Invalid JSDoc @param "baz" type "object"; prefer: "Object".'
-        }
+          message: 'Invalid JSDoc @param "baz" type "object"; prefer: "Object".',
+        },
       ],
       settings: {
         jsdoc: {
           preferredTypes: {
             abc: {
               message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "abc"; prefer: "Abc".',
-              replacement: 'Abc'
+              replacement: 'Abc',
             },
             cde: {
               message: 'More messed up JSDoc @{{tagName}}{{tagValue}} type "cde"; prefer: "Cde".',
-              replacement: 'Cde'
+              replacement: 'Cde',
             },
-            object: 'Object'
-          }
-        }
-      }
+            object: 'Object',
+          },
+        },
+      },
     },
     {
       code: `
@@ -322,20 +322,20 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Messed up JSDoc @param "foo" type "abc".'
-        }
+          message: 'Messed up JSDoc @param "foo" type "abc".',
+        },
       ],
       settings: {
         jsdoc: {
           preferredTypes: {
             abc: {
               message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "abc".',
-              replacement: false
+              replacement: false,
             },
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -348,19 +348,19 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Messed up JSDoc @param "foo" type "abc".'
-        }
+          message: 'Messed up JSDoc @param "foo" type "abc".',
+        },
       ],
       settings: {
         jsdoc: {
           preferredTypes: {
             abc: {
-              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "abc".'
+              message: 'Messed up JSDoc @{{tagName}}{{tagValue}} type "abc".',
             },
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -374,11 +374,11 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".',
+        },
       ],
       options: [{
-        noDefaults: true
+        noDefaults: true,
       }],
       output: `
           /**
@@ -392,10 +392,10 @@ export default {
         jsdoc: {
           preferredTypes: {
             abc: 'Abc',
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -409,21 +409,21 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".'
+          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".',
         },
         {
           line: 4,
-          message: 'Invalid JSDoc @param "bar" type "Number"; prefer: "number".'
-        }
+          message: 'Invalid JSDoc @param "bar" type "Number"; prefer: "number".',
+        },
       ],
       settings: {
         jsdoc: {
           preferredTypes: {
             abc: 'Abc',
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -436,17 +436,17 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "abc".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "abc".',
+        },
       ],
       settings: {
         jsdoc: {
           preferredTypes: {
             abc: false,
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -459,16 +459,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "abc".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "abc".',
+        },
       ],
       settings: {
         jsdoc: {
           preferredTypes: {
-            abc: false
-          }
-        }
-      }
+            abc: false,
+          },
+        },
+      },
     },
     {
       code: `
@@ -481,8 +481,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "baz" type "*".'
-        }
+          message: 'Invalid JSDoc @param "baz" type "*".',
+        },
       ],
       output: `
           /**
@@ -496,10 +496,10 @@ export default {
           preferredTypes: {
             '*': false,
             abc: 'Abc',
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -512,8 +512,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "baz" type "*"; prefer: "aaa".'
-        }
+          message: 'Invalid JSDoc @param "baz" type "*"; prefer: "aaa".',
+        },
       ],
       output: `
           /**
@@ -527,10 +527,10 @@ export default {
           preferredTypes: {
             '*': 'aaa',
             abc: 'Abc',
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -544,12 +544,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".'
+          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".',
         },
         {
           line: 4,
-          message: 'Invalid JSDoc @param "bar" type "Number"; prefer: "number".'
-        }
+          message: 'Invalid JSDoc @param "bar" type "Number"; prefer: "number".',
+        },
       ],
       output: `
           /**
@@ -563,10 +563,10 @@ export default {
         jsdoc: {
           preferredTypes: {
             abc: 'Abc',
-            string: 'Str'
-          }
-        }
-      }
+            string: 'Str',
+          },
+        },
+      },
     },
     {
       code: `
@@ -579,38 +579,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".'
-        }
-      ],
-      output: `
-      /**
-       * @param {GenericArray} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      settings: {
-        jsdoc: {
-          preferredTypes: {
-            Array: 'GenericArray'
-          }
-        }
-      }
-    },
-    {
-      code: `
-      /**
-       * @param {Array} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      errors: [
-        {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".',
+        },
       ],
       output: `
       /**
@@ -624,10 +594,40 @@ export default {
         jsdoc: {
           preferredTypes: {
             Array: 'GenericArray',
-            'Array.<>': 'GenericArray'
-          }
-        }
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {Array} foo
+       */
+      function quux (foo) {
+
       }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".',
+        },
+      ],
+      output: `
+      /**
+       * @param {GenericArray} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            Array: 'GenericArray',
+            'Array.<>': 'GenericArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -640,8 +640,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".',
+        },
       ],
       output: `
       /**
@@ -654,10 +654,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'Array.<>': 'GenericArray'
-          }
-        }
-      }
+            'Array.<>': 'GenericArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -670,8 +670,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".',
+        },
       ],
       output: `
       /**
@@ -684,10 +684,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'Array<>': 'GenericArray'
-          }
-        }
-      }
+            'Array<>': 'GenericArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -700,8 +700,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".',
+        },
       ],
       output: `
       /**
@@ -714,10 +714,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            '[]': 'SpecialTypeArray'
-          }
-        }
-      }
+            '[]': 'SpecialTypeArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -730,11 +730,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".',
+        },
       ],
       options: [{
-        unifyParentAndChildTypeChecks: true
+        unifyParentAndChildTypeChecks: true,
       }],
       output: `
       /**
@@ -747,10 +747,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            '[]': 'SpecialTypeArray'
-          }
-        }
-      }
+            '[]': 'SpecialTypeArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -763,11 +763,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "SpecialTypeArray".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "SpecialTypeArray".',
+        },
       ],
       options: [{
-        unifyParentAndChildTypeChecks: true
+        unifyParentAndChildTypeChecks: true,
       }],
       output: `
       /**
@@ -780,10 +780,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            Array: 'SpecialTypeArray'
-          }
-        }
-      }
+            Array: 'SpecialTypeArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -796,38 +796,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
-      ],
-      output: `
-      /**
-       * @param {GenericObject} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      settings: {
-        jsdoc: {
-          preferredTypes: {
-            object: 'GenericObject'
-          }
-        }
-      }
-    },
-    {
-      code: `
-      /**
-       * @param {object} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      errors: [
-        {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
       ],
       output: `
       /**
@@ -841,10 +811,9 @@ export default {
         jsdoc: {
           preferredTypes: {
             object: 'GenericObject',
-            'object.<>': 'GenericObject'
-          }
-        }
-      }
+          },
+        },
+      },
     },
     {
       code: `
@@ -857,8 +826,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
       ],
       output: `
       /**
@@ -872,196 +841,10 @@ export default {
         jsdoc: {
           preferredTypes: {
             object: 'GenericObject',
-            'object<>': 'GenericObject'
-          }
-        }
-      }
-    },
-    {
-      code: `
-      /**
-       * @param {object.<string>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      errors: [
-        {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
-      ],
-      output: `
-      /**
-       * @param {GenericObject.<string>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      settings: {
-        jsdoc: {
-          preferredTypes: {
-            'object.<>': 'GenericObject'
-          }
-        }
-      }
-    },
-    {
-      code: `
-      /**
-       * @param {object<string>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      errors: [
-        {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
-      ],
-      output: `
-      /**
-       * @param {GenericObject<string>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      settings: {
-        jsdoc: {
-          preferredTypes: {
-            'object<>': 'GenericObject'
-          }
-        }
-      }
-    },
-    {
-      code: `
-      /**
-       * @param {object.<string, number>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      errors: [
-        {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
-      ],
-      output: `
-      /**
-       * @param {GenericObject.<string, number>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      settings: {
-        jsdoc: {
-          preferredTypes: {
-            'object.<>': 'GenericObject'
-          }
-        }
-      }
-    },
-    {
-      code: `
-      /**
-       * @param {object<string, number>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      errors: [
-        {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
-      ],
-      output: `
-      /**
-       * @param {GenericObject<string, number>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      settings: {
-        jsdoc: {
-          preferredTypes: {
-            'object<>': 'GenericObject'
-          }
-        }
-      }
-    },
-    {
-      code: `
-      /**
-       * @param {object.<string>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      errors: [
-        {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
-      ],
-      options: [{
-        unifyParentAndChildTypeChecks: true
-      }],
-      output: `
-      /**
-       * @param {GenericObject.<string>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      settings: {
-        jsdoc: {
-          preferredTypes: {
-            object: 'GenericObject'
-          }
-        }
-      }
-    },
-    {
-      code: `
-      /**
-       * @param {object<string>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      errors: [
-        {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
-      ],
-      options: [{
-        unifyParentAndChildTypeChecks: true
-      }],
-      output: `
-      /**
-       * @param {GenericObject<string>} foo
-       */
-      function quux (foo) {
-
-      }
-      `,
-      settings: {
-        jsdoc: {
-          preferredTypes: {
-            object: 'GenericObject'
-          }
-        }
-      }
+            'object.<>': 'GenericObject',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1074,11 +857,228 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
+      ],
+      output: `
+      /**
+       * @param {GenericObject} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'GenericObject',
+            'object<>': 'GenericObject',
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {object.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
+      ],
+      output: `
+      /**
+       * @param {GenericObject.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'object.<>': 'GenericObject',
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {object<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
+      ],
+      output: `
+      /**
+       * @param {GenericObject<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'object<>': 'GenericObject',
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {object.<string, number>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
+      ],
+      output: `
+      /**
+       * @param {GenericObject.<string, number>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'object.<>': 'GenericObject',
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {object<string, number>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
+      ],
+      output: `
+      /**
+       * @param {GenericObject<string, number>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'object<>': 'GenericObject',
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {object.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
       ],
       options: [{
-        unifyParentAndChildTypeChecks: true
+        unifyParentAndChildTypeChecks: true,
+      }],
+      output: `
+      /**
+       * @param {GenericObject.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'GenericObject',
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {object<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
+      ],
+      options: [{
+        unifyParentAndChildTypeChecks: true,
+      }],
+      output: `
+      /**
+       * @param {GenericObject<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'GenericObject',
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {object} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
+      ],
+      options: [{
+        unifyParentAndChildTypeChecks: true,
       }],
       output: `
       /**
@@ -1091,10 +1091,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            object: 'GenericObject'
-          }
-        }
-      }
+            object: 'GenericObject',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1107,19 +1107,19 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "object".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "object".',
+        },
       ],
       options: [{
-        unifyParentAndChildTypeChecks: true
+        unifyParentAndChildTypeChecks: true,
       }],
       settings: {
         jsdoc: {
           preferredTypes: {
-            object: false
-          }
-        }
-      }
+            object: false,
+          },
+        },
+      },
     },
     {
       code: `
@@ -1132,16 +1132,16 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "object".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "object".',
+        },
       ],
       settings: {
         jsdoc: {
           preferredTypes: {
-            object: false
-          }
-        }
-      }
+            object: false,
+          },
+        },
+      },
     },
     {
       code: `
@@ -1154,11 +1154,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
       ],
       options: [{
-        unifyParentAndChildTypeChecks: true
+        unifyParentAndChildTypeChecks: true,
       }],
       output: `
       /**
@@ -1171,10 +1171,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            object: 'GenericObject'
-          }
-        }
-      }
+            object: 'GenericObject',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1187,11 +1187,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
+        },
       ],
       options: [{
-        unifyParentAndChildTypeChecks: true
+        unifyParentAndChildTypeChecks: true,
       }],
       output: `
       /**
@@ -1204,10 +1204,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            object: 'GenericObject'
-          }
-        }
-      }
+            object: 'GenericObject',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1221,11 +1221,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.".'
+          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.".',
+        },
       ],
       output: `
       /**
@@ -1239,10 +1239,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            '[]': 'Array.'
-          }
-        }
-      }
+            '[]': 'Array.',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1256,11 +1256,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.<>".'
+          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.<>".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.<>".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.<>".',
+        },
       ],
       output: `
       /**
@@ -1274,10 +1274,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            '[]': 'Array.<>'
-          }
-        }
-      }
+            '[]': 'Array.<>',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1291,11 +1291,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array<>".'
+          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array<>".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array<>".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array<>".',
+        },
       ],
       output: `
       /**
@@ -1309,10 +1309,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            '[]': 'Array<>'
-          }
-        }
-      }
+            '[]': 'Array<>',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1326,11 +1326,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object".'
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object".',
+        },
       ],
       output: `
       /**
@@ -1344,10 +1344,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'object.': 'Object'
-          }
-        }
-      }
+            'object.': 'Object',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1361,11 +1361,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".'
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".',
+        },
       ],
       output: `
       /**
@@ -1379,10 +1379,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'object.': 'Object<>'
-          }
-        }
-      }
+            'object.': 'Object<>',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1396,11 +1396,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object.".'
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object.".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object.".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object.".',
+        },
       ],
       output: `
       /**
@@ -1414,10 +1414,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'object<>': 'Object.'
-          }
-        }
-      }
+            'object<>': 'Object.',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1431,11 +1431,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".'
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
+        },
       ],
       output: `
       /**
@@ -1449,10 +1449,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'Array.': '[]'
-          }
-        }
-      }
+            'Array.': '[]',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1466,11 +1466,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array<>".'
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array<>".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array<>".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array<>".',
+        },
       ],
       output: `
       /**
@@ -1484,10 +1484,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'Array.': 'Array<>'
-          }
-        }
-      }
+            'Array.': 'Array<>',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1501,11 +1501,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "<>".'
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "<>".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "<>".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "<>".',
+        },
       ],
       output: `
       /**
@@ -1519,10 +1519,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'Array.': '<>'
-          }
-        }
-      }
+            'Array.': '<>',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1536,8 +1536,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "<>".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "<>".',
+        },
       ],
       output: `
       /**
@@ -1551,10 +1551,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'Array.': '<>'
-          }
-        }
-      }
+            'Array.': '<>',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1568,8 +1568,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "MyArray"; prefer: "<>".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "MyArray"; prefer: "<>".',
+        },
       ],
       output: `
       /**
@@ -1583,10 +1583,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'MyArray.': '<>'
-          }
-        }
-      }
+            'MyArray.': '<>',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1600,11 +1600,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".'
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".',
+        },
       ],
       output: `
       /**
@@ -1618,10 +1618,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            '<>': 'Array.'
-          }
-        }
-      }
+            '<>': 'Array.',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1635,14 +1635,14 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".'
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".',
+        },
       ],
       options: [{
-        unifyParentAndChildTypeChecks: true
+        unifyParentAndChildTypeChecks: true,
       }],
       output: `
       /**
@@ -1656,10 +1656,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            Array: 'Array.'
-          }
-        }
-      }
+            Array: 'Array.',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1673,11 +1673,11 @@ export default {
       `,
       errors: [
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".'
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
         },
         {
-          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".'
-        }
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
+        },
       ],
       output: `
       /**
@@ -1691,18 +1691,18 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            '<>': '[]'
-          }
-        }
-      }
+            '<>': '[]',
+          },
+        },
+      },
     },
     {
       code: '/** @typedef {String} foo */',
       errors: [
-        {message: 'Invalid JSDoc @typedef "foo" type "String"; prefer: "string".'}
+        {message: 'Invalid JSDoc @typedef "foo" type "String"; prefer: "string".'},
       ],
-      output: '/** @typedef {string} foo */'
-    }
+      output: '/** @typedef {string} foo */',
+    },
   ],
   valid: [
     {
@@ -1715,7 +1715,7 @@ export default {
           function quux (foo, bar, baz) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -1727,7 +1727,7 @@ export default {
           function quux (foo, bar, baz) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -1737,7 +1737,7 @@ export default {
           function quux (foo, bar, baz) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -1746,7 +1746,7 @@ export default {
            */
           function qux(foo) {
           }
-      `
+      `,
     },
     {
       code: `
@@ -1755,7 +1755,7 @@ export default {
            */
           function qux(foo) {
           }
-      `
+      `,
     },
     {
       code: `
@@ -1764,7 +1764,7 @@ export default {
            */
           function qux(foo) {
           }
-      `
+      `,
     },
     {
       code: `
@@ -1773,7 +1773,7 @@ export default {
            */
           function qux(foo) {
           }
-      `
+      `,
     },
     {
       code: `
@@ -1786,8 +1786,8 @@ export default {
           }
       `,
       options: [{
-        noDefaults: true
-      }]
+        noDefaults: true,
+      }],
     },
     {
       code: `
@@ -1801,10 +1801,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            object: 'Object'
-          }
-        }
-      }
+            object: 'Object',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1814,7 +1814,7 @@ export default {
       function quux (foo) {
 
       }
-      `
+      `,
     },
     {
       code: `
@@ -1828,10 +1828,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            Array: 'GenericArray'
-          }
-        }
-      }
+            Array: 'GenericArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1845,10 +1845,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            Array: 'GenericArray'
-          }
-        }
-      }
+            Array: 'GenericArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1864,10 +1864,10 @@ export default {
           preferredTypes: {
             Array: 'SpecialTypeArray',
             'Array.<>': 'SpecialTypeArray',
-            'Array<>': 'SpecialTypeArray'
-          }
-        }
-      }
+            'Array<>': 'SpecialTypeArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1879,16 +1879,16 @@ export default {
       }
       `,
       options: [{
-        unifyParentAndChildTypeChecks: true
+        unifyParentAndChildTypeChecks: true,
       }],
       settings: {
         jsdoc: {
           preferredTypes: {
             'Array.<>': 'SpecialTypeArray',
-            'Array<>': 'SpecialTypeArray'
-          }
-        }
-      }
+            'Array<>': 'SpecialTypeArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1902,10 +1902,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            '[]': 'SpecialTypeArray'
-          }
-        }
-      }
+            '[]': 'SpecialTypeArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1917,15 +1917,15 @@ export default {
       }
       `,
       options: [{
-        unifyParentAndChildTypeChecks: true
+        unifyParentAndChildTypeChecks: true,
       }],
       settings: {
         jsdoc: {
           preferredTypes: {
-            '[]': 'SpecialTypeArray'
-          }
-        }
-      }
+            '[]': 'SpecialTypeArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1939,10 +1939,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'Array.<>': 'GenericArray'
-          }
-        }
-      }
+            'Array.<>': 'GenericArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1956,10 +1956,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'Array<>': 'GenericArray'
-          }
-        }
-      }
+            'Array<>': 'GenericArray',
+          },
+        },
+      },
     },
     {
       code: `
@@ -1969,7 +1969,7 @@ export default {
       function quux (foo) {
 
       }
-      `
+      `,
     },
     {
       code: `
@@ -1983,10 +1983,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            object: 'GenericObject'
-          }
-        }
-      }
+            object: 'GenericObject',
+          },
+        },
+      },
     },
     {
       code: `
@@ -2000,10 +2000,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            object: 'GenericObject'
-          }
-        }
-      }
+            object: 'GenericObject',
+          },
+        },
+      },
     },
     {
       code: `
@@ -2017,10 +2017,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            object: 'GenericObject'
-          }
-        }
-      }
+            object: 'GenericObject',
+          },
+        },
+      },
     },
     {
       code: `
@@ -2034,10 +2034,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            object: 'GenericObject'
-          }
-        }
-      }
+            object: 'GenericObject',
+          },
+        },
+      },
     },
     {
       code: `
@@ -2051,10 +2051,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'object.<>': 'GenericObject'
-          }
-        }
-      }
+            'object.<>': 'GenericObject',
+          },
+        },
+      },
     },
     {
       code: `
@@ -2068,10 +2068,10 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            'object<>': 'GenericObject'
-          }
-        }
-      }
+            'object<>': 'GenericObject',
+          },
+        },
+      },
     },
     {
       code: `
@@ -2081,7 +2081,7 @@ export default {
           function quux (foo) {
 
           }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };

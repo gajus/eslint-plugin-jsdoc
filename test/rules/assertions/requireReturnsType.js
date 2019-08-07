@@ -12,9 +12,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @returns type.'
-        }
-      ]
+          message: 'Missing JSDoc @returns type.',
+        },
+      ],
     },
     {
       code: `
@@ -28,9 +28,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @returns type.'
-        }
-      ]
+          message: 'Missing JSDoc @returns type.',
+        },
+      ],
     },
     {
       code: `
@@ -44,16 +44,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @return type.'
-        }
+          message: 'Missing JSDoc @return type.',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            returns: 'return'
-          }
-        }
-      }
+            returns: 'return',
+          },
+        },
+      },
     },
     {
       code: `
@@ -66,17 +66,17 @@ export default {
       `,
       errors: [
         {
-          message: 'Unexpected tag `@returns`'
-        }
+          message: 'Unexpected tag `@returns`',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            returns: false
-          }
-        }
-      }
-    }
+            returns: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -87,7 +87,7 @@ export default {
           function quux () {
 
           }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };

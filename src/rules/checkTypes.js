@@ -14,7 +14,7 @@ const strictNativeTypes = [
   'Array',
   'Function',
   'Date',
-  'RegExp'
+  'RegExp',
 ];
 
 export default iterateJsdoc(({
@@ -23,7 +23,7 @@ export default iterateJsdoc(({
   report,
   utils,
   settings,
-  context
+  context,
 }) => {
   const jsdocTags = utils.filterTags((tag) => {
     return utils.isTagWithType(tag.tag);
@@ -56,7 +56,7 @@ export default iterateJsdoc(({
           [
             ['.', 'ANGLE_BRACKET_WITH_DOT'],
             ['.<>', 'ANGLE_BRACKET_WITH_DOT'],
-            ['<>', 'ANGLE_BRACKET']
+            ['<>', 'ANGLE_BRACKET'],
           ].some(([checkPostFix, syn]) => {
             isGenericMatch = _.get(
               preferredTypes,
@@ -74,7 +74,7 @@ export default iterateJsdoc(({
               ['[]', 'SQUARE_BRACKET'],
               ['.', 'ANGLE_BRACKET_WITH_DOT'],
               ['.<>', 'ANGLE_BRACKET_WITH_DOT'],
-              ['<>', 'ANGLE_BRACKET']
+              ['<>', 'ANGLE_BRACKET'],
             ].some(([checkPostFix, syn]) => {
               isGenericMatch = _.get(preferredTypes, checkPostFix) !== undefined &&
                 syntax === syn;
@@ -153,7 +153,7 @@ export default iterateJsdoc(({
           invalidTypes.push([
             nodeName,
             preferred,
-            _.get(preferredSetting, 'message')
+            _.get(preferredSetting, 'message'),
           ]);
         } else {
           utils.reportSettings(
@@ -209,7 +209,7 @@ export default iterateJsdoc(({
           jsdocTag,
           message ? {
             tagName,
-            tagValue
+            tagValue,
           } : null
         );
       });
@@ -224,15 +224,15 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           noDefaults: {
-            type: 'boolean'
+            type: 'boolean',
           },
           unifyParentAndChildTypeChecks: {
-            type: 'boolean'
-          }
+            type: 'boolean',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

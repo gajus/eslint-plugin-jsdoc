@@ -40,7 +40,7 @@ const getJsdocParameterNamesDeep = (jsdoc : Object, targetTagName : string) : Ar
   let jsdocParameterNames;
 
   jsdocParameterNames = _.filter(jsdoc.tags, {
-    tag: targetTagName
+    tag: targetTagName,
   });
 
   jsdocParameterNames = _.map(jsdocParameterNames, 'name');
@@ -144,7 +144,7 @@ const namepathDefiningTags = [
   'interface',
   'member', 'var',
   'mixin',
-  'namespace'
+  'namespace',
 ];
 
 const namepathPointingTags = [
@@ -163,7 +163,7 @@ const namepathPointingTags = [
   // MAY BE USEFUL WITHOUT NAMEPATH
   'emits',
   'fires',
-  'listens'
+  'listens',
 ];
 
 const isNamepathDefiningTag = (tagName) => {
@@ -219,11 +219,11 @@ let tagsWithTypes = [
   'throws',
   'type',
   'typedef',
-  'yields'
+  'yields',
 ];
 
 const closureTagsWithTypes = [
-  'package', 'private', 'protected', 'public', 'static'
+  'package', 'private', 'protected', 'public', 'static',
 ];
 
 const tagsWithTypesAliases = [
@@ -235,7 +235,7 @@ const tagsWithTypesAliases = [
   'prop',
   'return',
   'exception',
-  'yield'
+  'yield',
 ];
 
 tagsWithTypes = tagsWithTypes.concat(tagsWithTypesAliases, closureTagsWithTypes);
@@ -366,8 +366,8 @@ const enforcedContexts = (context, defaultContexts) => {
     contexts = defaultContexts === true ? [
       'ArrowFunctionExpression',
       'FunctionDeclaration',
-      'FunctionExpression'
-    ] : defaultContexts
+      'FunctionExpression',
+    ] : defaultContexts,
   } = context.options[0] || {};
 
   return contexts;
@@ -393,7 +393,7 @@ const tagsWithNamesAndDescriptions = [
   'param', 'arg', 'argument', 'property', 'prop',
 
   // These two are parsed by our custom parser as though having a `name`
-  'returns', 'return'
+  'returns', 'return',
 ];
 
 const getTagsByType = (tags, tagPreference) => {
@@ -411,7 +411,7 @@ const getTagsByType = (tags, tagPreference) => {
 
   return {
     tagsWithNames,
-    tagsWithoutNames
+    tagsWithoutNames,
   };
 };
 
@@ -457,5 +457,5 @@ export default {
   isTagWithMandatoryNamepathOrType,
   isTagWithType,
   isValidTag,
-  parseClosureTemplateTag
+  parseClosureTemplateTag,
 };

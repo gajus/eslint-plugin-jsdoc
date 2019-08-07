@@ -55,18 +55,18 @@ const parseComment = (commentNode, indent, trim = true) => {
           if (result) {
             return {
               data: {
-                description: result[1] === undefined ? '' : result[1]
+                description: result[1] === undefined ? '' : result[1],
               },
-              source: result[0]
+              source: result[0],
             };
           }
 
           // Always has at least whitespace due to `indent` we've added
           /* istanbul ignore next */
           return null;
-        }
+        },
     ],
-    trim
+    trim,
   })[0] || {};
 };
 
@@ -80,7 +80,7 @@ const getUtils = (
     implementsReplacesDocs,
     augmentsExtendsReplacesDocs,
     maxLines,
-    minLines
+    minLines,
   },
   report,
   context
@@ -142,7 +142,7 @@ const getUtils = (
       if (skipReportingBlockedTag) {
         return {
           blocked: true,
-          tagName
+          tagName,
         };
       }
       const message = isObject && ret.message || defaultMessage;
@@ -265,7 +265,7 @@ const getUtils = (
     const classNode = utils.getClassNode();
     const classJsdocNode = getJSDocComment(sourceCode, classNode, {
       maxLines,
-      minLines
+      minLines,
     });
 
     if (classJsdocNode) {
@@ -286,7 +286,7 @@ const getUtils = (
   utils.forEachPreferredTag = (tagName, arrayHandler, skipReportingBlockedTag = false) => {
     const targetTagName = utils.getPreferredTagName({
       skipReportingBlockedTag,
-      tagName
+      tagName,
     });
     if (!targetTagName ||
       skipReportingBlockedTag && targetTagName && typeof targetTagName === 'object'
@@ -294,7 +294,7 @@ const getUtils = (
       return;
     }
     const matchingJsdocTags = _.filter(jsdoc.tags || [], {
-      tag: targetTagName
+      tag: targetTagName,
     });
 
     matchingJsdocTags.forEach((matchingJsdocTag) => {
@@ -307,10 +307,10 @@ const getUtils = (
       loc: {
         start: {
           column: 1,
-          line: 1
-        }
+          line: 1,
+        },
       },
-      message
+      message,
     });
   };
 
@@ -354,7 +354,7 @@ const makeReport = (context, commentNode) => {
 
       loc = {
         end: {line: lineNumber},
-        start: {line: lineNumber}
+        start: {line: lineNumber},
       };
       if (jsdocLoc.column) {
         const colNumber = commentNode.loc.start.column + jsdocLoc.column;
@@ -369,7 +369,7 @@ const makeReport = (context, commentNode) => {
       fix,
       loc,
       message,
-      node: commentNode
+      node: commentNode,
     });
   };
 
@@ -429,19 +429,19 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
               report,
               settings,
               sourceCode,
-              utils: getUtils(null, jsdoc, jsdocNode, settings, report, context)
+              utils: getUtils(null, jsdoc, jsdocNode, settings, report, context),
             });
           });
-        }
+        },
       };
     },
-    meta: ruleConfig.meta
+    meta: ruleConfig.meta,
   };
 };
 
 export {
   getSettings,
-  parseComment
+  parseComment,
 };
 
 /**
@@ -464,7 +464,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   if (ruleConfig.iterateAllJsdocs) {
     return iterateAllJsdocs(iterator, {
       meta: ruleConfig.meta,
-      noTrim: ruleConfig.noTrim
+      noTrim: ruleConfig.noTrim,
     });
   }
 
@@ -521,7 +521,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           report,
           settings,
           sourceCode,
-          utils
+          utils,
         });
       };
 
@@ -534,9 +534,9 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       return {
         ArrowFunctionExpression: checkJsdoc,
         FunctionDeclaration: checkJsdoc,
-        FunctionExpression: checkJsdoc
+        FunctionExpression: checkJsdoc,
       };
     },
-    meta: ruleConfig.meta
+    meta: ruleConfig.meta,
   };
 }

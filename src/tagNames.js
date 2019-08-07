@@ -1,49 +1,49 @@
 export default {
   abstract: [
-    'virtual'
+    'virtual',
   ],
   access: [],
   alias: [],
   async: [],
   augments: [
-    'extends'
+    'extends',
   ],
   author: [],
   borrows: [],
   callback: [],
   class: [
-    'constructor'
+    'constructor',
   ],
   classdesc: [],
   constant: [
-    'const'
+    'const',
   ],
   constructs: [],
   copyright: [],
   default: [
-    'defaultvalue'
+    'defaultvalue',
   ],
   deprecated: [],
   description: [
-    'desc'
+    'desc',
   ],
   enum: [],
   event: [],
   example: [],
   exports: [],
   external: [
-    'host'
+    'host',
   ],
   file: [
     'fileoverview',
-    'overview'
+    'overview',
   ],
   fires: [
-    'emits'
+    'emits',
   ],
   function: [
     'func',
-    'method'
+    'method',
   ],
   generator: [],
   global: [],
@@ -59,7 +59,7 @@ export default {
   license: [],
   listens: [],
   member: [
-    'var'
+    'var',
   ],
   memberof: [],
   'memberof!': [],
@@ -72,18 +72,18 @@ export default {
   package: [],
   param: [
     'arg',
-    'argument'
+    'argument',
   ],
   private: [],
   property: [
-    'prop'
+    'prop',
   ],
   protected: [],
   public: [],
   readonly: [],
   requires: [],
   returns: [
-    'return'
+    'return',
   ],
   see: [],
   since: [],
@@ -99,7 +99,7 @@ export default {
 
   this: [],
   throws: [
-    'exception'
+    'exception',
   ],
   todo: [],
   tutorial: [],
@@ -108,6 +108,6 @@ export default {
   variation: [],
   version: [],
   yields: [
-    'yield'
-  ]
+    'yield',
+  ],
 };

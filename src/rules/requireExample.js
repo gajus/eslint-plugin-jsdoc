@@ -6,7 +6,7 @@ export default iterateJsdoc(({
   jsdoc,
   report,
   utils,
-  context
+  context,
 }) => {
   warnRemovedSettings(context, 'require-example');
 
@@ -19,13 +19,13 @@ export default iterateJsdoc(({
   const targetTagName = 'example';
 
   const functionExamples = _.filter(jsdoc.tags, {
-    tag: targetTagName
+    tag: targetTagName,
   });
 
   if (avoidExampleOnConstructors && (
     utils.hasATag([
       'class',
-      'constructor'
+      'constructor',
     ]) ||
     utils.isConstructor()
   )) {
@@ -44,7 +44,7 @@ export default iterateJsdoc(({
         name: '',
         optional: false,
         tag: targetTagName,
-        type: ''
+        type: '',
       });
     });
 
@@ -68,24 +68,24 @@ export default iterateJsdoc(({
         properties: {
           avoidExampleOnConstructors: {
             default: false,
-            type: 'boolean'
+            type: 'boolean',
           },
           contexts: {
             items: {
-              type: 'string'
+              type: 'string',
             },
-            type: 'array'
+            type: 'array',
           },
           exemptedBy: {
             items: {
-              type: 'string'
+              type: 'string',
             },
-            type: 'array'
-          }
+            type: 'array',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

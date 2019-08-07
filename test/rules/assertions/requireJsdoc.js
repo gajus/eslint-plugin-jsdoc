@@ -15,15 +15,15 @@ export default {
        `,
       errors: [
         {
-          message: 'Missing JSDoc comment.'
-        }
+          message: 'Missing JSDoc comment.',
+        },
       ],
       settings: {
         jsdoc: {
           maxLines: 3,
-          minLines: 2
-        }
-      }
+          minLines: 2,
+        },
+      },
     },
     {
       code: `
@@ -38,14 +38,14 @@ export default {
        `,
       errors: [
         {
-          message: 'Missing JSDoc comment.'
-        }
+          message: 'Missing JSDoc comment.',
+        },
       ],
       settings: {
         jsdoc: {
-          maxLines: 2
-        }
-      }
+          maxLines: 2,
+        },
+      },
     },
     {
       code: `
@@ -55,14 +55,14 @@ export default {
        `,
       errors: [
         {
-          message: 'Missing JSDoc comment.'
-        }
+          message: 'Missing JSDoc comment.',
+        },
       ],
       settings: {
         jsdoc: {
-          minLines: 1
-        }
-      }
+          minLines: 1,
+        },
+      },
     },
     {
       code: `
@@ -73,18 +73,18 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression'
-        }
+          type: 'FunctionExpression',
+        },
       ],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -96,18 +96,18 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration'
-        }
+          type: 'FunctionDeclaration',
+        },
       ],
       options: [{
         publicOnly: true,
         require: {
-          FunctionDeclaration: true
-        }
+          FunctionDeclaration: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -118,18 +118,18 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc comment.',
-          type: 'ArrowFunctionExpression'
-        }
+          type: 'ArrowFunctionExpression',
+        },
       ],
       options: [{
         publicOnly: true,
         require: {
-          ArrowFunctionExpression: true
-        }
+          ArrowFunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -140,18 +140,18 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc comment.',
-          type: 'ClassExpression'
-        }
+          type: 'ClassExpression',
+        },
       ],
       options: [{
         publicOnly: true,
         require: {
-          ClassExpression: true
-        }
+          ClassExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -160,22 +160,22 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration'
-        }
+          type: 'FunctionDeclaration',
+        },
       ],
       options: [{
         publicOnly: {
           cjs: false,
           esm: true,
-          window: false
+          window: false,
         },
         require: {
-          FunctionDeclaration: true
-        }
+          FunctionDeclaration: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -184,22 +184,22 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc comment.',
-          type: 'ArrowFunctionExpression'
-        }
+          type: 'ArrowFunctionExpression',
+        },
       ],
       options: [{
         publicOnly: {
           cjs: false,
           esm: true,
-          window: false
+          window: false,
         },
         require: {
-          ArrowFunctionExpression: true
-        }
+          ArrowFunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -208,22 +208,22 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression'
-        }
+          type: 'FunctionExpression',
+        },
       ],
       options: [{
         publicOnly: {
           cjs: false,
           esm: true,
-          window: false
+          window: false,
         },
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -232,18 +232,18 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc comment.',
-          type: 'ClassDeclaration'
-        }
+          type: 'ClassDeclaration',
+        },
       ],
       options: [{
         publicOnly: {
           cjs: false,
           esm: true,
-          window: false
+          window: false,
         },
         require: {
-          ClassDeclaration: true
-        }
+          ClassDeclaration: true,
+        },
       }],
       output: `
         /**
@@ -252,8 +252,8 @@ export default {
         export default class {}
       `,
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code:
@@ -264,22 +264,22 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc comment.'
-        }
-      ]
+          message: 'Missing JSDoc comment.',
+        },
+      ],
     },
     {
       code: '',
       errors: [
         {
-          message: '`settings.jsdoc.exemptEmptyFunctions` has been removed, use options in the rule `require-jsdoc` instead.'
-        }
+          message: '`settings.jsdoc.exemptEmptyFunctions` has been removed, use options in the rule `require-jsdoc` instead.',
+        },
       ],
       settings: {
         jsdoc: {
-          exemptEmptyFunctions: true
-        }
-      }
+          exemptEmptyFunctions: true,
+        },
+      },
     },
     {
       code: `
@@ -289,11 +289,11 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc comment.'
-        }
+          message: 'Missing JSDoc comment.',
+        },
       ],
       options: [
-        {exemptEmptyFunctions: true}
+        {exemptEmptyFunctions: true},
       ],
       output: `
         /**
@@ -301,7 +301,7 @@ export default {
          */
         function quux (foo) {
 
-        }`
+        }`,
     },
     {
       code: `
@@ -311,11 +311,11 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Missing JSDoc comment.'
-        }
+          message: 'Missing JSDoc comment.',
+        },
       ],
       options: [
-        {exemptEmptyFunctions: true}
+        {exemptEmptyFunctions: true},
       ],
       output: `
         /**
@@ -327,16 +327,16 @@ export default {
         }`,
       settings: {
         jsdoc: {
-          minLines: 2
-        }
-      }
+          minLines: 2,
+        },
+      },
     },
     {
       code: 'function myFunction() {}',
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
-      }]
+        type: 'FunctionDeclaration',
+      }],
     },
     {
       code:
@@ -350,17 +350,17 @@ export default {
          }`,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         require: {
           ClassDeclaration: true,
-          MethodDefinition: true
-        }
+          MethodDefinition: true,
+        },
       }],
       parserOptions: {
-        ecmaVersion: 6
-      }
+        ecmaVersion: 6,
+      },
     },
     {
       code:
@@ -375,17 +375,17 @@ export default {
         }`,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration'
+        type: 'ClassDeclaration',
       }],
       options: [{
         require: {
           ClassDeclaration: true,
-          MethodDefinition: true
-        }
+          MethodDefinition: true,
+        },
       }],
       parserOptions: {
-        ecmaVersion: 6
-      }
+        ecmaVersion: 6,
+      },
     },
     {
       code:
@@ -400,17 +400,17 @@ export default {
         }`,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration'
+        type: 'ClassDeclaration',
       }],
       options: [{
         require: {
           ClassDeclaration: true,
-          MethodDefinition: true
-        }
+          MethodDefinition: true,
+        },
       }],
       parserOptions: {
-        ecmaVersion: 6
-      }
+        ecmaVersion: 6,
+      },
     },
     {
       code:
@@ -425,17 +425,17 @@ export default {
         }`,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration'
+        type: 'ClassDeclaration',
       }],
       options: [{
         require: {
           ClassDeclaration: true,
-          MethodDefinition: true
-        }
+          MethodDefinition: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code:
@@ -450,86 +450,86 @@ export default {
         }`,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration'
+        type: 'ClassDeclaration',
       }],
       options: [{
         require: {
           ClassDeclaration: true,
-          MethodDefinition: true
-        }
+          MethodDefinition: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: 'var myFunction = () => {}',
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'ArrowFunctionExpression'
+        type: 'ArrowFunctionExpression',
       }],
       options: [{
         require: {
-          ArrowFunctionExpression: true
-        }
+          ArrowFunctionExpression: true,
+        },
       }],
       parserOptions: {
-        ecmaVersion: 6
-      }
+        ecmaVersion: 6,
+      },
     },
     {
       code: 'var myFunction = () => () => {}',
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'ArrowFunctionExpression'
+        type: 'ArrowFunctionExpression',
       }],
       options: [{
         require: {
-          ArrowFunctionExpression: true
-        }
+          ArrowFunctionExpression: true,
+        },
       }],
       parserOptions: {
-        ecmaVersion: 6
-      }
+        ecmaVersion: 6,
+      },
     },
     {
       code: 'var foo = function() {}',
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: 'const foo = {bar() {}}',
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        ecmaVersion: 6
-      }
+        ecmaVersion: 6,
+      },
     },
     {
       code: 'var foo = {bar: function() {}}',
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -537,11 +537,11 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
+        type: 'FunctionDeclaration',
       }],
       options: [
-        {exemptEmptyFunctions: false}
-      ]
+        {exemptEmptyFunctions: false},
+      ],
     },
     {
       code: `
@@ -551,11 +551,11 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
+        type: 'FunctionDeclaration',
       }],
       options: [
-        {exemptEmptyFunctions: false}
-      ]
+        {exemptEmptyFunctions: false},
+      ],
     },
     {
       code: `
@@ -564,18 +564,18 @@ export default {
           }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -584,20 +584,20 @@ export default {
           }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: {
-          ancestorsOnly: true
+          ancestorsOnly: true,
         },
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -608,18 +608,18 @@ export default {
           }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -632,18 +632,18 @@ export default {
           }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -656,20 +656,20 @@ export default {
           }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: {
-          ancestorsOnly: true
+          ancestorsOnly: true,
         },
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -678,18 +678,18 @@ export default {
           }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -703,18 +703,18 @@ export default {
           test.prototype.method = function() {}
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -726,18 +726,18 @@ export default {
           }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -749,18 +749,18 @@ export default {
           }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'ArrowFunctionExpression'
+        type: 'ArrowFunctionExpression',
       }],
       options: [{
         publicOnly: true,
         require: {
-          ArrowFunctionExpression: true
-        }
-      }]
+          ArrowFunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -772,18 +772,18 @@ export default {
         module.exports = Test;
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: true,
         require: {
-          MethodDefinition: true
-        }
-      }]
+          MethodDefinition: true,
+        },
+      }],
     },
     {
       code: `
@@ -793,17 +793,17 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
+        type: 'FunctionDeclaration',
       }],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -813,19 +813,19 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
+        type: 'FunctionDeclaration',
       }],
       options: [{
         publicOnly: {
-          ancestorsOnly: true
+          ancestorsOnly: true,
         },
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -836,17 +836,17 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
+        type: 'FunctionDeclaration',
       }],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -856,17 +856,17 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
+        type: 'FunctionDeclaration',
       }],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -876,19 +876,19 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
+        type: 'FunctionDeclaration',
       }],
       options: [{
         publicOnly: {
-          ancestorsOnly: true
+          ancestorsOnly: true,
         },
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -900,18 +900,18 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc comment.'
-        }
+          message: 'Missing JSDoc comment.',
+        },
       ],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -922,17 +922,17 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: true,
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -942,17 +942,17 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration'
+        type: 'ClassDeclaration',
       }],
       options: [{
         publicOnly: true,
         require: {
-          ClassDeclaration: true
-        }
+          ClassDeclaration: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -962,19 +962,19 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration'
+        type: 'ClassDeclaration',
       }],
       options: [{
         publicOnly: {
-          ancestorsOnly: true
+          ancestorsOnly: true,
         },
         require: {
-          ClassDeclaration: true
-        }
+          ClassDeclaration: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -984,19 +984,19 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: {
-          window: true
+          window: true,
         },
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -1006,19 +1006,19 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: {
-          window: true
+          window: true,
         },
         require: {
-          FunctionExpression: true
-        }
+          FunctionExpression: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -1028,16 +1028,16 @@ export default {
       `,
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
+        type: 'FunctionDeclaration',
       }],
       options: [{
         publicOnly: {
-          window: true
-        }
+          window: true,
+        },
       }],
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -1046,22 +1046,22 @@ export default {
         }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression'
+        type: 'FunctionExpression',
       }],
       options: [{
         publicOnly: {
           cjs: true,
           esm: false,
-          window: false
+          window: false,
         },
         require: {
-          FunctionExpression: true
-        }
-      }]
+          FunctionExpression: true,
+        },
+      }],
     },
     {
       code: `
@@ -1070,26 +1070,26 @@ export default {
         }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
+        type: 'FunctionDeclaration',
       }],
       options: [{
         publicOnly: {
           cjs: false,
           esm: true,
-          window: false
+          window: false,
         },
         require: {
-          FunctionDeclaration: true
-        }
+          FunctionDeclaration: true,
+        },
       }],
       parserOptions: {
         ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -1098,26 +1098,26 @@ export default {
         }
       `,
       env: {
-        node: true
+        node: true,
       },
       errors: [{
         message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration'
+        type: 'FunctionDeclaration',
       }],
       options: [{
         publicOnly: {
           cjs: false,
           esm: true,
-          window: false
+          window: false,
         },
         require: {
-          FunctionDeclaration: true
-        }
+          FunctionDeclaration: true,
+        },
       }],
       parserOptions: {
         ecmaVersion: 6,
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -1128,17 +1128,17 @@ export default {
       errors: [
         {
           message: 'Missing JSDoc comment.',
-          type: 'Property'
-        }
+          type: 'Property',
+        },
       ],
       options: [
         {
           contexts: [
-            'Property'
-          ]
-        }
-      ]
-    }
+            'Property',
+          ],
+        },
+      ],
+    },
   ],
   valid: [{
     code: `
@@ -1229,7 +1229,7 @@ export default {
       Object.keys(this.options.rules || {}).forEach(function(name) {}.bind(this));
       var object = { name: 'key'};
       Object.keys(object).forEach(function() {})
-    `
+    `,
   },
   {
     code: `
@@ -1244,9 +1244,9 @@ export default {
     settings: {
       jsdoc: {
         maxLines: 2,
-        minLines: 0
-      }
-    }
+        minLines: 0,
+      },
+    },
   },
   {
     code: `
@@ -1262,9 +1262,9 @@ export default {
     settings: {
       jsdoc: {
         maxLines: 3,
-        minLines: 0
-      }
-    }
+        minLines: 0,
+      },
+    },
   },
   {
     code: `
@@ -1275,9 +1275,9 @@ export default {
     settings: {
       jsdoc: {
         maxLines: 0,
-        minLines: 0
-      }
-    }
+        minLines: 0,
+      },
+    },
   },
   {
     code: `
@@ -1292,9 +1292,9 @@ export default {
     settings: {
       jsdoc: {
         maxLines: 3,
-        minLines: 2
-      }
-    }
+        minLines: 2,
+      },
+    },
   },
   {
     code: 'function myFunction() {}',
@@ -1302,9 +1302,9 @@ export default {
       require: {
         ClassDeclaration: true,
         FunctionDeclaration: false,
-        MethodDefinition: true
-      }
-    }]
+        MethodDefinition: true,
+      },
+    }],
   },
   {
     code: 'var myFunction = function() {}',
@@ -1312,9 +1312,9 @@ export default {
       require: {
         ClassDeclaration: true,
         FunctionDeclaration: false,
-        MethodDefinition: true
-      }
-    }]
+        MethodDefinition: true,
+      },
+    }],
   },
   {
     code: `
@@ -1333,12 +1333,12 @@ export default {
     options: [{
       require: {
         ClassDeclaration: true,
-        MethodDefinition: true
-      }
+        MethodDefinition: true,
+      },
     }],
     parserOptions: {
-      ecmaVersion: 6
-    }
+      ecmaVersion: 6,
+    },
   },
   {
     code:
@@ -1357,12 +1357,12 @@ export default {
     options: [{
       require: {
         ClassDeclaration: true,
-        MethodDefinition: true
-      }
+        MethodDefinition: true,
+      },
     }],
     parserOptions: {
-      ecmaVersion: 6
-    }
+      ecmaVersion: 6,
+    },
   },
   {
     code:
@@ -1381,13 +1381,13 @@ export default {
     options: [{
       require: {
         ClassDeclaration: true,
-        MethodDefinition: true
-      }
+        MethodDefinition: true,
+      },
     }],
     parserOptions: {
       ecmaVersion: 6,
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code:
@@ -1406,13 +1406,13 @@ export default {
     options: [{
       require: {
         ClassDeclaration: true,
-        MethodDefinition: true
-      }
+        MethodDefinition: true,
+      },
     }],
     parserOptions: {
       ecmaVersion: 6,
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code:
@@ -1424,12 +1424,12 @@ export default {
     options: [{
       require: {
         ClassDeclaration: false,
-        MethodDefinition: false
-      }
+        MethodDefinition: false,
+      },
     }],
     parserOptions: {
-      ecmaVersion: 6
-    }
+      ecmaVersion: 6,
+    },
   },
   {
     code:
@@ -1439,12 +1439,12 @@ export default {
        var myFunction = () => {}`,
     options: [{
       require: {
-        ArrowFunctionExpression: true
-      }
+        ArrowFunctionExpression: true,
+      },
     }],
     parserOptions: {
-      ecmaVersion: 6
-    }
+      ecmaVersion: 6,
+    },
   },
   {
     code:
@@ -1454,12 +1454,12 @@ export default {
        var myFunction = function () {}`,
     options: [{
       require: {
-        ArrowFunctionExpression: true
-      }
+        ArrowFunctionExpression: true,
+      },
     }],
     parserOptions: {
-      ecmaVersion: 6
-    }
+      ecmaVersion: 6,
+    },
   },
   {
     code:
@@ -1469,12 +1469,12 @@ export default {
        var myFunction = () => {}`,
     options: [{
       require: {
-        ArrowFunctionExpression: false
-      }
+        ArrowFunctionExpression: false,
+      },
     }],
     parserOptions: {
-      ecmaVersion: 6
-    }
+      ecmaVersion: 6,
+    },
   },
   {
     code:
@@ -1484,23 +1484,23 @@ export default {
        var myFunction = () => () => {}`,
     options: [{
       require: {
-        ArrowFunctionExpression: true
-      }
+        ArrowFunctionExpression: true,
+      },
     }],
     parserOptions: {
-      ecmaVersion: 6
-    }
+      ecmaVersion: 6,
+    },
   },
   {
     code: 'setTimeout(() => {}, 10);',
     options: [{
       require: {
-        ArrowFunctionExpression: true
-      }
+        ArrowFunctionExpression: true,
+      },
     }],
     parserOptions: {
-      ecmaVersion: 6
-    }
+      ecmaVersion: 6,
+    },
   },
   {
     code:
@@ -1510,9 +1510,9 @@ export default {
        var foo = function() {}`,
     options: [{
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   },
   {
     code:
@@ -1522,12 +1522,12 @@ export default {
        bar() {}}`,
     options: [{
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      ecmaVersion: 6
-    }
+      ecmaVersion: 6,
+    },
   },
   {
     code:
@@ -1537,28 +1537,28 @@ export default {
        bar: function() {}}`,
     options: [{
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   },
   {
     code: ' var foo = { [function() {}]: 1 };',
     options: [{
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      ecmaVersion: 6
-    }
+      ecmaVersion: 6,
+    },
   },
   {
     code: `
       function foo () {}
     `,
     options: [
-      {exemptEmptyFunctions: true}
-    ]
+      {exemptEmptyFunctions: true},
+    ],
   },
   {
     code: `
@@ -1567,8 +1567,8 @@ export default {
       }
     `,
     options: [
-      {exemptEmptyFunctions: true}
-    ]
+      {exemptEmptyFunctions: true},
+    ],
   },
   {
     code: `
@@ -1584,14 +1584,14 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -1607,14 +1607,14 @@ export default {
      }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -1630,18 +1630,18 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: {
         cjs: true,
         esm: false,
-        window: false
+        window: false,
       },
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -1657,18 +1657,18 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: {
         cjs: false,
         esm: true,
-        window: false
+        window: false,
       },
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -1684,14 +1684,14 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: true,
       require: {
-        ArrowFunctionExpression: true
-      }
-    }]
+        ArrowFunctionExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -1703,16 +1703,16 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: {
-        ancestorsOnly: true
+        ancestorsOnly: true,
       },
       require: {
-        ArrowFunctionExpression: true
-      }
-    }]
+        ArrowFunctionExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -1728,14 +1728,14 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -1755,14 +1755,14 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -1777,14 +1777,14 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -1807,14 +1807,14 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -1829,14 +1829,14 @@ export default {
     module.exports = Test;
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: true,
       require: {
-        MethodDefinition: true
-      }
-    }]
+        MethodDefinition: true,
+      },
+    }],
   },
   {
     code: `
@@ -1850,12 +1850,12 @@ export default {
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -1868,15 +1868,15 @@ export default {
     `,
     options: [{
       publicOnly: {
-        ancestorsOnly: true
+        ancestorsOnly: true,
       },
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -1891,12 +1891,12 @@ export default {
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -1907,15 +1907,15 @@ export default {
     `,
     options: [{
       publicOnly: {
-        ancestorsOnly: true
+        ancestorsOnly: true,
       },
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -1929,12 +1929,12 @@ export default {
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -1947,15 +1947,15 @@ export default {
     `,
     options: [{
       publicOnly: {
-        ancestorsOnly: true
+        ancestorsOnly: true,
       },
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -1971,12 +1971,12 @@ export default {
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -1991,12 +1991,12 @@ export default {
     options: [{
       publicOnly: true,
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -2009,15 +2009,15 @@ export default {
     `,
     options: [{
       publicOnly: {
-        ancestorsOnly: true
+        ancestorsOnly: true,
       },
       require: {
-        ClassDeclaration: true
-      }
+        ClassDeclaration: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -2030,15 +2030,15 @@ export default {
     `,
     options: [{
       publicOnly: {
-        window: true
+        window: true,
       },
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -2048,15 +2048,15 @@ export default {
     `,
     options: [{
       publicOnly: {
-        window: true
+        window: true,
       },
       require: {
-        FunctionExpression: true
-      }
+        FunctionExpression: true,
+      },
     }],
     parserOptions: {
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   },
   {
     code: `
@@ -2067,9 +2067,9 @@ export default {
     options: [{
       publicOnly: true,
       require: {
-        ClassExpression: false
-      }
-    }]
+        ClassExpression: false,
+      },
+    }],
   },
   {
     code: `
@@ -2083,9 +2083,9 @@ export default {
     options: [{
       publicOnly: true,
       require: {
-        ClassExpression: true
-      }
-    }]
+        ClassExpression: true,
+      },
+    }],
   },
   {
     code: `
@@ -2094,22 +2094,22 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: {
         cjs: true,
         esm: false,
-        window: false
+        window: false,
       },
       require: {
-        FunctionDeclaration: true
-      }
+        FunctionDeclaration: true,
+      },
     }],
     parserOptions: {
       ecmaVersion: 6,
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   }, {
     code: `
       export function someMethod() {
@@ -2117,22 +2117,22 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: {
         cjs: true,
         esm: false,
-        window: false
+        window: false,
       },
       require: {
-        FunctionDeclaration: true
-      }
+        FunctionDeclaration: true,
+      },
     }],
     parserOptions: {
       ecmaVersion: 6,
-      sourceType: 'module'
-    }
+      sourceType: 'module',
+    },
   }, {
     code: `
       exports.someMethod = function() {
@@ -2140,18 +2140,18 @@ export default {
       }
     `,
     env: {
-      node: true
+      node: true,
     },
     options: [{
       publicOnly: {
         cjs: false,
         esm: true,
-        window: false
+        window: false,
       },
       require: {
-        FunctionExpression: true
-      }
-    }]
+        FunctionExpression: true,
+      },
+    }],
   }, {
     code: `
         const myObject = {
@@ -2160,8 +2160,8 @@ export default {
     `,
     options: [
       {
-        contexts: []
-      }
-    ]
-  }]
+        contexts: [],
+      },
+    ],
+  }],
 };

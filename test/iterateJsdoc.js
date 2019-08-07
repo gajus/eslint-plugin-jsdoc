@@ -1,7 +1,7 @@
 /* eslint-disable max-nested-callbacks */
 
 import {
-  expect
+  expect,
 } from 'chai';
 // eslint-disable-next-line import/no-named-default
 import {parseComment, default as iterateJsdoc} from '../src/iterateJsdoc';
@@ -73,9 +73,9 @@ describe('iterateJsdoc', () => {
               optional: false,
               source: '@param {MyType} name desc',
               tag: 'param',
-              type: 'MyType'
-            }
-          ]
+              type: 'MyType',
+            },
+          ],
         });
       });
     });

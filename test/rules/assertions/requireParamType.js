@@ -12,9 +12,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @param "foo" type.'
-        }
-      ]
+          message: 'Missing JSDoc @param "foo" type.',
+        },
+      ],
     },
     {
       code: `
@@ -28,16 +28,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @arg "foo" type.'
-        }
+          message: 'Missing JSDoc @arg "foo" type.',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: 'arg'
-          }
-        }
-      }
+            param: 'arg',
+          },
+        },
+      },
     },
     {
       code: `
@@ -50,17 +50,17 @@ export default {
       `,
       errors: [
         {
-          message: 'Unexpected tag `@param`'
-        }
+          message: 'Unexpected tag `@param`',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: false
-          }
-        }
-      }
-    }
+            param: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -71,7 +71,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -81,7 +81,7 @@ export default {
           function quux (foo) {
 
           }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };

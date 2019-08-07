@@ -12,10 +12,10 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax should not be Google Closure Compiler style.'
-        }
-      ]
-    }
+          message: 'Syntax should not be Google Closure Compiler style.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -26,7 +26,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -36,7 +36,7 @@ export default {
           function quux (foo) {
 
           }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };

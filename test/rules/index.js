@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {
-  RuleTester
+  RuleTester,
 } from 'eslint';
 import config from '../../src';
 
@@ -33,10 +33,10 @@ const ruleTester = new RuleTester();
   'require-returns-check',
   'require-returns-description',
   'require-returns-type',
-  'valid-types'
+  'valid-types',
 ]).forEach((ruleName) => {
   const parserOptions = {
-    ecmaVersion: 6
+    ecmaVersion: 6,
   };
 
   // eslint-disable-next-line global-require, import/no-dynamic-require

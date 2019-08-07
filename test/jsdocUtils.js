@@ -1,7 +1,7 @@
 /* eslint-disable max-nested-callbacks */
 
 import {
-  expect
+  expect,
 } from 'chai';
 import jsdocUtils from '../src/jsdocUtils';
 
@@ -51,8 +51,8 @@ describe('jsdocUtils', () => {
         expect(() => {
           jsdocUtils.getFunctionParameterNames({params: [
             {
-              type: 'AssignmentPattern'
-            }
+              type: 'AssignmentPattern',
+            },
           ]});
         }).to.throw('Unsupported function signature format.');
       });

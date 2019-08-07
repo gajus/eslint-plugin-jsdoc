@@ -10,9 +10,9 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'There must be no indentation.'
-        }
-      ]
+          message: 'There must be no indentation.',
+        },
+      ],
     },
     {
       code: `
@@ -29,9 +29,9 @@ export default {
       errors: [
         {
           line: 6,
-          message: 'There must be no indentation.'
-        }
-      ]
+          message: 'There must be no indentation.',
+        },
+      ],
     },
     {
       code: `
@@ -44,10 +44,10 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'There must be no indentation.'
-        }
-      ]
-    }
+          message: 'There must be no indentation.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -61,7 +61,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -69,7 +69,7 @@ export default {
           function quux () {
 
           }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };

@@ -12,11 +12,11 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'There must be a hyphen before @param description.'
-        }
+          message: 'There must be a hyphen before @param description.',
+        },
       ],
       options: [
-        'always'
+        'always',
       ],
       output: `
           /**
@@ -25,7 +25,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -39,8 +39,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'There must be a hyphen before @param description.'
-        }
+          message: 'There must be a hyphen before @param description.',
+        },
       ],
       output: `
           /**
@@ -49,7 +49,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -63,11 +63,11 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'There must be no hyphen before @param description.'
-        }
+          message: 'There must be no hyphen before @param description.',
+        },
       ],
       options: [
-        'never'
+        'never',
       ],
       output: `
           /**
@@ -76,7 +76,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -91,11 +91,11 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'There must be a hyphen before @param description.'
-        }
+          message: 'There must be a hyphen before @param description.',
+        },
       ],
       options: [
-        'always'
+        'always',
       ],
       output: `
           /**
@@ -105,7 +105,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -121,11 +121,11 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'There must be a hyphen before @param description.'
-        }
+          message: 'There must be a hyphen before @param description.',
+        },
       ],
       options: [
-        'always'
+        'always',
       ],
       output: `
           /**
@@ -136,7 +136,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -149,17 +149,17 @@ export default {
       `,
       errors: [
         {
-          message: 'Unexpected tag `@param`'
-        }
+          message: 'Unexpected tag `@param`',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: false
-          }
-        }
-      }
-    }
+            param: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -172,8 +172,8 @@ export default {
           }
       `,
       options: [
-        'always'
-      ]
+        'always',
+      ],
     },
     {
       code: `
@@ -185,8 +185,8 @@ export default {
           }
       `,
       options: [
-        'never'
-      ]
+        'never',
+      ],
     },
     {
       code: `
@@ -196,7 +196,7 @@ export default {
           function quux () {
 
           }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };

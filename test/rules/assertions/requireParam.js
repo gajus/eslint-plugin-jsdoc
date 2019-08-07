@@ -17,9 +17,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -32,12 +32,12 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
+          message: 'Missing JSDoc @param "foo" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "bar" declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @param "bar" declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -50,12 +50,12 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
+          message: 'Missing JSDoc @param "foo" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "baz" declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @param "baz" declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -68,12 +68,12 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
+          message: 'Missing JSDoc @param "foo" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "bar" declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @param "bar" declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -86,16 +86,16 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @arg "foo" declaration.'
-        }
+          message: 'Missing JSDoc @arg "foo" declaration.',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: 'arg'
-          }
-        }
-      }
+            param: 'arg',
+          },
+        },
+      },
     },
     {
       code: `
@@ -108,9 +108,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "bar" declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @param "bar" declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -123,14 +123,14 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
-        }
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
       ],
       settings: {
         jsdoc: {
-          overrideReplacesDocs: false
-        }
-      }
+          overrideReplacesDocs: false,
+        },
+      },
     },
     {
       code: `
@@ -143,14 +143,14 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
-        }
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
       ],
       settings: {
         jsdoc: {
-          implementsReplacesDocs: false
-        }
-      }
+          implementsReplacesDocs: false,
+        },
+      },
     },
     {
       code: `
@@ -163,9 +163,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -178,9 +178,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -198,14 +198,14 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
-        }
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
       ],
       settings: {
         jsdoc: {
-          overrideReplacesDocs: false
-        }
-      }
+          overrideReplacesDocs: false,
+        },
+      },
     },
     {
       code: `
@@ -223,14 +223,14 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
-        }
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
       ],
       settings: {
         jsdoc: {
-          implementsReplacesDocs: false
-        }
-      }
+          implementsReplacesDocs: false,
+        },
+      },
     },
     {
       code: `
@@ -248,9 +248,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -268,9 +268,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
-        }
-      ]
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
     },
     {
       code: `
@@ -283,13 +283,13 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "foo" declaration.'
-        }
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -302,17 +302,17 @@ export default {
       `,
       errors: [
         {
-          message: 'Unexpected tag `@param`'
-        }
+          message: 'Unexpected tag `@param`',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: false
-          }
-        }
-      }
-    }
+            param: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -323,7 +323,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -333,7 +333,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -347,10 +347,10 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: 'arg'
-          }
-        }
-      }
+            param: 'arg',
+          },
+        },
+      },
     },
     {
       code: `
@@ -361,7 +361,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -371,7 +371,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -386,7 +386,7 @@ export default {
 
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -399,9 +399,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          overrideReplacesDocs: true
-        }
-      }
+          overrideReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -416,7 +416,7 @@ export default {
 
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -426,7 +426,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -439,9 +439,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          implementsReplacesDocs: true
-        }
-      }
+          implementsReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -452,7 +452,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -465,9 +465,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          augmentsExtendsReplacesDocs: true
-        }
-      }
+          augmentsExtendsReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -478,7 +478,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -491,9 +491,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          augmentsExtendsReplacesDocs: true
-        }
-      }
+          augmentsExtendsReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -504,7 +504,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -517,9 +517,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          augmentsExtendsReplacesDocs: true
-        }
-      }
+          augmentsExtendsReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -532,9 +532,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          augmentsExtendsReplacesDocs: true
-        }
-      }
+          augmentsExtendsReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -549,7 +549,7 @@ export default {
 
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -567,9 +567,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          overrideReplacesDocs: true
-        }
-      }
+          overrideReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -587,9 +587,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          implementsReplacesDocs: true
-        }
-      }
+          implementsReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -604,7 +604,7 @@ export default {
 
           }
         }
-      `
+      `,
     },
     {
       code: `
@@ -622,9 +622,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          augmentsExtendsReplacesDocs: true
-        }
-      }
+          augmentsExtendsReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -639,7 +639,7 @@ export default {
 
           }
         }
-      `
+      `,
     },
     {
       code: `
@@ -657,9 +657,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          augmentsExtendsReplacesDocs: true
-        }
-      }
+          augmentsExtendsReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -674,7 +674,7 @@ export default {
 
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -692,9 +692,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          augmentsExtendsReplacesDocs: true
-        }
-      }
+          augmentsExtendsReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -712,9 +712,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          augmentsExtendsReplacesDocs: true
-        }
-      }
+          augmentsExtendsReplacesDocs: true,
+        },
+      },
     },
     {
       code: `
@@ -727,9 +727,9 @@ export default {
       `,
       settings: {
         jsdoc: {
-          ignorePrivate: true
-        }
-      }
+          ignorePrivate: true,
+        },
+      },
     },
     {
       code: `
@@ -737,13 +737,13 @@ export default {
           /** @const {boolean} test */
           const test = something?.find(_ => _)
       `,
-      parser: require.resolve('babel-eslint')
+      parser: require.resolve('babel-eslint'),
     },
     {
       code: `
           /** @type {RequestHandler} */
           function foo(req, res, next) {}
-      `
+      `,
     },
     {
       code: `
@@ -756,9 +756,9 @@ export default {
       `,
       options: [
         {
-          exemptedBy: ['type']
-        }
-      ]
+          exemptedBy: ['type'],
+        },
+      ],
     },
     {
       code: `
@@ -773,7 +773,7 @@ export default {
 
             }
           }
-      `
+      `,
     },
     {
       code: `
@@ -786,8 +786,8 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -801,7 +801,7 @@ export default {
       function assign({name, department}) {
         // ...
       }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };
