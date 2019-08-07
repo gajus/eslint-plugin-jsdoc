@@ -10,40 +10,40 @@ const OPTIONS_SCHEMA = {
   properties: {
     contexts: {
       items: {
-        type: 'string'
+        type: 'string',
       },
-      type: 'array'
+      type: 'array',
     },
     exemptEmptyFunctions: {
       default: false,
-      type: 'boolean'
+      type: 'boolean',
     },
     publicOnly: {
       oneOf: [
         {
           default: false,
-          type: 'boolean'
+          type: 'boolean',
         },
         {
           additionalProperties: false,
           default: {},
           properties: {
             ancestorsOnly: {
-              type: 'boolean'
+              type: 'boolean',
             },
             cjs: {
-              type: 'boolean'
+              type: 'boolean',
             },
             esm: {
-              type: 'boolean'
+              type: 'boolean',
             },
             window: {
-              type: 'boolean'
-            }
+              type: 'boolean',
+            },
           },
-          type: 'object'
-        }
-      ]
+          type: 'object',
+        },
+      ],
     },
     require: {
       additionalProperties: false,
@@ -51,33 +51,33 @@ const OPTIONS_SCHEMA = {
       properties: {
         ArrowFunctionExpression: {
           default: false,
-          type: 'boolean'
+          type: 'boolean',
         },
         ClassDeclaration: {
           default: false,
-          type: 'boolean'
+          type: 'boolean',
         },
         ClassExpression: {
           default: false,
-          type: 'boolean'
+          type: 'boolean',
         },
         FunctionDeclaration: {
           default: true,
-          type: 'boolean'
+          type: 'boolean',
         },
         FunctionExpression: {
           default: false,
-          type: 'boolean'
+          type: 'boolean',
         },
         MethodDefinition: {
           default: false,
-          type: 'boolean'
-        }
+          type: 'boolean',
+        },
       },
-      type: 'object'
-    }
+      type: 'object',
+    },
   },
-  type: 'object'
+  type: 'object',
 };
 
 const getOption = (context, baseObject, option, key) => {
@@ -111,7 +111,7 @@ const getOptions = (context) => {
 
         return obj;
       }, {});
-    })(OPTIONS_SCHEMA.properties.require)
+    })(OPTIONS_SCHEMA.properties.require),
   };
 };
 
@@ -122,20 +122,20 @@ export default {
       category: 'Stylistic Issues',
       description: 'Require JSDoc comments',
       recommended: 'true',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc'
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc',
     },
 
     fixable: 'code',
 
     messages: {
-      missingJsDoc: 'Missing JSDoc comment.'
+      missingJsDoc: 'Missing JSDoc comment.',
     },
 
     schema: [
-      OPTIONS_SCHEMA
+      OPTIONS_SCHEMA,
     ],
 
-    type: 'suggestion'
+    type: 'suggestion',
   },
   create (context) {
     warnRemovedSettings(context, 'require-jsdoc');
@@ -166,7 +166,7 @@ export default {
         const indent = jsdocUtils.getIndent(sourceCode);
         const insertion = `/**\n${indent}*\n${indent}*/${'\n'.repeat(lines)}${indent.slice(0, -1)}`;
         const baseNode = [
-          'ExportDefaultDeclaration', 'ExportNamedDeclaration'
+          'ExportDefaultDeclaration', 'ExportNamedDeclaration',
         ].includes(node.parent && node.parent.type) ? node.parent : node;
 
         return fixer.insertTextBefore(baseNode, insertion);
@@ -177,7 +177,7 @@ export default {
           ancestorsOnly: Boolean(_.get(publicOnly, 'ancestorsOnly', false)),
           esm: Boolean(_.get(publicOnly, 'esm', true)),
           initModuleExports: Boolean(_.get(publicOnly, 'cjs', true)),
-          initWindow: Boolean(_.get(publicOnly, 'window', false))
+          initWindow: Boolean(_.get(publicOnly, 'window', false)),
         };
         const parseResult = exportParser.parse(sourceCode.ast, node, opt);
         const exported = exportParser.isExported(node, parseResult, opt);
@@ -186,14 +186,14 @@ export default {
           context.report({
             fix,
             messageId: 'missingJsDoc',
-            node
+            node,
           });
         }
       } else {
         context.report({
           fix,
           messageId: 'missingJsDoc',
-          node
+          node,
         });
       }
     };
@@ -254,8 +254,8 @@ export default {
           } else if (node.parent.type === 'Property' && node === node.parent.value) {
             checkJsDoc(node);
           }
-        }
+        },
       }
     );
-  }
+  },
 };

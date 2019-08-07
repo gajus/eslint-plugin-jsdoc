@@ -1,7 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
-  utils
+  utils,
 }) => {
   const tags = utils.getPresentTags(['param', 'arg', 'argument', 'returns', 'return']);
 
@@ -15,6 +15,6 @@ export default iterateJsdoc(({
 }, {
   meta: {
     fixable: true,
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

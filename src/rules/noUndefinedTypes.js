@@ -10,7 +10,7 @@ const extraTypes = [
   'function',
   'number', 'NaN', 'Infinity',
   'any', '*',
-  'Array', 'Object', 'RegExp', 'Date', 'Function'
+  'Array', 'Object', 'RegExp', 'Date', 'Function',
 ];
 
 const stripPseudoTypes = (str) => {
@@ -22,7 +22,7 @@ export default iterateJsdoc(({
   report,
   settings,
   sourceCode: {scopeManager},
-  utils
+  utils,
 }) => {
   const {globalScope} = scopeManager;
 
@@ -140,14 +140,14 @@ export default iterateJsdoc(({
         properties: {
           definedTypes: {
             items: {
-              type: 'string'
+              type: 'string',
             },
-            type: 'array'
-          }
+            type: 'array',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

@@ -8,7 +8,7 @@ export default iterateJsdoc(({
   utils,
   context,
   settings,
-  jsdocNode
+  jsdocNode,
 }) => {
   if (!jsdoc.tags) {
     return;
@@ -48,7 +48,7 @@ export default iterateJsdoc(({
       let preferredTagName = utils.getPreferredTagName({
         allowObjectReturn: true,
         defaultMessage: `Blacklisted tag found (\`@${tagName}\`)`,
-        tagName
+        tagName,
       });
       let message = `Invalid JSDoc tag (preference). Replace "${tagName}" JSDoc tag with "${preferredTagName}".`;
       if (!preferredTagName) {
@@ -82,14 +82,14 @@ export default iterateJsdoc(({
         properties: {
           definedTags: {
             items: {
-              type: 'string'
+              type: 'string',
             },
-            type: 'array'
-          }
+            type: 'array',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

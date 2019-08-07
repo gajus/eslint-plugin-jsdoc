@@ -18,9 +18,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Expected @param names to be "foo". Got "Foo".'
-        }
-      ]
+          message: 'Expected @param names to be "foo". Got "Foo".',
+        },
+      ],
     },
     {
       code: `
@@ -34,16 +34,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Expected @arg names to be "foo". Got "Foo".'
-        }
+          message: 'Expected @arg names to be "foo". Got "Foo".',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: 'arg'
-          }
-        }
-      }
+            param: 'arg',
+          },
+        },
+      },
     },
     {
       code: `
@@ -57,9 +57,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Expected @param names to be "foo". Got "Foo".'
-        }
-      ]
+          message: 'Expected @param names to be "foo". Got "Foo".',
+        },
+      ],
     },
     {
       code: `
@@ -73,9 +73,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@param path declaration ("Foo.Bar") appears before any real parameter.'
-        }
-      ]
+          message: '@param path declaration ("Foo.Bar") appears before any real parameter.',
+        },
+      ],
     },
     {
       code: `
@@ -90,9 +90,9 @@ export default {
       errors: [
         {
           line: 4,
-          message: '@param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").'
-        }
-      ]
+          message: '@param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").',
+        },
+      ],
     },
     {
       code: `
@@ -108,9 +108,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Expected @param names to be "bar, foo". Got "foo, bar".'
-        }
-      ]
+          message: 'Expected @param names to be "bar, foo". Got "foo, bar".',
+        },
+      ],
     },
     {
       code: `
@@ -125,9 +125,9 @@ export default {
       errors: [
         {
           line: 4,
-          message: '@param "bar" does not match an existing function parameter.'
-        }
-      ]
+          message: '@param "bar" does not match an existing function parameter.',
+        },
+      ],
     },
     {
       code: `
@@ -142,8 +142,8 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'Duplicate @param "foo"'
-        }
+          message: 'Duplicate @param "foo"',
+        },
       ],
       output: `
           /**
@@ -152,7 +152,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -167,9 +167,9 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'Duplicate @param "foo"'
-        }
-      ]
+          message: 'Duplicate @param "foo"',
+        },
+      ],
     },
     {
       code: `
@@ -184,9 +184,9 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'Duplicate @param "foo"'
-        }
-      ]
+          message: 'Duplicate @param "foo"',
+        },
+      ],
     },
     {
       code: `
@@ -200,13 +200,13 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'Expected @param names to be "property". Got "prop".'
-        }
+          message: 'Expected @param names to be "property". Got "prop".',
+        },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     {
       code: `
@@ -220,17 +220,17 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Unexpected tag `@param`'
-        }
+          message: 'Unexpected tag `@param`',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: false
-          }
-        }
-      }
-    }
+            param: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -241,7 +241,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -251,7 +251,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -262,7 +262,7 @@ export default {
           function quux (foo, bar) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -273,7 +273,7 @@ export default {
           function quux (foo, bar, baz) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -285,7 +285,7 @@ export default {
           function quux (foo, bar) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -295,7 +295,7 @@ export default {
           function quux (...args) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -305,7 +305,7 @@ export default {
           function quux ({a, b}) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -315,7 +315,7 @@ export default {
           function quux ({a, b} = {}) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -325,7 +325,7 @@ export default {
           function quux ([a, b] = []) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -338,7 +338,7 @@ export default {
           function assign (employees) {
 
           };
-      `
+      `,
     },
     {
       code: `
@@ -351,8 +351,8 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: 'module'
-      }
-    }
-  ]
+        sourceType: 'module',
+      },
+    },
+  ],
 };

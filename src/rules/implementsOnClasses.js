@@ -2,12 +2,12 @@ import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
   report,
-  utils
+  utils,
 }) => {
   if (
     utils.hasATag([
       'class',
-      'constructor'
+      'constructor',
     ]) ||
     utils.isConstructor()
   ) {
@@ -19,6 +19,6 @@ export default iterateJsdoc(({
   });
 }, {
   meta: {
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

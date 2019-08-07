@@ -14,13 +14,13 @@ const canSkip = (utils) => {
     //   tag indicating this but no explicit return
     'class',
     'constructor',
-    'interface'
+    'interface',
   ]) || utils.isConstructor() || utils.classHasTag('interface');
 };
 
 export default iterateJsdoc(({
   report,
-  utils
+  utils,
 }) => {
   if (canSkip(utils)) {
     return;
@@ -52,6 +52,6 @@ export default iterateJsdoc(({
   }
 }, {
   meta: {
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

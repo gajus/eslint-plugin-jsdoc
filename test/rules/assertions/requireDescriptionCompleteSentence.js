@@ -12,8 +12,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.'
-        }
+          message: 'Sentence should start with an uppercase character.',
+        },
       ],
       output: `
           /**
@@ -22,7 +22,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -35,8 +35,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Sentence should start with an uppercase character.'
-        }
+          message: 'Sentence should start with an uppercase character.',
+        },
       ],
       output: `
           /**
@@ -45,7 +45,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -59,8 +59,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.'
-        }
+          message: 'Sentence should start with an uppercase character.',
+        },
       ],
       output: `
           /**
@@ -69,7 +69,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -83,8 +83,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       output: `
           /**
@@ -93,7 +93,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -106,8 +106,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       output: `
           /**
@@ -116,7 +116,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -132,8 +132,8 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.'
-        }
+          message: 'Sentence should start with an uppercase character.',
+        },
       ],
       output: `
           /**
@@ -144,7 +144,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -158,8 +158,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.'
-        }
+          message: 'Sentence should start with an uppercase character.',
+        },
       ],
       output: `
           /**
@@ -168,7 +168,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -182,8 +182,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       output: `
           /**
@@ -192,7 +192,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -207,9 +207,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'A line of text is started with an uppercase character, but preceding line does not end the sentence.'
-        }
-      ]
+          message: 'A line of text is started with an uppercase character, but preceding line does not end the sentence.',
+        },
+      ],
     },
     {
       code: `
@@ -225,8 +225,8 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.'
-        }
+          message: 'Sentence should start with an uppercase character.',
+        },
       ],
       output: `
           /**
@@ -237,7 +237,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -253,12 +253,12 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.'
+          message: 'Sentence should start with an uppercase character.',
         },
         {
           line: 5,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       output: `
           /**
@@ -269,7 +269,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -283,12 +283,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.'
+          message: 'Sentence should start with an uppercase character.',
         },
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       output: `
           /**
@@ -297,7 +297,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -313,12 +313,12 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.'
+          message: 'Sentence should start with an uppercase character.',
         },
         {
           line: 5,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       output: `
           /**
@@ -329,7 +329,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -345,8 +345,8 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.'
-        }
+          message: 'Sentence should start with an uppercase character.',
+        },
       ],
       output: `
           /**
@@ -357,7 +357,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -376,8 +376,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.'
-        }
+          message: 'Sentence should start with an uppercase character.',
+        },
       ],
       output: `
           /**
@@ -391,7 +391,7 @@ export default {
           function longDescription (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -405,8 +405,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       output: `
           /**
@@ -415,7 +415,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -429,8 +429,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       output: `
           /**
@@ -439,7 +439,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -453,12 +453,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.'
+          message: 'Sentence should start with an uppercase character.',
         },
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       output: `
           /**
@@ -467,7 +467,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -483,12 +483,12 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.'
+          message: 'Sentence should start with an uppercase character.',
         },
         {
           line: 5,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       output: `
           /**
@@ -499,7 +499,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -511,9 +511,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
-      ]
+          message: 'Sentence must end with a period.',
+        },
+      ],
     },
     {
       code: `
@@ -527,9 +527,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
-      ]
+          message: 'Sentence must end with a period.',
+        },
+      ],
     },
     {
       code: `
@@ -543,9 +543,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
-      ]
+          message: 'Sentence must end with a period.',
+        },
+      ],
     },
     {
       code: `
@@ -559,14 +559,14 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       options: [
         {
-          tags: ['see']
-        }
-      ]
+          tags: ['see'],
+        },
+      ],
     },
     {
       code: `
@@ -580,20 +580,20 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.'
-        }
+          message: 'Sentence must end with a period.',
+        },
       ],
       options: [{
-        tags: ['param']
+        tags: ['param'],
       }],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            description: false
-          }
-        }
-      }
-    }
+            description: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -604,7 +604,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -614,7 +614,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -625,7 +625,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -637,7 +637,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -647,7 +647,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -658,7 +658,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       // @see https://github.com/gajus/eslint-plugin-jsdoc/issues/10
@@ -669,7 +669,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -679,7 +679,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -689,7 +689,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -705,7 +705,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -716,7 +716,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -726,7 +726,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -736,7 +736,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -746,7 +746,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -756,7 +756,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -768,7 +768,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -778,7 +778,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -788,7 +788,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -799,7 +799,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -809,7 +809,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -819,7 +819,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -831,7 +831,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -846,9 +846,9 @@ export default {
       `,
       options: [
         {
-          tags: ['param']
-        }
-      ]
+          tags: ['param'],
+        },
+      ],
     },
     {
       code: `
@@ -860,15 +860,15 @@ export default {
         }
       `,
       options: [{
-        tags: ['param']
+        tags: ['param'],
       }],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            description: false
-          }
-        }
-      }
+            description: false,
+          },
+        },
+      },
     },
     {
       code: `
@@ -882,10 +882,10 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            description: false
-          }
-        }
-      }
-    }
-  ]
+            description: false,
+          },
+        },
+      },
+    },
+  ],
 };

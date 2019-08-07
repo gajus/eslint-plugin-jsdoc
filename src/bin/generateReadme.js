@@ -60,7 +60,7 @@ const getAssertions = () => {
 
     return {
       invalid: _.map(codes.invalid, formatCodeSnippet),
-      valid: _.map(codes.valid, formatCodeSnippet)
+      valid: _.map(codes.valid, formatCodeSnippet),
     };
   });
 
@@ -81,8 +81,8 @@ const generateReadme = async () => {
   gitdown.setConfig({
     gitinfo: {
       defaultBranchName: getSomeBranch() || 'master',
-      gitPath: path.join(__dirname, '../../.git')
-    }
+      gitPath: path.join(__dirname, '../../.git'),
+    },
   });
   let documentBody = await gitdown.get();
 

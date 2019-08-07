@@ -11,14 +11,14 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @description declaration.'
-        }
+          message: 'Missing JSDoc @description declaration.',
+        },
       ],
       options: [
         {
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -31,14 +31,14 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc block description or @description declaration.'
-        }
+          message: 'Missing JSDoc block description or @description declaration.',
+        },
       ],
       options: [
         {
-          descriptionStyle: 'any'
-        }
-      ]
+          descriptionStyle: 'any',
+        },
+      ],
     },
     {
       code: `
@@ -51,14 +51,14 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc block description.'
-        }
+          message: 'Missing JSDoc block description.',
+        },
       ],
       options: [
         {
-          descriptionStyle: 'body'
-        }
-      ]
+          descriptionStyle: 'body',
+        },
+      ],
     },
     {
       code: `
@@ -71,15 +71,15 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @description declaration.'
-        }
+          message: 'Missing JSDoc @description declaration.',
+        },
       ],
       options: [
         {
           contexts: ['ClassDeclaration'],
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -92,15 +92,15 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @description declaration.'
-        }
+          message: 'Missing JSDoc @description declaration.',
+        },
       ],
       options: [
         {
           contexts: ['ClassDeclaration'],
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -113,15 +113,15 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @description declaration.'
-        }
+          message: 'Missing JSDoc @description declaration.',
+        },
       ],
       options: [
         {
           contexts: ['ClassDeclaration'],
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -134,14 +134,14 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @description description.'
-        }
+          message: 'Missing JSDoc @description description.',
+        },
       ],
       options: [
         {
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -154,18 +154,18 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @description declaration.'
-        }
+          message: 'Missing JSDoc @description declaration.',
+        },
       ],
       options: [
         {
           contexts: [
-            'TSInterfaceDeclaration'
+            'TSInterfaceDeclaration',
           ],
-          descriptionStyle: 'tag'
-        }
+          descriptionStyle: 'tag',
+        },
       ],
-      parser: require.resolve('@typescript-eslint/parser')
+      parser: require.resolve('@typescript-eslint/parser'),
     },
     {
       code: `
@@ -178,17 +178,17 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @description declaration.'
-        }
+          message: 'Missing JSDoc @description declaration.',
+        },
       ],
       options: [
         {
           contexts: [
-            'ClassExpression'
+            'ClassExpression',
           ],
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -201,17 +201,17 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @description declaration.'
-        }
+          message: 'Missing JSDoc @description declaration.',
+        },
       ],
       options: [
         {
           contexts: [
-            'ObjectExpression'
+            'ObjectExpression',
           ],
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -224,24 +224,24 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @someDesc description.'
-        }
+          message: 'Missing JSDoc @someDesc description.',
+        },
       ],
       options: [
         {
-          descriptionStyle: 'tag'
-        }
+          descriptionStyle: 'tag',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
             description: {
               message: 'Please avoid `{{tagName}}`; use `{{replacement}}` instead',
-              replacement: 'someDesc'
-            }
-          }
-        }
-      }
+              replacement: 'someDesc',
+            },
+          },
+        },
+      },
     },
     {
       code: `
@@ -254,21 +254,21 @@ export default {
       `,
       errors: [
         {
-          message: 'Unexpected tag `@description`'
-        }
+          message: 'Unexpected tag `@description`',
+        },
       ],
       options: [
         {
-          descriptionStyle: 'tag'
-        }
+          descriptionStyle: 'tag',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            description: false
-          }
-        }
-      }
+            description: false,
+          },
+        },
+      },
     },
     {
       code: `
@@ -281,22 +281,22 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc block description or @description declaration.'
-        }
+          message: 'Missing JSDoc block description or @description declaration.',
+        },
       ],
       options: [
         {
-          descriptionStyle: 'any'
-        }
+          descriptionStyle: 'any',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            description: false
-          }
-        }
-      }
-    }
+            description: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -311,9 +311,9 @@ export default {
       `,
       options: [
         {
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -327,9 +327,9 @@ export default {
       `,
       options: [
         {
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -346,9 +346,9 @@ export default {
       `,
       options: [
         {
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -361,9 +361,9 @@ export default {
       `,
       options: [
         {
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -376,9 +376,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['ClassDeclaration']
-        }
-      ]
+          contexts: ['ClassDeclaration'],
+        },
+      ],
     },
     {
       code: `
@@ -391,9 +391,9 @@ export default {
       `,
       options: [
         {
-          exemptedBy: ['type']
-        }
-      ]
+          exemptedBy: ['type'],
+        },
+      ],
     },
     {
       code: `
@@ -406,10 +406,10 @@ export default {
       `,
       options: [
         {
-          descriptionStyle: 'tag'
-        }
+          descriptionStyle: 'tag',
+        },
       ],
-      parser: require.resolve('@typescript-eslint/parser')
+      parser: require.resolve('@typescript-eslint/parser'),
     },
     {
       code: `
@@ -422,9 +422,9 @@ export default {
       `,
       options: [
         {
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -437,9 +437,9 @@ export default {
       `,
       options: [
         {
-          descriptionStyle: 'tag'
-        }
-      ]
+          descriptionStyle: 'tag',
+        },
+      ],
     },
     {
       code: `
@@ -452,9 +452,9 @@ export default {
       `,
       options: [
         {
-          descriptionStyle: 'body'
-        }
-      ]
+          descriptionStyle: 'body',
+        },
+      ],
     },
     {
       code: `
@@ -464,7 +464,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -477,9 +477,9 @@ export default {
       `,
       options: [
         {
-          descriptionStyle: 'any'
-        }
-      ]
+          descriptionStyle: 'any',
+        },
+      ],
     },
     {
       code: `
@@ -492,9 +492,9 @@ export default {
       `,
       options: [
         {
-          descriptionStyle: 'any'
-        }
-      ]
+          descriptionStyle: 'any',
+        },
+      ],
     },
     {
       code: `
@@ -508,10 +508,10 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            description: false
-          }
-        }
-      }
-    }
-  ]
+            description: false,
+          },
+        },
+      },
+    },
+  ],
 };

@@ -61,5 +61,5 @@ export default [
   'type',
   'typedef',
   'variation',
-  'version'
+  'version',
 ];

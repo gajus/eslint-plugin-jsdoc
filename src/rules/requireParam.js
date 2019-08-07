@@ -3,7 +3,7 @@ import iterateJsdoc from '../iterateJsdoc';
 // eslint-disable-next-line complexity
 export default iterateJsdoc(({
   report,
-  utils
+  utils,
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
   const jsdocParameterNames = utils.getJsdocParameterNames();
@@ -36,14 +36,14 @@ export default iterateJsdoc(({
         properties: {
           exemptedBy: {
             items: {
-              type: 'string'
+              type: 'string',
             },
-            type: 'array'
-          }
+            type: 'array',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

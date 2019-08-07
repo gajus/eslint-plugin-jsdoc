@@ -12,9 +12,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'There must be an identifier after @param type.'
-        }
-      ]
+          message: 'There must be an identifier after @param type.',
+        },
+      ],
     },
     {
       code: `
@@ -28,9 +28,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'There must be an identifier after @param tag.'
-        }
-      ]
+          message: 'There must be an identifier after @param tag.',
+        },
+      ],
     },
     {
       code: `
@@ -43,17 +43,17 @@ export default {
       `,
       errors: [
         {
-          message: 'Unexpected tag `@param`'
-        }
+          message: 'Unexpected tag `@param`',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: false
-          }
-        }
-      }
-    }
+            param: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -64,7 +64,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -74,7 +74,7 @@ export default {
           function quux (foo) {
 
           }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };

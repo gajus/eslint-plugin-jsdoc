@@ -12,9 +12,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@implements used on a non-constructor function'
-        }
-      ]
+          message: '@implements used on a non-constructor function',
+        },
+      ],
     },
     {
       code: `
@@ -28,17 +28,17 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Unexpected tag `@implements`'
-        }
+          message: 'Unexpected tag `@implements`',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            implements: false
-          }
-        }
-      }
-    }
+            implements: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -50,7 +50,7 @@ export default {
       function quux () {
 
       }
-      `
+      `,
     },
     {
       code: `
@@ -61,7 +61,7 @@ export default {
       function quux () {
 
       }
-      `
+      `,
     },
     {
       code: `
@@ -76,7 +76,7 @@ export default {
 
         }
       }
-      `
+      `,
     },
     {
       code: `
@@ -91,7 +91,7 @@ export default {
 
         }
       }
-      `
+      `,
     },
     {
       code: `
@@ -101,7 +101,7 @@ export default {
       function quux () {
 
       }
-      `
+      `,
     },
     {
       code: `
@@ -115,10 +115,10 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            implements: false
-          }
-        }
-      }
-    }
-  ]
+            implements: false,
+          },
+        },
+      },
+    },
+  ],
 };

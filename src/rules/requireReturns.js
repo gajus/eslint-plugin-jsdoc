@@ -31,7 +31,7 @@ const canSkip = (utils) => {
     'type',
 
     // This seems to imply a class as well
-    'interface'
+    'interface',
   ]) ||
     utils.isConstructor() ||
 
@@ -44,7 +44,7 @@ const canSkip = (utils) => {
 export default iterateJsdoc(({
   report,
   utils,
-  context
+  context,
 }) => {
   warnRemovedSettings(context, 'require-returns');
 
@@ -56,7 +56,7 @@ export default iterateJsdoc(({
 
   const {
     forceRequireReturn = false,
-    forceReturnsWithAsync = false
+    forceReturnsWithAsync = false,
   } = context.options[0] || {};
 
   const tagName = utils.getPreferredTagName({tagName: 'returns'});
@@ -100,22 +100,22 @@ export default iterateJsdoc(({
         properties: {
           exemptedBy: {
             items: {
-              type: 'string'
+              type: 'string',
             },
-            type: 'array'
+            type: 'array',
           },
           forceRequireReturn: {
             default: false,
-            type: 'boolean'
+            type: 'boolean',
           },
           forceReturnsWithAsync: {
             default: false,
-            type: 'boolean'
-          }
+            type: 'boolean',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

@@ -8,13 +8,13 @@ export default iterateJsdoc(({
   jsdoc,
   report,
   utils,
-  context
+  context,
 }) => {
   warnRemovedSettings(context, 'valid-types');
 
   const {
     allowEmptyNamepaths = true,
-    checkSeesForNamepaths = false
+    checkSeesForNamepaths = false,
   } = context.options[0] || {};
 
   if (!jsdoc.tags) {
@@ -93,16 +93,16 @@ export default iterateJsdoc(({
         properties: {
           allowEmptyNamepaths: {
             default: true,
-            type: 'boolean'
+            type: 'boolean',
           },
           checkSeesForNamepaths: {
             default: false,
-            type: 'boolean'
-          }
+            type: 'boolean',
+          },
         },
-        type: 'object'
-      }
+        type: 'object',
+      },
     ],
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

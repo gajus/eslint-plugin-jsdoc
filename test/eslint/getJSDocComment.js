@@ -1,5 +1,5 @@
 import {
-  RuleTester
+  RuleTester,
 } from 'eslint';
 import getJSDocComment from '../../src/eslint/getJSDocComment';
 import {getSettings} from '../../src/iterateJsdoc';
@@ -8,9 +8,9 @@ import {getSettings} from '../../src/iterateJsdoc';
 const rule = {
   meta: {
     messages: {
-      missingJsDoc: 'Missing JSDoc comment.'
+      missingJsDoc: 'Missing JSDoc comment.',
     },
-    type: 'layout'
+    type: 'layout',
   },
   create (context) {
     const sourceCode = context.getSourceCode();
@@ -24,11 +24,11 @@ const rule = {
         }
         context.report({
           messageId: 'missingJsDoc',
-          node
+          node,
         });
-      }
+      },
     };
-  }
+  },
 };
 
 const ruleTester = new RuleTester();
@@ -36,12 +36,12 @@ const ruleTester = new RuleTester();
 ruleTester.run('getJSDocComment', rule, {
   invalid: [{
     code: 'var a = {};',
-    errors: [{messageId: 'missingJsDoc'}]
+    errors: [{messageId: 'missingJsDoc'}],
   }],
   valid: [{
     code: `
     /** Doc */
     var a = {};
-    `
-  }]
+    `,
+  }],
 });

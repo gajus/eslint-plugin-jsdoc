@@ -6,7 +6,7 @@ export default iterateJsdoc(({
   utils,
   report,
   context,
-  jsdocNode
+  jsdocNode,
 }) => {
   let always;
   if (_.has(context.options, 0)) {
@@ -57,9 +57,9 @@ export default iterateJsdoc(({
     schema: [
       {
         enum: ['always', 'never'],
-        type: 'string'
-      }
+        type: 'string',
+      },
     ],
-    type: 'layout'
-  }
+    type: 'layout',
+  },
 });

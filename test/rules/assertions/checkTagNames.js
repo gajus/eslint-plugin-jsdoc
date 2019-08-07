@@ -12,9 +12,9 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Invalid JSDoc tag name "typoo".'
-        }
-      ]
+          message: 'Invalid JSDoc tag name "typoo".',
+        },
+      ],
     },
     {
       code: `
@@ -28,9 +28,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc tag name "Param".'
-        }
-      ]
+          message: 'Invalid JSDoc tag name "Param".',
+        },
+      ],
     },
     {
       code: `
@@ -44,9 +44,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc tag name "foo".'
-        }
-      ]
+          message: 'Invalid JSDoc tag name "foo".',
+        },
+      ],
     },
     {
       code: `
@@ -60,9 +60,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "param".'
-        }
-      ]
+          message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "param".',
+        },
+      ],
     },
     {
       code: `
@@ -76,16 +76,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".'
-        }
+          message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: 'arg'
-          }
-        }
-      }
+            param: 'arg',
+          },
+        },
+      },
     },
     {
       code: `
@@ -99,16 +99,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "somethingDifferent".'
-        }
+          message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "somethingDifferent".',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            arg: 'somethingDifferent'
-          }
-        }
-      }
+            arg: 'somethingDifferent',
+          },
+        },
+      },
     },
     {
       code: `
@@ -122,16 +122,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "parameter".'
-        }
+          message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "parameter".',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: 'parameter'
-          }
-        }
-      }
+            param: 'parameter',
+          },
+        },
+      },
     },
     {
       code: `
@@ -145,9 +145,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc tag name "bar".'
-        }
-      ]
+          message: 'Invalid JSDoc tag name "bar".',
+        },
+      ],
     },
     {
       code: `
@@ -161,12 +161,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc tag name "baz".'
-        }
+          message: 'Invalid JSDoc tag name "baz".',
+        },
       ],
       options: [{
-        definedTags: ['bar']
-      }]
+        definedTags: ['bar'],
+      }],
     },
     {
       code: `
@@ -181,12 +181,12 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'Invalid JSDoc tag name "baz".'
-        }
+          message: 'Invalid JSDoc tag name "baz".',
+        },
       ],
       options: [{
-        definedTags: ['bar']
-      }]
+        definedTags: ['bar'],
+      }],
     },
     {
       code: `
@@ -199,16 +199,16 @@ export default {
       `,
       errors: [
         {
-          message: 'Blacklisted tag found (`@todo`)'
-        }
+          message: 'Blacklisted tag found (`@todo`)',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            todo: false
-          }
-        }
-      }
+            todo: false,
+          },
+        },
+      },
     },
     {
       code: `
@@ -221,43 +221,18 @@ export default {
       `,
       errors: [
         {
-          message: 'Please resolve to-dos or add to the tracker'
-        }
-      ],
-      settings: {
-        jsdoc: {
-          tagNamePreference: {
-            todo: {
-              message: 'Please resolve to-dos or add to the tracker'
-            }
-          }
-        }
-      }
-    },
-    {
-      code: `
-          /**
-           * @todo
-           */
-          function quux () {
-
-          }
-      `,
-      errors: [
-        {
-          message: 'Please use x-todo instead of todo'
-        }
+          message: 'Please resolve to-dos or add to the tracker',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
             todo: {
-              message: 'Please use x-todo instead of todo',
-              replacement: 'x-todo'
-            }
-          }
-        }
-      }
+              message: 'Please resolve to-dos or add to the tracker',
+            },
+          },
+        },
+      },
     },
     {
       code: `
@@ -270,19 +245,44 @@ export default {
       `,
       errors: [
         {
-          message: 'Please use x-todo instead of todo'
-        }
+          message: 'Please use x-todo instead of todo',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
             todo: {
               message: 'Please use x-todo instead of todo',
-              replacement: 'x-todo'
-            }
+              replacement: 'x-todo',
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
           }
-        }
-      }
+      `,
+      errors: [
+        {
+          message: 'Please use x-todo instead of todo',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: {
+              message: 'Please use x-todo instead of todo',
+              replacement: 'x-todo',
+            },
+          },
+        },
+      },
     },
     {
       code: `
@@ -296,19 +296,19 @@ export default {
       errors: [
         {
           line: 1,
-          message: 'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.'
+          message: 'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.',
         },
         {
-          message: 'Invalid JSDoc tag (preference). Replace "todo" JSDoc tag with "55".'
-        }
+          message: 'Invalid JSDoc tag (preference). Replace "todo" JSDoc tag with "55".',
+        },
       ],
       settings: {
         jsdoc: {
           tagNamePreference: {
-            todo: 55
-          }
-        }
-      }
+            todo: 55,
+          },
+        },
+      },
     },
     {
       code: `
@@ -323,8 +323,8 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".'
-        }
+          message: 'Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".',
+        },
       ],
       output: `
           /**
@@ -334,7 +334,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -349,13 +349,13 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".'
-        }
+          message: 'Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".',
+        },
       ],
       options: [
         {
-          definedTags: ['abcd']
-        }
+          definedTags: ['abcd'],
+        },
       ],
       output: `
           /**
@@ -369,10 +369,10 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            abc: 'abcd'
-          }
-        }
-      }
+            abc: 'abcd',
+          },
+        },
+      },
     },
     {
       code: `
@@ -387,8 +387,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".'
-        }
+          message: 'Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".',
+        },
       ],
       output: `
           /**
@@ -402,11 +402,11 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            abc: 'abcd'
-          }
-        }
-      }
-    }
+            abc: 'abcd',
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -417,7 +417,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -427,7 +427,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -441,10 +441,10 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: 'arg'
-          }
-        }
-      }
+            param: 'arg',
+          },
+        },
+      },
     },
     {
       code: `
@@ -456,8 +456,8 @@ export default {
           }
       `,
       options: [{
-        definedTags: ['bar']
-      }]
+        definedTags: ['bar'],
+      }],
     },
     {
       code: `
@@ -469,8 +469,8 @@ export default {
           }
       `,
       options: [{
-        definedTags: ['baz', 'bar']
-      }]
+        definedTags: ['baz', 'bar'],
+      }],
     },
     {
       code: `
@@ -487,15 +487,15 @@ export default {
             param: 'baz',
             returns: {
               message: 'Prefer `bar`',
-              replacement: 'bar'
+              replacement: 'bar',
             },
-            todo: false
-          }
-        }
-      }
+            todo: false,
+          },
+        },
+      },
     },
     {
-      code: `${ALL_JSDOC_TAGS_COMMENT}\nfunction quux (foo) {}`
+      code: `${ALL_JSDOC_TAGS_COMMENT}\nfunction quux (foo) {}`,
     },
     {
       code: `
@@ -505,7 +505,7 @@ export default {
           function quux (foo) {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -515,7 +515,7 @@ export default {
           function quux () {
 
           }
-      `
-    }
-  ]
+      `,
+    },
+  ],
 };

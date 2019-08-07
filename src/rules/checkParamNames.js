@@ -105,7 +105,7 @@ export default iterateJsdoc(({
   jsdoc,
   jsdocNode,
   report,
-  utils
+  utils,
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
   const jsdocParameterNamesDeep = utils.getJsdocParameterNamesDeep();
@@ -123,6 +123,6 @@ export default iterateJsdoc(({
 }, {
   meta: {
     fixable: 'code',
-    type: 'suggestion'
-  }
+    type: 'suggestion',
+  },
 });

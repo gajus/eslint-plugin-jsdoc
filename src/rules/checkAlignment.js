@@ -5,7 +5,7 @@ export default iterateJsdoc(({
   sourceCode,
   jsdocNode,
   report,
-  indent
+  indent,
 }) => {
   // `indent` is whitespace from line 1 (`/**`), so slice and account for "/".
   const indentLevel = indent.length + 1;
@@ -34,7 +34,7 @@ export default iterateJsdoc(({
   sourceLines.some((line, lineNum) => {
     if (line.length !== indentLevel) {
       report('Expected JSDoc block to be aligned.', fix, {
-        line: lineNum + 1
+        line: lineNum + 1,
       });
 
       return true;
@@ -46,6 +46,6 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     fixable: 'code',
-    type: 'layout'
-  }
+    type: 'layout',
+  },
 });

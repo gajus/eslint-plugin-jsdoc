@@ -15,11 +15,11 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'There must be a newline after the description of the JSDoc block.'
-        }
+          message: 'There must be a newline after the description of the JSDoc block.',
+        },
       ],
       options: [
-        'always'
+        'always',
       ],
       output: `
           /**
@@ -32,7 +32,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -49,8 +49,8 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'There must be a newline after the description of the JSDoc block.'
-        }
+          message: 'There must be a newline after the description of the JSDoc block.',
+        },
       ],
       output: `
           /**
@@ -63,7 +63,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -81,11 +81,11 @@ export default {
       errors: [
         {
           line: 6,
-          message: 'There must be no newline after the description of the JSDoc block.'
-        }
+          message: 'There must be no newline after the description of the JSDoc block.',
+        },
       ],
       options: [
-        'never'
+        'never',
       ],
       output: `
           /**
@@ -97,7 +97,7 @@ export default {
           function quux () {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -110,11 +110,11 @@ export default {
       `,
       errors: [
         {
-          message: 'There must be no newline after the description of the JSDoc block.'
-        }
+          message: 'There must be no newline after the description of the JSDoc block.',
+        },
       ],
       options: [
-        'never'
+        'never',
       ],
       output: `
         /**
@@ -122,7 +122,7 @@ export default {
          * @typedef {Object} A
          * @prop {boolean} a A.
          */
-      `
+      `,
     },
     {
       code: `
@@ -134,11 +134,11 @@ export default {
       `,
       errors: [
         {
-          message: 'There must be a newline after the description of the JSDoc block.'
-        }
+          message: 'There must be a newline after the description of the JSDoc block.',
+        },
       ],
       options: [
-        'always'
+        'always',
       ],
       output: `
         /**
@@ -147,8 +147,8 @@ export default {
          * @typedef {Object} A
          * @prop {boolean} a A.
          */
-      `
-    }
+      `,
+    },
   ],
   valid: [
     {
@@ -161,8 +161,8 @@ export default {
           }
       `,
       options: [
-        'always'
-      ]
+        'always',
+      ],
     },
     {
       code: `
@@ -174,8 +174,8 @@ export default {
           }
       `,
       options: [
-        'never'
-      ]
+        'never',
+      ],
     },
     {
       code: `
@@ -189,8 +189,8 @@ export default {
           }
       `,
       options: [
-        'always'
-      ]
+        'always',
+      ],
     },
     {
       code: `
@@ -203,8 +203,8 @@ export default {
           }
       `,
       options: [
-        'never'
-      ]
-    }
-  ]
+        'never',
+      ],
+    },
+  ],
 };

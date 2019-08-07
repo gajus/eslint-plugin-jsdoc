@@ -4,7 +4,7 @@ const debug = debugModule('requireExportJsdoc');
 
 const createNode = function () {
   return {
-    props: {}
+    props: {},
   };
 };
 
@@ -392,7 +392,7 @@ const parse = function (ast, node, opt) {
     ancestorsOnly: false,
     esm: true,
     initModuleExports: true,
-    initWindow: true
+    initWindow: true,
   };
 
   const globalVars = createNode();
@@ -414,7 +414,7 @@ const parse = function (ast, node, opt) {
   }
 
   return {
-    globalVars
+    globalVars,
   };
 };
 
@@ -424,5 +424,5 @@ const isExported = function (node, parseResult, opt) {
 
 export default {
   isExported,
-  parse
+  parse,
 };
