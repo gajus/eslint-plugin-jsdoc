@@ -7345,7 +7345,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: module:namespace.SomeClass<~
+// Message: Syntax error in namepath: module:namespace.SomeClass<~
 
 /**
  * @memberof module:namespace.SomeClass~<
@@ -7353,7 +7353,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: module:namespace.SomeClass~<
+// Message: Syntax error in namepath: module:namespace.SomeClass~<
 
 /**
  * @borrows foo% as bar
@@ -7361,7 +7361,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: foo%
+// Message: Syntax error in namepath: foo%
 
 /**
  * @borrows #foo as bar
@@ -7369,7 +7369,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: #foo
+// Message: Syntax error in namepath: #foo
 
 /**
  * @borrows foo as bar%
@@ -7377,7 +7377,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: bar%
+// Message: Syntax error in namepath: bar%
 
 /**
  * @borrows foo
@@ -7394,7 +7394,7 @@ function quux() {
 
 }
 // Options: [{"checkSeesForNamepaths":true}]
-// Message: Syntax error in type: foo%
+// Message: Syntax error in namepath: foo%
 
 /** */
 function foo() {}
@@ -7407,7 +7407,7 @@ function foo() {}
 function quux() {
 
 }
-// Message: Syntax error in type: module:abc#event:foo-bar
+// Message: Syntax error in namepath: module:abc#event:foo-bar
 
 /**
  * @mixes module:namespace.SomeClass~
@@ -7415,7 +7415,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: module:namespace.SomeClass~
+// Message: Syntax error in namepath: module:namespace.SomeClass~
 
 /**
  * @callback
@@ -7440,7 +7440,7 @@ function quux() {
 /**
  * @typedef {string} UserStr%ng
  */
-// Message: Syntax error in type: UserStr%ng
+// Message: Syntax error in namepath: UserStr%ng
 
 /**
  * @extends

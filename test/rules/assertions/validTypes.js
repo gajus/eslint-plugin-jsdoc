@@ -28,7 +28,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: module:namespace.SomeClass<~',
+          message: 'Syntax error in namepath: module:namespace.SomeClass<~',
         },
       ],
     },
@@ -44,7 +44,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: module:namespace.SomeClass~<',
+          message: 'Syntax error in namepath: module:namespace.SomeClass~<',
         },
       ],
     },
@@ -59,7 +59,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: foo%',
+        message: 'Syntax error in namepath: foo%',
       }],
     },
     {
@@ -73,7 +73,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: #foo',
+        message: 'Syntax error in namepath: #foo',
       }],
     },
     {
@@ -87,7 +87,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: bar%',
+        message: 'Syntax error in namepath: bar%',
       }],
     },
     {
@@ -115,7 +115,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: foo%',
+        message: 'Syntax error in namepath: foo%',
       }],
       options: [{
         checkSeesForNamepaths: true,
@@ -152,7 +152,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: module:abc#event:foo-bar',
+        message: 'Syntax error in namepath: module:abc#event:foo-bar',
       }],
     },
     {
@@ -166,7 +166,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: module:namespace.SomeClass~',
+        message: 'Syntax error in namepath: module:namespace.SomeClass~',
       }],
     },
     {
@@ -222,7 +222,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: UserStr%ng',
+          message: 'Syntax error in namepath: UserStr%ng',
         },
       ],
     },

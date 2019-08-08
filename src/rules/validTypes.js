@@ -21,29 +21,29 @@ export default iterateJsdoc(({
     return;
   }
   jsdoc.tags.forEach((tag) => {
-    const validTypeParsing = function (type, tagName) {
+    const validNamepathParsing = function (namepath, tagName) {
       try {
-        parse(type);
-      } catch (err) {
-        let error = err;
+        parse(namepath);
+      } catch (error) {
+        let handled = false;
 
         if (tagName) {
           if (['memberof', 'memberof!'].includes(tagName)) {
-            const endChar = type.slice(-1);
+            const endChar = namepath.slice(-1);
             if (['#', '.', '~'].includes(endChar)) {
               try {
-                parse(type.slice(0, -1));
-                error = {};
+                parse(namepath.slice(0, -1));
+                handled = true;
               } catch (memberofError) {
                 // Use the original error for including the whole type
               }
             }
           } else if (tagName === 'borrows') {
-            const startChar = type.charAt();
+            const startChar = namepath.charAt();
             if (['#', '.', '~'].includes(startChar)) {
               try {
-                parse(type.slice(1));
-                error = {};
+                parse(namepath.slice(1));
+                handled = true;
               } catch (memberofError) {
                 // Use the original error for including the whole type
               }
@@ -51,11 +51,23 @@ export default iterateJsdoc(({
           }
         }
 
-        if (error.name === 'SyntaxError') {
-          report(`Syntax error in type: ${type}`, null, tag);
+        if (!handled) {
+          report(`Syntax error in namepath: ${namepath}`, null, tag);
 
           return false;
         }
+      }
+
+      return true;
+    };
+
+    const validTypeParsing = function (type) {
+      try {
+        parse(type);
+      } catch (error) {
+        report(`Syntax error in type: ${type}`, null, tag);
+
+        return false;
       }
 
       return true;
@@ -79,10 +91,10 @@ export default iterateJsdoc(({
         return;
       }
 
-      if (validTypeParsing(thisNamepath, 'borrows')) {
+      if (validNamepathParsing(thisNamepath, 'borrows')) {
         const thatNamepath = tag.name;
 
-        validTypeParsing(thatNamepath);
+        validNamepathParsing(thatNamepath);
       }
     } else {
       if (mustHaveEither && !hasEither) {
@@ -98,7 +110,7 @@ export default iterateJsdoc(({
       }
 
       if (hasNamePath) {
-        validTypeParsing(tag.name, tag.tag);
+        validNamepathParsing(tag.name, tag.tag);
       } else if (mustHaveNamepath) {
         report(`Tag @${tag.tag} must have a namepath`, null, tag);
       }
