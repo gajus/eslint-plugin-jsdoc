@@ -339,6 +339,19 @@ export default {
     {
       code: `
           /**
+           * @callback foo
+           */
+          function quux() {
+
+          }
+      `,
+      options: [{
+        allowEmptyNamepaths: true,
+      }],
+    },
+    {
+      code: `
+          /**
            * @class
            */
           function quux() {
@@ -401,6 +414,14 @@ export default {
       code: `
           /**
            * @constant {string}
+           */
+           const FOO = 'foo';
+      `,
+    },
+    {
+      code: `
+          /**
+           * @constant {string} FOO
            */
            const FOO = 'foo';
       `,

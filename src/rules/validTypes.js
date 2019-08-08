@@ -61,13 +61,13 @@ export default iterateJsdoc(({
       return true;
     };
 
-    const hasType = Boolean(tag.type);
+    const hasType = utils.tagMightHaveType(tag.tag) && Boolean(tag.type);
     const mustHaveType = utils.tagMustHaveType(tag.tag);
 
-    const hasNamePath = Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
+    const hasNamePath = utils.tagMightHaveNamepath(tag.tag) && Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
     const mustHaveNamepath = utils.tagMustHaveNamepath(tag.tag) && !allowEmptyNamepaths;
 
-    const hasEither = hasType || hasNamePath;
+    const hasEither = utils.tagMightHaveEitherTypeOrNamepath(tag.tag) && hasType || hasNamePath;
     const mustHaveEither = utils.tagMustHaveEitherTypeOrNamepath(tag.tag);
 
     if (tag.tag === 'borrows') {

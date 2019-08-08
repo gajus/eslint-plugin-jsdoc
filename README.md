@@ -7515,6 +7515,14 @@ function quux() {
 }
 
 /**
+ * @callback foo
+ */
+function quux() {
+
+}
+// Options: [{"allowEmptyNamepaths":true}]
+
+/**
  * @class
  */
 function quux() {
@@ -7559,6 +7567,11 @@ function quux() {
 
 /**
  * @constant {string}
+ */
+ const FOO = 'foo';
+
+/**
+ * @constant {string} FOO
  */
  const FOO = 'foo';
 
