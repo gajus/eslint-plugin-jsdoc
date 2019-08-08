@@ -11,29 +11,31 @@ import getJSDocComment from './eslint/getJSDocComment';
  * @returns {object}
  */
 const parseComment = (commentNode, indent, trim = true) => {
+  const skipSeeLink = (parser) => {
+    return (str, data) => {
+      if (data.tag === 'see' && str.match(/{@link.+?}/)) {
+        return null;
+      }
+
+      return parser(str, data);
+    }
+  };
+
   // Preserve JSDoc block start/end indentation.
   return commentParser(`${indent}/*${commentNode.value}${indent}*/`, {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
     parsers: [
       commentParser.PARSERS.parse_tag,
-      (str, data) => {
-        if (data.tag === 'see') {
-          // @see can't contain types, only names or links which might be confused with types
-          return null;
-        }
+      skipSeeLink(commentParser.PARSERS.parse_type),
+      skipSeeLink(
+        (str, data) => {
+          if (['example', 'return', 'returns', 'throws', 'exception'].includes(data.tag)) {
+            return null;
+          }
 
-        return commentParser.PARSERS.parse_type(str, data);
-      },
-      (str, data) => {
-        if (['example', 'return', 'returns', 'throws', 'exception'].includes(data.tag)) {
-          return null;
-        }
-        if (data.tag === 'see' && str.match(/{@link.+?}/)) {
-          return null;
-        }
-
-        return commentParser.PARSERS.parse_name(str, data);
-      },
+          return commentParser.PARSERS.parse_name(str, data);
+        },
+      ),
       trim ?
         commentParser.PARSERS.parse_description :
 
