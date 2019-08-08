@@ -197,7 +197,7 @@ const potentiallyEmptyNamepathTags = [
   'see',
 
   // GCC syntax allows typedef to be named through variable declaration rather than jsdoc name
-  'typedef'
+  'typedef',
 ];
 
 const isPotentiallyEmptyNamepathTag = (tag) => {
@@ -249,7 +249,7 @@ const potentiallyEmptyTypeTags = [
   'return', 'returns',
   'throws', 'exception',
   'yields', 'yield',
-  'package', 'private', 'protected', 'public', 'static'
+  'package', 'private', 'protected', 'public', 'static',
 ];
 
 const isPotentiallyEmptyTypeTag = (tag) => {
@@ -263,7 +263,7 @@ const isTagWithType = (tagName) => {
 const tagsWithMandatoryNamepathOrType = [
   'augments', 'extends',
   'param', 'arg',
-  'typedef'
+  'typedef',
 ];
 const isTagWithMandatoryNamepathOrType = (tagName) => {
   return tagsWithMandatoryNamepathOrType.includes(tagName);

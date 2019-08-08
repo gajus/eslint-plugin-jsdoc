@@ -64,7 +64,7 @@ export default iterateJsdoc(({
     const hasType = Boolean(tag.type);
     const mustHaveType = utils.isTagWithType(tag.tag) && !utils.isPotentiallyEmptyTypeTag(tag.tag);
 
-    const hasNamePath = Boolean(tag.name);
+    const hasNamePath = Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
     const mustHaveNamepath = utils.isNamepathTag(tag.tag, checkSeesForNamepaths) &&
       !utils.passesEmptyNamepathCheck(tag, allowEmptyNamepaths);
 

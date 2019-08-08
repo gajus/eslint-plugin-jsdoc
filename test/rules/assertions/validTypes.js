@@ -183,7 +183,7 @@ export default {
         message: 'Tag @callback must have a namepath',
       }],
       options: [{
-        allowEmptyNamepaths: false
+        allowEmptyNamepaths: false,
       }],
     },
     {
@@ -196,9 +196,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: str%ng'
-        }
-      ]
+          message: 'Syntax error in type: str%ng',
+        },
+      ],
     },
     {
       code: `
@@ -209,9 +209,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: str%ng'
-        }
-      ]
+          message: 'Syntax error in type: str%ng',
+        },
+      ],
     },
     {
       code: `
@@ -222,9 +222,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: UserStr%ng'
-        }
-      ]
+          message: 'Syntax error in type: UserStr%ng',
+        },
+      ],
     },
     {
       code: `
@@ -236,9 +236,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Tag @extends must have either a type or namepath'
-        }
-      ]
+          message: 'Tag @extends must have either a type or namepath',
+        },
+      ],
     },
     {
       code: `
@@ -250,10 +250,10 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Tag @type must have a type'
-        }
-      ]
-    }
+          message: 'Tag @type must have a type',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -403,7 +403,7 @@ export default {
            * @constant {string}
            */
            const FOO = 'foo';
-      `
+      `,
     },
     {
       code: `
@@ -411,7 +411,7 @@ export default {
            * @extends Foo
            */
            class Bar {};
-      `
+      `,
     },
     {
       code: `
@@ -419,14 +419,14 @@ export default {
            * @extends {Foo<String>}
            */
            class Bar {};
-      `
+      `,
     },
     {
       code: `
           /**
            * @typedef {number|string} UserDefinedType
            */
-      `
+      `,
     },
     {
       code: `
@@ -434,7 +434,7 @@ export default {
            * @typedef {number|string}
            */
           let UserDefinedGCCType;
-      `
-    }
+      `,
+    },
   ],
 };
