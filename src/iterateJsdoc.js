@@ -18,7 +18,7 @@ const parseComment = (commentNode, indent, trim = true) => {
       }
 
       return parser(str, data);
-    }
+    };
   };
 
   // Preserve JSDoc block start/end indentation.
@@ -193,27 +193,32 @@ const getUtils = (
     return false;
   };
 
+  utils.tagMustHaveEitherTypeOrNamepath = (tagName) => {
+    return jsdocUtils.tagMustHaveEitherTypeOrNamepath(tagName);
+  };
+
+  utils.tagMightHaveEitherTypeOrNamepath = (tagName) => {
+    return jsdocUtils.tagMightHaveEitherTypeOrNamepath(tagName);
+  };
+
+  utils.tagMustHaveNamepath = (tagName) => {
+    return jsdocUtils.tagMustHaveNamepath(tagName);
+  };
+
+  utils.tagMightHaveNamepath = (tagName) => {
+    return jsdocUtils.tagMightHaveNamepath(tagName);
+  };
+
+  utils.tagMustHaveType = (tagName) => {
+    return jsdocUtils.tagMustHaveType(tagName);
+  };
+
+  utils.tagMightHaveType = (tagName) => {
+    return jsdocUtils.tagMightHaveType(tagName);
+  };
+
   utils.isNamepathDefiningTag = (tagName) => {
     return jsdocUtils.isNamepathDefiningTag(tagName);
-  };
-  utils.isNamepathTag = (tagName, checkSeesForNamepaths) => {
-    return jsdocUtils.isNamepathTag(tagName, checkSeesForNamepaths);
-  };
-
-  utils.isTagWithType = (tagName) => {
-    return jsdocUtils.isTagWithType(tagName);
-  };
-  utils.isPotentiallyEmptyTypeTag = (tagName) => {
-    return jsdocUtils.isPotentiallyEmptyTypeTag(tagName);
-  };
-
-  utils.passesEmptyNamepathCheck = (tag, allowEmptyNamepaths) => {
-    return !tag.name && allowEmptyNamepaths &&
-      jsdocUtils.isPotentiallyEmptyNamepathTag(tag.tag);
-  };
-
-  utils.isTagWithMandatoryNamepathOrType = (tagName) => {
-    return jsdocUtils.isTagWithMandatoryNamepathOrType(tagName);
   };
 
   utils.hasDefinedTypeReturnTag = (tag) => {

@@ -126,17 +126,45 @@ const hasDefinedTypeReturnTag = (tag) => {
   return true;
 };
 
+const tagsWithOptionalType = [
+  'augments', 'extends',
+  'class', 'constructor',
+  'constant', 'const',
+  'enum',
+  'implements',
+  'member', 'var',
+  'module',
+  'namespace',
+  'param', 'arg', 'argument',
+  'property', 'prop',
+  'returns', 'return',
+  'throws', 'exception',
+  'type',
+  'typedef',
+  'yields', 'yield',
+
+  // GCC specific
+  'package',
+  'private',
+  'protected',
+  'public',
+  'static',
+];
+
+const tagsWithMandatoryType = [
+  'enum',
+  'implements',
+  'member', 'var',
+  'module',
+  'type',
+  'typedef',
+];
+
 const namepathDefiningTags = [
-  // NOT USEFUL WITHOUT NAMEPATH
   'external', 'host',
   'name',
   'typedef',
-
-  // MAY BE USEFUL WITHOUT NAMEPATH
   'event',
-
-  // MAY BE USEFUL WITHOUT NAMEPATH (OR
-  //  BLOCK CAN USE NAMEPATH FROM ELSEWHERE)
   'class', 'constructor',
   'constant', 'const',
   'callback',
@@ -147,126 +175,68 @@ const namepathDefiningTags = [
   'namespace',
 ];
 
-const namepathPointingTags = [
-  // NOT USEFUL WITHOUT NAMEPATH
+const tagsWithOptionalNamepath = [
+  ...namepathDefiningTags,
   'alias',
   'augments', 'extends',
 
   // `borrows` has a different format, however, so needs special parsing
   'borrows',
+  'emits', 'fires',
   'lends',
-  'memberof',
-  'memberof!',
-  'mixes',
-  'this',
-
-  // MAY BE USEFUL WITHOUT NAMEPATH
-  'emits',
-  'fires',
   'listens',
+  'memberof', 'memberof!',
+  'mixes',
+  'see',
+  'this',
+];
+
+const tagsWithMandatoryNamepath = [
+  'callback',
+  'external', 'host',
+  'name',
+  'typedef',
+];
+
+const tagsWithMandatoryEitherTypeOrNamepath = [
+  'alias',
+  'augments', 'extends',
+  'borrows',
+  'external', 'host',
+  'lends',
+  'memberof', 'memberof!',
+  'mixes',
+  'name',
+  'this',
+  'typedef',
 ];
 
 const isNamepathDefiningTag = (tagName) => {
   return namepathDefiningTags.includes(tagName);
 };
 
-const isNamepathPointingTag = (tagName, checkSeesForNamepaths) => {
-  return namepathPointingTags.includes(tagName) ||
-    tagName === 'see' && checkSeesForNamepaths;
+const tagMightHaveType = (tag) => {
+  return tagsWithOptionalType.includes(tag);
 };
 
-const isNamepathTag = (tagName, checkSeesForNamepaths) => {
-  return isNamepathDefiningTag(tagName) ||
-    isNamepathPointingTag(tagName, checkSeesForNamepaths);
+const tagMustHaveType = (tag) => {
+  return tagsWithMandatoryType.includes(tag);
 };
 
-const potentiallyEmptyNamepathTags = [
-  // These may serve some minor purpose when empty or
-  //  their namepath can be expressed elsewhere on the block
-  'event',
-  'callback',
-  'class', 'constructor',
-  'extends', 'augments',
-  'constant', 'const',
-  'function', 'func', 'method',
-  'interface',
-  'member', 'var',
-  'mixin',
-  'namespace',
-  'listens', 'fires', 'emits',
-  'see',
-
-  // GCC syntax allows typedef to be named through variable declaration rather than jsdoc name
-  'typedef',
-];
-
-const isPotentiallyEmptyNamepathTag = (tag) => {
-  return potentiallyEmptyNamepathTags.includes(tag);
+const tagMightHaveNamepath = (tag) => {
+  return tagsWithOptionalNamepath.includes(tag);
 };
 
-let tagsWithTypes = [
-  'augments', 'extends',
-  'class',
-  'constant',
-  'enum',
-  'implements',
-  'member',
-  'module',
-  'namespace',
-  'param',
-  'property',
-  'returns',
-  'throws',
-  'type',
-  'typedef',
-  'yields',
-];
-
-const closureTagsWithTypes = [
-  'package', 'private', 'protected', 'public', 'static',
-];
-
-const tagsWithTypesAliases = [
-  'constructor',
-  'const',
-  'var',
-  'arg',
-  'argument',
-  'prop',
-  'return',
-  'exception',
-  'yield',
-];
-
-tagsWithTypes = tagsWithTypes.concat(tagsWithTypesAliases, closureTagsWithTypes);
-
-const potentiallyEmptyTypeTags = [
-  'class', 'constructor',
-  'constant', 'const',
-  'extends', 'augments',
-  'namespace',
-  'param', 'arg',
-  'return', 'returns',
-  'throws', 'exception',
-  'yields', 'yield',
-  'package', 'private', 'protected', 'public', 'static',
-];
-
-const isPotentiallyEmptyTypeTag = (tag) => {
-  return potentiallyEmptyTypeTags.includes(tag);
+const tagMustHaveNamepath = (tag) => {
+  return tagsWithMandatoryNamepath.includes(tag);
 };
 
-const isTagWithType = (tagName) => {
-  return tagsWithTypes.includes(tagName);
+const tagMightHaveEitherTypeOrNamepath = (tag) => {
+  return tagMightHaveType(tag) || tagMightHaveNamepath(tag);
 };
 
-const tagsWithMandatoryNamepathOrType = [
-  'augments', 'extends',
-  'param', 'arg',
-  'typedef',
-];
-const isTagWithMandatoryNamepathOrType = (tagName) => {
-  return tagsWithMandatoryNamepathOrType.includes(tagName);
+const tagMustHaveEitherTypeOrNamepath = (tag) => {
+  return tagsWithMandatoryEitherTypeOrNamepath.includes(tag);
 };
 
 /**
@@ -451,11 +421,12 @@ export default {
   hasReturnValue,
   hasTag,
   isNamepathDefiningTag,
-  isNamepathTag,
-  isPotentiallyEmptyNamepathTag,
-  isPotentiallyEmptyTypeTag,
-  isTagWithMandatoryNamepathOrType,
-  isTagWithType,
   isValidTag,
   parseClosureTemplateTag,
+  tagMightHaveEitherTypeOrNamepath,
+  tagMightHaveNamepath,
+  tagMightHaveType,
+  tagMustHaveEitherTypeOrNamepath,
+  tagMustHaveNamepath,
+  tagMustHaveType,
 };
