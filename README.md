@@ -7494,6 +7494,13 @@ function quux() {
 }
 
 /**
+ * @see foo%
+ */
+function quux() {
+
+}
+
+/**
  * @alias module:namespace.SomeClass#event:ext_anevent
  */
 function quux() {
