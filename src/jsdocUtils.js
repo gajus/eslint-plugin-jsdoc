@@ -61,7 +61,10 @@ const getJsdocParameterNames = (jsdoc : Object, targetTagName : string) : Array<
 };
 
 const getPreferredTagName = (name : string, tagPreference : Object = {}) : string => {
-  if (_.values(tagPreference).includes(name)) {
+  const prefValues = _.values(tagPreference);
+  if (prefValues.includes(name) || prefValues.some((prefVal) => {
+    return prefVal && typeof prefVal === 'object' && prefVal.replacement === name;
+  })) {
     return name;
   }
 

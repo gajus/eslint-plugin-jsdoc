@@ -1550,6 +1550,14 @@ function quux (foo) {
 function quux () {
 
 }
+
+/**
+ * @extends Foo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"augments":{"message":"@extends is to be used over @augments.","replacement":"extends"}}}}
 ````
 
 
