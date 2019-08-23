@@ -8,6 +8,7 @@
     "comment-parser": "^0.6.2",
     "debug": "^4.1.1",
     "jsdoctypeparser": "5.0.1",
+    "lint-staged": "^7.3.0",
     "lodash": "^4.17.15",
     "object.entries-ponyfill": "^1.0.1",
     "regextras": "^0.6.1"
