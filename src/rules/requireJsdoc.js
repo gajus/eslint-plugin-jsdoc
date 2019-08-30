@@ -182,7 +182,7 @@ export default {
         const parseResult = exportParser.parse(sourceCode.ast, node, opt);
         const exported = exportParser.isExported(node, parseResult, opt);
 
-        if (exported && !jsDocNode) {
+        if (exported) {
           context.report({
             fix,
             messageId: 'missingJsDoc',
