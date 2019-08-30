@@ -340,9 +340,7 @@ const findExportedNode = function (block, node, cache) {
     if (Object.prototype.hasOwnProperty.call(props, key)) {
       blockCache.push(props[key]);
       if (props[key].exported) {
-        // If not always true, we need a test
-        /* istanbul ignore next */
-        if (findNode(node, block)) {
+        if (node === props[key].value || findNode(node, props[key].value)) {
           return true;
         }
       }

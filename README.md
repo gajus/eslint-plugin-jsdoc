@@ -5638,6 +5638,15 @@ const myObject = {
   myProp: true
 };
 // Options: [{"contexts":[]}]
+
+function bear() {}
+/**
+ *
+ */
+function quux () {
+}
+export default quux;
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 ````
 
 

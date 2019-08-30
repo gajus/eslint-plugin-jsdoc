@@ -2163,5 +2163,24 @@ export default {
         contexts: [],
       },
     ],
+  }, {
+    code: `
+      function bear() {}
+      /**
+       *
+       */
+      function quux () {
+      }
+      export default quux;
+    `,
+    options: [{
+      publicOnly: true,
+      require: {
+        FunctionExpression: true,
+      },
+    }],
+    parserOptions: {
+      sourceType: 'module',
+    },
   }],
 };
