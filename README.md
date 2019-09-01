@@ -7362,7 +7362,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: module:namespace.SomeClass<~
+// Message: Syntax error in namepath: module:namespace.SomeClass<~
 
 /**
  * @memberof module:namespace.SomeClass~<
@@ -7370,7 +7370,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: module:namespace.SomeClass~<
+// Message: Syntax error in namepath: module:namespace.SomeClass~<
 
 /**
  * @borrows foo% as bar
@@ -7378,7 +7378,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: foo%
+// Message: Syntax error in namepath: foo%
 
 /**
  * @borrows #foo as bar
@@ -7386,7 +7386,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: #foo
+// Message: Syntax error in namepath: #foo
 
 /**
  * @borrows foo as bar%
@@ -7394,7 +7394,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: bar%
+// Message: Syntax error in namepath: bar%
 
 /**
  * @borrows foo
@@ -7411,7 +7411,7 @@ function quux() {
 
 }
 // Options: [{"checkSeesForNamepaths":true}]
-// Message: Syntax error in type: foo%
+// Message: Syntax error in namepath: foo%
 
 /** */
 function foo() {}
@@ -7424,7 +7424,7 @@ function foo() {}
 function quux() {
 
 }
-// Message: Syntax error in type: module:abc#event:foo-bar
+// Message: Syntax error in namepath: module:abc#event:foo-bar
 
 /**
  * @mixes module:namespace.SomeClass~
@@ -7432,7 +7432,7 @@ function quux() {
 function quux() {
 
 }
-// Message: Syntax error in type: module:namespace.SomeClass~
+// Message: Syntax error in namepath: module:namespace.SomeClass~
 
 /**
  * @callback
@@ -7441,7 +7441,35 @@ function quux() {
 
 }
 // Options: [{"allowEmptyNamepaths":false}]
-// Message: Syntax error in type: 
+// Message: Tag @callback must have a namepath
+
+/**
+ * @constant {str%ng}
+ */
+ const FOO = 'foo';
+// Message: Syntax error in type: str%ng
+
+/**
+ * @typedef {str%ng} UserString
+ */
+// Message: Syntax error in type: str%ng
+
+/**
+ * @typedef {string} UserStr%ng
+ */
+// Message: Syntax error in namepath: UserStr%ng
+
+/**
+ * @extends
+ */
+ class Bar {};
+// Message: Tag @extends must have either a type or namepath
+
+/**
+ * @type
+ */
+ let foo;
+// Message: Tag @type must have a type
 ````
 
 The following patterns are not considered problems:
@@ -7497,11 +7525,19 @@ function quux() {
 }
 
 /**
+ * @callback foo
+ */
+function quux() {
+
+}
+
+/**
  * @callback
  */
 function quux() {
 
 }
+// Options: [{"allowEmptyNamepaths":true}]
 
 /**
  * @class
@@ -7516,6 +7552,7 @@ function quux() {
 function quux() {
 
 }
+// Options: [{"checkSeesForNamepaths":true}]
 
 /**
  *
@@ -7545,6 +7582,35 @@ function quux() {
 function quux() {
 
 }
+
+/**
+ * @constant {string}
+ */
+ const FOO = 'foo';
+
+/**
+ * @constant {string} FOO
+ */
+ const FOO = 'foo';
+
+/**
+ * @extends Foo
+ */
+ class Bar {};
+
+/**
+ * @extends {Foo<String>}
+ */
+ class Bar {};
+
+/**
+ * @typedef {number|string} UserDefinedType
+ */
+
+/**
+ * @typedef {number|string}
+ */
+let UserDefinedGCCType;
 ````
 
 

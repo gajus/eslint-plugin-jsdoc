@@ -28,7 +28,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: module:namespace.SomeClass<~',
+          message: 'Syntax error in namepath: module:namespace.SomeClass<~',
         },
       ],
     },
@@ -44,7 +44,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in type: module:namespace.SomeClass~<',
+          message: 'Syntax error in namepath: module:namespace.SomeClass~<',
         },
       ],
     },
@@ -59,7 +59,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: foo%',
+        message: 'Syntax error in namepath: foo%',
       }],
     },
     {
@@ -73,7 +73,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: #foo',
+        message: 'Syntax error in namepath: #foo',
       }],
     },
     {
@@ -87,7 +87,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: bar%',
+        message: 'Syntax error in namepath: bar%',
       }],
     },
     {
@@ -115,7 +115,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: foo%',
+        message: 'Syntax error in namepath: foo%',
       }],
       options: [{
         checkSeesForNamepaths: true,
@@ -152,7 +152,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: module:abc#event:foo-bar',
+        message: 'Syntax error in namepath: module:abc#event:foo-bar',
       }],
     },
     {
@@ -166,7 +166,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: module:namespace.SomeClass~',
+        message: 'Syntax error in namepath: module:namespace.SomeClass~',
       }],
     },
     {
@@ -180,11 +180,79 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Syntax error in type: ',
+        message: 'Tag @callback must have a namepath',
       }],
       options: [{
         allowEmptyNamepaths: false,
       }],
+    },
+    {
+      code: `
+          /**
+           * @constant {str%ng}
+           */
+           const FOO = 'foo';
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: str%ng',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @typedef {str%ng} UserString
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: str%ng',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @typedef {string} UserStr%ng
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in namepath: UserStr%ng',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @extends
+           */
+           class Bar {};
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tag @extends must have either a type or namepath',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @type
+           */
+           let foo;
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tag @type must have a type',
+        },
+      ],
     },
   ],
   valid: [
@@ -261,12 +329,25 @@ export default {
     {
       code: `
           /**
+           * @callback foo
+           */
+          function quux() {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            * @callback
            */
           function quux() {
 
           }
       `,
+      options: [{
+        allowEmptyNamepaths: true,
+      }],
     },
     {
       code: `
@@ -287,6 +368,9 @@ export default {
 
           }
       `,
+      options: [{
+        checkSeesForNamepaths: true,
+      }],
     },
     {
       code: `
@@ -327,6 +411,53 @@ export default {
           function quux() {
 
           }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @constant {string}
+           */
+           const FOO = 'foo';
+      `,
+    },
+    {
+      code: `
+          /**
+           * @constant {string} FOO
+           */
+           const FOO = 'foo';
+      `,
+    },
+    {
+      code: `
+          /**
+           * @extends Foo
+           */
+           class Bar {};
+      `,
+    },
+    {
+      code: `
+          /**
+           * @extends {Foo<String>}
+           */
+           class Bar {};
+      `,
+    },
+    {
+      code: `
+          /**
+           * @typedef {number|string} UserDefinedType
+           */
+      `,
+    },
+    {
+      code: `
+          /**
+           * @typedef {number|string}
+           */
+          let UserDefinedGCCType;
       `,
     },
   ],

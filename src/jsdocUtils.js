@@ -129,17 +129,39 @@ const hasDefinedTypeReturnTag = (tag) => {
   return true;
 };
 
+const tagsWithMandatoryType = [
+  'enum',
+  'implements',
+  'member', 'var',
+  'module',
+  'type',
+  'typedef',
+];
+
+const tagsWithOptionalType = [
+  'augments', 'extends',
+  'class', 'constructor',
+  'constant', 'const',
+  'namespace',
+  'param', 'arg', 'argument',
+  'property', 'prop',
+  'returns', 'return',
+  'throws', 'exception',
+  'yields', 'yield',
+
+  // Todo: Omit these GCC specific items when in non-GCC mode after landing https://github.com/gajus/eslint-plugin-jsdoc/issues/356
+  'package',
+  'private',
+  'protected',
+  'public',
+  'static',
+];
+
 const namepathDefiningTags = [
-  // NOT USEFUL WITHOUT NAMEPATH
   'external', 'host',
   'name',
   'typedef',
-
-  // MAY BE USEFUL WITHOUT NAMEPATH
   'event',
-
-  // MAY BE USEFUL WITHOUT NAMEPATH (OR
-  //  BLOCK CAN USE NAMEPATH FROM ELSEWHERE)
   'class', 'constructor',
   'constant', 'const',
   'callback',
@@ -150,95 +172,68 @@ const namepathDefiningTags = [
   'namespace',
 ];
 
-const namepathPointingTags = [
-  // NOT USEFUL WITHOUT NAMEPATH
+const tagsWithOptionalNamepath = [
+  ...namepathDefiningTags,
   'alias',
   'augments', 'extends',
 
   // `borrows` has a different format, however, so needs special parsing
   'borrows',
+  'emits', 'fires',
   'lends',
-  'memberof',
-  'memberof!',
-  'mixes',
-  'this',
-
-  // MAY BE USEFUL WITHOUT NAMEPATH
-  'emits',
-  'fires',
   'listens',
+  'memberof', 'memberof!',
+  'mixes',
+  'see',
+  'this',
+];
+
+const tagsWithMandatoryNamepath = [
+  'callback',
+  'external', 'host',
+  'name',
+  'typedef',
+];
+
+const tagsWithMandatoryTypeOrNamepath = [
+  'alias',
+  'augments', 'extends',
+  'borrows',
+  'external', 'host',
+  'lends',
+  'memberof', 'memberof!',
+  'mixes',
+  'name',
+  'this',
+  'typedef',
 ];
 
 const isNamepathDefiningTag = (tagName) => {
   return namepathDefiningTags.includes(tagName);
 };
 
-const isNamepathPointingTag = (tagName, checkSeesForNamepaths) => {
-  return namepathPointingTags.includes(tagName) ||
-    tagName === 'see' && checkSeesForNamepaths;
+const tagMightHaveType = (tag) => {
+  return tagsWithMandatoryType.includes(tag) || tagsWithOptionalType.includes(tag);
 };
 
-const isNamepathTag = (tagName, checkSeesForNamepaths) => {
-  return isNamepathDefiningTag(tagName) ||
-    isNamepathPointingTag(tagName, checkSeesForNamepaths);
+const tagMustHaveType = (tag) => {
+  return tagsWithMandatoryType.includes(tag);
 };
 
-const potentiallyEmptyNamepathTags = [
-  // These may serve some minor purpose when empty or
-  //  their namepath can be expressed elsewhere on the block
-  'event',
-  'callback',
-  'class', 'constructor',
-  'constant', 'const',
-  'function', 'func', 'method',
-  'interface',
-  'member', 'var',
-  'mixin',
-  'namespace',
-  'listens', 'fires', 'emits',
-];
-
-const isPotentiallyEmptyNamepathTag = (tag) => {
-  return potentiallyEmptyNamepathTags.includes(tag);
+const tagMightHaveNamepath = (tag) => {
+  return tagsWithOptionalNamepath.includes(tag);
 };
 
-let tagsWithTypes = [
-  'class',
-  'constant',
-  'enum',
-  'implements',
-  'member',
-  'module',
-  'namespace',
-  'param',
-  'property',
-  'returns',
-  'throws',
-  'type',
-  'typedef',
-  'yields',
-];
+const tagMustHaveNamepath = (tag) => {
+  return tagsWithMandatoryNamepath.includes(tag);
+};
 
-const closureTagsWithTypes = [
-  'package', 'private', 'protected', 'public', 'static',
-];
+const tagMightHaveEitherTypeOrNamepath = (tag) => {
+  return tagMightHaveType(tag) || tagMightHaveNamepath(tag);
+};
 
-const tagsWithTypesAliases = [
-  'constructor',
-  'const',
-  'var',
-  'arg',
-  'argument',
-  'prop',
-  'return',
-  'exception',
-  'yield',
-];
-
-tagsWithTypes = tagsWithTypes.concat(tagsWithTypesAliases, closureTagsWithTypes);
-
-const isTagWithType = (tagName) => {
-  return tagsWithTypes.includes(tagName);
+const tagMustHaveEitherTypeOrNamepath = (tag) => {
+  return tagsWithMandatoryTypeOrNamepath.includes(tag);
 };
 
 /**
@@ -423,9 +418,12 @@ export default {
   hasReturnValue,
   hasTag,
   isNamepathDefiningTag,
-  isNamepathTag,
-  isPotentiallyEmptyNamepathTag,
-  isTagWithType,
   isValidTag,
   parseClosureTemplateTag,
+  tagMightHaveEitherTypeOrNamepath,
+  tagMightHaveNamepath,
+  tagMightHaveType,
+  tagMustHaveEitherTypeOrNamepath,
+  tagMustHaveNamepath,
+  tagMustHaveType,
 };

@@ -26,7 +26,7 @@ export default iterateJsdoc(({
   context,
 }) => {
   const jsdocTags = utils.filterTags((tag) => {
-    return utils.isTagWithType(tag.tag);
+    return utils.tagMightHaveType(tag.tag);
   });
 
   const {preferredTypes} = settings;

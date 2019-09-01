@@ -21,29 +21,29 @@ export default iterateJsdoc(({
     return;
   }
   jsdoc.tags.forEach((tag) => {
-    const validTypeParsing = function (type, tagName) {
+    const validNamepathParsing = function (namepath, tagName) {
       try {
-        parse(type);
-      } catch (err) {
-        let error = err;
+        parse(namepath);
+      } catch (error) {
+        let handled = false;
 
         if (tagName) {
           if (['memberof', 'memberof!'].includes(tagName)) {
-            const endChar = type.slice(-1);
+            const endChar = namepath.slice(-1);
             if (['#', '.', '~'].includes(endChar)) {
               try {
-                parse(type.slice(0, -1));
-                error = {};
+                parse(namepath.slice(0, -1));
+                handled = true;
               } catch (memberofError) {
                 // Use the original error for including the whole type
               }
             }
           } else if (tagName === 'borrows') {
-            const startChar = type.charAt();
+            const startChar = namepath.charAt();
             if (['#', '.', '~'].includes(startChar)) {
               try {
-                parse(type.slice(1));
-                error = {};
+                parse(namepath.slice(1));
+                handled = true;
               } catch (memberofError) {
                 // Use the original error for including the whole type
               }
@@ -51,8 +51,8 @@ export default iterateJsdoc(({
           }
         }
 
-        if (error.name === 'SyntaxError') {
-          report(`Syntax error in type: ${type}`, null, tag);
+        if (!handled) {
+          report(`Syntax error in namepath: ${namepath}`, null, tag);
 
           return false;
         }
@@ -60,6 +60,27 @@ export default iterateJsdoc(({
 
       return true;
     };
+
+    const validTypeParsing = function (type) {
+      try {
+        parse(type);
+      } catch (error) {
+        report(`Syntax error in type: ${type}`, null, tag);
+
+        return false;
+      }
+
+      return true;
+    };
+
+    const hasType = utils.tagMightHaveType(tag.tag) && Boolean(tag.type);
+    const mustHaveType = utils.tagMustHaveType(tag.tag);
+
+    const hasNamePath = utils.tagMightHaveNamepath(tag.tag) && Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
+    const mustHaveNamepath = utils.tagMustHaveNamepath(tag.tag) && !allowEmptyNamepaths;
+
+    const hasEither = utils.tagMightHaveEitherTypeOrNamepath(tag.tag) && hasType || hasNamePath;
+    const mustHaveEither = utils.tagMustHaveEitherTypeOrNamepath(tag.tag);
 
     if (tag.tag === 'borrows') {
       const thisNamepath = tag.description.replace(asExpression, '');
@@ -70,18 +91,29 @@ export default iterateJsdoc(({
         return;
       }
 
-      if (validTypeParsing(thisNamepath, 'borrows')) {
+      if (validNamepathParsing(thisNamepath, 'borrows')) {
         const thatNamepath = tag.name;
 
-        validTypeParsing(thatNamepath);
+        validNamepathParsing(thatNamepath);
       }
-    } else if (utils.isNamepathTag(tag.tag, checkSeesForNamepaths)) {
-      if (utils.passesEmptyNamepathCheck(tag, allowEmptyNamepaths)) {
+    } else {
+      if (mustHaveEither && !hasEither) {
+        report(`Tag @${tag.tag} must have either a type or namepath`, null, tag);
+
         return;
       }
-      validTypeParsing(tag.name, tag.tag);
-    } else if (tag.type && utils.isTagWithType(tag.tag)) {
-      validTypeParsing(tag.type);
+
+      if (hasType) {
+        validTypeParsing(tag.type);
+      } else if (mustHaveType) {
+        report(`Tag @${tag.tag} must have a type`, null, tag);
+      }
+
+      if (hasNamePath) {
+        validNamepathParsing(tag.name, tag.tag);
+      } else if (mustHaveNamepath) {
+        report(`Tag @${tag.tag} must have a namepath`, null, tag);
+      }
     }
   });
 }, {

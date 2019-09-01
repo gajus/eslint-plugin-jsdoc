@@ -11,19 +11,31 @@ import getJSDocComment from './eslint/getJSDocComment';
  * @returns {object}
  */
 const parseComment = (commentNode, indent, trim = true) => {
+  const skipSeeLink = (parser) => {
+    return (str, data) => {
+      if (data.tag === 'see' && str.match(/{@link.+?}/)) {
+        return null;
+      }
+
+      return parser(str, data);
+    };
+  };
+
   // Preserve JSDoc block start/end indentation.
   return commentParser(`${indent}/*${commentNode.value}${indent}*/`, {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
     parsers: [
       commentParser.PARSERS.parse_tag,
-      commentParser.PARSERS.parse_type,
-      (str, data) => {
-        if (['example', 'return', 'returns', 'throws', 'exception'].includes(data.tag)) {
-          return null;
-        }
+      skipSeeLink(commentParser.PARSERS.parse_type),
+      skipSeeLink(
+        (str, data) => {
+          if (['example', 'return', 'returns', 'throws', 'exception'].includes(data.tag)) {
+            return null;
+          }
 
-        return commentParser.PARSERS.parse_name(str, data);
-      },
+          return commentParser.PARSERS.parse_name(str, data);
+        },
+      ),
       trim ?
         commentParser.PARSERS.parse_description :
 
@@ -181,20 +193,32 @@ const getUtils = (
     return false;
   };
 
+  utils.tagMustHaveEitherTypeOrNamepath = (tagName) => {
+    return jsdocUtils.tagMustHaveEitherTypeOrNamepath(tagName);
+  };
+
+  utils.tagMightHaveEitherTypeOrNamepath = (tagName) => {
+    return jsdocUtils.tagMightHaveEitherTypeOrNamepath(tagName);
+  };
+
+  utils.tagMustHaveNamepath = (tagName) => {
+    return jsdocUtils.tagMustHaveNamepath(tagName);
+  };
+
+  utils.tagMightHaveNamepath = (tagName) => {
+    return jsdocUtils.tagMightHaveNamepath(tagName);
+  };
+
+  utils.tagMustHaveType = (tagName) => {
+    return jsdocUtils.tagMustHaveType(tagName);
+  };
+
+  utils.tagMightHaveType = (tagName) => {
+    return jsdocUtils.tagMightHaveType(tagName);
+  };
+
   utils.isNamepathDefiningTag = (tagName) => {
     return jsdocUtils.isNamepathDefiningTag(tagName);
-  };
-  utils.isNamepathTag = (tagName, checkSeesForNamepaths) => {
-    return jsdocUtils.isNamepathTag(tagName, checkSeesForNamepaths);
-  };
-
-  utils.isTagWithType = (tagName) => {
-    return jsdocUtils.isTagWithType(tagName);
-  };
-
-  utils.passesEmptyNamepathCheck = (tag, allowEmptyNamepaths) => {
-    return !tag.name && allowEmptyNamepaths &&
-      jsdocUtils.isPotentiallyEmptyNamepathTag(tag.tag);
   };
 
   utils.hasDefinedTypeReturnTag = (tag) => {
