@@ -149,7 +149,7 @@ const tagsWithOptionalType = [
   'throws', 'exception',
   'yields', 'yield',
 
-  // GCC specific
+  // Todo: Omit these GCC specific items when in non-GCC mode after landing https://github.com/gajus/eslint-plugin-jsdoc/issues/356
   'package',
   'private',
   'protected',
