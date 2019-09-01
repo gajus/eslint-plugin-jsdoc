@@ -195,7 +195,7 @@ const tagsWithMandatoryNamepath = [
   'typedef',
 ];
 
-const tagsWithMandatoryEitherTypeOrNamepath = [
+const tagsWithMandatoryTypeOrNamepath = [
   'alias',
   'augments', 'extends',
   'borrows',
@@ -233,7 +233,7 @@ const tagMightHaveEitherTypeOrNamepath = (tag) => {
 };
 
 const tagMustHaveEitherTypeOrNamepath = (tag) => {
-  return tagsWithMandatoryEitherTypeOrNamepath.includes(tag);
+  return tagsWithMandatoryTypeOrNamepath.includes(tag);
 };
 
 /**
