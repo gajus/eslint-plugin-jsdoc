@@ -7552,6 +7552,7 @@ function quux() {
 function quux() {
 
 }
+// Options: [{"checkSeesForNamepaths":true}]
 
 /**
  *

@@ -368,6 +368,9 @@ export default {
 
           }
       `,
+      options: [{
+        checkSeesForNamepaths: true,
+      }],
     },
     {
       code: `
