@@ -129,21 +129,24 @@ const hasDefinedTypeReturnTag = (tag) => {
   return true;
 };
 
-const tagsWithOptionalType = [
-  'augments', 'extends',
-  'class', 'constructor',
-  'constant', 'const',
+const tagsWithMandatoryType = [
   'enum',
   'implements',
   'member', 'var',
   'module',
+  'type',
+  'typedef',
+];
+
+const tagsWithOptionalType = [
+  'augments', 'extends',
+  'class', 'constructor',
+  'constant', 'const',
   'namespace',
   'param', 'arg', 'argument',
   'property', 'prop',
   'returns', 'return',
   'throws', 'exception',
-  'type',
-  'typedef',
   'yields', 'yield',
 
   // GCC specific
@@ -152,15 +155,6 @@ const tagsWithOptionalType = [
   'protected',
   'public',
   'static',
-];
-
-const tagsWithMandatoryType = [
-  'enum',
-  'implements',
-  'member', 'var',
-  'module',
-  'type',
-  'typedef',
 ];
 
 const namepathDefiningTags = [
@@ -219,7 +213,7 @@ const isNamepathDefiningTag = (tagName) => {
 };
 
 const tagMightHaveType = (tag) => {
-  return tagsWithOptionalType.includes(tag);
+  return tagsWithMandatoryType.includes(tag) || tagsWithOptionalType.includes(tag);
 };
 
 const tagMustHaveType = (tag) => {
