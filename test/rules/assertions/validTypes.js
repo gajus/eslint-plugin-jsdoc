@@ -339,7 +339,7 @@ export default {
     {
       code: `
           /**
-           * @callback foo
+           * @callback
            */
           function quux() {
 

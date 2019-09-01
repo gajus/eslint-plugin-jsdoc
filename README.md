@@ -7532,7 +7532,7 @@ function quux() {
 }
 
 /**
- * @callback foo
+ * @callback
  */
 function quux() {
 
