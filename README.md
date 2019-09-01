@@ -1550,6 +1550,14 @@ function quux (foo) {
 function quux () {
 
 }
+
+/**
+ * @extends Foo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"augments":{"message":"@extends is to be used over @augments.","replacement":"extends"}}}}
 ````
 
 
@@ -5630,6 +5638,15 @@ const myObject = {
   myProp: true
 };
 // Options: [{"contexts":[]}]
+
+function bear() {}
+/**
+ *
+ */
+function quux () {
+}
+export default quux;
+// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
 ````
 
 
@@ -6860,7 +6877,7 @@ Will also report if multiple `@returns` tags are present.
 - `forceReturnsWithAsync` - By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` to `true` on the options object. This may be useful as an `async` function will always return a `Promise`, even if the `Promise` returns void. Defaults to `false`.
 
 ```js
-'jsdoc/require-jsdoc': ['error', {forceReturnsWithAsync: true}]
+'jsdoc/require-returns': ['error', {forceReturnsWithAsync: true}]
 ```
 
 |||

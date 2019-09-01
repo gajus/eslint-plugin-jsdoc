@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-
 export default {
   invalid: [
     {

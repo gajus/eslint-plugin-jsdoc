@@ -1,6 +1,5 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-// eslint-disable-next-line complexity
 export default iterateJsdoc(({
   report,
   utils,

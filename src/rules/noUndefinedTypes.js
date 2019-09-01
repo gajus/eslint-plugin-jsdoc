@@ -1,14 +1,12 @@
-// eslint-disable-next-line import/no-unassigned-import
-import 'flat-map-polyfill';
 import _ from 'lodash';
 import {parse as parseType, traverse} from 'jsdoctypeparser';
 import iterateJsdoc, {parseComment} from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
 
 const extraTypes = [
-  'null', 'undefined', 'string', 'boolean', 'object',
+  'null', 'undefined', 'string', 'symbol', 'boolean', 'object',
   'function',
-  'number', 'NaN', 'Infinity',
+  'number', 'bigint', 'NaN', 'Infinity',
   'any', '*',
   'Array', 'Object', 'RegExp', 'Date', 'Function',
 ];
@@ -78,7 +76,7 @@ export default iterateJsdoc(({
     );
   }
 
-  const closureGenericTypes = templateTags.flatMap((tag) => {
+  const closureGenericTypes = _.flatMap(templateTags, (tag) => {
     return jsdocUtils.parseClosureTemplateTag(tag);
   });
 

@@ -517,5 +517,25 @@ export default {
           }
       `,
     },
+    {
+      code: `
+          /**
+           * @extends Foo
+           */
+          function quux () {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            augments: {
+              message: '@extends is to be used over @augments.',
+              replacement: 'extends',
+            },
+          },
+        },
+      },
+    },
   ],
 };
