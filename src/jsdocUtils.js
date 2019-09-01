@@ -130,15 +130,15 @@ const hasDefinedTypeReturnTag = (tag) => {
 };
 
 const tagsWithMandatoryType = [
-  'enum',
   'implements',
-  'member', 'var',
-  'module',
   'type',
-  'typedef',
 ];
 
 const tagsWithOptionalType = [
+  'enum',
+  'member', 'var',
+  'module',
+  'typedef',
   'augments', 'extends',
   'class', 'constructor',
   'constant', 'const',
