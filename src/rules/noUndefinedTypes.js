@@ -4,7 +4,7 @@ import iterateJsdoc, {parseComment} from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
 
 const extraTypes = [
-  'null', 'undefined', 'string', 'symbol', 'boolean', 'object',
+  'null', 'undefined', 'void', 'string', 'symbol', 'boolean', 'object',
   'function',
   'number', 'bigint', 'NaN', 'Infinity',
   'any', '*',
