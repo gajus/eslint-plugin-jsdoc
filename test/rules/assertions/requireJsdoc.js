@@ -2182,5 +2182,53 @@ export default {
     parserOptions: {
       sourceType: 'module',
     },
-  }],
+  }, {
+    code: `
+    /**
+     * This example interface is great!
+     */
+    export interface Example {
+      /**
+       * My super test string!
+       */
+      test: string
+    }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+        ],
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
+  },
+  {
+    code: `
+    /**
+     * This example interface is great!
+     */
+    interface Example {
+      /**
+       * My super test string!
+       */
+      test: string
+    }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+        ],
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
+  },
+  ],
 };

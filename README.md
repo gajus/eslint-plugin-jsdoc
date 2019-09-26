@@ -5647,6 +5647,28 @@ function quux () {
 }
 export default quux;
 // Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+
+/**
+ * This example interface is great!
+ */
+export interface Example {
+  /**
+   * My super test string!
+   */
+  test: string
+}
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
+
+/**
+ * This example interface is great!
+ */
+interface Example {
+  /**
+   * My super test string!
+   */
+  test: string
+}
+// Options: [{"contexts":["TSInterfaceDeclaration"]}]
 ````
 
 

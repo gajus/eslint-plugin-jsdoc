@@ -62,9 +62,10 @@ const getJSDocComment = function (sourceCode, node, settings) {
 
     return null;
   };
-  let parent = node.parent;
+  let {parent} = node;
 
   switch (node.type) {
+  case 'TSInterfaceDeclaration':
   case 'ClassDeclaration':
   case 'FunctionDeclaration':
     return findJSDocComment(looksLikeExport(parent) ? parent : node);
@@ -74,9 +75,7 @@ const getJSDocComment = function (sourceCode, node, settings) {
   case 'ArrowFunctionExpression':
   case 'FunctionExpression':
     if (
-      parent.type !== 'CallExpression' &&
-      parent.type !== 'OptionalCallExpression' &&
-      parent.type !== 'NewExpression'
+      !['CallExpression', 'OptionalCallExpression', 'NewExpression'].includes(parent.type)
     ) {
       while (
         !sourceCode.getCommentsBefore(parent).length &&
