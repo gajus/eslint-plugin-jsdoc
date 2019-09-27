@@ -174,7 +174,7 @@ export default {
 
       const report = () => {
         const loc = {
-          end: node.loc.start,
+          end: node.loc.start + 1,
           start: node.loc.start,
         };
         context.report({

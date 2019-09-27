@@ -263,7 +263,7 @@ export default {
           }`,
       errors: [
         {
-          endLine: 2,
+          endLine: undefined,
           line: 2,
           message: 'Missing JSDoc comment.',
         },
