@@ -172,6 +172,19 @@ export default {
         return fixer.insertTextBefore(baseNode, insertion);
       };
 
+      const report = () => {
+        const loc = {
+          end: node.loc.start,
+          start: node.loc.start,
+        };
+        context.report({
+          fix,
+          messageId: 'missingJsDoc',
+          node,
+          loc,
+        });
+      };
+
       if (publicOnly) {
         const opt = {
           ancestorsOnly: Boolean(_.get(publicOnly, 'ancestorsOnly', false)),
@@ -183,18 +196,10 @@ export default {
         const exported = exportParser.isExported(node, parseResult, opt);
 
         if (exported) {
-          context.report({
-            fix,
-            messageId: 'missingJsDoc',
-            node,
-          });
+          report();
         }
       } else {
-        context.report({
-          fix,
-          messageId: 'missingJsDoc',
-          node,
-        });
+        report();
       }
     };
 
