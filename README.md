@@ -835,10 +835,36 @@ function quux () {}
 
 Reports invalid padding inside JSDoc block.
 
+<a name="eslint-plugin-jsdoc-rules-check-indentation-options-1"></a>
+#### Options
+
+This rule has an object option.
+
+<a name="eslint-plugin-jsdoc-rules-check-indentation-options-1-excludeexamples"></a>
+##### <code>excludeExamples</code>
+
+This boolean property allows to "hide" example code from reports.
+
+By default, whole JSDoc block is checked for invalid padding.
+That includes example blocks too, which may get in the way of adding full,
+readable examples of code without ending up with multiple linting issues.
+
+When enabled, following code will lint without any padding issue:
+
+```js
+/**
+ * @example
+ * anArray.filter((a) => {
+ *   return a.b;
+ * });
+ */
+```
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
+|Options| `excludeExamples` |
 
 The following patterns are considered problems:
 
@@ -871,14 +897,13 @@ class Moo {}
  * foo
  *
  * @example
- * function xFoo () {
- *   return 'foo';
- * }
+ * anArray.filter((a) => {
+ *   return a.b;
+ * });
  */
 function quux () {
 
 }
-// Options: ["excludeExamples":false}]
 // Message: There must be no indentation.
 ````
 
@@ -904,14 +929,14 @@ function quux () {
  * foo
  *
  * @example
- * function xFoo () {
- *   return 'foo';
- * }
+ * anArray.filter((a) => {
+ *   return a.b;
+ * });
  */
 function quux () {
 
 }
-// Options: ["excludeExamples":true}]
+// Options: [{"excludeExamples":true}]
 ````
 
 
@@ -1265,10 +1290,10 @@ yields
 
 Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreference` will automatically be considered as valid.
 
-<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-1"></a>
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-2"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-1-definedtags"></a>
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-2-definedtags"></a>
 ##### <code>definedTags</code>
 
 Use an array of `definedTags` strings to configure additional, allowed JSDoc tags.
@@ -1610,7 +1635,7 @@ Date
 RegExp
 ```
 
-<a name="eslint-plugin-jsdoc-rules-check-types-options-2"></a>
+<a name="eslint-plugin-jsdoc-rules-check-types-options-3"></a>
 #### Options
 
 `check-types` allows one option:
@@ -2511,10 +2536,10 @@ by our supported Node versions):
 Applies to the jsdoc block description and `@description` (or `@desc`)
 by default but the `tags` option (see below) may be used to match other tags.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-3"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-4"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-3-matchdescription"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-4-matchdescription"></a>
 ##### <code>matchDescription</code>
 
 You can supply your own expression to override the default, passing a
@@ -2529,7 +2554,7 @@ You can supply your own expression to override the default, passing a
 As with the default, the supplied regular expression will be applied with the
 Unicode (`"u"`) flag and is *not* case-insensitive.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-3-tags"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-4-tags"></a>
 ##### <code>tags</code>
 
 If you want different regular expressions to apply to tags, you may use
@@ -2566,7 +2591,7 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-3-maindescription"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-4-maindescription"></a>
 ##### <code>mainDescription</code>
 
 If you wish to override the main function description without changing the
@@ -2588,7 +2613,7 @@ There is no need to add `mainDescription: true`, as by default, the main
 function (and only the main function) is linted, though you may disable checking
 it by setting it to `false`.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-3-contexts"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-4-contexts"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -3208,7 +3233,7 @@ function quux () {
 
 Enforces a consistent padding of the block description.
 
-<a name="eslint-plugin-jsdoc-rules-newline-after-description-options-4"></a>
+<a name="eslint-plugin-jsdoc-rules-newline-after-description-options-5"></a>
 #### Options
 
 This rule allows one optional string argument. If it is `"always"` then a problem is raised when there is a newline after the description. If it is `"never"` then a problem is raised when there is no newline after the description. The default value is `"always"`.
@@ -3388,7 +3413,7 @@ The following types are always considered defined.
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
 also be assumed to be defined.
 
-<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-5"></a>
+<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-6"></a>
 #### Options
 
 An option object may have the following key:
@@ -3717,10 +3742,10 @@ tag descriptions are written in complete sentences, i.e.,
 * Every line in a paragraph (except the first) which starts with an uppercase
   character must be preceded by a line ending with a period.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-7"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-6-tags-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-7-tags-1"></a>
 ##### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
@@ -4176,7 +4201,7 @@ Requires that all functions have a description.
   `"tag"`) must have a non-empty description that explains the purpose of the
   method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-8"></a>
 #### Options
 
 An options object may have any of the following properties:
@@ -4453,25 +4478,25 @@ Requires that all functions have examples.
 * All functions must have one or more `@example` tags.
 * Every example tag must have a non-empty description that explains the method's usage.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-8"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-9"></a>
 #### Options
 
 This rule has an object option.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-8-exemptedby"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-9-exemptedby"></a>
 ##### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document
 block avoids the need for an `@example`. Defaults to an empty array.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-8-avoidexampleonconstructors"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-9-avoidexampleonconstructors"></a>
 ##### <code>avoidExampleOnConstructors</code>
 
 Set to `true` to avoid the need for an example on a constructor (whether
 indicated as such by a jsdoc tag or by being within an ES6 `class`).
 Defaults to `false`.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-8-contexts-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-9-contexts-1"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -4641,7 +4666,7 @@ function quux () {
 
 Requires a hyphen before the `@param` description.
 
-<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-9"></a>
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-10"></a>
 #### Options
 
 This rule takes one optional string argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
@@ -4747,7 +4772,7 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-10"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-11"></a>
 #### Options
 
 Accepts one optional options object with the following optional keys.
@@ -5887,7 +5912,7 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-11"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-12"></a>
 #### Options
 
 An options object accepts one optional property:
@@ -6914,7 +6939,7 @@ Requires returns are documented.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-12"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-13"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -7370,7 +7395,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-13"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-14"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to disallow
