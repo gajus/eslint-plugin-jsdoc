@@ -2,7 +2,8 @@ import iterateJsdoc from '../iterateJsdoc';
 
 const maskExamples = (str) => {
   const regExamples = /([ \t]+\*)[ \t]@example(?=[ \n])([\w|\W]*?\n)(?=[ \t]*\*(?:[ \t]*@|\/))/g;
-  return str.replace(regExamples, function hideCode (m, margin, code) {
+
+  return str.replace(regExamples, (match, margin, code) => {
     return (new Array(code.match(/\n/g).length + 1)).join(margin + '\n');
   });
 };
@@ -15,7 +16,7 @@ export default iterateJsdoc(({
 }) => {
   const options = context.options[0] || {};
   const {
-    excludeExamples = true
+    excludeExamples = false,
   } = options;
 
   const reg = new RegExp(/^(?:\/?\**|[ \t]*)\*[ \t]{2}/gm);
@@ -34,11 +35,11 @@ export default iterateJsdoc(({
       additionalProperties: false,
       properties: {
         excludeExamples: {
-          default: true,
-          type: 'boolean'
+          default: false,
+          type: 'boolean',
         },
       },
-      type: 'object'
+      type: 'object',
     }],
     type: 'layout',
   },

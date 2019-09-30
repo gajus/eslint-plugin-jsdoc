@@ -54,9 +54,9 @@ export default {
            * foo
            *
            * @example
-           * function xFoo () {
-           *   return 'foo';
-           * }
+           * anArray.filter((a) => {
+           *   return a.b;
+           * });
            */
           function quux () {
 
@@ -68,9 +68,6 @@ export default {
           message: 'There must be no indentation.',
         },
       ],
-      options: [{
-        excludeExamples: false,
-      }],
     },
   ],
   valid: [
@@ -101,9 +98,9 @@ export default {
            * foo
            *
            * @example
-           * function xFoo () {
-           *   return 'foo';
-           * }
+           * anArray.filter((a) => {
+           *   return a.b;
+           * });
            */
           function quux () {
 
