@@ -48,6 +48,30 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * foo
+           *
+           * @example
+           * function xFoo () {
+           *   return 'foo';
+           * }
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'There must be no indentation.',
+        },
+      ],
+      options: [{
+        excludeExamples: false,
+      }],
+    },
   ],
   valid: [
     {
@@ -70,6 +94,24 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * foo
+           *
+           * @example
+           * function xFoo () {
+           *   return 'foo';
+           * }
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        excludeExamples: true,
+      }],
     },
   ],
 };

@@ -866,6 +866,20 @@ function quux () {
  */
 class Moo {}
 // Message: There must be no indentation.
+
+/**
+ * foo
+ *
+ * @example
+ * function xFoo () {
+ *   return 'foo';
+ * }
+ */
+function quux () {
+
+}
+// Options: ["excludeExamples":false}]
+// Message: There must be no indentation.
 ````
 
 The following patterns are not considered problems:
@@ -885,6 +899,19 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * foo
+ *
+ * @example
+ * function xFoo () {
+ *   return 'foo';
+ * }
+ */
+function quux () {
+
+}
+// Options: ["excludeExamples":true}]
 ````
 
 
