@@ -68,6 +68,30 @@ export default {
           message: 'There must be no indentation.',
         },
       ],
+      options: [{
+        excludeTags: [],
+      }],
+    },
+    {
+      code: `
+          /**
+           * foo
+           *
+           * @example
+           *   aaaa
+           * @returns
+           *   eeee
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 8,
+          message: 'There must be no indentation.',
+        },
+      ],
     },
   ],
   valid: [
@@ -106,8 +130,25 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * foo
+           *
+           * @example
+           * anArray.filter((a) => {
+           *   return a.b;
+           * });
+           * @returns
+           *   eeee
+           */
+          function quux () {
+
+          }
+      `,
       options: [{
-        excludeExamples: true,
+        excludeTags: ['example', 'returns'],
       }],
     },
   ],
