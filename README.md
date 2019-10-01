@@ -840,16 +840,19 @@ Reports invalid padding inside JSDoc block.
 
 This rule has an object option.
 
-<a name="eslint-plugin-jsdoc-rules-check-indentation-options-1-excludeexamples"></a>
-##### <code>excludeExamples</code>
+<a name="eslint-plugin-jsdoc-rules-check-indentation-options-1-excludetags"></a>
+##### <code>excludeTags</code>
 
-This boolean property allows to "hide" example code from reports.
+Array of tags (e.g., `['example', 'description']`) whose content will be
+"hidden" from the `check-indentation` rule. Defaults to `['example']`.
 
 By default, whole JSDoc block is checked for invalid padding.
-That includes example blocks too, which may get in the way of adding full,
-readable examples of code without ending up with multiple linting issues.
+That would include `@example` blocks too, which would get in the way
+of adding full, readable examples of code without ending up with multiple
+linting issues.
 
-When enabled, following code will lint without any padding issue:
+When disabled (by passing `excludeTags: []` option), following code will
+lint *with* padding issue:
 
 ```js
 /**
@@ -864,7 +867,7 @@ When enabled, following code will lint without any padding issue:
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
-|Options| `excludeExamples` |
+|Options| `excludeTags` |
 
 The following patterns are considered problems:
 
@@ -904,6 +907,20 @@ class Moo {}
 function quux () {
 
 }
+// Options: [{"excludeTags":[]}]
+// Message: There must be no indentation.
+
+/**
+ * foo
+ *
+ * @example
+ *   aaaa
+ * @returns
+ *   eeee
+ */
+function quux () {
+
+}
 // Message: There must be no indentation.
 ````
 
@@ -936,7 +953,21 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"excludeExamples":true}]
+
+/**
+ * foo
+ *
+ * @example
+ * anArray.filter((a) => {
+ *   return a.b;
+ * });
+ * @returns
+ *   eeee
+ */
+function quux () {
+
+}
+// Options: [{"excludeTags":["example","returns"]}]
 ````
 
 
