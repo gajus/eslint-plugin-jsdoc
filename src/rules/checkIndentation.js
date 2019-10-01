@@ -1,9 +1,9 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const maskExamples = (str, excludeTags) => {
-  const regExamples = new RegExp(`([ \\t]+\\*)[ \\t]@(?:${excludeTags.join('|')})(?=[ \\n])([\\w|\\W]*?\\n)(?=[ \\t]*\\*(?:[ \\t]*@|\\/))`, 'g');
+const maskExcludedContent = (str, excludeTags) => {
+  const regContent = new RegExp(`([ \\t]+\\*)[ \\t]@(?:${excludeTags.join('|')})(?=[ \\n])([\\w|\\W]*?\\n)(?=[ \\t]*\\*(?:[ \\t]*@|\\/))`, 'g');
 
-  return str.replace(regExamples, (match, margin, code) => {
+  return str.replace(regContent, (match, margin, code) => {
     return (new Array(code.match(/\n/g).length + 1)).join(margin + '\n');
   });
 };
@@ -20,7 +20,7 @@ export default iterateJsdoc(({
   } = options;
 
   const reg = new RegExp(/^(?:\/?\**|[ \t]*)\*[ \t]{2}/gm);
-  const text = excludeTags.length ? maskExamples(sourceCode.getText(jsdocNode), excludeTags) : sourceCode.getText(jsdocNode);
+  const text = excludeTags.length ? maskExcludedContent(sourceCode.getText(jsdocNode), excludeTags) : sourceCode.getText(jsdocNode);
 
   if (reg.test(text)) {
     const lineBreaks = text.slice(0, reg.lastIndex).match(/\n/g) || [];
