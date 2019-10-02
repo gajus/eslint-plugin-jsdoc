@@ -8,6 +8,14 @@ const maskExcludedContent = (str, excludeTags) => {
   });
 };
 
+const maskCodeBlocks = (str) => {
+  const regContent = /([ \t]+\*)[ \t]```[^\n]*?([\w|\W]*?\n)(?=[ \t]*\*(?:[ \t]*(?:```|@)|\/))/g;
+
+  return str.replace(regContent, (match, margin, code) => {
+    return (new Array(code.match(/\n/g).length + 1)).join(margin + '\n');
+  });
+};
+
 export default iterateJsdoc(({
   sourceCode,
   jsdocNode,
@@ -20,7 +28,8 @@ export default iterateJsdoc(({
   } = options;
 
   const reg = new RegExp(/^(?:\/?\**|[ \t]*)\*[ \t]{2}/gm);
-  const text = excludeTags.length ? maskExcludedContent(sourceCode.getText(jsdocNode), excludeTags) : sourceCode.getText(jsdocNode);
+  const textWithoutCodeBlocks = maskCodeBlocks(sourceCode.getText(jsdocNode));
+  const text = excludeTags.length ? maskExcludedContent(textWithoutCodeBlocks, excludeTags) : textWithoutCodeBlocks;
 
   if (reg.test(text)) {
     const lineBreaks = text.slice(0, reg.lastIndex).match(/\n/g) || [];

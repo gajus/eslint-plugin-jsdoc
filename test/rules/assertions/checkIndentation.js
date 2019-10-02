@@ -93,6 +93,48 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * foo
+           * \`\`\`html
+           * <section>
+           *   <title>test</title>
+           * </section>
+           * \`\`\`
+           * @returns
+           *   eeee
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 10,
+          message: 'There must be no indentation.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * foo
+           * \`\`\`   aaaa\`\`\`
+           * @returns
+           *   eeee
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'There must be no indentation.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -150,6 +192,34 @@ export default {
       options: [{
         excludeTags: ['example', 'returns'],
       }],
+    },
+    {
+      code: `
+          /**
+           * foo
+           * \`\`\`html
+           * <section>
+           *   <title>test</title>
+           * </section>
+           * \`\`\`
+           * @returns eeee
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * foo
+           * \`\`\`   aaaa\`\`\`
+           * @returns eeee
+           */
+          function quux () {
+
+          }
+      `,
     },
   ],
 };

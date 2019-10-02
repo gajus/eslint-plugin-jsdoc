@@ -835,6 +835,20 @@ function quux () {}
 
 Reports invalid padding inside JSDoc block.
 
+Ignores parts enclosed in Markdown's "code block". For example,
+following description is valid:
+
+```js
+/**
+ * Some description:
+ * ```html
+ * <section>
+ *   <title>test</title>
+ * </section>
+ * ```
+ */
+```
+
 <a name="eslint-plugin-jsdoc-rules-check-indentation-options-1"></a>
 #### Options
 
@@ -922,6 +936,32 @@ function quux () {
 
 }
 // Message: There must be no indentation.
+
+/**
+ * foo
+ * ```html
+ * <section>
+ *   <title>test</title>
+ * </section>
+ * ```
+ * @returns
+ *   eeee
+ */
+function quux () {
+
+}
+// Message: There must be no indentation.
+
+/**
+ * foo
+ * ```   aaaa```
+ * @returns
+ *   eeee
+ */
+function quux () {
+
+}
+// Message: There must be no indentation.
 ````
 
 The following patterns are not considered problems:
@@ -968,6 +1008,28 @@ function quux () {
 
 }
 // Options: [{"excludeTags":["example","returns"]}]
+
+/**
+ * foo
+ * ```html
+ * <section>
+ *   <title>test</title>
+ * </section>
+ * ```
+ * @returns eeee
+ */
+function quux () {
+
+}
+
+/**
+ * foo
+ * ```   aaaa```
+ * @returns eeee
+ */
+function quux () {
+
+}
 ````
 
 
