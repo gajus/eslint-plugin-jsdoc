@@ -45,6 +45,7 @@ export default iterateJsdoc(({
       properties: {
         excludeTags: {
           items: {
+            pattern: '^[a-zA-Z]+$',
             type: 'string',
           },
           type: 'array',
