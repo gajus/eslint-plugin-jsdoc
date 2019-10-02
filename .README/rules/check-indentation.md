@@ -2,6 +2,20 @@
 
 Reports invalid padding inside JSDoc block.
 
+Ignores parts enclosed in Markdown's "code block". For example,
+following description is valid:
+
+```js
+/**
+ * Some description:
+ * ```html
+ * <section>
+ *   <title>test</title>
+ * </section>
+ * ```
+ */
+```
+
 #### Options
 
 This rule has an object option.
