@@ -8,6 +8,8 @@ tag descriptions are written in complete sentences, i.e.,
 * Sentences must end with a period.
 * Every line in a paragraph (except the first) which starts with an uppercase
   character must be preceded by a line ending with a period.
+* A colon or semi-colon followed by two line breaks is still part of the
+  containing paragraph (unlike normal dual line breaks).
 
 #### Options
 

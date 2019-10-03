@@ -3834,6 +3834,8 @@ tag descriptions are written in complete sentences, i.e.,
 * Sentences must end with a period.
 * Every line in a paragraph (except the first) which starts with an uppercase
   character must be preceded by a line ending with a period.
+* A colon or semi-colon followed by two line breaks is still part of the
+  containing paragraph (unlike normal dual line breaks).
 
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-7"></a>
 #### Options
@@ -4280,6 +4282,13 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+
+/**
+* We stop loading Items when we have loaded:
+*
+* 1) The main Item;
+* 2) All its variants.
+*/
 ````
 
 

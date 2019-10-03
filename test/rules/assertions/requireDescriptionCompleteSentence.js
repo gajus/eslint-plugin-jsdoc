@@ -887,5 +887,15 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+      * We stop loading Items when we have loaded:
+      *
+      * 1) The main Item;
+      * 2) All its variants.
+      */
+`,
+    },
   ],
 };

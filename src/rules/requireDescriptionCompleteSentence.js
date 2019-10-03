@@ -3,7 +3,11 @@ import {RegExtras} from 'regextras/dist/main-umd';
 import iterateJsdoc from '../iterateJsdoc';
 
 const extractParagraphs = (text) => {
-  return text.split(/\n\n/);
+  // Todo [engine:node@>8.11.0]: Uncomment following line with neg. lookbehind instead
+  // return text.split(/(?<![;:])\n\n/);
+  return [...text].reverse().join('').split(/\n\n(?![;:])/).map((par) => {
+    return [...par].reverse().join('');
+  }).reverse();
 };
 
 const extractSentences = (text) => {
