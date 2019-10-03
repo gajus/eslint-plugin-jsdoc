@@ -962,6 +962,35 @@ function quux () {
 
 }
 // Message: There must be no indentation.
+
+/**
+* @example <caption>
+* Here is a long
+*   indented summary of this
+* example
+* </caption>
+* ```js
+* function hi () {
+*   alert('Hello');
+* }
+* ```
+*/
+// Options: [{"excludeTags":[]}]
+// Message: There must be no indentation.
+
+/**
+* @example <caption>
+* Here is a long
+* summary of this
+* example
+* </caption>
+* // Code is not wrapped into fenced code block
+* function hi () {
+*   alert('Hello');
+* }
+*/
+// Options: [{"excludeTags":[]}]
+// Message: There must be no indentation.
 ````
 
 The following patterns are not considered problems:
@@ -1030,6 +1059,20 @@ function quux () {
 function quux () {
 
 }
+
+/**
+* @example <caption>
+* Here is a long
+* summary of this
+* example
+* </caption>
+* ```js
+* function hi () {
+*   alert('Hello');
+* }
+* ```
+*/
+// Options: [{"excludeTags":[]}]
 ````
 
 
