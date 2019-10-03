@@ -135,6 +135,55 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+          * @example <caption>
+          * Here is a long
+          *   indented summary of this
+          * example
+          * </caption>
+          * \`\`\`js
+          * function hi () {
+          *   alert('Hello');
+          * }
+          * \`\`\`
+          */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'There must be no indentation.',
+        },
+      ],
+      options: [{
+        excludeTags: [],
+      }],
+    },
+    {
+      code: `
+          /**
+          * @example <caption>
+          * Here is a long
+          * summary of this
+          * example
+          * </caption>
+          * // Code is not wrapped into fenced code block
+          * function hi () {
+          *   alert('Hello');
+          * }
+          */
+      `,
+      errors: [
+        {
+          line: 10,
+          message: 'There must be no indentation.',
+        },
+      ],
+      options: [{
+        excludeTags: [],
+      }],
+    },
   ],
   valid: [
     {
@@ -220,6 +269,25 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+          /**
+          * @example <caption>
+          * Here is a long
+          * summary of this
+          * example
+          * </caption>
+          * \`\`\`js
+          * function hi () {
+          *   alert('Hello');
+          * }
+          * \`\`\`
+          */
+      `,
+      options: [{
+        excludeTags: [],
+      }],
     },
   ],
 };
