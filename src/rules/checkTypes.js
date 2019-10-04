@@ -130,6 +130,9 @@ export default iterateJsdoc(({
     };
 
     traverse(typeAst, (node, parentName, parentNode) => {
+      if (!node) {
+        return;
+      }
       const {type, name} = node;
       if (!['NAME', 'ANY'].includes(type)) {
         return;

@@ -2561,6 +2561,9 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+/** @param {function(...)} callback The function to invoke. */
+var subscribe = function(callback) {};
 ````
 
 

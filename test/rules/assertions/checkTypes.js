@@ -2083,5 +2083,11 @@ export default {
           }
       `,
     },
+    {
+      code: `
+      /** @param {function(...)} callback The function to invoke. */
+      var subscribe = function(callback) {};
+      `,
+    },
   ],
 };
