@@ -1417,6 +1417,7 @@ memberof
 memberof!
 mixes
 mixin
+modifies (Currently undocumented but in source)
 module
 name
 namespace
@@ -1445,6 +1446,62 @@ version
 yields
 ```
 
+The following synonyms are also recognized:
+
+```
+arg
+argument
+const
+constructor
+defaultvalue
+desc
+emits
+exception
+extends
+fileoverview
+func
+host
+method
+overview
+prop
+return
+var
+virtual
+yield
+```
+
+For [TypeScript](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc)
+(or Closure), one may also use the following:
+
+```
+template
+```
+
+And for [Closure](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#nosideeffects-modifies-thisarguments),
+one may also use:
+
+```
+define
+dict
+export
+externs
+final
+implicitCast (casing distinct from that recognized by jsdoc internally)
+inheritDoc (casing distinct from that recognized by jsdoc internally)
+noalias
+nocollapse
+nocompile
+noinline
+nosideeffects
+polymer
+polymerBehavior
+preserve
+struct
+suppress
+template
+unrestricted
+```
+
 Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreference` will automatically be considered as valid.
 
 <a name="eslint-plugin-jsdoc-rules-check-tag-names-options-2"></a>
@@ -1458,7 +1515,7 @@ The format is as follows:
 
 ```json
 {
-  "definedTags": ["define", "record"]
+  "definedTags": ["note", "record"]
 }
 ```
 
