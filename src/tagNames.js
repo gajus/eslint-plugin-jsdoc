@@ -1,4 +1,12 @@
-export default {
+const jsdocTagsUndocumented = {
+  // Undocumented but present; see
+  // https://github.com/jsdoc/jsdoc/issues/1283#issuecomment-516816802
+  // https://github.com/jsdoc/jsdoc/blob/master/packages/jsdoc/lib/jsdoc/tag/dictionary/definitions.js#L594
+  modifies: [],
+};
+
+const jsdocTags = {
+  ...jsdocTagsUndocumented,
   abstract: [
     'virtual',
   ],
@@ -65,6 +73,7 @@ export default {
   'memberof!': [],
   mixes: [],
   mixin: [],
+
   module: [],
   name: [],
   namespace: [],
@@ -90,13 +99,6 @@ export default {
   static: [],
   summary: [],
 
-  // `@template` is not part of standard jsdoc on https://jsdoc.app but is
-  //    used by Closure per:
-  //      https://github.com/google/closure-compiler/wiki/Generic-Types
-  //    and by TypeScript per:
-  //      https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc
-  template: [],
-
   this: [],
   throws: [
     'exception',
@@ -111,3 +113,46 @@ export default {
     'yield',
   ],
 };
+
+const TypeScriptTags = {
+  // `@template` is also in TypeScript per:
+  //      https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc
+  template: [],
+};
+
+const closureTags = {
+  ...TypeScriptTags,
+
+  // From https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler
+  // These are all recognized in https://github.com/jsdoc/jsdoc/blob/master/packages/jsdoc/lib/jsdoc/tag/dictionary/definitions.js
+  //   except for the experimental `noinline` and the casing differences noted below
+
+  // Defined as a synonym of `const` in jsdoc `definitions.js`
+  define: [],
+
+  dict: [],
+  export: [],
+  externs: [],
+  final: [],
+
+  // With casing distinct from jsdoc `definitions.js`
+  implicitCast: [],
+
+  // With casing distinct from jsdoc `definitions.js`
+  inheritDoc: [],
+
+  noalias: [],
+  nocollapse: [],
+  nocompile: [],
+  noinline: [],
+  nosideeffects: [],
+  polymer: [],
+  polymerBehavior: [],
+  preserve: [],
+  struct: [],
+  suppress: [],
+
+  unrestricted: [],
+};
+
+export {jsdocTags, closureTags};
