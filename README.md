@@ -743,6 +743,17 @@ function f () {
  */
 // Options: [{"captionRequired":true,"eslintrcForExamples":false}]
 // Message: Caption is expected for examples.
+
+/**
+ * @example
+ * const list: number[] = [1, 2, 3]
+ * quux(list);
+ */
+function quux () {
+
+}
+// Options: [{"baseConfig":{"parser":"/Users/brett/eslint-plugin-jsdoc/node_modules/@typescript-eslint/parser/dist/parser.js","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
+// Message: @example error (semi): Missing semicolon.
 ````
 
 The following patterns are not considered problems:
@@ -827,6 +838,16 @@ var quux = {
  */
 function quux () {}
 // Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
+
+/**
+ * @example
+ * const list: number[] = [1, 2, 3];
+ * quux(list);
+ */
+function quux () {
+
+}
+// Options: [{"baseConfig":{"parser":"/Users/brett/eslint-plugin-jsdoc/node_modules/@typescript-eslint/parser/dist/parser.js","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
 ````
 
 

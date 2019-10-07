@@ -486,6 +486,35 @@ export default {
         eslintrcForExamples: false,
       }],
     },
+    {
+      code: `
+        /**
+         * @example
+         * const list: number[] = [1, 2, 3]
+         * quux(list);
+         */
+        function quux () {
+
+        }
+      `,
+      errors: [
+        {
+          message: '@example error (semi): Missing semicolon.',
+        },
+      ],
+      options: [{
+        baseConfig: {
+          parser: require.resolve('@typescript-eslint/parser'),
+          parserOptions: {
+            ecmaVersion: 6,
+          },
+          rules: {
+            semi: ['error', 'always'],
+          },
+        },
+        eslintrcForExamples: false,
+      }],
+    },
   ],
   valid: [
     {
@@ -651,6 +680,30 @@ export default {
         },
         eslintrcForExamples: false,
         noDefaultExampleRules: false,
+      }],
+    },
+    {
+      code: `
+        /**
+         * @example
+         * const list: number[] = [1, 2, 3];
+         * quux(list);
+         */
+        function quux () {
+
+        }
+      `,
+      options: [{
+        baseConfig: {
+          parser: require.resolve('@typescript-eslint/parser'),
+          parserOptions: {
+            ecmaVersion: 6,
+          },
+          rules: {
+            semi: ['error', 'always'],
+          },
+        },
+        eslintrcForExamples: false,
       }],
     },
   ],
