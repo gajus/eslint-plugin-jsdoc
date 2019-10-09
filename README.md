@@ -5890,6 +5890,50 @@ interface Example {
   test: string
 }
 // Options: [{"contexts":["TSInterfaceDeclaration"]}]
+
+/**
+ * This example type is great!
+ */
+export type Example = {
+  /**
+   * My super test string!
+   */
+  test: string
+};
+// Options: [{"contexts":["TSTypeAliasDeclaration"]}]
+
+/**
+ * This example type is great!
+ */
+type Example = {
+  /**
+   * My super test string!
+   */
+  test: string
+};
+// Options: [{"contexts":["TSTypeAliasDeclaration"]}]
+
+/**
+ * This example enum is great!
+ */
+export enum Example {
+  /**
+   * My super test enum!
+   */
+  test = 123
+}
+// Options: [{"contexts":["TSEnumDeclaration"]}]
+
+/**
+ * This example enum is great!
+ */
+enum Example {
+  /**
+   * My super test enum!
+   */
+  test = 123
+}
+// Options: [{"contexts":["TSEnumDeclaration"]}]
 ````
 
 
