@@ -20,6 +20,14 @@ export default {
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
     },
     {
       code: `
@@ -38,6 +46,38 @@ export default {
           message: 'Missing JSDoc @param "bar" declaration.',
         },
       ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo, bar) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux (foo, bar) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "bar" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * @param foo
+           * @param bar
+           */
+          function quux (foo, bar) {
+
+          }
+      `,
     },
     {
       code: `
@@ -56,6 +96,41 @@ export default {
           message: 'Missing JSDoc @param "baz" declaration.',
         },
       ],
+      output: `
+          /**
+           * @param foo
+           * @param bar
+           */
+          function quux (foo, bar, baz) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param bar
+           */
+          function quux (foo, bar, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "baz" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * @param foo
+           * @param bar
+           * @param baz
+           */
+          function quux (foo, bar, baz) {
+
+          }
+      `,
     },
     {
       code: `
@@ -74,6 +149,15 @@ export default {
           message: 'Missing JSDoc @param "bar" declaration.',
         },
       ],
+      output: `
+          /**
+           * @param foo
+           * @param baz
+           */
+          function quux (foo, bar, baz) {
+
+          }
+      `,
     },
     {
       code: `
@@ -126,6 +210,15 @@ export default {
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
+      output: `
+          /**
+           * @override
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
       settings: {
         jsdoc: {
           overrideReplacesDocs: false,
