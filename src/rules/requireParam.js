@@ -1,7 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
-  report,
+  jsdoc,
   utils,
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
@@ -18,17 +18,42 @@ export default iterateJsdoc(({
   if (utils.hasTag('type')) {
     return;
   }
+  const findExpectedIndex = (jsdocTags, funcParmOrder, tagName) => {
+    const docTags = jsdocTags.filter(({tag}) => {
+      return tag === tagName;
+    });
+    let expectedIndex = jsdocTags.length;
+    jsdocTags.forEach((tag, idx) => {
+      if (tag.tag === tagName) {
+        expectedIndex = docTags.indexOf(tag) < funcParmOrder ? idx + 1 : idx - 1;
+      }
+    });
 
-  functionParameterNames.forEach((functionParameterName) => {
+    return expectedIndex;
+  };
+
+  functionParameterNames.forEach((functionParameterName, functionParameterIdx) => {
     if (['<ObjectPattern>', '<ArrayPattern>'].includes(functionParameterName)) {
       return;
     }
     if (!jsdocParameterNames.includes(functionParameterName)) {
-      report(`Missing JSDoc @${utils.getPreferredTagName({tagName: 'param'})} "${functionParameterName}" declaration.`);
+      const preferredTagName = utils.getPreferredTagName({tagName: 'param'});
+      utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, () => {
+        if (!jsdoc.tags) {
+          jsdoc.tags = [];
+        }
+
+        const expectedIdx = findExpectedIndex(jsdoc.tags, functionParameterIdx, preferredTagName);
+        jsdoc.tags.splice(expectedIdx, 0, {
+          name: functionParameterName,
+          tag: preferredTagName,
+        });
+      });
     }
   });
 }, {
   meta: {
+    fixable: true,
     schema: [
       {
         additionalProperties: false,
