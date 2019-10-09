@@ -6117,12 +6117,29 @@ function quux (foo, bar) {
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
+ * @param foo
+ */
+function quux (foo, bar) {
+
+}
+// Message: Missing JSDoc @param "bar" declaration.
+
+/**
  * @param bar
  */
 function quux (foo, bar, baz) {
 
 }
 // Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @param foo
+ * @param bar
+ */
+function quux (foo, bar, baz) {
+
+}
+// Message: Missing JSDoc @param "baz" declaration.
 
 /**
  * @param baz
