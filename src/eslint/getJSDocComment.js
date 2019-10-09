@@ -27,6 +27,57 @@ const looksLikeExport = function (astNode) {
 };
 
 /**
+ * Reduces the provided node to the appropriate node for evaluating JSDoc comment status.
+ *
+ * @param {ASTNode} node An AST node.
+ * @param {SourceCode} sourceCode The ESLint SourceCode.
+ * @returns {ASTNode} The AST node that can be evaluated for appropriate JSDoc comments.
+ * @private
+ */
+const getReducedASTNode = function (node, sourceCode) {
+  let {parent} = node;
+
+  switch (node.type) {
+  case 'TSInterfaceDeclaration':
+  case 'TSTypeAliasDeclaration':
+  case 'TSEnumDeclaration':
+  case 'ClassDeclaration':
+  case 'FunctionDeclaration':
+    return looksLikeExport(parent) ? parent : node;
+
+  case 'ClassExpression':
+  case 'ObjectExpression':
+  case 'ArrowFunctionExpression':
+  case 'FunctionExpression':
+    if (
+      !['CallExpression', 'OptionalCallExpression', 'NewExpression'].includes(parent.type)
+    ) {
+      while (
+        !sourceCode.getCommentsBefore(parent).length &&
+        !/Function/u.test(parent.type) &&
+        parent.type !== 'MethodDefinition' &&
+        parent.type !== 'Property'
+      ) {
+        parent = parent.parent;
+
+        if (!parent) {
+          break;
+        }
+      }
+
+      if (parent && parent.type !== 'FunctionDeclaration' && parent.type !== 'Program') {
+        return parent;
+      }
+    }
+
+    return node;
+
+  default:
+    return node;
+  }
+};
+
+/**
  * Retrieves the JSDoc comment for a given node.
  *
  * @param {SourceCode} sourceCode The ESLint SourceCode
@@ -62,48 +113,13 @@ const getJSDocComment = function (sourceCode, node, settings) {
 
     return null;
   };
-  let {parent} = node;
 
-  switch (node.type) {
-  case 'TSInterfaceDeclaration':
-  case 'ClassDeclaration':
-  case 'FunctionDeclaration':
-    return findJSDocComment(looksLikeExport(parent) ? parent : node);
-
-  case 'ClassExpression':
-  case 'ObjectExpression':
-  case 'ArrowFunctionExpression':
-  case 'FunctionExpression':
-    if (
-      !['CallExpression', 'OptionalCallExpression', 'NewExpression'].includes(parent.type)
-    ) {
-      while (
-        !sourceCode.getCommentsBefore(parent).length &&
-        !/Function/u.test(parent.type) &&
-        parent.type !== 'MethodDefinition' &&
-        parent.type !== 'Property'
-      ) {
-        parent = parent.parent;
-
-        if (!parent) {
-          break;
-        }
-      }
-
-      if (parent && parent.type !== 'FunctionDeclaration' && parent.type !== 'Program') {
-        return findJSDocComment(parent);
-      }
-    }
-
-    return findJSDocComment(node);
-
-  default:
-    if (!node) {
-      return null;
-    }
-
-    return findJSDocComment(node);
+  const reducedNode = getReducedASTNode(node, sourceCode);
+  if (!reducedNode) {
+    return null;
   }
+
+  return findJSDocComment(reducedNode);
 };
 
 export default getJSDocComment;

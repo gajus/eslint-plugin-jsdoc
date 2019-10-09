@@ -2230,6 +2230,100 @@ export default {
     parserOptions: {
       sourceType: 'module',
     },
+  }, {
+    code: `
+    /**
+     * This example type is great!
+     */
+    export type Example = {
+      /**
+       * My super test string!
+       */
+      test: string
+    };
+    `,
+    options: [
+      {
+        contexts: [
+          'TSTypeAliasDeclaration',
+        ],
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
+  },
+  {
+    code: `
+    /**
+     * This example type is great!
+     */
+    type Example = {
+      /**
+       * My super test string!
+       */
+      test: string
+    };
+    `,
+    options: [
+      {
+        contexts: [
+          'TSTypeAliasDeclaration',
+        ],
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
+  }, {
+    code: `
+    /**
+     * This example enum is great!
+     */
+    export enum Example {
+      /**
+       * My super test enum!
+       */
+      test = 123
+    }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSEnumDeclaration',
+        ],
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
+  },
+  {
+    code: `
+    /**
+     * This example enum is great!
+     */
+    enum Example {
+      /**
+       * My super test enum!
+       */
+      test = 123
+    }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSEnumDeclaration',
+        ],
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
   },
   ],
 };
