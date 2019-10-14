@@ -85,8 +85,8 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 |||
 |---|---|
 |Context|everywhere|
-|Tags|`class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
-|Aliases|`constructor`, `const`, `var`, `arg`, `argument`, `prop`, `return`, `exception`|
+|Tags|`augments`, `class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
+|Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Options|`noDefaults`, `unifyParentAndChildTypeChecks`|
 |Settings|`preferredTypes`|
