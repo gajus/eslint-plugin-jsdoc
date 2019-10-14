@@ -13,6 +13,10 @@ the tag types in the table below:
 
 `@callback`, `@class` (or `@constructor`), `@constant` (or `@const`), `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`), `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`, `@template` (for Closure/TypeScript), `@typedef`.
 
+The following tags will also be checked but only when the mode is `closure`:
+
+`@package`, `@private`, `@protected`, `@public`, `@static`
+
 The following types are always considered defined.
 
 - `null`, `undefined`, `void`, `string`, `boolean`, `object`, `function`
@@ -38,6 +42,6 @@ An option object may have the following key:
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Options|`definedTypes`|
-|Settings|`preferredTypes`|
+|Settings|`preferredTypes`, `mode`|
 
 <!-- assertions noUndefinedTypes -->

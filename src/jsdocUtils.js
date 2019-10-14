@@ -219,7 +219,15 @@ const tagsWithOptionalType = [
   'throws', 'exception',
   'yields', 'yield',
 
-  // Todo: Omit these GCC specific items when in non-GCC mode after landing https://github.com/gajus/eslint-plugin-jsdoc/issues/356
+  // Has no documentation, but test example has curly brackets, and
+  //  "name" would be suggested rather than "namepath" based on example; not
+  //  sure if name is required
+  'modifies',
+];
+
+const tagsWithOptionalTypeClosure = [
+  ...tagsWithOptionalType,
+
   // Shows the signature with curly brackets but not in the example
   // "typeExpression"
   'package',
@@ -229,11 +237,6 @@ const tagsWithOptionalType = [
   // These do not show a signature nor show curly brackets in the example
   'public',
   'static',
-
-  // Has no documentation, but test example has curly brackets, and
-  //  "name" would be suggested rather than "namepath" based on example; not
-  //  sure if name is required
-  'modifies',
 ];
 
 // None of these show as having curly brackets for their name/namepath
@@ -327,8 +330,10 @@ const isNamepathDefiningTag = (tagName) => {
   return namepathDefiningTags.includes(tagName);
 };
 
-const tagMightHaveType = (tag) => {
-  return tagsWithMandatoryType.includes(tag) || tagsWithOptionalType.includes(tag);
+const tagMightHaveAType = (mode, tag) => {
+  return tagsWithMandatoryType.includes(tag) || (mode === 'closure' ?
+    tagsWithOptionalTypeClosure.includes(tag) :
+    tagsWithOptionalType.includes(tag));
 };
 
 const tagMustHaveType = (tag) => {
@@ -343,8 +348,8 @@ const tagMustHaveNamepath = (tag) => {
   return tagsWithMandatoryNamepath.includes(tag);
 };
 
-const tagMightHaveEitherTypeOrNamepath = (tag) => {
-  return tagMightHaveType(tag) || tagMightHaveNamepath(tag);
+const tagMightHaveEitherTypeOrNamepath = (mode, tag) => {
+  return tagMightHaveAType(mode, tag) || tagMightHaveNamepath(tag);
 };
 
 const tagMustHaveEitherTypeOrNamepath = (tag) => {
@@ -535,9 +540,9 @@ export default {
   isNamepathDefiningTag,
   isValidTag,
   parseClosureTemplateTag,
+  tagMightHaveAType,
   tagMightHaveEitherTypeOrNamepath,
   tagMightHaveNamepath,
-  tagMightHaveType,
   tagMustHaveEitherTypeOrNamepath,
   tagMustHaveNamepath,
   tagMustHaveType,

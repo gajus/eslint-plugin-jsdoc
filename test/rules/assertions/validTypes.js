@@ -267,6 +267,25 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @private {BadTypeChecked<}
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          message: 'Syntax error in type: BadTypeChecked<',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -479,6 +498,15 @@ export default {
            * @modifies {foo|bar}
            */
           function quux (foo, bar, baz) {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * @private {BadTypeNotCheckedInJsdoc<}
+       */
+      function quux () {}
+
       `,
     },
   ],

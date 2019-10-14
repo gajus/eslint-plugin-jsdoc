@@ -105,11 +105,11 @@ export default iterateJsdoc(({
     .concat(definedPreferredTypes)
     .concat(closureGenericTypes);
 
-  const jsdocTags = utils.filterTags((tag) => {
-    return utils.tagMightHaveType(tag.tag);
+  const jsdocTagsWithPossibleType = utils.filterTags((tag) => {
+    return utils.tagMightHaveAType(tag.tag);
   });
 
-  jsdocTags.forEach((tag) => {
+  jsdocTagsWithPossibleType.forEach((tag) => {
     let parsedType;
 
     try {
