@@ -1,6 +1,10 @@
-import JSDOC_THREE_TAGS from './jsdoc3Tags';
+import {jsdocTags} from '../../../src/tagNames';
 
-const ALL_JSDOC_TAGS_COMMENT = '/** \n * @' + JSDOC_THREE_TAGS.join('\n * @') + '\n */';
+const ALL_JSDOC_TAGS_COMMENT = '/** \n * @' + Object.keys(
+  jsdocTags
+).reduce((string, tagName, idx) => {
+  return string + (idx === 0 ? '' : '\n * @') + tagName;
+}, '') + '\n */';
 
 export default {
   invalid: [
