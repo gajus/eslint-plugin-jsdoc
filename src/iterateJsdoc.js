@@ -84,6 +84,7 @@ const getUtils = (
     augmentsExtendsReplacesDocs,
     maxLines,
     minLines,
+    mode,
   },
   report,
   context,
@@ -139,7 +140,7 @@ const getUtils = (
   };
 
   utils.getPreferredTagName = ({tagName, skipReportingBlockedTag = false, allowObjectReturn = false, defaultMessage = `Unexpected tag \`@${tagName}\``}) => {
-    const ret = jsdocUtils.getPreferredTagName(tagName, tagNamePreference);
+    const ret = jsdocUtils.getPreferredTagName(context, mode, tagName, tagNamePreference);
     const isObject = ret && typeof ret === 'object';
     if (utils.hasTag(tagName) && (ret === false || isObject && !ret.replacement)) {
       if (skipReportingBlockedTag) {
@@ -158,7 +159,7 @@ const getUtils = (
   };
 
   utils.isValidTag = (name, definedTags) => {
-    return jsdocUtils.isValidTag(name, definedTags);
+    return jsdocUtils.isValidTag(context, mode, name, definedTags);
   };
 
   utils.hasATag = (name) => {
@@ -251,7 +252,7 @@ const getUtils = (
   };
 
   utils.getTagsByType = (tags) => {
-    return jsdocUtils.getTagsByType(tags, tagNamePreference);
+    return jsdocUtils.getTagsByType(context, mode, tags, tagNamePreference);
   };
 
   utils.getClassNode = () => {
@@ -343,6 +344,9 @@ const getSettings = (context) => {
   settings.overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
   settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
   settings.augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
+
+  // Many rules, e.g., `check-tag-names`
+  settings.mode = _.get(context, 'settings.jsdoc.mode') || 'jsdoc';
 
   return settings;
 };

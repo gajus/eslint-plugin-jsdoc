@@ -1,3 +1,7 @@
+import WarnSettings from './WarnSettings';
+
+const warnSettings = WarnSettings();
+
 /**
  * @typedef {(
  *   | "require-jsdoc"
@@ -7,27 +11,6 @@
  *   | "check-examples"
  * )} RulesWithMovedSettings
  */
-
-/** @type {WeakMap<object, Set<string>>} */
-const warnedSettings = new WeakMap();
-
-/**
- * Warn only once for each context and setting
- *
- * @param {object} context
- * @param {string} setting
- */
-const hasBeenWarned = (context, setting) => {
-  return warnedSettings.has(context) && warnedSettings.get(context).has(setting);
-};
-
-const markSettingAsWarned = (context, setting) => {
-  if (!warnedSettings.has(context)) {
-    warnedSettings.set(context, new Set());
-  }
-
-  warnedSettings.get(context).add(setting);
-};
 
 /**
  * @param {object} obj
@@ -86,7 +69,7 @@ export default function warnRemovedSettings (context, ruleName) {
   for (const setting of movedSettings) {
     if (
       has(context.settings.jsdoc, setting) &&
-      !hasBeenWarned(context, setting)
+      !warnSettings.hasBeenWarned(context, setting)
     ) {
       context.report({
         loc: {
@@ -98,7 +81,7 @@ export default function warnRemovedSettings (context, ruleName) {
         message: `\`settings.jsdoc.${setting}\` has been removed, ` +
           `use options in the rule \`${ruleName}\` instead.`,
       });
-      markSettingAsWarned(context, setting);
+      warnSettings.markSettingAsWarned(context, setting);
     }
   }
 }

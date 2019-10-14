@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import {closureTags} from './tagNames';
+import {jsdocTags, closureTags, typeScriptTags} from './tagNames';
+import WarnSettings from './WarnSettings';
 
-// Todo: Distinguish closure tags
-const tagNames = closureTags;
+type ParserMode = "jsdoc"|"typescript"|"closure";
 
 const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
   const getParamName = (param) => {
@@ -63,7 +63,41 @@ const getJsdocParameterNames = (jsdoc : Object, targetTagName : string) : Array<
   return jsdocParameterNames;
 };
 
-const getPreferredTagName = (name : string, tagPreference : Object = {}) : string => {
+const modeWarnSettings = WarnSettings();
+
+const getTagNamesForMode = (mode, context) => {
+  switch (mode) {
+  case 'jsdoc':
+    return jsdocTags;
+  case 'typescript':
+    return typeScriptTags;
+  case 'closure':
+    return closureTags;
+  default:
+    if (!modeWarnSettings.hasBeenWarned(context, 'mode')) {
+      context.report({
+        loc: {
+          start: {
+            column: 1,
+            line: 1,
+          },
+        },
+        message: `Unrecognized value \`${mode}\` for \`settings.jsdoc.mode\`.`,
+      });
+      modeWarnSettings.markSettingAsWarned(context, 'mode');
+    }
+
+    // We'll avoid breaking too many other rules
+    return jsdocTags;
+  }
+};
+
+const getPreferredTagName = (
+  context,
+  mode : ParserMode,
+  name : string,
+  tagPreference : Object = {},
+) : string => {
   const prefValues = _.values(tagPreference);
   if (prefValues.includes(name) || prefValues.some((prefVal) => {
     return prefVal && typeof prefVal === 'object' && prefVal.replacement === name;
@@ -75,6 +109,8 @@ const getPreferredTagName = (name : string, tagPreference : Object = {}) : strin
     return tagPreference[name];
   }
 
+  const tagNames = getTagNamesForMode(mode, context);
+
   const preferredTagName = _.findKey(tagNames, (aliases) => {
     return aliases.includes(name);
   });
@@ -85,7 +121,13 @@ const getPreferredTagName = (name : string, tagPreference : Object = {}) : strin
   return name;
 };
 
-const isValidTag = (name : string, definedTags : Array) : boolean => {
+const isValidTag = (
+  context,
+  mode : ParserMode,
+  name : string,
+  definedTags : Array,
+) : boolean => {
+  const tagNames = getTagNamesForMode(mode, context);
   const validTagNames = _.keys(tagNames).concat(_.flatten(_.values(tagNames)));
   const additionalTags = definedTags;
   const allTags = validTagNames.concat(additionalTags);
@@ -436,8 +478,8 @@ const tagsWithNamesAndDescriptions = [
   'returns', 'return',
 ];
 
-const getTagsByType = (tags, tagPreference) => {
-  const descName = getPreferredTagName('description', tagPreference);
+const getTagsByType = (context, mode, tags, tagPreference) => {
+  const descName = getPreferredTagName(context, mode, 'description', tagPreference);
   const tagsWithoutNames = [];
   const tagsWithNames = filterTags(tags, (tag) => {
     const {tag: tagName} = tag;

@@ -101,14 +101,16 @@ yield
 ```
 
 For [TypeScript](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc)
-(or Closure), one may also use the following:
+(or Closure), when `settings.jsdoc.mode` is set to `typescript` or `closure`,
+one may also use the following:
 
 ```
 template
 ```
 
 And for [Closure](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#nosideeffects-modifies-thisarguments),
-one may also use:
+when `settings.jsdoc.mode` is set to `closure`, one may use the following (in
+addition to the jsdoc and TypeScript tags):
 
 ```
 define
@@ -128,7 +130,6 @@ polymerBehavior
 preserve
 struct
 suppress
-template
 unrestricted
 ```
 
@@ -138,7 +139,7 @@ Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreferenc
 
 ##### `definedTags`
 
-Use an array of `definedTags` strings to configure additional, allowed JSDoc tags.
+Use an array of `definedTags` strings to configure additional, allowed tags.
 The format is as follows:
 
 ```json
@@ -152,6 +153,6 @@ The format is as follows:
 |Context|everywhere|
 |Tags|N/A|
 |Options|`definedTags`|
-|Settings|`tagNamePreference`|
+|Settings|`tagNamePreference`, `mode`|
 
 <!-- assertions checkTagNames -->

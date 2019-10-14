@@ -13,6 +13,7 @@ JSDoc linting rules for ESLint.
     * [Configuration](#eslint-plugin-jsdoc-configuration)
     * [Settings](#eslint-plugin-jsdoc-settings)
         * [Allow `@private` to disable rules for that comment block](#eslint-plugin-jsdoc-settings-allow-private-to-disable-rules-for-that-comment-block)
+        * [Mode](#eslint-plugin-jsdoc-settings-mode)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [`@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`](#eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns)
         * [Settings to Configure `check-types` and `no-undefined-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types)
@@ -127,6 +128,13 @@ You can then selectively add to or override the recommended rules.
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
   on which a `@private` tag occurs. Defaults to `false`.
+
+<a name="eslint-plugin-jsdoc-settings-mode"></a>
+### Mode
+
+- `settings.jsdoc.mode` - Set to `jsdoc` (the default), `typescript`, or `closure`.
+  Currently is used for checking preferred tag names and in the `check-tag-names`
+  rule.
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
@@ -1495,14 +1503,16 @@ yield
 ```
 
 For [TypeScript](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc)
-(or Closure), one may also use the following:
+(or Closure), when `settings.jsdoc.mode` is set to `typescript` or `closure`,
+one may also use the following:
 
 ```
 template
 ```
 
 And for [Closure](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#nosideeffects-modifies-thisarguments),
-one may also use:
+when `settings.jsdoc.mode` is set to `closure`, one may use the following (in
+addition to the jsdoc and TypeScript tags):
 
 ```
 define
@@ -1522,7 +1532,6 @@ polymerBehavior
 preserve
 struct
 suppress
-template
 unrestricted
 ```
 
@@ -1534,7 +1543,7 @@ Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreferenc
 <a name="eslint-plugin-jsdoc-rules-check-tag-names-options-2-definedtags"></a>
 ##### <code>definedTags</code>
 
-Use an array of `definedTags` strings to configure additional, allowed JSDoc tags.
+Use an array of `definedTags` strings to configure additional, allowed tags.
 The format is as follows:
 
 ```json
@@ -1548,7 +1557,7 @@ The format is as follows:
 |Context|everywhere|
 |Tags|N/A|
 |Options|`definedTags`|
-|Settings|`tagNamePreference`|
+|Settings|`tagNamePreference`, `mode`|
 
 The following patterns are considered problems:
 
@@ -1709,6 +1718,162 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
 // Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
+
+/** 
+ * @modifies
+ * @abstract
+ * @access
+ * @alias
+ * @async
+ * @augments
+ * @author
+ * @borrows
+ * @callback
+ * @class
+ * @classdesc
+ * @constant
+ * @constructs
+ * @copyright
+ * @default
+ * @deprecated
+ * @description
+ * @enum
+ * @event
+ * @example
+ * @exports
+ * @external
+ * @file
+ * @fires
+ * @function
+ * @generator
+ * @global
+ * @hideconstructor
+ * @ignore
+ * @implements
+ * @inheritdoc
+ * @inner
+ * @instance
+ * @interface
+ * @kind
+ * @lends
+ * @license
+ * @listens
+ * @member
+ * @memberof
+ * @memberof!
+ * @mixes
+ * @mixin
+ * @module
+ * @name
+ * @namespace
+ * @override
+ * @package
+ * @param
+ * @private
+ * @property
+ * @protected
+ * @public
+ * @readonly
+ * @requires
+ * @returns
+ * @see
+ * @since
+ * @static
+ * @summary
+ * @this
+ * @throws
+ * @todo
+ * @tutorial
+ * @type
+ * @typedef
+ * @variation
+ * @version
+ * @yields
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"badMode"}}
+// Message: Unrecognized value `badMode` for `settings.jsdoc.mode`.
+
+/** 
+ * @modifies
+ * @abstract
+ * @access
+ * @alias
+ * @async
+ * @augments
+ * @author
+ * @borrows
+ * @callback
+ * @class
+ * @classdesc
+ * @constant
+ * @constructs
+ * @copyright
+ * @default
+ * @deprecated
+ * @description
+ * @enum
+ * @event
+ * @example
+ * @exports
+ * @external
+ * @file
+ * @fires
+ * @function
+ * @generator
+ * @global
+ * @hideconstructor
+ * @ignore
+ * @implements
+ * @inheritdoc
+ * @inner
+ * @instance
+ * @interface
+ * @kind
+ * @lends
+ * @license
+ * @listens
+ * @member
+ * @memberof
+ * @memberof!
+ * @mixes
+ * @mixin
+ * @module
+ * @name
+ * @namespace
+ * @override
+ * @package
+ * @param
+ * @private
+ * @property
+ * @protected
+ * @public
+ * @readonly
+ * @requires
+ * @returns
+ * @see
+ * @since
+ * @static
+ * @summary
+ * @this
+ * @throws
+ * @todo
+ * @tutorial
+ * @type
+ * @typedef
+ * @variation
+ * @version
+ * @yields
+ * @template
+ */
+function quux (foo) {}
+// Message: Invalid JSDoc tag name "template".
+
+/** 
+ * @externs
+ */
+function quux (foo) {}
+// Message: Invalid JSDoc tag name "externs".
 ````
 
 The following patterns are not considered problems:
@@ -1832,6 +1997,87 @@ function quux (foo) {
  * @yields
  */
 function quux (foo) {}
+
+/** 
+ * @modifies
+ * @abstract
+ * @access
+ * @alias
+ * @async
+ * @augments
+ * @author
+ * @borrows
+ * @callback
+ * @class
+ * @classdesc
+ * @constant
+ * @constructs
+ * @copyright
+ * @default
+ * @deprecated
+ * @description
+ * @enum
+ * @event
+ * @example
+ * @exports
+ * @external
+ * @file
+ * @fires
+ * @function
+ * @generator
+ * @global
+ * @hideconstructor
+ * @ignore
+ * @implements
+ * @inheritdoc
+ * @inner
+ * @instance
+ * @interface
+ * @kind
+ * @lends
+ * @license
+ * @listens
+ * @member
+ * @memberof
+ * @memberof!
+ * @mixes
+ * @mixin
+ * @module
+ * @name
+ * @namespace
+ * @override
+ * @package
+ * @param
+ * @private
+ * @property
+ * @protected
+ * @public
+ * @readonly
+ * @requires
+ * @returns
+ * @see
+ * @since
+ * @static
+ * @summary
+ * @this
+ * @throws
+ * @todo
+ * @tutorial
+ * @type
+ * @typedef
+ * @variation
+ * @version
+ * @yields
+ * @template
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/** 
+ * @externs
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"closure"}}
 
 /**
  *
