@@ -134,7 +134,9 @@ You can then selectively add to or override the recommended rules.
 
 - `settings.jsdoc.mode` - Set to `jsdoc` (the default), `typescript`, or `closure`.
   Currently is used for checking preferred tag names and in the `check-tag-names`
-  rule.
+  rule. For type-checking rules, the setting also determines which tags will be
+  checked for types (Closure allows types on some tags which the others do not,
+  so these tags will additionally be checked in "closure" mode).
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
@@ -2197,7 +2199,7 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Options|`noDefaults`, `unifyParentAndChildTypeChecks`|
-|Settings|`preferredTypes`|
+|Settings|`preferredTypes`, `mode`|
 
 The following patterns are considered problems:
 
@@ -3896,6 +3898,10 @@ the tag types in the table below:
 
 `@callback`, `@class` (or `@constructor`), `@constant` (or `@const`), `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`), `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`, `@template` (for Closure/TypeScript), `@typedef`.
 
+The following tags will also be checked but only when the mode is `closure`:
+
+`@package`, `@private`, `@protected`, `@public`, `@static`
+
 The following types are always considered defined.
 
 - `null`, `undefined`, `void`, `string`, `boolean`, `object`, `function`
@@ -3922,7 +3928,7 @@ An option object may have the following key:
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Options|`definedTypes`|
-|Settings|`preferredTypes`|
+|Settings|`preferredTypes`, `mode`|
 
 The following patterns are considered problems:
 
@@ -8039,6 +8045,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 |Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|
 |Options|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
+|Settings|`mode`|
 
 The following patterns are considered problems:
 
@@ -8171,6 +8178,13 @@ function quux() {
  */
 function quux (foo, bar, baz) {}
 // Message: Syntax error in type: bar|foo<
+
+/**
+ * @private {BadTypeChecked<}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Syntax error in type: BadTypeChecked<
 ````
 
 The following patterns are not considered problems:
@@ -8317,6 +8331,11 @@ let UserDefinedGCCType;
  * @modifies {foo|bar}
  */
 function quux (foo, bar, baz) {}
+
+/**
+ * @private {BadTypeNotCheckedInJsdoc<}
+ */
+function quux () {}
 ````
 
 

@@ -54,5 +54,6 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 |Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|
 |Options|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
+|Settings|`mode`|
 
 <!-- assertions validTypes -->

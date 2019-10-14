@@ -73,7 +73,7 @@ export default iterateJsdoc(({
       return true;
     };
 
-    const hasType = utils.tagMightHaveType(tag.tag) && Boolean(tag.type);
+    const hasType = utils.tagMightHaveAType(tag.tag) && Boolean(tag.type);
     const mustHaveType = utils.tagMustHaveType(tag.tag);
 
     const hasNamePath = utils.tagMightHaveNamepath(tag.tag) && Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);

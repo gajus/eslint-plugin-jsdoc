@@ -92,7 +92,9 @@ You can then selectively add to or override the recommended rules.
 
 - `settings.jsdoc.mode` - Set to `jsdoc` (the default), `typescript`, or `closure`.
   Currently is used for checking preferred tag names and in the `check-tag-names`
-  rule.
+  rule. For type-checking rules, the setting also determines which tags will be
+  checked for types (Closure allows types on some tags which the others do not,
+  so these tags will additionally be checked in "closure" mode).
 
 ### Alias Preference
 

@@ -25,8 +25,8 @@ export default iterateJsdoc(({
   settings,
   context,
 }) => {
-  const jsdocTags = utils.filterTags((tag) => {
-    return utils.tagMightHaveType(tag.tag);
+  const jsdocTagsWithPossibleType = utils.filterTags((tag) => {
+    return utils.tagMightHaveAType(tag.tag);
   });
 
   const {preferredTypes} = settings;
@@ -34,7 +34,7 @@ export default iterateJsdoc(({
   const noDefaults = _.get(optionObj, 'noDefaults');
   const unifyParentAndChildTypeChecks = _.get(optionObj, 'unifyParentAndChildTypeChecks');
 
-  jsdocTags.forEach((jsdocTag) => {
+  jsdocTagsWithPossibleType.forEach((jsdocTag) => {
     const invalidTypes = [];
     let typeAst;
 

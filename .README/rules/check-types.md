@@ -89,6 +89,6 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Options|`noDefaults`, `unifyParentAndChildTypeChecks`|
-|Settings|`preferredTypes`|
+|Settings|`preferredTypes`, `mode`|
 
 <!-- assertions checkTypes -->

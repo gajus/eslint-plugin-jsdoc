@@ -200,7 +200,7 @@ const getUtils = (
   };
 
   utils.tagMightHaveEitherTypeOrNamepath = (tagName) => {
-    return jsdocUtils.tagMightHaveEitherTypeOrNamepath(tagName);
+    return jsdocUtils.tagMightHaveEitherTypeOrNamepath(mode, tagName);
   };
 
   utils.tagMustHaveNamepath = (tagName) => {
@@ -215,8 +215,8 @@ const getUtils = (
     return jsdocUtils.tagMustHaveType(tagName);
   };
 
-  utils.tagMightHaveType = (tagName) => {
-    return jsdocUtils.tagMightHaveType(tagName);
+  utils.tagMightHaveAType = (tagName) => {
+    return jsdocUtils.tagMightHaveAType(mode, tagName);
   };
 
   utils.isNamepathDefiningTag = (tagName) => {
