@@ -1737,9 +1737,11 @@ function quux (foo) {
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"baz","returns":{"message":"Prefer `bar`","replacement":"bar"},"todo":false}}}
 
 /** 
+ * @modifies
  * @abstract
  * @access
  * @alias
+ * @async
  * @augments
  * @author
  * @borrows
@@ -1760,7 +1762,9 @@ function quux (foo) {
  * @file
  * @fires
  * @function
+ * @generator
  * @global
+ * @hideconstructor
  * @ignore
  * @implements
  * @inheritdoc
@@ -1780,6 +1784,7 @@ function quux (foo) {
  * @name
  * @namespace
  * @override
+ * @package
  * @param
  * @private
  * @property
@@ -1800,6 +1805,7 @@ function quux (foo) {
  * @typedef
  * @variation
  * @version
+ * @yields
  */
 function quux (foo) {}
 
