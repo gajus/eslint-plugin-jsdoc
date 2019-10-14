@@ -1,11 +1,8 @@
 import _ from 'lodash';
-import {jsdocTags, closureTags} from './tagNames';
+import {closureTags} from './tagNames';
 
 // Todo: Distinguish closure tags
-const tagNames = {
-  ...closureTags,
-  ...jsdocTags,
-};
+const tagNames = closureTags;
 
 const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
   const getParamName = (param) => {

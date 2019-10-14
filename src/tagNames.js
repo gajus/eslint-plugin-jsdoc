@@ -114,14 +114,16 @@ const jsdocTags = {
   ],
 };
 
-const TypeScriptTags = {
+const typeScriptTags = {
+  ...jsdocTags,
+
   // `@template` is also in TypeScript per:
   //      https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc
   template: [],
 };
 
 const closureTags = {
-  ...TypeScriptTags,
+  ...typeScriptTags,
 
   // From https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler
   // These are all recognized in https://github.com/jsdoc/jsdoc/blob/master/packages/jsdoc/lib/jsdoc/tag/dictionary/definitions.js
@@ -155,4 +157,4 @@ const closureTags = {
   unrestricted: [],
 };
 
-export {jsdocTags, closureTags};
+export {jsdocTags, closureTags, typeScriptTags};
