@@ -1,10 +1,15 @@
-import {jsdocTags} from '../../../src/tagNames';
+import {jsdocTags, typeScriptTags, closureTags} from '../../../src/tagNames';
 
-const ALL_JSDOC_TAGS_COMMENT = '/** \n * @' + Object.keys(
-  jsdocTags,
-).reduce((string, tagName, idx) => {
-  return string + (idx === 0 ? '' : '\n * @') + tagName;
-}, '') + '\n */';
+const buildTagBlock = (tags) => {
+  return '/** \n * @' + Object.keys(tags).reduce((string, tagName, idx) => {
+    return string + (idx === 0 ? '' : '\n * @') + tagName;
+  }, '') + '\n */';
+};
+
+// We avoid testing all closure tags as too many
+const ALL_JSDOC_TAGS_COMMENT = buildTagBlock(jsdocTags);
+const ALL_TYPESCRIPT_TAGS_COMMENT = buildTagBlock(typeScriptTags);
+const ONE_CLOSURE_TAGS_COMMENT = buildTagBlock({externs: closureTags.externs});
 
 export default {
   invalid: [
@@ -411,6 +416,35 @@ export default {
         },
       },
     },
+    {
+      code: `${ALL_JSDOC_TAGS_COMMENT}\nfunction quux (foo) {}`,
+      errors: [
+        {
+          message: 'Unrecognized value `badMode` for `settings.jsdoc.mode`.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'badMode',
+        },
+      },
+    },
+    {
+      code: `${ALL_TYPESCRIPT_TAGS_COMMENT}\nfunction quux (foo) {}`,
+      errors: [
+        {
+          message: 'Invalid JSDoc tag name "template".',
+        },
+      ],
+    },
+    {
+      code: `${ONE_CLOSURE_TAGS_COMMENT}\nfunction quux (foo) {}`,
+      errors: [
+        {
+          message: 'Invalid JSDoc tag name "externs".',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -500,6 +534,22 @@ export default {
     },
     {
       code: `${ALL_JSDOC_TAGS_COMMENT}\nfunction quux (foo) {}`,
+    },
+    {
+      code: `${ALL_TYPESCRIPT_TAGS_COMMENT}\nfunction quux (foo) {}`,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `${ONE_CLOSURE_TAGS_COMMENT}\nfunction quux (foo) {}`,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
     {
       code: `

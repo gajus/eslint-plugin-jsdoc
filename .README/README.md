@@ -88,6 +88,12 @@ You can then selectively add to or override the recommended rules.
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
   on which a `@private` tag occurs. Defaults to `false`.
 
+### Mode
+
+- `settings.jsdoc.mode` - Set to `jsdoc` (the default), `typescript`, or `closure`.
+  Currently is used for checking preferred tag names and in the `check-tag-names`
+  rule.
+
 ### Alias Preference
 
 Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.

@@ -10,38 +10,38 @@ describe('jsdocUtils', () => {
     context('no preferences', () => {
       context('alias name', () => {
         it('returns the primary tag name', () => {
-          expect(jsdocUtils.getPreferredTagName('return')).to.equal('returns');
+          expect(jsdocUtils.getPreferredTagName({}, 'jsdoc', 'return')).to.equal('returns');
         });
       });
       it('returns the primary tag name', () => {
-        expect(jsdocUtils.getPreferredTagName('returns')).to.equal('returns');
+        expect(jsdocUtils.getPreferredTagName({}, 'jsdoc', 'returns')).to.equal('returns');
       });
     });
     context('with preferences', () => {
       it('returns the preferred tag name', () => {
-        expect(jsdocUtils.getPreferredTagName('return', {returns: 'return'})).to.equal('return');
+        expect(jsdocUtils.getPreferredTagName({}, 'jsdoc', 'return', {returns: 'return'})).to.equal('return');
       });
     });
   });
   describe('isValidTag()', () => {
     context('tag is invalid', () => {
       it('returns false', () => {
-        expect(jsdocUtils.isValidTag('foo', [])).to.equal(false);
+        expect(jsdocUtils.isValidTag({}, 'jsdoc', 'foo', [])).to.equal(false);
       });
     });
     context('tag is valid', () => {
       it('returns true', () => {
-        expect(jsdocUtils.isValidTag('param', [])).to.equal(true);
+        expect(jsdocUtils.isValidTag({}, 'jsdoc', 'param', [])).to.equal(true);
       });
     });
     context('tag is valid alias', () => {
       it('returns true', () => {
-        expect(jsdocUtils.isValidTag('arg', [])).to.equal(true);
+        expect(jsdocUtils.isValidTag({}, 'jsdoc', 'arg', [])).to.equal(true);
       });
     });
     context('tag is valid and customized', () => {
       it('returns true', () => {
-        expect(jsdocUtils.isValidTag('foobar', ['foobar'])).to.equal(true);
+        expect(jsdocUtils.isValidTag({}, 'jsdoc', 'foobar', ['foobar'])).to.equal(true);
       });
     });
   });
