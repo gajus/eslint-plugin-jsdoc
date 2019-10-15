@@ -254,6 +254,19 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @modifies {bar|foo<}
+           */
+          function quux (foo, bar, baz) {}
+      `,
+      errors: [
+        {
+          message: 'Syntax error in type: bar|foo<',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -458,6 +471,14 @@ export default {
            * @typedef {number|string}
            */
           let UserDefinedGCCType;
+      `,
+    },
+    {
+      code: `
+          /**
+           * @modifies {foo|bar}
+           */
+          function quux (foo, bar, baz) {}
       `,
     },
   ],

@@ -132,83 +132,144 @@ const hasDefinedTypeReturnTag = (tag) => {
   return true;
 };
 
+// Todo: These type and namepath tag listings currently look
+//   at tags with `{...}` as being a type, but jsdoc may
+//   allow some namepaths only within brackets as well
+
 const tagsWithMandatoryType = [
+  // These both show curly brackets in the doc signature and examples
   'implements',
   'type',
 ];
 
 const tagsWithOptionalType = [
+  // These have the example showing curly brackets but not in their doc signature, e.g.: https://jsdoc.app/tags-enum.html
   'enum',
   'member', 'var',
-  'module',
+
   'typedef',
+
+  // These do not show curly brackets in either the signature or examples
   'augments', 'extends',
   'class', 'constructor',
   'constant', 'const',
+
+  // These show the signature with curly brackets but not in the example
+  'module',
   'namespace',
+
+  // These have no formal signature in the docs but show curly brackets
+  //   in the examples
   'param', 'arg', 'argument',
   'property', 'prop',
+
+  // These show curly brackets in the signature and in the examples
   'returns', 'return',
   'throws', 'exception',
   'yields', 'yield',
 
   // Todo: Omit these GCC specific items when in non-GCC mode after landing https://github.com/gajus/eslint-plugin-jsdoc/issues/356
+  // Shows the signature with curly brackets but not in the example
   'package',
   'private',
   'protected',
+
+  // These do not show a signature nor show curly brackets in the example
   'public',
   'static',
+
+  // Has no documentation, but test example has curly brackets, and
+  //  "name" would be suggested rather than "namepath" based on example; not
+  //  sure if name is required
+  'modifies',
 ];
 
+// None of these show as having curly brackets for their name/namepath,
+//   except for `member`/`var` (which show in their example)
 const namepathDefiningTags = [
+  // These appears to require a "name" in their signature, albeit these
+  //  are somewhat different from other "names" (including as described
+  // at https://jsdoc.app/about-namepaths.html )
   'external', 'host',
-  'name',
-  'typedef',
   'event',
+
+  // These allow for "names" in their signature, but indicate as optional
   'class', 'constructor',
   'constant', 'const',
-  'callback',
   'function', 'func', 'method',
   'interface',
   'member', 'var',
   'mixin',
   'namespace',
+
+  // Todo: Should add `module` here (with optional "name" and no curly brackets);
+  //  this block impacts `no-undefined-types` and `valid-types` (search for "isNamepathDefiningTag|tagMightHaveNamepath|tagMightHaveEitherTypeOrNamepath")
+
+  // These seem to all require a "namepath" in their signatures (with no counter-examples)
+  'name',
+  'typedef',
+  'callback',
 ];
 
+// The following do not seem to allow curly brackets in their doc
+//  signature or examples (besides `modifies`)
 const tagsWithOptionalNamepath = [
   ...namepathDefiningTags,
+
+  // `borrows` has a different format, however, so needs special parsing;
+  //   seems to require both, and as "namepaths"
+  'borrows',
+
+  // Signature seems to require a "name" (of an event) and no counter-examples
+  'emits', 'fires',
+  'listens',
+
+  // Signature seems to require a "namepath" (and no counter-examples)
   'alias',
   'augments', 'extends',
-
-  // `borrows` has a different format, however, so needs special parsing
-  'borrows',
-  'emits', 'fires',
   'lends',
-  'listens',
-  'memberof', 'memberof!',
-  'mixes',
-  'see',
   'this',
+
+  // Signature seems to require a "namepath" (and no counter-examples),
+  //  though it allows an incomplete namepath ending with connecting symbol
+  'memberof', 'memberof!',
+
+  // Signature seems to require a "OtherObjectPath" with no counter-examples
+  'mixes',
+
+  // Signature allows for namepath or text
+  'see',
 ];
 
+// Todo: `@link` seems to require a namepath OR URL and might be checked as such.
+
+// The doc signature of `event` seems to require a "name"
 const tagsWithMandatoryNamepath = [
-  'callback',
+  // "name" (and a special syntax for the `external` name)
   'external', 'host',
+
+  // "namepath"
+  'callback',
   'name',
   'typedef',
 ];
 
 const tagsWithMandatoryTypeOrNamepath = [
+  // "namepath"
   'alias',
   'augments', 'extends',
   'borrows',
-  'external', 'host',
   'lends',
   'memberof', 'memberof!',
-  'mixes',
   'name',
   'this',
   'typedef',
+
+  // "name"
+  'external', 'host',
+
+  // "OtherObjectPath"
+  'mixes',
 ];
 
 const isNamepathDefiningTag = (tagName) => {

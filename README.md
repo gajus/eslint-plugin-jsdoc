@@ -7669,7 +7669,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 1. Name(path)-pointing tags requiring namepath: `@alias`, `@augments`, `@extends`, `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@this`
 1. Name(path)-pointing tags (which may have value without namepath or their
     namepath can be expressed elsewhere on the block): `@listens`, `@fires`,
-    `@emits`
+    `@emits`, and `@modifies`
 1. Name(path)-pointing tags (multiple names in one): `@borrows`
 
 ...with the following applying to the above sets:
@@ -7695,10 +7695,10 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
   empty name paths with `@callback`, `@event`, `@class`, `@constructor`,
   `@constant`, `@const`, `@function`, `@func`, `@method`, `@interface`,
   `@member`, `@var`, `@mixin`, `@namespace`, `@listens`, `@fires`,
-  or `@emits` (these might often be expected to have an accompanying
-  name path, though they have some indicative value without one; these
-  may also allow names to be defined in another manner elsewhere in
-  the block)
+  `@modifies`, or `@emits` (these might often be expected to have an
+  accompanying name path, though they have some indicative value without
+  one; these may also allow names to be defined in another manner elsewhere
+  in the block)
 - `checkSeesForNamepaths` (default: false) - Set this to `true` to insist
   that `@see` only use name paths (the tag is normally permitted to
   allow other text)
@@ -7707,7 +7707,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 |||
 |---|---|
 |Context|everywhere|
-|Tags|For name only unless otherwise stated: `alias`, `augments`, `borrows`, `callback`, `class` (for name and type), `constant` (for name and type), `enum` (for type), `event`, `external`, `fires`, `function`, `implements` (for type), `interface`, `lends`, `listens`, `member` (for name and type),  `memberof`, `memberof!`, `mixes`, `mixin`, `module` (for name and type), `name`, `namespace` (for name and type), `param` (for name and type), `property` (for name and type), `returns` (for type), `this`, `throws` (for type), `type` (for type), `typedef` (for name and type), `yields` (for type)|
+|Tags|For name only unless otherwise stated: `alias`, `augments`, `borrows`, `callback`, `class` (for name and type), `constant` (for name and type), `enum` (for type), `event`, `external`, `fires`, `function`, `implements` (for type), `interface`, `lends`, `listens`, `member` (for name and type),  `memberof`, `memberof!`, `mixes`, `mixin`, `modifies`, `module` (for name and type), `name`, `namespace` (for name and type), `param` (for name and type), `property` (for name and type), `returns` (for type), `this`, `throws` (for type), `type` (for type), `typedef` (for name and type), `yields` (for type)|
 |Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|
 |Options|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
@@ -7837,6 +7837,12 @@ function quux() {
  */
  let foo;
 // Message: Tag @type must have a type
+
+/**
+ * @modifies {bar|foo<}
+ */
+function quux (foo, bar, baz) {}
+// Message: Syntax error in type: bar|foo<
 ````
 
 The following patterns are not considered problems:
@@ -7978,6 +7984,11 @@ function quux() {
  * @typedef {number|string}
  */
 let UserDefinedGCCType;
+
+/**
+ * @modifies {foo|bar}
+ */
+function quux (foo, bar, baz) {}
 ````
 
 
