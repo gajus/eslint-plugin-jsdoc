@@ -138,10 +138,18 @@ const hasDefinedTypeReturnTag = (tag) => {
 
 const tagsWithMandatoryType = [
   // These both show curly brackets in the doc signature and examples
+  // "typeExpression"
   'implements',
+
+  // "typeName"
   'type',
 ];
 
+// All of these have a signature with "type" except for
+//  `augments`/`extends` ("namepath")
+//  `param`/`arg`/`argument` (no signature)
+//  `property`/`prop` (no signature)
+// `modifies` (undocumented)
 const tagsWithOptionalType = [
   // These have the example showing curly brackets but not in their doc signature, e.g.: https://jsdoc.app/tags-enum.html
   'enum',
@@ -151,6 +159,7 @@ const tagsWithOptionalType = [
 
   // These do not show curly brackets in either the signature or examples
   'augments', 'extends',
+
   'class', 'constructor',
   'constant', 'const',
 
@@ -170,6 +179,7 @@ const tagsWithOptionalType = [
 
   // Todo: Omit these GCC specific items when in non-GCC mode after landing https://github.com/gajus/eslint-plugin-jsdoc/issues/356
   // Shows the signature with curly brackets but not in the example
+  // "typeExpression"
   'package',
   'private',
   'protected',
@@ -184,16 +194,15 @@ const tagsWithOptionalType = [
   'modifies',
 ];
 
-// None of these show as having curly brackets for their name/namepath,
-//   except for `member`/`var` (which show in their example)
+// None of these show as having curly brackets for their name/namepath
 const namepathDefiningTags = [
-  // These appears to require a "name" in their signature, albeit these
-  //  are somewhat different from other "names" (including as described
+  // These appear to require a "name" in their signature, albeit these
+  //  are somewhat different from other "name"'s (including as described
   // at https://jsdoc.app/about-namepaths.html )
   'external', 'host',
   'event',
 
-  // These allow for "names" in their signature, but indicate as optional
+  // These allow for "name"'s in their signature, but indicate as optional
   'class', 'constructor',
   'constant', 'const',
   'function', 'func', 'method',
@@ -217,7 +226,7 @@ const tagsWithOptionalNamepath = [
   ...namepathDefiningTags,
 
   // `borrows` has a different format, however, so needs special parsing;
-  //   seems to require both, and as "namepaths"
+  //   seems to require both, and as "namepath"'s
   'borrows',
 
   // Signature seems to require a "name" (of an event) and no counter-examples
@@ -237,7 +246,7 @@ const tagsWithOptionalNamepath = [
   // Signature seems to require a "OtherObjectPath" with no counter-examples
   'mixes',
 
-  // Signature allows for namepath or text
+  // Signature allows for "namepath" or text
   'see',
 ];
 
