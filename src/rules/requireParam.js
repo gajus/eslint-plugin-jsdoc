@@ -63,16 +63,15 @@ export default iterateJsdoc(({
   };
 
   missingTags.forEach(({functionParameterName}, index) => {
-    utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, () => {
+    // Fix all missing tags the first time.
+    const fixer = index > 0 ? null : () => {
       if (!jsdoc.tags) {
         jsdoc.tags = [];
       }
 
-      // Fix all missing tags at the first time.
-      if (index === 0) {
-        fixAll(missingTags, jsdoc.tags);
-      }
-    });
+      fixAll(missingTags, jsdoc.tags);
+    };
+    utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, fixer);
   });
 }, {
   meta: {

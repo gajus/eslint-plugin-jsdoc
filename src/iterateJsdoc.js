@@ -99,12 +99,12 @@ const getUtils = (
   };
 
   utils.reportJSDoc = (msg, tag, handler) => {
-    report(msg, (fixer) => {
+    report(msg, handler ? (fixer) => {
       handler();
       const replacement = utils.stringify(jsdoc);
 
       return fixer.replaceText(jsdocNode, replacement);
-    }, tag);
+    } : null, tag);
   };
 
   utils.getFunctionParameterNames = () => {
