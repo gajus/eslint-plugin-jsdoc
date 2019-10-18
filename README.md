@@ -6377,6 +6377,27 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
+
+/**
+ *
+ */
+function quux ({bar, baz}, foo) {
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ *
+ */
+function quux (foo, {bar, baz}) {
+}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ *
+ */
+function quux ([bar, baz], foo) {
+}
+// Message: Missing JSDoc @param "foo" declaration.
 ````
 
 The following patterns are not considered problems:
