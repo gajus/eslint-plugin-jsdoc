@@ -112,6 +112,26 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
+      options: [
+        {
+          exemptedBy: ['notPresent'],
+        },
+      ],
+    },
   ],
   valid: [
     {

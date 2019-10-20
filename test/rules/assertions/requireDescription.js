@@ -297,6 +297,26 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+      options: [
+        {
+          exemptedBy: ['notPresent'],
+        },
+      ],
+    },
   ],
   valid: [
     {

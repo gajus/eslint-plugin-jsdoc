@@ -472,6 +472,26 @@ export default {
       }
       `,
     },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      options: [
+        {
+          exemptedBy: ['notPresent'],
+        },
+      ],
+    },
   ],
   valid: [
     {

@@ -4578,6 +4578,14 @@ function quux () {
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 // Options: [{"descriptionStyle":"any"}]
 // Message: Missing JSDoc block description or @description declaration.
+
+/**
+ *
+ */
+function quux () {
+}
+// Options: [{"exemptedBy":["notPresent"]}]
+// Message: Missing JSDoc block description.
 ````
 
 The following patterns are not considered problems:
@@ -4800,6 +4808,14 @@ class quux {
 
 }
 // Options: [{"contexts":["ClassDeclaration"]}]
+// Message: Missing JSDoc @example declaration.
+
+/**
+ *
+ */
+function quux () {
+}
+// Options: [{"exemptedBy":["notPresent"]}]
 // Message: Missing JSDoc @example declaration.
 ````
 
@@ -6398,6 +6414,14 @@ function quux (foo, {bar, baz}) {
 function quux ([bar, baz], foo) {
 }
 // Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+}
+// Options: [{"exemptedBy":["notPresent"]}]
+// Message: Missing JSDoc @param "foo" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -7403,6 +7427,15 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
 // Message: Unexpected tag `@returns`
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+  return 'bar';
+}
+// Options: [{"exemptedBy":["notPresent"]}]
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:
