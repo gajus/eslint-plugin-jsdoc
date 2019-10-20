@@ -53,7 +53,6 @@ const getIdentifier = function (node, globals, scope, opts) {
 let createSymbol = null;
 const getSymbol = function (node, globals, scope, opt) {
   const opts = opt || {};
-  let block = scope;
   switch (node.type) {
   case 'Identifier': {
     return getIdentifier(node, globals, scope, opts);
@@ -64,7 +63,7 @@ const getSymbol = function (node, globals, scope, opt) {
 
     /* istanbul ignore next */
     if (obj && propertyValue && obj.props[propertyValue]) {
-      block = obj.props[propertyValue];
+      const block = obj.props[propertyValue];
 
       return block;
     }

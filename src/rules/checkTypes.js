@@ -125,8 +125,6 @@ export default iterateJsdoc(({
       if (!ret) {
         node.name = nodeName;
       }
-
-      return ret;
     };
 
     traverse(typeAst, (node, parentName, parentNode) => {
@@ -182,7 +180,7 @@ export default iterateJsdoc(({
 
       // For fixer
       if (preferred) {
-        preferred = adjustNames(type, preferred, isGenericMatch, nodeName, node, parentNode);
+        adjustNames(type, preferred, isGenericMatch, nodeName, node, parentNode);
       }
     });
 

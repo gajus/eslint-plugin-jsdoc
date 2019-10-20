@@ -54,7 +54,7 @@ export default iterateJsdoc(({
       if (!preferredTagName) {
         return;
       }
-      if (preferredTagName && typeof preferredTagName === 'object') {
+      if (typeof preferredTagName === 'object') {
         ({message, replacement: preferredTagName} = preferredTagName);
       }
 
