@@ -122,8 +122,26 @@ const typeScriptTags = {
   template: [],
 };
 
+const undocumentedClosureTags = {
+  // These are in Closure source but not in jsdoc source nor in the Closure
+  //  docs: https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/parsing/Annotation.java
+  closurePrimitive: [],
+  customElement: [],
+  expose: [],
+  hidden: [],
+  idGenerator: [],
+  meaning: [],
+  mixinClass: [],
+  mixinFunction: [],
+  ngInject: [],
+  owner: [],
+  typeSummary: [],
+  wizaction: [],
+};
+
 const closureTags = {
   ...typeScriptTags,
+  ...undocumentedClosureTags,
 
   // From https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler
   // These are all recognized in https://github.com/jsdoc/jsdoc/blob/master/packages/jsdoc/lib/jsdoc/tag/dictionary/definitions.js
@@ -151,6 +169,10 @@ const closureTags = {
   polymer: [],
   polymerBehavior: [],
   preserve: [],
+
+  // Defined as a synonym of `interface` in jsdoc `definitions.js`
+  record: [],
+
   struct: [],
   suppress: [],
 

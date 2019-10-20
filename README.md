@@ -1451,7 +1451,6 @@ memberof
 memberof!
 mixes
 mixin
-modifies (Currently undocumented but in source)
 module
 name
 namespace
@@ -1479,6 +1478,8 @@ variation
 version
 yields
 ```
+
+`modifies` is also supported (see [source](https://github.com/jsdoc/jsdoc/blob/master/packages/jsdoc/lib/jsdoc/tag/dictionary/definitions.js#L594)) but is undocumented.
 
 The following synonyms are also recognized:
 
@@ -1512,12 +1513,12 @@ one may also use the following:
 template
 ```
 
-And for [Closure](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#nosideeffects-modifies-thisarguments),
+And for [Closure](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler),
 when `settings.jsdoc.mode` is set to `closure`, one may use the following (in
 addition to the jsdoc and TypeScript tags):
 
 ```
-define
+define (synonym of `const` per jsdoc source)
 dict
 export
 externs
@@ -1532,9 +1533,27 @@ nosideeffects
 polymer
 polymerBehavior
 preserve
+record (synonym of `interface` per jsdoc source)
 struct
 suppress
 unrestricted
+```
+
+...and these undocumented tags which are only in [source](https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/parsing/Annotation.java):
+
+```
+closurePrimitive
+customElement
+expose
+hidden
+idGenerator
+meaning
+mixinClass
+mixinFunction
+ngInject
+owner
+typeSummary
+wizaction
 ```
 
 Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreference` will automatically be considered as valid.
