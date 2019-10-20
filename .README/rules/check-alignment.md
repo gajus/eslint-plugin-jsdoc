@@ -4,7 +4,7 @@ Reports invalid alignment of JSDoc block asterisks.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|everywhere|
 |Tags|N/A|
 
 <!-- assertions checkAlignment -->

@@ -42,7 +42,7 @@ Accepts one optional options object with the following optional keys.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
 |Options|`publicOnly`, `require`, `contexts`, `exemptEmptyFunctions`|
 
