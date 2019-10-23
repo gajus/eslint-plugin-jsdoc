@@ -8,6 +8,7 @@ import getJSDocComment from './eslint/getJSDocComment';
  *
  * @param {object} commentNode
  * @param {string} indent Whitespace
+ * @param {boolean} [trim=true]
  * @returns {object}
  */
 const parseComment = (commentNode, indent, trim = true) => {
