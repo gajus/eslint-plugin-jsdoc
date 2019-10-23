@@ -6013,6 +6013,10 @@ enum Example {
   test = 123
 }
 // Options: [{"contexts":["TSEnumDeclaration"]}]
+
+const foo = {...{}};
+function bar() {}
+// Options: [{"exemptEmptyFunctions":false,"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
 ````
 
 

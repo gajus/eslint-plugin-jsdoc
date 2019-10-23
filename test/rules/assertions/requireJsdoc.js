@@ -2325,5 +2325,34 @@ export default {
       sourceType: 'module',
     },
   },
+  {
+    // https://github.com/gajus/eslint-plugin-jsdoc/issues/378
+    code: `
+    const foo = {...{}};
+    function bar() {}
+    `,
+    options: [
+      {
+        exemptEmptyFunctions: false,
+        publicOnly: true,
+        require: {
+          ArrowFunctionExpression: true,
+          ClassDeclaration: true,
+          ClassExpression: true,
+          FunctionDeclaration: true,
+          FunctionExpression: false,
+          MethodDefinition: true,
+        },
+      },
+    ],
+    parser: require.resolve('babel-eslint'),
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+      ecmaVersion: 2017,
+      sourceType: 'module',
+    },
+  },
   ],
 };

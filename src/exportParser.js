@@ -105,6 +105,9 @@ const getSymbol = function (node, globals, scope, opt) {
     const val = createNode();
     val.type = 'object';
     node.properties.forEach((prop) => {
+      if (prop.type === 'ExperimentalSpreadProperty') {
+        return;
+      }
       const propVal = getSymbol(prop.value, globals, scope, opts);
       /* istanbul ignore next */
       if (propVal) {
