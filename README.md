@@ -2125,6 +2125,21 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"augments":{"message":"@extends is to be used over @augments.","replacement":"extends"}}}}
+
+/**
+ * Registers the `target` class as a transient dependency; each time the dependency is resolved a new instance will be created.
+ *
+ * @param target - The class / constructor function to register as transient.
+ *
+ * @example ```ts
+@transient()
+class Foo { }
+```
+ * @param Time for a new tag
+ */
+export function transient<T>(target?: T): T {
+  // ...
+}
 ````
 
 
