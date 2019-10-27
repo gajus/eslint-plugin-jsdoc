@@ -9,7 +9,7 @@ export default iterateJsdoc(({
       report(
         `There must be an identifier after @${targetTagName} ${jsdocParameter.type === '' ? 'type' : 'tag'}.`,
         null,
-        jsdocParameter
+        jsdocParameter,
       );
     }
   });

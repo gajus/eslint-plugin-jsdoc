@@ -86,7 +86,7 @@ const getUtils = (
     minLines,
   },
   report,
-  context
+  context,
 ) => {
   const ancestors = context.getAncestors();
   const sourceCode = context.getSourceCode();
@@ -510,7 +510,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           jsdocNode,
           settings,
           report,
-          context
+          context,
         );
 
         if (

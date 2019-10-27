@@ -351,7 +351,7 @@ const hasReturnValue = (node) => {
     return node.cases.some(
       (someCase) => {
         return someCase.consequent.some(hasReturnValue);
-      }
+      },
     );
   }
   case 'ReturnStatement': {

@@ -260,7 +260,7 @@ export default {
             checkJsDoc(node);
           }
         },
-      }
+      },
     );
   },
 };

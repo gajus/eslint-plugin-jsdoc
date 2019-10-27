@@ -35,7 +35,7 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
       report(
         `@${targetTagName} "${tag.name}" does not match an existing function parameter.`,
         null,
-        tag
+        tag,
       );
 
       return true;
@@ -54,7 +54,7 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
       report(
         `Expected @${targetTagName} names to be "${expectedNames}". Got "${actualNames}".`,
         null,
-        tag
+        tag,
       );
 
       return true;
@@ -88,7 +88,7 @@ const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames 
           `@${targetTagName} path declaration ("${jsdocParameterName}") root node name ("${pathRootNodeName}") ` +
           `does not match previous real parameter name ("${lastRealParameter}").`,
           null,
-          jsdoc.tags[idx]
+          jsdoc.tags[idx],
         );
 
         return true;

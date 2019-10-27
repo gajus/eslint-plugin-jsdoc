@@ -1,7 +1,7 @@
 import {jsdocTags} from '../../../src/tagNames';
 
 const ALL_JSDOC_TAGS_COMMENT = '/** \n * @' + Object.keys(
-  jsdocTags
+  jsdocTags,
 ).reduce((string, tagName, idx) => {
   return string + (idx === 0 ? '' : '\n * @') + tagName;
 }, '') + '\n */';

@@ -9,7 +9,7 @@ export default iterateJsdoc(({
       report(
         `Missing JSDoc @${targetTagName} "${jsdocParameter.name}" description.`,
         null,
-        jsdocParameter
+        jsdocParameter,
       );
     }
   });

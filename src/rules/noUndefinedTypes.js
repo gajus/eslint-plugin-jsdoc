@@ -40,7 +40,7 @@ export default iterateJsdoc(({
       }
       if (typeof preferredType !== 'object') {
         utils.reportSettings(
-          'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
+          'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
         );
       }
 
@@ -72,7 +72,7 @@ export default iterateJsdoc(({
       classJsdoc.tags
         .filter((tag) => {
           return tag.tag === 'template';
-        })
+        }),
     );
   }
 
@@ -97,7 +97,7 @@ export default iterateJsdoc(({
           return arr;
         }, []).map(({name}) => {
           return name;
-        }) : []
+        }) : [],
     )
     .concat(extraTypes)
     .concat(typedefDeclarations)

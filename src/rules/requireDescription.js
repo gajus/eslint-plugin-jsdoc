@@ -56,7 +56,7 @@ export default iterateJsdoc(({
     report(
       descriptionStyle === 'any' ?
         `Missing JSDoc block description or @${targetTagName} declaration.` :
-        `Missing JSDoc @${targetTagName} declaration.`
+        `Missing JSDoc @${targetTagName} declaration.`,
     );
 
     return;

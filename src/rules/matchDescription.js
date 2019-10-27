@@ -32,7 +32,7 @@ export default iterateJsdoc(({
 
     const regex = new RegExp(
       stringOrDefault(tagValue, options.matchDescription),
-      'u'
+      'u',
     );
 
     if (!regex.test(description)) {

@@ -60,7 +60,7 @@ export default iterateJsdoc(({
           ].some(([checkPostFix, syn]) => {
             isGenericMatch = _.get(
               preferredTypes,
-              nodeName + checkPostFix
+              nodeName + checkPostFix,
             ) !== undefined &&
               syntax === syn;
             if (isGenericMatch) {
@@ -158,7 +158,7 @@ export default iterateJsdoc(({
           ]);
         } else {
           utils.reportSettings(
-            'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.'
+            'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
           );
 
           return;
@@ -194,8 +194,8 @@ export default iterateJsdoc(({
             jsdocNode,
             sourceCode.getText(jsdocNode).replace(
               `{${jsdocTag.type}}`,
-              `{${fixedType}}`
-            )
+              `{${fixedType}}`,
+            ),
           );
         };
 
@@ -211,7 +211,7 @@ export default iterateJsdoc(({
           message ? {
             tagName,
             tagValue,
-          } : null
+          } : null,
         );
       });
     }

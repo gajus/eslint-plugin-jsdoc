@@ -224,7 +224,7 @@ export default iterateJsdoc(({
         {
           column: startCol,
           line: startLine,
-        }
+        },
       );
     });
   });

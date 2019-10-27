@@ -32,7 +32,7 @@ export default iterateJsdoc(({
       }
       if (typeof preferredTag !== 'object') {
         utils.reportSettings(
-          'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.'
+          'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.',
         );
       }
 
@@ -62,7 +62,7 @@ export default iterateJsdoc(({
         report(message, (fixer) => {
           const replacement = sourceCode.getText(jsdocNode).replace(
             new RegExp(`@${_.escapeRegExp(tagName)}\\b`),
-            `@${preferredTagName}`
+            `@${preferredTagName}`,
           );
 
           return fixer.replaceText(jsdocNode, replacement);
