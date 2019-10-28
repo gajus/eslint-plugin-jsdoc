@@ -499,7 +499,9 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           return;
         }
 
-        const indent = ' '.repeat(jsdocNode.loc.start.column);
+        const sourceLine = sourceCode.lines[jsdocNode.loc.start.line - 1];
+
+        const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
 
         const jsdoc = parseComment(jsdocNode, indent);
 

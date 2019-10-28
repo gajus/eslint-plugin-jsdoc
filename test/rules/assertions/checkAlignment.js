@@ -6,7 +6,7 @@ export default {
           * @param {Number} foo
          */
         function quux (foo) {
-
+          // with spaces
         }
       `,
       errors: [
@@ -20,10 +20,36 @@ export default {
          * @param {Number} foo
          */
         function quux (foo) {
-
+          // with spaces
         }
       `,
     },
+    /* eslint-disable no-tabs */
+    {
+      code: `
+				/**
+				  * @param {Number} foo
+				 */
+				function quux (foo) {
+					// with tabs
+				}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      output: `
+				/**
+				 * @param {Number} foo
+				 */
+				function quux (foo) {
+					// with tabs
+				}
+      `,
+    },
+    /* eslint-enable no-tabs */
     {
       code: `
         /**
