@@ -422,7 +422,8 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
               return;
             }
 
-            const indent = ' '.repeat(comment.loc.start.column);
+            const sourceLine = sourceCode.lines[comment.loc.start.line - 1];
+            const indent = sourceLine.charAt(0).repeat(comment.loc.start.column);
             const jsdoc = parseComment(comment, indent, !ruleConfig.noTrim);
             const settings = getSettings(context);
             const report = makeReport(context, comment);
