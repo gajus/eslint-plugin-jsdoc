@@ -24,15 +24,14 @@ export default {
         }
       `,
     },
-    /* eslint-disable no-tabs */
     {
       code: `
-				/**
-				  * @param {Number} foo
-				 */
-				function quux (foo) {
-					// with tabs
-				}
+\t\t\t\t/**
+\t\t\t\t  * @param {Number} foo
+\t\t\t\t */
+\t\t\t\tfunction quux (foo) {
+\t\t\t\t\t// with tabs
+\t\t\t\t}
       `,
       errors: [
         {
@@ -41,15 +40,62 @@ export default {
         },
       ],
       output: `
-				/**
-				 * @param {Number} foo
-				 */
-				function quux (foo) {
-					// with tabs
-				}
+\t\t\t\t/**
+\t\t\t\t * @param {Number} foo
+\t\t\t\t */
+\t\t\t\tfunction quux (foo) {
+\t\t\t\t\t// with tabs
+\t\t\t\t}
       `,
     },
-    /* eslint-enable no-tabs */
+    {
+      code: `
+/**
+  * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      output: `
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+      `,
+    },
+    {
+      code: `
+/**
+* @param {Number} foo
+*/
+function quux (foo) {
+  // with spaces
+}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      output: `
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+      `,
+    },
     {
       code: `
         /**

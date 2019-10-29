@@ -338,7 +338,31 @@ The following patterns are considered problems:
   * @param {Number} foo
  */
 function quux (foo) {
+  // with spaces
+}
+// Message: Expected JSDoc block to be aligned.
 
+/**
+  * @param {Number} foo
+ */
+function quux (foo) {
+	// with tabs
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+  * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// Message: Expected JSDoc block to be aligned.
+
+/**
+* @param {Number} foo
+*/
+function quux (foo) {
+  // with spaces
 }
 // Message: Expected JSDoc block to be aligned.
 
