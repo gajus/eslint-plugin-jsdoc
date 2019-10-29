@@ -1,5 +1,8 @@
-import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
+
+const trimStart = (string) => {
+  return string.replace(/^\s+/, '');
+};
 
 export default iterateJsdoc(({
   sourceCode,
@@ -15,16 +18,16 @@ export default iterateJsdoc(({
       return line.split('*')[0];
     })
     .filter((line) => {
-      return !line.trim().length;
+      return !trimStart(line).length;
     });
 
   const fix = (fixer) => {
     const replacement = sourceCode.getText(jsdocNode).split('\n')
       .map((line, index) => {
         // Ignore the first line and all lines not starting with `*`
-        const ignored = !index || line.split('*')[0].trim().length;
+        const ignored = !index || trimStart(line.split('*')[0]).length;
 
-        return ignored ? line : `${indent} ${_.trimStart(line)}`;
+        return ignored ? line : `${indent} ${trimStart(line)}`;
       })
       .join('\n');
 

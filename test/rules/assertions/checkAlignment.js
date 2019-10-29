@@ -6,7 +6,7 @@ export default {
           * @param {Number} foo
          */
         function quux (foo) {
-
+          // with spaces
         }
       `,
       errors: [
@@ -20,8 +20,80 @@ export default {
          * @param {Number} foo
          */
         function quux (foo) {
-
+          // with spaces
         }
+      `,
+    },
+    {
+      code: `
+\t\t\t\t/**
+\t\t\t\t  * @param {Number} foo
+\t\t\t\t */
+\t\t\t\tfunction quux (foo) {
+\t\t\t\t\t// with tabs
+\t\t\t\t}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      output: `
+\t\t\t\t/**
+\t\t\t\t * @param {Number} foo
+\t\t\t\t */
+\t\t\t\tfunction quux (foo) {
+\t\t\t\t\t// with tabs
+\t\t\t\t}
+      `,
+    },
+    {
+      code: `
+/**
+  * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      output: `
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+      `,
+    },
+    {
+      code: `
+/**
+* @param {Number} foo
+*/
+function quux (foo) {
+  // with spaces
+}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      output: `
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
       `,
     },
     {
