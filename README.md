@@ -133,10 +133,14 @@ You can then selectively add to or override the recommended rules.
 ### Mode
 
 - `settings.jsdoc.mode` - Set to `jsdoc` (the default), `typescript`, or `closure`.
-  Currently is used for checking preferred tag names and in the `check-tag-names`
-  rule. For type-checking rules, the setting also determines which tags will be
-  checked for types (Closure allows types on some tags which the others do not,
-  so these tags will additionally be checked in "closure" mode).
+  Currently is used for the following:
+  - Determine valid tags for `check-tag-names`
+  - Only check `@template` in `no-undefined-types` for types in "closure" and
+    "typescript" modes
+  - For type-checking rules, determine which tags will be checked for types
+    (Closure allows types on some tags which the others do not,
+    so these tags will additionally be checked in "closure" mode)
+  - Check preferred tag names
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
@@ -3915,7 +3919,7 @@ In addition to considering globals found in code (or in ESLint-indicated
 name(path) definitions to also serve as a potential "type" for checking
 the tag types in the table below:
 
-`@callback`, `@class` (or `@constructor`), `@constant` (or `@const`), `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`), `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`, `@template` (for Closure/TypeScript), `@typedef`.
+`@callback`, `@class` (or `@constructor`), `@constant` (or `@const`), `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`), `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`, `@template` (for "closure" or "typescript" `settings.jsdoc.mode` only), `@typedef`.
 
 The following tags will also be checked but only when the mode is `closure`:
 
@@ -4018,6 +4022,7 @@ function quux(foo, bar, baz) {
  */
 function foo (bar) {
 };
+// Settings: {"jsdoc":{"mode":"closure"}}
 // Message: The type 'WRONG_TEMPLATE_TYPE' is undefined.
 
 class Foo {
@@ -4047,6 +4052,7 @@ class Bar {
   validTemplateReference () {
   }
 }
+// Settings: {"jsdoc":{"mode":"typescript"}}
 // Message: The type 'TEMPLATE_TYPE' is undefined.
 
 /**
@@ -4056,6 +4062,19 @@ var quux = {
 
 };
 // Message: The type 'strnig' is undefined.
+
+/**
+ * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
+ */
+class Foo {
+  /**
+   * @param {TEMPLATE_TYPE_A} baz
+   * @return {TEMPLATE_TYPE_B}
+   */
+  bar (baz) {
+  }
+}
+// Message: The type 'TEMPLATE_TYPE_A' is undefined.
 ````
 
 The following patterns are not considered problems:
@@ -4213,6 +4232,7 @@ function quux(foo, bar, baz) {
  */
 function foo (bar) {
 };
+// Settings: {"jsdoc":{"mode":"closure"}}
 
 /**
  * @template TEMPLATE_TYPE
@@ -4224,6 +4244,7 @@ class Foo {
   bar () {
   }
 }
+// Settings: {"jsdoc":{"mode":"closure"}}
 
 /**
  * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
@@ -4236,6 +4257,7 @@ class Foo {
   bar (baz) {
   }
 }
+// Settings: {"jsdoc":{"mode":"closure"}}
 
 /****/
 
