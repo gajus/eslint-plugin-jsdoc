@@ -163,6 +163,11 @@ export default {
           message: 'The type \'WRONG_TEMPLATE_TYPE\' is undefined.',
         },
       ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
     {
       code: `
@@ -208,6 +213,11 @@ export default {
           message: 'The type \'TEMPLATE_TYPE\' is undefined.',
         },
       ],
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
     },
     {
       code: `
@@ -227,6 +237,29 @@ export default {
       rules: {
         'no-undef': 'error',
       },
+    },
+    {
+      code: `
+      /**
+       * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
+       */
+      class Foo {
+        /**
+         * @param {TEMPLATE_TYPE_A} baz
+         * @return {TEMPLATE_TYPE_B}
+         */
+        bar (baz) {
+        }
+      }
+      `,
+      errors: [
+        {
+          message: 'The type \'TEMPLATE_TYPE_A\' is undefined.',
+        },
+        {
+          message: 'The type \'TEMPLATE_TYPE_B\' is undefined.',
+        },
+      ],
     },
   ],
   valid: [
@@ -472,6 +505,11 @@ export default {
       function foo (bar) {
       };
       `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
     {
       code: `
@@ -486,6 +524,11 @@ export default {
         }
       }
       `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
     {
       code: `
@@ -501,6 +544,11 @@ export default {
         }
       }
       `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
     {
       code: `
