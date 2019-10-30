@@ -393,12 +393,12 @@ const makeReport = (context, commentNode) => {
  * @typedef {ReturnType<typeof getSettings>} Settings
  * @typedef {(
  *   arg: {
- *     context: Object,
- *     sourceCode: Object,
+ *     context: object,
+ *     sourceCode: object,
  *     indent: string,
- *     jsdoc: Object,
- *     jsdocNode: Object,
- *     node: Object | null,
+ *     jsdoc: object,
+ *     jsdocNode: object,
+ *     node: object | null,
  *     report: ReturnType<typeof makeReport>,
  *     settings: Settings,
  *     utils: Utils,
