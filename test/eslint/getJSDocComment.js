@@ -43,5 +43,11 @@ ruleTester.run('getJSDocComment', rule, {
     /** Doc */
     var a = {};
     `,
+  }, {
+    code: `
+    /** Doc */
+    // eslint-disable-next-line no-var
+    var a = {};
+    `,
   }],
 });

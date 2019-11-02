@@ -98,15 +98,27 @@ const getJSDocComment = function (sourceCode, node, settings) {
    * @private
    */
   const findJSDocComment = (astNode) => {
-    const tokenBefore = sourceCode.getTokenBefore(astNode, {includeComments: true});
     const {minLines, maxLines} = settings;
+    let currentNode = astNode;
+    let tokenBefore = null;
+
+    while (currentNode) {
+      tokenBefore = sourceCode.getTokenBefore(currentNode, {includeComments: true});
+      if (!tokenBefore || !isCommentToken(tokenBefore)) {
+        return null;
+      }
+      if (tokenBefore.type === 'Line') {
+        currentNode = tokenBefore;
+        continue;
+      }
+      break;
+    }
+
     if (
-      tokenBefore &&
-      isCommentToken(tokenBefore) &&
       tokenBefore.type === 'Block' &&
       tokenBefore.value.charAt(0) === '*' &&
-      astNode.loc.start.line - tokenBefore.loc.end.line >= minLines &&
-      astNode.loc.start.line - tokenBefore.loc.end.line <= maxLines
+      currentNode.loc.start.line - tokenBefore.loc.end.line >= minLines &&
+      currentNode.loc.start.line - tokenBefore.loc.end.line <= maxLines
     ) {
       return tokenBefore;
     }

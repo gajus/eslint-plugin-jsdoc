@@ -504,7 +504,7 @@ export default {
       ],
       options: [{
         baseConfig: {
-          parser: require.resolve('@typescript-eslint/parser'),
+          parser: '@typescript-eslint/parser',
           parserOptions: {
             ecmaVersion: 6,
           },
@@ -695,7 +695,7 @@ export default {
       `,
       options: [{
         baseConfig: {
-          parser: require.resolve('@typescript-eslint/parser'),
+          parser: '@typescript-eslint/parser',
           parserOptions: {
             ecmaVersion: 6,
           },
