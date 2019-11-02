@@ -790,7 +790,7 @@ function f () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"parser":"/Users/brett/eslint-plugin-jsdoc/node_modules/@typescript-eslint/parser/dist/parser.js","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
+// Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
 // Message: @example error (semi): Missing semicolon.
 ````
 
@@ -885,7 +885,7 @@ function quux () {}
 function quux () {
 
 }
-// Options: [{"baseConfig":{"parser":"/Users/brett/eslint-plugin-jsdoc/node_modules/@typescript-eslint/parser/dist/parser.js","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
+// Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
 ````
 
 
