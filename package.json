@@ -20,7 +20,7 @@
     "@babel/plugin-transform-flow-strip-types": "^7.6.3",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
-    "@typescript-eslint/parser": "^2.6.0",
+    "@typescript-eslint/parser": "^2.6.1",
     "babel-eslint": "^10.0.3",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^5.2.0",
