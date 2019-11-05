@@ -4090,6 +4090,13 @@ class Foo {
   }
 }
 // Message: The type 'TEMPLATE_TYPE_A' is undefined.
+
+/**
+ * @param {...VAR_TYPE} varargs
+ */
+function quux (varargs) {
+}
+// Message: The type 'VAR_TYPE' is undefined.
 ````
 
 The following patterns are not considered problems:
@@ -4281,6 +4288,18 @@ class Foo {
  */
 function quux () {
 
+}
+
+/**
+ * @param {...} varargs
+ */
+function quux (varargs) {
+}
+
+/**
+ * @param {...number} varargs
+ */
+function quux (varargs) {
 }
 ````
 

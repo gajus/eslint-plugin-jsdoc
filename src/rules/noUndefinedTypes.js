@@ -119,7 +119,11 @@ export default iterateJsdoc(({
       return;
     }
 
-    traverse(parsedType, ({type, name}) => {
+    traverse(parsedType, (arg) => {
+      // In case of a variadic jsdoc arguments, `arg` is `null`,
+      // but `parsedType` will be the tag we should be operating on.
+      const {type, name} = arg || parsedType;
+
       if (type === 'NAME') {
         if (!allDefinedTypes.includes(name)) {
           report(`The type '${name}' is undefined.`, null, tag);

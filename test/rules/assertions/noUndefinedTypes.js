@@ -261,6 +261,21 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @param {...VAR_TYPE} varargs
+       */
+      function quux (varargs) {
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The type \'VAR_TYPE\' is undefined.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -561,6 +576,24 @@ export default {
 
       }
        `,
+    },
+    {
+      code: `
+      /**
+       * @param {...} varargs
+       */
+      function quux (varargs) {
+      }
+      `,
+    },
+    {
+      code: `
+      /**
+       * @param {...number} varargs
+       */
+      function quux (varargs) {
+      }
+      `,
     },
   ],
 };
