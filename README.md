@@ -658,11 +658,16 @@ syntax highlighting). The following options determine whether a given
   first such group treated as one to include. If no parenthetical group
   exists or matches, the whole matching expression will be used.
   An example might be ````"^```(?:js|javascript)([\\s\\S]*)```\s*$"````
-  to only match explicitly fenced JavaScript blocks.
+  to only match explicitly fenced JavaScript blocks. Defaults to only
+  using the `u` flag, so to add your own flags, encapsulate your
+  expression as a string, but like a literal, e.g., ````/```js.*```/gi````.
+  Note that specifying a global regular expression (i.e., with `g`) will
+  allow independent linting of matched blocks within a single `@example`.
 * `rejectExampleCodeRegex` - Regex blacklist which rejects
   non-lintable examples (has priority over `exampleCodeRegex`). An example
   might be ```"^`"``` to avoid linting fenced blocks which may indicate
-  a non-JavaScript language.
+  a non-JavaScript language. See `exampleCodeRegex` on how to add flags
+  if the default `u` is not sufficient.
 
 If neither is in use, all examples will be matched. Note also that even if
 `captionRequired` is not set, any initial `<caption>` will be stripped out
@@ -958,6 +963,44 @@ function quux () {
 }
 // Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
 // Message: @example error (semi): Missing semicolon.
+
+/**
+ * @example <caption>Say `Hello!` to the user.</caption>
+ * First, import the function:
+ *
+ * ```js
+ * import popup from './popup'
+ * const aConstInSameScope = 5;
+ * ```
+ *
+ * Then use it like this:
+ *
+ * ```js
+ * const aConstInSameScope = 7;
+ * popup('Hello!')
+ * ```
+ *
+ * Here is the result on macOS:
+ *
+ * ![Screenshot](path/to/screenshot.jpg)
+ */
+// Options: [{"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"/^```(?:js|javascript)\\n([\\s\\S]*?)```$/gm"}]
+// Message: @example error (semi): Missing semicolon.
+
+/**
+ * @example // begin
+ alert('hello')
+ // end
+ * And here is another example:
+ // begin
+ alert('there')
+ // end
+ */
+function quux () {
+
+}
+// Options: [{"baseConfig":{"rules":{"semi":["warn","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"/\\/\\/ begin[\\s\\S]*?// end/g","noDefaultExampleRules":true}]
+// Message: @example warning (semi): Missing semicolon.
 ````
 
 The following patterns are not considered problems:
@@ -972,6 +1015,16 @@ function quux () {
 
 }
 // Options: [{"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
+
+/**
+ * @example ```js
+ alert('hello');
+ ```
+ */
+function quux () {
+
+}
+// Options: [{"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"/```js([\\s\\S]*)```/"}]
 
 /**
  * @example

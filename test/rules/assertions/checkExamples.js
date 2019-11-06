@@ -553,6 +553,92 @@ export default {
         eslintrcForExamples: false,
       }],
     },
+    {
+      code: `
+      /**
+       * @example <caption>Say \`Hello!\` to the user.</caption>
+       * First, import the function:
+       *
+       * \`\`\`js
+       * import popup from './popup'
+       * const aConstInSameScope = 5;
+       * \`\`\`
+       *
+       * Then use it like this:
+       *
+       * \`\`\`js
+       * const aConstInSameScope = 7;
+       * popup('Hello!')
+       * \`\`\`
+       *
+       * Here is the result on macOS:
+       *
+       * ![Screenshot](path/to/screenshot.jpg)
+       */
+      `,
+      errors: [
+        {
+          line: 7,
+          message: '@example error (semi): Missing semicolon.',
+        },
+        {
+          line: 15,
+          message: '@example error (semi): Missing semicolon.',
+        },
+      ],
+      options: [
+        {
+          baseConfig: {
+            parserOptions: {
+              ecmaVersion: 2015,
+              sourceType: 'module',
+            },
+            rules: {
+              semi: ['error', 'always'],
+            },
+          },
+          eslintrcForExamples: false,
+          exampleCodeRegex: '/^```(?:js|javascript)\\n([\\s\\S]*?)```$/gm',
+        },
+      ],
+    },
+
+    {
+      code: `
+          /**
+           * @example // begin
+           alert('hello')
+           // end
+           * And here is another example:
+           // begin
+           alert('there')
+           // end
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@example warning (semi): Missing semicolon.',
+        },
+        {
+          line: 8,
+          message: '@example warning (semi): Missing semicolon.',
+        },
+      ],
+      options: [{
+        baseConfig: {
+          rules: {
+            semi: ['warn', 'always'],
+          },
+        },
+        eslintrcForExamples: false,
+        exampleCodeRegex: '/\\/\\/ begin[\\s\\S]*?// end/g',
+        noDefaultExampleRules: true,
+      }],
+    },
   ],
   valid: [
     {
@@ -574,6 +660,27 @@ export default {
         },
         eslintrcForExamples: false,
         exampleCodeRegex: '```js([\\s\\S]*)```',
+      }],
+    },
+    {
+      code: `
+          /**
+           * @example \`\`\`js
+           alert('hello');
+           \`\`\`
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        baseConfig: {
+          rules: {
+            semi: ['error', 'always'],
+          },
+        },
+        eslintrcForExamples: false,
+        exampleCodeRegex: '/```js([\\s\\S]*)```/',
       }],
     },
     {
