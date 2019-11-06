@@ -14,6 +14,22 @@ const countChars = (str, ch) => {
   return (str.match(new RegExp(escapeStringRegexp(ch), 'gu')) || []).length;
 };
 
+const getRegexFromString = (regexString) => {
+  const match = regexString.match(/^\/(.*)\/([gimyus]*)$/u);
+  let flags = 'u';
+  let regex = regexString;
+  if (match) {
+    [, regex, flags] = match;
+    if (!flags) {
+      flags = 'u';
+    }
+    const uniqueFlags = [...new Set(flags)];
+    flags = uniqueFlags.join('');
+  }
+
+  return new RegExp(regex, flags);
+};
+
 export default iterateJsdoc(({
   report,
   utils,
@@ -67,8 +83,12 @@ export default iterateJsdoc(({
     'padded-blocks': 0,
   };
 
-  exampleCodeRegex = exampleCodeRegex && new RegExp(exampleCodeRegex, 'u');
-  rejectExampleCodeRegex = rejectExampleCodeRegex && new RegExp(rejectExampleCodeRegex, 'u');
+  if (exampleCodeRegex) {
+    exampleCodeRegex = getRegexFromString(exampleCodeRegex);
+  }
+  if (rejectExampleCodeRegex) {
+    rejectExampleCodeRegex = getRegexFromString(rejectExampleCodeRegex);
+  }
 
   utils.forEachPreferredTag('example', (tag, targetTagName) => {
     // If a space is present, we should ignore it
@@ -90,40 +110,40 @@ export default iterateJsdoc(({
       return;
     }
 
-    let nonJSPrefacingLines = 0;
-    let nonJSPrefacingCols = 0;
-
+    const sources = [];
     if (exampleCodeRegex) {
-      const idx = source.search(exampleCodeRegex);
+      let nonJSPrefacingCols = 0;
+      let nonJSPrefacingLines = 0;
 
-      // Strip out anything preceding user regex match (can affect line numbering)
-      const preMatch = source.slice(0, idx);
+      let startingIndex = 0;
+      let lastStringCount = 0;
 
-      const preMatchLines = countChars(preMatch, '\n');
+      let exampleCode;
+      exampleCodeRegex.lastIndex = 0;
+      while ((exampleCode = exampleCodeRegex.exec(source)) !== null) {
+        const {index, 0: n0, 1: n1} = exampleCode;
 
-      nonJSPrefacingLines = preMatchLines;
+        // Count anything preceding user regex match (can affect line numbering)
+        const preMatch = source.slice(startingIndex, index);
 
-      const colDelta = preMatchLines ?
-        preMatch.slice(preMatch.lastIndexOf('\n') + 1).length :
-        preMatch.length;
+        const preMatchLines = countChars(preMatch, '\n');
 
-      // Get rid of text preceding user regex match (even if it leaves valid JS, it
-      //   could cause us to count newlines twice)
-      source = source.slice(idx);
+        const colDelta = preMatchLines ?
+          preMatch.slice(preMatch.lastIndexOf('\n') + 1).length :
+          preMatch.length;
 
-      source = source.replace(exampleCodeRegex, (n0, n1) => {
         let nonJSPreface;
         let nonJSPrefaceLineCount;
         if (n1) {
-          const index = n0.indexOf(n1);
-          nonJSPreface = n0.slice(0, index);
+          const idx = n0.indexOf(n1);
+          nonJSPreface = n0.slice(0, idx);
           nonJSPrefaceLineCount = countChars(nonJSPreface, '\n');
         } else {
           nonJSPreface = '';
           nonJSPrefaceLineCount = 0;
         }
 
-        nonJSPrefacingLines += nonJSPrefaceLineCount;
+        nonJSPrefacingLines += lastStringCount + preMatchLines + nonJSPrefaceLineCount;
 
         // Ignore `preMatch` delta if newlines here
         if (nonJSPrefaceLineCount) {
@@ -134,36 +154,37 @@ export default iterateJsdoc(({
           nonJSPrefacingCols += colDelta + nonJSPreface.length;
         }
 
-        return n1 || n0;
+        const string = n1 || n0;
+        sources.push({
+          nonJSPrefacingCols,
+          nonJSPrefacingLines,
+          string,
+        });
+        startingIndex = exampleCodeRegex.lastIndex;
+        lastStringCount = countChars(string, '\n');
+        if (!exampleCodeRegex.global) {
+          break;
+        }
+      }
+    } else {
+      sources.push({
+        nonJSPrefacingCols: 0,
+        nonJSPrefacingLines: 0,
+        string: source,
       });
     }
 
-    // Programmatic ESLint API: https://eslint.org/docs/developer-guide/nodejs-api
-    const cli = new CLIEngine({
-      allowInlineConfig,
-      baseConfig,
-      configFile,
-      reportUnusedDisableDirectives,
-      rulePaths,
-      rules,
-      useEslintrc: eslintrcForExamples,
-    });
-
-    let messages;
-
-    if (paddedIndent) {
-      source = source.replace(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gu'), '\n');
-    }
-
-    if (filename) {
-      const config = cli.getConfigForFile(filename);
-
-      // We need a new instance to ensure that the rules that may only
-      //  be available to `filename` (if it has its own `.eslintrc`),
-      //  will be defined.
-      const cliFile = new CLIEngine({
+    // Todo: Make fixable
+    // Todo: Fix whitespace indent
+    const checkRules = function ({
+      nonJSPrefacingCols,
+      nonJSPrefacingLines,
+      string,
+    }) {
+      // Programmatic ESLint API: https://eslint.org/docs/developer-guide/nodejs-api
+      const cli = new CLIEngine({
         allowInlineConfig,
-        baseConfig: config,
+        baseConfig,
         configFile,
         reportUnusedDisableDirectives,
         rulePaths,
@@ -171,63 +192,87 @@ export default iterateJsdoc(({
         useEslintrc: eslintrcForExamples,
       });
 
-      const linter = new Linter();
+      let messages;
 
-      // Force external rules to become available on `cli`
-      try {
-        cliFile.executeOnText('');
-      } catch (error) {
-        // Ignore
+      let src = string;
+      if (paddedIndent) {
+        src = src.replace(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gu'), '\n');
       }
 
-      const linterRules = [...cliFile.getRules().entries()].reduce((obj, [key, val]) => {
-        obj[key] = val;
+      if (filename) {
+        const config = cli.getConfigForFile(filename);
 
-        return obj;
-      }, {});
+        // We need a new instance to ensure that the rules that may only
+        //  be available to `filename` (if it has its own `.eslintrc`),
+        //  will be defined.
+        const cliFile = new CLIEngine({
+          allowInlineConfig,
+          baseConfig: config,
+          configFile,
+          reportUnusedDisableDirectives,
+          rulePaths,
+          rules,
+          useEslintrc: eslintrcForExamples,
+        });
 
-      linter.defineRules(linterRules);
+        const linter = new Linter();
 
-      if (config.parser) {
-        // eslint-disable-next-line global-require, import/no-dynamic-require
-        linter.defineParser(config.parser, require(config.parser));
+        // Force external rules to become available on `cli`
+        try {
+          cliFile.executeOnText('');
+        } catch (error) {
+          // Ignore
+        }
+
+        const linterRules = [...cliFile.getRules().entries()].reduce((obj, [key, val]) => {
+          obj[key] = val;
+
+          return obj;
+        }, {});
+
+        linter.defineRules(linterRules);
+
+        if (config.parser) {
+          // eslint-disable-next-line global-require, import/no-dynamic-require
+          linter.defineParser(config.parser, require(config.parser));
+        }
+
+        // Could also support `disableFixes` and `allowInlineConfig`
+        messages = linter.verify(src, config, {
+          filename,
+          reportUnusedDisableDirectives,
+        });
+      } else {
+        ({results: [{messages}]} =
+          cli.executeOnText(src));
       }
 
-      // Could also support `disableFixes` and `allowInlineConfig`
-      messages = linter.verify(source, config, {
-        filename,
-        reportUnusedDisableDirectives,
+      // NOTE: `tag.line` can be 0 if of form `/** @tag ... */`
+      const codeStartLine = tag.line + nonJSPrefacingLines;
+      const codeStartCol = likelyNestedJSDocIndentSpace;
+
+      messages.forEach(({message, line, column, severity, ruleId}) => {
+        const startLine = codeStartLine + line + zeroBasedLineIndexAdjust;
+        const startCol = codeStartCol + (
+
+          // This might not work for line 0, but line 0 is unlikely for examples
+          line <= 1 ? nonJSPrefacingCols + firstLinePrefixLength : preTagSpaceLength
+        ) + column;
+
+        report(
+          '@' + targetTagName + ' ' + (severity === 2 ? 'error' : 'warning') +
+            (ruleId ? ' (' + ruleId + ')' : '') + ': ' +
+            message,
+          null,
+          {
+            column: startCol,
+            line: startLine,
+          },
+        );
       });
-    } else {
-      ({results: [{messages}]} =
-        cli.executeOnText(source));
-    }
+    };
 
-    // Make fixable, fix whitespace indent, allow global regexes
-    // NOTE: `tag.line` can be 0 if of form `/** @tag ... */`
-    const codeStartLine = tag.line + nonJSPrefacingLines;
-    const codeStartCol = likelyNestedJSDocIndentSpace;
-
-    messages.forEach(({message, line, column, severity, ruleId}) => {
-      const startLine = codeStartLine + line + zeroBasedLineIndexAdjust;
-      const startCol = codeStartCol + (
-
-        // This might not work for line 0, but line 0 is unlikely for examples
-        line <= 1 ? nonJSPrefacingCols + firstLinePrefixLength : preTagSpaceLength
-      ) + column;
-
-      // Could perhaps make fixable
-      report(
-        '@' + targetTagName + ' ' + (severity === 2 ? 'error' : 'warning') +
-          (ruleId ? ' (' + ruleId + ')' : '') + ': ' +
-          message,
-        null,
-        {
-          column: startCol,
-          line: startLine,
-        },
-      );
-    });
+    sources.forEach(checkRules);
   });
 }, {
   iterateAllJsdocs: true,
