@@ -14,12 +14,12 @@
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "@babel/node": "^7.6.3",
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.0",
+    "@babel/node": "^7.7.0",
     "@babel/plugin-transform-flow-strip-types": "^7.6.3",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/register": "^7.6.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/register": "^7.7.0",
     "@typescript-eslint/parser": "^2.6.1",
     "babel-eslint": "^10.0.3",
     "babel-plugin-add-module-exports": "^1.0.2",
@@ -33,7 +33,7 @@
     "mocha": "^6.2.2",
     "nyc": "^14.1.1",
     "semantic-release": "^15.13.30",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.2"
   },
   "engines": {
     "node": ">=6"
