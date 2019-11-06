@@ -40,7 +40,7 @@ export default iterateJsdoc(({
       }
     } else if (jsdocTag.description.startsWith('-')) {
       report(`There must be no hyphen before @${targetTagName} description.`, (fixer) => {
-        const [unwantedPart] = /-\s*/.exec(jsdocTag.description);
+        const [unwantedPart] = /-\s*/u.exec(jsdocTag.description);
 
         const replacement = sourceCode
           .getText(jsdocNode)

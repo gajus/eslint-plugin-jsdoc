@@ -104,7 +104,7 @@ export default iterateJsdoc(({
           parentNode.meta.syntax = 'SQUARE_BRACKET';
           ret = 'Array';
         } else {
-          const dotBracketEnd = preferred.match(/\.(?:<>)?$/);
+          const dotBracketEnd = preferred.match(/\.(?:<>)?$/u);
           if (dotBracketEnd) {
             parentNode.meta.syntax = 'ANGLE_BRACKET_WITH_DOT';
             ret = preferred.slice(0, -dotBracketEnd[0].length);
@@ -119,7 +119,7 @@ export default iterateJsdoc(({
       } else if (type === 'ANY') {
         node.type = 'NAME';
       }
-      node.name = ret.replace(/(?:\.|<>|\.<>|\[])$/, '');
+      node.name = ret.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
 
       // For bare pseudo-types like `<>`
       if (!ret) {

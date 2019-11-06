@@ -14,7 +14,7 @@ import getJSDocComment from './eslint/getJSDocComment';
 const parseComment = (commentNode, indent, trim = true) => {
   const skipSeeLink = (parser) => {
     return (str, data) => {
-      if (data.tag === 'see' && str.match(/{@link.+?}/)) {
+      if (data.tag === 'see' && str.match(/\{@link.+?\}/u)) {
         return null;
       }
 
@@ -51,7 +51,7 @@ const parseComment = (commentNode, indent, trim = true) => {
           }
 
           // Tweak original regex to capture only single optional space
-          const result = str.match(/^\s?((.|\s)+)?/);
+          const result = str.match(/^\s?((.|\s)+)?/u);
 
           // Always has at least whitespace due to `indent` we've added
           /* istanbul ignore next */

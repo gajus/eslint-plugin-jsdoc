@@ -5,13 +5,13 @@ import warnRemovedSettings from '../warnRemovedSettings';
 const zeroBasedLineIndexAdjust = -1;
 const likelyNestedJSDocIndentSpace = 1;
 const preTagSpaceLength = 1;
-const hasCaptionRegex = /^\s*<caption>(.*?)<\/caption>/;
+const hasCaptionRegex = /^\s*<caption>(.*?)<\/caption>/u;
 
 const escapeStringRegexp = (str) => {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return str.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
 };
 const countChars = (str, ch) => {
-  return (str.match(new RegExp(escapeStringRegexp(ch), 'g')) || []).length;
+  return (str.match(new RegExp(escapeStringRegexp(ch), 'gu')) || []).length;
 };
 
 export default iterateJsdoc(({
@@ -67,8 +67,8 @@ export default iterateJsdoc(({
     'padded-blocks': 0,
   };
 
-  exampleCodeRegex = exampleCodeRegex && new RegExp(exampleCodeRegex, '');
-  rejectExampleCodeRegex = rejectExampleCodeRegex && new RegExp(rejectExampleCodeRegex, '');
+  exampleCodeRegex = exampleCodeRegex && new RegExp(exampleCodeRegex, 'u');
+  rejectExampleCodeRegex = rejectExampleCodeRegex && new RegExp(rejectExampleCodeRegex, 'u');
 
   utils.forEachPreferredTag('example', (tag, targetTagName) => {
     // If a space is present, we should ignore it
@@ -152,7 +152,7 @@ export default iterateJsdoc(({
     let messages;
 
     if (paddedIndent) {
-      source = source.replace(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'g'), '\n');
+      source = source.replace(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gu'), '\n');
     }
 
     if (filename) {
@@ -203,6 +203,7 @@ export default iterateJsdoc(({
         cli.executeOnText(source));
     }
 
+    // Make fixable, fix whitespace indent, allow global regexes
     // NOTE: `tag.line` can be 0 if of form `/** @tag ... */`
     const codeStartLine = tag.line + nonJSPrefacingLines;
     const codeStartCol = likelyNestedJSDocIndentSpace;

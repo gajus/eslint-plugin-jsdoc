@@ -4,8 +4,8 @@ import iterateJsdoc from '../iterateJsdoc';
 
 const extractParagraphs = (text) => {
   // Todo [engine:node@>8.11.0]: Uncomment following line with neg. lookbehind instead
-  // return text.split(/(?<![;:])\n\n/);
-  return [...text].reverse().join('').split(/\n\n(?![;:])/).map((par) => {
+  // return text.split(/(?<![;:])\n\n/u);
+  return [...text].reverse().join('').split(/\n\n(?![;:])/u).map((par) => {
     return [...par].reverse().join('');
   }).reverse();
 };
@@ -14,20 +14,20 @@ const extractSentences = (text) => {
   const txt = text
 
     // Remove all {} tags.
-    .replace(/\{[\s\S]*?\}\s*/g, '');
+    .replace(/\{[\s\S]*?\}\s*/gu, '');
 
-  const sentenceEndGrouping = /([.?!])(?:\s+|$)/;
+  const sentenceEndGrouping = /([.?!])(?:\s+|$)/u;
   const puncts = RegExtras(sentenceEndGrouping).map(txt, (punct) => {
     return punct;
   });
 
   return txt
 
-    .split(/[.?!](?:\s+|$)/)
+    .split(/[.?!](?:\s+|$)/u)
 
     // Re-add the dot.
     .map((sentence, idx) => {
-      return /^\s*$/.test(sentence) ? sentence : `${sentence}${puncts[idx] || ''}`;
+      return /^\s*$/u.test(sentence) ? sentence : `${sentence}${puncts[idx] || ''}`;
     });
 };
 
@@ -37,11 +37,11 @@ const isNewLinePrecededByAPeriod = (text) => {
   const lines = text.split('\n');
 
   return !lines.some((line) => {
-    if (typeof lastLineEndsSentence === 'boolean' && !lastLineEndsSentence && /^[A-Z]/.test(line)) {
+    if (typeof lastLineEndsSentence === 'boolean' && !lastLineEndsSentence && /^[A-Z]/u.test(line)) {
       return true;
     }
 
-    lastLineEndsSentence = /[.:?!]$/.test(line);
+    lastLineEndsSentence = /[.:?!]$/u.test(line);
 
     return false;
   });
@@ -68,19 +68,19 @@ const validateDescription = (description, reportOrig, jsdocNode, sourceCode, tag
     const fix = (fixer) => {
       let text = sourceCode.getText(jsdocNode);
 
-      if (!/[.:?!]$/.test(paragraph)) {
+      if (!/[.:?!]$/u.test(paragraph)) {
         const line = _.last(paragraph.split('\n'));
 
-        text = text.replace(new RegExp(`${_.escapeRegExp(line)}$`, 'm'), `${line}.`);
+        text = text.replace(new RegExp(`${_.escapeRegExp(line)}$`, 'mu'), `${line}.`);
       }
 
       for (const sentence of sentences.filter((sentence_) => {
-        return !(/^\s*$/).test(sentence_) && !isCapitalized(sentence_);
+        return !(/^\s*$/u).test(sentence_) && !isCapitalized(sentence_);
       })) {
         const beginning = sentence.split('\n')[0];
 
         if (tag.tag) {
-          const reg = new RegExp(`(@${_.escapeRegExp(tag.tag)}.*)${_.escapeRegExp(beginning)}`);
+          const reg = new RegExp(`(@${_.escapeRegExp(tag.tag)}.*)${_.escapeRegExp(beginning)}`, 'u');
 
           text = text.replace(reg, ($0, $1) => {
             return $1 + capitalize(beginning);
@@ -102,12 +102,12 @@ const validateDescription = (description, reportOrig, jsdocNode, sourceCode, tag
     };
 
     if (sentences.some((sentence) => {
-      return !(/^\s*$/).test(sentence) && !isCapitalized(sentence);
+      return !(/^\s*$/u).test(sentence) && !isCapitalized(sentence);
     })) {
       report('Sentence should start with an uppercase character.', fix, tag);
     }
 
-    if (!/[.!?]$/.test(paragraph)) {
+    if (!/[.!?]$/u.test(paragraph)) {
       report('Sentence must end with a period.', fix, tag);
 
       return true;

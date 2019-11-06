@@ -8,10 +8,10 @@ import glob from 'glob';
 import Gitdown from 'gitdown';
 
 const trimCode = (code) => {
-  let lines = code.replace(/^\n/, '').trimEnd().split('\n');
+  let lines = code.replace(/^\n/u, '').trimEnd().split('\n');
 
-  const firsLineIndentation = lines[0].match(/^\s+/);
-  const lastLineIndentation = lines[lines.length - 1].match(/^\s+/);
+  const firsLineIndentation = lines[0].match(/^\s+/u);
+  const lastLineIndentation = lines[lines.length - 1].match(/^\s+/u);
 
   const firstIndentSize = firsLineIndentation ? firsLineIndentation[0].length : 0;
   const lastIndentSize = lastLineIndentation ? lastLineIndentation[0].length : 0;
@@ -69,7 +69,7 @@ const getAssertions = () => {
 
 const getSomeBranch = () => {
   const gitConfig = fs.readFileSync(path.join(__dirname, '../../.git/config')).toString();
-  const [, branch] = /\[branch "([^"]+)"\]/.exec(gitConfig) || [];
+  const [, branch] = /\[branch "([^"]+)"\]/u.exec(gitConfig) || [];
 
   return branch;
 };
@@ -86,8 +86,8 @@ const generateReadme = async () => {
   });
   let documentBody = await gitdown.get();
 
-  documentBody = documentBody.replace(/<!-- assertions ([a-z]+?) -->/ig, (assertionsBlock) => {
-    const ruleName = assertionsBlock.match(/assertions ([a-z]+)/i)[1];
+  documentBody = documentBody.replace(/<!-- assertions ([a-z]+?) -->/gui, (assertionsBlock) => {
+    const ruleName = assertionsBlock.match(/assertions ([a-z]+)/ui)[1];
     const ruleAssertions = assertions[ruleName];
 
     if (!ruleAssertions) {

@@ -418,7 +418,7 @@ const hasReturnValue = (node) => {
 /** @param {string} tag */
 /*
 const isInlineTag = (tag) => {
-  return /^(@link|@linkcode|@linkplain|@tutorial) /.test(tag);
+  return /^(@link|@linkcode|@linkplain|@tutorial) /u.test(tag);
 };
 */
 
@@ -515,7 +515,7 @@ const getAncestor = (sourceCode, nde, depth, idx = 0) => {
 };
 
 const getIndent = (sourceCode) => {
-  let indent = sourceCode.text.match(/^\n*([ \t]+)/);
+  let indent = sourceCode.text.match(/^\n*([ \t]+)/u);
   /* istanbul ignore next */
   indent = indent ? indent[1] + indent[1].charAt() : ' ';
 

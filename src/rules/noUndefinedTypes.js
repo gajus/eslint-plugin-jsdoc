@@ -12,7 +12,7 @@ const extraTypes = [
 ];
 
 const stripPseudoTypes = (str) => {
-  return str && str.replace(/(?:\.|<>|\.<>|\[])$/, '');
+  return str && str.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
 };
 
 export default iterateJsdoc(({

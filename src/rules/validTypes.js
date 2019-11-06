@@ -2,7 +2,7 @@ import {parse} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
 import warnRemovedSettings from '../warnRemovedSettings';
 
-const asExpression = /as\s+/;
+const asExpression = /as\s+/u;
 
 export default iterateJsdoc(({
   jsdoc,
