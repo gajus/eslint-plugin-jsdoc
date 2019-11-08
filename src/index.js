@@ -7,6 +7,7 @@ import checkParamNames from './rules/checkParamNames';
 import checkSyntax from './rules/checkSyntax';
 import checkTagNames from './rules/checkTagNames';
 import checkTypes from './rules/checkTypes';
+import checkValues from './rules/checkValues';
 import emptyTags from './rules/emptyTags';
 import implementsOnClasses from './rules/implementsOnClasses';
 import matchDescription from './rules/matchDescription';
@@ -41,6 +42,7 @@ export default {
         'jsdoc/check-syntax': 'off',
         'jsdoc/check-tag-names': 'warn',
         'jsdoc/check-types': 'warn',
+        'jsdoc/check-values': 'warn',
         'jsdoc/empty-tags': 'warn',
         'jsdoc/implements-on-classes': 'warn',
         'jsdoc/match-description': 'off',
@@ -73,6 +75,7 @@ export default {
     'check-syntax': checkSyntax,
     'check-tag-names': checkTagNames,
     'check-types': checkTypes,
+    'check-values': checkValues,
     'empty-tags': emptyTags,
     'implements-on-classes': implementsOnClasses,
     'match-description': matchDescription,

@@ -322,6 +322,7 @@ only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
 {"gitdown": "include", "file": "./rules/check-syntax.md"}
 {"gitdown": "include", "file": "./rules/check-tag-names.md"}
 {"gitdown": "include", "file": "./rules/check-types.md"}
+{"gitdown": "include", "file": "./rules/check-values.md"}
 {"gitdown": "include", "file": "./rules/empty-tags.md"}
 {"gitdown": "include", "file": "./rules/implements-on-classes.md"}
 {"gitdown": "include", "file": "./rules/match-description.md"}

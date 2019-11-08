@@ -16,6 +16,7 @@ const ruleTester = new RuleTester();
   'check-syntax',
   'check-tag-names',
   'check-types',
+  'check-values',
   'empty-tags',
   'implements-on-classes',
   'match-description',
