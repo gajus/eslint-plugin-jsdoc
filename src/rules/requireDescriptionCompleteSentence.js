@@ -41,7 +41,7 @@ const isNewLinePrecededByAPeriod = (text) => {
       return true;
     }
 
-    lastLineEndsSentence = /[.:?!]$/u.test(line);
+    lastLineEndsSentence = /[.:?!|]$/u.test(line);
 
     return false;
   });
@@ -49,6 +49,10 @@ const isNewLinePrecededByAPeriod = (text) => {
 
 const isCapitalized = (str) => {
   return str[0] === str[0].toUpperCase();
+};
+
+const isTable = (str) => {
+  return str.charAt() === '|';
 };
 
 const capitalize = (str) => {
@@ -75,7 +79,7 @@ const validateDescription = (description, reportOrig, jsdocNode, sourceCode, tag
       }
 
       for (const sentence of sentences.filter((sentence_) => {
-        return !(/^\s*$/u).test(sentence_) && !isCapitalized(sentence_);
+        return !(/^\s*$/u).test(sentence_) && !isCapitalized(sentence_) && !isTable(sentence_);
       })) {
         const beginning = sentence.split('\n')[0];
 
@@ -102,12 +106,12 @@ const validateDescription = (description, reportOrig, jsdocNode, sourceCode, tag
     };
 
     if (sentences.some((sentence) => {
-      return !(/^\s*$/u).test(sentence) && !isCapitalized(sentence);
+      return !(/^\s*$/u).test(sentence) && !isCapitalized(sentence) && !isTable(sentence);
     })) {
       report('Sentence should start with an uppercase character.', fix, tag);
     }
 
-    if (!/[.!?]$/u.test(paragraph)) {
+    if (!/[.!?|]$/u.test(paragraph)) {
       report('Sentence must end with a period.', fix, tag);
 
       return true;

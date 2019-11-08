@@ -897,5 +897,17 @@ export default {
       */
 `,
     },
+    {
+      code: `
+      /**
+       * This method is working on 2 steps.
+       *
+       * | Step | Comment     |
+       * |------|-------------|
+       * |   1  | do it       |
+       * |   2  | do it again |
+       */
+      `,
+    },
   ],
 };

@@ -4778,6 +4778,15 @@ function quux (foo) {
 * 1) The main Item;
 * 2) All its variants.
 */
+
+/**
+ * This method is working on 2 steps.
+ *
+ * | Step | Comment     |
+ * |------|-------------|
+ * |   1  | do it       |
+ * |   2  | do it again |
+ */
 ````
 
 
