@@ -314,6 +314,7 @@ only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
 
 ## Rules
 
+{"gitdown": "include", "file": "./rules/check-access.md"}
 {"gitdown": "include", "file": "./rules/check-alignment.md"}
 {"gitdown": "include", "file": "./rules/check-examples.md"}
 {"gitdown": "include", "file": "./rules/check-indentation.md"}

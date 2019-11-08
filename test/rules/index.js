@@ -8,6 +8,7 @@ const ruleTester = new RuleTester();
 
 // eslint-disable-next-line no-process-env
 (process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : [
+  'check-access',
   'check-alignment',
   'check-examples',
   'check-indentation',

@@ -1,4 +1,5 @@
 /* eslint-disable import/max-dependencies */
+import checkAccess from './rules/checkAccess';
 import checkAlignment from './rules/checkAlignment';
 import checkExamples from './rules/checkExamples';
 import checkIndentation from './rules/checkIndentation';
@@ -32,6 +33,7 @@ export default {
     recommended: {
       plugins: ['jsdoc'],
       rules: {
+        'jsdoc/check-access': 'warn',
         'jsdoc/check-alignment': 'warn',
         'jsdoc/check-examples': 'off',
         'jsdoc/check-indentation': 'off',
@@ -63,6 +65,7 @@ export default {
     },
   },
   rules: {
+    'check-access': checkAccess,
     'check-alignment': checkAlignment,
     'check-examples': checkExamples,
     'check-indentation': checkIndentation,

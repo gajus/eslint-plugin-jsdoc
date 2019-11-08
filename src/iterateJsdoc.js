@@ -30,7 +30,7 @@ const parseComment = (commentNode, indent, trim = true) => {
       skipSeeLink(commentParser.PARSERS.parse_type),
       skipSeeLink(
         (str, data) => {
-          if (['example', 'return', 'returns', 'throws', 'exception'].includes(data.tag)) {
+          if (['example', 'return', 'returns', 'throws', 'exception', 'access'].includes(data.tag)) {
             return null;
           }
 
