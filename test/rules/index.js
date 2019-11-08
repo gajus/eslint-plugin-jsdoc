@@ -35,12 +35,29 @@ const ruleTester = new RuleTester();
   'require-returns-type',
   'valid-types',
 ]).forEach((ruleName) => {
+  const rule = config.rules[ruleName];
+
   const parserOptions = {
     ecmaVersion: 6,
   };
 
   // eslint-disable-next-line global-require, import/no-dynamic-require
   const assertions = require(`./assertions/${_.camelCase(ruleName)}`);
+
+  if (!_.has(rule, 'meta.schema')) {
+    const testHasOptions = (item) => {
+      return item.options;
+    };
+    if (
+      assertions.invalid.some(testHasOptions) ||
+      assertions.valid.some(testHasOptions)
+    ) {
+      throw new TypeError(
+        `Presence of testing options suggests that rule ${ruleName} should ` +
+        'include a schema.',
+      );
+    }
+  }
 
   assertions.invalid = assertions.invalid.map((assertion) => {
     assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
@@ -80,5 +97,5 @@ const ruleTester = new RuleTester();
   }
   /* eslint-enable no-process-env */
 
-  ruleTester.run(ruleName, config.rules[ruleName], assertions);
+  ruleTester.run(ruleName, rule, assertions);
 });
