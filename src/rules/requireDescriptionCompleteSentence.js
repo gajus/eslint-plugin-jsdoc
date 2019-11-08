@@ -2,6 +2,14 @@ import _ from 'lodash';
 import {RegExtras} from 'regextras/dist/main-umd';
 import iterateJsdoc from '../iterateJsdoc';
 
+const otherDescriptiveTags = [
+  // 'copyright' and 'see' might be good addition, but as the former may be
+  //   sensitive text, and the latter may have just a link, they are not
+  //   included by default
+  'summary', 'file', 'fileoverview', 'overview', 'classdesc', 'todo',
+  'deprecated', 'throws', 'exception', 'yields', 'yield',
+];
+
 const extractParagraphs = (text) => {
   // Todo [engine:node@>8.11.0]: Uncomment following line with neg. lookbehind instead
   // return text.split(/(?<![;:])\n\n/u);
@@ -132,7 +140,6 @@ export default iterateJsdoc(({
   jsdoc,
   report,
   jsdocNode,
-  context,
   utils,
 }) => {
   if (!jsdoc.tags ||
@@ -148,22 +155,10 @@ export default iterateJsdoc(({
     validateDescription(description, report, jsdocNode, sourceCode, matchingJsdocTag);
   }, true);
 
-  const options = context.options[0] || {};
-
-  const hasOptionTag = (tagName) => {
-    return Boolean(options.tags && options.tags.includes(tagName));
-  };
-
   const {tagsWithNames} = utils.getTagsByType(jsdoc.tags);
   const tagsWithoutNames = utils.filterTags(({tag: tagName}) => {
-    return [
-      // 'copyright' and 'see' might be good addition, but as the former may be
-      //   sensitive text, and the latter may have just a link, they are not
-      //   included by default
-      'summary', 'file', 'fileoverview', 'overview', 'classdesc', 'todo',
-      'deprecated', 'throws', 'exception', 'yields', 'yield',
-    ].includes(tagName) ||
-      hasOptionTag(tagName) && !tagsWithNames.some(({tag}) => {
+    return otherDescriptiveTags.includes(tagName) ||
+      utils.hasOptionTag(tagName) && !tagsWithNames.some(({tag}) => {
         // If user accidentally adds tags with names (or like `returns`
         //  get parsed as having names), do not add to this list
         return tag === tagName;

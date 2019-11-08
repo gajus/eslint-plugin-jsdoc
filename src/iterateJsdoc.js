@@ -255,6 +255,12 @@ const getUtils = (
     return jsdocUtils.getTagsByType(context, mode, tags, tagNamePreference);
   };
 
+  utils.hasOptionTag = (tagName) => {
+    const tags = _.get(context, 'options[0].tags');
+
+    return Boolean(tags && tags.includes(tagName));
+  };
+
   utils.getClassNode = () => {
     // Ancestors missing in `Program` comment iteration
     const greatGrandParent = ancestors.length ?
