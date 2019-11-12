@@ -430,8 +430,7 @@ const isInlineTag = (tag) => {
  * @returns {Array<string>}
  */
 const parseClosureTemplateTag = (tag) => {
-  return tag.source
-    .split('@template')[1]
+  return (tag.name + ' ' + tag.description)
     .split(',')
     .map((type) => {
       return type.trim();

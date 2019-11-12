@@ -4309,6 +4309,20 @@ class Foo {
 function quux () {
 
 }
+
+/**
+ * Run callback when hooked method is called.
+ *
+ * @template {BaseObject} T
+ * @param {T} obj - object whose method should be hooked.
+ * @param {string} method - method which should be hooked.
+ * @param {(sender: T) => void} callback - callback which should
+ * be called when the hooked method was invoked.
+ */
+function registerEvent(obj, method, callback) {
+
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
 ````
 
 
