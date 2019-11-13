@@ -1,17 +1,12 @@
 import entries from 'object.entries-ponyfill';
 import iterateJsdoc from '../iterateJsdoc';
 
-/* istanbul ignore next */
-if (!Object.entries) {
-  Object.entries = entries;
-}
-
 const validateParameterNames = (targetTagName : string, functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report) => {
   if (!jsdoc || !jsdoc.tags) {
     return false;
   }
 
-  const paramTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
+  const paramTags = entries(jsdoc.tags).filter(([, tag]) => {
     return tag.tag === targetTagName && !tag.name.includes('.');
   });
 
