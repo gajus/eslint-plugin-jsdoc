@@ -3212,7 +3212,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Invalid JSDoc @license: "FOO"; expected SPDX identifier: https://spdx.org/licenses/.
+// Message: Invalid JSDoc @license: "FOO"; expected SPDX expression: https://spdx.org/licenses/.
 
 /**
  * @license FOO
@@ -3222,6 +3222,14 @@ function quux (foo) {
 }
 // Options: [{"allowedLicenses":["BAR","BAX"]}]
 // Message: Invalid JSDoc @license: "FOO"; expected one of BAR, BAX.
+
+/**
+ * @license (MIT OR GPL-2.5)
+ */
+function quux (foo) {
+
+}
+// Message: Invalid JSDoc @license: "(MIT OR GPL-2.5)"; expected SPDX expression: https://spdx.org/licenses/.
 
 /**
  * @author
@@ -3260,6 +3268,13 @@ function quux (foo) {
 
 /**
  * @license MIT
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @license (MIT OR GPL-2.0)
  */
 function quux (foo) {
 

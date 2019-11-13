@@ -12,7 +12,7 @@
     "object.entries-ponyfill": "^1.0.1",
     "regextras": "^0.6.1",
     "semver": "^6.3.0",
-    "spdx-license-list": "^6.1.0"
+    "spdx-expression-parse": "^3.0.0"
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {

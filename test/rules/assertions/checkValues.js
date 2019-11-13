@@ -92,7 +92,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @license: "FOO"; expected SPDX identifier: https://spdx.org/licenses/.',
+          message: 'Invalid JSDoc @license: "FOO"; expected SPDX expression: https://spdx.org/licenses/.',
         },
       ],
     },
@@ -114,6 +114,21 @@ export default {
       options: [
         {
           allowedLicenses: ['BAR', 'BAX'],
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @license (MIT OR GPL-2.5)
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @license: "(MIT OR GPL-2.5)"; expected SPDX expression: https://spdx.org/licenses/.',
         },
       ],
     },
@@ -180,6 +195,16 @@ export default {
       code: `
       /**
        * @license MIT
+       */
+      function quux (foo) {
+
+      }
+      `,
+    },
+    {
+      code: `
+      /**
+       * @license (MIT OR GPL-2.0)
        */
       function quux (foo) {
 

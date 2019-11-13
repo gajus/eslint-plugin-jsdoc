@@ -1,5 +1,5 @@
 import semver from 'semver';
-import spdxLicenseList from 'spdx-license-list/simple';
+import spdxExpressionParse from 'spdx-expression-parse';
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
@@ -56,17 +56,21 @@ export default iterateJsdoc(({
     } else if (allowedLicenses) {
       if (allowedLicenses !== true && !allowedLicenses.includes(license)) {
         report(
-          `Invalid JSDoc @${targetTagName}: "${jsdocParameter.description}"; expected one of ${allowedLicenses.join(', ')}.`,
+          `Invalid JSDoc @${targetTagName}: "${license}"; expected one of ${allowedLicenses.join(', ')}.`,
           null,
           jsdocParameter,
         );
       }
-    } else if (!spdxLicenseList.has(license)) {
-      report(
-        `Invalid JSDoc @${targetTagName}: "${jsdocParameter.description}"; expected SPDX identifier: https://spdx.org/licenses/.`,
-        null,
-        jsdocParameter,
-      );
+    } else {
+      try {
+        spdxExpressionParse(license);
+      } catch (error) {
+        report(
+          `Invalid JSDoc @${targetTagName}: "${license}"; expected SPDX expression: https://spdx.org/licenses/.`,
+          null,
+          jsdocParameter,
+        );
+      }
     }
   });
 
@@ -113,6 +117,9 @@ export default iterateJsdoc(({
                 type: 'boolean',
               },
             ],
+          },
+          licensePattern: {
+            type: 'string',
           },
         },
         type: 'object',
