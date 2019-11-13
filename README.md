@@ -3156,11 +3156,20 @@ be checked for.
 An array of allowable license values or `true` to allow any license text.
 If present as an array, will be used in place of SPDX identifiers.
 
+<a name="eslint-plugin-jsdoc-rules-check-values-options-5-licensepattern"></a>
+##### <code>licensePattern</code>
+
+A string to be converted into a `RegExp` (with `u` flag) and whose first
+parenthetical grouping, if present, will match the portion of the license
+description to check (if no grouping is present, then the whole portion
+matched will be used). Defaults to `([^\n]*)`, i.e., the SPDX expression
+is expected before any line breaks.
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|`@version`, `@since`, `@license`, `@author`|
-|Options|`allowedAuthors`, `allowedLicenses`|
+|Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|
 
 The following patterns are considered problems:
@@ -3224,6 +3233,15 @@ function quux (foo) {
 // Message: Invalid JSDoc @license: "FOO"; expected one of BAR, BAX.
 
 /**
+ * @license MIT-7
+ * Some extra text...
+ */
+function quux (foo) {
+
+}
+// Message: Invalid JSDoc @license: "MIT-7"; expected SPDX expression: https://spdx.org/licenses/.
+
+/**
  * @license (MIT OR GPL-2.5)
  */
 function quux (foo) {
@@ -3268,6 +3286,14 @@ function quux (foo) {
 
 /**
  * @license MIT
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @license MIT
+ * Some extra text...
  */
 function quux (foo) {
 

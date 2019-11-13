@@ -23,11 +23,19 @@ be checked for.
 An array of allowable license values or `true` to allow any license text.
 If present as an array, will be used in place of SPDX identifiers.
 
+##### `licensePattern`
+
+A string to be converted into a `RegExp` (with `u` flag) and whose first
+parenthetical grouping, if present, will match the portion of the license
+description to check (if no grouping is present, then the whole portion
+matched will be used). Defaults to `([^\n]*)`, i.e., the SPDX expression
+is expected before any line breaks.
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|`@version`, `@since`, `@license`, `@author`|
-|Options|`allowedAuthors`, `allowedLicenses`|
+|Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|
 
 <!-- assertions checkValues -->

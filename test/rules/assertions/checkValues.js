@@ -120,6 +120,22 @@ export default {
     {
       code: `
       /**
+       * @license MIT-7
+       * Some extra text...
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @license: "MIT-7"; expected SPDX expression: https://spdx.org/licenses/.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
        * @license (MIT OR GPL-2.5)
        */
       function quux (foo) {
@@ -195,6 +211,17 @@ export default {
       code: `
       /**
        * @license MIT
+       */
+      function quux (foo) {
+
+      }
+      `,
+    },
+    {
+      code: `
+      /**
+       * @license MIT
+       * Some extra text...
        */
       function quux (foo) {
 

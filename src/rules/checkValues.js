@@ -11,6 +11,7 @@ export default iterateJsdoc(({
   const {
     allowedLicenses = null,
     allowedAuthors = null,
+    licensePattern = '([^\n]*)',
   } = options;
 
   utils.forEachPreferredTag('version', (jsdocParameter, targetTagName) => {
@@ -46,7 +47,9 @@ export default iterateJsdoc(({
     }
   });
   utils.forEachPreferredTag('license', (jsdocParameter, targetTagName) => {
-    const license = jsdocParameter.description;
+    const licenseRegex = new RegExp(licensePattern, 'g');
+    const match = jsdocParameter.description.match(licenseRegex);
+    const license = match && match[1] || match[0];
     if (!license.trim()) {
       report(
         `Missing JSDoc @${targetTagName}.`,
