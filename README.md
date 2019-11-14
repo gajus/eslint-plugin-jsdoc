@@ -3250,6 +3250,17 @@ function quux (foo) {
 // Message: Invalid JSDoc @license: "(MIT OR GPL-2.5)"; expected SPDX expression: https://spdx.org/licenses/.
 
 /**
+ * @license MIT
+ * Some extra text
+ */
+function quux (foo) {
+
+}
+// Options: [{"licensePattern":"[\\s\\S]*"}]
+// Message: Invalid JSDoc @license: "MIT
+Some extra text"; expected SPDX expression: https://spdx.org/licenses/.
+
+/**
  * @author
  */
 function quux (foo) {
@@ -3321,6 +3332,15 @@ function quux (foo) {
 
 }
 // Options: [{"allowedLicenses":true}]
+
+/**
+ * @license MIT
+ * Some extra text
+ */
+function quux (foo) {
+
+}
+// Options: [{"licensePattern":"[^\n]*"}]
 
 /**
  * @author Gajus Kuizinas
