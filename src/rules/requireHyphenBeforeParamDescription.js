@@ -31,7 +31,7 @@ export default iterateJsdoc(({
           const descriptionIndex = sourceLines[lineIndex].lastIndexOf(description);
 
           const replacementLine = sourceLines[lineIndex]
-            .substring(0, descriptionIndex) + '- ' + description;
+            .slice(0, descriptionIndex) + '- ' + description;
           sourceLines.splice(lineIndex, 1, replacementLine);
           const replacement = sourceLines.join('\n');
 

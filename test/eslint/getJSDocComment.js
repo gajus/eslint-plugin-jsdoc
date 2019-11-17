@@ -4,14 +4,7 @@ import {
 import getJSDocComment from '../../src/eslint/getJSDocComment';
 import {getSettings} from '../../src/iterateJsdoc';
 
-/* eslint-disable sort-keys */
 const rule = {
-  meta: {
-    messages: {
-      missingJsDoc: 'Missing JSDoc comment.',
-    },
-    type: 'layout',
-  },
   create (context) {
     const sourceCode = context.getSourceCode();
     const settings = getSettings(context);
@@ -28,6 +21,12 @@ const rule = {
         });
       },
     };
+  },
+  meta: {
+    messages: {
+      missingJsDoc: 'Missing JSDoc comment.',
+    },
+    type: 'layout',
   },
 };
 

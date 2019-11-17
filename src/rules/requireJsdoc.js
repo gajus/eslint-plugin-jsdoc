@@ -115,28 +115,7 @@ const getOptions = (context) => {
   };
 };
 
-/* eslint-disable sort-keys */
 export default {
-  meta: {
-    doc: {
-      category: 'Stylistic Issues',
-      description: 'Require JSDoc comments',
-      recommended: 'true',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc',
-    },
-
-    fixable: 'code',
-
-    messages: {
-      missingJsDoc: 'Missing JSDoc comment.',
-    },
-
-    schema: [
-      OPTIONS_SCHEMA,
-    ],
-
-    type: 'suggestion',
-  },
   create (context) {
     warnRemovedSettings(context, 'require-jsdoc');
 
@@ -179,9 +158,9 @@ export default {
         };
         context.report({
           fix,
+          loc,
           messageId: 'missingJsDoc',
           node,
-          loc,
         });
       };
 
@@ -262,5 +241,25 @@ export default {
         },
       },
     );
+  },
+  meta: {
+    doc: {
+      category: 'Stylistic Issues',
+      description: 'Require JSDoc comments',
+      recommended: 'true',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc',
+    },
+
+    fixable: 'code',
+
+    messages: {
+      missingJsDoc: 'Missing JSDoc comment.',
+    },
+
+    schema: [
+      OPTIONS_SCHEMA,
+    ],
+
+    type: 'suggestion',
   },
 };

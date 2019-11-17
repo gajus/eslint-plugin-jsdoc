@@ -4,6 +4,16 @@ import _ from 'lodash';
 import jsdocUtils from './jsdocUtils';
 import getJSDocComment from './eslint/getJSDocComment';
 
+const skipSeeLink = (parser) => {
+  return (str, data) => {
+    if (data.tag === 'see' && str.match(/\{@link.+?\}/u)) {
+      return null;
+    }
+
+    return parser(str, data);
+  };
+};
+
 /**
  *
  * @param {object} commentNode
@@ -12,16 +22,6 @@ import getJSDocComment from './eslint/getJSDocComment';
  * @returns {object}
  */
 const parseComment = (commentNode, indent, trim = true) => {
-  const skipSeeLink = (parser) => {
-    return (str, data) => {
-      if (data.tag === 'see' && str.match(/\{@link.+?\}/u)) {
-        return null;
-      }
-
-      return parser(str, data);
-    };
-  };
-
   // Preserve JSDoc block start/end indentation.
   return commentParser(`${indent}/*${commentNode.value}${indent}*/`, {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
