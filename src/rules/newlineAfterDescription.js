@@ -21,10 +21,7 @@ export default iterateJsdoc(({
     always = true;
   }
 
-  // The contents of the jsdoc.source and of jsdoc.description is left trimmed.
-  // The contents of the jsdoc.description is right trimmed.
-  // This gets the text following the description.
-  const descriptionEndsWithANewline = jsdoc.source.slice(jsdoc.description.length).startsWith('\n\n');
+  const descriptionEndsWithANewline = jsdoc.description.endsWith('\n');
 
   if (always) {
     if (!descriptionEndsWithANewline) {
@@ -34,7 +31,9 @@ export default iterateJsdoc(({
       });
       report('There must be a newline after the description of the JSDoc block.', (fixer) => {
         // Add the new line
-        sourceLines.splice(lastDescriptionLine + 1, 0, `${indent} *`);
+        const injectedLine = `${indent} *` +
+          (sourceLines[lastDescriptionLine].endsWith('\r') ? '\r' : '');
+        sourceLines.splice(lastDescriptionLine + 1, 0, injectedLine);
 
         return fixer.replaceText(jsdocNode, sourceLines.join('\n'));
       }, {
@@ -48,11 +47,11 @@ export default iterateJsdoc(({
     });
     report('There must be no newline after the description of the JSDoc block.', (fixer) => {
       // Remove the extra line
-      sourceLines.splice(lastDescriptionLine + 1, 1);
+      sourceLines.splice(lastDescriptionLine, 1);
 
       return fixer.replaceText(jsdocNode, sourceLines.join('\n'));
     }, {
-      line: lastDescriptionLine + 1,
+      line: lastDescriptionLine,
     });
   }
 }, {
@@ -67,4 +66,5 @@ export default iterateJsdoc(({
     ],
     type: 'layout',
   },
+  noTrim: true,
 });

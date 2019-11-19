@@ -4366,6 +4366,16 @@ function quux () {
  */
 // Options: ["always"]
 // Message: There must be a newline after the description of the JSDoc block.
+
+
+     /**
+      * Service for fetching symbols.
+      * @param {Object} $http - Injected http helper.
+      * @param {Object} $q - Injected Promise api helper.
+      * @param {Object} $location - Injected window location object.
+      * @param {Object} REPORT_DIALOG_CONSTANTS - Injected handle.
+      */
+// Message: There must be a newline after the description of the JSDoc block.
 ````
 
 The following patterns are not considered problems:
