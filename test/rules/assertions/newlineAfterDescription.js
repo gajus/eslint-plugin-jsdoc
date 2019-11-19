@@ -100,6 +100,40 @@ export default {
       `,
     },
     {
+      code: `\r
+          /**\r
+           * Bar.\r
+           *\r
+           * Bar.\r
+           *\r
+           * @bar\r
+           */\r
+          function quux () {\r
+\r
+          }\r
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'There must be no newline after the description of the JSDoc block.',
+        },
+      ],
+      options: [
+        'never',
+      ],
+      output: `\r
+          /**\r
+           * Bar.\r
+           *\r
+           * Bar.\r
+           * @bar\r
+           */\r
+          function quux () {\r
+\r
+          }\r
+      `,
+    },
+    {
       code: `
         /**
          * A.
@@ -231,6 +265,27 @@ export default {
       options: [
         'never',
       ],
+    },
+    {
+      code: `\r
+      /**\r
+       * @foo\r
+       * Test\u00a0\r
+       * abc\u00a0\r
+       * @bar\u00a0\r
+       */\r
+      `,
+    },
+    {
+      code: `\r
+      /**\r
+       * \r
+       * @foo\r
+       * Test\u00a0\r
+       * abc\u00a0\r
+       * @bar\u00a0\r
+       */\r
+      `,
     },
   ],
 };

@@ -11,7 +11,7 @@ export default iterateJsdoc(({
 }) => {
   let always;
 
-  if (!jsdoc.description || !jsdoc.tags.length) {
+  if (!jsdoc.description.trim() || !jsdoc.tags.length) {
     return;
   }
 

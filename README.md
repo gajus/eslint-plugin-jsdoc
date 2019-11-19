@@ -4350,6 +4350,20 @@ function quux () {
 // Options: ["never"]
 // Message: There must be no newline after the description of the JSDoc block.
 
+
+         /**
+          * Bar.
+          *
+          * Bar.
+          *
+          * @bar
+          */
+         function quux () {
+
+         }
+// Options: ["never"]
+// Message: There must be no newline after the description of the JSDoc block.
+
 /**
  * A.
  *
@@ -4415,6 +4429,23 @@ function quux () {
 
 }
 // Options: ["never"]
+
+
+     /**
+      * @foo
+      * Test 
+      * abc 
+      * @bar 
+      */
+
+
+     /**
+      * 
+      * @foo
+      * Test 
+      * abc 
+      * @bar 
+      */
 ````
 
 
