@@ -431,7 +431,7 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
           const comments = sourceCode.getAllComments();
 
           comments.forEach((comment) => {
-            if (!sourceCode.getText(comment).startsWith('/**')) {
+            if (!(/\/\*\*\s/).test(sourceCode.getText(comment))) {
               return;
             }
 

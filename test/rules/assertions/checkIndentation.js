@@ -2,7 +2,7 @@ export default {
   invalid: [
     {
       code: `
-          /***  foo */
+          /**  foo */
           function quux () {
 
           }

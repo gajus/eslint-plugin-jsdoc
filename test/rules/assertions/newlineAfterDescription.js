@@ -287,5 +287,17 @@ export default {
        */\r
       `,
     },
+    {
+      code: `
+      /***
+       *
+       */
+      function quux () {
+
+      }`,
+      options: [
+        'always',
+      ],
+    },
   ],
 };

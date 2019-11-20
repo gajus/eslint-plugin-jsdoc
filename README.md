@@ -1111,7 +1111,7 @@ report a padding issue:
 The following patterns are considered problems:
 
 ````js
-/***  foo */
+/**  foo */
 function quux () {
 
 }
@@ -4446,6 +4446,14 @@ function quux () {
       * abc 
       * @bar 
       */
+
+/***
+ *
+ */
+function quux () {
+
+}
+// Options: ["always"]
 ````
 
 
