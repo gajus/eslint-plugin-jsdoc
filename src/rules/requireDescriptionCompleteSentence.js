@@ -45,7 +45,7 @@ const isNewLinePrecededByAPeriod = (text) => {
   const lines = text.split('\n');
 
   return !lines.some((line) => {
-    if (typeof lastLineEndsSentence === 'boolean' && !lastLineEndsSentence && /^[A-Z]/u.test(line)) {
+    if (typeof lastLineEndsSentence === 'boolean' && !lastLineEndsSentence && /^[A-Z][a-z]/u.test(line)) {
       return true;
     }
 

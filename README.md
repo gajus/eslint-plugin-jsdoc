@@ -5376,6 +5376,22 @@ function quux (foo) {
  * |   1  | do it       |
  * |   2  | do it again |
  */
+
+/**
+ * This is something that
+ * I want to test.
+ */
+function quux () {
+
+}
+
+/**
+ * When making HTTP requests, the
+ * URL is super important.
+ */
+function quux () {
+
+}
 ````
 
 
