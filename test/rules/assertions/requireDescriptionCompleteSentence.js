@@ -909,5 +909,27 @@ export default {
        */
       `,
     },
+    {
+      code: `
+          /**
+           * This is something that
+           * I want to test.
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * When making HTTP requests, the
+           * URL is super important.
+           */
+          function quux () {
+
+          }
+      `,
+    },
   ],
 };
