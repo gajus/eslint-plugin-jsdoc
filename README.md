@@ -4328,6 +4328,18 @@ function quux () {
 
 /**
  * Foo.
+ * @foo
+ *
+ * Foo.
+ */
+function quux () {
+
+}
+// Options: ["always"]
+// Message: There must be a newline after the description of the JSDoc block.
+
+/**
+ * Foo.
  *
  * Foo.
  * @foo
@@ -4343,6 +4355,19 @@ function quux () {
  * Bar.
  *
  * @bar
+ */
+function quux () {
+
+}
+// Options: ["never"]
+// Message: There must be no newline after the description of the JSDoc block.
+
+/**
+ * Bar.
+ *
+ * @bar
+ *
+ * Bar.
  */
 function quux () {
 

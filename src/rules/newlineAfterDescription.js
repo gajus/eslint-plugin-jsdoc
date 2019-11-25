@@ -26,9 +26,8 @@ export default iterateJsdoc(({
   if (always) {
     if (!descriptionEndsWithANewline) {
       const sourceLines = sourceCode.getText(jsdocNode).split('\n');
-      const lastDescriptionLine = _.findLastIndex(sourceLines, (line) => {
-        return line.replace(/^\s*\*\s*/u, '') === _.last(jsdoc.description.split('\n'));
-      });
+      const splitDesc = jsdoc.description.split('\n');
+      const lastDescriptionLine = splitDesc.length - 1;
       report('There must be a newline after the description of the JSDoc block.', (fixer) => {
         // Add the new line
         const injectedLine = `${indent} *` +
@@ -42,9 +41,8 @@ export default iterateJsdoc(({
     }
   } else if (descriptionEndsWithANewline) {
     const sourceLines = sourceCode.getText(jsdocNode).split('\n');
-    const lastDescriptionLine = _.findLastIndex(sourceLines, (line) => {
-      return line.replace(/^\s*\*\s*/u, '') === _.last(jsdoc.description.split('\n'));
-    });
+    const splitDesc = jsdoc.description.split('\n');
+    const lastDescriptionLine = splitDesc.length - 1;
     report('There must be no newline after the description of the JSDoc block.', (fixer) => {
       // Remove the extra line
       sourceLines.splice(lastDescriptionLine, 1);
