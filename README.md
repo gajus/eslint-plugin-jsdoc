@@ -4454,6 +4454,19 @@ function quux () {
 
 }
 // Options: ["always"]
+
+/**
+ * Parses query string to object containing URL parameters
+ * 
+ * @param queryString
+ * Input string
+ * 
+ * @returns
+ * Object containing URL parameters
+ */
+export function parseQueryString(queryString: string): { [key: string]: string } {    // <-- Line 10 that fails
+
+}
 ````
 
 

@@ -299,5 +299,26 @@ export default {
         'always',
       ],
     },
+    {
+      // https://github.com/gajus/eslint-plugin-jsdoc/issues/437
+      code: `
+      /**\r
+       * Parses query string to object containing URL parameters\r
+       * \r
+       * @param queryString\r
+       * Input string\r
+       * \r
+       * @returns\r
+       * Object containing URL parameters\r
+       */\r
+      export function parseQueryString(queryString: string): { [key: string]: string } {    // <-- Line 10 that fails\r
+\r
+      }\r
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
 };

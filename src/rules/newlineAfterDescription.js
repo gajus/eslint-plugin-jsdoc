@@ -21,7 +21,7 @@ export default iterateJsdoc(({
     always = true;
   }
 
-  const descriptionEndsWithANewline = jsdoc.description.endsWith('\n');
+  const descriptionEndsWithANewline = (/\n\r?$/).test(jsdoc.description);
 
   if (always) {
     if (!descriptionEndsWithANewline) {
