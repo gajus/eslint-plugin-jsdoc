@@ -1001,6 +1001,16 @@ function quux () {
 }
 // Options: [{"baseConfig":{"rules":{"semi":["warn","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"/\\/\\/ begin[\\s\\S]*?// end/g","noDefaultExampleRules":true}]
 // Message: @example warning (semi): Missing semicolon.
+
+/**
+ * @example
+ *   quux();
+ */
+function quux () {
+
+}
+// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
+// Message: @example error (indent): Expected indentation of 0 spaces but found 2.
 ````
 
 The following patterns are not considered problems:
@@ -1105,6 +1115,27 @@ function quux () {
 
 }
 // Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
+
+/**
+ * @example const ident = 5;
+ *   quux2();
+ *   bar();
+ */
+function quux2 () {
+
+}
+// Options: [{"paddedIndent":2}]
+
+/**
+ * @example
+ * function quux() {
+ *     bar();
+ * }
+ */
+function quux () {
+
+}
+// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
 ````
 
 

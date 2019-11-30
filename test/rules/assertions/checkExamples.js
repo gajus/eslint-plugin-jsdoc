@@ -639,6 +639,32 @@ export default {
         noDefaultExampleRules: true,
       }],
     },
+    {
+      code: `
+          /**
+           * @example
+           *   quux();
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@example error (indent): Expected indentation of 0 spaces but found 2.',
+        },
+      ],
+      options: [{
+        baseConfig: {
+          rules: {
+            indent: ['error'],
+          },
+        },
+        eslintrcForExamples: false,
+        noDefaultExampleRules: false,
+      }],
+    },
   ],
   valid: [
     {
@@ -867,6 +893,28 @@ export default {
           paddedIndent: 2,
         },
       ],
+    },
+    {
+      code: `
+          /**
+           * @example
+           * function quux() {
+           *     bar();
+           * }
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        baseConfig: {
+          rules: {
+            indent: ['error'],
+          },
+        },
+        eslintrcForExamples: false,
+        noDefaultExampleRules: false,
+      }],
     },
   ],
 };
