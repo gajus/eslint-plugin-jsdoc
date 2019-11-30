@@ -246,6 +246,9 @@ Or one may set the targeted tag to an object with a custom `message`, but withou
 Note that the preferred tags indicated in the `settings.jsdoc.tagNamePreference`
 map will be assumed to be defined by `check-tag-names`.
 
+<a name="eslint-plugin-jsdoc-settings-alias-preference-default-preferred-aliases"></a>
+#### Default Preferred Aliases
+
 The defaults in `eslint-plugin-jsdoc` (for tags which offer
 aliases) are as follows:
 
@@ -337,22 +340,28 @@ The format of the configuration is as follows:
   - `false` to forbid the type
   - a string to indicate the type that should be preferred in its place
     (and which `fix` mode can replace); this can be one of the formats
-    of the keys described above. Note that the format will not be changed
-    unless you use a pseudo-type in the replacement (e.g.,
-    `'Array.<>': 'MyArray'` will change `Array.<string>` to `MyArray.<string>`,
-    preserving the dot; to get rid of the dot, you must use the pseudo-type:
-    `'Array.<>': 'MyArray<>'` which will change `Array.<string>` to
-    `MyArray<string>`). If you use a bare pseudo-type in the replacement,
-    e.g., `'MyArray.<>': '<>'`, the type will be converted to the format
-    of the pseudo-type without changing the type name, i.e., `MyArray.<string>`
-    will become `MyArray<string>` but `Array.<string>` will not be modified.
-  - an object with the key `message` to provide a specific error message
-    when encountering the discouraged type and, if a type is to be preferred
-    in its place, the key `replacement` to indicate the type that should be
-    used in its place (and which `fix` mode can replace) or `false` if
-    forbidding the type. The message string will have the substrings with
-    special meaning, `{{tagName}}` and `{{tagValue}}`, replaced with their
-    corresponding value.
+    of the keys described above.
+    - Note that the format will not be changed unless you use a pseudo-type
+      in the replacement. (For example, `'Array.<>': 'MyArray'` will change
+      `Array.<string>` to `MyArray.<string>`, preserving the dot. To get rid
+      of the dot, you must use the pseudo-type with `<>`, i.e.,
+      `'Array.<>': 'MyArray<>'`, which will change `Array.<string>` to
+      `MyArray<string>`).
+    - If you use a _bare_ pseudo-type in the replacement (e.g.,
+      `'MyArray.<>': '<>'`), the type will be converted to the format
+      of the pseudo-type without changing the type name. For example,
+      `MyArray.<string>` will become `MyArray<string>` but `Array.<string>`
+      will not be modified.
+  - an object with:
+    - the key `message` to provide a specific error message
+      when encountering the discouraged type.
+      - The message string will have the substrings with special meaning,
+        `{{tagName}}` and `{{tagValue}}`, replaced with their
+        corresponding value.
+    - an optional key `replacement` with either of the following values:
+      - a string type to be preferred in its place (and which `fix` mode
+        can replace)
+      - `false` (for forbidding the type)
 
 Note that the preferred types indicated as targets in `settings.jsdoc.preferredTypes`
 map will be assumed to be defined by `no-undefined-types`.
@@ -732,16 +741,16 @@ decreasing precedence:
 * `eslintrcForExamples` - Defaults to `true` in adding rules
   based on an `.eslintrc.*` file. Setting to `false` corresponds to
   ESLint's [`--no-eslintrc`](https://eslint.org/docs/user-guide/command-line-interface#--no-eslintrc).
-* `baseConfig` - An object of rules with the same schema
-  as `.eslintrc.*` for defaults
+* `baseConfig` - Set to an object of rules with the same schema
+  as `.eslintrc.*` for defaults.
 
 <a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
 ##### Rules Disabled by Default Unless <code>noDefaultExampleRules</code> is Set to <code>true</code>
 
 * `eol-last` - Insisting that a newline "always" be at the end is less likely
-  to be desired in sample code as with the code file convention
-* `no-console` - Unlikely to have inadvertent temporary debugging within
-  examples
+  to be desired in sample code as with the code file convention.
+* `no-console` - This rule is unlikely to have inadvertent temporary debugging
+  within examples.
 * `no-undef` - Many variables in examples will be `undefined`.
 * `no-unused-vars` - It is common to define variables for clarity without always
   using them within examples.
@@ -750,9 +759,9 @@ decreasing precedence:
 * `import/no-unresolved` - One wouldn't generally expect example paths to
   resolve relative to the current JavaScript file as one would with real code.
 * `import/unambiguous` - Snippets in examples are likely too short to always
-  include full import/export info
-* `node/no-missing-import` - See `import/no-unresolved`
-* `node/no-missing-require` -  See `import/no-unresolved`
+  include full import/export info.
+* `node/no-missing-import` - See `import/no-unresolved`.
+* `node/no-missing-require` -  See `import/no-unresolved`.
 
 |||
 |---|---|

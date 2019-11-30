@@ -98,15 +98,15 @@ decreasing precedence:
 * `eslintrcForExamples` - Defaults to `true` in adding rules
   based on an `.eslintrc.*` file. Setting to `false` corresponds to
   ESLint's [`--no-eslintrc`](https://eslint.org/docs/user-guide/command-line-interface#--no-eslintrc).
-* `baseConfig` - An object of rules with the same schema
-  as `.eslintrc.*` for defaults
+* `baseConfig` - Set to an object of rules with the same schema
+  as `.eslintrc.*` for defaults.
 
 ##### Rules Disabled by Default Unless `noDefaultExampleRules` is Set to `true`
 
 * `eol-last` - Insisting that a newline "always" be at the end is less likely
-  to be desired in sample code as with the code file convention
-* `no-console` - Unlikely to have inadvertent temporary debugging within
-  examples
+  to be desired in sample code as with the code file convention.
+* `no-console` - This rule is unlikely to have inadvertent temporary debugging
+  within examples.
 * `no-undef` - Many variables in examples will be `undefined`.
 * `no-unused-vars` - It is common to define variables for clarity without always
   using them within examples.
@@ -115,9 +115,9 @@ decreasing precedence:
 * `import/no-unresolved` - One wouldn't generally expect example paths to
   resolve relative to the current JavaScript file as one would with real code.
 * `import/unambiguous` - Snippets in examples are likely too short to always
-  include full import/export info
-* `node/no-missing-import` - See `import/no-unresolved`
-* `node/no-missing-require` -  See `import/no-unresolved`
+  include full import/export info.
+* `node/no-missing-import` - See `import/no-unresolved`.
+* `node/no-missing-require` -  See `import/no-unresolved`.
 
 |||
 |---|---|
