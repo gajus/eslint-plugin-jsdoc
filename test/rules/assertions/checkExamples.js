@@ -377,10 +377,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
-          message: '@example error (no-multiple-empty-lines): Too many blank lines at the beginning of file. Max of 0 allowed.',
-        },
-        {
           line: 4,
           message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).',
         },

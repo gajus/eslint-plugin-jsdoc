@@ -69,6 +69,10 @@ export default iterateJsdoc(({
     // Unlikely to have inadvertent debugging within examples
     'no-console': 0,
 
+    // Often wish to start `@example` code after newline; also may use
+    //   empty lines for spacing
+    'no-multiple-empty-lines': 0,
+
     // Many variables in examples will be `undefined`
     'no-undef': 0,
 

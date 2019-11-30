@@ -107,6 +107,10 @@ decreasing precedence:
   to be desired in sample code as with the code file convention.
 * `no-console` - This rule is unlikely to have inadvertent temporary debugging
   within examples.
+* `no-multiple-empty-lines` - This rule may be problematic for projects which
+  use an initial newline just to start an example. Also, projects may wish to
+  use extra lines within examples just for easier illustration
+  purposes.
 * `no-undef` - Many variables in examples will be `undefined`.
 * `no-unused-vars` - It is common to define variables for clarity without always
   using them within examples.
