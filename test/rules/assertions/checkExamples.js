@@ -851,5 +851,22 @@ export default {
         eslintrcForExamples: false,
       }],
     },
+    {
+      code: `
+          /**
+           * @example const ident = 5;
+           *   quux2();
+           *   bar();
+           */
+          function quux2 () {
+
+          }
+      `,
+      options: [
+        {
+          paddedIndent: 2,
+        },
+      ],
+    },
   ],
 };
