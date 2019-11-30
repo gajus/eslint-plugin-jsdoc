@@ -908,7 +908,7 @@ function quux2 () {
 function quux2 () {
 
 }
-// Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
+// Message: @example error (no-multiple-empty-lines): Too many blank lines at the beginning of file. Max of 0 allowed.
 
 /**
  * @example const i = 5;

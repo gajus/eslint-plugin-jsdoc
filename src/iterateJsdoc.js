@@ -54,7 +54,7 @@ const parseComment = (commentNode, indent, trim = true) => {
           }
 
           // Tweak original regex to capture only single optional space
-          const result = str.match(/^\s?((.|\s)+)?/u);
+          const result = str.match(/^ ?((.|\s)+)?/u);
 
           // Always has at least whitespace due to `indent` we've added
           /* istanbul ignore next */

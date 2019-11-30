@@ -11,9 +11,11 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@example error (no-alert): Unexpected alert.',
         },
         {
+          line: 3,
           message: '@example error (semi): Missing semicolon.',
         },
       ],
@@ -38,9 +40,11 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@example error (no-alert): Unexpected alert.',
         },
         {
+          line: 3,
           message: '@example error (semi): Missing semicolon.',
         },
       ],
@@ -67,6 +71,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: '@example error (semi): Extra semicolon.',
         },
       ],
@@ -93,6 +98,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: '@example error (semi): Extra semicolon.',
         },
       ],
@@ -118,6 +124,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: '@example error (semi): Extra semicolon.',
         },
       ],
@@ -143,6 +150,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: '@example error (semi): Extra semicolon.',
         },
       ],
@@ -173,6 +181,7 @@ export default {
       `,
       errors: [
         {
+          line: 9,
           message: '@example error (semi): Extra semicolon.',
         },
       ],
@@ -198,6 +207,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: '@example error (no-undef): \'quux\' is not defined.',
         },
       ],
@@ -226,6 +236,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Caption is expected for examples.',
         },
       ],
@@ -245,6 +256,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@example error (indent): Expected indentation of 0 spaces but found 1.',
         },
       ],
@@ -267,6 +279,7 @@ export default {
 `,
       errors: [
         {
+          line: 3,
           message: '@example error: Unused eslint-disable directive (no problems were reported from \'semi\').',
         },
       ],
@@ -286,6 +299,7 @@ export default {
 `,
       errors: [
         {
+          line: 4,
           message: '@example error (semi): Missing semicolon.',
         },
       ],
@@ -312,9 +326,11 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).',
         },
         {
+          line: 4,
           message: '@example error (semi): Missing semicolon.',
         },
       ],
@@ -334,9 +350,11 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).',
         },
         {
+          line: 4,
           message: '@example error (semi): Missing semicolon.',
         },
       ],
@@ -359,9 +377,15 @@ export default {
       `,
       errors: [
         {
+          line: 3,
+          message: '@example error (no-multiple-empty-lines): Too many blank lines at the beginning of file. Max of 0 allowed.',
+        },
+        {
+          line: 4,
           message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).',
         },
         {
+          line: 5,
           message: '@example error (semi): Missing semicolon.',
         },
       ],
@@ -378,6 +402,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: '@example error (semi): Missing semicolon.',
         },
       ],
@@ -398,6 +423,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: '@example warning (semi): Missing semicolon.',
         },
       ],
@@ -423,33 +449,43 @@ export default {
       `,
       errors: [
         {
+          line: 1,
           message: '`settings.jsdoc.captionRequired` has been removed, use options in the rule `check-examples` instead.',
         },
         {
+          line: 1,
           message: '`settings.jsdoc.exampleCodeRegex` has been removed, use options in the rule `check-examples` instead.',
         },
         {
+          line: 1,
           message: '`settings.jsdoc.rejectExampleCodeRegex` has been removed, use options in the rule `check-examples` instead.',
         },
         {
+          line: 1,
           message: '`settings.jsdoc.allowInlineConfig` has been removed, use options in the rule `check-examples` instead.',
         },
         {
+          line: 1,
           message: '`settings.jsdoc.noDefaultExampleRules` has been removed, use options in the rule `check-examples` instead.',
         },
         {
+          line: 1,
           message: '`settings.jsdoc.matchingFileName` has been removed, use options in the rule `check-examples` instead.',
         },
         {
+          line: 1,
           message: '`settings.jsdoc.configFile` has been removed, use options in the rule `check-examples` instead.',
         },
         {
+          line: 1,
           message: '`settings.jsdoc.eslintrcForExamples` has been removed, use options in the rule `check-examples` instead.',
         },
         {
+          line: 1,
           message: '`settings.jsdoc.baseConfig` has been removed, use options in the rule `check-examples` instead.',
         },
         {
+          line: 1,
           message: '`settings.jsdoc.reportUnusedDisableDirectives` has been removed, use options in the rule `check-examples` instead.',
         },
       ],
@@ -478,6 +514,7 @@ export default {
      `,
       errors: [
         {
+          line: 4,
           message: 'Caption is expected for examples.',
         },
       ],
@@ -499,6 +536,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: '@example error (semi): Missing semicolon.',
         },
       ],
