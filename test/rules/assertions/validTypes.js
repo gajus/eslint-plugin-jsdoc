@@ -304,6 +304,25 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @define
+           */
+           function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tag @define must have a type',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -565,6 +584,14 @@ export default {
           mode: 'closure',
         },
       },
+    },
+    {
+      code: `
+          /**
+           * @define
+           */
+           function quux () {}
+      `,
     },
   ],
 };

@@ -9058,6 +9058,13 @@ function quux () {}
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
 // Message: Syntax error in type: BadTypeChecked<
+
+/**
+ * @define
+ */
+ function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Tag @define must have a type
 ````
 
 The following patterns are not considered problems:
@@ -9227,6 +9234,11 @@ function quux () {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @define
+ */
+ function quux () {}
 ````
 
 

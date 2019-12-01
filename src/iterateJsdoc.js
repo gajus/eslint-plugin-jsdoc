@@ -215,7 +215,7 @@ const getUtils = (
   };
 
   utils.tagMustHaveTypePosition = (tagName) => {
-    return jsdocUtils.tagMustHaveTypePosition(tagName);
+    return jsdocUtils.tagMustHaveTypePosition(mode, tagName);
   };
 
   utils.tagMightHaveTypePosition = (tagName) => {

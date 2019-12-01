@@ -345,7 +345,11 @@ const tagMightHaveTypePosition = (mode, tag) => {
     tagsWithOptionalTypePosition.includes(tag);
 };
 
-const tagMustHaveTypePosition = (tag) => {
+const tagMustHaveTypePosition = (mode, tag) => {
+  if (mode === 'closure') {
+    return tagsWithMandatoryTypePositionClosure.includes(tag);
+  }
+
   return tagsWithMandatoryTypePosition.includes(tag);
 };
 
