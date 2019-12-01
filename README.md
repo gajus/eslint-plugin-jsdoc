@@ -9065,6 +9065,13 @@ function quux () {}
  function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
 // Message: Tag @define must have a type
+
+/**
+ * @this
+ */
+ let foo;
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Tag @this must have a type
 ````
 
 The following patterns are not considered problems:

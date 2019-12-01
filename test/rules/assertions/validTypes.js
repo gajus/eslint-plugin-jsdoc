@@ -323,6 +323,25 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @this
+           */
+           let foo;
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tag @this must have a type',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {

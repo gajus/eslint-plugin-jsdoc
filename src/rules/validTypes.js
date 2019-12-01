@@ -97,7 +97,7 @@ export default iterateJsdoc(({
         validNamepathParsing(thatNamepath);
       }
     } else {
-      if (mustHaveEither && !hasEither) {
+      if (mustHaveEither && !hasEither && !mustHaveTypePosition) {
         report(`Tag @${tag.tag} must have either a type or namepath`, null, tag);
 
         return;
