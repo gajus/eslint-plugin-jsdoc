@@ -1703,6 +1703,40 @@ export default {
       ],
       output: '/** @typedef {string} foo */',
     },
+    {
+      code: `
+      /**
+       * @this {array}
+       */
+      function quux () {}
+      `,
+      errors: [{
+        line: 3,
+        message: 'Invalid JSDoc @this type "array"; prefer: "Array".',
+      }],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @export {array}
+       */
+      function quux () {}
+      `,
+      errors: [{
+        line: 3,
+        message: 'Invalid JSDoc @export type "array"; prefer: "Array".',
+      }],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -2088,6 +2122,32 @@ export default {
       /** @param {function(...)} callback The function to invoke. */
       var subscribe = function(callback) {};
       `,
+    },
+    {
+      code: `
+      /**
+       * @this {Array}
+       */
+      function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @export {Array}
+       */
+      function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
   ],
 };

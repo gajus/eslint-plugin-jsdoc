@@ -183,6 +183,12 @@ const tagsWithMandatoryTypePosition = [
   'type',
 ];
 
+const tagsWithMandatoryTypePositionClosure = [
+  ...tagsWithMandatoryTypePosition,
+  'this',
+  'define',
+];
+
 // All of these have a signature with "type" except for
 //  `augments`/`extends` ("namepath")
 //  `param`/`arg`/`argument` (no signature)
@@ -223,6 +229,8 @@ const tagsWithOptionalTypePosition = [
 
 const tagsWithOptionalTypePositionClosure = [
   ...tagsWithOptionalTypePosition,
+
+  'export',
 
   // Shows the signature with curly brackets but not in the example
   // "typeExpression"
@@ -328,9 +336,13 @@ const isNamepathDefiningTag = (tagName) => {
 };
 
 const tagMightHaveTypePosition = (mode, tag) => {
-  return tagsWithMandatoryTypePosition.includes(tag) || (mode === 'closure' ?
-    tagsWithOptionalTypePositionClosure.includes(tag) :
-    tagsWithOptionalTypePosition.includes(tag));
+  if (mode === 'closure') {
+    return tagsWithMandatoryTypePositionClosure.includes(tag) ||
+      tagsWithOptionalTypePositionClosure.includes(tag);
+  }
+
+  return tagsWithMandatoryTypePosition.includes(tag) ||
+    tagsWithOptionalTypePosition.includes(tag);
 };
 
 const tagMustHaveTypePosition = (tag) => {

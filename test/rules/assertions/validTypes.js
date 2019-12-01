@@ -286,6 +286,24 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @this {BadTypeChecked<}
+       */
+      function quux () {}
+      `,
+      errors: [
+        {
+          message: 'Syntax error in type: BadTypeChecked<',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -508,6 +526,45 @@ export default {
       function quux () {}
 
       `,
+    },
+    {
+      code: `
+      /**
+       * @this {Navigator}
+       */
+      function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @export {SomeType}
+       */
+      function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @define {boolean}
+       */
+      function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
   ],
 };

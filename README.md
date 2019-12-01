@@ -3009,6 +3009,20 @@ function quux (foo) {
 
 /** @typedef {String} foo */
 // Message: Invalid JSDoc @typedef "foo" type "String"; prefer: "string".
+
+/**
+ * @this {array}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Invalid JSDoc @this type "array"; prefer: "Array".
+
+/**
+ * @export {array}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Invalid JSDoc @export type "array"; prefer: "Array".
 ````
 
 The following patterns are not considered problems:
@@ -3217,6 +3231,18 @@ function quux (foo) {
 
 /** @param {function(...)} callback The function to invoke. */
 var subscribe = function(callback) {};
+
+/**
+ * @this {Array}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @export {Array}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
 ````
 
 
@@ -4811,6 +4837,20 @@ class Foo {
 function quux (varargs) {
 }
 // Message: The type 'VAR_TYPE' is undefined.
+
+/**
+ * @this {Navigator}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: The type 'Navigator' is undefined.
+
+/**
+ * @export {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: The type 'SomeType' is undefined.
 ````
 
 The following patterns are not considered problems:
@@ -5029,6 +5069,20 @@ function quux (varargs) {
  */
 function quux (varargs) {
 }
+
+class Navigator {}
+/**
+ * @this {Navigator}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+class SomeType {}
+/**
+ * @export {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
 ````
 
 
@@ -8997,6 +9051,13 @@ function quux (foo, bar, baz) {}
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
 // Message: Syntax error in type: BadTypeChecked<
+
+/**
+ * @this {BadTypeChecked<}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Syntax error in type: BadTypeChecked<
 ````
 
 The following patterns are not considered problems:
@@ -9148,6 +9209,24 @@ function quux (foo, bar, baz) {}
  * @private {BadTypeNotCheckedInJsdoc<}
  */
 function quux () {}
+
+/**
+ * @this {Navigator}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @export {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @define {boolean}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
 ````
 
 

@@ -276,6 +276,44 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @this {Navigator}
+       */
+      function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The type \'Navigator\' is undefined.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @export {SomeType}
+       */
+      function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The type \'SomeType\' is undefined.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -615,6 +653,34 @@ export default {
      function quux (varargs) {
      }
      `,
+    },
+    {
+      code: `
+      class Navigator {}
+      /**
+       * @this {Navigator}
+       */
+      function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      class SomeType {}
+      /**
+       * @export {SomeType}
+       */
+      function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
   ],
 };
