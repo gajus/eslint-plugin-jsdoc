@@ -56,7 +56,7 @@ export default iterateJsdoc(({
   context,
 }) => {
   const jsdocTagsWithPossibleType = utils.filterTags((tag) => {
-    return utils.tagMightHaveAType(tag.tag);
+    return utils.tagMightHaveTypePosition(tag.tag);
   });
 
   const {preferredTypes} = settings;

@@ -198,28 +198,28 @@ const getUtils = (
     return false;
   };
 
-  utils.tagMustHaveEitherTypeOrNamepath = (tagName) => {
-    return jsdocUtils.tagMustHaveEitherTypeOrNamepath(tagName);
+  utils.tagMustHaveEitherTypeOrNamePosition = (tagName) => {
+    return jsdocUtils.tagMustHaveEitherTypeOrNamePosition(tagName);
   };
 
-  utils.tagMightHaveEitherTypeOrNamepath = (tagName) => {
-    return jsdocUtils.tagMightHaveEitherTypeOrNamepath(mode, tagName);
+  utils.tagMightHaveEitherTypeOrNamePosition = (tagName) => {
+    return jsdocUtils.tagMightHaveEitherTypeOrNamePosition(mode, tagName);
   };
 
-  utils.tagMustHaveNamepath = (tagName) => {
-    return jsdocUtils.tagMustHaveNamepath(tagName);
+  utils.tagMustHaveNamePosition = (tagName) => {
+    return jsdocUtils.tagMustHaveNamePosition(tagName);
   };
 
-  utils.tagMightHaveNamepath = (tagName) => {
-    return jsdocUtils.tagMightHaveNamepath(tagName);
+  utils.tagMightHaveNamePosition = (tagName) => {
+    return jsdocUtils.tagMightHaveNamePosition(tagName);
   };
 
-  utils.tagMustHaveType = (tagName) => {
-    return jsdocUtils.tagMustHaveType(tagName);
+  utils.tagMustHaveTypePosition = (tagName) => {
+    return jsdocUtils.tagMustHaveTypePosition(tagName);
   };
 
-  utils.tagMightHaveAType = (tagName) => {
-    return jsdocUtils.tagMightHaveAType(mode, tagName);
+  utils.tagMightHaveTypePosition = (tagName) => {
+    return jsdocUtils.tagMightHaveTypePosition(mode, tagName);
   };
 
   utils.isNamepathDefiningTag = (tagName) => {

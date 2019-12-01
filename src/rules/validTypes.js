@@ -73,14 +73,14 @@ export default iterateJsdoc(({
       return true;
     };
 
-    const hasType = utils.tagMightHaveAType(tag.tag) && Boolean(tag.type);
-    const mustHaveType = utils.tagMustHaveType(tag.tag);
+    const hasTypePosition = utils.tagMightHaveTypePosition(tag.tag) && Boolean(tag.type);
+    const mustHaveTypePosition = utils.tagMustHaveTypePosition(tag.tag);
 
-    const hasNamePath = utils.tagMightHaveNamepath(tag.tag) && Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
-    const mustHaveNamepath = utils.tagMustHaveNamepath(tag.tag) && !allowEmptyNamepaths;
+    const hasNameOrNamepathPosition = utils.tagMightHaveNamePosition(tag.tag) && Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
+    const mustHaveNameOrNamepathPosition = utils.tagMustHaveNamePosition(tag.tag) && !allowEmptyNamepaths;
 
-    const hasEither = utils.tagMightHaveEitherTypeOrNamepath(tag.tag) && hasType || hasNamePath;
-    const mustHaveEither = utils.tagMustHaveEitherTypeOrNamepath(tag.tag);
+    const hasEither = utils.tagMightHaveEitherTypeOrNamePosition(tag.tag) && hasTypePosition || hasNameOrNamepathPosition;
+    const mustHaveEither = utils.tagMustHaveEitherTypeOrNamePosition(tag.tag);
 
     if (tag.tag === 'borrows') {
       const thisNamepath = tag.description.replace(asExpression, '');
@@ -103,16 +103,16 @@ export default iterateJsdoc(({
         return;
       }
 
-      if (hasType) {
+      if (hasTypePosition) {
         validTypeParsing(tag.type);
-      } else if (mustHaveType) {
+      } else if (mustHaveTypePosition) {
         report(`Tag @${tag.tag} must have a type`, null, tag);
       }
 
-      if (hasNamePath) {
+      if (hasNameOrNamepathPosition) {
         validNamepathParsing(tag.name, tag.tag);
-      } else if (mustHaveNamepath) {
-        report(`Tag @${tag.tag} must have a namepath`, null, tag);
+      } else if (mustHaveNameOrNamepathPosition) {
+        report(`Tag @${tag.tag} must have a name/namepath`, null, tag);
       }
     }
   });

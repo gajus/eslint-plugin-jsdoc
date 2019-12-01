@@ -8955,7 +8955,7 @@ function quux() {
 
 }
 // Options: [{"allowEmptyNamepaths":false}]
-// Message: Tag @callback must have a namepath
+// Message: Tag @callback must have a name/namepath
 
 /**
  * @constant {str%ng}

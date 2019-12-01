@@ -180,7 +180,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Tag @callback must have a namepath',
+        message: 'Tag @callback must have a name/namepath',
       }],
       options: [{
         allowEmptyNamepaths: false,

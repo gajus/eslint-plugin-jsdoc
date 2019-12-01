@@ -106,7 +106,7 @@ export default iterateJsdoc(({
     .concat(settings.mode === 'jsdoc' ? [] : closureGenericTypes);
 
   const jsdocTagsWithPossibleType = utils.filterTags((tag) => {
-    return utils.tagMightHaveAType(tag.tag);
+    return utils.tagMightHaveTypePosition(tag.tag);
   });
 
   jsdocTagsWithPossibleType.forEach((tag) => {

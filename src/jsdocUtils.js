@@ -174,11 +174,7 @@ const hasDefinedTypeReturnTag = (tag) => {
   return true;
 };
 
-// Todo: These type and namepath tag listings currently look
-//   at tags with `{...}` as being a type, but jsdoc may
-//   allow some namepaths only within brackets as well
-
-const tagsWithMandatoryType = [
+const tagsWithMandatoryTypePosition = [
   // These both show curly brackets in the doc signature and examples
   // "typeExpression"
   'implements',
@@ -192,7 +188,7 @@ const tagsWithMandatoryType = [
 //  `param`/`arg`/`argument` (no signature)
 //  `property`/`prop` (no signature)
 // `modifies` (undocumented)
-const tagsWithOptionalType = [
+const tagsWithOptionalTypePosition = [
   // These have the example showing curly brackets but not in their doc signature, e.g.: https://jsdoc.app/tags-enum.html
   'enum',
   'member', 'var',
@@ -225,8 +221,8 @@ const tagsWithOptionalType = [
   'modifies',
 ];
 
-const tagsWithOptionalTypeClosure = [
-  ...tagsWithOptionalType,
+const tagsWithOptionalTypePositionClosure = [
+  ...tagsWithOptionalTypePosition,
 
   // Shows the signature with curly brackets but not in the example
   // "typeExpression"
@@ -257,7 +253,8 @@ const namepathDefiningTags = [
   'namespace',
 
   // Todo: Should add `module` here (with optional "name" and no curly brackets);
-  //  this block impacts `no-undefined-types` and `valid-types` (search for "isNamepathDefiningTag|tagMightHaveNamepath|tagMightHaveEitherTypeOrNamepath")
+  //  this block impacts `no-undefined-types` and `valid-types` (search for
+  //  "isNamepathDefiningTag|tagMightHaveNamePosition|tagMightHaveEitherTypeOrNamePosition")
 
   // These seem to all require a "namepath" in their signatures (with no counter-examples)
   'name',
@@ -267,7 +264,7 @@ const namepathDefiningTags = [
 
 // The following do not seem to allow curly brackets in their doc
 //  signature or examples (besides `modifies`)
-const tagsWithOptionalNamepath = [
+const tagsWithOptionalNamePosition = [
   ...namepathDefiningTags,
 
   // `borrows` has a different format, however, so needs special parsing;
@@ -298,7 +295,7 @@ const tagsWithOptionalNamepath = [
 // Todo: `@link` seems to require a namepath OR URL and might be checked as such.
 
 // The doc signature of `event` seems to require a "name"
-const tagsWithMandatoryNamepath = [
+const tagsWithMandatoryNamePosition = [
   // "name" (and a special syntax for the `external` name)
   'external', 'host',
 
@@ -308,7 +305,7 @@ const tagsWithMandatoryNamepath = [
   'typedef',
 ];
 
-const tagsWithMandatoryTypeOrNamepath = [
+const tagsWithMandatoryTypeOrNamePosition = [
   // "namepath"
   'alias',
   'augments', 'extends',
@@ -330,30 +327,30 @@ const isNamepathDefiningTag = (tagName) => {
   return namepathDefiningTags.includes(tagName);
 };
 
-const tagMightHaveAType = (mode, tag) => {
-  return tagsWithMandatoryType.includes(tag) || (mode === 'closure' ?
-    tagsWithOptionalTypeClosure.includes(tag) :
-    tagsWithOptionalType.includes(tag));
+const tagMightHaveTypePosition = (mode, tag) => {
+  return tagsWithMandatoryTypePosition.includes(tag) || (mode === 'closure' ?
+    tagsWithOptionalTypePositionClosure.includes(tag) :
+    tagsWithOptionalTypePosition.includes(tag));
 };
 
-const tagMustHaveType = (tag) => {
-  return tagsWithMandatoryType.includes(tag);
+const tagMustHaveTypePosition = (tag) => {
+  return tagsWithMandatoryTypePosition.includes(tag);
 };
 
-const tagMightHaveNamepath = (tag) => {
-  return tagsWithOptionalNamepath.includes(tag);
+const tagMightHaveNamePosition = (tag) => {
+  return tagsWithOptionalNamePosition.includes(tag);
 };
 
-const tagMustHaveNamepath = (tag) => {
-  return tagsWithMandatoryNamepath.includes(tag);
+const tagMustHaveNamePosition = (tag) => {
+  return tagsWithMandatoryNamePosition.includes(tag);
 };
 
-const tagMightHaveEitherTypeOrNamepath = (mode, tag) => {
-  return tagMightHaveAType(mode, tag) || tagMightHaveNamepath(tag);
+const tagMightHaveEitherTypeOrNamePosition = (mode, tag) => {
+  return tagMightHaveTypePosition(mode, tag) || tagMightHaveNamePosition(tag);
 };
 
-const tagMustHaveEitherTypeOrNamepath = (tag) => {
-  return tagsWithMandatoryTypeOrNamepath.includes(tag);
+const tagMustHaveEitherTypeOrNamePosition = (tag) => {
+  return tagsWithMandatoryTypeOrNamePosition.includes(tag);
 };
 
 /**
@@ -539,10 +536,10 @@ export default {
   isNamepathDefiningTag,
   isValidTag,
   parseClosureTemplateTag,
-  tagMightHaveAType,
-  tagMightHaveEitherTypeOrNamepath,
-  tagMightHaveNamepath,
-  tagMustHaveEitherTypeOrNamepath,
-  tagMustHaveNamepath,
-  tagMustHaveType,
+  tagMightHaveEitherTypeOrNamePosition,
+  tagMightHaveNamePosition,
+  tagMightHaveTypePosition,
+  tagMustHaveEitherTypeOrNamePosition,
+  tagMustHaveNamePosition,
+  tagMustHaveTypePosition,
 };
