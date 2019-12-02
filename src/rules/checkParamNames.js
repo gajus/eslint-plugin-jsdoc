@@ -40,7 +40,7 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
       return false;
     }
 
-    if (functionParameterName !== tag.name) {
+    if (functionParameterName !== tag.name.trim()) {
       const expectedNames = functionParameterNames.join(', ');
       const actualNames = paramTags.map(([, {name}]) => {
         return name;

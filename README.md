@@ -1506,6 +1506,13 @@ export class SomeClass {
    */
   constructor(private property: string) {}
 }
+
+/**
+ * @param {Error} error Exit code
+ * @param {number} [code = 1] Exit code
+ */
+function quux (error, code = 1) {
+};
 ````
 
 
