@@ -231,6 +231,22 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @param {Error} error Exit code
+           * @param {number} [code = 1] Exit code
+           */
+          function quux (error, cde = 1) {
+          };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected @param names to be "error, cde". Got "error, code".',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -353,6 +369,16 @@ export default {
       parserOptions: {
         sourceType: 'module',
       },
+    },
+    {
+      code: `
+          /**
+           * @param {Error} error Exit code
+           * @param {number} [code = 1] Exit code
+           */
+          function quux (error, code = 1) {
+          };
+      `,
     },
   ],
 };

@@ -1515,6 +1515,14 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
+
+/**
+ * @param {Error} error Exit code
+ * @param {number} [code = 1] Exit code
+ */
+function quux (error, cde = 1) {
+};
+// Message: Expected @param names to be "error, cde". Got "error, code".
 ````
 
 The following patterns are not considered problems:
@@ -1603,6 +1611,13 @@ export class SomeClass {
    */
   constructor(private property: string) {}
 }
+
+/**
+ * @param {Error} error Exit code
+ * @param {number} [code = 1] Exit code
+ */
+function quux (error, code = 1) {
+};
 ````
 
 
