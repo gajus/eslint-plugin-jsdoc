@@ -2149,5 +2149,10 @@ export default {
         },
       },
     },
+    {
+      code: `
+        /** @type {new() => EntityBase} */
+      `,
+    },
   ],
 };

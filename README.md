@@ -3262,6 +3262,8 @@ function quux () {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+/** @type {new() => EntityBase} */
 ````
 
 
