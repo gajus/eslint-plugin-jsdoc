@@ -40,37 +40,35 @@ const parseComment = (commentNode, indent, trim = true) => {
           return commentParser.PARSERS.parse_name(str, data);
         },
       ),
-      trim ?
-        commentParser.PARSERS.parse_description :
 
-        // parse_description
-        (str, data) => {
-          // Only expected throw in previous step is if bad name (i.e.,
-          //   missing end bracket on optional name), but `@example`
-          //  skips name parsing
-          /* istanbul ignore next */
-          if (data.errors && data.errors.length) {
-            return null;
-          }
-
-          // Tweak original regex to capture only single optional space
-          const result = str.match(/^ ?((.|\s)+)?/u);
-
-          // Always has at least whitespace due to `indent` we've added
-          /* istanbul ignore next */
-          if (result) {
-            return {
-              data: {
-                description: result[1] === undefined ? '' : result[1],
-              },
-              source: result[0],
-            };
-          }
-
-          // Always has at least whitespace due to `indent` we've added
-          /* istanbul ignore next */
+      // parse_description
+      (str, data) => {
+        // Only expected throw in previous step is if bad name (i.e.,
+        //   missing end bracket on optional name), but `@example`
+        //  skips name parsing
+        /* istanbul ignore next */
+        if (data.errors && data.errors.length) {
           return null;
-        },
+        }
+
+        // Tweak original regex to capture only single optional space
+        const result = str.match(/^ ?((.|\s)+)?/u);
+
+        // Always has at least whitespace due to `indent` we've added
+        /* istanbul ignore next */
+        if (result) {
+          return {
+            data: {
+              description: result[1] === undefined ? '' : result[1],
+            },
+            source: result[0],
+          };
+        }
+
+        // Always has at least whitespace due to `indent` we've added
+        /* istanbul ignore next */
+        return null;
+      },
     ],
     trim,
   })[0] || {};
