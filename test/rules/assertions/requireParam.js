@@ -982,5 +982,36 @@ export default {
       }
       `,
     },
+    {
+      code: `
+    export abstract class StephanPlugin<O, D> {
+
+        /**
+         * Called right after Stephan loads the plugin file.
+         *
+         * @example
+         *\`\`\`typescript
+         * type Options = {
+         *      verbose?: boolean;
+         *      token?: string;
+         * }
+         * \`\`\`
+         *
+         * Note that your Options type should only have optional properties...
+         *
+         * @param args Arguments compiled and provided by StephanClient.
+         * @param args.options The options as provided by the user, or an empty object if not provided.
+         * @param defaultOptions The default options as provided by the plugin, or an empty object.
+         */
+        public constructor({options, client}: {
+            options: O;
+            client: unknown;
+        }, defaultOptions: D) {
+
+        }
+    }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
