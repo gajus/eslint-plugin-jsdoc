@@ -28,6 +28,7 @@ const ruleTester = new RuleTester();
   'no-restricted-syntax',
   'no-types',
   'no-undefined-types',
+  'require-asterisk-prefix',
   'require-description',
   'require-description-complete-sentence',
   'require-example',

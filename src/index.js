@@ -19,6 +19,7 @@ import noMissingSyntax from './rules/noMissingSyntax';
 import noRestrictedSyntax from './rules/noRestrictedSyntax';
 import noTypes from './rules/noTypes';
 import noUndefinedTypes from './rules/noUndefinedTypes';
+import requireAsteriskPrefix from './rules/requireAsteriskPrefix';
 import requireDescription from './rules/requireDescription';
 import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
 import requireExample from './rules/requireExample';
@@ -68,6 +69,7 @@ export default {
         'jsdoc/no-restricted-syntax': 'off',
         'jsdoc/no-types': 'off',
         'jsdoc/no-undefined-types': 'warn',
+        'jsdoc/require-asterisk-prefix': 'off',
         'jsdoc/require-description': 'off',
         'jsdoc/require-description-complete-sentence': 'off',
         'jsdoc/require-example': 'off',
@@ -115,6 +117,7 @@ export default {
     'no-restricted-syntax': noRestrictedSyntax,
     'no-types': noTypes,
     'no-undefined-types': noUndefinedTypes,
+    'require-asterisk-prefix': requireAsteriskPrefix,
     'require-description': requireDescription,
     'require-description-complete-sentence': requireDescriptionCompleteSentence,
     'require-example': requireExample,

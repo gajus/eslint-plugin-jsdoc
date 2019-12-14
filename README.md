@@ -45,6 +45,7 @@ JSDoc linting rules for ESLint.
         * [`no-restricted-syntax`](#eslint-plugin-jsdoc-rules-no-restricted-syntax)
         * [`no-types`](#eslint-plugin-jsdoc-rules-no-types)
         * [`no-undefined-types`](#eslint-plugin-jsdoc-rules-no-undefined-types)
+        * [`require-asterisk-prefix`](#eslint-plugin-jsdoc-rules-require-asterisk-prefix)
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-description`](#eslint-plugin-jsdoc-rules-require-description)
         * [`require-example`](#eslint-plugin-jsdoc-rules-require-example)
@@ -124,6 +125,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/no-defaults": 1,
         "jsdoc/no-types": 1,
         "jsdoc/no-undefined-types": 1, // Recommended
+        "jsdoc/require-asterisk-prefix": 1,
         "jsdoc/require-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-example": 1,
@@ -8370,6 +8372,21 @@ class Test {
 ````
 
 
+<a name="eslint-plugin-jsdoc-rules-require-asterisk-prefix"></a>
+### <code>require-asterisk-prefix</code>
+
+Requires that each JSDoc line starts with an `*`.
+
+<a name="eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-19"></a>
+#### Options
+
+This rule allows one optional string argument. If it is `"always"` then a problem is raised when there is no asterisk prefix on a given jsdoc line. If it is `"never"` then a problem is raised when there is an asterisk present. The default value is `"always"`.
+
+|||
+|---|---|
+|Context|everywhere|
+|Tags|N/a|
+
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
 ### <code>require-description-complete-sentence</code>
 
@@ -8387,10 +8404,10 @@ Requires that block description, explicit `@description`, and
 * Periods after items within the `abbreviations` option array are not treated
   as sentence endings.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-19"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-20"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-19-tags-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-20-tags-3"></a>
 ##### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
@@ -8414,14 +8431,14 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-19-abbreviations"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-20-abbreviations"></a>
 ##### <code>abbreviations</code>
 
 You can provide an `abbreviations` options array to avoid such strings of text
 being treated as sentence endings when followed by dots. The `.` is not
 necessary at the end of the array items.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-19-newlinebeforecapsassumesbadsentenceend"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-20-newlinebeforecapsassumesbadsentenceend"></a>
 ##### <code>newlineBeforeCapsAssumesBadSentenceEnd</code>
 
 When `false` (the new default), we will not assume capital letters after
@@ -9092,7 +9109,7 @@ Requires that all functions have a description.
   is `"tag"`) must have a non-empty description that explains the purpose of
   the method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options-20"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-21"></a>
 #### Options
 
 An options object may have any of the following properties:
@@ -9607,12 +9624,12 @@ Requires that all functions have examples.
 * Every example tag must have a non-empty description that explains the
   method's usage.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-21"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-22"></a>
 #### Options
 
 This rule has an object option.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-21-exemptedby"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-22-exemptedby"></a>
 ##### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document
@@ -9621,13 +9638,13 @@ block avoids the need for an `@example`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-21-exemptnoarguments"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-22-exemptnoarguments"></a>
 ##### <code>exemptNoArguments</code>
 
 Boolean to indicate that no-argument functions should not be reported for
 missing `@example` declarations.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-21-contexts-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-22-contexts-6"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -9639,18 +9656,18 @@ want the rule to apply to any jsdoc block throughout your files.
 See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-21-checkconstructors"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-22-checkconstructors"></a>
 ##### <code>checkConstructors</code>
 
 A value indicating whether `constructor`s should be checked.
 Defaults to `true`.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-21-checkgetters"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-22-checkgetters"></a>
 ##### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-21-checksetters"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-22-checksetters"></a>
 ##### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Defaults to `false`.
@@ -9942,10 +9959,10 @@ Checks that:
   as being when the overview tag is not preceded by anything other than
   a comment.
 
-<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-22"></a>
+<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-23"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-22-tags-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-23-tags-4"></a>
 ##### <code>tags</code>
 
 The keys of this object are tag names, and the values are configuration
@@ -10228,7 +10245,7 @@ function quux () {
 
 Requires (or disallows) a hyphen before the `@param` description.
 
-<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-23"></a>
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-24"></a>
 #### Options
 
 This rule takes one optional string argument and an optional options object.
@@ -10459,12 +10476,12 @@ function main(argv) {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-24"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-25"></a>
 #### Options
 
 Accepts one optional options object with the following optional keys.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-24-publiconly"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-25-publiconly"></a>
 ##### <code>publicOnly</code>
 
 This option will insist that missing jsdoc blocks are only reported for
@@ -10480,7 +10497,7 @@ otherwise noted):
 - `cjs` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
 - `window` - Window global exports are checked for JSDoc comments
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-24-require"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-25-require"></a>
 ##### <code>require</code>
 
 An object with the following optional boolean keys which all default to
@@ -10493,7 +10510,7 @@ An object with the following optional boolean keys which all default to
 - `FunctionExpression`
 - `MethodDefinition`
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-24-contexts-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-25-contexts-7"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings or objects representing the additional AST
@@ -10509,7 +10526,7 @@ if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition
 See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-24-exemptemptyconstructors"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-25-exemptemptyconstructors"></a>
 ##### <code>exemptEmptyConstructors</code>
 
 Default: true
@@ -10518,7 +10535,7 @@ When `true`, the rule will not report missing jsdoc blocks above constructors
 with no parameters or return values (this is enabled by default as the class
 name or description should be seen as sufficient to convey intent).
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-24-exemptemptyfunctions"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-25-exemptemptyfunctions"></a>
 ##### <code>exemptEmptyFunctions</code>
 
 Default: false.
@@ -10527,14 +10544,14 @@ When `true`, the rule will not report missing jsdoc blocks above
 functions/methods with no parameters or return values (intended where
 function/method names are sufficient for themselves as documentation).
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-24-checkconstructors-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-25-checkconstructors-1"></a>
 ##### <code>checkConstructors</code>
 
 A value indicating whether `constructor`s should be checked. Defaults to
 `true`. When `true`, `exemptEmptyConstructors` may still avoid reporting when
 no parameters or return values are found.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-24-checkgetters-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-25-checkgetters-1"></a>
 ##### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Besides setting as a
@@ -10543,7 +10560,7 @@ getters should be checked but only when there is no setter. This may be useful
 if one only wishes documentation on one of the two accessors. Defaults to
 `false`.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-24-checksetters-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-25-checksetters-1"></a>
 ##### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Besides setting as a
@@ -10552,7 +10569,7 @@ setters should be checked but only when there is no getter. This may be useful
 if one only wishes documentation on one of the two accessors. Defaults to
 `false`.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-24-enablefixer-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-25-enablefixer-2"></a>
 ##### <code>enableFixer</code>
 
 A boolean on whether to enable the fixer (which adds an empty jsdoc block).
@@ -12081,10 +12098,10 @@ export class User {
 
 Requires that each `@param` tag has a `description` value.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-25"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-26"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-25-contexts-8"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-26-contexts-8"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -12205,10 +12222,10 @@ Requires that all function parameters have names.
 >
 > [JSDoc](https://jsdoc.app/tags-param.html#overview)
 
-<a name="eslint-plugin-jsdoc-rules-require-param-name-options-26"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-27"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-param-name-options-26-contexts-9"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-27-contexts-9"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -12341,10 +12358,10 @@ function example(cb) {
 
 Requires that each `@param` tag has a `type` value.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-27"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-28"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-27-contexts-10"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-28-contexts-10"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -12642,30 +12659,30 @@ other properties, so in looking at the docs alone without looking at the
 function signature, it may appear that there is an actual property named
 `extra`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29"></a>
 #### Options
 
 An options object accepts the following optional properties:
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-enablefixer-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-enablefixer-3"></a>
 ##### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-enablerootfixer"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-enablerootfixer"></a>
 ##### <code>enableRootFixer</code>
 
 Whether to enable the auto-adding of incrementing roots (see the "Fixer"
 section). Defaults to `true`. Has no effect if `enableFixer` is set to
 `false`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-enablerestelementfixer"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-enablerestelementfixer"></a>
 ##### <code>enableRestElementFixer</code>
 
 Whether to enable the rest element fixer (see
 "Rest Element (`RestElement`) insertions"). Defaults to `true`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-checkrestproperty-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-checkrestproperty-1"></a>
 ##### <code>checkRestProperty</code>
 
 If set to `true`, will report (and add fixer insertions) for missing rest
@@ -12719,13 +12736,13 @@ function quux ({num, ...extra}) {
 }
 ```
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-autoincrementbase"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-autoincrementbase"></a>
 ##### <code>autoIncrementBase</code>
 
 Numeric to indicate the number at which to begin auto-incrementing roots.
 Defaults to `0`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-unnamedrootbase"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-unnamedrootbase"></a>
 ##### <code>unnamedRootBase</code>
 
 An array of root names to use in the fixer when roots are missing. Defaults
@@ -12751,7 +12768,7 @@ function quux ({foo}, [bar], {baz}) {
 */
 ```
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-exemptedby-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-exemptedby-1"></a>
 ##### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document block
@@ -12760,7 +12777,7 @@ avoids the need for a `@param`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-checktypespattern-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-checktypespattern-1"></a>
 ##### <code>checkTypesPattern</code>
 
 When one specifies a type, unless it is of a generic type, like `object`
@@ -12795,7 +12812,7 @@ You could set this regular expression to a more expansive list, or you
 could restrict it such that even types matching those strings would not
 need destructuring.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-contexts-11"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-contexts-11"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -12807,28 +12824,28 @@ which are checked.
 See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-checkconstructors-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-checkconstructors-2"></a>
 ##### <code>checkConstructors</code>
 
 A value indicating whether `constructor`s should be checked. Defaults to
 `true`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-checkgetters-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-checkgetters-2"></a>
 ##### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-checksetters-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-checksetters-2"></a>
 ##### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Defaults to `false`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-checkdestructured-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-checkdestructured-1"></a>
 ##### <code>checkDestructured</code>
 
 Whether to require destructured properties. Defaults to `true`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-checkdestructuredroots"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-checkdestructuredroots"></a>
 ##### <code>checkDestructuredRoots</code>
 
 Whether to check the existence of a corresponding `@param` for root objects
@@ -12841,7 +12858,7 @@ implied to be `false` (i.e., the inside of the roots will not be checked
 either, e.g., it will also not complain if `a` or `b` do not have their own
 documentation). Defaults to `true`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-28-usedefaultobjectproperties-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-29-usedefaultobjectproperties-1"></a>
 ##### <code>useDefaultObjectProperties</code>
 
 Set to `true` if you wish to expect documentation of properties on objects
@@ -14444,7 +14461,7 @@ is set to `false` no non-`undefined` returned or resolved value is found.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-check-options-29"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-check-options-30"></a>
 #### Options
 
 - `exemptAsync` - By default, functions which return a `Promise` that are not
@@ -14971,10 +14988,10 @@ Requires that the `@returns` tag has a `description` value. The error
 will not be reported if the return value is `void` or `undefined`
 or if it is `Promise<void>` or `Promise<undefined>`.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-30"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-31"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-30-contexts-12"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-31-contexts-12"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -15127,10 +15144,10 @@ function quux () {
 
 Requires that `@returns` tag has `type` value.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-31"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-32"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-31-contexts-13"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-32-contexts-13"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -15250,7 +15267,7 @@ Requires that returns are documented.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-32"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-33"></a>
 #### Options
 
 - `checkConstructors` - A value indicating whether `constructor`s should
@@ -16271,7 +16288,7 @@ async function foo() {
 
 Requires that throw statements are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-throws-options-33"></a>
+<a name="eslint-plugin-jsdoc-rules-require-throws-options-34"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
@@ -16547,7 +16564,7 @@ Will also report if multiple `@yields` tags are present.
 See the `next`, `forceRequireNext`, and `nextWithGeneratorTag` options for an
 option to expect a non-standard `@next` tag.
 
-<a name="eslint-plugin-jsdoc-rules-require-yields-options-34"></a>
+<a name="eslint-plugin-jsdoc-rules-require-yields-options-35"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
@@ -17357,7 +17374,7 @@ function bodies.
 
 Will also report if multiple `@yields` tags are present.
 
-<a name="eslint-plugin-jsdoc-rules-require-yields-check-options-35"></a>
+<a name="eslint-plugin-jsdoc-rules-require-yields-check-options-36"></a>
 #### Options
 
 - `checkGeneratorsOnly` - Avoids checking the function body and merely insists
@@ -17910,7 +17927,7 @@ for valid types (based on the tag's `type` value), and either portion checked
 for presence (based on `false` `name` or `type` values or their `required`
 value). See the setting for more details.
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-36"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-37"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow

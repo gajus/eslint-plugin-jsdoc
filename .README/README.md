@@ -63,6 +63,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/no-defaults": 1,
         "jsdoc/no-types": 1,
         "jsdoc/no-undefined-types": 1, // Recommended
+        "jsdoc/require-asterisk-prefix": 1,
         "jsdoc/require-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-example": 1,
@@ -558,6 +559,7 @@ selector).
 {"gitdown": "include", "file": "./rules/no-restricted-syntax.md"}
 {"gitdown": "include", "file": "./rules/no-types.md"}
 {"gitdown": "include", "file": "./rules/no-undefined-types.md"}
+{"gitdown": "include", "file": "./rules/require-asterisk-prefix.md"}
 {"gitdown": "include", "file": "./rules/require-description-complete-sentence.md"}
 {"gitdown": "include", "file": "./rules/require-description.md"}
 {"gitdown": "include", "file": "./rules/require-example.md"}
