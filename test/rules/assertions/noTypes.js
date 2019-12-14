@@ -127,6 +127,35 @@ export default {
           }
       `,
     },
+    {
+      code: `
+          /**
+           * Beep
+           * Boop
+           *
+           * @returns {number}
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Types are not permitted on @returns.',
+        },
+      ],
+      output: `
+          /**
+           * Beep
+           * Boop
+           *
+           * @returns
+           */
+          function quux () {
+
+          }
+      `,
+    },
   ],
   valid: [
     {
