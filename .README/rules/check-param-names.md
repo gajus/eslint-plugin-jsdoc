@@ -2,9 +2,19 @@
 
 Ensures that parameter names in JSDoc match those in the function declaration.
 
+#### Options
+
+##### `allowExtraTrailingParamDocs`
+
+If set to `true`, this option will allow extra `@param` definitions (e.g.,
+representing future expected or virtual params) to be present without needing
+their presence within the function signature. Other inconsistencies between
+`@param`'s and present function parameters will still be reported.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Options|`allowExtraTrailingParamDocs`|
 |Tags|`param`|
 
 <!-- assertions checkParamNames -->
