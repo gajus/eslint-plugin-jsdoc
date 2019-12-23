@@ -82,11 +82,13 @@ export default iterateJsdoc(({
       return true;
     }
 
-    if (forceReturnsWithAsync && utils.isAsync() && !utils.hasReturnValue()) {
+    const isAsync = utils.isAsync();
+
+    if (forceReturnsWithAsync && isAsync) {
       return true;
     }
 
-    return utils.hasReturnValue();
+    return !isAsync && utils.hasReturnValue();
   };
 
   if (shouldReport()) {

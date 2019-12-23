@@ -8496,7 +8496,12 @@ Will also report if multiple `@returns` tags are present.
   `@returns` documentation regardless of implicit or explicit `return`'s
   in the function. May be desired to flag that a project is aware of an
   `undefined`/`void` return. Defaults to `false`.
-- `forceReturnsWithAsync` - By default `async` functions that do not explicitly return a value pass this rule. You can force all `async` functions to require return statements by setting `forceReturnsWithAsync` to `true` on the options object. This may be useful as an `async` function will always return a `Promise`, even if the `Promise` returns void. Defaults to `false`.
+- `forceReturnsWithAsync` - By default `async` functions that do not explicitly
+  return a value pass this rule as an `async` function will always return a
+  `Promise`, even if the `Promise` resolves to void. You can force all `async`
+  functions to require return statements by setting `forceReturnsWithAsync`
+  to `true` on the options object. This may be useful for flagging that there
+  has been consideration of return type. Defaults to `false`.
 
 ```js
 'jsdoc/require-returns': ['error', {forceReturnsWithAsync: true}]
@@ -8645,6 +8650,24 @@ function quux (foo) {
   return 'bar';
 }
 // Options: [{"exemptedBy":["notPresent"]}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * @param {array} a
+ */
+async function foo(a) {
+  return;
+}
+// Options: [{"forceReturnsWithAsync":true}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * @param {array} a
+ */
+async function foo(a) {
+  return Promise.all(a);
+}
+// Options: [{"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 ````
 
@@ -8914,6 +8937,20 @@ function quux () {
 
 }
 // Options: [{"exemptedBy":["type"]}]
+
+/**
+ * @param {array} a
+ */
+async function foo(a) {
+  return Promise.all(a);
+}
+
+/**
+ * @param {array} a
+ */
+async function foo(a) {
+  return;
+}
 ````
 
 

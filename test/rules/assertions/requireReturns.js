@@ -307,6 +307,50 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @param {array} a
+       */
+      async function foo(a) {
+        return;
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [{
+        forceReturnsWithAsync: true,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {array} a
+       */
+      async function foo(a) {
+        return Promise.all(a);
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [{
+        forceReturnsWithAsync: true,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
   ],
   valid: [
     {
@@ -724,6 +768,32 @@ export default {
           exemptedBy: ['type'],
         },
       ],
+    },
+    {
+      code: `
+      /**
+       * @param {array} a
+       */
+      async function foo(a) {
+        return Promise.all(a);
+      }
+      `,
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {array} a
+       */
+      async function foo(a) {
+        return;
+      }
+      `,
+      parserOptions: {
+        ecmaVersion: 8,
+      },
     },
   ],
 };
