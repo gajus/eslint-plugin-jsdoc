@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "comment-parser": "^0.7.1",
+    "comment-parser": "^0.7.2",
     "debug": "^4.1.1",
     "jsdoctypeparser": "^6.1.0",
     "lodash": "^4.17.15",
@@ -25,17 +25,17 @@
     "@typescript-eslint/parser": "^2.12.0",
     "babel-eslint": "^10.0.3",
     "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-istanbul": "^5.2.0",
+    "babel-plugin-istanbul": "^6.0.0",
     "chai": "^4.2.0",
-    "eslint": "6.7.2",
+    "eslint": "6.8.0",
     "eslint-config-canonical": "^18.1.0",
     "gitdown": "^3.1.2",
     "glob": "^7.1.6",
     "husky": "^3.1.0",
     "mocha": "^6.2.2",
-    "nyc": "^14.1.1",
-    "semantic-release": "^15.13.31",
-    "typescript": "^3.7.3"
+    "nyc": "^15.0.0",
+    "semantic-release": "^15.14.0",
+    "typescript": "^3.7.4"
   },
   "engines": {
     "node": ">=6"
