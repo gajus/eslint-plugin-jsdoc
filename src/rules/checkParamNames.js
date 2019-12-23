@@ -1,7 +1,10 @@
 import entries from 'object.entries-ponyfill';
 import iterateJsdoc from '../iterateJsdoc';
 
-const validateParameterNames = (targetTagName : string, functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report) => {
+const validateParameterNames = (
+  targetTagName : string, allowExtraTrailingParamDocs: boolean,
+  functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report,
+) => {
   if (!jsdoc || !jsdoc.tags) {
     return false;
   }
@@ -27,6 +30,10 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
     const functionParameterName = functionParameterNames[index];
 
     if (!functionParameterName) {
+      if (allowExtraTrailingParamDocs) {
+        return false;
+      }
+
       report(
         `@${targetTagName} "${tag.name}" does not match an existing function parameter.`,
         null,
@@ -59,7 +66,10 @@ const validateParameterNames = (targetTagName : string, functionParameterNames :
   });
 };
 
-const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames : Array<string>, jsdoc, report : Function) => {
+const validateParameterNamesDeep = (
+  targetTagName : string, allowExtraTrailingParamDocs: boolean,
+  jsdocParameterNames : Array<string>, jsdoc, report : Function,
+) => {
   let lastRealParameter;
 
   return jsdocParameterNames.some((jsdocParameterName, idx) => {
@@ -97,27 +107,47 @@ const validateParameterNamesDeep = (targetTagName : string, jsdocParameterNames 
 };
 
 export default iterateJsdoc(({
+  context,
   jsdoc,
   jsdocNode,
   report,
   utils,
 }) => {
-  const functionParameterNames = utils.getFunctionParameterNames();
+  const {allowExtraTrailingParamDocs} = context.options[0] || {};
+
   const jsdocParameterNamesDeep = utils.getJsdocParameterNamesDeep();
   if (!jsdocParameterNamesDeep) {
     return;
   }
+  const functionParameterNames = utils.getFunctionParameterNames();
   const targetTagName = utils.getPreferredTagName({tagName: 'param'});
-  const isError = validateParameterNames(targetTagName, functionParameterNames, jsdoc, jsdocNode, utils, report);
+  const isError = validateParameterNames(
+    targetTagName, allowExtraTrailingParamDocs, functionParameterNames,
+    jsdoc, jsdocNode, utils, report,
+  );
 
   if (isError) {
     return;
   }
 
-  validateParameterNamesDeep(targetTagName, jsdocParameterNamesDeep, jsdoc, report);
+  validateParameterNamesDeep(
+    targetTagName, allowExtraTrailingParamDocs, jsdocParameterNamesDeep,
+    jsdoc, report,
+  );
 }, {
   meta: {
     fixable: 'code',
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          allowExtraTrailingParamDocs: {
+            type: 'boolean',
+          },
+        },
+        type: 'object',
+      },
+    ],
     type: 'suggestion',
   },
 });

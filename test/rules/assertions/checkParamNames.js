@@ -380,5 +380,21 @@ export default {
           };
       `,
     },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param bar
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          allowExtraTrailingParamDocs: true,
+        },
+      ],
+    },
   ],
 };
