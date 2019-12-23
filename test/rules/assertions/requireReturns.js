@@ -475,7 +475,7 @@ export default {
     {
       code: `
           /**
-           * @returns {Object}
+           * @returns {object}
            */
           function quux () {
 
@@ -486,7 +486,7 @@ export default {
     {
       code: `
           /**
-           * @returns {Object}
+           * @returns {object}
            */
           const quux = () => ({a: foo});
       `,
@@ -494,7 +494,7 @@ export default {
     {
       code: `
           /**
-           * @returns {Object}
+           * @returns {object}
            */
           const quux = () => {
             return {a: foo}

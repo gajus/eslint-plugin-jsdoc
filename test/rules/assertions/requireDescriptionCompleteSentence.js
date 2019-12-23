@@ -504,7 +504,7 @@ export default {
     {
       code: `
         /**
-         * @throws {Object} Hello World
+         * @throws {object} Hello World
          * hello world
         */
       `,

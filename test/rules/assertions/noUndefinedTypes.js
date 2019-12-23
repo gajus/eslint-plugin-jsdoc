@@ -392,7 +392,7 @@ export default {
 
         /**
          * @param {MyType} foo - Bar.
-         * @param {Object<string, number>} foo
+         * @param {object<string, number>} foo
          * @param {Array<string>} baz
          */
           function quux(foo, bar, baz) {
@@ -422,7 +422,7 @@ export default {
     {
       code: `
         /**
-         * @typedef {Object} hello
+         * @typedef {object} hello
          * @property {string} a - a.
          */
 

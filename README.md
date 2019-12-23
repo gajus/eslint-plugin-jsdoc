@@ -1597,7 +1597,7 @@ function quux ([a, b] = []) {
 
 /**
  * Assign the project to a list of employees.
- * @param {Object[]} employees - The employees who are responsible for the project.
+ * @param {object[]} employees - The employees who are responsible for the project.
  * @param {string} employees[].name - The name of an employee.
  * @param {string} employees[].department - The employee's department.
  */
@@ -4532,7 +4532,7 @@ function quux () {
 /**
  * A.
  *
- * @typedef {Object} A
+ * @typedef {object} A
  * @prop {boolean} a A.
  */
 // Options: ["never"]
@@ -4540,7 +4540,7 @@ function quux () {
 
 /**
  * A.
- * @typedef {Object} A
+ * @typedef {object} A
  * @prop {boolean} a A.
  */
 // Options: ["always"]
@@ -4549,10 +4549,10 @@ function quux () {
 
      /**
       * Service for fetching symbols.
-      * @param {Object} $http - Injected http helper.
-      * @param {Object} $q - Injected Promise api helper.
-      * @param {Object} $location - Injected window location object.
-      * @param {Object} REPORT_DIALOG_CONSTANTS - Injected handle.
+      * @param {object} $http - Injected http helper.
+      * @param {object} $q - Injected Promise api helper.
+      * @param {object} $location - Injected window location object.
+      * @param {object} REPORT_DIALOG_CONSTANTS - Injected handle.
       */
 // Message: There must be a newline after the description of the JSDoc block.
 ````
@@ -4924,7 +4924,7 @@ import {MyType} from 'my-library';
 
 /**
  * @param {MyType} foo - Bar.
- * @param {Object<string, number>} foo
+ * @param {object<string, number>} foo
  * @param {Array<string>} baz
  */
   function quux(foo, bar, baz) {
@@ -4942,7 +4942,7 @@ import {MyType} from 'my-library';
 }
 
 /**
- * @typedef {Object} hello
+ * @typedef {object} hello
  * @property {string} a - a.
  */
 
@@ -5326,7 +5326,7 @@ function quux (foo) {
 // Message: Sentence should start with an uppercase character.
 
 /**
- * @throws {Object} Hello World
+ * @throws {object} Hello World
  * hello world
 */
 // Message: Sentence must end with a period.
@@ -8758,7 +8758,7 @@ function quux (foo) {
 }
 
 /**
- * @returns {Object}
+ * @returns {object}
  */
 function quux () {
 
@@ -8766,12 +8766,12 @@ function quux () {
 }
 
 /**
- * @returns {Object}
+ * @returns {object}
  */
 const quux = () => ({a: foo});
 
 /**
- * @returns {Object}
+ * @returns {object}
  */
 const quux = () => {
   return {a: foo}
