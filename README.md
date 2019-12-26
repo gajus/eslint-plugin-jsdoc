@@ -5044,6 +5044,22 @@ class Foo {
 // Settings: {"jsdoc":{"mode":"closure"}}
 
 /**
+ * @template TEMPLATE_TYPE
+ */
+class Foo {
+  /**
+   * @return {TEMPLATE_TYPE}
+   */
+  bar () {}
+
+  /**
+   * @return {TEMPLATE_TYPE}
+   */
+  baz () {}
+}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
  * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
  */
 class Foo {
