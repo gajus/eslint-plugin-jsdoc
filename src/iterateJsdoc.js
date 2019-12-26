@@ -419,59 +419,61 @@ const makeReport = (context, commentNode) => {
 const iterateAllJsdocs = (iterator, ruleConfig) => {
   const trackedJsdocs = [];
 
-  const callIterator = (context, node, jsdocNode) => {
+  const callIterator = (context, node, jsdocNodes) => {
     const sourceCode = context.getSourceCode();
-    if (!(/^\/\*\*\s/).test(sourceCode.getText(jsdocNode))) {
-      return;
-    }
-    const sourceLine = sourceCode.lines[jsdocNode.loc.start.line - 1];
-    const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
-    const jsdoc = parseComment(jsdocNode, indent, !ruleConfig.noTrim);
     const settings = getSettings(context);
-    const report = makeReport(context, jsdocNode);
+    const {lines} = sourceCode;
+    jsdocNodes.forEach((jsdocNode) => {
+      if (!(/^\/\*\*\s/).test(sourceCode.getText(jsdocNode))) {
+        return;
+      }
+      const sourceLine = lines[jsdocNode.loc.start.line - 1];
+      const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
+      const jsdoc = parseComment(jsdocNode, indent, !ruleConfig.noTrim);
+      const report = makeReport(context, jsdocNode);
 
-    iterator({
-      context,
-      indent,
-      jsdoc,
-      jsdocNode,
-      node,
-      report,
-      settings,
-      sourceCode,
-      utils: getUtils(node, jsdoc, jsdocNode, settings, report, context),
+      iterator({
+        context,
+        indent,
+        jsdoc,
+        jsdocNode,
+        node,
+        report,
+        settings,
+        sourceCode,
+        utils: getUtils(node, jsdoc, jsdocNode, settings, report, context),
+      });
     });
   };
 
   return {
     create (context) {
+      const sourceCode = context.getSourceCode();
+      const settings = getSettings(context);
+
       return {
         '*:not(Program)' (node) {
-          const sourceCode = context.getSourceCode();
           const reducedNode = getReducedASTNode(node, sourceCode);
 
           if (node !== reducedNode) {
             return;
           }
 
-          const comment = getJSDocComment(sourceCode, node, getSettings(context));
+          const comment = getJSDocComment(sourceCode, node, settings);
           if (!comment || trackedJsdocs.includes(comment)) {
             return;
           }
 
           trackedJsdocs.push(comment);
-          callIterator(context, node, comment);
+          callIterator(context, node, [comment]);
         },
         'Program:exit' () {
-          const sourceCode = context.getSourceCode();
           const allJsdocs = sourceCode.getAllComments();
           const untrackedJSdoc = allJsdocs.filter((node) => {
             return !trackedJsdocs.includes(node);
           });
 
-          untrackedJSdoc.forEach((comment) => {
-            callIterator(context, null, comment);
-          });
+          callIterator(context, null, untrackedJSdoc);
         },
       };
     },
