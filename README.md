@@ -7233,6 +7233,15 @@ enum Example {
 const foo = {...{}};
 function bar() {}
 // Options: [{"exemptEmptyFunctions":false,"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
+
+/**
+ * Class documentation
+ */
+ @logged
+export default class Foo {
+ // ....
+}
+// Options: [{"exemptEmptyFunctions":false,"require":{"ClassDeclaration":true}}]
 ````
 
 

@@ -2354,5 +2354,28 @@ export default {
       sourceType: 'module',
     },
   },
+  {
+    code: `
+    /**
+     * Class documentation
+     */
+     @logged
+    export default class Foo {
+     // ....
+    }
+    `,
+    options: [
+      {
+        exemptEmptyFunctions: false,
+        require: {
+          ClassDeclaration: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
+  },
   ],
 };

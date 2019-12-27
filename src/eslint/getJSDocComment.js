@@ -14,6 +14,17 @@ const isCommentToken = (token) => {
   return token.type === 'Line' || token.type === 'Block' || token.type === 'Shebang';
 };
 
+const getDecorator = (token, sourceCode) => {
+  if (token && token.type === 'Identifier') {
+    const tokenBefore = sourceCode.getTokenBefore(token, {includeComments: true});
+    if (tokenBefore && tokenBefore.type === 'Punctuator' && tokenBefore.value === '@') {
+      return tokenBefore;
+    }
+  }
+
+  return false;
+};
+
 /**
  * Check to see if its a ES6 export declaration.
  *
@@ -104,6 +115,11 @@ const getJSDocComment = function (sourceCode, node, settings) {
 
     while (currentNode) {
       tokenBefore = sourceCode.getTokenBefore(currentNode, {includeComments: true});
+      const decorator = getDecorator(tokenBefore, sourceCode);
+      if (decorator) {
+        currentNode = decorator;
+        continue;
+      }
       if (!tokenBefore || !isCommentToken(tokenBefore)) {
         return null;
       }
