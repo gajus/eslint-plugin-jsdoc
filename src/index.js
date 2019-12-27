@@ -24,6 +24,9 @@ import requireParam from './rules/requireParam';
 import requireParamDescription from './rules/requireParamDescription';
 import requireParamType from './rules/requireParamType';
 import requireProperty from './rules/requireProperty';
+import requirePropertyDescription from './rules/requirePropertyDescription';
+import requirePropertyName from './rules/requirePropertyName';
+import requirePropertyType from './rules/requirePropertyType';
 import requireReturns from './rules/requireReturns';
 import requireReturnsCheck from './rules/requireReturnsCheck';
 import requireReturnsDescription from './rules/requireReturnsDescription';
@@ -62,6 +65,9 @@ export default {
         'jsdoc/require-param-name': 'warn',
         'jsdoc/require-param-type': 'warn',
         'jsdoc/require-property': 'warn',
+        'jsdoc/require-property-description': 'warn',
+        'jsdoc/require-property-name': 'warn',
+        'jsdoc/require-property-type': 'warn',
         'jsdoc/require-returns': 'warn',
         'jsdoc/require-returns-check': 'warn',
         'jsdoc/require-returns-description': 'warn',
@@ -97,6 +103,9 @@ export default {
     'require-param-name': requireParamName,
     'require-param-type': requireParamType,
     'require-property': requireProperty,
+    'require-property-description': requirePropertyDescription,
+    'require-property-name': requirePropertyName,
+    'require-property-type': requirePropertyType,
     'require-returns': requireReturns,
     'require-returns-check': requireReturnsCheck,
     'require-returns-description': requireReturnsDescription,
