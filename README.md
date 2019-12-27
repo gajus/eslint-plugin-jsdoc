@@ -7248,7 +7248,7 @@ export default class Foo {
 <a name="eslint-plugin-jsdoc-rules-require-param-description"></a>
 ### <code>require-param-description</code>
 
-Requires that `@param` tag has `description` value.
+Requires that each `@param` tag has a `description` value.
 
 |||
 |---|---|
@@ -7308,7 +7308,7 @@ function quux (foo) {
 <a name="eslint-plugin-jsdoc-rules-require-param-name"></a>
 ### <code>require-param-name</code>
 
-Requires that all function parameters have name.
+Requires that all function parameters have names.
 
 > The `@param` tag requires you to specify the name of the parameter you are documenting. You can also include the parameter's type, enclosed in curly brackets, and a description of the parameter.
 >
@@ -7371,7 +7371,7 @@ function quux (foo) {
 <a name="eslint-plugin-jsdoc-rules-require-param-type"></a>
 ### <code>require-param-type</code>
 
-Requires that `@param` tag has `type` value.
+Requires that each `@param` tag has a `type` value.
 
 |||
 |---|---|

@@ -1,6 +1,6 @@
 ### `require-param-description`
 
-Requires that `@param` tag has `description` value.
+Requires that each `@param` tag has a `description` value.
 
 |||
 |---|---|

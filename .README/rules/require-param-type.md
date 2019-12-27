@@ -1,6 +1,6 @@
 ### `require-param-type`
 
-Requires that `@param` tag has `type` value.
+Requires that each `@param` tag has a `type` value.
 
 |||
 |---|---|
