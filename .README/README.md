@@ -353,6 +353,9 @@ only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
 {"gitdown": "include", "file": "./rules/require-param-type.md"}
 {"gitdown": "include", "file": "./rules/require-param.md"}
 {"gitdown": "include", "file": "./rules/require-property.md"}
+{"gitdown": "include", "file": "./rules/require-property-description.md"}
+{"gitdown": "include", "file": "./rules/require-property-name.md"}
+{"gitdown": "include", "file": "./rules/require-property-type.md"}
 {"gitdown": "include", "file": "./rules/require-returns-check.md"}
 {"gitdown": "include", "file": "./rules/require-returns-description.md"}
 {"gitdown": "include", "file": "./rules/require-returns-type.md"}

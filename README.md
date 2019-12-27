@@ -45,6 +45,9 @@ JSDoc linting rules for ESLint.
         * [`require-param-type`](#eslint-plugin-jsdoc-rules-require-param-type)
         * [`require-param`](#eslint-plugin-jsdoc-rules-require-param)
         * [`require-property`](#eslint-plugin-jsdoc-rules-require-property)
+        * [`require-property-description`](#eslint-plugin-jsdoc-rules-require-property-description)
+        * [`require-property-name`](#eslint-plugin-jsdoc-rules-require-property-name)
+        * [`require-property-type`](#eslint-plugin-jsdoc-rules-require-property-type)
         * [`require-returns-check`](#eslint-plugin-jsdoc-rules-require-returns-check)
         * [`require-returns-description`](#eslint-plugin-jsdoc-rules-require-returns-description)
         * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
@@ -8590,6 +8593,180 @@ The following patterns are not considered problems:
 function quux () {
 
 }
+````
+
+
+<a name="eslint-plugin-jsdoc-rules-require-property-description"></a>
+### <code>require-property-description</code>
+
+Requires that each `@property` tag has a `description` value.
+
+|||
+|---|---|
+|Context|everywhere|
+|Tags|N/A|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property foo
+ */
+// Message: Missing JSDoc @property "foo" description.
+
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @prop foo
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"property":"prop"}}}
+// Message: Missing JSDoc @prop "foo" description.
+
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property foo
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"property":false}}}
+// Message: Unexpected tag `@property`
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @typedef {SomeType} SomeTypedef
+ */
+
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property foo Foo.
+ */
+
+/**
+ * @namespace {SomeType} SomeName
+ * @property foo Foo.
+ */
+
+/**
+ * @class
+ * @property foo Foo.
+ */
+````
+
+
+<a name="eslint-plugin-jsdoc-rules-require-property-name"></a>
+### <code>require-property-name</code>
+
+Requires that all function `@property` tags have names.
+
+|||
+|---|---|
+|Context|everywhere|
+|Tags|N/A|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property
+ */
+// Message: There must be an identifier after @property type.
+
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property {string}
+ */
+// Message: There must be an identifier after @property tag.
+
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property foo
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"property":false}}}
+// Message: Unexpected tag `@property`
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property foo
+ */
+
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property {string} foo
+ */
+
+/**
+ * @namespace {SomeType} SomeName
+ * @property {string} foo
+ */
+
+/**
+ * @class
+ * @property {string} foo
+ */
+````
+
+
+<a name="eslint-plugin-jsdoc-rules-require-property-type"></a>
+### <code>require-property-type</code>
+
+Requires that each `@property` tag has a `type` value.
+
+|||
+|---|---|
+|Context|everywhere|
+|Tags|N/A|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property foo
+ */
+// Message: Missing JSDoc @property "foo" type.
+
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @prop foo
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"property":"prop"}}}
+// Message: Missing JSDoc @prop "foo" type.
+
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property foo
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"property":false}}}
+// Message: Unexpected tag `@property`
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @typedef {SomeType} SomeTypedef
+ */
+
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property {number} foo
+ */
+
+/**
+ * @namespace {SomeType} SomeName
+ * @property {number} foo
+ */
+
+/**
+ * @class
+ * @property {number} foo
+ */
 ````
 
 
