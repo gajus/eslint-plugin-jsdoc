@@ -586,6 +586,29 @@ export default {
     {
       code: `
       /**
+       * @template TEMPLATE_TYPE
+       */
+      class Foo {
+        /**
+         * @return {TEMPLATE_TYPE}
+         */
+        bar () {}
+
+        /**
+         * @return {TEMPLATE_TYPE}
+         */
+        baz () {}
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
        * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
        */
       class Foo {

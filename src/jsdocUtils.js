@@ -514,18 +514,6 @@ const getTagsByType = (context, mode, tags, tagPreference) => {
   };
 };
 
-const getAncestor = (sourceCode, nde, depth, idx = 0) => {
-  if (idx === depth) {
-    return nde;
-  }
-  const prevToken = sourceCode.getTokenBefore(nde);
-  if (prevToken) {
-    return getAncestor(sourceCode, prevToken, depth, idx + 1);
-  }
-
-  return null;
-};
-
 const getIndent = (sourceCode) => {
   let indent = sourceCode.text.match(/^\n*([ \t]+)/u);
   /* istanbul ignore next */
@@ -537,7 +525,6 @@ const getIndent = (sourceCode) => {
 export default {
   enforcedContexts,
   filterTags,
-  getAncestor,
   getContextObject,
   getFunctionParameterNames,
   getIndent,

@@ -2,7 +2,7 @@
 import {default as commentParser, stringify as commentStringify} from 'comment-parser';
 import _ from 'lodash';
 import jsdocUtils from './jsdocUtils';
-import getJSDocComment from './eslint/getJSDocComment';
+import getJSDocComment, {getReducedASTNode} from './eslint/getJSDocComment';
 
 const skipSeeLink = (parser) => {
   return (str, data) => {
@@ -263,22 +263,18 @@ const getUtils = (
   };
 
   utils.getClassNode = () => {
-    // Ancestors missing in `Program` comment iteration
-    const greatGrandParent = ancestors.length ?
-      ancestors.slice(-3)[0] :
-      jsdocUtils.getAncestor(sourceCode, jsdocNode, 3);
-
-    const greatGrandParentValue = greatGrandParent && sourceCode.getFirstToken(greatGrandParent).value;
-
-    if (greatGrandParentValue === 'class') {
-      return greatGrandParent;
-    }
-
-    return false;
+    return [...ancestors, node].reverse().find((parent) => {
+      return parent && ['ClassDeclaration', 'ClassExpression'].includes(parent.type);
+    }) || null;
   };
 
   utils.getClassJsdoc = () => {
     const classNode = utils.getClassNode();
+
+    if (!classNode) {
+      return null;
+    }
+
     const classJsdocNode = getJSDocComment(sourceCode, classNode, {
       maxLines,
       minLines,
@@ -296,7 +292,7 @@ const getUtils = (
   utils.classHasTag = (tagName) => {
     const classJsdoc = utils.getClassJsdoc();
 
-    return classJsdoc && jsdocUtils.hasTag(classJsdoc, tagName);
+    return Boolean(classJsdoc) && jsdocUtils.hasTag(classJsdoc, tagName);
   };
 
   utils.forEachPreferredTag = (tagName, arrayHandler, skipReportingBlockedTag = false) => {
@@ -421,37 +417,63 @@ const makeReport = (context, commentNode) => {
  * @param {{meta: any}} ruleConfig
  */
 const iterateAllJsdocs = (iterator, ruleConfig) => {
+  const trackedJsdocs = [];
+
+  const callIterator = (context, node, jsdocNodes) => {
+    const sourceCode = context.getSourceCode();
+    const settings = getSettings(context);
+    const {lines} = sourceCode;
+    jsdocNodes.forEach((jsdocNode) => {
+      if (!(/^\/\*\*\s/).test(sourceCode.getText(jsdocNode))) {
+        return;
+      }
+      const sourceLine = lines[jsdocNode.loc.start.line - 1];
+      const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
+      const jsdoc = parseComment(jsdocNode, indent, !ruleConfig.noTrim);
+      const report = makeReport(context, jsdocNode);
+
+      iterator({
+        context,
+        indent,
+        jsdoc,
+        jsdocNode,
+        node,
+        report,
+        settings,
+        sourceCode,
+        utils: getUtils(node, jsdoc, jsdocNode, settings, report, context),
+      });
+    });
+  };
+
   return {
     create (context) {
+      const sourceCode = context.getSourceCode();
+      const settings = getSettings(context);
+
       return {
-        'Program' () {
-          const sourceCode = context.getSourceCode();
-          const comments = sourceCode.getAllComments();
+        '*:not(Program)' (node) {
+          const reducedNode = getReducedASTNode(node, sourceCode);
 
-          comments.forEach((comment) => {
-            if (!(/^\/\*\*\s/).test(sourceCode.getText(comment))) {
-              return;
-            }
+          if (node !== reducedNode) {
+            return;
+          }
 
-            const sourceLine = sourceCode.lines[comment.loc.start.line - 1];
-            const indent = sourceLine.charAt(0).repeat(comment.loc.start.column);
-            const jsdoc = parseComment(comment, indent, !ruleConfig.noTrim);
-            const settings = getSettings(context);
-            const report = makeReport(context, comment);
-            const jsdocNode = comment;
+          const comment = getJSDocComment(sourceCode, node, settings);
+          if (!comment || trackedJsdocs.includes(comment)) {
+            return;
+          }
 
-            iterator({
-              context,
-              indent,
-              jsdoc,
-              jsdocNode,
-              node: null,
-              report,
-              settings,
-              sourceCode,
-              utils: getUtils(null, jsdoc, jsdocNode, settings, report, context),
-            });
+          trackedJsdocs.push(comment);
+          callIterator(context, node, [comment]);
+        },
+        'Program:exit' () {
+          const allJsdocs = sourceCode.getAllComments();
+          const untrackedJSdoc = allJsdocs.filter((node) => {
+            return !trackedJsdocs.includes(node);
           });
+
+          callIterator(context, null, untrackedJSdoc);
         },
       };
     },
