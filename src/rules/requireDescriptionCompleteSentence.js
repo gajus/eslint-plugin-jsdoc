@@ -18,11 +18,14 @@ const extractParagraphs = (text) => {
   }).reverse();
 };
 
-const extractSentences = (text) => {
+const extractSentences = (text, abbreviationsRegex) => {
   const txt = text
 
     // Remove all {} tags.
-    .replace(/\{[\s\S]*?\}\s*/gu, '');
+    .replace(/\{[\s\S]*?\}\s*/gu, '')
+
+    // Remove custom abbreviations
+    .replace(abbreviationsRegex, '');
 
   const sentenceEndGrouping = /([.?!])(?:\s+|$)/u;
   const puncts = RegExtras(sentenceEndGrouping).map(txt, (punct) => {
@@ -67,7 +70,7 @@ const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const validateDescription = (description, reportOrig, jsdocNode, sourceCode, tag) => {
+const validateDescription = (description, reportOrig, jsdocNode, abbreviationsRegex, sourceCode, tag) => {
   if (!description) {
     return false;
   }
@@ -75,7 +78,7 @@ const validateDescription = (description, reportOrig, jsdocNode, sourceCode, tag
   const paragraphs = extractParagraphs(description);
 
   return paragraphs.some((paragraph, parIdx) => {
-    const sentences = extractSentences(paragraph);
+    const sentences = extractSentences(paragraph, abbreviationsRegex);
 
     const fix = (fixer) => {
       let text = sourceCode.getText(jsdocNode);
@@ -87,7 +90,8 @@ const validateDescription = (description, reportOrig, jsdocNode, sourceCode, tag
       }
 
       for (const sentence of sentences.filter((sentence_) => {
-        return !(/^\s*$/u).test(sentence_) && !isCapitalized(sentence_) && !isTable(sentence_);
+        return !(/^\s*$/u).test(sentence_) && !isCapitalized(sentence_) &&
+          !isTable(sentence_);
       })) {
         const beginning = sentence.split('\n')[0];
 
@@ -119,13 +123,15 @@ const validateDescription = (description, reportOrig, jsdocNode, sourceCode, tag
       report('Sentence should start with an uppercase character.', fix, tag);
     }
 
-    if (!/[.!?|]$/u.test(paragraph)) {
+    const paragraphNoAbbreviations = paragraph.replace(abbreviationsRegex, '');
+
+    if (!/[.!?|]$/u.test(paragraphNoAbbreviations)) {
       report('Sentence must end with a period.', fix, tag);
 
       return true;
     }
 
-    if (!isNewLinePrecededByAPeriod(paragraph)) {
+    if (!isNewLinePrecededByAPeriod(paragraphNoAbbreviations)) {
       report('A line of text is started with an uppercase character, but preceding line does not end the sentence.', null, tag);
 
       return true;
@@ -137,13 +143,25 @@ const validateDescription = (description, reportOrig, jsdocNode, sourceCode, tag
 
 export default iterateJsdoc(({
   sourceCode,
+  context,
   jsdoc,
   report,
   jsdocNode,
   utils,
 }) => {
+  const options = context.options[0] || {};
+  const {
+    abbreviations = [],
+  } = options;
+
+  const abbreviationsRegex = abbreviations.length ?
+    new RegExp('\\b' + abbreviations.map((abbreviation) => {
+      return _.escapeRegExp(abbreviation.replace(/\.$/g, '') + '.');
+    }).join('|') + '(?:$|\\s)', 'gu') :
+    '';
+
   if (!jsdoc.tags ||
-    validateDescription(jsdoc.description, report, jsdocNode, sourceCode, {
+    validateDescription(jsdoc.description, report, jsdocNode, abbreviationsRegex, sourceCode, {
       line: jsdoc.line + 1,
     })
   ) {
@@ -152,7 +170,7 @@ export default iterateJsdoc(({
 
   utils.forEachPreferredTag('description', (matchingJsdocTag) => {
     const description = `${matchingJsdocTag.name} ${matchingJsdocTag.description}`.trim();
-    validateDescription(description, report, jsdocNode, sourceCode, matchingJsdocTag);
+    validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, matchingJsdocTag);
   }, true);
 
   const {tagsWithNames} = utils.getTagsByType(jsdoc.tags);
@@ -168,13 +186,13 @@ export default iterateJsdoc(({
   tagsWithNames.some((tag) => {
     const description = _.trimStart(tag.description, '- ');
 
-    return validateDescription(description, report, jsdocNode, sourceCode, tag);
+    return validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, tag);
   });
 
   tagsWithoutNames.some((tag) => {
     const description = `${tag.name} ${tag.description}`.trim();
 
-    return validateDescription(description, report, jsdocNode, sourceCode, tag);
+    return validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, tag);
   });
 }, {
   iterateAllJsdocs: true,
@@ -184,6 +202,12 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          abbreviations: {
+            items: {
+              type: 'string',
+            },
+            type: 'array',
+          },
           tags: {
             items: {
               type: 'string',

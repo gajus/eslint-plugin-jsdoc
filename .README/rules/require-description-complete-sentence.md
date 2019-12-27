@@ -10,6 +10,9 @@ tag descriptions are written in complete sentences, i.e.,
   character must be preceded by a line ending with a period.
 * A colon or semi-colon followed by two line breaks is still part of the
   containing paragraph (unlike normal dual line breaks).
+* Text within inline tags `{...}` are not checked for sentence divisions.
+* Periods after items within the `abbreviations` option array are not treated
+  as sentence endings.
 
 #### Options
 
@@ -34,10 +37,16 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
+##### `abbreviations`
+
+You can provide an `abbreviations` options array to avoid such strings of text
+being treated as sentence endings when followed by dots. The `.` is not
+necessary at the end of the array items.
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|doc block, `param`, `returns`, `description`, `property`, `summary`, `file`, `classdesc`, `todo`, `deprecated`, `throws`, 'yields' and others added by `tags`|
 |Aliases|`arg`, `argument`, `return`, `desc`, `prop`, `fileoverview`, `overview`, `exception`, `yield`|
-|Options|`tags`|
+|Options|`tags`, `abbreviations`|
 <!-- assertions requireDescriptionCompleteSentence -->

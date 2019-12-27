@@ -594,6 +594,170 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * Sorry, but this isn't a complete sentence, Mr.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.',
+        },
+      ],
+      options: [{
+        abbreviations: ['Mr'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * Sorry, but this isn't a complete sentence Mr.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.',
+        },
+      ],
+      options: [{
+        abbreviations: ['Mr.'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * Sorry, but this isn't a complete sentence Mr.\u0020
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.',
+        },
+      ],
+      options: [{
+        abbreviations: ['Mr'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * Sorry, but this isn't a complete sentence Mr. and Mrs.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.',
+        },
+      ],
+      options: [{
+        abbreviations: ['Mr', 'Mrs'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * This is a complete sentence. But this isn't, Mr.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.',
+        },
+      ],
+      options: [{
+        abbreviations: ['Mr'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * This is a complete Mr. sentence. But this isn't, Mr.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.',
+        },
+      ],
+      options: [{
+        abbreviations: ['Mr'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * This is a complete Mr. sentence.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence should start with an uppercase character.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * This is fun, i.e. enjoyable, but not superlatively so, e.g. not
+           * super, wonderful, etc..
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence should start with an uppercase character.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * Do not have dynamic content; e.g. homepage. Here a simple unique id
+       * suffices.
+       */
+       function quux () {
+
+       }
+       `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence should start with an uppercase character.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -930,6 +1094,127 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * Sorry, but this isn't a complete sentence, Mr.
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * Sorry, but this isn't a complete sentence Mr..
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        abbreviations: ['Mr.'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * Sorry, but this isn't a complete sentence Mr.\u0020
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * Sorry, but this isn't a complete sentence Mr. and Mrs..
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        abbreviations: ['Mr', 'Mrs'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * This is a complete sentence aMr.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        abbreviations: ['Mr'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * This is a complete sentence. But this isn't, Mr.
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * This is a complete Mr. Sentence. But this isn't, Mr.
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * This is a complete Mr. sentence.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        abbreviations: ['Mr'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * This is fun, i.e. enjoyable, but not superlatively so, e.g. not
+           * super, wonderful, etc..
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        abbreviations: ['etc', 'e.g.', 'i.e.'],
+      }],
+    },
+    {
+      code: `
+
+      /**
+       * Do not have dynamic content; e.g. homepage. Here a simple unique id
+       * suffices.
+       */
+       function quux () {
+
+       }
+       `,
+      options: [{
+        abbreviations: ['etc', 'e.g.', 'i.e.'],
+      }],
     },
   ],
 };
