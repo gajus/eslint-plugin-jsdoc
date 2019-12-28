@@ -28,6 +28,46 @@ export default {
           /**
            * foo.
            */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
           const q = {
 
           };
@@ -734,6 +774,23 @@ export default {
     },
   ],
   valid: [
+    {
+      code: `
+          /**
+           *
+           */
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+           function quux () {
+
+           }
+      `,
+    },
     {
       code: `
           /**

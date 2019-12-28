@@ -117,6 +117,23 @@ export default {
           /**
            *
            */
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
           function quux () {
           }
       `,
@@ -134,6 +151,13 @@ export default {
     },
   ],
   valid: [
+    {
+      code: `
+          /**
+           *
+           */
+      `,
+    },
     {
       code: `
           /**

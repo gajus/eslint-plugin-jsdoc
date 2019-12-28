@@ -120,10 +120,9 @@ export default {
     warnRemovedSettings(context, 'require-jsdoc');
 
     const sourceCode = context.getSourceCode();
+    const settings = getSettings(context);
 
     const {require: requireOption, publicOnly, exemptEmptyFunctions} = getOptions(context);
-
-    const settings = getSettings(context);
 
     const checkJsDoc = (node) => {
       const jsDocNode = getJSDocComment(sourceCode, node, settings);

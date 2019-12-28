@@ -14,7 +14,8 @@ An options object may have any of the following properties:
 
 - `contexts` - Set to an array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6
-  classes). Overrides the default contexts (see below).
+  classes). Overrides the default contexts (see below).  Set to `"any"` if
+  you want the rule to apply to any jsdoc block throughout your files.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
     document block avoids the need for a `@description`. Defaults to an
     empty array.
