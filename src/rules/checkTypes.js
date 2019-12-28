@@ -60,9 +60,11 @@ export default iterateJsdoc(({
   });
 
   const {preferredTypes} = settings;
-  const optionObj = context.options[0];
-  const noDefaults = _.get(optionObj, 'noDefaults');
-  const unifyParentAndChildTypeChecks = _.get(optionObj, 'unifyParentAndChildTypeChecks');
+  const {
+    noDefaults,
+    unifyParentAndChildTypeChecks,
+    exemptTagContexts = [],
+  } = context.options[0] || {};
 
   const getPreferredTypeInfo = (type, nodeName, parentName, parentNode) => {
     let hasMatchingPreferredType;
@@ -197,6 +199,12 @@ export default iterateJsdoc(({
         };
 
         const tagValue = jsdocTag.name ? ` "${jsdocTag.name}"` : '';
+        if (exemptTagContexts.some(({tag, types}) => {
+          return tag === tagName &&
+            (types === true || types.includes(jsdocTag.type));
+        })) {
+          return;
+        }
 
         report(
           message ||
@@ -221,6 +229,31 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          exemptTagContexts: {
+            items: {
+              additionalProperties: false,
+              properties: {
+                tag: {
+                  type: 'string',
+                },
+                types: {
+                  oneOf: [
+                    {
+                      type: 'boolean',
+                    },
+                    {
+                      items: {
+                        type: 'string',
+                      },
+                      type: 'array',
+                    },
+                  ],
+                },
+              },
+              type: 'object',
+            },
+            type: 'array',
+          },
           noDefaults: {
             type: 'boolean',
           },
