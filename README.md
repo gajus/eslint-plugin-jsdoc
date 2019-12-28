@@ -158,7 +158,7 @@ supplied as the second argument in an array after the error level.
 ### Allow <code>@private</code> to disable rules for that comment block
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
-  on which a `@private` tag occurs. Defaults to
+  on which a `@private` tag (or `@access private`) occurs. Defaults to
   `false`. Note: This has no effect with the rule `check-access` (whose
   purpose is to check access modifiers).
 
@@ -678,6 +678,15 @@ function quux (foo) {}
 /**
   * @param {Number} foo
   * @private
+ */
+function quux (foo) {
+  // with spaces
+}
+// Settings: {"jsdoc":{"ignorePrivate":true}}
+
+/**
+  * @param {Number} foo
+  * @access private
  */
 function quux (foo) {
   // with spaces
@@ -8355,6 +8364,14 @@ class A {
 
 /**
  * @private
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"ignorePrivate":true}}
+
+/**
+ * @access private
  */
 function quux (foo) {
 

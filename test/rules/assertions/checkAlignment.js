@@ -276,5 +276,21 @@ function quux (foo) {
         },
       },
     },
+    {
+      code: `
+        /**
+          * @param {Number} foo
+          * @access private
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      settings: {
+        jsdoc: {
+          ignorePrivate: true,
+        },
+      },
+    },
   ],
 };
