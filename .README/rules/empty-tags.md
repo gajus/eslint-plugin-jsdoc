@@ -23,6 +23,10 @@ is set to "closure" (which allows types).
 - `@public`
 - `@static`
 
+Note that `@private` will still be checked for content by this rule even with
+`settings.jsdoc.ignorePrivate` set to `true` (a setting which normally
+causes rules not to take effect).
+
 #### Options
 
 ##### `tags`

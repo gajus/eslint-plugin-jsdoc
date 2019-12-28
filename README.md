@@ -3594,6 +3594,10 @@ is set to "closure" (which allows types).
 - `@public`
 - `@static`
 
+Note that `@private` will still be checked for content by this rule even with
+`settings.jsdoc.ignorePrivate` set to `true` (a setting which normally
+causes rules not to take effect).
+
 <a name="eslint-plugin-jsdoc-rules-empty-tags-options-7"></a>
 #### Options
 
@@ -3651,6 +3655,15 @@ function quux () {
 function quux () {
 
 }
+// Message: @private should be empty.
+
+/**
+ * @private {someType}
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"ignorePrivate":true}}
 // Message: @private should be empty.
 ````
 

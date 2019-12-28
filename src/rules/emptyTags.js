@@ -38,6 +38,7 @@ export default iterateJsdoc(({
     }
   });
 }, {
+  checkPrivate: true,
   iterateAllJsdocs: true,
   meta: {
     fixable: 'code',

@@ -101,6 +101,27 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @private {someType}
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@private should be empty.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          ignorePrivate: true,
+        },
+      },
+    },
   ],
   valid: [
     {
