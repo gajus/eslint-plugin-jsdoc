@@ -97,7 +97,7 @@ const getPreferredTagName = (
   mode : ParserMode,
   name : string,
   tagPreference : Object = {},
-) : string => {
+) : string|Object => {
   const prefValues = _.values(tagPreference);
   if (prefValues.includes(name) || prefValues.some((prefVal) => {
     return prefVal && typeof prefVal === 'object' && prefVal.replacement === name;

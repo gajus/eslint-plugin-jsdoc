@@ -74,11 +74,50 @@ const parseComment = (commentNode, indent, trim = true) => {
   })[0] || {};
 };
 
+const getBasicUtils = (context, {tagNamePreference, mode}) => {
+  const utils = {};
+  utils.reportSettings = (message) => {
+    context.report({
+      loc: {
+        start: {
+          column: 1,
+          line: 1,
+        },
+      },
+      message,
+    });
+  };
+
+  utils.getPreferredTagNameObject = ({tagName}) => {
+    const ret = jsdocUtils.getPreferredTagName(context, mode, tagName, tagNamePreference);
+    const isObject = ret && typeof ret === 'object';
+    if (ret === false || isObject && !ret.replacement) {
+      return {
+        blocked: true,
+        tagName,
+      };
+    }
+
+    return ret;
+  };
+
+  return utils;
+};
+
 const getUtils = (
   node,
   jsdoc,
   jsdocNode,
-  {
+  settings,
+  report,
+  context,
+) => {
+  const ancestors = context.getAncestors();
+  const sourceCode = context.getSourceCode();
+
+  const utils = getBasicUtils(context, settings);
+
+  const {
     tagNamePreference,
     overrideReplacesDocs,
     implementsReplacesDocs,
@@ -86,14 +125,7 @@ const getUtils = (
     maxLines,
     minLines,
     mode,
-  },
-  report,
-  context,
-) => {
-  const ancestors = context.getAncestors();
-  const sourceCode = context.getSourceCode();
-
-  const utils = {};
+  } = settings;
 
   utils.stringify = (tagBlock) => {
     const indent = jsdocUtils.getIndent(sourceCode);
@@ -314,18 +346,6 @@ const getUtils = (
     });
   };
 
-  utils.reportSettings = (message) => {
-    context.report({
-      loc: {
-        start: {
-          column: 1,
-          line: 1,
-        },
-      },
-      message,
-    });
-  };
-
   return utils;
 };
 
@@ -410,7 +430,8 @@ const makeReport = (context, commentNode) => {
  */
 
 const iterate = (
-  ruleConfig, context, lines, jsdocNode, node, settings, sourceCode, iterator,
+  ruleConfig, context, lines, jsdocNode, node, settings,
+  sourceCode, iterator, state, exit,
 ) => {
   const sourceLine = lines[jsdocNode.loc.start.line - 1];
   const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
@@ -436,6 +457,7 @@ const iterate = (
 
   iterator({
     context,
+    exit,
     indent,
     jsdoc,
     jsdocNode,
@@ -443,6 +465,7 @@ const iterate = (
     report,
     settings,
     sourceCode,
+    state,
     utils,
   });
 };
@@ -457,10 +480,12 @@ const iterate = (
 const iterateAllJsdocs = (iterator, ruleConfig) => {
   const trackedJsdocs = [];
 
-  const callIterator = (context, node, jsdocNodes) => {
+  const callIterator = (context, node, jsdocNodes, state, lastCall) => {
     const sourceCode = context.getSourceCode();
     const settings = getSettings(context);
     const {lines} = sourceCode;
+
+    const utils = getBasicUtils(context, settings);
     jsdocNodes.forEach((jsdocNode) => {
       if (!(/^\/\*\*\s/).test(sourceCode.getText(jsdocNode))) {
         return;
@@ -468,14 +493,22 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
       iterate(
         ruleConfig, context, lines, jsdocNode, node,
         settings, sourceCode, iterator,
+        state,
       );
     });
+    if (lastCall && ruleConfig.exit) {
+      ruleConfig.exit({
+        state,
+        utils,
+      });
+    }
   };
 
   return {
     create (context) {
       const sourceCode = context.getSourceCode();
       const settings = getSettings(context);
+      const state = {};
 
       return {
         '*:not(Program)' (node) {
@@ -491,7 +524,7 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
           }
 
           trackedJsdocs.push(comment);
-          callIterator(context, node, [comment]);
+          callIterator(context, node, [comment], state);
         },
         'Program:exit' () {
           const allJsdocs = sourceCode.getAllComments();
@@ -499,7 +532,7 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
             return !trackedJsdocs.includes(node);
           });
 
-          callIterator(context, null, untrackedJSdoc);
+          callIterator(context, null, untrackedJSdoc, state, true);
         },
       };
     },

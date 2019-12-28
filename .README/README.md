@@ -345,6 +345,7 @@ only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
 {"gitdown": "include", "file": "./rules/require-description-complete-sentence.md"}
 {"gitdown": "include", "file": "./rules/require-description.md"}
 {"gitdown": "include", "file": "./rules/require-example.md"}
+{"gitdown": "include", "file": "./rules/require-file-overview.md"}
 {"gitdown": "include", "file": "./rules/require-hyphen-before-param-description.md"}
 {"gitdown": "include", "file": "./rules/require-jsdoc.md"}
 {"gitdown": "include", "file": "./rules/require-param-description.md"}
