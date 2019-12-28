@@ -4,6 +4,8 @@ import _ from 'lodash';
 import jsdocUtils from './jsdocUtils';
 import getJSDocComment, {getReducedASTNode} from './eslint/getJSDocComment';
 
+const globalState = new Map();
+
 const skipSeeLink = (parser) => {
   return (str, data) => {
     if (data.tag === 'see' && str.match(/\{@link.+?\}/u)) {
@@ -475,6 +477,7 @@ const iterate = (
 
   iterator({
     context,
+    globalState,
     indent,
     iteratingAll,
     jsdoc,
