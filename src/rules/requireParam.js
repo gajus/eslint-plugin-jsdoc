@@ -5,7 +5,7 @@ export default iterateJsdoc(({
   utils,
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
-  const jsdocParameterNames = utils.getJsdocParameterNames();
+  const jsdocParameterNames = utils.getJsdocNames('param');
   if (!jsdocParameterNames) {
     return;
   }
@@ -44,7 +44,12 @@ export default iterateJsdoc(({
     if (['<ObjectPattern>', '<ArrayPattern>'].includes(functionParameterName)) {
       return;
     }
-    if (!jsdocParameterNames.includes(functionParameterName)) {
+
+    // Todo: Now that returning index within `jsdocParameterNames`, we
+    //  may be able to remove need for findExpectedIndex
+    if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
+      return name === functionParameterName;
+    })) {
       missingTags.push({
         functionParameterIdx,
         functionParameterName,

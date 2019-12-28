@@ -37,30 +37,33 @@ const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
 };
 
 /**
- * Gets all parameter names, including those that refer to a path, e.g. "@param foo; @param foo.bar".
+ * Gets all parameter names, including those that refer to a path, e.g.
+ * "@param foo; @param foo.bar".
  */
-const getJsdocParameterNamesDeep = (jsdoc : Object, targetTagName : string) : Array<string> => {
-  let jsdocParameterNames;
+const getJsdocNamesDeep = (jsdoc : Object, targetTagName : string) : Array<string> => {
+  return (jsdoc.tags || []).reduce((arr, {name, tag}, idx) => {
+    if (tag !== targetTagName) {
+      return arr;
+    }
+    arr.push({
+      idx,
+      name,
+    });
 
-  jsdocParameterNames = _.filter(jsdoc.tags, {
-    tag: targetTagName,
-  });
-
-  jsdocParameterNames = _.map(jsdocParameterNames, 'name');
-
-  return jsdocParameterNames;
+    return arr;
+  }, []);
 };
 
-const getJsdocParameterNames = (jsdoc : Object, targetTagName : string) : Array<string> => {
-  let jsdocParameterNames;
+const getJsdocNames = (jsdoc : Object, targetTagName : string) : Array<string> => {
+  let jsdocNames;
 
-  jsdocParameterNames = getJsdocParameterNamesDeep(jsdoc, targetTagName);
+  jsdocNames = getJsdocNamesDeep(jsdoc, targetTagName);
 
-  jsdocParameterNames = jsdocParameterNames.filter((name) => {
+  jsdocNames = jsdocNames.filter(({name}) => {
     return !name.includes('.');
   });
 
-  return jsdocParameterNames;
+  return jsdocNames;
 };
 
 const modeWarnSettings = WarnSettings();
@@ -528,8 +531,8 @@ export default {
   getContextObject,
   getFunctionParameterNames,
   getIndent,
-  getJsdocParameterNames,
-  getJsdocParameterNamesDeep,
+  getJsdocNames,
+  getJsdocNamesDeep,
   getPreferredTagName,
   getTagsByType,
   hasATag,
