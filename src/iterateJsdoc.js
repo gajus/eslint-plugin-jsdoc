@@ -409,6 +409,43 @@ const makeReport = (context, commentNode) => {
  * ) => any } JsdocVisitor
  */
 
+const iterate = (
+  ruleConfig, context, lines, jsdocNode, node, settings, sourceCode, iterator,
+) => {
+  const sourceLine = lines[jsdocNode.loc.start.line - 1];
+  const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
+  const jsdoc = parseComment(jsdocNode, indent, !ruleConfig.noTrim);
+  const report = makeReport(context, jsdocNode);
+
+  const utils = getUtils(
+    node,
+    jsdoc,
+    jsdocNode,
+    settings,
+    report,
+    context,
+  );
+
+  if (
+    settings.ignorePrivate &&
+    utils.hasTag('private')
+  ) {
+    return;
+  }
+
+  iterator({
+    context,
+    indent,
+    jsdoc,
+    jsdocNode,
+    node,
+    report,
+    settings,
+    sourceCode,
+    utils,
+  });
+};
+
 /**
  * Create an eslint rule that iterates over all JSDocs, regardless of whether
  * they are attached to a function-like node.
@@ -427,22 +464,10 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
       if (!(/^\/\*\*\s/).test(sourceCode.getText(jsdocNode))) {
         return;
       }
-      const sourceLine = lines[jsdocNode.loc.start.line - 1];
-      const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
-      const jsdoc = parseComment(jsdocNode, indent, !ruleConfig.noTrim);
-      const report = makeReport(context, jsdocNode);
-
-      iterator({
-        context,
-        indent,
-        jsdoc,
-        jsdocNode,
-        node,
-        report,
-        settings,
-        sourceCode,
-        utils: getUtils(node, jsdoc, jsdocNode, settings, report, context),
-      });
+      iterate(
+        ruleConfig, context, lines, jsdocNode, node,
+        settings, sourceCode, iterator,
+      );
     });
   };
 
@@ -525,6 +550,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
 
       const settings = getSettings(context);
 
+      const {lines} = sourceCode;
       const checkJsdoc = (node) => {
         const jsdocNode = getJSDocComment(sourceCode, node, settings);
 
@@ -532,41 +558,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           return;
         }
 
-        const sourceLine = sourceCode.lines[jsdocNode.loc.start.line - 1];
-
-        const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
-
-        const jsdoc = parseComment(jsdocNode, indent);
-
-        const report = makeReport(context, jsdocNode);
-
-        const utils = getUtils(
-          node,
-          jsdoc,
-          jsdocNode,
-          settings,
-          report,
-          context,
+        iterate(
+          ruleConfig, context, lines, jsdocNode, node,
+          settings, sourceCode, iterator,
         );
-
-        if (
-          settings.ignorePrivate &&
-          utils.hasTag('private')
-        ) {
-          return;
-        }
-
-        iterator({
-          context,
-          indent,
-          jsdoc,
-          jsdocNode,
-          node,
-          report,
-          settings,
-          sourceCode,
-          utils,
-        });
       };
 
       if (ruleConfig.contextDefaults) {
