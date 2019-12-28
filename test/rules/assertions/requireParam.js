@@ -912,6 +912,21 @@ export default {
     },
     {
       code: `
+          /**
+           * @access private
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          ignorePrivate: true,
+        },
+      },
+    },
+    {
+      code: `
           // issue 182: optional chaining
           /** @const {boolean} test */
           const test = something?.find(_ => _)

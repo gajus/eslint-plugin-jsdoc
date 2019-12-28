@@ -450,7 +450,11 @@ const iterate = (
   if (
     settings.ignorePrivate &&
     !ruleConfig.checkPrivate &&
-    utils.hasTag('private')
+    (utils.hasTag('private') || _.filter(jsdoc.tags, {
+      tag: 'access',
+    }).some(({description}) => {
+      return description === 'private';
+    }))
   ) {
     return;
   }
