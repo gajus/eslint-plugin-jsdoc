@@ -1737,6 +1737,110 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @typedef {object} foo
+       * @property {object} bar
+       */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid JSDoc @property "bar" type "object"; prefer: "Object".',
+        },
+      ],
+      options: [
+        {
+          exemptTagContexts: [{
+            tag: 'typedef',
+            types: true,
+          }],
+        },
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'Object',
+          },
+        },
+      },
+    },
+    {
+      code: '/** @typedef {object} foo */',
+      errors: [
+        {
+          line: 1,
+          message: 'Invalid JSDoc @typedef "foo" type "object"; prefer: "Object".',
+        },
+      ],
+      options: [
+        {
+          exemptTagContexts: [{
+            tag: 'typedef',
+            types: ['array'],
+          }],
+        },
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'Object',
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @typedef {object} foo
+       * @property {object} bar
+       */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid JSDoc @property "bar" type "object"; prefer: "Object".',
+        },
+      ],
+      options: [
+        {
+          exemptTagContexts: [{
+            tag: 'typedef',
+            types: ['object'],
+          }],
+        },
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'Object',
+          },
+        },
+      },
+    },
+    {
+      code: '/** @typedef {object<string, string>} foo */',
+      errors: [{
+        line: 1,
+        message: 'Invalid JSDoc @typedef "foo" type "object"; prefer: "Object<>".',
+      }],
+      options: [
+        {
+          exemptTagContexts: [{
+            tag: 'typedef',
+            types: ['object'],
+          }],
+        },
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'object<>': 'Object<>',
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -2153,6 +2257,52 @@ export default {
       code: `
         /** @type {new() => EntityBase} */
       `,
+    },
+    {
+      code: '/** @typedef {object} foo */',
+      options: [
+        {
+          exemptTagContexts: [{
+            tag: 'typedef',
+            types: true,
+          }],
+        },
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'Object',
+          },
+        },
+      },
+    },
+    {
+      code: '/** @typedef {object<string, string>} foo */',
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'Object',
+          },
+        },
+      },
+    },
+    {
+      code: '/** @typedef {object<string, string>} foo */',
+      options: [
+        {
+          exemptTagContexts: [{
+            tag: 'typedef',
+            types: ['object<string, string>'],
+          }],
+        },
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'object<>': 'Object<>',
+          },
+        },
+      },
     },
   ],
 };
