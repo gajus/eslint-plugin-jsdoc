@@ -33,6 +33,7 @@ const ruleTester = new RuleTester();
   'require-param-description',
   'require-param-name',
   'require-param-type',
+  'require-property',
   'require-returns',
   'require-returns-check',
   'require-returns-description',
