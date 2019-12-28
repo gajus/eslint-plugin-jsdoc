@@ -37,6 +37,7 @@ JSDoc linting rules for ESLint.
         * [`require-description-complete-sentence`](#eslint-plugin-jsdoc-rules-require-description-complete-sentence)
         * [`require-description`](#eslint-plugin-jsdoc-rules-require-description)
         * [`require-example`](#eslint-plugin-jsdoc-rules-require-example)
+        * [`require-file-overview`](#eslint-plugin-jsdoc-rules-require-file-overview)
         * [`require-hyphen-before-param-description`](#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description)
         * [`require-jsdoc`](#eslint-plugin-jsdoc-rules-require-jsdoc)
         * [`require-param-description`](#eslint-plugin-jsdoc-rules-require-param-description)
@@ -6190,6 +6191,97 @@ function quux () {
 
 }
 // Options: [{"contexts":["ClassDeclaration"]}]
+````
+
+
+<a name="eslint-plugin-jsdoc-rules-require-file-overview"></a>
+### <code>require-file-overview</code>
+
+Requires that all files have a `@file`, `@fileoverview`, or `@overview` tag.
+
+<a name="eslint-plugin-jsdoc-rules-require-file-overview-fixer-1"></a>
+#### Fixer
+
+The fixer for `require-example` will add an empty `@file`. Note that if you
+need to report a missing description for `file`, you can add `file` on
+the `tags` option with `match-description` (and the `contexts` option
+set to "any").
+
+|||
+|---|---|
+|Context|Everywhere|
+|Tags|`file`|
+|Aliases|`fileoverview`, `overview`|
+
+The following patterns are considered problems:
+
+````js
+
+// Message: Missing @file
+
+/**
+ *
+ */
+// Message: Missing @file
+
+/**
+ *
+ */
+function quux () {}
+// Message: Missing @file
+
+/**
+ *
+ */
+function quux () {}
+// Settings: {"jsdoc":{"tagNamePreference":{"file":"fileoverview"}}}
+// Message: Missing @fileoverview
+
+/**
+ *
+ */
+function quux () {}
+// Settings: {"jsdoc":{"tagNamePreference":{"file":"overview"}}}
+// Message: Missing @overview
+
+/**
+ * @param a
+ */
+function quux (a) {}
+// Message: Missing @file
+
+/**
+ * @param a
+ */
+function quux (a) {}
+
+/**
+ * @param b
+ */
+function bar (b) {}
+// Message: Missing @file
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @file
+ */
+
+/**
+ * @fileoverview
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"file":"fileoverview"}}}
+
+/**
+ * @overview
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"file":"overview"}}}
+
+/**
+ * @file Description of file
+ */
 ````
 
 

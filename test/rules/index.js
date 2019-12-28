@@ -26,6 +26,7 @@ const ruleTester = new RuleTester();
   'require-description',
   'require-description-complete-sentence',
   'require-example',
+  'require-file-overview',
   'require-hyphen-before-param-description',
   'require-jsdoc',
   'require-param',
