@@ -584,11 +584,18 @@ export default function iterateJsdoc (iterator, ruleConfig) {
      *   a list with parser callback function.
      */
     create (context) {
+      let contexts;
+      if (ruleConfig.contextDefaults) {
+        contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
+        if (contexts.includes('any')) {
+          return iterateAllJsdocs(iterator, ruleConfig).create(context);
+        }
+      }
+
       const sourceCode = context.getSourceCode();
-
       const settings = getSettings(context);
-
       const {lines} = sourceCode;
+
       const checkJsdoc = (node) => {
         const jsdocNode = getJSDocComment(sourceCode, node, settings);
 
@@ -603,8 +610,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       };
 
       if (ruleConfig.contextDefaults) {
-        const contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
-
         return jsdocUtils.getContextObject(contexts, checkJsdoc);
       }
 

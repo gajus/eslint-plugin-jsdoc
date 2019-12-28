@@ -1143,6 +1143,12 @@ export default {
   ],
   valid: [{
     code: `
+        /**
+         *
+         */
+    `,
+  }, {
+    code: `
       var array = [1,2,3];
       array.forEach(function() {});
 

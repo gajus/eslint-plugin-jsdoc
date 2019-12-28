@@ -86,6 +86,24 @@ export default {
           /**
            *
            */
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['any'],
+          descriptionStyle: 'tag',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
           class quux {
 
           }
@@ -319,6 +337,13 @@ export default {
     },
   ],
   valid: [
+    {
+      code: `
+          /**
+           *
+           */
+      `,
+    },
     {
       code: `
           /**

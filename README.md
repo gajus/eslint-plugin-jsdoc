@@ -3973,7 +3973,8 @@ it by setting it to `false`.
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the default contexts (see below).
+Overrides the default contexts (see below). Set to `"any"` if you want
+the rule to apply to any jsdoc block throughout your files.
 
 |||
 |---|---|
@@ -3993,6 +3994,18 @@ const q = class {
 
 }
 // Options: [{"contexts":["ClassExpression"]}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+// Options: [{"contexts":["any"]}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+// Options: [{"contexts":["any"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -4305,6 +4318,17 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
+/**
+ *
+ */
+
+/**
+ *
+ */
+ function quux () {
+
+ }
+
 /**
  * @param foo - Foo.
  */
@@ -5952,7 +5976,8 @@ An options object may have any of the following properties:
 
 - `contexts` - Set to an array of strings representing the AST context
   where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6
-  classes). Overrides the default contexts (see below).
+  classes). Overrides the default contexts (see below).  Set to `"any"` if
+  you want the rule to apply to any jsdoc block throughout your files.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
     document block avoids the need for a `@description`. Defaults to an
     empty array.
@@ -6005,6 +6030,12 @@ class quux {
 
 }
 // Options: [{"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
+// Message: Missing JSDoc @description declaration.
+
+/**
+ *
+ */
+// Options: [{"contexts":["any"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -6103,6 +6134,10 @@ function quux () {
 The following patterns are not considered problems:
 
 ````js
+/**
+ *
+ */
+
 /**
  * @description
  * // arbitrary description content
@@ -6253,7 +6288,8 @@ Defaults to `false`.
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the default contexts (see below).
+Overrides the default contexts (see below). Set to `"any"` if you want
+the rule to apply to any jsdoc block throughout your files.
 
 <a name="eslint-plugin-jsdoc-rules-require-example-fixer"></a>
 #### Fixer
@@ -6325,6 +6361,12 @@ class quux {
 /**
  *
  */
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @example declaration.
+
+/**
+ *
+ */
 function quux () {
 }
 // Options: [{"exemptedBy":["notPresent"]}]
@@ -6334,6 +6376,10 @@ function quux () {
 The following patterns are not considered problems:
 
 ````js
+/**
+ *
+ */
+
 /**
  * @example
  * // arbitrary example content
@@ -7092,6 +7138,10 @@ const myObject = {
 The following patterns are not considered problems:
 
 ````js
+/**
+ *
+ */
+
 var array = [1,2,3];
 array.forEach(function() {});
 
