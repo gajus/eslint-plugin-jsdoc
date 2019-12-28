@@ -158,6 +158,23 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @file
+         */
+
+         /**
+          * @file
+          */
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Duplicate @file',
+        },
+      ],
+    },
   ],
   valid: [
     {

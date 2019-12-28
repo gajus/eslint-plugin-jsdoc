@@ -4,17 +4,20 @@ export default iterateJsdoc(({
   state,
   utils,
 }) => {
-  if (state.hasFileOverview) {
-    return;
-  }
   const targetTagName = utils.getPreferredTagName({tagName: 'file'});
 
-  // Can we somehow prevent repeating execution of this non-exiting
-  //  iterator instead of repeatedly checking the value above?
-  state.hasFileOverview = targetTagName && utils.hasTag(targetTagName);
+  const hasFileOverview = targetTagName && utils.hasTag(targetTagName);
+
+  if (state.hasFileOverview) {
+    state.hasDuplicate = hasFileOverview;
+
+    return;
+  }
+
+  state.hasFileOverview = hasFileOverview;
 }, {
   exit ({state, utils}) {
-    if (state.hasFileOverview) {
+    if (state.hasFileOverview && !state.hasDuplicate) {
       return;
     }
     const obj = utils.getPreferredTagNameObject({tagName: 'file'});
@@ -24,7 +27,14 @@ export default iterateJsdoc(({
         'for the `require-file-overview` rule',
       );
     } else {
-      utils.reportSettings(`Missing @${obj && obj.replacement || obj}`);
+      const targetTagName = obj && obj.replacement || obj;
+      if (state.hasDuplicate) {
+        utils.reportSettings(
+          `Duplicate @${targetTagName}`,
+        );
+      } else {
+        utils.reportSettings(`Missing @${targetTagName}`);
+      }
     }
   },
   iterateAllJsdocs: true,
