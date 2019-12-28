@@ -17,7 +17,9 @@ export default iterateJsdoc(({
   state.hasFileOverview = hasFileOverview;
 }, {
   exit ({state, utils}) {
-    if (state.hasFileOverview && !state.hasDuplicate) {
+    if (state.hasFileOverview && !state.hasDuplicate &&
+      !state.hasNonCommentBeforeFileOverview
+    ) {
       return;
     }
     const obj = utils.getPreferredTagNameObject({tagName: 'file'});
@@ -32,6 +34,12 @@ export default iterateJsdoc(({
         utils.reportSettings(
           `Duplicate @${targetTagName}`,
         );
+      } else if (state.hasFileOverview &&
+          state.hasNonCommentBeforeFileOverview
+      ) {
+        utils.reportSettings(
+          `@${targetTagName} should be at the beginning of the file`,
+        );
       } else {
         utils.reportSettings(`Missing @${targetTagName}`);
       }
@@ -41,5 +49,8 @@ export default iterateJsdoc(({
   meta: {
     fixable: 'code',
     type: 'suggestion',
+  },
+  nonComment ({state}) {
+    state.hasNonCommentBeforeFileOverview = !state.hasFileOverview;
   },
 });

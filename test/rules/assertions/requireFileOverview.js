@@ -175,10 +175,33 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        function quux () {
+        }
+        /**
+         * @file
+         */
+      `,
+      errors: [
+        {
+          line: 1,
+          message: '@file should be at the beginning of the file',
+        },
+      ],
+    },
   ],
   valid: [
     {
       code: `
+        /**
+         * @file
+         */
+      `,
+    },
+    {
+      code: `
+        // Ok preceded by comment
         /**
          * @file
          */
