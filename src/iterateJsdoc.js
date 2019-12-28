@@ -154,22 +154,22 @@ const getUtils = (
     return node.parent.kind === 'set';
   };
 
-  utils.getJsdocParameterNamesDeep = () => {
-    const param = utils.getPreferredTagName({tagName: 'param'});
-    if (!param) {
+  utils.getJsdocNamesDeep = (tagName) => {
+    const name = utils.getPreferredTagName({tagName});
+    if (!name) {
       return false;
     }
 
-    return jsdocUtils.getJsdocParameterNamesDeep(jsdoc, param);
+    return jsdocUtils.getJsdocNamesDeep(jsdoc, name);
   };
 
-  utils.getJsdocParameterNames = () => {
-    const param = utils.getPreferredTagName({tagName: 'param'});
-    if (!param) {
+  utils.getJsdocNames = (tagName) => {
+    const name = utils.getPreferredTagName({tagName});
+    if (!name) {
       return false;
     }
 
-    return jsdocUtils.getJsdocParameterNames(jsdoc, param);
+    return jsdocUtils.getJsdocNames(jsdoc, name);
   };
 
   utils.getPreferredTagName = ({tagName, skipReportingBlockedTag = false, allowObjectReturn = false, defaultMessage = `Unexpected tag \`@${tagName}\``}) => {

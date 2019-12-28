@@ -13,6 +13,7 @@ const ruleTester = new RuleTester();
   'check-examples',
   'check-indentation',
   'check-param-names',
+  'check-property-names',
   'check-syntax',
   'check-tag-names',
   'check-types',

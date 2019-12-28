@@ -5,10 +5,6 @@ const validateParameterNames = (
   targetTagName : string, allowExtraTrailingParamDocs: boolean,
   functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report,
 ) => {
-  if (!jsdoc || !jsdoc.tags) {
-    return false;
-  }
-
   const paramTags = entries(jsdoc.tags).filter(([, tag]) => {
     return tag.tag === targetTagName && !tag.name.includes('.');
   });
@@ -72,7 +68,7 @@ const validateParameterNamesDeep = (
 ) => {
   let lastRealParameter;
 
-  return jsdocParameterNames.some((jsdocParameterName, idx) => {
+  return jsdocParameterNames.some(({name: jsdocParameterName, idx}) => {
     const isPropertyPath = jsdocParameterName.includes('.');
 
     if (isPropertyPath) {
@@ -115,8 +111,8 @@ export default iterateJsdoc(({
 }) => {
   const {allowExtraTrailingParamDocs} = context.options[0] || {};
 
-  const jsdocParameterNamesDeep = utils.getJsdocParameterNamesDeep();
-  if (!jsdocParameterNamesDeep) {
+  const jsdocParameterNamesDeep = utils.getJsdocNamesDeep('param');
+  if (!jsdocParameterNamesDeep.length) {
     return;
   }
   const functionParameterNames = utils.getFunctionParameterNames();
