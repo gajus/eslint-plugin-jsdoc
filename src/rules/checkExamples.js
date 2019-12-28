@@ -34,8 +34,19 @@ export default iterateJsdoc(({
   report,
   utils,
   context,
+  globalState,
 }) => {
   warnRemovedSettings(context, 'check-examples');
+  const tagName = utils.getPreferredTagName({tagName: 'example'});
+  if (!utils.hasTag(tagName)) {
+    return;
+  }
+
+  if (!globalState.has('checkExamples-matchingFileName')) {
+    globalState.set('checkExamples-matchingFileName', new Map());
+  }
+  const matchingFileNameMap = globalState.get('checkExamples-matchingFileName');
+
   const options = context.options[0] || {};
   let {
     exampleCodeRegex = null,
@@ -52,6 +63,16 @@ export default iterateJsdoc(({
     reportUnusedDisableDirectives = true,
     captionRequired = false,
   } = options;
+
+  let defaultFileName;
+  if (!filename) {
+    const jsFileName = context.getFilename();
+    if (typeof jsFileName === 'string' && jsFileName.includes('.')) {
+      defaultFileName = jsFileName.replace(/\..*?$/, '.md');
+    } else {
+      defaultFileName = 'dummy.md';
+    }
+  }
 
   // Make this configurable?
   const rulePaths = [];
@@ -185,8 +206,7 @@ export default iterateJsdoc(({
       nonJSPrefacingLines,
       string,
     }) {
-      // Programmatic ESLint API: https://eslint.org/docs/developer-guide/nodejs-api
-      const cli = new CLIEngine({
+      const cliConfig = {
         allowInlineConfig,
         baseConfig,
         configFile,
@@ -194,7 +214,8 @@ export default iterateJsdoc(({
         rulePaths,
         rules,
         useEslintrc: eslintrcForExamples,
-      });
+      };
+      const cliConfigStr = JSON.stringify(cliConfig);
 
       let messages;
 
@@ -203,42 +224,59 @@ export default iterateJsdoc(({
         src = src.replace(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gu'), '\n');
       }
 
+      // Programmatic ESLint API: https://eslint.org/docs/developer-guide/nodejs-api
+      const fileNameMapKey = filename ?
+        'a' + cliConfigStr + filename :
+        'b' + cliConfigStr + defaultFileName;
       if (filename) {
-        const config = cli.getConfigForFile(filename);
+        let config;
+        let linter;
+        if (matchingFileNameMap.has(fileNameMapKey)) {
+          [config, linter] = matchingFileNameMap.get(fileNameMapKey);
+        } else {
+          const cli = new CLIEngine(cliConfig);
+          if (eslintrcForExamples) {
+            config = cli.getConfigForFile(filename);
+          }
 
-        // We need a new instance to ensure that the rules that may only
-        //  be available to `filename` (if it has its own `.eslintrc`),
-        //  will be defined.
-        const cliFile = new CLIEngine({
-          allowInlineConfig,
-          baseConfig: config,
-          configFile,
-          reportUnusedDisableDirectives,
-          rulePaths,
-          rules,
-          useEslintrc: eslintrcForExamples,
-        });
+          // We need a new instance to ensure that the rules that may only
+          //  be available to `filename` (if it has its own `.eslintrc`),
+          //  will be defined.
+          const cliFile = new CLIEngine({
+            allowInlineConfig,
+            baseConfig: {
+              ...baseConfig,
+              ...config,
+            },
+            configFile,
+            reportUnusedDisableDirectives,
+            rulePaths,
+            rules,
+            useEslintrc: false,
+          });
+          linter = new Linter();
 
-        const linter = new Linter();
+          // Force external rules to become available on `cliFile`
+          try {
+            cliFile.executeOnText('');
+          } catch (error) {
+            // Ignore
+          }
 
-        // Force external rules to become available on `cli`
-        try {
-          cliFile.executeOnText('');
-        } catch (error) {
-          // Ignore
-        }
+          const linterRules = [...cliFile.getRules().entries()].reduce((obj, [key, val]) => {
+            obj[key] = val;
 
-        const linterRules = [...cliFile.getRules().entries()].reduce((obj, [key, val]) => {
-          obj[key] = val;
+            return obj;
+          }, {});
 
-          return obj;
-        }, {});
+          linter.defineRules(linterRules);
 
-        linter.defineRules(linterRules);
+          if (config && config.parser) {
+            // eslint-disable-next-line global-require, import/no-dynamic-require
+            linter.defineParser(config.parser, require(config.parser));
+          }
 
-        if (config.parser) {
-          // eslint-disable-next-line global-require, import/no-dynamic-require
-          linter.defineParser(config.parser, require(config.parser));
+          matchingFileNameMap.set(fileNameMapKey, [config, linter]);
         }
 
         // Could also support `disableFixes` and `allowInlineConfig`
@@ -247,8 +285,35 @@ export default iterateJsdoc(({
           reportUnusedDisableDirectives,
         });
       } else {
+        // We do this all again even here so we can copy the user's parser;
+        //  doesn't work in `if` block just above
+        let config;
+
+        if (eslintrcForExamples) {
+          if (matchingFileNameMap.has(fileNameMapKey)) {
+            config = matchingFileNameMap.get(fileNameMapKey);
+          } else {
+            const cli = new CLIEngine(cliConfig);
+            config = cli.getConfigForFile(defaultFileName);
+            matchingFileNameMap.set(fileNameMapKey, config);
+          }
+        }
+
+        const cliNoFile = new CLIEngine({
+          allowInlineConfig,
+          baseConfig: {
+            ...baseConfig,
+            ...config,
+          },
+          configFile,
+          reportUnusedDisableDirectives,
+          rulePaths,
+          rules,
+          useEslintrc: false,
+        });
+
         ({results: [{messages}]} =
-          cli.executeOnText(src));
+          cliNoFile.executeOnText(src));
       }
 
       // NOTE: `tag.line` can be 0 if of form `/** @tag ... */`

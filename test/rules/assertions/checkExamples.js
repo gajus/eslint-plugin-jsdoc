@@ -1,3 +1,6 @@
+// Change `process.cwd()` when testing `eslintrcForExamples: true`
+process.chdir('test/rules/data');
+
 export default {
   invalid: [
     {
@@ -335,8 +338,30 @@ export default {
         },
       ],
       options: [{
-        matchingFileName: 'test/jsdocUtils.js',
+        matchingFileName: '../../jsdocUtils.js',
       }],
+    },
+    {
+      code: `
+          /**
+           * @example const i = 5;
+           * quux2()
+           */
+          function quux2 () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).',
+        },
+        {
+          line: 4,
+          message: '@example error (semi): Missing semicolon.',
+        },
+      ],
+      filename: 'test/rules/data/jsdocUtils.js',
     },
     {
       code: `
@@ -389,7 +414,7 @@ export default {
     {
       code: `
           /**
-           * @example const i = 5;
+           * @example const idx = 5;
            * quux2()
            */
           function quux2 () {
@@ -403,7 +428,50 @@ export default {
         },
       ],
       options: [{
-        matchingFileName: 'test/rules/data/dummy.js',
+        matchingFileName: 'dummy.js',
+      }],
+    },
+    {
+      code: `
+          /**
+           * @example const idx = 5;
+           *
+           * quux2()
+           */
+          function quux2 () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: '@example error (semi): Missing semicolon.',
+        },
+      ],
+      options: [{
+        matchingFileName: 'dummy.js',
+      }],
+    },
+    {
+      code: `
+          /**
+           * @example const idx = 5;
+           *
+           * quux2()
+           */
+          function quux2 () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@example error: Parsing error: The keyword \'const\' is reserved',
+        },
+      ],
+      options: [{
+        eslintrcForExamples: false,
+        matchingFileName: 'dummy.js',
       }],
     },
     {
@@ -551,6 +619,35 @@ export default {
     },
     {
       code: `
+        /**
+         * @example
+         * const test = something?.find((_) => {
+         *   return _
+         * });
+         */
+        function quux () {
+
+        }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: '@example error (semi): Missing semicolon.',
+        },
+      ],
+      options: [{
+        baseConfig: {
+          parserOptions: {
+            ecmaVersion: 6,
+          },
+          rules: {
+            semi: ['error', 'always'],
+          },
+        },
+      }],
+    },
+    {
+      code: `
       /**
        * @example <caption>Say \`Hello!\` to the user.</caption>
        * First, import the function:
@@ -598,7 +695,6 @@ export default {
         },
       ],
     },
-
     {
       code: `
           /**

@@ -971,7 +971,16 @@ function quux () {}
 function quux2 () {
 
 }
-// Options: [{"matchingFileName":"test/jsdocUtils.js"}]
+// Options: [{"matchingFileName":"../../jsdocUtils.js"}]
+// Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
+
+/**
+ * @example const i = 5;
+ * quux2()
+ */
+function quux2 () {
+
+}
 // Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
 
 /**
@@ -995,14 +1004,36 @@ function quux2 () {
 // Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
 
 /**
- * @example const i = 5;
+ * @example const idx = 5;
  * quux2()
  */
 function quux2 () {
 
 }
-// Options: [{"matchingFileName":"test/rules/data/dummy.js"}]
+// Options: [{"matchingFileName":"dummy.js"}]
 // Message: @example error (semi): Missing semicolon.
+
+/**
+ * @example const idx = 5;
+ *
+ * quux2()
+ */
+function quux2 () {
+
+}
+// Options: [{"matchingFileName":"dummy.js"}]
+// Message: @example error (semi): Missing semicolon.
+
+/**
+ * @example const idx = 5;
+ *
+ * quux2()
+ */
+function quux2 () {
+
+}
+// Options: [{"eslintrcForExamples":false,"matchingFileName":"dummy.js"}]
+// Message: @example error: Parsing error: The keyword 'const' is reserved
 
 /**
  * @example // begin
@@ -1041,6 +1072,18 @@ function quux () {
 
 }
 // Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
+// Message: @example error (semi): Missing semicolon.
+
+/**
+ * @example
+ * const test = something?.find((_) => {
+ *   return _
+ * });
+ */
+function quux () {
+
+}
+// Options: [{"baseConfig":{"parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}}}]
 // Message: @example error (semi): Missing semicolon.
 
 /**

@@ -3,7 +3,20 @@
   "parserOptions": {
     "ecmaVersion": 8
   },
+  "overrides": [{
+    "files": ["*.md"],
+    "parser": "babel-eslint"
+  }],
   "rules": {
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "id-length": [
+      1,
+      {
+        "exceptions": [
+          "_"
+        ],
+        "min": 2
+      }
+    ]
   }
 }
