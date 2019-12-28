@@ -6199,6 +6199,12 @@ function quux () {
 
 Requires that all files have a `@file`, `@fileoverview`, or `@overview` tag.
 
+Duplicate file overview tags will be reported as will file overview tags
+which are not, as per [the docs](https://jsdoc.app/tags-file.html),
+"at the beginning of the file", where beginning of the file is interpreted
+in this rule as being when the overview tag is not preceded by
+anything other than a comment.
+
 <a name="eslint-plugin-jsdoc-rules-require-file-overview-fixer-1"></a>
 #### Fixer
 
@@ -6245,6 +6251,20 @@ function quux () {}
 // Message: Missing @overview
 
 /**
+ *
+ */
+function quux () {}
+// Settings: {"jsdoc":{"tagNamePreference":{"file":false}}}
+// Message: `settings.jsdoc.tagNamePreference` cannot block @file for the `require-file-overview` rule
+
+/**
+ *
+ */
+function quux () {}
+// Settings: {"jsdoc":{"tagNamePreference":{"file":{"message":"Don't use file"}}}}
+// Message: `settings.jsdoc.tagNamePreference` cannot block @file for the `require-file-overview` rule
+
+/**
  * @param a
  */
 function quux (a) {}
@@ -6260,11 +6280,32 @@ function quux (a) {}
  */
 function bar (b) {}
 // Message: Missing @file
+
+/**
+ * @file
+ */
+
+ /**
+  * @file
+  */
+// Message: Duplicate @file
+
+function quux () {
+}
+/**
+ * @file
+ */
+// Message: @file should be at the beginning of the file
 ````
 
 The following patterns are not considered problems:
 
 ````js
+/**
+ * @file
+ */
+
+// Ok preceded by comment
 /**
  * @file
  */
@@ -6281,6 +6322,16 @@ The following patterns are not considered problems:
 
 /**
  * @file Description of file
+ */
+
+/**
+ * @file Description of file
+ */
+function quux () {
+}
+
+/**
+ *
  */
 ````
 
