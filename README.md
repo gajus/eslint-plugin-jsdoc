@@ -157,7 +157,9 @@ supplied as the second argument in an array after the error level.
 ### Allow <code>@private</code> to disable rules for that comment block
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
-  on which a `@private` tag occurs. Defaults to `false`.
+  on which a `@private` tag occurs. Defaults to
+  `false`. Note: This has no effect with the rule `check-access` (whose
+  purpose is to check access modifiers).
 
 <a name="eslint-plugin-jsdoc-settings-mode"></a>
 ### Mode
@@ -407,6 +409,15 @@ function quux (foo) {
 // Message: Missing valid JSDoc @access level.
 
 /**
+ * @access foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"ignorePrivate":true}}
+// Message: Missing valid JSDoc @access level.
+
+/**
  * @accessLevel foo
  */
 function quux (foo) {
@@ -451,12 +462,32 @@ function quux (foo) {
 // Message: At most one access-control tag may be present on a jsdoc block.
 
 /**
+ * @access public
+ * @access private
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"ignorePrivate":true}}
+// Message: At most one access-control tag may be present on a jsdoc block.
+
+/**
  * @public
  * @private
  */
 function quux (foo) {
 
 }
+// Message: At most one access-control tag may be present on a jsdoc block.
+
+/**
+ * @public
+ * @private
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"ignorePrivate":true}}
 // Message: At most one access-control tag may be present on a jsdoc block.
 
 /**
@@ -507,6 +538,14 @@ class MyClass {
 function quux (foo) {
 
 }
+
+/**
+ * @private
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"ignorePrivate":true}}
 ````
 
 
@@ -631,6 +670,15 @@ function quux (foo) {
   *    So this is unchecked.
  */
 function quux (foo) {}
+
+/**
+  * @param {Number} foo
+  * @private
+ */
+function quux (foo) {
+  // with spaces
+}
+// Settings: {"jsdoc":{"ignorePrivate":true}}
 ````
 
 

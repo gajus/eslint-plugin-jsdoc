@@ -428,6 +428,7 @@ const iterate = (
 
   if (
     settings.ignorePrivate &&
+    !ruleConfig.checkPrivate &&
     utils.hasTag('private')
   ) {
     return;
@@ -529,10 +530,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   }
 
   if (ruleConfig.iterateAllJsdocs) {
-    return iterateAllJsdocs(iterator, {
-      meta: ruleConfig.meta,
-      noTrim: ruleConfig.noTrim,
-    });
+    return iterateAllJsdocs(iterator, ruleConfig);
   }
 
   return {

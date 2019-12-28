@@ -111,7 +111,9 @@ supplied as the second argument in an array after the error level.
 ### Allow `@private` to disable rules for that comment block
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
-  on which a `@private` tag occurs. Defaults to `false`.
+  on which a `@private` tag occurs. Defaults to
+  `false`. Note: This has no effect with the rule `check-access` (whose
+  purpose is to check access modifiers).
 
 ### Mode
 

@@ -19,6 +19,27 @@ export default {
     {
       code: `
           /**
+           * @access foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing valid JSDoc @access level.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          ignorePrivate: true,
+        },
+      },
+    },
+    {
+      code: `
+          /**
            * @accessLevel foo
            */
           function quux (foo) {
@@ -113,6 +134,27 @@ export default {
     {
       code: `
           /**
+           * @access public
+           * @access private
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'At most one access-control tag may be present on a jsdoc block.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          ignorePrivate: true,
+        },
+      },
+    },
+    {
+      code: `
+          /**
            * @public
            * @private
            */
@@ -125,6 +167,27 @@ export default {
           message: 'At most one access-control tag may be present on a jsdoc block.',
         },
       ],
+    },
+    {
+      code: `
+          /**
+           * @public
+           * @private
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'At most one access-control tag may be present on a jsdoc block.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          ignorePrivate: true,
+        },
+      },
     },
     {
       code: `
@@ -201,6 +264,21 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * @private
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          ignorePrivate: true,
+        },
+      },
     },
   ],
 };
