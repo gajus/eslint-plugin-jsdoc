@@ -228,6 +228,9 @@ If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the tag
 }
 ```
 
+A project wishing to ensure no blocks are left excluded from entering the
+documentation, might wish to prevent the `@ignore` tag in the above manner.
+
 Or one may set the targeted tag to an object with a custom `message`, but without a `replacement` property:
 
 ```json
