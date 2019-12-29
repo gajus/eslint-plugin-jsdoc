@@ -11,12 +11,12 @@ Requires that all function parameters have names.
 ##### `contexts`
 
 Set this to an array of strings representing the AST context
-where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+where you wish the rule to be applied.
 Overrides the default contexts (see below). Set to `"any"` if you want
 the rule to apply to any jsdoc block throughout your files (as is necessary
 for finding function blocks not attached to a function declaration or
-expression such as `@callback` or `@function` (including those associated
-with an `@interface`).
+expression, i.e., `@callback` or `@function` (or its aliases `@func` or
+`@method`) (including those associated with an `@interface`).
 
 |||
 |---|---|

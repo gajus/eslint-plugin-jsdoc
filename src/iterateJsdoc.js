@@ -431,7 +431,7 @@ const makeReport = (context, commentNode) => {
 
 const iterate = (
   ruleConfig, context, lines, jsdocNode, node, settings,
-  sourceCode, iterator, state,
+  sourceCode, iterator, state, iteratingAll,
 ) => {
   const sourceLine = lines[jsdocNode.loc.start.line - 1];
   const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
@@ -462,6 +462,7 @@ const iterate = (
   iterator({
     context,
     indent,
+    iteratingAll,
     jsdoc,
     jsdocNode,
     node,
@@ -496,7 +497,7 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
       iterate(
         ruleConfig, context, lines, jsdocNode, node,
         settings, sourceCode, iterator,
-        state,
+        state, true,
       );
     });
     if (lastCall && ruleConfig.exit) {

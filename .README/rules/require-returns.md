@@ -18,22 +18,22 @@ Will also report if multiple `@returns` tags are present.
   functions to require return statements by setting `forceReturnsWithAsync`
   to `true` on the options object. This may be useful for flagging that there
   has been consideration of return type. Defaults to `false`.
+- `contexts` - Set this to an array of strings representing the AST context
+  where you wish the rule to be applied.
+  Overrides the default contexts (see below). Set to `"any"` if you want
+  the rule to apply to any jsdoc block throughout your files (as is necessary
+  for finding function blocks not attached to a function declaration or
+  expression, i.e., `@callback` or `@function` (or its aliases `@func` or
+  `@method`) (including those associated with an `@interface`). This
+  rule will only apply on non-default contexts when there is such a tag
+  present and the `forceRequireReturn` option is set or if the
+  `forceReturnsWithAsync` option is set with a present `@async` tag
+  (since we are not checking against the actual `return` values in these
+  cases).
 
 ```js
 'jsdoc/require-returns': ['error', {forceReturnsWithAsync: true}]
 ```
-
-#### Options
-
-##### `contexts`
-
-Set this to an array of strings representing the AST context
-where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the default contexts (see below). Set to `"any"` if you want
-the rule to apply to any jsdoc block throughout your files (as is necessary
-for finding function blocks not attached to a function declaration or
-expression such as `@callback` or `@function` (including those associated
-with an `@interface`).
 
 |||
 |---|---|
