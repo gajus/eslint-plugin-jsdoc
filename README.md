@@ -6716,17 +6716,89 @@ Checks that:
   as being when the overview tag is not preceded by anything other than
   a comment.
 
+<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-17"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-17-tags-3"></a>
+##### <code>tags</code>
+
+The keys of this object are tag names, and the values are configuration
+objects indicating what will be checked for these whole-file tags.
+
+Each configuration object has the following boolean keys (which default
+to `false` when this option is supplied): `mustExist`, `preventDuplicates`,
+`initialCommentsOnly`. These correspond to the three items above.
+
+When no `tags` is present, the default is:
+
+```json
+{
+  "file": {
+    "initialCommentsOnly": true,
+    "mustExist": true,
+    "preventDuplicates": true,
+  }
+}
+```
+
+You can add additional tag names and/or override `file` if you supply this
+option, e.g., in place of or in addition to `file`, giving other potential
+file global tags like `@license`, `@copyright`, `@author`, `@module` or
+`@exports`, optionally restricting them to a single use or preventing them
+from being preceded by anything besides comments.
+
+For example:
+
+```js
+{
+  "license": {
+    "mustExist": true,
+    "preventDuplicates": true,
+  }
+}
+```
+
+This would require one and only one `@license` in the file, though because
+`initialCommentsOnly` is absent and defaults to `false`, the `@license`
+can be anywhere.
+
+In the case of `@license`, you can use this rule along with the
+`check-values` rule (with its `allowedLicenses` or `licensePattern` options),
+to enforce a license whitelist be present on every JS file.
+
+Note that if you choose to use `preventDuplicates` with `license`, you still
+have a way to allow multiple licenses for the whole page by using the SPDX
+"AND" expression, e.g., `@license (MIT AND GPL-3.0)`.
+
+Note that the tag names are the main jsdoc tag name, so you should use `file`
+in this configuration object regardless of whether you have configured
+`fileoverview` instead of `file` on `tagNamePreference` (i.e., `fileoverview`
+will be checked, but you must use `file` on the configuration object).
+
 |||
 |---|---|
 |Context|Everywhere|
-|Tags|`file`|
+|Tags|`file`; others when `tags` set|
 |Aliases|`fileoverview`, `overview`|
+|Options|`tags`|
 
 The following patterns are considered problems:
 
 ````js
 
 // Message: Missing @file
+
+
+// Options: [{"tags":{"file":{"initialCommentsOnly":true,"mustExist":true,"preventDuplicates":true}}}]
+// Message: Missing @file
+
+
+// Options: [{"tags":{"file":{"mustExist":true}}}]
+// Message: Missing @file
+
+
+// Options: [{"tags":{"author":{"initialCommentsOnly":false,"mustExist":true,"preventDuplicates":false}}}]
+// Message: Missing @author
 
 /**
  *
@@ -6764,6 +6836,14 @@ function quux () {}
  *
  */
 function quux () {}
+// Settings: {"jsdoc":{"tagNamePreference":{"file":false}}}
+// Options: [{"tags":{"file":{"initialCommentsOnly":false,"mustExist":true,"preventDuplicates":false}}}]
+// Message: `settings.jsdoc.tagNamePreference` cannot block @file for the `require-file-overview` rule
+
+/**
+ *
+ */
+function quux () {}
 // Settings: {"jsdoc":{"tagNamePreference":{"file":{"message":"Don't use file"}}}}
 // Message: `settings.jsdoc.tagNamePreference` cannot block @file for the `require-file-overview` rule
 
@@ -6793,12 +6873,48 @@ function bar (b) {}
   */
 // Message: Duplicate @file
 
+/**
+ * @copyright
+ */
+
+ /**
+  * @copyright
+  */
+// Options: [{"tags":{"copyright":{"initialCommentsOnly":false,"mustExist":false,"preventDuplicates":true}}}]
+// Message: Duplicate @copyright
+
 function quux () {
 }
 /**
  * @file
  */
 // Message: @file should be at the beginning of the file
+
+function quux () {
+}
+/**
+ * @license
+ */
+// Options: [{"tags":{"license":{"initialCommentsOnly":true,"mustExist":false,"preventDuplicates":false}}}]
+// Message: @license should be at the beginning of the file
+
+function quux () {
+}
+/**
+ * @license
+ */
+// Options: [{"tags":{"license":{"initialCommentsOnly":true}}}]
+// Message: @license should be at the beginning of the file
+
+/**
+ * @file
+ */
+
+/**
+ * @file
+ */
+// Options: [{"tags":{"file":{"initialCommentsOnly":true,"preventDuplicates":true}}}]
+// Message: Duplicate @file
 ````
 
 The following patterns are not considered problems:
@@ -6807,6 +6923,15 @@ The following patterns are not considered problems:
 /**
  * @file
  */
+
+/**
+ * @file
+ */
+
+/**
+ * @file
+ */
+// Options: [{"tags":{"license":{"initialCommentsOnly":true,"preventDuplicates":true}}}]
 
 // Ok preceded by comment
 /**
@@ -6836,6 +6961,38 @@ function quux () {
 /**
  *
  */
+
+function quux () {
+}
+/**
+ *
+ */
+// Options: [{"tags":{"license":{"initialCommentsOnly":true,"mustExist":false,"preventDuplicates":false}}}]
+
+function quux () {
+}
+/**
+ *
+ */
+// Options: [{"tags":{"license":{"initialCommentsOnly":false,"mustExist":false,"preventDuplicates":false}}}]
+
+function quux () {
+}
+/**
+ *
+ */
+// Options: [{"tags":{"license":{"initialCommentsOnly":false,"mustExist":false,"preventDuplicates":true}}}]
+
+/**
+ * @license MIT
+ */
+
+ var a
+
+ /**
+  * @type {Array}
+  */
+// Options: [{"tags":{"license":{"initialCommentsOnly":true,"mustExist":false,"preventDuplicates":false}}}]
 ````
 
 
@@ -6844,7 +7001,7 @@ function quux () {
 
 Requires a hyphen before the `@param` description.
 
-<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-17"></a>
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-18"></a>
 #### Options
 
 This rule takes one optional string argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
@@ -6950,7 +7107,7 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-18"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-19"></a>
 #### Options
 
 Accepts one optional options object with the following optional keys.
@@ -7968,10 +8125,10 @@ export default class Foo {
 
 Requires that each `@param` tag has a `description` value.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-19"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-20"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-19-contexts-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-20-contexts-4"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -8088,10 +8245,10 @@ Requires that all function parameters have names.
 >
 > [JSDoc](https://jsdoc.app/tags-param.html#overview)
 
-<a name="eslint-plugin-jsdoc-rules-require-param-name-options-20"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-21"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-param-name-options-20-contexts-5"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-21-contexts-5"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -8203,10 +8360,10 @@ function quux (foo) {
 
 Requires that each `@param` tag has a `type` value.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-21"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-22"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-21-contexts-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-22-contexts-6"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -8319,7 +8476,7 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-22"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23"></a>
 #### Options
 
 An options object accepts one optional property:
@@ -9563,10 +9720,10 @@ function quux () {
 Requires that the `@returns` tag has a `description` value. The error
 will not be reported if the return value is `void` or `undefined`.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-23"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-24"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-23-contexts-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-24-contexts-7"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -9701,10 +9858,10 @@ function quux () {
 
 Requires that `@returns` tag has `type` value.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-24"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-25"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-24-contexts-8"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-25-contexts-8"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -9821,7 +9978,7 @@ Requires returns are documented.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-25"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-26"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -10420,7 +10577,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-26"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-27"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to disallow

@@ -516,6 +516,7 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
     });
     if (lastCall && ruleConfig.exit) {
       ruleConfig.exit({
+        context,
         state,
         utils,
       });
