@@ -19,6 +19,22 @@ export default {
     {
       code: `
           /**
+           * @returns {string}
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @returns description.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            * @return
            */
           function quux (foo) {

@@ -8476,6 +8476,14 @@ function quux (foo) {
 // Message: Missing JSDoc @returns description.
 
 /**
+ * @returns {string}
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @returns description.
+
+/**
  * @return
  */
 function quux (foo) {
