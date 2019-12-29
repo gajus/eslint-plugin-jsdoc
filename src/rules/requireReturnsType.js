@@ -10,7 +10,22 @@ export default iterateJsdoc(({
     }
   });
 }, {
+  contextDefaults: true,
   meta: {
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          contexts: {
+            items: {
+              type: 'string',
+            },
+            type: 'array',
+          },
+        },
+        type: 'object',
+      },
+    ],
     type: 'suggestion',
   },
 });

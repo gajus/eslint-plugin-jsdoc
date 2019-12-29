@@ -95,11 +95,18 @@ export default iterateJsdoc(({
     report(`Missing JSDoc @${tagName} declaration.`);
   }
 }, {
+  contextDefaults: true,
   meta: {
     schema: [
       {
         additionalProperties: false,
         properties: {
+          contexts: {
+            items: {
+              type: 'string',
+            },
+            type: 'array',
+          },
           exemptedBy: {
             items: {
               type: 'string',
