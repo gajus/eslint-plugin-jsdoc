@@ -12,6 +12,67 @@ export default {
     },
     {
       code: `
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Missing @file',
+        },
+      ],
+      options: [
+        {
+          tags: {
+            file: {
+              initialCommentsOnly: true,
+              mustExist: true,
+              preventDuplicates: true,
+            },
+          },
+        },
+      ],
+    },
+    {
+      code: `
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Missing @file',
+        },
+      ],
+      options: [
+        {
+          tags: {
+            file: {
+              mustExist: true,
+            },
+          },
+        },
+      ],
+    },
+    {
+      code: `
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Missing @author',
+        },
+      ],
+      options: [
+        {
+          tags: {
+            author: {
+              initialCommentsOnly: false,
+              mustExist: true,
+              preventDuplicates: false,
+            },
+          },
+        },
+      ],
+    },
+    {
+      code: `
       /**
        *
        */
@@ -115,6 +176,39 @@ export default {
             'for the `require-file-overview` rule',
         },
       ],
+      options: [
+        {
+          tags: {
+            file: {
+              initialCommentsOnly: false,
+              mustExist: true,
+              preventDuplicates: false,
+            },
+          },
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            file: false,
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       *
+       */
+      function quux () {}
+      `,
+      errors: [
+        {
+          line: 1,
+          message: '`settings.jsdoc.tagNamePreference` cannot block @file ' +
+            'for the `require-file-overview` rule',
+        },
+      ],
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -177,6 +271,34 @@ export default {
     },
     {
       code: `
+        /**
+         * @copyright
+         */
+
+         /**
+          * @copyright
+          */
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Duplicate @copyright',
+        },
+      ],
+      options: [
+        {
+          tags: {
+            copyright: {
+              initialCommentsOnly: false,
+              mustExist: false,
+              preventDuplicates: true,
+            },
+          },
+        },
+      ],
+    },
+    {
+      code: `
         function quux () {
         }
         /**
@@ -190,6 +312,83 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        function quux () {
+        }
+        /**
+         * @license
+         */
+      `,
+      errors: [
+        {
+          line: 1,
+          message: '@license should be at the beginning of the file',
+        },
+      ],
+      options: [
+        {
+          tags: {
+            license: {
+              initialCommentsOnly: true,
+              mustExist: false,
+              preventDuplicates: false,
+            },
+          },
+        },
+      ],
+    },
+    {
+      code: `
+        function quux () {
+        }
+        /**
+         * @license
+         */
+      `,
+      errors: [
+        {
+          line: 1,
+          message: '@license should be at the beginning of the file',
+        },
+      ],
+      options: [
+        {
+          tags: {
+            license: {
+              initialCommentsOnly: true,
+            },
+          },
+        },
+      ],
+    },
+    {
+      code: `
+       /**
+        * @file
+        */
+
+       /**
+        * @file
+        */
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Duplicate @file',
+        },
+      ],
+      options: [
+        {
+          tags: {
+            file: {
+              initialCommentsOnly: true,
+              preventDuplicates: true,
+            },
+          },
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -198,6 +397,27 @@ export default {
          * @file
          */
       `,
+    },
+    {
+      code: `
+       /**
+        * @file
+        */
+
+       /**
+        * @file
+        */
+      `,
+      options: [
+        {
+          tags: {
+            license: {
+              initialCommentsOnly: true,
+              preventDuplicates: true,
+            },
+          },
+        },
+      ],
     },
     {
       code: `
@@ -254,6 +474,90 @@ export default {
          *
          */
       `,
+    },
+    {
+      code: `
+        function quux () {
+        }
+        /**
+         *
+         */
+      `,
+      options: [
+        {
+          tags: {
+            license: {
+              initialCommentsOnly: true,
+              mustExist: false,
+              preventDuplicates: false,
+            },
+          },
+        },
+      ],
+    },
+    {
+      code: `
+        function quux () {
+        }
+        /**
+         *
+         */
+      `,
+      options: [
+        {
+          tags: {
+            license: {
+              initialCommentsOnly: false,
+              mustExist: false,
+              preventDuplicates: false,
+            },
+          },
+        },
+      ],
+    },
+    {
+      code: `
+        function quux () {
+        }
+        /**
+         *
+         */
+      `,
+      options: [
+        {
+          tags: {
+            license: {
+              initialCommentsOnly: false,
+              mustExist: false,
+              preventDuplicates: true,
+            },
+          },
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @license MIT
+       */
+
+       var a
+
+       /**
+        * @type {Array}
+        */
+      `,
+      options: [
+        {
+          tags: {
+            license: {
+              initialCommentsOnly: true,
+              mustExist: false,
+              preventDuplicates: false,
+            },
+          },
+        },
+      ],
     },
   ],
 };

@@ -24,8 +24,11 @@ export default iterateJsdoc(({
   jsdocNode,
   state,
   utils,
+  context,
 }) => {
-  const tags = defaultTags;
+  const {
+    tags = defaultTags,
+  } = context.options[0] || {};
 
   setDefaults(state);
 
@@ -50,14 +53,16 @@ export default iterateJsdoc(({
     }
   }
 }, {
-  exit ({state, utils}) {
+  exit ({context, state, utils}) {
     setDefaults(state);
-    const tags = defaultTags;
+    const {
+      tags = defaultTags,
+    } = context.options[0] || {};
 
     for (const [tagName, {
-      mustExist,
-      preventDuplicates,
-      initialCommentsOnly,
+      mustExist = false,
+      preventDuplicates = false,
+      initialCommentsOnly = false,
     }] of entries(tags)) {
       const obj = utils.getPreferredTagNameObject({tagName});
       if (obj && obj.blocked) {
@@ -88,6 +93,34 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     fixable: 'code',
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          tags: {
+            patternProperties: {
+              '.*': {
+                additionalProperties: false,
+                properties: {
+                  initialCommentsOnly: {
+                    type: 'boolean',
+                  },
+                  mustExist: {
+                    type: 'boolean',
+                  },
+                  preventDuplicates: {
+                    type: 'boolean',
+                  },
+                },
+                type: 'object',
+              },
+            },
+            type: 'object',
+          },
+        },
+        type: 'object',
+      },
+    ],
     type: 'suggestion',
   },
   nonComment ({state, node}) {
