@@ -8455,7 +8455,8 @@ function quux () {
 <a name="eslint-plugin-jsdoc-rules-require-returns-description"></a>
 ### <code>require-returns-description</code>
 
-Requires that `@returns` tag has `description` value.
+Requires that the `@returns` tag has a `description` value. The error
+will not be reported if the return value is `void` or `undefined`.
 
 |||
 |---|---|
