@@ -35,6 +35,65 @@ export default {
     {
       code: `
           /**
+           * @returns {string}
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @returns description.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @function
+           * @returns {string}
+           */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @returns description.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @callback
+           * @returns {string}
+           */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @returns description.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            * @return
            */
           function quux (foo) {
@@ -102,6 +161,21 @@ export default {
     {
       code: `
           /**
+           * @returns Foo.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            * @returns {undefined}
            */
           function quux () {
@@ -117,6 +191,22 @@ export default {
           function quux () {
 
           }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @function
+           * @returns
+           */
+      `,
+    },
+    {
+      code: `
+          /**
+           * @callback
+           * @returns
+           */
       `,
     },
   ],
