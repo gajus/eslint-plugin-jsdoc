@@ -23,12 +23,24 @@ Will also report if multiple `@returns` tags are present.
 'jsdoc/require-returns': ['error', {forceReturnsWithAsync: true}]
 ```
 
+#### Options
+
+##### `contexts`
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+Overrides the default contexts (see below). Set to `"any"` if you want
+the rule to apply to any jsdoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression such as `@callback` or `@function` (including those associated
+with an `@interface`).
+
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`returns`|
 |Aliases|`return`|
-|Options|`exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
+|Options|`contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <!-- assertions requireReturns -->

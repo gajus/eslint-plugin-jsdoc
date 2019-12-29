@@ -7854,9 +7854,10 @@ Requires that each `@param` tag has a `description` value.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Options|`contexts`|
 
 The following patterns are considered problems:
 
@@ -7916,11 +7917,26 @@ Requires that all function parameters have names.
 >
 > [JSDoc](https://jsdoc.app/tags-param.html#overview)
 
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-17"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-17-contexts-2"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+Overrides the default contexts (see below). Set to `"any"` if you want
+the rule to apply to any jsdoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression such as `@callback` or `@function` (including those associated
+with an `@interface`).
+
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Options|`contexts`|
 
 The following patterns are considered problems:
 
@@ -7975,11 +7991,26 @@ function quux (foo) {
 
 Requires that each `@param` tag has a `type` value.
 
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-18"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-18-contexts-3"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+Overrides the default contexts (see below). Set to `"any"` if you want
+the rule to apply to any jsdoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression such as `@callback` or `@function` (including those associated
+with an `@interface`).
+
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Options|`contexts`|
 
 The following patterns are considered problems:
 
@@ -8035,7 +8066,7 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-17"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-19"></a>
 #### Options
 
 An options object accepts one optional property:
@@ -9279,11 +9310,26 @@ function quux () {
 Requires that the `@returns` tag has a `description` value. The error
 will not be reported if the return value is `void` or `undefined`.
 
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-20"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-20-contexts-4"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+Overrides the default contexts (see below). Set to `"any"` if you want
+the rule to apply to any jsdoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression such as `@callback` or `@function` (including those associated
+with an `@interface`).
+
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`returns`|
 |Aliases|`return`|
+|Options|`contexts`|
 
 The following patterns are considered problems:
 
@@ -9361,11 +9407,27 @@ function quux () {
 
 Requires that `@returns` tag has `type` value.
 
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-21"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-21-contexts-5"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+Overrides the default contexts (see below). Set to `"any"` if you want
+the rule to apply to any jsdoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression such as `@callback` or `@function` (including those associated
+with an `@interface`).
+
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`returns`|
 |Aliases|`return`|
+|Options|`contexts`|
+|Options|`contexts`|
 
 The following patterns are considered problems:
 
@@ -9424,7 +9486,7 @@ Requires returns are documented.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-18"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-22"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -9444,12 +9506,26 @@ Will also report if multiple `@returns` tags are present.
 'jsdoc/require-returns': ['error', {forceReturnsWithAsync: true}]
 ```
 
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-23"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-23-contexts-6"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
+Overrides the default contexts (see below). Set to `"any"` if you want
+the rule to apply to any jsdoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression such as `@callback` or `@function` (including those associated
+with an `@interface`).
+
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`returns`|
 |Aliases|`return`|
-|Options|`exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
+|Options|`contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
@@ -9926,7 +10002,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-19"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-24"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to disallow
