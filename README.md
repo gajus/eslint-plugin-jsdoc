@@ -7885,6 +7885,29 @@ function quux (foo) {
 // Message: Missing JSDoc @param "foo" description.
 
 /**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @param "foo" description.
+
+/**
+ * @function
+ * @param foo
+ */
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @param "foo" description.
+
+/**
+ * @callback
+ * @param foo
+ */
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @param "foo" description.
+
+/**
  * @arg foo
  */
 function quux (foo) {
@@ -7919,6 +7942,24 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+/**
+ * @param foo Foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"contexts":["any"]}]
+
+/**
+ * @function
+ * @param foo
+ */
+
+/**
+ * @callback
+ * @param foo
+ */
 ````
 
 
@@ -7972,6 +8013,29 @@ function quux (foo) {
 // Message: There must be an identifier after @param tag.
 
 /**
+ * @param {string}
+ */
+function quux (foo) {
+
+}
+// Options: [{"contexts":["any"]}]
+// Message: There must be an identifier after @param tag.
+
+/**
+ * @function
+ * @param {string}
+ */
+// Options: [{"contexts":["any"]}]
+// Message: There must be an identifier after @param tag.
+
+/**
+ * @callback
+ * @param {string}
+ */
+// Options: [{"contexts":["any"]}]
+// Message: There must be an identifier after @param tag.
+
+/**
  * @param foo
  */
 function quux (foo) {
@@ -7992,11 +8056,29 @@ function quux (foo) {
 }
 
 /**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Options: [{"contexts":["any"]}]
+
+/**
  * @param {string} foo
  */
 function quux (foo) {
 
 }
+
+/**
+ * @function
+ * @param
+ */
+
+/**
+ * @callback
+ * @param
+ */
 ````
 
 
@@ -8038,6 +8120,29 @@ function quux (foo) {
 // Message: Missing JSDoc @param "foo" type.
 
 /**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @param "foo" type.
+
+/**
+ * @function
+ * @param foo
+ */
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @param "foo" type.
+
+/**
+ * @callback
+ * @param foo
+ */
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @param "foo" type.
+
+/**
  * @arg foo
  */
 function quux (foo) {
@@ -8072,6 +8177,24 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+/**
+ * @param {number} foo
+ */
+function quux (foo) {
+
+}
+// Options: [{"contexts":["any"]}]
+
+/**
+ * @function
+ * @param foo
+ */
+
+/**
+ * @callback
+ * @param foo
+ */
 ````
 
 
@@ -9365,6 +9488,29 @@ function quux (foo) {
 // Message: Missing JSDoc @returns description.
 
 /**
+ * @returns {string}
+ */
+function quux (foo) {
+
+}
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @returns description.
+
+/**
+ * @function
+ * @returns {string}
+ */
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @returns description.
+
+/**
+ * @callback
+ * @returns {string}
+ */
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @returns description.
+
+/**
  * @return
  */
 function quux (foo) {
@@ -9401,6 +9547,14 @@ function quux () {
 }
 
 /**
+ * @returns Foo.
+ */
+function quux () {
+
+}
+// Options: [{"contexts":["any"]}]
+
+/**
  * @returns {undefined}
  */
 function quux () {
@@ -9413,6 +9567,16 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * @function
+ * @returns
+ */
+
+/**
+ * @callback
+ * @returns
+ */
 ````
 
 
@@ -9463,6 +9627,29 @@ function quux () {
 // Message: Missing JSDoc @returns type.
 
 /**
+ * @returns Foo.
+ */
+function quux () {
+
+}
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @returns type.
+
+/**
+ * @function
+ * @returns Foo.
+ */
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @returns type.
+
+/**
+ * @callback
+ * @returns Foo.
+ */
+// Options: [{"contexts":["any"]}]
+// Message: Missing JSDoc @returns type.
+
+/**
  * @return Foo.
  */
 function quux () {
@@ -9490,6 +9677,24 @@ The following patterns are not considered problems:
 function quux () {
 
 }
+
+/**
+ * @returns {number}
+ */
+function quux () {
+
+}
+// Options: [{"contexts":["any"]}]
+
+/**
+ * @function
+ * @returns Foo.
+ */
+
+/**
+ * @callback
+ * @returns Foo.
+ */
 ````
 
 
@@ -9631,6 +9836,26 @@ function quux () {
 // Options: [{"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
+/**
+ *
+ */
+function quux () {
+}
+// Options: [{"contexts":["any"],"forceRequireReturn":true}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * @function
+ */
+// Options: [{"contexts":["any"],"forceRequireReturn":true}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * @callback
+ */
+// Options: [{"contexts":["any"],"forceRequireReturn":true}]
+// Message: Missing JSDoc @returns declaration.
+
 const language = {
   /**
    * @param {string} name
@@ -9647,6 +9872,20 @@ const language = {
 async function quux () {
 }
 // Options: [{"forceReturnsWithAsync":true}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * @function
+ * @async
+ */
+// Options: [{"contexts":["any"],"forceReturnsWithAsync":true}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * @callback
+ * @async
+ */
+// Options: [{"contexts":["any"],"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -9706,6 +9945,15 @@ function quux () {
 
   return foo;
 }
+
+/**
+ * @returns Foo.
+ */
+function quux () {
+
+  return foo;
+}
+// Options: [{"contexts":["any"]}]
 
 /**
  *
@@ -9976,6 +10224,48 @@ async function foo(a) {
 async function foo(a) {
   return;
 }
+
+/**
+ *
+ */
+// Options: [{"contexts":["any"]}]
+
+/**
+ * @async
+ */
+// Options: [{"contexts":["any"]}]
+
+/**
+ * @function
+ */
+// Options: [{"forceRequireReturn":true}]
+
+/**
+ * @callback
+ */
+// Options: [{"forceRequireReturn":true}]
+
+/**
+ * @function
+ * @async
+ */
+// Options: [{"forceReturnsWithAsync":true}]
+
+/**
+ * @callback
+ * @async
+ */
+// Options: [{"forceReturnsWithAsync":true}]
+
+/**
+ * @function
+ */
+// Options: [{"contexts":["any"],"forceReturnsWithAsync":true}]
+
+/**
+ * @callback
+ */
+// Options: [{"contexts":["any"],"forceReturnsWithAsync":true}]
 ````
 
 
