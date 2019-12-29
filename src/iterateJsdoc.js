@@ -111,6 +111,7 @@ const getUtils = (
   settings,
   report,
   context,
+  iteratingAll,
 ) => {
   const ancestors = context.getAncestors();
   const sourceCode = context.getSourceCode();
@@ -126,6 +127,18 @@ const getUtils = (
     minLines,
     mode,
   } = settings;
+
+  utils.isIteratingFunction = () => {
+    return !iteratingAll || [
+      'ArrowFunctionExpression',
+      'FunctionDeclaration',
+      'FunctionExpression',
+    ].includes(node && node.type);
+  };
+
+  utils.isVirtualFunction = () => {
+    return iteratingAll && utils.hasATag(['callback', 'function', 'func', 'method']);
+  };
 
   utils.stringify = (tagBlock) => {
     const indent = jsdocUtils.getIndent(sourceCode);
@@ -445,6 +458,7 @@ const iterate = (
     settings,
     report,
     context,
+    iteratingAll,
   );
 
   if (

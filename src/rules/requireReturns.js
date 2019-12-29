@@ -44,9 +44,7 @@ const canSkip = (utils) => {
 export default iterateJsdoc(({
   report,
   utils,
-  node,
   context,
-  iteratingAll,
 }) => {
   warnRemovedSettings(context, 'require-returns');
 
@@ -71,11 +69,7 @@ export default iterateJsdoc(({
     report(`Found more than one @${tagName} declaration.`);
   }
 
-  const iteratingFunction = !iteratingAll || [
-    'ArrowFunctionExpression',
-    'FunctionDeclaration',
-    'FunctionExpression',
-  ].includes(node && node.type);
+  const iteratingFunction = utils.isIteratingFunction();
 
   // In case the code returns something, we expect a return value in JSDoc.
   const [tag] = tags;
@@ -87,7 +81,7 @@ export default iterateJsdoc(({
     }
 
     if (forceRequireReturn && (
-      iteratingFunction || utils.hasATag(['callback', 'function', 'func', 'method'])
+      iteratingFunction || utils.isVirtualFunction()
     )) {
       return true;
     }
