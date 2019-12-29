@@ -19,6 +19,59 @@ export default {
     {
       code: `
           /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "foo" type.',
+        },
+      ],
+      options: [{
+        contexts: ['any'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * @function
+           * @param foo
+           */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @param "foo" type.',
+        },
+      ],
+      options: [{
+        contexts: ['any'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * @callback
+           * @param foo
+           */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @param "foo" type.',
+        },
+      ],
+      options: [{
+        contexts: ['any'],
+      }],
+    },
+    {
+      code: `
+          /**
            * @arg foo
            */
           function quux (foo) {
@@ -82,6 +135,35 @@ export default {
           function quux (foo) {
 
           }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {number} foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [{
+        contexts: ['any'],
+      }],
+    },
+    {
+      code: `
+          /**
+           * @function
+           * @param foo
+           */
+      `,
+    },
+    {
+      code: `
+          /**
+           * @callback
+           * @param foo
+           */
       `,
     },
   ],
