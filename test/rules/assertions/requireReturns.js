@@ -209,6 +209,59 @@ export default {
     },
     {
       code: `
+          /**
+           *
+           */
+          function quux () {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [{
+        contexts: ['any'],
+        forceRequireReturn: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @function
+           */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [{
+        contexts: ['any'],
+        forceRequireReturn: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @callback
+           */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [{
+        contexts: ['any'],
+        forceRequireReturn: true,
+      }],
+    },
+    {
+      code: `
       const language = {
         /**
          * @param {string} name
@@ -245,6 +298,42 @@ export default {
       parserOptions: {
         ecmaVersion: 8,
       },
+    },
+    {
+      code: `
+          /**
+           * @function
+           * @async
+           */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [{
+        contexts: ['any'],
+        forceReturnsWithAsync: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @callback
+           * @async
+           */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [{
+        contexts: ['any'],
+        forceReturnsWithAsync: true,
+      }],
     },
     {
       code: `
@@ -363,6 +452,22 @@ export default {
             return foo;
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * @returns Foo.
+           */
+          function quux () {
+
+            return foo;
+          }
+      `,
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
     },
     {
       code: `
@@ -794,6 +899,94 @@ export default {
       parserOptions: {
         ecmaVersion: 8,
       },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+      `,
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @async
+           */
+      `,
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @function
+           */
+      `,
+      options: [{
+        forceRequireReturn: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @callback
+           */
+      `,
+      options: [{
+        forceRequireReturn: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @function
+           * @async
+           */
+      `,
+      options: [{
+        forceReturnsWithAsync: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @callback
+           * @async
+           */
+      `,
+      options: [{
+        forceReturnsWithAsync: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @function
+           */
+      `,
+      options: [{
+        contexts: ['any'],
+        forceReturnsWithAsync: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @callback
+           */
+      `,
+      options: [{
+        contexts: ['any'],
+        forceReturnsWithAsync: true,
+      }],
     },
   ],
 };

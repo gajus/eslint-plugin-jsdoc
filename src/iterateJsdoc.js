@@ -147,11 +147,11 @@ const getUtils = (
   };
 
   utils.isConstructor = () => {
-    return node.parent && node.parent.kind === 'constructor';
+    return node && node.parent && node.parent.kind === 'constructor';
   };
 
   utils.isSetter = () => {
-    return node.parent.kind === 'set';
+    return node && node.parent.kind === 'set';
   };
 
   utils.getJsdocNamesDeep = (tagName) => {

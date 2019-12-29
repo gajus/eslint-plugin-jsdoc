@@ -75,7 +75,7 @@ export default iterateJsdoc(({
     'ArrowFunctionExpression',
     'FunctionDeclaration',
     'FunctionExpression',
-  ].includes(node.type);
+  ].includes(node && node.type);
 
   // In case the code returns something, we expect a return value in JSDoc.
   const [tag] = tags;
@@ -93,7 +93,7 @@ export default iterateJsdoc(({
     }
 
     const isAsync = !iteratingFunction && utils.hasTag('async') ||
-      iteratingFunction && (utils.hasTag('async') || utils.isAsync());
+      iteratingFunction && utils.isAsync();
 
     if (forceReturnsWithAsync && isAsync) {
       return true;
