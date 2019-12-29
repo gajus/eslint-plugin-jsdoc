@@ -4,13 +4,18 @@ export default iterateJsdoc(({
   report,
   utils,
 }) => {
-  if (
-    utils.hasATag([
+  const iteratingFunction = utils.isIteratingFunction();
+
+  if (iteratingFunction) {
+    if (utils.hasATag([
       'class',
       'constructor',
     ]) ||
-    utils.isConstructor()
-  ) {
+      utils.isConstructor()
+    ) {
+      return;
+    }
+  } else if (!utils.isVirtualFunction()) {
     return;
   }
 
@@ -18,7 +23,22 @@ export default iterateJsdoc(({
     report('@implements used on a non-constructor function', null, tag);
   });
 }, {
+  contextDefaults: true,
   meta: {
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          contexts: {
+            items: {
+              type: 'string',
+            },
+            type: 'array',
+          },
+        },
+        type: 'object',
+      },
+    ],
     type: 'suggestion',
   },
 });

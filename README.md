@@ -3911,9 +3911,23 @@ To indicate that a function follows another function's signature, one might
 instead use `@type` to indicate the `@function` or `@callback` to which the
 funciton is adhering.
 
+<a name="eslint-plugin-jsdoc-rules-implements-on-classes-options-9"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-implements-on-classes-options-9-contexts"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied.
+Overrides the default contexts (see below). Set to `"any"` if you want
+the rule to apply to any jsdoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression, i.e., `@callback` or `@function` (or its aliases `@func` or
+`@method`) (including those associated with an `@interface`).
+
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`implements` (prevented)|
 
 The following patterns are considered problems:
@@ -3925,6 +3939,32 @@ The following patterns are considered problems:
 function quux () {
 
 }
+// Message: @implements used on a non-constructor function
+
+/**
+ * @implements {SomeClass}
+ */
+function quux () {
+
+}
+// Options: [{"contexts":["any"]}]
+// Message: @implements used on a non-constructor function
+
+/**
+ * @function
+ * @implements {SomeClass}
+ */
+function quux () {
+
+}
+// Options: [{"contexts":["any"]}]
+// Message: @implements used on a non-constructor function
+
+/**
+ * @callback
+ * @implements {SomeClass}
+ */
+// Options: [{"contexts":["any"]}]
 // Message: @implements used on a non-constructor function
 
 /**
@@ -3947,6 +3987,20 @@ The following patterns are not considered problems:
 function quux () {
 
 }
+
+/**
+ * @implements {SomeClass}
+ * @class
+ */
+function quux () {
+
+}
+// Options: [{"contexts":["any"]}]
+
+/**
+ * @implements {SomeClass}
+ */
+// Options: [{"contexts":["any"]}]
 
 /**
  * @implements {SomeClass}
@@ -3994,6 +4048,16 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"implements":false}}}
+
+/**
+ * @function
+ * @implements {SomeClass}
+ */
+
+/**
+ * @callback
+ * @implements {SomeClass}
+ */
 ````
 
 
@@ -4011,10 +4075,10 @@ by our supported Node versions):
 Applies to the jsdoc block description and `@description` (or `@desc`)
 by default but the `tags` option (see below) may be used to match other tags.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-9"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-10"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-9-matchdescription"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-10-matchdescription"></a>
 ##### <code>matchDescription</code>
 
 You can supply your own expression to override the default, passing a
@@ -4029,7 +4093,7 @@ You can supply your own expression to override the default, passing a
 As with the default, the supplied regular expression will be applied with the
 Unicode (`"u"`) flag and is *not* case-insensitive.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-9-tags-1"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-10-tags-1"></a>
 ##### <code>tags</code>
 
 If you want different regular expressions to apply to tags, you may use
@@ -4066,7 +4130,7 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-9-maindescription"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-10-maindescription"></a>
 ##### <code>mainDescription</code>
 
 If you wish to override the main function description without changing the
@@ -4088,7 +4152,7 @@ There is no need to add `mainDescription: true`, as by default, the main
 function (and only the main function) is linted, though you may disable checking
 it by setting it to `false`.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-9-contexts"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-10-contexts-1"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -4732,7 +4796,7 @@ function quux () {
 
 Enforces a consistent padding of the block description.
 
-<a name="eslint-plugin-jsdoc-rules-newline-after-description-options-10"></a>
+<a name="eslint-plugin-jsdoc-rules-newline-after-description-options-11"></a>
 #### Options
 
 This rule allows one optional string argument. If it is `"always"` then a problem is raised when there is no newline after the description. If it is `"never"` then a problem is raised when there is a newline after the description. The default value is `"always"`.
@@ -4935,9 +4999,23 @@ This rule reports types being used on `@param` or `@returns`.
 The rule is intended to prevent the indication of types on tags where
 the type information would be redundant with TypeScript.
 
+<a name="eslint-plugin-jsdoc-rules-no-types-options-12"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-no-types-options-12-contexts-2"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied.
+Overrides the default contexts (see below). Set to `"any"` if you want
+the rule to apply to any jsdoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression, i.e., `@callback` or `@function` (or its aliases `@func` or
+`@method`) (including those associated with an `@interface`).
+
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`, `returns`|
 |Aliases|`arg`, `argument`, `return`|
 
@@ -4950,6 +5028,29 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+// Message: Types are not permitted on @param.
+
+/**
+ * @param {number} foo
+ */
+function quux (foo) {
+
+}
+// Options: [{"contexts":["any"]}]
+// Message: Types are not permitted on @param.
+
+/**
+ * @function
+ * @param {number} foo
+ */
+// Options: [{"contexts":["any"]}]
+// Message: Types are not permitted on @param.
+
+/**
+ * @callback
+ * @param {number} foo
+ */
+// Options: [{"contexts":["any"]}]
 // Message: Types are not permitted on @param.
 
 /**
@@ -4970,6 +5071,21 @@ The following patterns are not considered problems:
 function quux (foo) {
 
 }
+
+/**
+ * @param foo
+ */
+// Options: [{"contexts":["any"]}]
+
+/**
+ * @function
+ * @param {number} foo
+ */
+
+/**
+ * @callback
+ * @param {number} foo
+ */
 ````
 
 
@@ -5003,7 +5119,7 @@ The following types are always considered defined.
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
 also be assumed to be defined.
 
-<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-11"></a>
+<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-13"></a>
 #### Options
 
 An option object may have the following key:
@@ -5432,10 +5548,10 @@ tag descriptions are written in complete sentences, i.e.,
 * Periods after items within the `abbreviations` option array are not treated
   as sentence endings.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-12"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-14"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-12-tags-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-14-tags-2"></a>
 ##### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
@@ -5457,7 +5573,7 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-12-abbreviations"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-14-abbreviations"></a>
 ##### <code>abbreviations</code>
 
 You can provide an `abbreviations` options array to avoid such strings of text
@@ -6089,7 +6205,7 @@ Requires that all functions have a description.
   `"tag"`) must have a non-empty description that explains the purpose of the
   method.
 
-<a name="eslint-plugin-jsdoc-rules-require-description-options-13"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-15"></a>
 #### Options
 
 An options object may have any of the following properties:
@@ -6385,25 +6501,25 @@ Requires that all functions have examples.
 * All functions must have one or more `@example` tags.
 * Every example tag must have a non-empty description that explains the method's usage.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-14"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-16"></a>
 #### Options
 
 This rule has an object option.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-14-exemptedby"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-16-exemptedby"></a>
 ##### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document
 block avoids the need for an `@example`. Defaults to an empty array.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-14-avoidexampleonconstructors"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-16-avoidexampleonconstructors"></a>
 ##### <code>avoidExampleOnConstructors</code>
 
 Set to `true` to avoid the need for an example on a constructor (whether
 indicated as such by a jsdoc tag or by being within an ES6 `class`).
 Defaults to `false`.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-14-contexts-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-16-contexts-3"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -6728,7 +6844,7 @@ function quux () {
 
 Requires a hyphen before the `@param` description.
 
-<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-15"></a>
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-17"></a>
 #### Options
 
 This rule takes one optional string argument. If it is `"always"` then a problem is raised when there is no hyphen before the description. If it is `"never"` then a problem is raised when there is a hyphen before the description. The default value is `"always"`.
@@ -6834,7 +6950,7 @@ function quux () {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-16"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-18"></a>
 #### Options
 
 Accepts one optional options object with the following optional keys.
@@ -7852,10 +7968,10 @@ export default class Foo {
 
 Requires that each `@param` tag has a `description` value.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-17"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-19"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-17-contexts-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-19-contexts-4"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -7972,10 +8088,10 @@ Requires that all function parameters have names.
 >
 > [JSDoc](https://jsdoc.app/tags-param.html#overview)
 
-<a name="eslint-plugin-jsdoc-rules-require-param-name-options-18"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-20"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-param-name-options-18-contexts-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-20-contexts-5"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -8087,10 +8203,10 @@ function quux (foo) {
 
 Requires that each `@param` tag has a `type` value.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-19"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-21"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-19-contexts-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-21-contexts-6"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -8203,7 +8319,7 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-20"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-22"></a>
 #### Options
 
 An options object accepts one optional property:
@@ -9447,10 +9563,10 @@ function quux () {
 Requires that the `@returns` tag has a `description` value. The error
 will not be reported if the return value is `void` or `undefined`.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-21"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-23"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-21-contexts-5"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-23-contexts-7"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -9585,10 +9701,10 @@ function quux () {
 
 Requires that `@returns` tag has `type` value.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-22"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-24"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-22-contexts-6"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-24-contexts-8"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -9705,7 +9821,7 @@ Requires returns are documented.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-23"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-25"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -10304,7 +10420,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-24"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-26"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to disallow

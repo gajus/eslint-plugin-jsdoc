@@ -18,6 +18,68 @@ export default {
     },
     {
       code: `
+      /**
+       * @implements {SomeClass}
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@implements used on a non-constructor function',
+        },
+      ],
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @function
+       * @implements {SomeClass}
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@implements used on a non-constructor function',
+        },
+      ],
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @callback
+       * @implements {SomeClass}
+       */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@implements used on a non-constructor function',
+        },
+      ],
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
         /**
          * @implements {SomeClass}
          */
@@ -51,6 +113,34 @@ export default {
 
       }
       `,
+    },
+    {
+      code: `
+      /**
+       * @implements {SomeClass}
+       * @class
+       */
+      function quux () {
+
+      }
+      `,
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @implements {SomeClass}
+       */
+      `,
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
     },
     {
       code: `
@@ -119,6 +209,22 @@ export default {
           },
         },
       },
+    },
+    {
+      code: `
+      /**
+       * @function
+       * @implements {SomeClass}
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * @callback
+       * @implements {SomeClass}
+       */
+      `,
     },
   ],
 };
