@@ -1,4 +1,4 @@
-import {CLIEngine, Linter} from 'eslint';
+import {CLIEngine} from 'eslint';
 import iterateJsdoc from '../iterateJsdoc';
 import warnRemovedSettings from '../warnRemovedSettings';
 
@@ -217,89 +217,29 @@ export default iterateJsdoc(({
       };
       const cliConfigStr = JSON.stringify(cliConfig);
 
-      let messages;
-
-      let src = string;
-      if (paddedIndent) {
-        src = src.replace(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gu'), '\n');
-      }
+      const src = paddedIndent ?
+        string.replace(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gu'), '\n') :
+        string;
 
       // Programmatic ESLint API: https://eslint.org/docs/developer-guide/nodejs-api
       const fileNameMapKey = filename ?
         'a' + cliConfigStr + filename :
         'b' + cliConfigStr + defaultFileName;
-      if (filename) {
-        let config;
-        let linter;
-        if (matchingFileNameMap.has(fileNameMapKey)) {
-          [config, linter] = matchingFileNameMap.get(fileNameMapKey);
-        } else {
-          const cli = new CLIEngine(cliConfig);
-          if (eslintrcForExamples) {
-            config = cli.getConfigForFile(filename);
-          }
-
-          // We need a new instance to ensure that the rules that may only
-          //  be available to `filename` (if it has its own `.eslintrc`),
-          //  will be defined.
-          const cliFile = new CLIEngine({
-            allowInlineConfig,
-            baseConfig: {
-              ...baseConfig,
-              ...config,
-            },
-            configFile,
-            reportUnusedDisableDirectives,
-            rulePaths,
-            rules,
-            useEslintrc: false,
-          });
-          linter = new Linter();
-
-          // Force external rules to become available on `cliFile`
-          try {
-            cliFile.executeOnText('');
-          } catch (error) {
-            // Ignore
-          }
-
-          const linterRules = [...cliFile.getRules().entries()].reduce((obj, [key, val]) => {
-            obj[key] = val;
-
-            return obj;
-          }, {});
-
-          linter.defineRules(linterRules);
-
-          if (config && config.parser) {
-            // eslint-disable-next-line global-require, import/no-dynamic-require
-            linter.defineParser(config.parser, require(config.parser));
-          }
-
-          matchingFileNameMap.set(fileNameMapKey, [config, linter]);
-        }
-
-        // Could also support `disableFixes` and `allowInlineConfig`
-        messages = linter.verify(src, config, {
-          filename,
-          reportUnusedDisableDirectives,
-        });
+      const file = filename || defaultFileName;
+      let config;
+      let cliFile;
+      if (matchingFileNameMap.has(fileNameMapKey)) {
+        [config, cliFile] = matchingFileNameMap.get(fileNameMapKey);
       } else {
-        // We do this all again even here so we can copy the user's parser;
-        //  doesn't work in `if` block just above
-        let config;
-
+        const cli = new CLIEngine(cliConfig);
         if (eslintrcForExamples) {
-          if (matchingFileNameMap.has(fileNameMapKey)) {
-            config = matchingFileNameMap.get(fileNameMapKey);
-          } else {
-            const cli = new CLIEngine(cliConfig);
-            config = cli.getConfigForFile(defaultFileName);
-            matchingFileNameMap.set(fileNameMapKey, config);
-          }
+          config = cli.getConfigForFile(file);
         }
 
-        const cliNoFile = new CLIEngine({
+        // We need a new instance to ensure that the rules that may only
+        //  be available to `file` (if it has its own `.eslintrc`),
+        //  will be defined.
+        cliFile = new CLIEngine({
           allowInlineConfig,
           baseConfig: {
             ...baseConfig,
@@ -311,10 +251,11 @@ export default iterateJsdoc(({
           rules,
           useEslintrc: false,
         });
-
-        ({results: [{messages}]} =
-          cliNoFile.executeOnText(src));
+        matchingFileNameMap.set(fileNameMapKey, [config, cliFile]);
       }
+
+      const {results: [{messages}]} =
+        cliFile.executeOnText(src);
 
       // NOTE: `tag.line` can be 0 if of form `/** @tag ... */`
       const codeStartLine = tag.line + nonJSPrefacingLines;
