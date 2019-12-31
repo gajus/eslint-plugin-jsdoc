@@ -1,47 +1,87 @@
+// Todo[engine:node@>=7.0.0]: Replace with `Object.entries`
+import entries from 'object.entries-ponyfill';
 import iterateJsdoc from '../iterateJsdoc';
 
+const defaultTags = {
+  file: {
+    initialCommentsOnly: true,
+    mustExist: true,
+    preventDuplicates: true,
+  },
+};
+
+const setDefaults = (state) => {
+  // First iteration
+  if (!state.globalTags) {
+    state.globalTags = {};
+    state.hasDuplicates = {};
+    state.hasTag = {};
+    state.hasNonCommentBeforeTag = {};
+  }
+};
+
 export default iterateJsdoc(({
+  jsdocNode,
   state,
   utils,
 }) => {
-  const targetTagName = utils.getPreferredTagName({tagName: 'file'});
+  const tags = defaultTags;
 
-  const hasFileOverview = targetTagName && utils.hasTag(targetTagName);
+  setDefaults(state);
 
-  if (state.hasFileOverview) {
-    state.hasDuplicate = hasFileOverview;
+  for (const tagName of Object.keys(tags)) {
+    const targetTagName = utils.getPreferredTagName({tagName});
 
-    return;
+    const hasTag = targetTagName && utils.hasTag(targetTagName);
+
+    state.hasTag[tagName] = hasTag || state.hasTag[tagName];
+
+    const hasDuplicate = state.hasDuplicates[tagName];
+
+    if (hasDuplicate === false) {
+      // Was marked before, so if a tag now, is a dupe
+      state.hasDuplicates[tagName] = hasTag;
+    } else if (!hasDuplicate && hasTag) {
+      // No dupes set before, but has first tag, so change state
+      //   from `undefined` to `false` so can detect next time
+      state.hasDuplicates[tagName] = false;
+      state.hasNonCommentBeforeTag[tagName] = state.hasNonComment &&
+        state.hasNonComment < jsdocNode.start;
+    }
   }
-
-  state.hasFileOverview = hasFileOverview;
 }, {
   exit ({state, utils}) {
-    if (state.hasFileOverview && !state.hasDuplicate &&
-      !state.hasNonCommentBeforeFileOverview
-    ) {
-      return;
-    }
-    const obj = utils.getPreferredTagNameObject({tagName: 'file'});
-    if (obj && obj.blocked) {
-      utils.reportSettings(
-        `\`settings.jsdoc.tagNamePreference\` cannot block @${obj.tagName} ` +
-        'for the `require-file-overview` rule',
-      );
-    } else {
-      const targetTagName = obj && obj.replacement || obj;
-      if (state.hasDuplicate) {
+    setDefaults(state);
+    const tags = defaultTags;
+
+    for (const [tagName, {
+      mustExist,
+      preventDuplicates,
+      initialCommentsOnly,
+    }] of entries(tags)) {
+      const obj = utils.getPreferredTagNameObject({tagName});
+      if (obj && obj.blocked) {
         utils.reportSettings(
-          `Duplicate @${targetTagName}`,
-        );
-      } else if (state.hasFileOverview &&
-          state.hasNonCommentBeforeFileOverview
-      ) {
-        utils.reportSettings(
-          `@${targetTagName} should be at the beginning of the file`,
+          `\`settings.jsdoc.tagNamePreference\` cannot block @${obj.tagName} ` +
+          'for the `require-file-overview` rule',
         );
       } else {
-        utils.reportSettings(`Missing @${targetTagName}`);
+        const targetTagName = obj && obj.replacement || obj;
+        if (mustExist && !state.hasTag[tagName]) {
+          utils.reportSettings(`Missing @${targetTagName}`);
+        }
+        if (preventDuplicates && state.hasDuplicates[tagName]) {
+          utils.reportSettings(
+            `Duplicate @${targetTagName}`,
+          );
+        }
+        if (initialCommentsOnly &&
+            state.hasNonCommentBeforeTag[tagName]
+        ) {
+          utils.reportSettings(
+            `@${targetTagName} should be at the beginning of the file`,
+          );
+        }
       }
     }
   },
@@ -50,7 +90,9 @@ export default iterateJsdoc(({
     fixable: 'code',
     type: 'suggestion',
   },
-  nonComment ({state}) {
-    state.hasNonCommentBeforeFileOverview = !state.hasFileOverview;
+  nonComment ({state, node}) {
+    if (!state.hasNonComment) {
+      state.hasNonComment = node.start;
+    }
   },
 });
