@@ -522,9 +522,15 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
           }
 
           const comment = getJSDocComment(sourceCode, node, settings);
-          if (!comment || trackedJsdocs.includes(comment)) {
-            if (!comment && ruleConfig.nonComment) {
-              ruleConfig.nonComment({state});
+          if (trackedJsdocs.includes(comment)) {
+            return;
+          }
+          if (!comment) {
+            if (ruleConfig.nonComment) {
+              ruleConfig.nonComment({
+                node,
+                state,
+              });
             }
 
             return;
