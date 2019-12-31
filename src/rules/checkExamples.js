@@ -54,7 +54,7 @@ export default iterateJsdoc(({
   } = options;
   const {
     noDefaultExampleRules = false,
-    eslintrcForExamples = true,
+    checkEslintrc = true,
     matchingFileName: filename = null,
     paddedIndent = 0,
     baseConfig = {},
@@ -213,7 +213,7 @@ export default iterateJsdoc(({
         reportUnusedDisableDirectives,
         rulePaths,
         rules,
-        useEslintrc: eslintrcForExamples,
+        useEslintrc: checkEslintrc,
       };
       const cliConfigStr = JSON.stringify(cliConfig);
 
@@ -232,7 +232,7 @@ export default iterateJsdoc(({
         [config, cliFile] = matchingFileNameMap.get(fileNameMapKey);
       } else {
         const cli = new CLIEngine(cliConfig);
-        if (eslintrcForExamples) {
+        if (filename || checkEslintrc) {
           config = cli.getConfigForFile(file);
         }
 
@@ -302,12 +302,12 @@ export default iterateJsdoc(({
             default: false,
             type: 'boolean',
           },
-          configFile: {
-            type: 'string',
-          },
-          eslintrcForExamples: {
+          checkEslintrc: {
             default: true,
             type: 'boolean',
+          },
+          configFile: {
+            type: 'string',
           },
           exampleCodeRegex: {
             type: 'string',

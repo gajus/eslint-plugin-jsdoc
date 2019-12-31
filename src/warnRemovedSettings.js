@@ -45,6 +45,8 @@ const getMovedSettings = (ruleName) => {
       'noDefaultExampleRules',
       'matchingFileName',
       'configFile',
+
+      // The old name for `checkEslintrc`
       'eslintrcForExamples',
       'baseConfig',
       'reportUnusedDisableDirectives',
