@@ -779,8 +779,8 @@ disabling of ESLint directives which are not needed by the resolved rules
 will be reported as with the ESLint `--report-unused-disable-directives`
 command.
 
-<a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig"></a>
-#### Options for Determining ESLint Rule Applicability (<code>allowInlineConfig</code>, <code>noDefaultExampleRules</code>, <code>matchingFileName</code>, <code>configFile</code>, <code>eslintrcForExamples</code>, and <code>baseConfig</code>)
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig"></a>
+#### Options for Determining ESLint Rule Applicability (<code>allowInlineConfig</code>, <code>noDefaultExampleRules</code>, <code>matchingFileName</code>, <code>configFile</code>, <code>checkEslintrc</code>, and <code>baseConfig</code>)
 
 The following options determine which individual ESLint rules will be
 applied to the JavaScript found within the `@example` tags (as determined
@@ -793,6 +793,7 @@ decreasing precedence:
 * `noDefaultExampleRules` - Setting to `true` will disable the
   default rules which are expected to be troublesome for most documentation
   use. See the section below for the specific default rules.
+* `configFile` - A config file. Corresponds to ESLint's [`-c`](https://eslint.org/docs/user-guide/command-line-interface#-c---config).
 * `matchingFileName` - Option for a file name (even non-existent) to trigger
   specific rules defined in one's config; usable with ESLint `.eslintrc.*`
   `overrides` -> `files` globs, to apply a desired subset of rules with
@@ -801,16 +802,26 @@ decreasing precedence:
   with JavaScript Markdown lintable by
   [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
   if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
-  follow one's Markdown rules). Note that this option may come at somewhat
-  of a performance penalty as the file's existence is checked by eslint.
-* `configFile` - A config file. Corresponds to ESLint's [`-c`](https://eslint.org/docs/user-guide/command-line-interface#-c---config).
-* `eslintrcForExamples` - Defaults to `true` in adding rules
+  follow one's Markdown rules).
+* `checkEslintrc` - Defaults to `true` in adding rules
   based on an `.eslintrc.*` file. Setting to `false` corresponds to
   ESLint's [`--no-eslintrc`](https://eslint.org/docs/user-guide/command-line-interface#--no-eslintrc).
+  If `matchingFileName` is set, this will automatically be `true` and
+  will use the config corresponding to that file. If `matchingFileName` is
+  not set and this value is set to `false`, the `.eslintrc.*` configs will
+  not be checked. If `matchingFileName` is not set, and this is unset or
+  set to `true`, the `.eslintrc.*` configs will be checked as though the file
+  name were the same as the file containing the example, with any file
+  extension changed to ".md" (and if there is no file extension, "dummy.md"
+  will be used). This allows convenient sharing of similar rules with often
+  also context-free Markdown as well as use of `overrides` as described under
+  `matchingFileName`. Note that this option (whether set by `matchingFileName`
+  or set manually to `true`) may come at somewhat of a performance penalty
+  as the file's existence is checked by eslint.
 * `baseConfig` - Set to an object of rules with the same schema
   as `.eslintrc.*` for defaults.
 
-<a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-eslintrcforexamples-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
+<a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
 ##### Rules Disabled by Default Unless <code>noDefaultExampleRules</code> is Set to <code>true</code>
 
 * `eol-last` - Insisting that a newline "always" be at the end is less likely
@@ -848,7 +859,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}]
+// Options: [{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"checkEslintrc":false}]
 // Message: @example error (no-alert): Unexpected alert.
 
 /**
@@ -857,7 +868,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"eslintrcForExamples":false}]
+// Options: [{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"checkEslintrc":false}]
 // Message: @example error (no-alert): Unexpected alert.
 
 /**
@@ -868,7 +879,7 @@ class quux {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -879,7 +890,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -889,7 +900,7 @@ function quux () {
 var quux = {
 
 };
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -899,7 +910,7 @@ var quux = {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```\njs ([\\s\\S]*)```"}]
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```\njs ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -914,7 +925,7 @@ function quux () {
 function quux2 () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"rejectExampleCodeRegex":"^\\s*<.*>\\s*$"}]
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"rejectExampleCodeRegex":"^\\s*<.*>\\s*$"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -924,7 +935,7 @@ function quux2 () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
+// Options: [{"baseConfig":{"rules":{"no-undef":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":true}]
 // Message: @example error (no-undef): 'quux' is not defined.
 
 /**
@@ -937,7 +948,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"captionRequired":true,"eslintrcForExamples":false}]
+// Options: [{"captionRequired":true,"checkEslintrc":false}]
 // Message: Caption is expected for examples.
 
 /**
@@ -946,14 +957,14 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
+// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 // Message: @example error (indent): Expected indentation of 0 spaces but found 1.
 
 /**
  * @example test() // eslint-disable-line semi
  */
 function quux () {}
-// Options: [{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":true}]
+// Options: [{"checkEslintrc":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":true}]
 // Message: @example error: Unused eslint-disable directive (no problems were reported from 'semi').
 
 /**
@@ -961,7 +972,7 @@ function quux () {}
  test() // eslint-disable-line semi
  */
 function quux () {}
-// Options: [{"allowInlineConfig":false,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
+// Options: [{"allowInlineConfig":false,"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"noDefaultExampleRules":true}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -1032,7 +1043,7 @@ function quux2 () {
 function quux2 () {
 
 }
-// Options: [{"eslintrcForExamples":false,"matchingFileName":"dummy.js"}]
+// Options: [{"checkEslintrc":false,"matchingFileName":"dummy.js"}]
 // Message: @example error: Parsing error: The keyword 'const' is reserved
 
 /**
@@ -1043,7 +1054,7 @@ function quux2 () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["warn","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"// begin[\\s\\S]*// end","noDefaultExampleRules":true}]
+// Options: [{"baseConfig":{"rules":{"semi":["warn","always"]}},"checkEslintrc":false,"exampleCodeRegex":"// begin[\\s\\S]*// end","noDefaultExampleRules":true}]
 // Message: @example warning (semi): Missing semicolon.
 
 /**
@@ -1060,7 +1071,7 @@ function f () {
  * @example <caption></caption>
  * 'foo'
  */
-// Options: [{"captionRequired":true,"eslintrcForExamples":false}]
+// Options: [{"captionRequired":true,"checkEslintrc":false}]
 // Message: Caption is expected for examples.
 
 /**
@@ -1071,7 +1082,7 @@ function f () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
+// Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"checkEslintrc":false}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -1106,7 +1117,7 @@ function quux () {
  *
  * ![Screenshot](path/to/screenshot.jpg)
  */
-// Options: [{"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"/^```(?:js|javascript)\\n([\\s\\S]*?)```$/gm"}]
+// Options: [{"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"checkEslintrc":false,"exampleCodeRegex":"/^```(?:js|javascript)\\n([\\s\\S]*?)```$/gm"}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -1121,7 +1132,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["warn","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"/\\/\\/ begin[\\s\\S]*?// end/g","noDefaultExampleRules":true}]
+// Options: [{"baseConfig":{"rules":{"semi":["warn","always"]}},"checkEslintrc":false,"exampleCodeRegex":"/\\/\\/ begin[\\s\\S]*?// end/g","noDefaultExampleRules":true}]
 // Message: @example warning (semi): Missing semicolon.
 
 /**
@@ -1131,7 +1142,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
+// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 // Message: @example error (indent): Expected indentation of 0 spaces but found 2.
 ````
 
@@ -1146,7 +1157,7 @@ The following patterns are not considered problems:
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
+// Options: [{"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 
 /**
  * @example ```js
@@ -1156,7 +1167,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"exampleCodeRegex":"/```js([\\s\\S]*)```/"}]
+// Options: [{"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"exampleCodeRegex":"/```js([\\s\\S]*)```/"}]
 
 /**
  * @example
@@ -1165,7 +1176,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"eslintrcForExamples":false}]
+// Options: [{"checkEslintrc":false}]
 
 /**
  * @example
@@ -1174,7 +1185,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"no-undef":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
+// Options: [{"baseConfig":{"rules":{"no-undef":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 
 /**
  * @example quux();
@@ -1182,7 +1193,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
+// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 
 /**
  * @example <caption>Valid usage</caption>
@@ -1194,20 +1205,20 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"captionRequired":true,"eslintrcForExamples":false}]
+// Options: [{"captionRequired":true,"checkEslintrc":false}]
 
 /**
  * @example test() // eslint-disable-line semi
  */
 function quux () {}
-// Options: [{"eslintrcForExamples":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":false}]
+// Options: [{"checkEslintrc":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":false}]
 
 /**
  * @example
  test() // eslint-disable-line semi
  */
 function quux () {}
-// Options: [{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"eslintrcForExamples":false,"noDefaultExampleRules":true}]
+// Options: [{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"noDefaultExampleRules":true}]
 
 /**
  * @example ```js
@@ -1217,7 +1228,7 @@ function quux () {}
 var quux = {
 
 };
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"eslintrcForExamples":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
+// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 
 /**
  * @example
@@ -1226,7 +1237,7 @@ var quux = {
  * });
  */
 function quux () {}
-// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
+// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 
 /**
  * @example
@@ -1236,7 +1247,7 @@ function quux () {}
 function quux () {
 
 }
-// Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"eslintrcForExamples":false}]
+// Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"checkEslintrc":false}]
 
 /**
  * @example const ident = 5;
@@ -1257,7 +1268,7 @@ function quux2 () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"eslintrcForExamples":false,"noDefaultExampleRules":false}]
+// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 ````
 
 

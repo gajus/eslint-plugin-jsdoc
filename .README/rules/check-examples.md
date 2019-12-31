@@ -71,7 +71,7 @@ disabling of ESLint directives which are not needed by the resolved rules
 will be reported as with the ESLint `--report-unused-disable-directives`
 command.
 
-#### Options for Determining ESLint Rule Applicability (`allowInlineConfig`, `noDefaultExampleRules`, `matchingFileName`, `configFile`, `eslintrcForExamples`, and `baseConfig`)
+#### Options for Determining ESLint Rule Applicability (`allowInlineConfig`, `noDefaultExampleRules`, `matchingFileName`, `configFile`, `checkEslintrc`, and `baseConfig`)
 
 The following options determine which individual ESLint rules will be
 applied to the JavaScript found within the `@example` tags (as determined
@@ -84,6 +84,7 @@ decreasing precedence:
 * `noDefaultExampleRules` - Setting to `true` will disable the
   default rules which are expected to be troublesome for most documentation
   use. See the section below for the specific default rules.
+* `configFile` - A config file. Corresponds to ESLint's [`-c`](https://eslint.org/docs/user-guide/command-line-interface#-c---config).
 * `matchingFileName` - Option for a file name (even non-existent) to trigger
   specific rules defined in one's config; usable with ESLint `.eslintrc.*`
   `overrides` -> `files` globs, to apply a desired subset of rules with
@@ -92,12 +93,22 @@ decreasing precedence:
   with JavaScript Markdown lintable by
   [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
   if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
-  follow one's Markdown rules). Note that this option may come at somewhat
-  of a performance penalty as the file's existence is checked by eslint.
-* `configFile` - A config file. Corresponds to ESLint's [`-c`](https://eslint.org/docs/user-guide/command-line-interface#-c---config).
-* `eslintrcForExamples` - Defaults to `true` in adding rules
+  follow one's Markdown rules).
+* `checkEslintrc` - Defaults to `true` in adding rules
   based on an `.eslintrc.*` file. Setting to `false` corresponds to
   ESLint's [`--no-eslintrc`](https://eslint.org/docs/user-guide/command-line-interface#--no-eslintrc).
+  If `matchingFileName` is set, this will automatically be `true` and
+  will use the config corresponding to that file. If `matchingFileName` is
+  not set and this value is set to `false`, the `.eslintrc.*` configs will
+  not be checked. If `matchingFileName` is not set, and this is unset or
+  set to `true`, the `.eslintrc.*` configs will be checked as though the file
+  name were the same as the file containing the example, with any file
+  extension changed to ".md" (and if there is no file extension, "dummy.md"
+  will be used). This allows convenient sharing of similar rules with often
+  also context-free Markdown as well as use of `overrides` as described under
+  `matchingFileName`. Note that this option (whether set by `matchingFileName`
+  or set manually to `true`) may come at somewhat of a performance penalty
+  as the file's existence is checked by eslint.
 * `baseConfig` - Set to an object of rules with the same schema
   as `.eslintrc.*` for defaults.
 
