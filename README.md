@@ -6480,14 +6480,6 @@ Checks that:
   as being when the overview tag is not preceded by anything other than
   a comment.
 
-<a name="eslint-plugin-jsdoc-rules-require-file-overview-fixer-1"></a>
-#### Fixer
-
-The fixer for `require-example` will add an empty `@file`. Note that if you
-need to report a missing description for `file`, you can add `file` on
-the `tags` option with `match-description` (and the `contexts` option
-set to "any").
-
 |||
 |---|---|
 |Context|Everywhere|
