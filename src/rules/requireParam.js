@@ -5,7 +5,7 @@ export default iterateJsdoc(({
   utils,
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
-  const jsdocParameterNames = utils.getJsdocNames('param');
+  const jsdocParameterNames = utils.getJsdocTags('param');
   if (!jsdocParameterNames) {
     return;
   }

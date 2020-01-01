@@ -74,7 +74,7 @@ export default iterateJsdoc(({
   report,
   utils,
 }) => {
-  const jsdocPropertyNamesDeep = utils.getJsdocNamesDeep('property');
+  const jsdocPropertyNamesDeep = utils.getJsdocTagsDeep('property');
   if (!jsdocPropertyNamesDeep.length) {
     return;
   }

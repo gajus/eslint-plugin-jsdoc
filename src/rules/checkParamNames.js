@@ -112,7 +112,7 @@ export default iterateJsdoc(({
 }) => {
   const {allowExtraTrailingParamDocs} = context.options[0] || {};
 
-  const jsdocParameterNamesDeep = utils.getJsdocNamesDeep('param');
+  const jsdocParameterNamesDeep = utils.getJsdocTagsDeep('param');
   if (!jsdocParameterNamesDeep.length) {
     return;
   }

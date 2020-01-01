@@ -167,22 +167,22 @@ const getUtils = (
     return node && node.parent.kind === 'set';
   };
 
-  utils.getJsdocNamesDeep = (tagName) => {
+  utils.getJsdocTagsDeep = (tagName) => {
     const name = utils.getPreferredTagName({tagName});
     if (!name) {
       return false;
     }
 
-    return jsdocUtils.getJsdocNamesDeep(jsdoc, name);
+    return jsdocUtils.getJsdocTagsDeep(jsdoc, name);
   };
 
-  utils.getJsdocNames = (tagName) => {
+  utils.getJsdocTags = (tagName) => {
     const name = utils.getPreferredTagName({tagName});
     if (!name) {
       return false;
     }
 
-    return jsdocUtils.getJsdocNames(jsdoc, name);
+    return jsdocUtils.getJsdocTags(jsdoc, name);
   };
 
   utils.getPreferredTagName = ({tagName, skipReportingBlockedTag = false, allowObjectReturn = false, defaultMessage = `Unexpected tag \`@${tagName}\``}) => {

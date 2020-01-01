@@ -40,7 +40,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
  * Gets all names of the target type, including those that refer to a path, e.g.
  * "@param foo; @param foo.bar".
  */
-const getJsdocNamesDeep = (jsdoc : Object, targetTagName : string) : Array<Object> => {
+const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object> => {
   return (jsdoc.tags || []).reduce((arr, {name, tag}, idx) => {
     if (tag !== targetTagName) {
       return arr;
@@ -54,10 +54,10 @@ const getJsdocNamesDeep = (jsdoc : Object, targetTagName : string) : Array<Objec
   }, []);
 };
 
-const getJsdocNames = (jsdoc : Object, targetTagName : string) : Array<string> => {
+const getJsdocTags = (jsdoc : Object, targetTagName : string) : Array<string> => {
   let jsdocNames;
 
-  jsdocNames = getJsdocNamesDeep(jsdoc, targetTagName);
+  jsdocNames = getJsdocTagsDeep(jsdoc, targetTagName);
 
   jsdocNames = jsdocNames.filter(({name}) => {
     return !name.includes('.');
@@ -531,8 +531,8 @@ export default {
   getContextObject,
   getFunctionParameterNames,
   getIndent,
-  getJsdocNames,
-  getJsdocNamesDeep,
+  getJsdocTags,
+  getJsdocTagsDeep,
   getPreferredTagName,
   getTagsByType,
   hasATag,
