@@ -45,8 +45,6 @@ export default iterateJsdoc(({
       return;
     }
 
-    // Todo: Now that returning index within `jsdocParameterNames`, we
-    //  may be able to remove need for findExpectedIndex
     if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
       return name === functionParameterName;
     })) {
