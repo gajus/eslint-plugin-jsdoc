@@ -37,7 +37,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
 };
 
 /**
- * Gets all parameter names, including those that refer to a path, e.g.
+ * Gets all names of the target type, including those that refer to a path, e.g.
  * "@param foo; @param foo.bar".
  */
 const getJsdocNamesDeep = (jsdoc : Object, targetTagName : string) : Array<Object> => {
