@@ -385,179 +385,6 @@ only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
 <a name="eslint-plugin-jsdoc-rules"></a>
 ## Rules
 
-<a name="eslint-plugin-jsdoc-rules-check-access"></a>
-### <code>check-access</code>
-
-Checks that `@access` tags use one of the following values:
-
-- "package", "private", "protected", "public"
-
-Also reports:
-
-- Mixing of `@access` with `@public`, `@private`, `@protected`, or `@package`
-  on the same doc block.
-- Use of multiple instances of `@access` (or the `@public`, etc. style tags)
-  on the same doc block.
-
-|||
-|---|---|
-|Context|everywhere|
-|Tags|`@access`|
-|Settings||
-|Options||
-
-The following patterns are considered problems:
-
-````js
-/**
- * @access foo
- */
-function quux (foo) {
-
-}
-// Message: Missing valid JSDoc @access level.
-
-/**
- * @access foo
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"ignorePrivate":true}}
-// Message: Missing valid JSDoc @access level.
-
-/**
- * @accessLevel foo
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"tagNamePreference":{"access":"accessLevel"}}}
-// Message: Missing valid JSDoc @accessLevel level.
-
-/**
- * @access
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"tagNamePreference":{"access":false}}}
-// Message: Unexpected tag `@access`
-
-class MyClass {
-  /**
-   * @access
-   */
-  myClassField = 1
-}
-// Message: Missing valid JSDoc @access level.
-
-/**
- * @access public
- * @public
- */
-function quux (foo) {
-
-}
-// Message: The @access tag may not be used with specific access-control tags (@package, @private, @protected, or @public).
-
-/**
- * @access public
- * @access private
- */
-function quux (foo) {
-
-}
-// Message: At most one access-control tag may be present on a jsdoc block.
-
-/**
- * @access public
- * @access private
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"ignorePrivate":true}}
-// Message: At most one access-control tag may be present on a jsdoc block.
-
-/**
- * @public
- * @private
- */
-function quux (foo) {
-
-}
-// Message: At most one access-control tag may be present on a jsdoc block.
-
-/**
- * @public
- * @private
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"ignorePrivate":true}}
-// Message: At most one access-control tag may be present on a jsdoc block.
-
-/**
- * @public
- * @public
- */
-function quux (foo) {
-
-}
-// Message: At most one access-control tag may be present on a jsdoc block.
-````
-
-The following patterns are not considered problems:
-
-````js
-/**
- *
- */
-function quux (foo) {
-
-}
-
-/**
- * @access public
- */
-function quux (foo) {
-
-}
-
-/**
- * @accessLevel package
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"tagNamePreference":{"access":"accessLevel"}}}
-
-class MyClass {
-  /**
-   * @access private
-   */
-  myClassField = 1
-}
-
-/**
- * @public
- */
-function quux (foo) {
-
-}
-
-/**
- * @private
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"ignorePrivate":true}}
-````
-
-
 <a name="eslint-plugin-jsdoc-rules-check-alignment"></a>
 ### <code>check-alignment</code>
 
@@ -2278,7 +2105,7 @@ function quux () {
 // Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
 // Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
 
-/** 
+/**
  * @modifies
  * @abstract
  * @access
@@ -2353,7 +2180,7 @@ function quux (foo) {}
 // Settings: {"jsdoc":{"mode":"badMode"}}
 // Message: Unrecognized value `badMode` for `settings.jsdoc.mode`.
 
-/** 
+/**
  * @modifies
  * @abstract
  * @access
@@ -2428,7 +2255,7 @@ function quux (foo) {}
 function quux (foo) {}
 // Message: Invalid JSDoc tag name "template".
 
-/** 
+/**
  * @externs
  */
 function quux (foo) {}
@@ -2484,7 +2311,7 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"baz","returns":{"message":"Prefer `bar`","replacement":"bar"},"todo":false}}}
 
-/** 
+/**
  * @modifies
  * @abstract
  * @access
@@ -2557,7 +2384,7 @@ function quux (foo) {
  */
 function quux (foo) {}
 
-/** 
+/**
  * @modifies
  * @abstract
  * @access
@@ -2632,7 +2459,7 @@ function quux (foo) {}
 function quux (foo) {}
 // Settings: {"jsdoc":{"mode":"typescript"}}
 
-/** 
+/**
  * @externs
  */
 function quux (foo) {}
@@ -5015,7 +4842,7 @@ function quux () {
 
 
      /**
-      * 
+      *
       * @foo
       * Test 
       * abc 
@@ -5032,10 +4859,10 @@ function quux () {
 
 /**
  * Parses query string to object containing URL parameters
- * 
+ *
  * @param queryString
  * Input string
- * 
+ *
  * @returns
  * Object containing URL parameters
  */
@@ -5873,7 +5700,7 @@ function quux () {
 // Message: Sentence must end with a period.
 
 /**
- * Sorry, but this isn't a complete sentence Mr. 
+ * Sorry, but this isn't a complete sentence Mr.
  */
 function quux () {
 
@@ -6183,7 +6010,7 @@ function quux () {
 // Options: [{"abbreviations":["Mr."]}]
 
 /**
- * Sorry, but this isn't a complete sentence Mr. 
+ * Sorry, but this isn't a complete sentence Mr.
  */
 function quux () {
 
@@ -10990,5 +10817,3 @@ function quux () {}
  */
  function quux () {}
 ````
-
-

@@ -6,4 +6,5 @@ Problems reported by rules which have a wrench :wrench: below can be fixed autom
 
 |||rule|description|
 |-|-|-|-|
-|:heavy_check_mark:|:wrench:|||
+|:heavy_check_mark:||[check-access](check-access.md)|enforce valid @access tag|
+||:wrench:|||
