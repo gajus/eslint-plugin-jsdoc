@@ -32,7 +32,7 @@
     "gitdown": "^3.1.2",
     "glob": "^7.1.6",
     "husky": "^3.1.0",
-    "mocha": "^6.2.2",
+    "mocha": "^7.0.0",
     "nyc": "^15.0.0",
     "semantic-release": "^15.14.0",
     "typescript": "^3.7.4"
