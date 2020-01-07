@@ -7,8 +7,13 @@ const validateParameterNames = (
   functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report,
 ) => {
   const paramTags = entries(jsdoc.tags).filter(([, tag]) => {
-    return tag.tag === targetTagName && !tag.name.includes('.');
+    return tag.tag === targetTagName;
   });
+  const paramTagsNonNested = paramTags.filter(([, tag]) => {
+    return !tag.name.includes('.');
+  });
+
+  let dotted = 0;
 
   return paramTags.some(([, tag], index) => {
     let tagsIndex;
@@ -24,7 +29,13 @@ const validateParameterNames = (
 
       return true;
     }
-    const functionParameterName = functionParameterNames[index];
+    if (tag.name.includes('.')) {
+      dotted++;
+
+      return false;
+    }
+
+    const functionParameterName = functionParameterNames[index - dotted];
 
     if (!functionParameterName) {
       if (allowExtraTrailingParamDocs) {
@@ -46,7 +57,7 @@ const validateParameterNames = (
 
     if (functionParameterName !== tag.name.trim()) {
       const expectedNames = functionParameterNames.join(', ');
-      const actualNames = paramTags.map(([, {name}]) => {
+      const actualNames = paramTagsNonNested.map(([, {name}]) => {
         return name.trim();
       }).join(', ');
 

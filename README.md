@@ -1631,6 +1631,38 @@ function quux (foo, foo) {
 }
 // Message: Duplicate @param "foo"
 
+/**
+ * @param cfg
+ * @param cfg.foo
+ * @param cfg.foo
+ */
+function quux ({foo, bar}) {
+
+}
+// Message: Duplicate @param "cfg.foo"
+
+/**
+ * @param cfg
+ * @param cfg.foo
+ * @param [cfg.foo]
+ * @param baz
+ */
+function quux ({foo, bar}, baz) {
+
+}
+// Message: Duplicate @param "cfg.foo"
+
+/**
+ * @param cfg
+ * @param cfg.foo
+ * @param [cfg.foo="with a default"]
+ * @param baz
+ */
+function quux ({foo, bar}, baz) {
+
+}
+// Message: Duplicate @param "cfg.foo"
+
 export class SomeClass {
   /**
    * @param prop

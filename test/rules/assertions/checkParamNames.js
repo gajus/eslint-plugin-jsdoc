@@ -190,6 +190,62 @@ export default {
     },
     {
       code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param cfg.foo
+           */
+          function quux ({foo, bar}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Duplicate @param "cfg.foo"',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param [cfg.foo]
+           * @param baz
+           */
+          function quux ({foo, bar}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Duplicate @param "cfg.foo"',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param [cfg.foo="with a default"]
+           * @param baz
+           */
+          function quux ({foo, bar}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Duplicate @param "cfg.foo"',
+        },
+      ],
+    },
+    {
+      code: `
         export class SomeClass {
           /**
            * @param prop
