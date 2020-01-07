@@ -1864,6 +1864,41 @@ The following patterns are considered problems:
 
 /**
  * @typedef (SomeType) SomeTypedef
+ * @property cfg
+ * @property cfg.foo
+ * @property cfg.foo
+ */
+function quux ({foo, bar}) {
+
+}
+// Message: Duplicate @property "cfg.foo"
+
+/**
+ * @typedef (SomeType) SomeTypedef
+ * @property cfg
+ * @property cfg.foo
+ * @property [cfg.foo]
+ * @property baz
+ */
+function quux ({foo, bar}, baz) {
+
+}
+// Message: Duplicate @property "cfg.foo"
+
+/**
+ * @typedef (SomeType) SomeTypedef
+ * @property cfg
+ * @property cfg.foo
+ * @property [cfg.foo="with a default"]
+ * @property baz
+ */
+function quux ({foo, bar}, baz) {
+
+}
+// Message: Duplicate @property "cfg.foo"
+
+/**
+ * @typedef (SomeType) SomeTypedef
  * @prop foo
  * @prop foo
  */
@@ -1937,6 +1972,14 @@ function quux (code = 1) {
   this.error = new Error('oops');
   this.code = code;
 }
+
+/**
+ * @typedef (SomeType) SomeTypedef
+ * @property foo
+ * @property foo.bar
+ * @property foo.baz
+ * @property bar
+ */
 ````
 
 

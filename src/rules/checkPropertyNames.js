@@ -6,7 +6,7 @@ const validatePropertyNames = (
   jsdoc, jsdocNode, utils,
 ) => {
   const propertyTags = entries(jsdoc.tags).filter(([, tag]) => {
-    return tag.tag === targetTagName && !tag.name.includes('.');
+    return tag.tag === targetTagName;
   });
 
   return propertyTags.some(([, tag], index) => {
