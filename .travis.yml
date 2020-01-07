@@ -6,9 +6,20 @@ node_js:
   - 6
 before_install:
   - npm config set depth 0
-before_script:
-  - 'if [ "${ESLINT-}" == "6" ]; then npm install --no-save "eslint@${ESLINT}" ; fi'
-  - 'if [ "${ESLINT-}" == "5" ]; then npm install --no-save "eslint@${ESLINT}" mocha@6.2.2 nyc@14.1.1 babel-plugin-istanbul@5.2.0 eslint-config-canonical@17.1.2 eslint-plugin-unicorn@8.0.2 @typescript-eslint/parser@1.13.0 ; fi'
+before_script: >
+  node_version=$(node -v);
+  if [ ${node_version:3:1} = "." ]; then
+    echo "Node 10+"
+    npm install --no-save "eslint@${ESLINT}"
+    else
+      if [ ${node_version:1:2} -ge 8 ]; then
+        echo "Node 8+"
+        npm install --no-save "eslint@${ESLINT}" husky@3.1.0
+      else
+        echo "Node <= 6"
+        npm install --no-save "eslint@${ESLINT}" mocha@6.2.2 nyc@14.1.1 babel-plugin-istanbul@5.2.0 eslint-config-canonical@17.1.2 eslint-plugin-unicorn@8.0.2 @typescript-eslint/parser@1.13.0
+      fi
+  fi
 notifications:
   email: false
 sudo: false
