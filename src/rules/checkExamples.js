@@ -5,6 +5,10 @@ import warnRemovedSettings from '../warnRemovedSettings';
 const zeroBasedLineIndexAdjust = -1;
 const likelyNestedJSDocIndentSpace = 1;
 const preTagSpaceLength = 1;
+
+// If a space is present, we should ignore it
+const firstLinePrefixLength = preTagSpaceLength;
+
 const hasCaptionRegex = /^\s*<caption>(.*?)<\/caption>/u;
 
 const escapeStringRegexp = (str) => {
@@ -116,9 +120,6 @@ export default iterateJsdoc(({
   }
 
   utils.forEachPreferredTag('example', (tag, targetTagName) => {
-    // If a space is present, we should ignore it
-    const firstLinePrefixLength = preTagSpaceLength;
-
     let source = tag.description;
     const match = source.match(hasCaptionRegex);
 
