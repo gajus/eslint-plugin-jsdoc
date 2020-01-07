@@ -1747,6 +1747,16 @@ function quux ({a, b}) {
 
 /**
  * @param foo
+ * @param foo.bar
+ * @param foo.baz
+ * @param bar
+ */
+function quux (foo, bar) {
+
+}
+
+/**
+ * @param args
  */
 function quux ({a, b} = {}) {
 
