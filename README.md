@@ -8171,6 +8171,14 @@ export default class Foo {
  // ....
 }
 // Options: [{"exemptEmptyFunctions":false,"require":{"ClassDeclaration":true}}]
+
+const a = {};
+const b = {
+  ...a
+};
+
+export default b;
+// Options: [{"contexts":["ObjectExpression"],"exemptEmptyFunctions":false,"publicOnly":true}]
 ````
 
 

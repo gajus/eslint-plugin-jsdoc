@@ -105,7 +105,13 @@ const getSymbol = function (node, globals, scope, opt) {
     const val = createNode();
     val.type = 'object';
     node.properties.forEach((prop) => {
-      if (prop.type === 'ExperimentalSpreadProperty') {
+      if ([
+        // @typescript-eslint/parser, espree, acorn, etc.
+        'SpreadElement',
+
+        // babel-eslint
+        'ExperimentalSpreadProperty',
+      ].includes(prop.type)) {
         return;
       }
       const propVal = getSymbol(prop.value, globals, scope, opts);

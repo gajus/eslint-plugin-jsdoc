@@ -2383,5 +2383,26 @@ export default {
       sourceType: 'module',
     },
   },
+  {
+    code: `
+    const a = {};
+    const b = {
+      ...a
+    };
+
+    export default b;
+    `,
+    options: [
+      {
+        contexts: ['ObjectExpression'],
+        exemptEmptyFunctions: false,
+        publicOnly: true,
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
+  },
   ],
 };
