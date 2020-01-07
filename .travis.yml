@@ -12,12 +12,12 @@ before_script: >
     echo "Node 10+"
     npm install --no-save "eslint@${ESLINT}"
     else
-      if [ ${node_version:1:2} -ge 8 ]; then
+      if [ ${node_version:1:1} -ge 8 ]; then
         echo "Node 8+"
         npm install --no-save "eslint@${ESLINT}" husky@3.1.0
       else
         echo "Node <= 6"
-        npm install --no-save "eslint@${ESLINT}" mocha@6.2.2 nyc@14.1.1 babel-plugin-istanbul@5.2.0 eslint-config-canonical@17.1.2 eslint-plugin-unicorn@8.0.2 @typescript-eslint/parser@1.13.0
+        npm install --no-save "eslint@${ESLINT}" husky@3.1.0 mocha@6.2.2 nyc@14.1.1 babel-plugin-istanbul@5.2.0 eslint-config-canonical@17.1.2 eslint-plugin-unicorn@8.0.2 @typescript-eslint/parser@1.13.0
       fi
   fi
 notifications:
