@@ -78,7 +78,7 @@ export default iterateJsdoc(({
   });
 }, {
   meta: {
-    fixable: true,
+    fixable: 'code',
     schema: [
       {
         additionalProperties: false,

@@ -19,7 +19,7 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
-    fixable: true,
+    fixable: 'code',
     schema: [
       {
         additionalProperties: false,
