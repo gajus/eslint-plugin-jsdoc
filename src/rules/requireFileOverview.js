@@ -92,7 +92,6 @@ export default iterateJsdoc(({
   },
   iterateAllJsdocs: true,
   meta: {
-    fixable: 'code',
     schema: [
       {
         additionalProperties: false,
