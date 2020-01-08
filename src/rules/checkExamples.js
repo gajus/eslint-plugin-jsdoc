@@ -227,12 +227,12 @@ export default iterateJsdoc(({
         'a' + cliConfigStr + filename :
         'b' + cliConfigStr + defaultFileName;
       const file = filename || defaultFileName;
-      let config;
       let cliFile;
       if (matchingFileNameMap.has(fileNameMapKey)) {
-        [config, cliFile] = matchingFileNameMap.get(fileNameMapKey);
+        cliFile = matchingFileNameMap.get(fileNameMapKey);
       } else {
         const cli = new CLIEngine(cliConfig);
+        let config;
         if (filename || checkEslintrc) {
           config = cli.getConfigForFile(file);
         }
@@ -252,7 +252,7 @@ export default iterateJsdoc(({
           rules,
           useEslintrc: false,
         });
-        matchingFileNameMap.set(fileNameMapKey, [config, cliFile]);
+        matchingFileNameMap.set(fileNameMapKey, cliFile);
       }
 
       const {results: [{messages}]} =
