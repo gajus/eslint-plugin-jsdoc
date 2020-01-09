@@ -1,10 +1,21 @@
-### `require-property-description`
+# `require-property-description`
+
+{"gitdown": "contents"}
 
 Requires that each `@property` tag has a `description` value.
+
+## Context and settings
 
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/A|
+|Tags|`property`|
+|Aliases|`prop`|
 
-<!-- assertions requirePropertyDescription -->
+## Failing examples
+
+<!-- assertions-failing requirePropertyDescription -->
+
+## Passing examples
+
+<!-- assertions-passing requirePropertyDescription -->

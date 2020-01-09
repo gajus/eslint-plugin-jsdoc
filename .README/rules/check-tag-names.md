@@ -1,4 +1,6 @@
-### `check-tag-names`
+# `check-tag-names`
+
+{"gitdown": "contents"}
 
 Reports invalid block tag names.
 
@@ -154,9 +156,13 @@ wizaction
 
 Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreference` will automatically be considered as valid.
 
-#### Options
+## Fixer
 
-##### `definedTags`
+(Todo)
+
+## Options
+
+### `definedTags`
 
 Use an array of `definedTags` strings to configure additional, allowed tags.
 The format is as follows:
@@ -167,6 +173,8 @@ The format is as follows:
 }
 ```
 
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -174,4 +182,10 @@ The format is as follows:
 |Options|`definedTags`|
 |Settings|`tagNamePreference`, `mode`|
 
-<!-- assertions checkTagNames -->
+## Failing examples
+
+<!-- assertions-failing checkTagNames -->
+
+## Passing examples
+
+<!-- assertions-passing checkTagNames -->

@@ -1,9 +1,11 @@
-### `require-jsdoc`
+# `require-jsdoc`
+
+{"gitdown": "contents"}
 
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-#### Options
+## Options
 
 Accepts one optional options object with the following optional keys.
 
@@ -40,10 +42,22 @@ Accepts one optional options object with the following optional keys.
   missing jsdoc blocks above functions/methods with no parameters or return values
   (intended where variable names are sufficient for themselves as documentation).
 
+## Fixer
+
+(Todo)
+
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
 |Options|`publicOnly`, `require`, `contexts`, `exemptEmptyFunctions`|
 
-<!-- assertions requireJsdoc -->
+## Failing examples
+
+<!-- assertions-failing requireJsdoc -->
+
+## Passing examples
+
+<!-- assertions-passing requireJsdoc -->

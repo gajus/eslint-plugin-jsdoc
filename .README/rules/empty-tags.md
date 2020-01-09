@@ -1,4 +1,6 @@
-### `empty-tags`
+# `empty-tags`
+
+{"gitdown": "contents"}
 
 Expects the following tags to be empty of any content:
 
@@ -27,9 +29,9 @@ Note that `@private` will still be checked for content by this rule even with
 `settings.jsdoc.ignorePrivate` set to `true` (a setting which normally
 causes rules not to take effect).
 
-#### Options
+## Options
 
-##### `tags`
+### `tags`
 
 If you want additional tags to be checked for their descriptions, you may
 add them within this option.
@@ -40,10 +42,22 @@ add them within this option.
 }
 ```
 
+## Fixer
+
+(Todo)
+
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags| and others added by `tags`|
 |Aliases||
 |Options|`tags`|
-<!-- assertions emptyTags -->
+## Failing examples
+
+<!-- assertions-failing emptyTags -->
+
+## Passing examples
+
+<!-- assertions-passing emptyTags -->

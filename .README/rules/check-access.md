@@ -1,4 +1,6 @@
-### `check-access`
+# `check-access`
+
+{"gitdown": "contents"}
 
 Checks that `@access` tags use one of the following values:
 
@@ -11,6 +13,7 @@ Also reports:
 - Use of multiple instances of `@access` (or the `@public`, etc. style tags)
   on the same doc block.
 
+## Context and settings
 |||
 |---|---|
 |Context|everywhere|
@@ -18,4 +21,10 @@ Also reports:
 |Settings||
 |Options||
 
-<!-- assertions checkAccess -->
+## Failing examples
+
+<!-- assertions-failing checkAccess -->
+
+## Passing examples
+
+<!-- assertions-passing checkAccess -->

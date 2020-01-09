@@ -1,4 +1,6 @@
-### `check-values`
+# `check-values`
+
+{"gitdown": "contents"}
 
 This rule checks the values for a handful of tags:
 
@@ -11,25 +13,27 @@ This rule checks the values for a handful of tags:
     `allowedAuthors` is present, ensure that the author value is one
     of these array items.
 
-#### Options
+## Options
 
-##### `allowedAuthors`
+### `allowedAuthors`
 
 An array of allowable author values. If absent, only non-whitespace will
 be checked for.
 
-##### `allowedLicenses`
+### `allowedLicenses`
 
 An array of allowable license values or `true` to allow any license text.
 If present as an array, will be used in place of SPDX identifiers.
 
-##### `licensePattern`
+### `licensePattern`
 
 A string to be converted into a `RegExp` (with `u` flag) and whose first
 parenthetical grouping, if present, will match the portion of the license
 description to check (if no grouping is present, then the whole portion
 matched will be used). Defaults to `([^\n]*)`, i.e., the SPDX expression
 is expected before any line breaks.
+
+## Context and settings
 
 |||
 |---|---|
@@ -38,4 +42,10 @@ is expected before any line breaks.
 |Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|
 
-<!-- assertions checkValues -->
+## Failing examples
+
+<!-- assertions-failing checkValues -->
+
+## Passing examples
+
+<!-- assertions-passing checkValues -->

@@ -1,6 +1,9 @@
-### `valid-types`
+# `valid-types`
 
-Requires all types to be valid JSDoc or Closure compiler types without syntax errors.
+{"gitdown": "contents"}
+
+Requires all types/namepaths to be valid JSDoc, Closure compiler, or TypeScript types
+(configured by `settings.jsdoc.mode`).
 
 Also impacts behaviors on namepath (or event)-defining and pointing tags:
 
@@ -32,7 +35,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
-#### Options
+## Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to disallow
   empty name paths with `@callback`, `@event`, `@class`, `@constructor`,
@@ -46,6 +49,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
   that `@see` only use name paths (the tag is normally permitted to
   allow other text)
 
+## Context and settings
 
 |||
 |---|---|
@@ -56,4 +60,10 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 |Options|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
 |Settings|`mode`|
 
-<!-- assertions validTypes -->
+## Failing examples
+
+<!-- assertions-failing validTypes -->
+
+## Passing examples
+
+<!-- assertions-passing validTypes -->

@@ -1,10 +1,12 @@
-### `require-returns-type`
+# `require-returns-type`
 
-Requires that `@returns` tag has `type` value.
+{"gitdown": "contents"}
 
-#### Options
+Requires that `@returns` tag has a type value (in curly brackets).
 
-##### `contexts`
+## Options
+
+### `contexts`
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied.
@@ -14,6 +16,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -21,4 +25,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 |Aliases|`return`|
 |Options|`contexts`|
 
-<!-- assertions requireReturnsType -->
+## Failing examples
+
+<!-- assertions-failing requireReturnsType -->
+
+## Passing examples
+
+<!-- assertions-passing requireReturnsType -->

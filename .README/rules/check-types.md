@@ -1,4 +1,6 @@
-### `check-types`
+# `check-types`
+
+{"gitdown": "contents"}
 
 Reports invalid types.
 
@@ -19,7 +21,7 @@ Date
 RegExp
 ```
 
-#### Options
+## Options
 
 `check-types` allows one option:
 
@@ -58,7 +60,7 @@ RegExp
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
 
-#### Why not capital case everything?
+## Why not capital case everything?
 
 Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`.
 
@@ -83,6 +85,8 @@ Basically, for primitives, we want to define the type as a primitive, because th
 In short: It's not about consistency, rather about the 99.9% use case. (And some
 functions might not even support the objects if they are checking for identity.)
 
+## Comparisons
+
 type name | `typeof` | check-types | testcase
 --|--|--|--
 **Array** | object | **Array** | `([]) instanceof Array` -> `true`
@@ -94,6 +98,12 @@ Boolean | **boolean** | **boolean** | `(true) instanceof Boolean` -> **`false`**
 Number | **number** | **number** | `(41) instanceof Number` -> **`false`**
 String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
+## Fixer
+
+(Todo)
+
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -103,4 +113,10 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 |Options|`noDefaults`, `exemptTagContexts`, `unifyParentAndChildTypeChecks`|
 |Settings|`preferredTypes`, `mode`|
 
-<!-- assertions checkTypes -->
+## Failing examples
+
+<!-- assertions-failing checkTypes -->
+
+## Passing examples
+
+<!-- assertions-passing checkTypes -->

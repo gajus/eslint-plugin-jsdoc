@@ -1,4 +1,6 @@
-### `match-description`
+# `match-description`
+
+{"gitdown": "contents"}
 
 Enforces a regular expression pattern on descriptions.
 
@@ -11,9 +13,9 @@ by our supported Node versions):
 Applies to the jsdoc block description and `@description` (or `@desc`)
 by default but the `tags` option (see below) may be used to match other tags.
 
-#### Options
+## Options
 
-##### `matchDescription`
+### `matchDescription`
 
 You can supply your own expression to override the default, passing a
 `matchDescription` string on the options object.
@@ -27,7 +29,7 @@ You can supply your own expression to override the default, passing a
 As with the default, the supplied regular expression will be applied with the
 Unicode (`"u"`) flag and is *not* case-insensitive.
 
-##### `tags`
+### `tags`
 
 If you want different regular expressions to apply to tags, you may use
 the `tags` option object:
@@ -63,7 +65,7 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-##### `mainDescription`
+### `mainDescription`
 
 If you wish to override the main function description without changing the
 default `match-description`, you may use `mainDescription`:
@@ -84,12 +86,14 @@ There is no need to add `mainDescription: true`, as by default, the main
 function (and only the main function) is linted, though you may disable checking
 it by setting it to `false`.
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
 Overrides the default contexts (see below). Set to `"any"` if you want
 the rule to apply to any jsdoc block throughout your files.
+
+## Context and settings
 
 |||
 |---|---|
@@ -99,4 +103,10 @@ the rule to apply to any jsdoc block throughout your files.
 |Settings||
 |Options|`contexts`, `tags` (accepts tags with names and optional type such as 'param', 'arg', 'argument', 'property', and 'prop', and accepts arbitrary list of other tags with an optional type (but without names), e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
-<!-- assertions matchDescription -->
+## Failing examples
+
+<!-- assertions-failing matchDescription -->
+
+## Passing examples
+
+<!-- assertions-passing matchDescription -->

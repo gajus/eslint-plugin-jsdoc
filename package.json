@@ -61,8 +61,8 @@
   },
   "scripts": {
     "build": "rm -fr ./dist && NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored",
-    "check-readme": "babel-node ./src/bin/generateReadme.js --check",
-    "create-readme": "babel-node ./src/bin/generateReadme.js",
+    "check-readme": "babel-node ./src/bin/generateDocContents.js --check",
+    "create-readme": "babel-node ./src/bin/generateDocContents.js",
     "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
     "lint": "eslint --report-unused-disable-directives ./src ./test",
     "test-cov": "BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 9000",

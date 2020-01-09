@@ -1,4 +1,6 @@
-### `require-description-complete-sentence`
+# `require-description-complete-sentence`
+
+{"gitdown": "contents"}
 
 Requires that block description, explicit `@description`, and `@param`/`@returns`
 tag descriptions are written in complete sentences, i.e.,
@@ -14,9 +16,9 @@ tag descriptions are written in complete sentences, i.e.,
 * Periods after items within the `abbreviations` option array are not treated
   as sentence endings.
 
-#### Options
+## Options
 
-##### `tags`
+### `tags`
 
 If you want additional tags to be checked for their descriptions, you may
 add them within this option.
@@ -37,11 +39,17 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-##### `abbreviations`
+### `abbreviations`
 
 You can provide an `abbreviations` options array to avoid such strings of text
 being treated as sentence endings when followed by dots. The `.` is not
 necessary at the end of the array items.
+
+## Fixer
+
+(Todo)
+
+## Context and settings
 
 |||
 |---|---|
@@ -49,4 +57,10 @@ necessary at the end of the array items.
 |Tags|doc block, `param`, `returns`, `description`, `property`, `summary`, `file`, `classdesc`, `todo`, `deprecated`, `throws`, 'yields' and others added by `tags`|
 |Aliases|`arg`, `argument`, `return`, `desc`, `prop`, `fileoverview`, `overview`, `exception`, `yield`|
 |Options|`tags`, `abbreviations`|
-<!-- assertions requireDescriptionCompleteSentence -->
+## Failing examples
+
+<!-- assertions-failing requireDescriptionCompleteSentence -->
+
+## Passing examples
+
+<!-- assertions-passing requireDescriptionCompleteSentence -->

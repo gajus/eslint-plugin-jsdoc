@@ -1,4 +1,6 @@
-### `no-undefined-types`
+# `no-undefined-types`
+
+{"gitdown": "contents"}
 
 Checks that types in jsdoc comments are defined. This can be used to check
 unimported types.
@@ -28,13 +30,15 @@ The following types are always considered defined.
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
 also be assumed to be defined.
 
-#### Options
+## Options
 
 An option object may have the following key:
 
 - `definedTypes` - This array can be populated to indicate other types which
   are automatically considered as defined (in addition to globals, etc.).
   Defaults to an empty array.
+
+## Context and settings
 
 |||
 |---|---|
@@ -45,4 +49,10 @@ An option object may have the following key:
 |Options|`definedTypes`|
 |Settings|`preferredTypes`, `mode`|
 
-<!-- assertions noUndefinedTypes -->
+## Failing examples
+
+<!-- assertions-failing noUndefinedTypes -->
+
+## Passing examples
+
+<!-- assertions-passing noUndefinedTypes -->

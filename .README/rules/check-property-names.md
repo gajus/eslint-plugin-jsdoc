@@ -1,13 +1,25 @@
-### `check-property-names`
+# `check-property-names`
+
+{"gitdown": "contents"}
 
 Ensures that property names in JSDoc are not duplicated on the same block
 and that nested properties have defined roots.
 
-#### Options
+## Fixer
+
+(Todo)
+
+## Context and settings
 
 |||
 |---|---|
 |Context|Everywhere|
 |Tags|`property`|
 
-<!-- assertions checkPropertyNames -->
+## Failing examples
+
+<!-- assertions-failing checkPropertyNames -->
+
+## Passing examples
+
+<!-- assertions-passing checkPropertyNames -->

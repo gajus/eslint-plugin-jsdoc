@@ -1,14 +1,16 @@
-### `require-param-name`
+# `require-param-name`
 
-Requires that all function parameters have names.
+{"gitdown": "contents"}
+
+Requires that all `@param` tags have names.
 
 > The `@param` tag requires you to specify the name of the parameter you are documenting. You can also include the parameter's type, enclosed in curly brackets, and a description of the parameter.
 >
 > [JSDoc](https://jsdoc.app/tags-param.html#overview)
 
-#### Options
+## Options
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied.
@@ -18,6 +20,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -25,4 +29,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 |Aliases|`arg`, `argument`|
 |Options|`contexts`|
 
-<!-- assertions requireParamName -->
+## Failing examples
+
+<!-- assertions-failing requireParamName -->
+
+## Passing examples
+
+<!-- assertions-passing requireParamName -->

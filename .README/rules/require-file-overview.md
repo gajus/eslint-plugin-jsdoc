@@ -1,4 +1,6 @@
-### `require-file-overview`
+# `require-file-overview`
+
+{"gitdown": "contents"}
 
 Checks that:
 
@@ -10,9 +12,9 @@ Checks that:
   as being when the overview tag is not preceded by anything other than
   a comment.
 
-#### Options
+## Options
 
-##### `tags`
+### `tags`
 
 The keys of this object are tag names, and the values are configuration
 objects indicating what will be checked for these whole-file tags.
@@ -67,6 +69,8 @@ in this configuration object regardless of whether you have configured
 `fileoverview` instead of `file` on `tagNamePreference` (i.e., `fileoverview`
 will be checked, but you must use `file` on the configuration object).
 
+## Context and settings
+
 |||
 |---|---|
 |Context|Everywhere|
@@ -74,4 +78,10 @@ will be checked, but you must use `file` on the configuration object).
 |Aliases|`fileoverview`, `overview`|
 |Options|`tags`|
 
-<!-- assertions requireFileOverview -->
+## Failing examples
+
+<!-- assertions-failing requireFileOverview -->
+
+## Passing examples
+
+<!-- assertions-passing requireFileOverview -->

@@ -1,4 +1,6 @@
-### `implements-on-classes`
+# `implements-on-classes`
+
+{"gitdown": "contents"}
 
 Reports an issue with any non-constructor function using `@implements`.
 
@@ -9,9 +11,9 @@ To indicate that a function follows another function's signature, one might
 instead use `@type` to indicate the `@function` or `@callback` to which the
 funciton is adhering.
 
-#### Options
+## Options
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied.
@@ -21,10 +23,18 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`implements` (prevented)|
 |Options|`contexts`|
 
-<!-- assertions implementsOnClasses -->
+## Failing examples
+
+<!-- assertions-failing implementsOnClasses -->
+
+## Passing examples
+
+<!-- assertions-passing implementsOnClasses -->

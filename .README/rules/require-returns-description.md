@@ -1,11 +1,13 @@
-### `require-returns-description`
+# `require-returns-description`
+
+{"gitdown": "contents"}
 
 Requires that the `@returns` tag has a `description` value. The error
 will not be reported if the return value is `void` or `undefined`.
 
-#### Options
+## Options
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied.
@@ -15,6 +17,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -22,4 +26,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 |Aliases|`return`|
 |Options|`contexts`|
 
-<!-- assertions requireReturnsDescription -->
+## Failing examples
+
+<!-- assertions-failing requireReturnsDescription -->
+
+## Passing examples
+
+<!-- assertions-passing requireReturnsDescription -->

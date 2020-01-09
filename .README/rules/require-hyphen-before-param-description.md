@@ -1,8 +1,10 @@
-### `require-hyphen-before-param-description`
+# `require-hyphen-before-param-description`
+
+{"gitdown": "contents"}
 
 Requires a hyphen before the `@param` description.
 
-#### Options
+## Options
 
 This rule takes one optional string argument and an optional options object.
 
@@ -15,6 +17,12 @@ The options object may have the following properties:
 - `checkProperties` - Boolean on whether to also apply the rule to `@property`
   tags.
 
+## Fixer
+
+(Todo)
+
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -22,4 +30,10 @@ The options object may have the following properties:
 |Aliases|`arg`, `argument`; optionally `prop`|
 |Options|(a string matching `"always"|"never"`) and an optional object with a `checkProperties` property|
 
-<!-- assertions requireHyphenBeforeParamDescription -->
+## Failing examples
+
+<!-- assertions-failing requireHyphenBeforeParamDescription -->
+
+## Passing examples
+
+<!-- assertions-passing requireHyphenBeforeParamDescription -->

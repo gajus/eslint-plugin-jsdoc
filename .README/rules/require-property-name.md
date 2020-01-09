@@ -1,10 +1,21 @@
-### `require-property-name`
+# `require-property-name`
 
-Requires that all function `@property` tags have names.
+{"gitdown": "contents"}
+
+Requires that all `@property` tags have names.
+
+## Context and settings
 
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/A|
+|Tags|`property`|
+|Aliases|`prop`|
 
-<!-- assertions requirePropertyName -->
+## Failing examples
+
+<!-- assertions-failing requirePropertyName -->
+
+## Passing examples
+
+<!-- assertions-passing requirePropertyName -->
