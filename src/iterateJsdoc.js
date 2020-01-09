@@ -29,12 +29,21 @@ const parseComment = (commentNode, indent, trim = true) => {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
     parsers: [
       commentParser.PARSERS.parse_tag,
-      skipSeeLink(commentParser.PARSERS.parse_type),
+      skipSeeLink(
+        (str, data) => {
+          if (['default', 'defaultvalue'].includes(data.tag)) {
+            return null;
+          }
+
+          return commentParser.PARSERS.parse_type(str, data);
+        },
+      ),
       skipSeeLink(
         (str, data) => {
           if ([
             'example', 'return', 'returns', 'throws', 'exception',
             'access', 'version', 'since', 'license', 'author',
+            'default', 'defaultvalue',
           ].includes(data.tag)) {
             return null;
           }
