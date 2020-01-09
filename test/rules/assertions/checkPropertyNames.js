@@ -70,38 +70,6 @@ export default {
     {
       code: `
           /**
-           * Assign the project to a list of employees.
-           * @typedef (SomeType) SomeTypedef
-           * @property {string} employees[].name - The name of an employee.
-           * @property {string} employees[].department - The employee's department.
-           */
-      `,
-      errors: [
-        {
-          line: 5,
-          message: '@property path declaration ("employees[].name") appears before any real property.',
-        },
-      ],
-    },
-    {
-      code: `
-          /**
-           * Assign the project to a list of employees.
-           * @typedef (SomeType) SomeTypedef
-           * @property {string} employees[].name - The name of an employee.
-           * @property {string} employees[].name - The employee's department.
-           */
-      `,
-      errors: [
-        {
-          line: 6,
-          message: 'Duplicate @property "employees[].name"',
-        },
-      ],
-    },
-    {
-      code: `
-          /**
            * @typedef (SomeType) SomeTypedef
            * @property foo
            * @property foo
