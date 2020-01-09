@@ -22,6 +22,7 @@ const ruleTester = new RuleTester();
   'implements-on-classes',
   'match-description',
   'newline-after-description',
+  'no-bad-blocks',
   'no-defaults',
   'no-types',
   'no-undefined-types',

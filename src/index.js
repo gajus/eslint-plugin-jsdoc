@@ -13,6 +13,7 @@ import emptyTags from './rules/emptyTags';
 import implementsOnClasses from './rules/implementsOnClasses';
 import matchDescription from './rules/matchDescription';
 import newlineAfterDescription from './rules/newlineAfterDescription';
+import noBadBlocks from './rules/noBadBlocks';
 import noDefaults from './rules/noDefaults';
 import noTypes from './rules/noTypes';
 import noUndefinedTypes from './rules/noUndefinedTypes';
@@ -55,6 +56,7 @@ export default {
         'jsdoc/implements-on-classes': 'warn',
         'jsdoc/match-description': 'off',
         'jsdoc/newline-after-description': 'warn',
+        'jsdoc/no-bad-blocks': 'off',
         'jsdoc/no-defaults': 'off',
         'jsdoc/no-types': 'off',
         'jsdoc/no-undefined-types': 'warn',
@@ -95,6 +97,7 @@ export default {
     'implements-on-classes': implementsOnClasses,
     'match-description': matchDescription,
     'newline-after-description': newlineAfterDescription,
+    'no-bad-blocks': noBadBlocks,
     'no-defaults': noDefaults,
     'no-types': noTypes,
     'no-undefined-types': noUndefinedTypes,

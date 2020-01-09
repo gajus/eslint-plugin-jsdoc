@@ -568,12 +568,47 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
           callIterator(context, node, [comment], state);
         },
         'Program:exit' () {
-          const allJsdocs = sourceCode.getAllComments();
-          const untrackedJSdoc = allJsdocs.filter((node) => {
+          const allComments = sourceCode.getAllComments();
+          const untrackedJSdoc = allComments.filter((node) => {
             return !trackedJsdocs.includes(node);
           });
 
           callIterator(context, null, untrackedJSdoc, state, true);
+        },
+      };
+    },
+    meta: ruleConfig.meta,
+  };
+};
+
+/**
+ * Create an eslint rule that iterates over all JSDocs, regardless of whether
+ * they are attached to a function-like node.
+ *
+ * @param {JsdocVisitor} iterator
+ * @param {{meta: any}} ruleConfig
+ */
+const checkFile = (iterator, ruleConfig) => {
+  return {
+    create (context) {
+      const sourceCode = context.getSourceCode();
+      const settings = getSettings(context);
+
+      return {
+        'Program:exit' () {
+          const allComments = sourceCode.getAllComments();
+          const {lines} = sourceCode;
+          const utils = getBasicUtils(context, settings);
+
+          iterator({
+            allComments,
+            context,
+            lines,
+            makeReport,
+            settings,
+            sourceCode,
+            utils,
+          });
         },
       };
     },
@@ -601,6 +636,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   }
   if (typeof iterator !== 'function') {
     throw new TypeError('The iterator argument must be a function.');
+  }
+
+  if (ruleConfig.checkFile) {
+    return checkFile(iterator, ruleConfig);
   }
 
   if (ruleConfig.iterateAllJsdocs) {
