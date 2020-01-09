@@ -22,5 +22,6 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`, `returns`|
 |Aliases|`arg`, `argument`, `return`|
+|Options|`contexts`|
 
 <!-- assertions noTypes -->

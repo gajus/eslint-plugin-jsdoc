@@ -20,6 +20,5 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 |Tags|`returns`|
 |Aliases|`return`|
 |Options|`contexts`|
-|Options|`contexts`|
 
 <!-- assertions requireReturnsType -->

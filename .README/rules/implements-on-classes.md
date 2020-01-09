@@ -25,5 +25,6 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`implements` (prevented)|
+|Options|`contexts`|
 
 <!-- assertions implementsOnClasses -->
