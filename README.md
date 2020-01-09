@@ -1606,6 +1606,26 @@ function assign (employees) {
 // Message: Duplicate @param "employees[].name"
 
 /**
+ * Assign the project to a list of employees.
+ * @param {string} employees[].name - The name of an employee.
+ * @param {string} employees[].department - The employee's department.
+ */
+function assign (employees) {
+
+};
+// Message: @param path declaration ("employees[].name") appears before any real parameter.
+
+/**
+ * Assign the project to a list of employees.
+ * @param {string} employees[].name - The name of an employee.
+ * @param {string} employees[].name - The employee's department.
+ */
+function assign (employees) {
+
+};
+// Message: Duplicate @param "employees[].name"
+
+/**
  * @param foo
  * @param foo.bar
  * @param bar
@@ -1874,6 +1894,22 @@ The following patterns are considered problems:
  * @property Foo.Bar
  */
 // Message: @property path declaration ("Foo.Bar") root node name ("Foo") does not match previous real property name ("foo").
+
+/**
+ * Assign the project to a list of employees.
+ * @typedef (SomeType) SomeTypedef
+ * @property {string} employees[].name - The name of an employee.
+ * @property {string} employees[].department - The employee's department.
+ */
+// Message: @property path declaration ("employees[].name") appears before any real property.
+
+/**
+ * Assign the project to a list of employees.
+ * @typedef (SomeType) SomeTypedef
+ * @property {string} employees[].name - The name of an employee.
+ * @property {string} employees[].name - The employee's department.
+ */
+// Message: Duplicate @property "employees[].name"
 
 /**
  * Assign the project to a list of employees.
@@ -8914,6 +8950,17 @@ function quux (foo) {
 }
 // Options: [{"exemptedBy":["notPresent"]}]
 // Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * Assign the project to a list of employees.
+ * @param {object[]} employees - The employees who are responsible for the project.
+ * @param {string} employees[].name - The name of an employee.
+ * @param {string} employees[].department - The employee's department.
+ */
+function assign (employees, name) {
+
+};
+// Message: Missing JSDoc @param "name" declaration.
 
 /**
  * Assign the project to a list of employees.

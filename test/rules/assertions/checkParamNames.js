@@ -133,6 +133,42 @@ export default {
     {
       code: `
           /**
+           * Assign the project to a list of employees.
+           * @param {string} employees[].name - The name of an employee.
+           * @param {string} employees[].department - The employee's department.
+           */
+          function assign (employees) {
+
+          };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@param path declaration ("employees[].name") appears before any real parameter.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * Assign the project to a list of employees.
+           * @param {string} employees[].name - The name of an employee.
+           * @param {string} employees[].name - The employee's department.
+           */
+          function assign (employees) {
+
+          };
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Duplicate @param "employees[].name"',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            * @param foo
            * @param foo.bar
            * @param bar
