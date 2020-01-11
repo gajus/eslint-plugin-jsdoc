@@ -68,5 +68,23 @@ export default {
       }
       `,
     },
+    {
+      code: `
+           /* This could just be intended as a regular multiline comment,
+              so don't report this */
+           function quux () {
+
+           }
+      `,
+    },
+    {
+      code: `
+           /* Just a regular multiline comment with an \`@\` but not appearing
+               like a tag in a jsdoc-block, so don't report */
+           function quux () {
+
+           }
+      `,
+    },
   ],
 };
