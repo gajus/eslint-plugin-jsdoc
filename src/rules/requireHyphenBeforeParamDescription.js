@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
@@ -8,14 +7,10 @@ export default iterateJsdoc(({
   context,
   jsdocNode,
 }) => {
-  let always;
-  if (_.has(context.options, 0)) {
-    always = context.options[0] === 'always';
-  } else {
-    always = true;
-  }
+  const [circumstance, {checkProperties} = {}] = context.options;
+  const always = !circumstance || circumstance === 'always';
 
-  utils.forEachPreferredTag('param', (jsdocTag, targetTagName) => {
+  const checkHyphens = (jsdocTag, targetTagName) => {
     if (!jsdocTag.description) {
       return;
     }
@@ -49,7 +44,12 @@ export default iterateJsdoc(({
         return fixer.replaceText(jsdocNode, replacement);
       }, jsdocTag);
     }
-  });
+  };
+
+  utils.forEachPreferredTag('param', checkHyphens);
+  if (checkProperties) {
+    utils.forEachPreferredTag('property', checkHyphens);
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {
@@ -58,6 +58,16 @@ export default iterateJsdoc(({
       {
         enum: ['always', 'never'],
         type: 'string',
+      },
+      {
+        additionalProperties: false,
+        properties: {
+          checkProperties: {
+            default: false,
+            type: 'boolean',
+          },
+        },
+        type: 'object',
       },
     ],
     type: 'layout',
