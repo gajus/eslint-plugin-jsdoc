@@ -160,6 +160,52 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @typedef {SomeType} ATypeDefName
+           * @property foo Foo.
+           */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'There must be a hyphen before @property description.',
+        },
+      ],
+      options: [
+        'always', {checkProperties: true},
+      ],
+      output: `
+          /**
+           * @typedef {SomeType} ATypeDefName
+           * @property foo - Foo.
+           */
+      `,
+    },
+    {
+      code: `
+          /**
+           * @typedef {SomeType} ATypeDefName
+           * @property foo - Foo.
+           */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'There must be no hyphen before @property description.',
+        },
+      ],
+      options: [
+        'never', {checkProperties: true},
+      ],
+      output: `
+          /**
+           * @typedef {SomeType} ATypeDefName
+           * @property foo Foo.
+           */
+      `,
+    },
   ],
   valid: [
     {
@@ -197,6 +243,28 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * @typedef {SomeType} ATypeDefName
+           * @property foo - Foo.
+           */
+      `,
+      options: [
+        'always', {checkProperties: true},
+      ],
+    },
+    {
+      code: `
+          /**
+           * @typedef {SomeType} ATypeDefName
+           * @property foo Foo.
+           */
+      `,
+      options: [
+        'never', {checkProperties: true},
+      ],
     },
   ],
 };
