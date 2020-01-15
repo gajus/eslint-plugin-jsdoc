@@ -95,6 +95,17 @@ export default iterateJsdoc(({
       }
     }
   });
+
+  utils.forEachPreferredTag('throws', (jsdocParameter, targetTagName) => {
+    const throws = jsdocParameter.description.trim();
+    if (!throws) {
+      report(
+        `Missing JSDoc @${targetTagName}.`,
+        null,
+        jsdocParameter,
+      );
+    }
+  });
 }, {
   iterateAllJsdocs: true,
   meta: {

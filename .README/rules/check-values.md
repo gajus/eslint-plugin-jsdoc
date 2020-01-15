@@ -10,6 +10,7 @@ This rule checks the values for a handful of tags:
 4. `@author` - Checks there is a value present, and if the option
     `allowedAuthors` is present, ensure that the author value is one
     of these array items.
+5. `@throws` - Checks that there is a value present.
 
 #### Options
 

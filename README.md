@@ -3742,6 +3742,7 @@ This rule checks the values for a handful of tags:
 4. `@author` - Checks there is a value present, and if the option
     `allowedAuthors` is present, ensure that the author value is one
     of these array items.
+5. `@throws` - Checks that there is a value present.
 
 <a name="eslint-plugin-jsdoc-rules-check-values-options-7"></a>
 #### Options
@@ -3878,6 +3879,14 @@ function quux (foo) {
 }
 // Options: [{"allowedAuthors":["Gajus Kuizinas","golopot"]}]
 // Message: Invalid JSDoc @author: "Brett Zamir"; expected one of Gajus Kuizinas, golopot.
+
+/**
+ * @throws
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @throws.
 ````
 
 The following patterns are not considered problems:
@@ -3972,6 +3981,13 @@ function quux (foo) {
 
 }
 // Options: [{"allowedAuthors":["Gajus Kuizinas","golopot","Brett Zamir"]}]
+
+/**
+ * @throws {DivideByZero} Argument x must be non-zero.
+ */
+function quux (foo) {
+
+}
 ````
 
 

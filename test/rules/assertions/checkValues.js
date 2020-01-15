@@ -206,6 +206,22 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @throws
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @throws.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -349,6 +365,16 @@ export default {
           allowedAuthors: ['Gajus Kuizinas', 'golopot', 'Brett Zamir'],
         },
       ],
+    },
+    {
+      code: `
+      /**
+       * @throws {DivideByZero} Argument x must be non-zero.
+       */
+      function quux (foo) {
+
+      }
+      `,
     },
   ],
 };
