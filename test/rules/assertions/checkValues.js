@@ -221,7 +221,27 @@ export default {
     {
       code: `
       /**
+       * @version      3.4.1
+       */
+      function quux (foo) {
+
+      }
+      `,
+    },
+    {
+      code: `
+      /**
        * @since 3.4.1
+       */
+      function quux (foo) {
+
+      }
+      `,
+    },
+    {
+      code: `
+      /**
+       * @since      3.4.1
        */
       function quux (foo) {
 

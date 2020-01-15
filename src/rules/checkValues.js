@@ -15,8 +15,8 @@ export default iterateJsdoc(({
   } = options;
 
   utils.forEachPreferredTag('version', (jsdocParameter, targetTagName) => {
-    const version = jsdocParameter.description;
-    if (!version.trim()) {
+    const version = jsdocParameter.description.trim();
+    if (!version) {
       report(
         `Missing JSDoc @${targetTagName}.`,
         null,
@@ -31,8 +31,8 @@ export default iterateJsdoc(({
     }
   });
   utils.forEachPreferredTag('since', (jsdocParameter, targetTagName) => {
-    const version = jsdocParameter.description;
-    if (!version.trim()) {
+    const version = jsdocParameter.description.trim();
+    if (!version) {
       report(
         `Missing JSDoc @${targetTagName}.`,
         null,
