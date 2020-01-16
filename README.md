@@ -14,6 +14,7 @@ JSDoc linting rules for ESLint.
     * [Options](#eslint-plugin-jsdoc-options)
     * [Settings](#eslint-plugin-jsdoc-settings)
         * [Allow `@private` to disable rules for that comment block](#eslint-plugin-jsdoc-settings-allow-private-to-disable-rules-for-that-comment-block)
+        * [`maxLines` and `minLines`](#eslint-plugin-jsdoc-settings-maxlines-and-minlines)
         * [Mode](#eslint-plugin-jsdoc-settings-mode)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [`@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`](#eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns)
@@ -166,6 +167,18 @@ supplied as the second argument in an array after the error level.
   on which a `@private` tag (or `@access private`) occurs. Defaults to
   `false`. Note: This has no effect with the rule `check-access` (whose
   purpose is to check access modifiers).
+
+<a name="eslint-plugin-jsdoc-settings-maxlines-and-minlines"></a>
+### <code>maxLines</code> and <code>minLines</code>
+
+One can use `minLines` and `maxLines` to indicate how many line breaks
+(if any) will be checked to find a jsdoc comment block before the given
+code block. These settings default to `0` and `1` respectively.
+
+In conjunction with the `require-jsdoc` rule, these settings can
+be enforced so as to report problems if a jsdoc block is not found within
+the specified boundaries. The settings are also used in the fixer to determine
+how many line breaks to add when a block is missing.
 
 <a name="eslint-plugin-jsdoc-settings-mode"></a>
 ### Mode
