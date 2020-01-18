@@ -5351,8 +5351,9 @@ The following tags will also be checked but only when the mode is `closure`:
 
 The following types are always considered defined.
 
-- `null`, `undefined`, `void`, `string`, `boolean`, `object`, `function`
-- `number`, `NaN`, `Infinity`
+- `null`, `undefined`, `void`, `string`, `boolean`, `object`,
+  `function`, `symbol`
+- `number`, `bigint`, `NaN`, `Infinity`
 - `any`, `*`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
 
