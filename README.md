@@ -7794,6 +7794,20 @@ const myObject = {
 };
 // Options: [{"contexts":["Property"]}]
 // Message: Missing JSDoc comment.
+
+/**
+ * Foo interface documentation.
+ */
+export interface Foo extends Bar {
+  /**
+   * baz method documentation.
+   */
+  baz(): void;
+
+  meow(): void;
+}
+// Options: [{"contexts":["TSMethodSignature"]}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:
@@ -8401,6 +8415,22 @@ const b = {
 
 export default b;
 // Options: [{"contexts":["ObjectExpression"],"exemptEmptyFunctions":false,"publicOnly":true}]
+
+/**
+ * Foo interface documentation.
+ */
+export interface Foo extends Bar {
+  /**
+   * baz method documentation.
+   */
+  baz(): void;
+
+  /**
+   * meow method documentation.
+   */
+  meow(): void;
+}
+// Options: [{"contexts":["TSMethodSignature"]}]
 ````
 
 

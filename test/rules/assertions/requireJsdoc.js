@@ -1140,6 +1140,32 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * Foo interface documentation.
+       */
+      export interface Foo extends Bar {
+        /**
+         * baz method documentation.
+         */
+        baz(): void;
+
+        meow(): void;
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [{
+        contexts: [
+          'TSMethodSignature',
+        ],
+      }],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [{
     code: `
@@ -2403,6 +2429,30 @@ export default {
     parserOptions: {
       sourceType: 'module',
     },
+  },
+  {
+    code: `
+    /**
+     * Foo interface documentation.
+     */
+    export interface Foo extends Bar {
+      /**
+       * baz method documentation.
+       */
+      baz(): void;
+
+      /**
+       * meow method documentation.
+       */
+      meow(): void;
+    }
+    `,
+    options: [{
+      contexts: [
+        'TSMethodSignature',
+      ],
+    }],
+    parser: require.resolve('@typescript-eslint/parser'),
   },
   ],
 };
