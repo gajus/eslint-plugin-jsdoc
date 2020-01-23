@@ -301,6 +301,25 @@ export default {
     {
       code: `
           /**
+           * @record
+           */
+          class Foo {
+            /**
+             * @returns {string}
+             */
+            bar () {
+            }
+          }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+          /**
            * @returns {undefined} Foo.
            */
           function quux () {
