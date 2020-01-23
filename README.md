@@ -9824,6 +9824,18 @@ class Foo {
 }
 
 /**
+ * @record
+ */
+class Foo {
+  /**
+   * @returns {string}
+   */
+  bar () {
+  }
+}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
  * @returns {undefined} Foo.
  */
 function quux () {

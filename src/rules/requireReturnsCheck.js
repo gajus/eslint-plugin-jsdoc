@@ -1,7 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const canSkip = (utils) => {
-  return utils.hasATag([
+const canSkip = (utils, settings) => {
+  const voidingTags = [
     // An abstract function is by definition incomplete
     // so it is perfectly fine if a return is documented but
     // not present within the function.
@@ -15,14 +15,25 @@ const canSkip = (utils) => {
     'class',
     'constructor',
     'interface',
-  ]) || utils.isConstructor() || utils.classHasTag('interface');
+  ];
+
+  if (settings.mode === 'closure') {
+    // Structural Interface in GCC terms, equivalent to @interface tag as far as this rule is concerned
+    voidingTags.push('record');
+  }
+
+  return utils.hasATag(voidingTags) ||
+    utils.isConstructor() ||
+    utils.classHasTag('interface') ||
+    settings.mode === 'closure' && utils.classHasTag('record');
 };
 
 export default iterateJsdoc(({
   report,
+  settings,
   utils,
 }) => {
-  if (canSkip(utils)) {
+  if (canSkip(utils, settings)) {
     return;
   }
 
