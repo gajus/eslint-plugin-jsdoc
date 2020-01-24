@@ -1,5 +1,5 @@
 // Todo[engine:node@>=7.0.0]: Replace with `Object.entries`
-import entries from 'object.entries-ponyfill';
+import entries from 'object.entries';
 import iterateJsdoc from '../iterateJsdoc';
 
 const validateParameterNames = (

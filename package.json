@@ -9,7 +9,7 @@
     "debug": "^4.1.1",
     "jsdoctypeparser": "^6.1.0",
     "lodash": "^4.17.15",
-    "object.entries-ponyfill": "^1.0.1",
+    "object.entries": "^1.1.1",
     "regextras": "^0.7.0",
     "semver": "^6.3.0",
     "spdx-expression-parse": "^3.0.0"

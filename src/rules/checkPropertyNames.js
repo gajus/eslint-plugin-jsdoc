@@ -1,4 +1,4 @@
-import entries from 'object.entries-ponyfill';
+import entries from 'object.entries';
 import iterateJsdoc from '../iterateJsdoc';
 
 const validatePropertyNames = (
