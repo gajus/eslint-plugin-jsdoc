@@ -1,5 +1,3 @@
-// Todo[engine:node@>=7.0.0]: Replace with `Object.entries`
-import entries from 'object.entries-ponyfill';
 import iterateJsdoc from '../iterateJsdoc';
 
 const defaultTags = {
@@ -63,7 +61,7 @@ export default iterateJsdoc(({
       mustExist = false,
       preventDuplicates = false,
       initialCommentsOnly = false,
-    }] of entries(tags)) {
+    }] of Object.entries(tags)) {
       const obj = utils.getPreferredTagNameObject({tagName});
       if (obj && obj.blocked) {
         utils.reportSettings(

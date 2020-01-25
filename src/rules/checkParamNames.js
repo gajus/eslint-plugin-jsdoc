@@ -1,12 +1,10 @@
-// Todo[engine:node@>=7.0.0]: Replace with `Object.entries`
-import entries from 'object.entries-ponyfill';
 import iterateJsdoc from '../iterateJsdoc';
 
 const validateParameterNames = (
   targetTagName : string, allowExtraTrailingParamDocs: boolean,
   functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report,
 ) => {
-  const paramTags = entries(jsdoc.tags).filter(([, tag]) => {
+  const paramTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
     return tag.tag === targetTagName;
   });
   const paramTagsNonNested = paramTags.filter(([, tag]) => {

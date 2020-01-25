@@ -1,11 +1,10 @@
-import entries from 'object.entries-ponyfill';
 import iterateJsdoc from '../iterateJsdoc';
 
 const validatePropertyNames = (
   targetTagName : string,
   jsdoc, jsdocNode, utils,
 ) => {
-  const propertyTags = entries(jsdoc.tags).filter(([, tag]) => {
+  const propertyTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
     return tag.tag === targetTagName;
   });
 
