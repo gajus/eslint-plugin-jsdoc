@@ -17,6 +17,7 @@ import noBadBlocks from './rules/noBadBlocks';
 import noDefaults from './rules/noDefaults';
 import noTypes from './rules/noTypes';
 import noUndefinedTypes from './rules/noUndefinedTypes';
+import requireDeprecatedDescription from './rules/requireDeprecatedDescription';
 import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
 import requireDescription from './rules/requireDescription';
 import requireExample from './rules/requireExample';
@@ -60,6 +61,7 @@ export default {
         'jsdoc/no-defaults': 'off',
         'jsdoc/no-types': 'off',
         'jsdoc/no-undefined-types': 'warn',
+        'jsdoc/require-deprecated-description': 'warn',
         'jsdoc/require-description': 'off',
         'jsdoc/require-description-complete-sentence': 'off',
         'jsdoc/require-example': 'off',
@@ -101,6 +103,7 @@ export default {
     'no-defaults': noDefaults,
     'no-types': noTypes,
     'no-undefined-types': noUndefinedTypes,
+    'require-deprecated-description': requireDeprecatedDescription,
     'require-description': requireDescription,
     'require-description-complete-sentence': requireDescriptionCompleteSentence,
     'require-example': requireExample,

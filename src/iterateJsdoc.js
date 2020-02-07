@@ -44,6 +44,7 @@ const parseComment = (commentNode, indent, trim = true) => {
             'example', 'return', 'returns', 'throws', 'exception',
             'access', 'version', 'since', 'license', 'author',
             'default', 'defaultvalue',
+            'deprecated',
           ].includes(data.tag)) {
             return null;
           }
