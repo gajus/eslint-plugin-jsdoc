@@ -232,9 +232,10 @@ export default {
             return;
           }
 
-          if (['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type)) {
-            checkJsDoc(node);
-          } else if (node.parent.type === 'Property' && node === node.parent.value) {
+          if (
+            ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
+            node.parent.type === 'Property' && node === node.parent.value
+          ) {
             checkJsDoc(node);
           }
         },

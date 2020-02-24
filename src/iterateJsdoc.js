@@ -374,26 +374,28 @@ const getUtils = (
 };
 
 const getSettings = (context) => {
-  const settings = {};
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  const settings = {
+    // All rules
+    ignorePrivate: Boolean(_.get(context, 'settings.jsdoc.ignorePrivate')),
+    maxLines: Number(_.get(context, 'settings.jsdoc.maxLines', 1)),
+    minLines: Number(_.get(context, 'settings.jsdoc.minLines', 0)),
 
-  // All rules
-  settings.ignorePrivate = Boolean(_.get(context, 'settings.jsdoc.ignorePrivate'));
-  settings.minLines = Number(_.get(context, 'settings.jsdoc.minLines', 0));
-  settings.maxLines = Number(_.get(context, 'settings.jsdoc.maxLines', 1));
+    // `check-tag-names` and many returns/param rules
+    tagNamePreference: _.get(context, 'settings.jsdoc.tagNamePreference') || {},
 
-  // `check-tag-names` and many returns/param rules
-  settings.tagNamePreference = _.get(context, 'settings.jsdoc.tagNamePreference') || {};
+    // `check-types` and `no-undefined-types`
+    preferredTypes: _.get(context, 'settings.jsdoc.preferredTypes') || {},
 
-  // `check-types` and `no-undefined-types`
-  settings.preferredTypes = _.get(context, 'settings.jsdoc.preferredTypes') || {};
+    // `require-param`, `require-description`, `require-example`, `require-returns`
+    overrideReplacesDocs: _.get(context, 'settings.jsdoc.overrideReplacesDocs'),
+    implementsReplacesDocs: _.get(context, 'settings.jsdoc.implementsReplacesDocs'),
+    augmentsExtendsReplacesDocs: _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs'),
 
-  // `require-param`, `require-description`, `require-example`, `require-returns`
-  settings.overrideReplacesDocs = _.get(context, 'settings.jsdoc.overrideReplacesDocs');
-  settings.implementsReplacesDocs = _.get(context, 'settings.jsdoc.implementsReplacesDocs');
-  settings.augmentsExtendsReplacesDocs = _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs');
-
-  // Many rules, e.g., `check-tag-names`
-  settings.mode = _.get(context, 'settings.jsdoc.mode') || 'jsdoc';
+    // Many rules, e.g., `check-tag-names`
+    mode: _.get(context, 'settings.jsdoc.mode') || 'jsdoc',
+  };
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 
   return settings;
 };

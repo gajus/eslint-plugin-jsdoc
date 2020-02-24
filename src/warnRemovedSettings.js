@@ -4,7 +4,7 @@ const warnSettings = WarnSettings();
 
 /**
  * @typedef {(
- *   | "require-jsdoc"
+ *     "require-jsdoc"
  *   | "require-returns"
  *   | "valid-types"
  *   | "require-example"

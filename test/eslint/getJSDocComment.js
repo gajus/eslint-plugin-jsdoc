@@ -10,7 +10,7 @@ const rule = {
     const settings = getSettings(context);
 
     return {
-      ObjectExpression: (node) => {
+      ObjectExpression (node) {
         const comment = getJSDocComment(sourceCode, node, settings);
         if (comment !== null) {
           return;

@@ -146,6 +146,9 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
   const block = scope || globals;
   let symbol;
   switch (node.type) {
+  case 'FunctionDeclaration':
+
+    // Fallthrough
   case 'ClassDeclaration': {
     if (node.id && node.id.type === 'Identifier') {
       return createSymbol(node.id, globals, node, globals);
@@ -181,11 +184,6 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
     }
     /* istanbul ignore next */
     debug('MemberExpression: Missing symbol: %s', node.property.name);
-    break;
-  } case 'FunctionDeclaration': {
-    if (node.id && node.id.type === 'Identifier') {
-      return createSymbol(node.id, globals, node, globals);
-    }
     break;
   }
   }
@@ -232,11 +230,10 @@ const mapVariables = function (node, globals, opt, isExport) {
   case 'Program': {
     if (opts.ancestorsOnly) {
       return false;
-    } else {
-      node.body.forEach((childNode) => {
-        mapVariables(childNode, globals, opts);
-      });
     }
+    node.body.forEach((childNode) => {
+      mapVariables(childNode, globals, opts);
+    });
     break;
   } case 'ExpressionStatement': {
     mapVariables(node.expression, globals, opts);
