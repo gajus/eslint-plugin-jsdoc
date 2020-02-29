@@ -380,27 +380,6 @@ export default {
           /**
            * @param prop
            * @param prop.foo
-           */
-          constructor(prop: { foo: string, bar: string }) {}
-        }
-      `,
-      errors: [
-        {
-          line: 4,
-          message: 'Missing @param "prop.bar"',
-        },
-      ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
-        sourceType: 'module',
-      },
-    },
-    {
-      code: `
-        export class SomeClass {
-          /**
-           * @param prop
-           * @param prop.foo
            * @param prop.bar
            */
           constructor(options: { foo: string, bar: string }) {}

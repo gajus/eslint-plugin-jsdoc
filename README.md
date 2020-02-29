@@ -1669,10 +1669,19 @@ function quux (foo, foo) {
  * @param cfg.foo
  * @param cfg.foo
  */
-function quux ({foo, bar}) {
+function quux ({foo}) {
 
 }
 // Message: Duplicate @param "cfg.foo"
+
+/**
+ * @param cfg
+ * @param cfg.foo
+ */
+function quux ({foo, bar}) {
+
+}
+// Message: Missing @param "cfg.bar"
 
 /**
  * @param cfg
@@ -1680,7 +1689,7 @@ function quux ({foo, bar}) {
  * @param [cfg.foo]
  * @param baz
  */
-function quux ({foo, bar}, baz) {
+function quux ({foo}, baz) {
 
 }
 // Message: Duplicate @param "cfg.foo"
@@ -1688,13 +1697,33 @@ function quux ({foo, bar}, baz) {
 /**
  * @param cfg
  * @param cfg.foo
+ * @param baz
+ */
+function quux ({foo, bar}, baz) {
+
+}
+// Message: Missing @param "cfg.bar"
+
+/**
+ * @param cfg
+ * @param cfg.foo
+ * @param [cfg.foo="with a default"]
+ * @param baz
+ */
+function quux ({foo}, baz) {
+
+}
+// Message: Duplicate @param "cfg.foo"
+
+/**
+ * @param cfg
  * @param [cfg.foo="with a default"]
  * @param baz
  */
 function quux ({foo, bar}, baz) {
 
 }
-// Message: Duplicate @param "cfg.foo"
+// Message: Missing @param "cfg.bar"
 
 export class SomeClass {
   /**
@@ -1703,6 +1732,35 @@ export class SomeClass {
   constructor(private property: string) {}
 }
 // Message: Expected @param names to be "property". Got "prop".
+
+export class SomeClass {
+  /**
+   * @param prop
+   * @param prop.foo
+   */
+  constructor(prop: { foo: string, bar: string }) {}
+}
+// Message: Missing @param "prop.bar"
+
+export class SomeClass {
+  /**
+   * @param prop
+   * @param prop.foo
+   * @param prop.bar
+   */
+  constructor(options: { foo: string, bar: string }) {}
+}
+// Message: Missing @param "options.foo"
+
+export class SomeClass {
+  /**
+   * @param options
+   * @param options.foo
+   * @param options.bar
+   */
+  constructor(options: { foo: string }) {}
+}
+// Message: @param "options.bar" does not exist on options
 
 /**
  * @param foo
@@ -1773,6 +1831,8 @@ function quux (...args) {
 
 /**
  * @param foo
+ * @param foo.a
+ * @param foo.b
  */
 function quux ({a, b}) {
 
@@ -1819,6 +1879,15 @@ export class SomeClass {
   constructor(private property: string) {}
 }
 
+export class SomeClass {
+  /**
+   * @param options
+   * @param options.foo
+   * @param options.bar
+   */
+  constructor(options: { foo: string, bar: string }) {}
+}
+
 /**
  * @param {Error} error Exit code
  * @param {number} [code = 1] Exit code
@@ -1834,6 +1903,15 @@ function quux (foo) {
 
 }
 // Options: [{"allowExtraTrailingParamDocs":true}]
+
+/**
+ * @param cfg
+ * @param cfg.foo
+ * @param baz
+ */
+function quux ({foo}, baz) {
+
+}
 ````
 
 
