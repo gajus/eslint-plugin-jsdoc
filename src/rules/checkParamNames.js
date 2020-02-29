@@ -49,6 +49,51 @@ const validateParameterNames = (
       return true;
     }
 
+    if (Array.isArray(functionParameterName)) {
+      const [parameterName, properties] = functionParameterName;
+      const tagName = parameterName ? parameterName : tag.name.trim();
+      const expectedNames = properties.map((name) => {
+        return `${tagName}.${name}`;
+      });
+      const actualNames = paramTags.map(([, paramTag]) => {
+        return paramTag.name.trim();
+      });
+
+      const missingProperties = [];
+      expectedNames.forEach((name) => {
+        if (!actualNames.includes(name)) {
+          missingProperties.push(name);
+        }
+      });
+
+      const extraProperties = [];
+      actualNames.filter((name) => {
+        return name.includes(tag.name.trim());
+      }).forEach((name) => {
+        if (!expectedNames.includes(name) && name !== tag.name) {
+          extraProperties.push(name);
+        }
+      });
+
+      if (missingProperties.length) {
+        missingProperties.forEach((missingProperty) => {
+          report(`Missing @${targetTagName} "${missingProperty}"`, null, tag);
+        });
+
+        return true;
+      }
+
+      if (extraProperties.length) {
+        extraProperties.forEach((extraProperty) => {
+          report(`@${targetTagName} "${extraProperty}" does not exist on ${tag.name}`, null, tag);
+        });
+
+        return true;
+      }
+
+      return false;
+    }
+
     if (functionParameterName === '<ObjectPattern>' || functionParameterName === '<ArrayPattern>') {
       return false;
     }
