@@ -231,7 +231,7 @@ export default {
            * @param cfg.foo
            * @param cfg.foo
            */
-          function quux ({foo, bar}) {
+          function quux ({foo}) {
 
           }
       `,
@@ -239,6 +239,23 @@ export default {
         {
           line: 5,
           message: 'Duplicate @param "cfg.foo"',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           */
+          function quux ({foo, bar}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "cfg.bar"',
         },
       ],
     },
@@ -250,7 +267,7 @@ export default {
            * @param [cfg.foo]
            * @param baz
            */
-          function quux ({foo, bar}, baz) {
+          function quux ({foo}, baz) {
 
           }
       `,
@@ -266,6 +283,42 @@ export default {
           /**
            * @param cfg
            * @param cfg.foo
+           * @param baz
+           */
+          function quux ({foo, bar}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "cfg.bar"',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param [cfg.foo="with a default"]
+           * @param baz
+           */
+          function quux ({foo}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Duplicate @param "cfg.foo"',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param cfg
            * @param [cfg.foo="with a default"]
            * @param baz
            */
@@ -275,8 +328,8 @@ export default {
       `,
       errors: [
         {
-          line: 5,
-          message: 'Duplicate @param "cfg.foo"',
+          line: 3,
+          message: 'Missing @param "cfg.bar"',
         },
       ],
     },
@@ -293,6 +346,96 @@ export default {
         {
           line: 4,
           message: 'Expected @param names to be "property". Got "prop".',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param prop
+           * @param prop.foo
+           */
+          constructor(prop: { foo: string, bar: string }) {}
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing @param "prop.bar"',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param prop
+           * @param prop.foo
+           */
+          constructor(prop: { foo: string, bar: string }) {}
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing @param "prop.bar"',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param prop
+           * @param prop.foo
+           * @param prop.bar
+           */
+          constructor(options: { foo: string, bar: string }) {}
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing @param "options.foo"',
+        },
+        {
+          line: 4,
+          message: 'Missing @param "options.bar"',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param options
+           * @param options.foo
+           * @param options.bar
+           */
+          constructor(options: { foo: string }) {}
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@param "options.bar" does not exist on options',
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
@@ -409,6 +552,8 @@ export default {
       code: `
           /**
            * @param foo
+           * @param foo.a
+           * @param foo.b
            */
           function quux ({a, b}) {
 
@@ -477,6 +622,22 @@ export default {
     },
     {
       code: `
+        export class SomeClass {
+          /**
+           * @param options
+           * @param options.foo
+           * @param options.bar
+           */
+          constructor(options: { foo: string, bar: string }) {}
+        }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
           /**
            * @param {Error} error Exit code
            * @param {number} [code = 1] Exit code
@@ -500,6 +661,18 @@ export default {
           allowExtraTrailingParamDocs: true,
         },
       ],
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param baz
+           */
+          function quux ({foo}, baz) {
+
+          }
+      `,
     },
   ],
 };

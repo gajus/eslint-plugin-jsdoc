@@ -4,8 +4,22 @@ import WarnSettings from './WarnSettings';
 
 type ParserMode = "jsdoc"|"typescript"|"closure";
 
-const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
+const getFunctionParameterNames = (functionNode : Object) : Array<string | [?string, Array<string>]> => {
   const getParamName = (param) => {
+    if (_.has(param, 'typeAnnotation')) {
+      const typeAnnotation = param.typeAnnotation;
+      if (typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
+        const propertyNames = typeAnnotation.typeAnnotation.members.map((member) => {
+          return member.key.name;
+        });
+        if (_.has(param, 'name')) {
+          return [param.name, propertyNames];
+        }
+
+        return [undefined, propertyNames];
+      }
+    }
+
     if (_.has(param, 'name')) {
       return param.name;
     }
@@ -15,6 +29,12 @@ const getFunctionParameterNames = (functionNode : Object) : Array<string> => {
     }
 
     if (param.type === 'ObjectPattern' || _.get(param, 'left.type') === 'ObjectPattern') {
+      if (param.properties) {
+        return [undefined, param.properties.map((prop) => {
+          return prop.value.name;
+        })];
+      }
+
       return '<ObjectPattern>';
     }
 
