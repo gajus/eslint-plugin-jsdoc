@@ -24,15 +24,11 @@ script:
 env:
   matrix:
     - ESLINT=6
-    - ESLINT=5
 matrix:
   fast_finish: true
   include:
     - node_js: 'lts/*'
       env: LINT=true
-  exclude:
-    - node_js: 6
-      env: ESLINT=6
 after_success:
   - export NODE_ENV=production
   - npm run build
