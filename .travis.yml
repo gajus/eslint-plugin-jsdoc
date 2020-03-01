@@ -12,7 +12,7 @@ before_script: >
     npm install --no-save "eslint@${ESLINT}"
     else
       echo "Node 8+"
-      npm install --no-save "eslint@${ESLINT}" husky@3.1.0 semantic-release@15.14.0 eslint-plugin-canonical@18.1.1
+      npm install --no-save "eslint@${ESLINT}" husky@3.1.0 semantic-release@15.14.0 eslint-config-canonical@18.1.1
   fi
 notifications:
   email: false
