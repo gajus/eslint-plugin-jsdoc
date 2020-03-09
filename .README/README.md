@@ -137,14 +137,14 @@ object supplied as the second argument in an array after the error level.
 
 ## Settings
 
-### Allow `@private` to disable rules for that comment block
+### Allow `@private` to disable rules for that comment block (`ignorePrivate`)
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
   on which a `@private` tag (or `@access private`) occurs. Defaults to
   `false`. Note: This has no effect with the rule `check-access` (whose
   purpose is to check access modifiers).
 
-### `maxLines` and `minLines`
+#### Controlling spacing between code and comment blocks (`maxLines` and `minLines`)
 
 One can use `minLines` and `maxLines` to indicate how many line breaks
 (if any) will be checked to find a jsdoc comment block before the given
@@ -155,7 +155,7 @@ be enforced so as to report problems if a jsdoc block is not found within
 the specified boundaries. The settings are also used in the fixer to determine
 how many line breaks to add when a block is missing.
 
-### Mode
+### Linting mode (`mode`)
 
 - `settings.jsdoc.mode` - Set to `jsdoc` (the default), `typescript`, or `closure`.
   Currently is used for the following:
@@ -167,7 +167,7 @@ how many line breaks to add when a block is missing.
     so these tags will additionally be checked in "closure" mode)
   - Check preferred tag names
 
-### Alias Preference
+### Alias Preference (`tagNamePreference`)
 
 Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.
 
@@ -281,7 +281,7 @@ This setting is utilized by the the rule for tag name checking
 - `require-returns-description`
 - `require-returns-type`
 
-### `@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`
+### `@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns` (`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`)
 
 The following settings allows the element(s) they reference to be omitted
 on the JSDoc comment block of the function or that of its parent class
@@ -307,7 +307,7 @@ The format of the configuration is as follows:
 }
 ```
 
-### Settings to Configure `check-types` and `no-undefined-types`
+### Settings to Configure `check-types` and `no-undefined-types` (`preferredTypes`)
 
 - `settings.jsdoc.preferredTypes` An option map to indicate preferred
   or forbidden types (if default types are indicated here, these will
