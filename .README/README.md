@@ -23,7 +23,7 @@ If you have installed `ESLint` globally, you have to install JSDoc plugin global
 npm install --save-dev eslint-plugin-jsdoc
 ```
 
-## Configuration
+## Configuration introduction
 
 To enable rules, you may use either of the following approaches in setting
 up your ESLint configuration file.
@@ -109,7 +109,7 @@ Problems reported by rules which have a wrench :wrench: below can be fixed autom
 |:heavy_check_mark:||[require-returns-type](#eslint-plugin-jsdoc-rules-require-returns-type)|Requires that `@returns` tag has a type value (in curly brackets).|
 |:heavy_check_mark:||[valid-types](#eslint-plugin-jsdoc-rules-valid-types)|Requires all types/namepaths to be valid JSDoc, Closure compiler, or TypeScript types (configurable in settings)|
 
-## Options
+## Options overview
 
 Rules may, as per the [ESLint user guide](https://eslint.org/docs/user-guide/configuring), have their own individual options. In `eslint-plugin-jsdoc`, a few options,
 such as, `exemptedBy` and `contexts`, may be used across different rules.
