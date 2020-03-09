@@ -1,6 +1,6 @@
 ### `require-description-complete-sentence`
 
-{"gitdown": "contents", "rootId": "require-description-complete-sentence"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-description-complete-sentence"}
 
 Requires that block description, explicit `@description`, and `@param`/`@returns`
 tag descriptions are written in complete sentences, i.e.,
@@ -45,10 +45,23 @@ You can provide an `abbreviations` options array to avoid such strings of text
 being treated as sentence endings when followed by dots. The `.` is not
 necessary at the end of the array items.
 
+#### Fixer
+
+(Todo)
+
+#### Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|doc block, `param`, `returns`, `description`, `property`, `summary`, `file`, `classdesc`, `todo`, `deprecated`, `throws`, 'yields' and others added by `tags`|
 |Aliases|`arg`, `argument`, `return`, `desc`, `prop`, `fileoverview`, `overview`, `exception`, `yield`|
 |Options|`tags`, `abbreviations`|
-<!-- assertions requireDescriptionCompleteSentence -->
+
+#### Failing examples
+
+<!-- assertions-failing requireDescriptionCompleteSentence -->
+
+#### Passing examples
+
+<!-- assertions-passing requireDescriptionCompleteSentence -->

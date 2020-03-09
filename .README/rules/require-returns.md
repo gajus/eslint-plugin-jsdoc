@@ -1,8 +1,8 @@
 ### `require-returns`
 
-{"gitdown": "contents", "rootId": "require-returns"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-returns"}
 
-Requires returns are documented.
+Requires that return statements are documented.
 
 Will also report if multiple `@returns` tags are present.
 
@@ -37,6 +37,8 @@ Will also report if multiple `@returns` tags are present.
 'jsdoc/require-returns': ['error', {forceReturnsWithAsync: true}]
 ```
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -45,4 +47,10 @@ Will also report if multiple `@returns` tags are present.
 |Options|`contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
-<!-- assertions requireReturns -->
+#### Failing examples
+
+<!-- assertions-failing requireReturns -->
+
+#### Passing examples
+
+<!-- assertions-passing requireReturns -->

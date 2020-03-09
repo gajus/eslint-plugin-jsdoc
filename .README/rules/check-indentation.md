@@ -1,6 +1,6 @@
 ### `check-indentation`
 
-{"gitdown": "contents", "rootId": "check-indentation"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-check-indentation"}
 
 Reports invalid padding inside JSDoc blocks.
 
@@ -44,10 +44,18 @@ report a padding issue:
  */
 ```
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
 |Options| `excludeTags` |
 
-<!-- assertions checkIndentation -->
+#### Failing examples
+
+<!-- assertions-failing checkIndentation -->
+
+#### Passing examples
+
+<!-- assertions-passing checkIndentation -->

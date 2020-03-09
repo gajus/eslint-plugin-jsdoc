@@ -1,6 +1,6 @@
 ### `require-param`
 
-{"gitdown": "contents", "rootId": "require-param"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-param"}
 
 Requires that all function parameters are documented.
 
@@ -11,6 +11,12 @@ An options object accepts one optional property:
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
     block avoids the need for a `@param`. Defaults to an empty array.
 
+#### Fixer
+
+(Todo)
+
+#### Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -19,4 +25,10 @@ An options object accepts one optional property:
 |Options|`exemptedBy`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
-<!-- assertions requireParam -->
+#### Failing examples
+
+<!-- assertions-failing requireParam -->
+
+#### Passing examples
+
+<!-- assertions-passing requireParam -->

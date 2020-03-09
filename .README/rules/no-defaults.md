@@ -1,6 +1,6 @@
 ### `no-defaults`
 
-{"gitdown": "contents", "rootId": "no-defaults"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-no-defaults"}
 
 This rule reports defaults being used on the relevant portion of `@param`
 or `@default`. It also optionally reports the presence of the
@@ -34,6 +34,14 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+#### Fixer
+
+Will strip the default value (i.e. `defaultValue` within
+`[<name>=<defaultValue>]`) and if `noOptionalParamNames` is set, the optionality
+markers (`[` and `]`) will be stripped as well.
+
+#### Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -41,4 +49,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 |Aliases|`arg`, `argument`, `defaultvalue`|
 |Options|`contexts`, `noOptionalParamNames`|
 
-<!-- assertions noDefaults -->
+#### Failing examples
+
+<!-- assertions-failing noDefaults -->
+
+#### Passing examples
+
+<!-- assertions-passing noDefaults -->

@@ -1,6 +1,6 @@
 ### `implements-on-classes`
 
-{"gitdown": "contents", "rootId": "implements-on-classes"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-implements-on-classes"}
 
 Reports an issue with any non-constructor function using `@implements`.
 
@@ -23,10 +23,18 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`implements` (prevented)|
 |Options|`contexts`|
 
-<!-- assertions implementsOnClasses -->
+#### Failing examples
+
+<!-- assertions-failing implementsOnClasses -->
+
+#### Passing examples
+
+<!-- assertions-passing implementsOnClasses -->

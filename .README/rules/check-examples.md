@@ -1,6 +1,6 @@
 ### `check-examples`
 
-{"gitdown": "contents", "rootId": "check-examples"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-check-examples"}
 
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.
 
@@ -136,10 +136,18 @@ decreasing precedence:
 * `node/no-missing-import` - See `import/no-unresolved`.
 * `node/no-missing-require` -  See `import/no-unresolved`.
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|`example`|
 |Options| *See above* |
 
-<!-- assertions checkExamples -->
+#### Failing examples
+
+<!-- assertions-failing checkExamples -->
+
+#### Passing examples
+
+<!-- assertions-passing checkExamples -->

@@ -1,6 +1,6 @@
 ### `require-hyphen-before-param-description`
 
-{"gitdown": "contents", "rootId": "require-hyphen-before-param-description"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-hyphen-before-param-description"}
 
 Requires a hyphen before the `@param` description.
 
@@ -17,6 +17,12 @@ The options object may have the following properties:
 - `checkProperties` - Boolean on whether to also apply the rule to `@property`
   tags.
 
+#### Fixer
+
+(Todo)
+
+#### Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -24,4 +30,10 @@ The options object may have the following properties:
 |Aliases|`arg`, `argument`; optionally `prop`|
 |Options|(a string matching `"always"|"never"`) and an optional object with a `checkProperties` property|
 
-<!-- assertions requireHyphenBeforeParamDescription -->
+#### Failing examples
+
+<!-- assertions-failing requireHyphenBeforeParamDescription -->
+
+#### Passing examples
+
+<!-- assertions-passing requireHyphenBeforeParamDescription -->

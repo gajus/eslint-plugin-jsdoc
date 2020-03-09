@@ -1,12 +1,21 @@
 ### `require-property-type`
 
-{"gitdown": "contents", "rootId": "require-property-type"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-property-type"}
 
-Requires that each `@property` tag has a `type` value.
+Requires that each `@property` tag has a type value (within curly brackets).
+
+#### Context and settings
 
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/A|
+|Tags|`property`|
+|Aliases|`prop`|
 
-<!-- assertions requirePropertyType -->
+#### Failing examples
+
+<!-- assertions-failing requirePropertyType -->
+
+#### Passing examples
+
+<!-- assertions-passing requirePropertyType -->

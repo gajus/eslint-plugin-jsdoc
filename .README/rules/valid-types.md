@@ -1,8 +1,9 @@
 ### `valid-types`
 
-{"gitdown": "contents", "rootId": "valid-types"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-valid-types"}
 
-Requires all types to be valid JSDoc or Closure compiler types without syntax errors.
+Requires all types/namepaths to be valid JSDoc, Closure compiler, or TypeScript types
+(configured by `settings.jsdoc.mode`).
 
 Also impacts behaviors on namepath (or event)-defining and pointing tags:
 
@@ -48,6 +49,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
   that `@see` only use name paths (the tag is normally permitted to
   allow other text)
 
+#### Context and settings
 
 |||
 |---|---|
@@ -58,4 +60,10 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 |Options|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
 |Settings|`mode`|
 
-<!-- assertions validTypes -->
+#### Failing examples
+
+<!-- assertions-failing validTypes -->
+
+#### Passing examples
+
+<!-- assertions-passing validTypes -->

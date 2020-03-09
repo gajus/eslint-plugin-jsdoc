@@ -1,8 +1,8 @@
 ### `require-returns-type`
 
-{"gitdown": "contents", "rootId": "require-returns-type"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-returns-type"}
 
-Requires that `@returns` tag has `type` value.
+Requires that `@returns` tag has a type value (in curly brackets).
 
 #### Options
 
@@ -16,6 +16,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -23,4 +25,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 |Aliases|`return`|
 |Options|`contexts`|
 
-<!-- assertions requireReturnsType -->
+#### Failing examples
+
+<!-- assertions-failing requireReturnsType -->
+
+#### Passing examples
+
+<!-- assertions-passing requireReturnsType -->

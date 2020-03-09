@@ -1,6 +1,6 @@
 ### `match-description`
 
-{"gitdown": "contents", "rootId": "match-description"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-match-description"}
 
 Enforces a regular expression pattern on descriptions.
 
@@ -93,6 +93,8 @@ where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes)
 Overrides the default contexts (see below). Set to `"any"` if you want
 the rule to apply to any jsdoc block throughout your files.
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -101,4 +103,10 @@ the rule to apply to any jsdoc block throughout your files.
 |Settings||
 |Options|`contexts`, `tags` (accepts tags with names and optional type such as 'param', 'arg', 'argument', 'property', and 'prop', and accepts arbitrary list of other tags with an optional type (but without names), e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
-<!-- assertions matchDescription -->
+#### Failing examples
+
+<!-- assertions-failing matchDescription -->
+
+#### Passing examples
+
+<!-- assertions-passing matchDescription -->

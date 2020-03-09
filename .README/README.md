@@ -137,7 +137,7 @@ object supplied as the second argument in an array after the error level.
 
 ## Settings
 
-{"gitdown": "contents", "rootId": "settings"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-settings"}
 
 ### Allow `@private` to disable rules for that comment block (`ignorePrivate`)
 

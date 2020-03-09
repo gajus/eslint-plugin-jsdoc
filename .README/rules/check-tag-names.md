@@ -1,6 +1,6 @@
 ### `check-tag-names`
 
-{"gitdown": "contents", "rootId": "check-tag-names"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-check-tag-names"}
 
 Reports invalid block tag names.
 
@@ -156,6 +156,10 @@ wizaction
 
 Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreference` will automatically be considered as valid.
 
+#### Fixer
+
+(Todo)
+
 #### Options
 
 ##### `definedTags`
@@ -169,6 +173,8 @@ The format is as follows:
 }
 ```
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -176,4 +182,10 @@ The format is as follows:
 |Options|`definedTags`|
 |Settings|`tagNamePreference`, `mode`|
 
-<!-- assertions checkTagNames -->
+#### Failing examples
+
+<!-- assertions-failing checkTagNames -->
+
+#### Passing examples
+
+<!-- assertions-passing checkTagNames -->

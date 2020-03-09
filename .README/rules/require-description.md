@@ -1,6 +1,6 @@
 ### `require-description`
 
-{"gitdown": "contents", "rootId": "require-description"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-description"}
 
 Requires that all functions have a description.
 
@@ -25,6 +25,8 @@ An options object may have any of the following properties:
     `@description` tags (`"tag"`) as satisfying the rule. Set to `"any"` to
     accept either style. Defaults to `"body"`.
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -33,4 +35,10 @@ An options object may have any of the following properties:
 |Options|`contexts`, `exemptedBy`, `descriptionStyle`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
-<!-- assertions requireDescription -->
+#### Failing examples
+
+<!-- assertions-failing requireDescription -->
+
+#### Passing examples
+
+<!-- assertions-passing requireDescription -->

@@ -1,8 +1,8 @@
 ### `require-param-type`
 
-{"gitdown": "contents", "rootId": "require-param-type"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-param-type"}
 
-Requires that each `@param` tag has a `type` value.
+Requires that each `@param` tag has a type value (within curly brackets).
 
 #### Options
 
@@ -16,6 +16,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -23,4 +25,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 |Aliases|`arg`, `argument`|
 |Options|`contexts`|
 
-<!-- assertions requireParamType -->
+#### Failing examples
+
+<!-- assertions-failing requireParamType -->
+
+#### Passing examples
+
+<!-- assertions-passing requireParamType -->

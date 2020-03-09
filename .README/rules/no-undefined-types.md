@@ -1,6 +1,6 @@
 ### `no-undefined-types`
 
-{"gitdown": "contents", "rootId": "no-undefined-types"}
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-no-undefined-types"}
 
 Checks that types in jsdoc comments are defined. This can be used to check
 unimported types.
@@ -38,6 +38,8 @@ An option object may have the following key:
   are automatically considered as defined (in addition to globals, etc.).
   Defaults to an empty array.
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -47,4 +49,10 @@ An option object may have the following key:
 |Options|`definedTypes`|
 |Settings|`preferredTypes`, `mode`|
 
-<!-- assertions noUndefinedTypes -->
+#### Failing examples
+
+<!-- assertions-failing noUndefinedTypes -->
+
+#### Passing examples
+
+<!-- assertions-passing noUndefinedTypes -->
