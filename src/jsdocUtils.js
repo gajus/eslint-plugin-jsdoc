@@ -11,7 +11,7 @@ const flattenRoots = (params, root = '') => {
     if (Array.isArray(cur)) {
       const inner = [
         root ? `${root}.${cur[0]}` : cur[0],
-        ...flattenRoots(cur[1], root ? `${root}.${cur[0]}` : cur[0])
+        ...flattenRoots(cur[1], root ? `${root}.${cur[0]}` : cur[0]),
       ].filter(Boolean);
       // eslint-disable-next-line no-param-reassign
       acc = acc.concat(inner);
