@@ -335,7 +335,6 @@ export default {
     },
     {
       code: `
-<<<<<<< HEAD
           /**
            * @param args
            */
@@ -356,8 +355,6 @@ export default {
     },
     {
       code: `
-=======
->>>>>>> e01c25584bdf16f2aaf43782531a56738fcd9fbc
         export class SomeClass {
           /**
            * @param prop
@@ -640,7 +637,6 @@ export default {
     },
     {
       code: `
-<<<<<<< HEAD
         export class SomeClass {
           /**
            * @param options
@@ -673,8 +669,6 @@ export default {
     },
     {
       code: `
-=======
->>>>>>> e01c25584bdf16f2aaf43782531a56738fcd9fbc
           /**
            * @param {Error} error Exit code
            * @param {number} [code = 1] Exit code
