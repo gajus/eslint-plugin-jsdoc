@@ -1725,6 +1725,14 @@ function quux ({foo, bar}, baz) {
 }
 // Message: Missing @param "cfg.bar"
 
+/**
+ * @param args
+ */
+function quux ({a, b}) {
+
+}
+// Message: Missing @param "args.a"
+
 export class SomeClass {
   /**
    * @param prop
@@ -1886,6 +1894,24 @@ export class SomeClass {
    * @param options.bar
    */
   constructor(options: { foo: string, bar: string }) {}
+}
+
+export class SomeClass {
+  /**
+   * @param options
+   * @param options.foo
+   * @param options.bar
+   */
+  constructor({ foo, bar }: { foo: string, bar: string }) {}
+}
+
+export class SomeClass {
+  /**
+   * @param options
+   * @param options.foo
+   * @param options.bar
+   */
+  constructor({ foo, bar }: { foo: string, bar: string }) {}
 }
 
 /**
@@ -8862,6 +8888,38 @@ function quux (foo) {
 /**
  *
  */
+function quux ({foo}) {
+
+}
+// Message: Missing JSDoc @param "root.foo" declaration.
+
+/**
+ * @param
+ */
+function quux ({foo}) {
+
+}
+// Message: Missing JSDoc @param "root.foo" declaration.
+
+/**
+ * @param options
+ */
+function quux ({foo}) {
+
+}
+// Message: Missing JSDoc @param "options.foo" declaration.
+
+/**
+ * @param
+ */
+function quux ({ foo, bar__: { baz__ }}) {
+
+}
+// Message: Missing JSDoc @param "root.foo" declaration.
+
+/**
+ *
+ */
 function quux (foo, bar) {
 
 }
@@ -9025,9 +9083,9 @@ function quux (foo) {
 /**
  *
  */
-function quux ({bar, baz}, foo) {
+function quux ({bar, baz___}, foo) {
 }
-// Message: Missing JSDoc @param "foo" declaration.
+// Message: Missing JSDoc @param "root.bar" declaration.
 
 /**
  *
@@ -9061,6 +9119,42 @@ function assign (employees, name) {
 
 };
 // Message: Missing JSDoc @param "name" declaration.
+
+/**
+ * @param options
+ */
+function quux ({foo: bar}) {
+
+}
+// Message: Missing JSDoc @param "options.foo" declaration.
+
+class Client {
+  /**
+   * Set collection data.
+   * @param  {Object}   data                    The collection data object.
+   * @param  {number}   data.last_modified
+   * @param  {Object}   options            The options object.
+   * @param  {Object}   [options.headers]       The headers object option.
+   * @param  {Number}   [options.retry=0]       Number of retries to make
+   *     when faced with transient errors.
+   * @param  {Boolean}  [options.safe]          The safe option.
+   * @param  {Boolean}  [options.patch]         The patch option.
+   * @param  {Number}   [options.last_modified] The last_modified option.
+   * @return {Promise<Object, Error>}
+   */
+  async setData(
+    data: { last_modified?: number },
+    options: {
+      headers?: Record<string, string>;
+      safe?: boolean;
+      retry?: number;
+      patch?: boolean;
+      last_modified?: number;
+      permissions?: [];
+    } = {}
+  ) {}
+}
+// Message: Missing JSDoc @param "options.permissions" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -9386,10 +9480,10 @@ export class SomeClass {
  * Assign the project to an employee.
  *
  * @param {object} employee - The employee who is responsible for the project.
- * @param {string} employee.name - The name of the employee.
- * @param {string} employee.department - The employee's department.
+ * @param {string} employee.name1 - The name of the employee.
+ * @param {string} employee.department1 - The employee's department.
  */
-function assign({name, department}) {
+function assign({name1, department1}) {
   // ...
 }
 
@@ -9410,11 +9504,41 @@ export abstract class StephanPlugin<O, D> {
      *
      * @param args Arguments compiled and provided by StephanClient.
      * @param args.options The options as provided by the user, or an empty object if not provided.
+     * @param args.client The options as provided by the user, or an empty object if not provided.
      * @param defaultOptions The default options as provided by the plugin, or an empty object.
      */
     public constructor({options, client}: {
         options: O;
         client: unknown;
+    }, defaultOptions: D) {
+
+    }
+}
+
+export abstract class StephanPlugin<O, D> {
+
+    /**
+     * Called right after Stephan loads the plugin file.
+     *
+     * @example
+     *```typescript
+     * type Options = {
+     *      verbose?: boolean;
+     *      token?: string;
+     * }
+     * ```
+     *
+     * Note that your Options type should only have optional properties...
+     *
+     * @param args Arguments compiled and provided by StephanClient.
+     * @param args.options The options as provided by the user, or an empty object if not provided.
+     * @param args.client The options as provided by the user, or an empty object if not provided.
+     * @param args.client.name The name of the client.
+     * @param defaultOptions The default options as provided by the plugin, or an empty object.
+     */
+    public constructor({ options, client: { name } }: {
+        options: O;
+        client: { name: string };
     }, defaultOptions: D) {
 
     }
