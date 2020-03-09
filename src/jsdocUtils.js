@@ -4,19 +4,45 @@ import WarnSettings from './WarnSettings';
 
 type ParserMode = "jsdoc"|"typescript"|"closure";
 
-const getFunctionParameterNames = (functionNode : Object) : Array<string | [?string, Array<string>]> => {
+// Given a nested array of property names, reduce them to a single array,
+// appending the name of the root element along the way if present.
+const flattenRoots = (params, root = '') => {
+  return params.reduce((acc, cur, idx) => {
+    if (Array.isArray(cur)) {
+      const inner = [cur[0], ...flattenRoots(cur[1], root ? `${root}.${cur[0]}` : cur[0])].filter(Boolean);
+      acc = acc.concat(inner);
+    } else {
+      acc.push(root ? `${root}.${cur}` : cur);
+    }
+
+    return acc;
+  }, []);
+};
+
+type T = string | [?string, T];
+const getPropertiesFromPropertySignature = (propSignature): T => {
+  if (propSignature.typeAnnotation && propSignature.typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
+    return [propSignature.key.name, propSignature.typeAnnotation.typeAnnotation.members.map((member) => {
+      return getPropertiesFromPropertySignature(member);
+    })];
+  }
+
+  return propSignature.key.name;
+};
+
+const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
   const getParamName = (param) => {
-    if (_.has(param, 'typeAnnotation')) {
-      const typeAnnotation = param.typeAnnotation;
+    if (_.has(param, 'typeAnnotation') || _.has(param, 'left.typeAnnotation')) {
+      const typeAnnotation = _.has(param, 'left.typeAnnotation') ? param.left.typeAnnotation : param.typeAnnotation;
       if (typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
         const propertyNames = typeAnnotation.typeAnnotation.members.map((member) => {
-          return member.key.name;
+          return getPropertiesFromPropertySignature(member);
         });
-        if (_.has(param, 'name')) {
-          return [param.name, propertyNames];
+        if (_.has(param, 'name') || _.has(param, 'left.name')) {
+          return [_.has(param, 'left.name') ? param.left.name : param.name, flattenRoots(propertyNames)];
         }
 
-        return [undefined, propertyNames];
+        return [undefined, flattenRoots(propertyNames)];
       }
     }
 
@@ -30,12 +56,26 @@ const getFunctionParameterNames = (functionNode : Object) : Array<string | [?str
 
     if (param.type === 'ObjectPattern' || _.get(param, 'left.type') === 'ObjectPattern') {
       if (param.properties) {
-        return [undefined, param.properties.map((prop) => {
-          return prop.value.name;
-        })];
+        const roots = param.properties.map((prop) => {
+          return getParamName(prop);
+        });
+
+        return [undefined, flattenRoots(roots)];
       }
 
       return '<ObjectPattern>';
+    }
+
+    if (param.type === 'Property') {
+      if (param.value.type === 'ObjectPattern') {
+        return [param.key.name, param.value.properties.map((prop) => {
+          return getParamName(prop);
+        })];
+      }
+
+      if (param.key.type === 'Identifier') {
+        return param.key.name;
+      }
     }
 
     if (param.type === 'ArrayPattern' || _.get(param, 'left.type') === 'ArrayPattern') {
@@ -548,6 +588,7 @@ const getIndent = (sourceCode) => {
 export default {
   enforcedContexts,
   filterTags,
+  flattenRoots,
   getContextObject,
   getFunctionParameterNames,
   getIndent,

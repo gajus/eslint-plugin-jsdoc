@@ -166,6 +166,10 @@ const getUtils = (
     } : null, tag);
   };
 
+  utils.flattenRoots = (params) => {
+    return jsdocUtils.flattenRoots(params);
+  };
+
   utils.getFunctionParameterNames = () => {
     return jsdocUtils.getFunctionParameterNames(node);
   };

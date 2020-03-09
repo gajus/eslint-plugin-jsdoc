@@ -335,6 +335,26 @@ export default {
     },
     {
       code: `
+          /**
+           * @param args
+           */
+          function quux ({a, b}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "args.a"',
+        },
+        {
+          line: 3,
+          message: 'Missing @param "args.b"',
+        },
+      ],
+    },
+    {
+      code: `
         export class SomeClass {
           /**
            * @param prop
@@ -608,6 +628,38 @@ export default {
            * @param options.bar
            */
           constructor(options: { foo: string, bar: string }) {}
+        }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param options
+           * @param options.foo
+           * @param options.bar
+           */
+          constructor({ foo, bar }: { foo: string, bar: string }) {}
+        }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param options
+           * @param options.foo
+           * @param options.bar
+           */
+          constructor({ foo, bar }: { foo: string, bar: string }) {}
         }
       `,
       parser: require.resolve('@typescript-eslint/parser'),

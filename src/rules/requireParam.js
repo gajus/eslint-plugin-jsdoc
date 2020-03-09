@@ -5,7 +5,7 @@ export default iterateJsdoc(({
   utils,
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
-  const jsdocParameterNames = utils.getJsdocTags('param');
+  const jsdocParameterNames = utils.getJsdocTagsDeep('param');
   if (!jsdocParameterNames) {
     return;
   }
@@ -39,12 +39,38 @@ export default iterateJsdoc(({
   };
 
   const missingTags = [];
+  const paramIndex = utils.flattenRoots(functionParameterNames).reduce((acc, cur, idx) => {
+    acc[cur] = idx;
+    return acc;
+  }, {});
 
   functionParameterNames.forEach((functionParameterName, functionParameterIdx) => {
-    if (
-      ['<ObjectPattern>', '<ArrayPattern>'].includes(functionParameterName) ||
-      Array.isArray(functionParameterName)
-    ) {
+    if (['<ObjectPattern>', '<ArrayPattern>'].includes(functionParameterName)) {
+      return;
+    }
+
+    if (Array.isArray(functionParameterName)) {
+      functionParameterName[1].forEach((paramName) => {
+        const matchedJsdoc = jsdocParameterNames[functionParameterIdx];
+
+        let rootName = 'root';
+        if (functionParameterName[0]) {
+          rootName = functionParameterName[0];
+        } else if (matchedJsdoc && matchedJsdoc.name) {
+          rootName = matchedJsdoc.name;
+        }
+        const fullParamName = `${rootName}.${paramName}`;
+
+        if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
+          return name === fullParamName;
+        })) {
+          missingTags.push({
+            functionParameterIdx: paramIndex[functionParameterName[0] ? fullParamName : paramName],
+            functionParameterName: fullParamName,
+          });
+        }
+      });
+
       return;
     }
 
@@ -52,7 +78,7 @@ export default iterateJsdoc(({
       return name === functionParameterName;
     })) {
       missingTags.push({
-        functionParameterIdx,
+        functionParameterIdx: paramIndex[functionParameterName],
         functionParameterName,
       });
     }
