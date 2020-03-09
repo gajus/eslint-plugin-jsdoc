@@ -191,15 +191,6 @@ const getUtils = (
     return jsdocUtils.getJsdocTagsDeep(jsdoc, name);
   };
 
-  utils.getJsdocTags = (tagName) => {
-    const name = utils.getPreferredTagName({tagName});
-    if (!name) {
-      return false;
-    }
-
-    return jsdocUtils.getJsdocTags(jsdoc, name);
-  };
-
   utils.getPreferredTagName = ({tagName, skipReportingBlockedTag = false, allowObjectReturn = false, defaultMessage = `Unexpected tag \`@${tagName}\``}) => {
     const ret = jsdocUtils.getPreferredTagName(context, mode, tagName, tagNamePreference);
     const isObject = ret && typeof ret === 'object';

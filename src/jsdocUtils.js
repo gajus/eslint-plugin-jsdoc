@@ -9,7 +9,10 @@ type ParserMode = "jsdoc"|"typescript"|"closure";
 const flattenRoots = (params, root = '') => {
   return params.reduce((acc, cur) => {
     if (Array.isArray(cur)) {
-      const inner = [cur[0], ...flattenRoots(cur[1], root ? `${root}.${cur[0]}` : cur[0])].filter(Boolean);
+      const inner = [
+        root ? `${root}.${cur[0]}` : cur[0],
+        ...flattenRoots(cur[1], root ? `${root}.${cur[0]}` : cur[0])
+      ].filter(Boolean);
       // eslint-disable-next-line no-param-reassign
       acc = acc.concat(inner);
     } else {
@@ -74,6 +77,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
         })];
       }
 
+      /* istanbul ignore else */
       if (param.key.type === 'Identifier') {
         return param.key.name;
       }
@@ -113,18 +117,6 @@ const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object
 
     return arr;
   }, []);
-};
-
-const getJsdocTags = (jsdoc : Object, targetTagName : string) : Array<string> => {
-  let jsdocNames;
-
-  jsdocNames = getJsdocTagsDeep(jsdoc, targetTagName);
-
-  jsdocNames = jsdocNames.filter(({name}) => {
-    return !name.includes('.');
-  });
-
-  return jsdocNames;
 };
 
 const modeWarnSettings = WarnSettings();
@@ -593,7 +585,6 @@ export default {
   getContextObject,
   getFunctionParameterNames,
   getIndent,
-  getJsdocTags,
   getJsdocTagsDeep,
   getPreferredTagName,
   getTagsByType,

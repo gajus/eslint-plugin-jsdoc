@@ -65,4 +65,21 @@ describe('jsdocUtils', () => {
       });
     });
   });
+  describe('flattenRoots()', () => {
+    context('Provided root', () => {
+      it('should prepend properties with provided root', () => {
+        const roots = [["data",["last_modified"]],["options",["headers"]]];
+        const expected = ["base.data", "base.data.last_modified", "base.options", "base.options.headers"];
+        expect(jsdocUtils.flattenRoots(roots, 'base')).to.deep.equal(expected);
+      });
+    });
+
+    context('Without root', () => {
+      it('should prepend properties with provided root', () => {
+        const roots = [["data",["last_modified"]],["options",["headers"]]];
+        const expected = ["data", "data.last_modified", "options", "options.headers"];
+        expect(jsdocUtils.flattenRoots(roots)).to.deep.equal(expected);
+      });
+    });
+  });
 });
