@@ -47,8 +47,7 @@ export default iterateJsdoc(({
 
   functionParameterNames.forEach((functionParameterName, functionParameterIdx) => {
     if (
-      ['<ObjectPattern>', '<ArrayPattern>'].includes(functionParameterName) ||
-      Array.isArray(functionParameterName)
+      ['<ObjectPattern>', '<ArrayPattern>'].includes(functionParameterName)
     ) {
       return;
     }
