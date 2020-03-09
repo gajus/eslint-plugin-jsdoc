@@ -41,6 +41,7 @@ export default iterateJsdoc(({
   const missingTags = [];
   const paramIndex = utils.flattenRoots(functionParameterNames).reduce((acc, cur, idx) => {
     acc[cur] = idx;
+
     return acc;
   }, {});
 
