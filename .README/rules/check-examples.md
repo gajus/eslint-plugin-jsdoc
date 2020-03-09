@@ -1,5 +1,7 @@
 ### `check-examples`
 
+{"gitdown": "contents", "rootId": "check-examples"}
+
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.
 
 #### Options

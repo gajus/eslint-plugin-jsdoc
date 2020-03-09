@@ -1,5 +1,7 @@
 ### `require-jsdoc`
 
+{"gitdown": "contents", "rootId": "require-jsdoc"}
+
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 

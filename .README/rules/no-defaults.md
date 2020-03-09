@@ -1,5 +1,7 @@
 ### `no-defaults`
 
+{"gitdown": "contents", "rootId": "no-defaults"}
+
 This rule reports defaults being used on the relevant portion of `@param`
 or `@default`. It also optionally reports the presence of the
 square-bracketed optional arguments at all.

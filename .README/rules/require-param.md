@@ -1,5 +1,7 @@
 ### `require-param`
 
+{"gitdown": "contents", "rootId": "require-param"}
+
 Requires that all function parameters are documented.
 
 #### Options

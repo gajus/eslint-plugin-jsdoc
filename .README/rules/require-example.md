@@ -1,5 +1,7 @@
 ### `require-example`
 
+{"gitdown": "contents", "rootId": "require-example"}
+
 Requires that all functions have examples.
 
 * All functions must have one or more `@example` tags.

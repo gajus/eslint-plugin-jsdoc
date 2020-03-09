@@ -1,5 +1,7 @@
 ### `require-property-description`
 
+{"gitdown": "contents", "rootId": "require-property-description"}
+
 Requires that each `@property` tag has a `description` value.
 
 |||

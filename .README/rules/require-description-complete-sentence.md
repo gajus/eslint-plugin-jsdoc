@@ -1,5 +1,7 @@
 ### `require-description-complete-sentence`
 
+{"gitdown": "contents", "rootId": "require-description-complete-sentence"}
+
 Requires that block description, explicit `@description`, and `@param`/`@returns`
 tag descriptions are written in complete sentences, i.e.,
 

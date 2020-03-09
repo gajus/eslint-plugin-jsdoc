@@ -1,5 +1,7 @@
 ### `require-property`
 
+{"gitdown": "contents", "rootId": "require-property"}
+
 Requires that all `@typedef` and `@namespace` tags have `@property`
 when their type is a plain `object`, `Object`, or `PlainObject`.
 

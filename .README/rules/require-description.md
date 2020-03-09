@@ -1,5 +1,7 @@
 ### `require-description`
 
+{"gitdown": "contents", "rootId": "require-description"}
+
 Requires that all functions have a description.
 
 * All functions must have an implicit description or have the option

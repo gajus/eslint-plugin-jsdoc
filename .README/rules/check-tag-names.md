@@ -1,5 +1,7 @@
 ### `check-tag-names`
 
+{"gitdown": "contents", "rootId": "check-tag-names"}
+
 Reports invalid block tag names.
 
 Valid [JSDoc 3 Block Tags](https://jsdoc.app/#block-tags) are:

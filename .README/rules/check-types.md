@@ -1,5 +1,7 @@
 ### `check-types`
 
+{"gitdown": "contents", "rootId": "check-types"}
+
 Reports invalid types.
 
 By default, ensures that the casing of native types is the same as in this list:

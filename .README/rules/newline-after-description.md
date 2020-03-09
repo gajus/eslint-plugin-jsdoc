@@ -1,5 +1,7 @@
 ### `newline-after-description`
 
+{"gitdown": "contents", "rootId": "newline-after-description"}
+
 Enforces a consistent padding of the block description.
 
 #### Options

@@ -1,5 +1,7 @@
 ### `require-file-overview`
 
+{"gitdown": "contents", "rootId": "require-file-overview"}
+
 Checks that:
 
 1. All files have a `@file`, `@fileoverview`, or `@overview` tag.

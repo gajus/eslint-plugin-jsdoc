@@ -1,5 +1,7 @@
 ### `empty-tags`
 
+{"gitdown": "contents", "rootId": "empty-tags"}
+
 Expects the following tags to be empty of any content:
 
 - `@abstract`

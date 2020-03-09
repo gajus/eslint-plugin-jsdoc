@@ -1,5 +1,7 @@
 ### `implements-on-classes`
 
+{"gitdown": "contents", "rootId": "implements-on-classes"}
+
 Reports an issue with any non-constructor function using `@implements`.
 
 Constructor functions, whether marked with `@class`, `@constructs`, or being

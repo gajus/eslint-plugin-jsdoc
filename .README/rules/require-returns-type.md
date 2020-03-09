@@ -1,5 +1,7 @@
 ### `require-returns-type`
 
+{"gitdown": "contents", "rootId": "require-returns-type"}
+
 Requires that `@returns` tag has `type` value.
 
 #### Options

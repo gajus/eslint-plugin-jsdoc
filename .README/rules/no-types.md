@@ -1,5 +1,7 @@
 ### `no-types`
 
+{"gitdown": "contents", "rootId": "no-types"}
+
 This rule reports types being used on `@param` or `@returns`.
 
 The rule is intended to prevent the indication of types on tags where

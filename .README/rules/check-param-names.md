@@ -1,5 +1,7 @@
 ### `check-param-names`
 
+{"gitdown": "contents", "rootId": "check-param-names"}
+
 Ensures that parameter names in JSDoc match those in the function declaration.
 
 #### Options

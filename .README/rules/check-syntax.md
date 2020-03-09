@@ -1,5 +1,7 @@
 ### `check-syntax`
 
+{"gitdown": "contents", "rootId": "check-syntax"}
+
 Reports against Google Closure Compiler syntax.
 
 |||

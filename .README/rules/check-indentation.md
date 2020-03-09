@@ -1,5 +1,7 @@
 ### `check-indentation`
 
+{"gitdown": "contents", "rootId": "check-indentation"}
+
 Reports invalid padding inside JSDoc blocks.
 
 Ignores parts enclosed in Markdown "code block"'s. For example,

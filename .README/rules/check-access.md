@@ -1,5 +1,7 @@
 ### `check-access`
 
+{"gitdown": "contents", "rootId": "check-access"}
+
 Checks that `@access` tags use one of the following values:
 
 - "package", "private", "protected", "public"

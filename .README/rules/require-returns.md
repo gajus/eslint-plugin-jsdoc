@@ -1,5 +1,7 @@
 ### `require-returns`
 
+{"gitdown": "contents", "rootId": "require-returns"}
+
 Requires returns are documented.
 
 Will also report if multiple `@returns` tags are present.

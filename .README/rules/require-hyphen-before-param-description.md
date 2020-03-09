@@ -1,5 +1,7 @@
 ### `require-hyphen-before-param-description`
 
+{"gitdown": "contents", "rootId": "require-hyphen-before-param-description"}
+
 Requires a hyphen before the `@param` description.
 
 #### Options

@@ -1,5 +1,7 @@
 ### `require-param-type`
 
+{"gitdown": "contents", "rootId": "require-param-type"}
+
 Requires that each `@param` tag has a `type` value.
 
 #### Options

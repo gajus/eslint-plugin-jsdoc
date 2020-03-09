@@ -1,5 +1,7 @@
 ### `require-property-name`
 
+{"gitdown": "contents", "rootId": "require-property-name"}
+
 Requires that all function `@property` tags have names.
 
 |||

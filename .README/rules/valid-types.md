@@ -1,5 +1,7 @@
 ### `valid-types`
 
+{"gitdown": "contents", "rootId": "valid-types"}
+
 Requires all types to be valid JSDoc or Closure compiler types without syntax errors.
 
 Also impacts behaviors on namepath (or event)-defining and pointing tags:

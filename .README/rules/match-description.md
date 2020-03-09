@@ -1,5 +1,7 @@
 ### `match-description`
 
+{"gitdown": "contents", "rootId": "match-description"}
+
 Enforces a regular expression pattern on descriptions.
 
 The default is this basic expression to match English sentences (Support

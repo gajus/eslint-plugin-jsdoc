@@ -1,5 +1,7 @@
 ### `check-values`
 
+{"gitdown": "contents", "rootId": "check-values"}
+
 This rule checks the values for a handful of tags:
 
 1. `@version` - Checks that there is a present and valid

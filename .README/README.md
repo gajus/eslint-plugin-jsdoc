@@ -137,6 +137,8 @@ object supplied as the second argument in an array after the error level.
 
 ## Settings
 
+{"gitdown": "contents", "rootId": "settings"}
+
 ### Allow `@private` to disable rules for that comment block (`ignorePrivate`)
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block

@@ -1,5 +1,7 @@
 ### `require-param-description`
 
+{"gitdown": "contents", "rootId": "require-param-description"}
+
 Requires that each `@param` tag has a `description` value.
 
 #### Options
