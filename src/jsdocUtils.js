@@ -7,9 +7,10 @@ type ParserMode = "jsdoc"|"typescript"|"closure";
 // Given a nested array of property names, reduce them to a single array,
 // appending the name of the root element along the way if present.
 const flattenRoots = (params, root = '') => {
-  return params.reduce((acc, cur, idx) => {
+  return params.reduce((acc, cur) => {
     if (Array.isArray(cur)) {
       const inner = [cur[0], ...flattenRoots(cur[1], root ? `${root}.${cur[0]}` : cur[0])].filter(Boolean);
+      // eslint-disable-next-line no-param-reassign
       acc = acc.concat(inner);
     } else {
       acc.push(root ? `${root}.${cur}` : cur);
