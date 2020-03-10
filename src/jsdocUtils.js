@@ -76,6 +76,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
         })];
       }
 
+      // As function parameters, these do not allow dynamic properties, etc.
       /* istanbul ignore else */
       if (param.key.type === 'Identifier') {
         return param.key.name;
