@@ -516,7 +516,6 @@ const parseClosureTemplateTag = (tag) => {
  */
 const enforcedContexts = (context, defaultContexts) => {
   const {
-    /* istanbul ignore next */
     contexts = defaultContexts === true ? [
       'ArrowFunctionExpression',
       'FunctionDeclaration',
@@ -571,7 +570,6 @@ const getTagsByType = (context, mode, tags, tagPreference) => {
 
 const getIndent = (sourceCode) => {
   let indent = sourceCode.text.match(/^\n*([ \t]+)/u);
-  /* istanbul ignore next */
   indent = indent ? indent[1] + indent[1].charAt() : ' ';
 
   return indent;

@@ -143,10 +143,6 @@ const getJSDocComment = function (sourceCode, node, settings) {
   };
 
   const reducedNode = getReducedASTNode(node, sourceCode);
-  /* istanbul ignore next */
-  if (!reducedNode) {
-    return null;
-  }
 
   return findJSDocComment(reducedNode);
 };
