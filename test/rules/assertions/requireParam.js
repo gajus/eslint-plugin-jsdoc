@@ -79,7 +79,7 @@ export default {
           /**
            * @param
            */
-          function quux ({ foo, bar__: { baz__ }}) {
+          function quux ({ foo, bar: { baz }}) {
 
           }
       `,
@@ -88,10 +88,10 @@ export default {
           message: 'Missing JSDoc @param "root.foo" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "root.bar__" declaration.',
+          message: 'Missing JSDoc @param "root.bar" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "root.bar__.baz__" declaration.',
+          message: 'Missing JSDoc @param "root.bar.baz" declaration.',
         },
       ],
     },
@@ -480,7 +480,7 @@ export default {
       /**
        *
        */
-      function quux ({bar, baz___}, foo) {
+      function quux ({bar, baz}, foo) {
       }
       `,
       errors: [
@@ -488,7 +488,7 @@ export default {
           message: 'Missing JSDoc @param "root.bar" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "root.baz___" declaration.',
+          message: 'Missing JSDoc @param "root.baz" declaration.',
         },
         {
           message: 'Missing JSDoc @param "foo" declaration.',
@@ -497,10 +497,10 @@ export default {
       output: `
       /**
        * @param root.bar
-       * @param root.baz___
+       * @param root.baz
        * @param foo
        */
-      function quux ({bar, baz___}, foo) {
+      function quux ({bar, baz}, foo) {
       }
       `,
     },
@@ -1171,10 +1171,10 @@ export default {
        * Assign the project to an employee.
        *
        * @param {object} employee - The employee who is responsible for the project.
-       * @param {string} employee.name1 - The name of the employee.
-       * @param {string} employee.department1 - The employee's department.
+       * @param {string} employee.name - The name of the employee.
+       * @param {string} employee.department - The employee's department.
        */
-      function assign({name1, department1}) {
+      function assign({name, department}) {
         // ...
       }
       `,

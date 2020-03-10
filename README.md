@@ -8912,7 +8912,7 @@ function quux ({foo}) {
 /**
  * @param
  */
-function quux ({ foo, bar__: { baz__ }}) {
+function quux ({ foo, bar: { baz }}) {
 
 }
 // Message: Missing JSDoc @param "root.foo" declaration.
@@ -9083,7 +9083,7 @@ function quux (foo) {
 /**
  *
  */
-function quux ({bar, baz___}, foo) {
+function quux ({bar, baz}, foo) {
 }
 // Message: Missing JSDoc @param "root.bar" declaration.
 
@@ -9480,10 +9480,10 @@ export class SomeClass {
  * Assign the project to an employee.
  *
  * @param {object} employee - The employee who is responsible for the project.
- * @param {string} employee.name1 - The name of the employee.
- * @param {string} employee.department1 - The employee's department.
+ * @param {string} employee.name - The name of the employee.
+ * @param {string} employee.department - The employee's department.
  */
-function assign({name1, department1}) {
+function assign({name, department}) {
   // ...
 }
 
