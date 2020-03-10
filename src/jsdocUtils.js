@@ -13,11 +13,10 @@ const flattenRoots = (params, root = '') => {
         root ? `${root}.${cur[0]}` : cur[0],
         ...flattenRoots(cur[1], root ? `${root}.${cur[0]}` : cur[0]),
       ].filter(Boolean);
-      // eslint-disable-next-line no-param-reassign
-      acc = acc.concat(inner);
-    } else {
-      acc.push(root ? `${root}.${cur}` : cur);
+
+      return acc.concat(inner);
     }
+    acc.push(root ? `${root}.${cur}` : cur);
 
     return acc;
   }, []);
