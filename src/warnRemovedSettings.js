@@ -53,7 +53,6 @@ const getMovedSettings = (ruleName) => {
     ];
   }
 
-  /* istanbul ignore next */
   return [];
 };
 
@@ -62,11 +61,11 @@ const getMovedSettings = (ruleName) => {
  * @param {RulesWithMovedSettings} ruleName
  */
 export default function warnRemovedSettings (context, ruleName) {
-  const movedSettings = getMovedSettings(ruleName);
-
   if (!context.settings || !context.settings.jsdoc) {
     return;
   }
+
+  const movedSettings = getMovedSettings(ruleName);
 
   for (const setting of movedSettings) {
     if (
