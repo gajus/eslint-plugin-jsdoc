@@ -283,6 +283,7 @@ export default {
           /**
            * @param cfg
            * @param cfg.foo
+           * @param [cfg.foo="with a default"]
            * @param baz
            */
           function quux ({foo, bar}, baz) {
