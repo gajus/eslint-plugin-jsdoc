@@ -593,6 +593,26 @@ export default {
     },
     {
       code: `
+          /**
+           * (Set tag name preference to itself to get aliases to
+           *   work along with main tag name.)
+           * @augments Bar
+           * @extends Foo
+           */
+          function quux () {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            extends: 'extends',
+          },
+        },
+      },
+    },
+    {
+      code: `
       /**
        * Registers the \`target\` class as a transient dependency; each time the dependency is resolved a new instance will be created.
        *
