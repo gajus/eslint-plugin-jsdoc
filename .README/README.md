@@ -214,6 +214,10 @@ Or one may set the targeted tag to an object with a custom `message`, but withou
 Note that the preferred tags indicated in the `settings.jsdoc.tagNamePreference`
 map will be assumed to be defined by `check-tag-names`.
 
+See `check-tag-names` for how that fact can be used to set an alias to itself
+to allow both the alias and the default (since aliases are otherwise not
+permitted unless used in `tagNamePreference`).
+
 #### Default Preferred Aliases
 
 The defaults in `eslint-plugin-jsdoc` (for tags which offer
