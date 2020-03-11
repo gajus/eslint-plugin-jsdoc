@@ -50,10 +50,11 @@ export default iterateJsdoc(({
         defaultMessage: `Blacklisted tag found (\`@${tagName}\`)`,
         tagName,
       });
-      let message = `Invalid JSDoc tag (preference). Replace "${tagName}" JSDoc tag with "${preferredTagName}".`;
       if (!preferredTagName) {
         return;
       }
+
+      let message = `Invalid JSDoc tag (preference). Replace "${tagName}" JSDoc tag with "${preferredTagName}".`;
       if (typeof preferredTagName === 'object') {
         ({message, replacement: preferredTagName} = preferredTagName);
       }
