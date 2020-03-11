@@ -16,13 +16,10 @@ export default iterateJsdoc(({
   const {definedTags = []} = context.options[0] || {};
 
   let definedPreferredTags = [];
-  let definedNonPreferredTags = [];
   const {tagNamePreference} = settings;
-  if (Object.keys(tagNamePreference).length) {
-    definedNonPreferredTags = _.keys(tagNamePreference);
-
-    // Replace `_.values` with `Object.values` when we may start requiring Node 7+
-    definedPreferredTags = _.values(tagNamePreference).map((preferredTag) => {
+  const definedNonPreferredTags = Object.keys(tagNamePreference);
+  if (definedNonPreferredTags.length) {
+    definedPreferredTags = Object.values(tagNamePreference).map((preferredTag) => {
       if (typeof preferredTag === 'string') {
         // May become an empty string but will be filtered out below
         return preferredTag;
