@@ -54,9 +54,11 @@ export default iterateJsdoc(({
         return;
       }
 
-      let message = `Invalid JSDoc tag (preference). Replace "${tagName}" JSDoc tag with "${preferredTagName}".`;
+      let message;
       if (typeof preferredTagName === 'object') {
         ({message, replacement: preferredTagName} = preferredTagName);
+      } else {
+        message = `Invalid JSDoc tag (preference). Replace "${tagName}" JSDoc tag with "${preferredTagName}".`;
       }
 
       if (preferredTagName !== tagName) {
