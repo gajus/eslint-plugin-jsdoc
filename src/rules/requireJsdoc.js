@@ -124,14 +124,14 @@ export default {
 
     const {require: requireOption, publicOnly, exemptEmptyFunctions} = getOptions(context);
 
-    const checkJsDoc = (node) => {
+    const checkJsDoc = (node, isFunctionContext) => {
       const jsDocNode = getJSDocComment(sourceCode, node, settings);
 
       if (jsDocNode) {
         return;
       }
 
-      if (exemptEmptyFunctions) {
+      if (exemptEmptyFunctions && isFunctionContext) {
         const functionParameterNames = jsdocUtils.getFunctionParameterNames(node);
         if (!functionParameterNames.length && !jsdocUtils.hasReturnValue(node, context)) {
           return;
@@ -195,7 +195,7 @@ export default {
             return;
           }
 
-          checkJsDoc(node);
+          checkJsDoc(node, true);
         },
 
         ClassDeclaration (node) {
@@ -219,12 +219,12 @@ export default {
             return;
           }
 
-          checkJsDoc(node);
+          checkJsDoc(node, true);
         },
 
         FunctionExpression (node) {
           if (requireOption.MethodDefinition && node.parent.type === 'MethodDefinition') {
-            checkJsDoc(node);
+            checkJsDoc(node, true);
 
             return;
           }
@@ -237,7 +237,7 @@ export default {
             ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
             node.parent.type === 'Property' && node === node.parent.value
           ) {
-            checkJsDoc(node);
+            checkJsDoc(node, true);
           }
         },
       },

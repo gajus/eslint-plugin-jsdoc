@@ -7905,6 +7905,12 @@ export interface Foo extends Bar {
 }
 // Options: [{"contexts":["TSMethodSignature"]}]
 // Message: Missing JSDoc comment.
+
+class MyClass {
+  someProperty: boolean; // Flow type annotation.
+}
+// Options: [{"exemptEmptyFunctions":true,"require":{"ClassDeclaration":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

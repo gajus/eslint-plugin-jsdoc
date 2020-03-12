@@ -1166,6 +1166,25 @@ export default {
       }],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      class MyClass {
+        someProperty: boolean; // Flow type annotation.
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [{
+        exemptEmptyFunctions: true,
+        require: {
+          ClassDeclaration: true,
+        },
+      }],
+      parser: require.resolve('babel-eslint'),
+    },
   ],
   valid: [{
     code: `
