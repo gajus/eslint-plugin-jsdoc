@@ -8926,7 +8926,7 @@ function quux (foo) {
 function quux ({foo}) {
 
 }
-// Message: Missing JSDoc @param "root.foo" declaration.
+// Message: Missing JSDoc @param "root0.foo" declaration.
 
 /**
  * @param
@@ -8934,7 +8934,7 @@ function quux ({foo}) {
 function quux ({foo}) {
 
 }
-// Message: Missing JSDoc @param "root.foo" declaration.
+// Message: Missing JSDoc @param "root0.foo" declaration.
 
 /**
  * @param options
@@ -8950,7 +8950,25 @@ function quux ({foo}) {
 function quux ({ foo, bar: { baz }}) {
 
 }
-// Message: Missing JSDoc @param "root.foo" declaration.
+// Message: Missing JSDoc @param "root0.foo" declaration.
+
+/**
+ * 
+ */
+function quux ({foo}, {bar}) {
+
+}
+// Options: [{"unnamedRootBase":["arg"]}]
+// Message: Missing JSDoc @param "arg0.foo" declaration.
+
+/**
+ * 
+ */
+function quux ({foo}, {bar}) {
+
+}
+// Options: [{"unnamedRootBase":["arg","config"]}]
+// Message: Missing JSDoc @param "arg0.foo" declaration.
 
 /**
  *
@@ -9120,7 +9138,7 @@ function quux (foo) {
  */
 function quux ({bar, baz}, foo) {
 }
-// Message: Missing JSDoc @param "root.bar" declaration.
+// Message: Missing JSDoc @param "root0.bar" declaration.
 
 /**
  *
@@ -9201,6 +9219,48 @@ The following patterns are not considered problems:
 function quux (foo) {
 
 }
+
+/**
+ * @param root0
+ * @param root0.foo
+ */
+function quux ({foo}) {
+
+}
+
+/**
+ * @param root0
+ * @param root0.foo
+ * @param root1
+ * @param root1.bar
+ */
+function quux ({foo}, {bar}) {
+
+}
+
+/**
+ * @param arg0
+ * @param arg0.foo
+ * @param arg1
+ * @param arg1.bar
+ */
+function quux ({foo}, {bar}) {
+
+}
+// Options: [{"unnamedRootBase":["arg"]}]
+
+/**
+ * @param arg0
+ * @param arg0.foo
+ * @param config0
+ * @param config0.bar
+ * @param arg1
+ * @param arg1.baz
+ */
+function quux ({foo}, {bar}, {baz}) {
+
+}
+// Options: [{"unnamedRootBase":["arg","config"]}]
 
 /**
  * @inheritdoc

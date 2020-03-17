@@ -1,14 +1,32 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+type T = [string, () => T];
+const rootNamer = (desiredRoots: string[], currentIndex: number = 0): T => {
+  const base = desiredRoots[currentIndex % desiredRoots.length];
+  const suffix = Math.floor(currentIndex / desiredRoots.length);
+  const name = `${base}${suffix}`;
+
+  return [name, () => {
+    return rootNamer(desiredRoots, currentIndex + 1);
+  }];
+};
+
 export default iterateJsdoc(({
   jsdoc,
   utils,
+  context,
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
   const jsdocParameterNames = utils.getJsdocTagsDeep('param');
   if (!jsdocParameterNames) {
     return;
   }
+  const shallowJsdocParameterNames = jsdocParameterNames.filter((tag) => {
+    return !tag.name.includes('.');
+  }).map((tag, idx) => {
+    return {...tag,
+      idx};
+  });
 
   if (utils.avoidDocs()) {
     return;
@@ -45,6 +63,9 @@ export default iterateJsdoc(({
     return acc;
   }, {});
 
+  const {unnamedRootBase = ['root']} = context.options[0] || {};
+  let [nextRootName, namer] = rootNamer(unnamedRootBase);
+
   functionParameterNames.forEach((functionParameterName, functionParameterIdx) => {
     if (
       ['<ObjectPattern>', '<ArrayPattern>'].includes(functionParameterName)
@@ -53,15 +74,19 @@ export default iterateJsdoc(({
     }
 
     if (Array.isArray(functionParameterName)) {
-      functionParameterName[1].forEach((paramName) => {
-        const matchedJsdoc = jsdocParameterNames[functionParameterIdx];
+      const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx] ?
+        shallowJsdocParameterNames[functionParameterIdx] :
+        jsdocParameterNames[functionParameterIdx];
 
-        let rootName = 'root';
-        if (functionParameterName[0]) {
-          rootName = functionParameterName[0];
-        } else if (matchedJsdoc && matchedJsdoc.name) {
-          rootName = matchedJsdoc.name;
-        }
+      let rootName = nextRootName;
+      [nextRootName, namer] = namer();
+      if (functionParameterName[0]) {
+        rootName = functionParameterName[0];
+      } else if (matchedJsdoc && matchedJsdoc.name) {
+        rootName = matchedJsdoc.name;
+      }
+
+      functionParameterName[1].forEach((paramName) => {
         const fullParamName = `${rootName}.${paramName}`;
 
         if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
@@ -116,6 +141,12 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           exemptedBy: {
+            items: {
+              type: 'string',
+            },
+            type: 'array',
+          },
+          unnamedRootBase: {
             items: {
               type: 'string',
             },

@@ -40,7 +40,7 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "root.foo" declaration.',
+          message: 'Missing JSDoc @param "root0.foo" declaration.',
         },
       ],
     },
@@ -55,7 +55,7 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "root.foo" declaration.',
+          message: 'Missing JSDoc @param "root0.foo" declaration.',
         },
       ],
     },
@@ -85,13 +85,59 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "root.foo" declaration.',
+          message: 'Missing JSDoc @param "root0.foo" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "root.bar" declaration.',
+          message: 'Missing JSDoc @param "root0.bar" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "root.bar.baz" declaration.',
+          message: 'Missing JSDoc @param "root0.bar.baz" declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * 
+           */
+          function quux ({foo}, {bar}) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "arg0.foo" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "arg1.bar" declaration.',
+        },
+      ],
+      options: [
+        {
+          unnamedRootBase: ['arg'],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * 
+           */
+          function quux ({foo}, {bar}) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "arg0.foo" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "config0.bar" declaration.',
+        },
+      ],
+      options: [
+        {
+          unnamedRootBase: ['arg', 'config'],
         },
       ],
     },
@@ -485,10 +531,10 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "root.bar" declaration.',
+          message: 'Missing JSDoc @param "root0.bar" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "root.baz" declaration.',
+          message: 'Missing JSDoc @param "root0.baz" declaration.',
         },
         {
           message: 'Missing JSDoc @param "foo" declaration.',
@@ -496,8 +542,8 @@ export default {
       ],
       output: `
       /**
-       * @param root.bar
-       * @param root.baz
+       * @param root0.bar
+       * @param root0.baz
        * @param foo
        */
       function quux ({bar, baz}, foo) {
@@ -517,17 +563,17 @@ export default {
           message: 'Missing JSDoc @param "foo" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "root.bar" declaration.',
+          message: 'Missing JSDoc @param "root0.bar" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "root.baz" declaration.',
+          message: 'Missing JSDoc @param "root0.baz" declaration.',
         },
       ],
       output: `
       /**
        * @param foo
-       * @param root.bar
-       * @param root.baz
+       * @param root0.bar
+       * @param root0.baz
        */
       function quux (foo, {bar, baz}) {
       }
@@ -685,6 +731,68 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * @param root0
+           * @param root0.foo
+           */
+          function quux ({foo}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param root0
+           * @param root0.foo
+           * @param root1
+           * @param root1.bar
+           */
+          function quux ({foo}, {bar}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param arg0
+           * @param arg0.foo
+           * @param arg1
+           * @param arg1.bar
+           */
+          function quux ({foo}, {bar}) {
+
+          }
+      `,
+      options: [
+        {
+          unnamedRootBase: ['arg'],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param arg0
+           * @param arg0.foo
+           * @param config0
+           * @param config0.bar
+           * @param arg1
+           * @param arg1.baz
+           */
+          function quux ({foo}, {bar}, {baz}) {
+
+          }
+      `,
+      options: [
+        {
+          unnamedRootBase: ['arg', 'config'],
+        },
+      ],
     },
     {
       code: `
