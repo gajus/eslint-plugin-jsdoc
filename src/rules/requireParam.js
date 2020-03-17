@@ -37,6 +37,8 @@ export default iterateJsdoc(({
     return;
   }
 
+  const {enableFixer = true} = context.options[0] || {};
+
   const preferredTagName = utils.getPreferredTagName({tagName: 'param'});
 
   const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
@@ -131,7 +133,7 @@ export default iterateJsdoc(({
 
       fixAll(missingTags, jsdoc.tags);
     };
-    utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, fixer);
+    utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, enableFixer ? fixer : null);
   });
 }, {
   meta: {
@@ -140,6 +142,9 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          enableFixer: {
+            type: 'boolean',
+          },
           exemptedBy: {
             items: {
               type: 'string',

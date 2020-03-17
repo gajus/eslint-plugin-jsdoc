@@ -9208,6 +9208,15 @@ class Client {
   ) {}
 }
 // Message: Missing JSDoc @param "options.permissions" declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// Options: [{"enableFixer":false}]
+// Message: Missing JSDoc @param "foo" declaration.
 ````
 
 The following patterns are not considered problems:

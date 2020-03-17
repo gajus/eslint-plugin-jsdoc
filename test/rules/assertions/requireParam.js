@@ -720,6 +720,34 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+        },
+      ],
+      output: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }
+      `,
+    },
   ],
   valid: [
     {
