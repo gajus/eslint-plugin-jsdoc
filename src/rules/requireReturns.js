@@ -12,7 +12,7 @@ import warnRemovedSettings from '../warnRemovedSettings';
  * @returns {boolean}
  *   true in case deep checking can be skipped; otherwise false.
  */
-const canSkip = (utils) => {
+const canSkip = (utils, checkGetters) => {
   return utils.hasATag([
     // inheritdoc implies that all documentation is inherited
     // see https://jsdoc.app/tags-inheritdoc.html
@@ -34,9 +34,7 @@ const canSkip = (utils) => {
     'interface',
   ]) ||
     utils.isConstructor() ||
-
-    // Though ESLint avoided getters: https://github.com/eslint/eslint/blob/master/lib/rules/valid-jsdoc.js#L435
-    //  ... getters seem that they should, unlike setters, always return:
+    utils.isGetter() && !checkGetters ||
     utils.isSetter() ||
     utils.avoidDocs();
 };
@@ -48,16 +46,17 @@ export default iterateJsdoc(({
 }) => {
   warnRemovedSettings(context, 'require-returns');
 
-  // A preflight check. We do not need to run a deep check
-  // in case the @returns comment is optional or undefined.
-  if (canSkip(utils)) {
-    return;
-  }
-
   const {
     forceRequireReturn = false,
     forceReturnsWithAsync = false,
+    checkGetters = true,
   } = context.options[0] || {};
+
+  // A preflight check. We do not need to run a deep check
+  // in case the @returns comment is optional or undefined.
+  if (canSkip(utils, checkGetters)) {
+    return;
+  }
 
   const tagName = utils.getPreferredTagName({tagName: 'returns'});
   if (!tagName) {
@@ -106,6 +105,10 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          checkGetters: {
+            default: true,
+            type: 'boolean',
+          },
           contexts: {
             items: {
               type: 'string',

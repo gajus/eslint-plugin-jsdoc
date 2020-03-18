@@ -440,6 +440,28 @@ export default {
         ecmaVersion: 8,
       },
     },
+    {
+      code: `
+      class foo {
+        /** gets bar */
+        get bar() {
+          return 0;
+        }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [{
+        checkGetters: true,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
   ],
   valid: [
     {
@@ -987,6 +1009,37 @@ export default {
         contexts: ['any'],
         forceReturnsWithAsync: true,
       }],
+    },
+    {
+      code: `
+          class foo {
+            get bar() {
+              return 0;
+            }
+          }
+      `,
+      options: [{
+        checkGetters: false,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+          class foo {
+            /** @returns zero */
+            get bar() {
+              return 0;
+            }
+          }
+      `,
+      options: [{
+        checkGetters: true,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
     },
   ],
 };

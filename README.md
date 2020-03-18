@@ -10512,6 +10512,15 @@ async function foo(a) {
 }
 // Options: [{"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
+
+class foo {
+  /** gets bar */
+  get bar() {
+    return 0;
+  }
+}
+// Options: [{"checkGetters":true}]
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:
@@ -10845,6 +10854,21 @@ async function foo(a) {
  * @callback
  */
 // Options: [{"contexts":["any"],"forceReturnsWithAsync":true}]
+
+class foo {
+  get bar() {
+    return 0;
+  }
+}
+// Options: [{"checkGetters":false}]
+
+class foo {
+  /** @returns zero */
+  get bar() {
+    return 0;
+  }
+}
+// Options: [{"checkGetters":true}]
 ````
 
 
