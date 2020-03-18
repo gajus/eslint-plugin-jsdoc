@@ -178,6 +178,10 @@ const getUtils = (
     return node && node.parent && node.parent.kind === 'constructor';
   };
 
+  utils.isGetter = () => {
+    return node && node.parent.kind === 'get';
+  };
+
   utils.isSetter = () => {
     return node && node.parent.kind === 'set';
   };
