@@ -6,6 +6,8 @@ Will also report if multiple `@returns` tags are present.
 
 #### Options
 
+- `checkGetters` - Boolean to determine whether getter methods should
+  be checked for `@returns` tags. Defaults to `true`.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
     block avoids the need for a `@returns`. Defaults to an empty array.
 - `forceRequireReturn` - Set to `true` to always insist on
@@ -40,7 +42,7 @@ Will also report if multiple `@returns` tags are present.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`returns`|
 |Aliases|`return`|
-|Options|`contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
+|Options|`checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <!-- assertions requireReturns -->
