@@ -10869,6 +10869,14 @@ class foo {
   }
 }
 // Options: [{"checkGetters":true}]
+
+class foo {
+  /** @returns zero */
+  get bar() {
+    return 0;
+  }
+}
+// Options: [{"checkGetters":false}]
 ````
 
 

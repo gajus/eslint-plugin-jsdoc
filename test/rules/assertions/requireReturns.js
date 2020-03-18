@@ -1041,5 +1041,21 @@ export default {
         ecmaVersion: 8,
       },
     },
+    {
+      code: `
+          class foo {
+            /** @returns zero */
+            get bar() {
+              return 0;
+            }
+          }
+      `,
+      options: [{
+        checkGetters: false,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
   ],
 };
