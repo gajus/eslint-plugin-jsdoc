@@ -10287,6 +10287,8 @@ Will also report if multiple `@returns` tags are present.
 <a name="eslint-plugin-jsdoc-rules-require-returns-options-26"></a>
 #### Options
 
+- `checkGetters` - Boolean to determine whether getter methods should
+  be checked for `@returns` tags. Defaults to `true`.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
     block avoids the need for a `@returns`. Defaults to an empty array.
 - `forceRequireReturn` - Set to `true` to always insist on
@@ -10321,7 +10323,7 @@ Will also report if multiple `@returns` tags are present.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`returns`|
 |Aliases|`return`|
-|Options|`contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
+|Options|`checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
