@@ -34,7 +34,7 @@ const canSkip = (utils, checkGetters) => {
     'interface',
   ]) ||
     utils.isConstructor() ||
-    utils.isGetter() && !checkGetters ||
+    !checkGetters && utils.isGetter() ||
     utils.isSetter() ||
     utils.avoidDocs();
 };
