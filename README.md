@@ -7358,7 +7358,7 @@ The options object may have the following properties:
 |Context|everywhere|
 |Tags|`param` and optionally `property`|
 |Aliases|`arg`, `argument`; optionally `prop`|
-|Options|(a string matching `"always"|"never"`) and an optional object with a `checkProperties` property|
+|Options|(a string matching `"always"|"never"`) followed by an optional object with a `checkProperties` property|
 
 The following patterns are considered problems:
 
