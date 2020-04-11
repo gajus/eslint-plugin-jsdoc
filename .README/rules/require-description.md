@@ -18,7 +18,9 @@ An options object may have any of the following properties:
   you want the rule to apply to any jsdoc block throughout your files.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
     document block avoids the need for a `@description`. Defaults to an
-    empty array.
+    array with `inheritdoc`. If you set this array, it will overwrite the
+    default, so be sure to add back `inheritdoc` if you wish its presence
+    to cause exemption of the rule.
 - `descriptionStyle` - Whether to accept implicit descriptions (`"body"`) or
     `@description` tags (`"tag"`) as satisfying the rule. Set to `"any"` to
     accept either style. Defaults to `"body"`.

@@ -238,9 +238,6 @@ const getUtils = (
       implementsReplacesDocs !== false &&
         (utils.hasTag('implements') || utils.classHasTag('implements')) ||
 
-      // inheritdoc implies that all documentation is inherited; see https://jsdoc.app/tags-inheritdoc.html
-      utils.hasTag('inheritdoc') ||
-
       augmentsExtendsReplacesDocs &&
         (utils.hasATag(['augments', 'extends']) ||
           utils.classHasTag('augments') ||
@@ -248,8 +245,8 @@ const getUtils = (
       return true;
     }
 
-    const exemptedBy = _.get(context, 'options[0].exemptedBy');
-    if (exemptedBy && exemptedBy.length && utils.getPresentTags(exemptedBy).length) {
+    const exemptedBy = _.get(context, 'options[0].exemptedBy', ['inheritdoc']);
+    if (exemptedBy.length && utils.getPresentTags(exemptedBy).length) {
       return true;
     }
 

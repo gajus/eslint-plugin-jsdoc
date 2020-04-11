@@ -6421,7 +6421,9 @@ An options object may have any of the following properties:
   you want the rule to apply to any jsdoc block throughout your files.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
     document block avoids the need for a `@description`. Defaults to an
-    empty array.
+    array with `inheritdoc`. If you set this array, it will overwrite the
+    default, so be sure to add back `inheritdoc` if you wish its presence
+    to cause exemption of the rule.
 - `descriptionStyle` - Whether to accept implicit descriptions (`"body"`) or
     `@description` tags (`"tag"`) as satisfying the rule. Set to `"any"` to
     accept either style. Defaults to `"body"`.
@@ -6715,7 +6717,10 @@ This rule has an object option.
 ##### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document
-block avoids the need for an `@example`. Defaults to an empty array.
+block avoids the need for an `@example`. Defaults to an array with
+`inheritdoc`. If you set this array, it will overwrite the default,
+so be sure to add back `inheritdoc` if you wish its presence to cause
+exemption of the rule.
 
 <a name="eslint-plugin-jsdoc-rules-require-example-options-16-avoidexampleonconstructors"></a>
 ##### <code>avoidExampleOnConstructors</code>
@@ -8769,7 +8774,10 @@ An options object accepts two optional properties:
 ##### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document block
-avoids the need for a `@param`. Defaults to an empty array.
+avoids the need for a `@param`. Defaults to an array with
+`inheritdoc`. If you set this array, it will overwrite the default,
+so be sure to add back `inheritdoc` if you wish its presence to cause
+exemption of the rule.
 
 <a name="eslint-plugin-jsdoc-rules-require-param-options-23-contexts-7"></a>
 ##### <code>contexts</code>
@@ -8998,6 +9006,15 @@ function quux ([bar, baz], foo) {
 function quux (foo) {
 }
 // Options: [{"exemptedBy":["notPresent"]}]
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @inheritdoc
+ */
+function quux (foo) {
+
+}
+// Options: [{"exemptedBy":[]}]
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -10328,7 +10345,10 @@ Will also report if multiple `@returns` tags are present.
 - `checkGetters` - Boolean to determine whether getter methods should
   be checked for `@returns` tags. Defaults to `true`.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@returns`. Defaults to an empty array.
+    block avoids the need for a `@returns`. Defaults to an array with
+    `inheritdoc`. If you set this array, it will overwrite the default,
+    so be sure to add back `inheritdoc` if you wish its presence to cause
+    exemption of the rule.
 - `forceRequireReturn` - Set to `true` to always insist on
   `@returns` documentation regardless of implicit or explicit `return`'s
   in the function. May be desired to flag that a project is aware of an

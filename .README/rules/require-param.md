@@ -9,7 +9,10 @@ An options object accepts two optional properties:
 ##### `exemptedBy`
 
 Array of tags (e.g., `['type']`) whose presence on the document block
-avoids the need for a `@param`. Defaults to an empty array.
+avoids the need for a `@param`. Defaults to an array with
+`inheritdoc`. If you set this array, it will overwrite the default,
+so be sure to add back `inheritdoc` if you wish its presence to cause
+exemption of the rule.
 
 ##### `contexts`
 

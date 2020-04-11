@@ -523,6 +523,27 @@ export default {
     {
       code: `
           /**
+           * @inheritdoc
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      options: [
+        {
+          exemptedBy: [],
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            * Assign the project to a list of employees.
            * @param {object[]} employees - The employees who are responsible for the project.
            * @param {string} employees[].name - The name of an employee.
