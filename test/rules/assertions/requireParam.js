@@ -34,6 +34,34 @@ export default {
           /**
            *
            */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['FunctionDeclaration'],
+        },
+      ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
           function quux (foo, bar) {
 
           }
@@ -510,6 +538,38 @@ export default {
           message: 'Missing JSDoc @param "name" declaration.',
         },
       ],
+    },
+    {
+      code: `
+      interface ITest {
+      /**
+       * Test description.
+       */
+      TestMethod(id: number): void;
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSMethodSignature'],
+        },
+      ],
+      output: `
+      interface ITest {
+      /**
+       * Test description.
+       *
+       * @param id
+       */
+      TestMethod(id: number): void;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
   valid: [
@@ -1046,6 +1106,21 @@ export default {
     }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          contexts: ['ArrowFunctionExpression'],
+        },
+      ],
     },
   ],
 };

@@ -8763,17 +8763,29 @@ Requires that all function parameters are documented.
 <a name="eslint-plugin-jsdoc-rules-require-param-options-23"></a>
 #### Options
 
-An options object accepts one optional property:
+An options object accepts two optional properties:
 
-- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
-    block avoids the need for a `@param`. Defaults to an empty array.
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-exemptedby-1"></a>
+##### <code>exemptedBy</code>
+
+Array of tags (e.g., `['type']`) whose presence on the document block
+avoids the need for a `@param`. Defaults to an empty array.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-contexts-7"></a>
+##### <code>contexts</code>
+
+Set this to an array of strings representing the AST context
+where you wish the rule to be applied. Overrides the default
+contexts (see below). May be useful for adding such as
+`TSMethodSignature` in TypeScript or restricting the contexts
+which are checked.
 
 |||
 |---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
-|Options|`exemptedBy`|
+|Options|`contexts`, `exemptedBy`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
@@ -8785,6 +8797,15 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// Options: [{"contexts":["FunctionDeclaration"]}]
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -8989,6 +9010,15 @@ function assign (employees, name) {
 
 };
 // Message: Missing JSDoc @param "name" declaration.
+
+interface ITest {
+/**
+ * Test description.
+ */
+TestMethod(id: number): void;
+}
+// Options: [{"contexts":["TSMethodSignature"]}]
+// Message: Missing JSDoc @param "id" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -9347,6 +9377,14 @@ export abstract class StephanPlugin<O, D> {
 
     }
 }
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// Options: [{"contexts":["ArrowFunctionExpression"]}]
 ````
 
 
@@ -10030,7 +10068,7 @@ will not be reported if the return value is `void` or `undefined`.
 <a name="eslint-plugin-jsdoc-rules-require-returns-description-options-24"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-24-contexts-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-24-contexts-8"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -10168,7 +10206,7 @@ Requires that `@returns` tag has `type` value.
 <a name="eslint-plugin-jsdoc-rules-require-returns-type-options-25"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-25-contexts-8"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-25-contexts-9"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context

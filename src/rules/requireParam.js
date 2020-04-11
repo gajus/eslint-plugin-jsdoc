@@ -77,12 +77,19 @@ export default iterateJsdoc(({
     utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, fixer);
   });
 }, {
+  contextDefaults: true,
   meta: {
     fixable: 'code',
     schema: [
       {
         additionalProperties: false,
         properties: {
+          contexts: {
+            items: {
+              type: 'string',
+            },
+            type: 'array',
+          },
           exemptedBy: {
             items: {
               type: 'string',
