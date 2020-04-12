@@ -242,13 +242,17 @@ const getUtils = (
       augmentsExtendsReplacesDocs &&
         (utils.hasATag(['augments', 'extends']) ||
           utils.classHasTag('augments') ||
-            utils.classHasTag('extends')) ||
-      ((_.isBoolean(userConfig.checkConstructors) && !userConfig.checkConstructors) &&
-        utils.isConstructor()) ||
-      ((_.isBoolean(userConfig.checkGetters) && !userConfig.checkGetters) &&
-        utils.isGetter()) ||
-      ((_.isBoolean(userConfig.checkSetters) && !userConfig.checkSetters) &&
-        utils.isSetter())) {
+            utils.classHasTag('extends'))) {
+      return true;
+    }
+
+    if (
+      userConfig.checkConstructors === false &&
+        utils.isConstructor() ||
+      userConfig.checkGetters === false &&
+        utils.isGetter() ||
+      userConfig.checkSetters === false &&
+        utils.isSetter()) {
       return true;
     }
 
