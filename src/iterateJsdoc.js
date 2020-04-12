@@ -124,6 +124,7 @@ const getUtils = (
   context,
   iteratingAll,
 ) => {
+  const userConfig = context.options[0] || {};
   const ancestors = context.getAncestors();
   const sourceCode = context.getSourceCode();
 
@@ -241,7 +242,13 @@ const getUtils = (
       augmentsExtendsReplacesDocs &&
         (utils.hasATag(['augments', 'extends']) ||
           utils.classHasTag('augments') ||
-            utils.classHasTag('extends'))) {
+            utils.classHasTag('extends')) ||
+      ((_.isBoolean(userConfig.checkConstructors) && !userConfig.checkConstructors) &&
+        utils.isConstructor()) ||
+      ((_.isBoolean(userConfig.checkGetters) && !userConfig.checkGetters) &&
+        utils.isGetter()) ||
+      ((_.isBoolean(userConfig.checkSetters) && !userConfig.checkSetters) &&
+        utils.isSetter())) {
       return true;
     }
 
