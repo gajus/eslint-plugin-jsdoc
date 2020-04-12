@@ -37,6 +37,79 @@ const looksLikeExport = function (astNode) {
     astNode.type === 'ExportAllDeclaration' || astNode.type === 'ExportSpecifier';
 };
 
+const getTSFunctionComment = function (astNode) {
+  const {parent} = astNode;
+  const grandparent = parent.parent;
+  const greatGrandparent = grandparent.parent;
+  const greatGreatGrandparent = greatGrandparent && greatGrandparent.parent;
+
+  // istanbul ignore if
+  if (parent.type !== 'TSTypeAnnotation') {
+    return astNode;
+  }
+
+  switch (grandparent.type) {
+  case 'ClassProperty':
+  case 'TSDeclareFunction':
+  case 'TSMethodSignature':
+  case 'TSPropertySignature':
+    return grandparent;
+  case 'ArrowFunctionExpression':
+    // istanbul ignore else
+    if (
+      greatGrandparent.type === 'VariableDeclarator'
+
+    // && greatGreatGrandparent.parent.type === 'VariableDeclaration'
+    ) {
+      return greatGreatGrandparent.parent;
+    }
+
+    // istanbul ignore next
+    return astNode;
+  case 'FunctionExpression':
+    // istanbul ignore else
+    if (greatGrandparent.type === 'MethodDefinition') {
+      return greatGrandparent;
+    }
+
+  // Fallthrough
+  default:
+    // istanbul ignore if
+    if (grandparent.type !== 'Identifier') {
+      // istanbul ignore next
+      return astNode;
+    }
+  }
+
+  // istanbul ignore next
+  switch (greatGrandparent.type) {
+  case 'ArrowFunctionExpression':
+    // istanbul ignore else
+    if (
+      greatGreatGrandparent.type === 'VariableDeclarator' &&
+      greatGreatGrandparent.parent.type === 'VariableDeclaration'
+    ) {
+      return greatGreatGrandparent.parent;
+    }
+
+    // istanbul ignore next
+    return astNode;
+  case 'FunctionDeclaration':
+    return greatGrandparent;
+  case 'VariableDeclarator':
+    // istanbul ignore else
+    if (greatGreatGrandparent.type === 'VariableDeclaration') {
+      return greatGreatGrandparent;
+    }
+
+    // Fallthrough
+  default:
+    // istanbul ignore next
+    return astNode;
+  }
+};
+
+/* eslint-disable complexity */
 /**
  * Reduces the provided node to the appropriate node for evaluating JSDoc comment status.
  *
@@ -49,6 +122,8 @@ const getReducedASTNode = function (node, sourceCode) {
   let {parent} = node;
 
   switch (node.type) {
+  case 'TSFunctionType':
+    return getTSFunctionComment(node);
   case 'TSInterfaceDeclaration':
   case 'TSTypeAliasDeclaration':
   case 'TSEnumDeclaration':
@@ -59,6 +134,7 @@ const getReducedASTNode = function (node, sourceCode) {
   case 'ClassExpression':
   case 'ObjectExpression':
   case 'ArrowFunctionExpression':
+  case 'TSEmptyBodyFunctionExpression':
   case 'FunctionExpression':
     if (
       !['CallExpression', 'OptionalCallExpression', 'NewExpression'].includes(parent.type)

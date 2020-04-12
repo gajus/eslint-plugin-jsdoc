@@ -592,6 +592,404 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+       * A test class.
+       */
+      abstract class TestClass
+      {
+      /**
+       * A test method.
+       */
+      abstract TestFunction(id);
+      }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSEmptyBodyFunctionExpression'],
+        },
+      ],
+      output: `
+      /**
+       * A test class.
+       */
+      abstract class TestClass
+      {
+      /**
+       * A test method.
+       *
+       * @param id
+       */
+      abstract TestFunction(id);
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * A test class.
+       */
+      declare class TestClass
+      {
+      /**
+       *
+       */
+      TestMethod(id);
+      }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSEmptyBodyFunctionExpression'],
+        },
+      ],
+      output: `
+      /**
+       * A test class.
+       */
+      declare class TestClass
+      {
+      /**
+       * @param id
+       */
+      TestMethod(id);
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * A test function.
+       */
+      declare let TestFunction: (id) => void;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      /**
+       * A test function.
+       *
+       * @param id
+       */
+      declare let TestFunction: (id) => void;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * A test function.
+       */
+      let TestFunction: (id) => void;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      /**
+       * A test function.
+       *
+       * @param id
+       */
+      let TestFunction: (id) => void;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * A test function.
+       */
+       function test(
+         processor: (id: number) => string
+       ) {
+         return processor(10);
+       }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      /**
+       * A test function.
+       *
+       * @param id
+       */
+       function test(
+         processor: (id: number) => string
+       ) {
+         return processor(10);
+       }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * A test function.
+       */
+       let test = (processor: (id: number) => string) =>
+       {
+         return processor(10);
+       }
+       `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      /**
+       * A test function.
+       *
+       * @param id
+       */
+       let test = (processor: (id: number) => string) =>
+       {
+         return processor(10);
+       }
+       `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      class TestClass {
+      /**
+       * A class property.
+       */
+        public Test: (id: number) => string;
+      }
+       `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      class TestClass {
+      /**
+       * A class property.
+       *
+       * @param id
+       */
+        public Test: (id: number) => string;
+      }
+       `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      class TestClass {
+      /**
+       * A class method.
+       */
+       public TestMethod(): (id: number) => string
+       {
+       }
+      }
+       `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      class TestClass {
+      /**
+       * A class method.
+       *
+       * @param id
+       */
+       public TestMethod(): (id: number) => string
+       {
+       }
+      }
+       `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      interface TestInterface {
+      /**
+       * An interface property.
+       */
+        public Test: (id: number) => string;
+      }
+       `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      interface TestInterface {
+      /**
+       * An interface property.
+       *
+       * @param id
+       */
+        public Test: (id: number) => string;
+      }
+       `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      interface TestInterface {
+      /**
+       * An interface method.
+       */
+       public TestMethod(): (id: number) => string;
+      }
+       `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      interface TestInterface {
+      /**
+       * An interface method.
+       *
+       * @param id
+       */
+       public TestMethod(): (id: number) => string;
+      }
+       `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * A function with return type
+       */
+       function test(): (id: number) => string;
+       `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      /**
+       * A function with return type
+       *
+       * @param id
+       */
+       function test(): (id: number) => string;
+       `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * A function with return type
+       */
+       let test = (): (id: number) => string =>
+        {
+            return (id) => \`\${id}\`;
+        }
+       `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      /**
+       * A function with return type
+       *
+       * @param id
+       */
+       let test = (): (id: number) => string =>
+        {
+            return (id) => \`\${id}\`;
+        }
+       `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
@@ -1142,6 +1540,25 @@ export default {
           contexts: ['ArrowFunctionExpression'],
         },
       ],
+    },
+    {
+      code: `
+      /**
+       * A function with return type
+       *
+       * @param id
+       */
+       let test = (): (id: number) => string =>
+        {
+            return (id) => \`\${id}\`;
+        }
+       `,
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
 };
