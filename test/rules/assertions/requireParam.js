@@ -592,6 +592,112 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+       * A test class.
+       */
+      abstract class TestClass
+      {
+      /**
+       * A test method.
+       */
+      abstract TestFunction(id);
+      }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSEmptyBodyFunctionExpression'],
+        },
+      ],
+      output: `
+      /**
+       * A test class.
+       */
+      abstract class TestClass
+      {
+      /**
+       * A test method.
+       *
+       * @param id
+       */
+      abstract TestFunction(id);
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * A test class.
+       */
+      declare class TestClass
+      {
+      /**
+       *
+       */
+      TestMethod(id);
+      }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSEmptyBodyFunctionExpression'],
+        },
+      ],
+      output: `
+      /**
+       * A test class.
+       */
+      declare class TestClass
+      {
+      /**
+       * @param id
+       */
+      TestMethod(id);
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * A test function.
+       */
+      declare let TestFunction: (id) => void;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "id" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      output: `
+      /**
+       * A test function.
+       *
+       * @param id
+       */
+      declare let TestFunction: (id) => void;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {

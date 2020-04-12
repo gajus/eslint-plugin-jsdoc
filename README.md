@@ -9062,6 +9062,39 @@ TestMethod(id: number): void;
 }
 // Options: [{"contexts":["TSMethodSignature"]}]
 // Message: Missing JSDoc @param "id" declaration.
+
+/**
+ * A test class.
+ */
+abstract class TestClass
+{
+/**
+ * A test method.
+ */
+abstract TestFunction(id);
+}
+// Options: [{"contexts":["TSEmptyBodyFunctionExpression"]}]
+// Message: Missing JSDoc @param "id" declaration.
+
+/**
+ * A test class.
+ */
+declare class TestClass
+{
+/**
+ *
+ */
+TestMethod(id);
+}
+// Options: [{"contexts":["TSEmptyBodyFunctionExpression"]}]
+// Message: Missing JSDoc @param "id" declaration.
+
+/**
+ * A test function.
+ */
+declare let TestFunction: (id) => void;
+// Options: [{"contexts":["TSFunctionType"]}]
+// Message: Missing JSDoc @param "id" declaration.
 ````
 
 The following patterns are not considered problems:

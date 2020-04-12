@@ -37,6 +37,19 @@ const looksLikeExport = function (astNode) {
     astNode.type === 'ExportAllDeclaration' || astNode.type === 'ExportSpecifier';
 };
 
+const getDeclaration = function (astNode) {
+  const {parent} = astNode;
+  const grandparent = parent.parent;
+  const greatGrandparent = grandparent.parent;
+  const greatGreatGrandparent = greatGrandparent.parent;
+
+  return parent.type === 'TSTypeAnnotation' && grandparent.type === 'Identifier' &&
+      greatGrandparent.type === 'VariableDeclarator' && greatGreatGrandparent.type === 'VariableDeclaration' ?
+    greatGreatGrandparent :
+    astNode;
+};
+
+/* eslint-disable complexity */
 /**
  * Reduces the provided node to the appropriate node for evaluating JSDoc comment status.
  *
@@ -49,6 +62,8 @@ const getReducedASTNode = function (node, sourceCode) {
   let {parent} = node;
 
   switch (node.type) {
+  case 'TSFunctionType':
+    return getDeclaration(node);
   case 'TSInterfaceDeclaration':
   case 'TSTypeAliasDeclaration':
   case 'TSEnumDeclaration':
@@ -59,6 +74,7 @@ const getReducedASTNode = function (node, sourceCode) {
   case 'ClassExpression':
   case 'ObjectExpression':
   case 'ArrowFunctionExpression':
+  case 'TSEmptyBodyFunctionExpression':
   case 'FunctionExpression':
     if (
       !['CallExpression', 'OptionalCallExpression', 'NewExpression'].includes(parent.type)
