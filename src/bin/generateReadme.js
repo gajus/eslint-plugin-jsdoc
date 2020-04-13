@@ -86,17 +86,22 @@ const generateReadme = async () => {
   });
   let documentBody = await gitdown.get();
 
-  documentBody = documentBody.replace(/<!-- assertions ([a-z]+?) -->/gui, (assertionsBlock) => {
-    const ruleName = assertionsBlock.match(/assertions ([a-z]+)/ui)[1];
-    const ruleAssertions = assertions[ruleName];
+  documentBody = documentBody.replace(
+    /<!-- assertions-(passing|failing) ([a-z]+?) -->/gui,
+    (assertionsBlock, passFail, ruleName) => {
+      const ruleAssertions = assertions[ruleName];
 
-    if (!ruleAssertions) {
-      throw new Error(`No assertions available for rule "${ruleName}".`);
-    }
+      if (!ruleAssertions) {
+        throw new Error(`No assertions available for rule "${ruleName}".`);
+      }
 
-    return 'The following patterns are considered problems:\n\n````js\n' + ruleAssertions.invalid.join('\n\n') +
-      '\n````\n\nThe following patterns are not considered problems:\n\n````js\n' + ruleAssertions.valid.join('\n\n') + '\n````\n';
-  });
+      return passFail === 'failing' ?
+        'The following patterns are considered problems:\n\n````js\n' +
+            ruleAssertions.invalid.join('\n\n') + '\n````\n' :
+        'The following patterns are not considered problems:\n\n````js\n' +
+            ruleAssertions.valid.join('\n\n') + '\n````\n';
+    },
+  );
 
   return documentBody;
 };

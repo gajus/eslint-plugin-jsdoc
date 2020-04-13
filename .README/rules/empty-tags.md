@@ -1,5 +1,7 @@
 ### `empty-tags`
 
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-empty-tags"}
+
 Expects the following tags to be empty of any content:
 
 - `@abstract`
@@ -40,10 +42,23 @@ add them within this option.
 }
 ```
 
+#### Fixer
+
+(Todo)
+
+#### Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags| and others added by `tags`|
 |Aliases||
 |Options|`tags`|
-<!-- assertions emptyTags -->
+
+#### Failing examples
+
+<!-- assertions-failing emptyTags -->
+
+#### Passing examples
+
+<!-- assertions-passing emptyTags -->

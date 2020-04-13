@@ -1,5 +1,7 @@
 ### `check-values`
 
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-check-values"}
+
 This rule checks the values for a handful of tags:
 
 1. `@version` - Checks that there is a present and valid
@@ -31,6 +33,8 @@ description to check (if no grouping is present, then the whole portion
 matched will be used). Defaults to `([^\n]*)`, i.e., the SPDX expression
 is expected before any line breaks.
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -38,4 +42,10 @@ is expected before any line breaks.
 |Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|
 
-<!-- assertions checkValues -->
+#### Failing examples
+
+<!-- assertions-failing checkValues -->
+
+#### Passing examples
+
+<!-- assertions-passing checkValues -->

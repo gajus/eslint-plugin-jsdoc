@@ -1,5 +1,7 @@
 ### `require-file-overview`
 
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-file-overview"}
+
 Checks that:
 
 1. All files have a `@file`, `@fileoverview`, or `@overview` tag.
@@ -67,6 +69,8 @@ in this configuration object regardless of whether you have configured
 `fileoverview` instead of `file` on `tagNamePreference` (i.e., `fileoverview`
 will be checked, but you must use `file` on the configuration object).
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|Everywhere|
@@ -74,4 +78,10 @@ will be checked, but you must use `file` on the configuration object).
 |Aliases|`fileoverview`, `overview`|
 |Options|`tags`|
 
-<!-- assertions requireFileOverview -->
+#### Failing examples
+
+<!-- assertions-failing requireFileOverview -->
+
+#### Passing examples
+
+<!-- assertions-passing requireFileOverview -->

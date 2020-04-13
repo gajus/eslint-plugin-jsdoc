@@ -1,5 +1,7 @@
 ### `require-example`
 
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-example"}
+
 Requires that all functions have examples.
 
 * All functions must have one or more `@example` tags.
@@ -35,6 +37,8 @@ the rule to apply to any jsdoc block throughout your files.
 The fixer for `require-example` will add an empty `@example`, but it will still
 report a missing example description after this is added.
 
+#### Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -42,4 +46,10 @@ report a missing example description after this is added.
 |Options|`exemptedBy`, `avoidExampleOnConstructors`, `contexts`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
-<!-- assertions requireExample -->
+#### Failing examples
+
+<!-- assertions-failing requireExample -->
+
+#### Passing examples
+
+<!-- assertions-passing requireExample -->

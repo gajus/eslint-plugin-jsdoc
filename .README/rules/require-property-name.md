@@ -1,10 +1,21 @@
 ### `require-property-name`
 
-Requires that all function `@property` tags have names.
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-property-name"}
+
+Requires that all `@property` tags have names.
+
+#### Context and settings
 
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/A|
+|Tags|`property`|
+|Aliases|`prop`|
 
-<!-- assertions requirePropertyName -->
+#### Failing examples
+
+<!-- assertions-failing requirePropertyName -->
+
+#### Passing examples
+
+<!-- assertions-passing requirePropertyName -->

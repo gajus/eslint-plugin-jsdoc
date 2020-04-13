@@ -1,5 +1,7 @@
 ### `require-param`
 
+{"gitdown": "contents", "rootId": "eslint-plugin-jsdoc-rules-require-param"}
+
 Requires that all function parameters are documented.
 
 #### Options
@@ -22,6 +24,12 @@ contexts (see below). May be useful for adding such as
 `TSMethodSignature` in TypeScript or restricting the contexts
 which are checked.
 
+#### Fixer
+
+(Todo)
+
+#### Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -30,4 +38,10 @@ which are checked.
 |Options|`contexts`, `exemptedBy`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
-<!-- assertions requireParam -->
+#### Failing examples
+
+<!-- assertions-failing requireParam -->
+
+#### Passing examples
+
+<!-- assertions-passing requireParam -->
