@@ -335,6 +335,117 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        class TestClass {
+          /**
+           * 
+           */
+          constructor() { }
+        }
+        `,
+        errors: [
+          {
+            line: 3,
+            message: 'Missing JSDoc block description.'
+          },
+        ],
+    },
+    {
+      code: `
+        class TestClass {
+          /**
+           * 
+           */
+          constructor() { }
+        }
+        `,
+      options: [
+        {
+          checkConstructors: true
+        },
+      ],
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc block description.'
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * 
+         */
+        get Test() { }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc block description.'
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * 
+         */
+        get Test() { }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc block description.'
+        }
+      ],
+      options: [
+        {
+          checkGetters: true
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * 
+         */
+        set Test(value) { }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc block description.'
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * 
+         */
+        set Test(value) { }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc block description.'
+        }
+      ],
+      options: [
+        {
+          checkSetters: true
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -557,6 +668,81 @@ export default {
           },
         },
       },
+    },
+    {
+      code: `
+        class TestClass {
+          /**
+           * Test.
+           */
+          constructor() { }
+        }
+        `,
+    },
+    {
+      code: `
+        class TestClass {
+          /**
+           * 
+           */
+          constructor() { }
+        }
+        `,
+      options: [
+        {
+          checkConstructors: false,
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * Test.
+         */
+        get Test() { }
+      }
+      `,
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * 
+         */
+        get Test() { }
+      }
+      `,
+      options: [
+        {
+          checkGetters: false,
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * Test.
+         */
+        set Test(value) { }
+      }
+      `,
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * 
+         */
+        set Test(value) { }
+      }
+      `,
+      options: [
+        {
+          checkSetters: false,
+        },
+      ],
     },
   ],
 };

@@ -248,16 +248,16 @@ const getUtils = (
     }
 
     if (
-      userConfig[0].checkConstructors === false &&
+      userConfig[0].checkConstructors !== true &&
         (
           utils.isConstructor() ||
           utils.hasATag([
             'class',
             'constructor',
           ])) ||
-      userConfig[0].checkGetters === false &&
+      userConfig[0].checkGetters !== true &&
         utils.isGetter() ||
-      userConfig[0].checkSetters === false &&
+      userConfig[0].checkSetters !== true &&
         utils.isSetter()) {
       return true;
     }

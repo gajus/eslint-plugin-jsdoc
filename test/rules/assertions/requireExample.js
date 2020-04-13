@@ -149,6 +149,90 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      class TestClass {
+        /**
+         * 
+         */
+        get Test() { }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @example declaration.'
+        }
+      ],
+      options: [
+        {
+          checkGetters: true
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * @example
+         */
+        get Test() { }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @example description.'
+        }
+      ],
+      options: [
+        {
+          checkGetters: true
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         *
+         */
+        set Test(value) { }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @example declaration.'
+        }
+      ],
+      options: [
+        {
+          checkSetters: true
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * @example
+         */
+        set Test(value) { }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @example description.'
+        }
+      ],
+      options: [
+        {
+          checkSetters: true
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -294,6 +378,81 @@ export default {
       options: [
         {
           contexts: ['ClassDeclaration'],
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         *
+         */
+        get Test() { }
+      }
+      `,
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * @example
+         */
+        get Test() { }
+      }
+      `,
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * @example Test
+         */
+        get Test() { }
+      }
+      `,
+      options: [
+        {
+          checkGetters: true,
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         *
+         */
+        set Test(value) { }
+      }
+      `,
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * @example
+         */
+        set Test(value) { }
+      }
+      `,
+      options: [
+        {
+          checkSetters: false,
+        },
+      ],
+    },
+    {
+      code: `
+      class TestClass {
+        /**
+         * @example Test
+         */
+        set Test(value) { }
+      }
+      `,
+      options: [
+        {
+          checkSetters: true,
         },
       ],
     },
