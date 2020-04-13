@@ -483,8 +483,7 @@ const iterate = (
   const report = makeReport(context, jsdocNode);
   const userConfig = context.options.length > 0 ? _.cloneDeep(context.options) : [{}];
 
-  if (ruleConfig.meta.schema)
-  {
+  if (ruleConfig.meta.schema) {
     new Ajv({ useDefaults: true }).compile(
       {
         type: 'array',
