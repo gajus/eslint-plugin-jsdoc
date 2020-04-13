@@ -12,7 +12,7 @@ import warnRemovedSettings from '../warnRemovedSettings';
  * @returns {boolean}
  *   true in case deep checking can be skipped; otherwise false.
  */
-const canSkip = (utils, checkGetters) => {
+const canSkip = (utils) => {
   return utils.hasATag([
     // inheritdoc implies that all documentation is inherited
     // see https://jsdoc.app/tags-inheritdoc.html
@@ -46,12 +46,11 @@ export default iterateJsdoc(({
   const {
     forceRequireReturn = false,
     forceReturnsWithAsync = false,
-    checkGetters = true,
   } = context.options[0] || {};
 
   // A preflight check. We do not need to run a deep check
   // in case the @returns comment is optional or undefined.
-  if (canSkip(utils, checkGetters)) {
+  if (canSkip(utils)) {
     return;
   }
 
