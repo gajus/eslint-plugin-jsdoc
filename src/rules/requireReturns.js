@@ -126,10 +126,6 @@ export default iterateJsdoc(({
             default: false,
             type: 'boolean',
           },
-          checkSetters: {
-            default: false,
-            type: 'boolean',
-          },
           forceRequireReturn: {
             default: false,
             type: 'boolean',
