@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-named-default
+import Ajv from "ajv";
 import {default as commentParser, stringify as commentStringify} from 'comment-parser';
 import _ from 'lodash';
 import jsdocUtils from './jsdocUtils';
@@ -123,8 +124,8 @@ const getUtils = (
   report,
   context,
   iteratingAll,
+  userConfig,
 ) => {
-  const userConfig = context.options[0] || {};
   const ancestors = context.getAncestors();
   const sourceCode = context.getSourceCode();
 
@@ -247,16 +248,16 @@ const getUtils = (
     }
 
     if (
-      userConfig.checkConstructors === false &&
+      userConfig[0].checkConstructors === false &&
         (
           utils.isConstructor() ||
           utils.hasATag([
             'class',
             'constructor',
           ])) ||
-      userConfig.checkGetters === false &&
+      userConfig[0].checkGetters === false &&
         utils.isGetter() ||
-      userConfig.checkSetters === false &&
+      userConfig[0].checkSetters === false &&
         utils.isSetter()) {
       return true;
     }
@@ -480,6 +481,15 @@ const iterate = (
   const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
   const jsdoc = parseComment(jsdocNode, indent, !ruleConfig.noTrim);
   const report = makeReport(context, jsdocNode);
+  const userConfig = context.options.length > 0 ? _.cloneDeep(context.options) : [{}];
+
+  (ruleConfig.meta.schema) ?
+    new Ajv({ useDefaults: true }).compile(
+      {
+        type: 'array',
+        items: ruleConfig.meta.schema
+      })(userConfig) :
+    userConfig;
 
   const utils = getUtils(
     node,
@@ -489,6 +499,7 @@ const iterate = (
     report,
     context,
     iteratingAll,
+    userConfig,
   );
 
   if (
