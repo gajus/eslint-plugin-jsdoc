@@ -204,7 +204,9 @@ export default {
       }
       `,
       options: [
-        {avoidExampleOnConstructors: true},
+        {
+          checkConstructors: false,
+        },
       ],
     },
     {
@@ -218,7 +220,9 @@ export default {
       }
       `,
       options: [
-        {avoidExampleOnConstructors: true},
+        {
+          checkConstructors: false,
+        },
       ],
     },
     {
@@ -233,7 +237,9 @@ export default {
       }
       `,
       options: [
-        {avoidExampleOnConstructors: true},
+        {
+          checkConstructors: false,
+        },
       ],
     },
     {

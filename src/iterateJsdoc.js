@@ -248,7 +248,12 @@ const getUtils = (
 
     if (
       userConfig.checkConstructors === false &&
-        utils.isConstructor() ||
+        (
+          utils.isConstructor() ||
+          utils.hasATag([
+            'class',
+            'constructor',
+          ])) ||
       userConfig.checkGetters === false &&
         utils.isGetter() ||
       userConfig.checkSetters === false &&

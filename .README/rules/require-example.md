@@ -17,12 +17,6 @@ block avoids the need for an `@example`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
-##### `avoidExampleOnConstructors`
-
-Set to `true` to avoid the need for an example on a constructor (whether
-indicated as such by a jsdoc tag or by being within an ES6 `class`).
-Defaults to `false`.
-
 ##### `contexts`
 
 Set this to an array of strings representing the AST context
