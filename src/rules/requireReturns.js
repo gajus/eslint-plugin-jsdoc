@@ -102,6 +102,14 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          checkConstructors: {
+            default: false,
+            type: 'boolean',
+          },
+          checkGetters: {
+            default: true,
+            type: 'boolean',
+          },
           checkGetters: {
             default: true,
             type: 'boolean',
@@ -117,14 +125,6 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
-          },
-          checkConstructors: {
-            default: false,
-            type: 'boolean',
-          },
-          checkGetters: {
-            default: true,
-            type: 'boolean',
           },
           forceRequireReturn: {
             default: false,

@@ -344,12 +344,12 @@ export default {
           constructor() { }
         }
         `,
-        errors: [
-          {
-            line: 3,
-            message: 'Missing JSDoc block description.'
-          },
-        ],
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
     },
     {
       code: `
@@ -360,15 +360,15 @@ export default {
           constructor() { }
         }
         `,
-      options: [
-        {
-          checkConstructors: true
-        },
-      ],
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc block description.'
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+      options: [
+        {
+          checkConstructors: true,
         },
       ],
     },
@@ -384,7 +384,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc block description.'
+          message: 'Missing JSDoc block description.',
         },
       ],
     },
@@ -400,12 +400,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc block description.'
-        }
+          message: 'Missing JSDoc block description.',
+        },
       ],
       options: [
         {
-          checkGetters: true
+          checkGetters: true,
         },
       ],
     },
@@ -421,7 +421,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc block description.'
+          message: 'Missing JSDoc block description.',
         },
       ],
     },
@@ -437,12 +437,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc block description.'
-        }
+          message: 'Missing JSDoc block description.',
+        },
       ],
       options: [
         {
-          checkSetters: true
+          checkSetters: true,
         },
       ],
     },

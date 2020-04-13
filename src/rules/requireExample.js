@@ -54,18 +54,6 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
-          contexts: {
-            items: {
-              type: 'string',
-            },
-            type: 'array',
-          },
-          exemptedBy: {
-            items: {
-              type: 'string',
-            },
-            type: 'array',
-          },
           checkConstructors: {
             default: true,
             type: 'boolean',
@@ -77,6 +65,18 @@ export default iterateJsdoc(({
           checkSetters: {
             default: false,
             type: 'boolean',
+          },
+          contexts: {
+            items: {
+              type: 'string',
+            },
+            type: 'array',
+          },
+          exemptedBy: {
+            items: {
+              type: 'string',
+            },
+            type: 'array',
           },
         },
         type: 'object',

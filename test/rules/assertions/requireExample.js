@@ -161,12 +161,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @example declaration.'
-        }
+          message: 'Missing JSDoc @example declaration.',
+        },
       ],
       options: [
         {
-          checkGetters: true
+          checkGetters: true,
         },
       ],
     },
@@ -182,12 +182,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @example description.'
-        }
+          message: 'Missing JSDoc @example description.',
+        },
       ],
       options: [
         {
-          checkGetters: true
+          checkGetters: true,
         },
       ],
     },
@@ -203,12 +203,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @example declaration.'
-        }
+          message: 'Missing JSDoc @example declaration.',
+        },
       ],
       options: [
         {
-          checkSetters: true
+          checkSetters: true,
         },
       ],
     },
@@ -224,12 +224,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @example description.'
-        }
+          message: 'Missing JSDoc @example description.',
+        },
       ],
       options: [
         {
-          checkSetters: true
+          checkSetters: true,
         },
       ],
     },

@@ -1,5 +1,5 @@
+import Ajv from 'ajv';
 // eslint-disable-next-line import/no-named-default
-import Ajv from "ajv";
 import {default as commentParser, stringify as commentStringify} from 'comment-parser';
 import _ from 'lodash';
 import jsdocUtils from './jsdocUtils';
@@ -486,9 +486,10 @@ const iterate = (
   if (ruleConfig.meta.schema) {
     new Ajv({useDefaults: true}).compile(
       {
+        items: ruleConfig.meta.schema,
         type: 'array',
-        items: ruleConfig.meta.schema
-      })(userConfig)
+      },
+    )(userConfig);
   }
 
   const utils = getUtils(

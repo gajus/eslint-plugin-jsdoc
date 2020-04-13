@@ -473,15 +473,15 @@ export default {
           }
         }
         `,
-      options: [
-        {
-          checkConstructors: true
-        },
-      ],
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @returns declaration.'
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          checkConstructors: true,
         },
       ],
     },
@@ -499,12 +499,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @returns declaration.'
+          message: 'Missing JSDoc @returns declaration.',
         },
       ],
       options: [
         {
-          checkGetters: true
+          checkGetters: true,
         },
       ],
     },

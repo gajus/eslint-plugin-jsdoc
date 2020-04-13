@@ -74,6 +74,18 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          checkConstructors: {
+            default: true,
+            type: 'boolean',
+          },
+          checkGetters: {
+            default: true,
+            type: 'boolean',
+          },
+          checkSetters: {
+            default: true,
+            type: 'boolean',
+          },
           contexts: {
             items: {
               type: 'string',
@@ -89,18 +101,6 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
-          },
-          checkConstructors: {
-            default: true,
-            type: 'boolean',
-          },
-          checkGetters: {
-            default: true,
-            type: 'boolean',
-          },
-          checkSetters: {
-            default: true,
-            type: 'boolean',
           },
         },
         type: 'object',
