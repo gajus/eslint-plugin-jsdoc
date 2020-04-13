@@ -123,7 +123,7 @@ export default iterateJsdoc(({
             type: 'boolean',
           },
           checkGetters: {
-            default: false,
+            default: true,
             type: 'boolean',
           },
           forceRequireReturn: {
