@@ -90,6 +90,18 @@ export default iterateJsdoc(({
             },
             type: 'array',
           },
+          checkConstructors: {
+            default: true,
+            type: 'boolean',
+          },
+          checkGetters: {
+            default: true,
+            type: 'boolean',
+          },
+          checkSetters: {
+            default: true,
+            type: 'boolean',
+          },
         },
         type: 'object',
       },
