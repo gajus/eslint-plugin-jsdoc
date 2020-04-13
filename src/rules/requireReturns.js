@@ -110,10 +110,6 @@ export default iterateJsdoc(({
             default: true,
             type: 'boolean',
           },
-          checkGetters: {
-            default: true,
-            type: 'boolean',
-          },
           contexts: {
             items: {
               type: 'string',
