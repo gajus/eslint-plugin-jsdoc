@@ -101,11 +101,11 @@ export default iterateJsdoc(({
             type: 'boolean',
           },
           checkGetters: {
-            default: true,
+            default: false,
             type: 'boolean',
           },
           checkSetters: {
-            default: true,
+            default: false,
             type: 'boolean',
           },
         },
