@@ -484,7 +484,7 @@ const iterate = (
   const userConfig = context.options.length > 0 ? _.cloneDeep(context.options) : [{}];
 
   if (ruleConfig.meta.schema) {
-    new Ajv({ useDefaults: true }).compile(
+    new Ajv({useDefaults: true}).compile(
       {
         type: 'array',
         items: ruleConfig.meta.schema
