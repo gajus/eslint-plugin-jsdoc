@@ -122,15 +122,15 @@ export default iterateJsdoc(({
             type: 'array',
           },
           checkConstructors: {
-            default: true,
+            default: false,
             type: 'boolean',
           },
           checkGetters: {
-            default: true,
+            default: false,
             type: 'boolean',
           },
           checkSetters: {
-            default: true,
+            default: false,
             type: 'boolean',
           },
           forceRequireReturn: {
