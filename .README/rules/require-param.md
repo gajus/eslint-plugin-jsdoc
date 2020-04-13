@@ -22,12 +22,24 @@ contexts (see below). May be useful for adding such as
 `TSMethodSignature` in TypeScript or restricting the contexts
 which are checked.
 
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
-|Tags|`param`|
-|Aliases|`arg`, `argument`|
-|Options|`contexts`, `exemptedBy`|
-|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
+##### `checkConstructors`
+
+A value indicating whether `constructor`s should be checked. Defaults to `true`.
+
+##### `checkGetters`
+
+A value indicating whether getters should be checked. Defaults to `false`.
+
+##### `checkSetters`
+
+A value indicating whether getters should be checked. Defaults to `false`.
+
+|          |                                                                                                               |
+| -------- | ------------------------------------------------------------------------------------------------------------- |
+| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
+| Tags     | `param`                                                                                                       |
+| Aliases  | `arg`, `argument`                                                                                             |
+| Options  | `contexts`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`                                 |
+| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 <!-- assertions requireParam -->

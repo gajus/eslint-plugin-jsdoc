@@ -6427,14 +6427,17 @@ An options object may have any of the following properties:
 - `descriptionStyle` - Whether to accept implicit descriptions (`"body"`) or
     `@description` tags (`"tag"`) as satisfying the rule. Set to `"any"` to
     accept either style. Defaults to `"body"`.
+- `checkConstructors` - A value indicating whether `constructor`s should be checked. Defaults to `true`.
+- `checkGetters` - A value indicating whether getters should be checked. Defaults to `true`.
+- `checkSetters` - A value indicating whether getters should be checked. Defaults to `true`.
 
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
-|Tags|`description` or jsdoc block|
-|Aliases|`desc`|
-|Options|`contexts`, `exemptedBy`, `descriptionStyle`|
-|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
+|          |                                                                                                               |
+| -------- | ------------------------------------------------------------------------------------------------------------- |
+| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
+| Tags     | `description` or jsdoc block                                                                                  |
+| Aliases  | `desc`                                                                                                        |
+| Options  | `contexts`, `exemptedBy`, `descriptionStyle`, `checkConstructors`, `checkGetters`, `checkSetters`             |
+| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 The following patterns are considered problems:
 
@@ -6572,6 +6575,57 @@ function quux () {
 }
 // Options: [{"exemptedBy":["notPresent"]}]
 // Message: Missing JSDoc block description.
+
+class TestClass {
+  /**
+   * 
+   */
+  constructor() { }
+}
+// Message: Missing JSDoc block description.
+
+class TestClass {
+  /**
+   * 
+   */
+  constructor() { }
+}
+// Options: [{"checkConstructors":true}]
+// Message: Missing JSDoc block description.
+
+class TestClass {
+  /**
+   * 
+   */
+  get Test() { }
+}
+// Message: Missing JSDoc block description.
+
+class TestClass {
+  /**
+   * 
+   */
+  get Test() { }
+}
+// Options: [{"checkGetters":true}]
+// Message: Missing JSDoc block description.
+
+class TestClass {
+  /**
+   * 
+   */
+  set Test(value) { }
+}
+// Message: Missing JSDoc block description.
+
+class TestClass {
+  /**
+   * 
+   */
+  set Test(value) { }
+}
+// Options: [{"checkSetters":true}]
+// Message: Missing JSDoc block description.
 ````
 
 The following patterns are not considered problems:
@@ -6697,6 +6751,51 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+
+class TestClass {
+  /**
+   * Test.
+   */
+  constructor() { }
+}
+
+class TestClass {
+  /**
+   * 
+   */
+  constructor() { }
+}
+// Options: [{"checkConstructors":false}]
+
+class TestClass {
+  /**
+   * Test.
+   */
+  get Test() { }
+}
+
+class TestClass {
+  /**
+   * 
+   */
+  get Test() { }
+}
+// Options: [{"checkGetters":false}]
+
+class TestClass {
+  /**
+   * Test.
+   */
+  set Test(value) { }
+}
+
+class TestClass {
+  /**
+   * 
+   */
+  set Test(value) { }
+}
+// Options: [{"checkSetters":false}]
 ````
 
 
@@ -6722,13 +6821,6 @@ block avoids the need for an `@example`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
-<a name="eslint-plugin-jsdoc-rules-require-example-options-16-avoidexampleonconstructors"></a>
-##### <code>avoidExampleOnConstructors</code>
-
-Set to `true` to avoid the need for an example on a constructor (whether
-indicated as such by a jsdoc tag or by being within an ES6 `class`).
-Defaults to `false`.
-
 <a name="eslint-plugin-jsdoc-rules-require-example-options-16-contexts-3"></a>
 ##### <code>contexts</code>
 
@@ -6736,6 +6828,21 @@ Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
 Overrides the default contexts (see below). Set to `"any"` if you want
 the rule to apply to any jsdoc block throughout your files.
+
+<a name="eslint-plugin-jsdoc-rules-require-example-options-16-checkconstructors"></a>
+##### <code>checkConstructors</code>
+
+A value indicating whether `constructor`s should be checked. Defaults to `true`.
+
+<a name="eslint-plugin-jsdoc-rules-require-example-options-16-checkgetters"></a>
+##### <code>checkGetters</code>
+
+A value indicating whether getters should be checked. Defaults to `false`.
+
+<a name="eslint-plugin-jsdoc-rules-require-example-options-16-checksetters"></a>
+##### <code>checkSetters</code>
+
+A value indicating whether getters should be checked. Defaults to `false`.
 
 <a name="eslint-plugin-jsdoc-rules-require-example-fixer"></a>
 #### Fixer
@@ -6817,6 +6924,42 @@ function quux () {
 }
 // Options: [{"exemptedBy":["notPresent"]}]
 // Message: Missing JSDoc @example declaration.
+
+class TestClass {
+  /**
+   * 
+   */
+  get Test() { }
+}
+// Options: [{"checkGetters":true}]
+// Message: Missing JSDoc @example declaration.
+
+class TestClass {
+  /**
+   * @example
+   */
+  get Test() { }
+}
+// Options: [{"checkGetters":true}]
+// Message: Missing JSDoc @example description.
+
+class TestClass {
+  /**
+   *
+   */
+  set Test(value) { }
+}
+// Options: [{"checkSetters":true}]
+// Message: Missing JSDoc @example declaration.
+
+class TestClass {
+  /**
+   * @example
+   */
+  set Test(value) { }
+}
+// Options: [{"checkSetters":true}]
+// Message: Missing JSDoc @example description.
 ````
 
 The following patterns are not considered problems:
@@ -6859,7 +7002,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"avoidExampleOnConstructors":true}]
+// Options: [{"checkConstructors":false}]
 
 /**
  * @constructor
@@ -6868,7 +7011,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"avoidExampleOnConstructors":true}]
+// Options: [{"checkConstructors":false}]
 
 class Foo {
   /**
@@ -6878,7 +7021,7 @@ class Foo {
 
   }
 }
-// Options: [{"avoidExampleOnConstructors":true}]
+// Options: [{"checkConstructors":false}]
 
 /**
  * @inheritdoc
@@ -6910,6 +7053,51 @@ function quux () {
 
 }
 // Options: [{"contexts":["ClassDeclaration"]}]
+
+class TestClass {
+  /**
+   *
+   */
+  get Test() { }
+}
+
+class TestClass {
+  /**
+   * @example
+   */
+  get Test() { }
+}
+
+class TestClass {
+  /**
+   * @example Test
+   */
+  get Test() { }
+}
+// Options: [{"checkGetters":true}]
+
+class TestClass {
+  /**
+   *
+   */
+  set Test(value) { }
+}
+
+class TestClass {
+  /**
+   * @example
+   */
+  set Test(value) { }
+}
+// Options: [{"checkSetters":false}]
+
+class TestClass {
+  /**
+   * @example Test
+   */
+  set Test(value) { }
+}
+// Options: [{"checkSetters":true}]
 ````
 
 
@@ -8788,13 +8976,28 @@ contexts (see below). May be useful for adding such as
 `TSMethodSignature` in TypeScript or restricting the contexts
 which are checked.
 
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
-|Tags|`param`|
-|Aliases|`arg`, `argument`|
-|Options|`contexts`, `exemptedBy`|
-|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-checkconstructors-1"></a>
+##### <code>checkConstructors</code>
+
+A value indicating whether `constructor`s should be checked. Defaults to `true`.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-checkgetters-1"></a>
+##### <code>checkGetters</code>
+
+A value indicating whether getters should be checked. Defaults to `false`.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-checksetters-1"></a>
+##### <code>checkSetters</code>
+
+A value indicating whether getters should be checked. Defaults to `false`.
+
+|          |                                                                                                               |
+| -------- | ------------------------------------------------------------------------------------------------------------- |
+| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
+| Tags     | `param`                                                                                                       |
+| Aliases  | `arg`, `argument`                                                                                             |
+| Options  | `contexts`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`                                 |
+| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 The following patterns are considered problems:
 
@@ -10342,6 +10545,8 @@ Will also report if multiple `@returns` tags are present.
 <a name="eslint-plugin-jsdoc-rules-require-returns-options-26"></a>
 #### Options
 
+- `checkConstructors` - A value indicating whether `constructor`s should
+  be checked for `@returns` tags. Defaults to `false`.
 - `checkGetters` - Boolean to determine whether getter methods should
   be checked for `@returns` tags. Defaults to `true`.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -10376,13 +10581,13 @@ Will also report if multiple `@returns` tags are present.
 'jsdoc/require-returns': ['error', {forceReturnsWithAsync: true}]
 ```
 
-|||
-|---|---|
-|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
-|Tags|`returns`|
-|Aliases|`return`|
-|Options|`checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
-|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
+|          |                                                                                                               |
+| -------- | ------------------------------------------------------------------------------------------------------------- |
+| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
+| Tags     | `returns`                                                                                                     |
+| Aliases  | `return`                                                                                                      |
+| Options  | `checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`  |
+| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 The following patterns are considered problems:
 
@@ -10576,6 +10781,28 @@ async function foo(a) {
 class foo {
   /** gets bar */
   get bar() {
+    return 0;
+  }
+}
+// Options: [{"checkGetters":true}]
+// Message: Missing JSDoc @returns declaration.
+
+class TestClass {
+  /**
+   * 
+   */
+  constructor() {
+    return new Map();
+  }
+}
+// Options: [{"checkConstructors":true}]
+// Message: Missing JSDoc @returns declaration.
+
+class TestClass {
+  /**
+   * 
+   */
+  get Test() {
     return 0;
   }
 }
@@ -10933,6 +11160,56 @@ class foo {
 class foo {
   /** @returns zero */
   get bar() {
+    return 0;
+  }
+}
+// Options: [{"checkGetters":false}]
+
+class TestClass {
+  /**
+   *
+   */
+  constructor() { }
+}
+
+class TestClass {
+  /**
+   * @returns A map.
+   */
+  constructor() {
+    return new Map();
+  }
+}
+
+class TestClass {
+  /**
+   *
+   */
+  constructor() { }
+}
+// Options: [{"checkConstructors":false}]
+
+class TestClass {
+  /**
+   *
+   */
+  get Test() { }
+}
+
+class TestClass {
+  /**
+   * @returns A number.
+   */
+  get Test() {
+    return 0;
+  }
+}
+
+class TestClass {
+  /**
+   *
+   */
+  get Test() {
     return 0;
   }
 }
