@@ -34,6 +34,7 @@
     "husky": "^4.2.3",
     "mocha": "^7.1.1",
     "nyc": "^15.0.0",
+    "rimraf": "^3.0.2",
     "semantic-release": "^17.0.4",
     "typescript": "^3.8.3"
   },
@@ -61,7 +62,7 @@
     "url": "https://github.com/gajus/eslint-plugin-jsdoc"
   },
   "scripts": {
-    "build": "rm -fr ./dist && NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored",
+    "build": "rimraf ./dist && cross-env NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored",
     "check-readme": "babel-node ./src/bin/generateReadme.js --check",
     "create-readme": "babel-node ./src/bin/generateReadme.js",
     "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
