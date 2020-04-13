@@ -483,13 +483,14 @@ const iterate = (
   const report = makeReport(context, jsdocNode);
   const userConfig = context.options.length > 0 ? _.cloneDeep(context.options) : [{}];
 
-  (ruleConfig.meta.schema) ?
+  if (ruleConfig.meta.schema)
+  {
     new Ajv({ useDefaults: true }).compile(
       {
         type: 'array',
         items: ruleConfig.meta.schema
-      })(userConfig) :
-    userConfig;
+      })(userConfig)
+  }
 
   const utils = getUtils(
     node,
