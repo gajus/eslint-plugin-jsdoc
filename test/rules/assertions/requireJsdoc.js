@@ -1185,6 +1185,36 @@ export default {
       }],
       parser: require.resolve('babel-eslint'),
     },
+    {
+      code: `
+      export default class Test {
+        constructor(a) {
+          this.a = a;
+        }
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: false,
+            ClassExpression: false,
+            FunctionDeclaration: false,
+            FunctionExpression: false,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [{
     code: `
