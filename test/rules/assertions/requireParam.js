@@ -1541,5 +1541,24 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * A function with return type
+       *
+       * @param id
+       */
+       let test = (): (id: number) => string =>
+        {
+            return (id) => \`\${id}\`;
+        }
+       `,
+      options: [
+        {
+          contexts: ['TSFunctionType'],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
