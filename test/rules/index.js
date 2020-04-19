@@ -80,6 +80,9 @@ const ruleTester = new RuleTester();
     if (assertion.errors) {
       throw new Error(`Valid assertions for rule ${ruleName} should not have an \`errors\` array.`);
     }
+    if (assertion.output) {
+      throw new Error(`Valid assertions for rule ${ruleName} should not have an \`output\` property.`);
+    }
     assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
 
     return assertion;
