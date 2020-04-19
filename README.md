@@ -7783,6 +7783,25 @@ class MyClass {
 }
 // Options: [{"exemptEmptyFunctions":true,"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
+
+export default class Test {
+  constructor(a) {
+    this.a = a;
+  }
+}
+// Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+export default class Test {
+  constructor(a) {
+    this.a = a;
+  }
+  private abc(a) {
+    this.a = a;
+  }
+}
+// Options: [{"contexts":["MethodDefinition:not([accessibility=\"private\"]) > FunctionExpression"],"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":false}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:
@@ -8406,6 +8425,13 @@ export interface Foo extends Bar {
   meow(): void;
 }
 // Options: [{"contexts":["TSMethodSignature"]}]
+
+export default class Test {
+  private abc(a) {
+    this.a = a;
+  }
+}
+// Options: [{"contexts":["MethodDefinition:not([accessibility=\"private\"]) > FunctionExpression"],"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":false}}]
 ````
 
 
