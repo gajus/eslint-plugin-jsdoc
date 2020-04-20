@@ -123,7 +123,6 @@ const getUtils = (
   report,
   context,
   iteratingAll,
-  ruleConfig,
 ) => {
   const ancestors = context.getAncestors();
   const sourceCode = context.getSourceCode();
@@ -232,17 +231,6 @@ const getUtils = (
     return jsdocUtils.hasTag(jsdoc, name);
   };
 
-  const hasSchemaOption = (prop) => {
-    const schemaProperties = ruleConfig.meta.schema[0].properties;
-
-    return _.get(
-      context,
-      `options[0].${prop}`,
-      schemaProperties[prop] && schemaProperties[prop].default,
-    );
-  };
-
-  // eslint-disable-next-line complexity
   utils.avoidDocs = () => {
     if (
       overrideReplacesDocs !== false &&
@@ -254,21 +242,6 @@ const getUtils = (
         (utils.hasATag(['augments', 'extends']) ||
           utils.classHasTag('augments') ||
             utils.classHasTag('extends'))) {
-      return true;
-    }
-
-    if (
-      !hasSchemaOption('checkConstructors') &&
-        (
-          utils.isConstructor() ||
-          utils.hasATag([
-            'class',
-            'constructor',
-          ])) ||
-      !hasSchemaOption('checkGetters') &&
-        utils.isGetter() ||
-      !hasSchemaOption('checkSetters') &&
-        utils.isSetter()) {
       return true;
     }
 
@@ -505,7 +478,6 @@ const iterate = (
     report,
     context,
     iteratingAll,
-    ruleConfig,
   );
 
   if (

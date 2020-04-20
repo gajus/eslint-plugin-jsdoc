@@ -462,52 +462,6 @@ export default {
         ecmaVersion: 8,
       },
     },
-    {
-      code: `
-        class TestClass {
-          /**
-           * 
-           */
-          constructor() {
-            return new Map();
-          }
-        }
-        `,
-      errors: [
-        {
-          line: 3,
-          message: 'Missing JSDoc @returns declaration.',
-        },
-      ],
-      options: [
-        {
-          checkConstructors: true,
-        },
-      ],
-    },
-    {
-      code: `
-      class TestClass {
-        /**
-         * 
-         */
-        get Test() {
-          return 0;
-        }
-      }
-      `,
-      errors: [
-        {
-          line: 3,
-          message: 'Missing JSDoc @returns declaration.',
-        },
-      ],
-      options: [
-        {
-          checkGetters: true,
-        },
-      ],
-    },
   ],
   valid: [
     {
@@ -1102,82 +1056,6 @@ export default {
       parserOptions: {
         ecmaVersion: 8,
       },
-    },
-    {
-      code: `
-        class TestClass {
-          /**
-           *
-           */
-          constructor() { }
-        }
-        `,
-    },
-    {
-      code: `
-        class TestClass {
-          /**
-           * @returns A map.
-           */
-          constructor() {
-            return new Map();
-          }
-        }
-        `,
-    },
-    {
-      code: `
-        class TestClass {
-          /**
-           *
-           */
-          constructor() { }
-        }
-        `,
-      options: [
-        {
-          checkConstructors: false,
-        },
-      ],
-    },
-    {
-      code: `
-      class TestClass {
-        /**
-         *
-         */
-        get Test() { }
-      }
-      `,
-    },
-    {
-      code: `
-      class TestClass {
-        /**
-         * @returns A number.
-         */
-        get Test() {
-          return 0;
-        }
-      }
-      `,
-    },
-    {
-      code: `
-      class TestClass {
-        /**
-         *
-         */
-        get Test() {
-          return 0;
-        }
-      }
-      `,
-      options: [
-        {
-          checkGetters: false,
-        },
-      ],
     },
   ],
 };

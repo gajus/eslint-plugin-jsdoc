@@ -6,8 +6,6 @@ Will also report if multiple `@returns` tags are present.
 
 #### Options
 
-- `checkConstructors` - A value indicating whether `constructor`s should
-  be checked for `@returns` tags. Defaults to `false`.
 - `checkGetters` - Boolean to determine whether getter methods should
   be checked for `@returns` tags. Defaults to `true`.
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the document
@@ -42,12 +40,12 @@ Will also report if multiple `@returns` tags are present.
 'jsdoc/require-returns': ['error', {forceReturnsWithAsync: true}]
 ```
 
-|          |                                                                                                               |
-| -------- | ------------------------------------------------------------------------------------------------------------- |
-| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
-| Tags     | `returns`                                                                                                     |
-| Aliases  | `return`                                                                                                      |
-| Options  | `checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`  |
-| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
+|Tags|`returns`|
+|Aliases|`return`|
+|Options|`checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
+|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <!-- assertions requireReturns -->
