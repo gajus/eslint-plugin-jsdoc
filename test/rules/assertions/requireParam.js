@@ -544,27 +544,6 @@ export default {
     {
       code: `
           /**
-           * @inheritdoc
-           */
-          function quux (foo) {
-
-          }
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Missing JSDoc @param "foo" declaration.',
-        },
-      ],
-      settings: {
-        jsdoc: {
-          mode: 'closure',
-        },
-      },
-    },
-    {
-      code: `
-          /**
            * Assign the project to a list of employees.
            * @param {object[]} employees - The employees who are responsible for the project.
            * @param {string} employees[].name - The name of an employee.
@@ -1027,16 +1006,6 @@ export default {
       code: `
           /**
            * @inheritdoc
-           */
-          function quux (foo) {
-
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @inheritDoc
            */
           function quux (foo) {
 
@@ -1590,28 +1559,6 @@ export default {
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
-    },
-    {
-      code: `
-      /** @abstract */
-      class base {
-        /** @param {boolean} arg0 */
-        constructor(arg0) {}
-      }
-
-      class foo extends base {
-        /** @inheritDoc */
-        constructor(arg0) {
-          super(arg0);
-          this.arg0 = arg0;
-        }
-      }
-      `,
-      settings: {
-        jsdoc: {
-          mode: 'closure',
-        },
-      },
     },
   ],
 };

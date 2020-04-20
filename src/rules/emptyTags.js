@@ -2,18 +2,11 @@ import iterateJsdoc from '../iterateJsdoc';
 
 const defaultEmptyTags = [
   'abstract', 'async', 'generator', 'global', 'hideconstructor',
-  'ignore', 'inner', 'instance', 'override', 'readonly',
-
-  // jsdoc doesn't use this form in its docs, but allow for compatibility with
-  //  TypeScript which allows and Closure which requires
-  'inheritDoc',
+  'ignore', 'inheritdoc', 'inner', 'instance', 'override', 'readonly',
 ];
 
 const emptyIfNotClosure = [
   'package', 'private', 'protected', 'public', 'static',
-
-  // Closure doesn't allow with this casing
-  'inheritdoc',
 ];
 
 export default iterateJsdoc(({

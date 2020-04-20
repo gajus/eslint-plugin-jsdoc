@@ -2444,7 +2444,6 @@ function quux () {
  * @ignore
  * @implements
  * @inheritdoc
- * @inheritDoc
  * @inner
  * @instance
  * @interface
@@ -2520,7 +2519,6 @@ function quux (foo) {}
  * @ignore
  * @implements
  * @inheritdoc
- * @inheritDoc
  * @inner
  * @instance
  * @interface
@@ -2652,7 +2650,6 @@ function quux (foo) {
  * @ignore
  * @implements
  * @inheritdoc
- * @inheritDoc
  * @inner
  * @instance
  * @interface
@@ -2726,7 +2723,6 @@ function quux (foo) {}
  * @ignore
  * @implements
  * @inheritdoc
- * @inheritDoc
  * @inner
  * @instance
  * @interface
@@ -9048,15 +9044,6 @@ function quux (foo) {
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
- * @inheritdoc
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"mode":"closure"}}
-// Message: Missing JSDoc @param "foo" declaration.
-
-/**
  * Assign the project to a list of employees.
  * @param {object[]} employees - The employees who are responsible for the project.
  * @param {string} employees[].name - The name of an employee.
@@ -9108,89 +9095,6 @@ TestMethod(id);
 declare let TestFunction: (id) => void;
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
-
-/**
- * A test function.
- */
-let TestFunction: (id) => void;
-// Options: [{"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
-
-/**
- * A test function.
- */
- function test(
-   processor: (id: number) => string
- ) {
-   return processor(10);
- }
-// Options: [{"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
-
-/**
- * A test function.
- */
- let test = (processor: (id: number) => string) =>
- {
-   return processor(10);
- }
-// Options: [{"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
-
-class TestClass {
-/**
- * A class property.
- */
-  public Test: (id: number) => string;
-}
-// Options: [{"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
-
-class TestClass {
-/**
- * A class method.
- */
- public TestMethod(): (id: number) => string
- {
- }
-}
-// Options: [{"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
-
-interface TestInterface {
-/**
- * An interface property.
- */
-  public Test: (id: number) => string;
-}
-// Options: [{"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
-
-interface TestInterface {
-/**
- * An interface method.
- */
- public TestMethod(): (id: number) => string;
-}
-// Options: [{"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
-
-/**
- * A function with return type
- */
- function test(): (id: number) => string;
-// Options: [{"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
-
-/**
- * A function with return type
- */
- let test = (): (id: number) => string =>
-  {
-      return (id) => `${id}`;
-  }
-// Options: [{"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -9205,13 +9109,6 @@ function quux (foo) {
 
 /**
  * @inheritdoc
- */
-function quux (foo) {
-
-}
-
-/**
- * @inheritDoc
  */
 function quux (foo) {
 
@@ -9564,32 +9461,6 @@ function quux (foo) {
 
 }
 // Options: [{"contexts":["ArrowFunctionExpression"]}]
-
-/**
- * A function with return type
- *
- * @param id
- */
- let test = (): (id: number) => string =>
-  {
-      return (id) => `${id}`;
-  }
-// Options: [{"contexts":["TSFunctionType"]}]
-
-/** @abstract */
-class base {
-  /** @param {boolean} arg0 */
-  constructor(arg0) {}
-}
-
-class foo extends base {
-  /** @inheritDoc */
-  constructor(arg0) {
-    super(arg0);
-    this.arg0 = arg0;
-  }
-}
-// Settings: {"jsdoc":{"mode":"closure"}}
 ````
 
 
