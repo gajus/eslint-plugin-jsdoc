@@ -245,7 +245,12 @@ const getUtils = (
       return true;
     }
 
-    const exemptedBy = _.get(context, 'options[0].exemptedBy', ['inheritdoc']);
+    const exemptedBy = _.get(
+      context, 'options[0].exemptedBy', [
+        'inheritDoc',
+        ...settings.mode === 'closure' ? [] : ['inheritdoc'],
+      ],
+    );
     if (exemptedBy.length && utils.getPresentTags(exemptedBy).length) {
       return true;
     }
