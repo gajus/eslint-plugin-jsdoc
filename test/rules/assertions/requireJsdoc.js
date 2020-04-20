@@ -1185,6 +1185,73 @@ export default {
       }],
       parser: require.resolve('babel-eslint'),
     },
+    {
+      code: `
+      export default class Test {
+        constructor(a) {
+          this.a = a;
+        }
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: false,
+            ClassExpression: false,
+            FunctionDeclaration: false,
+            FunctionExpression: false,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+      export default class Test {
+        constructor(a) {
+          this.a = a;
+        }
+        private abc(a) {
+          this.a = a;
+        }
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'MethodDefinition:not([accessibility="private"]) > FunctionExpression',
+          ],
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: false,
+            ClassExpression: false,
+            FunctionDeclaration: false,
+            FunctionExpression: false,
+            MethodDefinition: false,
+          },
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [{
     code: `
@@ -2472,6 +2539,35 @@ export default {
       ],
     }],
     parser: require.resolve('@typescript-eslint/parser'),
+  },
+  {
+    code: `
+    export default class Test {
+      private abc(a) {
+        this.a = a;
+      }
+    }
+    `,
+    options: [
+      {
+        contexts: [
+          'MethodDefinition:not([accessibility="private"]) > FunctionExpression',
+        ],
+        publicOnly: true,
+        require: {
+          ArrowFunctionExpression: false,
+          ClassDeclaration: false,
+          ClassExpression: false,
+          FunctionDeclaration: false,
+          FunctionExpression: false,
+          MethodDefinition: false,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
   },
   ],
 };

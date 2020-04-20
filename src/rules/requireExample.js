@@ -14,23 +14,11 @@ export default iterateJsdoc(({
     return;
   }
 
-  const {avoidExampleOnConstructors = false} = context.options[0] || {};
-
   const targetTagName = 'example';
 
   const functionExamples = _.filter(jsdoc.tags, {
     tag: targetTagName,
   });
-
-  if (avoidExampleOnConstructors && (
-    utils.hasATag([
-      'class',
-      'constructor',
-    ]) ||
-    utils.isConstructor()
-  )) {
-    return;
-  }
 
   if (!functionExamples.length) {
     utils.reportJSDoc(`Missing JSDoc @${targetTagName} declaration.`, null, () => {
@@ -66,7 +54,15 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
-          avoidExampleOnConstructors: {
+          checkConstructors: {
+            default: true,
+            type: 'boolean',
+          },
+          checkGetters: {
+            default: false,
+            type: 'boolean',
+          },
+          checkSetters: {
             default: false,
             type: 'boolean',
           },

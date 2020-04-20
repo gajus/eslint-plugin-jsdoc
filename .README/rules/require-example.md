@@ -12,13 +12,10 @@ This rule has an object option.
 ##### `exemptedBy`
 
 Array of tags (e.g., `['type']`) whose presence on the document
-block avoids the need for an `@example`. Defaults to an empty array.
-
-##### `avoidExampleOnConstructors`
-
-Set to `true` to avoid the need for an example on a constructor (whether
-indicated as such by a jsdoc tag or by being within an ES6 `class`).
-Defaults to `false`.
+block avoids the need for an `@example`. Defaults to an array with
+`inheritdoc`. If you set this array, it will overwrite the default,
+so be sure to add back `inheritdoc` if you wish its presence to cause
+exemption of the rule.
 
 ##### `contexts`
 
@@ -26,6 +23,18 @@ Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
 Overrides the default contexts (see below). Set to `"any"` if you want
 the rule to apply to any jsdoc block throughout your files.
+
+##### `checkConstructors`
+
+A value indicating whether `constructor`s should be checked. Defaults to `true`.
+
+##### `checkGetters`
+
+A value indicating whether getters should be checked. Defaults to `false`.
+
+##### `checkSetters`
+
+A value indicating whether getters should be checked. Defaults to `false`.
 
 #### Fixer
 

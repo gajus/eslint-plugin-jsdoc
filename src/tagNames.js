@@ -59,6 +59,10 @@ const jsdocTags = {
   ignore: [],
   implements: [],
   inheritdoc: [],
+
+  // Allowing casing distinct from jsdoc `definitions.js` (required in Closure)
+  inheritDoc: [],
+
   inner: [],
   instance: [],
   interface: [],
@@ -139,8 +143,14 @@ const undocumentedClosureTags = {
   wizaction: [],
 };
 
+const {
+  // eslint-disable-next-line no-unused-vars
+  inheritdoc,
+  ...typeScriptTagsNoInheritdoc
+} = typeScriptTags;
+
 const closureTags = {
-  ...typeScriptTags,
+  ...typeScriptTagsNoInheritdoc,
   ...undocumentedClosureTags,
 
   // From https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler
@@ -157,9 +167,6 @@ const closureTags = {
 
   // With casing distinct from jsdoc `definitions.js`
   implicitCast: [],
-
-  // With casing distinct from jsdoc `definitions.js`
-  inheritDoc: [],
 
   noalias: [],
   nocollapse: [],

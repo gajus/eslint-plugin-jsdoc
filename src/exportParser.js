@@ -308,22 +308,22 @@ const findNode = function (node, block, cache) {
   blockCache = blockCache.slice();
   blockCache.push(block);
 
-  if (block.type === 'object') {
+  if (block.type === 'object' || block.type === 'MethodDefinition') {
     if (block.value === node) {
       return true;
     }
   }
 
-  const {props} = block;
-  for (const prop in props) {
-    /* istanbul ignore next */
-    if (Object.prototype.hasOwnProperty.call(props, prop)) {
-      const propval = props[prop];
-
-      // Only check node if it had resolvable value
-      if (propval && findNode(node, propval, blockCache)) {
+  const {props = block.body} = block;
+  for (const propval of Object.values(props || {})) {
+    if (Array.isArray(propval)) {
+      if (propval.some((val) => {
+        return findNode(node, val, blockCache);
+      })) {
         return true;
       }
+    } else if (findNode(node, propval, blockCache)) {
+      return true;
     }
   }
 
@@ -340,19 +340,16 @@ const findExportedNode = function (block, node, cache) {
   }
   const blockCache = cache || [];
   const {props} = block;
-  for (const key in props) {
-    /* istanbul ignore next */
-    if (Object.prototype.hasOwnProperty.call(props, key)) {
-      blockCache.push(props[key]);
-      if (props[key].exported) {
-        if (node === props[key].value || findNode(node, props[key].value)) {
-          return true;
-        }
+  for (const propval of Object.values(props)) {
+    blockCache.push(propval);
+    if (propval.exported) {
+      if (node === propval.value || findNode(node, propval.value)) {
+        return true;
       }
-
-      // No need to check `props[key]` for exported nodes as ESM
-      //  exports are only global
     }
+
+    // No need to check `propval` for exported nodes as ESM
+    //  exports are only global
   }
 
   return false;
