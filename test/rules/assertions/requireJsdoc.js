@@ -1252,6 +1252,138 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      e = function () {
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          require: {
+            FunctionDeclaration: false,
+            FunctionExpression: true,
+          },
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      e = function () {
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+       *
+       */
+      export class Class {
+          test = 1;
+
+          foo() {
+              this.test = 2;
+          }
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          require: {
+            FunctionDeclaration: false,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export class Class {
+          test = 1;
+
+          /**
+           *
+           */
+          foo() {
+              this.test = 2;
+          }
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+      class Dog {
+        eat() {
+
+        }
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          require: {
+            FunctionDeclaration: false,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+      class Dog {
+        /**
+         *
+         */
+        eat() {
+
+        }
+      }
+      `,
+    },
+    {
+      code: `
+      const hello = name => {
+        document.body.textContent = "Hello, " + name + "!";
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: true,
+            FunctionDeclaration: false,
+          },
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      const hello = name => {
+        document.body.textContent = "Hello, " + name + "!";
+      };
+      `,
+    },
   ],
   valid: [{
     code: `
