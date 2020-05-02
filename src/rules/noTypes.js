@@ -36,4 +36,5 @@ export default iterateJsdoc(({
     ],
     type: 'suggestion',
   },
+  noTrim: true,
 });
