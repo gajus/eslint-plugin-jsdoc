@@ -5295,6 +5295,17 @@ function quux () {
 
 }
 // Message: Types are not permitted on @returns.
+
+/**
+ * Beep
+ * Boop
+ *
+ * @returns {number}
+ */
+function quux () {
+
+}
+// Message: Types are not permitted on @returns.
 ````
 
 The following patterns are not considered problems:
