@@ -270,6 +270,10 @@ Or one may set the targeted tag to an object with a custom `message`, but withou
 Note that the preferred tags indicated in the `settings.jsdoc.tagNamePreference`
 map will be assumed to be defined by `check-tag-names`.
 
+See `check-tag-names` for how that fact can be used to set an alias to itself
+to allow both the alias and the default (since aliases are otherwise not
+permitted unless used in `tagNamePreference`).
+
 <a name="eslint-plugin-jsdoc-settings-alias-preference-default-preferred-aliases"></a>
 #### Default Preferred Aliases
 
@@ -2153,7 +2157,8 @@ yields
 
 `modifies` is also supported (see [source](https://github.com/jsdoc/jsdoc/blob/master/packages/jsdoc/lib/jsdoc/tag/dictionary/definitions.js#L594)) but is undocumented.
 
-The following synonyms are also recognized:
+The following synonyms are also recognized if you set them in `tagNamePreference`
+as a key (or replacement):
 
 ```
 arg
@@ -2176,6 +2181,20 @@ var
 virtual
 yield
 ```
+
+If you wish to allow in certain cases both a primary tag name and its alias(es),
+you can set a normally non-preferred tag name to itself to indicate that you want
+to allow both the default tag (in this case `@returns`) and a non-default
+(in this case `return`):
+
+```js
+"tagNamePreference": {
+    "return": "return",
+}
+```
+
+Because the tags indicated as replacements in `settings.jsdoc.tagNamePreference`
+will automatically be considered as valid, the above works.
 
 For [TypeScript](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc)
 (or Closure), when `settings.jsdoc.mode` is set to `typescript` or `closure`,
@@ -2227,8 +2246,6 @@ owner
 typeSummary
 wizaction
 ```
-
-Note that the tags indicated as replacements in `settings.jsdoc.tagNamePreference` will automatically be considered as valid.
 
 <a name="eslint-plugin-jsdoc-rules-check-tag-names-options-5"></a>
 #### Options
