@@ -187,6 +187,7 @@ export default {
       }
     };
 
+    // todo[engine:node@>=8.3.0]: Change to object spread
     // eslint-disable-next-line fp/no-mutating-assign
     return Object.assign(
       jsdocUtils.getContextObject(jsdocUtils.enforcedContexts(context, []), checkJsDoc),
