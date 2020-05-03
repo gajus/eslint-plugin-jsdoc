@@ -53,7 +53,6 @@ const getMovedSettings = (ruleName) => {
     ];
   }
 
-  /* istanbul ignore next */
   return [];
 };
 
