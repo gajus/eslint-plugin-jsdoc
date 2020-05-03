@@ -3,7 +3,7 @@
 Requires that all `@typedef` and `@namespace` tags have `@property`
 when their type is a plain `object`, `Object`, or `PlainObject`.
 
-Note that if any other type, including a subtype of object such as
+Note that any other type, including a subtype of object such as
 `object<string, string>`, will not be reported.
 
 #### Fixer
