@@ -2816,6 +2816,16 @@ function quux () {
 // Settings: {"jsdoc":{"tagNamePreference":{"augments":{"message":"@extends is to be used over @augments.","replacement":"extends"}}}}
 
 /**
+ * (Set tag name preference to itself to get aliases to
+ *   work along with main tag name.)
+ * @augments Bar
+ * @extends Foo
+ */
+function quux () {
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"extends":"extends"}}}
+
+/**
  * Registers the `target` class as a transient dependency; each time the dependency is resolved a new instance will be created.
  *
  * @param target - The class / constructor function to register as transient.
