@@ -8127,6 +8127,38 @@ export default class Test {
 }
 // Options: [{"contexts":["MethodDefinition:not([accessibility=\"private\"]) > FunctionExpression"],"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":false}}]
 // Message: Missing JSDoc comment.
+
+e = function () {
+};
+// Options: [{"require":{"FunctionDeclaration":false,"FunctionExpression":true}}]
+// Message: Missing JSDoc comment.
+
+/**
+ *
+ */
+export class Class {
+    test = 1;
+
+    foo() {
+        this.test = 2;
+    }
+}
+// Options: [{"require":{"FunctionDeclaration":false,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+class Dog {
+  eat() {
+
+  }
+}
+// Options: [{"require":{"FunctionDeclaration":false,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+const hello = name => {
+  document.body.textContent = "Hello, " + name + "!";
+};
+// Options: [{"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":false}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

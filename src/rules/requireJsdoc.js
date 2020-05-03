@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import jsdocUtils from '../jsdocUtils';
 import exportParser from '../exportParser';
-import getJSDocComment from '../eslint/getJSDocComment';
+import {getJSDocComment, getReducedASTNode} from '../eslint/getJSDocComment';
 import warnRemovedSettings from '../warnRemovedSettings';
 import {getSettings} from '../iterateJsdoc';
 
@@ -141,11 +141,17 @@ export default {
       const fix = (fixer) => {
         // Default to one line break if the `minLines`/`maxLines` settings allow
         const lines = settings.minLines === 0 && settings.maxLines >= 1 ? 1 : settings.minLines;
-        const indent = jsdocUtils.getIndent(sourceCode);
+        const baseNode = getReducedASTNode(node, sourceCode);
+
+        const indent = jsdocUtils.getIndent({
+          text: sourceCode.getText(
+            baseNode,
+
+            // Could also use `baseNode.start - 1`
+            baseNode.loc.start.column,
+          ),
+        });
         const insertion = `/**\n${indent}*\n${indent}*/${'\n'.repeat(lines)}${indent.slice(0, -1)}`;
-        const baseNode = [
-          'ExportDefaultDeclaration', 'ExportNamedDeclaration',
-        ].includes(node.parent && node.parent.type) ? node.parent : node;
 
         return fixer.insertTextBefore(baseNode, insertion);
       };

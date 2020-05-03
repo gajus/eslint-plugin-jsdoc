@@ -142,6 +142,8 @@ const getReducedASTNode = function (node, sourceCode) {
       while (
         !sourceCode.getCommentsBefore(parent).length &&
         !/Function/u.test(parent.type) &&
+        parent.type !== 'VariableDeclaration' &&
+        parent.type !== 'ExpressionStatement' &&
         parent.type !== 'MethodDefinition' &&
         parent.type !== 'Property'
       ) {
@@ -223,5 +225,5 @@ const getJSDocComment = function (sourceCode, node, settings) {
   return findJSDocComment(reducedNode);
 };
 
-export {getReducedASTNode};
+export {getReducedASTNode, getJSDocComment};
 export default getJSDocComment;
