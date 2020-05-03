@@ -1,7 +1,7 @@
 import {
   RuleTester,
 } from 'eslint';
-import getJSDocComment from '../../src/eslint/getJSDocComment';
+import {getJSDocComment} from '../../src/eslint/getJSDocComment';
 import {getSettings} from '../../src/iterateJsdoc';
 
 const rule = {
