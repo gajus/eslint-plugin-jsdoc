@@ -2927,7 +2927,6 @@ function quux () {
  * @extends Foo
  */
 function quux () {
-
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"extends":"extends"}}}
 

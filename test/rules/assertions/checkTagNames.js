@@ -600,7 +600,6 @@ export default {
            * @extends Foo
            */
           function quux () {
-
           }
       `,
       settings: {
