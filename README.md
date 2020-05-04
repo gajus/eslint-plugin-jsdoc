@@ -1540,8 +1540,36 @@ function quux () {
 
 Ensures that parameter names in JSDoc match those in the function declaration.
 
+<a name="eslint-plugin-jsdoc-rules-check-param-names-destructuring"></a>
+#### Destructuring
+
+Note that by default the rule will not report parameters present on the docs
+but missing from the function signature when an object rest property is part
+of that function signature since the missing properties might be a part of
+the object rest property.
+
+```js
+/**
+ * @param options
+ * @param options.foo
+ */
+function quux ({foo, ...extra}) {}
+```
+
+To require that `extra` be documented, you can use the `checkRestProperty`
+option. Note, however, that jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
+to currently support syntax or output to distinguish rest properties from
+other properties, so in looking at the docs alone without looking at the
+function signature, it may appear that there is an actual property named
+`extra`.
+
 <a name="eslint-plugin-jsdoc-rules-check-param-names-options-3"></a>
 #### Options
+
+<a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-checkrestproperty"></a>
+##### <code>checkRestProperty</code>
+
+See the "Destructuring" section.
 
 <a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-allowextratrailingparamdocs"></a>
 ##### <code>allowExtraTrailingParamDocs</code>
@@ -9321,7 +9349,7 @@ function quux ({num, ...extra}) {
 You may wish to manually note in your jsdoc for `extra` that this is a
 rest property, however, as jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
 to currently support syntax or output to distinguish rest properties from
-other properties and in looking at the docs alone without looking at the
+other properties, so in looking at the docs alone without looking at the
 function signature, it may appear that there is an actual property named
 `extra`.
 
@@ -9348,7 +9376,7 @@ section). Defaults to `true`. Has no effect if `enableFixer` is set to
 Whether to enable the rest element fixer (see
 "Rest Element (`RestElement`) insertions"). Defaults to `true`.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-23-checkrestproperty"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-checkrestproperty-1"></a>
 ##### <code>checkRestProperty</code>
 
 If set to `true`, will report (and add fixer insertions) for missing rest

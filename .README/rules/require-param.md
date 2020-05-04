@@ -171,7 +171,7 @@ function quux ({num, ...extra}) {
 You may wish to manually note in your jsdoc for `extra` that this is a
 rest property, however, as jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
 to currently support syntax or output to distinguish rest properties from
-other properties and in looking at the docs alone without looking at the
+other properties, so in looking at the docs alone without looking at the
 function signature, it may appear that there is an actual property named
 `extra`.
 
