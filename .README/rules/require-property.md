@@ -8,7 +8,7 @@ Note that any other type, including a subtype of object such as
 
 #### Fixer
 
-The fixer for `require-example` will add an empty `@property`.
+The fixer for `require-property` will add an empty `@property`.
 
 |||
 |---|---|
