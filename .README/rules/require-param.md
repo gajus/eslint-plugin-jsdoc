@@ -19,7 +19,7 @@ So for:
 /**
  * @param cfg
  */
-function quux ({foo: bar}) {
+function quux ({foo: bar, baz: bax = 5}) {
 }
 ```
 
@@ -29,6 +29,7 @@ function quux ({foo: bar}) {
 /**
 * @param cfg
 * @param cfg.foo
+* @param cfg.baz
 */
 ```
 
