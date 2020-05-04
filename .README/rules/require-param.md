@@ -93,6 +93,88 @@ numeric component).
 And one can have the count begin at another number (e.g., `1`) by changing
 `autoIncrementBase` from the default of `0`.
 
+##### Rest Element (`RestElement`) insertions
+
+The fixer will automatically report/insert [jsdoc repeatable parameters](https://jsdoc.app/tags-param.html#multiple-types-and-repeatable-parameters) if missing.
+
+```js
+/**
+  * @param {GenericArray} cfg
+  * @param {number} cfg.0
+ */
+function baar ([a, ...extra]) {
+  //
+}
+```
+
+..becomes:
+
+```js
+/**
+  * @param {GenericArray} cfg
+  * @param {number} cfg.0
+  * @param {...any} cfg.1
+ */
+function baar ([a, ...extra]) {
+  //
+}
+```
+
+Note that the type `any` is included since we don't know of any specific
+type to use.
+
+To disable such rest element insertions, set `enableRestElementFixer` to
+`true`.
+
+Note too that the following will be reported even though there is an item
+corresponding to `extra`:
+
+```js
+/**
+  * @param {GenericArray} cfg
+  * @param {number} cfg.0
+  * @param {any} cfg.1
+ */
+function baar ([a, ...extra]) {
+  //
+}
+```
+
+...because it does not use the `...` syntax in the type.
+
+##### Object Rest Property (`ExperimentalRestProperty`) insertions
+
+If the `checkRestProperty` option is set to `true` (`false` by default),
+missing rest properties will be reported with documentation auto-inserted:
+
+```js
+/**
+ * @param cfg
+ * @param cfg.num
+ */
+function quux ({num, ...extra}) {
+}
+```
+
+...becomes:
+
+```js
+/**
+ * @param cfg
+ * @param cfg.num
+ * @param cfg.extra
+ */
+function quux ({num, ...extra}) {
+}
+```
+
+You may wish to manually note in your jsdoc for `extra` that this is a
+rest property, however, as jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
+to currently support syntax or output to distinguish rest properties from
+other properties and in looking at the docs alone without looking at the
+function signature, it may appear that there is an actual property named
+`extra`.
+
 #### Options
 
 An options object accepts the following optional properties:
@@ -106,6 +188,64 @@ Whether to enable the fixer. Defaults to `true`.
 Whether to enable the auto-adding of incrementing roots (see the "Fixer"
 section). Defaults to `true`. Has no effect if `enableFixer` is set to
 `false`.
+
+##### `enableRestElementFixer`
+
+Whether to enable the rest element fixer (see
+"Rest Element (`RestElement`) insertions"). Defaults to `true`.
+
+##### `checkRestProperty`
+
+If set to `true`, will report (and add fixer insertions) for missing rest
+properties (`ExperimentalRestProperty`). Defaults to `false`.
+
+If set to `true`, note that you can still document the subproperties of the
+rest property using other jsdoc features, e.g., `@typedef`:
+
+```js
+/**
+ * @typedef ExtraOptions
+ * @property innerProp1
+ * @property innerProp2
+ */
+
+/**
+ * @param cfg
+ * @param cfg.num
+ * @param {ExtraOptions} extra
+ */
+function quux ({num, ...extra}) {
+}
+```
+
+Setting this option to `false` (the default) may be useful in cases where
+you already have separate `@param` definitions for each of the properties
+within the rest property.
+
+For example, with the option disabled, this will not give an error despite
+`extra` not having any definition:
+
+```js
+/**
+ * @param cfg
+ * @param cfg.num
+ */
+function quux ({num, ...extra}) {
+}
+```
+
+Nor will this:
+
+```js
+/**
+ * @param cfg
+ * @param cfg.num
+ * @param cfg.innerProp1
+ * @param cfg.innerProp2
+ */
+function quux ({num, ...extra}) {
+}
+```
 
 ##### `autoIncrementBase`
 
