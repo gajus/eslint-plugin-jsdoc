@@ -9867,7 +9867,7 @@ Note that any other type, including a subtype of object such as
 <a name="eslint-plugin-jsdoc-rules-require-property-fixer-1"></a>
 #### Fixer
 
-The fixer for `require-example` will add an empty `@property`.
+The fixer for `require-property` will add an empty `@property`.
 
 |||
 |---|---|
