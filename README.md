@@ -1286,6 +1286,11 @@ function quux () {
 
 }
 // Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
+
+// Comment
+a();
+
+export default {};
 ````
 
 

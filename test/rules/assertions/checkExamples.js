@@ -1008,5 +1008,16 @@ export default {
         noDefaultExampleRules: false,
       }],
     },
+    {
+      code: `
+      // Comment
+      a();
+
+      export default {};
+      `,
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
 };

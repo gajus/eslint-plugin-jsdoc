@@ -153,9 +153,8 @@ const getReducedASTNode = function (node, sourceCode) {
           break;
         }
       }
-
       if (parent) {
-        if (parent.parent.type === 'ExportNamedDeclaration') {
+        if (parent.parent && parent.parent.type === 'ExportNamedDeclaration') {
           return parent.parent;
         }
 
