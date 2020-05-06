@@ -733,7 +733,6 @@ export default {
       interface ITest {
       /**
        * Test description.
-       *
        * @param id
        */
       TestMethod(id: number): void;
@@ -773,7 +772,6 @@ export default {
       {
       /**
        * A test method.
-       *
        * @param id
        */
       abstract TestFunction(id);
@@ -840,7 +838,6 @@ export default {
       output: `
       /**
        * A test function.
-       *
        * @param id
        */
       declare let TestFunction: (id) => void;
@@ -868,7 +865,6 @@ export default {
       output: `
         /**
          * A test function.
-         *
          * @param id
          */
         let TestFunction: (id) => void;
@@ -900,7 +896,6 @@ export default {
       output: `
         /**
          * A test function.
-         *
          * @param id
          */
         function test(
@@ -935,7 +930,6 @@ export default {
       output: `
         /**
          * A test function.
-         *
          * @param id
          */
         let test = (processor: (id: number) => string) =>
@@ -969,7 +963,6 @@ export default {
         class TestClass {
         /**
          * A class property.
-         *
          * @param id
          */
         public Test: (id: number) => string;
@@ -1003,7 +996,6 @@ export default {
         class TestClass {
         /**
          * A class method.
-         *
          * @param id
          */
         public TestMethod(): (id: number) => string
@@ -1037,7 +1029,6 @@ export default {
         interface TestInterface {
         /**
          * An interface property.
-         *
          * @param id
          */
         public Test: (id: number) => string;
@@ -1069,7 +1060,6 @@ export default {
         interface TestInterface {
         /**
          * An interface method.
-         *
          * @param id
          */
         public TestMethod(): (id: number) => string;
@@ -1098,7 +1088,6 @@ export default {
       output: `
         /**
          * A function with return type
-         *
          * @param id
          */
         function test(): (id: number) => string;
@@ -1129,7 +1118,6 @@ export default {
       output: `
         /**
          * A function with return type
-         *
          * @param id
          */
         let test = (): (id: number) => string =>
@@ -1192,7 +1180,6 @@ export default {
       class Client {
         /**
        * Set collection data.
-       *
        * @param {Object} data                    The collection data object.
        * @param {number} data.last_modified
        * @param {Object} options            The options object.

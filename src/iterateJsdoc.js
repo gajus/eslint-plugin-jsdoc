@@ -154,6 +154,10 @@ const getUtils = (
 
   utils.stringify = (tagBlock) => {
     const indent = jsdocUtils.getIndent(sourceCode);
+    if (ruleConfig.noTrim) {
+      const lastTag = tagBlock.tags[tagBlock.tags.length - 1];
+      lastTag.description = lastTag.description.replace(/\n$/, '');
+    }
 
     return commentStringify([tagBlock], {indent}).slice(indent.length - 1);
   };
