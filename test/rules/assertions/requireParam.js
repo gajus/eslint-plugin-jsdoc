@@ -1423,9 +1423,10 @@ export default {
     {
       code: `
           /**
+           * @param baz
            * @param options
            */
-          function quux ({foo: bar}) {
+          function quux (baz, {foo: bar}) {
 
           }
       `,
@@ -1436,10 +1437,11 @@ export default {
       ],
       output: `
           /**
+           * @param baz
            * @param options
            * @param options.foo
            */
-          function quux ({foo: bar}) {
+          function quux (baz, {foo: bar}) {
 
           }
       `,

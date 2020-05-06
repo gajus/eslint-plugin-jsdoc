@@ -92,6 +92,17 @@ export default iterateJsdoc(({
       }
 
       functionParameterName[1].forEach((paramName) => {
+        if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
+          return name === rootName;
+        })) {
+          if (!functionParameterName[0]) {
+            missingTags.push({
+              functionParameterIdx: paramIndex[rootName],
+              functionParameterName: rootName,
+            });
+          }
+        }
+
         const fullParamName = `${rootName}.${paramName}`;
 
         if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
@@ -99,7 +110,7 @@ export default iterateJsdoc(({
         })) {
           missingTags.push({
             functionParameterIdx: paramIndex[functionParameterName[0] ? fullParamName : paramName],
-            functionParameterName: functionParameterName[0] ? [fullParamName] : [rootName, fullParamName],
+            functionParameterName: fullParamName,
           });
         }
       });
@@ -112,7 +123,7 @@ export default iterateJsdoc(({
     })) {
       missingTags.push({
         functionParameterIdx: paramIndex[functionParameterName],
-        functionParameterName: [functionParameterName],
+        functionParameterName,
       });
     }
   });
@@ -121,13 +132,12 @@ export default iterateJsdoc(({
     missings.forEach(({
       functionParameterIdx, functionParameterName,
     }) => {
+      console.log('functionParameterName', functionParameterName, functionParameterIdx);
       const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
-      tags.splice(expectedIdx, 0, ...functionParameterName.map((name) => {
-        return {
-          name,
-          tag: preferredTagName,
-        };
-      }));
+      tags.splice(expectedIdx, 0, {
+        name: functionParameterName,
+        tag: preferredTagName,
+      });
     });
   };
 
@@ -140,9 +150,7 @@ export default iterateJsdoc(({
 
       fixAll(missingTags, jsdoc.tags);
     };
-    functionParameterName.forEach((functionParamName) => {
-      utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParamName}" declaration.`, null, enableFixer ? fixer : null);
-    });
+    utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, enableFixer ? fixer : null);
   });
 }, {
   contextDefaults: true,
