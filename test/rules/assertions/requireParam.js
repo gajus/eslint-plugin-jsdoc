@@ -90,6 +90,26 @@ export default {
     {
       code: `
           /**
+           * @param
+           */
+          function quux ({foo}) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "root1.foo" declaration.',
+        },
+      ],
+      options: [
+        {
+          autoIncrementBase: 1,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            * @param options
            */
           function quux ({foo}) {

@@ -1,7 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc';
 
 type T = [string, () => T];
-const rootNamer = (desiredRoots: string[], currentIndex: number = 0): T => {
+const rootNamer = (desiredRoots: string[], currentIndex: number): T => {
   const base = desiredRoots[currentIndex % desiredRoots.length];
   const suffix = Math.floor(currentIndex / desiredRoots.length);
   const name = `${base}${suffix}`;
@@ -65,8 +65,11 @@ export default iterateJsdoc(({
     return acc;
   }, {});
 
-  const {unnamedRootBase = ['root']} = context.options[0] || {};
-  let [nextRootName, namer] = rootNamer(unnamedRootBase);
+  const {
+    autoIncrementBase = 0,
+    unnamedRootBase = ['root'],
+  } = context.options[0] || {};
+  let [nextRootName, namer] = rootNamer(unnamedRootBase, autoIncrementBase);
 
   functionParameterNames.forEach((functionParameterName, functionParameterIdx) => {
     if (
@@ -143,6 +146,10 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          autoIncrementBase: {
+            default: 0,
+            type: 'integer',
+          },
           checkConstructors: {
             default: true,
             type: 'boolean',

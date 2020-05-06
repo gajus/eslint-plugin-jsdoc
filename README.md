@@ -9554,6 +9554,15 @@ function quux ({foo}) {
 // Message: Missing JSDoc @param "root0.foo" declaration.
 
 /**
+ * @param
+ */
+function quux ({foo}) {
+
+}
+// Options: [{"autoIncrementBase":1}]
+// Message: Missing JSDoc @param "root1.foo" declaration.
+
+/**
  * @param options
  */
 function quux ({foo}) {
