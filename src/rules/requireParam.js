@@ -99,7 +99,7 @@ export default iterateJsdoc(({
         })) {
           missingTags.push({
             functionParameterIdx: paramIndex[functionParameterName[0] ? fullParamName : paramName],
-            functionParameterName: fullParamName,
+            functionParameterName: functionParameterName[0] ? [fullParamName] : [rootName, fullParamName],
           });
         }
       });
@@ -112,18 +112,22 @@ export default iterateJsdoc(({
     })) {
       missingTags.push({
         functionParameterIdx: paramIndex[functionParameterName],
-        functionParameterName,
+        functionParameterName: [functionParameterName],
       });
     }
   });
 
   const fixAll = (missings, tags) => {
-    missings.forEach(({functionParameterIdx, functionParameterName}) => {
+    missings.forEach(({
+      functionParameterIdx, functionParameterName,
+    }) => {
       const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
-      tags.splice(expectedIdx, 0, {
-        name: functionParameterName,
-        tag: preferredTagName,
-      });
+      tags.splice(expectedIdx, 0, ...functionParameterName.map((name) => {
+        return {
+          name,
+          tag: preferredTagName,
+        };
+      }));
     });
   };
 
@@ -136,7 +140,9 @@ export default iterateJsdoc(({
 
       fixAll(missingTags, jsdoc.tags);
     };
-    utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, enableFixer ? fixer : null);
+    functionParameterName.forEach((functionParamName) => {
+      utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParamName}" declaration.`, null, enableFixer ? fixer : null);
+    });
   });
 }, {
   contextDefaults: true,

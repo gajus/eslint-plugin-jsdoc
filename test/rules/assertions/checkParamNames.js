@@ -129,6 +129,15 @@ export default {
           message: 'Duplicate @param "employees[].name"',
         },
       ],
+      output: `
+          /**
+           * Assign the project to a list of employees.
+           * @param {string} employees[].name - The name of an employee.
+           */
+          function assign (employees) {
+
+          };
+      `,
     },
     {
       code: `
@@ -206,6 +215,14 @@ export default {
           message: 'Duplicate @param "foo"',
         },
       ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo, bar) {
+
+          }
+      `,
     },
     {
       code: `
@@ -223,6 +240,14 @@ export default {
           message: 'Duplicate @param "foo"',
         },
       ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo, foo) {
+
+          }
+      `,
     },
     {
       code: `
@@ -241,6 +266,15 @@ export default {
           message: 'Duplicate @param "cfg.foo"',
         },
       ],
+      output: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           */
+          function quux ({foo}) {
+
+          }
+      `,
     },
     {
       code: `
@@ -277,6 +311,16 @@ export default {
           message: 'Duplicate @param "cfg.foo"',
         },
       ],
+      output: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param baz
+           */
+          function quux ({foo}, baz) {
+
+          }
+      `,
     },
     {
       code: `
@@ -315,6 +359,16 @@ export default {
           message: 'Duplicate @param "cfg.foo"',
         },
       ],
+      output: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param baz
+           */
+          function quux ({foo}, baz) {
+
+          }
+      `,
     },
     {
       code: `
