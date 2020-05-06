@@ -87,6 +87,33 @@ export default {
     {
       code: `
           /**
+           *
+           */
+          function quux ({foo: bar = 5} = {}) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "root0" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "root0.foo" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * @param root0
+           * @param root0.foo
+           */
+          function quux ({foo: bar = 5} = {}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            * @param
            */
           function quux ({foo}) {
