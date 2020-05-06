@@ -2237,5 +2237,17 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+      * @param {string} cb
+      */
+      function createGetter (cb) {
+        return function (...args) {
+          cb();
+        };
+      }
+      `,
+    },
   ],
 };

@@ -9548,7 +9548,15 @@ function quux (foo) {
 function quux ({foo}) {
 
 }
-// Message: Missing JSDoc @param "root0.foo" declaration.
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ *
+ */
+function quux ({foo: bar = 5} = {}) {
+
+}
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  * @param
@@ -9556,7 +9564,7 @@ function quux ({foo}) {
 function quux ({foo}) {
 
 }
-// Message: Missing JSDoc @param "root0.foo" declaration.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  * @param
@@ -9565,7 +9573,7 @@ function quux ({foo}) {
 
 }
 // Options: [{"autoIncrementBase":1}]
-// Message: Missing JSDoc @param "root1.foo" declaration.
+// Message: Missing JSDoc @param "root1" declaration.
 
 /**
  * @param options
@@ -9581,7 +9589,7 @@ function quux ({foo}) {
 function quux ({ foo, bar: { baz }}) {
 
 }
-// Message: Missing JSDoc @param "root0.foo" declaration.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  *
@@ -9590,7 +9598,7 @@ function quux ({foo}, {bar}) {
 
 }
 // Options: [{"unnamedRootBase":["arg"]}]
-// Message: Missing JSDoc @param "arg0.foo" declaration.
+// Message: Missing JSDoc @param "arg0" declaration.
 
 /**
  *
@@ -9599,7 +9607,7 @@ function quux ({foo}, {bar}) {
 
 }
 // Options: [{"unnamedRootBase":["arg","config"]}]
-// Message: Missing JSDoc @param "arg0.foo" declaration.
+// Message: Missing JSDoc @param "arg0" declaration.
 
 /**
  *
@@ -9769,7 +9777,7 @@ function quux (foo) {
  */
 function quux ({bar, baz}, foo) {
 }
-// Message: Missing JSDoc @param "root0.bar" declaration.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  *
@@ -9948,9 +9956,10 @@ let test = (): (id: number) => string =>
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
+ * @param baz
  * @param options
  */
-function quux ({foo: bar}) {
+function quux (baz, {foo: bar}) {
 
 }
 // Message: Missing JSDoc @param "options.foo" declaration.
@@ -10461,6 +10470,15 @@ this.arg0 = arg0;
     }, defaultOptions: D) {
 
     }
+}
+
+/**
+* @param {string} cb
+*/
+function createGetter (cb) {
+  return function (...args) {
+    cb();
+  };
 }
 ````
 
