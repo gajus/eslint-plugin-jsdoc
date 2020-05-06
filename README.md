@@ -11424,7 +11424,8 @@ function quux () {
 ### <code>require-returns-description</code>
 
 Requires that the `@returns` tag has a `description` value. The error
-will not be reported if the return value is `void` or `undefined`.
+will not be reported if the return value is `void` or `undefined`
+or if it is `Promise<void>` or `Promise<undefined>`.
 
 <a name="eslint-plugin-jsdoc-rules-require-returns-description-options-24"></a>
 #### Options
@@ -11542,6 +11543,20 @@ function quux () {
 
 /**
  * @returns {void}
+ */
+function quux () {
+
+}
+
+/**
+ * @returns {Promise<void>}
+ */
+function quux () {
+
+}
+
+/**
+ * @returns {Promise<undefined>}
  */
 function quux () {
 
