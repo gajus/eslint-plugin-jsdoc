@@ -154,7 +154,11 @@ const getReducedASTNode = function (node, sourceCode) {
         }
       }
 
-      if (parent && parent.type !== 'FunctionDeclaration' && parent.type !== 'Program') {
+      if (parent) {
+        if (parent.parent.type === 'ExportNamedDeclaration') {
+          return parent.parent;
+        }
+
         return parent;
       }
     }

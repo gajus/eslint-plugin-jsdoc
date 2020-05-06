@@ -1384,6 +1384,34 @@ export default {
       };
       `,
     },
+    {
+      code: `
+      export const loginSuccessAction = (): BaseActionPayload => ({ type: LOGIN_SUCCESSFUL });
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: true,
+            FunctionDeclaration: false,
+          },
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export const loginSuccessAction = (): BaseActionPayload => ({ type: LOGIN_SUCCESSFUL });
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [{
     code: `

@@ -8053,6 +8053,10 @@ const hello = name => {
 };
 // Options: [{"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":false}}]
 // Message: Missing JSDoc comment.
+
+export const loginSuccessAction = (): BaseActionPayload => ({ type: LOGIN_SUCCESSFUL });
+// Options: [{"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":false}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:
