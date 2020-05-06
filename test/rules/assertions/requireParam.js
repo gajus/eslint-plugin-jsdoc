@@ -1601,5 +1601,17 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+      * @param {string} cb
+      */
+      function createGetter (cb) {
+        return function (...args) {
+          cb();
+        };
+      }
+      `,
+    },
   ],
 };

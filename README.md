@@ -9872,6 +9872,15 @@ class foo extends base {
   }
 }
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+* @param {string} cb
+*/
+function createGetter (cb) {
+  return function (...args) {
+    cb();
+  };
+}
 ````
 
 
