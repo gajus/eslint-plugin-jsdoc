@@ -196,6 +196,26 @@ export default {
     {
       code: `
           /**
+           * @returns {Promise<void>}
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @returns {Promise<undefined>}
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            * @function
            * @returns
            */
