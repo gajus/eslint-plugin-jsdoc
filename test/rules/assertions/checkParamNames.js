@@ -410,6 +410,26 @@ export default {
     },
     {
       code: `
+          /**
+           * @param args
+           */
+          function quux ({a, b} = {}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "args.a"',
+        },
+        {
+          line: 3,
+          message: 'Missing @param "args.b"',
+        },
+      ],
+    },
+    {
+      code: `
         export class SomeClass {
           /**
            * @param prop
@@ -536,6 +556,26 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux ([a, b] = []) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "foo.0"',
+        },
+        {
+          line: 3,
+          message: 'Missing @param "foo.1"',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -623,26 +663,6 @@ export default {
            * @param bar
            */
           function quux (foo, bar) {
-
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @param args
-           */
-          function quux ({a, b} = {}) {
-
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @param foo
-           */
-          function quux ([a, b] = []) {
 
           }
       `,
