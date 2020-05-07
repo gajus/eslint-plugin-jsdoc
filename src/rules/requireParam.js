@@ -23,9 +23,7 @@ export default iterateJsdoc(({
     return;
   }
   const jsdocParameterNames = utils.getJsdocTagsDeep(preferredTagName);
-  if (!jsdocParameterNames) {
-    return;
-  }
+
   const shallowJsdocParameterNames = jsdocParameterNames.filter((tag) => {
     return !tag.name.includes('.');
   }).map((tag, idx) => {
@@ -80,12 +78,6 @@ export default iterateJsdoc(({
   let [nextRootName, namer] = rootNamer(unnamedRootBase, autoIncrementBase);
 
   functionParameterNames.forEach((functionParameterName, functionParameterIdx) => {
-    if (
-      ['<ObjectPattern>', '<ArrayPattern>'].includes(functionParameterName)
-    ) {
-      return;
-    }
-
     if (Array.isArray(functionParameterName)) {
       const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx] ||
         jsdocParameterNames[functionParameterIdx];

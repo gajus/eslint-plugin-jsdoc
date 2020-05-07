@@ -94,10 +94,6 @@ const validateParameterNames = (
       return false;
     }
 
-    if (functionParameterName === '<ObjectPattern>' || functionParameterName === '<ArrayPattern>') {
-      return false;
-    }
-
     if (functionParameterName !== tag.name.trim()) {
       const expectedNames = functionParameterNames.join(', ');
       const actualNames = paramTagsNonNested.map(([, {name}]) => {
