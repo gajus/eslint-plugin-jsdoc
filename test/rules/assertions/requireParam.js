@@ -871,6 +871,15 @@ export default {
       `,
       errors: [
         {
+          message: 'Missing JSDoc @param "root0" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "root0.0" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "root0.1" declaration.',
+        },
+        {
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
