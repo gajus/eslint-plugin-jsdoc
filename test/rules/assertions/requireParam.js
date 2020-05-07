@@ -458,7 +458,7 @@ export default {
       ],
       output: `
           /**
-           * @param foo
+           * @arg foo
            */
           function quux (foo) {
 
@@ -512,8 +512,8 @@ export default {
       ],
       output: `
           /**
-           * @override
            * @param foo
+           * @override
            */
           function quux (foo) {
 
