@@ -66,9 +66,14 @@ export default iterateJsdoc(({
     const remainingRoots = functionParameterNames.slice(indexAtFunctionParams || 0);
     const foundIndex = jsdocTags.findIndex(({name, newAdd}) => {
       return !newAdd && remainingRoots.some((remainingRoot) => {
-        return Array.isArray(remainingRoot) ?
-          remainingRoot[1].includes(name) :
-          name === remainingRoot;
+        if (Array.isArray(remainingRoot)) {
+          return remainingRoot[1].includes(name);
+        }
+        if (typeof remainingRoot === 'object') {
+          return name === remainingRoot.name;
+        }
+
+        return name === remainingRoot;
       });
     });
 
@@ -105,7 +110,6 @@ export default iterateJsdoc(({
         inc = incremented;
         [nextRootName, incremented, namer] = namer();
       }
-      console.log('functionParameterName', functionParameterName);
 
       functionParameterName[1].forEach((paramName) => {
         if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
@@ -150,13 +154,22 @@ export default iterateJsdoc(({
 
       return;
     }
+    let funcParamName;
+    if (typeof functionParameterName === 'object') {
+      if (!enableRestElementFixer && functionParameterName.restElement) {
+        return;
+      }
+      funcParamName = functionParameterName.name;
+    } else {
+      funcParamName = functionParameterName;
+    }
 
     if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
-      return name === functionParameterName;
+      return name === funcParamName;
     })) {
       missingTags.push({
-        functionParameterIdx: paramIndex[functionParameterName],
-        functionParameterName,
+        functionParameterIdx: paramIndex[funcParamName],
+        functionParameterName: funcParamName,
         inc,
       });
     }

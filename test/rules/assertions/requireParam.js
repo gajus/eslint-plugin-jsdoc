@@ -1706,6 +1706,33 @@ export default {
         ecmaVersion: 2015,
       },
     },
+    {
+      code: `
+      /**
+       * @param a
+       */
+      function baar (a, ...extra) {
+        //
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "extra" declaration.',
+        },
+      ],
+      output: `
+      /**
+       * @param a
+       * @param {...any} extra
+       */
+      function baar (a, ...extra) {
+        //
+      }
+      `,
+      parserOptions: {
+        ecmaVersion: 2015,
+      },
+    },
   ],
   valid: [
     {
@@ -2436,6 +2463,24 @@ export default {
         * @param {number} cfg.0
        */
       function baar ([a, ...extra]) {
+        //
+      }
+      `,
+      options: [
+        {
+          enableRestElementFixer: false,
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 2015,
+      },
+    },
+    {
+      code: `
+      /**
+        * @param a
+       */
+      function baar (a, ...extra) {
         //
       }
       `,

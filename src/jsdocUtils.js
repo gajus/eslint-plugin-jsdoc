@@ -16,7 +16,11 @@ const flattenRoots = (params, root = '') => {
 
       return acc.concat(inner);
     }
-    acc.push(root ? `${root}.${cur}` : cur);
+    if (typeof cur === 'object') {
+      acc.push(root ? `${root}.${cur.name}` : cur.name);
+    } else {
+      acc.push(root ? `${root}.${cur}` : cur);
+    }
 
     return acc;
   }, []);
@@ -91,7 +95,10 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
     }
 
     if (param.type === 'RestElement') {
-      return param.argument.name;
+      return {
+        name: param.argument.name,
+        restElement: true,
+      };
     }
 
     if (param.type === 'TSParameterProperty') {

@@ -94,7 +94,12 @@ const validateParameterNames = (
       return false;
     }
 
-    if (functionParameterName !== tag.name.trim()) {
+    const funcParamName = typeof functionParameterName === 'object' ?
+      functionParameterName.name :
+      functionParameterName;
+
+    if (funcParamName !== tag.name.trim()) {
+      // Todo: This won't work for array or object child items
       const expectedNames = functionParameterNames.join(', ');
       const actualNames = paramTagsNonNested.map(([, {name}]) => {
         return name.trim();
