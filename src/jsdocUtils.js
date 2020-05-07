@@ -82,7 +82,12 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
     }
 
     if (param.type === 'ArrayPattern' || _.get(param, 'left.type') === 'ArrayPattern') {
-      return '<ArrayPattern>';
+      const elements = param.elements || _.get(param, 'left.elements');
+      const roots = elements.map((prop, idx) => {
+        return idx;
+      });
+
+      return [undefined, flattenRoots(roots)];
     }
 
     if (param.type === 'RestElement') {
