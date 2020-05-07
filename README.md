@@ -9536,9 +9536,9 @@ function quux (foo) {
 /**
  *
  */
- function quux (foo) {
+function quux (foo) {
 
- }
+}
 // Options: [{"contexts":["FunctionDeclaration"]}]
 // Message: Missing JSDoc @param "foo" declaration.
 
@@ -9706,8 +9706,8 @@ function quux (foo) {
  */
 class A {
   /**
-    *
-    */
+   *
+   */
   quux (foo) {
 
   }
@@ -9791,7 +9791,7 @@ function quux (foo, {bar, baz}) {
  */
 function quux ([bar, baz], foo) {
 }
-// Message: Missing JSDoc @param "foo" declaration.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  *
