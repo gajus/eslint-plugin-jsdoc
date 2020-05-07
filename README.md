@@ -1587,7 +1587,7 @@ their presence within the function signature. Other inconsistencies between
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`|
+|Options|`allowExtraTrailingParamDocs`, `checkRestProperty`|
 |Tags|`param`|
 
 The following patterns are considered problems:
@@ -1840,6 +1840,15 @@ function quux ([a, b] = []) {
 
 }
 // Message: Missing @param "foo.0"
+
+/**
+ * @param options
+ * @param options.foo
+ */
+function quux ({foo, ...extra}) {
+}
+// Options: [{"checkRestProperty":true}]
+// Message: Missing @param "options.extra"
 ````
 
 The following patterns are not considered problems:
@@ -1978,29 +1987,15 @@ function quux (foo) {
 function quux ({foo}, baz) {
 
 }
+
+/**
+ * @param options
+ * @param options.foo
+ */
+function quux ({foo, ...extra}) {
+}
 ````
 
-
-<a name="eslint-plugin-jsdoc-rules-check-param-names-deconstructing-function-parameter"></a>
-#### Deconstructing Function Parameter
-
-`eslint-plugin-jsdoc` does not validate names of parameters in function deconstruction, e.g.
-
-```js
-/**
- * @param foo
- */
-function quux ({
-    a,
-    b
-}) {
-
-}
-```
-
-`{a, b}` is an [`ObjectPattern`](https://github.com/estree/estree/blob/master/es2015.md#objectpattern) AST type and does not have a name. Therefore, the associated parameter in JSDoc block can have any name.
-
-Likewise for the pattern `[a, b]` which is an [`ArrayPattern`](https://github.com/estree/estree/blob/master/es2015.md#arraypattern).
 
 <a name="eslint-plugin-jsdoc-rules-check-property-names"></a>
 ### <code>check-property-names</code>
@@ -9323,7 +9318,7 @@ Note that the type `any` is included since we don't know of any specific
 type to use.
 
 To disable such rest element insertions, set `enableRestElementFixer` to
-`true`.
+`false`.
 
 Note too that the following will be reported even though there is an item
 corresponding to `extra`:
@@ -9521,7 +9516,7 @@ A value indicating whether getters should be checked. Defaults to `false`.
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `param`                                                                                                       |
 | Aliases  | `arg`, `argument`                                                                                             |
-| Options  | `contexts`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`                                 |
+| Options  | `autoIncrementBase`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `unnamedRootBase`                                 |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 The following patterns are considered problems:
@@ -10031,6 +10026,24 @@ class Client {
   ) {}
 }
 // Message: Missing JSDoc @param "data" declaration.
+
+/**
+ * @param cfg
+ * @param cfg.num
+ */
+function quux ({num, ...extra}) {
+}
+// Options: [{"checkRestProperty":true}]
+// Message: Missing JSDoc @param "cfg.extra" declaration.
+
+/**
+ * @param {GenericArray} cfg
+ * @param {number} cfg.0
+ */
+function baar ([a, ...extra]) {
+  //
+}
+// Message: Missing JSDoc @param "cfg.1" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -10511,6 +10524,22 @@ function createGetter (cb) {
     cb();
   };
 }
+
+/**
+ * @param cfg
+ * @param cfg.num
+ */
+function quux ({num, ...extra}) {
+}
+
+/**
+  * @param {GenericArray} cfg
+  * @param {number} cfg.0
+ */
+function baar ([a, ...extra]) {
+  //
+}
+// Options: [{"enableRestElementFixer":false}]
 ````
 
 

@@ -50,6 +50,8 @@ export default iterateJsdoc(({
   const {
     enableFixer = true,
     enableRootFixer = true,
+    checkRestProperty = false,
+    enableRestElementFixer = true,
   } = context.options[0] || {};
 
   const missingTags = [];
@@ -103,6 +105,7 @@ export default iterateJsdoc(({
         inc = incremented;
         [nextRootName, incremented, namer] = namer();
       }
+      console.log('functionParameterName', functionParameterName);
 
       functionParameterName[1].forEach((paramName) => {
         if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
@@ -214,6 +217,10 @@ export default iterateJsdoc(({
             default: false,
             type: 'boolean',
           },
+          checkRestProperty: {
+            default: false,
+            type: 'boolean',
+          },
           checkSetters: {
             default: false,
             type: 'boolean',
@@ -225,6 +232,9 @@ export default iterateJsdoc(({
             type: 'array',
           },
           enableFixer: {
+            type: 'boolean',
+          },
+          enableRestElementFixer: {
             type: 'boolean',
           },
           enableRootFixer: {

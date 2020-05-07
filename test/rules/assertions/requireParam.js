@@ -1654,6 +1654,58 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+       * @param cfg
+       * @param cfg.num
+       */
+      function quux ({num, ...extra}) {
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "cfg.extra" declaration.',
+        },
+      ],
+      options: [
+        {
+          checkRestProperty: true,
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 2018,
+      },
+    },
+    {
+      code: `
+      /**
+       * @param {GenericArray} cfg
+       * @param {number} cfg.0
+       */
+      function baar ([a, ...extra]) {
+        //
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "cfg.1" declaration.',
+        },
+      ],
+      output: `
+      /**
+       * @param {GenericArray} cfg
+       * @param {number} cfg.0
+       * @param {...any} cfg.1
+       */
+      function baar ([a, ...extra]) {
+        //
+      }
+      `,
+      parserOptions: {
+        ecmaVersion: 2015,
+      },
+    },
   ],
   valid: [
     {
@@ -2363,6 +2415,38 @@ export default {
         };
       }
       `,
+    },
+    {
+      code: `
+      /**
+       * @param cfg
+       * @param cfg.num
+       */
+      function quux ({num, ...extra}) {
+      }
+      `,
+      parserOptions: {
+        ecmaVersion: 2018,
+      },
+    },
+    {
+      code: `
+      /**
+        * @param {GenericArray} cfg
+        * @param {number} cfg.0
+       */
+      function baar ([a, ...extra]) {
+        //
+      }
+      `,
+      options: [
+        {
+          enableRestElementFixer: false,
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 2015,
+      },
     },
   ],
 };

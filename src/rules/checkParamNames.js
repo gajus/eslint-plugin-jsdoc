@@ -160,7 +160,10 @@ export default iterateJsdoc(({
   report,
   utils,
 }) => {
-  const {allowExtraTrailingParamDocs} = context.options[0] || {};
+  const {
+    allowExtraTrailingParamDocs,
+    checkRestProperty = false,
+  } = context.options[0] || {};
 
   const jsdocParameterNamesDeep = utils.getJsdocTagsDeep('param');
   if (!jsdocParameterNamesDeep.length) {
@@ -189,6 +192,9 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           allowExtraTrailingParamDocs: {
+            type: 'boolean',
+          },
+          checkRestProperty: {
             type: 'boolean',
           },
         },

@@ -124,7 +124,7 @@ Note that the type `any` is included since we don't know of any specific
 type to use.
 
 To disable such rest element insertions, set `enableRestElementFixer` to
-`true`.
+`false`.
 
 Note too that the following will be reported even though there is an item
 corresponding to `extra`:
@@ -309,7 +309,7 @@ A value indicating whether getters should be checked. Defaults to `false`.
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `param`                                                                                                       |
 | Aliases  | `arg`, `argument`                                                                                             |
-| Options  | `contexts`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`                                 |
+| Options  | `autoIncrementBase`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `unnamedRootBase`                                 |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 <!-- assertions requireParam -->

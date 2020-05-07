@@ -576,6 +576,30 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @param options
+       * @param options.foo
+       */
+      function quux ({foo, ...extra}) {
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "options.extra"',
+        },
+      ],
+      options: [
+        {
+          checkRestProperty: true,
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 2018,
+      },
+    },
   ],
   valid: [
     {
@@ -779,6 +803,19 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+      /**
+       * @param options
+       * @param options.foo
+       */
+      function quux ({foo, ...extra}) {
+      }
+      `,
+      parserOptions: {
+        ecmaVersion: 2018,
+      },
     },
   ],
 };
