@@ -9555,6 +9555,15 @@ function quux ({foo}) {
 /**
  *
  */
+function quux ({foo}) {
+
+}
+// Options: [{"enableFixer":false}]
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ *
+ */
 function quux ({foo: bar = 5} = {}) {
 
 }
@@ -9609,6 +9618,15 @@ function quux ({foo}, {bar}) {
 
 }
 // Options: [{"unnamedRootBase":["arg","config"]}]
+// Message: Missing JSDoc @param "arg" declaration.
+
+/**
+ *
+ */
+function quux ({foo}, {bar}) {
+
+}
+// Options: [{"enableRootFixer":false,"unnamedRootBase":["arg","config"]}]
 // Message: Missing JSDoc @param "arg" declaration.
 
 /**

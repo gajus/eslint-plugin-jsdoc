@@ -4,15 +4,16 @@ type T = [string, () => T];
 const rootNamer = (desiredRoots: string[], currentIndex: number): T => {
   let name;
   let idx = currentIndex;
-  if (desiredRoots.length > 1) {
-    name = desiredRoots.shift();
-  } else {
+  const incremented = desiredRoots.length <= 1;
+  if (incremented) {
     const base = desiredRoots[0];
     const suffix = idx++;
     name = `${base}${suffix}`;
+  } else {
+    name = desiredRoots.shift();
   }
 
-  return [name, () => {
+  return [name, incremented, () => {
     return rootNamer(desiredRoots, idx);
   }];
 };
@@ -46,7 +47,10 @@ export default iterateJsdoc(({
     return;
   }
 
-  const {enableFixer = true} = context.options[0] || {};
+  const {
+    enableFixer = true,
+    enableRootFixer = true,
+  } = context.options[0] || {};
 
   const missingTags = [];
   const flattenedRoots = utils.flattenRoots(functionParameterNames);
@@ -81,19 +85,23 @@ export default iterateJsdoc(({
     autoIncrementBase = 0,
     unnamedRootBase = ['root'],
   } = context.options[0] || {};
-  let [nextRootName, namer] = rootNamer([...unnamedRootBase], autoIncrementBase);
+  let [nextRootName, incremented, namer] = rootNamer([...unnamedRootBase], autoIncrementBase);
 
   functionParameterNames.forEach((functionParameterName, functionParameterIdx) => {
+    let inc;
     if (Array.isArray(functionParameterName)) {
       const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx] ||
         jsdocParameterNames[functionParameterIdx];
 
-      let rootName = nextRootName;
-      [nextRootName, namer] = namer();
+      let rootName;
       if (functionParameterName[0]) {
         rootName = functionParameterName[0];
       } else if (matchedJsdoc && matchedJsdoc.name) {
         rootName = matchedJsdoc.name;
+      } else {
+        rootName = nextRootName;
+        inc = incremented;
+        [nextRootName, incremented, namer] = namer();
       }
 
       functionParameterName[1].forEach((paramName) => {
@@ -111,12 +119,14 @@ export default iterateJsdoc(({
               missingTags.push({
                 functionParameterIdx: emptyParamIdx,
                 functionParameterName: rootName,
+                inc,
                 remove: true,
               });
             } else {
               missingTags.push({
                 functionParameterIdx: paramIndex[rootName],
                 functionParameterName: rootName,
+                inc,
               });
             }
           }
@@ -130,6 +140,7 @@ export default iterateJsdoc(({
           missingTags.push({
             functionParameterIdx: paramIndex[functionParameterName[0] ? fullParamName : paramName],
             functionParameterName: fullParamName,
+            inc,
           });
         }
       });
@@ -143,40 +154,44 @@ export default iterateJsdoc(({
       missingTags.push({
         functionParameterIdx: paramIndex[functionParameterName],
         functionParameterName,
+        inc,
       });
     }
   });
 
-  const fixAll = (missings, tags) => {
-    missings.forEach(({
-      functionParameterIdx, functionParameterName, remove,
-    }) => {
-      if (remove) {
-        tags.splice(functionParameterIdx, 1, {
-          name: functionParameterName,
-          newAdd: true,
-          tag: preferredTagName,
-        });
-      } else {
-        const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
-        tags.splice(expectedIdx, 0, {
-          name: functionParameterName,
-          newAdd: true,
-          tag: preferredTagName,
-        });
-      }
+  const fix = ({
+    functionParameterIdx, functionParameterName, remove, inc,
+  }, tags) => {
+    if (inc && !enableRootFixer) {
+      return;
+    }
+    if (remove) {
+      tags.splice(functionParameterIdx, 1, {
+        name: functionParameterName,
+        newAdd: true,
+        tag: preferredTagName,
+      });
+    } else {
+      const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
+      tags.splice(expectedIdx, 0, {
+        name: functionParameterName,
+        newAdd: true,
+        tag: preferredTagName,
+      });
+    }
+  };
+
+  const fixer = () => {
+    if (!jsdoc.tags) {
+      jsdoc.tags = [];
+    }
+
+    missingTags.forEach((missingTag) => {
+      fix(missingTag, jsdoc.tags);
     });
   };
 
-  missingTags.forEach(({functionParameterName}, index) => {
-    // Fix all missing tags the first time.
-    const fixer = index > 0 ? null : () => {
-      if (!jsdoc.tags) {
-        jsdoc.tags = [];
-      }
-
-      fixAll(missingTags, jsdoc.tags);
-    };
+  missingTags.forEach(({functionParameterName}) => {
     utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, enableFixer ? fixer : null, node);
   });
 }, {
@@ -210,6 +225,9 @@ export default iterateJsdoc(({
             type: 'array',
           },
           enableFixer: {
+            type: 'boolean',
+          },
+          enableRootFixer: {
             type: 'boolean',
           },
           exemptedBy: {

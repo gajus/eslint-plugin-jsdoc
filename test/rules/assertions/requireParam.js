@@ -89,6 +89,37 @@ export default {
           /**
            *
            */
+          function quux ({foo}) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "root0" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "root0.foo" declaration.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+        },
+      ],
+      output: `
+          /**
+           *
+           */
+          function quux ({foo}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
           function quux ({foo: bar = 5} = {}) {
 
           }
@@ -303,6 +334,45 @@ export default {
            * @param arg.foo
            * @param config0
            * @param config0.bar
+           */
+          function quux ({foo}, {bar}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux ({foo}, {bar}) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "arg" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "arg.foo" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "config0" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "config0.bar" declaration.',
+        },
+      ],
+      options: [
+        {
+          enableRootFixer: false,
+          unnamedRootBase: ['arg', 'config'],
+        },
+      ],
+      output: `
+          /**
+           * @param arg
+           * @param arg.foo
            */
           function quux ({foo}, {bar}) {
 
