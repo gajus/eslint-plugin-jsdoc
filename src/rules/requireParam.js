@@ -99,10 +99,14 @@ export default iterateJsdoc(({
           return name === rootName;
         })) {
           if (!functionParameterName[0]) {
-            missingTags.push({
-              functionParameterIdx: paramIndex[rootName],
-              functionParameterName: rootName,
-            });
+            if (!missingTags.find(({functionParameterName: fpn}) => {
+              return fpn === rootName;
+            })) {
+              missingTags.push({
+                functionParameterIdx: paramIndex[rootName],
+                functionParameterName: rootName,
+              });
+            }
           }
         }
 
