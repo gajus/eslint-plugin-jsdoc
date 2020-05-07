@@ -18,7 +18,11 @@ export default iterateJsdoc(({
   context,
 }) => {
   const functionParameterNames = utils.getFunctionParameterNames();
-  const jsdocParameterNames = utils.getJsdocTagsDeep('param');
+  const preferredTagName = utils.getPreferredTagName({tagName: 'param'});
+  if (!preferredTagName) {
+    return;
+  }
+  const jsdocParameterNames = utils.getJsdocTagsDeep(preferredTagName);
   if (!jsdocParameterNames) {
     return;
   }
@@ -39,8 +43,6 @@ export default iterateJsdoc(({
   }
 
   const {enableFixer = true} = context.options[0] || {};
-
-  const preferredTagName = utils.getPreferredTagName({tagName: 'param'});
 
   const missingTags = [];
   const flattenedRoots = utils.flattenRoots(functionParameterNames);
@@ -107,6 +109,7 @@ export default iterateJsdoc(({
               const emptyParamIdx = jsdocParameterNames.findIndex(({name}) => {
                 return !name;
               });
+
               if (emptyParamIdx > -1) {
                 missingTags.push({
                   functionParameterIdx: emptyParamIdx,
