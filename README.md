@@ -9609,7 +9609,7 @@ function quux ({foo}, {bar}) {
 
 }
 // Options: [{"unnamedRootBase":["arg","config"]}]
-// Message: Missing JSDoc @param "arg0" declaration.
+// Message: Missing JSDoc @param "arg" declaration.
 
 /**
  *
@@ -10055,12 +10055,12 @@ function quux ({foo}, {bar}) {
 // Options: [{"unnamedRootBase":["arg"]}]
 
 /**
- * @param arg0
- * @param arg0.foo
+ * @param arg
+ * @param arg.foo
  * @param config0
  * @param config0.bar
- * @param arg1
- * @param arg1.baz
+ * @param config1
+ * @param config1.baz
  */
 function quux ({foo}, {bar}, {baz}) {
 

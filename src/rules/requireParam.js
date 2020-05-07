@@ -2,12 +2,18 @@ import iterateJsdoc from '../iterateJsdoc';
 
 type T = [string, () => T];
 const rootNamer = (desiredRoots: string[], currentIndex: number): T => {
-  const base = desiredRoots[currentIndex % desiredRoots.length];
-  const suffix = Math.floor(currentIndex / desiredRoots.length);
-  const name = `${base}${suffix}`;
+  let name;
+  let idx = currentIndex;
+  if (desiredRoots.length > 1) {
+    name = desiredRoots.shift();
+  } else {
+    const base = desiredRoots[0];
+    const suffix = idx++;
+    name = `${base}${suffix}`;
+  }
 
   return [name, () => {
-    return rootNamer(desiredRoots, currentIndex + 1);
+    return rootNamer(desiredRoots, idx);
   }];
 };
 
@@ -75,7 +81,7 @@ export default iterateJsdoc(({
     autoIncrementBase = 0,
     unnamedRootBase = ['root'],
   } = context.options[0] || {};
-  let [nextRootName, namer] = rootNamer(unnamedRootBase, autoIncrementBase);
+  let [nextRootName, namer] = rootNamer([...unnamedRootBase], autoIncrementBase);
 
   functionParameterNames.forEach((functionParameterName, functionParameterIdx) => {
     if (Array.isArray(functionParameterName)) {

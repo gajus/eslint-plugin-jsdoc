@@ -280,10 +280,10 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "arg0" declaration.',
+          message: 'Missing JSDoc @param "arg" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "arg0.foo" declaration.',
+          message: 'Missing JSDoc @param "arg.foo" declaration.',
         },
         {
           message: 'Missing JSDoc @param "config0" declaration.',
@@ -299,8 +299,8 @@ export default {
       ],
       output: `
           /**
-           * @param arg0
-           * @param arg0.foo
+           * @param arg
+           * @param arg.foo
            * @param config0
            * @param config0.bar
            */
@@ -1641,12 +1641,12 @@ export default {
     {
       code: `
           /**
-           * @param arg0
-           * @param arg0.foo
+           * @param arg
+           * @param arg.foo
            * @param config0
            * @param config0.bar
-           * @param arg1
-           * @param arg1.baz
+           * @param config1
+           * @param config1.baz
            */
           function quux ({foo}, {bar}, {baz}) {
 
