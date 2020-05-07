@@ -34,6 +34,7 @@ const getPropertiesFromPropertySignature = (propSignature): T => {
 };
 
 const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
+  // eslint-disable-next-line complexity
   const getParamName = (param) => {
     if (_.has(param, 'typeAnnotation') || _.has(param, 'left.typeAnnotation')) {
       const typeAnnotation = _.has(param, 'left.typeAnnotation') ? param.left.typeAnnotation : param.typeAnnotation;
@@ -58,8 +59,9 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
     }
 
     if (param.type === 'ObjectPattern' || _.get(param, 'left.type') === 'ObjectPattern') {
-      if (param.properties) {
-        const roots = param.properties.map((prop) => {
+      const properties = param.properties || _.get(param, 'left.properties');
+      if (properties) {
+        const roots = properties.map((prop) => {
           return getParamName(prop);
         });
 
