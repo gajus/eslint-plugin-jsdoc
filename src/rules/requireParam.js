@@ -42,16 +42,33 @@ export default iterateJsdoc(({
 
   const preferredTagName = utils.getPreferredTagName({tagName: 'param'});
 
-  const findExpectedIndex = (jsdocTags) => {
-    // , indexAtFunctionParams
+  const missingTags = [];
+  const flattenedRoots = utils.flattenRoots(functionParameterNames);
+  const paramIndex = flattenedRoots.reduce((acc, cur, idx) => {
+    acc[cur] = idx;
+
+    return acc;
+  }, {});
+
+  const findExpectedIndex = (jsdocTags, indexAtFunctionParams, functionParameterName) => {
     /*
     const paramTags = jsdocTags.filter(({tag}) => {
       return tag === preferredTagName;
     });
     */
 
-    return jsdocTags.reduce((sum, tag) => {
-      let inc = 0;
+    const remainingRoots = flattenedRoots.slice(indexAtFunctionParams);
+    const foundIndex = jsdocTags.findIndex(({name}) => {
+      return remainingRoots.some((remainingRoot) => {
+        return name === remainingRoot;
+      });
+    });
+    if (foundIndex > -1) {
+      return foundIndex;
+    }
+
+    let inc = 0;
+    jsdocTags.some((tag) => {
       if (tag.tag === preferredTagName) {
         inc++;
 
@@ -63,16 +80,11 @@ export default iterateJsdoc(({
         */
       }
 
-      return sum + inc;
-    }, 0);
+      return false;
+    });
+
+    return inc;
   };
-
-  const missingTags = [];
-  const paramIndex = utils.flattenRoots(functionParameterNames).reduce((acc, cur, idx) => {
-    acc[cur] = idx;
-
-    return acc;
-  }, {});
 
   const {
     autoIncrementBase = 0,
@@ -141,7 +153,7 @@ export default iterateJsdoc(({
     missings.forEach(({
       functionParameterIdx, functionParameterName,
     }) => {
-      const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
+      const expectedIdx = findExpectedIndex(tags, functionParameterIdx, functionParameterName);
       tags.splice(expectedIdx, 0, {
         name: functionParameterName,
         tag: preferredTagName,
