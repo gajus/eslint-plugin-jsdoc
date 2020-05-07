@@ -41,21 +41,29 @@ export default iterateJsdoc(({
 
   const preferredTagName = utils.getPreferredTagName({tagName: 'param'});
 
-  const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
-    const functionTags = jsdocTags.filter(({tag}) => {
+  const findExpectedIndex = (jsdocTags) => {
+    // , indexAtFunctionParams
+    /*
+    const paramTags = jsdocTags.filter(({tag}) => {
       return tag === preferredTagName;
     });
-    let expectedIndex = jsdocTags.length;
-    jsdocTags.forEach((tag, index) => {
-      if (tag.tag === preferredTagName) {
-        expectedIndex = index;
-        if (functionTags.indexOf(tag) < indexAtFunctionParams) {
-          expectedIndex += 1;
-        }
-      }
-    });
+    */
 
-    return expectedIndex;
+    return jsdocTags.reduce((sum, tag) => {
+      let inc = 0;
+      if (tag.tag === preferredTagName) {
+        inc++;
+
+        /*
+        // Increment if the jsdoc (param) tag is less than the index within params
+        if (paramTags.indexOf(tag) < indexAtFunctionParams) {
+          inc++;
+        }
+        */
+      }
+
+      return sum + inc;
+    }, 0);
   };
 
   const missingTags = [];
@@ -132,7 +140,6 @@ export default iterateJsdoc(({
     missings.forEach(({
       functionParameterIdx, functionParameterName,
     }) => {
-      console.log('functionParameterName', functionParameterName, functionParameterIdx);
       const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
       tags.splice(expectedIdx, 0, {
         name: functionParameterName,
