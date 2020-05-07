@@ -85,8 +85,7 @@ export default iterateJsdoc(({
     }
 
     if (Array.isArray(functionParameterName)) {
-      const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx] ?
-        shallowJsdocParameterNames[functionParameterIdx] :
+      const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx] ||
         jsdocParameterNames[functionParameterIdx];
 
       let rootName = nextRootName;
@@ -105,10 +104,21 @@ export default iterateJsdoc(({
             if (!missingTags.find(({functionParameterName: fpn}) => {
               return fpn === rootName;
             })) {
-              missingTags.push({
-                functionParameterIdx: paramIndex[rootName],
-                functionParameterName: rootName,
+              const emptyParamIdx = jsdocParameterNames.findIndex(({name}) => {
+                return !name;
               });
+              if (emptyParamIdx > -1) {
+                missingTags.push({
+                  functionParameterIdx: emptyParamIdx,
+                  functionParameterName: rootName,
+                  remove: true,
+                });
+              } else {
+                missingTags.push({
+                  functionParameterIdx: paramIndex[rootName],
+                  functionParameterName: rootName,
+                });
+              }
             }
           }
         }
@@ -140,14 +150,22 @@ export default iterateJsdoc(({
 
   const fixAll = (missings, tags) => {
     missings.forEach(({
-      functionParameterIdx, functionParameterName,
+      functionParameterIdx, functionParameterName, remove,
     }) => {
-      const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
-      tags.splice(expectedIdx, 0, {
-        name: functionParameterName,
-        newAdd: true,
-        tag: preferredTagName,
-      });
+      if (remove) {
+        tags.splice(functionParameterIdx, 1, {
+          name: functionParameterName,
+          newAdd: true,
+          tag: preferredTagName,
+        });
+      } else {
+        const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
+        tags.splice(expectedIdx, 0, {
+          name: functionParameterName,
+          newAdd: true,
+          tag: preferredTagName,
+        });
+      }
     });
   };
 
