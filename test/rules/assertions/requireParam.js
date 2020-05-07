@@ -459,6 +459,7 @@ export default {
       output: `
           /**
            * @arg foo
+           * @param
            */
           function quux (foo) {
 
