@@ -1549,6 +1549,41 @@ export default {
           }
       `,
     },
+    {
+      code: `
+      class Client {
+        /**
+         * Set collection data.
+         * @return {Promise<Object, Error>}
+         */
+        async setData(
+          data: { last_modified?: number }
+        ) {}
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "data" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "data.last_modified" declaration.',
+        },
+      ],
+      output: `
+      class Client {
+        /**
+         * Set collection data.
+         * @param data
+         * @param data.last_modified
+         * @return {Promise<Object, Error>}
+         */
+        async setData(
+          data: { last_modified?: number }
+        ) {}
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {

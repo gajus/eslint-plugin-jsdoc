@@ -94,26 +94,24 @@ export default iterateJsdoc(({
         if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
           return name === rootName;
         })) {
-          if (!functionParameterName[0]) {
-            if (!missingTags.find(({functionParameterName: fpn}) => {
-              return fpn === rootName;
-            })) {
-              const emptyParamIdx = jsdocParameterNames.findIndex(({name}) => {
-                return !name;
-              });
+          if (!missingTags.find(({functionParameterName: fpn}) => {
+            return fpn === rootName;
+          })) {
+            const emptyParamIdx = jsdocParameterNames.findIndex(({name}) => {
+              return !name;
+            });
 
-              if (emptyParamIdx > -1) {
-                missingTags.push({
-                  functionParameterIdx: emptyParamIdx,
-                  functionParameterName: rootName,
-                  remove: true,
-                });
-              } else {
-                missingTags.push({
-                  functionParameterIdx: paramIndex[rootName],
-                  functionParameterName: rootName,
-                });
-              }
+            if (emptyParamIdx > -1) {
+              missingTags.push({
+                functionParameterIdx: emptyParamIdx,
+                functionParameterName: rootName,
+                remove: true,
+              });
+            } else {
+              missingTags.push({
+                functionParameterIdx: paramIndex[rootName],
+                functionParameterName: rootName,
+              });
             }
           }
         }

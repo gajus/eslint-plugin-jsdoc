@@ -1771,6 +1771,14 @@ function quux ({a, b}) {
 }
 // Message: Missing @param "args.a"
 
+/**
+ * @param args
+ */
+function quux ({a, b} = {}) {
+
+}
+// Message: Missing @param "args.a"
+
 export class SomeClass {
   /**
    * @param prop
@@ -1824,6 +1832,14 @@ function quux (foo) {
 function quux (error, cde = 1) {
 };
 // Message: Expected @param names to be "error, cde". Got "error, code".
+
+/**
+ * @param foo
+ */
+function quux ([a, b] = []) {
+
+}
+// Message: Missing @param "foo.0"
 ````
 
 The following patterns are not considered problems:
@@ -1891,20 +1907,6 @@ function quux ({a, b}) {
  * @param bar
  */
 function quux (foo, bar) {
-
-}
-
-/**
- * @param args
- */
-function quux ({a, b} = {}) {
-
-}
-
-/**
- * @param foo
- */
-function quux ([a, b] = []) {
 
 }
 
@@ -10000,6 +10002,17 @@ function quux (foo) {
 }
 // Options: [{"enableFixer":false}]
 // Message: Missing JSDoc @param "foo" declaration.
+
+class Client {
+  /**
+   * Set collection data.
+   * @return {Promise<Object, Error>}
+   */
+  async setData(
+    data: { last_modified?: number }
+  ) {}
+}
+// Message: Missing JSDoc @param "data" declaration.
 ````
 
 The following patterns are not considered problems:
