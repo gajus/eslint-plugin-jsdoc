@@ -146,8 +146,6 @@ export default {
         const indent = jsdocUtils.getIndent({
           text: sourceCode.getText(
             baseNode,
-
-            // Could also use `baseNode.start - 1`
             baseNode.loc.start.column,
           ),
         });

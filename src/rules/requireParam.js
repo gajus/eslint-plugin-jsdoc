@@ -13,6 +13,7 @@ const rootNamer = (desiredRoots: string[], currentIndex: number): T => {
 
 export default iterateJsdoc(({
   jsdoc,
+  node,
   utils,
   context,
 }) => {
@@ -157,7 +158,7 @@ export default iterateJsdoc(({
 
       fixAll(missingTags, jsdoc.tags);
     };
-    utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, enableFixer ? fixer : null);
+    utils.reportJSDoc(`Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`, null, enableFixer ? fixer : null, node);
   });
 }, {
   contextDefaults: true,

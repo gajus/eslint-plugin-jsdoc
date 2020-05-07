@@ -60,15 +60,11 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
 
     if (param.type === 'ObjectPattern' || _.get(param, 'left.type') === 'ObjectPattern') {
       const properties = param.properties || _.get(param, 'left.properties');
-      if (properties) {
-        const roots = properties.map((prop) => {
-          return getParamName(prop);
-        });
+      const roots = properties.map((prop) => {
+        return getParamName(prop);
+      });
 
-        return [undefined, flattenRoots(roots)];
-      }
-
-      return '<ObjectPattern>';
+      return [undefined, flattenRoots(roots)];
     }
 
     if (param.type === 'Property') {

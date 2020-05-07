@@ -31,9 +31,9 @@ export default {
     },
     {
       code: `
-          /**
-           *
-           */
+           /**
+            *
+            */
            function quux (foo) {
 
            }
@@ -49,9 +49,9 @@ export default {
         },
       ],
       output: `
-          /**
-           * @param foo
-           */
+           /**
+            * @param foo
+            */
            function quux (foo) {
 
            }
@@ -609,8 +609,8 @@ export default {
            */
           class A {
             /**
-              *
-              */
+             *
+             */
             quux (foo) {
 
             }
@@ -627,8 +627,8 @@ export default {
            */
           class A {
             /**
-              * @param foo
-              */
+             * @param foo
+             */
             quux (foo) {
 
             }
@@ -1483,19 +1483,19 @@ export default {
       output: `
       class Client {
         /**
-       * Set collection data.
-       * @param {Object} data                    The collection data object.
-       * @param {number} data.last_modified
-       * @param {Object} options            The options object.
-       * @param {Object} [options.headers]       The headers object option.
-       * @param {Number} [options.retry=0]       Number of retries to make
-       * when faced with transient errors.
-       * @param {Boolean} [options.safe]          The safe option.
-       * @param {Boolean} [options.patch]         The patch option.
-       * @param {Number} [options.last_modified] The last_modified option.
-       * @param options.permissions
-       * @return {Promise<Object, Error>}
-       */
+         * Set collection data.
+         * @param {Object} data                    The collection data object.
+         * @param {number} data.last_modified
+         * @param {Object} options            The options object.
+         * @param {Object} [options.headers]       The headers object option.
+         * @param {Number} [options.retry=0]       Number of retries to make
+         * when faced with transient errors.
+         * @param {Boolean} [options.safe]          The safe option.
+         * @param {Boolean} [options.patch]         The patch option.
+         * @param {Number} [options.last_modified] The last_modified option.
+         * @param options.permissions
+         * @return {Promise<Object, Error>}
+         */
         async setData(
           data: { last_modified?: number },
           options: {
