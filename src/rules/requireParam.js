@@ -51,12 +51,15 @@ export default iterateJsdoc(({
   }, {});
 
   const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
-    const remainingRoots = flattenedRoots.slice(indexAtFunctionParams);
-    const foundIndex = jsdocTags.findIndex(({name}) => {
-      return remainingRoots.some((remainingRoot) => {
-        return name === remainingRoot;
+    const remainingRoots = functionParameterNames.slice(indexAtFunctionParams || 0);
+    const foundIndex = jsdocTags.findIndex(({name, newAdd}) => {
+      return !newAdd && remainingRoots.some((remainingRoot) => {
+        return Array.isArray(remainingRoot) ?
+          remainingRoot[1].includes(name) :
+          name === remainingRoot;
       });
     });
+
     if (foundIndex > -1) {
       return foundIndex;
     }
@@ -142,6 +145,7 @@ export default iterateJsdoc(({
       const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
       tags.splice(expectedIdx, 0, {
         name: functionParameterName,
+        newAdd: true,
         tag: preferredTagName,
       });
     });
