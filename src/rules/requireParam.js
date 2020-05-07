@@ -50,13 +50,7 @@ export default iterateJsdoc(({
     return acc;
   }, {});
 
-  const findExpectedIndex = (jsdocTags, indexAtFunctionParams, functionParameterName) => {
-    /*
-    const paramTags = jsdocTags.filter(({tag}) => {
-      return tag === preferredTagName;
-    });
-    */
-
+  const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
     const remainingRoots = flattenedRoots.slice(indexAtFunctionParams);
     const foundIndex = jsdocTags.findIndex(({name}) => {
       return remainingRoots.some((remainingRoot) => {
@@ -67,23 +61,11 @@ export default iterateJsdoc(({
       return foundIndex;
     }
 
-    let inc = 0;
-    jsdocTags.some((tag) => {
-      if (tag.tag === preferredTagName) {
-        inc++;
-
-        /*
-        // Increment if the jsdoc (param) tag is less than the index within params
-        if (paramTags.indexOf(tag) < indexAtFunctionParams) {
-          inc++;
-        }
-        */
-      }
-
-      return false;
+    const paramTags = jsdocTags.filter(({tag}) => {
+      return tag === preferredTagName;
     });
 
-    return inc;
+    return paramTags.length;
   };
 
   const {
@@ -153,7 +135,7 @@ export default iterateJsdoc(({
     missings.forEach(({
       functionParameterIdx, functionParameterName,
     }) => {
-      const expectedIdx = findExpectedIndex(tags, functionParameterIdx, functionParameterName);
+      const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
       tags.splice(expectedIdx, 0, {
         name: functionParameterName,
         tag: preferredTagName,
