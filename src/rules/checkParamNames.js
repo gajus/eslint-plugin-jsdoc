@@ -50,7 +50,7 @@ const validateParameterNames = (
     }
 
     if (Array.isArray(functionParameterName)) {
-      const [parameterName, properties] = functionParameterName;
+      const [parameterName, {names: properties}] = functionParameterName;
       const tagName = parameterName ? parameterName : tag.name.trim();
       const expectedNames = properties.map((name) => {
         return `${tagName}.${name}`;

@@ -7,16 +7,38 @@ type ParserMode = "jsdoc"|"typescript"|"closure";
 // Given a nested array of property names, reduce them to a single array,
 // appending the name of the root element along the way if present.
 const flattenRoots = (params, root = '') => {
-  return params.reduce((acc, cur) => {
+  let hasRestElement = false;
+  let hasPropertyRest = false;
+  const names = params.reduce((acc, cur) => {
     if (Array.isArray(cur)) {
+      if (cur[1].hasRestElement) {
+        hasRestElement = true;
+      }
+      if (cur[1].hasPropertyRest) {
+        hasPropertyRest = true;
+      }
+      const nms = Array.isArray(cur[1]) ? cur[1] : cur[1].names;
+      const flattened = flattenRoots(nms, root ? `${root}.${cur[0]}` : cur[0]);
+      if (flattened.hasRestElement) {
+        hasRestElement = true;
+      }
+      if (flattened.hasPropertyRest) {
+        hasPropertyRest = true;
+      }
       const inner = [
         root ? `${root}.${cur[0]}` : cur[0],
-        ...flattenRoots(cur[1], root ? `${root}.${cur[0]}` : cur[0]),
+        ...flattened.names,
       ].filter(Boolean);
 
       return acc.concat(inner);
     }
     if (typeof cur === 'object') {
+      if (cur.restElement) {
+        hasRestElement = true;
+        if (cur.isProperty) {
+          hasPropertyRest = true;
+        }
+      }
       acc.push(root ? `${root}.${cur.name}` : cur.name);
     } else {
       acc.push(root ? `${root}.${cur}` : cur);
@@ -24,6 +46,12 @@ const flattenRoots = (params, root = '') => {
 
     return acc;
   }, []);
+
+  return {
+    hasPropertyRest,
+    hasRestElement,
+    names,
+  };
 };
 
 type T = string | [?string, T];
@@ -39,18 +67,19 @@ const getPropertiesFromPropertySignature = (propSignature): T => {
 
 const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
   // eslint-disable-next-line complexity
-  const getParamName = (param) => {
+  const getParamName = (param, isProperty) => {
     if (_.has(param, 'typeAnnotation') || _.has(param, 'left.typeAnnotation')) {
       const typeAnnotation = _.has(param, 'left.typeAnnotation') ? param.left.typeAnnotation : param.typeAnnotation;
       if (typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
         const propertyNames = typeAnnotation.typeAnnotation.members.map((member) => {
           return getPropertiesFromPropertySignature(member);
         });
+        const flattened = flattenRoots(propertyNames);
         if (_.has(param, 'name') || _.has(param, 'left.name')) {
-          return [_.has(param, 'left.name') ? param.left.name : param.name, flattenRoots(propertyNames)];
+          return [_.has(param, 'left.name') ? param.left.name : param.name, flattened];
         }
 
-        return [undefined, flattenRoots(propertyNames)];
+        return [undefined, flattened];
       }
     }
 
@@ -65,7 +94,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
     if (param.type === 'ObjectPattern' || _.get(param, 'left.type') === 'ObjectPattern') {
       const properties = param.properties || _.get(param, 'left.properties');
       const roots = properties.map((prop) => {
-        return getParamName(prop);
+        return getParamName(prop, true);
       });
 
       return [undefined, flattenRoots(roots)];
@@ -74,7 +103,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
     if (param.type === 'Property') {
       if (param.value.type === 'ObjectPattern') {
         return [param.key.name, param.value.properties.map((prop) => {
-          return getParamName(prop);
+          return getParamName(prop, isProperty);
         })];
       }
 
@@ -88,7 +117,10 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
     if (param.type === 'ArrayPattern' || _.get(param, 'left.type') === 'ArrayPattern') {
       const elements = param.elements || _.get(param, 'left.elements');
       const roots = elements.map((prop, idx) => {
-        return idx;
+        return {
+          name: idx,
+          restElement: prop.type === 'RestElement',
+        };
       });
 
       return [undefined, flattenRoots(roots)];
@@ -96,19 +128,22 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
 
     if (param.type === 'RestElement') {
       return {
+        isProperty,
         name: param.argument.name,
         restElement: true,
       };
     }
 
     if (param.type === 'TSParameterProperty') {
-      return getParamName(param.parameter);
+      return getParamName(param.parameter, true);
     }
 
     throw new Error('Unsupported function signature format.');
   };
 
-  return functionNode.params.map(getParamName);
+  return functionNode.params.map((param) => {
+    return getParamName(param);
+  });
 };
 
 /**

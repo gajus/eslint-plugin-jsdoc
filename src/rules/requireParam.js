@@ -55,7 +55,7 @@ export default iterateJsdoc(({
   } = context.options[0] || {};
 
   const missingTags = [];
-  const flattenedRoots = utils.flattenRoots(functionParameterNames);
+  const flattenedRoots = utils.flattenRoots(functionParameterNames).names;
   const paramIndex = flattenedRoots.reduce((acc, cur, idx) => {
     acc[cur] = idx;
 
@@ -67,7 +67,7 @@ export default iterateJsdoc(({
     const foundIndex = jsdocTags.findIndex(({name, newAdd}) => {
       return !newAdd && remainingRoots.some((remainingRoot) => {
         if (Array.isArray(remainingRoot)) {
-          return remainingRoot[1].includes(name);
+          return remainingRoot[1].names.includes(name);
         }
         if (typeof remainingRoot === 'object') {
           return name === remainingRoot.name;
@@ -111,7 +111,12 @@ export default iterateJsdoc(({
         [nextRootName, incremented, namer] = namer();
       }
 
-      functionParameterName[1].forEach((paramName) => {
+      const {hasRestElement} = functionParameterName[1];
+      if (!enableRestElementFixer && hasRestElement) {
+        return;
+      }
+
+      functionParameterName[1].names.forEach((paramName) => {
         if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
           return name === rootName;
         })) {
@@ -148,6 +153,7 @@ export default iterateJsdoc(({
             functionParameterIdx: paramIndex[functionParameterName[0] ? fullParamName : paramName],
             functionParameterName: fullParamName,
             inc,
+            type: hasRestElement ? '...any' : undefined,
           });
         }
       });
@@ -155,11 +161,13 @@ export default iterateJsdoc(({
       return;
     }
     let funcParamName;
+    let type;
     if (typeof functionParameterName === 'object') {
       if (!enableRestElementFixer && functionParameterName.restElement) {
         return;
       }
       funcParamName = functionParameterName.name;
+      type = '...any';
     } else {
       funcParamName = functionParameterName;
     }
@@ -171,12 +179,13 @@ export default iterateJsdoc(({
         functionParameterIdx: paramIndex[funcParamName],
         functionParameterName: funcParamName,
         inc,
+        type,
       });
     }
   });
 
   const fix = ({
-    functionParameterIdx, functionParameterName, remove, inc,
+    functionParameterIdx, functionParameterName, remove, inc, type,
   }, tags) => {
     if (inc && !enableRootFixer) {
       return;
@@ -186,6 +195,7 @@ export default iterateJsdoc(({
         name: functionParameterName,
         newAdd: true,
         tag: preferredTagName,
+        type,
       });
     } else {
       const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
@@ -193,6 +203,7 @@ export default iterateJsdoc(({
         name: functionParameterName,
         newAdd: true,
         tag: preferredTagName,
+        type,
       });
     }
   };
