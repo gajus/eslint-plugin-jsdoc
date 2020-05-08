@@ -600,6 +600,33 @@ export default {
         ecmaVersion: 2018,
       },
     },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param cfg.bar
+           * @param cfg.extra
+           */
+          function quux ({foo, ...extra}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@param "cfg.bar" does not exist on cfg',
+        },
+      ],
+      options: [
+        {
+          checkRestProperty: true,
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 2018,
+      },
+    },
   ],
   valid: [
     {
@@ -816,6 +843,17 @@ export default {
       parserOptions: {
         ecmaVersion: 2018,
       },
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param bar
+           */
+          function quux (foo, bar, ...extra) {
+
+          }
+      `,
     },
   ],
 };

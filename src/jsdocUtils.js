@@ -9,6 +9,7 @@ type ParserMode = "jsdoc"|"typescript"|"closure";
 const flattenRoots = (params, root = '') => {
   let hasRestElement = false;
   let hasPropertyRest = false;
+  const rests = [];
   const names = params.reduce((acc, cur) => {
     if (Array.isArray(cur)) {
       if (cur[1].hasRestElement) {
@@ -29,18 +30,23 @@ const flattenRoots = (params, root = '') => {
         root ? `${root}.${cur[0]}` : cur[0],
         ...flattened.names,
       ].filter(Boolean);
+      rests.push(false, ...flattened.rests);
 
       return acc.concat(inner);
     }
     if (typeof cur === 'object') {
+      if (cur.isRestProperty) {
+        hasPropertyRest = true;
+        rests.push(true);
+      } else {
+        rests.push(false);
+      }
       if (cur.restElement) {
         hasRestElement = true;
-        if (cur.isProperty) {
-          hasPropertyRest = true;
-        }
       }
       acc.push(root ? `${root}.${cur.name}` : cur.name);
     } else {
+      rests.push(false);
       acc.push(root ? `${root}.${cur}` : cur);
     }
 
@@ -51,6 +57,7 @@ const flattenRoots = (params, root = '') => {
     hasPropertyRest,
     hasRestElement,
     names,
+    rests,
   };
 };
 
@@ -128,7 +135,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
 
     if (param.type === 'RestElement') {
       return {
-        isProperty,
+        isRestProperty: isProperty,
         name: param.argument.name,
         restElement: true,
       };

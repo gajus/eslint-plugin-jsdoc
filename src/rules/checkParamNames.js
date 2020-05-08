@@ -1,7 +1,9 @@
 import iterateJsdoc from '../iterateJsdoc';
 
 const validateParameterNames = (
-  targetTagName : string, allowExtraTrailingParamDocs: boolean,
+  targetTagName : string,
+  allowExtraTrailingParamDocs: boolean,
+  checkRestProperty : boolean,
   functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report,
 ) => {
   const paramTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
@@ -50,7 +52,9 @@ const validateParameterNames = (
     }
 
     if (Array.isArray(functionParameterName)) {
-      const [parameterName, {names: properties}] = functionParameterName;
+      const [parameterName, {
+        names: properties, hasPropertyRest, rests,
+      }] = functionParameterName;
       const tagName = parameterName ? parameterName : tag.name.trim();
       const expectedNames = properties.map((name) => {
         return `${tagName}.${name}`;
@@ -60,20 +64,25 @@ const validateParameterNames = (
       });
 
       const missingProperties = [];
-      expectedNames.forEach((name) => {
+      expectedNames.forEach((name, idx) => {
         if (!actualNames.includes(name)) {
+          if (!checkRestProperty && rests[idx]) {
+            return;
+          }
           missingProperties.push(name);
         }
       });
 
       const extraProperties = [];
-      actualNames.filter((name) => {
-        return name.includes(tag.name.trim());
-      }).forEach((name) => {
-        if (!expectedNames.includes(name) && name !== tag.name) {
-          extraProperties.push(name);
-        }
-      });
+      if (!hasPropertyRest || checkRestProperty) {
+        actualNames.filter((name) => {
+          return name.includes(tag.name.trim());
+        }).forEach((name) => {
+          if (!expectedNames.includes(name) && name !== tag.name) {
+            extraProperties.push(name);
+          }
+        });
+      }
 
       if (missingProperties.length) {
         missingProperties.forEach((missingProperty) => {
@@ -94,9 +103,16 @@ const validateParameterNames = (
       return false;
     }
 
-    const funcParamName = typeof functionParameterName === 'object' ?
-      functionParameterName.name :
-      functionParameterName;
+    let funcParamName;
+    if (typeof functionParameterName === 'object') {
+      const {name, isRestProperty} = functionParameterName;
+      if (isRestProperty && !checkRestProperty) {
+        return false;
+      }
+      funcParamName = name;
+    } else {
+      funcParamName = functionParameterName;
+    }
 
     if (funcParamName !== tag.name.trim()) {
       // Todo: This won't work for array or object child items
@@ -177,7 +193,9 @@ export default iterateJsdoc(({
   const functionParameterNames = utils.getFunctionParameterNames();
   const targetTagName = utils.getPreferredTagName({tagName: 'param'});
   const isError = validateParameterNames(
-    targetTagName, allowExtraTrailingParamDocs, functionParameterNames,
+    targetTagName,
+    allowExtraTrailingParamDocs, checkRestProperty,
+    functionParameterNames,
     jsdoc, jsdocNode, utils, report,
   );
 

@@ -1549,9 +1549,9 @@ Ensures that parameter names in JSDoc match those in the function declaration.
 #### Destructuring
 
 Note that by default the rule will not report parameters present on the docs
-but missing from the function signature when an object rest property is part
-of that function signature since the missing properties might be a part of
-the object rest property.
+but non-existing on the function signature when an object rest property is part
+of that function signature since the seemingly non-existing properties might
+actually be a part of the object rest property.
 
 ```js
 /**
@@ -1561,12 +1561,15 @@ the object rest property.
 function quux ({foo, ...extra}) {}
 ```
 
-To require that `extra` be documented, you can use the `checkRestProperty`
-option. Note, however, that jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
+To require that `extra` be documented--and that any extraneous properties
+get reported--e.g., if there had been a `@param options.bar` above--you
+can use the `checkRestProperty` option which insists that the rest
+property be documented (and that there be no other implicit properties).
+Note, however, that jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
 to currently support syntax or output to distinguish rest properties from
 other properties, so in looking at the docs alone without looking at the
-function signature, it may appear that there is an actual property named
-`extra`.
+function signature, the disadvantage of enabling this option is that it
+may appear that there is an actual property named `extra`.
 
 <a name="eslint-plugin-jsdoc-rules-check-param-names-options-3"></a>
 #### Options
@@ -1574,7 +1577,7 @@ function signature, it may appear that there is an actual property named
 <a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-checkrestproperty"></a>
 ##### <code>checkRestProperty</code>
 
-See the "Destructuring" section.
+See the "Destructuring" section. Defaults to `false`.
 
 <a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-allowextratrailingparamdocs"></a>
 ##### <code>allowExtraTrailingParamDocs</code>
@@ -1849,6 +1852,18 @@ function quux ({foo, ...extra}) {
 }
 // Options: [{"checkRestProperty":true}]
 // Message: Missing @param "options.extra"
+
+/**
+ * @param cfg
+ * @param cfg.foo
+ * @param cfg.bar
+ * @param cfg.extra
+ */
+function quux ({foo, ...extra}) {
+
+}
+// Options: [{"checkRestProperty":true}]
+// Message: @param "cfg.bar" does not exist on cfg
 ````
 
 The following patterns are not considered problems:
@@ -1993,6 +2008,14 @@ function quux ({foo}, baz) {
  * @param options.foo
  */
 function quux ({foo, ...extra}) {
+}
+
+/**
+ * @param foo
+ * @param bar
+ */
+function quux (foo, bar, ...extra) {
+
 }
 ````
 
@@ -10044,6 +10067,14 @@ function baar ([a, ...extra]) {
   //
 }
 // Message: Missing JSDoc @param "cfg.1" declaration.
+
+/**
+ * @param a
+ */
+function baar (a, ...extra) {
+  //
+}
+// Message: Missing JSDoc @param "extra" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -10537,6 +10568,14 @@ function quux ({num, ...extra}) {
   * @param {number} cfg.0
  */
 function baar ([a, ...extra]) {
+  //
+}
+// Options: [{"enableRestElementFixer":false}]
+
+/**
+  * @param a
+ */
+function baar (a, ...extra) {
   //
 }
 // Options: [{"enableRestElementFixer":false}]
