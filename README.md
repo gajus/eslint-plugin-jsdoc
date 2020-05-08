@@ -9408,8 +9408,8 @@ function baar ([a, ...extra]) {
 
 ...because it does not use the `...` syntax in the type.
 
-<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-object-rest-property-experimentalrestproperty-insertions"></a>
-##### Object Rest Property (<code>ExperimentalRestProperty</code>) insertions
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-object-rest-property-insertions"></a>
+##### Object Rest Property insertions
 
 If the `checkRestProperty` option is set to `true` (`false` by default),
 missing rest properties will be reported with documentation auto-inserted:
@@ -9469,7 +9469,7 @@ Whether to enable the rest element fixer (see
 ##### <code>checkRestProperty</code>
 
 If set to `true`, will report (and add fixer insertions) for missing rest
-properties (`ExperimentalRestProperty`). Defaults to `false`.
+properties. Defaults to `false`.
 
 If set to `true`, note that you can still document the subproperties of the
 rest property using other jsdoc features, e.g., `@typedef`:

@@ -142,7 +142,7 @@ function baar ([a, ...extra]) {
 
 ...because it does not use the `...` syntax in the type.
 
-##### Object Rest Property (`ExperimentalRestProperty`) insertions
+##### Object Rest Property insertions
 
 If the `checkRestProperty` option is set to `true` (`false` by default),
 missing rest properties will be reported with documentation auto-inserted:
@@ -197,7 +197,7 @@ Whether to enable the rest element fixer (see
 ##### `checkRestProperty`
 
 If set to `true`, will report (and add fixer insertions) for missing rest
-properties (`ExperimentalRestProperty`). Defaults to `false`.
+properties. Defaults to `false`.
 
 If set to `true`, note that you can still document the subproperties of the
 rest property using other jsdoc features, e.g., `@typedef`:
