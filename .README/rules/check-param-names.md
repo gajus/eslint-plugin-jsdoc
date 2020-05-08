@@ -33,6 +33,10 @@ may appear that there is an actual property named `extra`.
 
 See the "Destructuring" section. Defaults to `false`.
 
+##### `checkTypesPattern`
+
+See `require-param` under the option of the same name.
+
 ##### `allowExtraTrailingParamDocs`
 
 If set to `true`, this option will allow extra `@param` definitions (e.g.,
@@ -43,7 +47,7 @@ their presence within the function signature. Other inconsistencies between
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkRestProperty`|
+|Options|`allowExtraTrailingParamDocs`, `checkRestProperty`, `checkTypesPattern`|
 |Tags|`param`|
 
 <!-- assertions checkParamNames -->

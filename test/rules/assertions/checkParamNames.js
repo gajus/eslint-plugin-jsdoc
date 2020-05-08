@@ -627,6 +627,61 @@ export default {
         ecmaVersion: 2018,
       },
     },
+    {
+      code: `
+      /**
+       * Converts an SVGRect into an object.
+       * @param {SVGRect} bbox - a SVGRect
+       */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing @param "bbox.x"',
+        },
+        {
+          message: 'Missing @param "bbox.y"',
+        },
+        {
+          message: 'Missing @param "bbox.width"',
+        },
+        {
+          message: 'Missing @param "bbox.height"',
+        },
+      ],
+      options: [
+        {
+          checkTypesPattern: 'SVGRect',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * Converts an SVGRect into an object.
+       * @param {object} bbox - a SVGRect
+       */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing @param "bbox.x"',
+        },
+        {
+          message: 'Missing @param "bbox.y"',
+        },
+        {
+          message: 'Missing @param "bbox.width"',
+        },
+        {
+          message: 'Missing @param "bbox.height"',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -854,6 +909,44 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+      /**
+      * Converts an SVGRect into an object.
+      * @param {SVGRect} bbox - a SVGRect
+      */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+      * Converts an SVGRect into an object.
+      * @param {SVGRect} bbox - a SVGRect
+      */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+      * Converts an SVGRect into an object.
+      * @param {object} bbox - a SVGRect
+      */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+      options: [
+        {
+          checkTypesPattern: 'SVGRect',
+        },
+      ],
     },
   ],
 };

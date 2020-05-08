@@ -1757,6 +1757,87 @@ export default {
         ecmaVersion: 2015,
       },
     },
+    {
+      code: `
+      /**
+       * Converts an SVGRect into an object.
+       * @param {SVGRect} bbox - a SVGRect
+       */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "bbox.x" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "bbox.y" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "bbox.width" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "bbox.height" declaration.',
+        },
+      ],
+      options: [
+        {
+          checkTypesPattern: 'SVGRect',
+        },
+      ],
+      output: `
+      /**
+       * Converts an SVGRect into an object.
+       * @param {SVGRect} bbox - a SVGRect
+       * @param bbox.x
+       * @param bbox.y
+       * @param bbox.width
+       * @param bbox.height
+       */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+       * Converts an SVGRect into an object.
+       * @param {object} bbox - a SVGRect
+       */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "bbox.x" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "bbox.y" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "bbox.width" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "bbox.height" declaration.',
+        },
+      ],
+      output: `
+      /**
+       * Converts an SVGRect into an object.
+       * @param {object} bbox - a SVGRect
+       * @param bbox.x
+       * @param bbox.y
+       * @param bbox.width
+       * @param bbox.height
+       */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+    },
   ],
   valid: [
     {
@@ -2516,6 +2597,33 @@ export default {
       parserOptions: {
         ecmaVersion: 2015,
       },
+    },
+    {
+      code: `
+      /**
+      * Converts an SVGRect into an object.
+      * @param {SVGRect} bbox - a SVGRect
+      */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+      * Converts an SVGRect into an object.
+      * @param {object} bbox - a SVGRect
+      */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+      options: [
+        {
+          checkTypesPattern: 'SVGRect',
+        },
+      ],
     },
   ],
 };

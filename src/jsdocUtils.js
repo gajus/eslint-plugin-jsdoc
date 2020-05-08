@@ -164,13 +164,14 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
  * "@param foo; @param foo.bar".
  */
 const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object> => {
-  return (jsdoc.tags || []).reduce((arr, {name, tag}, idx) => {
+  return (jsdoc.tags || []).reduce((arr, {name, tag, type}, idx) => {
     if (tag !== targetTagName) {
       return arr;
     }
     arr.push({
       idx,
       name,
+      type,
     });
 
     return arr;

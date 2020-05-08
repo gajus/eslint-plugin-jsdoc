@@ -52,7 +52,13 @@ export default iterateJsdoc(({
     enableRootFixer = true,
     checkRestProperty = false,
     enableRestElementFixer = true,
+    checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
   } = context.options[0] || {};
+
+  const lastSlashPos = checkTypesPattern.lastIndexOf('/');
+  const checkTypesRegex = lastSlashPos === -1 ?
+    new RegExp(checkTypesPattern) :
+    new RegExp(checkTypesPattern.slice(1, lastSlashPos), checkTypesPattern.slice(lastSlashPos + 1));
 
   const missingTags = [];
   const flattenedRoots = utils.flattenRoots(functionParameterNames).names;
@@ -105,6 +111,9 @@ export default iterateJsdoc(({
         rootName = functionParameterName[0];
       } else if (matchedJsdoc && matchedJsdoc.name) {
         rootName = matchedJsdoc.name;
+        if (matchedJsdoc.type && matchedJsdoc.type.search(checkTypesRegex) === -1) {
+          return;
+        }
       } else {
         rootName = nextRootName;
         inc = incremented;
@@ -251,6 +260,9 @@ export default iterateJsdoc(({
           checkSetters: {
             default: false,
             type: 'boolean',
+          },
+          checkTypesPattern: {
+            type: 'string',
           },
           contexts: {
             items: {

@@ -284,6 +284,37 @@ avoids the need for a `@param`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
+##### `checkTypesPattern`
+
+When one specifies a type, unless it is of a generic type, like `object`
+or `array`, it may be considered unnecessary to have that object's
+destructured components required, especially where generated docs will
+link back to the specified type. For example:
+
+```js
+/**
+ * @param {SVGRect} bbox - a SVGRect
+ */
+export const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+```
+
+By default `checkTypesPattern` is set to
+`/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/`,
+meaning that destructuring will be required only if the type of the `@param`
+(the text between curly brackets) is a match for "Object" or "Array" (with or
+without initial caps), "PlainObject", or "GenericObject", "GenericArray" (or
+if no type is present). So in the above example, the lack of a match will
+mean that no complaint will be given about the undocumented destructured
+parameters.
+
+Note that the `/` delimiters are optional, but necessary to add flags.
+
+You could set this regular expression to a more expansive list, or you
+could restrict it such that even types matching those strings would not
+need destructuring.
+
 ##### `contexts`
 
 Set this to an array of strings representing the AST context
@@ -309,7 +340,7 @@ A value indicating whether getters should be checked. Defaults to `false`.
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `param`                                                                                                       |
 | Aliases  | `arg`, `argument`                                                                                             |
-| Options  | `autoIncrementBase`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `unnamedRootBase`                                 |
+| Options  | `autoIncrementBase`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 <!-- assertions requireParam -->

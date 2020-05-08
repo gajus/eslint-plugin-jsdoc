@@ -1579,6 +1579,11 @@ may appear that there is an actual property named `extra`.
 
 See the "Destructuring" section. Defaults to `false`.
 
+<a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-checktypespattern"></a>
+##### <code>checkTypesPattern</code>
+
+See `require-param` under the option of the same name.
+
 <a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-allowextratrailingparamdocs"></a>
 ##### <code>allowExtraTrailingParamDocs</code>
 
@@ -1590,7 +1595,7 @@ their presence within the function signature. Other inconsistencies between
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkRestProperty`|
+|Options|`allowExtraTrailingParamDocs`, `checkRestProperty`, `checkTypesPattern`|
 |Tags|`param`|
 
 The following patterns are considered problems:
@@ -1864,6 +1869,25 @@ function quux ({foo, ...extra}) {
 }
 // Options: [{"checkRestProperty":true}]
 // Message: @param "cfg.bar" does not exist on cfg
+
+/**
+ * Converts an SVGRect into an object.
+ * @param {SVGRect} bbox - a SVGRect
+ */
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Options: [{"checkTypesPattern":"SVGRect"}]
+// Message: Missing @param "bbox.x"
+
+/**
+ * Converts an SVGRect into an object.
+ * @param {object} bbox - a SVGRect
+ */
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Message: Missing @param "bbox.x"
 ````
 
 The following patterns are not considered problems:
@@ -2017,6 +2041,31 @@ function quux ({foo, ...extra}) {
 function quux (foo, bar, ...extra) {
 
 }
+
+/**
+* Converts an SVGRect into an object.
+* @param {SVGRect} bbox - a SVGRect
+*/
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+
+/**
+* Converts an SVGRect into an object.
+* @param {SVGRect} bbox - a SVGRect
+*/
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+
+/**
+* Converts an SVGRect into an object.
+* @param {object} bbox - a SVGRect
+*/
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Options: [{"checkTypesPattern":"SVGRect"}]
 ````
 
 
@@ -9510,6 +9559,38 @@ avoids the need for a `@param`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-checktypespattern-1"></a>
+##### <code>checkTypesPattern</code>
+
+When one specifies a type, unless it is of a generic type, like `object`
+or `array`, it may be considered unnecessary to have that object's
+destructured components required, especially where generated docs will
+link back to the specified type. For example:
+
+```js
+/**
+ * @param {SVGRect} bbox - a SVGRect
+ */
+export const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+```
+
+By default `checkTypesPattern` is set to
+`/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/`,
+meaning that destructuring will be required only if the type of the `@param`
+(the text between curly brackets) is a match for "Object" or "Array" (with or
+without initial caps), "PlainObject", or "GenericObject", "GenericArray" (or
+if no type is present). So in the above example, the lack of a match will
+mean that no complaint will be given about the undocumented destructured
+parameters.
+
+Note that the `/` delimiters are optional, but necessary to add flags.
+
+You could set this regular expression to a more expansive list, or you
+could restrict it such that even types matching those strings would not
+need destructuring.
+
 <a name="eslint-plugin-jsdoc-rules-require-param-options-23-contexts-7"></a>
 ##### <code>contexts</code>
 
@@ -9539,7 +9620,7 @@ A value indicating whether getters should be checked. Defaults to `false`.
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `param`                                                                                                       |
 | Aliases  | `arg`, `argument`                                                                                             |
-| Options  | `autoIncrementBase`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `unnamedRootBase`                                 |
+| Options  | `autoIncrementBase`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 The following patterns are considered problems:
@@ -10085,6 +10166,25 @@ function baar (a, ...extra) {
   //
 }
 // Message: Missing JSDoc @param "extra" declaration.
+
+/**
+ * Converts an SVGRect into an object.
+ * @param {SVGRect} bbox - a SVGRect
+ */
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Options: [{"checkTypesPattern":"SVGRect"}]
+// Message: Missing JSDoc @param "bbox.x" declaration.
+
+/**
+ * Converts an SVGRect into an object.
+ * @param {object} bbox - a SVGRect
+ */
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Message: Missing JSDoc @param "bbox.x" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -10589,6 +10689,23 @@ function baar (a, ...extra) {
   //
 }
 // Options: [{"enableRestElementFixer":false}]
+
+/**
+* Converts an SVGRect into an object.
+* @param {SVGRect} bbox - a SVGRect
+*/
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+
+/**
+* Converts an SVGRect into an object.
+* @param {object} bbox - a SVGRect
+*/
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Options: [{"checkTypesPattern":"SVGRect"}]
 ````
 
 

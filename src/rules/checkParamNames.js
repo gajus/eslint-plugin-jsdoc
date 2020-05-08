@@ -4,6 +4,7 @@ const validateParameterNames = (
   targetTagName : string,
   allowExtraTrailingParamDocs: boolean,
   checkRestProperty : boolean,
+  checkTypesRegex : RegExp,
   functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report,
 ) => {
   const paramTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
@@ -52,6 +53,10 @@ const validateParameterNames = (
     }
 
     if (Array.isArray(functionParameterName)) {
+      if (tag.type && tag.type.search(checkTypesRegex) === -1) {
+        return false;
+      }
+
       const [parameterName, {
         names: properties, hasPropertyRest, rests,
       }] = functionParameterName;
@@ -181,7 +186,13 @@ export default iterateJsdoc(({
   const {
     allowExtraTrailingParamDocs,
     checkRestProperty = false,
+    checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
   } = context.options[0] || {};
+
+  const lastSlashPos = checkTypesPattern.lastIndexOf('/');
+  const checkTypesRegex = lastSlashPos === -1 ?
+    new RegExp(checkTypesPattern) :
+    new RegExp(checkTypesPattern.slice(1, lastSlashPos), checkTypesPattern.slice(lastSlashPos + 1));
 
   const jsdocParameterNamesDeep = utils.getJsdocTagsDeep('param');
   if (!jsdocParameterNamesDeep.length) {
@@ -192,6 +203,7 @@ export default iterateJsdoc(({
   const isError = validateParameterNames(
     targetTagName,
     allowExtraTrailingParamDocs, checkRestProperty,
+    checkTypesRegex,
     functionParameterNames,
     jsdoc, jsdocNode, utils, report,
   );
@@ -216,6 +228,9 @@ export default iterateJsdoc(({
           },
           checkRestProperty: {
             type: 'boolean',
+          },
+          checkTypesPattern: {
+            type: 'string',
           },
         },
         type: 'object',
