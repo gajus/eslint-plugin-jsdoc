@@ -152,8 +152,16 @@ const getUtils = (
     return iteratingAll && utils.hasATag(['callback', 'function', 'func', 'method']);
   };
 
-  utils.stringify = (tagBlock) => {
-    const indent = jsdocUtils.getIndent(sourceCode);
+  utils.stringify = (tagBlock, tag) => {
+    const indent = tag ?
+      jsdocUtils.getIndent({
+        text: sourceCode.getText(
+          tag,
+          tag.loc.start.column,
+        ),
+      }) :
+      jsdocUtils.getIndent(sourceCode);
+
     if (ruleConfig.noTrim) {
       const lastTag = tagBlock.tags[tagBlock.tags.length - 1];
       lastTag.description = lastTag.description.replace(/\n$/, '');
@@ -162,13 +170,17 @@ const getUtils = (
     return commentStringify([tagBlock], {indent}).slice(indent.length - 1);
   };
 
-  utils.reportJSDoc = (msg, tag, handler) => {
+  utils.reportJSDoc = (msg, tag, handler, nodeRef) => {
     report(msg, handler ? (fixer) => {
       handler();
-      const replacement = utils.stringify(jsdoc);
+      const replacement = utils.stringify(jsdoc, nodeRef);
 
       return fixer.replaceText(jsdocNode, replacement);
     } : null, tag);
+  };
+
+  utils.flattenRoots = (params) => {
+    return jsdocUtils.flattenRoots(params);
   };
 
   utils.getFunctionParameterNames = () => {
@@ -194,15 +206,6 @@ const getUtils = (
     }
 
     return jsdocUtils.getJsdocTagsDeep(jsdoc, name);
-  };
-
-  utils.getJsdocTags = (tagName) => {
-    const name = utils.getPreferredTagName({tagName});
-    if (!name) {
-      return false;
-    }
-
-    return jsdocUtils.getJsdocTags(jsdoc, name);
   };
 
   utils.getPreferredTagName = ({tagName, skipReportingBlockedTag = false, allowObjectReturn = false, defaultMessage = `Unexpected tag \`@${tagName}\``}) => {

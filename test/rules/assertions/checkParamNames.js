@@ -129,6 +129,15 @@ export default {
           message: 'Duplicate @param "employees[].name"',
         },
       ],
+      output: `
+          /**
+           * Assign the project to a list of employees.
+           * @param {string} employees[].name - The name of an employee.
+           */
+          function assign (employees) {
+
+          };
+      `,
     },
     {
       code: `
@@ -206,6 +215,14 @@ export default {
           message: 'Duplicate @param "foo"',
         },
       ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo, bar) {
+
+          }
+      `,
     },
     {
       code: `
@@ -223,6 +240,14 @@ export default {
           message: 'Duplicate @param "foo"',
         },
       ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo, foo) {
+
+          }
+      `,
     },
     {
       code: `
@@ -231,7 +256,7 @@ export default {
            * @param cfg.foo
            * @param cfg.foo
            */
-          function quux ({foo, bar}) {
+          function quux ({foo}) {
 
           }
       `,
@@ -239,6 +264,32 @@ export default {
         {
           line: 5,
           message: 'Duplicate @param "cfg.foo"',
+        },
+      ],
+      output: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           */
+          function quux ({foo}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           */
+          function quux ({foo, bar}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "cfg.bar"',
         },
       ],
     },
@@ -250,7 +301,7 @@ export default {
            * @param [cfg.foo]
            * @param baz
            */
-          function quux ({foo, bar}, baz) {
+          function quux ({foo}, baz) {
 
           }
       `,
@@ -260,6 +311,16 @@ export default {
           message: 'Duplicate @param "cfg.foo"',
         },
       ],
+      output: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param baz
+           */
+          function quux ({foo}, baz) {
+
+          }
+      `,
     },
     {
       code: `
@@ -275,8 +336,95 @@ export default {
       `,
       errors: [
         {
+          line: 3,
+          message: 'Missing @param "cfg.bar"',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param [cfg.foo="with a default"]
+           * @param baz
+           */
+          function quux ({foo}, baz) {
+
+          }
+      `,
+      errors: [
+        {
           line: 5,
           message: 'Duplicate @param "cfg.foo"',
+        },
+      ],
+      output: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param baz
+           */
+          function quux ({foo}, baz) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param [cfg.foo="with a default"]
+           * @param baz
+           */
+          function quux ({foo, bar}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "cfg.bar"',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param args
+           */
+          function quux ({a, b}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "args.a"',
+        },
+        {
+          line: 3,
+          message: 'Missing @param "args.b"',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param args
+           */
+          function quux ({a, b} = {}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "args.a"',
+        },
+        {
+          line: 3,
+          message: 'Missing @param "args.b"',
         },
       ],
     },
@@ -293,6 +441,75 @@ export default {
         {
           line: 4,
           message: 'Expected @param names to be "property". Got "prop".',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param prop
+           * @param prop.foo
+           */
+          constructor(prop: { foo: string, bar: string }) {}
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing @param "prop.bar"',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param prop
+           * @param prop.foo
+           * @param prop.bar
+           */
+          constructor(options: { foo: string, bar: string }) {}
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing @param "options.foo"',
+        },
+        {
+          line: 4,
+          message: 'Missing @param "options.bar"',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param options
+           * @param options.foo
+           * @param options.bar
+           */
+          constructor(options: { foo: string }) {}
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@param "options.bar" does not exist on options',
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
@@ -336,6 +553,132 @@ export default {
         {
           line: 4,
           message: 'Expected @param names to be "error, cde". Got "error, code".',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux ([a, b] = []) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "foo.0"',
+        },
+        {
+          line: 3,
+          message: 'Missing @param "foo.1"',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @param options
+       * @param options.foo
+       */
+      function quux ({foo, ...extra}) {
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing @param "options.extra"',
+        },
+      ],
+      options: [
+        {
+          checkRestProperty: true,
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 2018,
+      },
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param cfg.bar
+           * @param cfg.extra
+           */
+          function quux ({foo, ...extra}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@param "cfg.bar" does not exist on cfg',
+        },
+      ],
+      options: [
+        {
+          checkRestProperty: true,
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 2018,
+      },
+    },
+    {
+      code: `
+      /**
+       * Converts an SVGRect into an object.
+       * @param {SVGRect} bbox - a SVGRect
+       */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing @param "bbox.x"',
+        },
+        {
+          message: 'Missing @param "bbox.y"',
+        },
+        {
+          message: 'Missing @param "bbox.width"',
+        },
+        {
+          message: 'Missing @param "bbox.height"',
+        },
+      ],
+      options: [
+        {
+          checkTypesPattern: 'SVGRect',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * Converts an SVGRect into an object.
+       * @param {object} bbox - a SVGRect
+       */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing @param "bbox.x"',
+        },
+        {
+          message: 'Missing @param "bbox.y"',
+        },
+        {
+          message: 'Missing @param "bbox.width"',
+        },
+        {
+          message: 'Missing @param "bbox.height"',
         },
       ],
     },
@@ -409,6 +752,8 @@ export default {
       code: `
           /**
            * @param foo
+           * @param foo.a
+           * @param foo.b
            */
           function quux ({a, b}) {
 
@@ -424,26 +769,6 @@ export default {
            * @param bar
            */
           function quux (foo, bar) {
-
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @param args
-           */
-          function quux ({a, b} = {}) {
-
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @param foo
-           */
-          function quux ([a, b] = []) {
 
           }
       `,
@@ -477,6 +802,54 @@ export default {
     },
     {
       code: `
+        export class SomeClass {
+          /**
+           * @param options
+           * @param options.foo
+           * @param options.bar
+           */
+          constructor(options: { foo: string, bar: string }) {}
+        }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param options
+           * @param options.foo
+           * @param options.bar
+           */
+          constructor({ foo, bar }: { foo: string, bar: string }) {}
+        }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export class SomeClass {
+          /**
+           * @param options
+           * @param options.foo
+           * @param options.bar
+           */
+          constructor({ foo, bar }: { foo: string, bar: string }) {}
+        }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
           /**
            * @param {Error} error Exit code
            * @param {number} [code = 1] Exit code
@@ -498,6 +871,80 @@ export default {
       options: [
         {
           allowExtraTrailingParamDocs: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param baz
+           */
+          function quux ({foo}, baz) {
+
+          }
+      `,
+    },
+    {
+      code: `
+      /**
+       * @param options
+       * @param options.foo
+       */
+      function quux ({foo, ...extra}) {
+      }
+      `,
+      parserOptions: {
+        ecmaVersion: 2018,
+      },
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param bar
+           */
+          function quux (foo, bar, ...extra) {
+
+          }
+      `,
+    },
+    {
+      code: `
+      /**
+      * Converts an SVGRect into an object.
+      * @param {SVGRect} bbox - a SVGRect
+      */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+      * Converts an SVGRect into an object.
+      * @param {SVGRect} bbox - a SVGRect
+      */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+      * Converts an SVGRect into an object.
+      * @param {object} bbox - a SVGRect
+      */
+      const bboxToObj = function ({x, y, width, height}) {
+        return {x, y, width, height};
+      };
+      `,
+      options: [
+        {
+          checkTypesPattern: 'SVGRect',
         },
       ],
     },

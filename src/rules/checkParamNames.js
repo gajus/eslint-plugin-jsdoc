@@ -1,7 +1,10 @@
 import iterateJsdoc from '../iterateJsdoc';
 
 const validateParameterNames = (
-  targetTagName : string, allowExtraTrailingParamDocs: boolean,
+  targetTagName : string,
+  allowExtraTrailingParamDocs: boolean,
+  checkRestProperty : boolean,
+  checkTypesRegex : RegExp,
   functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report,
 ) => {
   const paramTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
@@ -49,11 +52,72 @@ const validateParameterNames = (
       return true;
     }
 
-    if (functionParameterName === '<ObjectPattern>' || functionParameterName === '<ArrayPattern>') {
+    if (Array.isArray(functionParameterName)) {
+      if (tag.type && tag.type.search(checkTypesRegex) === -1) {
+        return false;
+      }
+
+      const [parameterName, {
+        names: properties, hasPropertyRest, rests,
+      }] = functionParameterName;
+      const tagName = parameterName ? parameterName : tag.name.trim();
+      const expectedNames = properties.map((name) => {
+        return `${tagName}.${name}`;
+      });
+      const actualNames = paramTags.map(([, paramTag]) => {
+        return paramTag.name.trim();
+      });
+
+      const missingProperties = [];
+      expectedNames.forEach((name, idx) => {
+        if (!actualNames.includes(name)) {
+          if (!checkRestProperty && rests[idx]) {
+            return;
+          }
+          missingProperties.push(name);
+        }
+      });
+
+      const extraProperties = [];
+      if (!hasPropertyRest || checkRestProperty) {
+        actualNames.filter((name) => {
+          return name.includes(tag.name.trim());
+        }).forEach((name) => {
+          if (!expectedNames.includes(name) && name !== tag.name) {
+            extraProperties.push(name);
+          }
+        });
+      }
+
+      if (missingProperties.length) {
+        missingProperties.forEach((missingProperty) => {
+          report(`Missing @${targetTagName} "${missingProperty}"`, null, tag);
+        });
+
+        return true;
+      }
+
+      if (extraProperties.length) {
+        extraProperties.forEach((extraProperty) => {
+          report(`@${targetTagName} "${extraProperty}" does not exist on ${tag.name}`, null, tag);
+        });
+
+        return true;
+      }
+
       return false;
     }
 
-    if (functionParameterName !== tag.name.trim()) {
+    let funcParamName;
+    if (typeof functionParameterName === 'object') {
+      const {name} = functionParameterName;
+      funcParamName = name;
+    } else {
+      funcParamName = functionParameterName;
+    }
+
+    if (funcParamName !== tag.name.trim()) {
+      // Todo: This won't work for array or object child items
       const expectedNames = functionParameterNames.join(', ');
       const actualNames = paramTagsNonNested.map(([, {name}]) => {
         return name.trim();
@@ -119,7 +183,16 @@ export default iterateJsdoc(({
   report,
   utils,
 }) => {
-  const {allowExtraTrailingParamDocs} = context.options[0] || {};
+  const {
+    allowExtraTrailingParamDocs,
+    checkRestProperty = false,
+    checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
+  } = context.options[0] || {};
+
+  const lastSlashPos = checkTypesPattern.lastIndexOf('/');
+  const checkTypesRegex = lastSlashPos === -1 ?
+    new RegExp(checkTypesPattern) :
+    new RegExp(checkTypesPattern.slice(1, lastSlashPos), checkTypesPattern.slice(lastSlashPos + 1));
 
   const jsdocParameterNamesDeep = utils.getJsdocTagsDeep('param');
   if (!jsdocParameterNamesDeep.length) {
@@ -128,7 +201,10 @@ export default iterateJsdoc(({
   const functionParameterNames = utils.getFunctionParameterNames();
   const targetTagName = utils.getPreferredTagName({tagName: 'param'});
   const isError = validateParameterNames(
-    targetTagName, allowExtraTrailingParamDocs, functionParameterNames,
+    targetTagName,
+    allowExtraTrailingParamDocs, checkRestProperty,
+    checkTypesRegex,
+    functionParameterNames,
     jsdoc, jsdocNode, utils, report,
   );
 
@@ -149,6 +225,12 @@ export default iterateJsdoc(({
         properties: {
           allowExtraTrailingParamDocs: {
             type: 'boolean',
+          },
+          checkRestProperty: {
+            type: 'boolean',
+          },
+          checkTypesPattern: {
+            type: 'string',
           },
         },
         type: 'object',

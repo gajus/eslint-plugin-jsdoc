@@ -1545,8 +1545,44 @@ function quux () {
 
 Ensures that parameter names in JSDoc match those in the function declaration.
 
+<a name="eslint-plugin-jsdoc-rules-check-param-names-destructuring"></a>
+#### Destructuring
+
+Note that by default the rule will not report parameters present on the docs
+but non-existing on the function signature when an object rest property is part
+of that function signature since the seemingly non-existing properties might
+actually be a part of the object rest property.
+
+```js
+/**
+ * @param options
+ * @param options.foo
+ */
+function quux ({foo, ...extra}) {}
+```
+
+To require that `extra` be documented--and that any extraneous properties
+get reported--e.g., if there had been a `@param options.bar` above--you
+can use the `checkRestProperty` option which insists that the rest
+property be documented (and that there be no other implicit properties).
+Note, however, that jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
+to currently support syntax or output to distinguish rest properties from
+other properties, so in looking at the docs alone without looking at the
+function signature, the disadvantage of enabling this option is that it
+may appear that there is an actual property named `extra`.
+
 <a name="eslint-plugin-jsdoc-rules-check-param-names-options-3"></a>
 #### Options
+
+<a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-checkrestproperty"></a>
+##### <code>checkRestProperty</code>
+
+See the "Destructuring" section. Defaults to `false`.
+
+<a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-checktypespattern"></a>
+##### <code>checkTypesPattern</code>
+
+See `require-param` under the option of the same name.
 
 <a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-allowextratrailingparamdocs"></a>
 ##### <code>allowExtraTrailingParamDocs</code>
@@ -1559,7 +1595,7 @@ their presence within the function signature. Other inconsistencies between
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`|
+|Options|`allowExtraTrailingParamDocs`, `checkRestProperty`, `checkTypesPattern`|
 |Tags|`param`|
 
 The following patterns are considered problems:
@@ -1678,7 +1714,7 @@ function quux (foo, foo) {
  * @param cfg.foo
  * @param cfg.foo
  */
-function quux ({foo, bar}) {
+function quux ({foo}) {
 
 }
 // Message: Duplicate @param "cfg.foo"
@@ -1686,10 +1722,19 @@ function quux ({foo, bar}) {
 /**
  * @param cfg
  * @param cfg.foo
+ */
+function quux ({foo, bar}) {
+
+}
+// Message: Missing @param "cfg.bar"
+
+/**
+ * @param cfg
+ * @param cfg.foo
  * @param [cfg.foo]
  * @param baz
  */
-function quux ({foo, bar}, baz) {
+function quux ({foo}, baz) {
 
 }
 // Message: Duplicate @param "cfg.foo"
@@ -1703,7 +1748,44 @@ function quux ({foo, bar}, baz) {
 function quux ({foo, bar}, baz) {
 
 }
+// Message: Missing @param "cfg.bar"
+
+/**
+ * @param cfg
+ * @param cfg.foo
+ * @param [cfg.foo="with a default"]
+ * @param baz
+ */
+function quux ({foo}, baz) {
+
+}
 // Message: Duplicate @param "cfg.foo"
+
+/**
+ * @param cfg
+ * @param [cfg.foo="with a default"]
+ * @param baz
+ */
+function quux ({foo, bar}, baz) {
+
+}
+// Message: Missing @param "cfg.bar"
+
+/**
+ * @param args
+ */
+function quux ({a, b}) {
+
+}
+// Message: Missing @param "args.a"
+
+/**
+ * @param args
+ */
+function quux ({a, b} = {}) {
+
+}
+// Message: Missing @param "args.a"
 
 export class SomeClass {
   /**
@@ -1712,6 +1794,35 @@ export class SomeClass {
   constructor(private property: string) {}
 }
 // Message: Expected @param names to be "property". Got "prop".
+
+export class SomeClass {
+  /**
+   * @param prop
+   * @param prop.foo
+   */
+  constructor(prop: { foo: string, bar: string }) {}
+}
+// Message: Missing @param "prop.bar"
+
+export class SomeClass {
+  /**
+   * @param prop
+   * @param prop.foo
+   * @param prop.bar
+   */
+  constructor(options: { foo: string, bar: string }) {}
+}
+// Message: Missing @param "options.foo"
+
+export class SomeClass {
+  /**
+   * @param options
+   * @param options.foo
+   * @param options.bar
+   */
+  constructor(options: { foo: string }) {}
+}
+// Message: @param "options.bar" does not exist on options
 
 /**
  * @param foo
@@ -1729,6 +1840,54 @@ function quux (foo) {
 function quux (error, cde = 1) {
 };
 // Message: Expected @param names to be "error, cde". Got "error, code".
+
+/**
+ * @param foo
+ */
+function quux ([a, b] = []) {
+
+}
+// Message: Missing @param "foo.0"
+
+/**
+ * @param options
+ * @param options.foo
+ */
+function quux ({foo, ...extra}) {
+}
+// Options: [{"checkRestProperty":true}]
+// Message: Missing @param "options.extra"
+
+/**
+ * @param cfg
+ * @param cfg.foo
+ * @param cfg.bar
+ * @param cfg.extra
+ */
+function quux ({foo, ...extra}) {
+
+}
+// Options: [{"checkRestProperty":true}]
+// Message: @param "cfg.bar" does not exist on cfg
+
+/**
+ * Converts an SVGRect into an object.
+ * @param {SVGRect} bbox - a SVGRect
+ */
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Options: [{"checkTypesPattern":"SVGRect"}]
+// Message: Missing @param "bbox.x"
+
+/**
+ * Converts an SVGRect into an object.
+ * @param {object} bbox - a SVGRect
+ */
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Message: Missing @param "bbox.x"
 ````
 
 The following patterns are not considered problems:
@@ -1782,6 +1941,8 @@ function quux (...args) {
 
 /**
  * @param foo
+ * @param foo.a
+ * @param foo.b
  */
 function quux ({a, b}) {
 
@@ -1794,20 +1955,6 @@ function quux ({a, b}) {
  * @param bar
  */
 function quux (foo, bar) {
-
-}
-
-/**
- * @param args
- */
-function quux ({a, b} = {}) {
-
-}
-
-/**
- * @param foo
- */
-function quux ([a, b] = []) {
 
 }
 
@@ -1828,6 +1975,33 @@ export class SomeClass {
   constructor(private property: string) {}
 }
 
+export class SomeClass {
+  /**
+   * @param options
+   * @param options.foo
+   * @param options.bar
+   */
+  constructor(options: { foo: string, bar: string }) {}
+}
+
+export class SomeClass {
+  /**
+   * @param options
+   * @param options.foo
+   * @param options.bar
+   */
+  constructor({ foo, bar }: { foo: string, bar: string }) {}
+}
+
+export class SomeClass {
+  /**
+   * @param options
+   * @param options.foo
+   * @param options.bar
+   */
+  constructor({ foo, bar }: { foo: string, bar: string }) {}
+}
+
 /**
  * @param {Error} error Exit code
  * @param {number} [code = 1] Exit code
@@ -1843,29 +2017,57 @@ function quux (foo) {
 
 }
 // Options: [{"allowExtraTrailingParamDocs":true}]
-````
 
-
-<a name="eslint-plugin-jsdoc-rules-check-param-names-deconstructing-function-parameter"></a>
-#### Deconstructing Function Parameter
-
-`eslint-plugin-jsdoc` does not validate names of parameters in function deconstruction, e.g.
-
-```js
 /**
- * @param foo
+ * @param cfg
+ * @param cfg.foo
+ * @param baz
  */
-function quux ({
-    a,
-    b
-}) {
+function quux ({foo}, baz) {
 
 }
-```
 
-`{a, b}` is an [`ObjectPattern`](https://github.com/estree/estree/blob/master/es2015.md#objectpattern) AST type and does not have a name. Therefore, the associated parameter in JSDoc block can have any name.
+/**
+ * @param options
+ * @param options.foo
+ */
+function quux ({foo, ...extra}) {
+}
 
-Likewise for the pattern `[a, b]` which is an [`ArrayPattern`](https://github.com/estree/estree/blob/master/es2015.md#arraypattern).
+/**
+ * @param foo
+ * @param bar
+ */
+function quux (foo, bar, ...extra) {
+
+}
+
+/**
+* Converts an SVGRect into an object.
+* @param {SVGRect} bbox - a SVGRect
+*/
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+
+/**
+* Converts an SVGRect into an object.
+* @param {SVGRect} bbox - a SVGRect
+*/
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+
+/**
+* Converts an SVGRect into an object.
+* @param {object} bbox - a SVGRect
+*/
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Options: [{"checkTypesPattern":"SVGRect"}]
+````
+
 
 <a name="eslint-plugin-jsdoc-rules-check-property-names"></a>
 ### <code>check-property-names</code>
@@ -9062,10 +9264,291 @@ function quux (foo) {
 
 Requires that all function parameters are documented.
 
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1"></a>
+#### Fixer
+
+Adds `@param <name>` for each tag present in the function signature but
+missing in the jsdoc. Can be disabled by setting the `enableFixer`
+option to `false`.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-destructured-object-and-array-naming"></a>
+##### Destructured object and array naming
+
+When the fixer is applied to destructured objects, only the input name is
+used.
+
+So for:
+
+```js
+/**
+ * @param cfg
+ */
+function quux ({foo: bar, baz: bax = 5}) {
+}
+```
+
+..the fixed jsdoc will be:
+
+```js
+/**
+* @param cfg
+* @param cfg.foo
+* @param cfg.baz
+*/
+```
+
+This is because the input to the function is the relevant item for
+understanding the function's input, not how the variable is renamed
+for internal use (the signature itself documents that).
+
+For destructured arrays, the input name is merely the array index.
+
+So for:
+
+```js
+/**
+ * @param cfg
+ */
+function quux ([foo, bar]) {
+}
+```
+
+..the fixed jsdoc will be:
+
+```js
+/**
+* @param cfg
+* @param cfg.0
+* @param cfg.1
+*/
+```
+
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-missing-root-fixing"></a>
+##### Missing root fixing
+
+Note that unless `enableRootFixer` (or `enableFixer`) is set to `false`,
+missing roots will be added and auto-incremented. The default behavior
+is for "root" to be auto-inserted for missing roots, followed by a
+0-based auto-incrementing number.
+
+So for:
+
+```js
+function quux ({foo}, {bar}, {baz}) {
+}
+```
+
+...the default jsdoc that would be added if the fixer is enabled would be:
+
+```js
+/**
+* @param root0
+* @param root0.foo
+* @param root1
+* @param root1.bar
+* @param root2
+* @param root2.baz
+*/
+```
+
+The name of "root" can be configured with `unnamedRootBase` (which also allows
+cycling through a list of multiple root names before there is need for any
+numeric component).
+
+And one can have the count begin at another number (e.g., `1`) by changing
+`autoIncrementBase` from the default of `0`.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-rest-element-restelement-insertions"></a>
+##### Rest Element (<code>RestElement</code>) insertions
+
+The fixer will automatically report/insert [jsdoc repeatable parameters](https://jsdoc.app/tags-param.html#multiple-types-and-repeatable-parameters) if missing.
+
+```js
+/**
+  * @param {GenericArray} cfg
+  * @param {number} cfg.0
+ */
+function baar ([a, ...extra]) {
+  //
+}
+```
+
+..becomes:
+
+```js
+/**
+  * @param {GenericArray} cfg
+  * @param {number} cfg.0
+  * @param {...any} cfg.1
+ */
+function baar ([a, ...extra]) {
+  //
+}
+```
+
+Note that the type `any` is included since we don't know of any specific
+type to use.
+
+To disable such rest element insertions, set `enableRestElementFixer` to
+`false`.
+
+Note too that the following will be reported even though there is an item
+corresponding to `extra`:
+
+```js
+/**
+  * @param {GenericArray} cfg
+  * @param {number} cfg.0
+  * @param {any} cfg.1
+ */
+function baar ([a, ...extra]) {
+  //
+}
+```
+
+...because it does not use the `...` syntax in the type.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-object-rest-property-insertions"></a>
+##### Object Rest Property insertions
+
+If the `checkRestProperty` option is set to `true` (`false` by default),
+missing rest properties will be reported with documentation auto-inserted:
+
+```js
+/**
+ * @param cfg
+ * @param cfg.num
+ */
+function quux ({num, ...extra}) {
+}
+```
+
+...becomes:
+
+```js
+/**
+ * @param cfg
+ * @param cfg.num
+ * @param cfg.extra
+ */
+function quux ({num, ...extra}) {
+}
+```
+
+You may wish to manually note in your jsdoc for `extra` that this is a
+rest property, however, as jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
+to currently support syntax or output to distinguish rest properties from
+other properties, so in looking at the docs alone without looking at the
+function signature, it may appear that there is an actual property named
+`extra`.
+
 <a name="eslint-plugin-jsdoc-rules-require-param-options-23"></a>
 #### Options
 
-An options object accepts two optional properties:
+An options object accepts the following optional properties:
+
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-enablefixer"></a>
+##### <code>enableFixer</code>
+
+Whether to enable the fixer. Defaults to `true`.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-enablerootfixer"></a>
+##### <code>enableRootFixer</code>
+
+Whether to enable the auto-adding of incrementing roots (see the "Fixer"
+section). Defaults to `true`. Has no effect if `enableFixer` is set to
+`false`.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-enablerestelementfixer"></a>
+##### <code>enableRestElementFixer</code>
+
+Whether to enable the rest element fixer (see
+"Rest Element (`RestElement`) insertions"). Defaults to `true`.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-checkrestproperty-1"></a>
+##### <code>checkRestProperty</code>
+
+If set to `true`, will report (and add fixer insertions) for missing rest
+properties. Defaults to `false`.
+
+If set to `true`, note that you can still document the subproperties of the
+rest property using other jsdoc features, e.g., `@typedef`:
+
+```js
+/**
+ * @typedef ExtraOptions
+ * @property innerProp1
+ * @property innerProp2
+ */
+
+/**
+ * @param cfg
+ * @param cfg.num
+ * @param {ExtraOptions} extra
+ */
+function quux ({num, ...extra}) {
+}
+```
+
+Setting this option to `false` (the default) may be useful in cases where
+you already have separate `@param` definitions for each of the properties
+within the rest property.
+
+For example, with the option disabled, this will not give an error despite
+`extra` not having any definition:
+
+```js
+/**
+ * @param cfg
+ * @param cfg.num
+ */
+function quux ({num, ...extra}) {
+}
+```
+
+Nor will this:
+
+```js
+/**
+ * @param cfg
+ * @param cfg.num
+ * @param cfg.innerProp1
+ * @param cfg.innerProp2
+ */
+function quux ({num, ...extra}) {
+}
+```
+
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-autoincrementbase"></a>
+##### <code>autoIncrementBase</code>
+
+Numeric to indicate the number at which to begin auto-incrementing roots.
+Defaults to `0`.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-unnamedrootbase"></a>
+##### <code>unnamedRootBase</code>
+
+An array of root names to use in the fixer when roots are missing. Defaults
+to `['root']`. Note that only when all items in the array besides the last
+are exhausted will auto-incrementing occur. So, with `unnamedRootBase: ['arg', 'config']`, the following:
+
+```js
+function quux ({foo}, [bar], {baz}) {
+}
+```
+
+...will get the following jsdoc block added:
+
+```js
+/**
+* @param arg
+* @param arg.foo
+* @param config0
+* @param config0.0 (`bar`)
+* @param config1
+* @param config1.baz
+*/
+```
 
 <a name="eslint-plugin-jsdoc-rules-require-param-options-23-exemptedby-1"></a>
 ##### <code>exemptedBy</code>
@@ -9075,6 +9558,38 @@ avoids the need for a `@param`. Defaults to an array with
 `inheritdoc`. If you set this array, it will overwrite the default,
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
+
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-checktypespattern-1"></a>
+##### <code>checkTypesPattern</code>
+
+When one specifies a type, unless it is of a generic type, like `object`
+or `array`, it may be considered unnecessary to have that object's
+destructured components required, especially where generated docs will
+link back to the specified type. For example:
+
+```js
+/**
+ * @param {SVGRect} bbox - a SVGRect
+ */
+export const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+```
+
+By default `checkTypesPattern` is set to
+`/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/`,
+meaning that destructuring will be required only if the type of the `@param`
+(the text between curly brackets) is a match for "Object" or "Array" (with or
+without initial caps), "PlainObject", or "GenericObject", "GenericArray" (or
+if no type is present). So in the above example, the lack of a match will
+mean that no complaint will be given about the undocumented destructured
+parameters.
+
+Note that the `/` delimiters are optional, but necessary to add flags.
+
+You could set this regular expression to a more expansive list, or you
+could restrict it such that even types matching those strings would not
+need destructuring.
 
 <a name="eslint-plugin-jsdoc-rules-require-param-options-23-contexts-7"></a>
 ##### <code>contexts</code>
@@ -9105,7 +9620,7 @@ A value indicating whether getters should be checked. Defaults to `false`.
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `param`                                                                                                       |
 | Aliases  | `arg`, `argument`                                                                                             |
-| Options  | `contexts`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`                                 |
+| Options  | `autoIncrementBase`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 The following patterns are considered problems:
@@ -9127,6 +9642,91 @@ function quux (foo) {
 }
 // Options: [{"contexts":["FunctionDeclaration"]}]
 // Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ *
+ */
+function quux ({foo}) {
+
+}
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ *
+ */
+function quux ({foo}) {
+
+}
+// Options: [{"enableFixer":false}]
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ *
+ */
+function quux ({foo: bar = 5} = {}) {
+
+}
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ * @param
+ */
+function quux ({foo}) {
+
+}
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ * @param
+ */
+function quux ({foo}) {
+
+}
+// Options: [{"autoIncrementBase":1}]
+// Message: Missing JSDoc @param "root1" declaration.
+
+/**
+ * @param options
+ */
+function quux ({foo}) {
+
+}
+// Message: Missing JSDoc @param "options.foo" declaration.
+
+/**
+ * @param
+ */
+function quux ({ foo, bar: { baz }}) {
+
+}
+// Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ *
+ */
+function quux ({foo}, {bar}) {
+
+}
+// Options: [{"unnamedRootBase":["arg"]}]
+// Message: Missing JSDoc @param "arg0" declaration.
+
+/**
+ *
+ */
+function quux ({foo}, {bar}) {
+
+}
+// Options: [{"unnamedRootBase":["arg","config"]}]
+// Message: Missing JSDoc @param "arg" declaration.
+
+/**
+ *
+ */
+function quux ({foo}, {bar}) {
+
+}
+// Options: [{"enableRootFixer":false,"unnamedRootBase":["arg","config"]}]
+// Message: Missing JSDoc @param "arg" declaration.
 
 /**
  *
@@ -9225,8 +9825,8 @@ function quux (foo) {
  */
 class A {
   /**
-    *
-    */
+   *
+   */
   quux (foo) {
 
   }
@@ -9296,7 +9896,7 @@ function quux (foo) {
  */
 function quux ({bar, baz}, foo) {
 }
-// Message: Missing JSDoc @param "foo" declaration.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  *
@@ -9310,7 +9910,7 @@ function quux (foo, {bar, baz}) {
  */
 function quux ([bar, baz], foo) {
 }
-// Message: Missing JSDoc @param "foo" declaration.
+// Message: Missing JSDoc @param "root0" declaration.
 
 /**
  *
@@ -9399,80 +9999,192 @@ let TestFunction: (id) => void;
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
- * A test function.
- */
- function test(
-   processor: (id: number) => string
- ) {
-   return processor(10);
- }
+* A test function.
+*/
+function test(
+processor: (id: number) => string
+) {
+return processor(10);
+}
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
- * A test function.
- */
- let test = (processor: (id: number) => string) =>
- {
-   return processor(10);
- }
-// Options: [{"contexts":["TSFunctionType"]}]
-// Message: Missing JSDoc @param "id" declaration.
-
-class TestClass {
-/**
- * A class property.
- */
-  public Test: (id: number) => string;
+* A test function.
+*/
+let test = (processor: (id: number) => string) =>
+{
+return processor(10);
 }
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 class TestClass {
 /**
- * A class method.
- */
- public TestMethod(): (id: number) => string
- {
- }
+* A class property.
+*/
+public Test: (id: number) => string;
+}
+// Options: [{"contexts":["TSFunctionType"]}]
+// Message: Missing JSDoc @param "id" declaration.
+
+class TestClass {
+/**
+* A class method.
+*/
+public TestMethod(): (id: number) => string
+{
+}
 }
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 interface TestInterface {
 /**
- * An interface property.
- */
-  public Test: (id: number) => string;
+* An interface property.
+*/
+public Test: (id: number) => string;
 }
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 interface TestInterface {
 /**
- * An interface method.
- */
- public TestMethod(): (id: number) => string;
+* An interface method.
+*/
+public TestMethod(): (id: number) => string;
 }
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
- * A function with return type
- */
- function test(): (id: number) => string;
+* A function with return type
+*/
+function test(): (id: number) => string;
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
- * A function with return type
- */
- let test = (): (id: number) => string =>
-  {
-      return (id) => `${id}`;
-  }
+* A function with return type
+*/
+let test = (): (id: number) => string =>
+{
+  return (id) => `${id}`;
+}
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
+
+/**
+ * @param baz
+ * @param options
+ */
+function quux (baz, {foo: bar}) {
+
+}
+// Message: Missing JSDoc @param "options.foo" declaration.
+
+class Client {
+  /**
+   * Set collection data.
+   * @param  {Object}   data                    The collection data object.
+   * @param  {number}   data.last_modified
+   * @param  {Object}   options            The options object.
+   * @param  {Object}   [options.headers]       The headers object option.
+   * @param  {Number}   [options.retry=0]       Number of retries to make
+   *     when faced with transient errors.
+   * @param  {Boolean}  [options.safe]          The safe option.
+   * @param  {Boolean}  [options.patch]         The patch option.
+   * @param  {Number}   [options.last_modified] The last_modified option.
+   * @return {Promise<Object, Error>}
+   */
+  async setData(
+    data: { last_modified?: number },
+    options: {
+      headers?: Record<string, string>;
+      safe?: boolean;
+      retry?: number;
+      patch?: boolean;
+      last_modified?: number;
+      permissions?: [];
+    } = {}
+  ) {}
+}
+// Message: Missing JSDoc @param "options.permissions" declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// Options: [{"enableFixer":false}]
+// Message: Missing JSDoc @param "foo" declaration.
+
+class Client {
+  /**
+   * Set collection data.
+   * @return {Promise<Object, Error>}
+   */
+  async setData(
+    data: { last_modified?: number }
+  ) {}
+}
+// Message: Missing JSDoc @param "data" declaration.
+
+/**
+ * @param cfg
+ * @param cfg.num
+ */
+function quux ({num, ...extra}) {
+}
+// Options: [{"checkRestProperty":true}]
+// Message: Missing JSDoc @param "cfg.extra" declaration.
+
+/**
+ * @param cfg
+ * @param cfg.opts
+ * @param cfg.opts.num
+ */
+function quux ({opts: {num, ...extra}}) {
+}
+// Options: [{"checkRestProperty":true}]
+// Message: Missing JSDoc @param "cfg.opts.extra" declaration.
+
+/**
+ * @param {GenericArray} cfg
+ * @param {number} cfg.0
+ */
+function baar ([a, ...extra]) {
+  //
+}
+// Message: Missing JSDoc @param "cfg.1" declaration.
+
+/**
+ * @param a
+ */
+function baar (a, ...extra) {
+  //
+}
+// Message: Missing JSDoc @param "extra" declaration.
+
+/**
+ * Converts an SVGRect into an object.
+ * @param {SVGRect} bbox - a SVGRect
+ */
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Options: [{"checkTypesPattern":"SVGRect"}]
+// Message: Missing JSDoc @param "bbox.x" declaration.
+
+/**
+ * Converts an SVGRect into an object.
+ * @param {object} bbox - a SVGRect
+ */
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Message: Missing JSDoc @param "bbox.x" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -9484,6 +10196,48 @@ The following patterns are not considered problems:
 function quux (foo) {
 
 }
+
+/**
+ * @param root0
+ * @param root0.foo
+ */
+function quux ({foo}) {
+
+}
+
+/**
+ * @param root0
+ * @param root0.foo
+ * @param root1
+ * @param root1.bar
+ */
+function quux ({foo}, {bar}) {
+
+}
+
+/**
+ * @param arg0
+ * @param arg0.foo
+ * @param arg1
+ * @param arg1.bar
+ */
+function quux ({foo}, {bar}) {
+
+}
+// Options: [{"unnamedRootBase":["arg"]}]
+
+/**
+ * @param arg
+ * @param arg.foo
+ * @param config0
+ * @param config0.bar
+ * @param config1
+ * @param config1.baz
+ */
+function quux ({foo}, {bar}, {baz}) {
+
+}
+// Options: [{"unnamedRootBase":["arg","config"]}]
 
 /**
  * @inheritdoc
@@ -9829,6 +10583,7 @@ export abstract class StephanPlugin<O, D> {
      *
      * @param args Arguments compiled and provided by StephanClient.
      * @param args.options The options as provided by the user, or an empty object if not provided.
+     * @param args.client The options as provided by the user, or an empty object if not provided.
      * @param defaultOptions The default options as provided by the plugin, or an empty object.
      */
     public constructor({options, client}: {
@@ -9848,30 +10603,59 @@ function quux (foo) {
 // Options: [{"contexts":["ArrowFunctionExpression"]}]
 
 /**
- * A function with return type
- *
- * @param id
- */
- let test = (): (id: number) => string =>
-  {
-      return (id) => `${id}`;
-  }
+* A function with return type
+*
+* @param id
+*/
+let test = (): (id: number) => string =>
+{
+  return (id) => `${id}`;
+}
 // Options: [{"contexts":["TSFunctionType"]}]
 
 /** @abstract */
 class base {
-  /** @param {boolean} arg0 */
-  constructor(arg0) {}
+/** @param {boolean} arg0 */
+constructor(arg0) {}
 }
 
 class foo extends base {
-  /** @inheritDoc */
-  constructor(arg0) {
-    super(arg0);
-    this.arg0 = arg0;
-  }
+/** @inheritDoc */
+constructor(arg0) {
+super(arg0);
+this.arg0 = arg0;
+}
 }
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+    export abstract class StephanPlugin<O, D> {
+
+    /**
+     * Called right after Stephan loads the plugin file.
+     *
+     * @example
+     *```typescript
+     * type Options = {
+     *      verbose?: boolean;
+     *      token?: string;
+     * }
+     * ```
+     *
+     * Note that your Options type should only have optional properties...
+     *
+     * @param args Arguments compiled and provided by StephanClient.
+     * @param args.options The options as provided by the user, or an empty object if not provided.
+     * @param args.client The options as provided by the user, or an empty object if not provided.
+     * @param args.client.name The name of the client.
+     * @param defaultOptions The default options as provided by the plugin, or an empty object.
+     */
+    public constructor({ options, client: { name } }: {
+        options: O;
+        client: { name: string };
+    }, defaultOptions: D) {
+
+    }
+}
 
 /**
 * @param {string} cb
@@ -9881,6 +10665,47 @@ function createGetter (cb) {
     cb();
   };
 }
+
+/**
+ * @param cfg
+ * @param cfg.num
+ */
+function quux ({num, ...extra}) {
+}
+
+/**
+  * @param {GenericArray} cfg
+  * @param {number} cfg.0
+ */
+function baar ([a, ...extra]) {
+  //
+}
+// Options: [{"enableRestElementFixer":false}]
+
+/**
+  * @param a
+ */
+function baar (a, ...extra) {
+  //
+}
+// Options: [{"enableRestElementFixer":false}]
+
+/**
+* Converts an SVGRect into an object.
+* @param {SVGRect} bbox - a SVGRect
+*/
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+
+/**
+* Converts an SVGRect into an object.
+* @param {object} bbox - a SVGRect
+*/
+const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+// Options: [{"checkTypesPattern":"SVGRect"}]
 ````
 
 
@@ -9893,7 +10718,7 @@ when their type is a plain `object`, `Object`, or `PlainObject`.
 Note that any other type, including a subtype of object such as
 `object<string, string>`, will not be reported.
 
-<a name="eslint-plugin-jsdoc-rules-require-property-fixer-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-property-fixer-2"></a>
 #### Fixer
 
 The fixer for `require-property` will add an empty `@property`.
