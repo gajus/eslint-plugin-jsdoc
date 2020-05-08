@@ -111,12 +111,12 @@ export default iterateJsdoc(({
         [nextRootName, incremented, namer] = namer();
       }
 
-      const {hasRestElement} = functionParameterName[1];
+      const {hasRestElement, rests, names} = functionParameterName[1];
       if (!enableRestElementFixer && hasRestElement) {
         return;
       }
 
-      functionParameterName[1].names.forEach((paramName) => {
+      names.forEach((paramName, idx) => {
         if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
           return name === rootName;
         })) {
@@ -142,6 +142,9 @@ export default iterateJsdoc(({
               });
             }
           }
+        }
+        if (!checkRestProperty && rests[idx]) {
+          return;
         }
 
         const fullParamName = `${rootName}.${paramName}`;

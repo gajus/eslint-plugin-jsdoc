@@ -1680,6 +1680,30 @@ export default {
     {
       code: `
       /**
+       * @param cfg
+       * @param cfg.opts
+       * @param cfg.opts.num
+       */
+      function quux ({opts: {num, ...extra}}) {
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "cfg.opts.extra" declaration.',
+        },
+      ],
+      options: [
+        {
+          checkRestProperty: true,
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 2018,
+      },
+    },
+    {
+      code: `
+      /**
        * @param {GenericArray} cfg
        * @param {number} cfg.0
        */

@@ -105,10 +105,7 @@ const validateParameterNames = (
 
     let funcParamName;
     if (typeof functionParameterName === 'object') {
-      const {name, isRestProperty} = functionParameterName;
-      if (isRestProperty && !checkRestProperty) {
-        return false;
-      }
+      const {name} = functionParameterName;
       funcParamName = name;
     } else {
       funcParamName = functionParameterName;

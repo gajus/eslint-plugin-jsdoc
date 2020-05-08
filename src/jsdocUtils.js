@@ -12,13 +12,19 @@ const flattenRoots = (params, root = '') => {
   const rests = [];
   const names = params.reduce((acc, cur) => {
     if (Array.isArray(cur)) {
-      if (cur[1].hasRestElement) {
-        hasRestElement = true;
+      let nms;
+      if (Array.isArray(cur[1])) {
+        nms = cur[1];
+      } else {
+        if (cur[1].hasRestElement) {
+          hasRestElement = true;
+        }
+        if (cur[1].hasPropertyRest) {
+          hasPropertyRest = true;
+        }
+        nms = cur[1].names;
       }
-      if (cur[1].hasPropertyRest) {
-        hasPropertyRest = true;
-      }
-      const nms = Array.isArray(cur[1]) ? cur[1] : cur[1].names;
+
       const flattened = flattenRoots(nms, root ? `${root}.${cur[0]}` : cur[0]);
       if (flattened.hasRestElement) {
         hasRestElement = true;

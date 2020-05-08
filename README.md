@@ -10060,6 +10060,16 @@ function quux ({num, ...extra}) {
 // Message: Missing JSDoc @param "cfg.extra" declaration.
 
 /**
+ * @param cfg
+ * @param cfg.opts
+ * @param cfg.opts.num
+ */
+function quux ({opts: {num, ...extra}}) {
+}
+// Options: [{"checkRestProperty":true}]
+// Message: Missing JSDoc @param "cfg.opts.extra" declaration.
+
+/**
  * @param {GenericArray} cfg
  * @param {number} cfg.0
  */

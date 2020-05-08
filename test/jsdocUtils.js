@@ -70,8 +70,15 @@ describe('jsdocUtils', () => {
       it('should prepend properties with provided root', () => {
         const roots = [['data', ['last_modified']], ['options', ['headers']]];
         const expected = {
+          hasPropertyRest: false,
           hasRestElement: false,
           names: ['base.data', 'base.data.last_modified', 'base.options', 'base.options.headers'],
+          rests: [
+            false,
+            false,
+            false,
+            false,
+          ],
         };
         expect(jsdocUtils.flattenRoots(roots, 'base')).to.deep.equal(expected);
       });
@@ -81,8 +88,15 @@ describe('jsdocUtils', () => {
       it('should prepend properties with provided root', () => {
         const roots = [['data', ['last_modified']], ['options', ['headers']]];
         const expected = {
+          hasPropertyRest: false,
           hasRestElement: false,
           names: ['data', 'data.last_modified', 'options', 'options.headers'],
+          rests: [
+            false,
+            false,
+            false,
+            false,
+          ],
         };
         expect(jsdocUtils.flattenRoots(roots)).to.deep.equal(expected);
       });
