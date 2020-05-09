@@ -948,5 +948,19 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      class CSS {
+        /**
+         * Set one or more CSS properties for the set of matched elements.
+         *
+         * @param {Object} propertyObject - An object of property-value pairs to set.
+         */
+        setCssObject(propertyObject: {[key: string]: string | number}): void {
+        }
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };

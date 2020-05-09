@@ -51,7 +51,7 @@ const flattenRoots = (params, root = '') => {
         hasRestElement = true;
       }
       acc.push(root ? `${root}.${cur.name}` : cur.name);
-    } else {
+    } else if (typeof cur !== 'undefined') {
       rests.push(false);
       acc.push(root ? `${root}.${cur}` : cur);
     }
@@ -73,6 +73,9 @@ const getPropertiesFromPropertySignature = (propSignature): T => {
     return [propSignature.key.name, propSignature.typeAnnotation.typeAnnotation.members.map((member) => {
       return getPropertiesFromPropertySignature(member);
     })];
+  }
+  if (propSignature.type === 'TSIndexSignature') {
+    return undefined;
   }
 
   return propSignature.key.name;

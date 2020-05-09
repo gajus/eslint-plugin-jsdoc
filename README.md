@@ -2066,6 +2066,16 @@ const bboxToObj = function ({x, y, width, height}) {
   return {x, y, width, height};
 };
 // Options: [{"checkTypesPattern":"SVGRect"}]
+
+class CSS {
+  /**
+   * Set one or more CSS properties for the set of matched elements.
+   *
+   * @param {Object} propertyObject - An object of property-value pairs to set.
+   */
+  setCssObject(propertyObject: {[key: string]: string | number}): void {
+  }
+}
 ````
 
 
