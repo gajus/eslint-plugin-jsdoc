@@ -47,7 +47,7 @@ export default iterateJsdoc(({
       //   from `undefined` to `false` so can detect next time
       state.hasDuplicates[tagName] = false;
       state.hasNonCommentBeforeTag[tagName] = state.hasNonComment &&
-        state.hasNonComment < jsdocNode.start;
+        state.hasNonComment < jsdocNode.range[0];
     }
   }
 }, {
@@ -122,7 +122,7 @@ export default iterateJsdoc(({
   },
   nonComment ({state, node}) {
     if (!state.hasNonComment) {
-      state.hasNonComment = node.start;
+      state.hasNonComment = node.range[0];
     }
   },
 });

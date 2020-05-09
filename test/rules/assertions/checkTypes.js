@@ -91,6 +91,15 @@ export default {
           message: 'Invalid JSDoc @throws type "Number"; prefer: "number".',
         },
       ],
+      output: `
+          /**
+           * @returns {number} foo
+           * @throws {Number} foo
+           */
+          function quux () {
+
+          }
+      `,
     },
     {
       code: `
@@ -295,6 +304,15 @@ export default {
           message: 'Invalid JSDoc @param "baz" type "object"; prefer: "Object".',
         },
       ],
+      output: `
+          /**
+           * @param {Abc} foo
+           * @param {cde} bar
+           * @param {object} baz
+           */
+          function qux(foo, bar, baz) {
+          }
+      `,
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -416,6 +434,14 @@ export default {
           message: 'Invalid JSDoc @param "bar" type "Number"; prefer: "number".',
         },
       ],
+      output: `
+          /**
+           * @param {Abc} foo
+           * @param {Number} bar
+           */
+          function qux(foo, bar) {
+          }
+      `,
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -1714,6 +1740,12 @@ export default {
         line: 3,
         message: 'Invalid JSDoc @this type "array"; prefer: "Array".',
       }],
+      output: `
+      /**
+       * @this {Array}
+       */
+      function quux () {}
+      `,
       settings: {
         jsdoc: {
           mode: 'closure',
@@ -1731,6 +1763,12 @@ export default {
         line: 3,
         message: 'Invalid JSDoc @export type "array"; prefer: "Array".',
       }],
+      output: `
+      /**
+       * @export {Array}
+       */
+      function quux () {}
+      `,
       settings: {
         jsdoc: {
           mode: 'closure',
@@ -1758,6 +1796,12 @@ export default {
           }],
         },
       ],
+      output: `
+      /**
+       * @typedef {Object} foo
+       * @property {object} bar
+       */
+      `,
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -1782,6 +1826,7 @@ export default {
           }],
         },
       ],
+      output: '/** @typedef {Object} foo */',
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -1811,6 +1856,12 @@ export default {
           }],
         },
       ],
+      output: `
+      /**
+       * @typedef {Object} foo
+       * @property {object} bar
+       */
+      `,
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -1833,6 +1884,7 @@ export default {
           }],
         },
       ],
+      output: '/** @typedef {Object<string, string>} foo */',
       settings: {
         jsdoc: {
           preferredTypes: {

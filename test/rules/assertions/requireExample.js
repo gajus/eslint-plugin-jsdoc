@@ -24,6 +24,27 @@ export default {
       `,
     },
     {
+      code: `/**
+ *
+ */
+function quux () {
+
+}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
+      output: `/**
+ * @example
+ */
+function quux () {
+
+}
+      `,
+    },
+    {
       code: `
           /**
            * @example
@@ -55,6 +76,15 @@ export default {
           message: 'Missing JSDoc @example declaration.',
         },
       ],
+      output: `
+      /**
+       * @constructor
+       * @example
+       */
+      function f () {
+
+      }
+      `,
       settings: {
         jsdoc: {
           avoidExampleOnConstructors: true,
@@ -75,6 +105,15 @@ export default {
           message: 'Missing JSDoc @example declaration.',
         },
       ],
+      output: `
+      /**
+       * @constructor
+       * @example
+       */
+      function quux () {
+
+      }
+      `,
     },
     {
       code: `
@@ -111,6 +150,14 @@ export default {
           contexts: ['ClassDeclaration'],
         },
       ],
+      output: `
+          /**
+           * @example
+           */
+          class quux {
+
+          }
+      `,
     },
     {
       code: `
@@ -128,6 +175,11 @@ export default {
           contexts: ['any'],
         },
       ],
+      output: `
+          /**
+           * @example
+           */
+      `,
     },
     {
       code: `
@@ -148,12 +200,19 @@ export default {
           exemptedBy: ['notPresent'],
         },
       ],
+      output: `
+          /**
+           * @example
+           */
+          function quux () {
+          }
+      `,
     },
     {
       code: `
       class TestClass {
         /**
-         * 
+         *
          */
         get Test() { }
       }
@@ -169,6 +228,14 @@ export default {
           checkGetters: true,
         },
       ],
+      output: `
+      class TestClass {
+        /**
+         * @example
+         */
+        get Test() { }
+      }
+      `,
     },
     {
       code: `
@@ -211,6 +278,14 @@ export default {
           checkSetters: true,
         },
       ],
+      output: `
+      class TestClass {
+        /**
+         * @example
+         */
+        set Test(value) { }
+      }
+      `,
     },
     {
       code: `

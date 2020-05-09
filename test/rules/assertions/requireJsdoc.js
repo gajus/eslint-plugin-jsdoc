@@ -18,6 +18,18 @@ export default {
           message: 'Missing JSDoc comment.',
         },
       ],
+      output: `
+       /**
+        * @func myFunction
+        */
+       /**
+        *
+        */
+
+       function myFunction() {
+
+       }
+       `,
       settings: {
         jsdoc: {
           maxLines: 3,
@@ -41,6 +53,19 @@ export default {
           message: 'Missing JSDoc comment.',
         },
       ],
+      output: `
+       /**
+        * @func myFunction
+        */
+
+
+       /**
+        *
+        */
+       function myFunction() {
+
+       }
+       `,
       settings: {
         jsdoc: {
           maxLines: 2,
@@ -58,6 +83,14 @@ export default {
           message: 'Missing JSDoc comment.',
         },
       ],
+      output: `
+       /** @func myFunction */ /**
+        *
+        */
+       function myFunction() {
+
+       }
+       `,
       settings: {
         jsdoc: {
           minLines: 1,
@@ -82,6 +115,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          export var test = function () {
+
+          };
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -105,6 +146,15 @@ export default {
           FunctionDeclaration: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          function test () {
+
+          }
+          export var test2 = test;
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -127,6 +177,14 @@ export default {
           ArrowFunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          export const test = () => {
+
+          };
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -149,6 +207,14 @@ export default {
           ClassExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          export let test = class {
+
+          };
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -173,6 +239,12 @@ export default {
           FunctionDeclaration: true,
         },
       }],
+      output: `
+        /**
+         *
+         */
+        export default function () {}
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -197,6 +269,12 @@ export default {
           ArrowFunctionExpression: true,
         },
       }],
+      output: `
+        export default /**
+         *
+         */
+        () => {}
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -221,6 +299,12 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+      export default (/**
+       *
+       */
+      function () {})
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -256,8 +340,7 @@ export default {
       },
     },
     {
-      code:
-        `
+      code: `
           function quux (foo) {
 
           }`,
@@ -268,6 +351,13 @@ export default {
           message: 'Missing JSDoc comment.',
         },
       ],
+      output: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }`,
     },
     {
       code: '',
@@ -333,11 +423,19 @@ export default {
       },
     },
     {
-      code: 'function myFunction() {}',
+      code: `
+      function myFunction() {}
+      `,
       errors: [{
         message: 'Missing JSDoc comment.',
         type: 'FunctionDeclaration',
       }],
+      output: `
+      /**
+       *
+       */
+      function myFunction() {}
+      `,
     },
     {
       code:
@@ -359,13 +457,25 @@ export default {
           MethodDefinition: true,
         },
       }],
+      output:
+        `/**
+          * Description for A.
+          */
+         class A {
+            /**
+             *
+             */
+            constructor(xs) {
+                 this.a = xs;
+            }
+         }`,
       parserOptions: {
         ecmaVersion: 6,
       },
     },
     {
-      code:
-        `class A {
+      code: `
+        class A {
             /**
              * Description for constructor.
              * @param {object[]} xs - xs
@@ -384,13 +494,26 @@ export default {
           MethodDefinition: true,
         },
       }],
+      output: `
+        /**
+         *
+         */
+        class A {
+            /**
+             * Description for constructor.
+             * @param {object[]} xs - xs
+             */
+            constructor(xs) {
+                this.a = xs;
+            }
+        }`,
       parserOptions: {
         ecmaVersion: 6,
       },
     },
     {
-      code:
-        `class A extends B {
+      code: `
+        class A extends B {
             /**
              * Description for constructor.
              * @param {object[]} xs - xs
@@ -409,13 +532,26 @@ export default {
           MethodDefinition: true,
         },
       }],
+      output: `
+        /**
+         *
+         */
+        class A extends B {
+            /**
+             * Description for constructor.
+             * @param {object[]} xs - xs
+             */
+            constructor(xs) {
+                this.a = xs;
+            }
+        }`,
       parserOptions: {
         ecmaVersion: 6,
       },
     },
     {
-      code:
-        `export class A extends B {
+      code: `
+        export class A extends B {
             /**
              * Description for constructor.
              * @param {object[]} xs - xs
@@ -434,13 +570,26 @@ export default {
           MethodDefinition: true,
         },
       }],
+      output: `
+        /**
+         *
+         */
+        export class A extends B {
+            /**
+             * Description for constructor.
+             * @param {object[]} xs - xs
+             */
+            constructor(xs) {
+                this.a = xs;
+            }
+        }`,
       parserOptions: {
         sourceType: 'module',
       },
     },
     {
-      code:
-        `export default class A extends B {
+      code: `
+        export default class A extends B {
             /**
              * Description for constructor.
              * @param {object[]} xs - xs
@@ -459,12 +608,27 @@ export default {
           MethodDefinition: true,
         },
       }],
+      output: `
+        /**
+         *
+         */
+        export default class A extends B {
+            /**
+             * Description for constructor.
+             * @param {object[]} xs - xs
+             */
+            constructor(xs) {
+                this.a = xs;
+            }
+        }`,
       parserOptions: {
         sourceType: 'module',
       },
     },
     {
-      code: 'var myFunction = () => {}',
+      code: `
+      var myFunction = () => {}
+      `,
       errors: [{
         message: 'Missing JSDoc comment.',
         type: 'ArrowFunctionExpression',
@@ -474,12 +638,20 @@ export default {
           ArrowFunctionExpression: true,
         },
       }],
+      output: `
+      /**
+       *
+       */
+      var myFunction = () => {}
+      `,
       parserOptions: {
         ecmaVersion: 6,
       },
     },
     {
-      code: 'var myFunction = () => () => {}',
+      code: `
+      var myFunction = () => () => {}
+      `,
       errors: [{
         message: 'Missing JSDoc comment.',
         type: 'ArrowFunctionExpression',
@@ -489,12 +661,20 @@ export default {
           ArrowFunctionExpression: true,
         },
       }],
+      output: `
+      /**
+       *
+       */
+      var myFunction = () => () => {}
+      `,
       parserOptions: {
         ecmaVersion: 6,
       },
     },
     {
-      code: 'var foo = function() {}',
+      code: `
+      var foo = function() {}
+      `,
       errors: [{
         message: 'Missing JSDoc comment.',
         type: 'FunctionExpression',
@@ -504,9 +684,17 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+      /**
+       *
+       */
+      var foo = function() {}
+      `,
     },
     {
-      code: 'const foo = {bar() {}}',
+      code: `
+      const foo = {bar() {}}
+      `,
       errors: [{
         message: 'Missing JSDoc comment.',
         type: 'FunctionExpression',
@@ -516,12 +704,20 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+      const foo = {/**
+       *
+       */
+      bar() {}}
+      `,
       parserOptions: {
         ecmaVersion: 6,
       },
     },
     {
-      code: 'var foo = {bar: function() {}}',
+      code: `
+      var foo = {bar: function() {}}
+      `,
       errors: [{
         message: 'Missing JSDoc comment.',
         type: 'FunctionExpression',
@@ -531,6 +727,12 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+      var foo = {/**
+       *
+       */
+      bar: function() {}}
+      `,
     },
     {
       code: `
@@ -543,6 +745,12 @@ export default {
       options: [
         {exemptEmptyFunctions: false},
       ],
+      output: `
+        /**
+         *
+         */
+        function foo (abc) {}
+      `,
     },
     {
       code: `
@@ -557,6 +765,14 @@ export default {
       options: [
         {exemptEmptyFunctions: false},
       ],
+      output: `
+        /**
+         *
+         */
+        function foo () {
+          return true;
+        }
+      `,
     },
     {
       code: `
@@ -577,6 +793,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          module.exports = function quux () {
+
+          }
+      `,
     },
     {
       code: `
@@ -599,6 +823,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          module.exports = function quux () {
+
+          }
+      `,
     },
     {
       code: `
@@ -621,6 +853,16 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          module.exports = {
+            /**
+             *
+             */
+            method: function() {
+
+            }
+          }
+      `,
     },
     {
       code: `
@@ -645,6 +887,18 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          module.exports = {
+            test: {
+              /**
+               *
+               */
+              test2: function() {
+
+              }
+            }
+          }
+      `,
     },
     {
       code: `
@@ -671,6 +925,18 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          module.exports = {
+            test: {
+              /**
+               *
+               */
+              test2: function() {
+
+              }
+            }
+          }
+      `,
     },
     {
       code: `
@@ -691,6 +957,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          const test = module.exports = function () {
+
+          }
+      `,
     },
     {
       code: `
@@ -716,6 +990,19 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+          *
+          */
+          const test = module.exports = function () {
+
+          }
+
+          /**
+           *
+           */
+          test.prototype.method = function() {}
+      `,
     },
     {
       code: `
@@ -739,6 +1026,17 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          const test = function () {
+
+          }
+          module.exports = {
+            test: test
+          }
+      `,
     },
     {
       code: `
@@ -762,6 +1060,17 @@ export default {
           ArrowFunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          const test = () => {
+
+          }
+          module.exports = {
+            test: test
+          }
+      `,
     },
     {
       code: `
@@ -785,6 +1094,17 @@ export default {
           MethodDefinition: true,
         },
       }],
+      output: `
+        class Test {
+            /**
+             *
+             */
+            method() {
+
+            }
+        }
+        module.exports = Test;
+      `,
     },
     {
       code: `
@@ -802,6 +1122,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          export default function quux () {
+
+          }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -824,6 +1152,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          export default function quux () {
+
+          }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -845,6 +1181,15 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          function quux () {
+
+          }
+          export default quux;
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -865,6 +1210,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          export function test() {
+
+          }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -887,6 +1240,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          export function test() {
+
+          }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -910,6 +1271,16 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          var test = function () {
+
+          }
+          var test2 = 2;
+          export { test, test2 }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -931,6 +1302,15 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          var test = function () {
+
+          }
+          export { test as test2 }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -951,6 +1331,14 @@ export default {
           ClassDeclaration: true,
         },
       }],
+      output: `
+         /**
+          *
+          */
+         export default class A {
+
+         }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -973,6 +1361,14 @@ export default {
           ClassDeclaration: true,
         },
       }],
+      output: `
+         /**
+          *
+          */
+         export default class A {
+
+         }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -995,6 +1391,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          var test = function () {
+
+          }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -1017,6 +1421,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          window.test = function () {
+
+          }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -1036,6 +1448,14 @@ export default {
           window: true,
         },
       }],
+      output: `
+          /**
+           *
+           */
+          function test () {
+
+          }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -1063,6 +1483,14 @@ export default {
           FunctionExpression: true,
         },
       }],
+      output: `
+        /**
+         *
+         */
+        module.exports = function() {
+
+        }
+      `,
     },
     {
       code: `
@@ -1087,6 +1515,14 @@ export default {
           FunctionDeclaration: true,
         },
       }],
+      output: `
+        /**
+         *
+         */
+        export function someMethod() {
+
+        }
+      `,
       parserOptions: {
         ecmaVersion: 6,
         sourceType: 'module',
@@ -1115,6 +1551,14 @@ export default {
           FunctionDeclaration: true,
         },
       }],
+      output: `
+        /**
+         *
+         */
+        export function someMethod() {
+
+        }
+      `,
       parserOptions: {
         ecmaVersion: 6,
         sourceType: 'module',
@@ -1139,6 +1583,14 @@ export default {
           ],
         },
       ],
+      output: `
+          const myObject = {
+            /**
+             *
+             */
+            myProp: true
+          };
+      `,
     },
     {
       code: `
@@ -1164,6 +1616,22 @@ export default {
           'TSMethodSignature',
         ],
       }],
+      output: `
+      /**
+       * Foo interface documentation.
+       */
+      export interface Foo extends Bar {
+        /**
+         * baz method documentation.
+         */
+        baz(): void;
+
+        /**
+         *
+         */
+        meow(): void;
+      }
+      `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
     {
@@ -1183,6 +1651,14 @@ export default {
           ClassDeclaration: true,
         },
       }],
+      output: `
+      /**
+       *
+       */
+      class MyClass {
+        someProperty: boolean; // Flow type annotation.
+      }
+      `,
       parser: require.resolve('babel-eslint'),
     },
     {
@@ -1211,6 +1687,16 @@ export default {
           },
         },
       ],
+      output: `
+      export default class Test {
+        /**
+         *
+         */
+        constructor(a) {
+          this.a = a;
+        }
+      }
+      `,
       parserOptions: {
         sourceType: 'module',
       },
@@ -1247,6 +1733,19 @@ export default {
           },
         },
       ],
+      output: `
+      export default class Test {
+        /**
+         *
+         */
+        constructor(a) {
+          this.a = a;
+        }
+        private abc(a) {
+          this.a = a;
+        }
+      }
+      `,
       parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
         sourceType: 'module',

@@ -514,6 +514,12 @@ export default {
           message: 'Sentence must end with a period.',
         },
       ],
+      output: `
+        /**
+         * @throws {object} Hello World
+         * hello world.
+        */
+      `,
     },
     {
       code: `
@@ -530,6 +536,14 @@ export default {
           message: 'Sentence must end with a period.',
         },
       ],
+      output: `
+          /**
+           * @summary Foo.
+           */
+          function quux () {
+
+          }
+      `,
     },
     {
       code: `
@@ -546,6 +560,14 @@ export default {
           message: 'Sentence must end with a period.',
         },
       ],
+      output: `
+          /**
+           * @throws {SomeType} Foo.
+           */
+          function quux () {
+
+          }
+      `,
     },
     {
       code: `
@@ -567,6 +589,14 @@ export default {
           tags: ['see'],
         },
       ],
+      output: `
+          /**
+           * @see Foo.
+           */
+          function quux () {
+
+          }
+      `,
     },
     {
       code: `
@@ -586,6 +616,14 @@ export default {
       options: [{
         tags: ['param'],
       }],
+      output: `
+        /**
+         * @param foo Foo bar.
+         */
+        function quux (foo) {
+
+        }
+      `,
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -723,6 +761,14 @@ export default {
           message: 'Sentence should start with an uppercase character.',
         },
       ],
+      output: `
+          /**
+           * This is a complete Mr. Sentence.
+           */
+          function quux () {
+
+          }
+      `,
     },
     {
       code: `
@@ -740,6 +786,15 @@ export default {
           message: 'Sentence should start with an uppercase character.',
         },
       ],
+      output: `
+          /**
+           * This is fun, i.e. Enjoyable, but not superlatively so, e.g. Not
+           * super, wonderful, etc..
+           */
+          function quux () {
+
+          }
+      `,
     },
     {
       code: `
@@ -757,6 +812,15 @@ export default {
           message: 'Sentence should start with an uppercase character.',
         },
       ],
+      output: `
+      /**
+       * Do not have dynamic content; e.g. Homepage. Here a simple unique id
+       * suffices.
+       */
+       function quux () {
+
+       }
+       `,
     },
   ],
   valid: [

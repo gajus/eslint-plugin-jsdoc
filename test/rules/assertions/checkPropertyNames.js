@@ -66,6 +66,13 @@ export default {
           message: 'Duplicate @property "employees[].name"',
         },
       ],
+      output: `
+          /**
+           * Assign the project to a list of employees.
+           * @typedef (SomeType) SomeTypedef
+           * @property {string} employees[].name - The name of an employee.
+           */
+      `,
     },
     {
       code: `
@@ -106,6 +113,16 @@ export default {
           message: 'Duplicate @property "cfg.foo"',
         },
       ],
+      output: `
+          /**
+           * @typedef (SomeType) SomeTypedef
+           * @property cfg
+           * @property cfg.foo
+           */
+          function quux ({foo, bar}) {
+
+          }
+      `,
     },
     {
       code: `
@@ -126,6 +143,17 @@ export default {
           message: 'Duplicate @property "cfg.foo"',
         },
       ],
+      output: `
+          /**
+           * @typedef (SomeType) SomeTypedef
+           * @property cfg
+           * @property cfg.foo
+           * @property baz
+           */
+          function quux ({foo, bar}, baz) {
+
+          }
+      `,
     },
     {
       code: `
@@ -146,6 +174,17 @@ export default {
           message: 'Duplicate @property "cfg.foo"',
         },
       ],
+      output: `
+          /**
+           * @typedef (SomeType) SomeTypedef
+           * @property cfg
+           * @property cfg.foo
+           * @property baz
+           */
+          function quux ({foo, bar}, baz) {
+
+          }
+      `,
     },
     {
       code: `
