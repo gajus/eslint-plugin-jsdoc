@@ -120,7 +120,7 @@ export default iterateJsdoc(({
         [nextRootName, incremented, namer] = namer();
       }
 
-      const {hasRestElement, rests, names} = functionParameterName[1];
+      const {hasRestElement, hasPropertyRest, rests, names} = functionParameterName[1];
       if (!enableRestElementFixer && hasRestElement) {
         return;
       }
@@ -165,7 +165,7 @@ export default iterateJsdoc(({
             functionParameterIdx: paramIndex[functionParameterName[0] ? fullParamName : paramName],
             functionParameterName: fullParamName,
             inc,
-            type: hasRestElement ? '...any' : undefined,
+            type: hasRestElement && !hasPropertyRest ? '...any' : undefined,
           });
         }
       });
