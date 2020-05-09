@@ -7118,6 +7118,14 @@ function quux () {
 // Message: Missing JSDoc @example declaration.
 
 /**
+ *
+ */
+function quux () {
+
+}
+// Message: Missing JSDoc @example declaration.
+
+/**
  * @example
  */
 function quux () {
@@ -7176,7 +7184,7 @@ function quux () {
 
 class TestClass {
   /**
-   * 
+   *
    */
   get Test() { }
 }
