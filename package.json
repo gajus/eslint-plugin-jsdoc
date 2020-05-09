@@ -27,7 +27,7 @@
     "babel-plugin-istanbul": "^6.0.0",
     "chai": "^4.2.0",
     "cross-env": "^7.0.2",
-    "eslint": "6.8.0",
+    "eslint": "7.0.0",
     "eslint-config-canonical": "^19.0.4",
     "gitdown": "^3.1.3",
     "glob": "^7.1.6",
@@ -55,7 +55,7 @@
   "main": "./dist/index.js",
   "name": "eslint-plugin-jsdoc",
   "peerDependencies": {
-    "eslint": "^6.0.0"
+    "eslint": "^6.0.0 || ^7.0.0"
   },
   "repository": {
     "type": "git",

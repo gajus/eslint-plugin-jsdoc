@@ -204,6 +204,11 @@ function quux (foo) {
           message: 'Expected JSDoc block to be aligned.',
         },
       ],
+      output: `
+        /**
+         * A jsdoc not attached to any node.
+         */
+      `,
     },
     {
       code: `
@@ -221,6 +226,15 @@ function quux (foo) {
           message: 'Expected JSDoc block to be aligned.',
         },
       ],
+      output: `
+        class Foo {
+          /**
+           *  Some method
+           * @param a
+           */
+          quux(a) {}
+        }
+      `,
     },
   ],
   valid: [

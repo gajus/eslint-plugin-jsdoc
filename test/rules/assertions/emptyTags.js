@@ -100,6 +100,14 @@ export default {
           message: '@private should be empty.',
         },
       ],
+      output: `
+      /**
+       * @private
+       */
+      function quux () {
+
+      }
+      `,
     },
     {
       code: `
@@ -116,6 +124,14 @@ export default {
           message: '@private should be empty.',
         },
       ],
+      output: `
+      /**
+       * @private
+       */
+      function quux () {
+
+      }
+      `,
       settings: {
         jsdoc: {
           ignorePrivate: true,

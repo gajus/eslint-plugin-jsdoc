@@ -72,6 +72,14 @@ export default {
           message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "param".',
         },
       ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
     },
     {
       code: `
@@ -88,6 +96,14 @@ export default {
           message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".',
         },
       ],
+      output: `
+          /**
+           * @arg foo
+           */
+          function quux (foo) {
+
+          }
+      `,
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -111,6 +127,14 @@ export default {
           message: 'Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "somethingDifferent".',
         },
       ],
+      output: `
+          /**
+           * @somethingDifferent foo
+           */
+          function quux (foo) {
+
+          }
+      `,
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -134,6 +158,14 @@ export default {
           message: 'Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "parameter".',
         },
       ],
+      output: `
+          /**
+           * @parameter foo
+           */
+          function quux (foo) {
+
+          }
+      `,
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -257,6 +289,14 @@ export default {
           message: 'Please use x-todo instead of todo',
         },
       ],
+      output: `
+          /**
+           * @x-todo
+           */
+          function quux () {
+
+          }
+      `,
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -282,6 +322,14 @@ export default {
           message: 'Please use x-todo instead of todo',
         },
       ],
+      output: `
+          /**
+           * @x-todo
+           */
+          function quux () {
+
+          }
+      `,
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -311,6 +359,14 @@ export default {
           message: 'Invalid JSDoc tag (preference). Replace "todo" JSDoc tag with "55".',
         },
       ],
+      output: `
+          /**
+           * @55
+           */
+          function quux () {
+
+          }
+      `,
       settings: {
         jsdoc: {
           tagNamePreference: {

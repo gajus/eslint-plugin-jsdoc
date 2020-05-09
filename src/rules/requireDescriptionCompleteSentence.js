@@ -102,7 +102,7 @@ const validateDescription = (description, reportOrig, jsdocNode, abbreviationsRe
             return $1 + capitalize(beginning);
           });
         } else {
-          text = text.replace(beginning, capitalize(beginning));
+          text = text.replace(new RegExp('((?:[.!?]|\\*|\\})\\s*)' + _.escapeRegExp(beginning), 'u'), '$1' + capitalize(beginning));
         }
       }
 
