@@ -1673,6 +1673,15 @@ export default {
           checkRestProperty: true,
         },
       ],
+      output: `
+      /**
+       * @param cfg
+       * @param cfg.num
+       * @param cfg.extra
+       */
+      function quux ({num, ...extra}) {
+      }
+      `,
       parserOptions: {
         ecmaVersion: 2018,
       },
@@ -1697,6 +1706,16 @@ export default {
           checkRestProperty: true,
         },
       ],
+      output: `
+      /**
+       * @param cfg
+       * @param cfg.opts
+       * @param cfg.opts.num
+       * @param cfg.opts.extra
+       */
+      function quux ({opts: {num, ...extra}}) {
+      }
+      `,
       parserOptions: {
         ecmaVersion: 2018,
       },
