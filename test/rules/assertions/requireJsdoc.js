@@ -1911,6 +1911,54 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      export type Container = {
+        constants?: ObjByString;
+        enums?: { [key in string]: TypescriptEnum };
+        helpers?: { [key in string]: AnyFunction };
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSTypeAliasDeclaration',
+            {
+              context: 'TSPropertySignature',
+              inlineCommentBlock: true,
+            },
+          ],
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export type Container = {
+        /** */
+        constants?: ObjByString;
+        /** */
+        enums?: { [key in string]: TypescriptEnum };
+        /** */
+        helpers?: { [key in string]: AnyFunction };
+      };
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [{
     code: `

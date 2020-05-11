@@ -10,7 +10,23 @@ const OPTIONS_SCHEMA = {
   properties: {
     contexts: {
       items: {
-        type: 'string',
+        anyOf: [
+          {
+            type: 'string',
+          },
+          {
+            additionalProperties: false,
+            properties: {
+              context: {
+                type: 'string',
+              },
+              inlineCommentBlock: {
+                type: 'boolean',
+              },
+            },
+            type: 'object',
+          },
+        ],
       },
       type: 'array',
     },
@@ -89,10 +105,16 @@ const getOption = (context, baseObject, option, key) => {
 };
 
 const getOptions = (context) => {
+  const {
+    publicOnly,
+    contexts = [],
+    exemptEmptyFunctions = false,
+  } = context.options[0] || {};
+
   return {
-    exemptEmptyFunctions: context.options[0] ? context.options[0].exemptEmptyFunctions : false,
+    contexts,
+    exemptEmptyFunctions,
     publicOnly: ((baseObj) => {
-      const publicOnly = _.get(context, 'options[0].publicOnly');
       if (!publicOnly) {
         return false;
       }
@@ -122,7 +144,11 @@ export default {
     const sourceCode = context.getSourceCode();
     const settings = getSettings(context);
 
-    const {require: requireOption, publicOnly, exemptEmptyFunctions} = getOptions(context);
+    const {
+      require: requireOption,
+      contexts,
+      publicOnly, exemptEmptyFunctions,
+    } = getOptions(context);
 
     const checkJsDoc = (node, isFunctionContext) => {
       const jsDocNode = getJSDocComment(sourceCode, node, settings);
@@ -149,7 +175,13 @@ export default {
             baseNode.loc.start.column,
           ),
         });
-        const insertion = `/**\n${indent}*\n${indent}*/${'\n'.repeat(lines)}${indent.slice(0, -1)}`;
+        const {inlineCommentBlock} = contexts.find(({context: ctxt}) => {
+          return ctxt === node.type;
+        }) || {};
+        const insertion = (inlineCommentBlock ?
+          '/** ' :
+          `/**\n${indent}*\n${indent}`) +
+            `*/${'\n'.repeat(lines)}${indent.slice(0, -1)}`;
 
         return fixer.insertTextBefore(baseNode, insertion);
       };

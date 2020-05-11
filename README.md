@@ -7837,9 +7837,13 @@ Accepts one optional options object with the following optional keys.
   - `FunctionExpression`
   - `MethodDefinition`
 
-- `contexts` - Set this to an array of strings representing the additional
-  AST contexts where you wish the rule to be applied (e.g., `Property` for
-  properties). Defaults to an empty array.
+- `contexts` - Set this to an array of strings or objects representing the
+  additional AST contexts where you wish the rule to be applied (e.g.,
+  `Property` for properties). If specified as an object, it should have a
+  `context` property and can have an `inlineCommentBlock` property which,
+  if set to `true`, will add an inline `/** */` instead of the regular,
+  multi-line, indented jsdoc block which will otherwise be added. Defaults
+  to an empty array.
 
 - `exemptEmptyFunctions` (default: false) - When `true`, the rule will not report
   missing jsdoc blocks above functions/methods with no parameters or return values
@@ -8292,6 +8296,14 @@ const hello = name => {
 
 export const loginSuccessAction = (): BaseActionPayload => ({ type: LOGIN_SUCCESSFUL });
 // Options: [{"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":false}}]
+// Message: Missing JSDoc comment.
+
+export type Container = {
+  constants?: ObjByString;
+  enums?: { [key in string]: TypescriptEnum };
+  helpers?: { [key in string]: AnyFunction };
+};
+// Options: [{"contexts":["TSTypeAliasDeclaration",{"context":"TSPropertySignature","inlineCommentBlock":true}]}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -10724,6 +10736,16 @@ const bboxToObj = function ({x, y, width, height}) {
   return {x, y, width, height};
 };
 // Options: [{"checkTypesPattern":"SVGRect"}]
+
+class CSS {
+  /**
+   * Set one or more CSS properties for the set of matched elements.
+   *
+   * @param {Object} propertyObject - An object of property-value pairs to set.
+   */
+  setCssObject(propertyObject: {[key: string]: string | number}): void {
+  }
+}
 ````
 
 

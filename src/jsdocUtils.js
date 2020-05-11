@@ -595,7 +595,11 @@ const enforcedContexts = (context, defaultContexts) => {
  */
 const getContextObject = (contexts, checkJsdoc) => {
   return contexts.reduce((obj, prop) => {
-    obj[prop] = checkJsdoc;
+    if (typeof prop === 'object') {
+      obj[prop.context] = checkJsdoc;
+    } else {
+      obj[prop] = checkJsdoc;
+    }
 
     return obj;
   }, {});
