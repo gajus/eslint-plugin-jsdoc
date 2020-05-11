@@ -37,6 +37,15 @@ See the "Destructuring" section. Defaults to `false`.
 
 See `require-param` under the option of the same name.
 
+##### `enableFixer`
+
+Set to `false` to avoid auto-removing `@param`'s duplicates (based on
+identical names).
+
+Note that, by default, duplicates of the same name are removed even if
+the definitions do not match in other ways (e.g., the second param will
+be removed even if it has a different type or description).
+
 ##### `allowExtraTrailingParamDocs`
 
 If set to `true`, this option will allow extra `@param` definitions (e.g.,

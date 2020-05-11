@@ -1584,6 +1584,16 @@ See the "Destructuring" section. Defaults to `false`.
 
 See `require-param` under the option of the same name.
 
+<a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-enablefixer"></a>
+##### <code>enableFixer</code>
+
+Set to `false` to avoid auto-removing `@param`'s duplicates (based on
+identical names).
+
+Note that, by default, duplicates of the same name are removed even if
+the definitions do not match in other ways (e.g., the second param will
+be removed even if it has a different type or description).
+
 <a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-allowextratrailingparamdocs"></a>
 ##### <code>allowExtraTrailingParamDocs</code>
 
@@ -1717,6 +1727,17 @@ function quux (foo, foo) {
 function quux ({foo}) {
 
 }
+// Message: Duplicate @param "cfg.foo"
+
+/**
+ * @param cfg
+ * @param cfg.foo
+ * @param cfg.foo
+ */
+function quux ({foo}) {
+
+}
+// Options: [{"enableFixer":false}]
 // Message: Duplicate @param "cfg.foo"
 
 /**
@@ -2088,9 +2109,20 @@ and that nested properties have defined roots.
 <a name="eslint-plugin-jsdoc-rules-check-property-names-options-4"></a>
 #### Options
 
+<a name="eslint-plugin-jsdoc-rules-check-property-names-options-4-enablefixer-1"></a>
+##### <code>enableFixer</code>
+
+Set to `false` to avoid auto-removing `@property`'s duplicates (based on
+identical names).
+
+Note that, by default, duplicates of the same name are removed even if
+the definitions do not match in other ways (e.g., the second property will
+be removed even if it has a different type or description).
+
 |||
 |---|---|
 |Context|Everywhere|
+|Options|`enableFixer`|
 |Tags|`property`|
 
 The following patterns are considered problems:
@@ -2130,6 +2162,14 @@ The following patterns are considered problems:
  * @property foo
  * @property foo
  */
+// Message: Duplicate @property "foo"
+
+/**
+ * @typedef (SomeType) SomeTypedef
+ * @property foo
+ * @property foo
+ */
+// Options: [{"enableFixer":false}]
 // Message: Duplicate @property "foo"
 
 /**
@@ -9485,7 +9525,7 @@ function signature, it may appear that there is an actual property named
 
 An options object accepts the following optional properties:
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-23-enablefixer"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-enablefixer-2"></a>
 ##### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.

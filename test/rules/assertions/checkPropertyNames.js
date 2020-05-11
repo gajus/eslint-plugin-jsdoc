@@ -99,6 +99,33 @@ export default {
       code: `
           /**
            * @typedef (SomeType) SomeTypedef
+           * @property foo
+           * @property foo
+           */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Duplicate @property "foo"',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+        },
+      ],
+      output: `
+          /**
+           * @typedef (SomeType) SomeTypedef
+           * @property foo
+           * @property foo
+           */
+      `,
+    },
+    {
+      code: `
+          /**
+           * @typedef (SomeType) SomeTypedef
            * @property cfg
            * @property cfg.foo
            * @property cfg.foo

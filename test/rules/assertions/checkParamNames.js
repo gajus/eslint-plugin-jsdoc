@@ -281,6 +281,39 @@ export default {
           /**
            * @param cfg
            * @param cfg.foo
+           * @param cfg.foo
+           */
+          function quux ({foo}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Duplicate @param "cfg.foo"',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+        },
+      ],
+      output: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param cfg.foo
+           */
+          function quux ({foo}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
            */
           function quux ({foo, bar}) {
 
