@@ -87,6 +87,39 @@ export default {
     {
       code: `
           /**
+           * @param foo
+           */
+          function quux (foo, bar, {baz}) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "bar" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "root0" declaration.',
+        },
+      ],
+      options: [
+        {
+          checkDestructured: false,
+        },
+      ],
+      output: `
+          /**
+           * @param foo
+           * @param bar
+           * @param root0
+           */
+          function quux (foo, bar, {baz}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            *
            */
           function quux ({foo}) {
@@ -2695,6 +2728,23 @@ export default {
       }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param bar
+           * @param cfg
+           */
+          function quux (foo, bar, {baz}) {
+
+          }
+      `,
+      options: [
+        {
+          checkDestructured: false,
+        },
+      ],
     },
   ],
 };
