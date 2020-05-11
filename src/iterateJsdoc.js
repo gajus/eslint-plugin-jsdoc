@@ -244,11 +244,8 @@ const getUtils = (
   const hasSchemaOption = (prop) => {
     const schemaProperties = ruleConfig.meta.schema[0].properties;
 
-    return _.get(
-      context,
-      `options[0].${prop}`,
-      schemaProperties[prop] && schemaProperties[prop].default,
-    );
+    return context.options[0]?.[prop] ??
+      (schemaProperties[prop] && schemaProperties[prop].default);
   };
 
   // eslint-disable-next-line complexity
@@ -281,12 +278,10 @@ const getUtils = (
       return true;
     }
 
-    const exemptedBy = _.get(
-      context, 'options[0].exemptedBy', [
-        'inheritDoc',
-        ...settings.mode === 'closure' ? [] : ['inheritdoc'],
-      ],
-    );
+    const exemptedBy = context.options[0]?.exemptedBy ?? [
+      'inheritDoc',
+      ...settings.mode === 'closure' ? [] : ['inheritdoc'],
+    ];
     if (exemptedBy.length && utils.getPresentTags(exemptedBy).length) {
       return true;
     }
@@ -355,7 +350,7 @@ const getUtils = (
   };
 
   utils.hasOptionTag = (tagName) => {
-    const tags = _.get(context, 'options[0].tags');
+    const {tags} = context.options[0] ?? {};
 
     return Boolean(tags && tags.includes(tagName));
   };
@@ -419,23 +414,23 @@ const getSettings = (context) => {
   /* eslint-disable sort-keys-fix/sort-keys-fix */
   const settings = {
     // All rules
-    ignorePrivate: Boolean(_.get(context, 'settings.jsdoc.ignorePrivate')),
-    maxLines: Number(_.get(context, 'settings.jsdoc.maxLines', 1)),
-    minLines: Number(_.get(context, 'settings.jsdoc.minLines', 0)),
+    ignorePrivate: Boolean(context.settings.jsdoc?.ignorePrivate),
+    maxLines: Number(context.settings.jsdoc?.maxLines ?? 1),
+    minLines: Number(context.settings.jsdoc?.minLines ?? 0),
 
     // `check-tag-names` and many returns/param rules
-    tagNamePreference: _.get(context, 'settings.jsdoc.tagNamePreference') || {},
+    tagNamePreference: context.settings.jsdoc?.tagNamePreference ?? {},
 
     // `check-types` and `no-undefined-types`
-    preferredTypes: _.get(context, 'settings.jsdoc.preferredTypes') || {},
+    preferredTypes: context.settings.jsdoc?.preferredTypes ?? {},
 
     // `require-param`, `require-description`, `require-example`, `require-returns`
-    overrideReplacesDocs: _.get(context, 'settings.jsdoc.overrideReplacesDocs'),
-    implementsReplacesDocs: _.get(context, 'settings.jsdoc.implementsReplacesDocs'),
-    augmentsExtendsReplacesDocs: _.get(context, 'settings.jsdoc.augmentsExtendsReplacesDocs'),
+    overrideReplacesDocs: context.settings.jsdoc?.overrideReplacesDocs,
+    implementsReplacesDocs: context.settings.jsdoc?.implementsReplacesDocs,
+    augmentsExtendsReplacesDocs: context.settings.jsdoc?.augmentsExtendsReplacesDocs,
 
     // Many rules, e.g., `check-tag-names`
-    mode: _.get(context, 'settings.jsdoc.mode') || 'jsdoc',
+    mode: context.settings.jsdoc?.mode ?? 'jsdoc',
   };
   /* eslint-enable sort-keys-fix/sort-keys-fix */
 
@@ -675,7 +670,7 @@ export {
  * }} ruleConfig
  */
 export default function iterateJsdoc (iterator, ruleConfig) {
-  const metaType = _.get(ruleConfig, 'meta.type');
+  const metaType = ruleConfig?.meta?.type;
   if (!metaType || !['problem', 'suggestion', 'layout'].includes(metaType)) {
     throw new TypeError('Rule must include `meta.type` option (with value "problem", "suggestion", or "layout")');
   }

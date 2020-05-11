@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {parse, traverse, publish} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
 
@@ -73,17 +72,14 @@ export default iterateJsdoc(({
     if (Object.keys(preferredTypes).length) {
       const parentType = parentName === 'subject';
       if (unifyParentAndChildTypeChecks || parentType) {
-        const syntax = _.get(parentNode, 'meta.syntax');
+        const syntax = parentNode?.meta?.syntax;
 
         [
           ['.', 'ANGLE_BRACKET_WITH_DOT'],
           ['.<>', 'ANGLE_BRACKET_WITH_DOT'],
           ['<>', 'ANGLE_BRACKET'],
         ].some(([checkPostFix, syn]) => {
-          isGenericMatch = _.get(
-            preferredTypes,
-            nodeName + checkPostFix,
-          ) !== undefined &&
+          isGenericMatch = preferredTypes?.[nodeName + checkPostFix] !== undefined &&
             syntax === syn;
           if (isGenericMatch) {
             typeName += checkPostFix;
@@ -98,7 +94,7 @@ export default iterateJsdoc(({
             ['.<>', 'ANGLE_BRACKET_WITH_DOT'],
             ['<>', 'ANGLE_BRACKET'],
           ].some(([checkPostFix, syn]) => {
-            isGenericMatch = _.get(preferredTypes, checkPostFix) !== undefined &&
+            isGenericMatch = preferredTypes?.[checkPostFix] !== undefined &&
               syntax === syn;
             if (isGenericMatch) {
               typeName = checkPostFix;
@@ -108,7 +104,7 @@ export default iterateJsdoc(({
           });
         }
       }
-      const directNameMatch = _.get(preferredTypes, nodeName) !== undefined;
+      const directNameMatch = preferredTypes?.[nodeName] !== undefined;
       const unifiedSyntaxParentMatch = parentType && directNameMatch && unifyParentAndChildTypeChecks;
       isGenericMatch = isGenericMatch || unifiedSyntaxParentMatch;
 
@@ -149,11 +145,11 @@ export default iterateJsdoc(({
           preferred = preferredSetting;
           invalidTypes.push([nodeName, preferred]);
         } else if (typeof preferredSetting === 'object') {
-          preferred = _.get(preferredSetting, 'replacement');
+          preferred = preferredSetting?.replacement;
           invalidTypes.push([
             nodeName,
             preferred,
-            _.get(preferredSetting, 'message'),
+            preferredSetting?.message,
           ]);
         } else {
           utils.reportSettings(
@@ -168,7 +164,7 @@ export default iterateJsdoc(({
             strictNativeType !== nodeName &&
 
             // Don't report if user has own map for a strict native type
-            (!preferredTypes || _.get(preferredTypes, strictNativeType) === undefined)
+            (!preferredTypes || preferredTypes?.[strictNativeType] === undefined)
           ) {
             preferred = strictNativeType;
             invalidTypes.push([nodeName, preferred]);

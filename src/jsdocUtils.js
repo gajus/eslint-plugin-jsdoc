@@ -107,8 +107,8 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
       return param.left.name;
     }
 
-    if (param.type === 'ObjectPattern' || _.get(param, 'left.type') === 'ObjectPattern') {
-      const properties = param.properties || _.get(param, 'left.properties');
+    if (param.type === 'ObjectPattern' || param.left?.type === 'ObjectPattern') {
+      const properties = param.properties || param.left?.properties;
       const roots = properties.map((prop) => {
         return getParamName(prop, true);
       });
@@ -130,8 +130,8 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
       }
     }
 
-    if (param.type === 'ArrayPattern' || _.get(param, 'left.type') === 'ArrayPattern') {
-      const elements = param.elements || _.get(param, 'left.elements');
+    if (param.type === 'ArrayPattern' || param.left?.type === 'ArrayPattern') {
+      const elements = param.elements || param.left?.elements;
       const roots = elements.map((prop, idx) => {
         return {
           name: idx,

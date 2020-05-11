@@ -201,10 +201,10 @@ export default {
 
       if (publicOnly) {
         const opt = {
-          ancestorsOnly: Boolean(_.get(publicOnly, 'ancestorsOnly', false)),
-          esm: Boolean(_.get(publicOnly, 'esm', true)),
-          initModuleExports: Boolean(_.get(publicOnly, 'cjs', true)),
-          initWindow: Boolean(_.get(publicOnly, 'window', false)),
+          ancestorsOnly: Boolean(publicOnly?.ancestorsOnly ?? false),
+          esm: Boolean(publicOnly?.esm ?? true),
+          initModuleExports: Boolean(publicOnly?.cjs ?? true),
+          initWindow: Boolean(publicOnly?.window ?? false),
         };
         const parseResult = exportParser.parse(sourceCode.ast, node, opt);
         const exported = exportParser.isExported(node, parseResult, opt);
