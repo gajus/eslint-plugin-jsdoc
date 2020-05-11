@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 type T = [string, () => T];
@@ -47,11 +48,14 @@ export default iterateJsdoc(({
   }
 
   const {
+    autoIncrementBase = 0,
+    checkRestProperty = false,
+    checkDestructured = true,
+    checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
     enableFixer = true,
     enableRootFixer = true,
-    checkRestProperty = false,
     enableRestElementFixer = true,
-    checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
+    unnamedRootBase = ['root'],
   } = context.options[0] || {};
 
   const lastSlashPos = checkTypesPattern.lastIndexOf('/');
@@ -93,10 +97,6 @@ export default iterateJsdoc(({
     return paramTags.length;
   };
 
-  const {
-    autoIncrementBase = 0,
-    unnamedRootBase = ['root'],
-  } = context.options[0] || {};
   let [nextRootName, incremented, namer] = rootNamer([...unnamedRootBase], autoIncrementBase);
 
   functionParameterNames.forEach((functionParameterName, functionParameterIdx) => {
@@ -125,32 +125,39 @@ export default iterateJsdoc(({
       }
 
       names.forEach((paramName, idx) => {
-        if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
+        // Add root if the root name is not in the docs (and is not already
+        //  in the tags to be fixed)
+        if (!jsdocParameterNames.find(({name}) => {
           return name === rootName;
+        }) && !missingTags.find(({functionParameterName: fpn}) => {
+          return fpn === rootName;
         })) {
-          if (!missingTags.find(({functionParameterName: fpn}) => {
-            return fpn === rootName;
-          })) {
-            const emptyParamIdx = jsdocParameterNames.findIndex(({name}) => {
-              return !name;
-            });
+          const emptyParamIdx = jsdocParameterNames.findIndex(({name}) => {
+            return !name;
+          });
 
-            if (emptyParamIdx > -1) {
-              missingTags.push({
-                functionParameterIdx: emptyParamIdx,
-                functionParameterName: rootName,
-                inc,
-                remove: true,
-              });
-            } else {
-              missingTags.push({
-                functionParameterIdx: paramIndex[rootName],
-                functionParameterName: rootName,
-                inc,
-              });
-            }
+          if (emptyParamIdx > -1) {
+            missingTags.push({
+              functionParameterIdx: emptyParamIdx,
+              functionParameterName: rootName,
+              inc,
+              remove: true,
+            });
+          } else {
+            missingTags.push({
+              functionParameterIdx: _.has(paramIndex, rootName) ?
+                paramIndex[rootName] :
+                paramIndex[paramName],
+              functionParameterName: rootName,
+              inc,
+            });
           }
         }
+
+        if (!checkDestructured) {
+          return;
+        }
+
         if (!checkRestProperty && rests[idx]) {
           return;
         }
@@ -250,6 +257,9 @@ export default iterateJsdoc(({
           },
           checkConstructors: {
             default: true,
+            type: 'boolean',
+          },
+          checkDestructured: {
             type: 'boolean',
           },
           checkGetters: {
