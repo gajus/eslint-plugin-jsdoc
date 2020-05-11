@@ -5,6 +5,7 @@ const validateParameterNames = (
   allowExtraTrailingParamDocs: boolean,
   checkRestProperty : boolean,
   checkTypesRegex : RegExp,
+  enableFixer: boolean,
   functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report,
 ) => {
   const paramTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
@@ -24,9 +25,9 @@ const validateParameterNames = (
       return tg.name === tag.name && idx !== index;
     });
     if (dupeTagInfo) {
-      utils.reportJSDoc(`Duplicate @${targetTagName} "${tag.name}"`, dupeTagInfo[1], () => {
+      utils.reportJSDoc(`Duplicate @${targetTagName} "${tag.name}"`, dupeTagInfo[1], enableFixer ? () => {
         jsdoc.tags.splice(tagsIndex, 1);
-      });
+      } : null);
 
       return true;
     }
@@ -187,6 +188,7 @@ export default iterateJsdoc(({
     allowExtraTrailingParamDocs,
     checkRestProperty = false,
     checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
+    enableFixer = true,
   } = context.options[0] || {};
 
   const lastSlashPos = checkTypesPattern.lastIndexOf('/');
@@ -202,8 +204,10 @@ export default iterateJsdoc(({
   const targetTagName = utils.getPreferredTagName({tagName: 'param'});
   const isError = validateParameterNames(
     targetTagName,
-    allowExtraTrailingParamDocs, checkRestProperty,
+    allowExtraTrailingParamDocs,
+    checkRestProperty,
     checkTypesRegex,
+    enableFixer,
     functionParameterNames,
     jsdoc, jsdocNode, utils, report,
   );
@@ -231,6 +235,9 @@ export default iterateJsdoc(({
           },
           checkTypesPattern: {
             type: 'string',
+          },
+          enableFixer: {
+            type: 'boolean',
           },
         },
         type: 'object',

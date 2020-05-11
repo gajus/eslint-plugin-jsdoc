@@ -2,6 +2,7 @@ import iterateJsdoc from '../iterateJsdoc';
 
 const validatePropertyNames = (
   targetTagName : string,
+  enableFixer : boolean,
   jsdoc, jsdocNode, utils,
 ) => {
   const propertyTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
@@ -16,9 +17,9 @@ const validatePropertyNames = (
       return tg.name === tag.name && idx !== index;
     });
     if (dupeTagInfo) {
-      utils.reportJSDoc(`Duplicate @${targetTagName} "${tag.name}"`, dupeTagInfo[1], () => {
+      utils.reportJSDoc(`Duplicate @${targetTagName} "${tag.name}"`, dupeTagInfo[1], enableFixer ? () => {
         jsdoc.tags.splice(tagsIndex, 1);
-      });
+      } : null);
 
       return true;
     }
@@ -68,11 +69,15 @@ const validatePropertyNamesDeep = (
 };
 
 export default iterateJsdoc(({
+  context,
   jsdoc,
   jsdocNode,
   report,
   utils,
 }) => {
+  const {
+    enableFixer = true,
+  } = context.options[0] || {};
   const jsdocPropertyNamesDeep = utils.getJsdocTagsDeep('property');
   if (!jsdocPropertyNamesDeep.length) {
     return;
@@ -80,6 +85,7 @@ export default iterateJsdoc(({
   const targetTagName = utils.getPreferredTagName({tagName: 'property'});
   const isError = validatePropertyNames(
     targetTagName,
+    enableFixer,
     jsdoc, jsdocNode, utils,
   );
 
@@ -95,6 +101,17 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     fixable: 'code',
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          enableFixer: {
+            type: 'boolean',
+          },
+        },
+        type: 'object',
+      },
+    ],
     type: 'suggestion',
   },
 });
