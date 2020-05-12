@@ -8305,6 +8305,14 @@ export type Container = {
 };
 // Options: [{"contexts":["TSTypeAliasDeclaration",{"context":"TSPropertySignature","inlineCommentBlock":true}]}]
 // Message: Missing JSDoc comment.
+
+class Foo {
+    constructor() {}
+
+    bar() {}
+}
+// Options: [{"contexts":["MethodDefinition[key.name!=\"constructor\"]"],"require":{"ClassDeclaration":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

@@ -1959,6 +1959,48 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      class Foo {
+          constructor() {}
+
+          bar() {}
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 5,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'MethodDefinition[key.name!="constructor"]',
+          ],
+          require: {
+            ClassDeclaration: true,
+          },
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      class Foo {
+          constructor() {}
+
+          /**
+           *
+           */
+          bar() {}
+      }
+      `,
+    },
   ],
   valid: [{
     code: `
