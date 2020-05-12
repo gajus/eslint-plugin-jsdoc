@@ -101,6 +101,32 @@ export default {
         },
       },
     },
+    {
+      code: `
+      class Foo {
+          /**
+           * @implements {SomeClass}
+           */
+          constructor() {}
+
+          /**
+           * @implements {SomeClass}
+           */
+          bar() {}
+      }
+      `,
+      errors: [
+        {
+          line: 9,
+          message: '@implements used on a non-constructor function',
+        },
+      ],
+      options: [
+        {
+          contexts: ['MethodDefinition'],
+        },
+      ],
+    },
   ],
   valid: [
     {

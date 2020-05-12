@@ -466,7 +466,7 @@ export default {
       code: `
         class TestClass {
           /**
-           * 
+           *
            */
           constructor() {
             return new Map();
@@ -489,7 +489,7 @@ export default {
       code: `
       class TestClass {
         /**
-         * 
+         *
          */
         get Test() {
           return 0;

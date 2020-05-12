@@ -1587,10 +1587,10 @@ See `require-param` under the option of the same name.
 <a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-enablefixer"></a>
 ##### <code>enableFixer</code>
 
-Set to `false` to avoid auto-removing `@param`'s duplicates (based on
-identical names).
+Set to `true` to auto-remove `@param` duplicates (based on identical
+names).
 
-Note that, by default, duplicates of the same name are removed even if
+Note that this option will remove duplicates of the same name even if
 the definitions do not match in other ways (e.g., the second param will
 be removed even if it has a different type or description).
 
@@ -1671,6 +1671,7 @@ function assign (employees) {
 function assign (employees) {
 
 };
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @param "employees[].name"
 
 /**
@@ -1699,6 +1700,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @param "foo"
 
 /**
@@ -1708,6 +1710,7 @@ function quux (foo) {
 function quux (foo, bar) {
 
 }
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @param "foo"
 
 /**
@@ -1717,6 +1720,7 @@ function quux (foo, bar) {
 function quux (foo, foo) {
 
 }
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @param "foo"
 
 /**
@@ -1727,6 +1731,7 @@ function quux (foo, foo) {
 function quux ({foo}) {
 
 }
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @param "cfg.foo"
 
 /**
@@ -1737,7 +1742,6 @@ function quux ({foo}) {
 function quux ({foo}) {
 
 }
-// Options: [{"enableFixer":false}]
 // Message: Duplicate @param "cfg.foo"
 
 /**
@@ -1758,6 +1762,7 @@ function quux ({foo, bar}) {
 function quux ({foo}, baz) {
 
 }
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @param "cfg.foo"
 
 /**
@@ -1780,6 +1785,7 @@ function quux ({foo, bar}, baz) {
 function quux ({foo}, baz) {
 
 }
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @param "cfg.foo"
 
 /**
@@ -1909,6 +1915,17 @@ const bboxToObj = function ({x, y, width, height}) {
   return {x, y, width, height};
 };
 // Message: Missing @param "bbox.x"
+
+module.exports = class GraphQL {
+  /**
+   * @param fetchOptions
+   * @param cacheKey
+   */
+  fetch = ({ url, ...options }, cacheKey) => {
+  }
+};
+// Options: [{"checkRestProperty":true}]
+// Message: Missing @param "fetchOptions.url"
 ````
 
 The following patterns are not considered problems:
@@ -2112,10 +2129,10 @@ and that nested properties have defined roots.
 <a name="eslint-plugin-jsdoc-rules-check-property-names-options-4-enablefixer-1"></a>
 ##### <code>enableFixer</code>
 
-Set to `false` to avoid auto-removing `@property`'s duplicates (based on
+Set to `true` to auto-remove `@property` duplicates (based on
 identical names).
 
-Note that, by default, duplicates of the same name are removed even if
+Note that this option will remove duplicates of the same name even if
 the definitions do not match in other ways (e.g., the second property will
 be removed even if it has a different type or description).
 
@@ -2155,6 +2172,7 @@ The following patterns are considered problems:
  * @property {string} employees[].name - The name of an employee.
  * @property {string} employees[].name - The employee's department.
  */
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @property "employees[].name"
 
 /**
@@ -2162,6 +2180,7 @@ The following patterns are considered problems:
  * @property foo
  * @property foo
  */
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @property "foo"
 
 /**
@@ -2169,7 +2188,6 @@ The following patterns are considered problems:
  * @property foo
  * @property foo
  */
-// Options: [{"enableFixer":false}]
 // Message: Duplicate @property "foo"
 
 /**
@@ -2181,6 +2199,7 @@ The following patterns are considered problems:
 function quux ({foo, bar}) {
 
 }
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @property "cfg.foo"
 
 /**
@@ -2193,6 +2212,7 @@ function quux ({foo, bar}) {
 function quux ({foo, bar}, baz) {
 
 }
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @property "cfg.foo"
 
 /**
@@ -2205,6 +2225,7 @@ function quux ({foo, bar}, baz) {
 function quux ({foo, bar}, baz) {
 
 }
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @property "cfg.foo"
 
 /**
@@ -2213,6 +2234,7 @@ function quux ({foo, bar}, baz) {
  * @prop foo
  */
 // Settings: {"jsdoc":{"tagNamePreference":{"property":"prop"}}}
+// Options: [{"enableFixer":true}]
 // Message: Duplicate @prop "foo"
 
 /**
@@ -4466,6 +4488,20 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"implements":false}}}
 // Message: Unexpected tag `@implements`
+
+class Foo {
+    /**
+     * @implements {SomeClass}
+     */
+    constructor() {}
+
+    /**
+     * @implements {SomeClass}
+     */
+    bar() {}
+}
+// Options: [{"contexts":["MethodDefinition"]}]
+// Message: @implements used on a non-constructor function
 ````
 
 The following patterns are not considered problems:
@@ -6877,7 +6913,7 @@ function quux () {
 
 class TestClass {
   /**
-   * 
+   *
    */
   constructor() { }
 }
@@ -6885,7 +6921,7 @@ class TestClass {
 
 class TestClass {
   /**
-   * 
+   *
    */
   constructor() { }
 }
@@ -6894,7 +6930,7 @@ class TestClass {
 
 class TestClass {
   /**
-   * 
+   *
    */
   get Test() { }
 }
@@ -6902,7 +6938,7 @@ class TestClass {
 
 class TestClass {
   /**
-   * 
+   *
    */
   get Test() { }
 }
@@ -6911,7 +6947,7 @@ class TestClass {
 
 class TestClass {
   /**
-   * 
+   *
    */
   set Test(value) { }
 }
@@ -6919,11 +6955,28 @@ class TestClass {
 
 class TestClass {
   /**
-   * 
+   *
    */
   set Test(value) { }
 }
 // Options: [{"checkSetters":true}]
+// Message: Missing JSDoc block description.
+
+/**
+ *
+ */
+class Foo {
+    /**
+     *
+     */
+    constructor() {}
+
+    /**
+     *
+     */
+    bar() {}
+}
+// Options: [{"checkConstructors":false,"contexts":["MethodDefinition"]}]
 // Message: Missing JSDoc block description.
 ````
 
@@ -7060,7 +7113,7 @@ class TestClass {
 
 class TestClass {
   /**
-   * 
+   *
    */
   constructor() { }
 }
@@ -7075,7 +7128,7 @@ class TestClass {
 
 class TestClass {
   /**
-   * 
+   *
    */
   get Test() { }
 }
@@ -7090,7 +7143,7 @@ class TestClass {
 
 class TestClass {
   /**
-   * 
+   *
    */
   set Test(value) { }
 }
@@ -10263,6 +10316,17 @@ const bboxToObj = function ({x, y, width, height}) {
   return {x, y, width, height};
 };
 // Message: Missing JSDoc @param "bbox.x" declaration.
+
+module.exports = class GraphQL {
+  /**
+   * @param fetchOptions
+   * @param cacheKey
+   */
+  fetch = ({ url, ...options }, cacheKey) => {
+  }
+};
+// Options: [{"checkRestProperty":true}]
+// Message: Missing JSDoc @param "fetchOptions.url" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -11993,7 +12057,7 @@ class foo {
 
 class TestClass {
   /**
-   * 
+   *
    */
   constructor() {
     return new Map();
@@ -12004,7 +12068,7 @@ class TestClass {
 
 class TestClass {
   /**
-   * 
+   *
    */
   get Test() {
     return 0;

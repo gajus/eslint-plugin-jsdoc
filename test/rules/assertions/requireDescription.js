@@ -339,7 +339,7 @@ export default {
       code: `
         class TestClass {
           /**
-           * 
+           *
            */
           constructor() { }
         }
@@ -355,7 +355,7 @@ export default {
       code: `
         class TestClass {
           /**
-           * 
+           *
            */
           constructor() { }
         }
@@ -376,7 +376,7 @@ export default {
       code: `
       class TestClass {
         /**
-         * 
+         *
          */
         get Test() { }
       }
@@ -392,7 +392,7 @@ export default {
       code: `
       class TestClass {
         /**
-         * 
+         *
          */
         get Test() { }
       }
@@ -413,7 +413,7 @@ export default {
       code: `
       class TestClass {
         /**
-         * 
+         *
          */
         set Test(value) { }
       }
@@ -429,7 +429,7 @@ export default {
       code: `
       class TestClass {
         /**
-         * 
+         *
          */
         set Test(value) { }
       }
@@ -443,6 +443,36 @@ export default {
       options: [
         {
           checkSetters: true,
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       *
+       */
+      class Foo {
+          /**
+           *
+           */
+          constructor() {}
+
+          /**
+           *
+           */
+          bar() {}
+      }
+      `,
+      errors: [
+        {
+          line: 11,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+      options: [
+        {
+          checkConstructors: false,
+          contexts: ['MethodDefinition'],
         },
       ],
     },
@@ -683,7 +713,7 @@ export default {
       code: `
         class TestClass {
           /**
-           * 
+           *
            */
           constructor() { }
         }
@@ -708,7 +738,7 @@ export default {
       code: `
       class TestClass {
         /**
-         * 
+         *
          */
         get Test() { }
       }
@@ -733,7 +763,7 @@ export default {
       code: `
       class TestClass {
         /**
-         * 
+         *
          */
         set Test(value) { }
       }

@@ -188,7 +188,8 @@ const getUtils = (
   };
 
   utils.isConstructor = () => {
-    return node && node.parent && node.parent.kind === 'constructor';
+    return node?.type === 'MethodDefinition' && node.kind === 'constructor' ||
+      node?.parent?.kind === 'constructor';
   };
 
   utils.isGetter = () => {
