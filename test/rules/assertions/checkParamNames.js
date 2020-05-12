@@ -682,6 +682,32 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      module.exports = class GraphQL {
+        /**
+         * @param fetchOptions
+         * @param cacheKey
+         */
+        fetch = ({ url, ...options }, cacheKey) => {
+        }
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing @param "fetchOptions.url"',
+        },
+        {
+          message: 'Missing @param "fetchOptions.options"',
+        },
+      ],
+      options: [
+        {
+          checkRestProperty: true,
+        },
+      ],
+      parser: require.resolve('babel-eslint'),
+    },
   ],
   valid: [
     {

@@ -142,7 +142,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
       return [undefined, flattenRoots(roots)];
     }
 
-    if (param.type === 'RestElement') {
+    if (['RestElement', 'ExperimentalRestProperty'].includes(param.type)) {
       return {
         isRestProperty: isProperty,
         name: param.argument.name,

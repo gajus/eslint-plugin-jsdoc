@@ -1857,6 +1857,44 @@ export default {
       };
       `,
     },
+    {
+      code: `
+      module.exports = class GraphQL {
+        /**
+         * @param fetchOptions
+         * @param cacheKey
+         */
+        fetch = ({ url, ...options }, cacheKey) => {
+        }
+      };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "fetchOptions.url" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "fetchOptions.options" declaration.',
+        },
+      ],
+      options: [
+        {
+          checkRestProperty: true,
+        },
+      ],
+      output: `
+      module.exports = class GraphQL {
+        /**
+         * @param fetchOptions
+         * @param fetchOptions.url
+         * @param fetchOptions.options
+         * @param cacheKey
+         */
+        fetch = ({ url, ...options }, cacheKey) => {
+        }
+      };
+      `,
+      parser: require.resolve('babel-eslint'),
+    },
   ],
   valid: [
     {
