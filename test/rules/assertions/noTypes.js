@@ -26,6 +26,34 @@ export default {
     },
     {
       code: `
+      class quux {
+        /**
+         * @param {number} foo
+         */
+        bar (foo) {
+
+        }
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Types are not permitted on @param.',
+        },
+      ],
+      output: `
+      class quux {
+        /**
+         * @param foo
+         */
+        bar (foo) {
+
+        }
+      }
+      `,
+    },
+    {
+      code: `
           /**
            * @param {number} foo
            */

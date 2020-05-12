@@ -211,6 +211,40 @@ export default {
     },
     {
       code: `
+      class bar {
+          /**
+           * @param foo
+           * @param foo
+           */
+          quux (foo) {
+
+          }
+      }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Duplicate @param "foo"',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+      class bar {
+          /**
+           * @param foo
+           */
+          quux (foo) {
+
+          }
+      }
+      `,
+    },
+    {
+      code: `
           /**
            * @param foo
            * @param foo

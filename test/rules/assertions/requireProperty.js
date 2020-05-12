@@ -20,6 +20,30 @@ export default {
     },
     {
       code: `
+      class Test {
+          /**
+           * @typedef {object} SomeTypedef
+           */
+          quux () {}
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @property.',
+        },
+      ],
+      output: `
+      class Test {
+          /**
+           * @typedef {object} SomeTypedef
+           * @property
+           */
+          quux () {}
+      }
+      `,
+    },
+    {
+      code: `
           /**
            * @typedef {PlainObject} SomeTypedef
            */

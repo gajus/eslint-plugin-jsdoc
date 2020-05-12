@@ -4,7 +4,6 @@ import warnRemovedSettings from '../warnRemovedSettings';
 
 export default iterateJsdoc(({
   jsdoc,
-  node,
   report,
   utils,
   context,
@@ -35,7 +34,7 @@ export default iterateJsdoc(({
         tag: targetTagName,
         type: '',
       });
-    }, node);
+    });
 
     return;
   }

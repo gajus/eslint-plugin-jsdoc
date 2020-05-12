@@ -170,10 +170,10 @@ const getUtils = (
     return commentStringify([tagBlock], {indent}).slice(indent.length - 1);
   };
 
-  utils.reportJSDoc = (msg, tag, handler, nodeRef) => {
+  utils.reportJSDoc = (msg, tag, handler) => {
     report(msg, handler ? (fixer) => {
       handler();
-      const replacement = utils.stringify(jsdoc, nodeRef);
+      const replacement = utils.stringify(jsdoc, node);
 
       return fixer.replaceText(jsdocNode, replacement);
     } : null, tag);

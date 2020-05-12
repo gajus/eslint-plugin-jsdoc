@@ -26,6 +26,34 @@ export default {
     },
     {
       code: `
+      class Test {
+          /**
+           * @param {number} [foo="7"]
+           */
+          quux (foo) {
+
+          }
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Defaults are not permitted on @param.',
+        },
+      ],
+      output: `
+      class Test {
+          /**
+           * @param {number} [foo]
+           */
+          quux (foo) {
+
+          }
+      }
+      `,
+    },
+    {
+      code: `
           /**
            * @param {number} [foo="7"]
            */

@@ -163,6 +163,44 @@ export default {
     },
     {
       code: `
+      class Test {
+          /**
+           * @typedef (SomeType) SomeTypedef
+           * @property cfg
+           * @property cfg.foo
+           * @property cfg.foo
+           */
+          quux ({foo, bar}) {
+
+          }
+      }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Duplicate @property "cfg.foo"',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+      class Test {
+          /**
+           * @typedef (SomeType) SomeTypedef
+           * @property cfg
+           * @property cfg.foo
+           */
+          quux ({foo, bar}) {
+
+          }
+      }
+      `,
+    },
+    {
+      code: `
           /**
            * @typedef (SomeType) SomeTypedef
            * @property cfg

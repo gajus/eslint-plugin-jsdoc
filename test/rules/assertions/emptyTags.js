@@ -26,6 +26,34 @@ export default {
     },
     {
       code: `
+      class Test {
+          /**
+           * @abstract extra text
+           */
+          quux () {
+
+          }
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@abstract should be empty.',
+        },
+      ],
+      output: `
+      class Test {
+          /**
+           * @abstract
+           */
+          quux () {
+
+          }
+      }
+      `,
+    },
+    {
+      code: `
           /**
            * @abstract extra text
            * @inheritdoc
