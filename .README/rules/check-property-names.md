@@ -7,10 +7,10 @@ and that nested properties have defined roots.
 
 ##### `enableFixer`
 
-Set to `false` to avoid auto-removing `@property`'s duplicates (based on
+Set to `true` to auto-remove `@property` duplicates (based on
 identical names).
 
-Note that, by default, duplicates of the same name are removed even if
+Note that this option will remove duplicates of the same name even if
 the definitions do not match in other ways (e.g., the second property will
 be removed even if it has a different type or description).
 

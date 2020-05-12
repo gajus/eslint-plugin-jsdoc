@@ -66,6 +66,11 @@ export default {
           message: 'Duplicate @property "employees[].name"',
         },
       ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
       output: `
           /**
            * Assign the project to a list of employees.
@@ -88,6 +93,11 @@ export default {
           message: 'Duplicate @property "foo"',
         },
       ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
       output: `
           /**
            * @typedef (SomeType) SomeTypedef
@@ -107,11 +117,6 @@ export default {
         {
           line: 5,
           message: 'Duplicate @property "foo"',
-        },
-      ],
-      options: [
-        {
-          enableFixer: false,
         },
       ],
       output: `
@@ -138,6 +143,11 @@ export default {
         {
           line: 6,
           message: 'Duplicate @property "cfg.foo"',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
         },
       ],
       output: `
@@ -168,6 +178,11 @@ export default {
         {
           line: 6,
           message: 'Duplicate @property "cfg.foo"',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
         },
       ],
       output: `
@@ -201,6 +216,11 @@ export default {
           message: 'Duplicate @property "cfg.foo"',
         },
       ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
       output: `
           /**
            * @typedef (SomeType) SomeTypedef
@@ -225,6 +245,11 @@ export default {
         {
           line: 5,
           message: 'Duplicate @prop "foo"',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
         },
       ],
       output: `

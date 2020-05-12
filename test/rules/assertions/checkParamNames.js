@@ -129,6 +129,11 @@ export default {
           message: 'Duplicate @param "employees[].name"',
         },
       ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
       output: `
           /**
            * Assign the project to a list of employees.
@@ -190,6 +195,11 @@ export default {
           message: 'Duplicate @param "foo"',
         },
       ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
       output: `
           /**
            * @param foo
@@ -215,6 +225,11 @@ export default {
           message: 'Duplicate @param "foo"',
         },
       ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
       output: `
           /**
            * @param foo
@@ -240,6 +255,11 @@ export default {
           message: 'Duplicate @param "foo"',
         },
       ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
       output: `
           /**
            * @param foo
@@ -266,6 +286,11 @@ export default {
           message: 'Duplicate @param "cfg.foo"',
         },
       ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
       output: `
           /**
            * @param cfg
@@ -291,11 +316,6 @@ export default {
         {
           line: 5,
           message: 'Duplicate @param "cfg.foo"',
-        },
-      ],
-      options: [
-        {
-          enableFixer: false,
         },
       ],
       output: `
@@ -344,6 +364,11 @@ export default {
           message: 'Duplicate @param "cfg.foo"',
         },
       ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
       output: `
           /**
            * @param cfg
@@ -390,6 +415,11 @@ export default {
         {
           line: 5,
           message: 'Duplicate @param "cfg.foo"',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
         },
       ],
       output: `
