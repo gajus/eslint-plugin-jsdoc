@@ -1703,6 +1703,18 @@ function quux (foo) {
 // Options: [{"enableFixer":true}]
 // Message: Duplicate @param "foo"
 
+class bar {
+    /**
+     * @param foo
+     * @param foo
+     */
+    quux (foo) {
+
+    }
+}
+// Options: [{"enableFixer":true}]
+// Message: Duplicate @param "foo"
+
 /**
  * @param foo
  * @param foo
@@ -2198,6 +2210,20 @@ The following patterns are considered problems:
  */
 function quux ({foo, bar}) {
 
+}
+// Options: [{"enableFixer":true}]
+// Message: Duplicate @property "cfg.foo"
+
+class Test {
+    /**
+     * @typedef (SomeType) SomeTypedef
+     * @property cfg
+     * @property cfg.foo
+     * @property cfg.foo
+     */
+    quux ({foo, bar}) {
+
+    }
 }
 // Options: [{"enableFixer":true}]
 // Message: Duplicate @property "cfg.foo"
@@ -4324,6 +4350,16 @@ function quux () {
 }
 // Message: @abstract should be empty.
 
+class Test {
+    /**
+     * @abstract extra text
+     */
+    quux () {
+
+    }
+}
+// Message: @abstract should be empty.
+
 /**
  * @abstract extra text
  * @inheritdoc
@@ -4501,6 +4537,20 @@ class Foo {
     bar() {}
 }
 // Options: [{"contexts":["MethodDefinition"]}]
+// Message: @implements used on a non-constructor function
+
+class Foo {
+    /**
+     * @implements {SomeClass}
+     */
+    constructor() {}
+
+    /**
+     * @implements {SomeClass}
+     */
+    bar() {}
+}
+// Options: [{"contexts":["any"]}]
 // Message: @implements used on a non-constructor function
 ````
 
@@ -5558,11 +5608,32 @@ function quux (foo) {
 }
 // Message: Types are not permitted on @param.
 
+class quux {
+  /**
+   * @param {number} foo
+   */
+  bar (foo) {
+
+  }
+}
+// Message: Types are not permitted on @param.
+
 /**
  * @param {number} foo
  */
 function quux (foo) {
 
+}
+// Options: [{"contexts":["any"]}]
+// Message: Types are not permitted on @param.
+
+class quux {
+  /**
+   * @param {number} foo
+   */
+  quux (foo) {
+
+  }
 }
 // Options: [{"contexts":["any"]}]
 // Message: Types are not permitted on @param.
@@ -10888,6 +10959,14 @@ The following patterns are considered problems:
  */
 // Message: Missing JSDoc @property.
 
+class Test {
+    /**
+     * @typedef {object} SomeTypedef
+     */
+    quux () {}
+}
+// Message: Missing JSDoc @property.
+
 /**
  * @typedef {PlainObject} SomeTypedef
  */
@@ -12075,6 +12154,16 @@ class TestClass {
   }
 }
 // Options: [{"checkGetters":true}]
+// Message: Missing JSDoc @returns declaration.
+
+class quux {
+  /**
+   *
+   */
+  quux () {
+  }
+}
+// Options: [{"contexts":["any"],"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 ````
 

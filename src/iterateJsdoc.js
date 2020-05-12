@@ -142,6 +142,7 @@ const getUtils = (
 
   utils.isIteratingFunction = () => {
     return !iteratingAll || [
+      'MethodDefinition',
       'ArrowFunctionExpression',
       'FunctionDeclaration',
       'FunctionExpression',

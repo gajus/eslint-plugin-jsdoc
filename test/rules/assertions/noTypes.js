@@ -83,6 +83,39 @@ export default {
     },
     {
       code: `
+      class quux {
+        /**
+         * @param {number} foo
+         */
+        quux (foo) {
+
+        }
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Types are not permitted on @param.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['any'],
+        },
+      ],
+      output: `
+      class quux {
+        /**
+         * @param foo
+         */
+        quux (foo) {
+
+        }
+      }
+      `,
+    },
+    {
+      code: `
           /**
            * @function
            * @param {number} foo

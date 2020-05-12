@@ -508,6 +508,27 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      class quux {
+        /**
+         *
+         */
+        quux () {
+        }
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [{
+        contexts: ['any'],
+        forceRequireReturn: true,
+      }],
+    },
   ],
   valid: [
     {
