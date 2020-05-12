@@ -76,7 +76,7 @@ export default iterateJsdoc(({
   utils,
 }) => {
   const {
-    enableFixer = true,
+    enableFixer = false,
   } = context.options[0] || {};
   const jsdocPropertyNamesDeep = utils.getJsdocTagsDeep('property');
   if (!jsdocPropertyNamesDeep.length) {

@@ -188,7 +188,7 @@ export default iterateJsdoc(({
     allowExtraTrailingParamDocs,
     checkRestProperty = false,
     checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
-    enableFixer = true,
+    enableFixer = false,
   } = context.options[0] || {};
 
   const lastSlashPos = checkTypesPattern.lastIndexOf('/');
