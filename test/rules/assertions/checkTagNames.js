@@ -115,6 +115,37 @@ export default {
     {
       code: `
           /**
+           * @constructor foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag (preference). Replace "constructor" JSDoc tag with "cons".',
+        },
+      ],
+      output: `
+          /**
+           * @cons foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            'tag constructor': 'cons',
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
            * @arg foo
            */
           function quux (foo) {

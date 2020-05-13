@@ -223,8 +223,15 @@ const getPreferredTagName = (
     return name;
   }
 
-  if (_.has(tagPreference, name)) {
-    return tagPreference[name];
+  // Allow keys to have a 'tag ' prefix to avoid upstream bug in ESLint
+  // that disallows keys that conflict with Object.prototype,
+  // e.g. 'tag constructor' for 'constructor' (#537)
+  const tagPreferenceFixed = _.mapKeys(tagPreference, (value, key) => {
+    return key.replace('tag ', '');
+  });
+
+  if (_.has(tagPreferenceFixed, name)) {
+    return tagPreferenceFixed[name];
   }
 
   const tagNames = getTagNamesForMode(mode, context);
