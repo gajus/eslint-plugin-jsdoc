@@ -9854,6 +9854,15 @@ function quux ({foo}) {
 // Message: Missing JSDoc @param "root0" declaration.
 
 /**
+ * @param foo
+ */
+function quux (foo, bar, {baz}) {
+
+}
+// Options: [{"checkDestructured":false}]
+// Message: Missing JSDoc @param "bar" declaration.
+
+/**
  *
  */
 function quux ({foo}) {
@@ -10929,6 +10938,16 @@ class CSS {
   setCssObject(propertyObject: {[key: string]: string | number}): void {
   }
 }
+
+/**
+ * @param foo
+ * @param bar
+ * @param cfg
+ */
+function quux (foo, bar, {baz}) {
+
+}
+// Options: [{"checkDestructured":false}]
 ````
 
 
