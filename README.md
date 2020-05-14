@@ -212,7 +212,7 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
-Note: ESLint does not allow settings to have keys which conflict with Object.prototype e.g. `'constructor'`. To work around this use can use the key `'tag constructor'`.
+Note: ESLint does not allow settings to have keys which conflict with `Object.prototype` e.g. `'constructor'`. To work around this, you can use the key `'tag constructor'`.
 
 One may also use an object with a `message` and `replacement`.
 
