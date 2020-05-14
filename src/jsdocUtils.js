@@ -216,7 +216,7 @@ const getPreferredTagName = (
   name : string,
   tagPreference : Object = {},
 ) : string|Object => {
-  const prefValues = _.values(tagPreference);
+  const prefValues = Object.values(tagPreference);
   if (prefValues.includes(name) || prefValues.some((prefVal) => {
     return prefVal && typeof prefVal === 'object' && prefVal.replacement === name;
   })) {
@@ -236,9 +236,9 @@ const getPreferredTagName = (
 
   const tagNames = getTagNamesForMode(mode, context);
 
-  const preferredTagName = _.findKey(tagNames, (aliases) => {
+  const preferredTagName = Object.entries(tagNames).find(([, aliases]) => {
     return aliases.includes(name);
-  });
+  })?.[0];
   if (preferredTagName) {
     return preferredTagName;
   }
@@ -253,7 +253,7 @@ const isValidTag = (
   definedTags : Array,
 ) : boolean => {
   const tagNames = getTagNamesForMode(mode, context);
-  const validTagNames = _.keys(tagNames).concat(_.flatten(_.values(tagNames)));
+  const validTagNames = Object.keys(tagNames).concat(_.flatten(Object.values(tagNames)));
   const additionalTags = definedTags;
   const allTags = validTagNames.concat(additionalTags);
 
