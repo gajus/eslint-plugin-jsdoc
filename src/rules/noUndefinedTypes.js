@@ -91,7 +91,6 @@ export default iterateJsdoc(({
       scopeManager.__options.nodejsScope ||
       scopeManager.isModule() ?
         _.flatMap(globalScope.childScopes, ({variables}) => {
-          // Flatten
           return variables;
         }, []).map(({name}) => {
           return name;
