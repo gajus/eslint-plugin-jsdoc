@@ -67,11 +67,11 @@ export default iterateJsdoc(({
 
   let templateTags = utils.getPresentTags('template');
   const classJsdoc = utils.getClassJsdoc();
-  if (classJsdoc && classJsdoc.tags) {
+  if (classJsdoc?.tags) {
     templateTags = templateTags.concat(
       classJsdoc.tags
-        .filter((tag) => {
-          return tag.tag === 'template';
+        .filter(({tag}) => {
+          return tag === 'template';
         }),
     );
   }
@@ -102,8 +102,8 @@ export default iterateJsdoc(({
     .concat(definedPreferredTypes)
     .concat(settings.mode === 'jsdoc' ? [] : closureGenericTypes));
 
-  const jsdocTagsWithPossibleType = utils.filterTags((tag) => {
-    return utils.tagMightHaveTypePosition(tag.tag);
+  const jsdocTagsWithPossibleType = utils.filterTags(({tag}) => {
+    return utils.tagMightHaveTypePosition(tag);
   });
 
   jsdocTagsWithPossibleType.forEach((tag) => {
