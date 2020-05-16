@@ -119,20 +119,22 @@ const getOptions = (context) => {
         return false;
       }
 
-      return Object.keys(baseObj.properties).reduce((obj, prop) => {
+      const properties = {};
+      Object.keys(baseObj.properties).forEach((prop) => {
         const opt = getOption(context, baseObj, 'publicOnly', prop);
-        obj[prop] = opt;
+        properties[prop] = opt;
+      });
 
-        return obj;
-      }, {});
+      return properties;
     })(OPTIONS_SCHEMA.properties.publicOnly.oneOf[1]),
     require: ((baseObj) => {
-      return Object.keys(baseObj.properties).reduce((obj, prop) => {
+      const properties = {};
+      Object.keys(baseObj.properties).forEach((prop) => {
         const opt = getOption(context, baseObj, 'require', prop);
-        obj[prop] = opt;
+        properties[prop] = opt;
+      });
 
-        return obj;
-      }, {});
+      return properties;
     })(OPTIONS_SCHEMA.properties.require),
   };
 };

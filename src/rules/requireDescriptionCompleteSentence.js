@@ -2,13 +2,13 @@ import _ from 'lodash';
 import {RegExtras} from 'regextras/dist/main-umd';
 import iterateJsdoc from '../iterateJsdoc';
 
-const otherDescriptiveTags = [
+const otherDescriptiveTags = new Set([
   // 'copyright' and 'see' might be good addition, but as the former may be
   //   sensitive text, and the latter may have just a link, they are not
   //   included by default
   'summary', 'file', 'fileoverview', 'overview', 'classdesc', 'todo',
   'deprecated', 'throws', 'exception', 'yields', 'yield',
-];
+]);
 
 const extractParagraphs = (text) => {
   // Todo [engine:node@>8.11.0]: Uncomment following line with neg. lookbehind instead
@@ -175,7 +175,7 @@ export default iterateJsdoc(({
 
   const {tagsWithNames} = utils.getTagsByType(jsdoc.tags);
   const tagsWithoutNames = utils.filterTags(({tag: tagName}) => {
-    return otherDescriptiveTags.includes(tagName) ||
+    return otherDescriptiveTags.has(tagName) ||
       utils.hasOptionTag(tagName) && !tagsWithNames.some(({tag}) => {
         // If user accidentally adds tags with names (or like `returns`
         //  get parsed as having names), do not add to this list

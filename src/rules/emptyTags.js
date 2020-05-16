@@ -1,20 +1,20 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const defaultEmptyTags = [
+const defaultEmptyTags = new Set([
   'abstract', 'async', 'generator', 'global', 'hideconstructor',
   'ignore', 'inner', 'instance', 'override', 'readonly',
 
   // jsdoc doesn't use this form in its docs, but allow for compatibility with
   //  TypeScript which allows and Closure which requires
   'inheritDoc',
-];
+]);
 
-const emptyIfNotClosure = [
+const emptyIfNotClosure = new Set([
   'package', 'private', 'protected', 'public', 'static',
 
   // Closure doesn't allow with this casing
   'inheritdoc',
-];
+]);
 
 export default iterateJsdoc(({
   settings,
@@ -25,11 +25,11 @@ export default iterateJsdoc(({
     return;
   }
   const emptyTags = utils.filterTags(({tag: tagName}) => {
-    return defaultEmptyTags.includes(tagName) ||
+    return defaultEmptyTags.has(tagName) ||
       utils.hasOptionTag(tagName) && jsdoc.tags.some(({tag}) => {
         return tag === tagName;
       }) ||
-      settings.mode !== 'closure' && emptyIfNotClosure.includes(tagName);
+      settings.mode !== 'closure' && emptyIfNotClosure.has(tagName);
   });
   emptyTags.forEach((tag) => {
     const fix = () => {

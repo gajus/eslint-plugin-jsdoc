@@ -1,9 +1,9 @@
 import {jsdocTags, typeScriptTags, closureTags} from '../../../src/tagNames';
 
 const buildTagBlock = (tags) => {
-  return '/** \n * @' + Object.keys(tags).reduce((string, tagName, idx) => {
-    return string + (idx === 0 ? '' : '\n * @') + tagName;
-  }, '') + '\n */';
+  return '/** \n * @' + Object.keys(tags).map((tagName, idx) => {
+    return (idx === 0 ? '' : '\n * @') + tagName;
+  }).join('') + '\n */';
 };
 
 // We avoid testing all closure tags as too many

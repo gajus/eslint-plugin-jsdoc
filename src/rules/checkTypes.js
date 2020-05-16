@@ -121,7 +121,7 @@ export default iterateJsdoc(({
 
     try {
       typeAst = parse(jsdocTag.type);
-    } catch (error) {
+    } catch {
       return;
     }
 

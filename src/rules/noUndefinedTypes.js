@@ -80,7 +80,7 @@ export default iterateJsdoc(({
     return jsdocUtils.parseClosureTemplateTag(tag);
   });
 
-  const allDefinedTypes = globalScope.variables.map((variable) => {
+  const allDefinedTypes = new Set(globalScope.variables.map((variable) => {
     return variable.name;
   })
 
@@ -90,6 +90,7 @@ export default iterateJsdoc(({
       // This covers `commonjs` as well as `node`
       scopeManager.__options.nodejsScope ||
       scopeManager.isModule() ?
+        // eslint-disable-next-line unicorn/no-reduce
         globalScope.childScopes.reduce((arr, {variables}) => {
           // Flatten
           arr.push(...variables);
@@ -103,7 +104,7 @@ export default iterateJsdoc(({
     .concat(typedefDeclarations)
     .concat(definedTypes)
     .concat(definedPreferredTypes)
-    .concat(settings.mode === 'jsdoc' ? [] : closureGenericTypes);
+    .concat(settings.mode === 'jsdoc' ? [] : closureGenericTypes));
 
   const jsdocTagsWithPossibleType = utils.filterTags((tag) => {
     return utils.tagMightHaveTypePosition(tag.tag);
@@ -114,14 +115,14 @@ export default iterateJsdoc(({
 
     try {
       parsedType = parseType(tag.type);
-    } catch (error) {
+    } catch {
       // On syntax error, will be handled by valid-types.
       return;
     }
 
     traverse(parsedType, ({type, name}) => {
       if (type === 'NAME') {
-        if (!allDefinedTypes.includes(name)) {
+        if (!allDefinedTypes.has(name)) {
           report(`The type '${name}' is undefined.`, null, tag);
         } else if (!_.includes(extraTypes, name)) {
           context.markVariableAsUsed(name);

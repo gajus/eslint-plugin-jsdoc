@@ -65,11 +65,11 @@ export default iterateJsdoc(({
 
   const missingTags = [];
   const flattenedRoots = utils.flattenRoots(functionParameterNames).names;
-  const paramIndex = flattenedRoots.reduce((acc, cur, idx) => {
-    acc[cur] = idx;
 
-    return acc;
-  }, {});
+  const paramIndex = {};
+  flattenedRoots.forEach((cur, idx) => {
+    paramIndex[cur] = idx;
+  });
 
   const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
     const remainingRoots = functionParameterNames.slice(indexAtFunctionParams || 0);
