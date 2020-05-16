@@ -67,7 +67,7 @@ export default iterateJsdoc(({
     } else {
       try {
         spdxExpressionParse(license);
-      } catch (error) {
+      } catch {
         report(
           `Invalid JSDoc @${targetTagName}: "${license}"; expected SPDX expression: https://spdx.org/licenses/.`,
           null,

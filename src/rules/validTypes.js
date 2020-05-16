@@ -24,7 +24,7 @@ export default iterateJsdoc(({
     const validNamepathParsing = function (namepath, tagName) {
       try {
         parse(namepath);
-      } catch (error) {
+      } catch {
         let handled = false;
 
         if (tagName) {
@@ -34,7 +34,7 @@ export default iterateJsdoc(({
               try {
                 parse(namepath.slice(0, -1));
                 handled = true;
-              } catch (memberofError) {
+              } catch {
                 // Use the original error for including the whole type
               }
             }
@@ -44,7 +44,7 @@ export default iterateJsdoc(({
               try {
                 parse(namepath.slice(1));
                 handled = true;
-              } catch (memberofError) {
+              } catch {
                 // Use the original error for including the whole type
               }
             }
@@ -64,7 +64,7 @@ export default iterateJsdoc(({
     const validTypeParsing = function (type) {
       try {
         parse(type);
-      } catch (error) {
+      } catch {
         report(`Syntax error in type: ${type}`, null, tag);
 
         return false;

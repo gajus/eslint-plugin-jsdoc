@@ -10,6 +10,8 @@ const flattenRoots = (params, root = '') => {
   let hasRestElement = false;
   let hasPropertyRest = false;
   const rests = [];
+
+  // eslint-disable-next-line unicorn/no-reduce
   const names = params.reduce((acc, cur) => {
     if (Array.isArray(cur)) {
       let nms;
@@ -167,18 +169,19 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
  * "@param foo; @param foo.bar".
  */
 const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object> => {
-  return (jsdoc.tags || []).reduce((arr, {name, tag, type}, idx) => {
+  const ret = [];
+  (jsdoc.tags || []).forEach(({name, tag, type}, idx) => {
     if (tag !== targetTagName) {
-      return arr;
+      return;
     }
-    arr.push({
+    ret.push({
       idx,
       name,
       type,
     });
+  });
 
-    return arr;
-  }, []);
+  return ret;
 };
 
 const modeWarnSettings = WarnSettings();
@@ -299,27 +302,27 @@ const hasDefinedTypeReturnTag = (tag) => {
   return true;
 };
 
-const tagsWithMandatoryTypePosition = [
+const tagsWithMandatoryTypePosition = new Set([
   // These both show curly brackets in the doc signature and examples
   // "typeExpression"
   'implements',
 
   // "typeName"
   'type',
-];
+]);
 
-const tagsWithMandatoryTypePositionClosure = [
+const tagsWithMandatoryTypePositionClosure = new Set([
   ...tagsWithMandatoryTypePosition,
   'this',
   'define',
-];
+]);
 
 // All of these have a signature with "type" except for
 //  `augments`/`extends` ("namepath")
 //  `param`/`arg`/`argument` (no signature)
 //  `property`/`prop` (no signature)
 // `modifies` (undocumented)
-const tagsWithOptionalTypePosition = [
+const tagsWithOptionalTypePosition = new Set([
   // These have the example showing curly brackets but not in their doc signature, e.g.: https://jsdoc.app/tags-enum.html
   'enum',
   'member', 'var',
@@ -350,9 +353,9 @@ const tagsWithOptionalTypePosition = [
   //  "name" would be suggested rather than "namepath" based on example; not
   //  sure if name is required
   'modifies',
-];
+]);
 
-const tagsWithOptionalTypePositionClosure = [
+const tagsWithOptionalTypePositionClosure = new Set([
   ...tagsWithOptionalTypePosition,
 
   'export',
@@ -366,10 +369,10 @@ const tagsWithOptionalTypePositionClosure = [
   // These do not show a signature nor show curly brackets in the example
   'public',
   'static',
-];
+]);
 
 // None of these show as having curly brackets for their name/namepath
-const namepathDefiningTags = [
+const namepathDefiningTags = new Set([
   // These appear to require a "name" in their signature, albeit these
   //  are somewhat different from other "name"'s (including as described
   // at https://jsdoc.app/about-namepaths.html )
@@ -393,11 +396,11 @@ const namepathDefiningTags = [
   'name',
   'typedef',
   'callback',
-];
+]);
 
 // The following do not seem to allow curly brackets in their doc
 //  signature or examples (besides `modifies`)
-const tagsWithOptionalNamePosition = [
+const tagsWithOptionalNamePosition = new Set([
   ...namepathDefiningTags,
 
   // `borrows` has a different format, however, so needs special parsing;
@@ -423,12 +426,12 @@ const tagsWithOptionalNamePosition = [
 
   // Signature allows for "namepath" or text
   'see',
-];
+]);
 
 // Todo: `@link` seems to require a namepath OR URL and might be checked as such.
 
 // The doc signature of `event` seems to require a "name"
-const tagsWithMandatoryNamePosition = [
+const tagsWithMandatoryNamePosition = new Set([
   // "name" (and a special syntax for the `external` name)
   'external', 'host',
 
@@ -436,9 +439,9 @@ const tagsWithMandatoryNamePosition = [
   'callback',
   'name',
   'typedef',
-];
+]);
 
-const tagsWithMandatoryTypeOrNamePosition = [
+const tagsWithMandatoryTypeOrNamePosition = new Set([
   // "namepath"
   'alias',
   'augments', 'extends',
@@ -454,36 +457,36 @@ const tagsWithMandatoryTypeOrNamePosition = [
 
   // "OtherObjectPath"
   'mixes',
-];
+]);
 
 const isNamepathDefiningTag = (tagName) => {
-  return namepathDefiningTags.includes(tagName);
+  return namepathDefiningTags.has(tagName);
 };
 
 const tagMightHaveTypePosition = (mode, tag) => {
   if (mode === 'closure') {
-    return tagsWithMandatoryTypePositionClosure.includes(tag) ||
-      tagsWithOptionalTypePositionClosure.includes(tag);
+    return tagsWithMandatoryTypePositionClosure.has(tag) ||
+      tagsWithOptionalTypePositionClosure.has(tag);
   }
 
-  return tagsWithMandatoryTypePosition.includes(tag) ||
-    tagsWithOptionalTypePosition.includes(tag);
+  return tagsWithMandatoryTypePosition.has(tag) ||
+    tagsWithOptionalTypePosition.has(tag);
 };
 
 const tagMustHaveTypePosition = (mode, tag) => {
   if (mode === 'closure') {
-    return tagsWithMandatoryTypePositionClosure.includes(tag);
+    return tagsWithMandatoryTypePositionClosure.has(tag);
   }
 
-  return tagsWithMandatoryTypePosition.includes(tag);
+  return tagsWithMandatoryTypePosition.has(tag);
 };
 
 const tagMightHaveNamePosition = (tag) => {
-  return tagsWithOptionalNamePosition.includes(tag);
+  return tagsWithOptionalNamePosition.has(tag);
 };
 
 const tagMustHaveNamePosition = (tag) => {
-  return tagsWithMandatoryNamePosition.includes(tag);
+  return tagsWithMandatoryNamePosition.has(tag);
 };
 
 const tagMightHaveEitherTypeOrNamePosition = (mode, tag) => {
@@ -491,7 +494,7 @@ const tagMightHaveEitherTypeOrNamePosition = (mode, tag) => {
 };
 
 const tagMustHaveEitherTypeOrNamePosition = (tag) => {
-  return tagsWithMandatoryTypeOrNamePosition.includes(tag);
+  return tagsWithMandatoryTypeOrNamePosition.has(tag);
 };
 
 /**
@@ -601,34 +604,36 @@ const enforcedContexts = (context, defaultContexts) => {
  * @param {Function} checkJsdoc
  */
 const getContextObject = (contexts, checkJsdoc) => {
-  return contexts.reduce((obj, prop) => {
-    if (typeof prop === 'object') {
-      obj[prop.context] = checkJsdoc;
-    } else {
-      obj[prop] = checkJsdoc;
-    }
+  const properties = {};
 
-    return obj;
-  }, {});
+  contexts.forEach((prop) => {
+    if (typeof prop === 'object') {
+      properties[prop.context] = checkJsdoc;
+    } else {
+      properties[prop] = checkJsdoc;
+    }
+  });
+
+  return properties;
 };
 
 const filterTags = (tags = [], filter) => {
   return tags.filter(filter);
 };
 
-const tagsWithNamesAndDescriptions = [
+const tagsWithNamesAndDescriptions = new Set([
   'param', 'arg', 'argument', 'property', 'prop',
 
   // These two are parsed by our custom parser as though having a `name`
   'returns', 'return',
-];
+]);
 
 const getTagsByType = (context, mode, tags, tagPreference) => {
   const descName = getPreferredTagName(context, mode, 'description', tagPreference);
   const tagsWithoutNames = [];
   const tagsWithNames = filterTags(tags, (tag) => {
     const {tag: tagName} = tag;
-    const tagWithName = tagsWithNamesAndDescriptions.includes(tagName);
+    const tagWithName = tagsWithNamesAndDescriptions.has(tagName);
     if (!tagWithName && tagName !== descName) {
       tagsWithoutNames.push(tag);
     }
