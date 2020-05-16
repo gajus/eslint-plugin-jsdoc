@@ -80,8 +80,8 @@ export default iterateJsdoc(({
     return jsdocUtils.parseClosureTemplateTag(tag);
   });
 
-  const allDefinedTypes = new Set(globalScope.variables.map((variable) => {
-    return variable.name;
+  const allDefinedTypes = new Set(globalScope.variables.map(({name}) => {
+    return name;
   })
 
     // If the file is a module, concat the variables from the module scope.
