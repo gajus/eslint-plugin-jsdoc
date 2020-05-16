@@ -90,12 +90,9 @@ export default iterateJsdoc(({
       // This covers `commonjs` as well as `node`
       scopeManager.__options.nodejsScope ||
       scopeManager.isModule() ?
-        // eslint-disable-next-line unicorn/no-reduce
-        globalScope.childScopes.reduce((arr, {variables}) => {
+        _.flatMap(globalScope.childScopes, ({variables}) => {
           // Flatten
-          arr.push(...variables);
-
-          return arr;
+          return variables;
         }, []).map(({name}) => {
           return name;
         }) : [],
