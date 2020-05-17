@@ -8488,6 +8488,10 @@ class Foo {
 }
 // Options: [{"contexts":["MethodDefinition[key.name!=\"constructor\"]"],"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
+
+function bar(arg: true): true;
+// Options: [{"contexts":["TSDeclareFunction"]}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

@@ -2001,6 +2001,31 @@ export default {
       }
       `,
     },
+    {
+      code: `
+      function bar(arg: true): true;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      function bar(arg: true): true;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [{
     code: `
