@@ -8,7 +8,7 @@ const globalState = new Map();
 
 const skipSeeLink = (parser) => {
   return (str, data) => {
-    if (data.tag === 'see' && str.match(/\{@link.+?\}/u)) {
+    if (data.tag === 'see' && (/\{@link.+?\}/u).test(str)) {
       return null;
     }
 
