@@ -12,3 +12,4 @@ package-lock.json
 !.README
 !.travis.yml
 !.ncurc.js
+!.github
