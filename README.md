@@ -8490,8 +8490,16 @@ class Foo {
 // Options: [{"contexts":["MethodDefinition[key.name!=\"constructor\"]"],"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
+function foo(arg: boolean): boolean {
+  return arg;
+}
+
 function bar(arg: true): true;
-// Options: [{"contexts":["TSDeclareFunction"]}]
+function bar(arg: false): false;
+function bar(arg: boolean): boolean {
+  return arg;
+}
+// Options: [{"contexts":["TSDeclareFunction:not(TSDeclareFunction + TSDeclareFunction)","FunctionDeclaration:not(TSDeclareFunction + FunctionDeclaration)"],"require":{"FunctionDeclaration":false}}]
 // Message: Missing JSDoc comment.
 ````
 

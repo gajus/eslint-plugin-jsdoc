@@ -2003,26 +2003,53 @@ export default {
     },
     {
       code: `
+      function foo(arg: boolean): boolean {
+        return arg;
+      }
+
       function bar(arg: true): true;
+      function bar(arg: false): false;
+      function bar(arg: boolean): boolean {
+        return arg;
+      }
       `,
       errors: [
         {
           line: 2,
           message: 'Missing JSDoc comment.',
         },
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
       ],
       options: [
         {
           contexts: [
-            'TSDeclareFunction',
+            'TSDeclareFunction:not(TSDeclareFunction + TSDeclareFunction)',
+            'FunctionDeclaration:not(TSDeclareFunction + FunctionDeclaration)',
           ],
+          require: {
+            FunctionDeclaration: false,
+          },
         },
       ],
       output: `
       /**
        *
        */
+      function foo(arg: boolean): boolean {
+        return arg;
+      }
+
+      /**
+       *
+       */
       function bar(arg: true): true;
+      function bar(arg: false): false;
+      function bar(arg: boolean): boolean {
+        return arg;
+      }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
