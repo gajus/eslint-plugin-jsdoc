@@ -418,7 +418,12 @@ This option works with [ESLint's selectors](https://eslint.org/docs/developer-gu
 expressions one may use to target a specific node type or types, including
 subsets of the type(s) such as nodes with certain children or attributes.
 
-To know all of the definitions one may use, it will depend on the
+These expressions are used within ESLint plugins to find those parts of
+your files' code which are of interest to check. However, in
+`eslint-plugin-jsdoc`, we also allow you to use these selectors to define
+additional contexts where you wish our own rules to be applied.
+
+To know all of the AST definitions one may target, it will depend on the
 [parser](https://eslint.org/docs/user-guide/configuring#specifying-parser)
 you are using with ESLint (e.g., `espree` is the default parser for ESLint,
 and this follows [EStree AST](https://github.com/estree/estree) but
@@ -431,12 +436,14 @@ the [ESTree docs](https://github.com/estree/estree) as used by Espree or see
 ESLint's [overview of the structure of AST](https://eslint.org/docs/developer-guide/working-with-custom-parsers#the-ast-specification).
 
 However, it can sometimes be even more helpful to get an idea of ASt by just
-providing some JavaScript to the wonderful [AST Explorer](https://astexplorer.net/)
-tool and see what AST is built for your code. You can set the tool to the parser
-which you are using.
+providing some of your JavaScript to the wonderful
+[AST Explorer](https://astexplorer.net/) tool and see what AST is built out
+of your code. You can set the tool to the specific parser which you are using.
 
-Tip: If you want to more deeply understand not just the AST but the esquery
-selector syntax, you can set the "Transform" feature to ESLint and test out
+Tip: If you want to more deeply understand not just the resulting AST tree
+structures for any given code but also the syntax for esquery selectors so
+that you can, for example, find only those nodes with a child of a certain
+type, you can set the "Transform" feature to ESLint and test out
 esquery selectors in place of the selector expression (e.g., replace `'VariableDeclaration > VariableDeclarator > Identifier[name="someVar"]'` as
 we have [here](https://astexplorer.net/#/gist/71a93130c19599d6f197bddb29c13a59/latest)) to the selector you wish so as to get messages reported in the bottom right
 pane which match your [esquery](https://github.com/estools/esquery/#readme)
