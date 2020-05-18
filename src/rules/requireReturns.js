@@ -88,7 +88,7 @@ export default iterateJsdoc(({
       return true;
     }
 
-    return !isAsync && iteratingFunction && utils.hasReturnValue();
+    return iteratingFunction && utils.hasReturnValue();
   };
 
   if (shouldReport()) {

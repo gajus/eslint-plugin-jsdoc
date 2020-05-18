@@ -12209,6 +12209,14 @@ class quux {
 }
 // Options: [{"contexts":["any"],"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
+
+/**
+ * @param {array} a
+ */
+async function foo(a) {
+  return Promise.all(a);
+}
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:
@@ -12486,13 +12494,6 @@ function quux () {
 
 }
 // Options: [{"exemptedBy":["type"]}]
-
-/**
- * @param {array} a
- */
-async function foo(a) {
-  return Promise.all(a);
-}
 
 /**
  * @param {array} a
