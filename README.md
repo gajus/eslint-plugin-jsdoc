@@ -8561,6 +8561,18 @@ function bar(arg: boolean): boolean {
 }
 // Options: [{"contexts":["TSDeclareFunction:not(TSDeclareFunction + TSDeclareFunction)","FunctionDeclaration:not(TSDeclareFunction + FunctionDeclaration)"],"require":{"FunctionDeclaration":false}}]
 // Message: Missing JSDoc comment.
+
+export function foo(arg: boolean): boolean {
+  return arg;
+}
+
+export function bar(arg: true): true;
+export function bar(arg: false): false;
+export function bar(arg: boolean): boolean {
+  return arg;
+}
+// Options: [{"contexts":["ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"]:not(ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"] + ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"])","ExportNamedDeclaration[declaration.type=\"FunctionDeclaration\"]:not(ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"] + ExportNamedDeclaration[declaration.type=\"FunctionDeclaration\"])"],"require":{"FunctionDeclaration":false}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

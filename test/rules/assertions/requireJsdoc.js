@@ -2053,6 +2053,62 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      export function foo(arg: boolean): boolean {
+        return arg;
+      }
+
+      export function bar(arg: true): true;
+      export function bar(arg: false): false;
+      export function bar(arg: boolean): boolean {
+        return arg;
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'ExportNamedDeclaration[declaration.type="TSDeclareFunction"]:' +
+              'not(ExportNamedDeclaration[declaration.type="TSDeclareFunction"] + ' +
+              'ExportNamedDeclaration[declaration.type="TSDeclareFunction"])',
+            'ExportNamedDeclaration[declaration.type="FunctionDeclaration"]:not(' +
+              'ExportNamedDeclaration[declaration.type="TSDeclareFunction"] + ' +
+              'ExportNamedDeclaration[declaration.type="FunctionDeclaration"])',
+          ],
+          require: {
+            FunctionDeclaration: false,
+          },
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export function foo(arg: boolean): boolean {
+        return arg;
+      }
+
+      /**
+       *
+       */
+      export function bar(arg: true): true;
+      export function bar(arg: false): false;
+      export function bar(arg: boolean): boolean {
+        return arg;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [{
     code: `
