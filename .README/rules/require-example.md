@@ -24,6 +24,9 @@ where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes)
 Overrides the default contexts (see below). Set to `"any"` if you want
 the rule to apply to any jsdoc block throughout your files.
 
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
+
 ##### `checkConstructors`
 
 A value indicating whether `constructor`s should be checked. Defaults to `true`.

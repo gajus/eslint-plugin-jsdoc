@@ -323,6 +323,9 @@ contexts (see below). May be useful for adding such as
 `TSMethodSignature` in TypeScript or restricting the contexts
 which are checked.
 
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
+
 ##### `checkConstructors`
 
 A value indicating whether `constructor`s should be checked. Defaults to `true`.

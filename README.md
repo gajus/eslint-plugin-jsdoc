@@ -19,6 +19,8 @@ JSDoc linting rules for ESLint.
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [`@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`](#eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns)
         * [Settings to Configure `check-types` and `no-undefined-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types)
+    * [Advanced](#eslint-plugin-jsdoc-advanced)
+        * [AST and Selectors](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
     * [Rules](#eslint-plugin-jsdoc-rules)
         * [`check-access`](#eslint-plugin-jsdoc-rules-check-access)
         * [`check-alignment`](#eslint-plugin-jsdoc-rules-check-alignment)
@@ -402,6 +404,43 @@ See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
 how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
 appended and its bearing on whether types are checked as parents/children
 only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
+
+<a name="eslint-plugin-jsdoc-advanced"></a>
+## Advanced
+
+<a name="eslint-plugin-jsdoc-advanced-ast-and-selectors"></a>
+### AST and Selectors
+
+For various rules, one can add to the environments to which the rule applies
+by using the `contexts` option.
+
+This option works with [ESLint's selectors](https://eslint.org/docs/developer-guide/selectors) which are [esquery](https://github.com/estools/esquery/#readme)
+expressions one may use to target a specific node type or types, including
+subsets of the type(s) such as nodes with certain children or attributes.
+
+To know all of the definitions one may use, it will depend on the
+[parser](https://eslint.org/docs/user-guide/configuring#specifying-parser)
+you are using with ESLint (e.g., `espree` is the default parser for ESLint,
+and this follows [EStree AST](https://github.com/estree/estree) but
+to support the the latest experimental features of JavaScript, one may use
+`babel-eslint` or to be able to have one's rules (including JSDoc rules)
+apply to TypeScript, one may use `@typescript-eslint/parser`, etc.
+
+So you can look up a particular parser to see its rules, e.g., browse through
+the [ESTree docs](https://github.com/estree/estree) as used by Espree or see
+ESLint's [overview of the structure of AST](https://eslint.org/docs/developer-guide/working-with-custom-parsers#the-ast-specification).
+
+However, it can sometimes be even more helpful to get an idea of ASt by just
+providing some JavaScript to the wonderful [AST Explorer](https://astexplorer.net/)
+tool and see what AST is built for your code. You can set the tool to the parser
+which you are using.
+
+Tip: If you want to more deeply understand not just the AST but the esquery
+selector syntax, you can set the "Transform" feature to ESLint and test out
+esquery selectors in place of the selector expression (e.g., replace `'VariableDeclaration > VariableDeclarator > Identifier[name="someVar"]'` as
+we have [here](https://astexplorer.net/#/gist/71a93130c19599d6f197bddb29c13a59/latest)) to the selector you wish so as to get messages reported in the bottom right
+pane which match your [esquery](https://github.com/estools/esquery/#readme)
+selector).
 
 <a name="eslint-plugin-jsdoc-rules"></a>
 ## Rules
@@ -4480,11 +4519,15 @@ funciton is adhering.
 
 Set this to an array of strings representing the AST context
 where you wish the rule to be applied.
+
 Overrides the default contexts (see below). Set to `"any"` if you want
 the rule to apply to any jsdoc block throughout your files (as is necessary
 for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
+
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
 
 |||
 |---|---|
@@ -4749,6 +4792,9 @@ Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
 Overrides the default contexts (see below). Set to `"any"` if you want
 the rule to apply to any jsdoc block throughout your files.
+
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
 
 |||
 |---|---|
@@ -5602,6 +5648,9 @@ the rule to apply to any jsdoc block throughout your files (as is necessary
 for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
+
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
 
 |||
 |---|---|
@@ -7264,6 +7313,9 @@ Set this to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
 Overrides the default contexts (see below). Set to `"any"` if you want
 the rule to apply to any jsdoc block throughout your files.
+
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
 
 <a name="eslint-plugin-jsdoc-rules-require-example-options-16-checkconstructors"></a>
 ##### <code>checkConstructors</code>
@@ -9154,6 +9206,9 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -9274,6 +9329,9 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -9388,6 +9446,9 @@ the rule to apply to any jsdoc block throughout your files (as is necessary
 for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
+
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
 
 |||
 |---|---|
@@ -9826,6 +9887,9 @@ where you wish the rule to be applied. Overrides the default
 contexts (see below). May be useful for adding such as
 `TSMethodSignature` in TypeScript or restricting the contexts
 which are checked.
+
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
 
 <a name="eslint-plugin-jsdoc-rules-require-param-options-23-checkconstructors-1"></a>
 ##### <code>checkConstructors</code>
@@ -11676,6 +11740,9 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -11827,6 +11894,9 @@ the rule to apply to any jsdoc block throughout your files (as is necessary
 for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
+
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
+more on the expected format.
 
 |||
 |---|---|
