@@ -75,7 +75,8 @@ npm install --save-dev eslint-plugin-jsdoc
 <a name="eslint-plugin-jsdoc-configuration"></a>
 ## Configuration
 
-Add `plugins` section to `.eslintrc` and specify `eslint-plugin-jsdoc` as a plugin.
+Add `plugins` section to [.eslintrc.*](https://eslint.org/docs/user-guide/configuring#configuration-file-formats) 
+and specify `eslint-plugin-jsdoc` as a plugin.
 
 ```json
 {
@@ -120,8 +121,8 @@ Finally, enable all of the rules that you would like to use.
 }
 ```
 
-Or you can simply add the following to `.eslintrc`, which enables the rules commented
-above as "recommended":
+Or you can simply add the following to [.eslintrc.*](https://eslint.org/docs/user-guide/configuring#configuration-file-formats)
+, which enables the rules commented above as "recommended":
 
 ```json
 {
