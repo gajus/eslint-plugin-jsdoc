@@ -6,6 +6,17 @@ labels: bug
 assignees: ''
 ---
 
+<!--
+NOTE: If this is a bug specifically related to the parsing of types, e.g.,
+the `some-unrecognized+type-syntax` (within curly brackets) in:
+
+/**
+ * @param {some-unrecognized+type-syntax} myName
+ */
+
+...then please file instead at https://github.com/jsdoctypeparser/jsdoctypeparser/issues/
+-->
+
 ## Expected behavior
 <!-- Provide a detailed description of how you expected the software to -->
 <!-- behave. -->

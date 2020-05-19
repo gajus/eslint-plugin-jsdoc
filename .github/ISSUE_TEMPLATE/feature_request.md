@@ -6,6 +6,17 @@ labels: enhancement
 assignees: ''
 ---
 
+<!--
+NOTE: If this is a feature specifically related to the parsing of types, e.g.,
+supporting `some-new+type-syntax` (within curly brackets) in:
+
+/**
+ * @param {some-new+type-syntax} myName
+ */
+
+...then please file instead at https://github.com/jsdoctypeparser/jsdoctypeparser/issues/
+-->
+
 ## Motivation
 
 <!-- What would be the purpose of this new feature? -->
