@@ -8556,6 +8556,16 @@ class Foo {
 // Options: [{"contexts":["MethodDefinition[key.name!=\"constructor\"]"],"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
+class Example extends React.PureComponent {
+  componentDidMount() {}
+
+  render() {}
+
+  someOtherMethod () {}
+}
+// Options: [{"contexts":["MethodDefinition:not([key.name=\"componentDidMount\"]):not([key.name=\"render\"])"],"require":{"ClassDeclaration":true}}]
+// Message: Missing JSDoc comment.
+
 function foo(arg: boolean): boolean {
   return arg;
 }

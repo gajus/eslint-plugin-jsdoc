@@ -2003,6 +2003,52 @@ export default {
     },
     {
       code: `
+      class Example extends React.PureComponent {
+        componentDidMount() {}
+
+        render() {}
+
+        someOtherMethod () {}
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 7,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'MethodDefinition:not([key.name="componentDidMount"]):not([key.name="render"])',
+          ],
+          require: {
+            ClassDeclaration: true,
+          },
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      class Example extends React.PureComponent {
+        componentDidMount() {}
+
+        render() {}
+
+        /**
+         *
+         */
+        someOtherMethod () {}
+      }
+      `,
+    },
+    {
+      code: `
       function foo(arg: boolean): boolean {
         return arg;
       }
