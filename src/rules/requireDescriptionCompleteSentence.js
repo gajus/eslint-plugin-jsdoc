@@ -70,7 +70,10 @@ const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const validateDescription = (description, reportOrig, jsdocNode, abbreviationsRegex, sourceCode, tag) => {
+const validateDescription = (
+  description, reportOrig, jsdocNode, abbreviationsRegex,
+  sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd,
+) => {
   if (!description) {
     return false;
   }
@@ -131,7 +134,7 @@ const validateDescription = (description, reportOrig, jsdocNode, abbreviationsRe
       return true;
     }
 
-    if (!isNewLinePrecededByAPeriod(paragraphNoAbbreviations)) {
+    if (newlineBeforeCapsAssumesBadSentenceEnd && !isNewLinePrecededByAPeriod(paragraphNoAbbreviations)) {
       report('A line of text is started with an uppercase character, but preceding line does not end the sentence.', null, tag);
 
       return true;
@@ -152,6 +155,7 @@ export default iterateJsdoc(({
   const options = context.options[0] || {};
   const {
     abbreviations = [],
+    newlineBeforeCapsAssumesBadSentenceEnd = false,
   } = options;
 
   const abbreviationsRegex = abbreviations.length ?
@@ -163,14 +167,14 @@ export default iterateJsdoc(({
   if (!jsdoc.tags ||
     validateDescription(jsdoc.description, report, jsdocNode, abbreviationsRegex, sourceCode, {
       line: jsdoc.line + 1,
-    })
+    }, newlineBeforeCapsAssumesBadSentenceEnd)
   ) {
     return;
   }
 
   utils.forEachPreferredTag('description', (matchingJsdocTag) => {
     const description = `${matchingJsdocTag.name} ${matchingJsdocTag.description}`.trim();
-    validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, matchingJsdocTag);
+    validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, matchingJsdocTag, newlineBeforeCapsAssumesBadSentenceEnd);
   }, true);
 
   const {tagsWithNames} = utils.getTagsByType(jsdoc.tags);
@@ -186,13 +190,13 @@ export default iterateJsdoc(({
   tagsWithNames.some((tag) => {
     const description = _.trimStart(tag.description, '- ');
 
-    return validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, tag);
+    return validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd);
   });
 
   tagsWithoutNames.some((tag) => {
     const description = `${tag.name} ${tag.description}`.trim();
 
-    return validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, tag);
+    return validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd);
   });
 }, {
   iterateAllJsdocs: true,
@@ -207,6 +211,9 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
+          },
+          newlineBeforeCapsAssumesBadSentenceEnd: {
+            type: 'boolean',
           },
           tags: {
             items: {
