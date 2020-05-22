@@ -210,6 +210,9 @@ export default {
           message: 'A line of text is started with an uppercase character, but preceding line does not end the sentence.',
         },
       ],
+      options: [{
+        newlineBeforeCapsAssumesBadSentenceEnd: true,
+      }],
     },
     {
       code: `
@@ -822,6 +825,25 @@ export default {
        }
        `,
     },
+    {
+      code: `
+      /**
+       * Implements support for the
+       * Swahili voice synthesizer.
+       */
+      function speak() {
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'A line of text is started with an uppercase character, but preceding line does not end the sentence.',
+        },
+      ],
+      options: [{
+        newlineBeforeCapsAssumesBadSentenceEnd: true,
+      }],
+    },
   ],
   valid: [
     {
@@ -1279,6 +1301,16 @@ export default {
       options: [{
         abbreviations: ['etc', 'e.g.', 'i.e.'],
       }],
+    },
+    {
+      code: `
+      /**
+       * Implements support for the
+       * Swahili voice synthesizer.
+       */
+      function speak() {
+      }
+      `,
     },
   ],
 };

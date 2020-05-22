@@ -6348,6 +6348,7 @@ function quux () {
 function quux () {
 
 }
+// Options: [{"newlineBeforeCapsAssumesBadSentenceEnd":true}]
 // Message: A line of text is started with an uppercase character, but preceding line does not end the sentence.
 
 /**
@@ -6565,6 +6566,15 @@ function quux () {
 
  }
 // Message: Sentence should start with an uppercase character.
+
+/**
+ * Implements support for the
+ * Swahili voice synthesizer.
+ */
+function speak() {
+}
+// Options: [{"newlineBeforeCapsAssumesBadSentenceEnd":true}]
+// Message: A line of text is started with an uppercase character, but preceding line does not end the sentence.
 ````
 
 The following patterns are not considered problems:
@@ -6877,6 +6887,13 @@ function quux () {
 
 }
 // Options: [{"abbreviations":["etc","e.g.","i.e."]}]
+
+/**
+ * Implements support for the
+ * Swahili voice synthesizer.
+ */
+function speak() {
+}
 ````
 
 
