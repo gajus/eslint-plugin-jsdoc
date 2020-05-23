@@ -7,7 +7,15 @@ assignees: ''
 ---
 
 <!--
-NOTE: If this is a bug specifically related to the parsing of types, e.g.,
+NOTE: If you are running ESLint/`eslint-plugin-jsdoc` from within an IDE,
+before filing an issue, please be sure to restart the IDE after making any
+updates to ensure you are indeed getting errors with the updated version.
+Running `eslint` on the command line may also be helpful in allowing you
+to better provide us with the error details including the stack trace.
+-->
+
+<!--
+NOTE: If you have a bug specifically related to the parsing of types, e.g.,
 the `some-unrecognized+type-syntax` (within curly brackets) in:
 
 /**
@@ -15,6 +23,13 @@ the `some-unrecognized+type-syntax` (within curly brackets) in:
  */
 
 ...then please file instead at https://github.com/jsdoctypeparser/jsdoctypeparser/issues/
+-->
+
+<!--
+TIP: If you have a complicated config with `overrides`, you can simplify the
+config you provide us by running `eslint` with `--print-config` and the file
+that is triggering the error. See:
+https://eslint.org/docs/user-guide/command-line-interface#print-config
 -->
 
 ## Expected behavior
