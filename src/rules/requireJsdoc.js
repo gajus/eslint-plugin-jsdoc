@@ -229,7 +229,7 @@ export default {
             return;
           }
 
-          if (!['VariableDeclarator', 'ExportDefaultDeclaration'].includes(node.parent.type)) {
+          if (!['VariableDeclarator', 'ExportDefaultDeclaration', 'AssignmentExpression'].includes(node.parent.type)) {
             return;
           }
 

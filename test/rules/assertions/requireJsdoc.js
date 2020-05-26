@@ -2155,6 +2155,38 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      module.exports.foo = (bar) => {
+        return bar + "biz"
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: false,
+          require: {
+            ArrowFunctionExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      module.exports.foo = (bar) => {
+        return bar + "biz"
+      }
+      `,
+    },
   ],
   valid: [{
     code: `
