@@ -6266,12 +6266,19 @@ You can provide an `abbreviations` options array to avoid such strings of text
 being treated as sentence endings when followed by dots. The `.` is not
 necessary at the end of the array items.
 
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-14-newlinebeforecapsassumesbadsentenceend"></a>
+##### <code>newlineBeforeCapsAssumesBadSentenceEnd</code>
+
+When `false` (the new default), we will not assume capital letters after
+newlines are an incorrect way to end the sentence (they may be proper
+nouns, for example).
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|doc block, `param`, `returns`, `description`, `property`, `summary`, `file`, `classdesc`, `todo`, `deprecated`, `throws`, 'yields' and others added by `tags`|
 |Aliases|`arg`, `argument`, `return`, `desc`, `prop`, `fileoverview`, `overview`, `exception`, `yield`|
-|Options|`tags`, `abbreviations`|
+|Options|`tags`, `abbreviations`, `newlineBeforeCapsAssumesBadSentenceEnd`|
 The following patterns are considered problems:
 
 ````js
