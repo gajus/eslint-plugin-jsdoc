@@ -5,12 +5,13 @@ export default iterateJsdoc(({
   utils,
   report,
   context,
+  jsdoc,
   jsdocNode,
 }) => {
-  const [circumstance, {checkProperties} = {}] = context.options;
-  const always = !circumstance || circumstance === 'always';
+  const [mainCircumstance, {tags} = {}] = context.options;
 
-  const checkHyphens = (jsdocTag, targetTagName) => {
+  const checkHyphens = (jsdocTag, targetTagName, circumstance = mainCircumstance) => {
+    const always = !circumstance || circumstance === 'always';
     if (!jsdocTag.description) {
       return;
     }
@@ -47,8 +48,28 @@ export default iterateJsdoc(({
   };
 
   utils.forEachPreferredTag('param', checkHyphens);
-  if (checkProperties) {
-    utils.forEachPreferredTag('property', checkHyphens);
+  if (tags) {
+    const tagEntries = Object.entries(tags);
+    tagEntries.forEach(([tagName, circumstance]) => {
+      if (tagName === '*') {
+        const preferredParamTag = utils.getPreferredTagName({tagName: 'param'});
+        (jsdoc.tags || []).forEach(({tag}) => {
+          if (tag === preferredParamTag || tagEntries.some(([tagNme]) => {
+            return tagNme !== '*' && tagNme === tag;
+          })) {
+            return;
+          }
+          utils.forEachPreferredTag(tag, (jsdocTag, targetTagName) => {
+            checkHyphens(jsdocTag, targetTagName, circumstance);
+          });
+        });
+
+        return;
+      }
+      utils.forEachPreferredTag(tagName, (jsdocTag, targetTagName) => {
+        checkHyphens(jsdocTag, targetTagName, circumstance);
+      });
+    });
   }
 }, {
   iterateAllJsdocs: true,
@@ -62,9 +83,22 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
-          checkProperties: {
-            default: false,
-            type: 'boolean',
+          tags: {
+            anyOf: [
+              {
+                patternProperties: {
+                  '.*': {
+                    enum: ['always', 'never'],
+                    type: 'string',
+                  },
+                },
+                type: 'object',
+              },
+              {
+                enum: ['any'],
+                type: 'string',
+              },
+            ],
           },
         },
         type: 'object',

@@ -7930,17 +7930,23 @@ If the string is `"always"` then a problem is raised when there is no hyphen
 before the description. If it is `"never"` then a problem is raised when there
 is a hyphen before the description. The default value is `"always"`.
 
-The options object may have the following properties:
+The options object may have the following properties to indicate behavior for
+other tags besides the `@param` tag (or the `@arg` tag if so set):
 
-- `checkProperties` - Boolean on whether to also apply the rule to `@property`
-  tags.
+- `tags` - Object whose keys indicate different tags to check for the
+  presence or absence of hyphens; the key value should be "always" or "never",
+  indicating how hyphens are to be applied, e.g., `{property: 'never'}`
+  to ensure `@property` never uses hyphens. A key can also be set as `*`, e.g.,
+  `'*': 'always'` to apply hyphen checking to any tag (besides the preferred
+  `@param` tag which follows the main string option setting and besides any
+  other `tags` entries).
 
 |||
 |---|---|
 |Context|everywhere|
-|Tags|`param` and optionally `property`|
-|Aliases|`arg`, `argument`; optionally `prop`|
-|Options|(a string matching `"always"|"never"`) followed by an optional object with a `checkProperties` property|
+|Tags|`param` and optionally other tags within `tags`|
+|Aliases|`arg`, `argument`; potentially `prop` or other aliases|
+|Options|(a string matching `"always"|"never"`) followed by an optional object with a `tags` property|
 
 The following patterns are considered problems:
 
@@ -7952,6 +7958,25 @@ function quux () {
 
 }
 // Options: ["always"]
+// Message: There must be a hyphen before @param description.
+
+/**
+ * @param foo Foo.
+ */
+function quux () {
+
+}
+// Options: ["always",{"tags":{"*":"never"}}]
+// Message: There must be a hyphen before @param description.
+
+/**
+ * @param foo Foo.
+ * @returns {SomeType} - Hyphen here.
+ */
+function quux () {
+
+}
+// Options: ["always",{"tags":{"*":"never","returns":"always"}}]
 // Message: There must be a hyphen before @param description.
 
 /**
@@ -8005,15 +8030,25 @@ function quux (foo) {
  * @typedef {SomeType} ATypeDefName
  * @property foo Foo.
  */
-// Options: ["always",{"checkProperties":true}]
+// Options: ["always",{"tags":{"property":"always"}}]
 // Message: There must be a hyphen before @property description.
 
 /**
  * @typedef {SomeType} ATypeDefName
  * @property foo - Foo.
  */
-// Options: ["never",{"checkProperties":true}]
+// Options: ["never",{"tags":{"property":"never"}}]
 // Message: There must be no hyphen before @property description.
+
+/**
+ * @param foo Foo.
+ * @returns {SomeType} - A description.
+ */
+function quux () {
+
+}
+// Options: ["always",{"tags":{"returns":"never"}}]
+// Message: There must be a hyphen before @param description.
 ````
 
 The following patterns are not considered problems:
@@ -8026,6 +8061,15 @@ function quux () {
 
 }
 // Options: ["always"]
+
+/**
+ * @param foo - Foo.
+ * @returns {SomeType} A description.
+ */
+function quux () {
+
+}
+// Options: ["always",{"tags":{"returns":"never"}}]
 
 /**
  * @param foo Foo.
@@ -8043,16 +8087,30 @@ function quux () {
 }
 
 /**
+ *
+ */
+function quux () {
+
+}
+// Options: ["always",{"tags":{"*":"always"}}]
+
+/**
  * @typedef {SomeType} ATypeDefName
  * @property foo - Foo.
  */
-// Options: ["always",{"checkProperties":true}]
+// Options: ["always",{"tags":{"property":"always"}}]
 
 /**
  * @typedef {SomeType} ATypeDefName
  * @property foo Foo.
  */
-// Options: ["never",{"checkProperties":true}]
+// Options: ["never",{"tags":{"property":"never"}}]
+
+/**
+ * @typedef {SomeType} ATypeDefName
+ * @property foo - Foo.
+ */
+// Options: ["never",{"tags":{"*":"always"}}]
 ````
 
 

@@ -42,6 +42,73 @@ export default {
           message: 'There must be a hyphen before @param description.',
         },
       ],
+      options: [
+        'always',
+        {
+          tags: {
+            '*': 'never',
+          },
+        },
+      ],
+      output: `
+          /**
+           * @param foo - Foo.
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo Foo.
+           * @returns {SomeType} - Hyphen here.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a hyphen before @param description.',
+        },
+      ],
+      options: [
+        'always',
+        {
+          tags: {
+            '*': 'never',
+            returns: 'always',
+          },
+        },
+      ],
+      output: `
+          /**
+           * @param foo - Foo.
+           * @returns {SomeType} - Hyphen here.
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo Foo.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a hyphen before @param description.',
+        },
+      ],
       output: `
           /**
            * @param foo - Foo.
@@ -174,7 +241,9 @@ export default {
         },
       ],
       options: [
-        'always', {checkProperties: true},
+        'always', {tags: {
+          property: 'always',
+        }},
       ],
       output: `
           /**
@@ -197,7 +266,9 @@ export default {
         },
       ],
       options: [
-        'never', {checkProperties: true},
+        'never', {tags: {
+          property: 'never',
+        }},
       ],
       output: `
           /**
@@ -206,6 +277,44 @@ export default {
            */
       `,
     },
+    {
+      code: `
+          /**
+           * @param foo Foo.
+           * @returns {SomeType} - A description.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a hyphen before @param description.',
+        },
+        {
+          line: 4,
+          message: 'There must be no hyphen before @returns description.',
+        },
+      ],
+      options: [
+        'always', {
+          tags: {
+            returns: 'never',
+          },
+        },
+      ],
+      output: `
+          /**
+           * @param foo - Foo.
+           * @returns {SomeType} - A description.
+           */
+          function quux () {
+
+          }
+      `,
+    },
+
   ],
   valid: [
     {
@@ -219,6 +328,24 @@ export default {
       `,
       options: [
         'always',
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param foo - Foo.
+           * @returns {SomeType} A description.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        'always', {
+          tags: {
+            returns: 'never',
+          },
+        },
       ],
     },
     {
@@ -247,12 +374,29 @@ export default {
     {
       code: `
           /**
+           *
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        'always', {tags: {
+          '*': 'always',
+        }},
+      ],
+    },
+    {
+      code: `
+          /**
            * @typedef {SomeType} ATypeDefName
            * @property foo - Foo.
            */
       `,
       options: [
-        'always', {checkProperties: true},
+        'always', {tags: {
+          property: 'always',
+        }},
       ],
     },
     {
@@ -263,7 +407,22 @@ export default {
            */
       `,
       options: [
-        'never', {checkProperties: true},
+        'never', {tags: {
+          property: 'never',
+        }},
+      ],
+    },
+    {
+      code: `
+          /**
+           * @typedef {SomeType} ATypeDefName
+           * @property foo - Foo.
+           */
+      `,
+      options: [
+        'never', {tags: {
+          '*': 'always',
+        }},
       ],
     },
   ],
