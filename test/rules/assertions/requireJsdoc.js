@@ -360,19 +360,6 @@ export default {
           }`,
     },
     {
-      code: '',
-      errors: [
-        {
-          message: '`settings.jsdoc.exemptEmptyFunctions` has been removed, use options in the rule `require-jsdoc` instead.',
-        },
-      ],
-      settings: {
-        jsdoc: {
-          exemptEmptyFunctions: true,
-        },
-      },
-    },
-    {
       code: `
         function quux (foo) {
 

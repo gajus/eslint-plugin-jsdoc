@@ -1131,15 +1131,6 @@ function quux () {
 // Message: @example warning (semi): Missing semicolon.
 
 /**
- *
- */
-function f () {
-
-}
-// Settings: {"jsdoc":{"allowInlineConfig":true,"baseConfig":{},"captionRequired":false,"configFile":"configFile.js","eslintrcForExamples":true,"exampleCodeRegex":".*?","matchingFileName":"test.md","noDefaultExampleRules":false,"rejectExampleCodeRegex":"\\W*","reportUnusedDisableDirectives":true}}
-// Message: `settings.jsdoc.captionRequired` has been removed, use options in the rule `check-examples` instead.
-
-/**
  * @typedef {string} Foo
  * @example <caption></caption>
  * 'foo'
@@ -1347,6 +1338,13 @@ function quux () {
 a();
 
 export default {};
+
+/**
+ *
+ */
+function f () {
+
+}
 ````
 
 
@@ -7412,15 +7410,6 @@ function quux () {
 /**
  * @constructor
  */
-function f () {
-
-}
-// Settings: {"jsdoc":{"avoidExampleOnConstructors":true}}
-// Message: `settings.jsdoc.avoidExampleOnConstructors` has been removed, use options in the rule `require-example` instead.
-
-/**
- * @constructor
- */
 function quux () {
 
 }
@@ -8195,10 +8184,6 @@ function quux (foo) {
 
 }
 // Message: Missing JSDoc comment.
-
-
-// Settings: {"jsdoc":{"exemptEmptyFunctions":true}}
-// Message: `settings.jsdoc.exemptEmptyFunctions` has been removed, use options in the rule `require-jsdoc` instead.
 
 function quux (foo) {
 
@@ -12160,18 +12145,6 @@ function quux (foo) {
 /**
  *
  */
-function foo() {}
-
-/**
- *
- */
-function bar() {}
-// Settings: {"jsdoc":{"forceRequireReturn":true}}
-// Message: `settings.jsdoc.forceRequireReturn` has been removed, use options in the rule `require-returns` instead.
-
-/**
- *
- */
 async function quux() {
 }
 // Options: [{"forceRequireReturn":true}]
@@ -12881,11 +12854,6 @@ function quux() {
 }
 // Options: [{"checkSeesForNamepaths":true}]
 // Message: Syntax error in namepath: foo%
-
-/** */
-function foo() {}
-// Settings: {"jsdoc":{"allowEmptyNamepaths":true,"checkSeesForNamepaths":true}}
-// Message: `settings.jsdoc.allowEmptyNamepaths` has been removed, use options in the rule `valid-types` instead.
 
 /**
  * @alias module:abc#event:foo-bar

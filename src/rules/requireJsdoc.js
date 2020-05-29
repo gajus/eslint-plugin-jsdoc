@@ -2,7 +2,6 @@ import _ from 'lodash';
 import jsdocUtils from '../jsdocUtils';
 import exportParser from '../exportParser';
 import {getJSDocComment, getReducedASTNode} from '../eslint/getJSDocComment';
-import warnRemovedSettings from '../warnRemovedSettings';
 import {getSettings} from '../iterateJsdoc';
 
 const OPTIONS_SCHEMA = {
@@ -141,8 +140,6 @@ const getOptions = (context) => {
 
 export default {
   create (context) {
-    warnRemovedSettings(context, 'require-jsdoc');
-
     const sourceCode = context.getSourceCode();
     const settings = getSettings(context);
 

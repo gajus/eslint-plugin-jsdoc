@@ -3,7 +3,6 @@
 // https://github.com/eslint/eslint/blob/master/docs/user-guide/migrating-to-7.0.0.md#-the-cliengine-class-has-been-deprecated
 import {CLIEngine} from 'eslint';
 import iterateJsdoc from '../iterateJsdoc';
-import warnRemovedSettings from '../warnRemovedSettings';
 
 const zeroBasedLineIndexAdjust = -1;
 const likelyNestedJSDocIndentSpace = 1;
@@ -43,7 +42,6 @@ export default iterateJsdoc(({
   context,
   globalState,
 }) => {
-  warnRemovedSettings(context, 'check-examples');
   const tagName = utils.getPreferredTagName({tagName: 'example'});
   if (!utils.hasTag(tagName)) {
     return;

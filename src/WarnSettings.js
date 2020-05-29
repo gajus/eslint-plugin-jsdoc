@@ -14,6 +14,7 @@ const WarnSettings = function () {
     },
 
     markSettingAsWarned (context, setting) {
+      // istanbul ignore else
       if (!warnedSettings.has(context)) {
         warnedSettings.set(context, new Set());
       }

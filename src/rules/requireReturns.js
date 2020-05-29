@@ -1,5 +1,4 @@
 import iterateJsdoc from '../iterateJsdoc';
-import warnRemovedSettings from '../warnRemovedSettings';
 
 /**
  * We can skip checking for a return value, in case the documentation is inherited
@@ -41,8 +40,6 @@ export default iterateJsdoc(({
   utils,
   context,
 }) => {
-  warnRemovedSettings(context, 'require-returns');
-
   const {
     forceRequireReturn = false,
     forceReturnsWithAsync = false,
