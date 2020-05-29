@@ -2,20 +2,21 @@
 name: Bug Report
 about: Report a bug
 title: ''
-labels: bug
+labels: bug-unconfirmed
 assignees: ''
 ---
 
 <!--
-NOTE: If you are running ESLint/`eslint-plugin-jsdoc` from within an IDE,
+NOTE 1: It would help if you can first scan the issue tracker before submitting
+a new issue: https://github.com/gajus/eslint-plugin-jsdoc/issues
+
+NOTE 2: If you are running ESLint/`eslint-plugin-jsdoc` from within an IDE,
 before filing an issue, please be sure to restart the IDE after making any
 updates to ensure you are indeed getting errors with the updated version.
 Running `eslint` on the command line may also be helpful in allowing you
 to better provide us with the error details including the stack trace.
--->
 
-<!--
-NOTE: If you have a bug specifically related to the parsing of types, e.g.,
+NOTE 3: If you have a bug specifically related to the parsing of types, e.g.,
 the `some-unrecognized+type-syntax` (within curly brackets) in:
 
 /**

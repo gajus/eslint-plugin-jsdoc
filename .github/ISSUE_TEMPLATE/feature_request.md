@@ -7,7 +7,10 @@ assignees: ''
 ---
 
 <!--
-NOTE: If this is a feature specifically related to the parsing of types, e.g.,
+NOTE 1: It would help if you can first scan the issue tracker before submitting
+a new issue: https://github.com/gajus/eslint-plugin-jsdoc/issues
+
+NOTE 2: If this is a feature specifically related to the parsing of types, e.g.,
 supporting `some-new+type-syntax` (within curly brackets) in:
 
 /**
