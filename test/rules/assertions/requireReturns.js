@@ -90,29 +90,6 @@ export default {
           /**
            *
            */
-          function foo() {}
-
-          /**
-           *
-           */
-          function bar() {}
-          `,
-      errors: [
-        {
-          message: '`settings.jsdoc.forceRequireReturn` has been removed, use options in the rule `require-returns` instead.',
-        },
-      ],
-      settings: {
-        jsdoc: {
-          forceRequireReturn: true,
-        },
-      },
-    },
-    {
-      code: `
-          /**
-           *
-           */
           async function quux() {
           }
       `,

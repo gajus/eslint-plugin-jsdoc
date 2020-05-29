@@ -505,72 +505,6 @@ export default {
     {
       code: `
       /**
-       *
-       */
-      function f () {
-
-      }
-      `,
-      errors: [
-        {
-          line: 1,
-          message: '`settings.jsdoc.captionRequired` has been removed, use options in the rule `check-examples` instead.',
-        },
-        {
-          line: 1,
-          message: '`settings.jsdoc.exampleCodeRegex` has been removed, use options in the rule `check-examples` instead.',
-        },
-        {
-          line: 1,
-          message: '`settings.jsdoc.rejectExampleCodeRegex` has been removed, use options in the rule `check-examples` instead.',
-        },
-        {
-          line: 1,
-          message: '`settings.jsdoc.allowInlineConfig` has been removed, use options in the rule `check-examples` instead.',
-        },
-        {
-          line: 1,
-          message: '`settings.jsdoc.noDefaultExampleRules` has been removed, use options in the rule `check-examples` instead.',
-        },
-        {
-          line: 1,
-          message: '`settings.jsdoc.matchingFileName` has been removed, use options in the rule `check-examples` instead.',
-        },
-        {
-          line: 1,
-          message: '`settings.jsdoc.configFile` has been removed, use options in the rule `check-examples` instead.',
-        },
-        {
-          line: 1,
-          message: '`settings.jsdoc.eslintrcForExamples` has been removed, use options in the rule `check-examples` instead.',
-        },
-        {
-          line: 1,
-          message: '`settings.jsdoc.baseConfig` has been removed, use options in the rule `check-examples` instead.',
-        },
-        {
-          line: 1,
-          message: '`settings.jsdoc.reportUnusedDisableDirectives` has been removed, use options in the rule `check-examples` instead.',
-        },
-      ],
-      settings: {
-        jsdoc: {
-          allowInlineConfig: true,
-          baseConfig: {},
-          captionRequired: false,
-          configFile: 'configFile.js',
-          eslintrcForExamples: true,
-          exampleCodeRegex: '.*?',
-          matchingFileName: 'test.md',
-          noDefaultExampleRules: false,
-          rejectExampleCodeRegex: '\\W*',
-          reportUnusedDisableDirectives: true,
-        },
-      },
-    },
-    {
-      code: `
-      /**
        * @typedef {string} Foo
        * @example <caption></caption>
        * 'foo'
@@ -1018,6 +952,16 @@ export default {
       parserOptions: {
         sourceType: 'module',
       },
+    },
+    {
+      code: `
+      /**
+       *
+       */
+      function f () {
+
+      }
+      `,
     },
   ],
 };

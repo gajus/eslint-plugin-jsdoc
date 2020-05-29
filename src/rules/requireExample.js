@@ -1,15 +1,11 @@
 import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
-import warnRemovedSettings from '../warnRemovedSettings';
 
 export default iterateJsdoc(({
   jsdoc,
   report,
   utils,
-  context,
 }) => {
-  warnRemovedSettings(context, 'require-example');
-
   if (utils.avoidDocs()) {
     return;
   }

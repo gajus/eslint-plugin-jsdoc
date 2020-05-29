@@ -1,6 +1,5 @@
 import {parse} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
-import warnRemovedSettings from '../warnRemovedSettings';
 
 const asExpression = /as\s+/u;
 
@@ -10,8 +9,6 @@ export default iterateJsdoc(({
   utils,
   context,
 }) => {
-  warnRemovedSettings(context, 'valid-types');
-
   const {
     allowEmptyNamepaths = true,
     checkSeesForNamepaths = false,
