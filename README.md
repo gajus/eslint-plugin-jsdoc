@@ -9234,6 +9234,23 @@ export default class Test {
   }
 }
 // Options: [{"contexts":["MethodDefinition:not([accessibility=\"private\"]) > FunctionExpression"],"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":false}}]
+
+/**
+ * Basic application controller.
+ */
+@Controller()
+export class AppController {
+  /**
+   * Returns the application information.
+   *
+   * @returns ...
+   */
+  @Get('/info')
+  public getInfo(): string {
+    return 'OK';
+  }
+}
+// Options: [{"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
 ````
 
 

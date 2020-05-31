@@ -15,7 +15,17 @@ const isCommentToken = (token) => {
 };
 
 const getDecorator = (token, sourceCode) => {
-  if (token && token.type === 'Identifier') {
+  if (!token) {
+    return false;
+  }
+  if (token.type === 'Punctuator' && token.value === ')') {
+    const tokenBefore = sourceCode.getTokenBefore(token, {includeComments: true});
+
+    // This should be `(` and when token before it is checked, should find
+    //  the Identifer.
+    return tokenBefore;
+  }
+  if (token.type === 'Identifier') {
     const tokenBefore = sourceCode.getTokenBefore(token, {includeComments: true});
     if (tokenBefore && tokenBefore.type === 'Punctuator' && tokenBefore.value === '@') {
       return tokenBefore;

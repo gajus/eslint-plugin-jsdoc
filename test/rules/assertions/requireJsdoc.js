@@ -3491,5 +3491,40 @@ export default {
       sourceType: 'module',
     },
   },
+  {
+    code: `
+    /**
+     * Basic application controller.
+     */
+    @Controller()
+    export class AppController {
+      /**
+       * Returns the application information.
+       *
+       * @returns ...
+       */
+      @Get('/info')
+      public getInfo(): string {
+        return 'OK';
+      }
+    }
+    `,
+    options: [
+      {
+        require: {
+          ArrowFunctionExpression: false,
+          ClassDeclaration: true,
+          ClassExpression: true,
+          FunctionDeclaration: true,
+          FunctionExpression: false,
+          MethodDefinition: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
+  },
   ],
 };
