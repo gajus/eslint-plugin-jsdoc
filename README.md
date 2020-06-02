@@ -8604,6 +8604,20 @@ module.exports.foo = (bar) => {
 }
 // Options: [{"publicOnly":false,"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
+
+class Animal {
+
+  #name: string;
+
+  private species: string;
+
+  public color: string;
+
+  @SomeAnnotation('optionalParameter')
+  tail: boolean;
+}
+// Options: [{"contexts":["ClassProperty"]}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

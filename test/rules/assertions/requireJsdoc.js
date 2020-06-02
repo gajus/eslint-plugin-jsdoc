@@ -2174,6 +2174,73 @@ export default {
       }
       `,
     },
+    {
+      code: `
+      class Animal {
+
+        #name: string;
+
+        private species: string;
+
+        public color: string;
+
+        @SomeAnnotation('optionalParameter')
+        tail: boolean;
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 8,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 10,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['ClassProperty'],
+        },
+      ],
+      output: `
+      class Animal {
+
+        /**
+         *
+         */
+        #name: string;
+
+        /**
+         *
+         */
+        private species: string;
+
+        /**
+         *
+         */
+        public color: string;
+
+        /**
+         *
+         */
+        @SomeAnnotation('optionalParameter')
+        tail: boolean;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [{
     code: `
