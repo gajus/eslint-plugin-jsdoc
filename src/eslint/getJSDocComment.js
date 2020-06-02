@@ -19,10 +19,28 @@ const getDecorator = (token, sourceCode) => {
     return false;
   }
   if (token.type === 'Punctuator' && token.value === ')') {
-    const tokenBefore = sourceCode.getTokenBefore(token, {includeComments: true});
+    let nested = 0;
+    let tokenBefore = token;
+    do {
+      tokenBefore = sourceCode.getTokenBefore(tokenBefore, {includeComments: true});
+      // istanbul ignore if
+      if (!tokenBefore) {
+        break;
+      }
+      if (tokenBefore.type === 'Punctuator') {
+        if (tokenBefore.value === ')') {
+          nested++;
+        }
+        if (tokenBefore.value === '(') {
+          if (nested) {
+            nested--;
+          } else {
+            break;
+          }
+        }
+      }
+    } while (tokenBefore);
 
-    // This should be `(` and when token before it is checked, should find
-    //  the Identifer.
     return tokenBefore;
   }
   if (token.type === 'Identifier') {

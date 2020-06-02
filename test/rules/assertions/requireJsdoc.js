@@ -3526,5 +3526,57 @@ export default {
       sourceType: 'module',
     },
   },
+  {
+    code: `
+    /**
+     * Entity to represent a user in the system.
+     */
+    @Entity('users')
+    export class User {
+    }
+    `,
+    options: [
+      {
+        require: {
+          ArrowFunctionExpression: false,
+          ClassDeclaration: true,
+          ClassExpression: true,
+          FunctionDeclaration: true,
+          FunctionExpression: false,
+          MethodDefinition: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
+  },
+  {
+    code: `
+    /**
+     * Entity to represent a user in the system.
+     */
+    @Entity('users', getVal())
+    export class User {
+    }
+    `,
+    options: [
+      {
+        require: {
+          ArrowFunctionExpression: false,
+          ClassDeclaration: true,
+          ClassExpression: true,
+          FunctionDeclaration: true,
+          FunctionExpression: false,
+          MethodDefinition: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
+  },
   ],
 };

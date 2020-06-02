@@ -9251,6 +9251,22 @@ export class AppController {
   }
 }
 // Options: [{"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
+
+/**
+ * Entity to represent a user in the system.
+ */
+@Entity('users')
+export class User {
+}
+// Options: [{"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
+
+/**
+ * Entity to represent a user in the system.
+ */
+@Entity('users', getVal())
+export class User {
+}
+// Options: [{"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
 ````
 
 
