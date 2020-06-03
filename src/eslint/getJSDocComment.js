@@ -24,10 +24,7 @@ const getDecorator = (token, sourceCode) => {
     do {
       tokenBefore = sourceCode.getTokenBefore(tokenBefore, {includeComments: true});
       // istanbul ignore if
-      if (!tokenBefore) {
-        break;
-      }
-      if (tokenBefore.type === 'Punctuator') {
+      if (tokenBefore && tokenBefore.type === 'Punctuator') {
         if (tokenBefore.value === ')') {
           nested++;
         }
