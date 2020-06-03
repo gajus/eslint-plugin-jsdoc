@@ -705,5 +705,24 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @template T
+       * @param {T} arg
+       */
+      function example(arg) {
+
+        /** @param {T} */
+        function inner(x) {
+        }
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
 };

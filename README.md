@@ -6212,6 +6212,18 @@ class SomeType {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @template T
+ * @param {T} arg
+ */
+function example(arg) {
+
+  /** @param {T} */
+  function inner(x) {
+  }
+}
+// Settings: {"jsdoc":{"mode":"closure"}}
 ````
 
 

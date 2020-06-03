@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {parse as parseType, traverse} from 'jsdoctypeparser';
 import iterateJsdoc, {parseComment} from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
+import {getJSDocComment} from '../eslint/getJSDocComment';
 
 const extraTypes = [
   'null', 'undefined', 'void', 'string', 'boolean', 'object',
@@ -17,11 +18,13 @@ const stripPseudoTypes = (str) => {
 
 export default iterateJsdoc(({
   context,
+  node,
   report,
   settings,
-  sourceCode: {scopeManager},
+  sourceCode,
   utils,
 }) => {
+  const {scopeManager} = sourceCode;
   const {globalScope} = scopeManager;
 
   const {definedTypes = []} = context.options[0] || {};
@@ -54,7 +57,9 @@ export default iterateJsdoc(({
     .filter((comment) => {
       return comment.value.startsWith('*');
     })
-    .map(parseComment)
+    .map((commentNode) => {
+      return parseComment(commentNode, '');
+    })
     .flatMap((doc) => {
       return (doc.tags || []).filter(({tag}) => {
         return utils.isNamepathDefiningTag(tag);
@@ -65,7 +70,23 @@ export default iterateJsdoc(({
     })
     .value();
 
-  let templateTags = utils.getPresentTags('template');
+  const ancestorNodes = [];
+  let currentScope = scopeManager.acquire(node);
+  while (currentScope && currentScope.block.type !== 'Program') {
+    ancestorNodes.push(currentScope.block);
+    currentScope = currentScope.upper;
+  }
+
+  let templateTags = ancestorNodes.flatMap((ancestorNode) => {
+    const commentNode = getJSDocComment(sourceCode, ancestorNode, settings);
+
+    const jsdoc = parseComment(commentNode, '');
+
+    return jsdocUtils.filterTags(jsdoc.tags, (tag) => {
+      return 'template' === tag.tag;
+    });
+  });
+
   const classJsdoc = utils.getClassJsdoc();
   if (classJsdoc?.tags) {
     templateTags = templateTags.concat(
