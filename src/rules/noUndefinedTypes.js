@@ -77,7 +77,7 @@ export default iterateJsdoc(({
     currentScope = currentScope.upper;
   }
 
-  let templateTags = ancestorNodes.flatMap((ancestorNode) => {
+  let templateTags = _(ancestorNodes).flatMap((ancestorNode) => {
     const commentNode = getJSDocComment(sourceCode, ancestorNode, settings);
 
     const jsdoc = parseComment(commentNode, '');
@@ -85,7 +85,7 @@ export default iterateJsdoc(({
     return jsdocUtils.filterTags(jsdoc.tags, (tag) => {
       return 'template' === tag.tag;
     });
-  });
+  }).value();
 
   const classJsdoc = utils.getClassJsdoc();
   if (classJsdoc?.tags) {
