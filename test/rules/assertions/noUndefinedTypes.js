@@ -724,5 +724,21 @@ export default {
         },
       },
     },
+    {
+      code: `
+    const init = () => {
+      /**
+       * Makes request
+       * @returns {Promise}
+       */
+      function request() {
+        return Promise.resolve('success');
+      }
+    };
+`,
+      env: {
+        es6: true,
+      },
+    },
   ],
 };

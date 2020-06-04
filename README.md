@@ -6224,6 +6224,16 @@ function example(arg) {
   }
 }
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+const init = () => {
+  /**
+   * Makes request
+   * @returns {Promise}
+   */
+  function request() {
+    return Promise.resolve('success');
+  }
+};
 ````
 
 

@@ -79,6 +79,9 @@ export default iterateJsdoc(({
 
   let templateTags = _(ancestorNodes).flatMap((ancestorNode) => {
     const commentNode = getJSDocComment(sourceCode, ancestorNode, settings);
+    if (!commentNode) {
+      return [];
+    }
 
     const jsdoc = parseComment(commentNode, '');
 
