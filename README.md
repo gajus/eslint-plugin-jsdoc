@@ -3869,6 +3869,15 @@ function quux () {}
 // Settings: {"jsdoc":{"preferredTypes":{"object<>":"Object<>"}}}
 // Options: [{"exemptTagContexts":[{"tag":"typedef","types":["object"]}]}]
 // Message: Invalid JSDoc @typedef "foo" type "object"; prefer: "Object<>".
+
+/**
+ * @param {Array<number|undefined>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"preferredTypes":{"Array.<>":"[]","Array<>":"[]"}}}
+// Message: Invalid JSDoc @param "foo" type "Array"; prefer: "[]".
 ````
 
 The following patterns are not considered problems:

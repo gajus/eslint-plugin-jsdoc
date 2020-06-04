@@ -1893,6 +1893,37 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @param {Array<number|undefined>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
+        },
+      ],
+      output: `
+      /**
+       * @param {(number|undefined)[]} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            'Array.<>': '[]',
+            'Array<>': '[]',
+          },
+        },
+      },
+    },
   ],
   valid: [
     {

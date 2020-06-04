@@ -20,6 +20,12 @@ const adjustNames = (type, preferred, isGenericMatch, nodeName, node, parentNode
   let ret = preferred;
   if (isGenericMatch) {
     if (preferred === '[]') {
+      if (parentNode.objects[0].type === 'UNION') {
+        parentNode.objects[0] = {
+          type: 'PARENTHESIS',
+          value: parentNode.objects[0],
+        };
+      }
       parentNode.meta.syntax = 'SQUARE_BRACKET';
       ret = 'Array';
     } else {
