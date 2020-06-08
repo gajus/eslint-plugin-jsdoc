@@ -71,13 +71,13 @@ const flattenRoots = (params, root = '') => {
 
 type T = string | [?string, T];
 const getPropertiesFromPropertySignature = (propSignature): T => {
+  if (propSignature.type === 'TSIndexSignature') {
+    return undefined;
+  }
   if (propSignature.typeAnnotation && propSignature.typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
     return [propSignature.key.name, propSignature.typeAnnotation.typeAnnotation.members.map((member) => {
       return getPropertiesFromPropertySignature(member);
     })];
-  }
-  if (propSignature.type === 'TSIndexSignature') {
-    return undefined;
   }
 
   return propSignature.key.name;
