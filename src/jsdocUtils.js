@@ -556,6 +556,61 @@ const hasReturnValue = (node) => {
   }
 };
 
+/**
+ * Checks if a node has a throws statement.
+ *
+ * @param {object} node
+ * @returns {boolean}
+ */
+const hasThrowValue = (node) => {
+  if (!node) {
+    return false;
+  }
+  switch (node.type) {
+  case 'FunctionExpression':
+  case 'FunctionDeclaration':
+  case 'ArrowFunctionExpression': {
+    return node.expression || hasThrowValue(node.body);
+  }
+  case 'BlockStatement': {
+    return node.body.some((bodyNode) => {
+      return bodyNode.type !== 'FunctionDeclaration' && hasThrowValue(bodyNode);
+    });
+  }
+  case 'WhileStatement':
+  case 'DoWhileStatement':
+  case 'ForStatement':
+  case 'ForInStatement':
+  case 'ForOfStatement':
+  case 'WithStatement': {
+    return hasThrowValue(node.body);
+  }
+  case 'IfStatement': {
+    return hasThrowValue(node.consequent) || hasThrowValue(node.alternate);
+  }
+
+  // We only consider it to throw an error if the catch or finally blocks throw an error.
+  case 'TryStatement': {
+    return hasThrowValue(node.handler && node.handler.body) ||
+        hasThrowValue(node.finalizer);
+  }
+  case 'SwitchStatement': {
+    return node.cases.some(
+      (someCase) => {
+        return someCase.consequent.some(hasThrowValue);
+      },
+    );
+  }
+  case 'ThrowStatement': {
+    return true;
+  }
+
+  default: {
+    return false;
+  }
+  }
+};
+
 /** @param {string} tag */
 /*
 const isInlineTag = (tag) => {
@@ -668,6 +723,7 @@ export default {
   hasDefinedTypeReturnTag,
   hasReturnValue,
   hasTag,
+  hasThrowValue,
   isNamepathDefiningTag,
   isValidTag,
   parseClosureTemplateTag,

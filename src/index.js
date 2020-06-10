@@ -34,6 +34,7 @@ import requireReturns from './rules/requireReturns';
 import requireReturnsCheck from './rules/requireReturnsCheck';
 import requireReturnsDescription from './rules/requireReturnsDescription';
 import requireReturnsType from './rules/requireReturnsType';
+import requireThrows from './rules/requireThrows';
 import validTypes from './rules/validTypes';
 import requireJsdoc from './rules/requireJsdoc';
 
@@ -119,6 +120,7 @@ export default {
     'require-returns-check': requireReturnsCheck,
     'require-returns-description': requireReturnsDescription,
     'require-returns-type': requireReturnsType,
+    'require-throws': requireThrows,
     'valid-types': validTypes,
   },
 };

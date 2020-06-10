@@ -44,6 +44,7 @@ const ruleTester = new RuleTester();
   'require-returns-check',
   'require-returns-description',
   'require-returns-type',
+  'require-throws',
   'valid-types',
 ]).forEach((ruleName) => {
   const rule = config.rules[ruleName];
