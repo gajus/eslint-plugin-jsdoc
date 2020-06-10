@@ -2132,6 +2132,25 @@ function quux ({foo}, baz) {
 }
 
 /**
+ * @param cfg
+ * @param cfg.foo
+ * @param cfg2
+ */
+function quux ({foo}, cfg2) {
+
+}
+
+/**
+ * @param cfg
+ * @param cfg.foo
+ * @param baz
+ * @param baz.cfg
+ */
+function quux ({foo}, {cfg}) {
+
+}
+
+/**
  * @param options
  * @param options.foo
  */
