@@ -82,7 +82,7 @@ const validateParameterNames = (
       const extraProperties = [];
       if (!hasPropertyRest || checkRestProperty) {
         actualNames.filter((name) => {
-          return name.includes(tag.name.trim());
+          return name.startsWith(tag.name.trim() + '.');
         }).forEach((name) => {
           if (!expectedNames.includes(name) && name !== tag.name) {
             extraProperties.push(name);
