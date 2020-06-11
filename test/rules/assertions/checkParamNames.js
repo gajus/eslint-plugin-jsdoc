@@ -1011,31 +1011,6 @@ export default {
     },
     {
       code: `
-          /**
-           * @param cfg
-           * @param cfg.foo
-           * @param cfg2
-           */
-          function quux ({foo}, cfg2) {
-
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @param cfg
-           * @param cfg.foo
-           * @param baz
-           * @param baz.cfg
-           */
-          function quux ({foo}, {cfg}) {
-
-          }
-      `,
-    },
-    {
-      code: `
       /**
        * @param options
        * @param options.foo
