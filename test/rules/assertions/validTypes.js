@@ -35,6 +35,22 @@ export default {
     {
       code: `
           /**
+           * @param someParam<~
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in namepath: someParam<~',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            * @memberof module:namespace.SomeClass~<
            */
           function quux() {
@@ -322,6 +338,27 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * Foo function.
+       *
+       * @param {[number, string]} bar - The bar array.
+       */
+      function foo(bar) {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Syntax error in type: [number, string]',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -591,6 +628,36 @@ export default {
            */
            function quux () {}
       `,
+    },
+    {
+      code: `
+      /**
+       * Foo function.
+       *
+       * @param {[number, string]} bar - The bar array.
+       */
+      function foo(bar) {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * Foo function.
+       *
+       * @param {[number, string]} bar - The bar array.
+       */
+      function foo(bar) {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+        },
+      },
     },
   ],
 };

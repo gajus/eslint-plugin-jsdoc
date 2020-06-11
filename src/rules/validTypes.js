@@ -8,19 +8,20 @@ export default iterateJsdoc(({
   report,
   utils,
   context,
+  settings,
 }) => {
   const {
     allowEmptyNamepaths = true,
     checkSeesForNamepaths = false,
   } = context.options[0] || {};
-
+  const {mode} = settings;
   if (!jsdoc.tags) {
     return;
   }
   jsdoc.tags.forEach((tag) => {
     const validNamepathParsing = function (namepath, tagName) {
       try {
-        parse(namepath);
+        parse(namepath, {mode});
       } catch {
         let handled = false;
 
@@ -29,7 +30,7 @@ export default iterateJsdoc(({
             const endChar = namepath.slice(-1);
             if (['#', '.', '~'].includes(endChar)) {
               try {
-                parse(namepath.slice(0, -1));
+                parse(namepath.slice(0, -1), {mode});
                 handled = true;
               } catch {
                 // Use the original error for including the whole type
@@ -39,7 +40,7 @@ export default iterateJsdoc(({
             const startChar = namepath.charAt();
             if (['#', '.', '~'].includes(startChar)) {
               try {
-                parse(namepath.slice(1));
+                parse(namepath.slice(1), {mode});
                 handled = true;
               } catch {
                 // Use the original error for including the whole type
@@ -60,7 +61,7 @@ export default iterateJsdoc(({
 
     const validTypeParsing = function (type) {
       try {
-        parse(type);
+        parse(type, {mode});
       } catch {
         report(`Syntax error in type: ${type}`, null, tag);
 

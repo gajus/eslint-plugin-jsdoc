@@ -195,7 +195,7 @@ const getTagNamesForMode = (mode, context) => {
     return jsdocTags;
   case 'typescript':
     return typeScriptTags;
-  case 'closure':
+  case 'closure': case 'permissive':
     return closureTags;
   default:
     if (!modeWarnSettings.hasBeenWarned(context, 'mode')) {
@@ -402,9 +402,10 @@ const namepathDefiningTags = new Set([
 ]);
 
 // The following do not seem to allow curly brackets in their doc
-//  signature or examples (besides `modifies`)
+//  signature or examples (besides `modifies` and `param`)
 const tagsWithOptionalNamePosition = new Set([
   ...namepathDefiningTags,
+  'param',
 
   // `borrows` has a different format, however, so needs special parsing;
   //   seems to require both, and as "namepath"'s

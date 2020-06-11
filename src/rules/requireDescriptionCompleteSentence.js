@@ -11,11 +11,7 @@ const otherDescriptiveTags = new Set([
 ]);
 
 const extractParagraphs = (text) => {
-  // Todo [engine:node@>8.11.0]: Uncomment following line with neg. lookbehind instead
-  // return text.split(/(?<![;:])\n\n/u);
-  return [...text].reverse().join('').split(/\n\n(?![;:])/u).map((par) => {
-    return [...par].reverse().join('');
-  }).reverse();
+  return text.split(/(?<![;:])\n\n/u);
 };
 
 const extractSentences = (text, abbreviationsRegex) => {

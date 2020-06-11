@@ -30,7 +30,7 @@ export default iterateJsdoc(({
   const {definedTypes = []} = context.options[0] || {};
 
   let definedPreferredTypes = [];
-  const {preferredTypes} = settings;
+  const {preferredTypes, mode} = settings;
   if (Object.keys(preferredTypes).length) {
     // Replace `_.values` with `Object.values` when we may start requiring Node 7+
     definedPreferredTypes = _.values(preferredTypes).map((preferredType) => {
@@ -139,7 +139,7 @@ export default iterateJsdoc(({
     let parsedType;
 
     try {
-      parsedType = parseType(tag.type);
+      parsedType = parseType(tag.type, {mode});
     } catch {
       // On syntax error, will be handled by valid-types.
       return;

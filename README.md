@@ -189,6 +189,9 @@ how many line breaks to add when a block is missing.
 ### Mode
 
 - `settings.jsdoc.mode` - Set to `jsdoc` (the default), `typescript`, or `closure`.
+  Note that if you do not wish to use separate `.eslintrc.*` files for a project
+  containing both JavaScript and TypeScript, you can also use [`overrides`](https://eslint.org/docs/user-guide/configuring). You may also set to `"permissive"` to
+  try to be as accommodating to any of the styles, but this is not recommended.
   Currently is used for the following:
   - Determine valid tags for `check-tag-names`
   - Only check `@template` in `no-undefined-types` for types in "closure" and
@@ -196,6 +199,8 @@ how many line breaks to add when a block is missing.
   - For type-checking rules, determine which tags will be checked for types
     (Closure allows types on some tags which the others do not,
     so these tags will additionally be checked in "closure" mode)
+  - For type-checking rules, impacts parsing of types (through
+    [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser) dependency)
   - Check preferred tag names
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
@@ -13274,6 +13279,14 @@ function quux() {
 // Message: Syntax error in namepath: module:namespace.SomeClass<~
 
 /**
+ * @param someParam<~
+ */
+function quux() {
+
+}
+// Message: Syntax error in namepath: someParam<~
+
+/**
  * @memberof module:namespace.SomeClass~<
  */
 function quux() {
@@ -13408,6 +13421,15 @@ function quux () {}
  let foo;
 // Settings: {"jsdoc":{"mode":"closure"}}
 // Message: Tag @this must have a type
+
+/**
+ * Foo function.
+ *
+ * @param {[number, string]} bar - The bar array.
+ */
+function foo(bar) {}
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: Syntax error in type: [number, string]
 ````
 
 The following patterns are not considered problems:
@@ -13582,6 +13604,22 @@ function quux () {}
  * @define
  */
  function quux () {}
+
+/**
+ * Foo function.
+ *
+ * @param {[number, string]} bar - The bar array.
+ */
+function foo(bar) {}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * Foo function.
+ *
+ * @param {[number, string]} bar - The bar array.
+ */
+function foo(bar) {}
+// Settings: {"jsdoc":{"mode":"permissive"}}
 ````
 
 
