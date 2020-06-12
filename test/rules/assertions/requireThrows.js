@@ -21,8 +21,148 @@ export default {
           /**
            *
            */
+          const quux = function (foo) {
+            throw new Error('err')
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          const quux = (foo) => {
+            throw new Error('err')
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
           function quux (foo) {
             while(true) {
+              throw new Error('err')
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+            do {
+              throw new Error('err')
+            } while(true)
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+            for(var i = 0; i <= 10; i++) {
+              throw new Error('err')
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+            for(num in [1,2,3]) {
+              throw new Error('err')
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+            for(const num of [1,2,3]) {
+              throw new Error('err')
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+            for(const index in [1,2,3]) {
+              throw new Error('err')
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+            with(foo) {
               throw new Error('err')
             }
           }
