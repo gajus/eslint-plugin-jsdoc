@@ -272,6 +272,28 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @throws
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Unexpected tag `@throws`',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            throws: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
