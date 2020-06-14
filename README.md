@@ -2210,6 +2210,17 @@ export default function (input: {
 }): void {
   input;
 }
+
+export class Thing {
+  foo: any;
+
+  /**
+   * @param {} C
+   */
+  constructor(C: { new (): any }) {
+    this.foo = new C();
+  }
+}
 ````
 
 

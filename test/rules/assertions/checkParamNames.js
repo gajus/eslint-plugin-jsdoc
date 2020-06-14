@@ -1125,5 +1125,20 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      export class Thing {
+        foo: any;
+
+        /**
+         * @param {} C
+         */
+        constructor(C: { new (): any }) {
+          this.foo = new C();
+        }
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
