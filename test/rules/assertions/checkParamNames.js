@@ -1011,6 +1011,31 @@ export default {
     },
     {
       code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param cfg2
+           */
+          function quux ({foo}, cfg2) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param cfg
+           * @param cfg.foo
+           * @param baz
+           * @param baz.cfg
+           */
+          function quux ({foo}, {cfg}) {
+
+          }
+      `,
+    },
+    {
+      code: `
       /**
        * @param options
        * @param options.foo
@@ -1096,6 +1121,21 @@ export default {
         [foo: string]: { a: string; b: string };
       }): void {
         input;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      export class Thing {
+        foo: any;
+
+        /**
+         * @param {} C
+         */
+        constructor(C: { new (): any }) {
+          this.foo = new C();
+        }
       }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
