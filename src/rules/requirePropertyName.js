@@ -16,6 +16,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Requires that all function `@property` tags have names.',
+    },
     type: 'suggestion',
   },
 });

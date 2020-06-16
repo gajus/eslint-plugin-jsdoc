@@ -226,6 +226,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Reports invalid types.',
+    },
     fixable: 'code',
     schema: [
       {

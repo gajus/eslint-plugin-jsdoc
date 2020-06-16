@@ -76,6 +76,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Reports invalid block tag names.',
+    },
     fixable: 'code',
     schema: [
       {

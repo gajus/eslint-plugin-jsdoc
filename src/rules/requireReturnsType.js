@@ -12,6 +12,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      description: 'Requires that `@returns` tag has `type` value.',
+    },
     schema: [
       {
         additionalProperties: false,

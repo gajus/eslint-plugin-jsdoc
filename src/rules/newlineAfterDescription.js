@@ -55,6 +55,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Enforces a consistent padding of the block description.',
+    },
     fixable: 'whitespace',
     schema: [
       {

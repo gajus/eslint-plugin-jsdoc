@@ -29,6 +29,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      description: 'This rule reports defaults being used on the relevant portion of `@param` or `@default`.',
+    },
     fixable: 'code',
     schema: [
       {

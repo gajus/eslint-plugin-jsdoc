@@ -16,6 +16,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Requires that each `@property` tag has a `type` value.',
+    },
     type: 'suggestion',
   },
 });

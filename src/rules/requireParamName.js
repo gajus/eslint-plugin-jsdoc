@@ -16,6 +16,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      description: 'Requires that all function parameters have names.',
+    },
     schema: [
       {
         additionalProperties: false,

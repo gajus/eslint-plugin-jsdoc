@@ -25,6 +25,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      description: 'Reports an issue with any non-constructor function using `@implements`.',
+    },
     schema: [
       {
         additionalProperties: false,

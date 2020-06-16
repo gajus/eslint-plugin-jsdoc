@@ -98,6 +98,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'This rule checks the values for a handful of tags: `@version`, `@since`, `@license` and `@author`.',
+    },
     schema: [
       {
         additionalProperties: false,

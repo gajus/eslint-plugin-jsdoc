@@ -26,6 +26,9 @@ export default iterateJsdoc(({
 }, {
   checkFile: true,
   meta: {
+    docs: {
+      description: 'This rule checks for multi-line-style comments which fail to meet the criteria of a jsdoc block.',
+    },
     fixable: 'code',
     type: 'layout',
   },

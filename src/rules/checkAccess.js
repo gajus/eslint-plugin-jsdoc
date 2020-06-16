@@ -35,6 +35,9 @@ export default iterateJsdoc(({
   checkPrivate: true,
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Checks that `@access` tags have a valid value.',
+    },
     type: 'suggestion',
   },
 });

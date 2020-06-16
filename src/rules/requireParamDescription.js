@@ -16,6 +16,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      description: 'Requires that each `@param` tag has a `description` value.',
+    },
     schema: [
       {
         additionalProperties: false,

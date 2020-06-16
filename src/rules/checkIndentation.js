@@ -40,6 +40,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Reports invalid padding inside JSDoc blocks.',
+    },
     schema: [{
       additionalProperties: false,
       properties: {
