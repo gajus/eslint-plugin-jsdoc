@@ -187,6 +187,27 @@ export default {
     },
     {
       code: `
+          interface quux {
+            checked?: boolean
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSPropertySignature',
+          ],
+          descriptionStyle: 'tag',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
           /**
            *
            */
@@ -592,6 +613,22 @@ export default {
       `,
       options: [
         {
+          descriptionStyle: 'tag',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          interface quux {
+            checked?: boolean
+          }
+      `,
+      options: [
+        {
+          contexts: [
+            'TSPropertySignature',
+          ],
           descriptionStyle: 'tag',
         },
       ],
