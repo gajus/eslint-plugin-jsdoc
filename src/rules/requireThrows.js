@@ -18,6 +18,9 @@ const canSkip = (utils) => {
     // so it is not necessary to document that they throw an error.
     'abstract',
     'virtual',
+
+    // The designated type can itself document `@throws`
+    'type',
   ]) ||
     utils.avoidDocs();
 };
@@ -26,7 +29,8 @@ export default iterateJsdoc(({
   report,
   utils,
 }) => {
-  // A preflight check. We do not need to run a deep check for abstract functions.
+  // A preflight check. We do not need to run a deep check for abstract
+  //  functions.
   if (canSkip(utils)) {
     return;
   }
