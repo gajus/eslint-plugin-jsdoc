@@ -153,6 +153,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Checks that types in jsdoc comments are defined.',
+    },
     schema: [
       {
         additionalProperties: false,

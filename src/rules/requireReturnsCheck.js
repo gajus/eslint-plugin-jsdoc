@@ -63,6 +63,9 @@ export default iterateJsdoc(({
   }
 }, {
   meta: {
+    docs: {
+      description: 'Requires a return statement in function body if a `@returns` tag is specified in jsdoc comment.',
+    },
     type: 'suggestion',
   },
 });

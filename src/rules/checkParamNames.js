@@ -222,6 +222,9 @@ export default iterateJsdoc(({
   );
 }, {
   meta: {
+    docs: {
+      description: 'Ensures that parameter names in JSDoc match those in the function declaration.',
+    },
     fixable: 'code',
     schema: [
       {

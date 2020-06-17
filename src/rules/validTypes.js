@@ -116,6 +116,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Requires all types to be valid JSDoc or Closure compiler types without syntax errors.',
+    },
     schema: [
       {
         additionalProperies: false,

@@ -246,6 +246,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      description: 'Requires that all function parameters are documented.',
+    },
     fixable: 'code',
     schema: [
       {

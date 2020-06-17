@@ -17,6 +17,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Reports against Google Closure Compiler syntax.',
+    },
     type: 'suggestion',
   },
 });

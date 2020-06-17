@@ -74,6 +74,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Requires a hyphen before the `@param` description.',
+    },
     fixable: 'code',
     schema: [
       {

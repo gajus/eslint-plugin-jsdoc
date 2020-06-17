@@ -279,7 +279,7 @@ export default {
     );
   },
   meta: {
-    doc: {
+    docs: {
       category: 'Stylistic Issues',
       description: 'Require JSDoc comments',
       recommended: 'true',

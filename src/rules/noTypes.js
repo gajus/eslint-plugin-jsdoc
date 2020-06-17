@@ -19,6 +19,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      description: 'This rule reports types being used on `@param` or `@returns`.',
+    },
     fixable: 'code',
     schema: [
       {

@@ -45,6 +45,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      description: 'Requires that all functions have examples.',
+    },
     fixable: 'code',
     schema: [
       {

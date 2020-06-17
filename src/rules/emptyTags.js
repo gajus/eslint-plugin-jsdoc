@@ -48,6 +48,9 @@ export default iterateJsdoc(({
   checkPrivate: true,
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Expects specific tags to be empty of any content.',
+    },
     fixable: 'code',
     schema: [
       {

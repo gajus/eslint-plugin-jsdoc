@@ -81,6 +81,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      description: 'Enforces a regular expression pattern on descriptions.',
+    },
     schema: [
       {
         additionalProperties: false,

@@ -100,6 +100,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Ensures that property names in JSDoc are not duplicated on the same block and that nested properties have defined roots.',
+    },
     fixable: 'code',
     schema: [
       {

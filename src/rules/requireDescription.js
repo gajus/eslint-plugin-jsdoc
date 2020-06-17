@@ -70,6 +70,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      description: 'Requires that all functions have a description.',
+    },
     schema: [
       {
         additionalProperties: false,

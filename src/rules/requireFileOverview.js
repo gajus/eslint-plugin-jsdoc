@@ -90,6 +90,9 @@ export default iterateJsdoc(({
   },
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Checks that all files have one `@file`, `@fileoverview`, or `@overview` tag at the beginning of the file.',
+    },
     schema: [
       {
         additionalProperties: false,

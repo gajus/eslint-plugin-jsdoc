@@ -289,6 +289,9 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description: 'Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.',
+    },
     schema: [
       {
         additionalProperties: false,
