@@ -1,6 +1,6 @@
 ### `require-hyphen-before-param-description`
 
-Requires a hyphen before the `@param` description.
+Requires (or disallows) a hyphen before the `@param` description.
 
 #### Options
 

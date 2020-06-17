@@ -4570,7 +4570,7 @@ an ES6 class constructor, will not be flagged.
 
 To indicate that a function follows another function's signature, one might
 instead use `@type` to indicate the `@function` or `@callback` to which the
-funciton is adhering.
+function is adhering.
 
 <a name="eslint-plugin-jsdoc-rules-implements-on-classes-options-9"></a>
 #### Options
@@ -7991,7 +7991,7 @@ function quux () {
 <a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description"></a>
 ### <code>require-hyphen-before-param-description</code>
 
-Requires a hyphen before the `@param` description.
+Requires (or disallows) a hyphen before the `@param` description.
 
 <a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-18"></a>
 #### Options
