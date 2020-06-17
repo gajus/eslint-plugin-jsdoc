@@ -325,6 +325,10 @@ const getUtils = (
     return jsdocUtils.hasReturnValue(node);
   };
 
+  utils.hasThrowValue = () => {
+    return jsdocUtils.hasThrowValue(node);
+  };
+
   utils.isAsync = () => {
     return node.async;
   };
