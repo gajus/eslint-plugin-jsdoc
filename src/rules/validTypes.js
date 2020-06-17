@@ -76,7 +76,7 @@ export default iterateJsdoc(({
     const hasNameOrNamepathPosition = utils.tagMightHaveNamePosition(tag.tag) && Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
     const mustHaveNameOrNamepathPosition = utils.tagMustHaveNamePosition(tag.tag) && !allowEmptyNamepaths;
 
-    const hasEither = utils.tagMightHaveEitherTypeOrNamePosition(tag.tag) && hasTypePosition || hasNameOrNamepathPosition;
+    const hasEither = utils.tagMightHaveEitherTypeOrNamePosition(tag.tag) && (hasTypePosition || hasNameOrNamepathPosition);
     const mustHaveEither = utils.tagMustHaveEitherTypeOrNamePosition(tag.tag);
 
     if (tag.tag === 'borrows') {
