@@ -621,6 +621,9 @@ export default {
     {
       code: `
           interface quux {
+            /**
+             * If the thing should be checked.
+             */
             checked?: boolean
           }
       `,
