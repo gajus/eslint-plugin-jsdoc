@@ -72,23 +72,28 @@ export default iterateJsdoc(({
 
   const ancestorNodes = [];
   let currentScope = scopeManager.acquire(node);
+
   while (currentScope && currentScope.block.type !== 'Program') {
     ancestorNodes.push(currentScope.block);
     currentScope = currentScope.upper;
   }
 
-  let templateTags = _(ancestorNodes).flatMap((ancestorNode) => {
-    const commentNode = getJSDocComment(sourceCode, ancestorNode, settings);
-    if (!commentNode) {
-      return [];
-    }
+  // `currentScope` may be `null` or `Program`, so in such a case,
+  //  we look to present tags instead
+  let templateTags = ancestorNodes.length ?
+    _(ancestorNodes).flatMap((ancestorNode) => {
+      const commentNode = getJSDocComment(sourceCode, ancestorNode, settings);
+      if (!commentNode) {
+        return [];
+      }
 
-    const jsdoc = parseComment(commentNode, '');
+      const jsdoc = parseComment(commentNode, '');
 
-    return jsdocUtils.filterTags(jsdoc.tags, (tag) => {
-      return 'template' === tag.tag;
-    });
-  }).value();
+      return jsdocUtils.filterTags(jsdoc.tags, (tag) => {
+        return 'template' === tag.tag;
+      });
+    }).value() :
+    utils.getPresentTags('template');
 
   const classJsdoc = utils.getClassJsdoc();
   if (classJsdoc?.tags) {

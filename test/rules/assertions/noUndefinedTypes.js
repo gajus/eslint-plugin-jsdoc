@@ -740,5 +740,44 @@ export default {
         es6: true,
       },
     },
+    {
+      code: `
+      /** Gets a Promise resolved with a given value.
+       *
+       * @template ValueType
+       * @param {ValueType} value Value to resolve.
+       * @returns {Promise<ValueType>} Promise resolved with value.
+       */
+      exports.resolve1 = function resolve1(value) {
+        return Promise.resolve(value);
+      };
+      `,
+      env: {
+        es6: true,
+      },
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * A function returning the same type as its argument.
+       *
+       * @template ValueType
+       * @typedef {ValueType} ValueFunc
+       */
+      `,
+      env: {
+        es6: true,
+      },
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
   ],
 };

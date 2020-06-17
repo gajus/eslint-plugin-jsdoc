@@ -6284,6 +6284,25 @@ const init = () => {
     return Promise.resolve('success');
   }
 };
+
+/** Gets a Promise resolved with a given value.
+ *
+ * @template ValueType
+ * @param {ValueType} value Value to resolve.
+ * @returns {Promise<ValueType>} Promise resolved with value.
+ */
+exports.resolve1 = function resolve1(value) {
+  return Promise.resolve(value);
+};
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * A function returning the same type as its argument.
+ *
+ * @template ValueType
+ * @typedef {ValueType} ValueFunc
+ */
+// Settings: {"jsdoc":{"mode":"typescript"}}
 ````
 
 
