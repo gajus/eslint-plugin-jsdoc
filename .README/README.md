@@ -428,4 +428,5 @@ selector).
 {"gitdown": "include", "file": "./rules/require-returns-description.md"}
 {"gitdown": "include", "file": "./rules/require-returns-type.md"}
 {"gitdown": "include", "file": "./rules/require-returns.md"}
+{"gitdown": "include", "file": "./rules/require-throws.md"}
 {"gitdown": "include", "file": "./rules/valid-types.md"}
