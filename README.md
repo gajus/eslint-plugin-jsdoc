@@ -56,6 +56,7 @@ JSDoc linting rules for ESLint.
         * [`require-returns-description`](#eslint-plugin-jsdoc-rules-require-returns-description)
         * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
         * [`require-returns`](#eslint-plugin-jsdoc-rules-require-returns)
+        * [`require-throws`](#eslint-plugin-jsdoc-rules-require-throws)
         * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
 
 
@@ -12929,6 +12930,253 @@ class TestClass {
 ````
 
 
+<a name="eslint-plugin-jsdoc-rules-require-throws"></a>
+### <code>require-throws</code>
+
+Requires that throw statements are documented.
+
+<a name="eslint-plugin-jsdoc-rules-require-throws-options-27"></a>
+#### Options
+
+- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
+    document block avoids the need for a `@throws`. Defaults to an array
+    with `inheritdoc`. If you set this array, it will overwrite the default,
+    so be sure to add back `inheritdoc` if you wish its presence to cause
+    exemption of the rule.
+- `contexts` - Set this to an array of strings representing the AST context
+    where you wish the rule to be applied.
+    Overrides the default contexts (see below). Set to `"any"` if you want
+    the rule to apply to any jsdoc block throughout your files (as is necessary
+    for finding function blocks not attached to a function declaration or
+    expression, i.e., `@callback` or `@function` (or its aliases `@func` or
+    `@method`) (including those associated with an `@interface`).
+
+```js
+'jsdoc/require-throws': 'error',
+```
+
+| | |
+| -------- | --- |
+| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
+| Tags     | `throws` |
+| Aliases  | `exception` |
+| Options  | `contexts`, `exemptedBy` |
+| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
+
+The following patterns are considered problems:
+
+````js
+/**
+ *
+ */
+function quux (foo) {
+  throw new Error('err')
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+const quux = function (foo) {
+  throw new Error('err')
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+const quux = (foo) => {
+  throw new Error('err')
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  while(true) {
+    throw new Error('err')
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  do {
+    throw new Error('err')
+  } while(true)
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  for(var i = 0; i <= 10; i++) {
+    throw new Error('err')
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  for(num in [1,2,3]) {
+    throw new Error('err')
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  for(const num of [1,2,3]) {
+    throw new Error('err')
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  for(const index in [1,2,3]) {
+    throw new Error('err')
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  with(foo) {
+    throw new Error('err')
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  if (true) {
+    throw new Error('err')
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  if (false) {
+    // do nothing
+  } else {
+    throw new Error('err')
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  try {
+    throw new Error('err')
+  } catch(e) {
+    throw new Error(e.message)
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  try {
+    // do nothing
+  } finally {
+    throw new Error(e.message)
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+  const a = 'b'
+  switch(a) {
+    case 'b':
+      throw new Error('err')
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
+/**
+ * @throws
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"throws":false}}}
+// Message: Unexpected tag `@throws`
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @throws An error.
+ */
+function quux () {
+  throw new Error('err')
+}
+
+/**
+ *
+ */
+function quux (foo) {
+  try {
+    throw new Error('err')
+  } catch(e) {}
+}
+
+/**
+ * @inheritdoc
+ */
+function quux (foo) {
+  throw new Error('err')
+}
+
+/**
+ * @abstract
+ */
+function quux (foo) {
+  throw new Error('err')
+}
+
+/**
+ *
+ */
+function quux (foo) {
+}
+
+/**
+ * @type {MyCallback}
+ */
+function quux () {
+  throw new Error('err')
+}
+// Options: [{"exemptedBy":["type"]}]
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-valid-types"></a>
 ### <code>valid-types</code>
 
@@ -12964,7 +13212,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-27"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-28"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to disallow
