@@ -60,6 +60,7 @@ export default iterateJsdoc(({
   contextDefaults: true,
   meta: {
     docs: {
+      description: 'Requires that throw statements are documented.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns',
     },
     schema: [
