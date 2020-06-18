@@ -580,11 +580,23 @@ export default {
       errors: [
         {
           line: 4,
+          message: '@param "prop" does not match annotation name "options"',
+        },
+        {
+          line: 4,
           message: 'Missing @param "options.foo"',
         },
         {
           line: 4,
           message: 'Missing @param "options.bar"',
+        },
+        {
+          line: 5,
+          message: '@param "prop.foo" does not exist on prop',
+        },
+        {
+          line: 6,
+          message: '@param "prop.bar" does not exist on prop',
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
@@ -605,7 +617,7 @@ export default {
       `,
       errors: [
         {
-          line: 4,
+          line: 6,
           message: '@param "options.bar" does not exist on options',
         },
       ],
@@ -711,7 +723,7 @@ export default {
       `,
       errors: [
         {
-          line: 3,
+          line: 5,
           message: '@param "cfg.bar" does not exist on cfg',
         },
       ],
@@ -804,6 +816,36 @@ export default {
         },
       ],
       parser: require.resolve('babel-eslint'),
+    },
+    {
+      code: `
+      /**
+       * Testing
+       *
+       * @param options
+       * @param options.one One
+       * @param options.two Two
+       * @param options.four Four
+       */
+      function testingEslint(options: {
+        one: string;
+        two: string;
+        three: string;
+      }): string {
+        return one + two + three;
+      }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Missing @param "options.three"',
+        },
+        {
+          line: 8,
+          message: '@param "options.four" does not exist on options',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
   valid: [

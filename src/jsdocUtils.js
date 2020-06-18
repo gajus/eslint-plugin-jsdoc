@@ -92,7 +92,10 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
         const propertyNames = typeAnnotation.typeAnnotation.members.map((member) => {
           return getPropertiesFromPropertySignature(member);
         });
-        const flattened = flattenRoots(propertyNames);
+        const flattened = {
+          ...flattenRoots(propertyNames),
+          annotationName: param.name,
+        };
         if (_.has(param, 'name') || _.has(param, 'left.name')) {
           return [_.has(param, 'left.name') ? param.left.name : param.name, flattened];
         }

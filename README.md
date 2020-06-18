@@ -1906,7 +1906,7 @@ export class SomeClass {
    */
   constructor(options: { foo: string, bar: string }) {}
 }
-// Message: Missing @param "options.foo"
+// Message: @param "prop" does not match annotation name "options"
 
 export class SomeClass {
   /**
@@ -1993,6 +1993,23 @@ module.exports = class GraphQL {
 };
 // Options: [{"checkRestProperty":true}]
 // Message: Missing @param "fetchOptions.url"
+
+/**
+ * Testing
+ *
+ * @param options
+ * @param options.one One
+ * @param options.two Two
+ * @param options.four Four
+ */
+function testingEslint(options: {
+  one: string;
+  two: string;
+  three: string;
+}): string {
+  return one + two + three;
+}
+// Message: Missing @param "options.three"
 ````
 
 The following patterns are not considered problems:
