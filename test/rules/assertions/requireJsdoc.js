@@ -2241,6 +2241,36 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      @Entity('users')
+      export class User {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+          },
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      @Entity('users')
+      export class User {}
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [{
     code: `

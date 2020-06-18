@@ -8767,6 +8767,11 @@ class Animal {
 }
 // Options: [{"contexts":["ClassProperty"]}]
 // Message: Missing JSDoc comment.
+
+@Entity('users')
+export class User {}
+// Options: [{"require":{"ClassDeclaration":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

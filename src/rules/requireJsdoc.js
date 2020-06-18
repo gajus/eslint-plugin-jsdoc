@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import jsdocUtils from '../jsdocUtils';
 import exportParser from '../exportParser';
-import {getJSDocComment, getReducedASTNode} from '../eslint/getJSDocComment';
+import {getJSDocComment, getReducedASTNode, getDecorator} from '../eslint/getJSDocComment';
 import {getSettings} from '../iterateJsdoc';
 
 const OPTIONS_SCHEMA = {
@@ -166,7 +166,16 @@ export default {
       const fix = (fixer) => {
         // Default to one line break if the `minLines`/`maxLines` settings allow
         const lines = settings.minLines === 0 && settings.maxLines >= 1 ? 1 : settings.minLines;
-        const baseNode = getReducedASTNode(node, sourceCode);
+        let baseNode = getReducedASTNode(node, sourceCode);
+
+        let decorator;
+        do {
+          const tokenBefore = sourceCode.getTokenBefore(baseNode, {includeComments: true});
+          decorator = getDecorator(tokenBefore, sourceCode);
+          if (decorator) {
+            baseNode = decorator;
+          }
+        } while (decorator);
 
         const indent = jsdocUtils.getIndent({
           text: sourceCode.getText(
