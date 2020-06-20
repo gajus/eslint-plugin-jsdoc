@@ -410,6 +410,44 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @typedef {SomeType}
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          message: '@typedef must have a name in "jsdoc" mode.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @private {SomeType}
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          message: '@private should not have a bracketed type in "jsdoc" mode.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -596,10 +634,23 @@ export default {
     {
       code: `
           /**
+           * @extends Foo<String>
+           */
+           class Bar {};
+      `,
+    },
+    {
+      code: `
+          /**
            * @extends {Foo<String>}
            */
            class Bar {};
       `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
     {
       code: `
@@ -615,6 +666,11 @@ export default {
            */
           let UserDefinedGCCType;
       `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
     {
       code: `
@@ -622,15 +678,6 @@ export default {
            * @modifies {foo|bar}
            */
           function quux (foo, bar, baz) {}
-      `,
-    },
-    {
-      code: `
-      /**
-       * @private {BadTypeNotCheckedInJsdoc<}
-       */
-      function quux () {}
-
       `,
     },
     {
@@ -707,6 +754,34 @@ export default {
       settings: {
         jsdoc: {
           mode: 'permissive',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @typedef {SomeType}
+       */
+      function quux () {}
+
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @private {SomeType}
+       */
+      function quux () {}
+
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
         },
       },
     },
