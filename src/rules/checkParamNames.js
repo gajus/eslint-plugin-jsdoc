@@ -59,9 +59,15 @@ const validateParameterNames = (
       }
 
       const [parameterName, {
-        names: properties, hasPropertyRest, rests,
+        names: properties, hasPropertyRest, rests, annotationParamName,
       }] = functionParameterName;
-      const tagName = parameterName ? parameterName : tag.name.trim();
+      if (annotationParamName !== undefined) {
+        const name = tag.name.trim();
+        if (name !== annotationParamName) {
+          report(`@${targetTagName} "${name}" does not match parameter name "${annotationParamName}"`, null, tag);
+        }
+      }
+      const tagName = parameterName === undefined ? tag.name.trim() : parameterName;
       const expectedNames = properties.map((name) => {
         return `${tagName}.${name}`;
       });
@@ -81,32 +87,30 @@ const validateParameterNames = (
 
       const extraProperties = [];
       if (!hasPropertyRest || checkRestProperty) {
-        actualNames.filter((name) => {
-          return name.startsWith(tag.name.trim() + '.');
-        }).forEach((name) => {
-          if (!expectedNames.includes(name) && name !== tag.name) {
-            extraProperties.push(name);
+        actualNames.forEach((name, idx) => {
+          const match = name.startsWith(tag.name.trim() + '.');
+          if (match && !expectedNames.includes(name) && name !== tag.name) {
+            extraProperties.push([name, paramTags[idx][1]]);
           }
         });
       }
 
-      if (missingProperties.length) {
+      const hasMissing = missingProperties.length;
+      if (hasMissing) {
         missingProperties.forEach((missingProperty) => {
           report(`Missing @${targetTagName} "${missingProperty}"`, null, tag);
         });
-
-        return true;
       }
 
       if (extraProperties.length) {
-        extraProperties.forEach((extraProperty) => {
-          report(`@${targetTagName} "${extraProperty}" does not exist on ${tag.name}`, null, tag);
+        extraProperties.forEach(([extraProperty, tg]) => {
+          report(`@${targetTagName} "${extraProperty}" does not exist on ${tag.name}`, null, tg);
         });
 
         return true;
       }
 
-      return false;
+      return hasMissing;
     }
 
     let funcParamName;
