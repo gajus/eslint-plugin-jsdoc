@@ -193,16 +193,16 @@ how many line breaks to add when a block is missing.
   containing both JavaScript and TypeScript, you can also use [`overrides`](https://eslint.org/docs/user-guide/configuring). You may also set to `"permissive"` to
   try to be as accommodating to any of the styles, but this is not recommended.
   Currently is used for the following:
-  - Determine valid tags and aliases for `check-tag-names`
-  - Only check `@template` in `no-undefined-types` for types in "closure" and
+  - `check-tag-names`: Determine valid tags and aliases
+  - `no-undefined-types`: Only check `@template` for types in "closure" and
     "typescript" modes
-  - For type-checking rules, determine which tags will be checked for types
-    (Closure allows types on some tags which the others do not,
+  - `check-syntax`: determines aspects that may be enforced
+  - For type/namepath-checking rules, determine which tags will be checked for
+    types/namepaths (Closure allows types on some tags which the others do not,
     so these tags will additionally be checked in "closure" mode)
   - For type-checking rules, impacts parsing of types (through
     [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser) dependency)
   - Check preferred tag names
-  - For `check-syntax`, determines aspects that may be enforced
   - Disallows namepath on `@interface` for "closure" mode in `valid-types` (and
       avoids checking in other rules)
 
@@ -13474,6 +13474,12 @@ function foo(bar) {}
 
 /**
  * @interface name<
+ */
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: Syntax error in namepath: name<
+
+/**
+ * @module name<
  */
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 // Message: Syntax error in namepath: name<
