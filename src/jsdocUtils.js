@@ -231,7 +231,9 @@ const getPreferredTagName = (
 
   // Allow keys to have a 'tag ' prefix to avoid upstream bug in ESLint
   // that disallows keys that conflict with Object.prototype,
-  // e.g. 'tag constructor' for 'constructor' (#537)
+  // e.g. 'tag constructor' for 'constructor':
+  // https://github.com/eslint/eslint/issues/13289
+  // https://github.com/gajus/eslint-plugin-jsdoc/issues/537
   const tagPreferenceFixed = _.mapKeys(tagPreference, (value, key) => {
     return key.replace('tag ', '');
   });

@@ -126,7 +126,8 @@ template
 
 And for [Closure](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler),
 when `settings.jsdoc.mode` is set to `closure`, one may use the following (in
-addition to the jsdoc and TypeScript tags):
+addition to the jsdoc and TypeScript tags–though replacing `returns` with
+`return`):
 
 ```
 define (synonym of `const` per jsdoc source)

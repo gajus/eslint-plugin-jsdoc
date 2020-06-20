@@ -193,7 +193,7 @@ how many line breaks to add when a block is missing.
   containing both JavaScript and TypeScript, you can also use [`overrides`](https://eslint.org/docs/user-guide/configuring). You may also set to `"permissive"` to
   try to be as accommodating to any of the styles, but this is not recommended.
   Currently is used for the following:
-  - Determine valid tags for `check-tag-names`
+  - Determine valid tags and aliases for `check-tag-names`
   - Only check `@template` in `no-undefined-types` for types in "closure" and
     "typescript" modes
   - For type-checking rules, determine which tags will be checked for types
@@ -2631,7 +2631,8 @@ template
 
 And for [Closure](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler),
 when `settings.jsdoc.mode` is set to `closure`, one may use the following (in
-addition to the jsdoc and TypeScript tags):
+addition to the jsdoc and TypeScript tags–though replacing `returns` with
+`return`):
 
 ```
 define (synonym of `const` per jsdoc source)
@@ -2863,6 +2864,13 @@ function quux () {
 // Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
 // Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
 
+/**
+ * @returns
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Invalid JSDoc tag (preference). Replace "returns" JSDoc tag with "return".
+
 /** 
  * @modifies
  * @abstract
@@ -3070,6 +3078,17 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"baz","returns":{"message":"Prefer `bar`","replacement":"bar"},"todo":false}}}
+
+/**
+ * @returns
+ */
+function quux (foo) {}
+
+/**
+ * @return
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"closure"}}
 
 /** 
  * @modifies
@@ -13214,7 +13233,8 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
     `@class`, `@constructor`, `@constant`, `@const`,
     `@function`, `@func`, `@method`, `@interface`, `@member`, `@var`,
     `@mixin`, `@namespace`
-1. Name(path)-pointing tags requiring namepath: `@alias`, `@augments`, `@extends`, `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@this`
+1. Name(path)-pointing tags requiring namepath: `@alias`, `@augments`,
+    `@extends`, `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@this`
 1. Name(path)-pointing tags (which may have value without namepath or their
     namepath can be expressed elsewhere on the block): `@listens`, `@fires`,
     `@emits`, and `@modifies`
