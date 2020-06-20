@@ -392,20 +392,26 @@ const closureNamepathDefiningTags = new Set([
   'mixin',
   'namespace',
 
-  // Todo: Should add `module` here (with optional "name" and no curly brackets);
-  //  this block impacts `no-undefined-types` and `valid-types` (search for
-  //  "isNamepathDefiningTag|tagMightHaveNamePosition|tagMightHaveEitherTypeOrNamePosition")
-
   // These seem to all require a "namepath" in their signatures (with no counter-examples)
   'name',
   'typedef',
   'callback',
 ]);
-const namepathDefiningTags = new Set([
+
+const typescriptNamepathDefiningTags = new Set([
   ...closureNamepathDefiningTags,
 
   // Allows for "name" in signature, but indicates as optional
   'interface',
+]);
+
+const namepathDefiningTags = new Set([
+  ...typescriptNamepathDefiningTags,
+
+  // Optional "name" and no curly brackets
+  //  this block impacts `no-undefined-types` and `valid-types` (search for
+  //  "isNamepathDefiningTag|tagMightHaveNamePosition|tagMightHaveEitherTypeOrNamePosition")
+  'module',
 ]);
 
 const tagsWithOptionalNamePositionBase = new Set([
@@ -440,6 +446,11 @@ const tagsWithOptionalNamePositionBase = new Set([
 //  signature or examples (besides `modifies` and `param`)
 const tagsWithOptionalNamePosition = new Set([
   ...namepathDefiningTags,
+  ...tagsWithOptionalNamePositionBase,
+]);
+
+const typescriptTagsWithOptionalNamePosition = new Set([
+  ...typescriptNamepathDefiningTags,
   ...tagsWithOptionalNamePositionBase,
 ]);
 
@@ -480,9 +491,14 @@ const tagsWithMandatoryTypeOrNamePosition = new Set([
 ]);
 
 const isNamepathDefiningTag = (mode, tagName) => {
-  return mode === 'closure' ?
-    closureNamepathDefiningTags.has(tagName) :
-    namepathDefiningTags.has(tagName);
+  if (mode === 'closure') {
+    return closureNamepathDefiningTags.has(tagName);
+  }
+  if (mode === 'typescript') {
+    return typescriptNamepathDefiningTags.has(tagName);
+  }
+
+  return namepathDefiningTags.has(tagName);
 };
 
 const tagMightHaveTypePosition = (mode, tag) => {
@@ -504,9 +520,14 @@ const tagMustHaveTypePosition = (mode, tag) => {
 };
 
 const tagMightHaveNamePosition = (mode, tag) => {
-  return mode === 'closure' ?
-    closureTagsWithOptionalNamePosition.has(tag) :
-    tagsWithOptionalNamePosition.has(tag);
+  if (mode === 'closure') {
+    return closureTagsWithOptionalNamePosition.has(tag);
+  }
+  if (mode === 'typescript') {
+    return typescriptTagsWithOptionalNamePosition.has(tag);
+  }
+
+  return tagsWithOptionalNamePosition.has(tag);
 };
 
 const tagMustHaveNamePosition = (tag) => {

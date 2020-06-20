@@ -379,6 +379,23 @@ export default {
     {
       code: `
       /**
+       * @module name<
+       */
+      `,
+      errors: [
+        {
+          message: 'Syntax error in namepath: name<',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
+    {
+      code: `
+      /**
        * @interface name
        */
       `,
