@@ -144,6 +144,7 @@ how many line breaks to add when a block is missing.
   - For type-checking rules, impacts parsing of types (through
     [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser) dependency)
   - Check preferred tag names
+  - For `check-syntax`, determines aspects that may be enforced
   - Disallows namepath on `@interface` for "closure" mode in `valid-types` (and
       avoids checking in other rules)
 
