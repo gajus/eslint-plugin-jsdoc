@@ -94,7 +94,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
         });
         const flattened = {
           ...flattenRoots(propertyNames),
-          annotationName: param.name,
+          annotationParamName: param.name,
         };
         if (_.has(param, 'name') || _.has(param, 'left.name')) {
           return [_.has(param, 'left.name') ? param.left.name : param.name, flattened];

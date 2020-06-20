@@ -59,12 +59,12 @@ const validateParameterNames = (
       }
 
       const [parameterName, {
-        names: properties, hasPropertyRest, rests, annotationName,
+        names: properties, hasPropertyRest, rests, annotationParamName,
       }] = functionParameterName;
-      if (annotationName !== undefined) {
+      if (annotationParamName !== undefined) {
         const name = tag.name.trim();
-        if (name !== annotationName) {
-          report(`@${targetTagName} "${name}" does not match annotation name "${annotationName}"`, null, tag);
+        if (name !== annotationParamName) {
+          report(`@${targetTagName} "${name}" does not match parameter name "${annotationParamName}"`, null, tag);
         }
       }
       const tagName = parameterName === undefined ? tag.name.trim() : parameterName;

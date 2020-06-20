@@ -580,7 +580,7 @@ export default {
       errors: [
         {
           line: 4,
-          message: '@param "prop" does not match annotation name "options"',
+          message: '@param "prop" does not match parameter name "options"',
         },
         {
           line: 4,

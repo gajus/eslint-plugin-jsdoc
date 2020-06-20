@@ -1906,7 +1906,7 @@ export class SomeClass {
    */
   constructor(options: { foo: string, bar: string }) {}
 }
-// Message: @param "prop" does not match annotation name "options"
+// Message: @param "prop" does not match parameter name "options"
 
 export class SomeClass {
   /**
