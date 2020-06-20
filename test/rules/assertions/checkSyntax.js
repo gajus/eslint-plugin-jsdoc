@@ -21,6 +21,21 @@ export default {
     {
       code: `
           /**
+           * @param {string=} foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+          /**
            * @param {string} [foo]
            */
           function quux (foo) {

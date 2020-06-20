@@ -202,6 +202,7 @@ how many line breaks to add when a block is missing.
   - For type-checking rules, impacts parsing of types (through
     [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser) dependency)
   - Check preferred tag names
+  - For `check-syntax`, determines aspects that may be enforced
   - Disallows namepath on `@interface` for "closure" mode in `valid-types` (and
       avoids checking in other rules)
 
@@ -2464,7 +2465,17 @@ function quux (code = 1) {
 <a name="eslint-plugin-jsdoc-rules-check-syntax"></a>
 ### <code>check-syntax</code>
 
-Reports against Google Closure Compiler syntax.
+Reports against syntax not encouraged for the mode (e.g., Google Closure Compiler
+in "jsdoc" or "typescript" mode). Note that this rule will not chekc for types
+that are wholly invalid for a given mode, as that is covered by `valid-types`.
+
+Currently checks against:
+
+- Use of `=` in "jsdoc" or "typescript" mode
+
+Note that "jsdoc" actually allows Closure syntax, but with another
+option available for optional parameters (enclosing the name in brackets), the
+rule is enforced (except under "permissive" and "closure" modes).
 
 |||
 |---|---|
@@ -2486,6 +2497,14 @@ function quux (foo) {
 The following patterns are not considered problems:
 
 ````js
+/**
+ * @param {string=} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
 /**
  * @param {string} [foo]
  */
