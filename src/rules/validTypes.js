@@ -18,6 +18,7 @@ export default iterateJsdoc(({
   if (!jsdoc.tags) {
     return;
   }
+  // eslint-disable-next-line complexity
   jsdoc.tags.forEach((tag) => {
     const validNamepathParsing = function (namepath, tagName) {
       try {
@@ -80,7 +81,8 @@ export default iterateJsdoc(({
     const hasEither = utils.tagMightHaveEitherTypeOrNamePosition(tag.tag) && (hasTypePosition || hasNameOrNamepathPosition);
     const mustHaveEither = utils.tagMustHaveEitherTypeOrNamePosition(tag.tag);
 
-    if (tag.tag === 'borrows') {
+    switch (tag.tag) {
+    case 'borrows': {
       const thisNamepath = tag.description.replace(asExpression, '');
 
       if (!asExpression.test(tag.description) || !thisNamepath) {
@@ -94,7 +96,17 @@ export default iterateJsdoc(({
 
         validNamepathParsing(thatNamepath);
       }
-    } else {
+      break;
+    }
+    case 'interface': {
+      if (mode === 'closure' && tag.name) {
+        report('@interface should not have a name in "closure" mode.', null, tag);
+        break;
+      }
+    }
+
+    // Fallthrough
+    default: {
       if (mustHaveEither && !hasEither && !mustHaveTypePosition) {
         report(`Tag @${tag.tag} must have either a type or namepath`, null, tag);
 
@@ -112,6 +124,7 @@ export default iterateJsdoc(({
       } else if (mustHaveNameOrNamepathPosition) {
         report(`Tag @${tag.tag} must have a name/namepath`, null, tag);
       }
+    }
     }
   });
 }, {

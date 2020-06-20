@@ -280,7 +280,7 @@ const getUtils = (
 
     const exemptedBy = context.options[0]?.exemptedBy ?? [
       'inheritDoc',
-      ...settings.mode === 'closure' ? [] : ['inheritdoc'],
+      ...mode === 'closure' ? [] : ['inheritdoc'],
     ];
     if (exemptedBy.length && utils.getPresentTags(exemptedBy).length) {
       return true;
@@ -302,7 +302,7 @@ const getUtils = (
   };
 
   utils.tagMightHaveNamePosition = (tagName) => {
-    return jsdocUtils.tagMightHaveNamePosition(tagName);
+    return jsdocUtils.tagMightHaveNamePosition(mode, tagName);
   };
 
   utils.tagMustHaveTypePosition = (tagName) => {
@@ -314,7 +314,7 @@ const getUtils = (
   };
 
   utils.isNamepathDefiningTag = (tagName) => {
-    return jsdocUtils.isNamepathDefiningTag(tagName);
+    return jsdocUtils.isNamepathDefiningTag(mode, tagName);
   };
 
   utils.hasDefinedTypeReturnTag = (tag) => {

@@ -375,7 +375,7 @@ const tagsWithOptionalTypePositionClosure = new Set([
 ]);
 
 // None of these show as having curly brackets for their name/namepath
-const namepathDefiningTags = new Set([
+const closureNamepathDefiningTags = new Set([
   // These appear to require a "name" in their signature, albeit these
   //  are somewhat different from other "name"'s (including as described
   // at https://jsdoc.app/about-namepaths.html )
@@ -386,7 +386,6 @@ const namepathDefiningTags = new Set([
   'class', 'constructor',
   'constant', 'const',
   'function', 'func', 'method',
-  'interface',
   'member', 'var',
   'mixin',
   'namespace',
@@ -400,11 +399,14 @@ const namepathDefiningTags = new Set([
   'typedef',
   'callback',
 ]);
+const namepathDefiningTags = new Set([
+  ...closureNamepathDefiningTags,
 
-// The following do not seem to allow curly brackets in their doc
-//  signature or examples (besides `modifies` and `param`)
-const tagsWithOptionalNamePosition = new Set([
-  ...namepathDefiningTags,
+  // Allows for "name" in signature, but indicates as optional
+  'interface',
+]);
+
+const tagsWithOptionalNamePositionBase = new Set([
   'param',
 
   // `borrows` has a different format, however, so needs special parsing;
@@ -430,6 +432,18 @@ const tagsWithOptionalNamePosition = new Set([
 
   // Signature allows for "namepath" or text
   'see',
+]);
+
+// The following do not seem to allow curly brackets in their doc
+//  signature or examples (besides `modifies` and `param`)
+const tagsWithOptionalNamePosition = new Set([
+  ...namepathDefiningTags,
+  ...tagsWithOptionalNamePositionBase,
+]);
+
+const closureTagsWithOptionalNamePosition = new Set([
+  ...closureNamepathDefiningTags,
+  ...tagsWithOptionalNamePositionBase,
 ]);
 
 // Todo: `@link` seems to require a namepath OR URL and might be checked as such.
@@ -463,8 +477,10 @@ const tagsWithMandatoryTypeOrNamePosition = new Set([
   'mixes',
 ]);
 
-const isNamepathDefiningTag = (tagName) => {
-  return namepathDefiningTags.has(tagName);
+const isNamepathDefiningTag = (mode, tagName) => {
+  return mode === 'closure' ?
+    closureNamepathDefiningTags.has(tagName) :
+    namepathDefiningTags.has(tagName);
 };
 
 const tagMightHaveTypePosition = (mode, tag) => {
@@ -485,8 +501,10 @@ const tagMustHaveTypePosition = (mode, tag) => {
   return tagsWithMandatoryTypePosition.has(tag);
 };
 
-const tagMightHaveNamePosition = (tag) => {
-  return tagsWithOptionalNamePosition.has(tag);
+const tagMightHaveNamePosition = (mode, tag) => {
+  return mode === 'closure' ?
+    closureTagsWithOptionalNamePosition.has(tag) :
+    tagsWithOptionalNamePosition.has(tag);
 };
 
 const tagMustHaveNamePosition = (tag) => {
@@ -494,7 +512,7 @@ const tagMustHaveNamePosition = (tag) => {
 };
 
 const tagMightHaveEitherTypeOrNamePosition = (mode, tag) => {
-  return tagMightHaveTypePosition(mode, tag) || tagMightHaveNamePosition(tag);
+  return tagMightHaveTypePosition(mode, tag) || tagMightHaveNamePosition(mode, tag);
 };
 
 const tagMustHaveEitherTypeOrNamePosition = (tag) => {

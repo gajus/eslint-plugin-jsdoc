@@ -202,6 +202,8 @@ how many line breaks to add when a block is missing.
   - For type-checking rules, impacts parsing of types (through
     [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser) dependency)
   - Check preferred tag names
+  - Disallows namepath on `@interface` for "closure" mode in `valid-types` (and
+      avoids checking in other rules)
 
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
@@ -13430,6 +13432,18 @@ function quux () {}
 function foo(bar) {}
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 // Message: Syntax error in type: [number, string]
+
+/**
+ * @interface name<
+ */
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: Syntax error in namepath: name<
+
+/**
+ * @interface name
+ */
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: @interface should not have a name in "closure" mode.
 ````
 
 The following patterns are not considered problems:
