@@ -81,6 +81,7 @@ export default iterateJsdoc(({
     const hasEither = utils.tagMightHaveEitherTypeOrNamePosition(tag.tag) && (hasTypePosition || hasNameOrNamepathPosition);
     const mustHaveEither = utils.tagMustHaveEitherTypeOrNamePosition(tag.tag);
 
+    let skip;
     switch (tag.tag) {
     case 'borrows': {
       const thisNamepath = tag.description.replace(asExpression, '');
@@ -98,8 +99,27 @@ export default iterateJsdoc(({
       }
       break;
     }
+    case 'extends':
+    case 'package': case 'private': case 'protected': case 'public': case 'static': {
+      if (mode !== 'closure' && mode !== 'permissive' && tag.type) {
+        report(`@${tag.tag} should not have a bracketed type in "${mode}" mode.`, null, tag);
+        break;
+      }
+      skip = true;
+    }
+
+    // Fallthrough
+    case 'typedef': {
+      if (!skip && mode !== 'closure' && mode !== 'permissive' && !tag.name) {
+        report(`@typedef must have a name in "${mode}" mode.`, null, tag);
+        break;
+      }
+      skip = true;
+    }
+
+    // Fallthrough
     case 'interface': {
-      if (mode === 'closure' && tag.name) {
+      if (!skip && mode === 'closure' && tag.name) {
         report('@interface should not have a name in "closure" mode.', null, tag);
         break;
       }

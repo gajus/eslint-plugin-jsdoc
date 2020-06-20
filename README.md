@@ -197,6 +197,9 @@ how many line breaks to add when a block is missing.
   - `no-undefined-types`: Only check `@template` for types in "closure" and
     "typescript" modes
   - `check-syntax`: determines aspects that may be enforced
+  - `valid-types`: in non-Closure mode, `@extends`, `@package` and access tags
+     (e.g., `@private`) with a bracketed type are reported as are missing
+     names with `@typedef`
   - For type/namepath-checking rules, determine which tags will be checked for
     types/namepaths (Closure allows types on some tags which the others do not,
     so these tags will additionally be checked in "closure" mode)
@@ -13489,6 +13492,20 @@ function foo(bar) {}
  */
 // Settings: {"jsdoc":{"mode":"closure"}}
 // Message: @interface should not have a name in "closure" mode.
+
+/**
+ * @typedef {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: @typedef must have a name in "jsdoc" mode.
+
+/**
+ * @private {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: @private should not have a bracketed type in "jsdoc" mode.
 ````
 
 The following patterns are not considered problems:
@@ -13618,9 +13635,15 @@ function quux() {
  class Bar {};
 
 /**
+ * @extends Foo<String>
+ */
+ class Bar {};
+
+/**
  * @extends {Foo<String>}
  */
  class Bar {};
+// Settings: {"jsdoc":{"mode":"closure"}}
 
 /**
  * @typedef {number|string} UserDefinedType
@@ -13630,16 +13653,12 @@ function quux() {
  * @typedef {number|string}
  */
 let UserDefinedGCCType;
+// Settings: {"jsdoc":{"mode":"closure"}}
 
 /**
  * @modifies {foo|bar}
  */
 function quux (foo, bar, baz) {}
-
-/**
- * @private {BadTypeNotCheckedInJsdoc<}
- */
-function quux () {}
 
 /**
  * @this {Navigator}
@@ -13679,6 +13698,18 @@ function foo(bar) {}
  */
 function foo(bar) {}
 // Settings: {"jsdoc":{"mode":"permissive"}}
+
+/**
+ * @typedef {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @private {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
 ````
 
 

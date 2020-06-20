@@ -139,6 +139,9 @@ how many line breaks to add when a block is missing.
   - `no-undefined-types`: Only check `@template` for types in "closure" and
     "typescript" modes
   - `check-syntax`: determines aspects that may be enforced
+  - `valid-types`: in non-Closure mode, `@extends`, `@package` and access tags
+     (e.g., `@private`) with a bracketed type are reported as are missing
+     names with `@typedef`
   - For type/namepath-checking rules, determine which tags will be checked for
     types/namepaths (Closure allows types on some tags which the others do not,
     so these tags will additionally be checked in "closure" mode)
