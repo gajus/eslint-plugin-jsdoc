@@ -16,7 +16,6 @@ before_script: >
   fi
 notifications:
   email: false
-sudo: false
 script:
   - npm run test
   - 'if [ -n "${LINT-}" ]; then npm run lint; fi'
