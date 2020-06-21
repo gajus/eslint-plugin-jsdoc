@@ -225,67 +225,63 @@ export default {
       }
     };
 
-    // todo[engine:node@>=8.3.0]: Change to object spread
-    // eslint-disable-next-line fp/no-mutating-assign
-    return Object.assign(
-      jsdocUtils.getContextObject(jsdocUtils.enforcedContexts(context, []), checkJsDoc),
-      {
-        ArrowFunctionExpression (node) {
-          if (!requireOption.ArrowFunctionExpression) {
-            return;
-          }
+    return {
+      ...jsdocUtils.getContextObject(jsdocUtils.enforcedContexts(context, []), checkJsDoc),
+      ArrowFunctionExpression (node) {
+        if (!requireOption.ArrowFunctionExpression) {
+          return;
+        }
 
-          if (!['VariableDeclarator', 'ExportDefaultDeclaration', 'AssignmentExpression'].includes(node.parent.type)) {
-            return;
-          }
+        if (!['VariableDeclarator', 'ExportDefaultDeclaration', 'AssignmentExpression'].includes(node.parent.type)) {
+          return;
+        }
 
-          checkJsDoc(node, true);
-        },
-
-        ClassDeclaration (node) {
-          if (!requireOption.ClassDeclaration) {
-            return;
-          }
-
-          checkJsDoc(node);
-        },
-
-        ClassExpression (node) {
-          if (!requireOption.ClassExpression) {
-            return;
-          }
-
-          checkJsDoc(node);
-        },
-
-        FunctionDeclaration (node) {
-          if (!requireOption.FunctionDeclaration) {
-            return;
-          }
-
-          checkJsDoc(node, true);
-        },
-
-        FunctionExpression (node) {
-          if (requireOption.MethodDefinition && node.parent.type === 'MethodDefinition') {
-            checkJsDoc(node, true);
-
-            return;
-          }
-
-          if (!requireOption.FunctionExpression) {
-            return;
-          }
-
-          if (
-            ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
-            node.parent.type === 'Property' && node === node.parent.value
-          ) {
-            checkJsDoc(node, true);
-          }
-        },
+        checkJsDoc(node, true);
       },
-    );
+
+      ClassDeclaration (node) {
+        if (!requireOption.ClassDeclaration) {
+          return;
+        }
+
+        checkJsDoc(node);
+      },
+
+      ClassExpression (node) {
+        if (!requireOption.ClassExpression) {
+          return;
+        }
+
+        checkJsDoc(node);
+      },
+
+      FunctionDeclaration (node) {
+        if (!requireOption.FunctionDeclaration) {
+          return;
+        }
+
+        checkJsDoc(node, true);
+      },
+
+      FunctionExpression (node) {
+        if (requireOption.MethodDefinition && node.parent.type === 'MethodDefinition') {
+          checkJsDoc(node, true);
+
+          return;
+        }
+
+        if (!requireOption.FunctionExpression) {
+          return;
+        }
+
+        if (
+          ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
+          node.parent.type === 'Property' && node === node.parent.value
+        ) {
+          checkJsDoc(node, true);
+        }
+      },
+    };
   },
   meta: {
     docs: {

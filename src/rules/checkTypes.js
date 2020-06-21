@@ -38,6 +38,11 @@ const adjustNames = (type, preferred, isGenericMatch, nodeName, node, parentNode
         if (bracketEnd) {
           parentNode.meta.syntax = 'ANGLE_BRACKET';
           ret = preferred.slice(0, -2);
+        } else if (
+          parentNode.meta.syntax === 'SQUARE_BRACKET' &&
+          (nodeName === '[]' || nodeName === 'Array')
+        ) {
+          parentNode.meta.syntax = 'ANGLE_BRACKET';
         }
       }
     }
@@ -64,7 +69,7 @@ export default iterateJsdoc(({
     return utils.tagMightHaveTypePosition(tag.tag);
   });
 
-  const {preferredTypes} = settings;
+  const {preferredTypes, mode} = settings;
   const {
     noDefaults,
     unifyParentAndChildTypeChecks,
@@ -126,7 +131,7 @@ export default iterateJsdoc(({
     let typeAst;
 
     try {
-      typeAst = parse(jsdocTag.type);
+      typeAst = parse(jsdocTag.type, {mode});
     } catch {
       return;
     }

@@ -7,39 +7,39 @@
   "dependencies": {
     "comment-parser": "^0.7.5",
     "debug": "^4.1.1",
-    "jsdoctypeparser": "^6.1.0",
+    "jsdoctypeparser": "^7.0.0",
     "lodash": "^4.17.15",
     "regextras": "^0.7.1",
-    "semver": "^6.3.0",
+    "semver": "^7.3.2",
     "spdx-expression-parse": "^3.0.1"
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
-    "@babel/cli": "^7.10.1",
-    "@babel/core": "^7.10.2",
-    "@babel/node": "^7.10.1",
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/node": "^7.10.3",
     "@babel/plugin-transform-flow-strip-types": "^7.10.1",
-    "@babel/preset-env": "^7.10.2",
-    "@babel/register": "^7.10.1",
-    "@typescript-eslint/parser": "^3.2.0",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/register": "^7.10.3",
+    "@typescript-eslint/parser": "^3.3.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-istanbul": "^6.0.0",
     "chai": "^4.2.0",
     "cross-env": "^7.0.2",
-    "eslint": "7.2.0",
-    "eslint-config-canonical": "^20.0.5",
+    "eslint": "7.3.0",
+    "eslint-config-canonical": "^20.0.6",
     "gitdown": "^3.1.3",
     "glob": "^7.1.6",
     "husky": "^4.2.5",
-    "mocha": "^7.2.0",
+    "mocha": "^8.0.1",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.0.8",
     "typescript": "^3.9.5"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "husky": {
     "hooks": {

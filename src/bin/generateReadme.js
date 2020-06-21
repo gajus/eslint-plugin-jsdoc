@@ -8,9 +8,7 @@ import glob from 'glob';
 import Gitdown from 'gitdown';
 
 const trimCode = (code) => {
-  // todo[engine:node@>10]: Change to `trimEnd`
-  // eslint-disable-next-line unicorn/prefer-trim-start-end
-  let lines = code.replace(/^\n/u, '').trimRight().split('\n');
+  let lines = code.replace(/^\n/u, '').trimEnd().split('\n');
 
   const firsLineIndentation = lines[0].match(/^\s+/u);
   const lastLineIndentation = lines[lines.length - 1].match(/^\s+/u);
