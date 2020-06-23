@@ -434,7 +434,8 @@ const getSettings = (context) => {
     augmentsExtendsReplacesDocs: context.settings.jsdoc?.augmentsExtendsReplacesDocs,
 
     // Many rules, e.g., `check-tag-names`
-    mode: context.settings.jsdoc?.mode ?? 'jsdoc',
+    mode: context.settings.jsdoc?.mode ??
+      (context.parserPath.includes('@typescript-eslint') ? 'typescript' : 'jsdoc'),
   };
   /* eslint-enable sort-keys-fix/sort-keys-fix */
 

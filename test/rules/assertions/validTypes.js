@@ -751,6 +751,17 @@ export default {
        */
       function foo(bar) {}
       `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Foo function.
+       *
+       * @param {[number, string]} bar - The bar array.
+       */
+      function foo(bar) {}
+      `,
       settings: {
         jsdoc: {
           mode: 'permissive',
