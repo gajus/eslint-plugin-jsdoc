@@ -75,8 +75,18 @@ export default iterateJsdoc(({
     const hasTypePosition = utils.tagMightHaveTypePosition(tag.tag) && Boolean(tag.type);
     const mustHaveTypePosition = utils.tagMustHaveTypePosition(tag.tag);
 
-    const hasNameOrNamepathPosition = utils.tagMightHaveNamePosition(tag.tag) && Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
-    const mustHaveNameOrNamepathPosition = utils.tagMustHaveNamePosition(tag.tag) && !allowEmptyNamepaths;
+    const hasNameOrNamepathPosition = (
+      utils.tagMustHaveNamePosition(tag.tag) ||
+      utils.tagMightHaveNamePosition(tag.tag)
+    ) && Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
+
+    // Don't handle `param` here though it does require name as handled by
+    //  `require-param-name` and `require-property-name`
+    const mustHaveNameOrNamepathPosition = ![
+      'param', 'arg', 'argument',
+      'property', 'prop',
+    ].includes(tag.tag) &&
+      utils.tagMustHaveNamePosition(tag.tag) && !allowEmptyNamepaths;
 
     const hasEither = utils.tagMightHaveEitherTypeOrNamePosition(tag.tag) && (hasTypePosition || hasNameOrNamepathPosition);
     const mustHaveEither = utils.tagMustHaveEitherTypeOrNamePosition(tag.tag);
@@ -132,7 +142,6 @@ export default iterateJsdoc(({
 
         return;
       }
-
       if (hasTypePosition) {
         validTypeParsing(tag.type);
       } else if (mustHaveTypePosition) {

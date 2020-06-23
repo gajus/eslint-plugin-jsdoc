@@ -732,6 +732,21 @@ export default {
       /**
        * Foo function.
        *
+       * @interface foo
+       */
+      function foo(bar) {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * Foo function.
+       *
        * @param {[number, string]} bar - The bar array.
        */
       function foo(bar) {}
@@ -795,6 +810,21 @@ export default {
           mode: 'closure',
         },
       },
+    },
+    {
+      code: `
+          /**
+           * @param
+           */
+          function quux() {
+
+          }
+      `,
+      options: [
+        {
+          allowEmptyNamepaths: false,
+        },
+      ],
     },
   ],
 };

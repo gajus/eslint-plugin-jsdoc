@@ -415,8 +415,6 @@ const namepathDefiningTags = new Set([
 ]);
 
 const tagsWithOptionalNamePositionBase = new Set([
-  'param',
-
   // `borrows` has a different format, however, so needs special parsing;
   //   seems to require both, and as "namepath"'s
   'borrows',
@@ -463,6 +461,16 @@ const closureTagsWithOptionalNamePosition = new Set([
 
 // The doc signature of `event` seems to require a "name"
 const tagsWithMandatoryNamePosition = new Set([
+  // Though no signature provided requiring, per https://jsdoc.app/tags-param.html:
+  // "The @param tag requires you to specify the name of the parameter you are documenting."
+  'param',
+  'arg',
+  'argument',
+
+  // No docs indicate required, but since parallel to `param`, we treat as such:
+  'property',
+  'prop',
+
   // "name" (and a special syntax for the `external` name)
   'external', 'host',
 

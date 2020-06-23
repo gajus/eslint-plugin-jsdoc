@@ -13691,6 +13691,14 @@ function quux () {}
 /**
  * Foo function.
  *
+ * @interface foo
+ */
+function foo(bar) {}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * Foo function.
+ *
  * @param {[number, string]} bar - The bar array.
  */
 function foo(bar) {}
@@ -13722,6 +13730,14 @@ function quux () {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @param
+ */
+function quux() {
+
+}
+// Options: [{"allowEmptyNamepaths":false}]
 ````
 
 
