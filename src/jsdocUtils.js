@@ -414,6 +414,7 @@ const namepathDefiningTags = new Set([
   'module',
 ]);
 
+// These *reference* names/namepaths and do not define them
 const tagsWithOptionalNamePositionBase = new Set([
   // `borrows` has a different format, however, so needs special parsing;
   //   seems to require both, and as "namepath"'s
