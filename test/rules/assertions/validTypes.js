@@ -359,6 +359,40 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @interface name<
+       */
+      `,
+      errors: [
+        {
+          message: 'Syntax error in namepath: name<',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @interface name
+       */
+      `,
+      errors: [
+        {
+          message: '@interface should not have a name in "closure" mode.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {
