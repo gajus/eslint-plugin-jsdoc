@@ -148,7 +148,10 @@ how many line breaks to add when a block is missing.
     types/namepaths (Closure allows types on some tags which the others do not,
     so these tags will additionally be checked in "closure" mode)
   - For type-checking rules, impacts parsing of types (through
-    [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser) dependency)
+    [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser)
+    dependency); note that some TypeScript features are
+    [not yet](https://github.com/gajus/eslint-plugin-jsdoc/issues/145)
+    [supported](https://github.com/jsdoctypeparser/jsdoctypeparser/issues/50)
   - Check preferred tag names
   - Disallows namepath on `@interface` for "closure" mode in `valid-types` (and
       avoids checking in other rules)
