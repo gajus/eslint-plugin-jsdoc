@@ -130,7 +130,9 @@ how many line breaks to add when a block is missing.
 
 ### Mode
 
-- `settings.jsdoc.mode` - Set to `jsdoc` (the default), `typescript`, or `closure`.
+- `settings.jsdoc.mode` - Set to `typescript`, `closure`, or `jsdoc` (the
+  default unless the `@typescript-eslint` parser is in use in which case
+  `typescript` will be the default).
   Note that if you do not wish to use separate `.eslintrc.*` files for a project
   containing both JavaScript and TypeScript, you can also use [`overrides`](https://eslint.org/docs/user-guide/configuring). You may also set to `"permissive"` to
   try to be as accommodating to any of the styles, but this is not recommended.
