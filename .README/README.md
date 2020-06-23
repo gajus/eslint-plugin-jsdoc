@@ -135,7 +135,7 @@ how many line breaks to add when a block is missing.
   containing both JavaScript and TypeScript, you can also use [`overrides`](https://eslint.org/docs/user-guide/configuring). You may also set to `"permissive"` to
   try to be as accommodating to any of the styles, but this is not recommended.
   Currently is used for the following:
-  - Determine valid tags for `check-tag-names`
+  - Determine valid tags and aliases for `check-tag-names`
   - Only check `@template` in `no-undefined-types` for types in "closure" and
     "typescript" modes
   - For type-checking rules, determine which tags will be checked for types

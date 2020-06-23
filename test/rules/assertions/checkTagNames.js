@@ -504,6 +504,30 @@ export default {
       },
     },
     {
+      code: `
+      /**
+       * @returns
+       */
+      function quux (foo) {}
+      `,
+      errors: [
+        {
+          message: 'Invalid JSDoc tag (preference). Replace "returns" JSDoc tag with "return".',
+        },
+      ],
+      output: `
+      /**
+       * @return
+       */
+      function quux (foo) {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
       code: `${ALL_JSDOC_TAGS_COMMENT}\nfunction quux (foo) {}`,
       errors: [
         {
@@ -616,6 +640,27 @@ export default {
             },
             todo: false,
           },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @returns
+       */
+      function quux (foo) {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * @return
+       */
+      function quux (foo) {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
         },
       },
     },

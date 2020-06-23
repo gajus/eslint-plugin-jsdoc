@@ -144,13 +144,17 @@ const undocumentedClosureTags = {
 };
 
 const {
-  // eslint-disable-next-line no-unused-vars
+  /* eslint-disable no-unused-vars */
   inheritdoc,
-  ...typeScriptTagsNoInheritdoc
+
+  // Will be inverted to prefer `return`
+  returns,
+  /* eslint-enable no-unused-vars */
+  ...typeScriptTagsInClosure
 } = typeScriptTags;
 
 const closureTags = {
-  ...typeScriptTagsNoInheritdoc,
+  ...typeScriptTagsInClosure,
   ...undocumentedClosureTags,
 
   // From https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler
@@ -179,6 +183,10 @@ const closureTags = {
 
   // Defined as a synonym of `interface` in jsdoc `definitions.js`
   record: [],
+
+  return: [
+    'returns',
+  ],
 
   struct: [],
   suppress: [],

@@ -10,7 +10,8 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
     `@class`, `@constructor`, `@constant`, `@const`,
     `@function`, `@func`, `@method`, `@interface`, `@member`, `@var`,
     `@mixin`, `@namespace`
-1. Name(path)-pointing tags requiring namepath: `@alias`, `@augments`, `@extends`, `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@this`
+1. Name(path)-pointing tags requiring namepath: `@alias`, `@augments`,
+    `@extends`, `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@this`
 1. Name(path)-pointing tags (which may have value without namepath or their
     namepath can be expressed elsewhere on the block): `@listens`, `@fires`,
     `@emits`, and `@modifies`
