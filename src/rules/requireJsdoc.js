@@ -29,6 +29,10 @@ const OPTIONS_SCHEMA = {
       },
       type: 'array',
     },
+    enableFixer: {
+      default: true,
+      type: 'boolean',
+    },
     exemptEmptyFunctions: {
       default: false,
       type: 'boolean',
@@ -108,10 +112,12 @@ const getOptions = (context) => {
     publicOnly,
     contexts = [],
     exemptEmptyFunctions = false,
+    enableFixer = true,
   } = context.options[0] || {};
 
   return {
     contexts,
+    enableFixer,
     exemptEmptyFunctions,
     publicOnly: ((baseObj) => {
       if (!publicOnly) {
@@ -146,7 +152,7 @@ export default {
     const {
       require: requireOption,
       contexts,
-      publicOnly, exemptEmptyFunctions,
+      publicOnly, exemptEmptyFunctions, enableFixer,
     } = getOptions(context);
 
     const checkJsDoc = (node, isFunctionContext) => {
@@ -200,7 +206,7 @@ export default {
           start: node.loc.start,
         };
         context.report({
-          fix,
+          fix: enableFixer ? fix : null,
           loc,
           messageId: 'missingJsDoc',
           node,

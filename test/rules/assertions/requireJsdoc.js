@@ -99,6 +99,28 @@ export default {
     },
     {
       code: `
+       function myFunction() {
+
+       }
+       `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+        },
+      ],
+      output: `
+       function myFunction() {
+
+       }
+       `,
+    },
+    {
+      code: `
           export var test = function () {
 
           };
