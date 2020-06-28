@@ -611,7 +611,6 @@ export default {
           contexts: [
             'TSPropertySignature',
           ],
-          descriptionStyle: 'tag',
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),

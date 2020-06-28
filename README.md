@@ -7379,6 +7379,14 @@ interface quux {
 }
 // Options: [{"descriptionStyle":"tag"}]
 
+interface quux {
+  /**
+   * If the thing should be checked.
+   */
+  checked?: boolean
+}
+// Options: [{"contexts":["TSPropertySignature"]}]
+
 /**
  *
  */
