@@ -8367,6 +8367,12 @@ function myFunction() {
 // Settings: {"jsdoc":{"minLines":1}}
 // Message: Missing JSDoc comment.
 
+function myFunction() {
+
+}
+// Options: [{"enableFixer":false}]
+// Message: Missing JSDoc comment.
+
 export var test = function () {
 
 };
