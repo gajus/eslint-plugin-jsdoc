@@ -35,7 +35,7 @@
     "mocha": "^8.0.1",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
-    "semantic-release": "^17.1.0",
+    "semantic-release": "^17.1.1",
     "typescript": "^3.9.5"
   },
   "engines": {
