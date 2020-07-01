@@ -13210,6 +13210,18 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"throws":false}}}
 // Message: Unexpected tag `@throws`
+
+/**
+ *
+ */
+const itself = (b) => {
+  const a = () => {};
+  if (b) {
+    throw new Error('oops')
+  }
+  return a;
+};
+// Message: Missing JSDoc @throws declaration.
 ````
 
 The following patterns are not considered problems:
@@ -13258,6 +13270,16 @@ function quux () {
   throw new Error('err')
 }
 // Options: [{"exemptedBy":["type"]}]
+
+/**
+ *
+ */
+const itself = (n) => n;
+
+/**
+ * Not tracking on nested function
+ */
+const itself = () => () => {throw new Error('oops');};
 ````
 
 

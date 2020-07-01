@@ -294,6 +294,26 @@ export default {
         },
       },
     },
+    {
+      code: `
+        /**
+         *
+         */
+        const itself = (b) => {
+          const a = () => {};
+          if (b) {
+            throw new Error('oops')
+          }
+          return a;
+        };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -361,6 +381,22 @@ export default {
           exemptedBy: ['type'],
         },
       ],
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        const itself = (n) => n;
+        `,
+    },
+    {
+      code: `
+      /**
+       * Not tracking on nested function
+       */
+      const itself = () => () => {throw new Error('oops');};
+      `,
     },
   ],
 };

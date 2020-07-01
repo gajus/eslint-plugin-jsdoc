@@ -614,9 +614,10 @@ const hasReturnValue = (node) => {
  * Checks if a node has a throws statement.
  *
  * @param {object} node
+ * @param {boolean} innerFunction
  * @returns {boolean}
  */
-const hasThrowValue = (node) => {
+const hasThrowValue = (node, innerFunction) => {
   if (!node) {
     return false;
   }
@@ -624,7 +625,7 @@ const hasThrowValue = (node) => {
   case 'FunctionExpression':
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
-    return node.expression || hasThrowValue(node.body);
+    return !innerFunction && hasThrowValue(node.body, true);
   }
   case 'BlockStatement': {
     return node.body.some((bodyNode) => {
