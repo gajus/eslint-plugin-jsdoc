@@ -133,6 +133,11 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
       if (param.key.type === 'Identifier') {
         return param.key.name;
       }
+        
+      // The key of an object could also be a string or number
+      if (param.key.type === 'Literal') {
+        return param.key.value;
+      }
     }
 
     if (param.type === 'ArrayPattern' || param.left?.type === 'ArrayPattern') {
