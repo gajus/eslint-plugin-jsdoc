@@ -13214,7 +13214,7 @@ function quux () {
 /**
  *
  */
-const itself = (b) => {
+const directThrowAfterArrow = (b) => {
   const a = () => {};
   if (b) {
     throw new Error('oops')
@@ -13279,7 +13279,7 @@ const itself = (n) => n;
 /**
  * Not tracking on nested function
  */
-const itself = () => () => {throw new Error('oops');};
+const nested = () => () => {throw new Error('oops');};
 ````
 
 

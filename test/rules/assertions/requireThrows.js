@@ -299,7 +299,7 @@ export default {
         /**
          *
          */
-        const itself = (b) => {
+        const directThrowAfterArrow = (b) => {
           const a = () => {};
           if (b) {
             throw new Error('oops')
@@ -395,7 +395,7 @@ export default {
       /**
        * Not tracking on nested function
        */
-      const itself = () => () => {throw new Error('oops');};
+      const nested = () => () => {throw new Error('oops');};
       `,
     },
   ],
