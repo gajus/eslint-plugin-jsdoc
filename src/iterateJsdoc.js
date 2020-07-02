@@ -189,16 +189,15 @@ const getUtils = (
   };
 
   utils.isConstructor = () => {
-    return node?.type === 'MethodDefinition' && node.kind === 'constructor' ||
-      node?.parent?.kind === 'constructor';
+    return jsdocUtils.isConstructor(node);
   };
 
   utils.isGetter = () => {
-    return node && node.parent.kind === 'get';
+    return jsdocUtils.isGetter(node);
   };
 
   utils.isSetter = () => {
-    return node && node.parent.kind === 'set';
+    return jsdocUtils.isSetter(node);
   };
 
   utils.getJsdocTagsDeep = (tagName) => {

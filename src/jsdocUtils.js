@@ -764,6 +764,19 @@ const getIndent = (sourceCode) => {
   return indent;
 };
 
+const isConstructor = (node) => {
+  return node?.type === 'MethodDefinition' && node.kind === 'constructor' ||
+    node?.parent?.kind === 'constructor';
+};
+
+const isGetter = (node) => {
+  return node && node.parent.kind === 'get';
+};
+
+const isSetter = (node) => {
+  return node && node.parent.kind === 'set';
+};
+
 export default {
   enforcedContexts,
   filterTags,
@@ -779,7 +792,10 @@ export default {
   hasReturnValue,
   hasTag,
   hasThrowValue,
+  isConstructor,
+  isGetter,
   isNamepathDefiningTag,
+  isSetter,
   isValidTag,
   parseClosureTemplateTag,
   tagMightHaveEitherTypeOrNamePosition,
