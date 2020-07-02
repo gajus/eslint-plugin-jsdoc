@@ -192,14 +192,6 @@ const getUtils = (
     return jsdocUtils.isConstructor(node);
   };
 
-  utils.isGetter = () => {
-    return jsdocUtils.isGetter(node);
-  };
-
-  utils.isSetter = () => {
-    return jsdocUtils.isSetter(node);
-  };
-
   utils.getJsdocTagsDeep = (tagName) => {
     const name = utils.getPreferredTagName({tagName});
     if (!name) {
@@ -240,14 +232,6 @@ const getUtils = (
     return jsdocUtils.hasTag(jsdoc, name);
   };
 
-  const hasSchemaOption = (prop) => {
-    const schemaProperties = ruleConfig.meta.schema[0].properties;
-
-    return context.options[0]?.[prop] ??
-      (schemaProperties[prop] && schemaProperties[prop].default);
-  };
-
-  // eslint-disable-next-line complexity
   utils.avoidDocs = () => {
     if (
       overrideReplacesDocs !== false &&
@@ -262,18 +246,9 @@ const getUtils = (
       return true;
     }
 
-    if (
-      !hasSchemaOption('checkConstructors') &&
-        (
-          utils.isConstructor() ||
-          utils.hasATag([
-            'class',
-            'constructor',
-          ])) ||
-      !hasSchemaOption('checkGetters') &&
-        utils.isGetter() ||
-      !hasSchemaOption('checkSetters') &&
-        utils.isSetter()) {
+    if (jsdocUtils.exemptSpeciaMethods(
+      jsdoc, node, context, ruleConfig.meta.schema,
+    )) {
       return true;
     }
 

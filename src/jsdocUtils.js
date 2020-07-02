@@ -777,8 +777,30 @@ const isSetter = (node) => {
   return node && node.parent.kind === 'set';
 };
 
+const exemptSpeciaMethods = (jsdoc, node, context, schema) => {
+  const hasSchemaOption = (prop) => {
+    const schemaProperties = schema[0].properties;
+
+    return context.options[0]?.[prop] ??
+      (schemaProperties[prop] && schemaProperties[prop].default);
+  };
+
+  return !hasSchemaOption('checkConstructors') &&
+    (
+      isConstructor(node) ||
+      hasATag(jsdoc, [
+        'class',
+        'constructor',
+      ])) ||
+  !hasSchemaOption('checkGetters') &&
+    isGetter(node) ||
+  !hasSchemaOption('checkSetters') &&
+    isSetter(node);
+};
+
 export default {
   enforcedContexts,
+  exemptSpeciaMethods,
   filterTags,
   flattenRoots,
   getContextObject,
