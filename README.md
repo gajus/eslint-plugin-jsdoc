@@ -2094,6 +2094,24 @@ function quux ({a, b}) {
 
 /**
  * @param foo
+ * @param foo.a
+ * @param foo.b
+ */
+function quux ({"a": A, b}) {
+
+}
+
+/**
+ * @param foo
+ * @param foo.a-b
+ * @param foo.b
+ */
+function quux ({"a-b": A, b}) {
+
+}
+
+/**
+ * @param foo
  * @param foo.bar
  * @param foo.baz
  * @param bar

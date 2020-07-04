@@ -40,7 +40,7 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: 'arg',
+            param: "arg",
           },
         },
       },
@@ -73,7 +73,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@param path declaration ("Foo.Bar") appears before any real parameter.',
+          message:
+            '@param path declaration ("Foo.Bar") appears before any real parameter.',
         },
       ],
     },
@@ -90,7 +91,8 @@ export default {
       errors: [
         {
           line: 4,
-          message: '@param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").',
+          message:
+            '@param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").',
         },
       ],
     },
@@ -108,7 +110,8 @@ export default {
       errors: [
         {
           line: 4,
-          message: '@param path declaration ("employees[].name") appears before any real parameter.',
+          message:
+            '@param path declaration ("employees[].name") appears before any real parameter.',
         },
       ],
     },
@@ -175,7 +178,8 @@ export default {
       errors: [
         {
           line: 4,
-          message: '@param "bar" does not match an existing function parameter.',
+          message:
+            '@param "bar" does not match an existing function parameter.',
         },
       ],
     },
@@ -540,9 +544,9 @@ export default {
           message: 'Expected @param names to be "property". Got "prop".',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
       parserOptions: {
-        sourceType: 'module',
+        sourceType: "module",
       },
     },
     {
@@ -561,9 +565,9 @@ export default {
           message: 'Missing @param "prop.bar"',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
       parserOptions: {
-        sourceType: 'module',
+        sourceType: "module",
       },
     },
     {
@@ -599,9 +603,9 @@ export default {
           message: '@param "prop.bar" does not exist on prop',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
       parserOptions: {
-        sourceType: 'module',
+        sourceType: "module",
       },
     },
     {
@@ -621,9 +625,9 @@ export default {
           message: '@param "options.bar" does not exist on options',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
       parserOptions: {
-        sourceType: 'module',
+        sourceType: "module",
       },
     },
     {
@@ -638,7 +642,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Unexpected tag `@param`',
+          message: "Unexpected tag `@param`",
         },
       ],
       settings: {
@@ -661,7 +665,8 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'Expected @param names to be "error, cde". Got "error, code".',
+          message:
+            'Expected @param names to be "error, cde". Got "error, code".',
         },
       ],
     },
@@ -762,7 +767,7 @@ export default {
       ],
       options: [
         {
-          checkTypesPattern: 'SVGRect',
+          checkTypesPattern: "SVGRect",
         },
       ],
     },
@@ -815,7 +820,7 @@ export default {
           checkRestProperty: true,
         },
       ],
-      parser: require.resolve('babel-eslint'),
+      parser: require.resolve("babel-eslint"),
     },
     {
       code: `
@@ -845,7 +850,7 @@ export default {
           message: '@param "options.four" does not exist on options',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
     },
   ],
   valid: [
@@ -941,6 +946,18 @@ export default {
       code: `
           /**
            * @param foo
+           * @param foo.a-b
+           * @param foo.b
+           */
+          function quux ({"a-b": A, b}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo
            * @param foo.bar
            * @param foo.baz
            * @param bar
@@ -972,9 +989,9 @@ export default {
           constructor(private property: string) {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
       parserOptions: {
-        sourceType: 'module',
+        sourceType: "module",
       },
     },
     {
@@ -988,9 +1005,9 @@ export default {
           constructor(options: { foo: string, bar: string }) {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
       parserOptions: {
-        sourceType: 'module',
+        sourceType: "module",
       },
     },
     {
@@ -1004,9 +1021,9 @@ export default {
           constructor({ foo, bar }: { foo: string, bar: string }) {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
       parserOptions: {
-        sourceType: 'module',
+        sourceType: "module",
       },
     },
     {
@@ -1020,9 +1037,9 @@ export default {
           constructor({ foo, bar }: { foo: string, bar: string }) {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
       parserOptions: {
-        sourceType: 'module',
+        sourceType: "module",
       },
     },
     {
@@ -1146,7 +1163,7 @@ export default {
       `,
       options: [
         {
-          checkTypesPattern: 'SVGRect',
+          checkTypesPattern: "SVGRect",
         },
       ],
     },
@@ -1162,7 +1179,7 @@ export default {
         }
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
     },
     {
       code: `
@@ -1177,7 +1194,7 @@ export default {
         input;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
     },
     {
       code: `
@@ -1192,7 +1209,7 @@ export default {
         }
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      parser: require.resolve("@typescript-eslint/parser"),
     },
   ],
 };
