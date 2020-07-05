@@ -1924,6 +1924,44 @@ export default {
         },
       },
     },
+    {
+      code: `
+        /**
+         * @typedef {object} foo
+         */
+        function a () {}
+
+        /**
+         * @typedef {Object} foo
+         */
+        function b () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @typedef "foo" type "object"; prefer: "Object".',
+        },
+      ],
+      output: `
+        /**
+         * @typedef {Object} foo
+         */
+        function a () {}
+
+        /**
+         * @typedef {Object} foo
+         */
+        function b () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+          preferredTypes: {
+            object: 'Object',
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -2384,6 +2422,64 @@ export default {
           preferredTypes: {
             'object<>': 'Object<>',
           },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @typedef {object} foo
+       */
+
+       /**
+        * @typedef {Object} foo
+        */
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'Object',
+            Object: 'object',
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} foo
+         */
+        function a () {}
+
+        /**
+         * @typedef {Object} foo
+         */
+        function b () {}
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: 'Object',
+            Object: 'object',
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} foo
+         */
+        function a () {}
+
+        /**
+         * @typedef {Object} foo
+         */
+        function b () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
         },
       },
     },

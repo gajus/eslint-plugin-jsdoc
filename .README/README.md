@@ -361,6 +361,11 @@ how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
 appended and its bearing on whether types are checked as parents/children
 only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
 
+Note that if a value is present both as a key and as a value, neither the
+key nor the value will be reported. Thus in `check-types`, this fact can
+be used to allow both `object` and `Object` if one has a `preferredTypes`
+key `object: 'Object'` and `Object: 'object'`.
+
 ## Advanced
 
 ### AST and Selectors
