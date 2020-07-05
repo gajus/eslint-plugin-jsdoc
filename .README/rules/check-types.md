@@ -55,6 +55,11 @@ RegExp
     `string[]` specifically as distinct from say `number[]`, but you can
     target both with `[]` or the child types `number` or `string`.
 
+If a value is present both as a key and as a value, neither the key nor the
+value will be reported. Thus one can use this fact to allow both `object`
+and `Object`, for example. Note that in "typescript" mode, this is the default
+behavior.
+
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
 

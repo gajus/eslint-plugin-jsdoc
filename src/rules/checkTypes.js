@@ -115,7 +115,8 @@ export default iterateJsdoc(({
           });
         }
       }
-      const directNameMatch = preferredTypes?.[nodeName] !== undefined;
+      const directNameMatch = preferredTypes?.[nodeName] !== undefined &&
+        !Object.values(preferredTypes).includes(nodeName);
       const unifiedSyntaxParentMatch = parentType && directNameMatch && unifyParentAndChildTypeChecks;
       isGenericMatch = isGenericMatch || unifiedSyntaxParentMatch;
 
@@ -171,6 +172,9 @@ export default iterateJsdoc(({
         }
       } else if (!noDefaults && type === 'NAME') {
         for (const strictNativeType of strictNativeTypes) {
+          if (strictNativeType === 'object' && mode === 'typescript') {
+            continue;
+          }
           if (strictNativeType.toLowerCase() === nodeName.toLowerCase() &&
             strictNativeType !== nodeName &&
 

@@ -423,6 +423,11 @@ how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
 appended and its bearing on whether types are checked as parents/children
 only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
 
+Note that if a value is present both as a key and as a value, neither the
+key nor the value will be reported. Thus in `check-types`, this fact can
+be used to allow both `object` and `Object` if one has a `preferredTypes`
+key `object: 'Object'` and `Object: 'object'`.
+
 <a name="eslint-plugin-jsdoc-advanced"></a>
 ## Advanced
 
@@ -3382,6 +3387,11 @@ RegExp
     `string[]` specifically as distinct from say `number[]`, but you can
     target both with `[]` or the child types `number` or `string`.
 
+If a value is present both as a key and as a value, neither the key nor the
+value will be reported. Thus one can use this fact to allow both `object`
+and `Object`, for example. Note that in "typescript" mode, this is the default
+behavior.
+
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
 
@@ -3991,6 +4001,18 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"preferredTypes":{"Array.<>":"[]","Array<>":"[]"}}}
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "[]".
+
+/**
+ * @typedef {object} foo
+ */
+function a () {}
+
+/**
+ * @typedef {Object} foo
+ */
+function b () {}
+// Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"object":"Object"}}}
+// Message: Invalid JSDoc @typedef "foo" type "object"; prefer: "Object".
 ````
 
 The following patterns are not considered problems:
@@ -4224,6 +4246,37 @@ function quux () {}
 /** @typedef {object<string, string>} foo */
 // Settings: {"jsdoc":{"preferredTypes":{"object<>":"Object<>"}}}
 // Options: [{"exemptTagContexts":[{"tag":"typedef","types":["object<string, string>"]}]}]
+
+/**
+ * @typedef {object} foo
+ */
+
+ /**
+  * @typedef {Object} foo
+  */
+// Settings: {"jsdoc":{"preferredTypes":{"object":"Object","Object":"object"}}}
+
+/**
+ * @typedef {object} foo
+ */
+function a () {}
+
+/**
+ * @typedef {Object} foo
+ */
+function b () {}
+// Settings: {"jsdoc":{"preferredTypes":{"object":"Object","Object":"object"}}}
+
+/**
+ * @typedef {object} foo
+ */
+function a () {}
+
+/**
+ * @typedef {Object} foo
+ */
+function b () {}
+// Settings: {"jsdoc":{"mode":"typescript"}}
 ````
 
 
