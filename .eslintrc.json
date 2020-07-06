@@ -2,6 +2,7 @@
   "extends": "canonical",
   "root": true,
   "rules": {
+    "array-element-newline": 0,
     "filenames/match-regex": 0,
     "prefer-named-capture-group": 0,
     "unicorn/prevent-abbreviations": 0
