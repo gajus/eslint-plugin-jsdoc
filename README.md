@@ -3469,7 +3469,7 @@ function quux () {
 // Message: Invalid JSDoc @returns type "Number"; prefer: "number".
 
 /**
- * @param {(Number|string|Boolean)=} foo
+ * @param {(Number | string | Boolean)=} foo
  */
 function quux (foo, bar, baz) {
 
@@ -3477,7 +3477,7 @@ function quux (foo, bar, baz) {
 // Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
 
 /**
- * @param {Array.<Number|String>} foo
+ * @param {Array.<Number | String>} foo
  */
 function quux (foo, bar, baz) {
 
@@ -3485,7 +3485,7 @@ function quux (foo, bar, baz) {
 // Message: Invalid JSDoc @param "foo" type "Number"; prefer: "number".
 
 /**
- * @param {(Number|String)[]} foo
+ * @param {(Number | String)[]} foo
  */
 function quux (foo, bar, baz) {
 
@@ -3984,7 +3984,7 @@ function quux () {}
 // Message: Invalid JSDoc @typedef "foo" type "object"; prefer: "Object<>".
 
 /**
- * @param {Array<number|undefined>} foo
+ * @param {Array<number | undefined>} foo
  */
 function quux (foo) {
 
@@ -4015,7 +4015,7 @@ function quux (foo, bar, baz) {
 }
 
 /**
- * @param {(number|string|boolean)=} foo
+ * @param {(number | string | boolean)=} foo
  */
 function quux (foo, bar, baz) {
 
@@ -13475,10 +13475,10 @@ function quux() {
 // Message: Tag @type must have a type
 
 /**
- * @modifies {bar|foo<}
+ * @modifies {bar | foo<}
  */
 function quux (foo, bar, baz) {}
-// Message: Syntax error in type: bar|foo<
+// Message: Syntax error in type: bar | foo<
 
 /**
  * @private {BadTypeChecked<}
@@ -13688,17 +13688,17 @@ function quux() {
 // Settings: {"jsdoc":{"mode":"closure"}}
 
 /**
- * @typedef {number|string} UserDefinedType
+ * @typedef {number | string} UserDefinedType
  */
 
 /**
- * @typedef {number|string}
+ * @typedef {number | string}
  */
 let UserDefinedGCCType;
 // Settings: {"jsdoc":{"mode":"closure"}}
 
 /**
- * @modifies {foo|bar}
+ * @modifies {foo | bar}
  */
 function quux (foo, bar, baz) {}
 

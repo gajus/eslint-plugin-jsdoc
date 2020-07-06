@@ -104,7 +104,7 @@ export default {
     {
       code: `
           /**
-           * @param {(Number|string|Boolean)=} foo
+           * @param {(Number | string | Boolean)=} foo
            */
           function quux (foo, bar, baz) {
 
@@ -122,7 +122,7 @@ export default {
       ],
       output: `
           /**
-           * @param {(number|string|boolean)=} foo
+           * @param {(number | string | boolean)=} foo
            */
           function quux (foo, bar, baz) {
 
@@ -132,7 +132,7 @@ export default {
     {
       code: `
           /**
-           * @param {Array.<Number|String>} foo
+           * @param {Array.<Number | String>} foo
            */
           function quux (foo, bar, baz) {
 
@@ -150,7 +150,7 @@ export default {
       ],
       output: `
           /**
-           * @param {Array.<number|string>} foo
+           * @param {Array.<number | string>} foo
            */
           function quux (foo, bar, baz) {
 
@@ -160,7 +160,7 @@ export default {
     {
       code: `
           /**
-           * @param {(Number|String)[]} foo
+           * @param {(Number | String)[]} foo
            */
           function quux (foo, bar, baz) {
 
@@ -178,7 +178,7 @@ export default {
       ],
       output: `
           /**
-           * @param {(number|string)[]} foo
+           * @param {(number | string)[]} foo
            */
           function quux (foo, bar, baz) {
 
@@ -1896,7 +1896,7 @@ export default {
     {
       code: `
       /**
-       * @param {Array<number|undefined>} foo
+       * @param {Array<number | undefined>} foo
        */
       function quux (foo) {
 
@@ -1909,7 +1909,7 @@ export default {
       ],
       output: `
       /**
-       * @param {(number|undefined)[]} foo
+       * @param {(number | undefined)[]} foo
        */
       function quux (foo) {
 
@@ -1953,7 +1953,7 @@ export default {
     {
       code: `
           /**
-           * @param {(number|string|boolean)=} foo
+           * @param {(number | string | boolean)=} foo
            */
           function quux (foo, bar, baz) {
 
