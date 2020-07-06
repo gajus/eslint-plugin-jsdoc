@@ -7,6 +7,18 @@ import {getSettings} from '../iterateJsdoc';
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
   properties: {
+    checkConstructors: {
+      default: true,
+      type: 'boolean',
+    },
+    checkGetters: {
+      default: true,
+      type: 'boolean',
+    },
+    checkSetters: {
+      default: true,
+      type: 'boolean',
+    },
     contexts: {
       items: {
         anyOf: [
@@ -31,6 +43,10 @@ const OPTIONS_SCHEMA = {
     },
     enableFixer: {
       default: true,
+      type: 'boolean',
+    },
+    exemptEmptyConstructors: {
+      default: false,
       type: 'boolean',
     },
     exemptEmptyFunctions: {
@@ -111,6 +127,7 @@ const getOptions = (context) => {
   const {
     publicOnly,
     contexts = [],
+    exemptEmptyConstructors = true,
     exemptEmptyFunctions = false,
     enableFixer = true,
   } = context.options[0] || {};
@@ -118,6 +135,7 @@ const getOptions = (context) => {
   return {
     contexts,
     enableFixer,
+    exemptEmptyConstructors,
     exemptEmptyFunctions,
     publicOnly: ((baseObj) => {
       if (!publicOnly) {
@@ -152,7 +170,7 @@ export default {
     const {
       require: requireOption,
       contexts,
-      publicOnly, exemptEmptyFunctions, enableFixer,
+      publicOnly, exemptEmptyFunctions, exemptEmptyConstructors, enableFixer,
     } = getOptions(context);
 
     const checkJsDoc = (node, isFunctionContext) => {
@@ -162,7 +180,20 @@ export default {
         return;
       }
 
-      if (exemptEmptyFunctions && isFunctionContext) {
+      // For those who have options configured against ANY constructors (or setters or getters) being reported
+      if (jsdocUtils.exemptSpeciaMethods(
+        jsDocNode, node, context, [OPTIONS_SCHEMA],
+      )) {
+        return;
+      }
+
+      if (
+        // Avoid reporting param-less, return-less functions (when `exemptEmptyFunctions` option is set)
+        exemptEmptyFunctions && isFunctionContext ||
+
+        // Avoid reporting  param-less, return-less constructor methods  (when `exemptEmptyConstructors` option is set)
+        exemptEmptyConstructors && jsdocUtils.isConstructor(node)
+      ) {
         const functionParameterNames = jsdocUtils.getFunctionParameterNames(node);
         if (!functionParameterNames.length && !jsdocUtils.hasReturnValue(node, context)) {
           return;

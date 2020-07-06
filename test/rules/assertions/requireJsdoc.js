@@ -2293,6 +2293,117 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+        /**
+         *
+         */
+        class Foo {
+            constructor() {}
+        }
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          exemptEmptyConstructors: false,
+          require: {
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+        /**
+         *
+         */
+        class Foo {
+            /**
+             *
+             */
+            constructor() {}
+        }
+      `,
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        class Foo {
+            constructor(notEmpty) {}
+        }
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          exemptEmptyConstructors: true,
+          require: {
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+        /**
+         *
+         */
+        class Foo {
+            /**
+             *
+             */
+            constructor(notEmpty) {}
+        }
+      `,
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        class Foo {
+            constructor() {
+                const notEmpty = true;
+                return notEmpty;
+            }
+        }
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          exemptEmptyConstructors: true,
+          require: {
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+        /**
+         *
+         */
+        class Foo {
+            /**
+             *
+             */
+            constructor() {
+                const notEmpty = true;
+                return notEmpty;
+            }
+        }
+      `,
+    },
   ],
   valid: [{
     code: `
@@ -3696,6 +3807,42 @@ export default {
     parserOptions: {
       sourceType: 'module',
     },
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      class Foo {
+          constructor() {}
+      }
+    `,
+    options: [
+      {
+        exemptEmptyConstructors: true,
+        require: {
+          MethodDefinition: true,
+        },
+      },
+    ],
+  },
+  {
+    code: `
+      /**
+       *
+       */
+      class Foo {
+          constructor() {}
+      }
+    `,
+    options: [
+      {
+        checkConstructors: false,
+        require: {
+          MethodDefinition: true,
+        },
+      },
+    ],
   },
   ],
 };
