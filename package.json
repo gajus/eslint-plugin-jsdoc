@@ -7,7 +7,7 @@
   "dependencies": {
     "comment-parser": "^0.7.5",
     "debug": "^4.1.1",
-    "jsdoctypeparser": "^7.0.0",
+    "jsdoctypeparser": "^8.0.0",
     "lodash": "^4.17.15",
     "regextras": "^0.7.1",
     "semver": "^7.3.2",
