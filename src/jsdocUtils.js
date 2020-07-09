@@ -828,6 +828,7 @@ const comparePaths = (name) => {
 
 export default {
   comparePaths,
+  dropPathSegmentQuotes,
   enforcedContexts,
   exemptSpeciaMethods,
   filterTags,

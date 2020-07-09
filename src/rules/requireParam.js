@@ -67,8 +67,17 @@ export default iterateJsdoc(({
   const flattenedRoots = utils.flattenRoots(functionParameterNames).names;
 
   const paramIndex = {};
+  const hasParamIndex = (cur) => {
+    return _.has(paramIndex, utils.dropPathSegmentQuotes(String(cur)));
+  };
+  const getParamIndex = (cur) => {
+    return paramIndex[utils.dropPathSegmentQuotes(String(cur))];
+  };
+  const setParamIndex = (cur, idx) => {
+    paramIndex[utils.dropPathSegmentQuotes(String(cur))] = idx;
+  };
   flattenedRoots.forEach((cur, idx) => {
-    paramIndex[cur] = idx;
+    setParamIndex(cur, idx);
   });
 
   const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
@@ -145,9 +154,9 @@ export default iterateJsdoc(({
             });
           } else {
             missingTags.push({
-              functionParameterIdx: _.has(paramIndex, rootName) ?
-                paramIndex[rootName] :
-                paramIndex[paramName],
+              functionParameterIdx: hasParamIndex(rootName) ?
+                getParamIndex(rootName) :
+                getParamIndex(paramName),
               functionParameterName: rootName,
               inc,
             });
@@ -165,10 +174,12 @@ export default iterateJsdoc(({
         const fullParamName = `${rootName}.${paramName}`;
 
         if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
-          return name === fullParamName;
+          return utils.comparePaths(name)(fullParamName);
         })) {
           missingTags.push({
-            functionParameterIdx: paramIndex[functionParameterName[0] ? fullParamName : paramName],
+            functionParameterIdx: getParamIndex(
+              functionParameterName[0] ? fullParamName : paramName,
+            ),
             functionParameterName: fullParamName,
             inc,
             type: hasRestElement && !hasPropertyRest ? '...any' : undefined,
@@ -194,7 +205,7 @@ export default iterateJsdoc(({
       return name === funcParamName;
     })) {
       missingTags.push({
-        functionParameterIdx: paramIndex[funcParamName],
+        functionParameterIdx: getParamIndex(funcParamName),
         functionParameterName: funcParamName,
         inc,
         type,

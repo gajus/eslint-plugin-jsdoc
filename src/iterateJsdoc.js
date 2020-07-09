@@ -236,6 +236,10 @@ const getUtils = (
     return jsdocUtils.comparePaths(name);
   };
 
+  utils.dropPathSegmentQuotes = (name) => {
+    return jsdocUtils.dropPathSegmentQuotes(name);
+  };
+
   utils.avoidDocs = () => {
     if (
       overrideReplacesDocs !== false &&

@@ -2746,5 +2746,27 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @param root
+           * @param root.foo
+           */
+          function quux ({"foo": bar}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param root
+           * @param root."foo"
+           */
+          function quux ({foo: bar}) {
+
+          }
+      `,
+    },
   ],
 };

@@ -11537,6 +11537,22 @@ function quux (foo, bar, {baz}) {
 
 }
 // Options: [{"checkDestructured":false}]
+
+/**
+ * @param root
+ * @param root.foo
+ */
+function quux ({"foo": bar}) {
+
+}
+
+/**
+ * @param root
+ * @param root."foo"
+ */
+function quux ({foo: bar}) {
+
+}
 ````
 
 
