@@ -137,7 +137,9 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
       // The key of an object could also be a string or number
       /* istanbul ignore else */
       if (param.key.type === 'Literal') {
-        return param.key.value;
+        return param.key.raw ||
+          // istanbul ignore next -- `raw` may not be present in all parsers
+          param.key.value;
       }
     }
 

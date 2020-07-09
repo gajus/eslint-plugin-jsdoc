@@ -946,7 +946,19 @@ export default {
       code: `
           /**
            * @param foo
-           * @param foo.a-b
+           * @param foo."a"
+           * @param foo.b
+           */
+          function quux ({a: A, b}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param foo."a-b"
            * @param foo.b
            */
           function quux ({"a-b": A, b}) {
