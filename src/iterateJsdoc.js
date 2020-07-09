@@ -232,6 +232,10 @@ const getUtils = (
     return jsdocUtils.hasTag(jsdoc, name);
   };
 
+  utils.comparePaths = (name) => {
+    return jsdocUtils.comparePaths(name);
+  };
+
   utils.avoidDocs = () => {
     if (
       overrideReplacesDocs !== false &&
