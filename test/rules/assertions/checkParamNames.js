@@ -73,7 +73,8 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@param path declaration ("Foo.Bar") appears before any real parameter.',
+          message:
+            '@param path declaration ("Foo.Bar") appears before any real parameter.',
         },
       ],
     },
@@ -90,7 +91,8 @@ export default {
       errors: [
         {
           line: 4,
-          message: '@param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").',
+          message:
+            '@param path declaration ("Foo.Bar") root node name ("Foo") does not match previous real parameter name ("foo").',
         },
       ],
     },
@@ -108,7 +110,8 @@ export default {
       errors: [
         {
           line: 4,
-          message: '@param path declaration ("employees[].name") appears before any real parameter.',
+          message:
+            '@param path declaration ("employees[].name") appears before any real parameter.',
         },
       ],
     },
@@ -175,7 +178,8 @@ export default {
       errors: [
         {
           line: 4,
-          message: '@param "bar" does not match an existing function parameter.',
+          message:
+            '@param "bar" does not match an existing function parameter.',
         },
       ],
     },
@@ -661,7 +665,8 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'Expected @param names to be "error, cde". Got "error, code".',
+          message:
+            'Expected @param names to be "error, cde". Got "error, code".',
         },
       ],
     },
@@ -921,6 +926,42 @@ export default {
            * @param foo.b
            */
           function quux ({a, b}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param foo.a
+           * @param foo.b
+           */
+          function quux ({"a": A, b}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param foo."a"
+           * @param foo.b
+           */
+          function quux ({a: A, b}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param foo."a-b"
+           * @param foo.b
+           */
+          function quux ({"a-b": A, b}) {
 
           }
       `,

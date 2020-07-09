@@ -1,5 +1,25 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+/**
+ * Since path segments may be unquoted (if matching a reserved word,
+ * identifier or numeric literal) or single or double quoted, in either
+ * the `@param` or in source, we need to strip the quotes to give a fair
+ * comparison.
+ *
+ * @param {string} str
+ * @returns {string}
+ */
+const dropPathSegmentQuotes = (str) => {
+  return str.replace(/\.(['"])(.*)\1/gu, '.$2');
+};
+
+const comparePaths = (name) => {
+  return (otherPathName) => {
+    return otherPathName === name ||
+      dropPathSegmentQuotes(otherPathName) === dropPathSegmentQuotes(name);
+  };
+};
+
 const validateParameterNames = (
   targetTagName : string,
   allowExtraTrailingParamDocs: boolean,
@@ -76,8 +96,9 @@ const validateParameterNames = (
       });
 
       const missingProperties = [];
+
       expectedNames.forEach((name, idx) => {
-        if (!actualNames.includes(name)) {
+        if (!actualNames.some(comparePaths(name))) {
           if (!checkRestProperty && rests[idx]) {
             return;
           }
@@ -89,7 +110,7 @@ const validateParameterNames = (
       if (!hasPropertyRest || checkRestProperty) {
         actualNames.forEach((name, idx) => {
           const match = name.startsWith(tag.name.trim() + '.');
-          if (match && !expectedNames.includes(name) && name !== tag.name) {
+          if (match && !expectedNames.some(comparePaths(name)) && name !== tag.name) {
             extraProperties.push([name, paramTags[idx][1]]);
           }
         });
