@@ -10996,6 +10996,16 @@ module.exports = class GraphQL {
 };
 // Options: [{"checkRestProperty":true}]
 // Message: Missing JSDoc @param "fetchOptions.url" declaration.
+
+(function() {
+	/**
+	 * A function.
+	 */
+	function f(param) {
+		return !param;
+	}
+})();
+// Message: Missing JSDoc @param "param" declaration.
 ````
 
 The following patterns are not considered problems:

@@ -1928,6 +1928,36 @@ export default {
       `,
       parser: require.resolve('babel-eslint'),
     },
+    /* eslint-disable no-tabs */
+    {
+      code: `
+(function() {
+	/**
+	 * A function.
+	 */
+	function f(param) {
+		return !param;
+	}
+})();
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "param" declaration.',
+        },
+      ],
+      output: `
+(function() {
+	/**
+	 * A function.
+	 * @param param
+	 */
+	function f(param) {
+		return !param;
+	}
+})();
+      `,
+      /* eslint-enable no-tabs */
+    },
   ],
   valid: [
     {

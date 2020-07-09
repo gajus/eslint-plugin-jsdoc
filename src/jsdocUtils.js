@@ -767,7 +767,7 @@ const getTagsByType = (context, mode, tags, tagPreference) => {
 
 const getIndent = (sourceCode) => {
   let indent = sourceCode.text.match(/^\n*([ \t]+)/u);
-  indent = indent ? indent[1] + indent[1].charAt() : ' ';
+  indent = indent ? indent[1] + ' ' : ' ';
 
   return indent;
 };
