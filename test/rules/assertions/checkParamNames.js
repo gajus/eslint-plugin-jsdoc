@@ -40,7 +40,7 @@ export default {
       settings: {
         jsdoc: {
           tagNamePreference: {
-            param: "arg",
+            param: 'arg',
           },
         },
       },
@@ -544,9 +544,9 @@ export default {
           message: 'Expected @param names to be "property". Got "prop".',
         },
       ],
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: "module",
+        sourceType: 'module',
       },
     },
     {
@@ -565,9 +565,9 @@ export default {
           message: 'Missing @param "prop.bar"',
         },
       ],
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: "module",
+        sourceType: 'module',
       },
     },
     {
@@ -603,9 +603,9 @@ export default {
           message: '@param "prop.bar" does not exist on prop',
         },
       ],
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: "module",
+        sourceType: 'module',
       },
     },
     {
@@ -625,9 +625,9 @@ export default {
           message: '@param "options.bar" does not exist on options',
         },
       ],
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: "module",
+        sourceType: 'module',
       },
     },
     {
@@ -642,7 +642,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: "Unexpected tag `@param`",
+          message: 'Unexpected tag `@param`',
         },
       ],
       settings: {
@@ -767,7 +767,7 @@ export default {
       ],
       options: [
         {
-          checkTypesPattern: "SVGRect",
+          checkTypesPattern: 'SVGRect',
         },
       ],
     },
@@ -820,7 +820,7 @@ export default {
           checkRestProperty: true,
         },
       ],
-      parser: require.resolve("babel-eslint"),
+      parser: require.resolve('babel-eslint'),
     },
     {
       code: `
@@ -850,7 +850,7 @@ export default {
           message: '@param "options.four" does not exist on options',
         },
       ],
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
   valid: [
@@ -989,9 +989,9 @@ export default {
           constructor(private property: string) {}
         }
       `,
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: "module",
+        sourceType: 'module',
       },
     },
     {
@@ -1005,9 +1005,9 @@ export default {
           constructor(options: { foo: string, bar: string }) {}
         }
       `,
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: "module",
+        sourceType: 'module',
       },
     },
     {
@@ -1021,9 +1021,9 @@ export default {
           constructor({ foo, bar }: { foo: string, bar: string }) {}
         }
       `,
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: "module",
+        sourceType: 'module',
       },
     },
     {
@@ -1037,9 +1037,9 @@ export default {
           constructor({ foo, bar }: { foo: string, bar: string }) {}
         }
       `,
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        sourceType: "module",
+        sourceType: 'module',
       },
     },
     {
@@ -1163,7 +1163,7 @@ export default {
       `,
       options: [
         {
-          checkTypesPattern: "SVGRect",
+          checkTypesPattern: 'SVGRect',
         },
       ],
     },
@@ -1179,7 +1179,7 @@ export default {
         }
       }
       `,
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
     },
     {
       code: `
@@ -1194,7 +1194,7 @@ export default {
         input;
       }
       `,
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
     },
     {
       code: `
@@ -1209,7 +1209,7 @@ export default {
         }
       }
       `,
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
 };
