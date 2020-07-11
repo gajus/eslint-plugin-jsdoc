@@ -3422,6 +3422,10 @@ behavior.
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
 
+Note that if there is an error [parsing](https://github.com/jsdoctypeparser/jsdoctypeparser)
+types for a tag, the function will silently ignore that tag, leaving it to
+the `valid-types` rule to report parsing errors.
+
 <a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
 #### Why not capital case everything?
 
@@ -6004,6 +6008,10 @@ The following types are always considered defined.
 
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
 also be assumed to be defined.
+
+Also note that if there is an error [parsing](https://github.com/jsdoctypeparser/jsdoctypeparser)
+types for a tag, the function will silently ignore that tag, leaving it to
+the `valid-types` rule to report parsing errors.
 
 <a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-13"></a>
 #### Options

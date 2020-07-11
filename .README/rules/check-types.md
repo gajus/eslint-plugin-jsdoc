@@ -63,6 +63,10 @@ behavior.
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
 
+Note that if there is an error [parsing](https://github.com/jsdoctypeparser/jsdoctypeparser)
+types for a tag, the function will silently ignore that tag, leaving it to
+the `valid-types` rule to report parsing errors.
+
 #### Why not capital case everything?
 
 Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`.

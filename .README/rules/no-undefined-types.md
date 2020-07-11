@@ -28,6 +28,10 @@ The following types are always considered defined.
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
 also be assumed to be defined.
 
+Also note that if there is an error [parsing](https://github.com/jsdoctypeparser/jsdoctypeparser)
+types for a tag, the function will silently ignore that tag, leaving it to
+the `valid-types` rule to report parsing errors.
+
 #### Options
 
 An option object may have the following key:
