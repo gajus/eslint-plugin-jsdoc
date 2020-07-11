@@ -63,6 +63,46 @@ export default {
     {
       code: `
           /**
+           * @desc Not a blank description
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Remove the @desc tag to leave a plain block description or add additional description text above the @desc line.',
+        },
+      ],
+      options: [
+        {
+          descriptionStyle: 'body',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @description Not a blank description
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Remove the @description tag to leave a plain block description or add additional description text above the @description line.',
+        },
+      ],
+      options: [
+        {
+          descriptionStyle: 'body',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            *
            */
           class quux {
