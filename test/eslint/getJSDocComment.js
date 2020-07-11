@@ -8,6 +8,9 @@ const rule = {
   create (context) {
     const sourceCode = context.getSourceCode();
     const settings = getSettings(context);
+    if (!settings) {
+      return {};
+    }
 
     return {
       ObjectExpression (node) {

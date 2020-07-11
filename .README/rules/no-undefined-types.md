@@ -36,6 +36,11 @@ Also note that if there is an error [parsing](https://github.com/jsdoctypeparser
 types for a tag, the function will silently ignore that tag, leaving it to
 the `valid-types` rule to report parsing errors.
 
+If you define your own tags, you can use `settings.jsdoc.structuredTags`
+to indicate that a tag's `name` is "namepath-defining" (and should prevent
+reporting on use of that namepath elsewhere) and/or that a tag's `type` is
+`false` (and should not be checked for types).
+
 #### Options
 
 An option object may have the following key:
@@ -51,6 +56,6 @@ An option object may have the following key:
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Options|`definedTypes`|
-|Settings|`preferredTypes`, `mode`|
+|Settings|`preferredTypes`, `mode`, `structuredTags`|
 
 <!-- assertions noUndefinedTypes -->

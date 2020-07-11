@@ -1962,6 +1962,33 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @aCustomTag {Number} foo
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @aCustomTag "foo" type "Number"; prefer: "number".',
+        },
+      ],
+      output: `
+          /**
+           * @aCustomTag {number} foo
+           */
+      `,
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              type: true,
+            },
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -2480,6 +2507,22 @@ export default {
       settings: {
         jsdoc: {
           mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @aCustomTag {Number} foo
+           */
+      `,
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              type: false,
+            },
+          },
         },
       },
     },

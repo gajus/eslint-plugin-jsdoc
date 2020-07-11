@@ -1,8 +1,15 @@
 import _ from 'lodash';
 import {jsdocTags, closureTags, typeScriptTags} from './tagNames';
 import WarnSettings from './WarnSettings';
+import getDefaultTagStructureForMode from './getDefaultTagStructureForMode';
 
 type ParserMode = "jsdoc"|"typescript"|"closure";
+
+let tagStructure;
+
+const setTagStructure = (mode) => {
+  tagStructure = getDefaultTagStructureForMode(mode);
+};
 
 // Given a nested array of property names, reduce them to a single array,
 // appending the name of the root element along the way if present.
@@ -315,291 +322,129 @@ const hasDefinedTypeReturnTag = (tag) => {
   return true;
 };
 
-const tagsWithMandatoryTypePosition = new Set([
-  // These both show curly brackets in the doc signature and examples
-  // "typeExpression"
-  'implements',
-
-  // "typeName"
-  'type',
-]);
-
-const tagsWithMandatoryTypePositionTypeScript = new Set([
-  ...tagsWithMandatoryTypePosition,
-  'this',
-]);
-
-const tagsWithMandatoryTypePositionClosure = new Set([
-  ...tagsWithMandatoryTypePositionTypeScript,
-  'define',
-]);
-
-// All of these have a signature with "type" except for
-//  `augments`/`extends` ("namepath")
-//  `param`/`arg`/`argument` (no signature)
-//  `property`/`prop` (no signature)
-// `modifies` (undocumented)
-const tagsWithOptionalTypePosition = new Set([
-  // These have the example showing curly brackets but not in their doc signature, e.g.: https://jsdoc.app/tags-enum.html
-  'enum',
-  'member', 'var',
-
-  'typedef',
-
-  // These do not show curly brackets in either the signature or examples
-  'augments', 'extends',
-
-  'class', 'constructor',
-  'constant', 'const',
-
-  // These show the signature with curly brackets but not in the example
-  'module',
-  'namespace',
-
-  // These have no formal signature in the docs but show curly brackets
-  //   in the examples
-  'param', 'arg', 'argument',
-  'property', 'prop',
-
-  // These show curly brackets in the signature and in the examples
-  'returns', 'return',
-  'throws', 'exception',
-  'yields', 'yield',
-
-  // Has no documentation, but test example has curly brackets, and
-  //  "name" would be suggested rather than "namepath" based on example; not
-  //  sure if name is required
-  'modifies',
-]);
-
-const tagsWithOptionalTypePositionTypescript = new Set([
-  'template',
-  ...tagsWithOptionalTypePosition,
-]);
-
-const tagsWithOptionalTypePositionClosure = new Set([
-  ...tagsWithOptionalTypePositionTypescript,
-
-  'export',
-
-  // Shows the signature with curly brackets but not in the example
-  // "typeExpression"
-  'package',
-  'private',
-  'protected',
-
-  // These do not show a signature nor show curly brackets in the example
-  'public',
-  'static',
-]);
-
-// None of these show as having curly brackets for their name/namepath
-const closureNamepathDefiningTags = new Set([
-  // Though defines in a sense, it is not parseable in the same way
-  //  for template (e.g., allowing commas)
-  // 'template',
-
-  // These appear to require a "name" in their signature, albeit these
-  //  are somewhat different from other "name"'s (including as described
-  // at https://jsdoc.app/about-namepaths.html )
-  'external', 'host',
-  'event',
-
-  // These allow for "name"'s in their signature, but indicate as optional
-  'class', 'constructor',
-  'constant', 'const',
-  'function', 'func', 'method',
-  'member', 'var',
-  'mixin',
-  'namespace',
-
-  // These seem to all require a "namepath" in their signatures (with no counter-examples)
-  'name',
-  'typedef',
-  'callback',
-]);
-
-const typescriptNamepathDefiningTags = new Set([
-  ...closureNamepathDefiningTags,
-
-  // Allows for "name" in signature, but indicates as optional
-  'interface',
-]);
-
-const namepathDefiningTags = new Set([
-  ...typescriptNamepathDefiningTags,
-
-  // Optional "name" and no curly brackets
-  //  this block impacts `no-undefined-types` and `valid-types` (search for
-  //  "isNamepathDefiningTag|tagMightHaveNamePosition|tagMightHaveEitherTypeOrNamePosition")
-  'module',
-]);
-
-// These *reference* names/namepaths and do not define them
-const tagsWithOptionalNamePositionBase = new Set([
-  // `borrows` has a different format, however, so needs special parsing;
-  //   seems to require both, and as "namepath"'s
-  'borrows',
-
-  // Signature seems to require a "name" (of an event) and no counter-examples
-  'emits', 'fires',
-  'listens',
-
-  // Signature seems to require a "namepath" (and no counter-examples)
-  'alias',
-  'augments', 'extends',
-  'lends',
-
-  // Signature seems to require a "namepath" (and no counter-examples),
-  //  though it allows an incomplete namepath ending with connecting symbol
-  'memberof', 'memberof!',
-
-  // Signature seems to require a "OtherObjectPath" with no counter-examples
-  'mixes',
-
-  // Signature allows for "namepath" or text
-  'see',
-]);
-
-// The following do not seem to allow curly brackets in their doc
-//  signature or examples (besides `modifies` and `param`)
-const tagsWithOptionalNamePosition = new Set([
-  // Signature seems to require a "namepath" (and no counter-examples)
-  // Not used with namepath in Closure/TypeScript, however
-  'this',
-  ...namepathDefiningTags,
-  ...tagsWithOptionalNamePositionBase,
-]);
-
-const typescriptTagsWithOptionalNamePosition = new Set([
-  'template',
-  ...typescriptNamepathDefiningTags,
-  ...tagsWithOptionalNamePositionBase,
-]);
-
-const closureTagsWithOptionalNamePosition = new Set([
-  'template',
-  ...closureNamepathDefiningTags,
-  ...tagsWithOptionalNamePositionBase,
-]);
-
-// Todo: `@link` seems to require a namepath OR URL and might be checked as such.
-
-// The doc signature of `event` seems to require a "name"
-const tagsWithMandatoryNamePosition = new Set([
-  // Though no signature provided requiring, per https://jsdoc.app/tags-param.html:
-  // "The @param tag requires you to specify the name of the parameter you are documenting."
-  'param',
-  'arg',
-  'argument',
-
-  // No docs indicate required, but since parallel to `param`, we treat as such:
-  'property',
-  'prop',
-
-  // "name" (and a special syntax for the `external` name)
-  'external', 'host',
-
-  // "namepath"
-  'callback',
-  'name',
-  'typedef',
-]);
-
-const tagsWithMandatoryTypeOrNamePositionBase = new Set([
-  // "namepath"
-  'alias',
-  'augments', 'extends',
-  'borrows',
-  'lends',
-  'memberof', 'memberof!',
-  'name',
-  'typedef',
-
-  'external', 'host',
-
-  // "OtherObjectPath"
-  'mixes',
-]);
-
-const tagsWithMandatoryTypeOrNamePosition = new Set([
-  // namepath
-  'this',
-  ...tagsWithMandatoryTypeOrNamePositionBase,
-]);
-
-const tagsWithMandatoryTypeOrNamePositionTypescript = new Set([
-  ...tagsWithMandatoryTypeOrNamePositionBase,
-]);
-
-const tagsWithMandatoryTypeOrNamePositionClosure = new Set([
-  ...tagsWithMandatoryTypeOrNamePositionBase,
-]);
-
-const isNamepathDefiningTag = (mode, tagName) => {
-  if (mode === 'closure') {
-    return closureNamepathDefiningTags.has(tagName);
-  }
-  if (mode === 'typescript') {
-    return typescriptNamepathDefiningTags.has(tagName);
+const ensureMap = (map, tag) => {
+  if (!map.has(tag)) {
+    map.set(tag, new Map());
   }
 
-  return namepathDefiningTags.has(tagName);
+  return map.get(tag);
 };
 
-const tagMightHaveTypePosition = (mode, tag) => {
-  if (mode === 'closure') {
-    return tagsWithMandatoryTypePositionClosure.has(tag) ||
-      tagsWithOptionalTypePositionClosure.has(tag);
-  }
-  if (mode === 'typescript') {
-    return tagsWithMandatoryTypePositionTypeScript.has(tag) ||
-      tagsWithOptionalTypePositionTypescript.has(tag);
-  }
+const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
+  Object.entries(structuredTags).forEach(([tag, {
+    name, type, required = [],
+  }]) => {
+    const tagStruct = ensureMap(tagMap, tag);
 
-  return tagsWithMandatoryTypePosition.has(tag) ||
-    tagsWithOptionalTypePosition.has(tag);
+    tagStruct.set('nameContents', name);
+    tagStruct.set('typeAllowed', type);
+
+    const requiredName = required.includes('name');
+    if (requiredName && name === false) {
+      throw new Error('Cannot add "name" to `require` with the tag\'s `name` set to `false`');
+    }
+    tagStruct.set('nameRequired', requiredName);
+
+    const requiredType = required.includes('type');
+    if (requiredType && type === false) {
+      throw new Error('Cannot add "type" to `require` with the tag\'s `type` set to `false`');
+    }
+    tagStruct.set('typeRequired', requiredType);
+
+    const typeOrNameRequired = required.includes('typeOrNameRequired');
+    if (typeOrNameRequired && name === false) {
+      throw new Error('Cannot add "typeOrNameRequired" to `require` with the tag\'s `name` set to `false`');
+    }
+    if (typeOrNameRequired && type === false) {
+      throw new Error('Cannot add "typeOrNameRequired" to `require` with the tag\'s `type` set to `false`');
+    }
+    tagStruct.set('typeOrNameRequired', typeOrNameRequired);
+  });
 };
 
-const tagMustHaveTypePosition = (mode, tag) => {
-  if (mode === 'closure') {
-    return tagsWithMandatoryTypePositionClosure.has(tag);
-  }
-  if (mode === 'typescript') {
-    return tagsWithMandatoryTypePositionTypeScript.has(tag);
+const getTagStructureForMode = (mode, structuredTags) => {
+  const tagStruct = getDefaultTagStructureForMode(mode);
+
+  try {
+    overrideTagStructure(structuredTags, tagStruct);
+  } catch {
+    //
   }
 
-  return tagsWithMandatoryTypePosition.has(tag);
+  return tagStruct;
 };
 
-const tagMightHaveNamePosition = (mode, tag) => {
-  if (mode === 'closure') {
-    return closureTagsWithOptionalNamePosition.has(tag);
-  }
-  if (mode === 'typescript') {
-    return typescriptTagsWithOptionalNamePosition.has(tag);
-  }
+const isNamepathDefiningTag = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
 
-  return tagsWithOptionalNamePosition.has(tag);
+  return tagStruct.get('nameContents') === 'namepath-defining';
 };
 
-const tagMustHaveNamePosition = (tag) => {
-  return tagsWithMandatoryNamePosition.has(tag);
+const tagMustHaveTypePosition = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
+
+  return tagStruct.get('typeRequired');
 };
 
-const tagMightHaveEitherTypeOrNamePosition = (mode, tag) => {
-  return tagMightHaveTypePosition(mode, tag) || tagMightHaveNamePosition(mode, tag);
+const tagMightHaveTypePosition = (tag, tagMap = tagStructure) => {
+  if (tagMustHaveTypePosition(tag, tagMap)) {
+    return true;
+  }
+
+  const tagStruct = ensureMap(tagMap, tag);
+
+  const ret = tagStruct.get('typeAllowed');
+
+  return ret === undefined ? true : ret;
 };
 
-const tagMustHaveEitherTypeOrNamePosition = (mode, tag) => {
-  if (mode === 'closure') {
-    return tagsWithMandatoryTypeOrNamePositionClosure.has(tag);
-  }
-  if (mode === 'typescript') {
-    return tagsWithMandatoryTypeOrNamePositionTypescript.has(tag);
-  }
+const namepathTypes = new Set([
+  'namepath-defining', 'namepath-referencing',
+]);
 
-  return tagsWithMandatoryTypeOrNamePosition.has(tag);
+const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
+
+  const ret = tagStruct.get('nameContents');
+
+  return ret === undefined ? true : Boolean(ret);
+};
+
+const tagMightHaveNamepath = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
+
+  return namepathTypes.has(tagStruct.get('nameContents'));
+};
+
+const tagMustHaveNamePosition = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
+
+  return tagStruct.get('nameRequired');
+};
+
+const tagMightHaveEitherTypeOrNamePosition = (tag, tagMap) => {
+  return tagMightHaveTypePosition(tag, tagMap) || tagMightHaveNamepath(tag, tagMap);
+};
+
+const tagMustHaveEitherTypeOrNamePosition = (tag, tagMap) => {
+  const tagStruct = ensureMap(tagMap, tag);
+
+  return tagStruct.get('typeOrNameRequired');
+};
+
+const tagMissingRequiredTypeOrNamepath = (tag, tagMap = tagStructure) => {
+  const mustHaveTypePosition = tagMustHaveTypePosition(tag.tag, tagMap);
+  const mightHaveTypePosition = tagMightHaveTypePosition(tag.tag, tagMap);
+  const hasTypePosition = mightHaveTypePosition && Boolean(tag.type);
+  const hasNameOrNamepathPosition = (
+    tagMustHaveNamePosition(tag.tag, tagMap) ||
+    tagMightHaveNamepath(tag.tag, tagMap)
+  ) && Boolean(tag.name);
+  const mustHaveEither = tagMustHaveEitherTypeOrNamePosition(tag.tag, tagMap);
+  const hasEither = tagMightHaveEitherTypeOrNamePosition(tag.tag, tagMap) &&
+    (hasTypePosition || hasNameOrNamepathPosition);
+
+  return mustHaveEither && !hasEither && !mustHaveTypePosition;
 };
 
 /**
@@ -882,6 +727,7 @@ export default {
   getJsdocTagsDeep,
   getPreferredTagName,
   getTagsByType,
+  getTagStructureForMode,
   hasATag,
   hasDefinedTypeReturnTag,
   hasReturnValue,
@@ -892,11 +738,13 @@ export default {
   isNamepathDefiningTag,
   isSetter,
   isValidTag,
+  overrideTagStructure,
   parseClosureTemplateTag,
-  tagMightHaveEitherTypeOrNamePosition,
+  setTagStructure,
+  tagMightHaveNamepath,
   tagMightHaveNamePosition,
   tagMightHaveTypePosition,
-  tagMustHaveEitherTypeOrNamePosition,
+  tagMissingRequiredTypeOrNamepath,
   tagMustHaveNamePosition,
   tagMustHaveTypePosition,
 };

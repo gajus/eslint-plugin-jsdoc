@@ -133,9 +133,16 @@ export default {
         line: 3,
         message: 'Syntax error in namepath: foo%',
       }],
-      options: [{
-        checkSeesForNamepaths: true,
-      }],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            see: {
+              name: 'namepath-referencing',
+              required: ['name'],
+            },
+          },
+        },
+      },
     },
     {
       code: `
@@ -176,7 +183,7 @@ export default {
       `,
       errors: [{
         line: 3,
-        message: 'Tag @callback must have a name/namepath',
+        message: 'Tag @callback must have a name/namepath.',
       }],
       options: [{
         allowEmptyNamepaths: false,
@@ -225,16 +232,48 @@ export default {
     {
       code: `
           /**
-           * @extends
+           * @this
            */
            class Bar {};
       `,
       errors: [
         {
           line: 3,
-          message: 'Tag @extends must have either a type or namepath',
+          message: 'Tag @this must have either a type or namepath in "jsdoc" mode.',
         },
       ],
+      options: [
+        {
+          allowEmptyNamepaths: false,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @aCustomTag
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tag @aCustomTag must have either a type or namepath.',
+        },
+      ],
+      options: [
+        {
+          allowEmptyNamepaths: false,
+        },
+      ],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              required: ['typeOrNameRequired'],
+            },
+          },
+        },
+      },
     },
     {
       code: `
@@ -246,7 +285,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Tag @type must have a type',
+          message: 'Tag @type must have a type.',
         },
       ],
     },
@@ -310,7 +349,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Tag @define must have a type',
+          message: 'Tag @define must have a type in "closure" mode.',
         },
       ],
       settings: {
@@ -329,7 +368,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Tag @this must have a type',
+          message: 'Tag @this must have a type in "closure" mode.',
         },
       ],
       settings: {
@@ -413,6 +452,27 @@ export default {
     {
       code: `
       /**
+       * @aCustomTag name
+       */
+      `,
+      errors: [
+        {
+          message: '@aCustomTag should not have a name.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              name: false,
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
        * @typedef {SomeType}
        */
       function quux () {}
@@ -420,7 +480,12 @@ export default {
       `,
       errors: [
         {
-          message: '@typedef must have a name in "jsdoc" mode.',
+          message: 'Tag @typedef must have a name/namepath in "jsdoc" mode.',
+        },
+      ],
+      options: [
+        {
+          allowEmptyNamepaths: false,
         },
       ],
       settings: {
@@ -445,6 +510,125 @@ export default {
       settings: {
         jsdoc: {
           mode: 'jsdoc',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @aCustomTag {SomeType}
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          message: '@aCustomTag should not have a bracketed type.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              type: false,
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @see foo%
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [{
+        line: 1,
+        message: 'Cannot add "name" to `require` with the tag\'s `name` set to `false`',
+      }],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            see: {
+              name: false,
+              required: ['name'],
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @see foo%
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [{
+        line: 1,
+        message: 'Cannot add "type" to `require` with the tag\'s `type` set to `false`',
+      }],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            see: {
+              required: ['type'],
+              type: false,
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @see foo%
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [{
+        line: 1,
+        message: 'Cannot add "typeOrNameRequired" to `require` with the tag\'s `name` set to `false`',
+      }],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            see: {
+              name: false,
+              required: ['typeOrNameRequired'],
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @see foo%
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [{
+        line: 1,
+        message: 'Cannot add "typeOrNameRequired" to `require` with the tag\'s `type` set to `false`',
+      }],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            see: {
+              required: ['typeOrNameRequired'],
+              type: false,
+            },
+          },
         },
       },
     },
@@ -562,9 +746,16 @@ export default {
 
           }
       `,
-      options: [{
-        checkSeesForNamepaths: true,
-      }],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            see: {
+              name: 'namepath-referencing',
+              required: ['name'],
+            },
+          },
+        },
+      },
     },
     {
       code: `
@@ -601,6 +792,16 @@ export default {
       code: `
           /**
            *
+           */
+          function quux() {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @aCustomTag
            */
           function quux() {
 
@@ -791,6 +992,11 @@ export default {
       function quux () {}
 
       `,
+      options: [
+        {
+          allowEmptyNamepaths: false,
+        },
+      ],
       settings: {
         jsdoc: {
           mode: 'closure',
@@ -825,6 +1031,25 @@ export default {
           allowEmptyNamepaths: false,
         },
       ],
+    },
+    {
+      code: `
+          /**
+           * @see
+           */
+          function quux() {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            see: {
+              name: 'namepath-referencing',
+            },
+          },
+        },
+      },
     },
   ],
 };

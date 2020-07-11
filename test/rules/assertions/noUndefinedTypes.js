@@ -314,6 +314,70 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @aCustomTag {SomeType}
+       */
+      function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The type \'SomeType\' is undefined.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              type: true,
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @namepathDefiner SomeType
+       */
+      /**
+       * @type {SomeType}
+       */
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'The type \'SomeType\' is undefined.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            namepathDefiner: {
+              name: 'namepath-referencing',
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @namepathDefiner SomeType
+       */
+      /**
+       * @type {SomeType}
+       */
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'The type \'SomeType\' is undefined.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -779,6 +843,42 @@ export default {
       settings: {
         jsdoc: {
           mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @aCustomTag {SomeType}
+       */
+      function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              type: false,
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @namepathDefiner SomeType
+       */
+      /**
+       * @type {SomeType}
+       */
+      `,
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            namepathDefiner: {
+              name: 'namepath-defining',
+            },
+          },
         },
       },
     },

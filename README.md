@@ -20,6 +20,7 @@ JSDoc linting rules for ESLint.
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
         * [`@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`](#eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns)
         * [Settings to Configure `check-types` and `no-undefined-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types)
+        * [`structuredTags`](#eslint-plugin-jsdoc-settings-structuredtags)
     * [Advanced](#eslint-plugin-jsdoc-advanced)
         * [AST and Selectors](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
     * [Rules](#eslint-plugin-jsdoc-rules)
@@ -441,6 +442,50 @@ Note that if a value is present both as a key and as a value, neither the
 key nor the value will be reported. Thus in `check-types`, this fact can
 be used to allow both `object` and `Object` if one has a `preferredTypes`
 key `object: 'Object'` and `Object: 'object'`.
+
+<a name="eslint-plugin-jsdoc-settings-structuredtags"></a>
+### <code>structuredTags</code>
+
+An object indicating tags whose types and names/namepaths (whether defining or
+referencing namepaths) will be checked, subject to configuration. If the tags
+have predefined behavior or `allowEmptyNamepaths` behavior, this option will
+override that behavior for any specified tags, though this option can also be
+used for tags without predefined behavior. Its keys are tag names and its
+values are objects with the following optional properties:
+  - `name` - String set to one of the following:
+    - `"text"` - When a name is present, plain text will be allowed in the
+      name position (non-whitespace immediately after the tag and whitespace),
+      e.g., in `@throws This is an error`, "This" would normally be the name,
+      but "text" allows non-name text here also. This is the default.
+    - `"namepath-defining"` - As with `namepath-referencing`, but also
+      indicates the tag adds a namepath to definitions, e.g., to prevent
+      `no-undefined-types` from reporting references to that namepath.
+    - `"namepath-referencing"` - This will cause any name position to be
+      checked to ensure it is a valid namepath. You might use this to ensure
+      that tags which normally allow free text, e.g., `@see` will instead
+      require a namepath.
+    - `false` - This will disallow any text in the name position.
+  - `type`:
+      - `true` - Allows valid types within brackets. This is the default.
+      - `false` - Explicitly disallows any brackets or bracketed type. You
+        might use this with `@throws` to suggest that only free form text
+        is being input or with `@augments` (for jsdoc mode) to disallow
+        Closure-style bracketed usage along with a required namepath.
+  - `required` - Array of one of the following (defaults to an empty array,
+      meaning none are required):
+    - One or both of the following strings (if both are included, then both
+      are required):
+      - `"name"` - Indicates that a name position is required (not just that
+        if present, it is a valid namepath). You might use this with `see`
+        to insist that a value (or namepath, depending on the `name` value)
+        is always present.
+      - `"type"` - Indicates that the type position (within curly brackets)
+        is required (not just that if present, it is a valid type). You
+        might use this with `@throws` or `@typedef` which might otherwise
+        normally have their types optional. See the type groups 3-5 above.
+    - `"typeOrName"` - Must have either type (e.g., `@throws {aType}`) or
+        name (`@throws Some text`); does not require that both exist but
+        disallows just an empty tag.
 
 <a name="eslint-plugin-jsdoc-advanced"></a>
 ## Advanced
@@ -2049,6 +2094,15 @@ function testingEslint(options: {
   return one + two + three;
 }
 // Message: Missing @param "options.three"
+
+/**
+ *
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"structuredTags":{"see":{"name":false,"required":["name"]}}}}
+// Message: Cannot add "name" to `require` with the tag's `name` set to `false`
 ````
 
 The following patterns are not considered problems:
@@ -3500,6 +3554,10 @@ Boolean | **boolean** | **boolean** | `(true) instanceof Boolean` -> **`false`**
 Number | **number** | **number** | `(41) instanceof Number` -> **`false`**
 String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
+If you define your own tags and don't wish their bracketed portions checked
+for types, you can use `settings.jsdoc.structuredTags` with a tag `type` of
+`false`.
+
 |||
 |---|---|
 |Context|everywhere|
@@ -3507,7 +3565,7 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Options|`noDefaults`, `exemptTagContexts`, `unifyParentAndChildTypeChecks`|
-|Settings|`preferredTypes`, `mode`|
+|Settings|`preferredTypes`, `mode`, `structuredTags`|
 
 The following patterns are considered problems:
 
@@ -4081,6 +4139,12 @@ function a () {}
 function b () {}
 // Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"object":"Object"}}}
 // Message: Invalid JSDoc @typedef "foo" type "object"; prefer: "Object".
+
+/**
+ * @aCustomTag {Number} foo
+ */
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":true}}}}
+// Message: Invalid JSDoc @aCustomTag "foo" type "Number"; prefer: "number".
 ````
 
 The following patterns are not considered problems:
@@ -4345,6 +4409,11 @@ function a () {}
  */
 function b () {}
 // Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @aCustomTag {Number} foo
+ */
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":false}}}}
 ````
 
 
@@ -6057,6 +6126,11 @@ Also note that if there is an error [parsing](https://github.com/jsdoctypeparser
 types for a tag, the function will silently ignore that tag, leaving it to
 the `valid-types` rule to report parsing errors.
 
+If you define your own tags, you can use `settings.jsdoc.structuredTags`
+to indicate that a tag's `name` is "namepath-defining" (and should prevent
+reporting on use of that namepath elsewhere) and/or that a tag's `type` is
+`false` (and should not be checked for types).
+
 <a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-13"></a>
 #### Options
 
@@ -6073,7 +6147,7 @@ An option object may have the following key:
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Options|`definedTypes`|
-|Settings|`preferredTypes`, `mode`|
+|Settings|`preferredTypes`, `mode`, `structuredTags`|
 
 The following patterns are considered problems:
 
@@ -6217,6 +6291,30 @@ function quux () {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
+// Message: The type 'SomeType' is undefined.
+
+/**
+ * @aCustomTag {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":true}}}}
+// Message: The type 'SomeType' is undefined.
+
+/**
+ * @namepathDefiner SomeType
+ */
+/**
+ * @type {SomeType}
+ */
+// Settings: {"jsdoc":{"structuredTags":{"namepathDefiner":{"name":"namepath-referencing"}}}}
+// Message: The type 'SomeType' is undefined.
+
+/**
+ * @namepathDefiner SomeType
+ */
+/**
+ * @type {SomeType}
+ */
 // Message: The type 'SomeType' is undefined.
 ````
 
@@ -6510,6 +6608,20 @@ exports.resolve1 = function resolve1(value) {
  * @typedef {ValueType} ValueFunc
  */
 // Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @aCustomTag {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":false}}}}
+
+/**
+ * @namepathDefiner SomeType
+ */
+/**
+ * @type {SomeType}
+ */
+// Settings: {"jsdoc":{"structuredTags":{"namepathDefiner":{"name":"namepath-defining"}}}}
 ````
 
 
@@ -9091,6 +9203,15 @@ class Foo {
 }
 // Options: [{"exemptEmptyConstructors":true,"require":{"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
+
+/**
+ *
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"structuredTags":{"see":{"name":false,"required":["name"]}}}}
+// Message: Cannot add "name" to `require` with the tag's `name` set to `false`
 ````
 
 The following patterns are not considered problems:
@@ -13599,15 +13720,15 @@ e.g., `@modifies`):
 The following tags have their name/namepath portion (the non-whitespace
 text after the tag name) checked:
 
-1. Name(path)-defining tags requiring namepath: `@external`, `@host`,
-    `@name`, `@typedef`, and `@template` (TypeScript/Closure only);
-    `@param` (`@arg`, `@argument`) and `@property`
+1. Name(path)-defining tags requiring namepath: `@event`, `@callback`,
+    `@external`, `@host`, `@name`, `@typedef`, and `@template`
+    (TypeScript/Closure only); `@param` (`@arg`, `@argument`) and `@property`
     (`@prop`) also fall into this category, but while this rule will check
     their namepath validity, we leave the requiring of the name portion
     to the rules `require-param-name` and `require-property-name`,
     respectively.
 1. Name(path)-defining tags (which may have value without namepath or their
-    namepath can be expressed elsewhere on the block): `@event`, `@callback`,
+    namepath can be expressed elsewhere on the block):
     `@class`, `@constructor`, `@constant`, `@const`, `@function`, `@func`,
     `@method`, `@interface` (TypeScript tag only), `@member`, `@var`,
     `@mixin`, `@namespace`, `@module` (module paths are not planned for
@@ -13638,6 +13759,13 @@ text after the tag name) checked:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
+If you define your own tags, `settings.jsdoc.structuredTags` will allow
+these custom tags to be checked, with the name portion of tags checked for
+valid namepaths (based on the tag's `name` value), their type portions checked
+for valid types (based on the tag's `type` value), and either portion checked
+for presence (based on `false` `name` or `type` values or their `required`
+value). See the setting for more details.
+
 <a name="eslint-plugin-jsdoc-rules-valid-types-options-28"></a>
 #### Options
 
@@ -13645,10 +13773,9 @@ text after the tag name) checked:
   empty name paths with namepath groups 2 and 4 (these might often be
   expected to have an accompanying name path, though they have some
   indicative value without one; these may also allow names to be defined
-  in another manner elsewhere in the block)
-- `checkSeesForNamepaths` (default: false) - Set this to `true` to insist
-  that `@see` only use name paths (the tag is normally permitted to
-  allow other text)
+  in another manner elsewhere in the block); you can use
+  `settings.jsdoc.structuredTags` with the `required` key set to "name" if you
+  wish to require name paths on a tag-by-tag basis.
 
 |||
 |---|---|
@@ -13656,8 +13783,8 @@ text after the tag name) checked:
 |Tags|For name only unless otherwise stated: `alias`, `augments`, `borrows`, `callback`, `class` (for name and type), `constant` (for name and type), `enum` (for type), `event`, `external`, `fires`, `function`, `implements` (for type), `interface`, `lends`, `listens`, `member` (for name and type),  `memberof`, `memberof!`, `mixes`, `mixin`, `modifies`, `module` (for name and type), `name`, `namespace` (for name and type), `param` (for name and type), `property` (for name and type), `returns` (for type), `see` (optionally for name), `this`, `throws` (for type), `type` (for type), `typedef` (for name and type), `yields` (for type)|
 |Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|
-|Options|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
-|Settings|`mode`|
+|Options|`allowEmptyNamepaths`|
+|Settings|`mode`, `structuredTags`|
 
 The following patterns are considered problems:
 
@@ -13732,7 +13859,7 @@ function quux() {
 function quux() {
 
 }
-// Options: [{"checkSeesForNamepaths":true}]
+// Settings: {"jsdoc":{"structuredTags":{"see":{"name":"namepath-referencing","required":["name"]}}}}
 // Message: Syntax error in namepath: foo%
 
 /**
@@ -13758,7 +13885,7 @@ function quux() {
 
 }
 // Options: [{"allowEmptyNamepaths":false}]
-// Message: Tag @callback must have a name/namepath
+// Message: Tag @callback must have a name/namepath.
 
 /**
  * @constant {str%ng}
@@ -13777,16 +13904,24 @@ function quux() {
 // Message: Syntax error in namepath: UserStr%ng
 
 /**
- * @extends
+ * @this
  */
  class Bar {};
-// Message: Tag @extends must have either a type or namepath
+// Options: [{"allowEmptyNamepaths":false}]
+// Message: Tag @this must have either a type or namepath in "jsdoc" mode.
+
+/**
+ * @aCustomTag
+ */
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"required":["typeOrNameRequired"]}}}}
+// Options: [{"allowEmptyNamepaths":false}]
+// Message: Tag @aCustomTag must have either a type or namepath.
 
 /**
  * @type
  */
  let foo;
-// Message: Tag @type must have a type
+// Message: Tag @type must have a type.
 
 /**
  * @modifies {bar | foo<}
@@ -13813,14 +13948,14 @@ function quux () {}
  */
  function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
-// Message: Tag @define must have a type
+// Message: Tag @define must have a type in "closure" mode.
 
 /**
  * @this
  */
  let foo;
 // Settings: {"jsdoc":{"mode":"closure"}}
-// Message: Tag @this must have a type
+// Message: Tag @this must have a type in "closure" mode.
 
 /**
  * Foo function.
@@ -13850,11 +13985,18 @@ function foo(bar) {}
 // Message: @interface should not have a name in "closure" mode.
 
 /**
+ * @aCustomTag name
+ */
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"name":false}}}}
+// Message: @aCustomTag should not have a name.
+
+/**
  * @typedef {SomeType}
  */
 function quux () {}
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
-// Message: @typedef must have a name in "jsdoc" mode.
+// Options: [{"allowEmptyNamepaths":false}]
+// Message: Tag @typedef must have a name/namepath in "jsdoc" mode.
 
 /**
  * @private {SomeType}
@@ -13862,6 +14004,49 @@ function quux () {}
 function quux () {}
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 // Message: @private should not have a bracketed type in "jsdoc" mode.
+
+/**
+ * @aCustomTag {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":false}}}}
+// Message: @aCustomTag should not have a bracketed type.
+
+/**
+ * @see foo%
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"structuredTags":{"see":{"name":false,"required":["name"]}}}}
+// Message: Cannot add "name" to `require` with the tag's `name` set to `false`
+
+/**
+ * @see foo%
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"structuredTags":{"see":{"required":["type"],"type":false}}}}
+// Message: Cannot add "type" to `require` with the tag's `type` set to `false`
+
+/**
+ * @see foo%
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"structuredTags":{"see":{"name":false,"required":["typeOrNameRequired"]}}}}
+// Message: Cannot add "typeOrNameRequired" to `require` with the tag's `name` set to `false`
+
+/**
+ * @see foo%
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"structuredTags":{"see":{"required":["typeOrNameRequired"],"type":false}}}}
+// Message: Cannot add "typeOrNameRequired" to `require` with the tag's `type` set to `false`
 ````
 
 The following patterns are not considered problems:
@@ -13944,7 +14129,7 @@ function quux() {
 function quux() {
 
 }
-// Options: [{"checkSeesForNamepaths":true}]
+// Settings: {"jsdoc":{"structuredTags":{"see":{"name":"namepath-referencing","required":["name"]}}}}
 
 /**
  *
@@ -13970,6 +14155,13 @@ function quux() {
 
 /**
  *
+ */
+function quux() {
+
+}
+
+/**
+ * @aCustomTag
  */
 function quux() {
 
@@ -14075,6 +14267,7 @@ function foo(bar) {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
+// Options: [{"allowEmptyNamepaths":false}]
 
 /**
  * @private {SomeType}
@@ -14089,6 +14282,14 @@ function quux() {
 
 }
 // Options: [{"allowEmptyNamepaths":false}]
+
+/**
+ * @see
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"structuredTags":{"see":{"name":"namepath-referencing"}}}}
 ````
 
 

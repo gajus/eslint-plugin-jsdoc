@@ -12,7 +12,6 @@ export default iterateJsdoc(({
 }) => {
   const {
     allowEmptyNamepaths = true,
-    checkSeesForNamepaths = false,
   } = context.options[0] || {};
   const {mode} = settings;
   if (!jsdoc.tags) {
@@ -72,29 +71,7 @@ export default iterateJsdoc(({
       return true;
     };
 
-    const hasTypePosition = utils.tagMightHaveTypePosition(tag.tag) && Boolean(tag.type);
-    const mustHaveTypePosition = utils.tagMustHaveTypePosition(tag.tag);
-
-    const hasNameOrNamepathPosition = (
-      utils.tagMustHaveNamePosition(tag.tag) ||
-      utils.tagMightHaveNamePosition(tag.tag)
-    ) && Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
-
-    // Don't handle `@param` here though it does require name as handled by
-    //  `require-param-name` (`@property` would similarly seem to require one,
-    //  but is handled by `require-property-name`)
-    const mustHaveNameOrNamepathPosition = ![
-      'param', 'arg', 'argument',
-      'property', 'prop',
-    ].includes(tag.tag) &&
-      utils.tagMustHaveNamePosition(tag.tag) && !allowEmptyNamepaths;
-
-    const hasEither = utils.tagMightHaveEitherTypeOrNamePosition(tag.tag) && (hasTypePosition || hasNameOrNamepathPosition);
-    const mustHaveEither = utils.tagMustHaveEitherTypeOrNamePosition(tag.tag);
-
-    let skip;
-    switch (tag.tag) {
-    case 'borrows': {
+    if (tag.tag === 'borrows') {
       const thisNamepath = tag.description.replace(asExpression, '');
 
       if (!asExpression.test(tag.description) || !thisNamepath) {
@@ -108,53 +85,82 @@ export default iterateJsdoc(({
 
         validNamepathParsing(thatNamepath);
       }
-      break;
-    }
-    case 'extends':
-    case 'package': case 'private': case 'protected': case 'public': case 'static': {
-      if (mode !== 'closure' && mode !== 'permissive' && tag.type) {
-        report(`@${tag.tag} should not have a bracketed type in "${mode}" mode.`, null, tag);
-        break;
-      }
-      skip = true;
+
+      return;
     }
 
-    // Fallthrough
-    case 'typedef': {
-      if (!skip && mode !== 'closure' && mode !== 'permissive' && !tag.name) {
-        report(`@typedef must have a name in "${mode}" mode.`, null, tag);
-        break;
-      }
-      skip = true;
+    const otherModeMaps = ['jsdoc', 'typescript', 'closure', 'permissive'].filter(
+      (mde) => {
+        return mde !== mode;
+      },
+    ).map((mde) => {
+      return utils.getTagStructureForMode(mde);
+    });
+
+    const tagMightHaveNamePosition = utils.tagMightHaveNamePosition(tag.tag, otherModeMaps);
+    if (tagMightHaveNamePosition !== true && tag.name) {
+      const modeInfo = tagMightHaveNamePosition === false ? '' : ` in "${mode}" mode`;
+      report(`@${tag.tag} should not have a name${modeInfo}.`, null, tag);
+
+      return;
     }
 
-    // Fallthrough
-    case 'interface': {
-      if (!skip && mode === 'closure' && tag.name) {
-        report('@interface should not have a name in "closure" mode.', null, tag);
-        break;
-      }
+    const mightHaveTypePosition = utils.tagMightHaveTypePosition(tag.tag, otherModeMaps);
+    if (mightHaveTypePosition !== true && tag.type) {
+      const modeInfo = mightHaveTypePosition === false ? '' : ` in "${mode}" mode`;
+      report(`@${tag.tag} should not have a bracketed type${modeInfo}.`, null, tag);
+
+      return;
     }
 
-    // Fallthrough
-    default: {
-      if (mustHaveEither && !hasEither && !mustHaveTypePosition) {
-        report(`Tag @${tag.tag} must have either a type or namepath`, null, tag);
+    // REQUIRED NAME
+    const tagMustHaveNamePosition = utils.tagMustHaveNamePosition(tag.tag, otherModeMaps);
 
-        return;
-      }
-      if (hasTypePosition) {
-        validTypeParsing(tag.type);
-      } else if (mustHaveTypePosition) {
-        report(`Tag @${tag.tag} must have a type`, null, tag);
-      }
+    // Don't handle `@param` here though it does require name as handled by
+    //  `require-param-name` (`@property` would similarly seem to require one,
+    //  but is handled by `require-property-name`)
+    if (tagMustHaveNamePosition !== false && !tag.name && !allowEmptyNamepaths && ![
+      'param', 'arg', 'argument',
+      'property', 'prop',
+    ].includes(tag.tag)) {
+      const modeInfo = tagMustHaveNamePosition === true ? '' : ` in "${mode}" mode`;
+      report(`Tag @${tag.tag} must have a name/namepath${modeInfo}.`, null, tag);
 
-      if (hasNameOrNamepathPosition) {
-        validNamepathParsing(tag.name, tag.tag);
-      } else if (mustHaveNameOrNamepathPosition) {
-        report(`Tag @${tag.tag} must have a name/namepath`, null, tag);
-      }
+      return;
     }
+
+    // REQUIRED TYPE
+    const mustHaveTypePosition = utils.tagMustHaveTypePosition(tag.tag, otherModeMaps);
+    if (mustHaveTypePosition !== false && !tag.type) {
+      const modeInfo = mustHaveTypePosition === true ? '' : ` in "${mode}" mode`;
+      report(`Tag @${tag.tag} must have a type${modeInfo}.`, null, tag);
+
+      return;
+    }
+
+    // REQUIRED TYPE OR NAME/NAMEPATH
+    const tagMissingRequiredTypeOrNamepath = utils.tagMissingRequiredTypeOrNamepath(tag, otherModeMaps);
+    if (tagMissingRequiredTypeOrNamepath !== false && !allowEmptyNamepaths) {
+      const modeInfo = tagMissingRequiredTypeOrNamepath === true ? '' : ` in "${mode}" mode`;
+      report(`Tag @${tag.tag} must have either a type or namepath${modeInfo}.`, null, tag);
+
+      return;
+    }
+
+    // VALID TYPE
+    const hasTypePosition = mightHaveTypePosition === true && Boolean(tag.type);
+    if (hasTypePosition) {
+      validTypeParsing(tag.type);
+    }
+
+    // VALID NAME/NAMEPATH
+    const hasNameOrNamepathPosition = (
+      tagMustHaveNamePosition !== false ||
+      utils.tagMightHaveNamepath(tag.tag)
+    ) && Boolean(tag.name);
+
+    if (hasNameOrNamepathPosition) {
+      validNamepathParsing(tag.name, tag.tag);
     }
   });
 }, {
@@ -169,10 +175,6 @@ export default iterateJsdoc(({
         properties: {
           allowEmptyNamepaths: {
             default: true,
-            type: 'boolean',
-          },
-          checkSeesForNamepaths: {
-            default: false,
             type: 'boolean',
           },
         },
