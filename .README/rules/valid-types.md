@@ -1,6 +1,10 @@
 ### `valid-types`
 
-Requires all types to be valid JSDoc or Closure compiler types without syntax errors.
+Requires all types to be valid JSDoc or Closure compiler types without
+syntax errors. Note that what determines a valid type is handled by
+our type parsing engine, [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser),
+using `settings.jsdoc.mode` to determine whether to use jsdoctypeparser's
+"jsdoc", "typescript", "closure", or "permissive" modes.
 
 Also impacts behaviors on namepath (or event)-defining and pointing tags:
 
