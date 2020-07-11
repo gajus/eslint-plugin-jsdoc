@@ -13490,11 +13490,12 @@ const nested = () => () => {throw new Error('oops');};
 <a name="eslint-plugin-jsdoc-rules-valid-types"></a>
 ### <code>valid-types</code>
 
-Requires all types to be valid JSDoc or Closure compiler types without
-syntax errors. Note that what determines a valid type is handled by
+Requires all types to be valid JSDoc, Closure, or TypeScript compiler types
+without syntax errors. Note that what determines a valid type is handled by
 our type parsing engine, [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser),
-using `settings.jsdoc.mode` to determine whether to use jsdoctypeparser's
-"jsdoc", "typescript", "closure", or "permissive" modes.
+using [`settings.jsdoc.mode`](#eslint-plugin-jsdoc-settings-mode) to
+determine whether to use jsdoctypeparser's "permissive" mode or the stricter
+"jsdoc", "typescript", "closure" modes.
 
 Also impacts behaviors on namepath (or event)-defining and pointing tags:
 
