@@ -120,6 +120,10 @@ Boolean | **boolean** | **boolean** | `(true) instanceof Boolean` -> **`false`**
 Number | **number** | **number** | `(41) instanceof Number` -> **`false`**
 String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
+If you define your own tags and don't wish their bracketed portions checked
+for types, you can use `settings.jsdoc.structuredTags` with a tag `type` of
+`false`.
+
 |||
 |---|---|
 |Context|everywhere|
@@ -127,6 +131,6 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Options|`noDefaults`, `exemptTagContexts`, `unifyParentAndChildTypeChecks`|
-|Settings|`preferredTypes`, `mode`|
+|Settings|`preferredTypes`, `mode`, `structuredTags`|
 
 <!-- assertions checkTypes -->

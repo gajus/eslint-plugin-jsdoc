@@ -271,32 +271,60 @@ const getUtils = (
     return false;
   };
 
-  utils.tagMustHaveEitherTypeOrNamePosition = (tagName) => {
-    return jsdocUtils.tagMustHaveEitherTypeOrNamePosition(mode, tagName);
-  };
+  [
+    'tagMightHaveNamePosition',
+    'tagMightHaveTypePosition',
+  ].forEach((method) => {
+    utils[method] = (tagName, otherModeMaps) => {
+      const result = jsdocUtils[method](tagName);
+      if (result) {
+        return true;
+      }
 
-  utils.tagMightHaveEitherTypeOrNamePosition = (tagName) => {
-    return jsdocUtils.tagMightHaveEitherTypeOrNamePosition(mode, tagName);
-  };
+      if (!otherModeMaps) {
+        return false;
+      }
 
-  utils.tagMustHaveNamePosition = (tagName) => {
-    return jsdocUtils.tagMustHaveNamePosition(tagName);
-  };
+      const otherResult = otherModeMaps.some((otherModeMap) => {
+        return jsdocUtils[method](tagName, otherModeMap);
+      });
 
-  utils.tagMightHaveNamePosition = (tagName) => {
-    return jsdocUtils.tagMightHaveNamePosition(mode, tagName);
-  };
+      return otherResult ? {otherMode: true} : false;
+    };
+  });
 
-  utils.tagMustHaveTypePosition = (tagName) => {
-    return jsdocUtils.tagMustHaveTypePosition(mode, tagName);
-  };
+  [
+    'tagMustHaveNamePosition',
+    'tagMustHaveTypePosition',
+    'tagMissingRequiredTypeOrNamepath',
+  ].forEach((method) => {
+    utils[method] = (tagName, otherModeMaps) => {
+      const result = jsdocUtils[method](tagName);
+      if (!result) {
+        return false;
+      }
 
-  utils.tagMightHaveTypePosition = (tagName) => {
-    return jsdocUtils.tagMightHaveTypePosition(mode, tagName);
-  };
+      // if (!otherModeMaps) { return true; }
 
-  utils.isNamepathDefiningTag = (tagName) => {
-    return jsdocUtils.isNamepathDefiningTag(mode, tagName);
+      const otherResult = otherModeMaps.every((otherModeMap) => {
+        return jsdocUtils[method](tagName, otherModeMap);
+      });
+
+      return otherResult ? true : {otherMode: false};
+    };
+  });
+
+  [
+    'isNamepathDefiningTag',
+    'tagMightHaveNamepath',
+  ].forEach((method) => {
+    utils[method] = (tagName) => {
+      return jsdocUtils[method](tagName);
+    };
+  });
+
+  utils.getTagStructureForMode = (mde) => {
+    return jsdocUtils.getTagStructureForMode(mde, settings.structuredTags);
   };
 
   utils.hasDefinedTypeReturnTag = (tag) => {
@@ -410,6 +438,9 @@ const getSettings = (context) => {
     // `check-types` and `no-undefined-types`
     preferredTypes: context.settings.jsdoc?.preferredTypes ?? {},
 
+    // `check-types`, `no-undefined-types`, `valid-types`
+    structuredTags: context.settings.jsdoc?.structuredTags ?? {},
+
     // `require-param`, `require-description`, `require-example`, `require-returns`
     overrideReplacesDocs: context.settings.jsdoc?.overrideReplacesDocs,
     implementsReplacesDocs: context.settings.jsdoc?.implementsReplacesDocs,
@@ -420,6 +451,23 @@ const getSettings = (context) => {
       (context.parserPath.includes('@typescript-eslint') ? 'typescript' : 'jsdoc'),
   };
   /* eslint-enable sort-keys-fix/sort-keys-fix */
+
+  jsdocUtils.setTagStructure(settings.mode);
+  try {
+    jsdocUtils.overrideTagStructure(settings.structuredTags);
+  } catch (error) {
+    context.report({
+      loc: {
+        start: {
+          column: 1,
+          line: 1,
+        },
+      },
+      message: error.message,
+    });
+
+    return false;
+  }
 
   return settings;
 };
@@ -537,9 +585,9 @@ const iterate = (
 const iterateAllJsdocs = (iterator, ruleConfig) => {
   const trackedJsdocs = [];
 
+  let settings;
   const callIterator = (context, node, jsdocNodes, state, lastCall) => {
     const sourceCode = context.getSourceCode();
-    const settings = getSettings(context);
     const {lines} = sourceCode;
 
     const utils = getBasicUtils(context, settings);
@@ -565,7 +613,11 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
   return {
     create (context) {
       const sourceCode = context.getSourceCode();
-      const settings = getSettings(context);
+      settings = getSettings(context);
+      if (!settings) {
+        return {};
+      }
+
       const state = {};
 
       return {
@@ -620,6 +672,9 @@ const checkFile = (iterator, ruleConfig) => {
     create (context) {
       const sourceCode = context.getSourceCode();
       const settings = getSettings(context);
+      if (!settings) {
+        return {};
+      }
 
       return {
         'Program:exit' () {
@@ -694,6 +749,9 @@ export default function iterateJsdoc (iterator, ruleConfig) {
 
       const sourceCode = context.getSourceCode();
       const settings = getSettings(context);
+      if (!settings) {
+        return {};
+      }
       const {lines} = sourceCode;
 
       const checkJsdoc = (node) => {

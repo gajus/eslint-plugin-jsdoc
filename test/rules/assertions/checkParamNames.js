@@ -852,6 +852,30 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [{
+        line: 1,
+        message: 'Cannot add "name" to `require` with the tag\'s `name` set to `false`',
+      }],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            see: {
+              name: false,
+              required: ['name'],
+            },
+          },
+        },
+      },
+    },
   ],
   valid: [
     {

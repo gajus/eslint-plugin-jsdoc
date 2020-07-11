@@ -31,15 +31,15 @@ e.g., `@modifies`):
 The following tags have their name/namepath portion (the non-whitespace
 text after the tag name) checked:
 
-1. Name(path)-defining tags requiring namepath: `@external`, `@host`,
-    `@name`, `@typedef`, and `@template` (TypeScript/Closure only);
-    `@param` (`@arg`, `@argument`) and `@property`
+1. Name(path)-defining tags requiring namepath: `@event`, `@callback`,
+    `@external`, `@host`, `@name`, `@typedef`, and `@template`
+    (TypeScript/Closure only); `@param` (`@arg`, `@argument`) and `@property`
     (`@prop`) also fall into this category, but while this rule will check
     their namepath validity, we leave the requiring of the name portion
     to the rules `require-param-name` and `require-property-name`,
     respectively.
 1. Name(path)-defining tags (which may have value without namepath or their
-    namepath can be expressed elsewhere on the block): `@event`, `@callback`,
+    namepath can be expressed elsewhere on the block):
     `@class`, `@constructor`, `@constant`, `@const`, `@function`, `@func`,
     `@method`, `@interface` (TypeScript tag only), `@member`, `@var`,
     `@mixin`, `@namespace`, `@module` (module paths are not planned for
@@ -70,16 +70,22 @@ text after the tag name) checked:
    allow `#`, `.`, or `~` at the end (which is not allowed at the end of
    normal paths).
 
+If you define your own tags, `settings.jsdoc.structuredTags` will allow
+these custom tags to be checked, with the name portion of tags checked for
+valid namepaths (based on the tag's `name` value), their type portions checked
+for valid types (based on the tag's `type` value), and either portion checked
+for presence (based on `false` `name` or `type` values or their `required`
+value). See the setting for more details.
+
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow
   empty name paths with namepath groups 2 and 4 (these might often be
   expected to have an accompanying name path, though they have some
   indicative value without one; these may also allow names to be defined
-  in another manner elsewhere in the block)
-- `checkSeesForNamepaths` (default: false) - Set this to `true` to insist
-  that `@see` only use name paths (the tag is normally permitted to
-  allow other text)
+  in another manner elsewhere in the block); you can use
+  `settings.jsdoc.structuredTags` with the `required` key set to "name" if you
+  wish to require name paths on a tag-by-tag basis.
 
 |||
 |---|---|
@@ -87,7 +93,7 @@ text after the tag name) checked:
 |Tags|For name only unless otherwise stated: `alias`, `augments`, `borrows`, `callback`, `class` (for name and type), `constant` (for name and type), `enum` (for type), `event`, `external`, `fires`, `function`, `implements` (for type), `interface`, `lends`, `listens`, `member` (for name and type),  `memberof`, `memberof!`, `mixes`, `mixin`, `modifies`, `module` (for name and type), `name`, `namespace` (for name and type), `param` (for name and type), `property` (for name and type), `returns` (for type), `see` (optionally for name), `this`, `throws` (for type), `type` (for type), `typedef` (for name and type), `yields` (for type)|
 |Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|
-|Options|`allowEmptyNamepaths`, `checkSeesForNamepaths`|
-|Settings|`mode`|
+|Options|`allowEmptyNamepaths`|
+|Settings|`mode`, `structuredTags`|
 
 <!-- assertions validTypes -->

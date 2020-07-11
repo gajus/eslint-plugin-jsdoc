@@ -166,6 +166,9 @@ export default {
   create (context) {
     const sourceCode = context.getSourceCode();
     const settings = getSettings(context);
+    if (!settings) {
+      return {};
+    }
 
     const {
       require: requireOption,
