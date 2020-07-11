@@ -500,7 +500,6 @@ const tagsWithMandatoryTypeOrNamePosition = new Set([
   'this',
   'typedef',
 
-  // "name"
   'external', 'host',
 
   // "OtherObjectPath"
