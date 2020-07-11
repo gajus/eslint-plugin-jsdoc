@@ -8450,11 +8450,17 @@ A value indicating whether getters should be checked. Defaults to `false`.
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-19-enablefixer-2"></a>
+##### <code>enableFixer</code>
+
+A boolean on whether to enable the fixer (which adds an empty jsdoc block).
+Defaults to `true`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
-|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`|
 
 The following patterns are considered problems:
 
@@ -10235,7 +10241,7 @@ function signature, it may appear that there is an actual property named
 
 An options object accepts the following optional properties:
 
-<a name="eslint-plugin-jsdoc-rules-require-param-options-23-enablefixer-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-enablefixer-3"></a>
 ##### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.

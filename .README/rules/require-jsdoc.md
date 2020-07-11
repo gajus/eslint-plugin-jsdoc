@@ -73,10 +73,15 @@ A value indicating whether getters should be checked. Defaults to `false`.
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
+##### `enableFixer`
+
+A boolean on whether to enable the fixer (which adds an empty jsdoc block).
+Defaults to `true`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
-|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`|
 
 <!-- assertions requireJsdoc -->
