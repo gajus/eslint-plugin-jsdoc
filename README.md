@@ -13515,8 +13515,9 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 1. Name(path)-pointing tags (which may have value without namepath or their
     namepath can be expressed elsewhere on the block): `@listens`, `@fires`,
     `@emits`, and `@modifies` (an undocumented jsdoc tag)
-1. Name(path)-pointing tags which may have free text or a namepath:
-    `@throws`, `@see`
+1. Name(path)-pointing tags which may have free text or...:
+    1. a type (`@throws`)
+    1. a namepath (`@see`)
 1. Name(path)-pointing tags (multiple names in one): `@borrows`
 
 ...with the following applying to the above sets:
@@ -13539,7 +13540,7 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
 <a name="eslint-plugin-jsdoc-rules-valid-types-options-28"></a>
 #### Options
 
-- `allowEmptyNamepaths` (default: true) - Set to `false` to disallow
+- `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow
   empty name paths with groups 2 and 4 (these might often be expected to have
   an accompanying name path, though they have some indicative value without
   one; these may also allow names to be defined in another manner elsewhere
