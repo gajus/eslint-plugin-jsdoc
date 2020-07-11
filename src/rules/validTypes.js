@@ -80,8 +80,9 @@ export default iterateJsdoc(({
       utils.tagMightHaveNamePosition(tag.tag)
     ) && Boolean(tag.name) && !(tag.tag === 'see' && !checkSeesForNamepaths);
 
-    // Don't handle `param` here though it does require name as handled by
-    //  `require-param-name` and `require-property-name`
+    // Don't handle `@param` here though it does require name as handled by
+    //  `require-param-name` (`@property` would similarly seem to require one,
+    //  but is handled by `require-property-name`)
     const mustHaveNameOrNamepathPosition = ![
       'param', 'arg', 'argument',
       'property', 'prop',

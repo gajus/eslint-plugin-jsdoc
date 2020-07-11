@@ -13499,7 +13499,12 @@ determine whether to use jsdoctypeparser's "permissive" mode or the stricter
 
 Also impacts behaviors on namepath (or event)-defining and pointing tags:
 
-1. Name(path)-defining tags requiring namepath: `@external`, `@host`, `@name`, `@typedef`
+1. Name(path)-defining tags requiring namepath: `@external`, `@host`,
+    `@name`, `@typedef`; `@param` (`@arg`, `@argument`) and `@property`
+    (`@prop`) also fall into this category, but while this rule will check
+    their namepath validity, we leave the requiring of the name portion
+    to the rules `require-param-name` and `require-property-name`,
+    respectively.
 1. Name(path)-defining tags (which may have value without namepath or their
     namepath can be expressed elsewhere on the block): `@event`, `@callback`,
     `@class`, `@constructor`, `@constant`, `@const`,
@@ -13521,7 +13526,8 @@ Also impacts behaviors on namepath (or event)-defining and pointing tags:
   `false` as these tags might have some indicative value without a path
   or may allow a name expressed elsewhere on the block (but sets 1 and 3 will
   always fail if empty)
-- For the special case of set 6, i.e., `@borrows <that namepath> as <this namepath>`,
+- For the special case of set 6, i.e.,
+  `@borrows <that namepath> as <this namepath>`,
   check that both namepaths are present and valid and ensure there is an `as `
   between them. In the case of `<this namepath>`, it can be preceded by
   one of the name path operators, `#`, `.`, or `~`.
