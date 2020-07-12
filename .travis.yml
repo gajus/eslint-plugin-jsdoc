@@ -1,8 +1,11 @@
+os: linux
+dist: xenial
 language: node_js
 node_js:
   - 14
   - 12
   - 10
+
 before_install:
   - npm config set depth 0
 before_script: >
@@ -21,10 +24,10 @@ script:
   - 'if [ -n "${LINT-}" ]; then npm run lint; fi'
   - npm run build
 env:
-  matrix:
+  jobs:
     - ESLINT=7
     - ESLINT=6
-matrix:
+jobs:
   fast_finish: true
   include:
     - node_js: 'lts/*'
