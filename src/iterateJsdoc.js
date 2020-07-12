@@ -272,7 +272,7 @@ const getUtils = (
   };
 
   utils.tagMustHaveEitherTypeOrNamePosition = (tagName) => {
-    return jsdocUtils.tagMustHaveEitherTypeOrNamePosition(tagName);
+    return jsdocUtils.tagMustHaveEitherTypeOrNamePosition(mode, tagName);
   };
 
   utils.tagMightHaveEitherTypeOrNamePosition = (tagName) => {

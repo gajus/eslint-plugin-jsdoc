@@ -324,9 +324,13 @@ const tagsWithMandatoryTypePosition = new Set([
   'type',
 ]);
 
-const tagsWithMandatoryTypePositionClosure = new Set([
+const tagsWithMandatoryTypePositionTypeScript = new Set([
   ...tagsWithMandatoryTypePosition,
   'this',
+]);
+
+const tagsWithMandatoryTypePositionClosure = new Set([
+  ...tagsWithMandatoryTypePositionTypeScript,
   'define',
 ]);
 
@@ -445,7 +449,6 @@ const tagsWithOptionalNamePositionBase = new Set([
   'alias',
   'augments', 'extends',
   'lends',
-  'this',
 
   // Signature seems to require a "namepath" (and no counter-examples),
   //  though it allows an incomplete namepath ending with connecting symbol
@@ -461,6 +464,9 @@ const tagsWithOptionalNamePositionBase = new Set([
 // The following do not seem to allow curly brackets in their doc
 //  signature or examples (besides `modifies` and `param`)
 const tagsWithOptionalNamePosition = new Set([
+  // Signature seems to require a "namepath" (and no counter-examples)
+  // Not used with namepath in Closure/TypeScript, however
+  'this',
   ...namepathDefiningTags,
   ...tagsWithOptionalNamePositionBase,
 ]);
@@ -500,7 +506,7 @@ const tagsWithMandatoryNamePosition = new Set([
   'typedef',
 ]);
 
-const tagsWithMandatoryTypeOrNamePosition = new Set([
+const tagsWithMandatoryTypeOrNamePositionBase = new Set([
   // "namepath"
   'alias',
   'augments', 'extends',
@@ -508,13 +514,26 @@ const tagsWithMandatoryTypeOrNamePosition = new Set([
   'lends',
   'memberof', 'memberof!',
   'name',
-  'this',
   'typedef',
 
   'external', 'host',
 
   // "OtherObjectPath"
   'mixes',
+]);
+
+const tagsWithMandatoryTypeOrNamePosition = new Set([
+  // namepath
+  'this',
+  ...tagsWithMandatoryTypeOrNamePositionBase,
+]);
+
+const tagsWithMandatoryTypeOrNamePositionTypescript = new Set([
+  ...tagsWithMandatoryTypeOrNamePositionBase,
+]);
+
+const tagsWithMandatoryTypeOrNamePositionClosure = new Set([
+  ...tagsWithMandatoryTypeOrNamePositionBase,
 ]);
 
 const isNamepathDefiningTag = (mode, tagName) => {
@@ -533,6 +552,10 @@ const tagMightHaveTypePosition = (mode, tag) => {
     return tagsWithMandatoryTypePositionClosure.has(tag) ||
       tagsWithOptionalTypePositionClosure.has(tag);
   }
+  if (mode === 'typescript') {
+    return tagsWithMandatoryTypePositionTypeScript.has(tag) ||
+      tagsWithOptionalTypePositionTypescript.has(tag);
+  }
 
   return tagsWithMandatoryTypePosition.has(tag) ||
     tagsWithOptionalTypePosition.has(tag);
@@ -541,6 +564,9 @@ const tagMightHaveTypePosition = (mode, tag) => {
 const tagMustHaveTypePosition = (mode, tag) => {
   if (mode === 'closure') {
     return tagsWithMandatoryTypePositionClosure.has(tag);
+  }
+  if (mode === 'typescript') {
+    return tagsWithMandatoryTypePositionTypeScript.has(tag);
   }
 
   return tagsWithMandatoryTypePosition.has(tag);
@@ -565,7 +591,14 @@ const tagMightHaveEitherTypeOrNamePosition = (mode, tag) => {
   return tagMightHaveTypePosition(mode, tag) || tagMightHaveNamePosition(mode, tag);
 };
 
-const tagMustHaveEitherTypeOrNamePosition = (tag) => {
+const tagMustHaveEitherTypeOrNamePosition = (mode, tag) => {
+  if (mode === 'closure') {
+    return tagsWithMandatoryTypeOrNamePositionClosure.has(tag);
+  }
+  if (mode === 'typescript') {
+    return tagsWithMandatoryTypeOrNamePositionTypescript.has(tag);
+  }
+
   return tagsWithMandatoryTypeOrNamePosition.has(tag);
 };
 
