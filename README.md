@@ -6384,6 +6384,9 @@ function quux () {
 }
 
 /**
+ * @typedef {object} BaseObject
+ */
+/**
  * Run callback when hooked method is called.
  *
  * @template {BaseObject} T

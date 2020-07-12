@@ -368,8 +368,13 @@ const tagsWithOptionalTypePosition = new Set([
   'modifies',
 ]);
 
-const tagsWithOptionalTypePositionClosure = new Set([
+const tagsWithOptionalTypePositionTypescript = new Set([
+  'template',
   ...tagsWithOptionalTypePosition,
+]);
+
+const tagsWithOptionalTypePositionClosure = new Set([
+  ...tagsWithOptionalTypePositionTypescript,
 
   'export',
 
@@ -386,6 +391,10 @@ const tagsWithOptionalTypePositionClosure = new Set([
 
 // None of these show as having curly brackets for their name/namepath
 const closureNamepathDefiningTags = new Set([
+  // Though defines in a sense, it is not parseable in the same way
+  //  for template (e.g., allowing commas)
+  // 'template',
+
   // These appear to require a "name" in their signature, albeit these
   //  are somewhat different from other "name"'s (including as described
   // at https://jsdoc.app/about-namepaths.html )
@@ -457,11 +466,13 @@ const tagsWithOptionalNamePosition = new Set([
 ]);
 
 const typescriptTagsWithOptionalNamePosition = new Set([
+  'template',
   ...typescriptNamepathDefiningTags,
   ...tagsWithOptionalNamePositionBase,
 ]);
 
 const closureTagsWithOptionalNamePosition = new Set([
+  'template',
   ...closureNamepathDefiningTags,
   ...tagsWithOptionalNamePositionBase,
 ]);
