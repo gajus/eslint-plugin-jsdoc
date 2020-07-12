@@ -7,27 +7,50 @@ using [`settings.jsdoc.mode`](#eslint-plugin-jsdoc-settings-mode) to
 determine whether to use jsdoctypeparser's "permissive" mode or the stricter
 "jsdoc", "typescript", "closure" modes.
 
-Also impacts behaviors on namepath (or event)-defining and pointing tags:
+The following tags have their "type" portions (the segment within brackets)
+checked (though those portions may sometimes be confined to namepaths,
+e.g., `@modifies`):
+
+1. Tags with required types: `@type`, `@implements`
+1. Tags with required types in Closure or TypeScript: `@this`,
+    `@define` (Closure only)
+1. Tags with optional types: `@enum`, `@member` (`@var`), `@typedef`,
+  `@augments` (or `@extends`), `@class` (or `@constructor`), `@constant`
+  (or `@const`), `@module` (module paths are not planned for TypeScript),
+  `@namespace`, `@throws`, `@exception`, `@yields` (or `@yield`),
+  `@modifies` (undocumented jsdoc); `@param` (`@arg`, `@argument`),
+  `@property` (`@prop`), and `@returns` (`@return`) also fall into this
+  category, but while this rule will check their type validity, we leave
+  the requiring of the type portion to the rules `require-param-type`,
+  `require-property-type`, and `require-returns-type`, respectively.
+1. Tags with types that are available optionally in Closure: `@export`,
+    `@package`, `@private`, `@protected`, `@public`, `@static`;
+    `@template` (TypeScript also)
+1. Tags with optional types that may take free text instead: `@throws`
+
+The following tags have their name/namepath portion (the non-whitespace
+text after the tag name) checked:
 
 1. Name(path)-defining tags requiring namepath: `@external`, `@host`,
-    `@name`, `@typedef`; `@param` (`@arg`, `@argument`) and `@property`
+    `@name`, `@typedef`, and `@template` (TypeScript/Closure only);
+    `@param` (`@arg`, `@argument`) and `@property`
     (`@prop`) also fall into this category, but while this rule will check
     their namepath validity, we leave the requiring of the name portion
     to the rules `require-param-name` and `require-property-name`,
     respectively.
 1. Name(path)-defining tags (which may have value without namepath or their
     namepath can be expressed elsewhere on the block): `@event`, `@callback`,
-    `@class`, `@constructor`, `@constant`, `@const`,
-    `@function`, `@func`, `@method`, `@interface`, `@member`, `@var`,
-    `@mixin`, `@namespace`, `@module`
+    `@class`, `@constructor`, `@constant`, `@const`, `@function`, `@func`,
+    `@method`, `@interface` (TypeScript tag only), `@member`, `@var`,
+    `@mixin`, `@namespace`, `@module` (module paths are not planned for
+    TypeScript)
 1. Name(path)-pointing tags requiring namepath: `@alias`, `@augments`,
     `@extends`, `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@this`
+    (jsdoc only)
 1. Name(path)-pointing tags (which may have value without namepath or their
     namepath can be expressed elsewhere on the block): `@listens`, `@fires`,
-    `@emits`, and `@modifies` (an undocumented jsdoc tag)
-1. Name(path)-pointing tags which may have free text or...:
-    1. a type (`@throws`)
-    1. a namepath (`@see`)
+    `@emits`.
+1. Name(path)-pointing tags which may have free text or a namepath: `@see`
 1. Name(path)-pointing tags (multiple names in one): `@borrows`
 
 ...with the following applying to the above sets:
