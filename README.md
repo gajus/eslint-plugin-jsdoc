@@ -7276,6 +7276,24 @@ function quux () {
 // Message: Missing JSDoc block description.
 
 /**
+ * @desc Not a blank description
+ */
+function quux () {
+
+}
+// Options: [{"descriptionStyle":"body"}]
+// Message: Remove the @desc tag to leave a plain block description or add additional description text above the @desc line.
+
+/**
+ * @description Not a blank description
+ */
+function quux () {
+
+}
+// Options: [{"descriptionStyle":"body"}]
+// Message: Remove the @description tag to leave a plain block description or add additional description text above the @description line.
+
+/**
  *
  */
 class quux {

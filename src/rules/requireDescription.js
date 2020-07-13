@@ -40,7 +40,13 @@ export default iterateJsdoc(({
     }
 
     if (descriptionStyle === 'body') {
-      report('Missing JSDoc block description.');
+      const descTags = utils.getPresentTags(['desc', 'description']);
+      if (descTags.length) {
+        const [{tag: tagName}] = descTags;
+        report(`Remove the @${tagName} tag to leave a plain block description or add additional description text above the @${tagName} line.`);
+      } else {
+        report('Missing JSDoc block description.');
+      }
 
       return;
     }
