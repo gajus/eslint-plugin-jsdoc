@@ -2,7 +2,8 @@
 
 Reports invalid types.
 
-By default, ensures that the casing of native types is the same as in this list:
+By default, ensures that the casing of native types is the same as in this
+list:
 
 ```
 undefined
@@ -69,11 +70,22 @@ the `valid-types` rule to report parsing errors.
 
 #### Why not capital case everything?
 
-Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`.
+Why are `boolean`, `number` and `string` exempt from starting with a capital
+letter? Let's take `string` as an example. In Javascript, everything is an
+object. The string Object has prototypes for string functions such as
+`.toUpperCase()`.
 
-Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do.
+Fortunately we don't have to write `new String()` everywhere in our code.
+Javascript will automatically wrap string primitives into string Objects when
+we're applying a string function to a string primitive. This way the memory
+footprint is a tiny little bit smaller, and the
+[GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has
+less work to do.
 
-So in a sense, there two types of strings in Javascript; `{string}` literals, also called primitives and `{String}` Objects. We use the primitives because it's easier to write and uses less memory. `{String}` and `{string}` are technically both valid, but they are not the same.
+So in a sense, there two types of strings in Javascript; `{string}` literals,
+also called primitives and `{String}` Objects. We use the primitives because
+it's easier to write and uses less memory. `{String}` and `{string}` are
+technically both valid, but they are not the same.
 
 ```js
 new String('lard') // String {0: "l", 1: "a", 2: "r", 3: "d", length: 4}
@@ -81,16 +93,21 @@ new String('lard') // String {0: "l", 1: "a", 2: "r", 3: "d", length: 4}
 new String('lard') === 'lard' // false
 ```
 
-To make things more confusing, there are also object literals and object Objects. But object literals are still static Objects and object Objects are instantiated Objects. So an object primitive is still an object Object.
+To make things more confusing, there are also object literals and object
+Objects. But object literals are still static Objects and object Objects are
+instantiated Objects. So an object primitive is still an object Object.
 
 However, `Object.create(null)` objects are not `instanceof Object`, however, so
 in the case of this Object we lower-case to indicate possible support for
 these objects.
 
-Basically, for primitives, we want to define the type as a primitive, because that's what we use in 99.9% of cases. For everything else, we use the type rather than the primitive. Otherwise it would all just be `{object}`.
+Basically, for primitives, we want to define the type as a primitive, because
+that's what we use in 99.9% of cases. For everything else, we use the type
+rather than the primitive. Otherwise it would all just be `{object}`.
 
-In short: It's not about consistency, rather about the 99.9% use case. (And some
-functions might not even support the objects if they are checking for identity.)
+In short: It's not about consistency, rather about the 99.9% use case. (And
+some functions might not even support the objects if they are checking for
+identity.)
 
 type name | `typeof` | check-types | testcase
 --|--|--|--

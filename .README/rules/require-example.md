@@ -3,7 +3,8 @@
 Requires that all functions have examples.
 
 * All functions must have one or more `@example` tags.
-* Every example tag must have a non-empty description that explains the method's usage.
+* Every example tag must have a non-empty description that explains the
+  method's usage.
 
 #### Options
 
@@ -20,16 +21,17 @@ exemption of the rule.
 ##### `contexts`
 
 Set this to an array of strings representing the AST context
-where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the default contexts (see below). Set to `"any"` if you want
-the rule to apply to any jsdoc block throughout your files.
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6
+classes). Overrides the default contexts (see below). Set to `"any"` if you
+want the rule to apply to any jsdoc block throughout your files.
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 ##### `checkConstructors`
 
-A value indicating whether `constructor`s should be checked. Defaults to `true`.
+A value indicating whether `constructor`s should be checked.
+Defaults to `true`.
 
 ##### `checkGetters`
 

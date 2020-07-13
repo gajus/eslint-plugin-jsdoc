@@ -73,10 +73,10 @@ text after the tag name) checked:
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow
-  empty name paths with groups 2 and 4 (these might often be expected to have
-  an accompanying name path, though they have some indicative value without
-  one; these may also allow names to be defined in another manner elsewhere
-  in the block)
+  empty name paths with namepath groups 2 and 4 (these might often be
+  expected to have an accompanying name path, though they have some
+  indicative value without one; these may also allow names to be defined
+  in another manner elsewhere in the block)
 - `checkSeesForNamepaths` (default: false) - Set this to `true` to insist
   that `@see` only use name paths (the tag is normally permitted to
   allow other text)

@@ -1,8 +1,9 @@
 ### `check-syntax`
 
-Reports against syntax not encouraged for the mode (e.g., Google Closure Compiler
-in "jsdoc" or "typescript" mode). Note that this rule will not chekc for types
-that are wholly invalid for a given mode, as that is covered by `valid-types`.
+Reports against syntax not encouraged for the mode (e.g., Google Closure
+Compiler in "jsdoc" or "typescript" mode). Note that this rule will not check
+for types that are wholly invalid for a given mode, as that is covered by
+`valid-types`.
 
 Currently checks against:
 

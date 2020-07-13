@@ -1,7 +1,7 @@
 ### `require-description-complete-sentence`
 
-Requires that block description, explicit `@description`, and `@param`/`@returns`
-tag descriptions are written in complete sentences, i.e.,
+Requires that block description, explicit `@description`, and
+`@param`/`@returns` tag descriptions are written in complete sentences, i.e.,
 
 * Description must start with an uppercase alphabetical character.
 * Paragraphs must start with an uppercase alphabetical character.
@@ -23,7 +23,9 @@ add them within this option.
 
 ```js
 {
-  'jsdoc/require-description-complete-sentence': ['error', {tags: ['see', 'copyright']}]
+  'jsdoc/require-description-complete-sentence': ['error', {
+    tags: ['see', 'copyright']
+  }]
 }
 ```
 

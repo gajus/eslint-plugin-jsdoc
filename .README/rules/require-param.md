@@ -95,7 +95,9 @@ And one can have the count begin at another number (e.g., `1`) by changing
 
 ##### Rest Element (`RestElement`) insertions
 
-The fixer will automatically report/insert [jsdoc repeatable parameters](https://jsdoc.app/tags-param.html#multiple-types-and-repeatable-parameters) if missing.
+The fixer will automatically report/insert
+[jsdoc repeatable parameters](https://jsdoc.app/tags-param.html#multiple-types-and-repeatable-parameters)
+if missing.
 
 ```js
 /**
@@ -169,7 +171,8 @@ function quux ({num, ...extra}) {
 ```
 
 You may wish to manually note in your jsdoc for `extra` that this is a
-rest property, however, as jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
+rest property, however, as jsdoc
+[does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
 to currently support syntax or output to distinguish rest properties from
 other properties, so in looking at the docs alone without looking at the
 function signature, it may appear that there is an actual property named
@@ -256,7 +259,8 @@ Defaults to `0`.
 
 An array of root names to use in the fixer when roots are missing. Defaults
 to `['root']`. Note that only when all items in the array besides the last
-are exhausted will auto-incrementing occur. So, with `unnamedRootBase: ['arg', 'config']`, the following:
+are exhausted will auto-incrementing occur. So, with
+`unnamedRootBase: ['arg', 'config']`, the following:
 
 ```js
 function quux ({foo}, [bar], {baz}) {
@@ -323,12 +327,13 @@ contexts (see below). May be useful for adding such as
 `TSMethodSignature` in TypeScript or restricting the contexts
 which are checked.
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 ##### `checkConstructors`
 
-A value indicating whether `constructor`s should be checked. Defaults to `true`.
+A value indicating whether `constructor`s should be checked. Defaults to
+`true`.
 
 ##### `checkGetters`
 

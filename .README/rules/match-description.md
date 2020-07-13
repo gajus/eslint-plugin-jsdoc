@@ -81,18 +81,18 @@ default `match-description`, you may use `mainDescription`:
 ```
 
 There is no need to add `mainDescription: true`, as by default, the main
-function (and only the main function) is linted, though you may disable checking
-it by setting it to `false`.
+function (and only the main function) is linted, though you may disable
+checking it by setting it to `false`.
 
 ##### `contexts`
 
 Set this to an array of strings representing the AST context
-where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the default contexts (see below). Set to `"any"` if you want
-the rule to apply to any jsdoc block throughout your files.
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6
+classes). Overrides the default contexts (see below). Set to `"any"` if you
+want the rule to apply to any jsdoc block throughout your files.
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 |||
 |---|---|

@@ -61,9 +61,9 @@ function/method names are sufficient for themselves as documentation).
 
 ##### `checkConstructors`
 
-A value indicating whether `constructor`s should be checked. Defaults to `true`.
-When `true`, `exemptEmptyConstructors` may still avoid reporting when no
-parameters or return values are found.
+A value indicating whether `constructor`s should be checked. Defaults to
+`true`. When `true`, `exemptEmptyConstructors` may still avoid reporting when
+no parameters or return values are found.
 
 ##### `checkGetters`
 

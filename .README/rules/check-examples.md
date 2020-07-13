@@ -123,8 +123,8 @@ decreasing precedence:
   use extra lines within examples just for easier illustration
   purposes.
 * `no-undef` - Many variables in examples will be `undefined`.
-* `no-unused-vars` - It is common to define variables for clarity without always
-  using them within examples.
+* `no-unused-vars` - It is common to define variables for clarity without
+  always using them within examples.
 * `padded-blocks` - It can generally look nicer to pad a little even if one's
   code follows more stringency as far as block padding.
 * `import/no-unresolved` - One wouldn't generally expect example paths to

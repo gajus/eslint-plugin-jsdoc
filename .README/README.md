@@ -12,13 +12,15 @@ JSDoc linting rules for ESLint.
 
 ## Installation
 
-Install [ESLint](https://www.github.com/eslint/eslint) either locally or globally.
+Install [ESLint](https://www.github.com/eslint/eslint) either locally or
+globally.
 
 ```sh
 npm install --save-dev eslint
 ```
 
-If you have installed `ESLint` globally, you have to install JSDoc plugin globally too. Otherwise, install it locally.
+If you have installed `ESLint` globally, you have to install JSDoc plugin
+globally too. Otherwise, install it locally.
 
 ```sh
 npm install --save-dev eslint-plugin-jsdoc
@@ -134,10 +136,11 @@ how many line breaks to add when a block is missing.
 - `settings.jsdoc.mode` - Set to `typescript`, `closure`, or `jsdoc` (the
   default unless the `@typescript-eslint` parser is in use in which case
   `typescript` will be the default).
-  Note that if you do not wish to use separate `.eslintrc.*` files for a project
-  containing both JavaScript and TypeScript, you can also use [`overrides`](https://eslint.org/docs/user-guide/configuring). You may also set to `"permissive"` to
-  try to be as accommodating to any of the styles, but this is not recommended.
-  Currently is used for the following:
+  Note that if you do not wish to use separate `.eslintrc.*` files for a
+  project containing both JavaScript and TypeScript, you can also use
+  [`overrides`](https://eslint.org/docs/user-guide/configuring). You may also
+  set to `"permissive"` to try to be as accommodating to any of the styles,
+  but this is not recommended. Currently is used for the following:
   - `check-tag-names`: Determine valid tags and aliases
   - `no-undefined-types`: Only check `@template` for types in "closure" and
     "typescript" modes
@@ -159,7 +162,9 @@ how many line breaks to add when a block is missing.
 
 ### Alias Preference
 
-Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.
+Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for
+a JSDoc tag. The format of the configuration is:
+`<primary tag name>: <preferred alias name>`, e.g.
 
 ```json
 {
@@ -175,11 +180,15 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
-Note: ESLint does not allow settings to have keys which conflict with `Object.prototype` e.g. `'constructor'`. To work around this, you can use the key `'tag constructor'`.
+Note: ESLint does not allow settings to have keys which conflict with
+`Object.prototype` e.g. `'constructor'`. To work around this, you can use the
+key `'tag constructor'`.
 
 One may also use an object with a `message` and `replacement`.
 
-The following will report the message `@extends is to be used over @augments as it is more evocative of classes than @augments` upon encountering `@augments`.
+The following will report the message
+`@extends is to be used over @augments as it is more evocative of classes than @augments`
+upon encountering `@augments`.
 
 ```json
 {
@@ -197,7 +206,8 @@ The following will report the message `@extends is to be used over @augments as 
 }
 ```
 
-If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the tag to `false`:
+If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the
+tag to `false`:
 
 ```json
 {
@@ -215,7 +225,8 @@ If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the tag
 A project wishing to ensure no blocks are left excluded from entering the
 documentation, might wish to prevent the `@ignore` tag in the above manner.
 
-Or one may set the targeted tag to an object with a custom `message`, but without a `replacement` property:
+Or one may set the targeted tag to an object with a custom `message`, but
+without a `replacement` property:
 
 ```json
 {
@@ -232,8 +243,9 @@ Or one may set the targeted tag to an object with a custom `message`, but withou
 }
 ```
 
-Note that the preferred tags indicated in the `settings.jsdoc.tagNamePreference`
-map will be assumed to be defined by `check-tag-names`.
+Note that the preferred tags indicated in the
+`settings.jsdoc.tagNamePreference` map will be assumed to be defined by
+`check-tag-names`.
 
 See `check-tag-names` for how that fact can be used to set an alias to itself
 to allow both the alias and the default (since aliases are otherwise not
@@ -285,7 +297,8 @@ for any of the "require" rules (i.e., `require-param`, `require-description`,
 `require-example`, or `require-returns`).
 
 * `settings.jsdoc.overrideReplacesDocs` (`@override`) - Defaults to `true`
-* `settings.jsdoc.augmentsExtendsReplacesDocs` (`@augments` or its alias `@extends`) - Defaults to `false`.
+* `settings.jsdoc.augmentsExtendsReplacesDocs` (`@augments` or its alias
+    `@extends`) - Defaults to `false`.
 * `settings.jsdoc.implementsReplacesDocs` (`@implements`) - Defaults to `false`
 
 The format of the configuration is as follows:
@@ -353,8 +366,9 @@ The format of the configuration is as follows:
         can replace)
       - `false` (for forbidding the type)
 
-Note that the preferred types indicated as targets in `settings.jsdoc.preferredTypes`
-map will be assumed to be defined by `no-undefined-types`.
+Note that the preferred types indicated as targets in
+`settings.jsdoc.preferredTypes` map will be assumed to be defined by
+`no-undefined-types`.
 
 See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
 how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
@@ -409,8 +423,11 @@ Tip: If you want to more deeply understand not just the resulting AST tree
 structures for any given code but also the syntax for esquery selectors so
 that you can, for example, find only those nodes with a child of a certain
 type, you can set the "Transform" feature to ESLint and test out
-esquery selectors in place of the selector expression (e.g., replace `'VariableDeclaration > VariableDeclarator > Identifier[name="someVar"]'` as
-we have [here](https://astexplorer.net/#/gist/71a93130c19599d6f197bddb29c13a59/latest)) to the selector you wish so as to get messages reported in the bottom right
+esquery selectors in place of the selector expression (e.g., replace
+  `'VariableDeclaration > VariableDeclarator > Identifier[name="someVar"]'` as
+we have
+[here](https://astexplorer.net/#/gist/71a93130c19599d6f197bddb29c13a59/latest))
+to the selector you wish so as to get messages reported in the bottom right
 pane which match your [esquery](https://github.com/estools/esquery/#readme)
 selector).
 

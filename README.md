@@ -64,13 +64,15 @@ JSDoc linting rules for ESLint.
 <a name="eslint-plugin-jsdoc-installation"></a>
 ## Installation
 
-Install [ESLint](https://www.github.com/eslint/eslint) either locally or globally.
+Install [ESLint](https://www.github.com/eslint/eslint) either locally or
+globally.
 
 ```sh
 npm install --save-dev eslint
 ```
 
-If you have installed `ESLint` globally, you have to install JSDoc plugin globally too. Otherwise, install it locally.
+If you have installed `ESLint` globally, you have to install JSDoc plugin
+globally too. Otherwise, install it locally.
 
 ```sh
 npm install --save-dev eslint-plugin-jsdoc
@@ -192,10 +194,11 @@ how many line breaks to add when a block is missing.
 - `settings.jsdoc.mode` - Set to `typescript`, `closure`, or `jsdoc` (the
   default unless the `@typescript-eslint` parser is in use in which case
   `typescript` will be the default).
-  Note that if you do not wish to use separate `.eslintrc.*` files for a project
-  containing both JavaScript and TypeScript, you can also use [`overrides`](https://eslint.org/docs/user-guide/configuring). You may also set to `"permissive"` to
-  try to be as accommodating to any of the styles, but this is not recommended.
-  Currently is used for the following:
+  Note that if you do not wish to use separate `.eslintrc.*` files for a
+  project containing both JavaScript and TypeScript, you can also use
+  [`overrides`](https://eslint.org/docs/user-guide/configuring). You may also
+  set to `"permissive"` to try to be as accommodating to any of the styles,
+  but this is not recommended. Currently is used for the following:
   - `check-tag-names`: Determine valid tags and aliases
   - `no-undefined-types`: Only check `@template` for types in "closure" and
     "typescript" modes
@@ -218,7 +221,9 @@ how many line breaks to add when a block is missing.
 <a name="eslint-plugin-jsdoc-settings-alias-preference"></a>
 ### Alias Preference
 
-Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a JSDoc tag. The format of the configuration is: `<primary tag name>: <preferred alias name>`, e.g.
+Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for
+a JSDoc tag. The format of the configuration is:
+`<primary tag name>: <preferred alias name>`, e.g.
 
 ```json
 {
@@ -234,11 +239,15 @@ Use `settings.jsdoc.tagNamePreference` to configure a preferred alias name for a
 }
 ```
 
-Note: ESLint does not allow settings to have keys which conflict with `Object.prototype` e.g. `'constructor'`. To work around this, you can use the key `'tag constructor'`.
+Note: ESLint does not allow settings to have keys which conflict with
+`Object.prototype` e.g. `'constructor'`. To work around this, you can use the
+key `'tag constructor'`.
 
 One may also use an object with a `message` and `replacement`.
 
-The following will report the message `@extends is to be used over @augments as it is more evocative of classes than @augments` upon encountering `@augments`.
+The following will report the message
+`@extends is to be used over @augments as it is more evocative of classes than @augments`
+upon encountering `@augments`.
 
 ```json
 {
@@ -256,7 +265,8 @@ The following will report the message `@extends is to be used over @augments as 
 }
 ```
 
-If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the tag to `false`:
+If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the
+tag to `false`:
 
 ```json
 {
@@ -274,7 +284,8 @@ If one wishes to reject a normally valid tag, e.g., `@todo`, one may set the tag
 A project wishing to ensure no blocks are left excluded from entering the
 documentation, might wish to prevent the `@ignore` tag in the above manner.
 
-Or one may set the targeted tag to an object with a custom `message`, but without a `replacement` property:
+Or one may set the targeted tag to an object with a custom `message`, but
+without a `replacement` property:
 
 ```json
 {
@@ -291,8 +302,9 @@ Or one may set the targeted tag to an object with a custom `message`, but withou
 }
 ```
 
-Note that the preferred tags indicated in the `settings.jsdoc.tagNamePreference`
-map will be assumed to be defined by `check-tag-names`.
+Note that the preferred tags indicated in the
+`settings.jsdoc.tagNamePreference` map will be assumed to be defined by
+`check-tag-names`.
 
 See `check-tag-names` for how that fact can be used to set an alias to itself
 to allow both the alias and the default (since aliases are otherwise not
@@ -346,7 +358,8 @@ for any of the "require" rules (i.e., `require-param`, `require-description`,
 `require-example`, or `require-returns`).
 
 * `settings.jsdoc.overrideReplacesDocs` (`@override`) - Defaults to `true`
-* `settings.jsdoc.augmentsExtendsReplacesDocs` (`@augments` or its alias `@extends`) - Defaults to `false`.
+* `settings.jsdoc.augmentsExtendsReplacesDocs` (`@augments` or its alias
+    `@extends`) - Defaults to `false`.
 * `settings.jsdoc.implementsReplacesDocs` (`@implements`) - Defaults to `false`
 
 The format of the configuration is as follows:
@@ -415,8 +428,9 @@ The format of the configuration is as follows:
         can replace)
       - `false` (for forbidding the type)
 
-Note that the preferred types indicated as targets in `settings.jsdoc.preferredTypes`
-map will be assumed to be defined by `no-undefined-types`.
+Note that the preferred types indicated as targets in
+`settings.jsdoc.preferredTypes` map will be assumed to be defined by
+`no-undefined-types`.
 
 See the option of `check-types`, `unifyParentAndChildTypeChecks`, for
 how the keys of `preferredTypes` may have `<>` or `.<>` (or just `.`)
@@ -473,8 +487,11 @@ Tip: If you want to more deeply understand not just the resulting AST tree
 structures for any given code but also the syntax for esquery selectors so
 that you can, for example, find only those nodes with a child of a certain
 type, you can set the "Transform" feature to ESLint and test out
-esquery selectors in place of the selector expression (e.g., replace `'VariableDeclaration > VariableDeclarator > Identifier[name="someVar"]'` as
-we have [here](https://astexplorer.net/#/gist/71a93130c19599d6f197bddb29c13a59/latest)) to the selector you wish so as to get messages reported in the bottom right
+esquery selectors in place of the selector expression (e.g., replace
+  `'VariableDeclaration > VariableDeclarator > Identifier[name="someVar"]'` as
+we have
+[here](https://astexplorer.net/#/gist/71a93130c19599d6f197bddb29c13a59/latest))
+to the selector you wish so as to get messages reported in the bottom right
 pane which match your [esquery](https://github.com/estools/esquery/#readme)
 selector).
 
@@ -929,8 +946,8 @@ decreasing precedence:
   use extra lines within examples just for easier illustration
   purposes.
 * `no-undef` - Many variables in examples will be `undefined`.
-* `no-unused-vars` - It is common to define variables for clarity without always
-  using them within examples.
+* `no-unused-vars` - It is common to define variables for clarity without
+  always using them within examples.
 * `padded-blocks` - It can generally look nicer to pad a little even if one's
   code follows more stringency as far as block padding.
 * `import/no-unresolved` - One wouldn't generally expect example paths to
@@ -2506,9 +2523,10 @@ function quux (code = 1) {
 <a name="eslint-plugin-jsdoc-rules-check-syntax"></a>
 ### <code>check-syntax</code>
 
-Reports against syntax not encouraged for the mode (e.g., Google Closure Compiler
-in "jsdoc" or "typescript" mode). Note that this rule will not chekc for types
-that are wholly invalid for a given mode, as that is covered by `valid-types`.
+Reports against syntax not encouraged for the mode (e.g., Google Closure
+Compiler in "jsdoc" or "typescript" mode). Note that this rule will not check
+for types that are wholly invalid for a given mode, as that is covered by
+`valid-types`.
 
 Currently checks against:
 
@@ -2640,10 +2658,11 @@ version
 yields
 ```
 
-`modifies` is also supported (see [source](https://github.com/jsdoc/jsdoc/blob/master/packages/jsdoc/lib/jsdoc/tag/dictionary/definitions.js#L594)) but is undocumented.
+`modifies` is also supported (see [source](https://github.com/jsdoc/jsdoc/blob/master/packages/jsdoc/lib/jsdoc/tag/dictionary/definitions.js#L594))
+but is undocumented.
 
-The following synonyms are also recognized if you set them in `tagNamePreference`
-as a key (or replacement):
+The following synonyms are also recognized if you set them in
+`tagNamePreference` as a key (or replacement):
 
 ```
 arg
@@ -2667,10 +2686,10 @@ virtual
 yield
 ```
 
-If you wish to allow in certain cases both a primary tag name and its alias(es),
-you can set a normally non-preferred tag name to itself to indicate that you want
-to allow both the default tag (in this case `@returns`) and a non-default
-(in this case `return`):
+If you wish to allow in certain cases both a primary tag name and its
+alias(es), you can set a normally non-preferred tag name to itself to indicate
+that you want to allow both the default tag (in this case `@returns`) and a
+non-default (in this case `return`):
 
 ```js
 "tagNamePreference": {
@@ -2678,8 +2697,9 @@ to allow both the default tag (in this case `@returns`) and a non-default
 }
 ```
 
-Because the tags indicated as replacements in `settings.jsdoc.tagNamePreference`
-will automatically be considered as valid, the above works.
+Because the tags indicated as replacements in
+`settings.jsdoc.tagNamePreference` will automatically be considered as valid,
+the above works.
 
 For [TypeScript](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc)
 (or Closure), when `settings.jsdoc.mode` is set to `typescript` or `closure`,
@@ -3360,7 +3380,8 @@ export function transient<T>(target?: T): T {
 
 Reports invalid types.
 
-By default, ensures that the casing of native types is the same as in this list:
+By default, ensures that the casing of native types is the same as in this
+list:
 
 ```
 undefined
@@ -3429,11 +3450,22 @@ the `valid-types` rule to report parsing errors.
 <a name="eslint-plugin-jsdoc-rules-check-types-why-not-capital-case-everything"></a>
 #### Why not capital case everything?
 
-Why are `boolean`, `number` and `string` exempt from starting with a capital letter? Let's take `string` as an example. In Javascript, everything is an object. The string Object has prototypes for string functions such as `.toUpperCase()`.
+Why are `boolean`, `number` and `string` exempt from starting with a capital
+letter? Let's take `string` as an example. In Javascript, everything is an
+object. The string Object has prototypes for string functions such as
+`.toUpperCase()`.
 
-Fortunately we don't have to write `new String()` everywhere in our code. Javascript will automatically wrap string primitives into string Objects when we're applying a string function to a string primitive. This way the memory footprint is a tiny little bit smaller, and the [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has less work to do.
+Fortunately we don't have to write `new String()` everywhere in our code.
+Javascript will automatically wrap string primitives into string Objects when
+we're applying a string function to a string primitive. This way the memory
+footprint is a tiny little bit smaller, and the
+[GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has
+less work to do.
 
-So in a sense, there two types of strings in Javascript; `{string}` literals, also called primitives and `{String}` Objects. We use the primitives because it's easier to write and uses less memory. `{String}` and `{string}` are technically both valid, but they are not the same.
+So in a sense, there two types of strings in Javascript; `{string}` literals,
+also called primitives and `{String}` Objects. We use the primitives because
+it's easier to write and uses less memory. `{String}` and `{string}` are
+technically both valid, but they are not the same.
 
 ```js
 new String('lard') // String {0: "l", 1: "a", 2: "r", 3: "d", length: 4}
@@ -3441,16 +3473,21 @@ new String('lard') // String {0: "l", 1: "a", 2: "r", 3: "d", length: 4}
 new String('lard') === 'lard' // false
 ```
 
-To make things more confusing, there are also object literals and object Objects. But object literals are still static Objects and object Objects are instantiated Objects. So an object primitive is still an object Object.
+To make things more confusing, there are also object literals and object
+Objects. But object literals are still static Objects and object Objects are
+instantiated Objects. So an object primitive is still an object Object.
 
 However, `Object.create(null)` objects are not `instanceof Object`, however, so
 in the case of this Object we lower-case to indicate possible support for
 these objects.
 
-Basically, for primitives, we want to define the type as a primitive, because that's what we use in 99.9% of cases. For everything else, we use the type rather than the primitive. Otherwise it would all just be `{object}`.
+Basically, for primitives, we want to define the type as a primitive, because
+that's what we use in 99.9% of cases. For everything else, we use the type
+rather than the primitive. Otherwise it would all just be `{object}`.
 
-In short: It's not about consistency, rather about the 99.9% use case. (And some
-functions might not even support the objects if they are checking for identity.)
+In short: It's not about consistency, rather about the 99.9% use case. (And
+some functions might not even support the objects if they are checking for
+identity.)
 
 type name | `typeof` | check-types | testcase
 --|--|--|--
@@ -4743,8 +4780,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 |||
 |---|---|
@@ -4999,19 +5036,19 @@ default `match-description`, you may use `mainDescription`:
 ```
 
 There is no need to add `mainDescription: true`, as by default, the main
-function (and only the main function) is linted, though you may disable checking
-it by setting it to `false`.
+function (and only the main function) is linted, though you may disable
+checking it by setting it to `false`.
 
 <a name="eslint-plugin-jsdoc-rules-match-description-options-10-contexts-1"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
-where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the default contexts (see below). Set to `"any"` if you want
-the rule to apply to any jsdoc block throughout your files.
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6
+classes). Overrides the default contexts (see below). Set to `"any"` if you
+want the rule to apply to any jsdoc block throughout your files.
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 |||
 |---|---|
@@ -5652,7 +5689,10 @@ Enforces a consistent padding of the block description.
 <a name="eslint-plugin-jsdoc-rules-newline-after-description-options-11"></a>
 #### Options
 
-This rule allows one optional string argument. If it is `"always"` then a problem is raised when there is no newline after the description. If it is `"never"` then a problem is raised when there is a newline after the description. The default value is `"always"`.
+This rule allows one optional string argument. If it is `"always"` then a
+problem is raised when there is no newline after the description. If it is
+`"never"` then a problem is raised when there is a newline after the
+description. The default value is `"always"`.
 
 |||
 |---|---|
@@ -5866,8 +5906,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 |||
 |---|---|
@@ -5992,7 +6032,11 @@ In addition to considering globals found in code (or in ESLint-indicated
 name(path) definitions to also serve as a potential "type" for checking
 the tag types in the table below:
 
-`@callback`, `@class` (or `@constructor`), `@constant` (or `@const`), `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`), `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`, `@template` (for "closure" or "typescript" `settings.jsdoc.mode` only), `@typedef`.
+`@callback`, `@class` (or `@constructor`), `@constant` (or `@const`),
+`@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`),
+`@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`,
+`@template` (for "closure" or "typescript" `settings.jsdoc.mode` only),
+`@typedef`.
 
 The following tags will also be checked but only when the mode is `closure`:
 
@@ -6472,8 +6516,8 @@ exports.resolve1 = function resolve1(value) {
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
 ### <code>require-description-complete-sentence</code>
 
-Requires that block description, explicit `@description`, and `@param`/`@returns`
-tag descriptions are written in complete sentences, i.e.,
+Requires that block description, explicit `@description`, and
+`@param`/`@returns` tag descriptions are written in complete sentences, i.e.,
 
 * Description must start with an uppercase alphabetical character.
 * Paragraphs must start with an uppercase alphabetical character.
@@ -6497,7 +6541,9 @@ add them within this option.
 
 ```js
 {
-  'jsdoc/require-description-complete-sentence': ['error', {tags: ['see', 'copyright']}]
+  'jsdoc/require-description-complete-sentence': ['error', {
+    tags: ['see', 'copyright']
+  }]
 }
 ```
 
@@ -7184,9 +7230,12 @@ An options object may have any of the following properties:
 - `descriptionStyle` - Whether to accept implicit descriptions (`"body"`) or
     `@description` tags (`"tag"`) as satisfying the rule. Set to `"any"` to
     accept either style. Defaults to `"body"`.
-- `checkConstructors` - A value indicating whether `constructor`s should be checked. Defaults to `true`.
-- `checkGetters` - A value indicating whether getters should be checked. Defaults to `true`.
-- `checkSetters` - A value indicating whether getters should be checked. Defaults to `true`.
+- `checkConstructors` - A value indicating whether `constructor`s should be
+    checked. Defaults to `true`.
+- `checkGetters` - A value indicating whether getters should be checked.
+    Defaults to `true`.
+- `checkSetters` - A value indicating whether getters should be checked.
+    Defaults to `true`.
 
 |          |                                                                                                               |
 | -------- | ------------------------------------------------------------------------------------------------------------- |
@@ -7587,7 +7636,8 @@ class TestClass {
 Requires that all functions have examples.
 
 * All functions must have one or more `@example` tags.
-* Every example tag must have a non-empty description that explains the method's usage.
+* Every example tag must have a non-empty description that explains the
+  method's usage.
 
 <a name="eslint-plugin-jsdoc-rules-require-example-options-16"></a>
 #### Options
@@ -7607,17 +7657,18 @@ exemption of the rule.
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
-where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6 classes).
-Overrides the default contexts (see below). Set to `"any"` if you want
-the rule to apply to any jsdoc block throughout your files.
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6
+classes). Overrides the default contexts (see below). Set to `"any"` if you
+want the rule to apply to any jsdoc block throughout your files.
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 <a name="eslint-plugin-jsdoc-rules-require-example-options-16-checkconstructors"></a>
 ##### <code>checkConstructors</code>
 
-A value indicating whether `constructor`s should be checked. Defaults to `true`.
+A value indicating whether `constructor`s should be checked.
+Defaults to `true`.
 
 <a name="eslint-plugin-jsdoc-rules-require-example-options-16-checkgetters"></a>
 ##### <code>checkGetters</code>
@@ -8447,9 +8498,9 @@ function/method names are sufficient for themselves as documentation).
 <a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-19-checkconstructors-1"></a>
 ##### <code>checkConstructors</code>
 
-A value indicating whether `constructor`s should be checked. Defaults to `true`.
-When `true`, `exemptEmptyConstructors` may still avoid reporting when no
-parameters or return values are found.
+A value indicating whether `constructor`s should be checked. Defaults to
+`true`. When `true`, `exemptEmptyConstructors` may still avoid reporting when
+no parameters or return values are found.
 
 <a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-19-checkgetters-1"></a>
 ##### <code>checkGetters</code>
@@ -9723,8 +9774,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 |||
 |---|---|
@@ -9846,8 +9897,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 |||
 |---|---|
@@ -9964,8 +10015,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 |||
 |---|---|
@@ -10166,7 +10217,9 @@ And one can have the count begin at another number (e.g., `1`) by changing
 <a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-rest-element-restelement-insertions"></a>
 ##### Rest Element (<code>RestElement</code>) insertions
 
-The fixer will automatically report/insert [jsdoc repeatable parameters](https://jsdoc.app/tags-param.html#multiple-types-and-repeatable-parameters) if missing.
+The fixer will automatically report/insert
+[jsdoc repeatable parameters](https://jsdoc.app/tags-param.html#multiple-types-and-repeatable-parameters)
+if missing.
 
 ```js
 /**
@@ -10241,7 +10294,8 @@ function quux ({num, ...extra}) {
 ```
 
 You may wish to manually note in your jsdoc for `extra` that this is a
-rest property, however, as jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
+rest property, however, as jsdoc
+[does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
 to currently support syntax or output to distinguish rest properties from
 other properties, so in looking at the docs alone without looking at the
 function signature, it may appear that there is an actual property named
@@ -10335,7 +10389,8 @@ Defaults to `0`.
 
 An array of root names to use in the fixer when roots are missing. Defaults
 to `['root']`. Note that only when all items in the array besides the last
-are exhausted will auto-incrementing occur. So, with `unnamedRootBase: ['arg', 'config']`, the following:
+are exhausted will auto-incrementing occur. So, with
+`unnamedRootBase: ['arg', 'config']`, the following:
 
 ```js
 function quux ({foo}, [bar], {baz}) {
@@ -10405,13 +10460,14 @@ contexts (see below). May be useful for adding such as
 `TSMethodSignature` in TypeScript or restricting the contexts
 which are checked.
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 <a name="eslint-plugin-jsdoc-rules-require-param-options-23-checkconstructors-2"></a>
 ##### <code>checkConstructors</code>
 
-A value indicating whether `constructor`s should be checked. Defaults to `true`.
+A value indicating whether `constructor`s should be checked. Defaults to
+`true`.
 
 <a name="eslint-plugin-jsdoc-rules-require-param-options-23-checkgetters-2"></a>
 ##### <code>checkGetters</code>
@@ -11866,7 +11922,8 @@ The following patterns are not considered problems:
 <a name="eslint-plugin-jsdoc-rules-require-returns-check"></a>
 ### <code>require-returns-check</code>
 
-Requires a return statement in function body if a `@returns` tag is specified in jsdoc comment.
+Requires a return statement in function body if a `@returns` tag is specified
+in jsdoc comment.
 
 Will also report if multiple `@returns` tags are present.
 
@@ -12283,8 +12340,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 |||
 |---|---|
@@ -12438,8 +12495,8 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors) section of our README for
-more on the expected format.
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
 
 |||
 |---|---|
@@ -13567,10 +13624,10 @@ text after the tag name) checked:
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow
-  empty name paths with groups 2 and 4 (these might often be expected to have
-  an accompanying name path, though they have some indicative value without
-  one; these may also allow names to be defined in another manner elsewhere
-  in the block)
+  empty name paths with namepath groups 2 and 4 (these might often be
+  expected to have an accompanying name path, though they have some
+  indicative value without one; these may also allow names to be defined
+  in another manner elsewhere in the block)
 - `checkSeesForNamepaths` (default: false) - Set this to `true` to insist
   that `@see` only use name paths (the tag is normally permitted to
   allow other text)
