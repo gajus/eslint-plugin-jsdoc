@@ -11,7 +11,7 @@ export default iterateJsdoc(({
   settings,
 }) => {
   const {
-    allowEmptyNamepaths = true,
+    allowEmptyNamepaths = false,
   } = context.options[0] || {};
   const {mode} = settings;
   if (!jsdoc.tags) {
@@ -122,7 +122,9 @@ export default iterateJsdoc(({
     if (tagMustHaveNamePosition !== false && !tag.name && !allowEmptyNamepaths && ![
       'param', 'arg', 'argument',
       'property', 'prop',
-    ].includes(tag.tag)) {
+    ].includes(tag.tag) &&
+      (tag.tag !== 'see' || !tag.description.includes('{@link'))
+    ) {
       const modeInfo = tagMustHaveNamePosition === true ? '' : ` in "${mode}" mode`;
       report(`Tag @${tag.tag} must have a name/namepath${modeInfo}.`, null, tag);
 
@@ -174,7 +176,7 @@ export default iterateJsdoc(({
         additionalProperies: false,
         properties: {
           allowEmptyNamepaths: {
-            default: true,
+            default: false,
             type: 'boolean',
           },
         },
