@@ -185,7 +185,7 @@ export default {
 
       // For those who have options configured against ANY constructors (or setters or getters) being reported
       if (jsdocUtils.exemptSpeciaMethods(
-        jsDocNode, node, context, [OPTIONS_SCHEMA],
+        {tags: []}, node, context, [OPTIONS_SCHEMA],
       )) {
         return;
       }

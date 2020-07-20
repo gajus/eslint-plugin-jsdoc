@@ -9212,6 +9212,12 @@ function quux() {
 }
 // Settings: {"jsdoc":{"structuredTags":{"see":{"name":false,"required":["name"]}}}}
 // Message: Cannot add "name" to `require` with the tag's `name` set to `false`
+
+class Test {
+  aFunc() {}
+}
+// Options: [{"checkConstructors":false,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":false,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

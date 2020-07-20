@@ -2428,6 +2428,36 @@ export default {
         },
       },
     },
+    {
+      code: `
+      class Test {
+        aFunc() {}
+      }
+      `,
+      errors: [{
+        line: 3,
+        message: 'Missing JSDoc comment.',
+      }],
+      options: [{
+        checkConstructors: false,
+        require: {
+          ArrowFunctionExpression: true,
+          ClassDeclaration: false,
+          ClassExpression: true,
+          FunctionDeclaration: true,
+          FunctionExpression: true,
+          MethodDefinition: true,
+        },
+      }],
+      output: `
+      class Test {
+        /**
+         *
+         */
+        aFunc() {}
+      }
+      `,
+    },
   ],
   valid: [{
     code: `
