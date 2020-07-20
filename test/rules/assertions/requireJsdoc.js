@@ -3936,5 +3936,17 @@ export default {
       },
     ],
   },
+  {
+    code: `
+    class Base {
+      constructor() {
+      }
+    }
+    `,
+    options: [{
+      contexts: ['MethodDefinition'],
+      exemptEmptyConstructors: true,
+    }],
+  },
   ],
 };

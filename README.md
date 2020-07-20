@@ -9904,6 +9904,12 @@ class Foo {
     constructor() {}
 }
 // Options: [{"checkConstructors":false,"require":{"MethodDefinition":true}}]
+
+class Base {
+  constructor() {
+  }
+}
+// Options: [{"contexts":["MethodDefinition"],"exemptEmptyConstructors":true}]
 ````
 
 

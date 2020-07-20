@@ -177,7 +177,7 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
     throw new Error('Unsupported function signature format.');
   };
 
-  return functionNode.params.map((param) => {
+  return (functionNode.params || functionNode.value.params).map((param) => {
     return getParamName(param);
   });
 };
