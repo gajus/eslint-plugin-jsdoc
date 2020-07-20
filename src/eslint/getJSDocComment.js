@@ -134,6 +134,16 @@ const getTSFunctionComment = function (astNode) {
   }
 };
 
+const invokedExpression = new Set(['CallExpression', 'OptionalCallExpression', 'NewExpression']);
+const allowableCommentNode = new Set([
+  'VariableDeclaration',
+  'ExpressionStatement',
+  'MethodDefinition',
+  'Property',
+  'ObjectProperty',
+  'ClassProperty',
+]);
+
 /* eslint-disable complexity */
 /**
  * Reduces the provided node to the appropriate node for evaluating JSDoc comment status.
@@ -162,15 +172,12 @@ const getReducedASTNode = function (node, sourceCode) {
   case 'TSEmptyBodyFunctionExpression':
   case 'FunctionExpression':
     if (
-      !['CallExpression', 'OptionalCallExpression', 'NewExpression'].includes(parent.type)
+      !invokedExpression.has(parent.type)
     ) {
       while (
         !sourceCode.getCommentsBefore(parent).length &&
         !/Function/u.test(parent.type) &&
-        parent.type !== 'VariableDeclaration' &&
-        parent.type !== 'ExpressionStatement' &&
-        parent.type !== 'MethodDefinition' &&
-        parent.type !== 'Property'
+        !allowableCommentNode.has(parent.type)
       ) {
         parent = parent.parent;
 

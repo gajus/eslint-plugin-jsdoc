@@ -9218,6 +9218,13 @@ class Test {
 }
 // Options: [{"checkConstructors":false,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":false,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
+
+class Test {
+  aFunc = () => {}
+  anotherFunc() {}
+}
+// Options: [{"require":{"ArrowFunctionExpression":true,"ClassDeclaration":false,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

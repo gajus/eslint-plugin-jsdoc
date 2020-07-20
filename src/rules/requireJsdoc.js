@@ -272,11 +272,12 @@ export default {
           return;
         }
 
-        if (!['VariableDeclarator', 'ExportDefaultDeclaration', 'AssignmentExpression'].includes(node.parent.type)) {
-          return;
+        if (
+          ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
+          ['Property', 'ObjectProperty', 'ClassProperty'].includes(node.parent.type) && node === node.parent.value
+        ) {
+          checkJsDoc(node, true);
         }
-
-        checkJsDoc(node, true);
       },
 
       ClassDeclaration (node) {
@@ -316,7 +317,7 @@ export default {
 
         if (
           ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
-          node.parent.type === 'Property' && node === node.parent.value
+          ['Property', 'ObjectProperty', 'ClassProperty'].includes(node.parent.type) && node === node.parent.value
         ) {
           checkJsDoc(node, true);
         }

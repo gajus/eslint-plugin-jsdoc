@@ -2458,6 +2458,44 @@ export default {
       }
       `,
     },
+    {
+      code: `
+      class Test {
+        aFunc = () => {}
+        anotherFunc() {}
+      }
+      `,
+      errors: [{
+        line: 3,
+        message: 'Missing JSDoc comment.',
+      }, {
+        line: 4,
+        message: 'Missing JSDoc comment.',
+      }],
+      options: [{
+        require: {
+          ArrowFunctionExpression: true,
+          ClassDeclaration: false,
+          ClassExpression: true,
+          FunctionDeclaration: true,
+          FunctionExpression: true,
+          MethodDefinition: true,
+        },
+      }],
+      output: `
+      class Test {
+        /**
+         *
+         */
+        aFunc = () => {}
+        /**
+         *
+         */
+        anotherFunc() {}
+      }
+      `,
+      parser: require.resolve('babel-eslint'),
+    },
   ],
   valid: [{
     code: `
