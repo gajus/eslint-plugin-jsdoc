@@ -533,7 +533,7 @@ structures for any given code but also the syntax for esquery selectors so
 that you can, for example, find only those nodes with a child of a certain
 type, you can set the "Transform" feature to ESLint and test out
 esquery selectors in place of the selector expression (e.g., replace
-  `'VariableDeclaration > VariableDeclarator > Identifier[name="someVar"]'` as
+`'VariableDeclaration > VariableDeclarator > Identifier[name="someVar"]'` as
 we have
 [here](https://astexplorer.net/#/gist/71a93130c19599d6f197bddb29c13a59/latest))
 to the selector you wish so as to get messages reported in the bottom right
