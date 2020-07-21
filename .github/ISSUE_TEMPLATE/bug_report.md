@@ -43,14 +43,25 @@ https://eslint.org/docs/user-guide/command-line-interface#print-config
 
 ## ESLint Config
 
-<!-- What is the minimal config that reproduces the issue? -->
+<!--
+
+What is the minimal config that reproduces the issue?
+
+Please try to reproduce with only a single rule in your config (along
+with the minimal number of options or settings that are needed to trigger
+the error).
+
+-->
+```js
+// Format JS (or JSON) code here
+```
 
 ## ESLint sample
 
 <!-- What code triggers the error? -->
 
 ```js
-// Format code using Markdown code blocks
+// Format JS code here
 ```
 
 <!-- OR, if this is not triggered by a single rule, what is the
@@ -58,6 +69,6 @@ https://eslint.org/docs/user-guide/command-line-interface#print-config
 
 ## Environment
 
-* Node version: <!-- $ node -v -->
-* ESLint version <!-- $ $(npm bin)/eslint -v -->
-* `eslint-plugin-jsdoc` version:
+- Node version: <!-- $ node -v -->
+- ESLint version <!-- $ $(npm bin)/eslint -v -->
+- `eslint-plugin-jsdoc` version:
