@@ -3,6 +3,7 @@ import iterateJsdoc from '../iterateJsdoc';
 const validateParameterNames = (
   targetTagName : string,
   allowExtraTrailingParamDocs: boolean,
+  checkDestructured : boolean,
   checkRestProperty : boolean,
   checkTypesRegex : RegExp,
   enableFixer: boolean,
@@ -54,6 +55,9 @@ const validateParameterNames = (
     }
 
     if (Array.isArray(functionParameterName)) {
+      if (!checkDestructured) {
+        return false;
+      }
       if (tag.type && tag.type.search(checkTypesRegex) === -1) {
         return false;
       }
@@ -123,14 +127,20 @@ const validateParameterNames = (
     }
 
     if (funcParamName !== tag.name.trim()) {
-      // Todo: This won't work for array or object child items
-      const expectedNames = functionParameterNames.join(', ');
+      // Todo: Improve for array or object child items
       const actualNames = paramTagsNonNested.map(([, {name}]) => {
         return name.trim();
+      });
+      const expectedNames = functionParameterNames.map((item, idx) => {
+        if (item?.[1]?.names) {
+          return actualNames[idx];
+        }
+
+        return item;
       }).join(', ');
 
       report(
-        `Expected @${targetTagName} names to be "${expectedNames}". Got "${actualNames}".`,
+        `Expected @${targetTagName} names to be "${expectedNames}". Got "${actualNames.join(', ')}".`,
         null,
         tag,
       );
@@ -191,6 +201,7 @@ export default iterateJsdoc(({
 }) => {
   const {
     allowExtraTrailingParamDocs,
+    checkDestructured = true,
     checkRestProperty = false,
     checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
     enableFixer = false,
@@ -210,6 +221,7 @@ export default iterateJsdoc(({
   const isError = validateParameterNames(
     targetTagName,
     allowExtraTrailingParamDocs,
+    checkDestructured,
     checkRestProperty,
     checkTypesRegex,
     enableFixer,
@@ -217,12 +229,13 @@ export default iterateJsdoc(({
     jsdoc, jsdocNode, utils, report,
   );
 
-  if (isError) {
+  if (isError || !checkDestructured) {
     return;
   }
 
   validateParameterNamesDeep(
-    targetTagName, allowExtraTrailingParamDocs, jsdocParameterNamesDeep,
+    targetTagName, allowExtraTrailingParamDocs,
+    jsdocParameterNamesDeep,
     jsdoc, report,
   );
 }, {
@@ -236,6 +249,9 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           allowExtraTrailingParamDocs: {
+            type: 'boolean',
+          },
+          checkDestructured: {
             type: 'boolean',
           },
           checkRestProperty: {

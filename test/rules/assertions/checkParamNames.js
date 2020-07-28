@@ -876,6 +876,24 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @param root
+           * @param foo
+           */
+          function quux ({foo, bar}, baz) {
+
+          }
+      `,
+      errors: [{
+        line: 4,
+        message: 'Expected @param names to be "root, baz". Got "root, foo".',
+      }],
+      options: [{
+        checkDestructured: false,
+      }],
+    },
   ],
   valid: [
     {
@@ -1246,6 +1264,20 @@ export default {
       }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param root
+           */
+          function quux (foo, {bar}) {
+
+          }
+      `,
+      options: [{
+        checkDestructured: false,
+      }],
     },
   ],
 };

@@ -2103,6 +2103,16 @@ function quux() {
 }
 // Settings: {"jsdoc":{"structuredTags":{"see":{"name":false,"required":["name"]}}}}
 // Message: Cannot add "name" to `require` with the tag's `name` set to `false`
+
+/**
+ * @param root
+ * @param foo
+ */
+function quux ({foo, bar}, baz) {
+
+}
+// Options: [{"checkDestructured":false}]
+// Message: Expected @param names to be "root, baz". Got "root, foo".
 ````
 
 The following patterns are not considered problems:
@@ -2359,6 +2369,15 @@ export class Thing {
     this.foo = new C();
   }
 }
+
+/**
+ * @param foo
+ * @param root
+ */
+function quux (foo, {bar}) {
+
+}
+// Options: [{"checkDestructured":false}]
 ````
 
 
