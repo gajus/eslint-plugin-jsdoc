@@ -343,12 +343,16 @@ A value indicating whether getters should be checked. Defaults to `false`.
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
+##### `checkDestructured`
+
+Whether to require destructured properties. Defaults to `true`.
+
 |          |                                                                                                               |
 | -------- | ------------------------------------------------------------------------------------------------------------- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `param`                                                                                                       |
 | Aliases  | `arg`, `argument`                                                                                             |
-| Options  | `autoIncrementBase`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
+| Options  | `autoIncrementBase`, `checkDestructured`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 <!-- assertions requireParam -->
