@@ -1741,10 +1741,15 @@ representing future expected or virtual params) to be present without needing
 their presence within the function signature. Other inconsistencies between
 `@param`'s and present function parameters will still be reported.
 
+<a name="eslint-plugin-jsdoc-rules-check-param-names-options-3-checkdestructured"></a>
+##### <code>checkDestructured</code>
+
+Whether to check destructured properties. Defaults to `true`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkRestProperty`, `checkTypesPattern`|
+|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`|
 |Tags|`param`|
 
 The following patterns are considered problems:
@@ -10656,12 +10661,17 @@ A value indicating whether getters should be checked. Defaults to `false`.
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-checkdestructured-1"></a>
+##### <code>checkDestructured</code>
+
+Whether to require destructured properties. Defaults to `true`.
+
 |          |                                                                                                               |
 | -------- | ------------------------------------------------------------------------------------------------------------- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `param`                                                                                                       |
 | Aliases  | `arg`, `argument`                                                                                             |
-| Options  | `autoIncrementBase`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
+| Options  | `autoIncrementBase`, `checkDestructured`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 The following patterns are considered problems:

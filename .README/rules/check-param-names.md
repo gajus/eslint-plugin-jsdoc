@@ -53,10 +53,14 @@ representing future expected or virtual params) to be present without needing
 their presence within the function signature. Other inconsistencies between
 `@param`'s and present function parameters will still be reported.
 
+##### `checkDestructured`
+
+Whether to check destructured properties. Defaults to `true`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkRestProperty`, `checkTypesPattern`|
+|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`|
 |Tags|`param`|
 
 <!-- assertions checkParamNames -->
