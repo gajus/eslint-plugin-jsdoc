@@ -120,6 +120,35 @@ export default {
     {
       code: `
           /**
+           * @param foo
+           */
+          function quux (foo, bar, {baz}) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "bar" declaration.',
+        },
+      ],
+      options: [
+        {
+          checkDestructuredRoots: false,
+        },
+      ],
+      output: `
+          /**
+           * @param foo
+           * @param bar
+           */
+          function quux (foo, bar, {baz}) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            *
            */
           function quux ({foo}) {
@@ -2773,6 +2802,22 @@ export default {
       options: [
         {
           checkDestructured: false,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param bar
+           */
+          function quux (foo, bar, {baz}) {
+
+          }
+      `,
+      options: [
+        {
+          checkDestructuredRoots: false,
         },
       ],
     },

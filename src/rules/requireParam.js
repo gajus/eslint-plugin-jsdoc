@@ -51,6 +51,7 @@ export default iterateJsdoc(({
     autoIncrementBase = 0,
     checkRestProperty = false,
     checkDestructured = true,
+    checkDestructuredRoots = true,
     checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
     enableFixer = true,
     enableRootFixer = true,
@@ -130,6 +131,10 @@ export default iterateJsdoc(({
 
       const {hasRestElement, hasPropertyRest, rests, names} = functionParameterName[1];
       if (!enableRestElementFixer && hasRestElement) {
+        return;
+      }
+
+      if (!checkDestructuredRoots) {
         return;
       }
 
@@ -274,6 +279,11 @@ export default iterateJsdoc(({
             type: 'boolean',
           },
           checkDestructured: {
+            default: true,
+            type: 'boolean',
+          },
+          checkDestructuredRoots: {
+            default: true,
             type: 'boolean',
           },
           checkGetters: {
