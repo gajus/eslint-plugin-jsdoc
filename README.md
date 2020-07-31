@@ -10666,12 +10666,25 @@ A value indicating whether getters should be checked. Defaults to `false`.
 
 Whether to require destructured properties. Defaults to `true`.
 
+<a name="eslint-plugin-jsdoc-rules-require-param-options-23-checkdestructuredroots"></a>
+##### <code>checkDestructuredRoots</code>
+
+Whether to check the existence of a corresponding `@param` for root objects
+of destructured properties (e.g., that for `function ({a, b}) {}`, that there
+is something like `@param myRootObj` defined that can correspond to
+the `{a, b}` object parameter).
+
+If `checkDestructuredRoots` is `false`, `checkDestructured` will also be
+implied to be `false` (i.e., the inside of the roots will not be checked
+either, e.g., it will also not complain if `a` or `b` do not have their own
+documentation). Defaults to `true`.
+
 |          |                                                                                                               |
 | -------- | ------------------------------------------------------------------------------------------------------------- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `param`                                                                                                       |
 | Aliases  | `arg`, `argument`                                                                                             |
-| Options  | `autoIncrementBase`, `checkDestructured`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
+| Options  | `autoIncrementBase`, `checkDestructured`, `checkDestructuredRoots`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 The following patterns are considered problems:
@@ -10709,6 +10722,15 @@ function quux (foo, bar, {baz}) {
 
 }
 // Options: [{"checkDestructured":false}]
+// Message: Missing JSDoc @param "bar" declaration.
+
+/**
+ * @param foo
+ */
+function quux (foo, bar, {baz}) {
+
+}
+// Options: [{"checkDestructuredRoots":false}]
 // Message: Missing JSDoc @param "bar" declaration.
 
 /**
@@ -11807,6 +11829,15 @@ function quux (foo, bar, {baz}) {
 
 }
 // Options: [{"checkDestructured":false}]
+
+/**
+ * @param foo
+ * @param bar
+ */
+function quux (foo, bar, {baz}) {
+
+}
+// Options: [{"checkDestructuredRoots":false}]
 
 /**
  * @param root

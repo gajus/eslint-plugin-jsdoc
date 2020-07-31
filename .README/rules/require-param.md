@@ -347,12 +347,24 @@ A value indicating whether getters should be checked. Defaults to `false`.
 
 Whether to require destructured properties. Defaults to `true`.
 
+##### `checkDestructuredRoots`
+
+Whether to check the existence of a corresponding `@param` for root objects
+of destructured properties (e.g., that for `function ({a, b}) {}`, that there
+is something like `@param myRootObj` defined that can correspond to
+the `{a, b}` object parameter).
+
+If `checkDestructuredRoots` is `false`, `checkDestructured` will also be
+implied to be `false` (i.e., the inside of the roots will not be checked
+either, e.g., it will also not complain if `a` or `b` do not have their own
+documentation). Defaults to `true`.
+
 |          |                                                                                                               |
 | -------- | ------------------------------------------------------------------------------------------------------------- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `param`                                                                                                       |
 | Aliases  | `arg`, `argument`                                                                                             |
-| Options  | `autoIncrementBase`, `checkDestructured`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
+| Options  | `autoIncrementBase`, `checkDestructured`, `checkDestructuredRoots`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 <!-- assertions requireParam -->
