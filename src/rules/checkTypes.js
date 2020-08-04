@@ -239,6 +239,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports invalid types.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/check-types.md',
     },
     fixable: 'code',
     schema: [

@@ -65,6 +65,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires a return statement in function body if a `@returns` tag is specified in jsdoc comment.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/require-returns-check.md',
     },
     type: 'suggestion',
   },

@@ -333,7 +333,7 @@ export default {
       category: 'Stylistic Issues',
       description: 'Require JSDoc comments',
       recommended: 'true',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/require-jsdoc.md',
     },
 
     fixable: 'code',

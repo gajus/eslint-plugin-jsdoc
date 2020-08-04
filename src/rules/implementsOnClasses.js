@@ -27,6 +27,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports an issue with any non-constructor function using `@implements`.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/implements-on-classes.md',
     },
     schema: [
       {

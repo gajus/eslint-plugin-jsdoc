@@ -50,6 +50,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports invalid alignment of JSDoc block asterisks.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/check-alignment.md',
     },
     fixable: 'code',
     type: 'layout',

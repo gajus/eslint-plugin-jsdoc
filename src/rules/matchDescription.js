@@ -83,6 +83,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Enforces a regular expression pattern on descriptions.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/match-description.md',
     },
     schema: [
       {

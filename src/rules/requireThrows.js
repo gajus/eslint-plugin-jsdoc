@@ -61,6 +61,9 @@ export default iterateJsdoc(({
 }, {
   contextDefaults: true,
   meta: {
+    docs: {
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/require-returns.md',
+    },
     schema: [
       {
         additionalProperties: false,

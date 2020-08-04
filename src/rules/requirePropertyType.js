@@ -18,6 +18,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires that each `@property` tag has a `type` value.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/require-property-type.md',
     },
     type: 'suggestion',
   },
