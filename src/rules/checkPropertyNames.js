@@ -102,6 +102,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Ensures that property names in JSDoc are not duplicated on the same block and that nested properties have defined roots.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/check-property-names.md',
     },
     fixable: 'code',
     schema: [

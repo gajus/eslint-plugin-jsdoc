@@ -20,6 +20,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires that the `@returns` tag has a `description` value.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/require-returns-description.md',
     },
     schema: [
       {

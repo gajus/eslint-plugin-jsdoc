@@ -100,6 +100,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'This rule checks the values for a handful of tags: `@version`, `@since`, `@license` and `@author`.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/check-values.md',
     },
     schema: [
       {

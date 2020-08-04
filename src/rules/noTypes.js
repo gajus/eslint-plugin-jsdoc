@@ -21,6 +21,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'This rule reports types being used on `@param` or `@returns`.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/no-types.md',
     },
     fixable: 'code',
     schema: [

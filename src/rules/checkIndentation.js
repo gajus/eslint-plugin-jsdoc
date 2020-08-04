@@ -42,6 +42,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports invalid padding inside JSDoc blocks.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/check-indentation.md',
     },
     schema: [{
       additionalProperties: false,
