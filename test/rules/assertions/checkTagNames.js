@@ -1,4 +1,6 @@
-import {jsdocTags, typeScriptTags, closureTags} from '../../../src/tagNames';
+import {
+  jsdocTags, typeScriptTags, closureTags,
+} from '../../../src/tagNames';
 
 const buildTagBlock = (tags) => {
   return '/** \n * @' + Object.keys(tags).map((tagName, idx) => {

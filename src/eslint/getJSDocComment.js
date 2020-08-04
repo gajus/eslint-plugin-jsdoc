@@ -260,5 +260,7 @@ const getJSDocComment = function (sourceCode, node, settings) {
   return findJSDocComment(reducedNode);
 };
 
-export {getReducedASTNode, getJSDocComment, getDecorator};
+export {
+  getReducedASTNode, getJSDocComment, getDecorator,
+};
 export default getJSDocComment;

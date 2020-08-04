@@ -1,5 +1,7 @@
 import _ from 'lodash';
-import {jsdocTags, closureTags, typeScriptTags} from './tagNames';
+import {
+  jsdocTags, closureTags, typeScriptTags,
+} from './tagNames';
 import WarnSettings from './WarnSettings';
 import getDefaultTagStructureForMode from './getDefaultTagStructureForMode';
 

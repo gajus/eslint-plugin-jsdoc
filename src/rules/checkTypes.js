@@ -1,4 +1,6 @@
-import {parse, traverse, publish} from 'jsdoctypeparser';
+import {
+  parse, traverse, publish,
+} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
 
 const strictNativeTypes = [

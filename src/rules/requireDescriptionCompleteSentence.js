@@ -1,5 +1,7 @@
 import _ from 'lodash';
-import {RegExtras} from 'regextras/dist/main-umd';
+import {
+  RegExtras,
+} from 'regextras/dist/main-umd';
 import iterateJsdoc from '../iterateJsdoc';
 
 const otherDescriptiveTags = new Set([

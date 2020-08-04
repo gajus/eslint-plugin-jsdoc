@@ -1,8 +1,14 @@
 import _ from 'lodash';
-import {parse as parseType, traverse} from 'jsdoctypeparser';
-import iterateJsdoc, {parseComment} from '../iterateJsdoc';
+import {
+  parse as parseType, traverse,
+} from 'jsdoctypeparser';
+import iterateJsdoc, {
+  parseComment,
+} from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
-import {getJSDocComment} from '../eslint/getJSDocComment';
+import {
+  getJSDocComment,
+} from '../eslint/getJSDocComment';
 
 const extraTypes = [
   'null', 'undefined', 'void', 'string', 'boolean', 'object',

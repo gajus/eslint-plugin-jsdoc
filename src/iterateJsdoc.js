@@ -1,8 +1,12 @@
-// eslint-disable-next-line import/no-named-default
-import {default as commentParser, stringify as commentStringify} from 'comment-parser';
+import {
+  // eslint-disable-next-line import/no-named-default
+  default as commentParser, stringify as commentStringify,
+} from 'comment-parser';
 import _ from 'lodash';
 import jsdocUtils from './jsdocUtils';
-import {getJSDocComment, getReducedASTNode} from './eslint/getJSDocComment';
+import {
+  getJSDocComment, getReducedASTNode,
+} from './eslint/getJSDocComment';
 
 const globalState = new Map();
 

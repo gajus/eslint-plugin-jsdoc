@@ -1,7 +1,9 @@
 // Todo: When peerDeps bump to ESLint 7, see about replacing `CLIEngine`
 //  with non-deprecated `ESLint` class:
 // https://github.com/eslint/eslint/blob/master/docs/user-guide/migrating-to-7.0.0.md#-the-cliengine-class-has-been-deprecated
-import {CLIEngine} from 'eslint';
+import {
+  CLIEngine,
+} from 'eslint';
 import iterateJsdoc from '../iterateJsdoc';
 
 const zeroBasedLineIndexAdjust = -1;

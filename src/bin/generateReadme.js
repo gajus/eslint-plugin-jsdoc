@@ -55,7 +55,7 @@ const getAssertions = () => {
   });
 
   const assertionCodes = assertionFiles.map((filePath) => {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
+    // eslint-disable-next-line import/no-dynamic-require
     const codes = require(filePath);
 
     return {
@@ -132,7 +132,6 @@ const main = async () => {
   } catch (error) {
     /* eslint-disable-next-line no-console */
     console.error(error);
-    /* eslint-disable-next-line no-process-exit */
     process.exit(1);
   }
 };

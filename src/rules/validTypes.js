@@ -1,4 +1,6 @@
-import {parse} from 'jsdoctypeparser';
+import {
+  parse,
+} from 'jsdoctypeparser';
 import iterateJsdoc from '../iterateJsdoc';
 
 const asExpression = /as\s+/u;

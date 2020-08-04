@@ -1,8 +1,12 @@
 import _ from 'lodash';
 import jsdocUtils from '../jsdocUtils';
 import exportParser from '../exportParser';
-import {getJSDocComment, getReducedASTNode, getDecorator} from '../eslint/getJSDocComment';
-import {getSettings} from '../iterateJsdoc';
+import {
+  getJSDocComment, getReducedASTNode, getDecorator,
+} from '../eslint/getJSDocComment';
+import {
+  getSettings,
+} from '../iterateJsdoc';
 
 const OPTIONS_SCHEMA = {
   additionalProperties: false,

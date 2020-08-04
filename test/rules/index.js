@@ -6,7 +6,6 @@ import config from '../../src';
 
 const ruleTester = new RuleTester();
 
-// eslint-disable-next-line no-process-env
 (process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : [
   'check-access',
   'check-alignment',
@@ -53,7 +52,7 @@ const ruleTester = new RuleTester();
     ecmaVersion: 6,
   };
 
-  // eslint-disable-next-line global-require, import/no-dynamic-require
+  // eslint-disable-next-line import/no-dynamic-require
   const assertions = require(`./assertions/${_.camelCase(ruleName)}`);
 
   if (!_.has(rule, 'meta.schema')) {
@@ -89,7 +88,6 @@ const ruleTester = new RuleTester();
     return assertion;
   });
 
-  /* eslint-disable no-process-env */
   if (process.env.npm_config_invalid) {
     const indexes = process.env.npm_config_invalid.split(',');
     assertions.invalid = assertions.invalid.filter((assertion, idx) => {

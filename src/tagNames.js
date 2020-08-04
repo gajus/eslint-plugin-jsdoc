@@ -194,4 +194,6 @@ const closureTags = {
   unrestricted: [],
 };
 
-export {jsdocTags, closureTags, typeScriptTags};
+export {
+  jsdocTags, closureTags, typeScriptTags,
+};

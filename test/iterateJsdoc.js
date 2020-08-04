@@ -3,8 +3,10 @@
 import {
   expect,
 } from 'chai';
-// eslint-disable-next-line import/no-named-default
-import {parseComment, default as iterateJsdoc} from '../src/iterateJsdoc';
+import {
+  // eslint-disable-next-line import/no-named-default
+  parseComment, default as iterateJsdoc,
+} from '../src/iterateJsdoc';
 
 describe('iterateJsdoc', () => {
   describe('constructor', () => {
