@@ -31,7 +31,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'This rule reports defaults being used on the relevant portion of `@param` or `@default`.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/no-defaults.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-defaults',
     },
     fixable: 'code',
     schema: [

@@ -293,7 +293,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/check-examples.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-examples',
     },
     schema: [
       {

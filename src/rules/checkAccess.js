@@ -37,7 +37,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Checks that `@access` tags have a valid value.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/check-access.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-access',
     },
     type: 'suggestion',
   },

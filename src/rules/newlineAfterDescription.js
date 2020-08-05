@@ -57,7 +57,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Enforces a consistent padding of the block description.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/newline-after-description.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-newline-after-description',
     },
     fixable: 'whitespace',
     schema: [

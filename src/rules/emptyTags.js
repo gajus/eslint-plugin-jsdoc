@@ -50,7 +50,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Expects specific tags to be empty of any content.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/empty-tags.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-empty-tags',
     },
     fixable: 'code',
     schema: [

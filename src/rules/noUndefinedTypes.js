@@ -166,7 +166,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Checks that types in jsdoc comments are defined.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/no-undefined-types.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-undefined-types',
     },
     schema: [
       {

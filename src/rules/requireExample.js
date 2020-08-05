@@ -47,7 +47,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires that all functions have examples.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/require-example.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-example',
     },
     fixable: 'code',
     schema: [

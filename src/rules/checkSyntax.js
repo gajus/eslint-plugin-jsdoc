@@ -25,7 +25,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports against syntax not valid for the mode (e.g., Google Closure Compiler in non-Closure mode).',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/check-syntax.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-syntax',
     },
     type: 'suggestion',
   },
