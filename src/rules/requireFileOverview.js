@@ -92,7 +92,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Checks that all files have one `@file`, `@fileoverview`, or `@overview` tag at the beginning of the file.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/require-file-overview.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-file-overview',
     },
     schema: [
       {

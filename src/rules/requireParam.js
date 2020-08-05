@@ -264,7 +264,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires that all function parameters are documented.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/require-param.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param',
     },
     fixable: 'code',
     schema: [

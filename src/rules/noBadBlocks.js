@@ -28,7 +28,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'This rule checks for multi-line-style comments which fail to meet the criteria of a jsdoc block.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/no-bad-blocks.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-bad-blocks',
     },
     fixable: 'code',
     type: 'layout',

@@ -37,7 +37,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires that all `@typedef` and `@namespace` tags have `@property` when their type is a plain `object`, `Object`, or `PlainObject`.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/master/.README/rules/require-property.md',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-property',
     },
     fixable: 'code',
     type: 'suggestion',
