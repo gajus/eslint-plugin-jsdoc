@@ -1,7 +1,7 @@
-import _ from 'lodash';
 import {
   RuleTester,
 } from 'eslint';
+import _ from 'lodash';
 import config from '../../src';
 
 const ruleTester = new RuleTester();

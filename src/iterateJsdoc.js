@@ -3,10 +3,10 @@ import {
   default as commentParser, stringify as commentStringify,
 } from 'comment-parser';
 import _ from 'lodash';
-import jsdocUtils from './jsdocUtils';
 import {
   getJSDocComment, getReducedASTNode,
 } from './eslint/getJSDocComment';
+import jsdocUtils from './jsdocUtils';
 
 const globalState = new Map();
 

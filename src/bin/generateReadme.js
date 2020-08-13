@@ -1,11 +1,11 @@
 /**
  * This script is used to inline assertions into the README.md documents.
  */
-import path from 'path';
 import fs from 'fs';
-import _ from 'lodash';
-import glob from 'glob';
+import path from 'path';
 import Gitdown from 'gitdown';
+import glob from 'glob';
+import _ from 'lodash';
 
 const trimCode = (code) => {
   let lines = code.replace(/^\n/u, '').trimEnd().split('\n');

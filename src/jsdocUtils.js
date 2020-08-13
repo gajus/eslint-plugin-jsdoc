@@ -1,9 +1,9 @@
 import _ from 'lodash';
+import WarnSettings from './WarnSettings';
+import getDefaultTagStructureForMode from './getDefaultTagStructureForMode';
 import {
   jsdocTags, closureTags, typeScriptTags,
 } from './tagNames';
-import WarnSettings from './WarnSettings';
-import getDefaultTagStructureForMode from './getDefaultTagStructureForMode';
 
 type ParserMode = "jsdoc"|"typescript"|"closure";
 

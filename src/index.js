@@ -17,14 +17,15 @@ import noBadBlocks from './rules/noBadBlocks';
 import noDefaults from './rules/noDefaults';
 import noTypes from './rules/noTypes';
 import noUndefinedTypes from './rules/noUndefinedTypes';
-import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
 import requireDescription from './rules/requireDescription';
+import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence';
 import requireExample from './rules/requireExample';
 import requireFileOverview from './rules/requireFileOverview';
 import requireHyphenBeforeParamDescription from './rules/requireHyphenBeforeParamDescription';
-import requireParamName from './rules/requireParamName';
+import requireJsdoc from './rules/requireJsdoc';
 import requireParam from './rules/requireParam';
 import requireParamDescription from './rules/requireParamDescription';
+import requireParamName from './rules/requireParamName';
 import requireParamType from './rules/requireParamType';
 import requireProperty from './rules/requireProperty';
 import requirePropertyDescription from './rules/requirePropertyDescription';
@@ -36,7 +37,6 @@ import requireReturnsDescription from './rules/requireReturnsDescription';
 import requireReturnsType from './rules/requireReturnsType';
 import requireThrows from './rules/requireThrows';
 import validTypes from './rules/validTypes';
-import requireJsdoc from './rules/requireJsdoc';
 
 export default {
   configs: {
