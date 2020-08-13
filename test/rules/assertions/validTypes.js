@@ -632,6 +632,56 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @template T<~, R
+       * @param {function(!T): !R} parser
+       * @return {function(!Array<!T>): !Array<!R>}
+       */
+      parseArray = function(parser) {
+          return function(array) {
+              return array.map(parser);
+          };
+      };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in namepath: T<~',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @template T, R<~
+       * @param {function(!T): !R} parser
+       * @return {function(!Array<!T>): !Array<!R>}
+       */
+      parseArray = function(parser) {
+          return function(array) {
+              return array.map(parser);
+          };
+      };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in namepath: R<~',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -1048,6 +1098,44 @@ export default {
               name: 'namepath-referencing',
             },
           },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @template T, R
+       * @param {function(!T): !R} parser
+       * @return {function(!Array<!T>): !Array<!R>}
+       */
+      parseArray = function(parser) {
+          return function(array) {
+              return array.map(parser);
+          };
+      };
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @template T, R<~
+       * @param {function(!T): !R} parser
+       * @return {function(!Array<!T>): !Array<!R>}
+       */
+      parseArray = function(parser) {
+          return function(array) {
+              return array.map(parser);
+          };
+      };
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
         },
       },
     },

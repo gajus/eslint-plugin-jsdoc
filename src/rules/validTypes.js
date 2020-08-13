@@ -164,7 +164,13 @@ export default iterateJsdoc(({
     ) && Boolean(tag.name);
 
     if (hasNameOrNamepathPosition) {
-      validNamepathParsing(tag.name, tag.tag);
+      if (mode !== 'jsdoc' && tag.tag === 'template') {
+        utils.parseClosureTemplateTag(tag).forEach((namepath) => {
+          validNamepathParsing(namepath);
+        });
+      } else {
+        validNamepathParsing(tag.name, tag.tag);
+      }
     }
   });
 }, {

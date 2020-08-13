@@ -14126,6 +14126,32 @@ function quux() {
 }
 // Settings: {"jsdoc":{"structuredTags":{"see":{"required":["typeOrNameRequired"],"type":false}}}}
 // Message: Cannot add "typeOrNameRequired" to `require` with the tag's `type` set to `false`
+
+/**
+ * @template T<~, R
+ * @param {function(!T): !R} parser
+ * @return {function(!Array<!T>): !Array<!R>}
+ */
+parseArray = function(parser) {
+    return function(array) {
+        return array.map(parser);
+    };
+};
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Syntax error in namepath: T<~
+
+/**
+ * @template T, R<~
+ * @param {function(!T): !R} parser
+ * @return {function(!Array<!T>): !Array<!R>}
+ */
+parseArray = function(parser) {
+    return function(array) {
+        return array.map(parser);
+    };
+};
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Syntax error in namepath: R<~
 ````
 
 The following patterns are not considered problems:
@@ -14369,6 +14395,30 @@ function quux() {
 
 }
 // Settings: {"jsdoc":{"structuredTags":{"see":{"name":"namepath-referencing"}}}}
+
+/**
+ * @template T, R
+ * @param {function(!T): !R} parser
+ * @return {function(!Array<!T>): !Array<!R>}
+ */
+parseArray = function(parser) {
+    return function(array) {
+        return array.map(parser);
+    };
+};
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @template T, R<~
+ * @param {function(!T): !R} parser
+ * @return {function(!Array<!T>): !Array<!R>}
+ */
+parseArray = function(parser) {
+    return function(array) {
+        return array.map(parser);
+    };
+};
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
 ````
 
 

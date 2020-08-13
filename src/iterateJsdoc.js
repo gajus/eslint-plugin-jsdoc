@@ -103,6 +103,10 @@ const getBasicUtils = (context, {tagNamePreference, mode}) => {
     });
   };
 
+  utils.parseClosureTemplateTag = (tag) => {
+    return jsdocUtils.parseClosureTemplateTag(tag);
+  };
+
   utils.getPreferredTagNameObject = ({tagName}) => {
     const ret = jsdocUtils.getPreferredTagName(context, mode, tagName, tagNamePreference);
     const isObject = ret && typeof ret === 'object';

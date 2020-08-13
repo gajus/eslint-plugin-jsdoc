@@ -112,7 +112,7 @@ export default iterateJsdoc(({
   }
 
   const closureGenericTypes = _.flatMap(templateTags, (tag) => {
-    return jsdocUtils.parseClosureTemplateTag(tag);
+    return utils.parseClosureTemplateTag(tag);
   });
 
   const allDefinedTypes = new Set(globalScope.variables.map(({name}) => {
