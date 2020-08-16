@@ -9,12 +9,12 @@ export default iterateJsdoc(({
   paramTags.forEach((tag) => {
     if (noOptionalParamNames && tag.optional) {
       utils.reportJSDoc(`Optional param names are not permitted on @${tag.tag}.`, tag, () => {
-        tag.default = '';
+        tag.default = undefined;
         tag.optional = false;
       });
     } else if (tag.default) {
       utils.reportJSDoc(`Defaults are not permitted on @${tag.tag}.`, tag, () => {
-        tag.default = '';
+        tag.default = undefined;
       });
     }
   });

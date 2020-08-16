@@ -2843,5 +2843,16 @@ export default {
           }
       `,
     },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {string} b Description \`/**\`.
+       */
+      module.exports = function a(b) {
+        console.info(b);
+      };
+      `,
+    },
   ],
 };
