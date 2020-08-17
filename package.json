@@ -21,6 +21,7 @@
     "@babel/plugin-transform-flow-strip-types": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/register": "^7.10.5",
+    "@hkdobrev/run-if-changed": "^0.3.1",
     "@typescript-eslint/parser": "^3.9.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
@@ -32,6 +33,7 @@
     "gitdown": "^3.1.3",
     "glob": "^7.1.6",
     "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "mocha": "^8.1.1",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
@@ -41,9 +43,24 @@
   "engines": {
     "node": ">=10"
   },
+  "lint-staged": {
+    ".eslintignore": "npm run lint",
+    ".eslintrc.json": "npm run lint",
+    "/*.js": "npm run lint-arg --",
+    "src/**/*.js": "npm run lint-arg --",
+    "test/**/*.js": "npm run lint-arg --"
+  },
+  "run-if-changed": {
+    "package-lock.json": "npm run install-offline"
+  },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm run test && npm run build && npm run check-readme"
+      "pre-push": "npm test && npm run build && npm run check-readme",
+      "post-commit": "run-if-changed",
+      "post-checkout": "run-if-changed",
+      "post-merge": "run-if-changed",
+      "post-rewrite": "run-if-changed",
+      "pre-commit": "lint-staged"
     }
   },
   "keywords": [
@@ -65,8 +82,10 @@
     "build": "rimraf ./dist && cross-env NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored",
     "check-readme": "babel-node ./src/bin/generateReadme.js --check",
     "create-readme": "babel-node ./src/bin/generateReadme.js",
+    "install-offline": "npm install --prefer-offline --no-audit",
     "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
     "lint": "eslint --report-unused-disable-directives ./src ./test",
+    "lint-arg": "eslint --report-unused-disable-directives",
     "test-cov": "cross-env BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 9000",
     "test-no-cov": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 9000",
     "test-index": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 9000 test/rules/index.js",
