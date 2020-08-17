@@ -1279,5 +1279,23 @@ export default {
         checkDestructured: false,
       }],
     },
+    {
+      code: `
+      class A {
+        /**
+         * Show a prompt.
+         * @param hideButton true if button should be hidden, false otherwise
+         * @param onHidden delegate to call when the prompt is hidden
+         */
+        public async showPrompt(hideButton: boolean, onHidden: {(): void}): Promise<void>
+        {
+        }
+      }
+`,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
 };
