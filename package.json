@@ -46,7 +46,7 @@
   "lint-staged": {
     ".eslintignore": "npm run lint",
     ".eslintrc.json": "npm run lint",
-    "/*.js": "npm run lint-arg --",
+    "./*.js": "npm run lint-arg --",
     "src/**/*.js": "npm run lint-arg --",
     "test/**/*.js": "npm run lint-arg --"
   },
