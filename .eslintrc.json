@@ -1,6 +1,19 @@
 {
   "extends": "canonical",
   "root": true,
+  "overrides": [{
+    "files": ".ncurc.js",
+    "parserOptions": {
+      "sourceType": "script",
+      "ecmaFeatures": {
+        "impliedStrict": false
+      }
+    },
+    "rules": {
+      "import/no-commonjs": 0,
+      "strict": ["error", "global"]
+    }
+  }],
   "rules": {
     "array-element-newline": 0,
     "filenames/match-regex": 0,
