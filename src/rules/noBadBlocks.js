@@ -1,5 +1,14 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+const regexp = /^\/\*(?!\*)[\s*]*(@[\w-]+)/;
+
+const allowed = new Set([
+  '@ts-check',
+  '@ts-expect-error',
+  '@ts-ignore',
+  '@ts-nocheck',
+]);
+
 export default iterateJsdoc(({
   context,
   sourceCode,
@@ -7,7 +16,12 @@ export default iterateJsdoc(({
   makeReport,
 }) => {
   const nonJsdocNodes = allComments.filter((comment) => {
-    return (/^\/\*(?!\*)[\s*]*@\w/).test(sourceCode.getText(comment));
+    const match = regexp.exec(sourceCode.getText(comment));
+    if (!match) {
+      return false;
+    }
+
+    return !allowed.has(match[1]);
   });
   if (!nonJsdocNodes.length) {
     return;

@@ -107,5 +107,17 @@ export default {
            }
       `,
     },
+    {
+      code: '/* @ts-check */',
+    },
+    {
+      code: '/* @ts-expect-error */',
+    },
+    {
+      code: '/* @ts-ignore */',
+    },
+    {
+      code: '/* @ts-nocheck */',
+    },
   ],
 };
