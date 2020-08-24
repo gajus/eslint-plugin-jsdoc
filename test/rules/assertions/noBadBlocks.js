@@ -63,6 +63,15 @@ export default {
         },
       },
     },
+    {
+      code: '/* @ts-ignore */',
+      errors: [{
+        line: 1,
+        message: 'Expected JSDoc-like comment to begin with two asterisks.',
+      }],
+      options: [{ignore: []}],
+      output: '/** @ts-ignore */',
+    },
   ],
   valid: [
     {
@@ -118,6 +127,10 @@ export default {
     },
     {
       code: '/* @ts-nocheck */',
+    },
+    {
+      code: '/* @custom */',
+      options: [{ignore: ['@custom']}],
     },
   ],
 };
