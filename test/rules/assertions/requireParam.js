@@ -2854,5 +2854,25 @@ export default {
       };
       `,
     },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {object} options Options.
+       * @param {FooBar} options.a A description.
+       */
+      function foo({ a: { b } }) {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {Foo} options Options.
+       * @param {FooBar} options.a A description.
+       */
+      function foo({ a: { b } }) {}
+      `,
+    },
   ],
 };
