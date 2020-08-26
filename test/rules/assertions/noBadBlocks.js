@@ -130,7 +130,7 @@ export default {
     },
     {
       code: '/* @custom */',
-      options: [{ignore: ['@custom']}],
+      options: [{ignore: ['custom']}],
     },
   ],
 };
