@@ -490,6 +490,8 @@ selector).
 {"gitdown": "include", "file": "./rules/implements-on-classes.md"}
 {"gitdown": "include", "file": "./rules/match-description.md"}
 {"gitdown": "include", "file": "./rules/newline-after-description.md"}
+{"gitdown": "include", "file": "./rules/no-bad-blocks.md"}
+{"gitdown": "include", "file": "./rules/no-defaults.md"}
 {"gitdown": "include", "file": "./rules/no-types.md"}
 {"gitdown": "include", "file": "./rules/no-undefined-types.md"}
 {"gitdown": "include", "file": "./rules/require-description-complete-sentence.md"}
