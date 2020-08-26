@@ -2859,9 +2859,9 @@ export default {
       /**
        * Description.
        * @param {object} options Options.
-       * @param {FooBar} options.a A description.
+       * @param {FooBar} options.foo A description.
        */
-      function foo({ a: { b } }) {}
+      function quux ({ foo: { bar } }) {}
       `,
     },
     {
@@ -2871,7 +2871,7 @@ export default {
        * @param {Foo} options Options.
        * @param {FooBar} options.a A description.
        */
-      function foo({ a: { b } }) {}
+      function quux ({ foo: { bar } }) {}
       `,
     },
   ],
