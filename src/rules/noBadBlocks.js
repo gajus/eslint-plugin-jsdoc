@@ -1,6 +1,6 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const regexp = /^\/\*(?!\*)[\s*]*(@[\w-]+)/;
+const regexp = /^\/\*(?!\*)[\s*]*@([\w-]+)/;
 
 export default iterateJsdoc(({
   context,
@@ -11,10 +11,10 @@ export default iterateJsdoc(({
   const [
     {
       ignore = [
-        '@ts-check',
-        '@ts-expect-error',
-        '@ts-ignore',
-        '@ts-nocheck',
+        'ts-check',
+        'ts-expect-error',
+        'ts-ignore',
+        'ts-nocheck',
       ],
     } = {},
   ] = context.options;
