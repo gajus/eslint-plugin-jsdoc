@@ -179,9 +179,8 @@ export default iterateJsdoc(({
 
         const fullParamName = `${rootName}.${paramName}`;
 
-        // eslint-disable-next-line no-shadow
-        const notCheckingName = jsdocParameterNames.find(({name, type}) => {
-          return utils.comparePaths(name)(fullParamName) && type.search(checkTypesRegex) === -1 && type !== '';
+        const notCheckingName = jsdocParameterNames.find(({name, type: paramType}) => {
+          return utils.comparePaths(name)(fullParamName) && paramType.search(checkTypesRegex) === -1 && paramType !== '';
         });
 
         if (notCheckingName !== undefined) {
