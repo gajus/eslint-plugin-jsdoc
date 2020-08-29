@@ -188,7 +188,7 @@ export default iterateJsdoc(({
         }
 
         if (notCheckingNames.find((name) => {
-          return new RegExp('^' + name).test(fullParamName);
+          return fullParamName.startsWith(name);
         })) {
           return;
         }
