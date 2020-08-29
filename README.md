@@ -11595,6 +11595,14 @@ module.exports = class GraphQL {
 	}
 })();
 // Message: Missing JSDoc @param "param" declaration.
+
+/**
+ * Description.
+ * @param {Object} options Options.
+ * @param {Object} options.foo A description.
+ */
+function quux ({ foo: { bar } }) {}
+// Message: Missing JSDoc @param "options.foo.bar" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -12174,13 +12182,6 @@ module.exports = function a(b) {
  * Description.
  * @param {object} options Options.
  * @param {FooBar} options.foo A description.
- */
-function quux ({ foo: { bar } }) {}
-
-/**
- * Description.
- * @param {Foo} options Options.
- * @param {FooBar} options.a A description.
  */
 function quux ({ foo: { bar } }) {}
 ````
