@@ -1987,6 +1987,30 @@ export default {
       `,
       /* eslint-enable no-tabs */
     },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {Object} options Options.
+       * @param {Object} options.foo A description.
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "options.foo.bar" declaration.',
+        },
+      ],
+      output: `
+      /**
+       * Description.
+       * @param {Object} options Options.
+       * @param {Object} options.foo A description.
+       * @param options.foo.bar
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -2860,16 +2884,6 @@ export default {
        * Description.
        * @param {object} options Options.
        * @param {FooBar} options.foo A description.
-       */
-      function quux ({ foo: { bar } }) {}
-      `,
-    },
-    {
-      code: `
-      /**
-       * Description.
-       * @param {Foo} options Options.
-       * @param {FooBar} options.a A description.
        */
       function quux ({ foo: { bar } }) {}
       `,
