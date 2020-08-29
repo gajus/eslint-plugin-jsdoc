@@ -11598,8 +11598,33 @@ module.exports = class GraphQL {
 
 /**
  * Description.
- * @param {Object} options Options.
- * @param {Object} options.foo A description.
+ * @param {Object} options
+ * @param {Object} options.foo
+ */
+function quux ({ foo: { bar } }) {}
+// Message: Missing JSDoc @param "options.foo.bar" declaration.
+
+/**
+ * Description.
+ * @param {FooBar} options
+ * @param {FooBar} options.foo
+ */
+function quux ({ foo: { bar } }) {}
+// Options: [{"checkTypesPattern":"FooBar"}]
+// Message: Missing JSDoc @param "options.foo.bar" declaration.
+
+/**
+ * Description.
+ * @param {Object} options
+ * @param {FooBar} foo
+ */
+function quux ({ foo: { bar } }) {}
+// Message: Missing JSDoc @param "options.foo" declaration.
+
+/**
+ * Description.
+ * @param {Object} options
+ * @param options.foo
  */
 function quux ({ foo: { bar } }) {}
 // Message: Missing JSDoc @param "options.foo.bar" declaration.
@@ -12180,10 +12205,18 @@ module.exports = function a(b) {
 
 /**
  * Description.
- * @param {object} options Options.
- * @param {FooBar} options.foo A description.
+ * @param {Object} options Options.
+ * @param {FooBar} options.foo foo description.
  */
 function quux ({ foo: { bar } }) {}
+
+/**
+ * Description.
+ * @param {FooBar} options
+ * @param {Object} options.foo
+ */
+function quux ({ foo: { bar } }) {}
+// Options: [{"checkTypesPattern":"FooBar"}]
 ````
 
 
