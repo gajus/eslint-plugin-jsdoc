@@ -115,16 +115,17 @@ export default iterateJsdoc(({
     return utils.parseClosureTemplateTag(tag);
   });
 
+  // In modules, including Node, there is a global scope at top with the
+  //  Program scope inside
+  const cjsOrESMScope = globalScope.childScopes[0]?.block.type === 'Program';
+
   const allDefinedTypes = new Set(globalScope.variables.map(({name}) => {
     return name;
   })
 
     // If the file is a module, concat the variables from the module scope.
     .concat(
-
-      // This covers `commonjs` as well as `node`
-      scopeManager.__options.nodejsScope ||
-      scopeManager.isModule() ?
+      cjsOrESMScope ?
         _.flatMap(globalScope.childScopes, ({variables}) => {
           return variables;
         }, []).map(({name}) => {

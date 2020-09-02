@@ -431,6 +431,21 @@ export default {
 
         }
       `,
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        const MyType = require('my-library').MyType;
+
+        /**
+         * @param {MyType} foo - Bar.
+         */
+          function quux(foo) {
+
+        }
+      `,
       env: {
         node: true,
       },
