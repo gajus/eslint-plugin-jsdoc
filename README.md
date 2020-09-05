@@ -11628,6 +11628,15 @@ function quux ({ foo: { bar } }) {}
  */
 function quux ({ foo: { bar } }) {}
 // Message: Missing JSDoc @param "options.foo.bar" declaration.
+
+/**
+ * Description.
+ * @param {object} options Options.
+ * @param {object} options.foo A description.
+ * @param {object} options.foo.bar 
+ */
+function foo({ foo: { bar: { baz } }}) {}
+// Message: Missing JSDoc @param "options.foo.bar.baz" declaration.
 ````
 
 The following patterns are not considered problems:

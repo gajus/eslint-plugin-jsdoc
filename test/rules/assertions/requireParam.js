@@ -2092,6 +2092,32 @@ export default {
       function quux ({ foo: { bar } }) {}
       `,
     },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {object} options Options.
+       * @param {object} options.foo A description.
+       * @param {object} options.foo.bar 
+       */
+      function foo({ foo: { bar: { baz } }}) {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "options.foo.bar.baz" declaration.',
+        },
+      ],
+      output: `
+      /**
+       * Description.
+       * @param {object} options Options.
+       * @param {object} options.foo A description.
+       * @param {object} options.foo.bar
+       * @param options.foo.bar.baz
+       */
+      function foo({ foo: { bar: { baz } }}) {}
+      `,
+    },
   ],
   valid: [
     {
