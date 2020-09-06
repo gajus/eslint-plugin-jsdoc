@@ -196,6 +196,10 @@ const getUtils = (
     return jsdocUtils.getFunctionParameterNames(node);
   };
 
+  utils.hasParams = () => {
+    return jsdocUtils.hasParams(node);
+  };
+
   utils.isConstructor = () => {
     return jsdocUtils.isConstructor(node);
   };

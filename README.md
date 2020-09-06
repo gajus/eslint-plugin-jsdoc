@@ -8216,6 +8216,15 @@ function quux () {
 /**
  *
  */
+function quux (someParam) {
+
+}
+// Options: [{"exemptNoArguments":true}]
+// Message: Missing JSDoc @example declaration.
+
+/**
+ *
+ */
 function quux () {
 
 }
@@ -8442,6 +8451,14 @@ class TestClass {
   set Test(value) { }
 }
 // Options: [{"checkSetters":true}]
+
+/**
+ *
+ */
+function quux () {
+
+}
+// Options: [{"exemptNoArguments":true}]
 ````
 
 

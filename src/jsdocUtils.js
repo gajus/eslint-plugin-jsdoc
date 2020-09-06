@@ -188,6 +188,11 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
   });
 };
 
+const hasParams = (functionNode) => {
+  // Should also check `functionNode.value.params` if supporting `MethodDefinition`
+  return functionNode.params.length;
+};
+
 /**
  * Gets all names of the target type, including those that refer to a path, e.g.
  * "@param foo; @param foo.bar".
@@ -736,6 +741,7 @@ export default {
   getTagStructureForMode,
   hasATag,
   hasDefinedTypeReturnTag,
+  hasParams,
   hasReturnValue,
   hasTag,
   hasThrowValue,
