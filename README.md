@@ -8162,6 +8162,12 @@ block avoids the need for an `@example`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
+<a name="eslint-plugin-jsdoc-rules-require-example-options-18-exemptnoarguments"></a>
+##### <code>exemptNoArguments</code>
+
+Boolean to indicate that no-argument functions should not be reported for
+missing `@example` declarations.
+
 <a name="eslint-plugin-jsdoc-rules-require-example-options-18-contexts-4"></a>
 ##### <code>contexts</code>
 
@@ -8199,7 +8205,7 @@ report a missing example description after this is added.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`example`|
-|Options|`exemptedBy`, `avoidExampleOnConstructors`, `contexts`|
+|Options|`exemptedBy`, `exemptNoArguments`, `avoidExampleOnConstructors`, `contexts`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
