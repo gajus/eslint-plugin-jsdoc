@@ -127,6 +127,8 @@ decreasing precedence:
   always using them within examples.
 * `padded-blocks` - It can generally look nicer to pad a little even if one's
   code follows more stringency as far as block padding.
+* `jsdoc/require-file-overview` - Shouldn't check example for jsdoc blocks.
+* `jsdoc/require-jsdoc` - Wouldn't expect jsdoc blocks within jsdoc blocks.
 * `import/no-unresolved` - One wouldn't generally expect example paths to
   resolve relative to the current JavaScript file as one would with real code.
 * `import/unambiguous` - Snippets in examples are likely too short to always

@@ -963,5 +963,27 @@ export default {
       }
       `,
     },
+    {
+      code: `
+      /**
+       * Does quux
+       * @example
+       * // Do it!
+       * quux();
+       */
+      function quux () {
+      }
+      `,
+      options: [{
+        baseConfig: {
+          plugins: ['jsdoc'],
+          rules: {
+            'jsdoc/require-file-overview': ['error'],
+          },
+        },
+        checkEslintrc: false,
+        noDefaultExampleRules: false,
+      }],
+    },
   ],
 };

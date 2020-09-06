@@ -94,6 +94,8 @@ export default iterateJsdoc(({
     // Snippets likely too short to always include import/export info
     'import/unambiguous': 0,
 
+    'jsdoc/require-file-overview': 0,
+
     // The end of a multiline comment would end the comment the example is in.
     'jsdoc/require-jsdoc': 0,
 
