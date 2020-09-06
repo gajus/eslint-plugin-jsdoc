@@ -2132,6 +2132,31 @@ function quux ({foo, bar}, baz) {
 }
 // Options: [{"checkDestructured":false}]
 // Message: Expected @param names to be "root, baz". Got "root, foo".
+
+/**
+ * Description.
+ * @param {Object} options
+ * @param {FooBar} foo
+ */
+function quux ({ foo: { bar } }) {}
+// Message: Missing @param "options.foo"
+
+/**
+ * Description.
+ * @param {Object} options
+ * @param options.foo
+ */
+function quux ({ foo: { bar } }) {}
+// Message: Missing @param "options.foo.bar"
+
+/**
+ * Description.
+ * @param {object} options Options.
+ * @param {object} options.foo A description.
+ * @param {object} options.foo.bar
+ */
+function foo({ foo: { bar: { baz } }}) {}
+// Message: Missing @param "options.foo.bar.baz"
 ````
 
 The following patterns are not considered problems:
@@ -2408,6 +2433,29 @@ class A {
   {
   }
 }
+
+/**
+ * Description.
+ * @param {Object} options Options.
+ * @param {FooBar} options.foo foo description.
+ */
+function quux ({ foo: { bar }}) {}
+
+/**
+ * Description.
+ * @param {FooBar} options
+ * @param {Object} options.foo
+ */
+function quux ({ foo: { bar } }) {}
+// Options: [{"checkTypesPattern":"FooBar"}]
+
+/**
+ * Description.
+ * @param {Object} options
+ * @param {FooBar} options.foo
+ * @param {FooBar} options.baz
+ */
+function quux ({ foo: { bar }, baz: { cfg } }) {}
 ````
 
 

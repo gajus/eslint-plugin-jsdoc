@@ -894,6 +894,55 @@ export default {
         checkDestructured: false,
       }],
     },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {Object} options
+       * @param {FooBar} foo
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+      errors: [
+        {
+          message: 'Missing @param "options.foo"',
+        },
+        {
+          message: 'Missing @param "options.foo.bar"',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {Object} options
+       * @param options.foo
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+      errors: [
+        {
+          message: 'Missing @param "options.foo.bar"',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {object} options Options.
+       * @param {object} options.foo A description.
+       * @param {object} options.foo.bar
+       */
+      function foo({ foo: { bar: { baz } }}) {}
+      `,
+      errors: [
+        {
+          message: 'Missing @param "options.foo.bar.baz"',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1296,6 +1345,42 @@ export default {
       parserOptions: {
         sourceType: 'module',
       },
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {Object} options Options.
+       * @param {FooBar} options.foo foo description.
+       */
+      function quux ({ foo: { bar }}) {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {FooBar} options
+       * @param {Object} options.foo
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+      options: [
+        {
+          checkTypesPattern: 'FooBar',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {Object} options
+       * @param {FooBar} options.foo
+       * @param {FooBar} options.baz
+       */
+      function quux ({ foo: { bar }, baz: { cfg } }) {}
+      `,
     },
   ],
 };

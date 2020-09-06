@@ -78,15 +78,29 @@ const validateParameterNames = (
       const actualNames = paramTags.map(([, paramTag]) => {
         return paramTag.name.trim();
       });
+      const actualTypes = paramTags.map(([, paramTag]) => {
+        return paramTag.type;
+      });
 
       const missingProperties = [];
+      const notCheckingNames = [];
 
       expectedNames.forEach((name, idx) => {
-        if (!actualNames.some(utils.comparePaths(name))) {
+        if (notCheckingNames.some((notCheckingName) => {
+          return name.startsWith(notCheckingName);
+        })) {
+          return;
+        }
+        const actualNameIdx = actualNames.findIndex((actualName) => {
+          return utils.comparePaths(name)(actualName);
+        });
+        if (actualNameIdx === -1) {
           if (!checkRestProperty && rests[idx]) {
             return;
           }
           missingProperties.push(name);
+        } else if (actualTypes[actualNameIdx].search(checkTypesRegex) === -1 && actualTypes[actualNameIdx] !== '') {
+          notCheckingNames.push(name);
         }
       });
 
