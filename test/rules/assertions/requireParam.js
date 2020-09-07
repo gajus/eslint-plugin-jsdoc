@@ -1987,6 +1987,137 @@ export default {
       `,
       /* eslint-enable no-tabs */
     },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {Object} options
+       * @param {Object} options.foo
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "options.foo.bar" declaration.',
+        },
+      ],
+      output: `
+      /**
+       * Description.
+       * @param {Object} options
+       * @param {Object} options.foo
+       * @param options.foo.bar
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {FooBar} options
+       * @param {FooBar} options.foo
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "options.foo.bar" declaration.',
+        },
+      ],
+      options: [
+        {
+          checkTypesPattern: 'FooBar',
+        },
+      ],
+      output: `
+      /**
+       * Description.
+       * @param {FooBar} options
+       * @param {FooBar} options.foo
+       * @param options.foo.bar
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {Object} options
+       * @param {FooBar} foo
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "options.foo" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "options.foo.bar" declaration.',
+        },
+      ],
+      output: `
+      /**
+       * Description.
+       * @param {Object} options
+       * @param options.foo
+       * @param {FooBar} foo
+       * @param options.foo.bar
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {Object} options
+       * @param options.foo
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "options.foo.bar" declaration.',
+        },
+      ],
+      output: `
+      /**
+       * Description.
+       * @param {Object} options
+       * @param options.foo
+       * @param options.foo.bar
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {object} options Options.
+       * @param {object} options.foo A description.
+       * @param {object} options.foo.bar 
+       */
+      function foo({ foo: { bar: { baz } }}) {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "options.foo.bar.baz" declaration.',
+        },
+      ],
+      output: `
+      /**
+       * Description.
+       * @param {object} options Options.
+       * @param {object} options.foo A description.
+       * @param {object} options.foo.bar
+       * @param options.foo.bar.baz
+       */
+      function foo({ foo: { bar: { baz } }}) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -2853,6 +2984,31 @@ export default {
         console.info(b);
       };
       `,
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {Object} options Options.
+       * @param {FooBar} options.foo foo description.
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Description.
+       * @param {FooBar} options
+       * @param {Object} options.foo
+       */
+      function quux ({ foo: { bar } }) {}
+      `,
+      options: [
+        {
+          checkTypesPattern: 'FooBar',
+        },
+      ],
     },
   ],
 };

@@ -130,6 +130,7 @@ export default iterateJsdoc(({
       }
 
       const {hasRestElement, hasPropertyRest, rests, names} = functionParameterName[1];
+      const notCheckingNames = [];
       if (!enableRestElementFixer && hasRestElement) {
         return;
       }
@@ -177,6 +178,20 @@ export default iterateJsdoc(({
         }
 
         const fullParamName = `${rootName}.${paramName}`;
+
+        const notCheckingName = jsdocParameterNames.find(({name, type: paramType}) => {
+          return utils.comparePaths(name)(fullParamName) && paramType.search(checkTypesRegex) === -1 && paramType !== '';
+        });
+
+        if (notCheckingName !== undefined) {
+          notCheckingNames.push(notCheckingName.name);
+        }
+
+        if (notCheckingNames.find((name) => {
+          return fullParamName.startsWith(name);
+        })) {
+          return;
+        }
 
         if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
           return utils.comparePaths(name)(fullParamName);
