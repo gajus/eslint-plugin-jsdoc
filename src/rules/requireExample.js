@@ -2,6 +2,7 @@ import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
+  context,
   jsdoc,
   report,
   utils,
@@ -10,6 +11,10 @@ export default iterateJsdoc(({
     return;
   }
 
+  const {
+    exemptNoArguments = false,
+  } = context.options[0] || {};
+
   const targetTagName = 'example';
 
   const functionExamples = _.filter(jsdoc.tags, {
@@ -17,6 +22,12 @@ export default iterateJsdoc(({
   });
 
   if (!functionExamples.length) {
+    if (exemptNoArguments && utils.isIteratingFunction() &&
+      !utils.hasParams()
+    ) {
+      return;
+    }
+
     utils.reportJSDoc(`Missing JSDoc @${targetTagName} declaration.`, null, () => {
       if (!jsdoc.tags) {
         jsdoc.tags = [];
@@ -77,6 +88,10 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
+          },
+          exemptNoArguments: {
+            default: false,
+            type: 'boolean',
           },
         },
         type: 'object',

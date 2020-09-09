@@ -24,6 +24,34 @@ export default {
       `,
     },
     {
+      code: `
+          /**
+           *
+           */
+          function quux (someParam) {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
+      options: [
+        {
+          exemptNoArguments: true,
+        },
+      ],
+      output: `
+          /**
+           * @example
+           */
+          function quux (someParam) {
+
+          }
+      `,
+    },
+    {
       code: `/**
  *
  */
@@ -496,6 +524,21 @@ function quux () {
       options: [
         {
           checkSetters: true,
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       *
+       */
+      function quux () {
+
+      }
+      `,
+      options: [
+        {
+          exemptNoArguments: true,
         },
       ],
     },

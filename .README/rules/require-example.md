@@ -18,6 +18,11 @@ block avoids the need for an `@example`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
+##### `exemptNoArguments`
+
+Boolean to indicate that no-argument functions should not be reported for
+missing `@example` declarations.
+
 ##### `contexts`
 
 Set this to an array of strings representing the AST context
@@ -50,7 +55,7 @@ report a missing example description after this is added.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`example`|
-|Options|`exemptedBy`, `avoidExampleOnConstructors`, `contexts`|
+|Options|`exemptedBy`, `exemptNoArguments`, `avoidExampleOnConstructors`, `contexts`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <!-- assertions requireExample -->
