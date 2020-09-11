@@ -140,6 +140,13 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
           return getParamName(prop, isProperty);
         })];
       }
+      if (param.value.type === 'AssignmentPattern' &&
+        param.value.left.type === 'ObjectPattern'
+      ) {
+        return [param.key.name, param.value.left.properties.map((prop) => {
+          return getParamName(prop, isProperty);
+        })];
+      }
 
       // As function parameters, these do not allow dynamic properties, etc.
       /* istanbul ignore else */

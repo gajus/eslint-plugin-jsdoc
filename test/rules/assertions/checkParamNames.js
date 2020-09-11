@@ -1382,5 +1382,27 @@ export default {
       function quux ({ foo: { bar }, baz: { cfg } }) {}
       `,
     },
+    {
+      code: `
+      /**
+       * Item
+       *
+       * @param {object} props
+       * @param {object} props.data - case data
+       * @param {string} props.data.className - additional css class
+       * @param props.val
+       */
+      export default function Item({
+        data: {
+          className,
+        } = {},
+        val = 4
+      }) {
+      }
+      `,
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
 };

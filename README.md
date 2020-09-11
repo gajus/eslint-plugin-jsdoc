@@ -2456,6 +2456,22 @@ function quux ({ foo: { bar } }) {}
  * @param {FooBar} options.baz
  */
 function quux ({ foo: { bar }, baz: { cfg } }) {}
+
+/**
+ * Item
+ *
+ * @param {object} props
+ * @param {object} props.data - case data
+ * @param {string} props.data.className - additional css class
+ * @param props.val
+ */
+export default function Item({
+  data: {
+    className,
+  } = {},
+  val = 4
+}) {
+}
 ````
 
 
