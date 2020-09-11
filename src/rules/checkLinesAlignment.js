@@ -45,13 +45,12 @@ const getFullDescription = (lineString) => {
 /**
  * Get the expected positions for each part.
  *
- * @param {Array[]} partsMatrix    Parts matrix.
- * @param {int[]}   partsMaxLength Max length of each part.
- * @param {int}     indentLevel    JSDoc indent level.
+ * @param {int[]} partsMaxLength Max length of each part.
+ * @param {int}   indentLevel    JSDoc indent level.
  *
  * @returns {int[]} Expected position for each part.
  */
-const getExpectedPositions = (partsMatrix, partsMaxLength, indentLevel) => {
+const getExpectedPositions = (partsMaxLength, indentLevel) => {
   // eslint-disable-next-line unicorn/no-reduce
   return partsMaxLength.reduce(
     (acc, cur, index) => {
@@ -164,11 +163,7 @@ const checkCommentPerTag = (comment, tag, tagIndentation, report) => {
     );
   });
 
-  const expectedPositions = getExpectedPositions(
-    partsMatrix,
-    partsMaxLength,
-    tagIndentation.length,
-  );
+  const expectedPositions = getExpectedPositions(partsMaxLength, tagIndentation.length);
 
   if (isNotAligned(expectedPositions, partsMatrix)) {
     report(
