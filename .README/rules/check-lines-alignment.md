@@ -1,4 +1,4 @@
-### `check-alignment`
+### `check-lines-alignment`
 
 Reports invalid alignment of JSDoc block lines. This is a
 [standard recommended to WordPress code](https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/javascript/#aligning-comments), for example.
