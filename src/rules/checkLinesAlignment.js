@@ -175,7 +175,6 @@ const checkCommentPerTag = (comment, tag, tagIndentation, report) => {
         lineRegExp,
         tagIndentation,
       ),
-      comment.loc,
     );
   }
 };
