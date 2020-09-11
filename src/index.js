@@ -3,6 +3,7 @@ import checkAccess from './rules/checkAccess';
 import checkAlignment from './rules/checkAlignment';
 import checkExamples from './rules/checkExamples';
 import checkIndentation from './rules/checkIndentation';
+import checkLinesAlignment from './rules/checkLinesAlignment';
 import checkParamNames from './rules/checkParamNames';
 import checkPropertyNames from './rules/checkPropertyNames';
 import checkSyntax from './rules/checkSyntax';
@@ -47,6 +48,7 @@ export default {
         'jsdoc/check-alignment': 'warn',
         'jsdoc/check-examples': 'off',
         'jsdoc/check-indentation': 'off',
+        'jsdoc/check-lines-alignment': 'warn',
         'jsdoc/check-param-names': 'warn',
         'jsdoc/check-property-names': 'warn',
         'jsdoc/check-syntax': 'off',
@@ -88,6 +90,7 @@ export default {
     'check-alignment': checkAlignment,
     'check-examples': checkExamples,
     'check-indentation': checkIndentation,
+    'check-lines-alignment': checkLinesAlignment,
     'check-param-names': checkParamNames,
     'check-property-names': checkPropertyNames,
     'check-syntax': checkSyntax,
