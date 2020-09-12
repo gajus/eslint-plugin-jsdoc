@@ -10,6 +10,8 @@ import iterateJsdoc from '../iterateJsdoc';
  * @param {RegExp}   regexp   Regular expression to run.
  * @param {Function} callback Function to be called each iteration.
  * @param {int}      limit    Limit of matches that we want to exec.
+ *
+ * @todo [engine:node@>=12]: Remove function and use `String.prototype.matchAll` instead.
  */
 const matchAll = (string, regexp, callback, limit) => {
   let result;
