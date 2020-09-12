@@ -135,17 +135,33 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
     }
 
     if (param.type === 'Property') {
+      if (param.value.type === 'ArrayPattern') {
+        return [param.key.name, param.value.elements.map((prop, idx) => {
+          return {
+            name: idx,
+            restElement: prop.type === 'RestElement',
+          };
+        })];
+      }
       if (param.value.type === 'ObjectPattern') {
         return [param.key.name, param.value.properties.map((prop) => {
           return getParamName(prop, isProperty);
         })];
       }
-      if (param.value.type === 'AssignmentPattern' &&
-        param.value.left.type === 'ObjectPattern'
-      ) {
-        return [param.key.name, param.value.left.properties.map((prop) => {
-          return getParamName(prop, isProperty);
-        })];
+      if (param.value.type === 'AssignmentPattern') {
+        if (param.value.left.type === 'ObjectPattern') {
+          return [param.key.name, param.value.left.properties.map((prop) => {
+            return getParamName(prop, isProperty);
+          })];
+        }
+        if (param.value.left.type === 'ArrayPattern') {
+          return [param.key.name, param.value.left.elements.map((prop, idx) => {
+            return {
+              name: idx,
+              restElement: prop.type === 'RestElement',
+            };
+          })];
+        }
       }
 
       // As function parameters, these do not allow dynamic properties, etc.

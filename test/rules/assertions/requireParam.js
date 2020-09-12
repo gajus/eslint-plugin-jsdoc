@@ -2098,7 +2098,7 @@ export default {
        * Description.
        * @param {object} options Options.
        * @param {object} options.foo A description.
-       * @param {object} options.foo.bar 
+       * @param {object} options.foo.bar
        */
       function foo({ foo: { bar: { baz } }}) {}
       `,
@@ -3009,6 +3009,25 @@ export default {
           checkTypesPattern: 'FooBar',
         },
       ],
+    },
+    {
+      code: `
+      /**
+       * @param obj
+       * @param obj.data
+       * @param obj.data.0
+       * @param obj.data.1
+       * @param obj.data.2
+       * @param obj.defaulting
+       * @param obj.defaulting.0
+       * @param obj.defaulting.1
+       */
+      function Item({
+        data: [foo, bar, ...baz],
+        defaulting: [quux, xyz] = []
+      }) {
+      }
+      `,
     },
   ],
 };
