@@ -16,6 +16,9 @@ export default {
           type: 'Block',
         },
       ],
+      options: [
+        'always',
+      ],
       output: `
         /**
          * Function description.
@@ -41,6 +44,9 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+      ],
+      options: [
+        'always',
       ],
       output: `
         /**
@@ -68,6 +74,9 @@ export default {
           type: 'Block',
         },
       ],
+      options: [
+        'always',
+      ],
       output: `
         /**
          * Function description.
@@ -93,6 +102,9 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+      ],
+      options: [
+        'always',
       ],
       output: `
         /**
@@ -120,6 +132,9 @@ export default {
           type: 'Block',
         },
       ],
+      options: [
+        'always',
+      ],
       output: `
         /**
          * Function description.
@@ -146,6 +161,9 @@ export default {
           type: 'Block',
         },
       ],
+      options: [
+        'always',
+      ],
       output: `
         /**
          * Function description.
@@ -171,6 +189,9 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+      ],
+      options: [
+        'always',
       ],
       output: `
         /**
@@ -199,6 +220,9 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+      ],
+      options: [
+        'always',
       ],
       output: `
         const object = {
@@ -229,6 +253,9 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+      ],
+      options: [
+        'always',
       ],
       output: `
         class ClassName {
@@ -258,6 +285,9 @@ export default {
           type: 'Block',
         },
       ],
+      options: [
+        'always',
+      ],
       output: `
         /**
          * Function description.
@@ -286,6 +316,9 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+      ],
+      options: [
+        'always',
       ],
       output: `
         /**
@@ -317,6 +350,9 @@ export default {
           type: 'Block',
         },
       ],
+      options: [
+        'always',
+      ],
       output: `
         /**
          * My object.
@@ -340,6 +376,9 @@ export default {
          */
         const fn = ( lorem, sit ) => {}
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -351,6 +390,9 @@ export default {
          */
         const fn = ( lorem, sit ) => {}
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -360,6 +402,9 @@ export default {
          */
         const fn = ( lorem, sit ) => {}
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -369,6 +414,9 @@ export default {
          */
         const fn = ( lorem, sit ) => {}
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -377,11 +425,17 @@ export default {
          */
         const fn = () => {}
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
         const fn = ( lorem, sit ) => {}
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -393,6 +447,9 @@ export default {
          */
         function fn( lorem, sit ) {}
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -406,6 +463,9 @@ export default {
           fn( lorem, sit ) {},
         }
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -419,6 +479,9 @@ export default {
           fn( lorem, sit ) {}
         }
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -430,6 +493,9 @@ export default {
          */
         const fn = ( lorem, sit ) => {}
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -444,6 +510,9 @@ export default {
             }
         }
       `,
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -454,6 +523,16 @@ export default {
          *
          * @property {string} lorem Description.
          * @property {int}    sit   Description multi words.
+         */
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+        /**
+         * Not validating without option.
          */
       `,
     },

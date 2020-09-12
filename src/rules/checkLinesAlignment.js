@@ -174,8 +174,17 @@ const checkCommentPerTag = (comment, tag, tagIndentation, report) => {
 export default iterateJsdoc(({
   jsdocNode,
   report,
+  context,
   indent,
 }) => {
+  if (context.options[0] === 'never') {
+    throw new Error('The `never` option is not yet implemented for this rule.');
+  }
+
+  if (context.options[0] !== 'always') {
+    return;
+  }
+
   // `indent` is whitespace from line 1 (`/**`), so slice and account for "/".
   const tagIndentation = indent + ' ';
 
@@ -190,6 +199,12 @@ export default iterateJsdoc(({
       url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-lines-alignment',
     },
     fixable: 'whitespace',
+    schema: [
+      {
+        enum: ['always', 'never'],
+        type: 'string',
+      },
+    ],
     type: 'layout',
   },
 });
