@@ -48,7 +48,7 @@ export default {
         'jsdoc/check-alignment': 'warn',
         'jsdoc/check-examples': 'off',
         'jsdoc/check-indentation': 'off',
-        'jsdoc/check-lines-alignment': 'warn',
+        'jsdoc/check-lines-alignment': 'off',
         'jsdoc/check-param-names': 'warn',
         'jsdoc/check-property-names': 'warn',
         'jsdoc/check-syntax': 'off',
