@@ -91,7 +91,7 @@ const createFixer = (comment, expectedPositions, partsMatrix, lineRegExp, tagInd
       // eslint-disable-next-line unicorn/no-reduce
       return partsMatrix[lineIndex++].reduce(
         (acc, {string}, index) => {
-          const spacings = ''.padStart(expectedPositions[index] - acc.length, ' ');
+          const spacings = ' '.repeat(expectedPositions[index] - acc.length);
 
           return acc + (index === 0 ? tagIndentation : spacings) + string;
         },
