@@ -364,6 +364,26 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * Not implemented yet.
+         *
+         * @param {string} lorem Description.
+         * @param {int} sit Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          message: 'The `never` option is not yet implemented for this rule.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'never',
+      ],
+    },
   ],
   valid: [
     {
@@ -533,7 +553,11 @@ export default {
       code: `
         /**
          * Not validating without option.
+         *
+         * @param {string} lorem Description.
+         * @param {int} sit Description multi words.
          */
+        const fn = ( lorem, sit ) => {}
       `,
     },
   ],

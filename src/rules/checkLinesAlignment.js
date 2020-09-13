@@ -178,7 +178,9 @@ export default iterateJsdoc(({
   indent,
 }) => {
   if (context.options[0] === 'never') {
-    throw new Error('The `never` option is not yet implemented for this rule.');
+    report('The `never` option is not yet implemented for this rule.');
+
+    return;
   }
 
   if (context.options[0] !== 'always') {
