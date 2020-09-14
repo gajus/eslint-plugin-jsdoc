@@ -1715,6 +1715,264 @@ line's parts. **Only the non-default `"always"` is implemented for now.**
 |Options|(a string matching `"always"|"never"`)|
 |Tags|`param`, `arg`, `argument`, `property`, `prop`|
 
+The following patterns are considered problems:
+
+````js
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem - Description.
+ * @param {int} sit - Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param  {string} lorem Description.
+ *  @param {int}    sit   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param  {string} lorem Description.
+  * @param {int}    sit   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param  {string} lorem Description.
+ * @param  {int}    sit   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi words.
+ */
+function fn( lorem, sit ) {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+const object = {
+  /**
+   * Function description.
+   *
+   * @param {string} lorem Description.
+   * @param {int} sit Description multi words.
+   */
+  fn( lorem, sit ) {}
+}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+class ClassName {
+  /**
+   * Function description.
+   *
+   * @param {string} lorem Description.
+   * @param {int} sit Description multi words.
+   */
+  fn( lorem, sit ) {}
+}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @arg {string} lorem Description.
+ * @arg {int} sit Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * @namespace
+ * @property {object} defaults Description.
+ * @property {int} defaults.lorem Description multi words.
+ */
+const config = {
+    defaults: {
+        lorem: 1
+    }
+}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * My object.
+ *
+ * @typedef {Object} MyObject
+ *
+ * @property {string} lorem Description.
+ * @property {int} sit Description multi words.
+ */
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Not implemented yet.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["never"]
+// Message: The `never` option is not yet implemented for this rule.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem - Description.
+ * @param {int}    sit   - Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+
+/**
+ * @param {string} lorem Description.
+ * @param {int}    sit
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+
+/**
+ * @param {int}    sit
+ * @param {string} lorem Description.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+
+/**
+ * No params.
+ */
+const fn = () => {}
+// Options: ["always"]
+
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description multi words.
+ */
+function fn( lorem, sit ) {}
+// Options: ["always"]
+
+const object = {
+  /**
+   * Function description.
+   *
+   * @param {string} lorem Description.
+   * @param {int}    sit   Description multi words.
+   */
+  fn( lorem, sit ) {},
+}
+// Options: ["always"]
+
+class ClassName {
+  /**
+   * Function description.
+   *
+   * @param {string} lorem Description.
+   * @param {int}    sit   Description multi words.
+   */
+  fn( lorem, sit ) {}
+}
+// Options: ["always"]
+
+/**
+ * Function description.
+ *
+ * @arg {string} lorem Description.
+ * @arg {int}    sit   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+
+/**
+ * @namespace
+ * @property {object} defaults       Description.
+ * @property {int}    defaults.lorem Description multi words.
+ */
+const config = {
+    defaults: {
+        lorem: 1
+    }
+}
+// Options: ["always"]
+
+/**
+ * My object.
+ *
+ * @typedef {Object} MyObject
+ *
+ * @property {string} lorem Description.
+ * @property {int}    sit   Description multi words.
+ */
+// Options: ["always"]
+
+/**
+ * Not validating without option.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-check-param-names"></a>
 ### <code>check-param-names</code>
 
