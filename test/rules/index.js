@@ -9,7 +9,7 @@ const ruleTester = new RuleTester();
 (process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : [
   'check-access',
   'check-alignment',
-  'check-lines-alignment',
+  'check-line-alignment',
   'check-examples',
   'check-indentation',
   'check-param-names',
