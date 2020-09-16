@@ -603,6 +603,15 @@ export default {
     },
     {
       code: `
+        /** @param {number} lorem */
+        const fn = ( lorem ) => {}
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
         /**
          * Not validating without option.
          *

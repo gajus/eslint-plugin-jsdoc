@@ -187,6 +187,11 @@ export default iterateJsdoc(({
     return;
   }
 
+  // Skip if it contains only a single line.
+  if (!jsdocNode.value.includes('\n')) {
+    return;
+  }
+
   // `indent` is whitespace from line 1 (`/**`), so slice and account for "/".
   const tagIndentation = indent + ' ';
 
