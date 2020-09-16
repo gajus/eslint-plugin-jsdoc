@@ -367,6 +367,41 @@ export default {
     {
       code: `
         /**
+         * My object.
+         *
+         * @typedef {Object} MyObject
+         *
+         * @property {{a: number, b: string, c}} lorem Description.
+         * @property {Object.<string, Class>} sit Description multi words.
+         * @property {Object.<string, Class>} amet Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>} dolor
+         */
+      `,
+      errors: [
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+        /**
+         * My object.
+         *
+         * @typedef {Object} MyObject
+         *
+         * @property {{a: number, b: string, c}} lorem Description.
+         * @property {Object.<string, Class>}    sit   Description multi words.
+         * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>}    dolor
+         */
+      `,
+    },
+    {
+      code: `
+        /**
          * Not implemented yet.
          *
          * @param {string} lorem Description.
@@ -543,6 +578,23 @@ export default {
          *
          * @property {string} lorem Description.
          * @property {int}    sit   Description multi words.
+         */
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+        /**
+         * My object.
+         *
+         * @typedef {Object} MyObject
+         *
+         * @property {{a: number, b: string, c}} lorem Description.
+         * @property {Object.<string, Class>}    sit   Description multi words.
+         * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>}    dolor
          */
       `,
       options: [
