@@ -14,7 +14,7 @@ JSDoc linting rules for ESLint.
     * [Configuration](#eslint-plugin-jsdoc-configuration)
     * [Options](#eslint-plugin-jsdoc-options)
     * [Settings](#eslint-plugin-jsdoc-settings)
-        * [Allow `@private` to disable rules for that comment block](#eslint-plugin-jsdoc-settings-allow-private-to-disable-rules-for-that-comment-block)
+        * [Allow tags (`@private` or `@internal`) to disable rules for that comment block](#eslint-plugin-jsdoc-settings-allow-tags-private-or-internal-to-disable-rules-for-that-comment-block)
         * [`maxLines` and `minLines`](#eslint-plugin-jsdoc-settings-maxlines-and-minlines)
         * [Mode](#eslint-plugin-jsdoc-settings-mode)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
@@ -172,13 +172,17 @@ supplied as the second argument in an array after the error level.
 <a name="eslint-plugin-jsdoc-settings"></a>
 ## Settings
 
-<a name="eslint-plugin-jsdoc-settings-allow-private-to-disable-rules-for-that-comment-block"></a>
-### Allow <code>@private</code> to disable rules for that comment block
+<a name="eslint-plugin-jsdoc-settings-allow-tags-private-or-internal-to-disable-rules-for-that-comment-block"></a>
+### Allow tags (<code>@private</code> or <code>@internal</code>) to disable rules for that comment block
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
   on which a `@private` tag (or `@access private`) occurs. Defaults to
   `false`. Note: This has no effect with the rule `check-access` (whose
-  purpose is to check access modifiers).
+  purpose is to check access modifiers) or `empty-tags` (which checks
+  `@private` itself).
+- `settings.jsdoc.ignoreInternal` - Disables all rules for the comment block
+  on which a `@internal` tag occurs. Defaults to `false`. Note: This has no
+  effect with the rule `empty-tags` (which checks `@internal` itself).
 
 <a name="eslint-plugin-jsdoc-settings-maxlines-and-minlines"></a>
 ### <code>maxLines</code> and <code>minLines</code>
@@ -5102,6 +5106,9 @@ Note that `@private` will still be checked for content by this rule even with
 `settings.jsdoc.ignorePrivate` set to `true` (a setting which normally
 causes rules not to take effect).
 
+Similarly, `@internal` will still be checked for content by this rule even with
+`settings.jsdoc.ignoreInternal` set to `true`.
+
 <a name="eslint-plugin-jsdoc-rules-empty-tags-options-9"></a>
 #### Options
 
@@ -5172,6 +5179,14 @@ function quux () {
 // Message: @private should be empty.
 
 /**
+ * @internal {someType}
+ */
+function quux () {
+
+}
+// Message: @internal should be empty.
+
+/**
  * @private {someType}
  */
 function quux () {
@@ -5224,6 +5239,13 @@ function quux () {
 
 /**
  * @private
+ */
+function quux () {
+
+}
+
+/**
+ * @internal
  */
 function quux () {
 
@@ -12367,6 +12389,14 @@ class A {
   }
 }
 // Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
+
+/**
+ * @internal
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"ignoreInternal":true}}
 
 /**
  * @private

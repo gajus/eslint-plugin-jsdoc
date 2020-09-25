@@ -2596,6 +2596,21 @@ export default {
     {
       code: `
           /**
+           * @internal
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          ignoreInternal: true,
+        },
+      },
+    },
+    {
+      code: `
+          /**
            * @private
            */
           function quux (foo) {

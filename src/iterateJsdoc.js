@@ -441,6 +441,7 @@ const getSettings = (context) => {
   const settings = {
     // All rules
     ignorePrivate: Boolean(context.settings.jsdoc?.ignorePrivate),
+    ignoreInternal: Boolean(context.settings.jsdoc?.ignoreInternal),
     maxLines: Number(context.settings.jsdoc?.maxLines ?? 1),
     minLines: Number(context.settings.jsdoc?.minLines ?? 0),
 
@@ -560,8 +561,13 @@ const iterate = (
   );
 
   if (
-    settings.ignorePrivate &&
-    !ruleConfig.checkPrivate &&
+    !ruleConfig.checkInternal && settings.ignoreInternal &&
+    utils.hasTag('internal')
+  ) {
+    return;
+  }
+  if (
+    !ruleConfig.checkPrivate && settings.ignorePrivate &&
     (utils.hasTag('private') || _.filter(jsdoc.tags, {
       tag: 'access',
     }).some(({description}) => {

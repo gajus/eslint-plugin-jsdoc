@@ -27,6 +27,9 @@ Note that `@private` will still be checked for content by this rule even with
 `settings.jsdoc.ignorePrivate` set to `true` (a setting which normally
 causes rules not to take effect).
 
+Similarly, `@internal` will still be checked for content by this rule even with
+`settings.jsdoc.ignoreInternal` set to `true`.
+
 #### Options
 
 ##### `tags`
