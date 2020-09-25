@@ -80,7 +80,11 @@ const getSymbol = function (node, globals, scope, opt) {
 
     /* istanbul ignore next */
     return null;
-  } case 'ClassDeclaration': case 'ClassExpression': case 'FunctionExpression': case 'FunctionDeclaration': case 'ArrowFunctionExpression': {
+  }
+  case 'TSEnumDeclaration':
+  case 'ClassDeclaration': case 'ClassExpression':
+  case 'FunctionExpression': case 'FunctionDeclaration':
+  case 'ArrowFunctionExpression': {
     const val = createNode();
     val.props.prototype = createNode();
     val.props.prototype.type = 'object';
@@ -146,6 +150,7 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
   const block = scope || globals;
   let symbol;
   switch (node.type) {
+  case 'TSEnumDeclaration':
   case 'FunctionDeclaration':
 
     // Fallthrough

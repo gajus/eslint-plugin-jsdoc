@@ -2554,6 +2554,37 @@ export default {
       `,
       parser: require.resolve('babel-eslint'),
     },
+    {
+      code: `
+      export enum testEnum {
+        A, B
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSEnumDeclaration'],
+          publicOnly: true,
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export enum testEnum {
+        A, B
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [{
     code: `

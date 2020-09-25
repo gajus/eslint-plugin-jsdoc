@@ -9951,6 +9951,12 @@ class Test {
 }
 // Options: [{"require":{"ArrowFunctionExpression":true,"ClassDeclaration":false,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
+
+export enum testEnum {
+  A, B
+}
+// Options: [{"contexts":["TSEnumDeclaration"],"publicOnly":true}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:
