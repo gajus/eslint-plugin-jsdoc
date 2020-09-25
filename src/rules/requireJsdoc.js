@@ -269,10 +269,16 @@ export default {
       }
     };
 
+    const hasOption = (prop) => {
+      return requireOption[prop] || contexts.some((ctxt) => {
+        return typeof ctxt === 'object' ? ctxt.context === prop : ctxt === prop;
+      });
+    };
+
     return {
       ...jsdocUtils.getContextObject(jsdocUtils.enforcedContexts(context, []), checkJsDoc),
       ArrowFunctionExpression (node) {
-        if (!requireOption.ArrowFunctionExpression) {
+        if (!hasOption('ArrowFunctionExpression')) {
           return;
         }
 
@@ -285,7 +291,7 @@ export default {
       },
 
       ClassDeclaration (node) {
-        if (!requireOption.ClassDeclaration) {
+        if (!hasOption('ClassDeclaration')) {
           return;
         }
 
@@ -293,7 +299,7 @@ export default {
       },
 
       ClassExpression (node) {
-        if (!requireOption.ClassExpression) {
+        if (!hasOption('ClassExpression')) {
           return;
         }
 
@@ -301,7 +307,7 @@ export default {
       },
 
       FunctionDeclaration (node) {
-        if (!requireOption.FunctionDeclaration) {
+        if (!hasOption('FunctionDeclaration')) {
           return;
         }
 
@@ -309,13 +315,13 @@ export default {
       },
 
       FunctionExpression (node) {
-        if (requireOption.MethodDefinition && node.parent.type === 'MethodDefinition') {
+        if (hasOption('MethodDefinition') && node.parent.type === 'MethodDefinition') {
           checkJsDoc(node, true);
 
           return;
         }
 
-        if (!requireOption.FunctionExpression) {
+        if (!hasOption('FunctionExpression')) {
           return;
         }
 

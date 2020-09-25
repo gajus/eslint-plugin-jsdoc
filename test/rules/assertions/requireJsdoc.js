@@ -213,6 +213,64 @@ export default {
     },
     {
       code: `
+          export const test = () => {
+
+          };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'ArrowFunctionExpression',
+        },
+      ],
+      options: [{
+        contexts: ['ArrowFunctionExpression'],
+        publicOnly: true,
+      }],
+      output: `
+          /**
+           *
+           */
+          export const test = () => {
+
+          };
+      `,
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          export const test = () => {
+
+          };
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'ArrowFunctionExpression',
+        },
+      ],
+      options: [{
+        contexts: [{
+          context: 'ArrowFunctionExpression',
+        }],
+        publicOnly: true,
+      }],
+      output: `
+          /**
+           *
+           */
+          export const test = () => {
+
+          };
+      `,
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
           export let test = class {
 
           };

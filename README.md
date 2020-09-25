@@ -9422,6 +9422,18 @@ export const test = () => {
 // Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
+export const test = () => {
+
+};
+// Options: [{"contexts":["ArrowFunctionExpression"],"publicOnly":true}]
+// Message: Missing JSDoc comment.
+
+export const test = () => {
+
+};
+// Options: [{"contexts":[{"context":"ArrowFunctionExpression"}],"publicOnly":true}]
+// Message: Missing JSDoc comment.
+
 export let test = class {
 
 };
