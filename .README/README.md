@@ -113,12 +113,16 @@ supplied as the second argument in an array after the error level.
 
 ## Settings
 
-### Allow `@private` to disable rules for that comment block
+### Allow tags (`@private` or `@internal`) to disable rules for that comment block
 
 - `settings.jsdoc.ignorePrivate` - Disables all rules for the comment block
   on which a `@private` tag (or `@access private`) occurs. Defaults to
   `false`. Note: This has no effect with the rule `check-access` (whose
-  purpose is to check access modifiers).
+  purpose is to check access modifiers) or `empty-tags` (which checks
+  `@private` itself).
+- `settings.jsdoc.ignoreInternal` - Disables all rules for the comment block
+  on which a `@internal` tag occurs. Defaults to `false`. Note: This has no
+  effect with the rule `empty-tags` (which checks `@internal` itself).
 
 ### `maxLines` and `minLines`
 

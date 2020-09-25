@@ -140,6 +140,30 @@ export default {
     {
       code: `
       /**
+       * @internal {someType}
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@internal should be empty.',
+        },
+      ],
+      output: `
+      /**
+       * @internal
+       */
+      function quux () {
+
+      }
+      `,
+    },
+    {
+      code: `
+      /**
        * @private {someType}
        */
       function quux () {
@@ -229,6 +253,16 @@ export default {
       code: `
       /**
        * @private
+       */
+      function quux () {
+
+      }
+      `,
+    },
+    {
+      code: `
+      /**
+       * @internal
        */
       function quux () {
 

@@ -7,6 +7,9 @@ const defaultEmptyTags = new Set([
   // jsdoc doesn't use this form in its docs, but allow for compatibility with
   //  TypeScript which allows and Closure which requires
   'inheritDoc',
+
+  // jsdoc doesn't use but allow for TypeScript
+  'internal',
 ]);
 
 const emptyIfNotClosure = new Set([
@@ -45,6 +48,7 @@ export default iterateJsdoc(({
     }
   });
 }, {
+  checkInternal: true,
   checkPrivate: true,
   iterateAllJsdocs: true,
   meta: {
