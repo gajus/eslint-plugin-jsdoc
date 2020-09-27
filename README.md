@@ -6416,6 +6416,16 @@ function quux() {
 /* @ts-ignore */
 // Options: [{"ignore":[]}]
 // Message: Expected JSDoc-like comment to begin with two asterisks.
+
+/*
+ * Some description.
+ *
+ * @returns {string} Some string
+ */
+function echo() {
+  return 'Something';
+}
+// Message: Expected JSDoc-like comment to begin with two asterisks.
 ````
 
 The following patterns are not considered problems:

@@ -72,6 +72,34 @@ export default {
       options: [{ignore: []}],
       output: '/** @ts-ignore */',
     },
+    {
+      code: `
+      /*
+       * Some description.
+       *
+       * @returns {string} Some string
+       */
+      function echo() {
+        return 'Something';
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc-like comment to begin with two asterisks.',
+        },
+      ],
+      output: `
+      /**
+       * Some description.
+       *
+       * @returns {string} Some string
+       */
+      function echo() {
+        return 'Something';
+      }
+      `,
+    },
   ],
   valid: [
     {

@@ -1,6 +1,7 @@
+import commentParser from 'comment-parser';
 import iterateJsdoc from '../iterateJsdoc';
 
-const regexp = /^\/\*(?!\*)[\s*]*@([\w-]+)/;
+const commentRegexp = /^\/\*(?!\*)/;
 
 export default iterateJsdoc(({
   context,
@@ -19,12 +20,16 @@ export default iterateJsdoc(({
     } = {},
   ] = context.options;
   const nonJsdocNodes = allComments.filter((comment) => {
-    const match = regexp.exec(sourceCode.getText(comment));
-    if (!match) {
+    const commentText = sourceCode.getText(comment);
+    if (!commentRegexp.test(commentText)) {
       return false;
     }
 
-    return !ignore.includes(match[1]);
+    const [{tags}] = commentParser(`${commentText.slice(0, 2)}*${commentText.slice(2)}`);
+
+    return tags.length && !tags.some(({tag}) => {
+      return ignore.includes(tag);
+    });
   });
   if (!nonJsdocNodes.length) {
     return;
