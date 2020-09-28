@@ -9989,6 +9989,13 @@ export enum testEnum {
 }
 // Options: [{"contexts":["TSEnumDeclaration"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
+
+export interface Test {
+  aFunc: () => void;
+  aVar: string;
+}
+// Options: [{"contexts":["TSInterfaceDeclaration"],"publicOnly":true}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

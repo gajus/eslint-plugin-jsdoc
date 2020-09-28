@@ -2585,6 +2585,39 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      export interface Test {
+        aFunc: () => void;
+        aVar: string;
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSInterfaceDeclaration'],
+          publicOnly: true,
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export interface Test {
+        aFunc: () => void;
+        aVar: string;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [{
     code: `
