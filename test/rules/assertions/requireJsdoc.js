@@ -2618,6 +2618,33 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      export type testType = string | number;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSTypeAliasDeclaration'],
+          publicOnly: true,
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export type testType = string | number;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [{
     code: `

@@ -81,6 +81,7 @@ const getSymbol = function (node, globals, scope, opt) {
     /* istanbul ignore next */
     return null;
   }
+  case 'TSTypeAliasDeclaration':
   case 'TSEnumDeclaration': case 'TSInterfaceDeclaration':
   case 'ClassDeclaration': case 'ClassExpression':
   case 'FunctionExpression': case 'FunctionDeclaration':
@@ -153,6 +154,7 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
   case 'TSEnumDeclaration':
   case 'FunctionDeclaration':
   case 'TSInterfaceDeclaration':
+  case 'TSTypeAliasDeclaration':
 
     // Fallthrough
   case 'ClassDeclaration': {
