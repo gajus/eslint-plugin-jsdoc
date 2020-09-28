@@ -9996,6 +9996,10 @@ export interface Test {
 }
 // Options: [{"contexts":["TSInterfaceDeclaration"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
+
+export type testType = string | number;
+// Options: [{"contexts":["TSTypeAliasDeclaration"],"publicOnly":true}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:
