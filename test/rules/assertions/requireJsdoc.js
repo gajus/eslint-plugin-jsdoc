@@ -4097,5 +4097,24 @@ export default {
       exemptEmptyConstructors: true,
     }],
   },
+  {
+    code: `
+    /**
+     * This is a text.
+     */
+    export function a(); // Reports an error
+    `,
+    options: [
+      {
+        contexts: [
+          'TSDeclareFunction',
+        ],
+        require: {
+          FunctionDeclaration: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  },
   ],
 };

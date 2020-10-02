@@ -166,6 +166,7 @@ const getReducedASTNode = function (node, sourceCode) {
   case 'FunctionDeclaration':
     return looksLikeExport(parent) ? parent : node;
 
+  case 'TSDeclareFunction':
   case 'ClassExpression':
   case 'ObjectExpression':
   case 'ArrowFunctionExpression':

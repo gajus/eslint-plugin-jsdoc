@@ -10685,6 +10685,12 @@ class Base {
   }
 }
 // Options: [{"contexts":["MethodDefinition"],"exemptEmptyConstructors":true}]
+
+/**
+ * This is a text.
+ */
+export function a(); // Reports an error
+// Options: [{"contexts":["TSDeclareFunction"],"require":{"FunctionDeclaration":true}}]
 ````
 
 
