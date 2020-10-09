@@ -2645,6 +2645,55 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      export interface Foo {
+          bar: number;
+          baz: string;
+          quux(): void;
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 5,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: ['TSPropertySignature', 'TSMethodSignature'],
+          publicOnly: true,
+        },
+      ],
+      output: `
+      export interface Foo {
+          /**
+           *
+           */
+          bar: number;
+          /**
+           *
+           */
+          baz: string;
+          /**
+           *
+           */
+          quux(): void;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [{
     code: `

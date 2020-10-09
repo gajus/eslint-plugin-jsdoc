@@ -10000,6 +10000,14 @@ export interface Test {
 export type testType = string | number;
 // Options: [{"contexts":["TSTypeAliasDeclaration"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
+
+export interface Foo {
+    bar: number;
+    baz: string;
+    quux(): void;
+}
+// Options: [{"contexts":["TSPropertySignature","TSMethodSignature"],"publicOnly":true}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

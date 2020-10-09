@@ -258,8 +258,7 @@ export default {
           initModuleExports: Boolean(publicOnly?.cjs ?? true),
           initWindow: Boolean(publicOnly?.window ?? false),
         };
-        const parseResult = exportParser.parse(sourceCode.ast, node, opt);
-        const exported = exportParser.isExported(node, parseResult, opt);
+        const exported = exportParser.isExported(node, sourceCode, opt);
 
         if (exported) {
           report();

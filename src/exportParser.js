@@ -53,6 +53,7 @@ const getIdentifier = function (node, globals, scope, opts) {
 let createSymbol = null;
 const getSymbol = function (node, globals, scope, opt) {
   const opts = opt || {};
+  /* istanbul ignore next */
   switch (node.type) {
   case 'Identifier': {
     return getIdentifier(node, globals, scope, opts);
@@ -151,16 +152,18 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
   const block = scope || globals;
   let symbol;
   switch (node.type) {
-  case 'TSEnumDeclaration':
   case 'FunctionDeclaration':
-  case 'TSInterfaceDeclaration':
-  case 'TSTypeAliasDeclaration':
-
-    // Fallthrough
-  case 'ClassDeclaration': {
+  /* istanbul ignore next */
+  // Fall through
+  case 'TSEnumDeclaration': case 'TSInterfaceDeclaration':
+  /* istanbul ignore next */
+  // Fall through
+  case 'TSTypeAliasDeclaration': case 'ClassDeclaration': {
+    /* istanbul ignore next */
     if (node.id && node.id.type === 'Identifier') {
       return createSymbol(node.id, globals, node, globals);
     }
+    /* istanbul ignore next */
     break;
   } case 'Identifier': {
     if (value) {
@@ -325,6 +328,7 @@ const findNode = function (node, block, cache) {
   const {props = block.body} = block;
   for (const propval of Object.values(props || {})) {
     if (Array.isArray(propval)) {
+      /* istanbul ignore if */
       if (propval.some((val) => {
         return findNode(node, val, blockCache);
       })) {
@@ -338,10 +342,20 @@ const findNode = function (node, block, cache) {
   return false;
 };
 
-const findExportedNode = function (block, node, cache) {
-  if (block.ANONYMOUS_DEFAULT === node) {
-    return true;
+const exportTypes = new Set(['ExportNamedDeclaration', 'ExportDefaultDeclaration']);
+const hasExportAncestor = function (nde) {
+  let node = nde;
+  while (node) {
+    if (exportTypes.has(node.type)) {
+      return true;
+    }
+    node = node.parent;
   }
+
+  return false;
+};
+
+const findExportedNode = function (block, node, cache) {
   /* istanbul ignore next */
   if (block === null) {
     return false;
@@ -426,7 +440,13 @@ const parse = function (ast, node, opt) {
   };
 };
 
-const isExported = function (node, parseResult, opt) {
+const isExported = function (node, sourceCode, opt) {
+  // Optimize with ancestor check for esm
+  if (opt.esm && hasExportAncestor(node)) {
+    return true;
+  }
+  const parseResult = parse(sourceCode.ast, node, opt);
+
   return isNodeExported(node, parseResult.globalVars, opt);
 };
 
