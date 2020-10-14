@@ -14912,6 +14912,12 @@ function foo(bar) {}
 // Message: Syntax error in namepath: name<
 
 /**
+ * @module module:name<
+ */
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: Syntax error in namepath: module:name<
+
+/**
  * @interface name
  */
 // Settings: {"jsdoc":{"mode":"closure"}}
@@ -15273,6 +15279,14 @@ parseArray = function(parser) {
     };
 };
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
+
+/**
+ * @module foo/bar
+ */
+
+/**
+ * @module module:foo/bar
+ */
 ````
 
 

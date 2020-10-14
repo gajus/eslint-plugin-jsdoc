@@ -19,43 +19,55 @@ export default iterateJsdoc(({
   if (!jsdoc.tags) {
     return;
   }
+
+  const tryParseIgnoreError = (path) => {
+    try {
+      parse(path, {mode});
+
+      return true;
+    } catch {
+      // Keep the original error for including the whole type
+    }
+
+    return false;
+  };
+
   // eslint-disable-next-line complexity
   jsdoc.tags.forEach((tag) => {
     const validNamepathParsing = function (namepath, tagName) {
-      try {
-        parse(namepath, {mode});
-      } catch {
-        let handled = false;
+      if (tryParseIgnoreError(namepath)) {
+        return true;
+      }
+      let handled = false;
 
-        if (tagName) {
-          if (['memberof', 'memberof!'].includes(tagName)) {
-            const endChar = namepath.slice(-1);
-            if (['#', '.', '~'].includes(endChar)) {
-              try {
-                parse(namepath.slice(0, -1), {mode});
-                handled = true;
-              } catch {
-                // Use the original error for including the whole type
-              }
-            }
-          } else if (tagName === 'borrows') {
-            const startChar = namepath.charAt();
-            if (['#', '.', '~'].includes(startChar)) {
-              try {
-                parse(namepath.slice(1), {mode});
-                handled = true;
-              } catch {
-                // Use the original error for including the whole type
-              }
-            }
+      if (tagName) {
+        switch (tagName) {
+        case 'module': {
+          if (!namepath.startsWith('module:')) {
+            handled = tryParseIgnoreError(`module:${namepath}`);
+          }
+          break;
+        }
+        case 'memberof': case 'memberof!': {
+          const endChar = namepath.slice(-1);
+          if (['#', '.', '~'].includes(endChar)) {
+            handled = tryParseIgnoreError(namepath.slice(0, -1));
+          }
+          break;
+        }
+        case 'borrows': {
+          const startChar = namepath.charAt();
+          if (['#', '.', '~'].includes(startChar)) {
+            handled = tryParseIgnoreError(namepath.slice(1));
           }
         }
-
-        if (!handled) {
-          report(`Syntax error in namepath: ${namepath}`, null, tag);
-
-          return false;
         }
+      }
+
+      if (!handled) {
+        report(`Syntax error in namepath: ${namepath}`, null, tag);
+
+        return false;
       }
 
       return true;
