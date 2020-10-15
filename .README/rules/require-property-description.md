@@ -5,6 +5,7 @@ Requires that each `@property` tag has a `description` value.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/A|
+|Tags|`property`|
+|Aliases|`prop`|
 
 <!-- assertions requirePropertyDescription -->

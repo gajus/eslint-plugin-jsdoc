@@ -19,5 +19,6 @@ be removed even if it has a different type or description).
 |Context|Everywhere|
 |Options|`enableFixer`|
 |Tags|`property`|
+|Aliases|`prop`|
 
 <!-- assertions checkPropertyNames -->
