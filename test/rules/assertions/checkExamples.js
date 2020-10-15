@@ -691,6 +691,64 @@ export default {
         noDefaultExampleRules: false,
       }],
     },
+    {
+      code: `
+          /**
+           * @default 'abc'
+           */
+          const str = 'abc';
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '@default error (semi): Missing semicolon.',
+        },
+      ],
+      options: [
+        {
+          checkDefaults: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {myType} [name='abc']
+           */
+          function quux () {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '@param error (semi): Missing semicolon.',
+        },
+      ],
+      options: [
+        {
+          checkParams: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @property {myType} [name='abc']
+           */
+          const obj = {};
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '@property error (semi): Missing semicolon.',
+        },
+      ],
+      options: [
+        {
+          checkProperties: true,
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -984,6 +1042,86 @@ export default {
         checkEslintrc: false,
         noDefaultExampleRules: false,
       }],
+    },
+    {
+      code: `
+          /**
+           * @default 'abc';
+           */
+          const str = 'abc';
+      `,
+      options: [
+        {
+          checkDefaults: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {myType} [name='abc';]
+           */
+          function quux () {
+          }
+      `,
+      options: [
+        {
+          checkParams: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @property {myType} [name='abc';]
+           */
+          const obj = {};
+      `,
+      options: [
+        {
+          checkProperties: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @default 'abc'
+           */
+          const str = 'abc';
+      `,
+      options: [
+        {
+          checkDefaults: false,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {myType} [name='abc']
+           */
+          function quux () {
+          }
+      `,
+      options: [
+        {
+          checkParams: false,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @property {myType} [name='abc']
+           */
+          const obj = {};
+      `,
+      options: [
+        {
+          checkProperties: false,
+        },
+      ],
     },
   ],
 };

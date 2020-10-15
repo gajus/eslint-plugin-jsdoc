@@ -1,6 +1,8 @@
 ### `check-examples`
 
-Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.
+Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules. Also
+has options to lint the default values of optional `@param`/`@arg`/`@argument`
+and `@property`/`@prop` tags or the values of `@default`/`@defaultvalue` tags.
 
 #### Options
 
@@ -13,6 +15,8 @@ JSDoc specs use of an optional `<caption>` element at the beginning of
 
 The option `captionRequired` insists on a `<caption>` being present at
 the beginning of any `@example`.
+
+Used only for `@example`.
 
 ##### `exampleCodeRegex` and `rejectExampleCodeRegex`
 
@@ -55,10 +59,12 @@ out before evaluation.
 /**
  * @example
  *     anArray.filter((a) => {
- *      return a.b;
+ *       return a.b;
  *     });
  */
 ```
+
+Only applied to `@example` linting.
 
 ##### `reportUnusedDisableDirectives`
 
@@ -66,17 +72,18 @@ If not set to `false`, `reportUnusedDisableDirectives` will report disabled
 directives which are not used (and thus not needed). Defaults to `true`.
 Corresponds to ESLint's [`--report-unused-disable-directives`](https://eslint.org/docs/user-guide/command-line-interface#--report-unused-disable-directives).
 
-Inline ESLint config within `@example` JavaScript is allowed, though the
-disabling of ESLint directives which are not needed by the resolved rules
-will be reported as with the ESLint `--report-unused-disable-directives`
-command.
+Inline ESLint config within `@example` JavaScript is allowed (or within
+`@default`, etc.), though the disabling of ESLint directives which are not
+needed by the resolved rules will be reported as with the ESLint
+`--report-unused-disable-directives` command.
 
 #### Options for Determining ESLint Rule Applicability (`allowInlineConfig`, `noDefaultExampleRules`, `matchingFileName`, `configFile`, `checkEslintrc`, and `baseConfig`)
 
 The following options determine which individual ESLint rules will be
 applied to the JavaScript found within the `@example` tags (as determined
-to be applicable by the above regex options). They are ordered by
-decreasing precedence:
+to be applicable by the above regex options) or for the other tags checked by
+`checkDefaults`, `checkParams`, or `checkProperties` options. They are ordered
+by decreasing precedence:
 
 * `allowInlineConfig` - If not set to `false`, will allow
   inline config within the `@example` to override other config. Defaults
@@ -135,6 +142,12 @@ decreasing precedence:
   include full import/export info.
 * `node/no-missing-import` - See `import/no-unresolved`.
 * `node/no-missing-require` -  See `import/no-unresolved`.
+
+##### Options for checking other than `@example` (`checkDefaults`, `checkParams`, or `checkProperties`)
+
+* `checkDefaults` - Whether to check the values of `@default`/`@defaultvalue` tags
+* `checkParams` - Whether to check `@param`/`@arg`/`@argument` default values
+* `checkProperties` - Whether to check `@property`/`@prop` default values
 
 |||
 |---|---|
