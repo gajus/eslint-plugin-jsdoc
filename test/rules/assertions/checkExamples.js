@@ -1093,6 +1093,7 @@ export default {
       options: [
         {
           checkDefaults: false,
+          matchingFileNameDefaults: 'dummy.js',
         },
       ],
     },
@@ -1107,6 +1108,7 @@ export default {
       options: [
         {
           checkParams: false,
+          matchingFileNameParams: 'dummy.js',
         },
       ],
     },
@@ -1120,6 +1122,7 @@ export default {
       options: [
         {
           checkProperties: false,
+          matchingFileNameProperties: 'dummy.js',
         },
       ],
     },

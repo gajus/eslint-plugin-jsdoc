@@ -60,7 +60,10 @@ export default iterateJsdoc(({
     checkProperties = true,
     noDefaultExampleRules = false,
     checkEslintrc = true,
-    matchingFileName: filename = null,
+    matchingFileName = null,
+    matchingFileNameDefaults = null,
+    matchingFileNameParams = null,
+    matchingFileNameProperties = null,
     paddedIndent = 0,
     baseConfig = {},
     configFile,
@@ -68,16 +71,6 @@ export default iterateJsdoc(({
     reportUnusedDisableDirectives = true,
     captionRequired = false,
   } = options;
-
-  let defaultFileName;
-  if (!filename) {
-    const jsFileName = context.getFilename();
-    if (typeof jsFileName === 'string' && jsFileName.includes('.')) {
-      defaultFileName = jsFileName.replace(/\..*?$/, '.md');
-    } else {
-      defaultFileName = 'dummy.md';
-    }
-  }
 
   // Make this configurable?
   const rulePaths = [];
@@ -126,6 +119,7 @@ export default iterateJsdoc(({
   }
 
   const checkSource = ({
+    filename, defaultFileName,
     skipInit, source, targetTagName, sources = [], tag = {line: 0},
   }) => {
     if (!skipInit) {
@@ -222,27 +216,50 @@ export default iterateJsdoc(({
     sources.forEach(checkRules);
   };
 
+  const getFilenameInfo = (filename) => {
+    let defaultFileName;
+    if (!filename) {
+      const jsFileName = context.getFilename();
+      if (typeof jsFileName === 'string' && jsFileName.includes('.')) {
+        defaultFileName = jsFileName.replace(/\..*?$/, '.md');
+      } else {
+        defaultFileName = 'dummy.md';
+      }
+    }
+
+    return {
+      defaultFileName,
+      filename,
+    };
+  };
+
   if (checkDefaults) {
+    const filenameInfo = getFilenameInfo(matchingFileNameDefaults);
     utils.forEachPreferredTag('default', (tag, targetTagName) => {
       checkSource({
         source: tag.description,
         targetTagName,
+        ...filenameInfo,
       });
     });
   }
   if (checkParams) {
+    const filenameInfo = getFilenameInfo(matchingFileNameParams);
     utils.forEachPreferredTag('param', (tag, targetTagName) => {
       checkSource({
         source: tag.default,
         targetTagName,
+        ...filenameInfo,
       });
     });
   }
   if (checkProperties) {
+    const filenameInfo = getFilenameInfo(matchingFileNameProperties);
     utils.forEachPreferredTag('property', (tag, targetTagName) => {
       checkSource({
         source: tag.default,
         targetTagName,
+        ...filenameInfo,
       });
     });
   }
@@ -251,6 +268,8 @@ export default iterateJsdoc(({
   if (!utils.hasTag(tagName)) {
     return;
   }
+
+  const matchingFilenameInfo = getFilenameInfo(matchingFileName);
 
   utils.forEachPreferredTag('example', (tag, targetTagName) => {
     let source = tag.description;
@@ -328,12 +347,14 @@ export default iterateJsdoc(({
       }
       skipInit = true;
     }
+
     checkSource({
       skipInit,
       source,
       sources,
       tag,
       targetTagName,
+      ...matchingFilenameInfo,
     });
   });
 }, {
@@ -381,6 +402,15 @@ export default iterateJsdoc(({
             type: 'string',
           },
           matchingFileName: {
+            type: 'string',
+          },
+          matchingFileNameDefaults: {
+            type: 'string',
+          },
+          matchingFileNameParams: {
+            type: 'string',
+          },
+          matchingFileNameProperties: {
             type: 'string',
           },
           noDefaultExampleRules: {

@@ -974,7 +974,10 @@ by decreasing precedence:
   with JavaScript Markdown lintable by
   [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
   if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
-  follow one's Markdown rules).
+  follow one's Markdown rules). For `@example` only.
+* `matchingFileNameDefaults` - As with `matchingFileName` but for use with `checkDefaults`.
+* `matchingFileNameParams` - As with `matchingFileName` but for use with `checkParams`.
+* `matchingFileNameProperties` As with `matchingFileName` but for use with `checkProperties`.
 * `checkEslintrc` - Defaults to `true` in adding rules
   based on an `.eslintrc.*` file. Setting to `false` corresponds to
   ESLint's [`--no-eslintrc`](https://eslint.org/docs/user-guide/command-line-interface#--no-eslintrc).
@@ -1509,20 +1512,20 @@ const obj = {};
  * @default 'abc'
  */
 const str = 'abc';
-// Options: [{"checkDefaults":false}]
+// Options: [{"checkDefaults":false,"matchingFileNameDefaults":"dummy.js"}]
 
 /**
  * @param {myType} [name='abc']
  */
 function quux () {
 }
-// Options: [{"checkParams":false}]
+// Options: [{"checkParams":false,"matchingFileNameParams":"dummy.js"}]
 
 /**
  * @property {myType} [name='abc']
  */
 const obj = {};
-// Options: [{"checkProperties":false}]
+// Options: [{"checkProperties":false,"matchingFileNameProperties":"dummy.js"}]
 ````
 
 

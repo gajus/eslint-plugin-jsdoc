@@ -100,7 +100,10 @@ by decreasing precedence:
   with JavaScript Markdown lintable by
   [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
   if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
-  follow one's Markdown rules).
+  follow one's Markdown rules). For `@example` only.
+* `matchingFileNameDefaults` - As with `matchingFileName` but for use with `checkDefaults`.
+* `matchingFileNameParams` - As with `matchingFileName` but for use with `checkParams`.
+* `matchingFileNameProperties` As with `matchingFileName` but for use with `checkProperties`.
 * `checkEslintrc` - Defaults to `true` in adding rules
   based on an `.eslintrc.*` file. Setting to `false` corresponds to
   ESLint's [`--no-eslintrc`](https://eslint.org/docs/user-guide/command-line-interface#--no-eslintrc).
