@@ -44,11 +44,6 @@ export default iterateJsdoc(({
   context,
   globalState,
 }) => {
-  const tagName = utils.getPreferredTagName({tagName: 'example'});
-  if (!utils.hasTag(tagName)) {
-    return;
-  }
-
   if (!globalState.has('checkExamples-matchingFileName')) {
     globalState.set('checkExamples-matchingFileName', new Map());
   }
@@ -60,6 +55,9 @@ export default iterateJsdoc(({
     rejectExampleCodeRegex = null,
   } = options;
   const {
+    checkDefaults = true,
+    checkParams = true,
+    checkProperties = true,
     noDefaultExampleRules = false,
     checkEslintrc = true,
     matchingFileName: filename = null,
@@ -127,80 +125,10 @@ export default iterateJsdoc(({
     rejectExampleCodeRegex = getRegexFromString(rejectExampleCodeRegex);
   }
 
-  utils.forEachPreferredTag('example', (tag, targetTagName) => {
-    let source = tag.description;
-    const match = source.match(hasCaptionRegex);
-
-    if (captionRequired && (!match || !match[1].trim())) {
-      report('Caption is expected for examples.', null, tag);
-    }
-
-    // If we allow newlines in hasCaptionRegex, we should add to line count
-    source = source.replace(hasCaptionRegex, '');
-
-    if (exampleCodeRegex && !exampleCodeRegex.test(source) ||
-      rejectExampleCodeRegex && rejectExampleCodeRegex.test(source)
-    ) {
-      return;
-    }
-
-    const sources = [];
-    if (exampleCodeRegex) {
-      let nonJSPrefacingCols = 0;
-      let nonJSPrefacingLines = 0;
-
-      let startingIndex = 0;
-      let lastStringCount = 0;
-
-      let exampleCode;
-      exampleCodeRegex.lastIndex = 0;
-      while ((exampleCode = exampleCodeRegex.exec(source)) !== null) {
-        const {index, 0: n0, 1: n1} = exampleCode;
-
-        // Count anything preceding user regex match (can affect line numbering)
-        const preMatch = source.slice(startingIndex, index);
-
-        const preMatchLines = countChars(preMatch, '\n');
-
-        const colDelta = preMatchLines ?
-          preMatch.slice(preMatch.lastIndexOf('\n') + 1).length :
-          preMatch.length;
-
-        let nonJSPreface;
-        let nonJSPrefaceLineCount;
-        if (n1) {
-          const idx = n0.indexOf(n1);
-          nonJSPreface = n0.slice(0, idx);
-          nonJSPrefaceLineCount = countChars(nonJSPreface, '\n');
-        } else {
-          nonJSPreface = '';
-          nonJSPrefaceLineCount = 0;
-        }
-
-        nonJSPrefacingLines += lastStringCount + preMatchLines + nonJSPrefaceLineCount;
-
-        // Ignore `preMatch` delta if newlines here
-        if (nonJSPrefaceLineCount) {
-          const charsInLastLine = nonJSPreface.slice(nonJSPreface.lastIndexOf('\n') + 1).length;
-
-          nonJSPrefacingCols += charsInLastLine;
-        } else {
-          nonJSPrefacingCols += colDelta + nonJSPreface.length;
-        }
-
-        const string = n1 || n0;
-        sources.push({
-          nonJSPrefacingCols,
-          nonJSPrefacingLines,
-          string,
-        });
-        startingIndex = exampleCodeRegex.lastIndex;
-        lastStringCount = countChars(string, '\n');
-        if (!exampleCodeRegex.global) {
-          break;
-        }
-      }
-    } else {
+  const checkSource = ({
+    skipInit, source, targetTagName, sources = [], tag = {line: 0},
+  }) => {
+    if (!skipInit) {
       sources.push({
         nonJSPrefacingCols: 0,
         nonJSPrefacingLines: 0,
@@ -292,6 +220,121 @@ export default iterateJsdoc(({
     };
 
     sources.forEach(checkRules);
+  };
+
+  if (checkDefaults) {
+    utils.forEachPreferredTag('default', (tag, targetTagName) => {
+      checkSource({
+        source: tag.description,
+        targetTagName,
+      });
+    });
+  }
+  if (checkParams) {
+    utils.forEachPreferredTag('param', (tag, targetTagName) => {
+      checkSource({
+        source: tag.default,
+        targetTagName,
+      });
+    });
+  }
+  if (checkProperties) {
+    utils.forEachPreferredTag('property', (tag, targetTagName) => {
+      checkSource({
+        source: tag.default,
+        targetTagName,
+      });
+    });
+  }
+
+  const tagName = utils.getPreferredTagName({tagName: 'example'});
+  if (!utils.hasTag(tagName)) {
+    return;
+  }
+
+  utils.forEachPreferredTag('example', (tag, targetTagName) => {
+    let source = tag.description;
+    const match = source.match(hasCaptionRegex);
+
+    if (captionRequired && (!match || !match[1].trim())) {
+      report('Caption is expected for examples.', null, tag);
+    }
+
+    // If we allow newlines in hasCaptionRegex, we should add to line count
+    source = source.replace(hasCaptionRegex, '');
+
+    if (exampleCodeRegex && !exampleCodeRegex.test(source) ||
+      rejectExampleCodeRegex && rejectExampleCodeRegex.test(source)
+    ) {
+      return;
+    }
+
+    const sources = [];
+    let skipInit = false;
+    if (exampleCodeRegex) {
+      let nonJSPrefacingCols = 0;
+      let nonJSPrefacingLines = 0;
+
+      let startingIndex = 0;
+      let lastStringCount = 0;
+
+      let exampleCode;
+      exampleCodeRegex.lastIndex = 0;
+      while ((exampleCode = exampleCodeRegex.exec(source)) !== null) {
+        const {index, 0: n0, 1: n1} = exampleCode;
+
+        // Count anything preceding user regex match (can affect line numbering)
+        const preMatch = source.slice(startingIndex, index);
+
+        const preMatchLines = countChars(preMatch, '\n');
+
+        const colDelta = preMatchLines ?
+          preMatch.slice(preMatch.lastIndexOf('\n') + 1).length :
+          preMatch.length;
+
+        let nonJSPreface;
+        let nonJSPrefaceLineCount;
+        if (n1) {
+          const idx = n0.indexOf(n1);
+          nonJSPreface = n0.slice(0, idx);
+          nonJSPrefaceLineCount = countChars(nonJSPreface, '\n');
+        } else {
+          nonJSPreface = '';
+          nonJSPrefaceLineCount = 0;
+        }
+
+        nonJSPrefacingLines += lastStringCount + preMatchLines + nonJSPrefaceLineCount;
+
+        // Ignore `preMatch` delta if newlines here
+        if (nonJSPrefaceLineCount) {
+          const charsInLastLine = nonJSPreface.slice(nonJSPreface.lastIndexOf('\n') + 1).length;
+
+          nonJSPrefacingCols += charsInLastLine;
+        } else {
+          nonJSPrefacingCols += colDelta + nonJSPreface.length;
+        }
+
+        const string = n1 || n0;
+        sources.push({
+          nonJSPrefacingCols,
+          nonJSPrefacingLines,
+          string,
+        });
+        startingIndex = exampleCodeRegex.lastIndex;
+        lastStringCount = countChars(string, '\n');
+        if (!exampleCodeRegex.global) {
+          break;
+        }
+      }
+      skipInit = true;
+    }
+    checkSource({
+      skipInit,
+      source,
+      sources,
+      tag,
+      targetTagName,
+    });
   });
 }, {
   iterateAllJsdocs: true,
@@ -315,7 +358,19 @@ export default iterateJsdoc(({
             default: false,
             type: 'boolean',
           },
+          checkDefaults: {
+            default: true,
+            type: 'boolean',
+          },
           checkEslintrc: {
+            default: true,
+            type: 'boolean',
+          },
+          checkParams: {
+            default: true,
+            type: 'boolean',
+          },
+          checkProperties: {
             default: true,
             type: 'boolean',
           },
