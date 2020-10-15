@@ -1717,7 +1717,8 @@ line's parts. **Only the non-default `"always"` is implemented for now.**
 |---|---|
 |Context|everywhere|
 |Options|(a string matching `"always"|"never"`)|
-|Tags|`param`, `arg`, `argument`, `property`, `prop`|
+|Tags|`param`, `property`|
+|Aliases|`arg`, `argument`, `prop`|
 
 The following patterns are considered problems:
 
@@ -2049,7 +2050,7 @@ Whether to check destructured properties. Defaults to `true`.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`|
 |Tags|`param`|
-
+|Aliases|`arg`, `argument`|
 The following patterns are considered problems:
 
 ````js
@@ -2799,6 +2800,7 @@ be removed even if it has a different type or description).
 |Context|Everywhere|
 |Options|`enableFixer`|
 |Tags|`property`|
+|Aliases|`prop`|
 
 The following patterns are considered problems:
 
@@ -5090,6 +5092,7 @@ Expects the following tags to be empty of any content:
 - `@inheritdoc`
 - `@inner`
 - `@instance`
+- `@internal` (used by TypeScript)
 - `@override`
 - `@readonly`
 
@@ -5127,8 +5130,7 @@ add them within this option.
 |||
 |---|---|
 |Context|everywhere|
-|Tags| and others added by `tags`|
-|Aliases||
+|Tags| `abstract`, `async`, `generator`, `global`, `hideconstructor`, `ignore`, `inheritdoc`, `inner`, `instance`, `internal`, `override`, `readonly`, `package`, `private`, `protected`, `public`, `static` and others added by `tags`|
 |Options|`tags`|
 The following patterns are considered problems:
 
@@ -12825,7 +12827,8 @@ Requires that each `@property` tag has a `description` value.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/A|
+|Tags|`property`|
+|Aliases|`prop`|
 
 The following patterns are considered problems:
 
@@ -12883,7 +12886,8 @@ Requires that all function `@property` tags have names.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/A|
+|Tags|`property`|
+|Aliases|`prop`|
 
 The following patterns are considered problems:
 
@@ -12941,7 +12945,8 @@ Requires that each `@property` tag has a `type` value.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/A|
+|Tags|`property`|
+|Aliases|`prop`|
 
 The following patterns are considered problems:
 

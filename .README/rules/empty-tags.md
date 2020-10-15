@@ -11,6 +11,7 @@ Expects the following tags to be empty of any content:
 - `@inheritdoc`
 - `@inner`
 - `@instance`
+- `@internal` (used by TypeScript)
 - `@override`
 - `@readonly`
 
@@ -46,7 +47,6 @@ add them within this option.
 |||
 |---|---|
 |Context|everywhere|
-|Tags| and others added by `tags`|
-|Aliases||
+|Tags| `abstract`, `async`, `generator`, `global`, `hideconstructor`, `ignore`, `inheritdoc`, `inner`, `instance`, `internal`, `override`, `readonly`, `package`, `private`, `protected`, `public`, `static` and others added by `tags`|
 |Options|`tags`|
 <!-- assertions emptyTags -->

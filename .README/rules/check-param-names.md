@@ -62,5 +62,5 @@ Whether to check destructured properties. Defaults to `true`.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`|
 |Tags|`param`|
-
+|Aliases|`arg`, `argument`|
 <!-- assertions checkParamNames -->

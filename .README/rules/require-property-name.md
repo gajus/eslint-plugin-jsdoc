@@ -5,6 +5,7 @@ Requires that all function `@property` tags have names.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/A|
+|Tags|`property`|
+|Aliases|`prop`|
 
 <!-- assertions requirePropertyName -->
