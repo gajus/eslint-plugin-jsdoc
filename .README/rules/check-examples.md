@@ -149,6 +149,13 @@ by decreasing precedence:
 * `node/no-missing-import` - See `import/no-unresolved`.
 * `node/no-missing-require` -  See `import/no-unresolved`.
 
+For `checkDefaults`, `checkParams`, and `checkProperties`, the following
+expression-oriented rules will be used by default as well:
+
+* `quotes` - Will insist on "double".
+* `semi` - Will insist on "never"
+* `no-unused-expressions` - Disabled.
+
 ##### Options for checking other than `@example` (`checkDefaults`, `checkParams`, or `checkProperties`)
 
 * `checkDefaults` - Whether to check the values of `@default`/`@defaultvalue` tags

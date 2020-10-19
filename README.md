@@ -1024,6 +1024,13 @@ by decreasing precedence:
 * `node/no-missing-import` - See `import/no-unresolved`.
 * `node/no-missing-require` -  See `import/no-unresolved`.
 
+For `checkDefaults`, `checkParams`, and `checkProperties`, the following
+expression-oriented rules will be used by default as well:
+
+* `quotes` - Will insist on "double".
+* `semi` - Will insist on "never"
+* `no-unused-expressions` - Disabled.
+
 <a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig-options-for-checking-other-than-example-checkdefaults-checkparams-or-checkproperties"></a>
 ##### Options for checking other than <code>@example</code> (<code>checkDefaults</code>, <code>checkParams</code>, or <code>checkProperties</code>)
 
@@ -1328,7 +1335,7 @@ function quux () {
  */
 const str = 'abc';
 // Options: [{"checkDefaults":true}]
-// Message: @default error (semi): Missing semicolon.
+// Message: @default error (quotes): Strings must use doublequote.
 
 /**
  * @param {myType} [name='abc']
@@ -1336,14 +1343,14 @@ const str = 'abc';
 function quux () {
 }
 // Options: [{"checkParams":true}]
-// Message: @param error (semi): Missing semicolon.
+// Message: @param error (quotes): Strings must use doublequote.
 
 /**
  * @property {myType} [name='abc']
  */
 const obj = {};
 // Options: [{"checkProperties":true}]
-// Message: @property error (semi): Missing semicolon.
+// Message: @property error (quotes): Strings must use doublequote.
 ````
 
 The following patterns are not considered problems:
@@ -1493,13 +1500,19 @@ function quux () {
 // Options: [{"baseConfig":{"plugins":["jsdoc"],"rules":{"jsdoc/require-file-overview":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 
 /**
- * @default 'abc';
+ * @default "abc"
  */
 const str = 'abc';
 // Options: [{"checkDefaults":true}]
 
 /**
- * @param {myType} [name='abc';]
+ * @default
+ */
+const str = 'abc';
+// Options: [{"checkDefaults":true}]
+
+/**
+ * @param {myType} [name="abc"]
  */
 function quux () {
 }
@@ -1513,7 +1526,7 @@ function quux () {
 // Options: [{"checkParams":true}]
 
 /**
- * @property {myType} [name='abc';]
+ * @property {myType} [name="abc"]
  */
 const obj = {};
 // Options: [{"checkProperties":true}]

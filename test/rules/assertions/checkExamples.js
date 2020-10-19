@@ -701,7 +701,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: '@default error (semi): Missing semicolon.',
+          message: '@default error (quotes): Strings must use doublequote.',
         },
       ],
       options: [
@@ -721,7 +721,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: '@param error (semi): Missing semicolon.',
+          message: '@param error (quotes): Strings must use doublequote.',
         },
       ],
       options: [
@@ -740,7 +740,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: '@property error (semi): Missing semicolon.',
+          message: '@property error (quotes): Strings must use doublequote.',
         },
       ],
       options: [
@@ -1046,7 +1046,7 @@ export default {
     {
       code: `
           /**
-           * @default 'abc';
+           * @default "abc"
            */
           const str = 'abc';
       `,
@@ -1059,7 +1059,20 @@ export default {
     {
       code: `
           /**
-           * @param {myType} [name='abc';]
+           * @default
+           */
+          const str = 'abc';
+      `,
+      options: [
+        {
+          checkDefaults: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {myType} [name="abc"]
            */
           function quux () {
           }
@@ -1087,7 +1100,7 @@ export default {
     {
       code: `
           /**
-           * @property {myType} [name='abc';]
+           * @property {myType} [name="abc"]
            */
           const obj = {};
       `,

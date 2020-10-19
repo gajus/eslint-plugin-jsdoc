@@ -38,6 +38,49 @@ const getRegexFromString = (regexString) => {
   return new RegExp(regex, flags);
 };
 
+const defaultMdRules = {
+  // "always" newline rule at end unlikely in sample code
+  'eol-last': 0,
+
+  // Wouldn't generally expect example paths to resolve relative to JS file
+  'import/no-unresolved': 0,
+
+  // Snippets likely too short to always include import/export info
+  'import/unambiguous': 0,
+
+  'jsdoc/require-file-overview': 0,
+
+  // The end of a multiline comment would end the comment the example is in.
+  'jsdoc/require-jsdoc': 0,
+
+  // Unlikely to have inadvertent debugging within examples
+  'no-console': 0,
+
+  // Often wish to start `@example` code after newline; also may use
+  //   empty lines for spacing
+  'no-multiple-empty-lines': 0,
+
+  // Many variables in examples will be `undefined`
+  'no-undef': 0,
+
+  // Common to define variables for clarity without always using them
+  'no-unused-vars': 0,
+
+  // See import/no-unresolved
+  'node/no-missing-import': 0,
+  'node/no-missing-require': 0,
+
+  // Can generally look nicer to pad a little even if code imposes more stringency
+  'padded-blocks': 0,
+};
+
+const defaultExpressionRules = {
+  ...defaultMdRules,
+  'no-unused-expressions': 'off',
+  quotes: ['error', 'double'],
+  semi: ['error', 'never'],
+};
+
 export default iterateJsdoc(({
   report,
   utils,
@@ -75,41 +118,9 @@ export default iterateJsdoc(({
   // Make this configurable?
   const rulePaths = [];
 
-  const rules = noDefaultExampleRules ? undefined : {
-    // "always" newline rule at end unlikely in sample code
-    'eol-last': 0,
+  const mdRules = noDefaultExampleRules ? undefined : defaultMdRules;
 
-    // Wouldn't generally expect example paths to resolve relative to JS file
-    'import/no-unresolved': 0,
-
-    // Snippets likely too short to always include import/export info
-    'import/unambiguous': 0,
-
-    'jsdoc/require-file-overview': 0,
-
-    // The end of a multiline comment would end the comment the example is in.
-    'jsdoc/require-jsdoc': 0,
-
-    // Unlikely to have inadvertent debugging within examples
-    'no-console': 0,
-
-    // Often wish to start `@example` code after newline; also may use
-    //   empty lines for spacing
-    'no-multiple-empty-lines': 0,
-
-    // Many variables in examples will be `undefined`
-    'no-undef': 0,
-
-    // Common to define variables for clarity without always using them
-    'no-unused-vars': 0,
-
-    // See import/no-unresolved
-    'node/no-missing-import': 0,
-    'node/no-missing-require': 0,
-
-    // Can generally look nicer to pad a little even if code imposes more stringency
-    'padded-blocks': 0,
-  };
+  const expressionRules = noDefaultExampleRules ? undefined : defaultExpressionRules;
 
   if (exampleCodeRegex) {
     exampleCodeRegex = getRegexFromString(exampleCodeRegex);
@@ -120,6 +131,7 @@ export default iterateJsdoc(({
 
   const checkSource = ({
     filename, defaultFileName,
+    rules = expressionRules,
     skipInit, source, targetTagName, sources = [], tag = {line: 0},
   }) => {
     if (!skipInit) {
@@ -236,8 +248,11 @@ export default iterateJsdoc(({
   if (checkDefaults) {
     const filenameInfo = getFilenameInfo(matchingFileNameDefaults, 'jsdoc-defaults');
     utils.forEachPreferredTag('default', (tag, targetTagName) => {
+      if (!tag.description.trim()) {
+        return;
+      }
       checkSource({
-        source: tag.description,
+        source: `(${tag.description})`,
         targetTagName,
         ...filenameInfo,
       });
@@ -246,11 +261,11 @@ export default iterateJsdoc(({
   if (checkParams) {
     const filenameInfo = getFilenameInfo(matchingFileNameParams, 'jsdoc-params');
     utils.forEachPreferredTag('param', (tag, targetTagName) => {
-      if (typeof tag.default !== 'string') {
+      if (!tag.default || !tag.default.trim()) {
         return;
       }
       checkSource({
-        source: tag.default,
+        source: `(${tag.default})`,
         targetTagName,
         ...filenameInfo,
       });
@@ -259,11 +274,11 @@ export default iterateJsdoc(({
   if (checkProperties) {
     const filenameInfo = getFilenameInfo(matchingFileNameProperties, 'jsdoc-properties');
     utils.forEachPreferredTag('property', (tag, targetTagName) => {
-      if (typeof tag.default !== 'string') {
+      if (!tag.default || !tag.default.trim()) {
         return;
       }
       checkSource({
-        source: tag.default,
+        source: `(${tag.default})`,
         targetTagName,
         ...filenameInfo,
       });
@@ -355,6 +370,7 @@ export default iterateJsdoc(({
     }
 
     checkSource({
+      rules: mdRules,
       skipInit,
       source,
       sources,
