@@ -1503,7 +1503,20 @@ function quux () {
 // Options: [{"checkParams":true}]
 
 /**
+ * @param {myType} name
+ */
+function quux () {
+}
+// Options: [{"checkParams":true}]
+
+/**
  * @property {myType} [name='abc';]
+ */
+const obj = {};
+// Options: [{"checkProperties":true}]
+
+/**
+ * @property {myType} [name]
  */
 const obj = {};
 // Options: [{"checkProperties":true}]

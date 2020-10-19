@@ -55,9 +55,9 @@ export default iterateJsdoc(({
     rejectExampleCodeRegex = null,
   } = options;
   const {
-    checkDefaults = true,
-    checkParams = true,
-    checkProperties = true,
+    checkDefaults = false,
+    checkParams = false,
+    checkProperties = false,
     noDefaultExampleRules = false,
     checkEslintrc = true,
     matchingFileName = null,
@@ -246,6 +246,9 @@ export default iterateJsdoc(({
   if (checkParams) {
     const filenameInfo = getFilenameInfo(matchingFileNameParams);
     utils.forEachPreferredTag('param', (tag, targetTagName) => {
+      if (typeof tag.default !== 'string') {
+        return;
+      }
       checkSource({
         source: tag.default,
         targetTagName,
@@ -256,6 +259,9 @@ export default iterateJsdoc(({
   if (checkProperties) {
     const filenameInfo = getFilenameInfo(matchingFileNameProperties);
     utils.forEachPreferredTag('property', (tag, targetTagName) => {
+      if (typeof tag.default !== 'string') {
+        return;
+      }
       checkSource({
         source: tag.default,
         targetTagName,
@@ -380,7 +386,7 @@ export default iterateJsdoc(({
             type: 'boolean',
           },
           checkDefaults: {
-            default: true,
+            default: false,
             type: 'boolean',
           },
           checkEslintrc: {
@@ -388,11 +394,11 @@ export default iterateJsdoc(({
             type: 'boolean',
           },
           checkParams: {
-            default: true,
+            default: false,
             type: 'boolean',
           },
           checkProperties: {
-            default: true,
+            default: false,
             type: 'boolean',
           },
           configFile: {

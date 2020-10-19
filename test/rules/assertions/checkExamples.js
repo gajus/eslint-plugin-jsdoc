@@ -1073,7 +1073,34 @@ export default {
     {
       code: `
           /**
+           * @param {myType} name
+           */
+          function quux () {
+          }
+      `,
+      options: [
+        {
+          checkParams: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            * @property {myType} [name='abc';]
+           */
+          const obj = {};
+      `,
+      options: [
+        {
+          checkProperties: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @property {myType} [name]
            */
           const obj = {};
       `,
