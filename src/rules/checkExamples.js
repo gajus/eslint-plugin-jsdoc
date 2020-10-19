@@ -216,14 +216,14 @@ export default iterateJsdoc(({
     sources.forEach(checkRules);
   };
 
-  const getFilenameInfo = (filename) => {
+  const getFilenameInfo = (filename, ext = 'md') => {
     let defaultFileName;
     if (!filename) {
       const jsFileName = context.getFilename();
       if (typeof jsFileName === 'string' && jsFileName.includes('.')) {
-        defaultFileName = jsFileName.replace(/\..*?$/, '.md');
+        defaultFileName = jsFileName.replace(/\..*?$/, `.${ext}`);
       } else {
-        defaultFileName = 'dummy.md';
+        defaultFileName = `dummy.${ext}`;
       }
     }
 
@@ -234,7 +234,7 @@ export default iterateJsdoc(({
   };
 
   if (checkDefaults) {
-    const filenameInfo = getFilenameInfo(matchingFileNameDefaults);
+    const filenameInfo = getFilenameInfo(matchingFileNameDefaults, 'jsdoc-defaults');
     utils.forEachPreferredTag('default', (tag, targetTagName) => {
       checkSource({
         source: tag.description,
@@ -244,7 +244,7 @@ export default iterateJsdoc(({
     });
   }
   if (checkParams) {
-    const filenameInfo = getFilenameInfo(matchingFileNameParams);
+    const filenameInfo = getFilenameInfo(matchingFileNameParams, 'jsdoc-params');
     utils.forEachPreferredTag('param', (tag, targetTagName) => {
       if (typeof tag.default !== 'string') {
         return;
@@ -257,7 +257,7 @@ export default iterateJsdoc(({
     });
   }
   if (checkProperties) {
-    const filenameInfo = getFilenameInfo(matchingFileNameProperties);
+    const filenameInfo = getFilenameInfo(matchingFileNameProperties, 'jsdoc-properties');
     utils.forEachPreferredTag('property', (tag, targetTagName) => {
       if (typeof tag.default !== 'string') {
         return;
