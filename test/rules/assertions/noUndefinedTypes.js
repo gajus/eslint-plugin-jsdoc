@@ -21,7 +21,7 @@ export default {
       settings: {
         jsdoc: {
           preferredTypes: {
-            HerType: 1000,
+            HerType: 1_000,
           },
         },
       },

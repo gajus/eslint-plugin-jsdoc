@@ -617,7 +617,7 @@ export default {
         {
           baseConfig: {
             parserOptions: {
-              ecmaVersion: 2015,
+              ecmaVersion: 2_015,
               sourceType: 'module',
             },
             rules: {

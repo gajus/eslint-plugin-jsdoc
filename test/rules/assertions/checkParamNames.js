@@ -711,7 +711,7 @@ export default {
         },
       ],
       parserOptions: {
-        ecmaVersion: 2018,
+        ecmaVersion: 2_018,
       },
     },
     {
@@ -738,7 +738,7 @@ export default {
         },
       ],
       parserOptions: {
-        ecmaVersion: 2018,
+        ecmaVersion: 2_018,
       },
     },
     {
@@ -1218,7 +1218,7 @@ export default {
       }
       `,
       parserOptions: {
-        ecmaVersion: 2018,
+        ecmaVersion: 2_018,
       },
     },
     {

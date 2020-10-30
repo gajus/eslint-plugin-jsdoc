@@ -3910,7 +3910,7 @@ export default {
       ecmaFeatures: {
         jsx: true,
       },
-      ecmaVersion: 2017,
+      ecmaVersion: 2_017,
       sourceType: 'module',
     },
   },
