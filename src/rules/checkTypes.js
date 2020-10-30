@@ -78,7 +78,7 @@ export default iterateJsdoc(({
     exemptTagContexts = [],
   } = context.options[0] || {};
 
-  const getPreferredTypeInfo = (type, nodeName, parentName, parentNode) => {
+  const getPreferredTypeInfo = (_type, nodeName, parentName, parentNode) => {
     let hasMatchingPreferredType;
     let isGenericMatch;
     let typeName = nodeName;

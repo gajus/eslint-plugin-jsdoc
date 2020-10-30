@@ -283,7 +283,7 @@ const getPreferredTagName = (
   // e.g. 'tag constructor' for 'constructor':
   // https://github.com/eslint/eslint/issues/13289
   // https://github.com/gajus/eslint-plugin-jsdoc/issues/537
-  const tagPreferenceFixed = _.mapKeys(tagPreference, (value, key) => {
+  const tagPreferenceFixed = _.mapKeys(tagPreference, (_value, key) => {
     return key.replace('tag ', '');
   });
 

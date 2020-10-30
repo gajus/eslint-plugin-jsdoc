@@ -91,7 +91,7 @@ const ruleTester = new RuleTester();
 
   if (process.env.npm_config_invalid) {
     const indexes = process.env.npm_config_invalid.split(',');
-    assertions.invalid = assertions.invalid.filter((assertion, idx) => {
+    assertions.invalid = assertions.invalid.filter((_assertion, idx) => {
       return indexes.includes(String(idx)) ||
         indexes.includes(String(idx - assertions.invalid.length));
     });
@@ -101,7 +101,7 @@ const ruleTester = new RuleTester();
   }
   if (process.env.npm_config_valid) {
     const indexes = process.env.npm_config_valid.split(',');
-    assertions.valid = assertions.valid.filter((assertion, idx) => {
+    assertions.valid = assertions.valid.filter((_assertion, idx) => {
       return indexes.includes(String(idx)) ||
         indexes.includes(String(idx - assertions.valid.length));
     });

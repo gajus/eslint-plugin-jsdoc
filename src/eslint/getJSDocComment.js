@@ -211,7 +211,6 @@ const getReducedASTNode = function (node, sourceCode) {
  * @returns {Token|null} The Block comment token containing the JSDoc comment
  *    for the given node or null if not found.
  * @public
- * @deprecated
  */
 const getJSDocComment = function (sourceCode, node, settings) {
   /**

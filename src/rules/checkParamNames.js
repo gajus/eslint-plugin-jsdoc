@@ -7,7 +7,7 @@ const validateParameterNames = (
   checkRestProperty : boolean,
   checkTypesRegex : RegExp,
   enableFixer: boolean,
-  functionParameterNames : Array<string>, jsdoc, jsdocNode, utils, report,
+  functionParameterNames : Array<string>, jsdoc, _jsdocNode, utils, report,
 ) => {
   const paramTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
     return tag.tag === targetTagName;
@@ -167,7 +167,7 @@ const validateParameterNames = (
 };
 
 const validateParameterNamesDeep = (
-  targetTagName : string, allowExtraTrailingParamDocs: boolean,
+  targetTagName : string, _allowExtraTrailingParamDocs: boolean,
   jsdocParameterNames : Array<string>, jsdoc, report : Function,
 ) => {
   let lastRealParameter;

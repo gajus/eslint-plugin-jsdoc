@@ -99,7 +99,7 @@ const validateDescription = (
         if (tag.tag) {
           const reg = new RegExp(`(@${_.escapeRegExp(tag.tag)}.*)${_.escapeRegExp(beginning)}`, 'u');
 
-          text = text.replace(reg, ($0, $1) => {
+          text = text.replace(reg, (_$0, $1) => {
             return $1 + capitalize(beginning);
           });
         } else {
