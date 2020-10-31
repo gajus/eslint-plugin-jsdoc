@@ -101,27 +101,39 @@ Finally, enable all of the rules that you would like to use.
 ```javascript
 {
     "rules": {
+        "jsdoc/check-access": 1, // Recommended
         "jsdoc/check-alignment": 1, // Recommended
         "jsdoc/check-examples": 1,
         "jsdoc/check-indentation": 1,
+        "jsdoc/check-line-alignment": 1,
         "jsdoc/check-param-names": 1, // Recommended
+        "jsdoc/check-property-names": 1, // Recommended
         "jsdoc/check-syntax": 1,
         "jsdoc/check-tag-names": 1, // Recommended
         "jsdoc/check-types": 1, // Recommended
+        "jsdoc/check-values": 1, // Recommended
+        "jsdoc/empty-tags": 1, // Recommended
         "jsdoc/implements-on-classes": 1, // Recommended
         "jsdoc/match-description": 1,
         "jsdoc/newline-after-description": 1, // Recommended
+        "jsdoc/no-bad-blocks": 1,
+        "jsdoc/no-defaults": 1,
         "jsdoc/no-types": 1,
         "jsdoc/no-undefined-types": 1, // Recommended
         "jsdoc/require-description": 1,
         "jsdoc/require-description-complete-sentence": 1,
         "jsdoc/require-example": 1,
+        "jsdoc/require-file-overview": 1,
         "jsdoc/require-hyphen-before-param-description": 1,
         "jsdoc/require-jsdoc": 1, // Recommended
         "jsdoc/require-param": 1, // Recommended
         "jsdoc/require-param-description": 1, // Recommended
         "jsdoc/require-param-name": 1, // Recommended
         "jsdoc/require-param-type": 1, // Recommended
+        "jsdoc/require-property": 1, // Recommended
+        "jsdoc/require-property-description": 1, // Recommended
+        "jsdoc/require-property-name": 1, // Recommended
+        "jsdoc/require-property-type": 1, // Recommended
         "jsdoc/require-returns": 1, // Recommended
         "jsdoc/require-returns-check": 1, // Recommended
         "jsdoc/require-returns-description": 1, // Recommended
@@ -568,6 +580,7 @@ Also reports:
 |---|---|
 |Context|everywhere|
 |Tags|`@access`|
+|Recommended|false|
 |Settings||
 |Options||
 
@@ -732,6 +745,7 @@ Reports invalid alignment of JSDoc block asterisks.
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
+|Recommended|true|
 
 The following patterns are considered problems:
 
@@ -1042,6 +1056,7 @@ expression-oriented rules will be used by default as well:
 |---|---|
 |Context|everywhere|
 |Tags|`example`|
+|Recommended|false|
 |Options| *See above* |
 
 The following patterns are considered problems:
@@ -1609,6 +1624,7 @@ report a padding issue:
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
+|Recommended|false|
 |Options| `excludeTags` |
 
 The following patterns are considered problems:
@@ -1825,6 +1841,7 @@ line's parts. **Only the non-default `"always"` is implemented for now.**
 |Options|(a string matching `"always"|"never"`)|
 |Tags|`param`, `property`|
 |Aliases|`arg`, `argument`, `prop`|
+|Recommended|false|
 
 The following patterns are considered problems:
 
@@ -2157,6 +2174,7 @@ Whether to check destructured properties. Defaults to `true`.
 |Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Recommended|true|
 The following patterns are considered problems:
 
 ````js
@@ -2907,6 +2925,7 @@ be removed even if it has a different type or description).
 |Options|`enableFixer`|
 |Tags|`property`|
 |Aliases|`prop`|
+|Recommended|true|
 
 The following patterns are considered problems:
 
@@ -3115,6 +3134,7 @@ rule is enforced (except under "permissive" and "closure" modes).
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
+|Recommended|false|
 
 The following patterns are considered problems:
 
@@ -3347,6 +3367,7 @@ The format is as follows:
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
+|Recommended|true|
 |Options|`definedTags`|
 |Settings|`tagNamePreference`, `mode`|
 
@@ -4085,6 +4106,7 @@ for types, you can use `settings.jsdoc.structuredTags` with a tag `type` of
 |Tags|`augments`, `class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
+|Recommended|true|
 |Options|`noDefaults`, `exemptTagContexts`, `unifyParentAndChildTypeChecks`|
 |Settings|`preferredTypes`, `mode`, `structuredTags`|
 
@@ -4980,6 +5002,7 @@ is expected before any line breaks.
 |---|---|
 |Context|everywhere|
 |Tags|`@version`, `@since`, `@license`, `@author`|
+|Recommended|true|
 |Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|
 
@@ -5237,6 +5260,7 @@ add them within this option.
 |---|---|
 |Context|everywhere|
 |Tags| `abstract`, `async`, `generator`, `global`, `hideconstructor`, `ignore`, `inheritdoc`, `inner`, `instance`, `internal`, `override`, `readonly`, `package`, `private`, `protected`, `public`, `static` and others added by `tags`|
+|Recommended|true|
 |Options|`tags`|
 The following patterns are considered problems:
 
@@ -5395,6 +5419,7 @@ section of our README for more on the expected format.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`implements` (prevented)|
+|Recommended|true|
 |Options|`contexts`|
 
 The following patterns are considered problems:
@@ -5663,6 +5688,7 @@ section of our README for more on the expected format.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|docblock and `@description` by default but more with `tags`|
 |Aliases|`@desc`|
+|Recommended|false|
 |Settings||
 |Options|`contexts`, `tags` (accepts tags with names and optional type such as 'param', 'arg', 'argument', 'property', and 'prop', and accepts arbitrary list of other tags with an optional type (but without names), e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
@@ -6326,8 +6352,9 @@ description. The default value is `"always"`.
 |||
 |---|---|
 |Context|everywhere|
-|Options|(a string matching `"always"|"never"`)|
 |Tags|N/A (doc block)|
+|Options|(a string matching `"always"|"never"`)|
+|Recommended|true|
 
 The following patterns are considered problems:
 
@@ -6539,8 +6566,9 @@ Defaults to `['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck']`
 |||
 |---|---|
 |Context|Everywhere|
-|Options|`ignore`|
 |Tags|N/A|
+|Recommended|false|
+|Options|`ignore`|
 
 The following patterns are considered problems:
 
@@ -6668,6 +6696,7 @@ section of our README for more on the expected format.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`, `default`|
 |Aliases|`arg`, `argument`, `defaultvalue`|
+|Recommended|false|
 |Options|`contexts`, `noOptionalParamNames`|
 
 The following patterns are considered problems:
@@ -6826,6 +6855,7 @@ section of our README for more on the expected format.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`, `returns`|
 |Aliases|`arg`, `argument`, `return`|
+|Recommended|false|
 |Options|`contexts`|
 
 The following patterns are considered problems:
@@ -6989,6 +7019,7 @@ An option object may have the following key:
 |Tags|`augments`, `class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
+|Recommended|true|
 |Options|`definedTypes`|
 |Settings|`preferredTypes`, `mode`, `structuredTags`|
 
@@ -7562,6 +7593,7 @@ nouns, for example).
 |Context|everywhere|
 |Tags|doc block, `param`, `returns`, `description`, `property`, `summary`, `file`, `classdesc`, `todo`, `deprecated`, `throws`, 'yields' and others added by `tags`|
 |Aliases|`arg`, `argument`, `return`, `desc`, `prop`, `fileoverview`, `overview`, `exception`, `yield`|
+|Recommended|false|
 |Options|`tags`, `abbreviations`, `newlineBeforeCapsAssumesBadSentenceEnd`|
 The following patterns are considered problems:
 
@@ -8239,6 +8271,7 @@ An options object may have any of the following properties:
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `description` or jsdoc block                                                                                  |
 | Aliases  | `desc`                                                                                                        |
+| Recommended | false |
 | Options  | `contexts`, `exemptedBy`, `descriptionStyle`, `checkConstructors`, `checkGetters`, `checkSetters`             |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
@@ -8711,6 +8744,7 @@ report a missing example description after this is added.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`example`|
+|Recommended|false|
 |Options|`exemptedBy`, `exemptNoArguments`, `avoidExampleOnConstructors`, `contexts`|
 |Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
@@ -9051,6 +9085,7 @@ will be checked, but you must use `file` on the configuration object).
 |Context|Everywhere|
 |Tags|`file`; others when `tags` set|
 |Aliases|`fileoverview`, `overview`|
+|Recommended|false|
 |Options|`tags`|
 
 The following patterns are considered problems:
@@ -9297,6 +9332,7 @@ other tags besides the `@param` tag (or the `@arg` tag if so set):
 |Context|everywhere|
 |Tags|`param` and optionally other tags within `tags`|
 |Aliases|`arg`, `argument`; potentially `prop` or other aliases|
+|Recommended|false|
 |Options|(a string matching `"always"|"never"`) followed by an optional object with a `tags` property|
 
 The following patterns are considered problems:
@@ -9566,6 +9602,7 @@ Defaults to `true`.
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
+|Recommended|true|
 |Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`|
 
 The following patterns are considered problems:
@@ -10897,6 +10934,7 @@ section of our README for more on the expected format.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Recommended|true|
 |Options|`contexts`|
 
 The following patterns are considered problems:
@@ -11020,6 +11058,7 @@ section of our README for more on the expected format.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Recommended|true|
 |Options|`contexts`|
 
 The following patterns are considered problems:
@@ -11138,6 +11177,7 @@ section of our README for more on the expected format.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Recommended|true|
 |Options|`contexts`|
 
 The following patterns are considered problems:
@@ -11617,6 +11657,7 @@ documentation). Defaults to `true`.
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `param`                                                                                                       |
 | Aliases  | `arg`, `argument`                                                                                             |
+|Recommended|true|
 | Options  | `autoIncrementBase`, `checkDestructured`, `checkDestructuredRoots`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
@@ -12897,6 +12938,7 @@ The fixer for `require-property` will add an empty `@property`.
 |---|---|
 |Context|Everywhere|
 |Tags|`typedef`, `namespace`|
+|Recommended|true|
 
 The following patterns are considered problems:
 
@@ -12995,6 +13037,7 @@ Requires that each `@property` tag has a `description` value.
 |Context|everywhere|
 |Tags|`property`|
 |Aliases|`prop`|
+|Recommended|true|
 
 The following patterns are considered problems:
 
@@ -13054,6 +13097,7 @@ Requires that all function `@property` tags have names.
 |Context|everywhere|
 |Tags|`property`|
 |Aliases|`prop`|
+|Recommended|true|
 
 The following patterns are considered problems:
 
@@ -13113,6 +13157,7 @@ Requires that each `@property` tag has a `type` value.
 |Context|everywhere|
 |Tags|`property`|
 |Aliases|`prop`|
+|Recommended|true|
 
 The following patterns are considered problems:
 
@@ -13175,6 +13220,7 @@ Will also report if multiple `@returns` tags are present.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 |Aliases|`return`|
+|Recommended|true|
 
 The following patterns are considered problems:
 
@@ -13591,6 +13637,7 @@ section of our README for more on the expected format.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`returns`|
 |Aliases|`return`|
+|Recommended|true|
 |Options|`contexts`|
 
 The following patterns are considered problems:
@@ -13746,6 +13793,7 @@ section of our README for more on the expected format.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`returns`|
 |Aliases|`return`|
+|Recommended|true|
 |Options|`contexts`|
 
 The following patterns are considered problems:
@@ -13891,6 +13939,7 @@ Will also report if multiple `@returns` tags are present.
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `returns` |
 | Aliases  | `return` |
+|Recommended|true|
 | Options  | `checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync` |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
@@ -14551,6 +14600,7 @@ Requires that throw statements are documented.
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `throws` |
 | Aliases  | `exception` |
+|Recommended|true|
 | Options  | `contexts`, `exemptedBy` |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
@@ -14887,6 +14937,7 @@ value). See the setting for more details.
 |Tags|For name only unless otherwise stated: `alias`, `augments`, `borrows`, `callback`, `class` (for name and type), `constant` (for name and type), `enum` (for type), `event`, `external`, `fires`, `function`, `implements` (for type), `interface`, `lends`, `listens`, `member` (for name and type),  `memberof`, `memberof!`, `mixes`, `mixin`, `modifies`, `module` (for name and type), `name`, `namespace` (for name and type), `param` (for name and type), `property` (for name and type), `returns` (for type), `see` (optionally for name), `this`, `throws` (for type), `type` (for type), `typedef` (for name and type), `yields` (for type)|
 |Aliases|`extends`, `constructor`, `const`, `host`, `emits`, `func`, `method`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|For type only: `package`, `private`, `protected`, `public`, `static`|
+|Recommended|true|
 |Options|`allowEmptyNamepaths`|
 |Settings|`mode`, `structuredTags`|
 

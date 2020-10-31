@@ -26,6 +26,7 @@ Requires that throw statements are documented.
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `throws` |
 | Aliases  | `exception` |
+|Recommended|true|
 | Options  | `contexts`, `exemptedBy` |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 

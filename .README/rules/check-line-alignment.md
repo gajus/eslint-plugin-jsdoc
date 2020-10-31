@@ -17,5 +17,6 @@ line's parts. **Only the non-default `"always"` is implemented for now.**
 |Options|(a string matching `"always"|"never"`)|
 |Tags|`param`, `property`|
 |Aliases|`arg`, `argument`, `prop`|
+|Recommended|false|
 
 <!-- assertions checkLineAlignment -->

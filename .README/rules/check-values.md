@@ -35,6 +35,7 @@ is expected before any line breaks.
 |---|---|
 |Context|everywhere|
 |Tags|`@version`, `@since`, `@license`, `@author`|
+|Recommended|true|
 |Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|
 

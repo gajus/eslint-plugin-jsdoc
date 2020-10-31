@@ -166,6 +166,7 @@ expression-oriented rules will be used by default as well:
 |---|---|
 |Context|everywhere|
 |Tags|`example`|
+|Recommended|false|
 |Options| *See above* |
 
 <!-- assertions checkExamples -->

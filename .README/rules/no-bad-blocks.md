@@ -21,7 +21,8 @@ Defaults to `['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck']`
 |||
 |---|---|
 |Context|Everywhere|
-|Options|`ignore`|
 |Tags|N/A|
+|Recommended|false|
+|Options|`ignore`|
 
 <!-- assertions noBadBlocks -->

@@ -46,6 +46,7 @@ report a padding issue:
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
+|Recommended|false|
 |Options| `excludeTags` |
 
 <!-- assertions checkIndentation -->

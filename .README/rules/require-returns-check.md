@@ -10,5 +10,6 @@ Will also report if multiple `@returns` tags are present.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 |Aliases|`return`|
+|Recommended|true|
 
 <!-- assertions requireReturnsCheck -->

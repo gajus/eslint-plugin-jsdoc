@@ -130,6 +130,7 @@ for types, you can use `settings.jsdoc.structuredTags` with a tag `type` of
 |Tags|`augments`, `class`, `constant`, `enum`, `implements`, `member`, `module`, `namespace`, `param`, `property`, `returns`, `throws`, `type`, `typedef`, `yields`|
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
+|Recommended|true|
 |Options|`noDefaults`, `exemptTagContexts`, `unifyParentAndChildTypeChecks`|
 |Settings|`preferredTypes`, `mode`, `structuredTags`|
 

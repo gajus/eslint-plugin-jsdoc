@@ -15,6 +15,7 @@ Also reports:
 |---|---|
 |Context|everywhere|
 |Tags|`@access`|
+|Recommended|false|
 |Settings||
 |Options||
 

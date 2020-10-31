@@ -48,5 +48,6 @@ add them within this option.
 |---|---|
 |Context|everywhere|
 |Tags| `abstract`, `async`, `generator`, `global`, `hideconstructor`, `ignore`, `inheritdoc`, `inner`, `instance`, `internal`, `override`, `readonly`, `package`, `private`, `protected`, `public`, `static` and others added by `tags`|
+|Recommended|true|
 |Options|`tags`|
 <!-- assertions emptyTags -->

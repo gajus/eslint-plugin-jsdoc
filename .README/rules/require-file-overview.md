@@ -72,6 +72,7 @@ will be checked, but you must use `file` on the configuration object).
 |Context|Everywhere|
 |Tags|`file`; others when `tags` set|
 |Aliases|`fileoverview`, `overview`|
+|Recommended|false|
 |Options|`tags`|
 
 <!-- assertions requireFileOverview -->

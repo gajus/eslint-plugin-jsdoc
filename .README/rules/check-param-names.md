@@ -63,4 +63,5 @@ Whether to check destructured properties. Defaults to `true`.
 |Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
+|Recommended|true|
 <!-- assertions checkParamNames -->

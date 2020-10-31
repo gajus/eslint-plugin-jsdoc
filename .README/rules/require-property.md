@@ -14,5 +14,6 @@ The fixer for `require-property` will add an empty `@property`.
 |---|---|
 |Context|Everywhere|
 |Tags|`typedef`, `namespace`|
+|Recommended|true|
 
 <!-- assertions requireProperty -->

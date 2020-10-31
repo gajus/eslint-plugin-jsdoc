@@ -187,6 +187,7 @@ The format is as follows:
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
+|Recommended|true|
 |Options|`definedTags`|
 |Settings|`tagNamePreference`, `mode`|
 

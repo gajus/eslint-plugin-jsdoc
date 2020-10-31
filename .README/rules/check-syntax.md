@@ -17,5 +17,6 @@ rule is enforced (except under "permissive" and "closure" modes).
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
+|Recommended|false|
 
 <!-- assertions checkSyntax -->

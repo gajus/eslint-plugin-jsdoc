@@ -20,5 +20,6 @@ be removed even if it has a different type or description).
 |Options|`enableFixer`|
 |Tags|`property`|
 |Aliases|`prop`|
+|Recommended|true|
 
 <!-- assertions checkPropertyNames -->

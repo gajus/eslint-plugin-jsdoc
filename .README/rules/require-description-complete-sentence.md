@@ -56,5 +56,6 @@ nouns, for example).
 |Context|everywhere|
 |Tags|doc block, `param`, `returns`, `description`, `property`, `summary`, `file`, `classdesc`, `todo`, `deprecated`, `throws`, 'yields' and others added by `tags`|
 |Aliases|`arg`, `argument`, `return`, `desc`, `prop`, `fileoverview`, `overview`, `exception`, `yield`|
+|Recommended|false|
 |Options|`tags`, `abbreviations`, `newlineBeforeCapsAssumesBadSentenceEnd`|
 <!-- assertions requireDescriptionCompleteSentence -->

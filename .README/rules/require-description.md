@@ -36,6 +36,7 @@ An options object may have any of the following properties:
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `description` or jsdoc block                                                                                  |
 | Aliases  | `desc`                                                                                                        |
+| Recommended | false |
 | Options  | `contexts`, `exemptedBy`, `descriptionStyle`, `checkConstructors`, `checkGetters`, `checkSetters`             |
 | Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 

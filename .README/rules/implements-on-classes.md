@@ -29,6 +29,7 @@ section of our README for more on the expected format.
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`implements` (prevented)|
+|Recommended|true|
 |Options|`contexts`|
 
 <!-- assertions implementsOnClasses -->
