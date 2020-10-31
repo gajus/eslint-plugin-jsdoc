@@ -699,6 +699,31 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @template    T, R<~
+       * @param {function(!T): !R} parser
+       * @return {function(!Array<!T>): !Array<!R>}
+       */
+      parseArray = function(parser) {
+          return function(array) {
+              return array.map(parser);
+          };
+      };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in namepath: R<~',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -1159,6 +1184,24 @@ export default {
     {
       code: `
       /**
+       * @template {string} K - K must be a string or string literal
+       * @template {{ serious: string }} Seriousalizable - must have a serious property
+       * @param {K} key
+       * @param {Seriousalizable} object
+       */
+      function seriousalize(key, object) {
+        // ????
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+      /**
        * @module foo/bar
        */
       `,
@@ -1169,6 +1212,33 @@ export default {
        * @module module:foo/bar
        */
       `,
+    },
+    {
+      code: `
+      /**
+       * @template invalid namepath,T Description
+       */
+      function f() {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * Description of complicated type.
+       *
+       * @template T Description of the T type parameter.
+       * @template U - Like other tags, this can have an optional hyphen before the description.
+       * @template V,W More parameters
+       * @template W,X - Also with a hyphen
+       */
+      type ComplicatedType<T, U, V, W, X> = never
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
 };

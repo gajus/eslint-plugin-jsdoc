@@ -44,6 +44,22 @@ const parseComment = (commentNode, indent, trim = true) => {
       ),
       skipSeeLink(
         (str, data) => {
+          if (data.tag === 'template') {
+            const preWS = str.match(/^[\t ]+/)?.[0].length ?? 0;
+            const remainder = str.slice(preWS);
+
+            const pos = remainder.search(/(?<![\s,])\s/);
+
+            const name = pos === -1 ? remainder : remainder.slice(0, pos);
+
+            return {
+              data: {
+                name,
+                optional: false,
+              },
+              source: str.slice(0, preWS + pos),
+            };
+          }
           if ([
             'example', 'return', 'returns', 'throws', 'exception',
             'access', 'version', 'since', 'license', 'author',

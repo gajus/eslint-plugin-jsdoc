@@ -205,6 +205,31 @@ export default {
           /**
            * Foo.
            *
+           * @template Abc, Def foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
+      options: [
+        {
+          tags: {
+            template: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
            * @prop foo foo.
            */
           function quux (foo) {
@@ -1272,6 +1297,25 @@ export default {
           },
         },
       },
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @template Abc, Def Foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          tags: {
+            template: true,
+          },
+        },
+      ],
     },
   ],
 };

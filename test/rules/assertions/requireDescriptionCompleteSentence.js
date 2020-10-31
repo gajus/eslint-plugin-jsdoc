@@ -844,6 +844,39 @@ export default {
         newlineBeforeCapsAssumesBadSentenceEnd: true,
       }],
     },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * @template TempA, TempB foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Sentence should start with an uppercase character.',
+        },
+      ],
+      options: [
+        {
+          tags: ['template'],
+        },
+      ],
+      output: `
+          /**
+           * Foo.
+           *
+           * @template TempA, TempB Foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+    },
   ],
   valid: [
     {

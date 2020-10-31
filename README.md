@@ -5755,6 +5755,17 @@ function quux (foo) {
 /**
  * Foo.
  *
+ * @template Abc, Def foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"template":true}}]
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo.
+ *
  * @prop foo foo.
  */
 function quux (foo) {
@@ -6286,6 +6297,16 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+
+/**
+ * Foo.
+ *
+ * @template Abc, Def Foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":{"template":true}}]
 ````
 
 
@@ -7138,6 +7159,15 @@ function quux () {}
  * @type {SomeType}
  */
 // Message: The type 'SomeType' is undefined.
+
+/**
+ * @template abc TEMPLATE_TYPE
+ * @param {TEMPLATE_TYPE} bar
+ */
+function foo (bar) {
+};
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: The type 'TEMPLATE_TYPE' is undefined.
 ````
 
 The following patterns are not considered problems:
@@ -7336,6 +7366,19 @@ class Foo {
 
 /**
  * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
+ */
+class Foo {
+  /**
+   * @param {TEMPLATE_TYPE_A} baz
+   * @return {TEMPLATE_TYPE_B}
+   */
+  bar (baz) {
+  }
+}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B - Some description
  */
 class Foo {
   /**
@@ -7823,6 +7866,17 @@ function speak() {
 }
 // Options: [{"newlineBeforeCapsAssumesBadSentenceEnd":true}]
 // Message: A line of text is started with an uppercase character, but preceding line does not end the sentence.
+
+/**
+ * Foo.
+ *
+ * @template TempA, TempB foo.
+ */
+function quux (foo) {
+
+}
+// Options: [{"tags":["template"]}]
+// Message: Sentence should start with an uppercase character.
 ````
 
 The following patterns are not considered problems:
@@ -9329,6 +9383,12 @@ function quux (foo) {
  */
 // Options: ["always",{"tags":{"property":"always"}}]
 // Message: There must be a hyphen before @property description.
+
+/**
+ * @template TempA, TempB A desc.
+ */
+// Options: ["always",{"tags":{"template":"always"}}]
+// Message: There must be a hyphen before @template description.
 
 /**
  * @typedef {SomeType} ATypeDefName
@@ -15123,6 +15183,19 @@ parseArray = function(parser) {
 };
 // Settings: {"jsdoc":{"mode":"closure"}}
 // Message: Syntax error in namepath: R<~
+
+/**
+ * @template    T, R<~
+ * @param {function(!T): !R} parser
+ * @return {function(!Array<!T>): !Array<!R>}
+ */
+parseArray = function(parser) {
+    return function(array) {
+        return array.map(parser);
+    };
+};
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Syntax error in namepath: R<~
 ````
 
 The following patterns are not considered problems:
@@ -15392,12 +15465,39 @@ parseArray = function(parser) {
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 
 /**
+ * @template {string} K - K must be a string or string literal
+ * @template {{ serious: string }} Seriousalizable - must have a serious property
+ * @param {K} key
+ * @param {Seriousalizable} object
+ */
+function seriousalize(key, object) {
+  // ????
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
  * @module foo/bar
  */
 
 /**
  * @module module:foo/bar
  */
+
+/**
+ * @template invalid namepath,T Description
+ */
+function f() {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * Description of complicated type.
+ *
+ * @template T Description of the T type parameter.
+ * @template U - Like other tags, this can have an optional hyphen before the description.
+ * @template V,W More parameters
+ * @template W,X - Also with a hyphen
+ */
+type ComplicatedType<T, U, V, W, X> = never
 ````
 
 

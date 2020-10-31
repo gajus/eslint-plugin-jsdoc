@@ -607,11 +607,12 @@ const isInlineTag = (tag) => {
  * Parses GCC Generic/Template types
  *
  * @see {https://github.com/google/closure-compiler/wiki/Generic-Types}
+ * @see {https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#template}
  * @param {JsDocTag} tag
  * @returns {Array<string>}
  */
 const parseClosureTemplateTag = (tag) => {
-  return (tag.name + ' ' + tag.description)
+  return tag.name
     .split(',')
     .map((type) => {
       return type.trim();
@@ -663,6 +664,7 @@ const filterTags = (tags = [], filter) => {
 
 const tagsWithNamesAndDescriptions = new Set([
   'param', 'arg', 'argument', 'property', 'prop',
+  'template',
 
   // These two are parsed by our custom parser as though having a `name`
   'returns', 'return',

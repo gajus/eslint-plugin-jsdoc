@@ -255,6 +255,29 @@ export default {
     {
       code: `
           /**
+           * @template TempA, TempB A desc.
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a hyphen before @template description.',
+        },
+      ],
+      options: [
+        'always', {tags: {
+          template: 'always',
+        }},
+      ],
+      output: `
+          /**
+           * @template TempA, TempB - A desc.
+           */
+      `,
+    },
+    {
+      code: `
+          /**
            * @typedef {SomeType} ATypeDefName
            * @property foo - Foo.
            */

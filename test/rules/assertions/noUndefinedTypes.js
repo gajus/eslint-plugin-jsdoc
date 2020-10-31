@@ -378,6 +378,27 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @template abc TEMPLATE_TYPE
+       * @param {TEMPLATE_TYPE} bar
+       */
+      function foo (bar) {
+      };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'TEMPLATE_TYPE\' is undefined.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -689,6 +710,26 @@ export default {
       code: `
       /**
        * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B
+       */
+      class Foo {
+        /**
+         * @param {TEMPLATE_TYPE_A} baz
+         * @return {TEMPLATE_TYPE_B}
+         */
+        bar (baz) {
+        }
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @template TEMPLATE_TYPE_A, TEMPLATE_TYPE_B - Some description
        */
       class Foo {
         /**
