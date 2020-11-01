@@ -79,6 +79,7 @@ const defaultExpressionRules = {
   'no-unused-expressions': 'off',
   quotes: ['error', 'double'],
   semi: ['error', 'never'],
+  strict: 'off',
 };
 
 export default iterateJsdoc(({

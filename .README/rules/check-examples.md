@@ -154,6 +154,7 @@ expression-oriented rules will be used by default as well:
 
 * `quotes` - Will insist on "double".
 * `semi` - Will insist on "never"
+* `strict` - Disabled.
 * `no-unused-expressions` - Disabled.
 
 ##### Options for checking other than `@example` (`checkDefaults`, `checkParams`, or `checkProperties`)
