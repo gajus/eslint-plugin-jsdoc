@@ -258,7 +258,7 @@ export default {
           initModuleExports: Boolean(publicOnly?.cjs ?? true),
           initWindow: Boolean(publicOnly?.window ?? false),
         };
-        const exported = exportParser.isExported(node, sourceCode, opt);
+        const exported = exportParser.isUncommentedExport(node, sourceCode, opt, settings);
 
         if (exported) {
           report();

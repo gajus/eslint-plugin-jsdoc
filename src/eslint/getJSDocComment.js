@@ -203,6 +203,48 @@ const getReducedASTNode = function (node, sourceCode) {
 };
 
 /**
+ * Checks for the presence of a JSDoc comment for the given node and returns it.
+ *
+ * @param {ASTNode} astNode The AST node to get the comment for.
+ * @returns {Token|null} The Block comment token containing the JSDoc comment
+ *    for the given node or null if not found.
+ * @private
+ */
+const findJSDocComment = (astNode, sourceCode, settings) => {
+  const {minLines, maxLines} = settings;
+  let currentNode = astNode;
+  let tokenBefore = null;
+
+  while (currentNode) {
+    tokenBefore = sourceCode.getTokenBefore(currentNode, {includeComments: true});
+    const decorator = getDecorator(tokenBefore, sourceCode);
+    if (decorator) {
+      currentNode = decorator;
+      continue;
+    }
+    if (!tokenBefore || !isCommentToken(tokenBefore)) {
+      return null;
+    }
+    if (tokenBefore.type === 'Line') {
+      currentNode = tokenBefore;
+      continue;
+    }
+    break;
+  }
+
+  if (
+    tokenBefore.type === 'Block' &&
+    tokenBefore.value.charAt(0) === '*' &&
+    currentNode.loc.start.line - tokenBefore.loc.end.line >= minLines &&
+    currentNode.loc.start.line - tokenBefore.loc.end.line <= maxLines
+  ) {
+    return tokenBefore;
+  }
+
+  return null;
+};
+
+/**
  * Retrieves the JSDoc comment for a given node.
  *
  * @param {SourceCode} sourceCode The ESLint SourceCode
@@ -213,54 +255,12 @@ const getReducedASTNode = function (node, sourceCode) {
  * @public
  */
 const getJSDocComment = function (sourceCode, node, settings) {
-  /**
-   * Checks for the presence of a JSDoc comment for the given node and returns it.
-   *
-   * @param {ASTNode} astNode The AST node to get the comment for.
-   * @returns {Token|null} The Block comment token containing the JSDoc comment
-   *    for the given node or null if not found.
-   * @private
-   */
-  const findJSDocComment = (astNode) => {
-    const {minLines, maxLines} = settings;
-    let currentNode = astNode;
-    let tokenBefore = null;
-
-    while (currentNode) {
-      tokenBefore = sourceCode.getTokenBefore(currentNode, {includeComments: true});
-      const decorator = getDecorator(tokenBefore, sourceCode);
-      if (decorator) {
-        currentNode = decorator;
-        continue;
-      }
-      if (!tokenBefore || !isCommentToken(tokenBefore)) {
-        return null;
-      }
-      if (tokenBefore.type === 'Line') {
-        currentNode = tokenBefore;
-        continue;
-      }
-      break;
-    }
-
-    if (
-      tokenBefore.type === 'Block' &&
-      tokenBefore.value.charAt(0) === '*' &&
-      currentNode.loc.start.line - tokenBefore.loc.end.line >= minLines &&
-      currentNode.loc.start.line - tokenBefore.loc.end.line <= maxLines
-    ) {
-      return tokenBefore;
-    }
-
-    return null;
-  };
-
   const reducedNode = getReducedASTNode(node, sourceCode);
 
-  return findJSDocComment(reducedNode);
+  return findJSDocComment(reducedNode, sourceCode, settings);
 };
 
 export {
-  getReducedASTNode, getJSDocComment, getDecorator,
+  getReducedASTNode, getJSDocComment, getDecorator, findJSDocComment,
 };
 export default getJSDocComment;

@@ -10905,6 +10905,18 @@ class Base {
  */
 export function a(); // Reports an error
 // Options: [{"contexts":["TSDeclareFunction"],"require":{"FunctionDeclaration":true}}]
+
+/**
+ * Foo
+ */
+export function foo(): void {
+  function bar(): void {
+    console.log('bar');
+  }
+
+  console.log('foo');
+}
+// Options: [{"publicOnly":true}]
 ````
 
 

@@ -4165,5 +4165,23 @@ export default {
     ],
     parser: require.resolve('@typescript-eslint/parser'),
   },
+  {
+    code: `
+    /**
+     * Foo
+     */
+    export function foo(): void {
+      function bar(): void {
+        console.log('bar');
+      }
+
+      console.log('foo');
+    }
+`,
+    options: [{
+      publicOnly: true,
+    }],
+    parser: require.resolve('@typescript-eslint/parser'),
+  },
   ],
 };

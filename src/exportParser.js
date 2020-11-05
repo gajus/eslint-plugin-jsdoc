@@ -1,4 +1,7 @@
 import debugModule from 'debug';
+import {
+  findJSDocComment,
+} from './eslint/getJSDocComment';
 
 const debug = debugModule('requireExportJsdoc');
 
@@ -343,11 +346,11 @@ const findNode = function (node, block, cache) {
 };
 
 const exportTypes = new Set(['ExportNamedDeclaration', 'ExportDefaultDeclaration']);
-const hasExportAncestor = function (nde) {
+const getExportAncestor = function (nde) {
   let node = nde;
   while (node) {
     if (exportTypes.has(node.type)) {
-      return true;
+      return node;
     }
     node = node.parent;
   }
@@ -440,17 +443,21 @@ const parse = function (ast, node, opt) {
   };
 };
 
-const isExported = function (node, sourceCode, opt) {
+const isUncommentedExport = function (node, sourceCode, opt, settings) {
   // Optimize with ancestor check for esm
-  if (opt.esm && hasExportAncestor(node)) {
-    return true;
+  if (opt.esm) {
+    const exportNode = getExportAncestor(node);
+    if (exportNode && !findJSDocComment(exportNode, sourceCode, settings)) {
+      return true;
+    }
   }
+
   const parseResult = parse(sourceCode.ast, node, opt);
 
   return isNodeExported(node, parseResult.globalVars, opt);
 };
 
 export default {
-  isExported,
+  isUncommentedExport,
   parse,
 };
