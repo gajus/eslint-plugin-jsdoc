@@ -13,7 +13,7 @@ const preTagSpaceLength = 1;
 // If a space is present, we should ignore it
 const firstLinePrefixLength = preTagSpaceLength;
 
-const hasCaptionRegex = /^\s*<caption>(.*?)<\/caption>/u;
+const hasCaptionRegex = /^\s*<caption>([\s\S]*?)<\/caption>/u;
 
 const escapeStringRegexp = (str) => {
   return str.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
@@ -82,6 +82,16 @@ const defaultExpressionRules = {
   strict: 'off',
 };
 
+const getLinesCols = (text) => {
+  const matchLines = countChars(text, '\n');
+
+  const colDelta = matchLines ?
+    text.slice(text.lastIndexOf('\n') + 1).length :
+    text.length;
+
+  return [matchLines, colDelta];
+};
+
 export default iterateJsdoc(({
   report,
   utils,
@@ -133,12 +143,14 @@ export default iterateJsdoc(({
   const checkSource = ({
     filename, defaultFileName,
     rules = expressionRules,
+    lines = 0,
+    cols = 0,
     skipInit, source, targetTagName, sources = [], tag = {line: 0},
   }) => {
     if (!skipInit) {
       sources.push({
-        nonJSPrefacingCols: 0,
-        nonJSPrefacingLines: 0,
+        nonJSPrefacingCols: cols,
+        nonJSPrefacingLines: lines,
         string: source,
       });
     }
@@ -301,8 +313,8 @@ export default iterateJsdoc(({
       report('Caption is expected for examples.', null, tag);
     }
 
-    // If we allow newlines in hasCaptionRegex, we should add to line count
     source = source.replace(hasCaptionRegex, '');
+    const [lines, cols] = match ? getLinesCols(match[0]) : [0, 0];
 
     if (exampleCodeRegex && !exampleCodeRegex.test(source) ||
       rejectExampleCodeRegex && rejectExampleCodeRegex.test(source)
@@ -327,11 +339,7 @@ export default iterateJsdoc(({
         // Count anything preceding user regex match (can affect line numbering)
         const preMatch = source.slice(startingIndex, index);
 
-        const preMatchLines = countChars(preMatch, '\n');
-
-        const colDelta = preMatchLines ?
-          preMatch.slice(preMatch.lastIndexOf('\n') + 1).length :
-          preMatch.length;
+        const [preMatchLines, colDelta] = getLinesCols(preMatch);
 
         let nonJSPreface;
         let nonJSPrefaceLineCount;
@@ -371,6 +379,8 @@ export default iterateJsdoc(({
     }
 
     checkSource({
+      cols,
+      lines,
       rules: mdRules,
       skipInit,
       source,

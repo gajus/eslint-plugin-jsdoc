@@ -1367,6 +1367,24 @@ function quux () {
 const obj = {};
 // Options: [{"checkProperties":true}]
 // Message: @property error (quotes): Strings must use doublequote.
+
+/**
+ * Test function.
+ *
+ * @example <caption>functionName (paramOne: string, paramTwo?: any,
+ * paramThree?: any): boolean</caption> test()
+ *
+ * @param {string} paramOne Parameter description.
+ * @param {any} [paramTwo] Parameter description.
+ * @param {any} [paramThree] Parameter description.
+ * @returns {boolean} Return description.
+ */
+const functionName = function (paramOne, paramTwo,
+  paramThree) {
+  return false;
+};
+// Options: [{"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"captionRequired":true,"checkEslintrc":false}]
+// Message: @example error (semi): Missing semicolon.
 ````
 
 The following patterns are not considered problems:
@@ -1571,6 +1589,23 @@ function quux () {
  */
 const obj = {};
 // Options: [{"checkProperties":false,"matchingFileNameProperties":"dummy.js"}]
+
+/**
+ * Test function.
+ *
+ * @example <caption>functionName (paramOne: string, paramTwo?: any,
+ * paramThree?: any): boolean</caption> test();
+ *
+ * @param {string} paramOne Parameter description.
+ * @param {any} [paramTwo] Parameter description.
+ * @param {any} [paramThree] Parameter description.
+ * @returns {boolean} Return description.
+ */
+const functionName = function (paramOne, paramTwo,
+  paramThree) {
+  return false;
+};
+// Options: [{"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"captionRequired":true,"checkEslintrc":false}]
 ````
 
 

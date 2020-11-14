@@ -749,6 +749,44 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * Test function.
+       *
+       * @example <caption>functionName (paramOne: string, paramTwo?: any,
+       * paramThree?: any): boolean</caption> test()
+       *
+       * @param {string} paramOne Parameter description.
+       * @param {any} [paramTwo] Parameter description.
+       * @param {any} [paramThree] Parameter description.
+       * @returns {boolean} Return description.
+       */
+      const functionName = function (paramOne, paramTwo,
+        paramThree) {
+        return false;
+      };
+      `,
+      errors: [
+        {
+          line: 6,
+          message: '@example error (semi): Missing semicolon.',
+        },
+      ],
+      options: [{
+        baseConfig: {
+          parserOptions: {
+            ecmaVersion: 2_015,
+            sourceType: 'module',
+          },
+          rules: {
+            semi: ['error', 'always'],
+          },
+        },
+        captionRequired: true,
+        checkEslintrc: false,
+      }],
+    },
   ],
   valid: [
     {
@@ -1165,6 +1203,38 @@ export default {
           matchingFileNameProperties: 'dummy.js',
         },
       ],
+    },
+    {
+      code: `
+      /**
+       * Test function.
+       *
+       * @example <caption>functionName (paramOne: string, paramTwo?: any,
+       * paramThree?: any): boolean</caption> test();
+       *
+       * @param {string} paramOne Parameter description.
+       * @param {any} [paramTwo] Parameter description.
+       * @param {any} [paramThree] Parameter description.
+       * @returns {boolean} Return description.
+       */
+      const functionName = function (paramOne, paramTwo,
+        paramThree) {
+        return false;
+      };
+      `,
+      options: [{
+        baseConfig: {
+          parserOptions: {
+            ecmaVersion: 2_015,
+            sourceType: 'module',
+          },
+          rules: {
+            semi: ['error', 'always'],
+          },
+        },
+        captionRequired: true,
+        checkEslintrc: false,
+      }],
     },
   ],
 };
