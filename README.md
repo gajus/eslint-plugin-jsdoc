@@ -10952,6 +10952,13 @@ export function foo(): void {
   console.log('foo');
 }
 // Options: [{"publicOnly":true}]
+
+const foo = {
+  bar: () => {
+    // ...
+  }
+}
+// Options: [{"contexts":[":not(Property) > ArrowFunctionExpression"],"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true}}]
 ````
 
 

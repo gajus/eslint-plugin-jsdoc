@@ -4183,5 +4183,24 @@ export default {
     }],
     parser: require.resolve('@typescript-eslint/parser'),
   },
+  {
+    code: `
+    const foo = {
+      bar: () => {
+        // ...
+      }
+    }
+    `,
+    options: [{
+      contexts: [
+        ':not(Property) > ArrowFunctionExpression',
+      ],
+      require: {
+        ArrowFunctionExpression: false,
+        ClassDeclaration: true,
+        ClassExpression: true,
+      },
+    }],
+  },
   ],
 };
