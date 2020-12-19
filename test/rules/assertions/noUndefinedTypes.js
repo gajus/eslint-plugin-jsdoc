@@ -938,5 +938,20 @@ export default {
         },
       },
     },
+    {
+      code: `
+      class Test {
+        /**
+         * Method.
+         *
+         * @returns {this} Return description.
+         */
+        method (): this {
+          return this;
+        }
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };

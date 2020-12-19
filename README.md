@@ -7026,6 +7026,7 @@ The following types are always considered defined.
   `function`, `symbol`
 - `number`, `bigint`, `NaN`, `Infinity`
 - `any`, `*`
+- `this`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
 
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
@@ -7563,6 +7564,17 @@ function quux () {}
  * @type {SomeType}
  */
 // Settings: {"jsdoc":{"structuredTags":{"namepathDefiner":{"name":"namepath-defining"}}}}
+
+class Test {
+  /**
+   * Method.
+   *
+   * @returns {this} Return description.
+   */
+  method (): this {
+    return this;
+  }
+}
 ````
 
 

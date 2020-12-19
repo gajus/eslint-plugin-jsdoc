@@ -15,6 +15,7 @@ const extraTypes = [
   'function', 'symbol',
   'number', 'bigint', 'NaN', 'Infinity',
   'any', '*',
+  'this',
   'Array', 'Object', 'RegExp', 'Date', 'Function',
 ];
 
