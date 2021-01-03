@@ -10281,6 +10281,13 @@ export interface Foo {
 }
 // Options: [{"contexts":["TSPropertySignature","TSMethodSignature"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
+
+export class User {
+  @Input()
+  public name: string;
+}
+// Options: [{"contexts":["ClassProperty:has(Decorator[expression.callee.name=\"Input\"])"]}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

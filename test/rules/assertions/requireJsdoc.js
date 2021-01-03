@@ -2694,6 +2694,35 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      export class User {
+        @Input()
+        public name: string;
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [{
+        contexts: [
+          'ClassProperty:has(Decorator[expression.callee.name="Input"])',
+        ],
+      }],
+      output: `
+      export class User {
+        /**
+         *
+         */
+        @Input()
+        public name: string;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [{
     code: `
