@@ -9433,6 +9433,15 @@ function quux () {
 // Message: There must be no hyphen before @param description.
 
 /**
+ * @param foo    - Foo.
+ */
+function quux () {
+
+}
+// Options: ["never"]
+// Message: There must be no hyphen before @param description.
+
+/**
  * @param foo - foo
  * @param foo foo
  */
@@ -9498,6 +9507,14 @@ The following patterns are not considered problems:
 ````js
 /**
  * @param foo - Foo.
+ */
+function quux () {
+
+}
+// Options: ["always"]
+
+/**
+ * @param foo     - Foo.
  */
 function quux () {
 

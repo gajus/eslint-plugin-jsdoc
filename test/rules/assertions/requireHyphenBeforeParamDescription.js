@@ -148,6 +148,33 @@ export default {
     {
       code: `
           /**
+           * @param foo    - Foo.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be no hyphen before @param description.',
+        },
+      ],
+      options: [
+        'never',
+      ],
+      output: `
+          /**
+           * @param foo Foo.
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            * @param foo - foo
            * @param foo foo
            */
@@ -344,6 +371,19 @@ export default {
       code: `
           /**
            * @param foo - Foo.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param foo     - Foo.
            */
           function quux () {
 

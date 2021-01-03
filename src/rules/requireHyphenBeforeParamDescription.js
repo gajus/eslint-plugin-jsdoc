@@ -16,8 +16,9 @@ export default iterateJsdoc(({
       return;
     }
 
+    const startsWithHyphen = (/-/u).test(jsdocTag.description);
     if (always) {
-      if (!jsdocTag.description.startsWith('-')) {
+      if (!startsWithHyphen) {
         report(`There must be a hyphen before @${targetTagName} description.`, (fixer) => {
           const lineIndex = jsdocTag.line;
           const sourceLines = sourceCode.getText(jsdocNode).split('\n');
@@ -34,9 +35,9 @@ export default iterateJsdoc(({
           return fixer.replaceText(jsdocNode, replacement);
         }, jsdocTag);
       }
-    } else if (jsdocTag.description.startsWith('-')) {
+    } else if (startsWithHyphen) {
       report(`There must be no hyphen before @${targetTagName} description.`, (fixer) => {
-        const [unwantedPart] = /-\s*/u.exec(jsdocTag.description);
+        const [unwantedPart] = /\s*-\s*/u.exec(jsdocTag.description);
 
         const replacement = sourceCode
           .getText(jsdocNode)
