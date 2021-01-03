@@ -1044,6 +1044,7 @@ expression-oriented rules will be used by default as well:
 * `quotes` - Will insist on "double".
 * `semi` - Will insist on "never"
 * `strict` - Disabled.
+* `no-new` - Disabled.
 * `no-unused-expressions` - Disabled.
 
 <a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig-options-for-checking-other-than-example-checkdefaults-checkparams-or-checkproperties"></a>

@@ -76,6 +76,7 @@ const defaultMdRules = {
 
 const defaultExpressionRules = {
   ...defaultMdRules,
+  'no-new': 'off',
   'no-unused-expressions': 'off',
   quotes: ['error', 'double'],
   semi: ['error', 'never'],
