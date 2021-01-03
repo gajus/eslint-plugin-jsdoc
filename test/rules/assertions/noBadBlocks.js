@@ -157,6 +157,9 @@ export default {
       code: '/* @ts-nocheck */',
     },
     {
+      code: '/* */',
+    },
+    {
       code: '/* @custom */',
       options: [{ignore: ['custom']}],
     },

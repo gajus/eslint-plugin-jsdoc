@@ -6682,6 +6682,8 @@ function quux () {
 
 /* @ts-nocheck */
 
+/* */
+
 /* @custom */
 // Options: [{"ignore":["custom"]}]
 ````

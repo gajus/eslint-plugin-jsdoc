@@ -25,7 +25,7 @@ export default iterateJsdoc(({
       return false;
     }
 
-    const [{tags}] = commentParser(`${commentText.slice(0, 2)}*${commentText.slice(2)}`);
+    const [{tags = {}} = {}] = commentParser(`${commentText.slice(0, 2)}*${commentText.slice(2)}`);
 
     return tags.length && !tags.some(({tag}) => {
       return ignore.includes(tag);
