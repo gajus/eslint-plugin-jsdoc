@@ -9572,6 +9572,14 @@ function quux () {
  * @property foo - Foo.
  */
 // Options: ["never",{"tags":{"*":"always"}}]
+
+/** Entry point for module.
+ *
+ * @param {!Array<string>} argv Command-line arguments.
+ */
+function main(argv) {
+};
+// Options: ["never"]
 ````
 
 

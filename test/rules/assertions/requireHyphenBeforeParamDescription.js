@@ -488,5 +488,16 @@ export default {
         }},
       ],
     },
+    {
+      code: `
+      /** Entry point for module.
+       *
+       * @param {!Array<string>} argv Command-line arguments.
+       */
+      function main(argv) {
+      };
+      `,
+      options: ['never'],
+    },
   ],
 };
