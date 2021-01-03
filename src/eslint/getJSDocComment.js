@@ -14,32 +14,39 @@ const isCommentToken = (token) => {
   return token.type === 'Line' || token.type === 'Block' || token.type === 'Shebang';
 };
 
+const decoratorMetaTokens = new Map([[')', '('], ['>', '<']]);
+
 const getDecorator = (token, sourceCode) => {
   if (!token) {
     return false;
   }
-  if (token.type === 'Punctuator' && token.value === ')') {
-    let nested = 0;
-    let tokenBefore = token;
-    do {
-      tokenBefore = sourceCode.getTokenBefore(tokenBefore, {includeComments: true});
-      // istanbul ignore if
-      if (tokenBefore && tokenBefore.type === 'Punctuator') {
-        if (tokenBefore.value === ')') {
-          nested++;
-        }
-        if (tokenBefore.value === '(') {
-          if (nested) {
-            nested--;
-          } else {
-            break;
+  if (token.type === 'Punctuator') {
+    const tokenClose = token.value;
+    const tokenOpen = decoratorMetaTokens.get(tokenClose);
+    if (tokenOpen) {
+      let nested = 0;
+      let tokenBefore = token;
+      do {
+        tokenBefore = sourceCode.getTokenBefore(tokenBefore, {includeComments: true});
+        // istanbul ignore if
+        if (tokenBefore && tokenBefore.type === 'Punctuator') {
+          if (tokenBefore.value === tokenClose) {
+            nested++;
+          }
+          if (tokenBefore.value === tokenOpen) {
+            if (nested) {
+              nested--;
+            } else {
+              break;
+            }
           }
         }
-      }
-    } while (tokenBefore);
+      } while (tokenBefore);
 
-    return tokenBefore;
+      return tokenBefore;
+    }
   }
+
   if (token.type === 'Identifier') {
     const tokenBefore = sourceCode.getTokenBefore(token, {includeComments: true});
     if (tokenBefore && tokenBefore.type === 'Punctuator' && tokenBefore.value === '@') {

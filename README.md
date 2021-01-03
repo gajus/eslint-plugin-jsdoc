@@ -10998,6 +10998,20 @@ const foo = {
   }
 }
 // Options: [{"contexts":[":not(Property) > ArrowFunctionExpression"],"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true}}]
+
+/** Defines the current user's settings. */
+@Injectable({
+  providedIn: 'root',
+})
+@State<Partial<UserSettingsStateModel>>
+({
+  name: 'userSettings',
+  defaults: {
+    isDev: !environment.production,
+  },
+})
+export class UserSettingsState { }
+// Options: [{"require":{"ClassDeclaration":true}}]
 ````
 
 

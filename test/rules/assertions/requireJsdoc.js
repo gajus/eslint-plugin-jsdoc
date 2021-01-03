@@ -4231,5 +4231,27 @@ export default {
       },
     }],
   },
+  {
+    code: `
+    /** Defines the current user's settings. */
+    @Injectable({
+      providedIn: 'root',
+    })
+    @State<Partial<UserSettingsStateModel>>
+    ({
+      name: 'userSettings',
+      defaults: {
+        isDev: !environment.production,
+      },
+    })
+    export class UserSettingsState { }
+    `,
+    options: [{
+      require: {
+        ClassDeclaration: true,
+      },
+    }],
+    parser: require.resolve('@typescript-eslint/parser'),
+  },
   ],
 };
