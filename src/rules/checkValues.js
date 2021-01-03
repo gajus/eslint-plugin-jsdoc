@@ -85,14 +85,12 @@ export default iterateJsdoc(({
         null,
         jsdocParameter,
       );
-    } else if (allowedAuthors) {
-      if (!allowedAuthors.includes(author)) {
-        report(
-          `Invalid JSDoc @${targetTagName}: "${jsdocParameter.description}"; expected one of ${allowedAuthors.join(', ')}.`,
-          null,
-          jsdocParameter,
-        );
-      }
+    } else if (allowedAuthors && !allowedAuthors.includes(author)) {
+      report(
+        `Invalid JSDoc @${targetTagName}: "${jsdocParameter.description}"; expected one of ${allowedAuthors.join(', ')}.`,
+        null,
+        jsdocParameter,
+      );
     }
   });
 }, {

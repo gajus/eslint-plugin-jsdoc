@@ -322,10 +322,11 @@ const findNode = function (node, block, cache) {
   blockCache = blockCache.slice();
   blockCache.push(block);
 
-  if (block.type === 'object' || block.type === 'MethodDefinition') {
-    if (block.value === node) {
-      return true;
-    }
+  if (
+    (block.type === 'object' || block.type === 'MethodDefinition') &&
+    block.value === node
+  ) {
+    return true;
   }
 
   const {props = block.body} = block;
@@ -367,10 +368,8 @@ const findExportedNode = function (block, node, cache) {
   const {props} = block;
   for (const propval of Object.values(props)) {
     blockCache.push(propval);
-    if (propval.exported) {
-      if (node === propval.value || findNode(node, propval.value)) {
-        return true;
-      }
+    if (propval.exported && (node === propval.value || findNode(node, propval.value))) {
+      return true;
     }
 
     // No need to check `propval` for exported nodes as ESM
@@ -381,16 +380,15 @@ const findExportedNode = function (block, node, cache) {
 };
 
 const isNodeExported = function (node, globals, opt) {
-  if (opt.initModuleExports && globals.props.module && globals.props.module.props.exports) {
-    if (findNode(node, globals.props.module.props.exports)) {
-      return true;
-    }
+  if (
+    opt.initModuleExports && globals.props.module && globals.props.module.props.exports &&
+    findNode(node, globals.props.module.props.exports)
+  ) {
+    return true;
   }
 
-  if (opt.initWindow && globals.props.window) {
-    if (findNode(node, globals.props.window)) {
-      return true;
-    }
+  if (opt.initWindow && globals.props.window && findNode(node, globals.props.window)) {
+    return true;
   }
 
   if (opt.esm && findExportedNode(globals, node)) {
@@ -402,10 +400,8 @@ const isNodeExported = function (node, globals, opt) {
 
 const parseRecursive = function (node, globalVars, opts) {
   // Iterate from top using recursion - stop at first processed node from top
-  if (node.parent) {
-    if (parseRecursive(node.parent, globalVars, opts)) {
-      return true;
-    }
+  if (node.parent && parseRecursive(node.parent, globalVars, opts)) {
+    return true;
   }
 
   return mapVariables(node, globalVars, opts);
