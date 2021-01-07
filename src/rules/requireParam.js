@@ -96,15 +96,22 @@ export default iterateJsdoc(({
       });
     });
 
-    if (foundIndex > -1) {
-      return foundIndex;
-    }
+    const tags = foundIndex > -1 ?
+      jsdocTags.slice(0, foundIndex) :
+      jsdocTags.filter(({tag}) => {
+        return tag === preferredTagName;
+      });
 
-    const paramTags = jsdocTags.filter(({tag}) => {
-      return tag === preferredTagName;
+    let tagLineCount = 0;
+    tags.forEach(({source}) => {
+      source.forEach(({tokens: {end}}) => {
+        if (!end) {
+          tagLineCount++;
+        }
+      });
     });
 
-    return paramTags.length;
+    return tagLineCount;
   };
 
   let [nextRootName, incremented, namer] = rootNamer([...unnamedRootBase], autoIncrementBase);
@@ -202,7 +209,7 @@ export default iterateJsdoc(({
             ),
             functionParameterName: fullParamName,
             inc,
-            type: hasRestElement && !hasPropertyRest ? '...any' : undefined,
+            type: hasRestElement && !hasPropertyRest ? '{...any}' : undefined,
           });
         }
       });
@@ -216,7 +223,7 @@ export default iterateJsdoc(({
         return;
       }
       funcParamName = functionParameterName.name;
-      type = '...any';
+      type = '{...any}';
     } else {
       funcParamName = functionParameterName;
     }
@@ -235,35 +242,56 @@ export default iterateJsdoc(({
 
   const fix = ({
     functionParameterIdx, functionParameterName, remove, inc, type,
-  }, tags) => {
+  }) => {
     if (inc && !enableRootFixer) {
       return;
     }
+    const createTokens = (tagIndex, sourceIndex, spliceCount) => {
+      // console.log(sourceIndex, tagIndex, jsdoc.tags, jsdoc.source);
+      const tokens = {
+        number: sourceIndex + 1,
+        tokens: {
+          delimiter: '*',
+          description: '',
+          end: '',
+          name: functionParameterName,
+          newAdd: true,
+          postDelimiter: ' ',
+          postName: '',
+          postTag: ' ',
+          postType: type ? ' ' : '',
+          start: jsdoc.source[sourceIndex].tokens.start,
+          tag: `@${preferredTagName}`,
+          type: type ?? '',
+        },
+      };
+      jsdoc.tags.splice(tagIndex, spliceCount, {
+        name: functionParameterName,
+        newAdd: true,
+        source: [tokens],
+        tag: preferredTagName,
+        type: type ?? '',
+      });
+      const firstNumber = jsdoc.source[0].number;
+      jsdoc.source.splice(sourceIndex, spliceCount, tokens);
+      jsdoc.source.slice(sourceIndex).forEach((src, idx) => {
+        src.number = firstNumber + sourceIndex + idx;
+      });
+    };
+    const offset = jsdoc.source.findIndex(({tokens: {tag, end}}) => {
+      return tag || end;
+    });
     if (remove) {
-      tags.splice(functionParameterIdx, 1, {
-        name: functionParameterName,
-        newAdd: true,
-        tag: preferredTagName,
-        type,
-      });
+      createTokens(functionParameterIdx, offset + functionParameterIdx, 1);
     } else {
-      const expectedIdx = findExpectedIndex(tags, functionParameterIdx);
-      tags.splice(expectedIdx, 0, {
-        name: functionParameterName,
-        newAdd: true,
-        tag: preferredTagName,
-        type,
-      });
+      const expectedIdx = findExpectedIndex(jsdoc.tags, functionParameterIdx);
+      createTokens(expectedIdx, offset + expectedIdx, 0);
     }
   };
 
   const fixer = () => {
-    if (!jsdoc.tags) {
-      jsdoc.tags = [];
-    }
-
     missingTags.forEach((missingTag) => {
-      fix(missingTag, jsdoc.tags);
+      fix(missingTag);
     });
   };
 

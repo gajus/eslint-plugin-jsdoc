@@ -16,9 +16,6 @@ export default iterateJsdoc(({
     allowEmptyNamepaths = false,
   } = context.options[0] || {};
   const {mode} = settings;
-  if (!jsdoc.tags) {
-    return;
-  }
 
   const tryParseIgnoreError = (path) => {
     try {

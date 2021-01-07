@@ -1,108 +1,128 @@
 import {
-  // eslint-disable-next-line import/no-named-default
-  default as commentParser, stringify as commentStringify,
+  parse as commentParser, stringify as commentStringify,
 } from 'comment-parser';
+import getSpacer from 'comment-parser/lib/parser/spacer';
+import {
+  tagTokenizer,
+  typeTokenizer,
+  nameTokenizer,
+  descriptionTokenizer,
+} from 'comment-parser/lib/parser/spec-parser';
+import {
+  rewireSpecs,
+  seedBlock,
+  seedTokens,
+} from 'comment-parser/lib/util';
 import _ from 'lodash';
 import {
   getJSDocComment, getReducedASTNode,
 } from './eslint/getJSDocComment';
 import jsdocUtils from './jsdocUtils';
 
+/*
+const {
+   align as commentAlign,
+  flow: commentFlow,
+  indent: commentIndent,
+} = transforms;
+*/
+
 const globalState = new Map();
 
-const skipSeeLink = (parser) => {
-  return (str, data) => {
-    if (data.tag === 'see' && (/\{@link.+?\}/u).test(str)) {
-      return null;
-    }
+const hasSeeWithLink = (spec) => {
+  return spec.tag === 'see' && (/\{@link.+?\}/u).test(spec.source[0].source);
+};
 
-    return parser(str, data);
-  };
+const getTokenizers = () => {
+  // trim
+  return [
+    // Tag
+    tagTokenizer(),
+
+    // Type
+    (spec) => {
+      if (['default', 'defaultvalue', 'see'].includes(spec.tag)) {
+        return spec;
+      }
+
+      return typeTokenizer()(spec);
+    },
+
+    // Name
+    (spec) => {
+      if (spec.tag === 'template') {
+        // const preWS = spec.postTag;
+        const remainder = spec.source[0].tokens.description;
+
+        const pos = remainder.search(/(?<![\s,])\s/);
+
+        const name = pos === -1 ? remainder : remainder.slice(0, pos);
+        const extra = remainder.slice(pos + 1);
+        const [, postName, description] = extra.match(/(\s*)(.*)/);
+
+        spec.name = name;
+        spec.optional = false;
+        const {tokens} = spec.source[0];
+        tokens.name = name;
+        tokens.postName = postName;
+        tokens.description = description;
+
+        return spec;
+      }
+
+      if ([
+        'example', 'return', 'returns', 'throws', 'exception',
+        'access', 'version', 'since', 'license', 'author',
+        'default', 'defaultvalue',
+      ].includes(spec.tag) || hasSeeWithLink(spec)) {
+        return spec;
+      }
+
+      return nameTokenizer()(spec);
+    },
+
+    // Description
+    (spec) => {
+      return descriptionTokenizer(getSpacer('preserve'))(spec);
+    },
+  ];
 };
 
 /**
  *
  * @param {object} commentNode
  * @param {string} indent Whitespace
- * @param {boolean} [trim=true]
  * @returns {object}
  */
-const parseComment = (commentNode, indent, trim = true) => {
+const parseComment = (commentNode, indent) => {
   // Preserve JSDoc block start/end indentation.
-  return commentParser(`${indent}/*${commentNode.value}${indent}*/`, {
+  return commentParser(`/*${commentNode.value}*/`, {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
-    parsers: [
-      commentParser.PARSERS.parse_tag,
-      skipSeeLink(
-        (str, data) => {
-          if (['default', 'defaultvalue'].includes(data.tag)) {
-            return null;
-          }
-
-          return commentParser.PARSERS.parse_type(str, data);
-        },
-      ),
-      skipSeeLink(
-        (str, data) => {
-          if (data.tag === 'template') {
-            const preWS = str.match(/^[\t ]+/)?.[0].length ?? 0;
-            const remainder = str.slice(preWS);
-
-            const pos = remainder.search(/(?<![\s,])\s/);
-
-            const name = pos === -1 ? remainder : remainder.slice(0, pos);
-
-            return {
-              data: {
-                name,
-                optional: false,
-              },
-              source: str.slice(0, preWS + pos),
-            };
-          }
-          if ([
-            'example', 'return', 'returns', 'throws', 'exception',
-            'access', 'version', 'since', 'license', 'author',
-            'default', 'defaultvalue',
-          ].includes(data.tag)) {
-            return null;
-          }
-
-          return commentParser.PARSERS.parse_name(str, data);
-        },
-      ),
-
-      // parse_description
-      (str, data) => {
-        // Only expected throw in previous step is if bad name (i.e.,
-        //   missing end bracket on optional name), but `@example`
-        //  skips name parsing
-        /* istanbul ignore next */
-        if (data.errors && data.errors.length) {
-          return null;
-        }
-
-        // Tweak original regex to capture only single optional space
-        const result = str.match(/^ ?((.|\s)+)?/u);
-
-        // Always has at least whitespace due to `indent` we've added
-        /* istanbul ignore next */
-        if (result) {
-          return {
-            data: {
-              description: result[1] === undefined ? '' : result[1],
-            },
-            source: result[0],
-          };
-        }
-
-        // Always has at least whitespace due to `indent` we've added
-        /* istanbul ignore next */
-        return null;
+    tokenizers: getTokenizers(),
+  })[0] || seedBlock({
+    source: [
+      {
+        number: 0,
+        tokens: seedTokens({
+          delimiter: '/**',
+          description: '',
+          end: '',
+          postDelimiter: '',
+          start: '',
+        }),
+      },
+      {
+        number: 1,
+        tokens: seedTokens({
+          delimiter: '',
+          description: '',
+          end: '*/',
+          postDelimiter: '',
+          start: indent + ' ',
+        }),
       },
     ],
-    trim,
-  })[0] || {};
+  });
 };
 
 const getBasicUtils = (context, {tagNamePreference, mode}) => {
@@ -148,6 +168,7 @@ const getUtils = (
   context,
   iteratingAll,
   ruleConfig,
+  indent,
 ) => {
   const ancestors = context.getAncestors();
   const sourceCode = context.getSourceCode();
@@ -177,31 +198,96 @@ const getUtils = (
     return iteratingAll && utils.hasATag(['callback', 'function', 'func', 'method']);
   };
 
-  utils.stringify = (tagBlock, tag) => {
-    const indent = tag ?
-      jsdocUtils.getIndent({
-        text: sourceCode.getText(
-          tag,
-          tag.loc.start.column,
-        ),
-      }) :
-      jsdocUtils.getIndent(sourceCode);
-
-    if (ruleConfig.noTrim) {
-      const lastTag = tagBlock.tags[tagBlock.tags.length - 1];
-      lastTag.description = lastTag.description.replace(/\n$/, '');
-    }
-
-    return commentStringify([tagBlock], {indent}).slice(indent.length - 1);
+  utils.stringify = (tagBlock, specRewire) => {
+    return commentStringify(specRewire ? rewireSpecs(tagBlock) : tagBlock);
   };
 
-  utils.reportJSDoc = (msg, tag, handler) => {
+  utils.reportJSDoc = (msg, tag, handler, specRewire) => {
     report(msg, handler ? (fixer) => {
       handler();
-      const replacement = utils.stringify(jsdoc, node);
+      const replacement = utils.stringify(jsdoc, specRewire);
 
       return fixer.replaceText(jsdocNode, replacement);
     } : null, tag);
+  };
+
+  utils.getDescription = () => {
+    const descriptions = [];
+    let lastDescriptionLine;
+    jsdoc.source.slice(1).some(({tokens: {description, tag, end}}, idx) => {
+      if (tag || end) {
+        lastDescriptionLine = idx;
+
+        return true;
+      }
+      descriptions.push(description);
+
+      return false;
+    });
+
+    return {
+      description: descriptions.join('\n'),
+      lastDescriptionLine,
+    };
+  };
+
+  utils.changeTag = (tag, ...tokens) => {
+    tag.source.forEach((src, idx) => {
+      src.tokens = {
+        ...src.tokens,
+        ...tokens[idx],
+      };
+    });
+  };
+
+  utils.setTag = (tag) => {
+    tag.source = [{
+      // Or tag.source[0].number?
+      number: tag.line,
+      tokens: seedTokens({
+        delimiter: '*',
+        postDelimiter: ' ',
+        start: indent + ' ',
+        tag: '@' + tag.tag,
+      }),
+    }];
+  };
+
+  utils.removeTag = (tagIndex) => {
+    const {source} = jsdoc.tags[tagIndex];
+    let lastIndex;
+    const firstNumber = jsdoc.source[0].number;
+    source.forEach(({number}) => {
+      const sourceIndex = jsdoc.source.findIndex(({
+        number: srcNumber, tokens: {end},
+      }) => {
+        return number === srcNumber && !end;
+      });
+      if (sourceIndex > -1) {
+        jsdoc.source.splice(sourceIndex, 1);
+        lastIndex = sourceIndex;
+      }
+    });
+    jsdoc.source.slice(lastIndex).forEach((src, idx) => {
+      src.number = firstNumber + lastIndex + idx;
+    });
+  };
+
+  utils.addTag = (targetTagName) => {
+    const number = (jsdoc.tags[jsdoc.tags.length - 1]?.source[0]?.number ?? 0) + 1;
+    jsdoc.source.splice(number, 0, {
+      number,
+      source: '',
+      tokens: seedTokens({
+        delimiter: '*',
+        postDelimiter: ' ',
+        start: indent + ' ',
+        tag: `@${targetTagName}`,
+      }),
+    });
+    jsdoc.source.slice(number + 1).forEach((src) => {
+      src.number++;
+    });
   };
 
   utils.flattenRoots = (params) => {
@@ -416,9 +502,9 @@ const getUtils = (
     });
 
     if (classJsdocNode) {
-      const indent = ' '.repeat(classJsdocNode.loc.start.column);
+      const indnt = ' '.repeat(classJsdocNode.loc.start.column);
 
-      return parseComment(classJsdocNode, indent);
+      return parseComment(classJsdocNode, indnt);
     }
 
     return null;
@@ -440,7 +526,7 @@ const getUtils = (
     ) {
       return;
     }
-    const matchingJsdocTags = _.filter(jsdoc.tags || [], {
+    const matchingJsdocTags = _.filter(jsdoc.tags, {
       tag: targetTagName,
     });
 
@@ -512,6 +598,10 @@ const makeReport = (context, commentNode) => {
     let loc;
 
     if (jsdocLoc) {
+      if (!('line' in jsdocLoc)) {
+        jsdocLoc.line = jsdocLoc.source[0].number;
+      }
+
       const lineNumber = commentNode.loc.start.line + jsdocLoc.line;
 
       loc = {
@@ -562,7 +652,7 @@ const iterate = (
 ) => {
   const sourceLine = lines[jsdocNode.loc.start.line - 1];
   const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
-  const jsdoc = parseComment(jsdocNode, indent, !ruleConfig.noTrim);
+  const jsdoc = parseComment(jsdocNode, indent);
   const report = makeReport(context, jsdocNode);
 
   const utils = getUtils(
@@ -574,6 +664,7 @@ const iterate = (
     context,
     iteratingAll,
     ruleConfig,
+    indent,
   );
 
   if (

@@ -1,7 +1,6 @@
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
-  jsdoc,
   utils,
 }) => {
   const propertyAssociatedTags = utils.filterTags(({tag}) => {
@@ -21,15 +20,7 @@ export default iterateJsdoc(({
       return;
     }
     utils.reportJSDoc(`Missing JSDoc @${targetTagName}.`, null, () => {
-      const line = jsdoc.tags[jsdoc.tags.length - 1].line + 1;
-      jsdoc.tags.push({
-        description: '',
-        line,
-        name: '',
-        optional: false,
-        tag: targetTagName,
-        type: '',
-      });
+      utils.addTag(targetTagName);
     });
   });
 }, {

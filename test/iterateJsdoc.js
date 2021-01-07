@@ -61,19 +61,76 @@ describe('iterateJsdoc', () => {
   describe('parseComment', () => {
     context('Parses comments', () => {
       it('', () => {
+        const tagSource = [
+          {
+            number: 1,
+            source: '          @param {MyType} name desc',
+            tokens: {
+              delimiter: '',
+              description: 'desc',
+              end: '',
+              name: 'name',
+              postDelimiter: '',
+              postName: ' ',
+              postTag: ' ',
+              postType: ' ',
+              start: '          ',
+              tag: '@param',
+              type: '{MyType}',
+            },
+          },
+          {
+            number: 2,
+            source: '        */',
+            tokens: {
+              delimiter: '',
+              description: '',
+              end: '*/',
+              name: '',
+              postDelimiter: '',
+              postName: '',
+              postTag: '',
+              postType: '',
+              start: '        ',
+              tag: '',
+              type: '',
+            },
+          },
+        ];
         expect(parseComment({value: `* SomeDescription
           @param {MyType} name desc
         `}, '')).to.deep.equal({
           description: 'SomeDescription',
-          line: 0,
-          source: 'SomeDescription\n@param {MyType} name desc',
+          problems: [],
+          source: [
+            {
+              number: 0,
+              source: '/** SomeDescription',
+              tokens: {
+                delimiter: '/**',
+                description: 'SomeDescription',
+                end: '',
+                name: '',
+                postDelimiter: ' ',
+                postName: '',
+                postTag: '',
+                postType: '',
+                start: '',
+                tag: '',
+                type: '',
+              },
+            },
+            ...tagSource,
+          ],
           tags: [
             {
-              description: 'desc',
-              line: 1,
+              description: '          desc',
               name: 'name',
               optional: false,
-              source: '@param {MyType} name desc',
+              problems: [],
+              source: [
+                ...tagSource,
+              ],
               tag: 'param',
               type: 'MyType',
             },

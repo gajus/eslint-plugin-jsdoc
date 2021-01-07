@@ -9684,6 +9684,11 @@ Defaults to `true`.
 The following patterns are considered problems:
 
 ````js
+function quux (foo) {
+
+}
+// Message: Missing JSDoc comment.
+
 /**
  * @func myFunction
  */
@@ -12171,74 +12176,74 @@ let TestFunction: (id) => void;
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
-* A test function.
-*/
+ * A test function.
+ */
 function test(
-processor: (id: number) => string
+  processor: (id: number) => string
 ) {
-return processor(10);
+  return processor(10);
 }
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
-* A test function.
-*/
+ * A test function.
+ */
 let test = (processor: (id: number) => string) =>
 {
-return processor(10);
+  return processor(10);
 }
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 class TestClass {
-/**
-* A class property.
-*/
-public Test: (id: number) => string;
+  /**
+  * A class property.
+  */
+  public Test: (id: number) => string;
 }
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 class TestClass {
-/**
-* A class method.
-*/
-public TestMethod(): (id: number) => string
-{
-}
+  /**
+   * A class method.
+   */
+  public TestMethod(): (id: number) => string
+  {
+  }
 }
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 interface TestInterface {
 /**
-* An interface property.
-*/
+ * An interface property.
+ */
 public Test: (id: number) => string;
 }
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 interface TestInterface {
-/**
-* An interface method.
-*/
-public TestMethod(): (id: number) => string;
+  /**
+   * An interface method.
+   */
+  public TestMethod(): (id: number) => string;
 }
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
-* A function with return type
-*/
+ * A function with return type
+ */
 function test(): (id: number) => string;
 // Options: [{"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
-* A function with return type
-*/
+ * A function with return type
+ */
 let test = (): (id: number) => string =>
 {
   return (id) => `${id}`;

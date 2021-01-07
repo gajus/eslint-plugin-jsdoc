@@ -1,4 +1,6 @@
-import commentParser from 'comment-parser';
+import {
+  parse as commentParser,
+} from 'comment-parser';
 import iterateJsdoc from '../iterateJsdoc';
 
 const commentRegexp = /^\/\*(?!\*)/;

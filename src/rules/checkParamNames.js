@@ -27,7 +27,7 @@ const validateParameterNames = (
     });
     if (dupeTagInfo) {
       utils.reportJSDoc(`Duplicate @${targetTagName} "${tag.name}"`, dupeTagInfo[1], enableFixer ? () => {
-        jsdoc.tags.splice(tagsIndex, 1);
+        utils.removeTag(tagsIndex);
       } : null);
 
       return true;

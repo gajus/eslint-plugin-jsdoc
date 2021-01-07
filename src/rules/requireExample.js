@@ -29,18 +29,7 @@ export default iterateJsdoc(({
     }
 
     utils.reportJSDoc(`Missing JSDoc @${targetTagName} declaration.`, null, () => {
-      if (!jsdoc.tags) {
-        jsdoc.tags = [];
-      }
-      const line = jsdoc.tags.length ? jsdoc.tags[jsdoc.tags.length - 1].line + 1 : 0;
-      jsdoc.tags.push({
-        description: '',
-        line,
-        name: '',
-        optional: false,
-        tag: targetTagName,
-        type: '',
-      });
+      utils.addTag(targetTagName);
     });
 
     return;

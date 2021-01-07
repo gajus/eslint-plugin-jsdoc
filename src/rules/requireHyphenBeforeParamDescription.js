@@ -54,7 +54,7 @@ export default iterateJsdoc(({
     tagEntries.forEach(([tagName, circumstance]) => {
       if (tagName === '*') {
         const preferredParamTag = utils.getPreferredTagName({tagName: 'param'});
-        (jsdoc.tags || []).forEach(({tag}) => {
+        jsdoc.tags.forEach(({tag}) => {
           if (tag === preferredParamTag || tagEntries.some(([tagNme]) => {
             return tagNme !== '*' && tagNme === tag;
           })) {

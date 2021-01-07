@@ -1,5 +1,10 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+const removeType = ({tokens}) => {
+  tokens.postTag = '';
+  tokens.type = '';
+};
+
 export default iterateJsdoc(({
   utils,
 }) => {
@@ -12,7 +17,7 @@ export default iterateJsdoc(({
   tags.forEach((tag) => {
     if (tag.type) {
       utils.reportJSDoc(`Types are not permitted on @${tag.tag}.`, tag, () => {
-        tag.type = '';
+        tag.source.forEach(removeType);
       });
     }
   });
@@ -40,5 +45,4 @@ export default iterateJsdoc(({
     ],
     type: 'suggestion',
   },
-  noTrim: true,
 });

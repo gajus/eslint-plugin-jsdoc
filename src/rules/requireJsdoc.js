@@ -227,6 +227,7 @@ export default {
             baseNode.loc.start.column,
           ),
         });
+
         const {inlineCommentBlock} = contexts.find(({context: ctxt}) => {
           return ctxt === node.type;
         }) || {};

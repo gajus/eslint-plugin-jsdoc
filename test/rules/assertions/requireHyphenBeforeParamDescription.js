@@ -165,7 +165,7 @@ export default {
       ],
       output: `
           /**
-           * @param foo Foo.
+           * @param foo    Foo.
            */
           function quux () {
 

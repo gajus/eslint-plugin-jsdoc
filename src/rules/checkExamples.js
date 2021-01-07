@@ -214,6 +214,10 @@ export default iterateJsdoc(({
       const {results: [{messages}]} =
         cliFile.executeOnText(src);
 
+      if (!('line' in tag)) {
+        tag.line = tag.source[0].number;
+      }
+
       // NOTE: `tag.line` can be 0 if of form `/** @tag ... */`
       const codeStartLine = tag.line + nonJSPrefacingLines;
       const codeStartCol = likelyNestedJSDocIndentSpace;
@@ -307,7 +311,7 @@ export default iterateJsdoc(({
   const matchingFilenameInfo = getFilenameInfo(matchingFileName);
 
   utils.forEachPreferredTag('example', (tag, targetTagName) => {
-    let source = tag.description;
+    let source = tag.source[0].tokens.postTag.slice(1) + tag.description;
     const match = source.match(hasCaptionRegex);
 
     if (captionRequired && (!match || !match[1].trim())) {
@@ -468,5 +472,4 @@ export default iterateJsdoc(({
     ],
     type: 'suggestion',
   },
-  noTrim: true,
 });

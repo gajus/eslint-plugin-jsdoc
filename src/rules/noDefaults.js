@@ -9,12 +9,15 @@ export default iterateJsdoc(({
   paramTags.forEach((tag) => {
     if (noOptionalParamNames && tag.optional) {
       utils.reportJSDoc(`Optional param names are not permitted on @${tag.tag}.`, tag, () => {
-        tag.default = undefined;
-        tag.optional = false;
+        utils.changeTag(tag, {
+          name: tag.name.replace(/([^=]*)(=.+)?/, '$1'),
+        });
       });
     } else if (tag.default) {
       utils.reportJSDoc(`Defaults are not permitted on @${tag.tag}.`, tag, () => {
-        tag.default = undefined;
+        utils.changeTag(tag, {
+          name: tag.name.replace(/([^=]*)(=.+)?/, '[$1]'),
+        });
       });
     }
   });
@@ -22,7 +25,10 @@ export default iterateJsdoc(({
   defaultTags.forEach((tag) => {
     if (tag.description) {
       utils.reportJSDoc(`Default values are not permitted on @${tag.tag}.`, tag, () => {
-        tag.description = '';
+        utils.changeTag(tag, {
+          description: '',
+          postTag: '',
+        });
       });
     }
   });

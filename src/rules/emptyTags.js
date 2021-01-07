@@ -24,9 +24,6 @@ export default iterateJsdoc(({
   jsdoc,
   utils,
 }) => {
-  if (!jsdoc.tags) {
-    return;
-  }
   const emptyTags = utils.filterTags(({tag: tagName}) => {
     return defaultEmptyTags.has(tagName) ||
       utils.hasOptionTag(tagName) && jsdoc.tags.some(({tag}) => {
@@ -35,16 +32,12 @@ export default iterateJsdoc(({
       settings.mode !== 'closure' && emptyIfNotClosure.has(tagName);
   });
   emptyTags.forEach((tag) => {
-    const fix = () => {
-      tag.name = '';
-      tag.description = '';
-      tag.type = '';
-      tag.optional = false;
-      tag.default = undefined;
-    };
     const content = tag.name || tag.description || tag.type;
     if (content) {
-      utils.reportJSDoc(`@${tag.tag} should be empty.`, tag, fix);
+      const fix = () => {
+        utils.setTag(tag);
+      };
+      utils.reportJSDoc(`@${tag.tag} should be empty.`, tag, fix, true);
     }
   });
 }, {

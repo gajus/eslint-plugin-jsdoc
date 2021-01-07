@@ -38,7 +38,7 @@ export default iterateJsdoc(({
     if (!regex.test(description)) {
       report('JSDoc description does not satisfy the regex pattern.', null, tag || {
         // Add one as description would typically be into block
-        line: jsdoc.line + 1,
+        line: jsdoc.source[0].number + 1,
       });
     }
   };

@@ -68,7 +68,7 @@ export default iterateJsdoc(({
       return parseComment(commentNode, '');
     })
     .flatMap((doc) => {
-      return (doc.tags || []).filter(({tag}) => {
+      return doc.tags.filter(({tag}) => {
         return utils.isNamepathDefiningTag(tag);
       });
     })

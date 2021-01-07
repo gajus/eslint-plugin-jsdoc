@@ -6,6 +6,26 @@ export default {
   invalid: [
     {
       code: `
+function quux (foo) {
+
+}`,
+      errors: [
+        {
+          endLine: undefined,
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      output: `
+/**
+ *
+ */
+function quux (foo) {
+
+}`,
+    },
+    {
+      code: `
        /**
         * @func myFunction
         */

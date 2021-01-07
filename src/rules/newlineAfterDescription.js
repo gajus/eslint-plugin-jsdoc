@@ -8,6 +8,7 @@ export default iterateJsdoc(({
   jsdocNode,
   sourceCode,
   indent,
+  utils,
 }) => {
   let always;
 
@@ -21,13 +22,13 @@ export default iterateJsdoc(({
     always = true;
   }
 
-  const descriptionEndsWithANewline = (/\n\r?$/).test(jsdoc.description);
+  const {description, lastDescriptionLine} = utils.getDescription();
+  const descriptionEndsWithANewline = (/\n\r?$/).test(description);
 
   if (always) {
     if (!descriptionEndsWithANewline) {
       const sourceLines = sourceCode.getText(jsdocNode).split('\n');
-      const splitDesc = jsdoc.description.split('\n');
-      const lastDescriptionLine = splitDesc.length - 1;
+
       report('There must be a newline after the description of the JSDoc block.', (fixer) => {
         // Add the new line
         const injectedLine = `${indent} *` +
@@ -41,8 +42,6 @@ export default iterateJsdoc(({
     }
   } else if (descriptionEndsWithANewline) {
     const sourceLines = sourceCode.getText(jsdocNode).split('\n');
-    const splitDesc = jsdoc.description.split('\n');
-    const lastDescriptionLine = splitDesc.length - 1;
     report('There must be no newline after the description of the JSDoc block.', (fixer) => {
       // Remove the extra line
       sourceLines.splice(lastDescriptionLine, 1);
@@ -68,5 +67,4 @@ export default iterateJsdoc(({
     ],
     type: 'layout',
   },
-  noTrim: true,
 });

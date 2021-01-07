@@ -222,7 +222,7 @@ const hasParams = (functionNode) => {
  */
 const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object> => {
   const ret = [];
-  (jsdoc.tags || []).forEach(({name, tag, type}, idx) => {
+  jsdoc.tags.forEach(({name, tag, type}, idx) => {
     if (tag !== targetTagName) {
       return;
     }
@@ -658,7 +658,7 @@ const getContextObject = (contexts, checkJsdoc) => {
   return properties;
 };
 
-const filterTags = (tags = [], filter) => {
+const filterTags = (tags, filter) => {
   return tags.filter(filter);
 };
 
@@ -690,10 +690,7 @@ const getTagsByType = (context, mode, tags, tagPreference) => {
 };
 
 const getIndent = (sourceCode) => {
-  let indent = sourceCode.text.match(/^\n*([ \t]+)/u);
-  indent = indent ? indent[1] + ' ' : ' ';
-
-  return indent;
+  return (sourceCode.text.match(/^\n*([ \t]+)/u)?.[1] ?? '') + ' ';
 };
 
 const isConstructor = (node) => {

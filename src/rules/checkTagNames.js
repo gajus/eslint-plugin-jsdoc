@@ -10,9 +10,6 @@ export default iterateJsdoc(({
   settings,
   jsdocNode,
 }) => {
-  if (!jsdoc.tags) {
-    return;
-  }
   const {definedTags = []} = context.options[0] || {};
 
   let definedPreferredTags = [];

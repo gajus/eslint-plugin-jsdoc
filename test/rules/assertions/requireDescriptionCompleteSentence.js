@@ -691,6 +691,14 @@ export default {
       options: [{
         abbreviations: ['Mr'],
       }],
+      output: `
+          /**
+           * Sorry, but this isn't a complete sentence Mr. .
+           */
+          function quux () {
+
+          }
+      `,
     },
     {
       code: `

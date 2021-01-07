@@ -1309,12 +1309,12 @@ export default {
     {
       code: `
         /**
-        * A test function.
-        */
+         * A test function.
+         */
         function test(
-        processor: (id: number) => string
+          processor: (id: number) => string
         ) {
-        return processor(10);
+          return processor(10);
         }
       `,
       errors: [
@@ -1334,9 +1334,9 @@ export default {
          * @param id
          */
         function test(
-        processor: (id: number) => string
+          processor: (id: number) => string
         ) {
-        return processor(10);
+          return processor(10);
         }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
@@ -1344,11 +1344,11 @@ export default {
     {
       code: `
         /**
-        * A test function.
-        */
+         * A test function.
+         */
         let test = (processor: (id: number) => string) =>
         {
-        return processor(10);
+          return processor(10);
         }
       `,
       errors: [
@@ -1369,7 +1369,7 @@ export default {
          */
         let test = (processor: (id: number) => string) =>
         {
-        return processor(10);
+          return processor(10);
         }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
@@ -1377,10 +1377,10 @@ export default {
     {
       code: `
         class TestClass {
-        /**
-        * A class property.
-        */
-        public Test: (id: number) => string;
+          /**
+          * A class property.
+          */
+          public Test: (id: number) => string;
         }
       `,
       errors: [
@@ -1396,11 +1396,11 @@ export default {
       ],
       output: `
         class TestClass {
-        /**
-         * A class property.
-         * @param id
-         */
-        public Test: (id: number) => string;
+          /**
+          * A class property.
+          * @param id
+          */
+          public Test: (id: number) => string;
         }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
@@ -1408,12 +1408,12 @@ export default {
     {
       code: `
         class TestClass {
-        /**
-        * A class method.
-        */
-        public TestMethod(): (id: number) => string
-        {
-        }
+          /**
+           * A class method.
+           */
+          public TestMethod(): (id: number) => string
+          {
+          }
         }
       `,
       errors: [
@@ -1429,13 +1429,13 @@ export default {
       ],
       output: `
         class TestClass {
-        /**
-         * A class method.
-         * @param id
-         */
-        public TestMethod(): (id: number) => string
-        {
-        }
+          /**
+           * A class method.
+           * @param id
+           */
+          public TestMethod(): (id: number) => string
+          {
+          }
         }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
@@ -1444,8 +1444,8 @@ export default {
       code: `
         interface TestInterface {
         /**
-        * An interface property.
-        */
+         * An interface property.
+         */
         public Test: (id: number) => string;
         }
       `,
@@ -1474,10 +1474,10 @@ export default {
     {
       code: `
         interface TestInterface {
-        /**
-        * An interface method.
-        */
-        public TestMethod(): (id: number) => string;
+          /**
+           * An interface method.
+           */
+          public TestMethod(): (id: number) => string;
         }
       `,
       errors: [
@@ -1493,11 +1493,11 @@ export default {
       ],
       output: `
         interface TestInterface {
-        /**
-         * An interface method.
-         * @param id
-         */
-        public TestMethod(): (id: number) => string;
+          /**
+           * An interface method.
+           * @param id
+           */
+          public TestMethod(): (id: number) => string;
         }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
@@ -1505,8 +1505,8 @@ export default {
     {
       code: `
         /**
-        * A function with return type
-        */
+         * A function with return type
+         */
         function test(): (id: number) => string;
       `,
       errors: [
@@ -1532,8 +1532,8 @@ export default {
     {
       code: `
         /**
-        * A function with return type
-        */
+         * A function with return type
+         */
         let test = (): (id: number) => string =>
         {
           return (id) => \`\${id}\`;
@@ -1626,15 +1626,15 @@ export default {
       class Client {
         /**
          * Set collection data.
-         * @param {Object} data                    The collection data object.
-         * @param {number} data.last_modified
-         * @param {Object} options            The options object.
-         * @param {Object} [options.headers]       The headers object option.
-         * @param {Number} [options.retry=0]       Number of retries to make
-         * when faced with transient errors.
-         * @param {Boolean} [options.safe]          The safe option.
-         * @param {Boolean} [options.patch]         The patch option.
-         * @param {Number} [options.last_modified] The last_modified option.
+         * @param  {Object}   data                    The collection data object.
+         * @param  {number}   data.last_modified
+         * @param  {Object}   options            The options object.
+         * @param  {Object}   [options.headers]       The headers object option.
+         * @param  {Number}   [options.retry=0]       Number of retries to make
+         *     when faced with transient errors.
+         * @param  {Boolean}  [options.safe]          The safe option.
+         * @param  {Boolean}  [options.patch]         The patch option.
+         * @param  {Number}   [options.last_modified] The last_modified option.
          * @param options.permissions
          * @return {Promise<Object, Error>}
          */

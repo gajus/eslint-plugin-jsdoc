@@ -5,10 +5,6 @@ export default iterateJsdoc(({
   report,
   settings,
 }) => {
-  if (!jsdoc.tags) {
-    return;
-  }
-
   const {mode} = settings;
 
   // Don't check for "permissive" and "closure"
