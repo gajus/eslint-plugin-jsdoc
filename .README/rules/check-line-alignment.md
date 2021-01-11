@@ -9,7 +9,7 @@ for example.
 This rule allows one optional string argument. If it is `"always"` then a
 problem is raised when the lines are not aligned. If it is `"never"` then
 a problem should be raised when there is more than one space between each
-line's parts. **Only the non-default `"always"` is implemented for now.**
+line's parts. Defaults to `"never"`.
 
 |||
 |---|---|
