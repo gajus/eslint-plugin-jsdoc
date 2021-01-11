@@ -240,7 +240,7 @@ const getUtils = (
     });
   };
 
-  utils.setTag = (tag) => {
+  utils.setTag = (tag, tokens) => {
     tag.source = [{
       // Or tag.source[0].number?
       number: tag.line,
@@ -249,6 +249,7 @@ const getUtils = (
         postDelimiter: ' ',
         start: indent + ' ',
         tag: '@' + tag.tag,
+        ...tokens,
       }),
     }];
   };

@@ -2025,14 +2025,43 @@ const config = {
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
- * Not implemented yet.
+ * My function.
  *
- * @param {string} lorem Description.
- * @param {int} sit Description multi words.
+ * @param {string} lorem  Description.
+ * @param {int}    sit    Description multi words.
  */
 const fn = ( lorem, sit ) => {}
 // Options: ["never"]
-// Message: The `never` option is not yet implemented for this rule.
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * My function.
+ *
+ * @param {string} lorem Description.
+ * @param   {int}    sit   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["never"]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * My function.
+ *
+ * @param {string} lorem Description.
+ * @param   {int}    sit
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["never"]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * My function.
+ *
+ * @param {string} lorem Description.
+ * @param   {int}    sit
+ */
+const fn = ( lorem, sit ) => {}
+// Message: Expected JSDoc block lines to not be aligned.
 ````
 
 The following patterns are not considered problems:

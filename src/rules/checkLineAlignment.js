@@ -111,7 +111,7 @@ const createFixer = (comment, expectedPositions, partsMatrix, lineRegExp, tagInd
  * @param {string}   tagIndentation Tag indentation.
  * @param {Function} report         Report function.
  */
-const checkCommentPerTag = (comment, tag, tagIndentation, report) => {
+const checkAlignedPerTag = (comment, tag, tagIndentation, report) => {
   const lineRegExp = new RegExp(`.*@${tag}[\\s].*`, 'gm');
   const lines = comment.value.match(lineRegExp);
 
@@ -171,32 +171,65 @@ const checkCommentPerTag = (comment, tag, tagIndentation, report) => {
   }
 };
 
+const spacers = [
+  ['postDelimiter', ['tag']],
+  ['postTag', ['type', 'name', 'description']],
+  ['postType', ['name', 'description']],
+  ['postName', ['description']],
+];
+
+const checkNotAlignedPerTag = (utils, tag) => {
+  // If checking alignment on multiple lines, need to check other `source` items
+  const ok = spacers.every(([prop, checkProps]) => {
+    const hasCheckProp = checkProps.some((checkProp) => {
+      return tag.source[0].tokens[checkProp];
+    });
+
+    return !hasCheckProp || (/^[\t ]$/).test(tag.source[0].tokens[prop]);
+  });
+  if (ok) {
+    return;
+  }
+  const fix = () => {
+    const tokens = tag.source[0].tokens;
+    spacers.forEach(([prop, checkProps]) => {
+      const hasCheckProp = checkProps.some((checkProp) => {
+        return tag.source[0].tokens[checkProp];
+      });
+      tokens[prop] = hasCheckProp ? ' ' : '';
+    });
+
+    utils.setTag(tag, tokens);
+  };
+  utils.reportJSDoc('Expected JSDoc block lines to not be aligned.', tag, fix, true);
+};
+
 export default iterateJsdoc(({
   jsdocNode,
   report,
   context,
   indent,
+  utils,
 }) => {
-  if (context.options[0] === 'never') {
-    report('The `never` option is not yet implemented for this rule.');
+  if (context.options[0] === 'always') {
+    // Skip if it contains only a single line.
+    if (!jsdocNode.value.includes('\n')) {
+      return;
+    }
+
+    // `indent` is whitespace from line 1 (`/**`), so slice and account for "/".
+    const tagIndentation = indent + ' ';
+
+    ['param', 'arg', 'argument', 'property', 'prop'].forEach((tag) => {
+      checkAlignedPerTag(jsdocNode, tag, tagIndentation, report);
+    });
 
     return;
   }
 
-  if (context.options[0] !== 'always') {
-    return;
-  }
-
-  // Skip if it contains only a single line.
-  if (!jsdocNode.value.includes('\n')) {
-    return;
-  }
-
-  // `indent` is whitespace from line 1 (`/**`), so slice and account for "/".
-  const tagIndentation = indent + ' ';
-
-  ['param', 'arg', 'argument', 'property', 'prop'].forEach((tag) => {
-    checkCommentPerTag(jsdocNode, tag, tagIndentation, report);
+  const paramTags = utils.getPresentTags(['param', 'arg', 'argument', 'property', 'prop']);
+  paramTags.forEach((tag) => {
+    checkNotAlignedPerTag(utils, tag, report);
   });
 }, {
   iterateAllJsdocs: true,
