@@ -6555,6 +6555,25 @@ function quux () {
       * @param {object} REPORT_DIALOG_CONSTANTS - Injected handle.
       */
 // Message: There must be a newline after the description of the JSDoc block.
+
+/** An example function.
+ *
+ * @returns {number} An example number.
+ */
+function example() {
+  return 42;
+}
+// Options: ["never"]
+// Message: There must be no newline after the description of the JSDoc block.
+
+/** An example function.
+ * @returns {number} An example number.
+ */
+function example() {
+  return 42;
+}
+// Options: ["always"]
+// Message: There must be a newline after the description of the JSDoc block.
 ````
 
 The following patterns are not considered problems:
@@ -6632,6 +6651,22 @@ function quux () {
 export function parseQueryString(queryString: string): { [key: string]: string } {    // <-- Line 10 that fails
 
 }
+
+/** An example function.
+ *
+ * @returns {number} An example number.
+ */
+function example() {
+  return 42;
+}
+
+/** An example function.
+ * @returns {number} An example number.
+ */
+function example() {
+  return 42;
+}
+// Options: ["never"]
 ````
 
 

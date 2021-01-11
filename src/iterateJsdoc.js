@@ -214,6 +214,9 @@ const getUtils = (
   utils.getDescription = () => {
     const descriptions = [];
     let lastDescriptionLine;
+    if (jsdoc.source[0].tokens.description) {
+      descriptions.push(jsdoc.source[0].tokens.description);
+    }
     jsdoc.source.slice(1).some(({tokens: {description, tag, end}}, idx) => {
       if (tag || end) {
         lastDescriptionLine = idx;

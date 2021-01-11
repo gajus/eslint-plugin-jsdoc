@@ -277,6 +277,62 @@ export default {
        */\r
       `,
     },
+    {
+      code: `
+      /** An example function.
+       *
+       * @returns {number} An example number.
+       */
+      function example() {
+        return 42;
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be no newline after the description of the JSDoc block.',
+        },
+      ],
+      options: [
+        'never',
+      ],
+      output: `
+      /** An example function.
+       * @returns {number} An example number.
+       */
+      function example() {
+        return 42;
+      }
+      `,
+    },
+    {
+      code: `
+      /** An example function.
+       * @returns {number} An example number.
+       */
+      function example() {
+        return 42;
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'There must be a newline after the description of the JSDoc block.',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+      /** An example function.
+       *
+       * @returns {number} An example number.
+       */
+      function example() {
+        return 42;
+      }
+      `,
+    },
   ],
   valid: [
     {
@@ -387,6 +443,30 @@ export default {
       parserOptions: {
         sourceType: 'module',
       },
+    },
+    {
+      code: `
+      /** An example function.
+       *
+       * @returns {number} An example number.
+       */
+      function example() {
+        return 42;
+      }
+      `,
+    },
+    {
+      code: `
+      /** An example function.
+       * @returns {number} An example number.
+       */
+      function example() {
+        return 42;
+      }
+      `,
+      options: [
+        'never',
+      ],
     },
   ],
 };
