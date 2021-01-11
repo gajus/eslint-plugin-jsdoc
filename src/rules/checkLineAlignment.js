@@ -31,7 +31,7 @@ const matchAll = (string, regexp, callback, limit) => {
  * @returns {string} The full description.
  */
 const getFullDescription = (lineString) => {
-  return /(?:\S+\s+){4}(.*)/.exec(lineString)[1];
+  return /\S+\s+(?:{{.*?}}|{.*?})\s+\S+\s+(.*)/.exec(lineString)[1];
 };
 
 /**
@@ -139,7 +139,7 @@ const checkCommentPerTag = (comment, tag, tagIndentation, report) => {
     // All line parts until the first word of the description (if description exists).
     matchAll(
       lineString,
-      /\S+/g,
+      /{{.*?}}|{.*?}|\S+/g,
       ({0: match, index: position}, partIndex) => {
         set(partsMatrix, [lineIndex, partIndex], {
           position,
@@ -184,6 +184,11 @@ export default iterateJsdoc(({
   }
 
   if (context.options[0] !== 'always') {
+    return;
+  }
+
+  // Skip if it contains only a single line.
+  if (!jsdocNode.value.includes('\n')) {
     return;
   }
 

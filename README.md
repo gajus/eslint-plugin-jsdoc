@@ -2012,6 +2012,19 @@ const config = {
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
+ * My object.
+ *
+ * @typedef {Object} MyObject
+ *
+ * @property {{a: number, b: string, c}} lorem Description.
+ * @property {Object.<string, Class>} sit Description multi words.
+ * @property {Object.<string, Class>} amet Description} weird {multi} {{words}}.
+ * @property {Object.<string, Class>} dolor
+ */
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
  * Not implemented yet.
  *
  * @param {string} lorem Description.
@@ -2126,6 +2139,22 @@ const config = {
  * @property {string} lorem Description.
  * @property {int}    sit   Description multi words.
  */
+// Options: ["always"]
+
+/**
+ * My object.
+ *
+ * @typedef {Object} MyObject
+ *
+ * @property {{a: number, b: string, c}} lorem Description.
+ * @property {Object.<string, Class>}    sit   Description multi words.
+ * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+ * @property {Object.<string, Class>}    dolor
+ */
+// Options: ["always"]
+
+/** @param {number} lorem */
+const fn = ( lorem ) => {}
 // Options: ["always"]
 
 /**
