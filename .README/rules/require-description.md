@@ -28,7 +28,7 @@ An options object may have any of the following properties:
     checked. Defaults to `true`.
 - `checkGetters` - A value indicating whether getters should be checked.
     Defaults to `true`.
-- `checkSetters` - A value indicating whether getters should be checked.
+- `checkSetters` - A value indicating whether setters should be checked.
     Defaults to `true`.
 
 |          |                                                                                                               |

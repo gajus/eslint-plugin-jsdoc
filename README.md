@@ -8372,7 +8372,7 @@ An options object may have any of the following properties:
     checked. Defaults to `true`.
 - `checkGetters` - A value indicating whether getters should be checked.
     Defaults to `true`.
-- `checkSetters` - A value indicating whether getters should be checked.
+- `checkSetters` - A value indicating whether setters should be checked.
     Defaults to `true`.
 
 |          |                                                                                                               |
@@ -8841,7 +8841,7 @@ A value indicating whether getters should be checked. Defaults to `false`.
 <a name="eslint-plugin-jsdoc-rules-require-example-options-19-checksetters"></a>
 ##### <code>checkSetters</code>
 
-A value indicating whether getters should be checked. Defaults to `false`.
+A value indicating whether setters should be checked. Defaults to `false`.
 
 <a name="eslint-plugin-jsdoc-rules-require-example-fixer"></a>
 #### Fixer
@@ -9724,7 +9724,7 @@ A value indicating whether getters should be checked. Defaults to `false`.
 <a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-22-checksetters-1"></a>
 ##### <code>checkSetters</code>
 
-A value indicating whether getters should be checked. Defaults to `false`.
+A value indicating whether setters should be checked. Defaults to `false`.
 
 <a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-22-enablefixer-2"></a>
 ##### <code>enableFixer</code>
@@ -11811,7 +11811,7 @@ A value indicating whether getters should be checked. Defaults to `false`.
 <a name="eslint-plugin-jsdoc-rules-require-param-options-26-checksetters-2"></a>
 ##### <code>checkSetters</code>
 
-A value indicating whether getters should be checked. Defaults to `false`.
+A value indicating whether setters should be checked. Defaults to `false`.
 
 <a name="eslint-plugin-jsdoc-rules-require-param-options-26-checkdestructured-1"></a>
 ##### <code>checkDestructured</code>

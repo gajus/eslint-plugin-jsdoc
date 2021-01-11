@@ -44,7 +44,7 @@ A value indicating whether getters should be checked. Defaults to `false`.
 
 ##### `checkSetters`
 
-A value indicating whether getters should be checked. Defaults to `false`.
+A value indicating whether setters should be checked. Defaults to `false`.
 
 #### Fixer
 
