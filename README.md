@@ -11811,7 +11811,7 @@ A value indicating whether getters should be checked. Defaults to `false`.
 <a name="eslint-plugin-jsdoc-rules-require-param-options-26-checksetters-2"></a>
 ##### <code>checkSetters</code>
 
-A value indicating whether getters should be checked. Defaults to `false`.
+A value indicating whether setters should be checked. Defaults to `false`.
 
 <a name="eslint-plugin-jsdoc-rules-require-param-options-26-checkdestructured-1"></a>
 ##### <code>checkDestructured</code>
