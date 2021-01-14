@@ -190,7 +190,7 @@ export default iterateJsdoc(({
   });
 
   tagsWithNames.some((tag) => {
-    const desc = _.trimStart(tag.description, '- ');
+    const desc = _.trimStart(tag.description, '- ').trimEnd();
 
     return validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd);
   });

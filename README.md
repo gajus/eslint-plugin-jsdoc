@@ -8383,6 +8383,15 @@ function quux () {
  */
 function speak() {
 }
+
+/**
+ * @param foo
+ *
+ * @returns {void}
+ */
+export default (foo) => {
+  foo()
+}
 ````
 
 

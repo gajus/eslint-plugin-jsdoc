@@ -1353,5 +1353,20 @@ export default {
       }
       `,
     },
+    {
+      code: `
+      /**
+       * @param foo
+       *
+       * @returns {void}
+       */
+      export default (foo) => {
+        foo()
+      }
+      `,
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
 };
