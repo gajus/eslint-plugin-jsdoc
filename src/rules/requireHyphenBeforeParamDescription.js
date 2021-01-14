@@ -12,7 +12,7 @@ export default iterateJsdoc(({
 
   const checkHyphens = (jsdocTag, targetTagName, circumstance = mainCircumstance) => {
     const always = !circumstance || circumstance === 'always';
-    if (!jsdocTag.description) {
+    if (!jsdocTag.description.trim()) {
       return;
     }
 

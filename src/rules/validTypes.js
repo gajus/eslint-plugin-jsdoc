@@ -83,7 +83,7 @@ export default iterateJsdoc(({
     };
 
     if (tag.tag === 'borrows') {
-      const thisNamepath = tag.description.replace(asExpression, '');
+      const thisNamepath = tag.description.replace(asExpression, '').trim();
 
       if (!asExpression.test(tag.description) || !thisNamepath) {
         report(`@borrows must have an "as" expression. Found "${tag.description}"`, null, tag);

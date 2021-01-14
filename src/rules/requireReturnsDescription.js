@@ -11,7 +11,7 @@ export default iterateJsdoc(({
       return;
     }
 
-    if (!jsdocTag.description) {
+    if (!jsdocTag.description.trim()) {
       report(`Missing JSDoc @${targetTagName} description.`, null, jsdocTag);
     }
   });

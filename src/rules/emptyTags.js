@@ -33,7 +33,7 @@ export default iterateJsdoc(({
   });
   emptyTags.forEach((tag) => {
     const content = tag.name || tag.description || tag.type;
-    if (content) {
+    if (content.trim()) {
       const fix = () => {
         utils.setTag(tag);
       };

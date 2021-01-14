@@ -78,8 +78,8 @@ export default iterateJsdoc(({
   });
 
   utils.forEachPreferredTag('author', (jsdocParameter, targetTagName) => {
-    const author = jsdocParameter.description;
-    if (!author.trim()) {
+    const author = jsdocParameter.description.trim();
+    if (!author) {
       report(
         `Missing JSDoc @${targetTagName}.`,
         null,

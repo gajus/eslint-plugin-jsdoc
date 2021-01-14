@@ -23,7 +23,7 @@ export default iterateJsdoc(({
   });
   const defaultTags = utils.getPresentTags(['default', 'defaultvalue']);
   defaultTags.forEach((tag) => {
-    if (tag.description) {
+    if (tag.description.trim()) {
       utils.reportJSDoc(`Default values are not permitted on @${tag.tag}.`, tag, () => {
         utils.changeTag(tag, {
           description: '',

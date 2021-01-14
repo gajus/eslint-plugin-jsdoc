@@ -269,5 +269,19 @@ export default {
       }
       `,
     },
+    {
+      code: `
+      /**
+       * Create an array.
+       *
+       * @private
+       *
+       * @param {string[]} [elem] - Elements to make an array of.
+       * @param {boolean} [clone] - Optionally clone nodes.
+       * @returns {string[]} The array of nodes.
+       */
+      function quux () {}
+      `,
+    },
   ],
 };

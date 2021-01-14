@@ -5,7 +5,7 @@ export default iterateJsdoc(({
   utils,
 }) => {
   utils.forEachPreferredTag('param', (jsdocParameter, targetTagName) => {
-    if (!jsdocParameter.description) {
+    if (!jsdocParameter.description.trim()) {
       report(
         `Missing JSDoc @${targetTagName} "${jsdocParameter.name}" description.`,
         null,
