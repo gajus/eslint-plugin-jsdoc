@@ -1,4 +1,3 @@
-/* eslint-disable import/max-dependencies */
 import checkAccess from './rules/checkAccess';
 import checkAlignment from './rules/checkAlignment';
 import checkExamples from './rules/checkExamples';

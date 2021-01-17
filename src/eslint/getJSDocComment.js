@@ -161,6 +161,7 @@ const allowableCommentNode = new Set([
  * @private
  */
 const getReducedASTNode = function (node, sourceCode) {
+  /* eslint-enable complexity */
   let {parent} = node;
 
   switch (node.type) {

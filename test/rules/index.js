@@ -109,7 +109,6 @@ const ruleTester = new RuleTester();
       assertions.invalid = [];
     }
   }
-  /* eslint-enable no-process-env */
 
   ruleTester.run(ruleName, rule, assertions);
 });
