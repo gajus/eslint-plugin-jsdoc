@@ -161,5 +161,15 @@ export default {
            */
       `,
     },
+    {
+      code: `
+      /**
+       * @param {Function} [processor=data => data] A function to run
+       */
+      function processData(processor) {
+        return processor(data)
+      }
+      `,
+    },
   ],
 };

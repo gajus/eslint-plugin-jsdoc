@@ -1,13 +1,14 @@
 import {
   parse as commentParser, stringify as commentStringify,
 } from 'comment-parser';
-import getSpacer from 'comment-parser/lib/parser/spacer';
 import {
-  tagTokenizer,
-  typeTokenizer,
-  nameTokenizer,
-  descriptionTokenizer,
-} from 'comment-parser/lib/parser/spec-parser';
+  // eslint-disable-next-line import/no-named-default
+  default as descriptionTokenizer,
+  getJoiner,
+} from 'comment-parser/lib/parser/tokenizers/description';
+import nameTokenizer from 'comment-parser/lib/parser/tokenizers/name';
+import tagTokenizer from 'comment-parser/lib/parser/tokenizers/tag';
+import typeTokenizer from 'comment-parser/lib/parser/tokenizers/type';
 import {
   rewireSpecs,
   seedBlock,
@@ -83,7 +84,7 @@ const getTokenizers = () => {
 
     // Description
     (spec) => {
-      return descriptionTokenizer(getSpacer('preserve'))(spec);
+      return descriptionTokenizer(getJoiner('preserve'))(spec);
     },
   ];
 };

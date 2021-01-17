@@ -11381,6 +11381,13 @@ function quux (foo) {
  * @callback
  * @param
  */
+
+/**
+ * @param {Function} [processor=data => data] A function to run
+ */
+function processData(processor) {
+  return processor(data)
+}
 ````
 
 
@@ -13317,6 +13324,15 @@ The following patterns are not considered problems:
 /**
  * @class
  * @property foo Foo.
+ */
+
+/**
+ * Typedef with multi-line property type.
+ *
+ * @typedef {object} MyType
+ * @property {function(
+ *   number
+ * )} numberEater Method which takes a number.
  */
 ````
 
