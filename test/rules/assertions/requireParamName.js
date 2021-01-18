@@ -171,5 +171,18 @@ export default {
       }
       `,
     },
+    {
+      code: `
+      /** Example with multi-line param type.
+      *
+      * @param {function(
+      *   number
+      * )} cb Callback.
+      */
+      function example(cb) {
+        cb(42);
+      }
+      `,
+    },
   ],
 };

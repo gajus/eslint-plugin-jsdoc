@@ -1240,5 +1240,15 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /** Multi-line typedef for an options object type.
+       *
+       * @typedef {{
+       *   prop: number
+       * }} MyOptions
+       */
+      `,
+    },
   ],
 };

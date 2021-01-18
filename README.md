@@ -11388,6 +11388,16 @@ function quux (foo) {
 function processData(processor) {
   return processor(data)
 }
+
+/** Example with multi-line param type.
+*
+* @param {function(
+*   number
+* )} cb Callback.
+*/
+function example(cb) {
+  cb(42);
+}
 ````
 
 
@@ -15799,6 +15809,13 @@ function f() {}
  * @template W,X - Also with a hyphen
  */
 type ComplicatedType<T, U, V, W, X> = never
+
+/** Multi-line typedef for an options object type.
+ *
+ * @typedef {{
+ *   prop: number
+ * }} MyOptions
+ */
 ````
 
 
