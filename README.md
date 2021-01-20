@@ -8400,11 +8400,12 @@ export default (foo) => {
 
 Requires that all functions have a description.
 
-* All functions must have an implicit description or have the option
-  `descriptionStyle` set to `tag`.
-* Every jsdoc block description (or description tag if `descriptionStyle` is
-  `"tag"`) must have a non-empty description that explains the purpose of the
-  method.
+* All functions must have an implicit description (e.g., text above tags) or
+  have the option `descriptionStyle` set to `tag` (requiring `@description`
+  (or `@desc` if that is set as your preferred tag name)).
+* Every jsdoc block description (or `@description` tag if `descriptionStyle`
+  is `"tag"`) must have a non-empty description that explains the purpose of
+  the method.
 
 <a name="eslint-plugin-jsdoc-rules-require-description-options-18"></a>
 #### Options
