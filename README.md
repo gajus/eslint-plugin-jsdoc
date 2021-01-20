@@ -14197,10 +14197,6 @@ Will also report if multiple `@returns` tags are present.
     (since we are not checking against the actual `return` values in these
     cases).
 
-```js
-'jsdoc/require-returns': ['error', {forceReturnsWithAsync: true}]
-```
-
 |          |         |
 | -------- | ------- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
