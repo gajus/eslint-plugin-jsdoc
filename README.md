@@ -62,6 +62,7 @@ JSDoc linting rules for ESLint.
         * [`require-returns-type`](#eslint-plugin-jsdoc-rules-require-returns-type)
         * [`require-returns`](#eslint-plugin-jsdoc-rules-require-returns)
         * [`require-throws`](#eslint-plugin-jsdoc-rules-require-throws)
+        * [`require-yields`](#eslint-plugin-jsdoc-rules-require-yields)
         * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
 
 
@@ -138,6 +139,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-returns-check": 1, // Recommended
         "jsdoc/require-returns-description": 1, // Recommended
         "jsdoc/require-returns-type": 1, // Recommended
+        "jsdoc/require-yields": 1, // Recommended
         "jsdoc/valid-types": 1 // Recommended
     }
 }
@@ -15105,6 +15107,648 @@ const nested = () => () => {throw new Error('oops');};
 ````
 
 
+<a name="eslint-plugin-jsdoc-rules-require-yields"></a>
+### <code>require-yields</code>
+
+Requires that yields are documented.
+
+Will also report if multiple `@yields` tags are present.
+
+<a name="eslint-plugin-jsdoc-rules-require-yields-options-31"></a>
+#### Options
+
+- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
+    document block avoids the need for a `@yields`. Defaults to an array
+    with `inheritdoc`. If you set this array, it will overwrite the default,
+    so be sure to add back `inheritdoc` if you wish its presence to cause
+    exemption of the rule.
+- `forceRequireYields` - Set to `true` to always insist on
+    `@yields` documentation even if there are only expressionless `yield`
+    statements in the function. May be desired to flag that a project is aware
+    of an `undefined`/`void` yield. Defaults to `false`.
+    Note that unlike `require-returns`, `require-yields` `forceRequire*` option
+    does not impose the requirement that all generators have a `yield` (since it
+    is possible a generator may not have even an implicit `yield` and merely
+    return). If you always want a `yield` present (and thus for this rule to
+    report the need for docs), you should also use the ESLint
+    [`require-yield`](https://eslint.org/docs/rules/require-yield) rule.
+- `contexts` - Set this to an array of strings representing the AST context
+    where you wish the rule to be applied.
+    Overrides the default contexts (see below). Set to `"any"` if you want
+    the rule to apply to any jsdoc block throughout your files (as is necessary
+    for finding function blocks not attached to a function declaration or
+    expression, i.e., `@callback` or `@function` (or its aliases `@func` or
+    `@method`) (including those associated with an `@interface`). This
+    rule will only apply on non-default contexts when there is such a tag
+    present and the `forceRequireYields` option is set or if the
+    `withGeneratorTag` option is set with a present `@generator` tag
+    (since we are not checking against the actual `yield` values in these
+    cases).
+- `withGeneratorTag` - If a `@generator` tag is present on a block, require
+    `@yields`/`@yield`. Defaults to `true`. See `contexts` to `any` if you want
+    to catch `@generator` with `@callback` or such not attached to a function.
+
+|||
+|---|---|
+|Context|Generator functions (`FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled)|
+|Tags|`yields`|
+|Aliases|`yield`|
+|Recommended|true|
+| Options  | `contexts`,  `exemptedBy`, `withGeneratorTag`, `forceRequireYields` |
+| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
+
+The following patterns are considered problems:
+
+````js
+/**
+ *
+ */
+function * quux (foo) {
+
+  yield foo;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux (foo) {
+
+  const a = yield foo;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux (foo) {
+  yield foo;
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"yields":"yield"}}}
+// Message: Missing JSDoc @yield declaration.
+
+/**
+ *
+ */
+function * quux() {
+  yield 5;
+}
+// Options: [{"forceRequireYields":true}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux() {
+  yield;
+}
+// Options: [{"forceRequireYields":true}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+const quux = async function * () {
+  yield;
+}
+// Options: [{"forceRequireYields":true}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+async function * quux () {
+  yield;
+}
+// Options: [{"forceRequireYields":true}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  yield;
+}
+// Options: [{"contexts":["any"],"forceRequireYields":true}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ * @function
+ * @generator
+ */
+// Options: [{"contexts":["any"],"forceRequireYields":true}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ * @callback
+ * @generator
+ */
+// Options: [{"contexts":["any"],"forceRequireYields":true}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ * @yields {undefined}
+ * @yields {void}
+ */
+function * quux (foo) {
+
+  return foo;
+}
+// Message: Found more than one @yields declaration.
+
+/**
+ * @yields
+ */
+function * quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"yields":false}}}
+// Message: Unexpected tag `@yields`
+
+/**
+ * @param foo
+ */
+function * quux (foo) {
+  yield 'bar';
+}
+// Options: [{"exemptedBy":["notPresent"]}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ * @param {array} a
+ */
+async function * foo(a) {
+  return;
+}
+// Options: [{"forceRequireYields":true}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ * @param {array} a
+ */
+async function * foo(a) {
+  yield Promise.all(a);
+}
+// Options: [{"forceRequireYields":true}]
+// Message: Missing JSDoc @yields declaration.
+
+class quux {
+  /**
+   *
+   */
+  * quux () {
+    yield;
+  }
+}
+// Options: [{"contexts":["any"],"forceRequireYields":true}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ * @param {array} a
+ */
+async function * foo(a) {
+  yield Promise.all(a);
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ * @generator
+ */
+// Options: [{"contexts":["any"],"withGeneratorTag":true}]
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  if (true) {
+    yield;
+  }
+  yield true;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  try {
+    yield true;
+  } catch (err) {
+  }
+  yield;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  try {
+  } finally {
+    yield true;
+  }
+  yield;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  try {
+    yield;
+  } catch (err) {
+  }
+  yield true;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  try {
+    something();
+  } catch (err) {
+    yield true;
+  }
+  yield;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  switch (true) {
+  case 'abc':
+    yield true;
+  }
+  yield;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  switch (true) {
+  case 'abc':
+    yield;
+  }
+  yield true;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  for (const i of abc) {
+    yield true;
+  }
+  yield;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  for (const a in b) {
+    yield true;
+  }
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  for (let i=0; i<n; i+=1) {
+    yield true;
+  }
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  while(true) {
+    yield true
+  }
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  do {
+    yield true
+  }
+  while(true)
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  if (true) {
+    yield;
+  }
+  yield true;
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  if (true) {
+    yield true;
+  }
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  var a = {};
+  with (a) {
+    yield true;
+  }
+}
+// Message: Missing JSDoc @yields declaration.
+
+/**
+ *
+ */
+function * quux () {
+  if (true) {
+    yield;
+  } else {
+    yield true;
+  }
+  yield;
+}
+// Message: Missing JSDoc @yields declaration.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @yields Foo.
+ */
+function * quux () {
+
+  yield foo;
+}
+
+/**
+ * @yields Foo.
+ */
+function * quux () {
+
+  yield foo;
+}
+// Options: [{"contexts":["any"]}]
+
+/**
+ *
+ */
+function * quux () {
+}
+
+/**
+ *
+ */
+function * quux () {
+  yield;
+}
+
+/**
+ *
+ */
+function quux (bar) {
+  bar.doSomething(function * (baz) {
+    yield baz.corge();
+  })
+}
+
+/**
+ * @yields {Array}
+ */
+function * quux (bar) {
+  yield bar.doSomething(function * (baz) {
+    yield baz.corge();
+  })
+}
+
+/**
+ * @inheritdoc
+ */
+function * quux (foo) {
+}
+
+/**
+ * @override
+ */
+function * quux (foo) {
+}
+
+/**
+ * @constructor
+ */
+function * quux (foo) {
+}
+
+/**
+ * @implements
+ */
+function * quux (foo) {
+  yield;
+}
+
+/**
+ * @override
+ */
+function * quux (foo) {
+
+  yield foo;
+}
+
+/**
+ * @class
+ */
+function * quux (foo) {
+  yield foo;
+}
+
+/**
+ * @constructor
+ */
+function * quux (foo) {
+}
+
+/**
+ * @yields {object}
+ */
+function * quux () {
+
+  yield {a: foo};
+}
+
+/**
+ * @yields {void}
+ */
+function * quux () {
+}
+
+/**
+ * @yields {undefined}
+ */
+function * quux () {
+}
+
+/**
+ *
+ */
+function * quux () {
+}
+
+/**
+ * @yields {void}
+ */
+function quux () {
+}
+// Options: [{"forceRequireYields":true}]
+
+/**
+ * @yields {void}
+ */
+function * quux () {
+  yield undefined;
+}
+
+/**
+ * @yields {void}
+ */
+function * quux () {
+  yield undefined;
+}
+// Options: [{"forceRequireYields":true}]
+
+/**
+ * @yields {void}
+ */
+function * quux () {
+  yield;
+}
+
+/**
+ * @yields {void}
+ */
+function * quux () {
+}
+// Options: [{"forceRequireYields":true}]
+
+/**
+ * @yields {void}
+ */
+function * quux () {
+  yield;
+}
+// Options: [{"forceRequireYields":true}]
+
+/** @type {SpecialIterator} */
+function * quux () {
+  yield 5;
+}
+
+/**
+ * @yields {Something}
+ */
+async function * quux () {
+}
+// Options: [{"forceRequireYields":true}]
+
+/**
+ *
+ */
+async function * quux () {}
+
+/**
+ *
+ */
+const quux = async function * () {}
+
+/**
+ * @type {MyCallback}
+ */
+function * quux () {
+  yield;
+}
+// Options: [{"exemptedBy":["type"]}]
+
+/**
+ * @param {array} a
+ */
+async function * foo (a) {
+  yield;
+}
+
+/**
+ *
+ */
+// Options: [{"contexts":["any"]}]
+
+/**
+ * @function
+ */
+// Options: [{"contexts":["any"]}]
+
+/**
+ * @function
+ */
+// Options: [{"forceRequireYields":true}]
+
+/**
+ * @callback
+ */
+// Options: [{"forceRequireYields":true}]
+
+/**
+ * @generator
+ */
+// Options: [{"withGeneratorTag":true}]
+
+/**
+ * @generator
+ * @yields
+ */
+// Options: [{"contexts":["any"],"withGeneratorTag":true}]
+
+/**
+ * @generator
+ */
+// Options: [{"contexts":["any"],"withGeneratorTag":false}]
+
+/**
+ * @yields
+ */
+function * quux (foo) {
+
+  const a = yield foo;
+}
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-valid-types"></a>
 ### <code>valid-types</code>
 
@@ -15185,7 +15829,7 @@ for valid types (based on the tag's `type` value), and either portion checked
 for presence (based on `false` `name` or `type` values or their `required`
 value). See the setting for more details.
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-31"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-32"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow

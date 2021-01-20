@@ -540,6 +540,73 @@ const hasReturnValue = (node) => {
 };
 
 /**
+ * Checks if a node has a return statement. Void return does not count.
+ *
+ * @param {object} node
+ * @returns {boolean}
+ */
+// eslint-disable-next-line complexity
+const hasYieldValue = (node) => {
+  if (!node) {
+    return false;
+  }
+  switch (node.type) {
+  case 'FunctionExpression':
+  case 'FunctionDeclaration': {
+    return node.generator && (node.expression || hasYieldValue(node.body));
+  }
+  case 'BlockStatement': {
+    return node.body.some((bodyNode) => {
+      return bodyNode.type !== 'FunctionDeclaration' && hasYieldValue(bodyNode);
+    });
+  }
+  case 'ExpressionStatement': {
+    return hasYieldValue(node.expression);
+  }
+  case 'WhileStatement':
+  case 'DoWhileStatement':
+  case 'ForStatement':
+  case 'ForInStatement':
+  case 'ForOfStatement':
+  case 'WithStatement': {
+    return hasYieldValue(node.body);
+  }
+  case 'IfStatement': {
+    return hasYieldValue(node.consequent) || hasYieldValue(node.alternate);
+  }
+  case 'TryStatement': {
+    return hasYieldValue(node.block) ||
+      hasYieldValue(node.handler && node.handler.body) ||
+      hasYieldValue(node.finalizer);
+  }
+  case 'SwitchStatement': {
+    return node.cases.some(
+      (someCase) => {
+        return someCase.consequent.some(hasYieldValue);
+      },
+    );
+  }
+  case 'VariableDeclaration': {
+    return node.declarations.some(hasYieldValue);
+  }
+  case 'VariableDeclarator': {
+    return hasYieldValue(node.init);
+  }
+  case 'YieldExpression': {
+    // void return does not count.
+    if (node.argument === null) {
+      return false;
+    }
+
+    return true;
+  }
+  default: {
+    return false;
+  }
+  }
+};
+
+/**
  * Checks if a node has a throws statement.
  *
  * @param {object} node
@@ -766,6 +833,7 @@ export default {
   hasReturnValue,
   hasTag,
   hasThrowValue,
+  hasYieldValue,
   isConstructor,
   isGetter,
   isNamepathDefiningTag,
