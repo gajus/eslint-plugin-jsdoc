@@ -9746,6 +9746,12 @@ and can have an `inlineCommentBlock` property which, if set to `true`, will
 add an inline `/** */` instead of the regular, multi-line, indented jsdoc
 block which will otherwise be added. Defaults to an empty array.
 
+Note that you may need to disable `require` items (e.g., `MethodDefinition`)
+if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition:not([accessibility="private"])`).
+
+See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our README for more on the expected format.
+
 <a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-22-exemptemptyconstructors"></a>
 ##### <code>exemptEmptyConstructors</code>
 
