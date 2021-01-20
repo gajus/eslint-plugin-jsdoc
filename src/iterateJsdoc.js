@@ -307,6 +307,13 @@ const getUtils = (
     return jsdocUtils.hasParams(node);
   };
 
+  utils.isGenerator = () => {
+    return node && (
+      node.generator ||
+      node.type === 'MethodDefinition' && node.value.generator
+    );
+  };
+
   utils.isConstructor = () => {
     return jsdocUtils.isConstructor(node);
   };
@@ -452,6 +459,10 @@ const getUtils = (
 
   utils.hasReturnValue = () => {
     return jsdocUtils.hasReturnValue(node);
+  };
+
+  utils.hasYieldValue = () => {
+    return jsdocUtils.hasYieldValue(node);
   };
 
   utils.hasThrowValue = () => {
