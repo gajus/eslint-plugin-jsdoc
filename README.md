@@ -14498,12 +14498,14 @@ function quux (foo) {
  * @constructor
  */
 function quux (foo) {
+  return true;
 }
 
 /**
  * @implements
  */
 function quux (foo) {
+  return true;
 }
 
 /**
@@ -14518,7 +14520,7 @@ function quux (foo) {
  * @class
  */
 function quux (foo) {
-
+  return true;
 }
 
 /**

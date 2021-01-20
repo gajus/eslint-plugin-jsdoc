@@ -619,6 +619,7 @@ export default {
            * @constructor
            */
           function quux (foo) {
+            return true;
           }
       `,
     },
@@ -628,6 +629,7 @@ export default {
            * @implements
            */
           function quux (foo) {
+            return true;
           }
       `,
     },
@@ -648,7 +650,7 @@ export default {
            * @class
            */
           function quux (foo) {
-
+            return true;
           }
       `,
     },
