@@ -7,17 +7,6 @@ Will also report if multiple `@yields` tags are present.
 See the `next`, `forceRequireNext`, and `nextWithGeneratorTag` options for an
 option to expect a non-standard `@next` tag.
 
-Note that there is currently no `yield` equivalent to the
-`require-returns-check` rule to ensure that if a `@yields` is present that a
-`yield` (or `yield` with a value) is present in the function body (or that if
-a `@next` is present that there is a `yield` with a return value present).
-
-Please also note that JavaScript does allow generators not to have `yield`
-(e.g., with just a return or even no explicit return), but if you want to
-enforce that all generators have a `yield` in the function body, you can
-use the ESLint
-[`require-yield`](https://eslint.org/docs/rules/require-yield) rule.
-
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
