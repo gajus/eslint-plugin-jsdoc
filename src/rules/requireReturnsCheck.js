@@ -58,7 +58,7 @@ export default iterateJsdoc(({
   }
 
   // In case a return value is declared in JSDoc, we also expect one in the code.
-  if (utils.hasDefinedTypeReturnTag(tags[0]) && !utils.hasReturnValue()) {
+  if (utils.hasDefinedTypeTag(tags[0]) && !utils.hasReturnValue()) {
     report(`JSDoc @${tagName} declaration present but return expression not available in function.`);
   }
 }, {

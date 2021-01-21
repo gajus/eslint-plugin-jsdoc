@@ -446,8 +446,8 @@ const getUtils = (
     return jsdocUtils.getTagStructureForMode(mde, settings.structuredTags);
   };
 
-  utils.hasDefinedTypeReturnTag = (tag) => {
-    return jsdocUtils.hasDefinedTypeReturnTag(tag);
+  utils.hasDefinedTypeTag = (tag) => {
+    return jsdocUtils.hasDefinedTypeTag(tag);
   };
 
   utils.hasReturnValue = () => {

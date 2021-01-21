@@ -58,10 +58,10 @@ describe('jsdocUtils', () => {
       });
     });
   });
-  describe('hasDefinedTypeReturnTag()', () => {
+  describe('hasDefinedTypeTag()', () => {
     context('Missing tag', () => {
       it('should return `false` with a missing tag', () => {
-        expect(jsdocUtils.hasDefinedTypeReturnTag(null)).to.equal(false);
+        expect(jsdocUtils.hasDefinedTypeTag(null)).to.equal(false);
       });
     });
   });

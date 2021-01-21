@@ -332,27 +332,26 @@ const hasATag = (jsdoc : Object, targetTagNames : Array) : boolean => {
 };
 
 /**
- * Checks if the JSDoc comment declares a return value.
+ * Checks if the JSDoc comment declares a defined type.
  *
  * @param {JsDocTag} tag
  *   the tag which should be checked.
  * @returns {boolean}
- *   true in case a return value is declared; otherwise false.
+ *   true in case a defined type is declared; otherwise false.
  */
-const hasDefinedTypeReturnTag = (tag) => {
-  // The function should not continue in the event @returns is not defined...
+const hasDefinedTypeTag = (tag) => {
+  // The function should not continue in the event the type is not defined...
   if (typeof tag === 'undefined' || tag === null) {
     return false;
   }
 
-  // .. same applies if it declares `@returns {undefined}` or `@returns {void}`
+  // .. same applies if it declares an `{undefined}` or `{void}` type
   const tagType = tag.type.trim();
   if (tagType === 'undefined' || tagType === 'void') {
     return false;
   }
 
-  // In any other case, something must be returned, and
-  // a return statement is expected
+  // In any other case, a type is present
   return true;
 };
 
@@ -762,7 +761,7 @@ export default {
   getTagsByType,
   getTagStructureForMode,
   hasATag,
-  hasDefinedTypeReturnTag,
+  hasDefinedTypeTag,
   hasParams,
   hasReturnValue,
   hasTag,
