@@ -521,7 +521,9 @@ const hasReturnValue = (node) => {
   case 'SwitchStatement': {
     return node.cases.some(
       (someCase) => {
-        return someCase.consequent.some(hasReturnValue);
+        return someCase.consequent.some((nde) => {
+          return hasReturnValue(nde);
+        });
       },
     );
   }
@@ -546,22 +548,26 @@ const hasReturnValue = (node) => {
  * @returns {boolean}
  */
 // eslint-disable-next-line complexity
-const hasYieldValue = (node) => {
+const hasYieldValue = (node, checkYieldReturnValue) => {
   if (!node) {
     return false;
   }
   switch (node.type) {
   case 'FunctionExpression':
   case 'FunctionDeclaration': {
-    return node.generator && (node.expression || hasYieldValue(node.body));
+    return node.generator && (
+      node.expression || hasYieldValue(node.body, checkYieldReturnValue)
+    );
   }
   case 'BlockStatement': {
     return node.body.some((bodyNode) => {
-      return bodyNode.type !== 'FunctionDeclaration' && hasYieldValue(bodyNode);
+      return bodyNode.type !== 'FunctionDeclaration' && hasYieldValue(
+        bodyNode, checkYieldReturnValue,
+      );
     });
   }
   case 'ExpressionStatement': {
-    return hasYieldValue(node.expression);
+    return hasYieldValue(node.expression, checkYieldReturnValue);
   }
   case 'WhileStatement':
   case 'DoWhileStatement':
@@ -569,30 +575,43 @@ const hasYieldValue = (node) => {
   case 'ForInStatement':
   case 'ForOfStatement':
   case 'WithStatement': {
-    return hasYieldValue(node.body);
+    return hasYieldValue(node.body, checkYieldReturnValue);
   }
   case 'IfStatement': {
-    return hasYieldValue(node.consequent) || hasYieldValue(node.alternate);
+    return hasYieldValue(node.consequent, checkYieldReturnValue) ||
+      hasYieldValue(node.alternate, checkYieldReturnValue);
   }
   case 'TryStatement': {
-    return hasYieldValue(node.block) ||
-      hasYieldValue(node.handler && node.handler.body) ||
-      hasYieldValue(node.finalizer);
+    return hasYieldValue(node.block, checkYieldReturnValue) ||
+      hasYieldValue(node.handler && node.handler.body, checkYieldReturnValue) ||
+      hasYieldValue(node.finalizer, checkYieldReturnValue);
   }
   case 'SwitchStatement': {
     return node.cases.some(
       (someCase) => {
-        return someCase.consequent.some(hasYieldValue);
+        return someCase.consequent.some((nde) => {
+          return hasYieldValue(nde, checkYieldReturnValue);
+        });
       },
     );
   }
   case 'VariableDeclaration': {
-    return node.declarations.some(hasYieldValue);
+    return node.declarations.some((nde) => {
+      return hasYieldValue(nde, checkYieldReturnValue);
+    });
   }
   case 'VariableDeclarator': {
-    return hasYieldValue(node.init);
+    return hasYieldValue(node.init, checkYieldReturnValue);
   }
   case 'YieldExpression': {
+    if (checkYieldReturnValue) {
+      if (node.parent.type === 'VariableDeclarator') {
+        return true;
+      }
+
+      return false;
+    }
+
     // void return does not count.
     if (node.argument === null) {
       return false;
@@ -648,7 +667,9 @@ const hasThrowValue = (node, innerFunction) => {
   case 'SwitchStatement': {
     return node.cases.some(
       (someCase) => {
-        return someCase.consequent.some(hasThrowValue);
+        return someCase.consequent.some((nde) => {
+          return hasThrowValue(nde);
+        });
       },
     );
   }

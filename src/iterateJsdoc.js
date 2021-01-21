@@ -465,6 +465,10 @@ const getUtils = (
     return jsdocUtils.hasYieldValue(node);
   };
 
+  utils.hasYieldReturnValue = () => {
+    return jsdocUtils.hasYieldValue(node, true);
+  };
+
   utils.hasThrowValue = () => {
     return jsdocUtils.hasThrowValue(node);
   };
