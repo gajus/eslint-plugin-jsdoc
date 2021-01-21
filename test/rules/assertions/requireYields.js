@@ -20,6 +20,83 @@ export default {
     {
       code: `
           /**
+           * @yields
+           */
+          function * quux (foo) {
+
+            const retVal = yield foo;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @next declaration.',
+        },
+      ],
+      options: [{
+        next: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @yields
+           */
+          function * quux (foo) {
+
+            const retVal = yield;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @next declaration.',
+        },
+      ],
+      options: [{
+        next: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @yields {void}
+           */
+          function * quux () {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @next declaration.',
+        },
+      ],
+      options: [{
+        forceRequireNext: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @yields {void}
+           */
+          function * quux () {
+            yield;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @next declaration.',
+        },
+      ],
+      options: [{
+        forceRequireNext: true,
+      }],
+    },
+    {
+      code: `
+          /**
            *
            */
           function * quux (foo) {
@@ -53,6 +130,58 @@ export default {
         jsdoc: {
           tagNamePreference: {
             yields: 'yield',
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @yields
+           */
+          function * quux (foo) {
+            const val = yield foo;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yield-returns declaration.',
+        },
+      ],
+      options: [{
+        next: true,
+      }],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            next: 'yield-returns',
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @yields
+           * @next
+           */
+          function * quux () {
+            const ret = yield 5;
+          }
+      `,
+      errors: [
+        {
+          message: 'Unexpected tag `@next`',
+        },
+      ],
+      options: [{
+        next: true,
+      }],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            next: false,
           },
         },
       },
@@ -362,6 +491,27 @@ export default {
       options: [{
         contexts: ['any'],
         withGeneratorTag: true,
+      }],
+      parserOptions: {
+        ecmaVersion: 2_018,
+      },
+    },
+    {
+      code: `
+          /**
+           * @generator
+           * @yields
+           */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @next declaration.',
+        },
+      ],
+      options: [{
+        contexts: ['any'],
+        nextWithGeneratorTag: true,
       }],
       parserOptions: {
         ecmaVersion: 2_018,
@@ -869,6 +1019,19 @@ export default {
       code: `
           /**
            * @yields {void}
+           * @next {void}
+           */
+          function * quux () {
+          }
+      `,
+      options: [{
+        forceRequireNext: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @yields {void}
            */
           function * quux () {
             yield undefined;
@@ -1054,12 +1217,35 @@ export default {
       code: `
           /**
            * @generator
+           */
+      `,
+      options: [{
+        nextWithGeneratorTag: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @generator
            * @yields
            */
       `,
       options: [{
         contexts: ['any'],
         withGeneratorTag: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @generator
+           * @yields
+           * @next
+           */
+      `,
+      options: [{
+        contexts: ['any'],
+        nextWithGeneratorTag: true,
       }],
     },
     {
@@ -1076,6 +1262,18 @@ export default {
     {
       code: `
           /**
+           * @generator
+           * @yields
+           */
+      `,
+      options: [{
+        contexts: ['any'],
+        nextWithGeneratorTag: false,
+      }],
+    },
+    {
+      code: `
+          /**
            * @yields
            */
           function * quux (foo) {
@@ -1083,6 +1281,81 @@ export default {
             const a = yield foo;
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * @yields
+           * @next
+           */
+          function * quux (foo) {
+            let a = yield;
+          }
+      `,
+      options: [{
+        next: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @yields
+           * @next
+           */
+          function * quux (foo) {
+            const a = yield foo;
+          }
+      `,
+      options: [{
+        next: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+      `,
+      options: [{
+        contexts: ['any'],
+        nextWithGeneratorTag: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+      `,
+      options: [{
+        contexts: ['any'],
+        next: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {}
+      `,
+      options: [{
+        contexts: ['any'],
+        next: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @yields {void}
+           */
+          function * quux () {
+            yield;
+          }
+      `,
+      options: [{
+        next: true,
+      }],
     },
   ],
 };

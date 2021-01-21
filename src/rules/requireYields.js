@@ -26,7 +26,8 @@ const canSkip = (utils) => {
     'class',
     'constructor',
 
-    // Yield type is specified accompanying the targeted @type
+    // Yield (and any `next`) type is specified accompanying the targeted
+    //   @type
     'type',
 
     // This seems to imply a class as well
@@ -35,12 +36,34 @@ const canSkip = (utils) => {
     utils.avoidDocs();
 };
 
+const checkTagName = (utils, report, tagName) => {
+  const preferredTagName = utils.getPreferredTagName({tagName});
+  if (!preferredTagName) {
+    return [];
+  }
+
+  const tags = utils.getTags(preferredTagName);
+
+  if (tags.length > 1) {
+    report(`Found more than one @${preferredTagName} declaration.`);
+  }
+
+  // In case the code yields something, we expect a yields value in JSDoc.
+  const [tag] = tags;
+  const missingTag = typeof tag === 'undefined' || tag === null;
+
+  return [preferredTagName, missingTag];
+};
+
 export default iterateJsdoc(({
   report,
   utils,
   context,
 }) => {
   const {
+    next = false,
+    nextWithGeneratorTag = false,
+    forceRequireNext = false,
     forceRequireYields = false,
     withGeneratorTag = true,
   } = context.options[0] || {};
@@ -51,40 +74,64 @@ export default iterateJsdoc(({
     return;
   }
 
-  const tagName = utils.getPreferredTagName({tagName: 'yields'});
-  if (!tagName) {
-    return;
-  }
-
-  const tags = utils.getTags(tagName);
-
-  if (tags.length > 1) {
-    report(`Found more than one @${tagName} declaration.`);
-  }
-
   const iteratingFunction = utils.isIteratingFunction();
 
-  // In case the code yields something, we expect a yields value in JSDoc.
-  const [tag] = tags;
-  const missingYieldTag = typeof tag === 'undefined' || tag === null;
+  const [preferredYieldTagName, missingYieldTag] = checkTagName(
+    utils, report, 'yields',
+  );
+  if (preferredYieldTagName) {
+    const shouldReportYields = () => {
+      if (!missingYieldTag) {
+        return false;
+      }
 
-  const shouldReport = () => {
-    if (!missingYieldTag) {
-      return false;
+      if (
+        withGeneratorTag && utils.hasTag('generator') ||
+        forceRequireYields && iteratingFunction && utils.isGenerator()
+      ) {
+        return true;
+      }
+
+      return iteratingFunction && utils.isGenerator() && utils.hasYieldValue();
+    };
+
+    if (shouldReportYields()) {
+      report(`Missing JSDoc @${preferredYieldTagName} declaration.`);
+    }
+  }
+
+  if (next || nextWithGeneratorTag || forceRequireNext) {
+    const [preferredNextTagName, missingNextTag] = checkTagName(
+      utils, report, 'next',
+    );
+    if (!preferredNextTagName) {
+      return;
     }
 
-    if (
-      withGeneratorTag && utils.hasTag('generator') ||
-      forceRequireYields && iteratingFunction && utils.isGenerator()
-    ) {
-      return true;
+    const shouldReportNext = () => {
+      if (!missingNextTag) {
+        return false;
+      }
+
+      if (
+        nextWithGeneratorTag && utils.hasTag('generator')) {
+        return true;
+      }
+
+      if (
+        !next && !forceRequireNext ||
+        !iteratingFunction ||
+        !utils.isGenerator()
+      ) {
+        return false;
+      }
+
+      return forceRequireNext || utils.hasYieldReturnValue();
+    };
+
+    if (shouldReportNext()) {
+      report(`Missing JSDoc @${preferredNextTagName} declaration.`);
     }
-
-    return iteratingFunction && utils.isGenerator() && utils.hasYieldValue();
-  };
-
-  if (shouldReport()) {
-    report(`Missing JSDoc @${tagName} declaration.`);
   }
 }, {
   contextDefaults: true,
@@ -109,7 +156,19 @@ export default iterateJsdoc(({
             },
             type: 'array',
           },
+          forceRequireNext: {
+            default: false,
+            type: 'boolean',
+          },
           forceRequireYields: {
+            default: false,
+            type: 'boolean',
+          },
+          next: {
+            default: false,
+            type: 'boolean',
+          },
+          nextWithGeneratorTag: {
             default: false,
             type: 'boolean',
           },
