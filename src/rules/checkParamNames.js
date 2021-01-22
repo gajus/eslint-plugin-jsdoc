@@ -6,6 +6,7 @@ const validateParameterNames = (
   checkDestructured : boolean,
   checkRestProperty : boolean,
   checkTypesRegex : RegExp,
+  disableExtraPropertyReporting,
   enableFixer: boolean,
   functionParameterNames : Array<string>, jsdoc, _jsdocNode, utils, report,
 ) => {
@@ -104,18 +105,6 @@ const validateParameterNames = (
         }
       });
 
-      const extraProperties = [];
-      if (!hasPropertyRest || checkRestProperty) {
-        actualNames.forEach((name, idx) => {
-          const match = name.startsWith(tag.name.trim() + '.');
-          if (match && !expectedNames.some(
-            utils.comparePaths(name),
-          ) && !utils.comparePaths(name)(tag.name)) {
-            extraProperties.push([name, paramTags[idx][1]]);
-          }
-        });
-      }
-
       const hasMissing = missingProperties.length;
       if (hasMissing) {
         missingProperties.forEach((missingProperty) => {
@@ -123,12 +112,28 @@ const validateParameterNames = (
         });
       }
 
-      if (extraProperties.length) {
-        extraProperties.forEach(([extraProperty, tg]) => {
-          report(`@${targetTagName} "${extraProperty}" does not exist on ${tag.name}`, null, tg);
+      if (!hasPropertyRest || checkRestProperty) {
+        const extraProperties = [];
+        actualNames.forEach((name, idx) => {
+          const match = name.startsWith(tag.name.trim() + '.');
+          if (
+            match && !expectedNames.some(
+              utils.comparePaths(name),
+            ) && !utils.comparePaths(name)(tag.name) &&
+            (!disableExtraPropertyReporting || properties.some((prop) => {
+              return prop.split('.').length >= name.split('.').length - 1;
+            }))
+          ) {
+            extraProperties.push([name, paramTags[idx][1]]);
+          }
         });
+        if (extraProperties.length) {
+          extraProperties.forEach(([extraProperty, tg]) => {
+            report(`@${targetTagName} "${extraProperty}" does not exist on ${tag.name}`, null, tg);
+          });
 
-        return true;
+          return true;
+        }
       }
 
       return hasMissing;
@@ -222,6 +227,7 @@ export default iterateJsdoc(({
     checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
     enableFixer = false,
     useDefaultObjectProperties = false,
+    disableExtraPropertyReporting = false,
   } = context.options[0] || {};
 
   const lastSlashPos = checkTypesPattern.lastIndexOf('/');
@@ -241,6 +247,7 @@ export default iterateJsdoc(({
     checkDestructured,
     checkRestProperty,
     checkTypesRegex,
+    disableExtraPropertyReporting,
     enableFixer,
     functionParameterNames,
     jsdoc, jsdocNode, utils, report,
@@ -277,6 +284,9 @@ export default iterateJsdoc(({
           },
           checkTypesPattern: {
             type: 'string',
+          },
+          disableExtraPropertyReporting: {
+            type: 'boolean',
           },
           enableFixer: {
             type: 'boolean',
