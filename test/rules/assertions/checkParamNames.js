@@ -943,6 +943,34 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+      * Returns a number.
+      * @param {Object} props Props.
+      * @param {Object} props.prop Prop.
+      * @param {string} props.prop.a String.
+      * @param {string} props.prop.b String.
+      * @return {number} A number.
+      */
+      export function testFn1 ({ prop = { a: 1, b: 2 } }) {
+      }
+      `,
+      errors: [
+        {
+          message: '@param "props.prop.a" does not exist on props',
+        },
+        {
+          message: '@param "props.prop.b" does not exist on props',
+        },
+      ],
+      options: [{
+        useDefaultObjectProperties: false,
+      }],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [
     {
@@ -1422,6 +1450,26 @@ export default {
       }) {
       }
       `,
+    },
+    {
+      code: `
+      /**
+      * Returns a number.
+      * @param {Object} props Props.
+      * @param {Object} props.prop Prop.
+      * @param {string} props.prop.a String.
+      * @param {string} props.prop.b String.
+      * @return {number} A number.
+      */
+      export function testFn1 ({ prop = { a: 1, b: 2 } }) {
+      }
+      `,
+      options: [{
+        useDefaultObjectProperties: true,
+      }],
+      parserOptions: {
+        sourceType: 'module',
+      },
     },
   ],
 };

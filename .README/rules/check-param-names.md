@@ -57,10 +57,17 @@ their presence within the function signature. Other inconsistencies between
 
 Whether to check destructured properties. Defaults to `true`.
 
+##### `useDefaultObjectProperties`
+
+Set to `true` if you wish to avoid reporting of child property documentation
+where instead of destructuring, a whole plain object is supplied as default
+value but you wish its keys to be considered as signalling that the properties
+are present and can therefore be documented. Defaults to `false`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`|
+|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `useDefaultObjectProperties`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|

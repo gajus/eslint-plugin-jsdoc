@@ -2266,10 +2266,18 @@ their presence within the function signature. Other inconsistencies between
 
 Whether to check destructured properties. Defaults to `true`.
 
+<a name="eslint-plugin-jsdoc-rules-check-param-names-options-4-usedefaultobjectproperties"></a>
+##### <code>useDefaultObjectProperties</code>
+
+Set to `true` if you wish to avoid reporting of child property documentation
+where instead of destructuring, a whole plain object is supplied as default
+value but you wish its keys to be considered as signalling that the properties
+are present and can therefore be documented. Defaults to `false`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`|
+|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `useDefaultObjectProperties`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
@@ -2664,6 +2672,19 @@ function quux ({ foo: { bar } }) {}
  */
 function foo({ foo: { bar: { baz } }}) {}
 // Message: Missing @param "options.foo.bar.baz"
+
+/**
+* Returns a number.
+* @param {Object} props Props.
+* @param {Object} props.prop Prop.
+* @param {string} props.prop.a String.
+* @param {string} props.prop.b String.
+* @return {number} A number.
+*/
+export function testFn1 ({ prop = { a: 1, b: 2 } }) {
+}
+// Options: [{"useDefaultObjectProperties":false}]
+// Message: @param "props.prop.a" does not exist on props
 ````
 
 The following patterns are not considered problems:
@@ -2995,6 +3016,18 @@ function Item({
   defaulting: [quux, xyz] = []
 }) {
 }
+
+/**
+* Returns a number.
+* @param {Object} props Props.
+* @param {Object} props.prop Prop.
+* @param {string} props.prop.a String.
+* @param {string} props.prop.b String.
+* @return {number} A number.
+*/
+export function testFn1 ({ prop = { a: 1, b: 2 } }) {
+}
+// Options: [{"useDefaultObjectProperties":true}]
 ````
 
 
@@ -11930,14 +11963,20 @@ implied to be `false` (i.e., the inside of the roots will not be checked
 either, e.g., it will also not complain if `a` or `b` do not have their own
 documentation). Defaults to `true`.
 
-|          |                                                                                                               |
-| -------- | ------------------------------------------------------------------------------------------------------------- |
+<a name="eslint-plugin-jsdoc-rules-require-param-options-26-usedefaultobjectproperties-1"></a>
+##### <code>useDefaultObjectProperties</code>
+
+Set to `true` if you wish to expect documentation of properties on objects
+supplied as default values. Defaults to `false`.
+
+|          |                      |
+| -------- | ----------------------------------------------------------------------------- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
-| Tags     | `param`                                                                                                       |
-| Aliases  | `arg`, `argument`                                                                                             |
-|Recommended|true|
-| Options  | `autoIncrementBase`, `checkDestructured`, `checkDestructuredRoots`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`                                 |
-| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
+| Tags     | `param` |
+| Aliases  | `arg`, `argument` |
+|Recommended | true|
+| Options  | `autoIncrementBase`, `checkDestructured`, `checkDestructuredRoots`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`, `useDefaultObjectProperties`|
+| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
 
@@ -12582,6 +12621,17 @@ function quux ({ foo: { bar } }) {}
  */
 function foo({ foo: { bar: { baz } }}) {}
 // Message: Missing JSDoc @param "options.foo.bar.baz" declaration.
+
+/**
+* Returns a number.
+* @param {Object} props Props.
+* @param {Object} props.prop Prop.
+* @return {number} A number.
+*/
+export function testFn1 ({ prop = { a: 1, b: 2 } }) {
+}
+// Options: [{"useDefaultObjectProperties":true}]
+// Message: Missing JSDoc @param "props.prop.a" declaration.
 ````
 
 The following patterns are not considered problems:
@@ -13195,6 +13245,16 @@ function Item({
   defaulting: [quux, xyz] = []
 }) {
 }
+
+/**
+* Returns a number.
+* @param {Object} props Props.
+* @param {Object} props.prop Prop.
+* @return {number} A number.
+*/
+export function testFn1 ({ prop = { a: 1, b: 2 } }) {
+}
+// Options: [{"useDefaultObjectProperties":false}]
 ````
 
 

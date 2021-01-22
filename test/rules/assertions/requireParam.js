@@ -2118,6 +2118,44 @@ export default {
       function foo({ foo: { bar: { baz } }}) {}
       `,
     },
+    {
+      code: `
+      /**
+      * Returns a number.
+      * @param {Object} props Props.
+      * @param {Object} props.prop Prop.
+      * @return {number} A number.
+      */
+      export function testFn1 ({ prop = { a: 1, b: 2 } }) {
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "props.prop.a" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "props.prop.b" declaration.',
+        },
+      ],
+      options: [{
+        useDefaultObjectProperties: true,
+      }],
+      output: `
+      /**
+      * Returns a number.
+      * @param {Object} props Props.
+      * @param {Object} props.prop Prop.
+      * @param props.prop.a
+      * @param props.prop.b
+      * @return {number} A number.
+      */
+      export function testFn1 ({ prop = { a: 1, b: 2 } }) {
+      }
+      `,
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [
     {
@@ -3043,6 +3081,24 @@ export default {
       }) {
       }
       `,
+    },
+    {
+      code: `
+      /**
+      * Returns a number.
+      * @param {Object} props Props.
+      * @param {Object} props.prop Prop.
+      * @return {number} A number.
+      */
+      export function testFn1 ({ prop = { a: 1, b: 2 } }) {
+      }
+      `,
+      options: [{
+        useDefaultObjectProperties: false,
+      }],
+      parserOptions: {
+        sourceType: 'module',
+      },
     },
   ],
 };
