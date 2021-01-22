@@ -299,8 +299,8 @@ const getUtils = (
     return jsdocUtils.flattenRoots(params);
   };
 
-  utils.getFunctionParameterNames = () => {
-    return jsdocUtils.getFunctionParameterNames(node);
+  utils.getFunctionParameterNames = (useDefaultObjectProperties) => {
+    return jsdocUtils.getFunctionParameterNames(node, useDefaultObjectProperties);
   };
 
   utils.hasParams = () => {

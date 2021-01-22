@@ -24,7 +24,6 @@ export default iterateJsdoc(({
   utils,
   context,
 }) => {
-  const functionParameterNames = utils.getFunctionParameterNames();
   const preferredTagName = utils.getPreferredTagName({tagName: 'param'});
   if (!preferredTagName) {
     return;
@@ -57,6 +56,7 @@ export default iterateJsdoc(({
     enableRootFixer = true,
     enableRestElementFixer = true,
     unnamedRootBase = ['root'],
+    useDefaultObjectProperties = false,
   } = context.options[0] || {};
 
   const lastSlashPos = checkTypesPattern.lastIndexOf('/');
@@ -65,6 +65,7 @@ export default iterateJsdoc(({
     new RegExp(checkTypesPattern.slice(1, lastSlashPos), checkTypesPattern.slice(lastSlashPos + 1));
 
   const missingTags = [];
+  const functionParameterNames = utils.getFunctionParameterNames(useDefaultObjectProperties);
   const flattenedRoots = utils.flattenRoots(functionParameterNames).names;
 
   const paramIndex = {};
@@ -371,6 +372,9 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
+          },
+          useDefaultObjectProperties: {
+            type: 'boolean',
           },
         },
         type: 'object',

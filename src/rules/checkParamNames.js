@@ -108,7 +108,9 @@ const validateParameterNames = (
       if (!hasPropertyRest || checkRestProperty) {
         actualNames.forEach((name, idx) => {
           const match = name.startsWith(tag.name.trim() + '.');
-          if (match && !expectedNames.some(utils.comparePaths(name)) && !utils.comparePaths(name)(tag.name)) {
+          if (match && !expectedNames.some(
+            utils.comparePaths(name),
+          ) && !utils.comparePaths(name)(tag.name)) {
             extraProperties.push([name, paramTags[idx][1]]);
           }
         });
@@ -219,6 +221,7 @@ export default iterateJsdoc(({
     checkRestProperty = false,
     checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
     enableFixer = false,
+    useDefaultObjectProperties = false,
   } = context.options[0] || {};
 
   const lastSlashPos = checkTypesPattern.lastIndexOf('/');
@@ -230,7 +233,7 @@ export default iterateJsdoc(({
   if (!jsdocParameterNamesDeep.length) {
     return;
   }
-  const functionParameterNames = utils.getFunctionParameterNames();
+  const functionParameterNames = utils.getFunctionParameterNames(useDefaultObjectProperties);
   const targetTagName = utils.getPreferredTagName({tagName: 'param'});
   const isError = validateParameterNames(
     targetTagName,
@@ -276,6 +279,9 @@ export default iterateJsdoc(({
             type: 'string',
           },
           enableFixer: {
+            type: 'boolean',
+          },
+          useDefaultObjectProperties: {
             type: 'boolean',
           },
         },

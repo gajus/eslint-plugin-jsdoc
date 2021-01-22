@@ -96,7 +96,9 @@ const getPropertiesFromPropertySignature = (propSignature): T => {
   return propSignature.key.name;
 };
 
-const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
+const getFunctionParameterNames = (
+  functionNode : Object, checkDefaultObjects: Boolean,
+) : Array<T> => {
   // eslint-disable-next-line complexity
   const getParamName = (param, isProperty) => {
     if (_.has(param, 'typeAnnotation') || _.has(param, 'left.typeAnnotation')) {
@@ -149,12 +151,20 @@ const getFunctionParameterNames = (functionNode : Object) : Array<T> => {
         })];
       }
       if (param.value.type === 'AssignmentPattern') {
-        if (param.value.left.type === 'ObjectPattern') {
+        switch (param.value.left.type) {
+        case 'Identifier':
+          // Default parameter
+          if (checkDefaultObjects && param.value.right.type === 'ObjectExpression') {
+            return [param.key.name, param.value.right.properties.map((prop) => {
+              return getParamName(prop, isProperty);
+            })];
+          }
+          break;
+        case 'ObjectPattern':
           return [param.key.name, param.value.left.properties.map((prop) => {
             return getParamName(prop, isProperty);
           })];
-        }
-        if (param.value.left.type === 'ArrayPattern') {
+        case 'ArrayPattern':
           return [param.key.name, param.value.left.elements.map((prop, idx) => {
             return {
               name: idx,
