@@ -64,10 +64,20 @@ where instead of destructuring, a whole plain object is supplied as default
 value but you wish its keys to be considered as signalling that the properties
 are present and can therefore be documented. Defaults to `false`.
 
+##### `disableExtraPropertyReporting`
+
+Whether to check for extra destructured properties. Defaults to `false`. Change
+to `true` if you want to be able to document properties which are not actually
+destructured. Keep as `false` if you expect properties to be documented in
+their own types. Note that extra properties will always be reported if another
+item at the same level is destructured as destructuring will prevent other
+access and this option is only intended to permit documenting extra properties
+that are available and actually used in the function.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `useDefaultObjectProperties`|
+|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `useDefaultObjectProperties`, `disableExtraPropertyReporting`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|

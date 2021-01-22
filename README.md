@@ -2274,10 +2274,21 @@ where instead of destructuring, a whole plain object is supplied as default
 value but you wish its keys to be considered as signalling that the properties
 are present and can therefore be documented. Defaults to `false`.
 
+<a name="eslint-plugin-jsdoc-rules-check-param-names-options-4-disableextrapropertyreporting"></a>
+##### <code>disableExtraPropertyReporting</code>
+
+Whether to check for extra destructured properties. Defaults to `false`. Change
+to `true` if you want to be able to document properties which are not actually
+destructured. Keep as `false` if you expect properties to be documented in
+their own types. Note that extra properties will always be reported if another
+item at the same level is destructured as destructuring will prevent other
+access and this option is only intended to permit documenting extra properties
+that are available and actually used in the function.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `useDefaultObjectProperties`|
+|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `useDefaultObjectProperties`, `disableExtraPropertyReporting`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
@@ -2685,6 +2696,68 @@ export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 }
 // Options: [{"useDefaultObjectProperties":false}]
 // Message: @param "props.prop.a" does not exist on props
+
+/**
+ * @param {object} cfg
+ * @param {string} cfg.foo
+ * @param {string} cfg.bar
+ * @param {object} cfg.extra
+ */
+function quux ({foo}) {
+
+}
+// Message: @param "cfg.bar" does not exist on cfg
+
+/**
+ * @param {object} cfg
+ * @param {string} cfg.foo
+ * @param {string} cfg.bar
+ * @param {object} cfg.extra
+ */
+function quux ({foo}) {
+
+}
+// Options: [{"disableExtraPropertyReporting":true}]
+// Message: @param "cfg.bar" does not exist on cfg
+
+/**
+ * @param {object} root
+ * @param {object} root.cfg
+ * @param {object} root.cfg.a
+ * @param {string} root.cfg.a.foo
+ * @param {string} root.cfg.a.bar
+ * @param {object} root.cfg.a.extra
+ */
+function quux ({cfg: {a: {foo}}}) {
+
+}
+// Message: @param "root.cfg.a.bar" does not exist on root
+
+/**
+ * @param {object} root
+ * @param {object} root.cfg
+ * @param {object} root.cfg.a
+ * @param {string} root.cfg.a.foo
+ * @param {string} root.cfg.a.bar
+ * @param {object} root.cfg.a.extra
+ */
+function quux ({cfg: {a: {foo}}}) {
+
+}
+// Options: [{"disableExtraPropertyReporting":true}]
+// Message: @param "root.cfg.a.bar" does not exist on root
+
+/**
+ * @param {object} root
+ * @param {object} root.cfg
+ * @param {string} root.cfg.foo
+ * @param {string} root.cfg.bar
+ * @param {object} root.cfg.extra
+ */
+function quux ({cfg}) {
+
+}
+// Message: @param "root.cfg.foo" does not exist on root
 ````
 
 The following patterns are not considered problems:
@@ -3028,6 +3101,18 @@ function Item({
 export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 }
 // Options: [{"useDefaultObjectProperties":true}]
+
+/**
+ * @param {object} root
+ * @param {object} root.cfg
+ * @param {string} root.cfg.foo
+ * @param {string} root.cfg.bar
+ * @param {object} root.cfg.extra
+ */
+function quux ({cfg}) {
+
+}
+// Options: [{"disableExtraPropertyReporting":true}]
 ````
 
 

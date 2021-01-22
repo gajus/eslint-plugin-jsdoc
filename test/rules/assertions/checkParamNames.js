@@ -971,6 +971,140 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+          /**
+           * @param {object} cfg
+           * @param {string} cfg.foo
+           * @param {string} cfg.bar
+           * @param {object} cfg.extra
+           */
+          function quux ({foo}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: '@param "cfg.bar" does not exist on cfg',
+        },
+        {
+          line: 6,
+          message: '@param "cfg.extra" does not exist on cfg',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {object} cfg
+           * @param {string} cfg.foo
+           * @param {string} cfg.bar
+           * @param {object} cfg.extra
+           */
+          function quux ({foo}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: '@param "cfg.bar" does not exist on cfg',
+        },
+        {
+          line: 6,
+          message: '@param "cfg.extra" does not exist on cfg',
+        },
+      ],
+      options: [
+        {
+          disableExtraPropertyReporting: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {object} root
+           * @param {object} root.cfg
+           * @param {object} root.cfg.a
+           * @param {string} root.cfg.a.foo
+           * @param {string} root.cfg.a.bar
+           * @param {object} root.cfg.a.extra
+           */
+          function quux ({cfg: {a: {foo}}}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: '@param "root.cfg.a.bar" does not exist on root',
+        },
+        {
+          line: 8,
+          message: '@param "root.cfg.a.extra" does not exist on root',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {object} root
+           * @param {object} root.cfg
+           * @param {object} root.cfg.a
+           * @param {string} root.cfg.a.foo
+           * @param {string} root.cfg.a.bar
+           * @param {object} root.cfg.a.extra
+           */
+          function quux ({cfg: {a: {foo}}}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: '@param "root.cfg.a.bar" does not exist on root',
+        },
+        {
+          line: 8,
+          message: '@param "root.cfg.a.extra" does not exist on root',
+        },
+      ],
+      options: [
+        {
+          disableExtraPropertyReporting: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param {object} root
+           * @param {object} root.cfg
+           * @param {string} root.cfg.foo
+           * @param {string} root.cfg.bar
+           * @param {object} root.cfg.extra
+           */
+          function quux ({cfg}) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: '@param "root.cfg.foo" does not exist on root',
+        },
+        {
+          line: 6,
+          message: '@param "root.cfg.bar" does not exist on root',
+        },
+        {
+          line: 7,
+          message: '@param "root.cfg.extra" does not exist on root',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1470,6 +1604,25 @@ export default {
       parserOptions: {
         sourceType: 'module',
       },
+    },
+    {
+      code: `
+          /**
+           * @param {object} root
+           * @param {object} root.cfg
+           * @param {string} root.cfg.foo
+           * @param {string} root.cfg.bar
+           * @param {object} root.cfg.extra
+           */
+          function quux ({cfg}) {
+
+          }
+      `,
+      options: [
+        {
+          disableExtraPropertyReporting: true,
+        },
+      ],
     },
   ],
 };
