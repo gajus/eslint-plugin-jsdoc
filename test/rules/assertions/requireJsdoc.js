@@ -6,6 +6,26 @@ export default {
   invalid: [
     {
       code: `
+      requestAnimationFrame(draw)
+
+      function bench() {
+      }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+      }],
+      output: `
+      requestAnimationFrame(draw)
+
+      /**
+       *
+       */
+      function bench() {
+      }
+      `,
+    },
+    {
+      code: `
 function quux (foo) {
 
 }`,

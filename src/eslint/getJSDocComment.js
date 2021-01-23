@@ -32,8 +32,7 @@ const getDecorator = (token, sourceCode) => {
         if (tokenBefore && tokenBefore.type === 'Punctuator') {
           if (tokenBefore.value === tokenClose) {
             nested++;
-          }
-          if (tokenBefore.value === tokenOpen) {
+          } else if (tokenBefore.value === tokenOpen) {
             if (nested) {
               nested--;
             } else {
@@ -43,18 +42,16 @@ const getDecorator = (token, sourceCode) => {
         }
       } while (tokenBefore);
 
-      return tokenBefore;
+      return getDecorator(tokenBefore, sourceCode);
+    }
+    if (token.value === '@') {
+      return token;
     }
   }
 
-  if (token.type === 'Identifier') {
-    const tokenBefore = sourceCode.getTokenBefore(token, {includeComments: true});
-    if (tokenBefore && tokenBefore.type === 'Punctuator' && tokenBefore.value === '@') {
-      return tokenBefore;
-    }
-  }
+  const tokenBfr = sourceCode.getTokenBefore(token, {includeComments: true});
 
-  return false;
+  return getDecorator(tokenBfr, sourceCode);
 };
 
 /**

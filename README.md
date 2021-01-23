@@ -9942,6 +9942,12 @@ Defaults to `true`.
 The following patterns are considered problems:
 
 ````js
+requestAnimationFrame(draw)
+
+function bench() {
+}
+// Message: Missing JSDoc comment.
+
 function quux (foo) {
 
 }
