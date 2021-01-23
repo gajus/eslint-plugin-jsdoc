@@ -13,7 +13,8 @@ export default iterateJsdoc(({
   const {definedTags = []} = context.options[0] || {};
 
   let definedPreferredTags = [];
-  const {tagNamePreference} = settings;
+  const {tagNamePreference, structuredTags} = settings;
+  const definedStructuredTags = Object.keys(structuredTags);
   const definedNonPreferredTags = Object.keys(tagNamePreference);
   if (definedNonPreferredTags.length) {
     definedPreferredTags = Object.values(tagNamePreference).map((preferredTag) => {
@@ -38,7 +39,10 @@ export default iterateJsdoc(({
 
   jsdoc.tags.forEach((jsdocTag) => {
     const tagName = jsdocTag.tag;
-    if (utils.isValidTag(tagName, [...definedTags, ...definedPreferredTags, ...definedNonPreferredTags])) {
+    if (utils.isValidTag(tagName, [
+      ...definedTags, ...definedPreferredTags, ...definedNonPreferredTags,
+      ...definedStructuredTags,
+    ])) {
       let preferredTagName = utils.getPreferredTagName({
         allowObjectReturn: true,
         defaultMessage: `Blacklisted tag found (\`@${tagName}\`)`,

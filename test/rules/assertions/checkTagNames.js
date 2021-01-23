@@ -29,6 +29,29 @@ export default {
     },
     {
       code: `
+        /** @typoo {string} */
+        let a;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Invalid JSDoc tag name "typoo".',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            parameter: {
+              name: 'namepath-referencing',
+              required: ['type', 'name'],
+              type: true,
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
           /**
            * @Param
            */
@@ -593,6 +616,27 @@ export default {
         jsdoc: {
           tagNamePreference: {
             param: 'arg',
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @parameter foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            parameter: {
+              name: 'namepath-referencing',
+              required: ['type', 'name'],
+              type: true,
+            },
           },
         },
       },

@@ -3394,6 +3394,10 @@ Because the tags indicated as replacements in
 `settings.jsdoc.tagNamePreference` will automatically be considered as valid,
 the above works.
 
+Likewise are the tag keys of `settings.jsdoc.structuredTags` automatically
+considered as valid (as their defining an expected structure for tags implies
+the tags may be used).
+
 For [TypeScript](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc)
 (or Closure), when `settings.jsdoc.mode` is set to `typescript` or `closure`,
 one may also use the following:
@@ -3474,6 +3478,11 @@ The following patterns are considered problems:
 ````js
 /** @typoo {string} */
 let a;
+// Message: Invalid JSDoc tag name "typoo".
+
+/** @typoo {string} */
+let a;
+// Settings: {"jsdoc":{"structuredTags":{"parameter":{"name":"namepath-referencing","required":["type","name"],"type":true}}}}
 // Message: Invalid JSDoc tag name "typoo".
 
 /**
@@ -3828,6 +3837,14 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
+
+/**
+ * @parameter foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"structuredTags":{"parameter":{"name":"namepath-referencing","required":["type","name"],"type":true}}}}
 
 /**
  * @bar foo
