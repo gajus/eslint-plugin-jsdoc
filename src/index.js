@@ -83,7 +83,7 @@ export default {
         'jsdoc/require-returns-description': 'warn',
         'jsdoc/require-returns-type': 'warn',
         'jsdoc/require-yields': 'warn',
-        'jsdoc/require-yields-Check': 'warn',
+        'jsdoc/require-yields-check': 'warn',
         'jsdoc/valid-types': 'warn',
       },
     },
