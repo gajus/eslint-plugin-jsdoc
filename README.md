@@ -10565,6 +10565,13 @@ export class User {
 }
 // Options: [{"contexts":["ClassProperty:has(Decorator[expression.callee.name=\"Input\"])"]}]
 // Message: Missing JSDoc comment.
+
+@Input()
+export class UserSettingsState {
+  method () {}
+}
+// Options: [{"require":{"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

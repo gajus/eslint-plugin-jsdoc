@@ -2763,6 +2763,35 @@ function quux (foo) {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      @Input()
+      export class UserSettingsState {
+        method () {}
+      }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [{
+        require: {
+          MethodDefinition: true,
+        },
+      }],
+      output: `
+      /**
+       *
+       */
+      @Input()
+      export class UserSettingsState {
+        method () {}
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [{
     code: `
