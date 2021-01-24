@@ -2065,6 +2065,46 @@ const fn = ( lorem, sit ) => {}
  */
 const fn = ( lorem, sit ) => {}
 // Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Creates OS based shortcuts for files, folders, and applications.
+ *
+ * @param  {object}  options  Options object for each OS.
+ * @return {boolean}          True = success, false = failed to create the icon
+ */
+ function quux () {}
+// Options: ["never"]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Creates OS based shortcuts for files, folders, and applications.
+ *
+ * @param {object} options Options object for each OS.
+ * @return {boolean}          True = success, false = failed to create the icon
+ */
+ function quux () {}
+// Options: ["never"]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Creates OS based shortcuts for files, folders, and applications.
+ *
+ * @param {object} options Options object for each OS.
+ * @return  True = success, false = failed to create the icon
+ */
+ function quux () {}
+// Options: ["never"]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Creates OS based shortcuts for files, folders, and applications.
+ *
+ * @param  options Options object for each OS.
+ * @return True = success, false = failed to create the icon
+ */
+ function quux () {}
+// Options: ["never"]
+// Message: Expected JSDoc block lines to not be aligned.
 ````
 
 The following patterns are not considered problems:
@@ -2196,6 +2236,14 @@ const fn = ( lorem ) => {}
  * @param {int} sit Description multi words.
  */
 const fn = ( lorem, sit ) => {}
+
+/**
+ * Creates OS based shortcuts for files, folders, and applications.
+ *
+ * @param {object} options Options object for each OS.
+ * @return {boolean} True = success, false = failed to create the icon
+ */
+function quux (options) {}
 ````
 
 

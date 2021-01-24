@@ -516,6 +516,123 @@ export default {
         const fn = ( lorem, sit ) => {}
       `,
     },
+    {
+      code: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param  {object}  options  Options object for each OS.
+       * @return {boolean}          True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+        {
+          line: 6,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['never'],
+      output: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param {object} options Options object for each OS.
+       * @return {boolean}          True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param {object} options Options object for each OS.
+       * @return {boolean}          True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['never'],
+      output: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param {object} options Options object for each OS.
+       * @return {boolean} True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param {object} options Options object for each OS.
+       * @return  True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['never'],
+      output: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param {object} options Options object for each OS.
+       * @return True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param  options Options object for each OS.
+       * @return True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['never'],
+      output: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param options Options object for each OS.
+       * @return True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+    },
   ],
   valid: [
     {
@@ -716,6 +833,17 @@ export default {
          * @param {int} sit Description multi words.
          */
         const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param {object} options Options object for each OS.
+       * @return {boolean} True = success, false = failed to create the icon
+       */
+      function quux (options) {}
       `,
     },
   ],

@@ -3,6 +3,8 @@ import {
 } from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
+const applicableTags = ['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return'];
+
 /**
  * Aux method until we consider the dev envs support `String.prototype.matchAll` (Node 12+).
  *
@@ -171,32 +173,87 @@ const checkAlignedPerTag = (comment, tag, tagIndentation, report) => {
   }
 };
 
-const spacers = [
-  ['postDelimiter', ['tag']],
-  ['postTag', ['type', 'name', 'description']],
-  ['postType', ['name', 'description']],
-  ['postName', ['description']],
-];
-
 const checkNotAlignedPerTag = (utils, tag) => {
-  // If checking alignment on multiple lines, need to check other `source` items
-  const ok = spacers.every(([prop, checkProps]) => {
-    const hasCheckProp = checkProps.some((checkProp) => {
-      return tag.source[0].tokens[checkProp];
-    });
+  /*
+  start +
+  delimiter +
+  postDelimiter +
+  tag +
+  postTag +
+  type +
+  postType +
+  name +
+  postName +
+  description +
+  end
+   */
+  let spacerProps;
+  let contentProps;
+  const isReturnTag = ['return', 'returns'].includes(tag.tag);
+  if (isReturnTag) {
+    spacerProps = ['postDelimiter', 'postTag', 'postType'];
+    contentProps = ['tag', 'type', 'description'];
+  } else {
+    spacerProps = ['postDelimiter', 'postTag', 'postType', 'postName'];
+    contentProps = ['tag', 'type', 'name', 'description'];
+  }
 
-    return !hasCheckProp || (/^[\t ]$/).test(tag.source[0].tokens[prop]);
+  const {tokens} = tag.source[0];
+
+  const followedBySpace = (idx, callbck) => {
+    const nextIndex = idx + 1;
+
+    return spacerProps.slice(nextIndex).some((spacerProp, innerIdx) => {
+      const contentProp = contentProps[nextIndex + innerIdx];
+
+      const spacePropVal = tokens[spacerProp];
+
+      const ret = spacePropVal;
+
+      if (callbck) {
+        callbck(!ret, contentProp);
+      }
+
+      return ret;
+    });
+  };
+
+  // If checking alignment on multiple lines, need to check other `source`
+  //   items
+  // Go through `post*` spacing properties and exit to indicate problem if
+  //   extra spacing detected
+  const ok = !spacerProps.some((spacerProp, idx) => {
+    const contentProp = contentProps[idx];
+    const contentPropVal = tokens[contentProp];
+    const spacerPropVal = tokens[spacerProp];
+
+    // There will be extra alignment if...
+
+    // 1. There is extra whitespace within a single spacer segment OR
+    return spacerPropVal.length > 1 ||
+
+      // 2. There is a (single) space, no immediate content, and yet another
+      //     space is found subsequently (not separated by intervening content)
+      spacerPropVal && !contentPropVal && followedBySpace(idx);
   });
   if (ok) {
     return;
   }
   const fix = () => {
-    const tokens = tag.source[0].tokens;
-    spacers.forEach(([prop, checkProps]) => {
-      const hasCheckProp = checkProps.some((checkProp) => {
-        return tag.source[0].tokens[checkProp];
-      });
-      tokens[prop] = hasCheckProp ? ' ' : '';
+    spacerProps.forEach((spacerProp, idx) => {
+      const contentProp = contentProps[idx];
+      const contentPropVal = tokens[contentProp];
+
+      if (contentPropVal) {
+        tokens[spacerProp] = ' ';
+        followedBySpace(idx, (hasSpace, contentPrp) => {
+          if (hasSpace) {
+            tokens[contentPrp] = '';
+          }
+        });
+      } else {
+        tokens[spacerProp] = '';
+      }
     });
 
     utils.setTag(tag, tokens);
@@ -220,16 +277,16 @@ export default iterateJsdoc(({
     // `indent` is whitespace from line 1 (`/**`), so slice and account for "/".
     const tagIndentation = indent + ' ';
 
-    ['param', 'arg', 'argument', 'property', 'prop'].forEach((tag) => {
+    applicableTags.forEach((tag) => {
       checkAlignedPerTag(jsdocNode, tag, tagIndentation, report);
     });
 
     return;
   }
 
-  const paramTags = utils.getPresentTags(['param', 'arg', 'argument', 'property', 'prop']);
-  paramTags.forEach((tag) => {
-    checkNotAlignedPerTag(utils, tag, report);
+  const foundTags = utils.getPresentTags(applicableTags);
+  foundTags.forEach((tag) => {
+    checkNotAlignedPerTag(utils, tag);
   });
 }, {
   iterateAllJsdocs: true,
