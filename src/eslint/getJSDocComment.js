@@ -16,19 +16,16 @@ const isCommentToken = (token) => {
 
 const decoratorMetaTokens = new Map([[')', '('], ['>', '<']]);
 
-// eslint-disable-next-line complexity
 const getDecorator = (token, sourceCode) => {
   if (!token) {
     return false;
   }
-
   if (token.type === 'Punctuator') {
     const tokenClose = token.value;
     const tokenOpen = decoratorMetaTokens.get(tokenClose);
     if (tokenOpen) {
       let nested = 0;
       let tokenBefore = token;
-      let exitEarlyUnlessTyped = false;
       do {
         tokenBefore = sourceCode.getTokenBefore(tokenBefore, {includeComments: true});
         // istanbul ignore if
@@ -36,9 +33,6 @@ const getDecorator = (token, sourceCode) => {
           if (tokenBefore.value === tokenClose) {
             nested++;
           } else if (tokenBefore.value === tokenOpen) {
-            if (tokenOpen === '(') {
-              exitEarlyUnlessTyped = true;
-            }
             if (nested) {
               nested--;
             } else {
@@ -48,33 +42,7 @@ const getDecorator = (token, sourceCode) => {
         }
       } while (tokenBefore);
 
-      // Because our token retrieval doesn't give us as much info as AST, and
-      //  because decorators can be nested and fairly complex, besides finding
-      //  any decorators, we also want to avoid checking backwards indefinitely
-      //  in a potentially large document, so we exit early if parentheses are
-      //  not preceded by a type where we have to keep checking backward for
-      //  now (such as a regular call expression) or if a decorator is found.
-      if (exitEarlyUnlessTyped) {
-        // Check for `@someDecorator(`
-        const identifier = sourceCode.getTokenBefore(tokenBefore, {includeComments: true});
-        if (identifier && identifier.type === 'Identifier') {
-          const before = sourceCode.getTokenBefore(identifier, {includeComments: true});
-          if (before && before.type === 'Punctuator' && before.value === '@') {
-            // Decorator found
-            return before;
-          }
-        }
-
-        // If decorators may have `:`, we might need to check for those as with typed.
-        if (!identifier || identifier.type !== 'Punctuator' || identifier.value !== '>') {
-          // Should not be a decorator
-          return false;
-        }
-
-        // Could be a typed decorator, so keep checking for one
-      }
-
-      return getDecorator(tokenBefore, sourceCode, true);
+      return getDecorator(tokenBefore, sourceCode);
     }
     if (token.value === '@') {
       return token;
