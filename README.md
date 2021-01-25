@@ -1879,8 +1879,8 @@ line's parts. Defaults to `"never"`.
 |---|---|
 |Context|everywhere|
 |Options|(a string matching `"always"|"never"`)|
-|Tags|`param`, `property`|
-|Aliases|`arg`, `argument`, `prop`|
+|Tags|`param`, `property`, `returns`|
+|Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|
 
 The following patterns are considered problems:
