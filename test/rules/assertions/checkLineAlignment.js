@@ -633,6 +633,38 @@ export default {
        function quux () {}
       `,
     },
+    {
+      code: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param {object} options Options object for each OS.
+       * @param {object} other Other.
+       * @return  True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['never', {
+        tags: ['param', 'return'],
+      }],
+      output: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param {object} options Options object for each OS.
+       * @param {object} other Other.
+       * @return True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+    },
   ],
   valid: [
     {
@@ -845,6 +877,21 @@ export default {
        */
       function quux (options) {}
       `,
+    },
+    {
+      code: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param {object} options Options object for each OS.
+       * @param {object} other Other.
+       * @return  True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+      options: ['never', {
+        tags: ['param'],
+      }],
     },
   ],
 };
