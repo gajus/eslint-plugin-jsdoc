@@ -1,5 +1,5 @@
 import {
-  set,
+  set, escapeRegExp,
 } from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
@@ -112,7 +112,7 @@ const createFixer = (comment, expectedPositions, partsMatrix, lineRegExp, tagInd
  * @param {Function} report         Report function.
  */
 const checkAlignedPerTag = (comment, tag, tagIndentation, report) => {
-  const lineRegExp = new RegExp(`.*@${tag}[\\s].*`, 'gm');
+  const lineRegExp = new RegExp(`.*@${escapeRegExp(tag)}[\\s].*`, 'gm');
   const lines = comment.value.match(lineRegExp);
 
   if (!lines) {
