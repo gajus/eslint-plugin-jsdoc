@@ -665,6 +665,48 @@ export default {
        function quux () {}
       `,
     },
+    {
+      code: `
+      /**
+       * Returns the value stored in the process.env for a given
+       * environment variable.
+       *
+       * @param  {string} withPercents    '%USERNAME%'
+       * @param  {string} withoutPercents 'USERNAME'
+       * @return {string}                 'bob' || '%USERNAME%'
+       */
+      function quux () {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+        {
+          line: 7,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+        {
+          line: 8,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['never'],
+      output: `
+      /**
+       * Returns the value stored in the process.env for a given
+       * environment variable.
+       *
+       * @param {string} withPercents '%USERNAME%'
+       * @param  {string} withoutPercents 'USERNAME'
+       * @return {string}                 'bob' || '%USERNAME%'
+       */
+      function quux () {}
+      `,
+    },
   ],
   valid: [
     {
