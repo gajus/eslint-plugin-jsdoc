@@ -11,11 +11,19 @@ problem is raised when the lines are not aligned. If it is `"never"` then
 a problem should be raised when there is more than one space between each
 line's parts. Defaults to `"never"`.
 
+After the string, an options object is allowed with the following properties.
+
+##### `tags`
+
+Use this to change the tags which are sought for alignment. Defaults to an
+array of
+`['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return']`.
+
 |||
 |---|---|
 |Context|everywhere|
-|Options|(a string matching `"always"|"never"`)|
-|Tags|`param`, `property`, `returns`|
+|Options|(a string matching `"always"|"never"` and optional object with `tags`)|
+|Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|
 

@@ -1875,11 +1875,20 @@ problem is raised when the lines are not aligned. If it is `"never"` then
 a problem should be raised when there is more than one space between each
 line's parts. Defaults to `"never"`.
 
+After the string, an options object is allowed with the following properties.
+
+<a name="eslint-plugin-jsdoc-rules-check-line-alignment-options-3-tags"></a>
+##### <code>tags</code>
+
+Use this to change the tags which are sought for alignment. Defaults to an
+array of
+`['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return']`.
+
 |||
 |---|---|
 |Context|everywhere|
-|Options|(a string matching `"always"|"never"`)|
-|Tags|`param`, `property`, `returns`|
+|Options|(a string matching `"always"|"never"` and optional object with `tags`)|
+|Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|
 
@@ -2105,6 +2114,17 @@ const fn = ( lorem, sit ) => {}
  function quux () {}
 // Options: ["never"]
 // Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Creates OS based shortcuts for files, folders, and applications.
+ *
+ * @param {object} options Options object for each OS.
+ * @param {object} other Other.
+ * @return  True = success, false = failed to create the icon
+ */
+ function quux () {}
+// Options: ["never",{"tags":["param","return"]}]
+// Message: Expected JSDoc block lines to not be aligned.
 ````
 
 The following patterns are not considered problems:
@@ -2244,6 +2264,16 @@ const fn = ( lorem, sit ) => {}
  * @return {boolean} True = success, false = failed to create the icon
  */
 function quux (options) {}
+
+/**
+ * Creates OS based shortcuts for files, folders, and applications.
+ *
+ * @param {object} options Options object for each OS.
+ * @param {object} other Other.
+ * @return  True = success, false = failed to create the icon
+ */
+ function quux () {}
+// Options: ["never",{"tags":["param"]}]
 ````
 
 
@@ -5525,7 +5555,7 @@ Similarly, `@internal` will still be checked for content by this rule even with
 <a name="eslint-plugin-jsdoc-rules-empty-tags-options-9"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-empty-tags-options-9-tags"></a>
+<a name="eslint-plugin-jsdoc-rules-empty-tags-options-9-tags-1"></a>
 ##### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
@@ -5905,7 +5935,7 @@ You can supply your own expression to override the default, passing a
 As with the default, the supplied regular expression will be applied with the
 Unicode (`"u"`) flag and is *not* case-insensitive.
 
-<a name="eslint-plugin-jsdoc-rules-match-description-options-11-tags-1"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-11-tags-2"></a>
 ##### <code>tags</code>
 
 If you want different regular expressions to apply to tags, you may use
@@ -7891,7 +7921,7 @@ Requires that block description, explicit `@description`, and
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-17"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-17-tags-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-17-tags-3"></a>
 ##### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
@@ -9375,7 +9405,7 @@ Checks that:
 <a name="eslint-plugin-jsdoc-rules-require-file-overview-options-20"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-20-tags-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-20-tags-4"></a>
 ##### <code>tags</code>
 
 The keys of this object are tag names, and the values are configuration

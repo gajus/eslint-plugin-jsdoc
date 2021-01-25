@@ -3,8 +3,6 @@ import {
 } from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
-const applicableTags = ['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return'];
-
 /**
  * Aux method until we consider the dev envs support `String.prototype.matchAll` (Node 12+).
  *
@@ -189,13 +187,13 @@ const checkNotAlignedPerTag = (utils, tag) => {
    */
   let spacerProps;
   let contentProps;
-  const isReturnTag = ['return', 'returns'].includes(tag.tag);
-  if (isReturnTag) {
-    spacerProps = ['postDelimiter', 'postTag', 'postType'];
-    contentProps = ['tag', 'type', 'description'];
-  } else {
+  const mightHaveNamepath = utils.tagMightHaveNamepath(tag.tag);
+  if (mightHaveNamepath) {
     spacerProps = ['postDelimiter', 'postTag', 'postType', 'postName'];
     contentProps = ['tag', 'type', 'name', 'description'];
+  } else {
+    spacerProps = ['postDelimiter', 'postTag', 'postType'];
+    contentProps = ['tag', 'type', 'description'];
   }
 
   const {tokens} = tag.source[0];
@@ -268,6 +266,10 @@ export default iterateJsdoc(({
   indent,
   utils,
 }) => {
+  const {
+    tags: applicableTags = ['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return'],
+  } = context.options[1] || {};
+
   if (context.options[0] === 'always') {
     // Skip if it contains only a single line.
     if (!jsdocNode.value.includes('\n')) {
@@ -300,6 +302,18 @@ export default iterateJsdoc(({
       {
         enum: ['always', 'never'],
         type: 'string',
+      },
+      {
+        additionalProperties: false,
+        properties: {
+          tags: {
+            items: {
+              type: 'string',
+            },
+            type: 'array',
+          },
+        },
+        type: 'object',
       },
     ],
     type: 'layout',
