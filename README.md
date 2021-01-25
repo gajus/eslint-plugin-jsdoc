@@ -2125,6 +2125,18 @@ const fn = ( lorem, sit ) => {}
  function quux () {}
 // Options: ["never",{"tags":["param","return"]}]
 // Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Returns the value stored in the process.env for a given
+ * environment variable.
+ *
+ * @param  {string} withPercents    '%USERNAME%'
+ * @param  {string} withoutPercents 'USERNAME'
+ * @return {string}                 'bob' || '%USERNAME%'
+ */
+function quux () {}
+// Options: ["never"]
+// Message: Expected JSDoc block lines to not be aligned.
 ````
 
 The following patterns are not considered problems:
