@@ -14435,10 +14435,11 @@ Will also report if multiple `@returns` tags are present.
 - `forceReturnsWithAsync` - By default `async` functions that do not explicitly
     return a value pass this rule as an `async` function will always return a
     `Promise`, even if the `Promise` resolves to void. You can force all
-    `async` functions to require `@return` documentation by setting
-    `forceReturnsWithAsync` to `true` on the options object. This may be useful
-    for flagging that there has been consideration of return type. Defaults
-    to `false`.
+    `async` functions (including ones with an explicit `Promise` but no
+    detected non-`undefined` `resolve` value) to require `@return`
+    documentation by setting `forceReturnsWithAsync` to `true` on the options
+    object. This may be useful for flagging that there has been consideration
+    of return type. Defaults to `false`.
 - `contexts` - Set this to an array of strings representing the AST context
     where you wish the rule to be applied.
     Overrides the default contexts (see below). Set to `"any"` if you want
@@ -14685,6 +14686,277 @@ class quux {
 async function foo(a) {
   return Promise.all(a);
 }
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+
+  return new Promise(function (resolve, reject) {
+    resolve(foo);
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+
+  return new Promise(function (resolve, reject) {
+    setTimeout(() => {
+      resolve(true);
+    });
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+
+  return new Promise(function (resolve, reject) {
+    foo(resolve);
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    while(true) {
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    do {
+      resolve(true);
+    }
+    while(true)
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    if (true) {
+      resolve(true);
+    }
+    return;
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    if (true) {
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  var a = {};
+  return new Promise((resolve, reject) => {
+    with (a) {
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  var a = {};
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(true);
+    } catch (err) {}
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  var a = {};
+  return new Promise((resolve, reject) => {
+    try {
+    } catch (err) {
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  var a = {};
+  return new Promise((resolve, reject) => {
+    try {
+    } catch (err) {
+    } finally {
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  var a = {};
+  return new Promise((resolve, reject) => {
+    switch (a) {
+    case 'abc':
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    if (true) {
+      resolve();
+    } else {
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    for (let i = 0; i < 5 ; i++) {
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    for (const i of obj) {
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    for (const i in obj) {
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    if (true) {
+      return;
+    } else {
+      resolve(true);
+    }
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    function a () {
+      resolve(true);
+    }
+    a();
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    return () => {
+      identifierForCoverage;
+      resolve(true);
+    };
+  });
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux () {
+  return new Promise();
+}
+// Options: [{"forceReturnsWithAsync":true}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+async function quux () {
+  return new Promise();
+}
+// Options: [{"forceReturnsWithAsync":true}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+async function quux () {
+  return new Promise((resolve, reject) => {});
+}
+// Options: [{"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 ````
 
@@ -15087,6 +15359,88 @@ class TestClass {
   }
 }
 // Options: [{"checkGetters":false}]
+
+/**
+ *
+ */
+function quux (foo) {
+
+  return new Promise(function (resolve, reject) {
+    resolve();
+  });
+}
+
+/**
+ *
+ */
+function quux (foo) {
+
+  return new Promise(function (resolve, reject) {
+    setTimeout(() => {
+      resolve();
+    });
+  });
+}
+
+/**
+ *
+ */
+function quux (foo) {
+
+  return new Promise(function (resolve, reject) {
+    foo();
+  });
+}
+
+/**
+ *
+ */
+function quux (foo) {
+
+  return new Promise(function (resolve, reject) {
+    abc((resolve) => {
+      resolve(true);
+    });
+  });
+}
+
+/**
+ *
+ */
+function quux (foo) {
+
+  return new Promise(function (resolve, reject) {
+    abc(function (resolve) {
+      resolve(true);
+    });
+  });
+}
+
+/**
+ *
+ */
+function quux () {
+  return new Promise((resolve, reject) => {
+    if (true) {
+      resolve();
+    }
+  });
+  return;
+}
+
+/**
+ *
+ */
+function quux () {
+  return new Promise();
+}
+
+/**
+ * Description.
+ */
+async function foo() {
+  return new Promise(resolve => resolve());
+}
 ````
 
 
