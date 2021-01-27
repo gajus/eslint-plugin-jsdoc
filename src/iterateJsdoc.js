@@ -461,6 +461,10 @@ const getUtils = (
     return jsdocUtils.hasReturnValue(node);
   };
 
+  utils.hasValueOrExecutorHasNonEmptyResolveValue = (anyPromiseAsReturn) => {
+    return jsdocUtils.hasValueOrExecutorHasNonEmptyResolveValue(node, anyPromiseAsReturn);
+  };
+
   utils.hasYieldValue = () => {
     return jsdocUtils.hasYieldValue(node);
   };

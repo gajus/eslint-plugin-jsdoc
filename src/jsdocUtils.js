@@ -491,13 +491,25 @@ const tagMissingRequiredTypeOrNamepath = (tag, tagMap = tagStructure) => {
 };
 
 /**
- * Checks if a node has a return statement. Void return does not count.
+ * Checks if a node is a promise but has no resolve value or an empty value.
+ * An `undefined` resolve does not count.
  *
  * @param {object} node
  * @returns {boolean}
  */
+const isNewPromiseExpression = (node) => {
+  return node.type === 'NewExpression' && node.callee.type === 'Identifier' &&
+    node.callee.name === 'Promise';
+};
+
+/**
+ * Checks if a node has a return statement. Void return does not count.
+ *
+ * @param {object} node
+ * @returns {boolean|Node}
+ */
 // eslint-disable-next-line complexity
-const hasReturnValue = (node) => {
+const hasReturnValue = (node, promFilter) => {
   if (!node) {
     return false;
   }
@@ -505,11 +517,11 @@ const hasReturnValue = (node) => {
   case 'FunctionExpression':
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
-    return node.expression || hasReturnValue(node.body);
+    return node.expression || hasReturnValue(node.body, promFilter);
   }
   case 'BlockStatement': {
     return node.body.some((bodyNode) => {
-      return bodyNode.type !== 'FunctionDeclaration' && hasReturnValue(bodyNode);
+      return bodyNode.type !== 'FunctionDeclaration' && hasReturnValue(bodyNode, promFilter);
     });
   }
   case 'WhileStatement':
@@ -518,21 +530,21 @@ const hasReturnValue = (node) => {
   case 'ForInStatement':
   case 'ForOfStatement':
   case 'WithStatement': {
-    return hasReturnValue(node.body);
+    return hasReturnValue(node.body, promFilter);
   }
   case 'IfStatement': {
-    return hasReturnValue(node.consequent) || hasReturnValue(node.alternate);
+    return hasReturnValue(node.consequent, promFilter) || hasReturnValue(node.alternate, promFilter);
   }
   case 'TryStatement': {
-    return hasReturnValue(node.block) ||
-      hasReturnValue(node.handler && node.handler.body) ||
-      hasReturnValue(node.finalizer);
+    return hasReturnValue(node.block, promFilter) ||
+      hasReturnValue(node.handler && node.handler.body, promFilter) ||
+      hasReturnValue(node.finalizer, promFilter);
   }
   case 'SwitchStatement': {
     return node.cases.some(
       (someCase) => {
         return someCase.consequent.some((nde) => {
-          return hasReturnValue(nde);
+          return hasReturnValue(nde, promFilter);
         });
       },
     );
@@ -543,12 +555,160 @@ const hasReturnValue = (node) => {
       return false;
     }
 
+    if (promFilter && isNewPromiseExpression(node.argument)) {
+      // Let caller decide how to filter, but this is, at the least,
+      //   a return of sorts and truthy
+      return promFilter(node.argument);
+    }
+
     return true;
   }
   default: {
     return false;
   }
   }
+};
+
+/**
+ * Avoids further checking child nodes if a nested function shadows the
+ * resolver, but otherwise, if name is used (by call or passed in as an
+ * argument to another function), will be considered as non-empty.
+ *
+ * This could check for redeclaration of the resolver, but as such is
+ * unlikely, we avoid the performance cost of checking everywhere for
+ * (re)declarations or assignments.
+ *
+ * @param {AST} node
+ * @param {string} resolverName
+ * @returns {boolean}
+ */
+// eslint-disable-next-line complexity
+const hasNonEmptyResolverCall = (node, resolverName) => {
+  if (!node) {
+    return false;
+  }
+
+  // Arrow function without block
+  switch (node.type) {
+  case 'CallExpression':
+    return node.callee.name === resolverName && (
+
+      // Implicit or expliit undefined
+      node.arguments.length > 1 || node.arguments[0] !== undefined
+    ) ||
+      node.arguments.some((nde) => {
+        // Being passed in to another function (which might invoke it)
+        return nde.type === 'Identifier' && nde.name === resolverName ||
+
+          // Handle nested items
+          hasNonEmptyResolverCall(nde, resolverName);
+      });
+  case 'ExpressionStatement':
+    return hasNonEmptyResolverCall(node.expression, resolverName);
+  case 'BlockStatement':
+    return node.body.some((bodyNode) => {
+      return hasNonEmptyResolverCall(bodyNode, resolverName);
+    });
+  case 'FunctionExpression':
+  case 'FunctionDeclaration':
+  case 'ArrowFunctionExpression': {
+    // Shadowing
+    if (node.params[0]?.name === resolverName) {
+      return false;
+    }
+
+    return hasNonEmptyResolverCall(node.body, resolverName);
+  }
+  case 'WhileStatement':
+  case 'DoWhileStatement':
+  case 'ForStatement':
+  case 'ForInStatement':
+  case 'ForOfStatement':
+  case 'WithStatement': {
+    return hasNonEmptyResolverCall(node.body, resolverName);
+  }
+  case 'IfStatement': {
+    return hasNonEmptyResolverCall(node.consequent, resolverName) ||
+      hasNonEmptyResolverCall(node.alternate, resolverName);
+  }
+  case 'TryStatement': {
+    return hasNonEmptyResolverCall(node.block, resolverName) ||
+      hasNonEmptyResolverCall(node.handler && node.handler.body, resolverName) ||
+      hasNonEmptyResolverCall(node.finalizer, resolverName);
+  }
+  case 'SwitchStatement': {
+    return node.cases.some(
+      (someCase) => {
+        return someCase.consequent.some((nde) => {
+          return hasNonEmptyResolverCall(nde, resolverName);
+        });
+      },
+    );
+  }
+
+  /*
+  // Comma
+  case 'SequenceExpression':
+  case 'ArrayExpression': case 'AssignmentExpression': case 'AssignmentPattern':
+  case 'AwaitExpression': case 'BinaryExpression': case 'ConditionalExpression':
+  case 'LogicalExpression': case 'MemberExpression': case 'OptionalMemberExpression':
+  case 'VariableDeclaration':
+  case 'OptionalCallExpression':
+  case 'TaggedTemplateExpression':
+  case 'TemplateElement': case 'TemplateLiteral': case 'UnaryExpression':
+  case 'SpreadElement':
+  case 'ArrayPattern': case 'ObjectPattern':
+  case 'ObjectExpression':
+  case 'Property':
+  case 'ClassProperty':
+  case 'ClassDeclaration': case 'ClassExpression': case 'MethodDefinition':
+  case 'Super':
+  case 'ExportDefaultDeclaration': case 'ExportNamedDeclaration':
+  case 'LabeledStatement':
+  case 'Import':
+  case 'ImportExpression':
+  case 'Decorator':
+  case 'YieldExpression':
+
+    // Todo: Add these (and also add to Yield/Throw checks)
+    return false;
+  */
+  case 'ReturnStatement': {
+    if (node.argument === null) {
+      return false;
+    }
+
+    return hasNonEmptyResolverCall(node.argument, resolverName);
+  }
+  default:
+    return false;
+  }
+};
+
+/**
+ * Checks if a Promise executor has no resolve value or an empty value.
+ * An `undefined` resolve does not count.
+ *
+ * @param {object} node
+ * @param {boolean} anyPromiseAsReturn
+ * @returns {boolean}
+ */
+const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn) => {
+  return hasReturnValue(node, (prom) => {
+    if (anyPromiseAsReturn) {
+      return true;
+    }
+
+    const [{params, body} = {}] = prom.arguments;
+
+    if (!params?.length) {
+      return false;
+    }
+
+    const [{name: resolverName}] = params;
+
+    return hasNonEmptyResolverCall(body, resolverName);
+  });
 };
 
 /**
@@ -864,6 +1024,7 @@ export default {
   hasReturnValue,
   hasTag,
   hasThrowValue,
+  hasValueOrExecutorHasNonEmptyResolveValue,
   hasYieldValue,
   isConstructor,
   isGetter,
