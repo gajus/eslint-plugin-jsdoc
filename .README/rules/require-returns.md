@@ -22,7 +22,7 @@ Will also report if multiple `@returns` tags are present.
 - `forceReturnsWithAsync` - By default `async` functions that do not explicitly
     return a value pass this rule as an `async` function will always return a
     `Promise`, even if the `Promise` resolves to void. You can force all
-    `async` functions to require return statements by setting
+    `async` functions to require `@return` documentation by setting
     `forceReturnsWithAsync` to `true` on the options object. This may be useful
     for flagging that there has been consideration of return type. Defaults
     to `false`.
