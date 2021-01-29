@@ -36,6 +36,7 @@ export default iterateJsdoc(({
 }) => {
   const {
     exemptAsync = true,
+    reportMissingReturnForUndefinedTypes = false,
   } = context.options[0] || {};
 
   if (canSkip(utils, settings)) {
@@ -63,7 +64,7 @@ export default iterateJsdoc(({
   }
 
   // In case a return value is declared in JSDoc, we also expect one in the code.
-  if (utils.hasDefinedTypeTag(tags[0]) && !utils.hasValueOrExecutorHasNonEmptyResolveValue(exemptAsync)) {
+  if ((reportMissingReturnForUndefinedTypes || utils.hasDefinedTypeTag(tags[0])) && !utils.hasValueOrExecutorHasNonEmptyResolveValue(exemptAsync)) {
     report(`JSDoc @${tagName} declaration present but return expression not available in function.`);
   }
 }, {
@@ -78,6 +79,10 @@ export default iterateJsdoc(({
         properties: {
           exemptAsync: {
             default: true,
+            type: 'boolean',
+          },
+          reportMissingReturnForUndefinedTypes: {
+            default: false,
             type: 'boolean',
           },
         },
