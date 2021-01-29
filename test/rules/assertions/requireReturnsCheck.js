@@ -151,6 +151,68 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @returns {Promise<void>}
+           */
+          async function quux() {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      options: [{
+        exemptAsync: false,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+          /**
+           * @returns {Promise<void>}
+           */
+          function quux() {
+            return new Promise((resolve, reject) => {})
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      options: [{
+        exemptAsync: false,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @returns {Promise<void>}
+           */
+          function quux() {
+            return new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve();
+              });
+            })
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      options: [{
+        exemptAsync: false,
+      }],
+    },
   ],
   valid: [
     {
@@ -574,6 +636,39 @@ export default {
             return;
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * @returns {Promise<void>}
+           */
+          async function quux() {
+            return 5;
+          }
+      `,
+      options: [{
+        exemptAsync: false,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+          /**
+           * @returns {Promise<void>}
+           */
+          function quux() {
+            return new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve(true);
+              });
+            })
+          }
+      `,
+      options: [{
+        exemptAsync: false,
+      }],
     },
   ],
 };
