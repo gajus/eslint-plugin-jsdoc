@@ -8380,12 +8380,16 @@ Requires that each JSDoc line starts with an `*`.
 <a name="eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-19"></a>
 #### Options
 
-This rule allows one optional string argument. If it is `"always"` then a problem is raised when there is no asterisk prefix on a given jsdoc line. If it is `"never"` then a problem is raised when there is an asterisk present. The default value is `"always"`.
+This rule allows one optional string argument. If it is `"always"` then a
+problem is raised when there is no asterisk prefix on a given jsdoc line. If
+it is `"never"` then a problem is raised when there is an asterisk present.
+The default value is `"always"`.
 
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/a|
+|Tags|N/A (doc block)|
+|Options|(a string matching `"always"|"never"`)|
 
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
 ### <code>require-description-complete-sentence</code>

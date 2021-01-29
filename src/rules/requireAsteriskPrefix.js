@@ -21,7 +21,7 @@ export default iterateJsdoc(({
   };
 
   sourceCode.getText(jsdocNode).split('\n').some((line, index) => {
-    const lineNum = parseInt(index, 10);
+    const lineNum = Number.parseInt(index, 10);
     if (lineNum && !validPrefix.test(line)) {
       report('Expected JSDoc block to have the prefix.', fix, {
         line: lineNum,
