@@ -27,7 +27,7 @@ export default iterateJsdoc(({
           tokens.postDelimiter = '';
         };
 
-        utils.reportJSDoc('Expected JSDoc block to have no prefix.', {
+        utils.reportJSDoc('Expected JSDoc line to have no prefix.', {
           column: 0,
           line: number,
         }, fix);
@@ -53,7 +53,7 @@ export default iterateJsdoc(({
         tokens.postDelimiter = ' ';
       };
 
-      utils.reportJSDoc('Expected JSDoc block to have the prefix.', {
+      utils.reportJSDoc('Expected JSDoc line to have the prefix.', {
         column: 0,
         line: number,
       }, fix);

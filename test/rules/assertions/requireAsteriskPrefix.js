@@ -13,7 +13,7 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'Expected JSDoc block to have the prefix.',
+          message: 'Expected JSDoc line to have the prefix.',
         },
       ],
       output: `
@@ -37,7 +37,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Expected JSDoc block to have the prefix.',
+          message: 'Expected JSDoc line to have the prefix.',
         },
       ],
       output: `
@@ -61,7 +61,7 @@ export default {
       errors: [
         {
           line: 4,
-          message: 'Expected JSDoc block to have no prefix.',
+          message: 'Expected JSDoc line to have no prefix.',
         },
       ],
       options: ['never'],
@@ -86,7 +86,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Expected JSDoc block to have no prefix.',
+          message: 'Expected JSDoc line to have no prefix.',
         },
       ],
       options: ['never'],
