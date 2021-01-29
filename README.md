@@ -8380,16 +8380,38 @@ Requires that each JSDoc line starts with an `*`.
 <a name="eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-19"></a>
 #### Options
 
-This rule allows one optional string argument. If it is `"always"` then a
+This rule allows an optional string argument. If it is `"always"` then a
 problem is raised when there is no asterisk prefix on a given jsdoc line. If
 it is `"never"` then a problem is raised when there is an asterisk present.
-The default value is `"always"`.
+The default value is `"always"`. You may also set the default to `"any"`
+and use the `tags` option to apply to specific tags only.
+
+After the string option, one may add an object with the following.
+
+<a name="eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-19-tags-3"></a>
+##### <code>tags</code>
+
+If you want different values to apply to specific tags, you may use
+the `tags` option object. The keys are `always`, `never`, or `any` and
+the values are arrays of tag names or the special value `*description`
+which applies to the main jsdoc block description.
+
+```js
+{
+  'jsdoc/require-asterisk-prefix': ['error', 'always', {
+    tags: {
+      any: ['example', 'license'],
+      never: ['copyright']
+    }
+  }]
+}
+```
 
 |||
 |---|---|
 |Context|everywhere|
 |Tags|N/A (doc block)|
-|Options|(a string matching `"always"|"never"`)|
+|Options|(a string matching `"always"|"never"` and optional object with `tags`)|
 
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
 ### <code>require-description-complete-sentence</code>
@@ -8411,7 +8433,7 @@ Requires that block description, explicit `@description`, and
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-20"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-20-tags-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-20-tags-4"></a>
 ##### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
@@ -9966,7 +9988,7 @@ Checks that:
 <a name="eslint-plugin-jsdoc-rules-require-file-overview-options-23"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-23-tags-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-23-tags-5"></a>
 ##### <code>tags</code>
 
 The keys of this object are tag names, and the values are configuration
