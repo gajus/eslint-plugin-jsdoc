@@ -213,6 +213,29 @@ export default {
         exemptAsync: false,
       }],
     },
+    {
+      code: `
+        /**
+         * Description.
+         * @returns {string}
+         */
+        async function foo() {
+          return new Promise(resolve => resolve());
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      options: [{
+        exemptAsync: false,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
   ],
   valid: [
     {
@@ -640,7 +663,20 @@ export default {
     {
       code: `
           /**
-           * @returns {Promise<void>}
+           * @returns {Promise<number>}
+           */
+          async function quux() {
+            return 5;
+          }
+      `,
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+          /**
+           * @returns {Promise<number>}
            */
           async function quux() {
             return 5;

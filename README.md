@@ -13866,6 +13866,16 @@ function quux() {
 }
 // Options: [{"exemptAsync":false}]
 // Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * Description.
+ * @returns {string}
+ */
+async function foo() {
+  return new Promise(resolve => resolve());
+}
+// Options: [{"exemptAsync":false}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 The following patterns are not considered problems:
@@ -14173,7 +14183,14 @@ function quux () {
 }
 
 /**
- * @returns {Promise<void>}
+ * @returns {Promise<number>}
+ */
+async function quux() {
+  return 5;
+}
+
+/**
+ * @returns {Promise<number>}
  */
 async function quux() {
   return 5;
