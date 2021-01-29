@@ -13732,8 +13732,12 @@ The following patterns are not considered problems:
 <a name="eslint-plugin-jsdoc-rules-require-returns-check"></a>
 ### <code>require-returns-check</code>
 
-Requires a return statement in function body if a `@returns` tag is specified
-in jsdoc comment.
+Requires a return statement (or non-`undefined` Promise resolve value) in
+function bodies if a `@returns` tag (without a `void` or `undefined` type)
+is specified in the function's jsdoc comment.
+
+Will also report `@returns {void}` and `@returns {undefined}` if `exemptAsync`
+is set to `false` no non-`undefined` returned or resolved value is found.
 
 Will also report if multiple `@returns` tags are present.
 
@@ -13749,14 +13753,18 @@ Will also report if multiple `@returns` tags are present.
     be exempted from reporting (i.e., that `async` functions can be reported
     if they lack an explicit (non-`undefined`) `return` when a `@returns` is
     present), you can set `exemptAsync` to `false` on the options object.
-    Defaults to `true`.
+- `reportMissingReturnForUndefinedTypes` - If `true` and no return or
+    resolve value is found, this setting will even insist that reporting occur
+    with `void` or `undefined` (including as an indicated `Promise` type).
+    Unlike `require-returns`, with this option in the rule, one can
+     *discourage* the labeling of `undefined` types. Defaults to `false`.
 
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 |Aliases|`return`|
-|Options|`exemptAsync`|
+|Options|`exemptAsync`, `reportMissingReturnForUndefinedTypes`|
 |Recommended|true|
 
 The following patterns are considered problems:
@@ -13875,6 +13883,23 @@ async function foo() {
   return new Promise(resolve => resolve());
 }
 // Options: [{"exemptAsync":false}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * Description.
+ * @returns {void}
+ */
+async function foo() {
+  return new Promise(resolve => resolve());
+}
+// Options: [{"exemptAsync":false,"reportMissingReturnForUndefinedTypes":true}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns { void } Foo.
+ */
+function quux () {}
+// Options: [{"reportMissingReturnForUndefinedTypes":true}]
 // Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
@@ -14208,6 +14233,31 @@ function quux() {
   })
 }
 // Options: [{"exemptAsync":false}]
+
+/**
+ * Description.
+ * @returns {void}
+ */
+async function foo() {
+  return new Promise(resolve => resolve());
+}
+// Options: [{"reportMissingReturnForUndefinedTypes":true}]
+
+/**
+ * @returns { void } Foo.
+ */
+function quux () {
+  return undefined;
+}
+// Options: [{"reportMissingReturnForUndefinedTypes":true}]
+
+/**
+ * @returns { string } Foo.
+ */
+function quux () {
+  return 'abc';
+}
+// Options: [{"reportMissingReturnForUndefinedTypes":true}]
 ````
 
 

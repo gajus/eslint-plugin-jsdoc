@@ -236,6 +236,47 @@ export default {
         ecmaVersion: 8,
       },
     },
+    {
+      code: `
+        /**
+         * Description.
+         * @returns {void}
+         */
+        async function foo() {
+          return new Promise(resolve => resolve());
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      options: [{
+        exemptAsync: false,
+        reportMissingReturnForUndefinedTypes: true,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+          /**
+           * @returns { void } Foo.
+           */
+          function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      options: [{
+        reportMissingReturnForUndefinedTypes: true,
+      }],
+    },
   ],
   valid: [
     {
@@ -704,6 +745,49 @@ export default {
       `,
       options: [{
         exemptAsync: false,
+      }],
+    },
+    {
+      code: `
+        /**
+         * Description.
+         * @returns {void}
+         */
+        async function foo() {
+          return new Promise(resolve => resolve());
+        }
+      `,
+      options: [{
+        reportMissingReturnForUndefinedTypes: true,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+          /**
+           * @returns { void } Foo.
+           */
+          function quux () {
+            return undefined;
+          }
+      `,
+      options: [{
+        reportMissingReturnForUndefinedTypes: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @returns { string } Foo.
+           */
+          function quux () {
+            return 'abc';
+          }
+      `,
+      options: [{
+        reportMissingReturnForUndefinedTypes: true,
       }],
     },
   ],
