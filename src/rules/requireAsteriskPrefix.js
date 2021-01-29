@@ -1,31 +1,62 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const prefixMatch = /^(\s+)(?:\*( ?))?/u;
-const validPrefix = /^\s+\*(?:\/?$| )/u;
-
 export default iterateJsdoc(({
-  sourceCode,
-  jsdocNode,
-  report,
+  context,
+  jsdoc,
+  utils,
 }) => {
-  const fix = (fixer) => {
-    const replacement = sourceCode.getText(jsdocNode).split('\n')
-      .map((line, index) => {
-        return index && !validPrefix.test(line) ? line.replace(prefixMatch, (_, $1, $2) => {
-          return `${$1}*${$2 || ' '}`;
-        }) : line;
-      })
-      .join('\n');
+  // Todo: `tags` option
+  /*
+  const {
+    tags: tagMap,
+  } = context.options[1] || {};
+  */
 
-    return fixer.replaceText(jsdocNode, replacement);
-  };
+  const {source} = jsdoc;
 
-  sourceCode.getText(jsdocNode).split('\n').some((line, index) => {
-    const lineNum = Number.parseInt(index, 10);
-    if (lineNum && !validPrefix.test(line)) {
-      report('Expected JSDoc block to have the prefix.', fix, {
-        line: lineNum,
-      });
+  if (context.options[0] === 'never') {
+    source.some(({number, tokens}) => {
+      const {delimiter, tag} = tokens;
+      if (!tag) {
+        // Todo: Reinvestigate upon trying to clean-up non-tag description
+        return false;
+      }
+      if (delimiter) {
+        const fix = () => {
+          tokens.delimiter = '';
+          tokens.postDelimiter = '';
+        };
+
+        utils.reportJSDoc('Expected JSDoc block to have no prefix.', {
+          column: 0,
+          line: number,
+        }, fix);
+
+        return true;
+      }
+
+      return false;
+    });
+
+    return;
+  }
+
+  source.some(({number, tokens}) => {
+    const {delimiter, tag} = tokens;
+    if (!tag) {
+      // Todo: Reinvestigate upon trying to clean-up non-tag description
+      return false;
+    }
+    if (!delimiter) {
+      const fix = () => {
+        tokens.delimiter = '*';
+        tokens.postDelimiter = ' ';
+      };
+
+      utils.reportJSDoc('Expected JSDoc block to have the prefix.', {
+        column: 0,
+        line: number,
+      }, fix);
 
       return true;
     }
@@ -36,6 +67,41 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     fixable: 'code',
+    schema: [
+      {
+        enum: ['always', 'never', 'any'],
+        type: 'string',
+      },
+      {
+        additionalProperties: false,
+        properties: {
+          tags: {
+            properties: {
+              always: {
+                items: {
+                  type: 'string',
+                },
+                type: 'array',
+              },
+              any: {
+                items: {
+                  type: 'string',
+                },
+                type: 'array',
+              },
+              never: {
+                items: {
+                  type: 'string',
+                },
+                type: 'array',
+              },
+            },
+            type: 'object',
+          },
+        },
+        type: 'object',
+      },
+    ],
     type: 'layout',
   },
 });

@@ -48,6 +48,56 @@ export default {
         }
       `,
     },
+    {
+      code: `
+
+        /**
+         * @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected JSDoc block to have no prefix.',
+        },
+      ],
+      options: ['never'],
+      output: `
+
+        /**
+         @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
+        /**
+          *@param {Number} foo
+         */function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block to have no prefix.',
+        },
+      ],
+      options: ['never'],
+      output: `
+        /**
+          @param {Number} foo
+         */function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
   ],
   valid: [
     {
