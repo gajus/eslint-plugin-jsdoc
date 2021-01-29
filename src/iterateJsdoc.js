@@ -457,10 +457,6 @@ const getUtils = (
     return jsdocUtils.hasDefinedTypeTag(tag);
   };
 
-  utils.hasReturnValue = () => {
-    return jsdocUtils.hasReturnValue(node);
-  };
-
   utils.hasValueOrExecutorHasNonEmptyResolveValue = (anyPromiseAsReturn) => {
     return jsdocUtils.hasValueOrExecutorHasNonEmptyResolveValue(node, anyPromiseAsReturn);
   };

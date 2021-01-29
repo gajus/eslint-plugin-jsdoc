@@ -29,15 +29,20 @@ const canSkip = (utils, settings) => {
 };
 
 export default iterateJsdoc(({
+  context,
   report,
   settings,
   utils,
 }) => {
+  const {
+    exemptAsync = true,
+  } = context.options[0] || {};
+
   if (canSkip(utils, settings)) {
     return;
   }
 
-  if (utils.isAsync()) {
+  if (exemptAsync && utils.isAsync()) {
     return;
   }
 
@@ -58,7 +63,7 @@ export default iterateJsdoc(({
   }
 
   // In case a return value is declared in JSDoc, we also expect one in the code.
-  if (utils.hasDefinedTypeTag(tags[0]) && !utils.hasReturnValue()) {
+  if (utils.hasDefinedTypeTag(tags[0]) && !utils.hasValueOrExecutorHasNonEmptyResolveValue(exemptAsync)) {
     report(`JSDoc @${tagName} declaration present but return expression not available in function.`);
   }
 }, {
@@ -67,6 +72,18 @@ export default iterateJsdoc(({
       description: 'Requires a return statement in function body if a `@returns` tag is specified in jsdoc comment.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-check',
     },
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          exemptAsync: {
+            default: true,
+            type: 'boolean',
+          },
+        },
+        type: 'object',
+      },
+    ],
     type: 'suggestion',
   },
 });

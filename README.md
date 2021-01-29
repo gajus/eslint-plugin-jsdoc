@@ -13737,11 +13737,26 @@ in jsdoc comment.
 
 Will also report if multiple `@returns` tags are present.
 
+<a name="eslint-plugin-jsdoc-rules-require-returns-check-options-27"></a>
+#### Options
+
+- `exemptAsync` - By default, functions which return a `Promise` that are not
+    detected as resolving with a non-`undefined` value and `async` functions
+    (even ones that do not explicitly return a value, as these are returning a
+    `Promise` implicitly) will be exempted from reporting by this rule.
+    If you wish to insist that only `Promise`'s which resolve to
+    non-`undefined` values or `async` functions with explicit `return`'s will
+    be exempted from reporting (i.e., that `async` functions can be reported
+    if they lack an explicit (non-`undefined`) `return` when a `@returns` is
+    present), you can set `exemptAsync` to `false` on the options object.
+    Defaults to `true`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 |Aliases|`return`|
+|Options|`exemptAsync`|
 |Recommended|true|
 
 The following patterns are considered problems:
@@ -13821,6 +13836,35 @@ function f () {
     return 5
   }
 }
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {Promise<void>}
+ */
+async function quux() {}
+// Options: [{"exemptAsync":false}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {Promise<void>}
+ */
+function quux() {
+  return new Promise((resolve, reject) => {})
+}
+// Options: [{"exemptAsync":false}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {Promise<void>}
+ */
+function quux() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    });
+  })
+}
+// Options: [{"exemptAsync":false}]
 // Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
@@ -14127,6 +14171,26 @@ function quux () {
   }
   return;
 }
+
+/**
+ * @returns {Promise<void>}
+ */
+async function quux() {
+  return 5;
+}
+// Options: [{"exemptAsync":false}]
+
+/**
+ * @returns {Promise<void>}
+ */
+function quux() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(true);
+    });
+  })
+}
+// Options: [{"exemptAsync":false}]
 ````
 
 
@@ -14137,10 +14201,10 @@ Requires that the `@returns` tag has a `description` value. The error
 will not be reported if the return value is `void` or `undefined`
 or if it is `Promise<void>` or `Promise<undefined>`.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-27"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-28"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-27-contexts-10"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-28-contexts-10"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -14293,10 +14357,10 @@ function quux () {
 
 Requires that `@returns` tag has `type` value.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-28"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-29"></a>
 #### Options
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-28-contexts-11"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-29-contexts-11"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
@@ -14416,7 +14480,7 @@ Requires that returns are documented.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-29"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-30"></a>
 #### Options
 
 - `checkConstructors` - A value indicating whether `constructor`s should
@@ -15436,7 +15500,7 @@ async function foo() {
 
 Requires that throw statements are documented.
 
-<a name="eslint-plugin-jsdoc-rules-require-throws-options-30"></a>
+<a name="eslint-plugin-jsdoc-rules-require-throws-options-31"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
@@ -15711,7 +15775,7 @@ Will also report if multiple `@yields` tags are present.
 See the `next`, `forceRequireNext`, and `nextWithGeneratorTag` options for an
 option to expect a non-standard `@next` tag.
 
-<a name="eslint-plugin-jsdoc-rules-require-yields-options-31"></a>
+<a name="eslint-plugin-jsdoc-rules-require-yields-options-32"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
@@ -16511,7 +16575,7 @@ function bodies.
 
 Will also report if multiple `@yields` tags are present.
 
-<a name="eslint-plugin-jsdoc-rules-require-yields-check-options-32"></a>
+<a name="eslint-plugin-jsdoc-rules-require-yields-check-options-33"></a>
 #### Options
 
 - `checkGeneratorsOnly` - Avoids checking the function body and merely insists
@@ -17064,7 +17128,7 @@ for valid types (based on the tag's `type` value), and either portion checked
 for presence (based on `false` `name` or `type` values or their `required`
 value). See the setting for more details.
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-33"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-34"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow
