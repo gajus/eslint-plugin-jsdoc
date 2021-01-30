@@ -323,8 +323,8 @@ export default {
       output: `
         /**
          * @namespace
-         * @property {object} defaults       Description.
-         * @property {int}    defaults.lorem Description multi words.
+         * @property  {object} defaults       Description.
+         * @property  {int}    defaults.lorem Description multi words.
          */
         const config = {
             defaults: {
@@ -357,10 +357,10 @@ export default {
         /**
          * My object.
          *
-         * @typedef {Object} MyObject
+         * @typedef  {Object} MyObject
          *
-         * @property {string} lorem Description.
-         * @property {int}    sit   Description multi words.
+         * @property {string} lorem    Description.
+         * @property {int}    sit      Description multi words.
          */
       `,
     },
@@ -390,11 +390,11 @@ export default {
         /**
          * My object.
          *
-         * @typedef {Object} MyObject
+         * @typedef  {Object}                    MyObject
          *
-         * @property {{a: number, b: string, c}} lorem Description.
-         * @property {Object.<string, Class>}    sit   Description multi words.
-         * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+         * @property {{a: number, b: string, c}} lorem    Description.
+         * @property {Object.<string, Class>}    sit      Description multi words.
+         * @property {Object.<string, Class>}    amet     Description} weird {multi} {{words}}.
          * @property {Object.<string, Class>}    dolor
          */
       `,
@@ -561,7 +561,6 @@ export default {
       `,
       errors: [
         {
-          line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -589,7 +588,6 @@ export default {
       `,
       errors: [
         {
-          line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -617,7 +615,6 @@ export default {
       `,
       errors: [
         {
-          line: 5,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -646,7 +643,6 @@ export default {
       `,
       errors: [
         {
-          line: 7,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -844,8 +840,8 @@ export default {
       code: `
         /**
          * @namespace
-         * @property {object} defaults       Description.
-         * @property {int}    defaults.lorem Description multi words.
+         * @property  {object} defaults       Description.
+         * @property  {int}    defaults.lorem Description multi words.
          */
         const config = {
             defaults: {
@@ -862,10 +858,10 @@ export default {
         /**
          * My object.
          *
-         * @typedef {Object} MyObject
+         * @typedef  {Object} MyObject
          *
-         * @property {string} lorem Description.
-         * @property {int}    sit   Description multi words.
+         * @property {string} lorem    Description.
+         * @property {int}    sit      Description multi words.
          */
       `,
       options: [
@@ -877,11 +873,11 @@ export default {
         /**
          * My object.
          *
-         * @typedef {Object} MyObject
+         * @typedef  {Object}                    MyObject
          *
-         * @property {{a: number, b: string, c}} lorem Description.
-         * @property {Object.<string, Class>}    sit   Description multi words.
-         * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+         * @property {{a: number, b: string, c}} lorem    Description.
+         * @property {Object.<string, Class>}    sit      Description multi words.
+         * @property {Object.<string, Class>}    amet     Description} weird {multi} {{words}}.
          * @property {Object.<string, Class>}    dolor
          */
       `,
@@ -897,6 +893,18 @@ export default {
       options: [
         'always',
       ],
+    },
+    {
+      code: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param  {object}  options Options object for each OS.
+       * @return {boolean}         True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+      options: ['always'],
     },
     {
       code: `
