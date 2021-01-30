@@ -2225,8 +2225,8 @@ const fn = ( lorem, sit ) => {}
 
 /**
  * @namespace
- * @property {object} defaults       Description.
- * @property {int}    defaults.lorem Description multi words.
+ * @property  {object} defaults       Description.
+ * @property  {int}    defaults.lorem Description multi words.
  */
 const config = {
     defaults: {
@@ -2238,27 +2238,36 @@ const config = {
 /**
  * My object.
  *
- * @typedef {Object} MyObject
+ * @typedef  {Object} MyObject
  *
- * @property {string} lorem Description.
- * @property {int}    sit   Description multi words.
+ * @property {string} lorem    Description.
+ * @property {int}    sit      Description multi words.
  */
 // Options: ["always"]
 
 /**
  * My object.
  *
- * @typedef {Object} MyObject
+ * @typedef  {Object}                    MyObject
  *
- * @property {{a: number, b: string, c}} lorem Description.
- * @property {Object.<string, Class>}    sit   Description multi words.
- * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+ * @property {{a: number, b: string, c}} lorem    Description.
+ * @property {Object.<string, Class>}    sit      Description multi words.
+ * @property {Object.<string, Class>}    amet     Description} weird {multi} {{words}}.
  * @property {Object.<string, Class>}    dolor
  */
 // Options: ["always"]
 
 /** @param {number} lorem */
 const fn = ( lorem ) => {}
+// Options: ["always"]
+
+/**
+ * Creates OS based shortcuts for files, folders, and applications.
+ *
+ * @param  {object}  options Options object for each OS.
+ * @return {boolean}         True = success, false = failed to create the icon
+ */
+ function quux () {}
 // Options: ["always"]
 
 /**
