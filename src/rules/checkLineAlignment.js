@@ -97,12 +97,42 @@ const checkNotAlignedPerTag = (utils, tag) => {
   utils.reportJSDoc('Expected JSDoc block lines to not be aligned.', tag, fix, true);
 };
 
+const checkAlignment = ({
+  indent,
+  jsdoc,
+  jsdocNode,
+  report,
+  utils,
+}) => {
+  const transform = commentFlow(commentAlign(), commentIndent(indent.length));
+  const transformedJsdoc = transform(jsdoc);
+
+  const comment = '/*' + jsdocNode.value + '*/';
+  const formatted = utils.stringify(transformedJsdoc)
+    .trimStart()
+
+    // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/119
+    .replace(/\s+\n/g, '\n')
+
+    // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/120
+    .replace(/(\n\s+)\*\s+@/g, '$1* @');
+
+  if (comment !== formatted) {
+    report(
+      'Expected JSDoc block lines to be aligned.',
+      (fixer) => {
+        return fixer.replaceText(jsdocNode, formatted);
+      },
+    );
+  }
+};
+
 export default iterateJsdoc(({
+  indent,
   jsdoc,
   jsdocNode,
   report,
   context,
-  indent,
   utils,
 }) => {
   const {
@@ -110,27 +140,13 @@ export default iterateJsdoc(({
   } = context.options[1] || {};
 
   if (context.options[0] === 'always') {
-    const transform = commentFlow(commentAlign(), commentIndent(indent.length));
-    const transformedJsdoc = transform(jsdoc);
-
-    const comment = '/*' + jsdocNode.value + '*/';
-    const formatted = utils.stringify(transformedJsdoc)
-      .trimStart()
-
-      // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/119
-      .replace(/\s+\n/g, '\n')
-
-      // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/120
-      .replace(/(\n\s+)\*\s+@/g, '$1* @');
-
-    if (comment !== formatted) {
-      report(
-        'Expected JSDoc block lines to be aligned.',
-        (fixer) => {
-          return fixer.replaceText(jsdocNode, formatted);
-        },
-      );
-    }
+    checkAlignment({
+      indent,
+      jsdoc,
+      jsdocNode,
+      report,
+      utils,
+    });
 
     return;
   }
