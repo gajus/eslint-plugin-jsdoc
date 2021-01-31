@@ -20,6 +20,25 @@ export default {
     {
       code: `
           /**
+           *
+           */
+          function * quux (foo) {
+            someLabel: {
+              yield foo;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
            * @yields
            */
           function * quux (foo) {
