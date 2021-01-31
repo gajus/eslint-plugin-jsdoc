@@ -513,6 +513,7 @@ const hasReturnValue = (node, promFilter) => {
   if (!node) {
     return false;
   }
+
   switch (node.type) {
   case 'FunctionExpression':
   case 'FunctionDeclaration':
@@ -591,8 +592,6 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
 
   // Arrow function without block
   switch (node.type) {
-  case 'ChainExpression':
-    return hasNonEmptyResolverCall(node.expression, resolverName);
   // istanbul ignore next -- In Babel?
   case 'OptionalCallExpression':
   case 'CallExpression':
@@ -608,8 +607,11 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
           // Handle nested items
           hasNonEmptyResolverCall(nde, resolverName);
       });
+  case 'ChainExpression':
+  case 'Decorator':
   case 'ExpressionStatement':
     return hasNonEmptyResolverCall(node.expression, resolverName);
+  case 'ClassBody':
   case 'BlockStatement':
     return node.body.some((bodyNode) => {
       return hasNonEmptyResolverCall(bodyNode, resolverName);
@@ -624,6 +626,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
 
     return hasNonEmptyResolverCall(node.body, resolverName);
   }
+
   case 'LabeledStatement':
   case 'WhileStatement':
   case 'DoWhileStatement':
@@ -663,7 +666,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'AssignmentPattern':
     return hasNonEmptyResolverCall(node.right, resolverName);
 
-  // Todo: Review all of the statements below this for relevance to yields/throw/return checkers
+  // Todo: Review all of the types below this for adapting to yields checks
   case 'AssignmentExpression':
   case 'BinaryExpression':
   case 'LogicalExpression': {
@@ -678,13 +681,40 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
       return hasNonEmptyResolverCall(subExpression, resolverName);
     });
 
+  case 'ObjectPattern':
   case 'ObjectExpression':
     return node.properties.some((property) => {
       return hasNonEmptyResolverCall(property, resolverName);
     });
+  // istanbul ignore next -- In Babel?
+  case 'ClassMethod':
+  case 'MethodDefinition':
+    return node.decorators && node.decorators.some((decorator) => {
+      return hasNonEmptyResolverCall(decorator, resolverName);
+    }) ||
+      node.computed && hasNonEmptyResolverCall(node.key, resolverName) ||
+      hasNonEmptyResolverCall(node.value, resolverName);
+
+  // istanbul ignore next -- In Babel?
+  case 'ObjectProperty':
+  /* eslint-disable no-fallthrough */
+  // istanbul ignore next -- In Babel?
+  case 'ClassProperty':
+  /* eslint-enable no-fallthrough */
   case 'Property':
     return node.computed && hasNonEmptyResolverCall(node.key, resolverName) ||
       hasNonEmptyResolverCall(node.value, resolverName);
+  // istanbul ignore next -- In Babel?
+  case 'ObjectMethod':
+    // istanbul ignore next -- In Babel?
+    return node.computed && hasNonEmptyResolverCall(node.key, resolverName) ||
+      node.arguments.some((nde) => {
+        return hasNonEmptyResolverCall(nde, resolverName);
+      });
+
+  case 'ClassExpression':
+  case 'ClassDeclaration':
+    return hasNonEmptyResolverCall(node.body, resolverName);
 
   case 'AwaitExpression':
   case 'SpreadElement':
@@ -712,22 +742,11 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
     return hasNonEmptyResolverCall(node.object, resolverName) ||
       hasNonEmptyResolverCall(node.property, resolverName);
 
-  /*
-  // Todo: As relevant, also check these in return/throw and yield checks
-
-  case 'ObjectPattern':
-
-  case 'ClassProperty':
-  case 'ClassDeclaration': case 'ClassExpression': case 'MethodDefinition':
-  case 'Super':
-
-  case 'ExportDefaultDeclaration': case 'ExportNamedDeclaration':
+  // istanbul ignore next -- In Babel?
   case 'Import':
   case 'ImportExpression':
-  case 'Decorator':
+    return hasNonEmptyResolverCall(node.source, resolverName);
 
-    return false;
-  */
   case 'ReturnStatement': {
     if (node.argument === null) {
       return false;
@@ -737,10 +756,12 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   }
 
   /*
-  // Shouldn't need to parse literals/literal components
+  // Shouldn't need to parse literals/literal components, etc.
 
   case 'Identifier':
   case 'TemplateElement':
+  case 'Super':
+  // Exports not relevant in this context
   */
   default:
     return false;

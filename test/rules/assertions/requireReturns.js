@@ -1290,7 +1290,7 @@ export default {
            */
           function quux () {
             return new Promise((resolve, reject) => {
-              const [a = resolve(true)] = [];
+              const [a = resolve(true)] = arr;
             });
           }
       `,
@@ -1301,6 +1301,177 @@ export default {
         },
       ],
       ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              const {a = resolve(true)} = obj;
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              import(resolve(true));
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parserOptions: {
+        ecmaVersion: 2_020,
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              class A {
+                method1 () {
+                  resolve();
+                }
+                @dec(function () {
+                  resolve()
+                })
+                method2 () {
+                  resolve(true);
+                }
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              class A {
+                method1 () {
+                  resolve();
+                }
+                @dec(function () {
+                  resolve(true)
+                })
+                method2 () {}
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              const a = class {
+                [b] () {
+                  resolve();
+                }
+                method1 () {
+                  resolve(true);
+                }
+                method2 () {}
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              const a = class {
+                [b] () {
+                  resolve(true);
+                }
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          export function quux () {
+            return new Promise((resolve, reject) => {
+              resolve(true);
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parserOptions: {
+        sourceType: 'module',
+      },
     },
     {
       code: `
