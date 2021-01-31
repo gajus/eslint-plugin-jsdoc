@@ -768,6 +768,7 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
   case 'ExpressionStatement': {
     return hasYieldValue(node.expression, checkYieldReturnValue);
   }
+  case 'LabeledStatement':
   case 'WhileStatement':
   case 'DoWhileStatement':
   case 'ForStatement':
