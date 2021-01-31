@@ -95,9 +95,11 @@ const getTokenizers = () => {
  * @param {string} indent Whitespace
  * @returns {object}
  */
-const parseComment = (commentNode, indent) => {
+const parseComment = (commentNode, indent, includesDelimiters = true) => {
+  const comment = includesDelimiters ? `/*${commentNode.value}*/` : commentNode.value;
+
   // Preserve JSDoc block start/end indentation.
-  return commentParser(`/*${commentNode.value}*/`, {
+  return commentParser(comment, {
     // @see https://github.com/yavorskiy/comment-parser/issues/21
     tokenizers: getTokenizers(),
   })[0] || seedBlock({
@@ -156,6 +158,8 @@ const getBasicUtils = (context, {tagNamePreference, mode}) => {
 
     return ret;
   };
+
+  utils.commentParser = parseComment;
 
   return utils;
 };
