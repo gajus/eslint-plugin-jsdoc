@@ -14923,19 +14923,6 @@ function quux () {
  *
  */
 function quux () {
-  return new Promise((resolve, reject) => {
-    return () => {
-      identifierForCoverage;
-      resolve(true);
-    };
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
   return new Promise();
 }
 // Options: [{"forceReturnsWithAsync":true}]

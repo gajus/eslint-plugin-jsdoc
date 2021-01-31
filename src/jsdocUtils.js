@@ -627,8 +627,10 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'WithStatement': {
     return hasNonEmptyResolverCall(node.body, resolverName);
   }
+  case 'ConditionalExpression':
   case 'IfStatement': {
-    return hasNonEmptyResolverCall(node.consequent, resolverName) ||
+    return hasNonEmptyResolverCall(node.test, resolverName) ||
+      hasNonEmptyResolverCall(node.consequent, resolverName) ||
       hasNonEmptyResolverCall(node.alternate, resolverName);
   }
   case 'TryStatement': {
@@ -646,12 +648,24 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
     );
   }
 
-  /*
+  case 'AssignmentExpression':
+  case 'BinaryExpression':
+  case 'LogicalExpression': {
+    return hasNonEmptyResolverCall(node.left, resolverName) ||
+      hasNonEmptyResolverCall(node.right, resolverName);
+  }
+
   // Comma
-  case 'SequenceExpression':
-  case 'ArrayExpression': case 'AssignmentExpression': case 'AssignmentPattern':
-  case 'AwaitExpression': case 'BinaryExpression': case 'ConditionalExpression':
-  case 'LogicalExpression': case 'MemberExpression': case 'OptionalMemberExpression':
+  case 'SequenceExpression': {
+    return node.expressions.some((subExpression) => {
+      return hasNonEmptyResolverCall(subExpression, resolverName);
+    });
+  }
+
+  /*
+  case 'ArrayExpression': case 'AssignmentPattern':
+  case 'AwaitExpression':
+  case 'MemberExpression': case 'OptionalMemberExpression':
   case 'VariableDeclaration':
   case 'OptionalCallExpression':
   case 'TaggedTemplateExpression':
