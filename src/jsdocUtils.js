@@ -662,27 +662,41 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
     });
   }
 
-  /*
-  case 'ArrayExpression': case 'AssignmentPattern':
+  case 'ArrayExpression':
+    return node.elements.some((bodyNode) => {
+      return hasNonEmptyResolverCall(bodyNode, resolverName);
+    });
+
   case 'AwaitExpression':
-  case 'MemberExpression': case 'OptionalMemberExpression':
-  case 'VariableDeclaration':
-  case 'OptionalCallExpression':
-  case 'TaggedTemplateExpression':
-  case 'TemplateElement': case 'TemplateLiteral': case 'UnaryExpression':
   case 'SpreadElement':
+  case 'UnaryExpression':
+  case 'YieldExpression':
+    return hasNonEmptyResolverCall(node.argument, resolverName);
+
+  /*
+  case 'LabeledStatement':
+  case 'VariableDeclaration':
+
+  case 'MemberExpression': case 'OptionalMemberExpression': // ?.
+  case 'OptionalCallExpression': ?.x()
+
+  case 'TaggedTemplateExpression':
+  case 'TemplateElement': case 'TemplateLiteral':
+
+  case 'AssignmentPattern':
   case 'ArrayPattern': case 'ObjectPattern':
+
   case 'ObjectExpression':
   case 'Property':
+
   case 'ClassProperty':
   case 'ClassDeclaration': case 'ClassExpression': case 'MethodDefinition':
   case 'Super':
+
   case 'ExportDefaultDeclaration': case 'ExportNamedDeclaration':
-  case 'LabeledStatement':
   case 'Import':
   case 'ImportExpression':
   case 'Decorator':
-  case 'YieldExpression':
 
     // Todo: Add these (and also add to Yield/Throw checks)
     return false;
