@@ -310,7 +310,9 @@ const getUtils = (
   utils.isGenerator = () => {
     return node && (
       node.generator ||
-      node.type === 'MethodDefinition' && node.value.generator
+      node.type === 'MethodDefinition' && node.value.generator ||
+      ['ExportNamedDeclaration', 'ExportDefaultDeclaration'].includes(node.type) &&
+        node.declaration.generator
     );
   };
 
@@ -462,6 +464,10 @@ const getUtils = (
   };
 
   utils.hasYieldValue = () => {
+    if (['ExportNamedDeclaration', 'ExportDefaultDeclaration'].includes(node.type)) {
+      return jsdocUtils.hasYieldValue(node.declaration);
+    }
+
     return jsdocUtils.hasYieldValue(node);
   };
 
@@ -891,7 +897,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           return iterateAllJsdocs(iterator, ruleConfig).create(context);
         }
       }
-
       const sourceCode = context.getSourceCode();
       const settings = getSettings(context);
       if (!settings) {
