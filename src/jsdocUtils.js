@@ -834,6 +834,7 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
  * @param {boolean} innerFunction
  * @returns {boolean}
  */
+// eslint-disable-next-line complexity
 const hasThrowValue = (node, innerFunction) => {
   if (!node) {
     return false;
@@ -849,6 +850,7 @@ const hasThrowValue = (node, innerFunction) => {
       return bodyNode.type !== 'FunctionDeclaration' && hasThrowValue(bodyNode);
     });
   }
+  case 'LabeledStatement':
   case 'WhileStatement':
   case 'DoWhileStatement':
   case 'ForStatement':
