@@ -140,6 +140,11 @@ export default iterateJsdoc(({
   } = context.options[1] || {};
 
   if (context.options[0] === 'always') {
+    // Skip if it contains only a single line.
+    if (!jsdocNode.value.includes('\n')) {
+      return;
+    }
+
     checkAlignment({
       indent,
       jsdoc,
