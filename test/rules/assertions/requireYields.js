@@ -1446,5 +1446,17 @@ export default {
         next: true,
       }],
     },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux (foo) {
+            const a = function * bar () {
+              yield foo;
+            }
+          }
+      `,
+    },
   ],
 };

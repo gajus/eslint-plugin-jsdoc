@@ -794,33 +794,25 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn) => 
   });
 };
 
-/**
- * Checks if a node has a return statement. Void return does not count.
- *
- * @param {object} node
- * @returns {boolean}
- */
 // eslint-disable-next-line complexity
-const hasYieldValue = (node, checkYieldReturnValue) => {
+const hasNonFunctionYield = (node, checkYieldReturnValue) => {
   if (!node) {
     return false;
   }
   switch (node.type) {
-  case 'FunctionExpression':
-  case 'FunctionDeclaration': {
-    return node.generator && (
-      node.expression || hasYieldValue(node.body, checkYieldReturnValue)
-    );
-  }
   case 'BlockStatement': {
     return node.body.some((bodyNode) => {
-      return bodyNode.type !== 'FunctionDeclaration' && hasYieldValue(
+      return ![
+        'ArrowFunctionExpression',
+        'FunctionDeclaration',
+        'FunctionExpression',
+      ].includes(bodyNode.type) && hasNonFunctionYield(
         bodyNode, checkYieldReturnValue,
       );
     });
   }
   case 'ExpressionStatement': {
-    return hasYieldValue(node.expression, checkYieldReturnValue);
+    return hasNonFunctionYield(node.expression, checkYieldReturnValue);
   }
   case 'LabeledStatement':
   case 'WhileStatement':
@@ -829,24 +821,24 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
   case 'ForInStatement':
   case 'ForOfStatement':
   case 'WithStatement': {
-    return hasYieldValue(node.body, checkYieldReturnValue);
+    return hasNonFunctionYield(node.body, checkYieldReturnValue);
   }
   case 'ConditionalExpression':
   case 'IfStatement': {
-    return hasYieldValue(node.test, checkYieldReturnValue) ||
-      hasYieldValue(node.consequent, checkYieldReturnValue) ||
-      hasYieldValue(node.alternate, checkYieldReturnValue);
+    return hasNonFunctionYield(node.test, checkYieldReturnValue) ||
+      hasNonFunctionYield(node.consequent, checkYieldReturnValue) ||
+      hasNonFunctionYield(node.alternate, checkYieldReturnValue);
   }
   case 'TryStatement': {
-    return hasYieldValue(node.block, checkYieldReturnValue) ||
-      hasYieldValue(node.handler && node.handler.body, checkYieldReturnValue) ||
-      hasYieldValue(node.finalizer, checkYieldReturnValue);
+    return hasNonFunctionYield(node.block, checkYieldReturnValue) ||
+      hasNonFunctionYield(node.handler && node.handler.body, checkYieldReturnValue) ||
+      hasNonFunctionYield(node.finalizer, checkYieldReturnValue);
   }
   case 'SwitchStatement': {
     return node.cases.some(
       (someCase) => {
         return someCase.consequent.some((nde) => {
-          return hasYieldValue(nde, checkYieldReturnValue);
+          return hasNonFunctionYield(nde, checkYieldReturnValue);
         });
       },
     );
@@ -854,19 +846,19 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
   case 'ArrayPattern':
   case 'ArrayExpression':
     return node.elements.some((element) => {
-      return hasYieldValue(element, checkYieldReturnValue);
+      return hasNonFunctionYield(element, checkYieldReturnValue);
     });
   case 'AssignmentPattern':
-    return hasYieldValue(node.right, checkYieldReturnValue);
+    return hasNonFunctionYield(node.right, checkYieldReturnValue);
 
   case 'VariableDeclaration': {
     return node.declarations.some((nde) => {
-      return hasYieldValue(nde, checkYieldReturnValue);
+      return hasNonFunctionYield(nde, checkYieldReturnValue);
     });
   }
   case 'VariableDeclarator': {
-    return hasYieldValue(node.id, checkYieldReturnValue) ||
-      hasYieldValue(node.init, checkYieldReturnValue);
+    return hasNonFunctionYield(node.id, checkYieldReturnValue) ||
+      hasNonFunctionYield(node.init, checkYieldReturnValue);
   }
   case 'YieldExpression': {
     if (checkYieldReturnValue) {
@@ -891,6 +883,18 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
 };
 
 /**
+ * Checks if a node has a return statement. Void return does not count.
+ *
+ * @param {object} node
+ * @returns {boolean}
+ */
+const hasYieldValue = (node, checkYieldReturnValue) => {
+  return node.generator && (
+    node.expression || hasNonFunctionYield(node.body, checkYieldReturnValue)
+  );
+};
+
+/**
  * Checks if a node has a throws statement.
  *
  * @param {object} node
@@ -902,6 +906,10 @@ const hasThrowValue = (node, innerFunction) => {
   if (!node) {
     return false;
   }
+
+  // There are cases where a function may execute its inner function which
+  //   throws, but we're treating functions atomically rather than trying to
+  //   follow them
   switch (node.type) {
   case 'FunctionExpression':
   case 'FunctionDeclaration':
