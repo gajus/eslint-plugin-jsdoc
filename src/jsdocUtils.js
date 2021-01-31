@@ -620,6 +620,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
 
     return hasNonEmptyResolverCall(node.body, resolverName);
   }
+  case 'LabeledStatement':
   case 'WhileStatement':
   case 'DoWhileStatement':
   case 'ForStatement':
@@ -664,9 +665,17 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   }
 
   case 'ArrayExpression':
-    return node.elements.some((bodyNode) => {
-      return hasNonEmptyResolverCall(bodyNode, resolverName);
+    return node.elements.some((element) => {
+      return hasNonEmptyResolverCall(element, resolverName);
     });
+
+  case 'ObjectExpression':
+    return node.properties.some((property) => {
+      return hasNonEmptyResolverCall(property, resolverName);
+    });
+  case 'Property':
+    return node.computed && hasNonEmptyResolverCall(node.key, resolverName) ||
+      hasNonEmptyResolverCall(node.value, resolverName);
 
   case 'AwaitExpression':
   case 'SpreadElement':
@@ -674,21 +683,27 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'YieldExpression':
     return hasNonEmptyResolverCall(node.argument, resolverName);
 
+  case 'VariableDeclaration': {
+    return node.declarations.some((nde) => {
+      return hasNonEmptyResolverCall(nde, resolverName);
+    });
+  }
+  case 'VariableDeclarator': {
+    // Todo: Check `id` too once `ArrayPattern` is implemented (destructuring default)
+    return hasNonEmptyResolverCall(node.init, resolverName);
+  }
+
   /*
-  case 'LabeledStatement':
-  case 'VariableDeclaration':
+  // Todo: As relevant, also check these in return/throw and yield checks
 
   case 'MemberExpression': case 'OptionalMemberExpression': // ?.
-  case 'OptionalCallExpression': ?.x()
+  case 'OptionalCallExpression': ?.x(resolve)
 
   case 'TaggedTemplateExpression':
   case 'TemplateElement': case 'TemplateLiteral':
 
-  case 'AssignmentPattern':
+  case 'AssignmentPattern': // Default destructuring value
   case 'ArrayPattern': case 'ObjectPattern':
-
-  case 'ObjectExpression':
-  case 'Property':
 
   case 'ClassProperty':
   case 'ClassDeclaration': case 'ClassExpression': case 'MethodDefinition':
@@ -803,6 +818,7 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
     });
   }
   case 'VariableDeclarator': {
+    // Todo: Check `id` too once `ArrayPattern` is implemented (destructuring default)
     return hasYieldValue(node.init, checkYieldReturnValue);
   }
   case 'YieldExpression': {
