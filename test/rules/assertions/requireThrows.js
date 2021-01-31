@@ -21,6 +21,25 @@ export default {
           /**
            *
            */
+          function quux (foo) {
+            someLabel: {
+              throw new Error('err')
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
           const quux = function (foo) {
             throw new Error('err')
           }
