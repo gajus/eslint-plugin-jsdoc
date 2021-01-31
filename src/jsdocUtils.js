@@ -747,8 +747,10 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
   case 'WithStatement': {
     return hasYieldValue(node.body, checkYieldReturnValue);
   }
+  case 'ConditionalExpression':
   case 'IfStatement': {
-    return hasYieldValue(node.consequent, checkYieldReturnValue) ||
+    return hasYieldValue(node.test, checkYieldReturnValue) ||
+      hasYieldValue(node.consequent, checkYieldReturnValue) ||
       hasYieldValue(node.alternate, checkYieldReturnValue);
   }
   case 'TryStatement': {

@@ -542,6 +542,42 @@ export default {
            *
            */
           function * quux () {
+            if (yield false) {
+
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            b ? yield false : true
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
             try {
               yield true;
             } catch (err) {
