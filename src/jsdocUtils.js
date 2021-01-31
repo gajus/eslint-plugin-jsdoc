@@ -591,6 +591,10 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
 
   // Arrow function without block
   switch (node.type) {
+  case 'ChainExpression':
+    return hasNonEmptyResolverCall(node.expression, resolverName);
+  // istanbul ignore next -- In Babel?
+  case 'OptionalCallExpression':
   case 'CallExpression':
     return node.callee.name === resolverName && (
 
@@ -658,11 +662,11 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   }
 
   // Comma
-  case 'SequenceExpression': {
+  case 'SequenceExpression':
+  case 'TemplateLiteral':
     return node.expressions.some((subExpression) => {
       return hasNonEmptyResolverCall(subExpression, resolverName);
     });
-  }
 
   case 'ArrayExpression':
     return node.elements.some((element) => {
@@ -693,14 +697,18 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
     return hasNonEmptyResolverCall(node.init, resolverName);
   }
 
+  case 'TaggedTemplateExpression':
+    return hasNonEmptyResolverCall(node.quasi, resolverName);
+
+  // ?.
+  // istanbul ignore next -- In Babel?
+  case 'OptionalMemberExpression':
+  case 'MemberExpression':
+    return hasNonEmptyResolverCall(node.object, resolverName) ||
+      hasNonEmptyResolverCall(node.property, resolverName);
+
   /*
   // Todo: As relevant, also check these in return/throw and yield checks
-
-  case 'MemberExpression': case 'OptionalMemberExpression': // ?.
-  case 'OptionalCallExpression': ?.x(resolve)
-
-  case 'TaggedTemplateExpression':
-  case 'TemplateElement': case 'TemplateLiteral':
 
   case 'AssignmentPattern': // Default destructuring value
   case 'ArrayPattern': case 'ObjectPattern':
@@ -714,7 +722,6 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'ImportExpression':
   case 'Decorator':
 
-    // Todo: Add these (and also add to Yield/Throw checks)
     return false;
   */
   case 'ReturnStatement': {
@@ -724,6 +731,13 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
 
     return hasNonEmptyResolverCall(node.argument, resolverName);
   }
+
+  /*
+  // Shouldn't need to parse literals/literal components
+
+  case 'Identifier':
+  case 'TemplateElement':
+  */
   default:
     return false;
   }
