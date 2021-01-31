@@ -524,6 +524,7 @@ const hasReturnValue = (node, promFilter) => {
       return bodyNode.type !== 'FunctionDeclaration' && hasReturnValue(bodyNode, promFilter);
     });
   }
+  case 'LabeledStatement':
   case 'WhileStatement':
   case 'DoWhileStatement':
   case 'ForStatement':

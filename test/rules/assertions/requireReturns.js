@@ -22,6 +22,25 @@ export default {
           /**
            *
            */
+          function quux (foo) {
+            someLabel: {
+              return foo;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
           const foo = () => ({
             bar: 'baz'
           })
