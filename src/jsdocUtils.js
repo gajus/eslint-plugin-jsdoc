@@ -654,6 +654,16 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
     );
   }
 
+  case 'ArrayPattern':
+  case 'ArrayExpression':
+    return node.elements.some((element) => {
+      return hasNonEmptyResolverCall(element, resolverName);
+    });
+
+  case 'AssignmentPattern':
+    return hasNonEmptyResolverCall(node.right, resolverName);
+
+  // Todo: Review all of the statements below this for relevance to yields/throw/return checkers
   case 'AssignmentExpression':
   case 'BinaryExpression':
   case 'LogicalExpression': {
@@ -666,11 +676,6 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'TemplateLiteral':
     return node.expressions.some((subExpression) => {
       return hasNonEmptyResolverCall(subExpression, resolverName);
-    });
-
-  case 'ArrayExpression':
-    return node.elements.some((element) => {
-      return hasNonEmptyResolverCall(element, resolverName);
     });
 
   case 'ObjectExpression':
@@ -693,8 +698,8 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
     });
   }
   case 'VariableDeclarator': {
-    // Todo: Check `id` too once `ArrayPattern` is implemented (destructuring default)
-    return hasNonEmptyResolverCall(node.init, resolverName);
+    return hasNonEmptyResolverCall(node.id, resolverName) ||
+      hasNonEmptyResolverCall(node.init, resolverName);
   }
 
   case 'TaggedTemplateExpression':
@@ -710,8 +715,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   /*
   // Todo: As relevant, also check these in return/throw and yield checks
 
-  case 'AssignmentPattern': // Default destructuring value
-  case 'ArrayPattern': case 'ObjectPattern':
+  case 'ObjectPattern':
 
   case 'ClassProperty':
   case 'ClassDeclaration': case 'ClassExpression': case 'MethodDefinition':
@@ -826,14 +830,22 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
       },
     );
   }
+  case 'ArrayPattern':
+  case 'ArrayExpression':
+    return node.elements.some((element) => {
+      return hasYieldValue(element, checkYieldReturnValue);
+    });
+  case 'AssignmentPattern':
+    return hasYieldValue(node.right, checkYieldReturnValue);
+
   case 'VariableDeclaration': {
     return node.declarations.some((nde) => {
       return hasYieldValue(nde, checkYieldReturnValue);
     });
   }
   case 'VariableDeclarator': {
-    // Todo: Check `id` too once `ArrayPattern` is implemented (destructuring default)
-    return hasYieldValue(node.init, checkYieldReturnValue);
+    return hasYieldValue(node.id, checkYieldReturnValue) ||
+      hasYieldValue(node.init, checkYieldReturnValue);
   }
   case 'YieldExpression': {
     if (checkYieldReturnValue) {
