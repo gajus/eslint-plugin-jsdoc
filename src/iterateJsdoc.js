@@ -262,6 +262,10 @@ const getUtils = (
     }];
   };
 
+  utils.replaceTagSource = (tag, newTagSource) => {
+    tag.source = newTagSource;
+  };
+
   utils.removeTag = (tagIndex) => {
     const {source} = jsdoc.tags[tagIndex];
     let lastIndex;
