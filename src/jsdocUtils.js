@@ -666,7 +666,6 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'AssignmentPattern':
     return hasNonEmptyResolverCall(node.right, resolverName);
 
-  // Todo: Review all of the types below this for adapting to yields checks
   case 'AssignmentExpression':
   case 'BinaryExpression':
   case 'LogicalExpression': {
@@ -811,6 +810,13 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
       );
     });
   }
+  // istanbul ignore next -- In Babel?
+  case 'OptionalCallExpression':
+  case 'CallExpression':
+    return node.arguments.some((element) => {
+      return hasNonFunctionYield(element, checkYieldReturnValue);
+    });
+  case 'ChainExpression':
   case 'ExpressionStatement': {
     return hasNonFunctionYield(node.expression, checkYieldReturnValue);
   }
@@ -860,6 +866,71 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
     return hasNonFunctionYield(node.id, checkYieldReturnValue) ||
       hasNonFunctionYield(node.init, checkYieldReturnValue);
   }
+
+  case 'AssignmentExpression':
+  case 'BinaryExpression':
+  case 'LogicalExpression': {
+    return hasNonFunctionYield(node.left, checkYieldReturnValue) ||
+      hasNonFunctionYield(node.right, checkYieldReturnValue);
+  }
+
+  // Comma
+  case 'SequenceExpression':
+  case 'TemplateLiteral':
+    return node.expressions.some((subExpression) => {
+      return hasNonFunctionYield(subExpression, checkYieldReturnValue);
+    });
+
+  case 'ObjectPattern':
+  case 'ObjectExpression':
+    return node.properties.some((property) => {
+      return hasNonFunctionYield(property, checkYieldReturnValue);
+    });
+
+  // istanbul ignore next -- In Babel?
+  case 'ObjectProperty':
+  /* eslint-disable no-fallthrough */
+  // istanbul ignore next -- In Babel?
+  case 'ClassProperty':
+  /* eslint-enable no-fallthrough */
+  case 'Property':
+    return node.computed && hasNonFunctionYield(node.key, checkYieldReturnValue) ||
+      hasNonFunctionYield(node.value, checkYieldReturnValue);
+  // istanbul ignore next -- In Babel?
+  case 'ObjectMethod':
+    // istanbul ignore next -- In Babel?
+    return node.computed && hasNonFunctionYield(node.key, checkYieldReturnValue) ||
+      node.arguments.some((nde) => {
+        return hasNonFunctionYield(nde, checkYieldReturnValue);
+      });
+
+  case 'SpreadElement':
+  case 'UnaryExpression':
+    return hasNonFunctionYield(node.argument, checkYieldReturnValue);
+
+  case 'TaggedTemplateExpression':
+    return hasNonFunctionYield(node.quasi, checkYieldReturnValue);
+
+  // ?.
+  // istanbul ignore next -- In Babel?
+  case 'OptionalMemberExpression':
+  case 'MemberExpression':
+    return hasNonFunctionYield(node.object, checkYieldReturnValue) ||
+      hasNonFunctionYield(node.property, checkYieldReturnValue);
+
+  // istanbul ignore next -- In Babel?
+  case 'Import':
+  case 'ImportExpression':
+    return hasNonFunctionYield(node.source, checkYieldReturnValue);
+
+  case 'ReturnStatement': {
+    if (node.argument === null) {
+      return false;
+    }
+
+    return hasNonFunctionYield(node.argument, checkYieldReturnValue);
+  }
+
   case 'YieldExpression': {
     if (checkYieldReturnValue) {
       if (node.parent.type === 'VariableDeclarator') {

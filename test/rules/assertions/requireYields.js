@@ -887,6 +887,26 @@ export default {
            *
            */
           function * quux () {
+            if (false) {
+              return;
+            }
+            return yield true;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
             [yield true];
           }
       `,
@@ -914,6 +934,341 @@ export default {
         },
       ],
       ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            a || (yield true);
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            (r = yield true);
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            a + (yield true);
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            a, yield true;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            +(yield);
+            [...yield];
+            [...+(yield true)];
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            someLabel: {
+              yield true;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            var obj = {
+              [someKey]: 'val',
+              anotherKey: yield true
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            var obj = {
+              [yield true]: 'val',
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            \`abc$\{yield true}\`;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            tagTemp\`abc$\{yield true}\`;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            a.b[yield true].c;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            a.b[yield true].c;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            abc?.[yield true].d?.e(yield true);
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parserOptions: {
+        ecmaVersion: 2_020,
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            const [a = yield true] = arr;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            const {a = yield true} = obj;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            import(yield true);
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parserOptions: {
+        ecmaVersion: 2_020,
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          export function * quux () {
+            yield true;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      options: [{
+        contexts: ['ExportNamedDeclaration'],
+      }],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          class A {
+            /**
+             *
+             */
+            * quux () {
+              yield true;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      options: [{
+        contexts: ['MethodDefinition > FunctionExpression'],
+      }],
+      parserOptions: {
+        sourceType: 'module',
+      },
     },
   ],
   valid: [
