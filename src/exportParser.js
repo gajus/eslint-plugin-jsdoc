@@ -118,7 +118,7 @@ const getSymbol = function (node, globals, scope, opt) {
         // @typescript-eslint/parser, espree, acorn, etc.
         'SpreadElement',
 
-        // babel-eslint
+        // @babel/eslint-parser
         'ExperimentalSpreadProperty',
       ].includes(prop.type)) {
         return;
