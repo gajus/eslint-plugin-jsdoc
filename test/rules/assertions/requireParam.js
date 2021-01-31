@@ -2,7 +2,7 @@
 //   approach over `__dirname`?
 // import {fileURLToPath} from 'url';
 // import {join, dirname} from 'path';
-// join(dirname(fileURLToPath(import.meta.url)), 'babel-eslint')
+// join(dirname(fileURLToPath(import.meta.url)), '@babel/eslint-parser')
 
 export default {
   invalid: [
@@ -1955,7 +1955,7 @@ export default {
         }
       };
       `,
-      parser: require.resolve('babel-eslint'),
+      parser: require.resolve('@babel/eslint-parser'),
     },
     /* eslint-disable no-tabs */
     {
@@ -2682,7 +2682,7 @@ export default {
           /** @const {boolean} test */
           const test = something?.find(_ => _)
       `,
-      parser: require.resolve('babel-eslint'),
+      parser: require.resolve('@babel/eslint-parser'),
     },
     {
       code: `

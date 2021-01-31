@@ -532,7 +532,7 @@ To know all of the AST definitions one may target, it will depend on the
 you are using with ESLint (e.g., `espree` is the default parser for ESLint,
 and this follows [EStree AST](https://github.com/estree/estree) but
 to support the the latest experimental features of JavaScript, one may use
-`babel-eslint` or to be able to have one's rules (including JSDoc rules)
+`@babel/eslint-parser` or to be able to have one's rules (including JSDoc rules)
 apply to TypeScript, one may use `@typescript-eslint/parser`, etc.
 
 So you can look up a particular parser to see its rules, e.g., browse through

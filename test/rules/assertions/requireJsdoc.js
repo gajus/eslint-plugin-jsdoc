@@ -1746,7 +1746,7 @@ function quux (foo) {
         someProperty: boolean; // Flow type annotation.
       }
       `,
-      parser: require.resolve('babel-eslint'),
+      parser: require.resolve('@babel/eslint-parser'),
     },
     {
       code: `
@@ -2572,7 +2572,7 @@ function quux (foo) {
         anotherFunc() {}
       }
       `,
-      parser: require.resolve('babel-eslint'),
+      parser: require.resolve('@babel/eslint-parser'),
     },
     {
       code: `
@@ -3954,7 +3954,7 @@ function quux (foo) {
         },
       },
     ],
-    parser: require.resolve('babel-eslint'),
+    parser: require.resolve('@babel/eslint-parser'),
     parserOptions: {
       ecmaFeatures: {
         jsx: true,
