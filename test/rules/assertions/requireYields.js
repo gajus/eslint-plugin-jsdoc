@@ -881,6 +881,40 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            [yield true];
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function * quux () {
+            const [a = yield true] = [];
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @yields declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
   ],
   valid: [
     {

@@ -1289,6 +1289,25 @@ export default {
            *
            */
           function quux () {
+            return new Promise((resolve, reject) => {
+              const [a = resolve(true)] = [];
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
             return new Promise();
           }
       `,
