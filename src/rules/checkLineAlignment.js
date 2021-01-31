@@ -127,6 +127,7 @@ const isTagSourcesEqual = (tag, otherTag) => {
 };
 
 const checkAlignment = ({
+  applicableTags,
   indent,
   jsdoc,
   utils,
@@ -138,6 +139,10 @@ const checkAlignment = ({
   });
 
   jsdoc.tags.forEach((tag, index) => {
+    if (!applicableTags.includes(tag.tag)) {
+      return;
+    }
+
     const formattedTag = jsdocFormatted.tags[index];
     if (!isTagSourcesEqual(tag, formattedTag)) {
       const fix = () => {
@@ -167,6 +172,7 @@ export default iterateJsdoc(({
     }
 
     checkAlignment({
+      applicableTags,
       indent,
       jsdoc,
       jsdocNode,

@@ -929,9 +929,26 @@ export default {
          * @property {Object.<string, Class>}    dolor
          */
       `,
-      options: [
-        'always',
-      ],
+      options: ['always', {
+        tags: ['typedef', 'property'],
+      }],
+    },
+    {
+      code: `
+        /**
+         * My object.
+         *
+         * @typedef {Object} MyObject
+         *
+         * @property {{a: number, b: string, c}} lorem Description.
+         * @property {Object.<string, Class>}    sit   Description multi words.
+         * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>}    dolor
+         */
+      `,
+      options: ['always', {
+        tags: ['typedef', 'property'],
+      }],
     },
     {
       code: `
