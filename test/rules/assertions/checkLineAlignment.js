@@ -15,6 +15,10 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
       ],
       options: [
         'always',
@@ -25,6 +29,50 @@ export default {
          *
          * @param {string} lorem Description.
          * @param {int}    sit   Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem Description.
+         * @param {int} sit Description multi words.
+         *
+         * @return {string} Return description.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+        {
+          line: 6,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+        {
+          line: 8,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param  {string} lorem Description.
+         * @param  {int}    sit   Description multi words.
+         *
+         * @return {string}       Return description.
          */
         const fn = ( lorem, sit ) => {}
       `,

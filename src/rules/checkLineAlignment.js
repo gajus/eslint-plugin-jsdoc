@@ -1,6 +1,9 @@
 import {
   transforms,
 } from 'comment-parser';
+import {
+  cloneDeep,
+} from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 const {
@@ -97,19 +100,16 @@ const checkNotAlignedPerTag = (utils, tag) => {
   utils.reportJSDoc('Expected JSDoc block lines to not be aligned.', tag, fix, true);
 };
 
-const checkAlignment = ({
+const getJsondocFormatted = ({
   indent,
   jsdoc,
-  jsdocNode,
-  report,
   utils,
 }) => {
+  // It needs to be cloned. Otherwise, the transform overrides the original object.
+  const jsdocClone = cloneDeep(jsdoc);
   const transform = commentFlow(commentAlign(), commentIndent(indent.length));
-  const transformedJsdoc = transform(jsdoc);
-
-  const comment = '/*' + jsdocNode.value + '*/';
+  const transformedJsdoc = transform(jsdocClone);
   const formatted = utils.stringify(transformedJsdoc)
-    .trimStart()
 
     // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/119
     .replace(/\s+\n/g, '\n')
@@ -117,14 +117,35 @@ const checkAlignment = ({
     // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/120
     .replace(/(\n\s+)\*\s+@/g, '$1* @');
 
-  if (comment !== formatted) {
-    report(
-      'Expected JSDoc block lines to be aligned.',
-      (fixer) => {
-        return fixer.replaceText(jsdocNode, formatted);
-      },
-    );
-  }
+  return commentFlow(commentAlign())(utils.commentParser({value: formatted}, indent, false));
+};
+
+const isTagSourcesEqual = (tag, otherTag) => {
+  return tag.source.every((source, index) => {
+    return source.source === otherTag.source[index].source;
+  });
+};
+
+const checkAlignment = ({
+  indent,
+  jsdoc,
+  utils,
+}) => {
+  const jsdocFormatted = getJsondocFormatted({
+    indent,
+    jsdoc,
+    utils,
+  });
+
+  jsdoc.tags.forEach((tag, index) => {
+    const formattedTag = jsdocFormatted.tags[index];
+    if (!isTagSourcesEqual(tag, formattedTag)) {
+      const fix = () => {
+        utils.replaceTagSource(tag, formattedTag.source);
+      };
+      utils.reportJSDoc('Expected JSDoc block lines to be aligned.', tag, fix, true);
+    }
+  });
 };
 
 export default iterateJsdoc(({
