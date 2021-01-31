@@ -85,7 +85,7 @@ const validateDescription = (
       let text = sourceCode.getText(jsdocNode);
 
       if (!/[.:?!]$/u.test(paragraph)) {
-        const line = _.last(paragraph.split('\n'));
+        const line = paragraph.split('\n').pop();
 
         text = text.replace(new RegExp(`${_.escapeRegExp(line)}$`, 'mu'), `${line}.`);
       }
