@@ -2716,29 +2716,39 @@ function quux (foo) {
     },
     {
       code: `
-      export class User {
+      export class MyComponentComponent {
+        @Output()
+        public changed = new EventEmitter();
+
+        public test = 'test';
+
         @Input()
-        public name: string;
+        public value = new EventEmitter();
       }
       `,
       errors: [
         {
-          line: 3,
+          line: 8,
           message: 'Missing JSDoc comment.',
         },
       ],
       options: [{
         contexts: [
-          'ClassProperty:has(Decorator[expression.callee.name="Input"])',
+          'ClassProperty > Decorator[expression.callee.name="Input"]',
         ],
       }],
       output: `
-      export class User {
+      export class MyComponentComponent {
+        @Output()
+        public changed = new EventEmitter();
+
+        public test = 'test';
+
         /**
          *
          */
         @Input()
-        public name: string;
+        public value = new EventEmitter();
       }
       `,
       parser: require.resolve('@typescript-eslint/parser'),

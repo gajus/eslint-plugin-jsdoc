@@ -10652,11 +10652,16 @@ export interface Foo {
 // Options: [{"contexts":["TSPropertySignature","TSMethodSignature"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
 
-export class User {
+export class MyComponentComponent {
+  @Output()
+  public changed = new EventEmitter();
+
+  public test = 'test';
+
   @Input()
-  public name: string;
+  public value = new EventEmitter();
 }
-// Options: [{"contexts":["ClassProperty:has(Decorator[expression.callee.name=\"Input\"])"]}]
+// Options: [{"contexts":["ClassProperty > Decorator[expression.callee.name=\"Input\"]"]}]
 // Message: Missing JSDoc comment.
 ````
 
