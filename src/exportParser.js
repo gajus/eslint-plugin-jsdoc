@@ -439,11 +439,24 @@ const parse = function (ast, node, opt) {
   };
 };
 
+const tsNotInAstExportedType = new Set([
+  'TSPropertySignature',
+  'TSMethodSignature',
+]);
+
 const isUncommentedExport = function (node, sourceCode, opt, settings) {
   // Optimize with ancestor check for esm
   if (opt.esm) {
     const exportNode = getExportAncestor(node);
     if (exportNode && !findJSDocComment(exportNode, sourceCode, settings)) {
+      return true;
+    }
+
+    /** Some typescript types are not in AST, but inherit exported (interface property and method)*/
+    if (
+      tsNotInAstExportedType.has(node.type) &&
+      !findJSDocComment(node, sourceCode, settings)
+    ) {
       return true;
     }
   }

@@ -6,6 +6,124 @@ export default {
   invalid: [
     {
       code: `
+          /** This is comment */
+          export interface Foo {
+            bar(): string;
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'TSMethodSignature',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+        },
+      ],
+      output: `
+          /** This is comment */
+          export interface Foo {
+            /**
+             *
+             */
+            bar(): string;
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /** This is comment */
+          export interface Foo {
+            bar: string;
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'TSPropertySignature',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+            esm: true,
+          },
+        },
+      ],
+      output: `
+          /** This is comment */
+          export interface Foo {
+            /**
+             *
+             */
+            bar: string;
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Foo interface documentation.
+       */
+      export interface Foo extends Bar {
+        /**
+         * baz method documentation.
+         */
+        baz(): void;
+
+        meow(): void;
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [{
+        contexts: [
+          'TSMethodSignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      }],
+      output: `
+      /**
+       * Foo interface documentation.
+       */
+      export interface Foo extends Bar {
+        /**
+         * baz method documentation.
+         */
+        baz(): void;
+
+        /**
+         *
+         */
+        meow(): void;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
 function quux (foo) {
 
 }`,
