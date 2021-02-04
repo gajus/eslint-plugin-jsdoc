@@ -10041,6 +10041,34 @@ Defaults to `true`.
 The following patterns are considered problems:
 
 ````js
+/** This is comment */
+export interface Foo {
+  bar(): string;
+}
+// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+// Message: Missing JSDoc comment.
+
+/** This is comment */
+export interface Foo {
+  bar: string;
+}
+// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true,"esm":true}}]
+// Message: Missing JSDoc comment.
+
+/**
+ * Foo interface documentation.
+ */
+export interface Foo extends Bar {
+  /**
+   * baz method documentation.
+   */
+  baz(): void;
+
+  meow(): void;
+}
+// Options: [{"contexts":["TSMethodSignature"],"publicOnly":{"ancestorsOnly":true}}]
+// Message: Missing JSDoc comment.
+
 function quux (foo) {
 
 }
