@@ -359,6 +359,40 @@ const getExportAncestor = function (nde) {
   return false;
 };
 
+const canExportedByAncestorType = new Set([
+  'TSPropertySignature',
+  'TSMethodSignature',
+  'ClassProperty',
+  'Method',
+]);
+
+const canExportChildrenType = new Set([
+  'TSInterfaceBody',
+  'TSInterfaceDeclaration',
+  'ClassDefinition',
+  'ClassExpression',
+  'Program',
+]);
+
+const isExportByAncestor = function (nde) {
+  if (!canExportedByAncestorType.has(nde.type)) {
+    return false;
+  }
+  let node = nde.parent;
+  while (node) {
+    if (exportTypes.has(node.type)) {
+      return node;
+    }
+
+    if (!canExportChildrenType.has(node.type)) {
+      return false;
+    }
+    node = node.parent;
+  }
+
+  return false;
+};
+
 const findExportedNode = function (block, node, cache) {
   /* istanbul ignore next */
   if (block === null) {
@@ -440,10 +474,21 @@ const parse = function (ast, node, opt) {
 };
 
 const isUncommentedExport = function (node, sourceCode, opt, settings) {
+  // console.log({node});
   // Optimize with ancestor check for esm
   if (opt.esm) {
     const exportNode = getExportAncestor(node);
+
+    // Is export node comment
     if (exportNode && !findJSDocComment(exportNode, sourceCode, settings)) {
+      return true;
+    }
+
+    /** Some typescript types are not in variable map, but inherit exported (interface property and method)*/
+    if (
+      isExportByAncestor(node) &&
+      !findJSDocComment(node, sourceCode, settings)
+    ) {
       return true;
     }
   }
