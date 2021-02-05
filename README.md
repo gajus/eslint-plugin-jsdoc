@@ -10043,6 +10043,24 @@ The following patterns are considered problems:
 ````js
 /** This is comment */
 export interface Foo {
+  /** This is comment x2 */
+  tom: string;
+  catchJerry(): boolean;
+}
+// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true,"ClassExpression":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+/** This is comment */
+export interface Foo {
+  /** This is comment x2 */
+  tom: string;
+  jerry: number;
+}
+// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true,"ClassExpression":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+/** This is comment */
+export interface Foo {
   bar(): string;
 }
 // Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
@@ -10696,6 +10714,43 @@ export class MyComponentComponent {
 The following patterns are not considered problems:
 
 ````js
+interface FooBar {
+  fooBar: string;
+}
+// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+
+/** This is comment */
+interface FooBar {
+  fooBar: string;
+}
+// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+
+/** This is comment */
+export class Foo {
+  someMethod() {
+    interface FooBar {
+      fooBar: string;
+    }
+  }
+}
+// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+
+/** This is comment */
+function someFunciton() {
+  interface FooBar {
+    fooBar: string;
+  }
+}
+// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+
+/** This is comment */
+export function foo() {
+  interface bar {
+    fooBar: string;
+  }
+}
+// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+
 /**
  *
  */
