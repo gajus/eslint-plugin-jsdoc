@@ -8,6 +8,96 @@ export default {
       code: `
           /** This is comment */
           export interface Foo {
+            /** This is comment x2 */
+            tom: string;
+            catchJerry(): boolean;
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'TSMethodSignature',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            ClassDeclaration: true,
+            ClassExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+          /** This is comment */
+          export interface Foo {
+            /** This is comment x2 */
+            tom: string;
+            /**
+             *
+             */
+            catchJerry(): boolean;
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /** This is comment */
+          export interface Foo {
+            /** This is comment x2 */
+            tom: string;
+            jerry: number;
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'TSPropertySignature',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            ClassDeclaration: true,
+            ClassExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+          /** This is comment */
+          export interface Foo {
+            /** This is comment x2 */
+            tom: string;
+            /**
+             *
+             */
+            jerry: number;
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /** This is comment */
+          export interface Foo {
             bar(): string;
           }
       `,
@@ -2873,6 +2963,114 @@ function quux (foo) {
     },
   ],
   valid: [{
+    code: `
+      interface FooBar {
+        fooBar: string;
+      }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSMethodSignature',
+          'TSPropertySignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  }, {
+    code: `
+      /** This is comment */
+      interface FooBar {
+        fooBar: string;
+      }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSMethodSignature',
+          'TSPropertySignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  }, {
+    code: `
+        /** This is comment */
+        export class Foo {
+          someMethod() {
+            interface FooBar {
+              fooBar: string;
+            }
+          }
+        }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSMethodSignature',
+          'TSPropertySignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  }, {
+    code: `
+        /** This is comment */
+        function someFunciton() {
+          interface FooBar {
+            fooBar: string;
+          }
+        }
+
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSMethodSignature',
+          'TSPropertySignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  }, {
+    code: `
+        /** This is comment */
+        export function foo() {
+          interface bar {
+            fooBar: string;
+          }
+        }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSMethodSignature',
+          'TSPropertySignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  }, {
     code: `
         /**
          *
