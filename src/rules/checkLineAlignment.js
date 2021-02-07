@@ -109,13 +109,7 @@ const checkAlignment = ({
 
   const comment = '/*' + jsdocNode.value + '*/';
   const formatted = utils.stringify(transformedJsdoc)
-    .trimStart()
-
-    // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/119
-    .replace(/\s+\n/g, '\n')
-
-    // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/120
-    .replace(/(\n\s+)\*\s+@/g, '$1* @');
+    .trimStart();
 
   if (comment !== formatted) {
     report(
