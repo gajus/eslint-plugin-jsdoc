@@ -20,7 +20,6 @@ const flattenRoots = (params, root = '') => {
   let hasPropertyRest = false;
   const rests = [];
 
-  // eslint-disable-next-line unicorn/no-reduce
   const names = params.reduce((acc, cur) => {
     if (Array.isArray(cur)) {
       let nms;
