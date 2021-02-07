@@ -168,5 +168,19 @@ export default {
            */
       `,
     },
+    {
+      code: `
+      /**
+       * Checks if the XML document sort of equals another XML document.
+       * @param {Object} obj The other object.
+       * @param {{includeWhiteSpace: (boolean|undefined),
+       *    ignoreElementOrder: (boolean|undefined)}} [options] The options.
+       * @return {expect.Assertion} The assertion.
+       */
+      expect.Assertion.prototype.xmleql = function (obj, options) {
+      }
+      `,
+      ignoreReadme: true,
+    },
   ],
 };
