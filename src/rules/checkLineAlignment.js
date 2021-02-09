@@ -2,6 +2,9 @@ import {
   transforms,
 } from 'comment-parser';
 import {
+  rewireSpecs,
+} from 'comment-parser/lib/util';
+import {
   cloneDeep,
 } from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
@@ -100,7 +103,26 @@ const checkNotAlignedPerTag = (utils, tag) => {
   utils.reportJSDoc('Expected JSDoc block lines to not be aligned.', tag, fix, true);
 };
 
+const filterApplicableTags = (jsdoc, applicableTags) => {
+  const filteredJsdoc = {
+    ...jsdoc,
+    source: jsdoc.source.filter((source) => {
+      if ('' === source.tokens.tag) {
+        return true;
+      }
+
+      return applicableTags.includes(source.tokens.tag.replace('@', ''));
+    }),
+    tags: jsdoc.tags.filter((tag) => {
+      return applicableTags.includes(tag.tag);
+    }),
+  };
+
+  return rewireSpecs(filteredJsdoc);
+};
+
 const getJsondocFormatted = ({
+  applicableTags,
   indent,
   jsdoc,
   utils,
@@ -108,7 +130,8 @@ const getJsondocFormatted = ({
   // It needs to be cloned. Otherwise, the transform overrides the original object.
   const jsdocClone = cloneDeep(jsdoc);
   const transform = commentFlow(commentAlign(), commentIndent(indent.length));
-  const transformedJsdoc = transform(jsdocClone);
+  const filteredClone = filterApplicableTags(jsdocClone, applicableTags);
+  const transformedJsdoc = transform(filteredClone);
   const formatted = utils.stringify(transformedJsdoc)
 
     // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/119
@@ -117,7 +140,9 @@ const getJsondocFormatted = ({
     // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/120
     .replace(/(\n\s+)\*\s+@/g, '$1* @');
 
-  return commentFlow(commentAlign())(utils.commentParser({value: formatted}, indent, false));
+  const parsed = utils.commentParser({value: formatted}, indent, false);
+
+  return commentFlow(commentAlign())(parsed);
 };
 
 const isTagSourcesEqual = (tag, otherTag) => {
@@ -128,25 +153,29 @@ const isTagSourcesEqual = (tag, otherTag) => {
 
 const checkAlignment = ({
   applicableTags,
+  foundTags,
   indent,
   jsdoc,
   utils,
 }) => {
   const jsdocFormatted = getJsondocFormatted({
+    applicableTags,
     indent,
     jsdoc,
     utils,
   });
 
-  jsdoc.tags.forEach((tag, index) => {
-    if (!applicableTags.includes(tag.tag)) {
-      return;
-    }
-
+  foundTags.forEach((tag, index) => {
     const formattedTag = jsdocFormatted.tags[index];
     if (!isTagSourcesEqual(tag, formattedTag)) {
       const fix = () => {
-        utils.replaceTagSource(tag, formattedTag.source);
+        const newSource = formattedTag.source.map((source, sourceIndex) => {
+          return {
+            ...source,
+            number: tag.source[sourceIndex].number,
+          };
+        });
+        utils.replaceTagSource(tag, newSource);
       };
       utils.reportJSDoc('Expected JSDoc block lines to be aligned.', tag, fix, true);
     }
@@ -157,13 +186,13 @@ export default iterateJsdoc(({
   indent,
   jsdoc,
   jsdocNode,
-  report,
   context,
   utils,
 }) => {
   const {
     tags: applicableTags = ['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return'],
   } = context.options[1] || {};
+  const foundTags = utils.getPresentTags(applicableTags);
 
   if (context.options[0] === 'always') {
     // Skip if it contains only a single line.
@@ -173,17 +202,15 @@ export default iterateJsdoc(({
 
     checkAlignment({
       applicableTags,
+      foundTags,
       indent,
       jsdoc,
-      jsdocNode,
-      report,
       utils,
     });
 
     return;
   }
 
-  const foundTags = utils.getPresentTags(applicableTags);
   foundTags.forEach((tag) => {
     checkNotAlignedPerTag(utils, tag);
   });

@@ -15,6 +15,32 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem Description.
+         * @param {int}    sit   Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem Description.
+         * @param {int}    sit   Description multi line
+         *                              second line.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
         {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
@@ -28,7 +54,8 @@ export default {
          * Function description.
          *
          * @param {string} lorem Description.
-         * @param {int}    sit   Description multi words.
+         * @param {int}    sit   Description multi line
+         *                       second line.
          */
         const fn = ( lorem, sit ) => {}
       `,
@@ -56,6 +83,79 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+        {
+          line: 8,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param  {string} lorem Description.
+         * @param {int} sit Description multi words.
+         *
+         * @return {string} Return description.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param  {string} lorem Description.
+         * @param {int} sit Description multi words.
+         *
+         * @return {string} Return description.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+        {
+          line: 8,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param  {string} lorem Description.
+         * @param  {int}    sit   Description multi words.
+         *
+         * @return {string} Return description.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param  {string} lorem Description.
+         * @param  {int}    sit   Description multi words.
+         *
+         * @return {string} Return description.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
         {
           line: 8,
           message: 'Expected JSDoc block lines to be aligned.',
@@ -140,7 +240,7 @@ export default {
         /**
          * Function description.
          *
-         * @param  {string} lorem Description.
+         * @param {string} lorem Description.
          *  @param {int}    sit   Description multi words.
          */
         const fn = ( lorem, sit ) => {}
@@ -179,6 +279,39 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem Description.
+          * @param {int}    sit   Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem Description.
+          * @param {int}    sit   Description multi words.
+        */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
       ],
       options: [
         'always',
@@ -208,6 +341,10 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
       ],
       options: [
         'always',
@@ -217,7 +354,7 @@ export default {
          * Function description.
          *
          * @param {string} lorem Description.
-         * @param {int}    sit   Description multi words.
+         * @param  {int}    sit   Description multi words.
          */
         const fn = ( lorem, sit ) => {}
       `,
@@ -364,6 +501,10 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
       ],
       options: [
         'always',
@@ -371,8 +512,8 @@ export default {
       output: `
         /**
          * @namespace
-         * @property  {object} defaults       Description.
-         * @property  {int}    defaults.lorem Description multi words.
+         * @property {object} defaults       Description.
+         * @property {int} defaults.lorem Description multi words.
          */
         const config = {
             defaults: {
@@ -405,10 +546,10 @@ export default {
         /**
          * My object.
          *
-         * @typedef  {Object} MyObject
+         * @typedef {Object} MyObject
          *
-         * @property {string} lorem    Description.
-         * @property {int}    sit      Description multi words.
+         * @property {string} lorem Description.
+         * @property {int}    sit   Description multi words.
          */
       `,
     },
@@ -430,6 +571,14 @@ export default {
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
       ],
       options: [
         'always',
@@ -438,12 +587,12 @@ export default {
         /**
          * My object.
          *
-         * @typedef  {Object}                    MyObject
+         * @typedef {Object} MyObject
          *
-         * @property {{a: number, b: string, c}} lorem    Description.
-         * @property {Object.<string, Class>}    sit      Description multi words.
-         * @property {Object.<string, Class>}    amet     Description} weird {multi} {{words}}.
-         * @property {Object.<string, Class>}    dolor
+         * @property {{a: number, b: string, c}} lorem Description.
+         * @property {Object.<string, Class>}    sit   Description multi words.
+         * @property {Object.<string, Class>} amet Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>} dolor
          */
       `,
     },
@@ -772,6 +921,21 @@ export default {
         /**
          * Function description.
          *
+         * @param {string} lorem Description.
+         * @param {int}    sit   Description multi line
+         *                       second line.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
          * @param {string} lorem - Description.
          * @param {int}    sit   - Description multi words.
          */
@@ -888,8 +1052,8 @@ export default {
       code: `
         /**
          * @namespace
-         * @property  {object} defaults       Description.
-         * @property  {int}    defaults.lorem Description multi words.
+         * @property {object} defaults       Description.
+         * @property {int}    defaults.lorem Description multi words.
          */
         const config = {
             defaults: {
@@ -904,12 +1068,29 @@ export default {
     {
       code: `
         /**
+         * @namespace
+         * @property  {object} defaults       Description.
+         * @property  {int}    defaults.lorem Description multi words.
+         */
+        const config = {
+            defaults: {
+                lorem: 1
+            }
+        }
+      `,
+      options: ['always', {
+        tags: ['namespace', 'property'],
+      }],
+    },
+    {
+      code: `
+        /**
          * My object.
          *
-         * @typedef  {Object} MyObject
+         * @typedef {Object} MyObject
          *
-         * @property {string} lorem    Description.
-         * @property {int}    sit      Description multi words.
+         * @property {string} lorem Description.
+         * @property {int}    sit   Description multi words.
          */
       `,
       options: [
@@ -947,7 +1128,7 @@ export default {
          */
       `,
       options: ['always', {
-        tags: ['typedef', 'property'],
+        tags: ['property'],
       }],
     },
     {
