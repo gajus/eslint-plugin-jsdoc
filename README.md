@@ -1908,6 +1908,53 @@ const fn = ( lorem, sit ) => {}
 /**
  * Function description.
  *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description multi line
+ *                              second line.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi words.
+ *
+ * @return {string} Return description.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param  {string} lorem Description.
+ * @param {int} sit Description multi words.
+ *
+ * @return {string} Return description.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param  {string} lorem Description.
+ * @param  {int}    sit   Description multi words.
+ *
+ * @return {string} Return description.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
  * @param {string} lorem - Description.
  * @param {int} sit - Description multi words.
  */
@@ -1928,7 +1975,7 @@ const fn = ( lorem, sit ) => {}
 /**
  * Function description.
  *
- * @param  {string} lorem Description.
+ * @param {string} lorem Description.
  *  @param {int}    sit   Description multi words.
  */
 const fn = ( lorem, sit ) => {}
@@ -1941,6 +1988,16 @@ const fn = ( lorem, sit ) => {}
  * @param  {string} lorem Description.
   * @param {int}    sit   Description multi words.
  */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+  * @param {int}    sit   Description multi words.
+*/
 const fn = ( lorem, sit ) => {}
 // Options: ["always"]
 // Message: Expected JSDoc block lines to be aligned.
@@ -2154,6 +2211,16 @@ const fn = ( lorem, sit ) => {}
 /**
  * Function description.
  *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description multi line
+ *                       second line.
+ */
+const fn = ( lorem, sit ) => {}
+// Options: ["always"]
+
+/**
+ * Function description.
+ *
  * @param {string} lorem - Description.
  * @param {int}    sit   - Description multi words.
  */
@@ -2225,8 +2292,8 @@ const fn = ( lorem, sit ) => {}
 
 /**
  * @namespace
- * @property  {object} defaults       Description.
- * @property  {int}    defaults.lorem Description multi words.
+ * @property {object} defaults       Description.
+ * @property {int}    defaults.lorem Description multi words.
  */
 const config = {
     defaults: {
@@ -2236,12 +2303,24 @@ const config = {
 // Options: ["always"]
 
 /**
+ * @namespace
+ * @property  {object} defaults       Description.
+ * @property  {int}    defaults.lorem Description multi words.
+ */
+const config = {
+    defaults: {
+        lorem: 1
+    }
+}
+// Options: ["always",{"tags":["namespace","property"]}]
+
+/**
  * My object.
  *
- * @typedef  {Object} MyObject
+ * @typedef {Object} MyObject
  *
- * @property {string} lorem    Description.
- * @property {int}    sit      Description multi words.
+ * @property {string} lorem Description.
+ * @property {int}    sit   Description multi words.
  */
 // Options: ["always"]
 
@@ -2255,7 +2334,19 @@ const config = {
  * @property {Object.<string, Class>}    amet     Description} weird {multi} {{words}}.
  * @property {Object.<string, Class>}    dolor
  */
-// Options: ["always"]
+// Options: ["always",{"tags":["typedef","property"]}]
+
+/**
+ * My object.
+ *
+ * @typedef {Object} MyObject
+ *
+ * @property {{a: number, b: string, c}} lorem Description.
+ * @property {Object.<string, Class>}    sit   Description multi words.
+ * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+ * @property {Object.<string, Class>}    dolor
+ */
+// Options: ["always",{"tags":["property"]}]
 
 /** @param {number} lorem */
 const fn = ( lorem ) => {}
