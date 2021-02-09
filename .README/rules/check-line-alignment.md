@@ -15,8 +15,8 @@ After the string, an options object is allowed with the following properties.
 
 ##### `tags`
 
-Use this to change the tags which are sought for alignment. Defaults to an
-array of
+Use this to change the tags which are sought for alignment changes. *Currently*
+*only works with the "never" option.* Defaults to an array of
 `['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return']`.
 
 |||

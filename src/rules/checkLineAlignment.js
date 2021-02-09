@@ -132,14 +132,7 @@ const getJsondocFormatted = ({
   const transform = commentFlow(commentAlign(), commentIndent(indent.length));
   const filteredClone = filterApplicableTags(jsdocClone, applicableTags);
   const transformedJsdoc = transform(filteredClone);
-  const formatted = utils.stringify(transformedJsdoc)
-
-    // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/119
-    .replace(/\s+\n/g, '\n')
-
-    // Temporary until comment-parser fix: https://github.com/syavorsky/comment-parser/issues/120
-    .replace(/(\n\s+)\*\s+@/g, '$1* @');
-
+  const formatted = utils.stringify(transformedJsdoc);
   const parsed = utils.commentParser({value: formatted}, indent, false);
 
   return commentFlow(commentAlign())(parsed);

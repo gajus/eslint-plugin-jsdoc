@@ -6,6 +6,214 @@ export default {
   invalid: [
     {
       code: `
+          /** This is comment */
+          export interface Foo {
+            /** This is comment x2 */
+            tom: string;
+            catchJerry(): boolean;
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'TSMethodSignature',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            ClassDeclaration: true,
+            ClassExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+          /** This is comment */
+          export interface Foo {
+            /** This is comment x2 */
+            tom: string;
+            /**
+             *
+             */
+            catchJerry(): boolean;
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /** This is comment */
+          export interface Foo {
+            /** This is comment x2 */
+            tom: string;
+            jerry: number;
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'TSPropertySignature',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            ClassDeclaration: true,
+            ClassExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      output: `
+          /** This is comment */
+          export interface Foo {
+            /** This is comment x2 */
+            tom: string;
+            /**
+             *
+             */
+            jerry: number;
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /** This is comment */
+          export interface Foo {
+            bar(): string;
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'TSMethodSignature',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+        },
+      ],
+      output: `
+          /** This is comment */
+          export interface Foo {
+            /**
+             *
+             */
+            bar(): string;
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /** This is comment */
+          export interface Foo {
+            bar: string;
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+          type: 'TSPropertySignature',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+            esm: true,
+          },
+        },
+      ],
+      output: `
+          /** This is comment */
+          export interface Foo {
+            /**
+             *
+             */
+            bar: string;
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Foo interface documentation.
+       */
+      export interface Foo extends Bar {
+        /**
+         * baz method documentation.
+         */
+        baz(): void;
+
+        meow(): void;
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [{
+        contexts: [
+          'TSMethodSignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      }],
+      output: `
+      /**
+       * Foo interface documentation.
+       */
+      export interface Foo extends Bar {
+        /**
+         * baz method documentation.
+         */
+        baz(): void;
+
+        /**
+         *
+         */
+        meow(): void;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
 function quux (foo) {
 
 }`,
@@ -1746,7 +1954,7 @@ function quux (foo) {
         someProperty: boolean; // Flow type annotation.
       }
       `,
-      parser: require.resolve('babel-eslint'),
+      parser: require.resolve('@babel/eslint-parser'),
     },
     {
       code: `
@@ -2572,7 +2780,7 @@ function quux (foo) {
         anotherFunc() {}
       }
       `,
-      parser: require.resolve('babel-eslint'),
+      parser: require.resolve('@babel/eslint-parser'),
     },
     {
       code: `
@@ -2716,35 +2924,153 @@ function quux (foo) {
     },
     {
       code: `
-      export class User {
+      export class MyComponentComponent {
+        @Output()
+        public changed = new EventEmitter();
+
+        public test = 'test';
+
         @Input()
-        public name: string;
+        public value = new EventEmitter();
       }
       `,
       errors: [
         {
-          line: 3,
+          line: 8,
           message: 'Missing JSDoc comment.',
         },
       ],
       options: [{
         contexts: [
-          'ClassProperty:has(Decorator[expression.callee.name="Input"])',
+          'ClassProperty > Decorator[expression.callee.name="Input"]',
         ],
       }],
       output: `
-      export class User {
+      export class MyComponentComponent {
+        @Output()
+        public changed = new EventEmitter();
+
+        public test = 'test';
+
         /**
          *
          */
         @Input()
-        public name: string;
+        public value = new EventEmitter();
       }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
   valid: [{
+    code: `
+      interface FooBar {
+        fooBar: string;
+      }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSMethodSignature',
+          'TSPropertySignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  }, {
+    code: `
+      /** This is comment */
+      interface FooBar {
+        fooBar: string;
+      }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSMethodSignature',
+          'TSPropertySignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  }, {
+    code: `
+        /** This is comment */
+        export class Foo {
+          someMethod() {
+            interface FooBar {
+              fooBar: string;
+            }
+          }
+        }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSMethodSignature',
+          'TSPropertySignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  }, {
+    code: `
+        /** This is comment */
+        function someFunciton() {
+          interface FooBar {
+            fooBar: string;
+          }
+        }
+
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSMethodSignature',
+          'TSPropertySignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  }, {
+    code: `
+        /** This is comment */
+        export function foo() {
+          interface bar {
+            fooBar: string;
+          }
+        }
+    `,
+    options: [
+      {
+        contexts: [
+          'TSInterfaceDeclaration',
+          'TSMethodSignature',
+          'TSPropertySignature',
+        ],
+        publicOnly: {
+          ancestorsOnly: true,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+  }, {
     code: `
         /**
          *
@@ -3954,7 +4280,7 @@ function quux (foo) {
         },
       },
     ],
-    parser: require.resolve('babel-eslint'),
+    parser: require.resolve('@babel/eslint-parser'),
     parserOptions: {
       ecmaFeatures: {
         jsx: true,

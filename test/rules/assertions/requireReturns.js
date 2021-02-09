@@ -22,6 +22,25 @@ export default {
           /**
            *
            */
+          function quux (foo) {
+            someLabel: {
+              return foo;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
           const foo = () => ({
             bar: 'baz'
           })
@@ -519,6 +538,1004 @@ export default {
         {
           line: 2,
           message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+            return new Promise(function (resolve, reject) {
+              resolve(foo);
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+            return new Promise(function (resolve, reject) {
+              setTimeout(() => {
+                resolve(true);
+              });
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+            return new Promise(function (resolve, reject) {
+              foo(resolve);
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              while(true) {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              do {
+                resolve(true);
+              }
+              while(true)
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              if (true) {
+                resolve(true);
+              }
+              return;
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              if (resolve(true)) {
+                return;
+              }
+              return;
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              if (true) {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              true ? resolve(true) : null;
+              return;
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            var a = {};
+            return new Promise((resolve, reject) => {
+              with (a) {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            var a = {};
+            return new Promise((resolve, reject) => {
+              try {
+                resolve(true);
+              } catch (err) {}
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            var a = {};
+            return new Promise((resolve, reject) => {
+              try {
+              } catch (err) {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            var a = {};
+            return new Promise((resolve, reject) => {
+              try {
+              } catch (err) {
+              } finally {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            var a = {};
+            return new Promise((resolve, reject) => {
+              switch (a) {
+              case 'abc':
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              if (true) {
+                resolve();
+              } else {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              for (let i = 0; i < 5 ; i++) {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              for (const i of obj) {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              for (const i in obj) {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              if (true) {
+                return;
+              } else {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              function a () {
+                resolve(true);
+              }
+              a();
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              return () => {
+                identifierForCoverage;
+                resolve(true);
+              };
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              a || resolve(true);
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              (r = resolve(true));
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              a + (resolve(true));
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              a, resolve(true);
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              +resolve();
+              [...resolve()];
+              [...+resolve(true)];
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise(function * (resolve, reject) {
+              yield resolve(true)
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise(async function (resolve, reject) {
+              await resolve(true)
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              someLabel: {
+                resolve(true);
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              var obj = {
+                [someKey]: 'val',
+                anotherKey: resolve(true)
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              var obj = {
+                [resolve(true)]: 'val',
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              \`abc$\{resolve(true)}\`;
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              tagTemp\`abc$\{resolve(true)}\`;
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              a.b[resolve(true)].c;
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              a.b[resolve(true)].c;
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              abc?.[resolve(true)].d?.e(resolve(true));
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parserOptions: {
+        ecmaVersion: 2_020,
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              const [a = resolve(true)] = arr;
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              const {a = resolve(true)} = obj;
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              import(resolve(true));
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parserOptions: {
+        ecmaVersion: 2_020,
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              class A {
+                method1 () {
+                  resolve();
+                }
+                @dec(function () {
+                  resolve()
+                })
+                method2 () {
+                  resolve(true);
+                }
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              class A {
+                method1 () {
+                  resolve();
+                }
+                @dec(function () {
+                  resolve(true)
+                })
+                method2 () {}
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              const a = class {
+                [b] () {
+                  resolve();
+                }
+                method1 () {
+                  resolve(true);
+                }
+                method2 () {}
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              const a = class {
+                [b] () {
+                  resolve(true);
+                }
+              }
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          export function quux () {
+            return new Promise((resolve, reject) => {
+              resolve(true);
+            });
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise();
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          forceReturnsWithAsync: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          async function quux () {
+            return new Promise();
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          forceReturnsWithAsync: true,
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          async function quux () {
+            return new Promise((resolve, reject) => {});
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          forceReturnsWithAsync: true,
         },
       ],
       parserOptions: {
@@ -1184,6 +2201,115 @@ export default {
           checkGetters: false,
         },
       ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+            return new Promise(function (resolve, reject) {
+              resolve();
+            });
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+            return new Promise(function (resolve, reject) {
+              setTimeout(() => {
+                resolve();
+              });
+            });
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+            return new Promise(function (resolve, reject) {
+              foo();
+            });
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+            return new Promise(function (resolve, reject) {
+              abc((resolve) => {
+                resolve(true);
+              });
+            });
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+            return new Promise(function (resolve, reject) {
+              abc(function (resolve) {
+                resolve(true);
+              });
+            });
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise((resolve, reject) => {
+              if (true) {
+                resolve();
+              }
+            });
+            return;
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux () {
+            return new Promise();
+          }
+      `,
+    },
+    {
+      code: `
+        /**
+         * Description.
+         */
+        async function foo() {
+          return new Promise(resolve => resolve());
+        }
+      `,
+      parserOptions: {
+        ecmaVersion: 8,
+      },
     },
   ],
 };

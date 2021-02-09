@@ -7,6 +7,10 @@ import Gitdown from 'gitdown';
 import glob from 'glob';
 import _ from 'lodash';
 
+const removeReadmeIgnores = ({ignoreReadme}) => {
+  return !ignoreReadme;
+};
+
 const trimCode = (code) => {
   let lines = code.replace(/^\n/u, '').trimEnd().split('\n');
 
@@ -59,8 +63,8 @@ const getAssertions = () => {
     const codes = require(filePath);
 
     return {
-      invalid: _.map(codes.invalid, formatCodeSnippet),
-      valid: _.map(codes.valid, formatCodeSnippet),
+      invalid: codes.invalid.filter(removeReadmeIgnores).map(formatCodeSnippet),
+      valid: codes.valid.filter(removeReadmeIgnores).map(formatCodeSnippet),
     };
   });
 

@@ -39,8 +39,7 @@ export default iterateJsdoc(({
   let definedPreferredTypes = [];
   const {preferredTypes, mode} = settings;
   if (Object.keys(preferredTypes).length) {
-    // Replace `_.values` with `Object.values` when we may start requiring Node 7+
-    definedPreferredTypes = _.values(preferredTypes).map((preferredType) => {
+    definedPreferredTypes = Object.values(preferredTypes).map((preferredType) => {
       if (typeof preferredType === 'string') {
         // May become an empty string but will be filtered out below
         return stripPseudoTypes(preferredType);
@@ -157,7 +156,7 @@ export default iterateJsdoc(({
       if (type === 'NAME') {
         if (!allDefinedTypes.has(name)) {
           report(`The type '${name}' is undefined.`, null, tag);
-        } else if (!_.includes(extraTypes, name)) {
+        } else if (!extraTypes.includes(name)) {
           context.markVariableAsUsed(name);
         }
       }

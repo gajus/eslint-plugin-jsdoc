@@ -85,7 +85,9 @@ export default iterateJsdoc(({
       return true;
     }
 
-    return iteratingFunction && utils.hasReturnValue();
+    return iteratingFunction && utils.hasValueOrExecutorHasNonEmptyResolveValue(
+      forceReturnsWithAsync,
+    );
   };
 
   if (shouldReport()) {

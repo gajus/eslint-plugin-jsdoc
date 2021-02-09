@@ -74,12 +74,14 @@ const ruleTester = new RuleTester();
   }
 
   assertions.invalid = assertions.invalid.map((assertion) => {
+    Reflect.deleteProperty(assertion, 'ignoreReadme');
     assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
 
     return assertion;
   });
 
   assertions.valid = assertions.valid.map((assertion) => {
+    Reflect.deleteProperty(assertion, 'ignoreReadme');
     if (assertion.errors) {
       throw new Error(`Valid assertions for rule ${ruleName} should not have an \`errors\` array.`);
     }
