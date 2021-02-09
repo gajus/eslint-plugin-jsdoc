@@ -144,6 +144,15 @@ const isTagSourcesEqual = (tag, otherTag) => {
   });
 };
 
+const getFormattedSource = (tag, formattedTag) => {
+  return formattedTag.source.map((source, index) => {
+    return {
+      ...source,
+      number: tag.source[index].number,
+    };
+  });
+};
+
 const checkAlignment = ({
   applicableTags,
   foundTags,
@@ -162,13 +171,8 @@ const checkAlignment = ({
     const formattedTag = jsdocFormatted.tags[index];
     if (!isTagSourcesEqual(tag, formattedTag)) {
       const fix = () => {
-        const newSource = formattedTag.source.map((source, sourceIndex) => {
-          return {
-            ...source,
-            number: tag.source[sourceIndex].number,
-          };
-        });
-        utils.replaceTagSource(tag, newSource);
+        const formattedSource = getFormattedSource(tag, formattedTag);
+        utils.replaceTagSource(tag, formattedSource);
       };
       utils.reportJSDoc('Expected JSDoc block lines to be aligned.', tag, fix, true);
     }
