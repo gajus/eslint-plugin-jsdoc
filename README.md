@@ -164,8 +164,9 @@ You can then selectively add to or override the recommended rules.
 Rules may, as per the [ESLint user guide](https://eslint.org/docs/user-guide/configuring), have their own individual options. In `eslint-plugin-jsdoc`, a few options,
 such as, `exemptedBy` and `contexts`, may be used across different rules.
 
-`eslint-plugin-jsdoc` options, if present, are in the form of an object
-supplied as the second argument in an array after the error level.
+`eslint-plugin-jsdoc` options, if present, are generally in the form of an
+object supplied as the second argument in an array after the error level
+(any exceptions to this format are explained within that rule's docs).
 
 ```js
 // `.eslintrc.js`
@@ -1887,7 +1888,7 @@ Use this to change the tags which are sought for alignment changes. *Currently*
 |||
 |---|---|
 |Context|everywhere|
-|Options|(a string matching `"always"|"never"` and optional object with `tags`)|
+|Options|(a string matching `"always" or "never"` and optional object with `tags`)|
 |Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|
@@ -6696,7 +6697,7 @@ description. The default value is `"always"`.
 |---|---|
 |Context|everywhere|
 |Tags|N/A (doc block)|
-|Options|(a string matching `"always"|"never"`)|
+|Options|(a string matching `"always" or "never"`)|
 |Recommended|true|
 
 The following patterns are considered problems:
@@ -9735,7 +9736,7 @@ other tags besides the `@param` tag (or the `@arg` tag if so set):
 |Tags|`param` and optionally other tags within `tags`|
 |Aliases|`arg`, `argument`; potentially `prop` or other aliases|
 |Recommended|false|
-|Options|(a string matching `"always"|"never"`) followed by an optional object with a `tags` property|
+|Options|a string matching `"always" or "never"` followed by an optional object with a `tags` property|
 
 The following patterns are considered problems:
 

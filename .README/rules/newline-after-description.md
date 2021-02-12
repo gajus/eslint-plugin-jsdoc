@@ -13,7 +13,7 @@ description. The default value is `"always"`.
 |---|---|
 |Context|everywhere|
 |Tags|N/A (doc block)|
-|Options|(a string matching `"always"|"never"`)|
+|Options|(a string matching `"always" or "never"`)|
 |Recommended|true|
 
 <!-- assertions newlineAfterDescription -->

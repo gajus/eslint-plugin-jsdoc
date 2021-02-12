@@ -22,7 +22,7 @@ Use this to change the tags which are sought for alignment changes. *Currently*
 |||
 |---|---|
 |Context|everywhere|
-|Options|(a string matching `"always"|"never"` and optional object with `tags`)|
+|Options|(a string matching `"always" or "never"` and optional object with `tags`)|
 |Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|

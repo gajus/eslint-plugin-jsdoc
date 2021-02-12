@@ -104,8 +104,9 @@ You can then selectively add to or override the recommended rules.
 Rules may, as per the [ESLint user guide](https://eslint.org/docs/user-guide/configuring), have their own individual options. In `eslint-plugin-jsdoc`, a few options,
 such as, `exemptedBy` and `contexts`, may be used across different rules.
 
-`eslint-plugin-jsdoc` options, if present, are in the form of an object
-supplied as the second argument in an array after the error level.
+`eslint-plugin-jsdoc` options, if present, are generally in the form of an
+object supplied as the second argument in an array after the error level
+(any exceptions to this format are explained within that rule's docs).
 
 ```js
 // `.eslintrc.js`
