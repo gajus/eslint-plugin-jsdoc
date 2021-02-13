@@ -10709,7 +10709,7 @@ export class MyComponentComponent {
   @Input()
   public value = new EventEmitter();
 }
-// Options: [{"contexts":["ClassProperty > Decorator[expression.callee.name=\"Input\"]"]}]
+// Options: [{"contexts":["ClassProperty:has(Decorator[expression.callee.name=\"Input\"])"]}]
 // Message: Missing JSDoc comment.
 ````
 

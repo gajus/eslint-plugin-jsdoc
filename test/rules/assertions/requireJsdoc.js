@@ -2942,7 +2942,7 @@ function quux (foo) {
       ],
       options: [{
         contexts: [
-          'ClassProperty > Decorator[expression.callee.name="Input"]',
+          'ClassProperty:has(Decorator[expression.callee.name="Input"])',
         ],
       }],
       output: `

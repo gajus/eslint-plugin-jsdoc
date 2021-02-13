@@ -29,7 +29,7 @@
     "babel-plugin-istanbul": "^6.0.0",
     "chai": "^4.3.0",
     "cross-env": "^7.0.3",
-    "eslint": "7.19.0",
+    "eslint": "7.20.0",
     "eslint-config-canonical": "^25.8.17",
     "gitdown": "^3.1.3",
     "glob": "^7.1.6",
@@ -38,7 +38,7 @@
     "mocha": "^8.3.0",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
-    "semantic-release": "^17.3.8",
+    "semantic-release": "^17.3.9",
     "typescript": "^4.1.5"
   },
   "engines": {
