@@ -994,7 +994,7 @@ by decreasing precedence:
   [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
   if one sets `matchingFileName` to `dummy.md/*.js` so that `@example`
   rules will follow rules for fenced JavaScript blocks within one's Markdown
-  rules). (In ESLint 6's process API and `eslint-plugin-markdown` < 2, one
+  rules). (In ESLint 6's processor API and `eslint-plugin-markdown` < 2, one
   would instead use `dummy.md`.) For `@example` only.
 * `matchingFileNameDefaults` - As with `matchingFileName` but for use with
   `checkDefaults` and defaulting to `.jsdoc-defaults` as extension.
