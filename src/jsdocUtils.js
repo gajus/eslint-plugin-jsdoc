@@ -1138,6 +1138,17 @@ const isSetter = (node) => {
   return node && node.parent.kind === 'set';
 };
 
+const hasAccessorPair = (node) => {
+  const {type, kind: sourceKind, key: {name: sourceName}} = node;
+  const oppositeKind = sourceKind === 'get' ? 'set' : 'get';
+
+  const children = type === 'MethodDefinition' ? 'body' : 'properties';
+
+  return node.parent[children].some(({kind, key: {name}}) => {
+    return kind === oppositeKind && name === sourceName;
+  });
+};
+
 const exemptSpeciaMethods = (jsdoc, node, context, schema) => {
   const hasSchemaOption = (prop) => {
     const schemaProperties = schema[0].properties;
@@ -1146,6 +1157,9 @@ const exemptSpeciaMethods = (jsdoc, node, context, schema) => {
       (schemaProperties[prop] && schemaProperties[prop].default);
   };
 
+  const checkGetters = hasSchemaOption('checkGetters');
+  const checkSetters = hasSchemaOption('checkSetters');
+
   return !hasSchemaOption('checkConstructors') &&
     (
       isConstructor(node) ||
@@ -1153,10 +1167,14 @@ const exemptSpeciaMethods = (jsdoc, node, context, schema) => {
         'class',
         'constructor',
       ])) ||
-  !hasSchemaOption('checkGetters') &&
-    isGetter(node) ||
-  !hasSchemaOption('checkSetters') &&
-    isSetter(node);
+  isGetter(node) && (
+    !checkGetters ||
+    checkGetters === 'no-setter' && hasAccessorPair(node.parent)
+  ) ||
+  isSetter(node) && (
+    !checkSetters ||
+    checkSetters === 'no-getter' && hasAccessorPair(node.parent)
+  );
 };
 
 /**
