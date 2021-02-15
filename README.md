@@ -1078,7 +1078,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"checkEslintrc":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"checkEslintrc":false}]
 // Message: @example error (no-alert): Unexpected alert.
 
 /**
@@ -1087,7 +1087,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"checkEslintrc":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"no-alert":2,"semi":["error","always"]}},"checkEslintrc":false}]
 // Message: @example error (no-alert): Unexpected alert.
 
 /**
@@ -1098,7 +1098,7 @@ class quux {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -1109,7 +1109,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -1119,7 +1119,7 @@ function quux () {
 var quux = {
 
 };
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -1129,7 +1129,7 @@ var quux = {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```\njs ([\\s\\S]*)```"}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```\njs ([\\s\\S]*)```"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -1144,7 +1144,7 @@ function quux () {
 function quux2 () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"rejectExampleCodeRegex":"^\\s*<.*>\\s*$"}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"rejectExampleCodeRegex":"^\\s*<.*>\\s*$"}]
 // Message: @example error (semi): Extra semicolon.
 
 /**
@@ -1154,7 +1154,7 @@ function quux2 () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"no-undef":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"no-undef":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":true}]
 // Message: @example error (no-undef): 'quux' is not defined.
 
 /**
@@ -1167,7 +1167,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"captionRequired":true,"checkEslintrc":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"captionRequired":true,"checkEslintrc":false}]
 // Message: Caption is expected for examples.
 
 /**
@@ -1176,14 +1176,14 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 // Message: @example error (indent): Expected indentation of 0 spaces but found 1.
 
 /**
  * @example test() // eslint-disable-line semi
  */
 function quux () {}
-// Options: [{"checkEslintrc":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkEslintrc":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":true}]
 // Message: @example error: Unused eslint-disable directive (no problems were reported from 'semi').
 
 /**
@@ -1191,7 +1191,7 @@ function quux () {}
  test() // eslint-disable-line semi
  */
 function quux () {}
-// Options: [{"allowInlineConfig":false,"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"noDefaultExampleRules":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"allowInlineConfig":false,"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"noDefaultExampleRules":true}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -1201,7 +1201,7 @@ function quux () {}
 function quux2 () {
 
 }
-// Options: [{"matchingFileName":"../../jsdocUtils.js"}]
+// "jsdoc/check-examples": ["error"|"warn", {"matchingFileName":"../../jsdocUtils.js"}]
 // Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
 
 /**
@@ -1220,7 +1220,7 @@ function quux2 () {
 function quux2 () {
 
 }
-// Options: [{"paddedIndent":2}]
+// "jsdoc/check-examples": ["error"|"warn", {"paddedIndent":2}]
 // Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
 
 /**
@@ -1240,7 +1240,7 @@ function quux2 () {
 function quux2 () {
 
 }
-// Options: [{"matchingFileName":"dummy.js"}]
+// "jsdoc/check-examples": ["error"|"warn", {"matchingFileName":"dummy.js"}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -1251,7 +1251,7 @@ function quux2 () {
 function quux2 () {
 
 }
-// Options: [{"matchingFileName":"dummy.js"}]
+// "jsdoc/check-examples": ["error"|"warn", {"matchingFileName":"dummy.js"}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -1262,7 +1262,7 @@ function quux2 () {
 function quux2 () {
 
 }
-// Options: [{"checkEslintrc":false,"matchingFileName":"dummy.js"}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkEslintrc":false,"matchingFileName":"dummy.js"}]
 // Message: @example error: Parsing error: The keyword 'const' is reserved
 
 /**
@@ -1273,7 +1273,7 @@ function quux2 () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["warn","always"]}},"checkEslintrc":false,"exampleCodeRegex":"// begin[\\s\\S]*// end","noDefaultExampleRules":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"semi":["warn","always"]}},"checkEslintrc":false,"exampleCodeRegex":"// begin[\\s\\S]*// end","noDefaultExampleRules":true}]
 // Message: @example warning (semi): Missing semicolon.
 
 /**
@@ -1281,7 +1281,7 @@ function quux () {
  * @example <caption></caption>
  * 'foo'
  */
-// Options: [{"captionRequired":true,"checkEslintrc":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"captionRequired":true,"checkEslintrc":false}]
 // Message: Caption is expected for examples.
 
 /**
@@ -1292,7 +1292,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"checkEslintrc":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"checkEslintrc":false}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -1304,7 +1304,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}}}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}}}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -1327,7 +1327,7 @@ function quux () {
  *
  * ![Screenshot](path/to/screenshot.jpg)
  */
-// Options: [{"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"checkEslintrc":false,"exampleCodeRegex":"/^```(?:js|javascript)\\n([\\s\\S]*?)```$/gm"}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"checkEslintrc":false,"exampleCodeRegex":"/^```(?:js|javascript)\\n([\\s\\S]*?)```$/gm"}]
 // Message: @example error (semi): Missing semicolon.
 
 /**
@@ -1342,7 +1342,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["warn","always"]}},"checkEslintrc":false,"exampleCodeRegex":"/\\/\\/ begin[\\s\\S]*?// end/g","noDefaultExampleRules":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"semi":["warn","always"]}},"checkEslintrc":false,"exampleCodeRegex":"/\\/\\/ begin[\\s\\S]*?// end/g","noDefaultExampleRules":true}]
 // Message: @example warning (semi): Missing semicolon.
 
 /**
@@ -1352,14 +1352,14 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 // Message: @example error (indent): Expected indentation of 0 spaces but found 2.
 
 /**
  * @default 'abc'
  */
 const str = 'abc';
-// Options: [{"checkDefaults":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkDefaults":true}]
 // Message: @default error (quotes): Strings must use doublequote.
 
 /**
@@ -1367,14 +1367,14 @@ const str = 'abc';
  */
 function quux () {
 }
-// Options: [{"checkParams":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkParams":true}]
 // Message: @param error (quotes): Strings must use doublequote.
 
 /**
  * @property {myType} [name='abc']
  */
 const obj = {};
-// Options: [{"checkProperties":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkProperties":true}]
 // Message: @property error (quotes): Strings must use doublequote.
 
 /**
@@ -1392,7 +1392,7 @@ const functionName = function (paramOne, paramTwo,
   paramThree) {
   return false;
 };
-// Options: [{"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"captionRequired":true,"checkEslintrc":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"captionRequired":true,"checkEslintrc":false}]
 // Message: @example error (semi): Missing semicolon.
 ````
 
@@ -1407,7 +1407,7 @@ The following patterns are not considered problems:
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 
 /**
  * @example ```js
@@ -1417,7 +1417,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"exampleCodeRegex":"/```js([\\s\\S]*)```/"}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"exampleCodeRegex":"/```js([\\s\\S]*)```/"}]
 
 /**
  * @example
@@ -1426,7 +1426,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"checkEslintrc":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkEslintrc":false}]
 
 /**
  * @example
@@ -1435,7 +1435,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"no-undef":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"no-undef":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 
 /**
  * @example quux();
@@ -1443,7 +1443,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 
 /**
  * @example <caption>Valid usage</caption>
@@ -1455,20 +1455,20 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"captionRequired":true,"checkEslintrc":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"captionRequired":true,"checkEslintrc":false}]
 
 /**
  * @example test() // eslint-disable-line semi
  */
 function quux () {}
-// Options: [{"checkEslintrc":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkEslintrc":false,"noDefaultExampleRules":true,"reportUnusedDisableDirectives":false}]
 
 /**
  * @example
  test() // eslint-disable-line semi
  */
 function quux () {}
-// Options: [{"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"noDefaultExampleRules":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"allowInlineConfig":true,"baseConfig":{"rules":{"semi":["error","always"]}},"checkEslintrc":false,"noDefaultExampleRules":true}]
 
 /**
  * @example ```js
@@ -1478,7 +1478,7 @@ function quux () {}
 var quux = {
 
 };
-// Options: [{"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"semi":["error","never"]}},"checkEslintrc":false,"exampleCodeRegex":"```js([\\s\\S]*)```"}]
 
 /**
  * @example
@@ -1487,7 +1487,7 @@ var quux = {
  * });
  */
 function quux () {}
-// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 
 /**
  * @example
@@ -1497,7 +1497,7 @@ function quux () {}
 function quux () {
 
 }
-// Options: [{"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"checkEslintrc":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"parser":"@typescript-eslint/parser","parserOptions":{"ecmaVersion":6},"rules":{"semi":["error","always"]}},"checkEslintrc":false}]
 
 /**
  * @example const ident = 5;
@@ -1507,7 +1507,7 @@ function quux () {
 function quux2 () {
 
 }
-// Options: [{"paddedIndent":2}]
+// "jsdoc/check-examples": ["error"|"warn", {"paddedIndent":2}]
 
 /**
  * @example
@@ -1518,7 +1518,7 @@ function quux2 () {
 function quux () {
 
 }
-// Options: [{"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"rules":{"indent":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 
 // Comment
 a();
@@ -1540,64 +1540,64 @@ function f () {
  */
 function quux () {
 }
-// Options: [{"baseConfig":{"plugins":["jsdoc"],"rules":{"jsdoc/require-file-overview":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"plugins":["jsdoc"],"rules":{"jsdoc/require-file-overview":["error"]}},"checkEslintrc":false,"noDefaultExampleRules":false}]
 
 /**
  * @default "abc"
  */
 const str = 'abc';
-// Options: [{"checkDefaults":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkDefaults":true}]
 
 /**
  * @default
  */
 const str = 'abc';
-// Options: [{"checkDefaults":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkDefaults":true}]
 
 /**
  * @param {myType} [name="abc"]
  */
 function quux () {
 }
-// Options: [{"checkParams":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkParams":true}]
 
 /**
  * @param {myType} name
  */
 function quux () {
 }
-// Options: [{"checkParams":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkParams":true}]
 
 /**
  * @property {myType} [name="abc"]
  */
 const obj = {};
-// Options: [{"checkProperties":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkProperties":true}]
 
 /**
  * @property {myType} [name]
  */
 const obj = {};
-// Options: [{"checkProperties":true}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkProperties":true}]
 
 /**
  * @default 'abc'
  */
 const str = 'abc';
-// Options: [{"checkDefaults":false,"matchingFileNameDefaults":"dummy.js"}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkDefaults":false,"matchingFileNameDefaults":"dummy.js"}]
 
 /**
  * @param {myType} [name='abc']
  */
 function quux () {
 }
-// Options: [{"checkParams":false,"matchingFileNameParams":"dummy.js"}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkParams":false,"matchingFileNameParams":"dummy.js"}]
 
 /**
  * @property {myType} [name='abc']
  */
 const obj = {};
-// Options: [{"checkProperties":false,"matchingFileNameProperties":"dummy.js"}]
+// "jsdoc/check-examples": ["error"|"warn", {"checkProperties":false,"matchingFileNameProperties":"dummy.js"}]
 
 /**
  * Test function.
@@ -1614,7 +1614,7 @@ const functionName = function (paramOne, paramTwo,
   paramThree) {
   return false;
 };
-// Options: [{"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"captionRequired":true,"checkEslintrc":false}]
+// "jsdoc/check-examples": ["error"|"warn", {"baseConfig":{"parserOptions":{"ecmaVersion":2015,"sourceType":"module"},"rules":{"semi":["error","always"]}},"captionRequired":true,"checkEslintrc":false}]
 ````
 
 
@@ -1710,7 +1710,7 @@ class Moo {}
 function quux () {
 
 }
-// Options: [{"excludeTags":[]}]
+// "jsdoc/check-indentation": ["error"|"warn", {"excludeTags":[]}]
 // Message: There must be no indentation.
 
 /**
@@ -1764,7 +1764,7 @@ function quux () {
 * }
 * ```
 */
-// Options: [{"excludeTags":[]}]
+// "jsdoc/check-indentation": ["error"|"warn", {"excludeTags":[]}]
 // Message: There must be no indentation.
 
 /**
@@ -1778,7 +1778,7 @@ function quux () {
 *   alert('Hello');
 * }
 */
-// Options: [{"excludeTags":[]}]
+// "jsdoc/check-indentation": ["error"|"warn", {"excludeTags":[]}]
 // Message: There must be no indentation.
 ````
 
@@ -1825,7 +1825,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"excludeTags":["example","returns"]}]
+// "jsdoc/check-indentation": ["error"|"warn", {"excludeTags":["example","returns"]}]
 
 /**
  * foo
@@ -1861,7 +1861,7 @@ function quux () {
 * }
 * ```
 */
-// Options: [{"excludeTags":[]}]
+// "jsdoc/check-indentation": ["error"|"warn", {"excludeTags":[]}]
 ````
 
 
@@ -1907,7 +1907,7 @@ The following patterns are considered problems:
  * @param {int} sit Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -1917,7 +1917,7 @@ const fn = ( lorem, sit ) => {}
  * @param {int} sit - Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -1927,7 +1927,7 @@ const fn = ( lorem, sit ) => {}
  * @param {int} sit Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -1937,7 +1937,7 @@ const fn = ( lorem, sit ) => {}
  *  @param {int}    sit   Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -1947,7 +1947,7 @@ const fn = ( lorem, sit ) => {}
   * @param {int}    sit   Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -1957,7 +1957,7 @@ const fn = ( lorem, sit ) => {}
  * @param  {int}    sit   Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -1967,7 +1967,7 @@ const fn = ( lorem, sit ) => {}
  * @param {int} sit Description multi words.
  */
 function fn( lorem, sit ) {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 const object = {
@@ -1979,7 +1979,7 @@ const object = {
    */
   fn( lorem, sit ) {}
 }
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 class ClassName {
@@ -1991,7 +1991,7 @@ class ClassName {
    */
   fn( lorem, sit ) {}
 }
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -2001,7 +2001,7 @@ class ClassName {
  * @arg {int} sit Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -2014,7 +2014,7 @@ const config = {
         lorem: 1
     }
 }
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -2025,7 +2025,7 @@ const config = {
  * @property {string} lorem Description.
  * @property {int} sit Description multi words.
  */
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -2038,7 +2038,7 @@ const config = {
  * @property {Object.<string, Class>} amet Description} weird {multi} {{words}}.
  * @property {Object.<string, Class>} dolor
  */
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -2048,7 +2048,7 @@ const config = {
  * @param {int}    sit    Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["never"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "never"]
 // Message: Expected JSDoc block lines to not be aligned.
 
 /**
@@ -2058,7 +2058,7 @@ const fn = ( lorem, sit ) => {}
  * @param   {int}    sit   Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["never"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "never"]
 // Message: Expected JSDoc block lines to not be aligned.
 
 /**
@@ -2068,7 +2068,7 @@ const fn = ( lorem, sit ) => {}
  * @param   {int}    sit
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["never"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "never"]
 // Message: Expected JSDoc block lines to not be aligned.
 
 /**
@@ -2087,7 +2087,7 @@ const fn = ( lorem, sit ) => {}
  * @return {boolean}          True = success, false = failed to create the icon
  */
  function quux () {}
-// Options: ["never"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "never"]
 // Message: Expected JSDoc block lines to not be aligned.
 
 /**
@@ -2097,7 +2097,7 @@ const fn = ( lorem, sit ) => {}
  * @return {boolean}          True = success, false = failed to create the icon
  */
  function quux () {}
-// Options: ["never"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "never"]
 // Message: Expected JSDoc block lines to not be aligned.
 
 /**
@@ -2107,7 +2107,7 @@ const fn = ( lorem, sit ) => {}
  * @return  True = success, false = failed to create the icon
  */
  function quux () {}
-// Options: ["never"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "never"]
 // Message: Expected JSDoc block lines to not be aligned.
 
 /**
@@ -2117,7 +2117,7 @@ const fn = ( lorem, sit ) => {}
  * @return True = success, false = failed to create the icon
  */
  function quux () {}
-// Options: ["never"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "never"]
 // Message: Expected JSDoc block lines to not be aligned.
 
 /**
@@ -2128,7 +2128,7 @@ const fn = ( lorem, sit ) => {}
  * @return  True = success, false = failed to create the icon
  */
  function quux () {}
-// Options: ["never",{"tags":["param","return"]}]
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"tags":["param","return"]}]
 // Message: Expected JSDoc block lines to not be aligned.
 
 /**
@@ -2140,7 +2140,7 @@ const fn = ( lorem, sit ) => {}
  * @return {string}                 'bob' || '%USERNAME%'
  */
 function quux () {}
-// Options: ["never"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "never"]
 // Message: Expected JSDoc block lines to not be aligned.
 ````
 
@@ -2154,7 +2154,7 @@ The following patterns are not considered problems:
  * @param {int}    sit   Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * Function description.
@@ -2163,30 +2163,30 @@ const fn = ( lorem, sit ) => {}
  * @param {int}    sit   - Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * @param {string} lorem Description.
  * @param {int}    sit
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * @param {int}    sit
  * @param {string} lorem Description.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * No params.
  */
 const fn = () => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * Function description.
@@ -2195,7 +2195,7 @@ const fn = ( lorem, sit ) => {}
  * @param {int}    sit   Description multi words.
  */
 function fn( lorem, sit ) {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 const object = {
   /**
@@ -2206,7 +2206,7 @@ const object = {
    */
   fn( lorem, sit ) {},
 }
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 class ClassName {
   /**
@@ -2217,7 +2217,7 @@ class ClassName {
    */
   fn( lorem, sit ) {}
 }
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * Function description.
@@ -2226,7 +2226,7 @@ class ClassName {
  * @arg {int}    sit   Description multi words.
  */
 const fn = ( lorem, sit ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * @namespace
@@ -2238,7 +2238,7 @@ const config = {
         lorem: 1
     }
 }
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * My object.
@@ -2248,7 +2248,7 @@ const config = {
  * @property {string} lorem    Description.
  * @property {int}    sit      Description multi words.
  */
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * My object.
@@ -2260,11 +2260,11 @@ const config = {
  * @property {Object.<string, Class>}    amet     Description} weird {multi} {{words}}.
  * @property {Object.<string, Class>}    dolor
  */
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /** @param {number} lorem */
 const fn = ( lorem ) => {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * Creates OS based shortcuts for files, folders, and applications.
@@ -2273,7 +2273,7 @@ const fn = ( lorem ) => {}
  * @return {boolean}         True = success, false = failed to create the icon
  */
  function quux () {}
-// Options: ["always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
  * Not validating without option.
@@ -2299,7 +2299,7 @@ function quux (options) {}
  * @return  True = success, false = failed to create the icon
  */
  function quux () {}
-// Options: ["never",{"tags":["param"]}]
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"tags":["param"]}]
 ````
 
 
@@ -2459,7 +2459,7 @@ function assign (employees) {
 function assign (employees) {
 
 };
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @param "employees[].name"
 
 /**
@@ -2488,7 +2488,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @param "foo"
 
 class bar {
@@ -2500,7 +2500,7 @@ class bar {
 
     }
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @param "foo"
 
 /**
@@ -2510,7 +2510,7 @@ class bar {
 function quux (foo, bar) {
 
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @param "foo"
 
 /**
@@ -2520,7 +2520,7 @@ function quux (foo, bar) {
 function quux (foo, foo) {
 
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @param "foo"
 
 /**
@@ -2531,7 +2531,7 @@ function quux (foo, foo) {
 function quux ({foo}) {
 
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @param "cfg.foo"
 
 /**
@@ -2562,7 +2562,7 @@ function quux ({foo, bar}) {
 function quux ({foo}, baz) {
 
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @param "cfg.foo"
 
 /**
@@ -2585,7 +2585,7 @@ function quux ({foo, bar}, baz) {
 function quux ({foo}, baz) {
 
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @param "cfg.foo"
 
 /**
@@ -2682,7 +2682,7 @@ function quux ([a, b] = []) {
  */
 function quux ({foo, ...extra}) {
 }
-// Options: [{"checkRestProperty":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"checkRestProperty":true}]
 // Message: Missing @param "options.extra"
 
 /**
@@ -2694,7 +2694,7 @@ function quux ({foo, ...extra}) {
 function quux ({foo, ...extra}) {
 
 }
-// Options: [{"checkRestProperty":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"checkRestProperty":true}]
 // Message: @param "cfg.bar" does not exist on cfg
 
 /**
@@ -2704,7 +2704,7 @@ function quux ({foo, ...extra}) {
 const bboxToObj = function ({x, y, width, height}) {
   return {x, y, width, height};
 };
-// Options: [{"checkTypesPattern":"SVGRect"}]
+// "jsdoc/check-param-names": ["error"|"warn", {"checkTypesPattern":"SVGRect"}]
 // Message: Missing @param "bbox.x"
 
 /**
@@ -2724,7 +2724,7 @@ module.exports = class GraphQL {
   fetch = ({ url, ...options }, cacheKey) => {
   }
 };
-// Options: [{"checkRestProperty":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"checkRestProperty":true}]
 // Message: Missing @param "fetchOptions.url"
 
 /**
@@ -2760,7 +2760,7 @@ function quux() {
 function quux ({foo, bar}, baz) {
 
 }
-// Options: [{"checkDestructured":false}]
+// "jsdoc/check-param-names": ["error"|"warn", {"checkDestructured":false}]
 // Message: Expected @param names to be "root, baz". Got "root, foo".
 
 /**
@@ -2798,7 +2798,7 @@ function foo({ foo: { bar: { baz } }}) {}
 */
 export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 }
-// Options: [{"useDefaultObjectProperties":false}]
+// "jsdoc/check-param-names": ["error"|"warn", {"useDefaultObjectProperties":false}]
 // Message: @param "props.prop.a" does not exist on props
 
 /**
@@ -2821,7 +2821,7 @@ function quux ({foo}) {
 function quux ({foo}) {
 
 }
-// Options: [{"disableExtraPropertyReporting":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"disableExtraPropertyReporting":true}]
 // Message: @param "cfg.bar" does not exist on cfg
 
 /**
@@ -2848,7 +2848,7 @@ function quux ({cfg: {a: {foo}}}) {
 function quux ({cfg: {a: {foo}}}) {
 
 }
-// Options: [{"disableExtraPropertyReporting":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"disableExtraPropertyReporting":true}]
 // Message: @param "root.cfg.a.bar" does not exist on root
 
 /**
@@ -3017,7 +3017,7 @@ function quux (error, code = 1) {
 function quux (foo) {
 
 }
-// Options: [{"allowExtraTrailingParamDocs":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"allowExtraTrailingParamDocs":true}]
 
 /**
  * @param cfg
@@ -3085,7 +3085,7 @@ const bboxToObj = function ({x, y, width, height}) {
 const bboxToObj = function ({x, y, width, height}) {
   return {x, y, width, height};
 };
-// Options: [{"checkTypesPattern":"SVGRect"}]
+// "jsdoc/check-param-names": ["error"|"warn", {"checkTypesPattern":"SVGRect"}]
 
 class CSS {
   /**
@@ -3126,7 +3126,7 @@ export class Thing {
 function quux (foo, {bar}) {
 
 }
-// Options: [{"checkDestructured":false}]
+// "jsdoc/check-param-names": ["error"|"warn", {"checkDestructured":false}]
 
 class A {
   /**
@@ -3152,7 +3152,7 @@ function quux ({ foo: { bar }}) {}
  * @param {Object} options.foo
  */
 function quux ({ foo: { bar } }) {}
-// Options: [{"checkTypesPattern":"FooBar"}]
+// "jsdoc/check-param-names": ["error"|"warn", {"checkTypesPattern":"FooBar"}]
 
 /**
  * Description.
@@ -3204,7 +3204,7 @@ function Item({
 */
 export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 }
-// Options: [{"useDefaultObjectProperties":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"useDefaultObjectProperties":true}]
 
 /**
  * @param {object} root
@@ -3216,7 +3216,7 @@ export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 function quux ({cfg}) {
 
 }
-// Options: [{"disableExtraPropertyReporting":true}]
+// "jsdoc/check-param-names": ["error"|"warn", {"disableExtraPropertyReporting":true}]
 ````
 
 
@@ -3277,7 +3277,7 @@ The following patterns are considered problems:
  * @property {string} employees[].name - The name of an employee.
  * @property {string} employees[].name - The employee's department.
  */
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-property-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @property "employees[].name"
 
 /**
@@ -3285,7 +3285,7 @@ The following patterns are considered problems:
  * @property foo
  * @property foo
  */
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-property-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @property "foo"
 
 /**
@@ -3304,7 +3304,7 @@ The following patterns are considered problems:
 function quux ({foo, bar}) {
 
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-property-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @property "cfg.foo"
 
 class Test {
@@ -3318,7 +3318,7 @@ class Test {
 
     }
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-property-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @property "cfg.foo"
 
 /**
@@ -3331,7 +3331,7 @@ class Test {
 function quux ({foo, bar}, baz) {
 
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-property-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @property "cfg.foo"
 
 /**
@@ -3344,7 +3344,7 @@ function quux ({foo, bar}, baz) {
 function quux ({foo, bar}, baz) {
 
 }
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-property-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @property "cfg.foo"
 
 /**
@@ -3353,7 +3353,7 @@ function quux ({foo, bar}, baz) {
  * @prop foo
  */
 // Settings: {"jsdoc":{"tagNamePreference":{"property":"prop"}}}
-// Options: [{"enableFixer":true}]
+// "jsdoc/check-property-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @prop "foo"
 
 /**
@@ -3781,7 +3781,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"definedTags":["bar"]}]
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["bar"]}]
 // Message: Invalid JSDoc tag name "baz".
 
 /**
@@ -3791,7 +3791,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"definedTags":["bar"]}]
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["bar"]}]
 // Message: Invalid JSDoc tag name "baz".
 
 /**
@@ -3856,7 +3856,7 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
-// Options: [{"definedTags":["abcd"]}]
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["abcd"]}]
 // Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
 
 /**
@@ -4074,7 +4074,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"definedTags":["bar"]}]
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["bar"]}]
 
 /**
  * @baz @bar foo
@@ -4082,7 +4082,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"definedTags":["baz","bar"]}]
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["baz","bar"]}]
 
 /**
  * @baz @bar foo
@@ -4565,7 +4565,7 @@ function qux(foo) {
 function qux(foo, bar) {
 }
 // Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
-// Options: [{"noDefaults":true}]
+// "jsdoc/check-types": ["error"|"warn", {"noDefaults":true}]
 // Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
 
 /**
@@ -4670,7 +4670,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"[]":"SpecialTypeArray"}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".
 
 /**
@@ -4680,7 +4680,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"SpecialTypeArray"}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "SpecialTypeArray".
 
 /**
@@ -4753,7 +4753,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
 /**
@@ -4763,7 +4763,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
 /**
@@ -4773,7 +4773,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
 /**
@@ -4783,7 +4783,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"object":false}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object".
 
 /**
@@ -4802,7 +4802,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
 /**
@@ -4812,7 +4812,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"object":"GenericObject"}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".
 
 /**
@@ -4943,7 +4943,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"Array":"Array."}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 // Message: Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".
 
 /**
@@ -4978,12 +4978,12 @@ function quux () {}
  * @property {object} bar
  */
 // Settings: {"jsdoc":{"preferredTypes":{"object":"Object"}}}
-// Options: [{"exemptTagContexts":[{"tag":"typedef","types":true}]}]
+// "jsdoc/check-types": ["error"|"warn", {"exemptTagContexts":[{"tag":"typedef","types":true}]}]
 // Message: Invalid JSDoc @property "bar" type "object"; prefer: "Object".
 
 /** @typedef {object} foo */
 // Settings: {"jsdoc":{"preferredTypes":{"object":"Object"}}}
-// Options: [{"exemptTagContexts":[{"tag":"typedef","types":["array"]}]}]
+// "jsdoc/check-types": ["error"|"warn", {"exemptTagContexts":[{"tag":"typedef","types":["array"]}]}]
 // Message: Invalid JSDoc @typedef "foo" type "object"; prefer: "Object".
 
 /**
@@ -4991,12 +4991,12 @@ function quux () {}
  * @property {object} bar
  */
 // Settings: {"jsdoc":{"preferredTypes":{"object":"Object"}}}
-// Options: [{"exemptTagContexts":[{"tag":"typedef","types":["object"]}]}]
+// "jsdoc/check-types": ["error"|"warn", {"exemptTagContexts":[{"tag":"typedef","types":["object"]}]}]
 // Message: Invalid JSDoc @property "bar" type "object"; prefer: "Object".
 
 /** @typedef {object<string, string>} foo */
 // Settings: {"jsdoc":{"preferredTypes":{"object<>":"Object<>"}}}
-// Options: [{"exemptTagContexts":[{"tag":"typedef","types":["object"]}]}]
+// "jsdoc/check-types": ["error"|"warn", {"exemptTagContexts":[{"tag":"typedef","types":["object"]}]}]
 // Message: Invalid JSDoc @typedef "foo" type "object"; prefer: "Object<>".
 
 /**
@@ -5086,7 +5086,7 @@ function qux(foo) {
 function quux () {
 
 }
-// Options: [{"noDefaults":true}]
+// "jsdoc/check-types": ["error"|"warn", {"noDefaults":true}]
 
 /**
  * @param {Object} foo
@@ -5134,7 +5134,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"Array.<>":"SpecialTypeArray","Array<>":"SpecialTypeArray"}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 
 /**
  * @param {Array} foo
@@ -5151,7 +5151,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"[]":"SpecialTypeArray"}}}
-// Options: [{"unifyParentAndChildTypeChecks":true}]
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 
 /**
  * @param {Array} foo
@@ -5250,14 +5250,14 @@ function quux () {}
 
 /** @typedef {object} foo */
 // Settings: {"jsdoc":{"preferredTypes":{"object":"Object"}}}
-// Options: [{"exemptTagContexts":[{"tag":"typedef","types":true}]}]
+// "jsdoc/check-types": ["error"|"warn", {"exemptTagContexts":[{"tag":"typedef","types":true}]}]
 
 /** @typedef {object<string, string>} foo */
 // Settings: {"jsdoc":{"preferredTypes":{"object":"Object"}}}
 
 /** @typedef {object<string, string>} foo */
 // Settings: {"jsdoc":{"preferredTypes":{"object<>":"Object<>"}}}
-// Options: [{"exemptTagContexts":[{"tag":"typedef","types":["object<string, string>"]}]}]
+// "jsdoc/check-types": ["error"|"warn", {"exemptTagContexts":[{"tag":"typedef","types":["object<string, string>"]}]}]
 
 /**
  * @typedef {object} foo
@@ -5400,7 +5400,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"allowedLicenses":["BAR","BAX"]}]
+// "jsdoc/check-values": ["error"|"warn", {"allowedLicenses":["BAR","BAX"]}]
 // Message: Invalid JSDoc @license: "FOO"; expected one of BAR, BAX.
 
 /**
@@ -5427,7 +5427,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"licensePattern":"[\\s\\S]*"}]
+// "jsdoc/check-values": ["error"|"warn", {"licensePattern":"[\\s\\S]*"}]
 // Message: Invalid JSDoc @license: "MIT
 Some extra text"; expected SPDX expression: https://spdx.org/licenses/.
 
@@ -5445,7 +5445,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"allowedAuthors":["Gajus Kuizinas","golopot"]}]
+// "jsdoc/check-values": ["error"|"warn", {"allowedAuthors":["Gajus Kuizinas","golopot"]}]
 // Message: Invalid JSDoc @author: "Brett Zamir"; expected one of Gajus Kuizinas, golopot.
 ````
 
@@ -5508,7 +5508,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"allowedLicenses":["FOO","BAR","BAX"]}]
+// "jsdoc/check-values": ["error"|"warn", {"allowedLicenses":["FOO","BAR","BAX"]}]
 
 /**
  * @license FOO
@@ -5516,7 +5516,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"allowedLicenses":true}]
+// "jsdoc/check-values": ["error"|"warn", {"allowedLicenses":true}]
 
 /**
  * @license MIT
@@ -5525,7 +5525,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"licensePattern":"[^\n]*"}]
+// "jsdoc/check-values": ["error"|"warn", {"licensePattern":"[^\n]*"}]
 
 /**
  * @author Gajus Kuizinas
@@ -5540,7 +5540,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"allowedAuthors":["Gajus Kuizinas","golopot","Brett Zamir"]}]
+// "jsdoc/check-values": ["error"|"warn", {"allowedAuthors":["Gajus Kuizinas","golopot","Brett Zamir"]}]
 ````
 
 
@@ -5636,7 +5636,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":["event"]}]
+// "jsdoc/empty-tags": ["error"|"warn", {"tags":["event"]}]
 // Message: @event should be empty.
 
 /**
@@ -5787,7 +5787,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/implements-on-classes": ["error"|"warn", {"contexts":["any"]}]
 // Message: @implements used on a non-constructor function
 
 /**
@@ -5797,14 +5797,14 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/implements-on-classes": ["error"|"warn", {"contexts":["any"]}]
 // Message: @implements used on a non-constructor function
 
 /**
  * @callback
  * @implements {SomeClass}
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/implements-on-classes": ["error"|"warn", {"contexts":["any"]}]
 // Message: @implements used on a non-constructor function
 
 /**
@@ -5827,7 +5827,7 @@ class Foo {
      */
     bar() {}
 }
-// Options: [{"contexts":["MethodDefinition"]}]
+// "jsdoc/implements-on-classes": ["error"|"warn", {"contexts":["MethodDefinition"]}]
 // Message: @implements used on a non-constructor function
 
 class Foo {
@@ -5841,7 +5841,7 @@ class Foo {
      */
     bar() {}
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/implements-on-classes": ["error"|"warn", {"contexts":["any"]}]
 // Message: @implements used on a non-constructor function
 ````
 
@@ -5863,12 +5863,12 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/implements-on-classes": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @implements {SomeClass}
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/implements-on-classes": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @implements {SomeClass}
@@ -6049,19 +6049,19 @@ The following patterns are considered problems:
 const q = class {
 
 }
-// Options: [{"contexts":["ClassExpression"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["ClassExpression"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
  * foo.
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["any"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
  * foo.
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["any"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6070,7 +6070,7 @@ const q = class {
 const q = {
 
 };
-// Options: [{"contexts":["ObjectExpression"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["ObjectExpression"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6095,7 +6095,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
+// "jsdoc/match-description": ["error"|"warn", {"matchDescription":"[А-Я][А-я]+\\."}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6104,7 +6104,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"mainDescription":"[А-Я][А-я]+\\.","tags":{"param":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":"[А-Я][А-я]+\\.","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6123,7 +6123,7 @@ function quux () {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"param":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6134,7 +6134,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"template":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"template":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6145,7 +6145,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"prop":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"prop":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6156,7 +6156,7 @@ function quux (foo) {
 function quux () {
 
 }
-// Options: [{"tags":{"summary":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"summary":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6167,7 +6167,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"author":".+"}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"author":".+"}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6178,7 +6178,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"x-tag":".+"}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"x-tag":".+"}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6189,7 +6189,7 @@ function quux () {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"description":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6200,7 +6200,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"mainDescription":"^[a-zA-Z]*$","tags":{"param":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":"^[a-zA-Z]*$","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6211,7 +6211,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"mainDescription":false,"tags":{"param":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":false,"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6222,7 +6222,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"param":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6241,7 +6241,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"returns":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"returns":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6252,7 +6252,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"returns":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"returns":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6274,7 +6274,7 @@ function longDescription (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"arg":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"arg":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6283,7 +6283,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"argument":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"argument":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6292,7 +6292,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"return":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"return":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6303,7 +6303,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"return":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"return":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6313,7 +6313,7 @@ function quux (foo) {
 function quux () {
 
 }
-// Options: [{"tags":{"param":"[А-Я][А-я]+\\."}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"param":"[А-Я][А-я]+\\."}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6323,7 +6323,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"description":"[А-Я][А-я]+\\."}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":"[А-Я][А-я]+\\."}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6332,7 +6332,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"contexts":["ClassDeclaration"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["ClassDeclaration"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 class MyClass {
@@ -6341,7 +6341,7 @@ class MyClass {
    */
   myClassField = 1
 }
-// Options: [{"contexts":["ClassProperty"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["ClassProperty"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6350,7 +6350,7 @@ class MyClass {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["TSInterfaceDeclaration"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 const myObject = {
@@ -6359,7 +6359,7 @@ const myObject = {
    */
   myProp: true
 };
-// Options: [{"contexts":["Property"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["Property"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6369,7 +6369,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
-// Options: [{"tags":{"param":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6402,7 +6402,7 @@ The following patterns are not considered problems:
 function quux () {
 
 }
-// Options: [{"tags":{"param":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"param":true}}]
 
 /**
  * Foo.
@@ -6434,7 +6434,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"matchDescription":"[А-Я][А-я]+\\."}]
+// "jsdoc/match-description": ["error"|"warn", {"matchDescription":"[А-Я][А-я]+\\."}]
 
 /**
  * @param notRet
@@ -6443,7 +6443,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"returns":"[А-Я][А-я]+\\."}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"returns":"[А-Я][А-я]+\\."}}]
 
 /**
  * @param notRet
@@ -6452,7 +6452,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"description":"[А-Я][А-я]+\\."}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":"[А-Я][А-я]+\\."}}]
 
 /**
  * Foo
@@ -6468,7 +6468,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"returns":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"returns":true}}]
 
 /**
  * @returns {type1} Foo bar.
@@ -6476,7 +6476,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"returns":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"returns":true}}]
 
 /**
  * @description Foo bar.
@@ -6484,7 +6484,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"description":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
 
 /**
  * Foo. {@see Math.sin}.
@@ -6551,7 +6551,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"mainDescription":false}]
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":false}]
 
 /**
  * foo.
@@ -6566,7 +6566,7 @@ class quux {
 class quux {
 
 }
-// Options: [{"mainDescription":true}]
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":true}]
 
 class MyClass {
   /**
@@ -6574,7 +6574,7 @@ class MyClass {
    */
   myClassField = 1
 }
-// Options: [{"contexts":["ClassProperty"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["ClassProperty"]}]
 
 /**
  * Foo.
@@ -6582,7 +6582,7 @@ class MyClass {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["TSInterfaceDeclaration"]}]
 
 const myObject = {
   /**
@@ -6590,7 +6590,7 @@ const myObject = {
    */
   myProp: true
 };
-// Options: [{"contexts":[]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[]}]
 
 /**
  * foo.
@@ -6598,7 +6598,7 @@ const myObject = {
 const q = class {
 
 }
-// Options: [{"contexts":[]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[]}]
 
 /**
  * foo.
@@ -6606,7 +6606,7 @@ const q = class {
 const q = {
 
 };
-// Options: [{"contexts":[]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[]}]
 
 /**
  * @description foo.
@@ -6614,7 +6614,7 @@ const q = {
 function quux () {
 
 }
-// Options: [{"tags":{"param":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"param":true}}]
 
 /**
  * Foo.
@@ -6624,7 +6624,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"summary":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"summary":true}}]
 
 /**
  * Foo.
@@ -6634,7 +6634,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"author":".+"}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"author":".+"}}]
 
 /**
  * Foo.
@@ -6644,7 +6644,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":{"x-tag":".+"}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"x-tag":".+"}}]
 
 /**
  * Foo.
@@ -6654,7 +6654,7 @@ function quux () {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"prop":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"prop":true}}]
 
 /**
  * @param foo Foo bar.
@@ -6680,7 +6680,7 @@ function quux () {
 function quux (foo) {
 
 }
-// Options: [{"tags":{"template":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"template":true}}]
 ````
 
 
@@ -6716,7 +6716,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
-// Options: ["always"]
+// "jsdoc/newline-after-description": ["error"|"warn", "always"]
 // Message: There must be a newline after the description of the JSDoc block.
 
 /**
@@ -6728,7 +6728,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["always"]
+// "jsdoc/newline-after-description": ["error"|"warn", "always"]
 // Message: There must be a newline after the description of the JSDoc block.
 
 /**
@@ -6752,7 +6752,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["never"]
+// "jsdoc/newline-after-description": ["error"|"warn", "never"]
 // Message: There must be no newline after the description of the JSDoc block.
 
 /**
@@ -6765,7 +6765,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["never"]
+// "jsdoc/newline-after-description": ["error"|"warn", "never"]
 // Message: There must be no newline after the description of the JSDoc block.
 
 
@@ -6779,7 +6779,7 @@ function quux () {
          function quux () {
 
          }
-// Options: ["never"]
+// "jsdoc/newline-after-description": ["error"|"warn", "never"]
 // Message: There must be no newline after the description of the JSDoc block.
 
 /**
@@ -6788,7 +6788,7 @@ function quux () {
  * @typedef {object} A
  * @prop {boolean} a A.
  */
-// Options: ["never"]
+// "jsdoc/newline-after-description": ["error"|"warn", "never"]
 // Message: There must be no newline after the description of the JSDoc block.
 
 /**
@@ -6796,7 +6796,7 @@ function quux () {
  * @typedef {object} A
  * @prop {boolean} a A.
  */
-// Options: ["always"]
+// "jsdoc/newline-after-description": ["error"|"warn", "always"]
 // Message: There must be a newline after the description of the JSDoc block.
 
 
@@ -6816,7 +6816,7 @@ function quux () {
 function example() {
   return 42;
 }
-// Options: ["never"]
+// "jsdoc/newline-after-description": ["error"|"warn", "never"]
 // Message: There must be no newline after the description of the JSDoc block.
 
 /** An example function.
@@ -6825,7 +6825,7 @@ function example() {
 function example() {
   return 42;
 }
-// Options: ["always"]
+// "jsdoc/newline-after-description": ["error"|"warn", "always"]
 // Message: There must be a newline after the description of the JSDoc block.
 ````
 
@@ -6838,7 +6838,7 @@ The following patterns are not considered problems:
 function quux () {
 
 }
-// Options: ["always"]
+// "jsdoc/newline-after-description": ["error"|"warn", "always"]
 
 /**
  * Bar.
@@ -6846,7 +6846,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["never"]
+// "jsdoc/newline-after-description": ["error"|"warn", "never"]
 
 /**
  * Foo.
@@ -6856,7 +6856,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["always"]
+// "jsdoc/newline-after-description": ["error"|"warn", "always"]
 
 /**
  * Bar.
@@ -6865,7 +6865,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["never"]
+// "jsdoc/newline-after-description": ["error"|"warn", "never"]
 
 
      /**
@@ -6890,7 +6890,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["always"]
+// "jsdoc/newline-after-description": ["error"|"warn", "always"]
 
 /**
  * Parses query string to object containing URL parameters
@@ -6919,7 +6919,7 @@ function example() {
 function example() {
   return 42;
 }
-// Options: ["never"]
+// "jsdoc/newline-after-description": ["error"|"warn", "never"]
 ````
 
 
@@ -6976,7 +6976,7 @@ function quux() {
 // Message: Cannot add "name" to `require` with the tag's `name` set to `false`
 
 /* @ts-ignore */
-// Options: [{"ignore":[]}]
+// "jsdoc/no-bad-blocks": ["error"|"warn", {"ignore":[]}]
 // Message: Expected JSDoc-like comment to begin with two asterisks.
 
 /*
@@ -7031,7 +7031,7 @@ function quux () {
 /* */
 
 /* @custom */
-// Options: [{"ignore":["custom"]}]
+// "jsdoc/no-bad-blocks": ["error"|"warn", {"ignore":["custom"]}]
 ````
 
 
@@ -7111,7 +7111,7 @@ class Test {
 function quux (foo) {
 
 }
-// Options: [{"noOptionalParamNames":true}]
+// "jsdoc/no-defaults": ["error"|"warn", {"noOptionalParamNames":true}]
 // Message: Optional param names are not permitted on @param.
 
 /**
@@ -7129,28 +7129,28 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-defaults": ["error"|"warn", {"contexts":["any"]}]
 // Message: Defaults are not permitted on @param.
 
 /**
  * @function
  * @param {number} [foo="7"]
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-defaults": ["error"|"warn", {"contexts":["any"]}]
 // Message: Defaults are not permitted on @param.
 
 /**
  * @callback
  * @param {number} [foo="7"]
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-defaults": ["error"|"warn", {"contexts":["any"]}]
 // Message: Defaults are not permitted on @param.
 
 /**
  * @default {}
  */
 const a = {};
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-defaults": ["error"|"warn", {"contexts":["any"]}]
 // Message: Default values are not permitted on @default.
 
 /**
@@ -7158,7 +7158,7 @@ const a = {};
  */
 const a = {};
 // Settings: {"jsdoc":{"tagNamePreference":{"default":"defaultvalue"}}}
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-defaults": ["error"|"warn", {"contexts":["any"]}]
 // Message: Default values are not permitted on @defaultvalue.
 ````
 
@@ -7182,7 +7182,7 @@ function quux (foo) {
 /**
  * @param foo
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-defaults": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @function
@@ -7200,13 +7200,13 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"noOptionalParamNames":true}]
+// "jsdoc/no-defaults": ["error"|"warn", {"noOptionalParamNames":true}]
 
 /**
  * @default
  */
 const a = {};
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-defaults": ["error"|"warn", {"contexts":["any"]}]
 ````
 
 
@@ -7270,7 +7270,7 @@ class quux {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-types": ["error"|"warn", {"contexts":["any"]}]
 // Message: Types are not permitted on @param.
 
 class quux {
@@ -7281,21 +7281,21 @@ class quux {
 
   }
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-types": ["error"|"warn", {"contexts":["any"]}]
 // Message: Types are not permitted on @param.
 
 /**
  * @function
  * @param {number} foo
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-types": ["error"|"warn", {"contexts":["any"]}]
 // Message: Types are not permitted on @param.
 
 /**
  * @callback
  * @param {number} foo
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-types": ["error"|"warn", {"contexts":["any"]}]
 // Message: Types are not permitted on @param.
 
 /**
@@ -7331,7 +7331,7 @@ function quux (foo) {
 /**
  * @param foo
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/no-types": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @function
@@ -7445,7 +7445,7 @@ function quux(foo) {
 function quux(foo, bar) {
 
 }
-// Options: [{"definedTypes":["MyType"]}]
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyType"]}]
 // Message: The type 'HisType' is undefined.
 
 /**
@@ -7457,7 +7457,7 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"}}}}
-// Options: [{"definedTypes":["MyType"]}]
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyType"]}]
 // Message: The type 'HisType' is undefined.
 
  /**
@@ -7469,7 +7469,7 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":false},"histype":"HisType"}}}
-// Options: [{"definedTypes":["MyType"]}]
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyType"]}]
 // Message: The type 'HerType' is undefined.
 
 /**
@@ -7720,7 +7720,7 @@ function foo () {
 function quux(foo, bar) {
 
 }
-// Options: [{"definedTypes":["MyType","HisType"]}]
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyType","HisType"]}]
 
 /**
  * @param {MyType} foo - Bar.
@@ -7731,7 +7731,7 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType"},"histype":"HisType"}}}
-// Options: [{"definedTypes":["MyType"]}]
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyType"]}]
 
 /**
  * @param {MyType} foo - Bar.
@@ -7742,7 +7742,7 @@ function quux(foo, bar, baz) {
 
 }
 // Settings: {"jsdoc":{"preferredTypes":{"hertype":{"replacement":"HerType<>"},"histype":"HisType.<>"}}}
-// Options: [{"definedTypes":["MyType"]}]
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyType"]}]
 
 /**
  * @template TEMPLATE_TYPE
@@ -8068,7 +8068,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"newlineBeforeCapsAssumesBadSentenceEnd":true}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"newlineBeforeCapsAssumesBadSentenceEnd":true}]
 // Message: A line of text is started with an uppercase character, but preceding line does not end the sentence.
 
 /**
@@ -8194,7 +8194,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"tags":["see"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"tags":["see"]}]
 // Message: Sentence must end with a period.
 
 /**
@@ -8204,7 +8204,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
-// Options: [{"tags":["param"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"tags":["param"]}]
 // Message: Sentence must end with a period.
 
 /**
@@ -8213,7 +8213,7 @@ function quux (foo) {
 function quux () {
 
 }
-// Options: [{"abbreviations":["Mr"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr"]}]
 // Message: Sentence must end with a period.
 
 /**
@@ -8222,7 +8222,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["Mr."]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr."]}]
 // Message: Sentence must end with a period.
 
 /**
@@ -8231,7 +8231,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["Mr"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr"]}]
 // Message: Sentence must end with a period.
 
 /**
@@ -8240,7 +8240,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["Mr","Mrs"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr","Mrs"]}]
 // Message: Sentence must end with a period.
 
 /**
@@ -8249,7 +8249,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["Mr"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr"]}]
 // Message: Sentence must end with a period.
 
 /**
@@ -8258,7 +8258,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["Mr"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr"]}]
 // Message: Sentence must end with a period.
 
 /**
@@ -8293,7 +8293,7 @@ function quux () {
  */
 function speak() {
 }
-// Options: [{"newlineBeforeCapsAssumesBadSentenceEnd":true}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"newlineBeforeCapsAssumesBadSentenceEnd":true}]
 // Message: A line of text is started with an uppercase character, but preceding line does not end the sentence.
 
 /**
@@ -8304,7 +8304,7 @@ function speak() {
 function quux (foo) {
 
 }
-// Options: [{"tags":["template"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"tags":["template"]}]
 // Message: Sentence should start with an uppercase character.
 ````
 
@@ -8489,7 +8489,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"tags":["param"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"tags":["param"]}]
 
 /**
  * @param foo Foo bar.
@@ -8498,7 +8498,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
-// Options: [{"tags":["param"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"tags":["param"]}]
 
 /**
  *
@@ -8553,7 +8553,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["Mr."]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr."]}]
 
 /**
  * Sorry, but this isn't a complete sentence Mr. 
@@ -8568,7 +8568,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["Mr","Mrs"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr","Mrs"]}]
 
 /**
  * This is a complete sentence aMr.
@@ -8576,7 +8576,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["Mr"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr"]}]
 
 /**
  * This is a complete sentence. But this isn't, Mr.
@@ -8598,7 +8598,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["Mr"]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr"]}]
 
 /**
  * This is fun, i.e. enjoyable, but not superlatively so, e.g. not
@@ -8607,7 +8607,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["etc","e.g.","i.e."]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["etc","e.g.","i.e."]}]
 
 
 **
@@ -8617,7 +8617,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"abbreviations":["etc","e.g.","i.e."]}]
+// "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["etc","e.g.","i.e."]}]
 
 /**
  * Implements support for the
@@ -8691,7 +8691,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -8700,7 +8700,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"any"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"any"}]
 // Message: Missing JSDoc block description or @description declaration.
 
 /**
@@ -8709,7 +8709,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"body"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"body"}]
 // Message: Missing JSDoc block description.
 
 /**
@@ -8718,7 +8718,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"body"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"body"}]
 // Message: Remove the @desc tag to leave a plain block description or add additional description text above the @desc line.
 
 /**
@@ -8727,7 +8727,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"body"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"body"}]
 // Message: Remove the @description tag to leave a plain block description or add additional description text above the @description line.
 
 /**
@@ -8736,22 +8736,13 @@ function quux () {
 class quux {
 
 }
-// Options: [{"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
  *
  */
-// Options: [{"contexts":["any"],"descriptionStyle":"tag"}]
-// Message: Missing JSDoc @description declaration.
-
-/**
- *
- */
-class quux {
-
-}
-// Options: [{"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["any"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -8760,7 +8751,16 @@ class quux {
 class quux {
 
 }
-// Options: [{"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
+// Message: Missing JSDoc @description declaration.
+
+/**
+ *
+ */
+class quux {
+
+}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -8769,7 +8769,7 @@ class quux {
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description description.
 
 /**
@@ -8778,7 +8778,7 @@ function quux () {
 interface quux {
 
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["TSInterfaceDeclaration"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -8787,7 +8787,7 @@ interface quux {
 var quux = class {
 
 };
-// Options: [{"contexts":["ClassExpression"],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["ClassExpression"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -8796,7 +8796,7 @@ var quux = class {
 var quux = {
 
 };
-// Options: [{"contexts":["ObjectExpression"],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["ObjectExpression"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -8806,7 +8806,7 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":{"message":"Please avoid `{{tagName}}`; use `{{replacement}}` instead","replacement":"someDesc"}}}}
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @someDesc description.
 
 /**
@@ -8816,7 +8816,7 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 // Message: Unexpected tag `@description`
 
 /**
@@ -8826,7 +8826,7 @@ function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
-// Options: [{"descriptionStyle":"any"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"any"}]
 // Message: Missing JSDoc block description or @description declaration.
 
 /**
@@ -8834,7 +8834,7 @@ function quux () {
  */
 function quux () {
 }
-// Options: [{"exemptedBy":["notPresent"]}]
+// "jsdoc/require-description": ["error"|"warn", {"exemptedBy":["notPresent"]}]
 // Message: Missing JSDoc block description.
 
 class TestClass {
@@ -8851,7 +8851,7 @@ class TestClass {
    */
   constructor() { }
 }
-// Options: [{"checkConstructors":true}]
+// "jsdoc/require-description": ["error"|"warn", {"checkConstructors":true}]
 // Message: Missing JSDoc block description.
 
 class TestClass {
@@ -8868,7 +8868,7 @@ class TestClass {
    */
   get Test() { }
 }
-// Options: [{"checkGetters":true}]
+// "jsdoc/require-description": ["error"|"warn", {"checkGetters":true}]
 // Message: Missing JSDoc block description.
 
 class TestClass {
@@ -8885,7 +8885,7 @@ class TestClass {
    */
   set Test(value) { }
 }
-// Options: [{"checkSetters":true}]
+// "jsdoc/require-description": ["error"|"warn", {"checkSetters":true}]
 // Message: Missing JSDoc block description.
 
 /**
@@ -8902,7 +8902,7 @@ class Foo {
      */
     bar() {}
 }
-// Options: [{"checkConstructors":false,"contexts":["MethodDefinition"]}]
+// "jsdoc/require-description": ["error"|"warn", {"checkConstructors":false,"contexts":["MethodDefinition"]}]
 // Message: Missing JSDoc block description.
 ````
 
@@ -8920,7 +8920,7 @@ The following patterns are not considered problems:
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 
 /**
  * @description
@@ -8929,7 +8929,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 
 /**
  * @description <caption>Valid usage</caption>
@@ -8941,7 +8941,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 
 /**
  *
@@ -8949,7 +8949,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 
 /**
  *
@@ -8957,7 +8957,7 @@ class quux {
 function quux () {
 
 }
-// Options: [{"contexts":["ClassDeclaration"]}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["ClassDeclaration"]}]
 
 /**
  * @type {MyCallback}
@@ -8965,7 +8965,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"exemptedBy":["type"]}]
+// "jsdoc/require-description": ["error"|"warn", {"exemptedBy":["type"]}]
 
 /**
  *
@@ -8973,7 +8973,7 @@ function quux () {
 interface quux {
 
 }
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 
 interface quux {
   /**
@@ -8981,7 +8981,7 @@ interface quux {
    */
   checked?: boolean
 }
-// Options: [{"contexts":["TSPropertySignature"]}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["TSPropertySignature"]}]
 
 /**
  *
@@ -8989,7 +8989,7 @@ interface quux {
 var quux = class {
 
 };
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 
 /**
  *
@@ -8997,7 +8997,7 @@ var quux = class {
 var quux = {
 
 };
-// Options: [{"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 
 /**
  * Has an implicit description
@@ -9005,7 +9005,7 @@ var quux = {
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"body"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"body"}]
 
 /**
  * Has an implicit description
@@ -9020,7 +9020,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"any"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"any"}]
 
 /**
  * @description Has an explicit description
@@ -9028,7 +9028,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"descriptionStyle":"any"}]
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"any"}]
 
 /**
  *
@@ -9051,7 +9051,7 @@ class TestClass {
    */
   constructor() { }
 }
-// Options: [{"checkConstructors":false}]
+// "jsdoc/require-description": ["error"|"warn", {"checkConstructors":false}]
 
 class TestClass {
   /**
@@ -9066,7 +9066,7 @@ class TestClass {
    */
   get Test() { }
 }
-// Options: [{"checkGetters":false}]
+// "jsdoc/require-description": ["error"|"warn", {"checkGetters":false}]
 
 class TestClass {
   /**
@@ -9081,7 +9081,7 @@ class TestClass {
    */
   set Test(value) { }
 }
-// Options: [{"checkSetters":false}]
+// "jsdoc/require-description": ["error"|"warn", {"checkSetters":false}]
 ````
 
 
@@ -9172,7 +9172,7 @@ function quux () {
 function quux (someParam) {
 
 }
-// Options: [{"exemptNoArguments":true}]
+// "jsdoc/require-example": ["error"|"warn", {"exemptNoArguments":true}]
 // Message: Missing JSDoc @example declaration.
 
 /**
@@ -9214,13 +9214,13 @@ function quux () {
 class quux {
 
 }
-// Options: [{"contexts":["ClassDeclaration"]}]
+// "jsdoc/require-example": ["error"|"warn", {"contexts":["ClassDeclaration"]}]
 // Message: Missing JSDoc @example declaration.
 
 /**
  *
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-example": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @example declaration.
 
 /**
@@ -9228,7 +9228,7 @@ class quux {
  */
 function quux () {
 }
-// Options: [{"exemptedBy":["notPresent"]}]
+// "jsdoc/require-example": ["error"|"warn", {"exemptedBy":["notPresent"]}]
 // Message: Missing JSDoc @example declaration.
 
 class TestClass {
@@ -9237,7 +9237,7 @@ class TestClass {
    */
   get Test() { }
 }
-// Options: [{"checkGetters":true}]
+// "jsdoc/require-example": ["error"|"warn", {"checkGetters":true}]
 // Message: Missing JSDoc @example declaration.
 
 class TestClass {
@@ -9246,7 +9246,7 @@ class TestClass {
    */
   get Test() { }
 }
-// Options: [{"checkGetters":true}]
+// "jsdoc/require-example": ["error"|"warn", {"checkGetters":true}]
 // Message: Missing JSDoc @example description.
 
 class TestClass {
@@ -9255,7 +9255,7 @@ class TestClass {
    */
   set Test(value) { }
 }
-// Options: [{"checkSetters":true}]
+// "jsdoc/require-example": ["error"|"warn", {"checkSetters":true}]
 // Message: Missing JSDoc @example declaration.
 
 class TestClass {
@@ -9264,7 +9264,7 @@ class TestClass {
    */
   set Test(value) { }
 }
-// Options: [{"checkSetters":true}]
+// "jsdoc/require-example": ["error"|"warn", {"checkSetters":true}]
 // Message: Missing JSDoc @example description.
 ````
 
@@ -9308,7 +9308,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"checkConstructors":false}]
+// "jsdoc/require-example": ["error"|"warn", {"checkConstructors":false}]
 
 /**
  * @constructor
@@ -9317,7 +9317,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"checkConstructors":false}]
+// "jsdoc/require-example": ["error"|"warn", {"checkConstructors":false}]
 
 class Foo {
   /**
@@ -9327,7 +9327,7 @@ class Foo {
 
   }
 }
-// Options: [{"checkConstructors":false}]
+// "jsdoc/require-example": ["error"|"warn", {"checkConstructors":false}]
 
 /**
  * @inheritdoc
@@ -9342,7 +9342,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"exemptedBy":["type"]}]
+// "jsdoc/require-example": ["error"|"warn", {"exemptedBy":["type"]}]
 
 /**
  * @example Some example code
@@ -9350,7 +9350,7 @@ function quux () {
 class quux {
 
 }
-// Options: [{"contexts":["ClassDeclaration"]}]
+// "jsdoc/require-example": ["error"|"warn", {"contexts":["ClassDeclaration"]}]
 
 /**
  *
@@ -9358,7 +9358,7 @@ class quux {
 function quux () {
 
 }
-// Options: [{"contexts":["ClassDeclaration"]}]
+// "jsdoc/require-example": ["error"|"warn", {"contexts":["ClassDeclaration"]}]
 
 class TestClass {
   /**
@@ -9380,7 +9380,7 @@ class TestClass {
    */
   get Test() { }
 }
-// Options: [{"checkGetters":true}]
+// "jsdoc/require-example": ["error"|"warn", {"checkGetters":true}]
 
 class TestClass {
   /**
@@ -9395,7 +9395,7 @@ class TestClass {
    */
   set Test(value) { }
 }
-// Options: [{"checkSetters":false}]
+// "jsdoc/require-example": ["error"|"warn", {"checkSetters":false}]
 
 class TestClass {
   /**
@@ -9403,7 +9403,7 @@ class TestClass {
    */
   set Test(value) { }
 }
-// Options: [{"checkSetters":true}]
+// "jsdoc/require-example": ["error"|"warn", {"checkSetters":true}]
 
 /**
  *
@@ -9411,7 +9411,7 @@ class TestClass {
 function quux () {
 
 }
-// Options: [{"exemptNoArguments":true}]
+// "jsdoc/require-example": ["error"|"warn", {"exemptNoArguments":true}]
 ````
 
 
@@ -9502,15 +9502,15 @@ The following patterns are considered problems:
 // Message: Missing @file
 
 
-// Options: [{"tags":{"file":{"initialCommentsOnly":true,"mustExist":true,"preventDuplicates":true}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"file":{"initialCommentsOnly":true,"mustExist":true,"preventDuplicates":true}}}]
 // Message: Missing @file
 
 
-// Options: [{"tags":{"file":{"mustExist":true}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"file":{"mustExist":true}}}]
 // Message: Missing @file
 
 
-// Options: [{"tags":{"author":{"initialCommentsOnly":false,"mustExist":true,"preventDuplicates":false}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"author":{"initialCommentsOnly":false,"mustExist":true,"preventDuplicates":false}}}]
 // Message: Missing @author
 
 /**
@@ -9550,7 +9550,7 @@ function quux () {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"tagNamePreference":{"file":false}}}
-// Options: [{"tags":{"file":{"initialCommentsOnly":false,"mustExist":true,"preventDuplicates":false}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"file":{"initialCommentsOnly":false,"mustExist":true,"preventDuplicates":false}}}]
 // Message: `settings.jsdoc.tagNamePreference` cannot block @file for the `require-file-overview` rule
 
 /**
@@ -9593,7 +9593,7 @@ function bar (b) {}
  /**
   * @copyright
   */
-// Options: [{"tags":{"copyright":{"initialCommentsOnly":false,"mustExist":false,"preventDuplicates":true}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"copyright":{"initialCommentsOnly":false,"mustExist":false,"preventDuplicates":true}}}]
 // Message: Duplicate @copyright
 
 function quux () {
@@ -9608,7 +9608,7 @@ function quux () {
 /**
  * @license
  */
-// Options: [{"tags":{"license":{"initialCommentsOnly":true,"mustExist":false,"preventDuplicates":false}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"license":{"initialCommentsOnly":true,"mustExist":false,"preventDuplicates":false}}}]
 // Message: @license should be at the beginning of the file
 
 function quux () {
@@ -9616,7 +9616,7 @@ function quux () {
 /**
  * @license
  */
-// Options: [{"tags":{"license":{"initialCommentsOnly":true}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"license":{"initialCommentsOnly":true}}}]
 // Message: @license should be at the beginning of the file
 
 /**
@@ -9626,7 +9626,7 @@ function quux () {
 /**
  * @file
  */
-// Options: [{"tags":{"file":{"initialCommentsOnly":true,"preventDuplicates":true}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"file":{"initialCommentsOnly":true,"preventDuplicates":true}}}]
 // Message: Duplicate @file
 ````
 
@@ -9644,7 +9644,7 @@ The following patterns are not considered problems:
 /**
  * @file
  */
-// Options: [{"tags":{"license":{"initialCommentsOnly":true,"preventDuplicates":true}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"license":{"initialCommentsOnly":true,"preventDuplicates":true}}}]
 
 // Ok preceded by comment
 /**
@@ -9680,21 +9680,21 @@ function quux () {
 /**
  *
  */
-// Options: [{"tags":{"license":{"initialCommentsOnly":true,"mustExist":false,"preventDuplicates":false}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"license":{"initialCommentsOnly":true,"mustExist":false,"preventDuplicates":false}}}]
 
 function quux () {
 }
 /**
  *
  */
-// Options: [{"tags":{"license":{"initialCommentsOnly":false,"mustExist":false,"preventDuplicates":false}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"license":{"initialCommentsOnly":false,"mustExist":false,"preventDuplicates":false}}}]
 
 function quux () {
 }
 /**
  *
  */
-// Options: [{"tags":{"license":{"initialCommentsOnly":false,"mustExist":false,"preventDuplicates":true}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"license":{"initialCommentsOnly":false,"mustExist":false,"preventDuplicates":true}}}]
 
 /**
  * @license MIT
@@ -9705,7 +9705,7 @@ function quux () {
  /**
   * @type {Array}
   */
-// Options: [{"tags":{"license":{"initialCommentsOnly":true,"mustExist":false,"preventDuplicates":false}}}]
+// "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"license":{"initialCommentsOnly":true,"mustExist":false,"preventDuplicates":false}}}]
 ````
 
 
@@ -9751,7 +9751,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
-// Options: ["always"]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always"]
 // Message: There must be a hyphen before @param description.
 
 /**
@@ -9760,7 +9760,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["always",{"tags":{"*":"never"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"*":"never"}}]
 // Message: There must be a hyphen before @param description.
 
 /**
@@ -9770,7 +9770,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["always",{"tags":{"*":"never","returns":"always"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"*":"never","returns":"always"}}]
 // Message: There must be a hyphen before @param description.
 
 /**
@@ -9787,7 +9787,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["never"]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "never"]
 // Message: There must be no hyphen before @param description.
 
 /**
@@ -9796,7 +9796,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["never"]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "never"]
 // Message: There must be no hyphen before @param description.
 
 /**
@@ -9806,7 +9806,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["always"]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always"]
 // Message: There must be a hyphen before @param description.
 
 /**
@@ -9817,7 +9817,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["always"]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always"]
 // Message: There must be a hyphen before @param description.
 
 /**
@@ -9833,20 +9833,20 @@ function quux (foo) {
  * @typedef {SomeType} ATypeDefName
  * @property foo Foo.
  */
-// Options: ["always",{"tags":{"property":"always"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"property":"always"}}]
 // Message: There must be a hyphen before @property description.
 
 /**
  * @template TempA, TempB A desc.
  */
-// Options: ["always",{"tags":{"template":"always"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"template":"always"}}]
 // Message: There must be a hyphen before @template description.
 
 /**
  * @typedef {SomeType} ATypeDefName
  * @property foo - Foo.
  */
-// Options: ["never",{"tags":{"property":"never"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "never",{"tags":{"property":"never"}}]
 // Message: There must be no hyphen before @property description.
 
 /**
@@ -9856,7 +9856,7 @@ function quux (foo) {
 function quux () {
 
 }
-// Options: ["always",{"tags":{"returns":"never"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"returns":"never"}}]
 // Message: There must be a hyphen before @param description.
 ````
 
@@ -9869,7 +9869,7 @@ The following patterns are not considered problems:
 function quux () {
 
 }
-// Options: ["always"]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always"]
 
 /**
  * @param foo     - Foo.
@@ -9877,7 +9877,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["always"]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always"]
 
 /**
  * @param foo - Foo.
@@ -9886,7 +9886,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["always",{"tags":{"returns":"never"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"returns":"never"}}]
 
 /**
  * @param foo Foo.
@@ -9894,7 +9894,7 @@ function quux () {
 function quux () {
 
 }
-// Options: ["never"]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "never"]
 
 /**
  * @param foo
@@ -9909,25 +9909,25 @@ function quux () {
 function quux () {
 
 }
-// Options: ["always",{"tags":{"*":"always"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"*":"always"}}]
 
 /**
  * @typedef {SomeType} ATypeDefName
  * @property foo - Foo.
  */
-// Options: ["always",{"tags":{"property":"always"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"property":"always"}}]
 
 /**
  * @typedef {SomeType} ATypeDefName
  * @property foo Foo.
  */
-// Options: ["never",{"tags":{"property":"never"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "never",{"tags":{"property":"never"}}]
 
 /**
  * @typedef {SomeType} ATypeDefName
  * @property foo - Foo.
  */
-// Options: ["never",{"tags":{"*":"always"}}]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "never",{"tags":{"*":"always"}}]
 
 /** Entry point for module.
  *
@@ -9935,7 +9935,7 @@ function quux () {
  */
 function main(argv) {
 };
-// Options: ["never"]
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "never"]
 ````
 
 
@@ -10052,7 +10052,7 @@ export interface Foo {
   tom: string;
   catchJerry(): boolean;
 }
-// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true,"ClassExpression":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true,"ClassExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 /** This is comment */
@@ -10061,21 +10061,21 @@ export interface Foo {
   tom: string;
   jerry: number;
 }
-// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true,"ClassExpression":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true,"ClassExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 /** This is comment */
 export interface Foo {
   bar(): string;
 }
-// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
 // Message: Missing JSDoc comment.
 
 /** This is comment */
 export interface Foo {
   bar: string;
 }
-// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true,"esm":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true,"esm":true}}]
 // Message: Missing JSDoc comment.
 
 /**
@@ -10089,7 +10089,7 @@ export interface Foo extends Bar {
 
   meow(): void;
 }
-// Options: [{"contexts":["TSMethodSignature"],"publicOnly":{"ancestorsOnly":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSMethodSignature"],"publicOnly":{"ancestorsOnly":true}}]
 // Message: Missing JSDoc comment.
 
 function quux (foo) {
@@ -10126,60 +10126,60 @@ function myFunction() {
 function myFunction() {
 
 }
-// Options: [{"enableFixer":false}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"enableFixer":false}]
 // Message: Missing JSDoc comment.
 
 export var test = function () {
 
 };
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 function test () {
 
 }
 export var test2 = test;
-// Options: [{"publicOnly":true,"require":{"FunctionDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 export const test = () => {
 
 };
-// Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export const test = () => {
 
 };
-// Options: [{"contexts":["ArrowFunctionExpression"],"publicOnly":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ArrowFunctionExpression"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
 
 export const test = () => {
 
 };
-// Options: [{"contexts":[{"context":"ArrowFunctionExpression"}],"publicOnly":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":[{"context":"ArrowFunctionExpression"}],"publicOnly":true}]
 // Message: Missing JSDoc comment.
 
 export let test = class {
 
 };
-// Options: [{"publicOnly":true,"require":{"ClassExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ClassExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export default function () {}
-// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 export default () => {}
-// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"ArrowFunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export default (function () {})
-// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export default class {}
-// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"ClassDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 function quux (foo) {
@@ -10190,14 +10190,14 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"exemptEmptyFunctions":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyFunctions":true}]
 // Message: Missing JSDoc comment.
 
 function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"minLines":2}}
-// Options: [{"exemptEmptyFunctions":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyFunctions":true}]
 // Message: Missing JSDoc comment.
 
 function myFunction() {}
@@ -10211,7 +10211,7 @@ class A {
         this.a = xs;
    }
 }
-// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 class A {
@@ -10223,7 +10223,7 @@ class A {
         this.a = xs;
     }
 }
-// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 class A extends B {
@@ -10235,7 +10235,7 @@ class A extends B {
         this.a = xs;
     }
 }
-// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 export class A extends B {
@@ -10247,7 +10247,7 @@ export class A extends B {
         this.a = xs;
     }
 }
-// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 export default class A extends B {
@@ -10259,49 +10259,49 @@ export default class A extends B {
         this.a = xs;
     }
 }
-// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 var myFunction = () => {}
-// Options: [{"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 var myFunction = () => () => {}
-// Options: [{"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 var foo = function() {}
-// Options: [{"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 const foo = {bar() {}}
-// Options: [{"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 var foo = {bar: function() {}}
-// Options: [{"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 function foo (abc) {}
-// Options: [{"exemptEmptyFunctions":false}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyFunctions":false}]
 // Message: Missing JSDoc comment.
 
 function foo () {
   return true;
 }
-// Options: [{"exemptEmptyFunctions":false}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyFunctions":false}]
 // Message: Missing JSDoc comment.
 
 module.exports = function quux () {
 
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 module.exports = function quux () {
 
 }
-// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 module.exports = {
@@ -10309,7 +10309,7 @@ module.exports = {
 
   }
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 module.exports = {
@@ -10319,7 +10319,7 @@ module.exports = {
     }
   }
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 module.exports = {
@@ -10329,13 +10329,13 @@ module.exports = {
     }
   }
 }
-// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 const test = module.exports = function () {
 
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 /**
@@ -10346,7 +10346,7 @@ const test = module.exports = function () {
 }
 
 test.prototype.method = function() {}
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 const test = function () {
@@ -10355,7 +10355,7 @@ const test = function () {
 module.exports = {
   test: test
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 const test = () => {
@@ -10364,7 +10364,7 @@ const test = () => {
 module.exports = {
   test: test
 }
-// Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 class Test {
@@ -10373,38 +10373,38 @@ class Test {
     }
 }
 module.exports = Test;
-// Options: [{"publicOnly":true,"require":{"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 export default function quux () {
 
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export default function quux () {
 
 }
-// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 function quux () {
 
 }
 export default quux;
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export function test() {
 
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export function test() {
 
 }
-// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 var test = function () {
@@ -10412,68 +10412,68 @@ var test = function () {
 }
 var test2 = 2;
 export { test, test2 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 var test = function () {
 
 }
 export { test as test2 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export default class A {
 
 }
-// Options: [{"publicOnly":true,"require":{"ClassDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 export default class A {
 
 }
-// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 var test = function () {
 
 }
-// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 window.test = function () {
 
 }
-// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 function test () {
 
 }
-// Options: [{"publicOnly":{"window":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"window":true}}]
 // Message: Missing JSDoc comment.
 
 module.exports = function() {
 
 }
-// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 export function someMethod() {
 
 }
-// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 export function someMethod() {
 
 }
-// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 const myObject = {
   myProp: true
 };
-// Options: [{"contexts":["Property"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["Property"]}]
 // Message: Missing JSDoc comment.
 
 /**
@@ -10487,13 +10487,13 @@ export interface Foo extends Bar {
 
   meow(): void;
 }
-// Options: [{"contexts":["TSMethodSignature"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSMethodSignature"]}]
 // Message: Missing JSDoc comment.
 
 class MyClass {
   someProperty: boolean; // Flow type annotation.
 }
-// Options: [{"exemptEmptyFunctions":true,"require":{"ClassDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyFunctions":true,"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 export default class Test {
@@ -10501,7 +10501,7 @@ export default class Test {
     this.a = a;
   }
 }
-// Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 export default class Test {
@@ -10512,12 +10512,12 @@ export default class Test {
     this.a = a;
   }
 }
-// Options: [{"contexts":["MethodDefinition:not([accessibility=\"private\"]) > FunctionExpression"],"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":false}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["MethodDefinition:not([accessibility=\"private\"]) > FunctionExpression"],"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":false}}]
 // Message: Missing JSDoc comment.
 
 e = function () {
 };
-// Options: [{"require":{"FunctionDeclaration":false,"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionDeclaration":false,"FunctionExpression":true}}]
 // Message: Missing JSDoc comment.
 
 /**
@@ -10530,7 +10530,7 @@ export class Class {
         this.test = 2;
     }
 }
-// Options: [{"require":{"FunctionDeclaration":false,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionDeclaration":false,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 class Dog {
@@ -10538,17 +10538,17 @@ class Dog {
 
   }
 }
-// Options: [{"require":{"FunctionDeclaration":false,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionDeclaration":false,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 const hello = name => {
   document.body.textContent = "Hello, " + name + "!";
 };
-// Options: [{"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":false}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":false}}]
 // Message: Missing JSDoc comment.
 
 export const loginSuccessAction = (): BaseActionPayload => ({ type: LOGIN_SUCCESSFUL });
-// Options: [{"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":false}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":false}}]
 // Message: Missing JSDoc comment.
 
 export type Container = {
@@ -10556,7 +10556,7 @@ export type Container = {
   enums?: { [key in string]: TypescriptEnum };
   helpers?: { [key in string]: AnyFunction };
 };
-// Options: [{"contexts":["TSTypeAliasDeclaration",{"context":"TSPropertySignature","inlineCommentBlock":true}]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSTypeAliasDeclaration",{"context":"TSPropertySignature","inlineCommentBlock":true}]}]
 // Message: Missing JSDoc comment.
 
 class Foo {
@@ -10564,7 +10564,7 @@ class Foo {
 
     bar() {}
 }
-// Options: [{"contexts":["MethodDefinition[key.name!=\"constructor\"]"],"require":{"ClassDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["MethodDefinition[key.name!=\"constructor\"]"],"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 class Example extends React.PureComponent {
@@ -10574,7 +10574,7 @@ class Example extends React.PureComponent {
 
   someOtherMethod () {}
 }
-// Options: [{"contexts":["MethodDefinition:not([key.name=\"componentDidMount\"]):not([key.name=\"render\"])"],"require":{"ClassDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["MethodDefinition:not([key.name=\"componentDidMount\"]):not([key.name=\"render\"])"],"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 function foo(arg: boolean): boolean {
@@ -10586,7 +10586,7 @@ function bar(arg: false): false;
 function bar(arg: boolean): boolean {
   return arg;
 }
-// Options: [{"contexts":["TSDeclareFunction:not(TSDeclareFunction + TSDeclareFunction)","FunctionDeclaration:not(TSDeclareFunction + FunctionDeclaration)"],"require":{"FunctionDeclaration":false}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSDeclareFunction:not(TSDeclareFunction + TSDeclareFunction)","FunctionDeclaration:not(TSDeclareFunction + FunctionDeclaration)"],"require":{"FunctionDeclaration":false}}]
 // Message: Missing JSDoc comment.
 
 export function foo(arg: boolean): boolean {
@@ -10598,13 +10598,13 @@ export function bar(arg: false): false;
 export function bar(arg: boolean): boolean {
   return arg;
 }
-// Options: [{"contexts":["ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"]:not(ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"] + ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"])","ExportNamedDeclaration[declaration.type=\"FunctionDeclaration\"]:not(ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"] + ExportNamedDeclaration[declaration.type=\"FunctionDeclaration\"])"],"require":{"FunctionDeclaration":false}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"]:not(ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"] + ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"])","ExportNamedDeclaration[declaration.type=\"FunctionDeclaration\"]:not(ExportNamedDeclaration[declaration.type=\"TSDeclareFunction\"] + ExportNamedDeclaration[declaration.type=\"FunctionDeclaration\"])"],"require":{"FunctionDeclaration":false}}]
 // Message: Missing JSDoc comment.
 
 module.exports.foo = (bar) => {
   return bar + "biz"
 }
-// Options: [{"publicOnly":false,"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":false,"require":{"ArrowFunctionExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 class Animal {
@@ -10618,12 +10618,12 @@ class Animal {
   @SomeAnnotation('optionalParameter')
   tail: boolean;
 }
-// Options: [{"contexts":["ClassProperty"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ClassProperty"]}]
 // Message: Missing JSDoc comment.
 
 @Entity('users')
 export class User {}
-// Options: [{"require":{"ClassDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
 /**
@@ -10632,7 +10632,7 @@ export class User {}
 class Foo {
     constructor() {}
 }
-// Options: [{"exemptEmptyConstructors":false,"require":{"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyConstructors":false,"require":{"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 /**
@@ -10641,7 +10641,7 @@ class Foo {
 class Foo {
     constructor(notEmpty) {}
 }
-// Options: [{"exemptEmptyConstructors":true,"require":{"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyConstructors":true,"require":{"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 /**
@@ -10653,7 +10653,7 @@ class Foo {
         return notEmpty;
     }
 }
-// Options: [{"exemptEmptyConstructors":true,"require":{"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyConstructors":true,"require":{"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 /**
@@ -10668,31 +10668,31 @@ function quux() {
 class Test {
   aFunc() {}
 }
-// Options: [{"checkConstructors":false,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":false,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkConstructors":false,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":false,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 class Test {
   aFunc = () => {}
   anotherFunc() {}
 }
-// Options: [{"require":{"ArrowFunctionExpression":true,"ClassDeclaration":false,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":true,"ClassDeclaration":false,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 
 export enum testEnum {
   A, B
 }
-// Options: [{"contexts":["TSEnumDeclaration"],"publicOnly":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSEnumDeclaration"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
 
 export interface Test {
   aFunc: () => void;
   aVar: string;
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"],"publicOnly":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
 
 export type testType = string | number;
-// Options: [{"contexts":["TSTypeAliasDeclaration"],"publicOnly":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSTypeAliasDeclaration"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
 
 export interface Foo {
@@ -10700,7 +10700,7 @@ export interface Foo {
     baz: string;
     quux(): void;
 }
-// Options: [{"contexts":["TSPropertySignature","TSMethodSignature"],"publicOnly":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSPropertySignature","TSMethodSignature"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
 
 export class MyComponentComponent {
@@ -10712,7 +10712,7 @@ export class MyComponentComponent {
   @Input()
   public value = new EventEmitter();
 }
-// Options: [{"contexts":["ClassProperty:has(Decorator[expression.callee.name=\"Input\"])"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ClassProperty:has(Decorator[expression.callee.name=\"Input\"])"]}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -10722,13 +10722,13 @@ The following patterns are not considered problems:
 interface FooBar {
   fooBar: string;
 }
-// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
 
 /** This is comment */
 interface FooBar {
   fooBar: string;
 }
-// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
 
 /** This is comment */
 export class Foo {
@@ -10738,7 +10738,7 @@ export class Foo {
     }
   }
 }
-// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
 
 /** This is comment */
 function someFunciton() {
@@ -10746,7 +10746,7 @@ function someFunciton() {
     fooBar: string;
   }
 }
-// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
 
 /** This is comment */
 export function foo() {
@@ -10754,7 +10754,7 @@ export function foo() {
     fooBar: string;
   }
 }
-// Options: [{"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
 
 /**
  *
@@ -10882,10 +10882,10 @@ function myFunction() {
 // Settings: {"jsdoc":{"maxLines":3,"minLines":2}}
 
 function myFunction() {}
-// Options: [{"require":{"ClassDeclaration":true,"FunctionDeclaration":false,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"FunctionDeclaration":false,"MethodDefinition":true}}]
 
 var myFunction = function() {}
-// Options: [{"require":{"ClassDeclaration":true,"FunctionDeclaration":false,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"FunctionDeclaration":false,"MethodDefinition":true}}]
 
 /**
  * Description for A.
@@ -10899,7 +10899,7 @@ class A {
         this.a = xs;
     }
 }
-// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
 
 /**
  * Description for A.
@@ -10913,7 +10913,7 @@ class App extends Component {
         this.a = xs;
     }
 }
-// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
 
 /**
  * Description for A.
@@ -10927,7 +10927,7 @@ export default class App extends Component {
         this.a = xs;
     }
 }
-// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
 
 /**
  * Description for A.
@@ -10941,70 +10941,70 @@ export class App extends Component {
         this.a = xs;
     }
 }
-// Options: [{"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true,"MethodDefinition":true}}]
 
 class A {
     constructor(xs) {
         this.a = xs;
     }
 }
-// Options: [{"require":{"ClassDeclaration":false,"MethodDefinition":false}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":false,"MethodDefinition":false}}]
 
 /**
 * Function doing something
 */
 var myFunction = () => {}
-// Options: [{"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":true}}]
 
 /**
 * Function doing something
 */
 var myFunction = function () {}
-// Options: [{"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":true}}]
 
 /**
 * Function doing something
 */
 var myFunction = () => {}
-// Options: [{"require":{"ArrowFunctionExpression":false}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":false}}]
 
 /**
  Function doing something
 */
 var myFunction = () => () => {}
-// Options: [{"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":true}}]
 
 setTimeout(() => {}, 10);
-// Options: [{"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":true}}]
 
 /**
 JSDoc Block
 */
 var foo = function() {}
-// Options: [{"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionExpression":true}}]
 
 const foo = {/**
 JSDoc Block
 */
 bar() {}}
-// Options: [{"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionExpression":true}}]
 
 var foo = {/**
 JSDoc Block
 */
 bar: function() {}}
-// Options: [{"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionExpression":true}}]
 
 var foo = { [function() {}]: 1 };
-// Options: [{"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionExpression":true}}]
 
 function foo () {}
-// Options: [{"exemptEmptyFunctions":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyFunctions":true}]
 
 function foo () {
   return;
 }
-// Options: [{"exemptEmptyFunctions":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyFunctions":true}]
 
 const test = {};
 /**
@@ -11016,7 +11016,7 @@ const test = {};
 module.exports = {
   prop: { prop2: test.method }
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11028,7 +11028,7 @@ function test() {
 module.exports = {
   prop: { prop2: test }
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11040,7 +11040,7 @@ test = function() {
 module.exports = {
   prop: { prop2: test }
 }
-// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11052,7 +11052,7 @@ test = function() {
 exports.someMethod = {
   prop: { prop2: test }
 }
-// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11064,7 +11064,7 @@ const test = () => {
 module.exports = {
 prop: { prop2: test }
 }
-// Options: [{"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ArrowFunctionExpression":true}}]
 
 const test = () => {
 
@@ -11072,7 +11072,7 @@ const test = () => {
 module.exports = {
   prop: { prop2: test }
 }
-// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ArrowFunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"require":{"ArrowFunctionExpression":true}}]
 
 /**
  *
@@ -11084,7 +11084,7 @@ window.test = function() {
 module.exports = {
 prop: window
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 test = function() {
 
@@ -11100,7 +11100,7 @@ test = function() {
 module.exports = {
 prop: { prop2: test }
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 test = function() {
 
@@ -11111,7 +11111,7 @@ test = 2;
 module.exports = {
 prop: { prop2: test }
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11130,7 +11130,7 @@ test.prototype.method = function() {
 module.exports = {
 prop: { prop2: test }
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 class Test {
   /**
@@ -11141,7 +11141,7 @@ class Test {
   }
 }
 module.exports = Test;
-// Options: [{"publicOnly":true,"require":{"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"MethodDefinition":true}}]
 
 /**
  *
@@ -11149,7 +11149,7 @@ module.exports = Test;
 export default function quux () {
 
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11157,7 +11157,7 @@ export default function quux () {
 export default function quux () {
 
 }
-// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11166,13 +11166,13 @@ function quux () {
 
 }
 export default quux;
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 function quux () {
 
 }
 export default quux;
-// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11180,7 +11180,7 @@ export default quux;
 export function test() {
 
 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11188,7 +11188,7 @@ export function test() {
 export function test() {
 
 }
-// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11198,7 +11198,7 @@ var test = function () {
 }
 var test2 = 2;
 export { test, test2 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11207,7 +11207,7 @@ var test = function () {
 
 }
 export { test as test2 }
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 /**
  *
@@ -11215,7 +11215,7 @@ export { test as test2 }
 export default class A {
 
 }
-// Options: [{"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"require":{"ClassDeclaration":true}}]
 
 /**
  *
@@ -11223,17 +11223,17 @@ export default class A {
 var test = function () {
 
 }
-// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 
 let test = function () {
 
 }
-// Options: [{"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"window":true},"require":{"FunctionExpression":true}}]
 
 let test = class {
 
 }
-// Options: [{"publicOnly":true,"require":{"ClassExpression":false}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ClassExpression":false}}]
 
 /**
  *
@@ -11241,27 +11241,27 @@ let test = class {
 let test = class {
 
 }
-// Options: [{"publicOnly":true,"require":{"ClassExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ClassExpression":true}}]
 
 export function someMethod() {
 
 }
-// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
 
 export function someMethod() {
 
 }
-// Options: [{"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
 
 exports.someMethod = function() {
 
 }
-// Options: [{"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionExpression":true}}]
 
 const myObject = {
   myProp: true
 };
-// Options: [{"contexts":[]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":[]}]
 
 function bear() {}
 /**
@@ -11270,7 +11270,7 @@ function bear() {}
 function quux () {
 }
 export default quux;
-// Options: [{"publicOnly":true,"require":{"FunctionExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"FunctionExpression":true}}]
 
 /**
  * This example interface is great!
@@ -11281,7 +11281,7 @@ export interface Example {
    */
   test: string
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration"]}]
 
 /**
  * This example interface is great!
@@ -11292,7 +11292,7 @@ interface Example {
    */
   test: string
 }
-// Options: [{"contexts":["TSInterfaceDeclaration"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration"]}]
 
 /**
  * This example type is great!
@@ -11303,7 +11303,7 @@ export type Example = {
    */
   test: string
 };
-// Options: [{"contexts":["TSTypeAliasDeclaration"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSTypeAliasDeclaration"]}]
 
 /**
  * This example type is great!
@@ -11314,7 +11314,7 @@ type Example = {
    */
   test: string
 };
-// Options: [{"contexts":["TSTypeAliasDeclaration"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSTypeAliasDeclaration"]}]
 
 /**
  * This example enum is great!
@@ -11325,7 +11325,7 @@ export enum Example {
    */
   test = 123
 }
-// Options: [{"contexts":["TSEnumDeclaration"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSEnumDeclaration"]}]
 
 /**
  * This example enum is great!
@@ -11336,11 +11336,11 @@ enum Example {
    */
   test = 123
 }
-// Options: [{"contexts":["TSEnumDeclaration"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSEnumDeclaration"]}]
 
 const foo = {...{}};
 function bar() {}
-// Options: [{"exemptEmptyFunctions":false,"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyFunctions":false,"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
 
 /**
  * Class documentation
@@ -11349,7 +11349,7 @@ function bar() {}
 export default class Foo {
  // ....
 }
-// Options: [{"exemptEmptyFunctions":false,"require":{"ClassDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyFunctions":false,"require":{"ClassDeclaration":true}}]
 
 const a = {};
 const b = {
@@ -11357,7 +11357,7 @@ const b = {
 };
 
 export default b;
-// Options: [{"contexts":["ObjectExpression"],"exemptEmptyFunctions":false,"publicOnly":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ObjectExpression"],"exemptEmptyFunctions":false,"publicOnly":true}]
 
 /**
  * Foo interface documentation.
@@ -11373,14 +11373,14 @@ export interface Foo extends Bar {
    */
   meow(): void;
 }
-// Options: [{"contexts":["TSMethodSignature"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSMethodSignature"]}]
 
 export default class Test {
   private abc(a) {
     this.a = a;
   }
 }
-// Options: [{"contexts":["MethodDefinition:not([accessibility=\"private\"]) > FunctionExpression"],"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":false}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["MethodDefinition:not([accessibility=\"private\"]) > FunctionExpression"],"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":false}}]
 
 /**
  * Basic application controller.
@@ -11397,7 +11397,7 @@ export class AppController {
     return 'OK';
   }
 }
-// Options: [{"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
 
 /**
  * Entity to represent a user in the system.
@@ -11405,7 +11405,7 @@ export class AppController {
 @Entity('users')
 export class User {
 }
-// Options: [{"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
 
 /**
  * Entity to represent a user in the system.
@@ -11413,7 +11413,7 @@ export class User {
 @Entity('users', getVal())
 export class User {
 }
-// Options: [{"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":false,"MethodDefinition":true}}]
 
 /**
  *
@@ -11421,7 +11421,7 @@ export class User {
 class Foo {
     constructor() {}
 }
-// Options: [{"exemptEmptyConstructors":true,"require":{"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptEmptyConstructors":true,"require":{"MethodDefinition":true}}]
 
 /**
  *
@@ -11429,19 +11429,19 @@ class Foo {
 class Foo {
     constructor() {}
 }
-// Options: [{"checkConstructors":false,"require":{"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkConstructors":false,"require":{"MethodDefinition":true}}]
 
 class Base {
   constructor() {
   }
 }
-// Options: [{"contexts":["MethodDefinition"],"exemptEmptyConstructors":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["MethodDefinition"],"exemptEmptyConstructors":true}]
 
 /**
  * This is a text.
  */
 export function a(); // Reports an error
-// Options: [{"contexts":["TSDeclareFunction"],"require":{"FunctionDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSDeclareFunction"],"require":{"FunctionDeclaration":true}}]
 
 /**
  * Foo
@@ -11453,14 +11453,14 @@ export function foo(): void {
 
   console.log('foo');
 }
-// Options: [{"publicOnly":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true}]
 
 const foo = {
   bar: () => {
     // ...
   }
 }
-// Options: [{"contexts":[":not(Property) > ArrowFunctionExpression"],"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":[":not(Property) > ArrowFunctionExpression"],"require":{"ArrowFunctionExpression":false,"ClassDeclaration":true,"ClassExpression":true}}]
 
 /** Defines the current user's settings. */
 @Injectable({
@@ -11474,7 +11474,7 @@ const foo = {
   },
 })
 export class UserSettingsState { }
-// Options: [{"require":{"ClassDeclaration":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true}}]
 ````
 
 
@@ -11525,21 +11525,21 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-description": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @param "foo" description.
 
 /**
  * @function
  * @param foo
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-description": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @param "foo" description.
 
 /**
  * @callback
  * @param foo
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-description": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @param "foo" description.
 
 /**
@@ -11584,7 +11584,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-description": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @function
@@ -11657,21 +11657,21 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-name": ["error"|"warn", {"contexts":["any"]}]
 // Message: There must be an identifier after @param tag.
 
 /**
  * @function
  * @param {string}
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-name": ["error"|"warn", {"contexts":["any"]}]
 // Message: There must be an identifier after @param tag.
 
 /**
  * @callback
  * @param {string}
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-name": ["error"|"warn", {"contexts":["any"]}]
 // Message: There must be an identifier after @param tag.
 
 /**
@@ -11700,7 +11700,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-name": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @param {string} foo
@@ -11785,21 +11785,21 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-type": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @param "foo" type.
 
 /**
  * @function
  * @param foo
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-type": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @param "foo" type.
 
 /**
  * @callback
  * @param foo
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-type": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @param "foo" type.
 
 /**
@@ -11844,7 +11844,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-param-type": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @function
@@ -12272,7 +12272,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["FunctionDeclaration"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["FunctionDeclaration"]}]
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -12289,7 +12289,7 @@ function quux ({foo}) {
 function quux (foo, bar, {baz}) {
 
 }
-// Options: [{"checkDestructured":false}]
+// "jsdoc/require-param": ["error"|"warn", {"checkDestructured":false}]
 // Message: Missing JSDoc @param "bar" declaration.
 
 /**
@@ -12298,7 +12298,7 @@ function quux (foo, bar, {baz}) {
 function quux (foo, bar, {baz}) {
 
 }
-// Options: [{"checkDestructuredRoots":false}]
+// "jsdoc/require-param": ["error"|"warn", {"checkDestructuredRoots":false}]
 // Message: Missing JSDoc @param "bar" declaration.
 
 /**
@@ -12307,7 +12307,7 @@ function quux (foo, bar, {baz}) {
 function quux ({foo}) {
 
 }
-// Options: [{"enableFixer":false}]
+// "jsdoc/require-param": ["error"|"warn", {"enableFixer":false}]
 // Message: Missing JSDoc @param "root0" declaration.
 
 /**
@@ -12332,7 +12332,7 @@ function quux ({foo}) {
 function quux ({foo}) {
 
 }
-// Options: [{"autoIncrementBase":1}]
+// "jsdoc/require-param": ["error"|"warn", {"autoIncrementBase":1}]
 // Message: Missing JSDoc @param "root1" declaration.
 
 /**
@@ -12357,7 +12357,7 @@ function quux ({ foo, bar: { baz }}) {
 function quux ({foo}, {bar}) {
 
 }
-// Options: [{"unnamedRootBase":["arg"]}]
+// "jsdoc/require-param": ["error"|"warn", {"unnamedRootBase":["arg"]}]
 // Message: Missing JSDoc @param "arg0" declaration.
 
 /**
@@ -12366,7 +12366,7 @@ function quux ({foo}, {bar}) {
 function quux ({foo}, {bar}) {
 
 }
-// Options: [{"unnamedRootBase":["arg","config"]}]
+// "jsdoc/require-param": ["error"|"warn", {"unnamedRootBase":["arg","config"]}]
 // Message: Missing JSDoc @param "arg" declaration.
 
 /**
@@ -12375,7 +12375,7 @@ function quux ({foo}, {bar}) {
 function quux ({foo}, {bar}) {
 
 }
-// Options: [{"enableRootFixer":false,"unnamedRootBase":["arg","config"]}]
+// "jsdoc/require-param": ["error"|"warn", {"enableRootFixer":false,"unnamedRootBase":["arg","config"]}]
 // Message: Missing JSDoc @param "arg" declaration.
 
 /**
@@ -12567,7 +12567,7 @@ function quux ([bar, baz], foo) {
  */
 function quux (foo) {
 }
-// Options: [{"exemptedBy":["notPresent"]}]
+// "jsdoc/require-param": ["error"|"warn", {"exemptedBy":["notPresent"]}]
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -12576,7 +12576,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"exemptedBy":[]}]
+// "jsdoc/require-param": ["error"|"warn", {"exemptedBy":[]}]
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -12605,7 +12605,7 @@ interface ITest {
  */
 TestMethod(id: number): void;
 }
-// Options: [{"contexts":["TSMethodSignature"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSMethodSignature"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
@@ -12618,7 +12618,7 @@ abstract class TestClass
  */
 abstract TestFunction(id);
 }
-// Options: [{"contexts":["TSEmptyBodyFunctionExpression"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSEmptyBodyFunctionExpression"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
@@ -12631,21 +12631,21 @@ declare class TestClass
  */
 TestMethod(id);
 }
-// Options: [{"contexts":["TSEmptyBodyFunctionExpression"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSEmptyBodyFunctionExpression"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
  * A test function.
  */
 declare let TestFunction: (id) => void;
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
  * A test function.
  */
 let TestFunction: (id) => void;
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
@@ -12656,7 +12656,7 @@ function test(
 ) {
   return processor(10);
 }
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
@@ -12666,7 +12666,7 @@ let test = (processor: (id: number) => string) =>
 {
   return processor(10);
 }
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 class TestClass {
@@ -12675,7 +12675,7 @@ class TestClass {
   */
   public Test: (id: number) => string;
 }
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 class TestClass {
@@ -12686,7 +12686,7 @@ class TestClass {
   {
   }
 }
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 interface TestInterface {
@@ -12695,7 +12695,7 @@ interface TestInterface {
  */
 public Test: (id: number) => string;
 }
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 interface TestInterface {
@@ -12704,14 +12704,14 @@ interface TestInterface {
    */
   public TestMethod(): (id: number) => string;
 }
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
  * A function with return type
  */
 function test(): (id: number) => string;
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
@@ -12721,7 +12721,7 @@ let test = (): (id: number) => string =>
 {
   return (id) => `${id}`;
 }
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
 
 /**
@@ -12767,7 +12767,7 @@ class Client {
 function quux (foo) {
 
 }
-// Options: [{"enableFixer":false}]
+// "jsdoc/require-param": ["error"|"warn", {"enableFixer":false}]
 // Message: Missing JSDoc @param "foo" declaration.
 
 class Client {
@@ -12787,7 +12787,7 @@ class Client {
  */
 function quux ({num, ...extra}) {
 }
-// Options: [{"checkRestProperty":true}]
+// "jsdoc/require-param": ["error"|"warn", {"checkRestProperty":true}]
 // Message: Missing JSDoc @param "cfg.extra" declaration.
 
 /**
@@ -12797,7 +12797,7 @@ function quux ({num, ...extra}) {
  */
 function quux ({opts: {num, ...extra}}) {
 }
-// Options: [{"checkRestProperty":true}]
+// "jsdoc/require-param": ["error"|"warn", {"checkRestProperty":true}]
 // Message: Missing JSDoc @param "cfg.opts.extra" declaration.
 
 /**
@@ -12824,7 +12824,7 @@ function baar (a, ...extra) {
 const bboxToObj = function ({x, y, width, height}) {
   return {x, y, width, height};
 };
-// Options: [{"checkTypesPattern":"SVGRect"}]
+// "jsdoc/require-param": ["error"|"warn", {"checkTypesPattern":"SVGRect"}]
 // Message: Missing JSDoc @param "bbox.x" declaration.
 
 /**
@@ -12844,7 +12844,7 @@ module.exports = class GraphQL {
   fetch = ({ url, ...options }, cacheKey) => {
   }
 };
-// Options: [{"checkRestProperty":true}]
+// "jsdoc/require-param": ["error"|"warn", {"checkRestProperty":true}]
 // Message: Missing JSDoc @param "fetchOptions.url" declaration.
 
 (function() {
@@ -12871,7 +12871,7 @@ function quux ({ foo: { bar } }) {}
  * @param {FooBar} options.foo
  */
 function quux ({ foo: { bar } }) {}
-// Options: [{"checkTypesPattern":"FooBar"}]
+// "jsdoc/require-param": ["error"|"warn", {"checkTypesPattern":"FooBar"}]
 // Message: Missing JSDoc @param "options.foo.bar" declaration.
 
 /**
@@ -12907,7 +12907,7 @@ function foo({ foo: { bar: { baz } }}) {}
 */
 export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 }
-// Options: [{"useDefaultObjectProperties":true}]
+// "jsdoc/require-param": ["error"|"warn", {"useDefaultObjectProperties":true}]
 // Message: Missing JSDoc @param "props.prop.a" declaration.
 ````
 
@@ -12948,7 +12948,7 @@ function quux ({foo}, {bar}) {
 function quux ({foo}, {bar}) {
 
 }
-// Options: [{"unnamedRootBase":["arg"]}]
+// "jsdoc/require-param": ["error"|"warn", {"unnamedRootBase":["arg"]}]
 
 /**
  * @param arg
@@ -12961,7 +12961,7 @@ function quux ({foo}, {bar}) {
 function quux ({foo}, {bar}, {baz}) {
 
 }
-// Options: [{"unnamedRootBase":["arg","config"]}]
+// "jsdoc/require-param": ["error"|"warn", {"unnamedRootBase":["arg","config"]}]
 
 /**
  * @inheritdoc
@@ -13266,7 +13266,7 @@ function foo(req, res, next) {}
 function quux () {
 
 }
-// Options: [{"exemptedBy":["type"]}]
+// "jsdoc/require-param": ["error"|"warn", {"exemptedBy":["type"]}]
 
 /**
  * @override
@@ -13332,7 +13332,7 @@ export abstract class StephanPlugin<O, D> {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["ArrowFunctionExpression"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["ArrowFunctionExpression"]}]
 
 /**
 * A function with return type
@@ -13343,7 +13343,7 @@ let test = (): (id: number) => string =>
 {
   return (id) => `${id}`;
 }
-// Options: [{"contexts":["TSFunctionType"]}]
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 
 /** @abstract */
 class base {
@@ -13412,7 +13412,7 @@ function quux ({num, ...extra}) {
 function baar ([a, ...extra]) {
   //
 }
-// Options: [{"enableRestElementFixer":false}]
+// "jsdoc/require-param": ["error"|"warn", {"enableRestElementFixer":false}]
 
 /**
   * @param a
@@ -13420,7 +13420,7 @@ function baar ([a, ...extra]) {
 function baar (a, ...extra) {
   //
 }
-// Options: [{"enableRestElementFixer":false}]
+// "jsdoc/require-param": ["error"|"warn", {"enableRestElementFixer":false}]
 
 /**
 * Converts an SVGRect into an object.
@@ -13437,7 +13437,7 @@ const bboxToObj = function ({x, y, width, height}) {
 const bboxToObj = function ({x, y, width, height}) {
   return {x, y, width, height};
 };
-// Options: [{"checkTypesPattern":"SVGRect"}]
+// "jsdoc/require-param": ["error"|"warn", {"checkTypesPattern":"SVGRect"}]
 
 class CSS {
   /**
@@ -13457,7 +13457,7 @@ class CSS {
 function quux (foo, bar, {baz}) {
 
 }
-// Options: [{"checkDestructured":false}]
+// "jsdoc/require-param": ["error"|"warn", {"checkDestructured":false}]
 
 /**
  * @param foo
@@ -13466,7 +13466,7 @@ function quux (foo, bar, {baz}) {
 function quux (foo, bar, {baz}) {
 
 }
-// Options: [{"checkDestructuredRoots":false}]
+// "jsdoc/require-param": ["error"|"warn", {"checkDestructuredRoots":false}]
 
 /**
  * @param root
@@ -13505,7 +13505,7 @@ function quux ({ foo: { bar } }) {}
  * @param {Object} options.foo
  */
 function quux ({ foo: { bar } }) {}
-// Options: [{"checkTypesPattern":"FooBar"}]
+// "jsdoc/require-param": ["error"|"warn", {"checkTypesPattern":"FooBar"}]
 
 /**
  * @param obj
@@ -13531,7 +13531,7 @@ function Item({
 */
 export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 }
-// Options: [{"useDefaultObjectProperties":false}]
+// "jsdoc/require-param": ["error"|"warn", {"useDefaultObjectProperties":false}]
 ````
 
 
@@ -13952,7 +13952,7 @@ function f () {
  * @returns {Promise<void>}
  */
 async function quux() {}
-// Options: [{"exemptAsync":false}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
@@ -13961,7 +13961,7 @@ async function quux() {}
 function quux() {
   return new Promise((resolve, reject) => {})
 }
-// Options: [{"exemptAsync":false}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
@@ -13974,7 +13974,7 @@ function quux() {
     });
   })
 }
-// Options: [{"exemptAsync":false}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
@@ -13984,7 +13984,7 @@ function quux() {
 async function foo() {
   return new Promise(resolve => resolve());
 }
-// Options: [{"exemptAsync":false}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
@@ -13994,14 +13994,14 @@ async function foo() {
 async function foo() {
   return new Promise(resolve => resolve());
 }
-// Options: [{"exemptAsync":false,"reportMissingReturnForUndefinedTypes":true}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false,"reportMissingReturnForUndefinedTypes":true}]
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
  * @returns { void } Foo.
  */
 function quux () {}
-// Options: [{"reportMissingReturnForUndefinedTypes":true}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"reportMissingReturnForUndefinedTypes":true}]
 // Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
@@ -14322,7 +14322,7 @@ async function quux() {
 async function quux() {
   return 5;
 }
-// Options: [{"exemptAsync":false}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
 
 /**
  * @returns {Promise<void>}
@@ -14334,7 +14334,7 @@ function quux() {
     });
   })
 }
-// Options: [{"exemptAsync":false}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
 
 /**
  * Description.
@@ -14343,7 +14343,7 @@ function quux() {
 async function foo() {
   return new Promise(resolve => resolve());
 }
-// Options: [{"reportMissingReturnForUndefinedTypes":true}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"reportMissingReturnForUndefinedTypes":true}]
 
 /**
  * @returns { void } Foo.
@@ -14351,7 +14351,7 @@ async function foo() {
 function quux () {
   return undefined;
 }
-// Options: [{"reportMissingReturnForUndefinedTypes":true}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"reportMissingReturnForUndefinedTypes":true}]
 
 /**
  * @returns { string } Foo.
@@ -14359,7 +14359,7 @@ function quux () {
 function quux () {
   return 'abc';
 }
-// Options: [{"reportMissingReturnForUndefinedTypes":true}]
+// "jsdoc/require-returns-check": ["error"|"warn", {"reportMissingReturnForUndefinedTypes":true}]
 ````
 
 
@@ -14420,21 +14420,21 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns-description": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @returns description.
 
 /**
  * @function
  * @returns {string}
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns-description": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @returns description.
 
 /**
  * @callback
  * @returns {string}
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns-description": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @returns description.
 
 /**
@@ -14479,7 +14479,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns-description": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @returns {undefined}
@@ -14576,21 +14576,21 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns-type": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @returns type.
 
 /**
  * @function
  * @returns Foo.
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns-type": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @returns type.
 
 /**
  * @callback
  * @returns Foo.
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns-type": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @returns type.
 
 /**
@@ -14628,7 +14628,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns-type": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @function
@@ -14742,28 +14742,28 @@ function quux (foo) {
  */
 async function quux() {
 }
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
  *
  */
 const quux = async function () {}
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
  *
  */
 const quux = async () => {}
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
  *
  */
 async function quux () {}
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -14771,7 +14771,7 @@ async function quux () {}
  */
 function quux () {
 }
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -14779,19 +14779,19 @@ function quux () {
  */
 function quux () {
 }
-// Options: [{"contexts":["any"],"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
  * @function
  */
-// Options: [{"contexts":["any"],"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
  * @callback
  */
-// Options: [{"contexts":["any"],"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 const language = {
@@ -14809,21 +14809,21 @@ const language = {
  */
 async function quux () {
 }
-// Options: [{"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
  * @function
  * @async
  */
-// Options: [{"contexts":["any"],"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
  * @callback
  * @async
  */
-// Options: [{"contexts":["any"],"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -14851,7 +14851,7 @@ function quux () {
 function quux (foo) {
   return 'bar';
 }
-// Options: [{"exemptedBy":["notPresent"]}]
+// "jsdoc/require-returns": ["error"|"warn", {"exemptedBy":["notPresent"]}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -14860,7 +14860,7 @@ function quux (foo) {
 async function foo(a) {
   return;
 }
-// Options: [{"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -14869,7 +14869,7 @@ async function foo(a) {
 async function foo(a) {
   return Promise.all(a);
 }
-// Options: [{"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 class foo {
@@ -14878,7 +14878,7 @@ class foo {
     return 0;
   }
 }
-// Options: [{"checkGetters":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":true}]
 // Message: Missing JSDoc @returns declaration.
 
 class TestClass {
@@ -14889,7 +14889,7 @@ class TestClass {
     return new Map();
   }
 }
-// Options: [{"checkConstructors":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"checkConstructors":true}]
 // Message: Missing JSDoc @returns declaration.
 
 class TestClass {
@@ -14900,7 +14900,7 @@ class TestClass {
     return 0;
   }
 }
-// Options: [{"checkGetters":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":true}]
 // Message: Missing JSDoc @returns declaration.
 
 class quux {
@@ -14910,7 +14910,7 @@ class quux {
   quux () {
   }
 }
-// Options: [{"contexts":["any"],"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -15158,7 +15158,7 @@ function quux () {
 function quux () {
   return new Promise();
 }
-// Options: [{"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -15167,7 +15167,7 @@ function quux () {
 async function quux () {
   return new Promise();
 }
-// Options: [{"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**
@@ -15176,7 +15176,7 @@ async function quux () {
 async function quux () {
   return new Promise((resolve, reject) => {});
 }
-// Options: [{"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
 ````
 
@@ -15198,7 +15198,7 @@ function quux () {
 
   return foo;
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  *
@@ -15343,7 +15343,7 @@ class Foo {
   constructor () {
   }
 }
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 
 const language = {
   /**
@@ -15359,7 +15359,7 @@ const language = {
  */
 function quux () {
 }
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 
 /**
  * @returns {void}
@@ -15374,7 +15374,7 @@ function quux () {
 function quux () {
   return undefined;
 }
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 
 /**
  * @returns {void}
@@ -15388,7 +15388,7 @@ function quux () {
  */
 function quux () {
 }
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 
 /**
  * @returns {void}
@@ -15396,7 +15396,7 @@ function quux () {
 function quux () {
   return;
 }
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 
 /** @type {RequestHandler} */
 function quux (req, res , next) {
@@ -15408,14 +15408,14 @@ function quux (req, res , next) {
  */
 async function quux () {
 }
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 
 /**
  * @returns {Promise}
  */
 async function quux () {
 }
-// Options: [{"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 
 /**
  *
@@ -15448,7 +15448,7 @@ export default foo;
  */
 function quux () {
 }
-// Options: [{"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 
 /**
  * @type {MyCallback}
@@ -15456,7 +15456,7 @@ function quux () {
 function quux () {
 
 }
-// Options: [{"exemptedBy":["type"]}]
+// "jsdoc/require-returns": ["error"|"warn", {"exemptedBy":["type"]}]
 
 /**
  * @param {array} a
@@ -15468,59 +15468,51 @@ async function foo(a) {
 /**
  *
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @async
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @function
  */
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 
 /**
  * @callback
  */
-// Options: [{"forceRequireReturn":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 
 /**
  * @function
  * @async
  */
-// Options: [{"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 
 /**
  * @callback
  * @async
  */
-// Options: [{"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 
 /**
  * @function
  */
-// Options: [{"contexts":["any"],"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceReturnsWithAsync":true}]
 
 /**
  * @callback
  */
-// Options: [{"contexts":["any"],"forceReturnsWithAsync":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceReturnsWithAsync":true}]
 
 class foo {
   get bar() {
     return 0;
   }
 }
-// Options: [{"checkGetters":false}]
-
-class foo {
-  /** @returns zero */
-  get bar() {
-    return 0;
-  }
-}
-// Options: [{"checkGetters":true}]
+// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":false}]
 
 class foo {
   /** @returns zero */
@@ -15528,7 +15520,15 @@ class foo {
     return 0;
   }
 }
-// Options: [{"checkGetters":false}]
+// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":true}]
+
+class foo {
+  /** @returns zero */
+  get bar() {
+    return 0;
+  }
+}
+// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":false}]
 
 class TestClass {
   /**
@@ -15552,7 +15552,7 @@ class TestClass {
    */
   constructor() { }
 }
-// Options: [{"checkConstructors":false}]
+// "jsdoc/require-returns": ["error"|"warn", {"checkConstructors":false}]
 
 class TestClass {
   /**
@@ -15578,7 +15578,7 @@ class TestClass {
     return 0;
   }
 }
-// Options: [{"checkGetters":false}]
+// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":false}]
 
 /**
  *
@@ -15920,7 +15920,7 @@ function quux (foo) {
 function quux () {
   throw new Error('err')
 }
-// Options: [{"exemptedBy":["type"]}]
+// "jsdoc/require-throws": ["error"|"warn", {"exemptedBy":["type"]}]
 
 /**
  *
@@ -16020,7 +16020,7 @@ function * quux (foo) {
 
   const retVal = yield foo;
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"next":true}]
 // Message: Missing JSDoc @next declaration.
 
 /**
@@ -16030,7 +16030,7 @@ function * quux (foo) {
 
   const retVal = yield;
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"next":true}]
 // Message: Missing JSDoc @next declaration.
 
 /**
@@ -16038,7 +16038,7 @@ function * quux (foo) {
  */
 function * quux () {
 }
-// Options: [{"forceRequireNext":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireNext":true}]
 // Message: Missing JSDoc @next declaration.
 
 /**
@@ -16047,7 +16047,7 @@ function * quux () {
 function * quux () {
   yield;
 }
-// Options: [{"forceRequireNext":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireNext":true}]
 // Message: Missing JSDoc @next declaration.
 
 /**
@@ -16075,7 +16075,7 @@ function * quux (foo) {
   const val = yield foo;
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"next":"yield-returns"}}}
-// Options: [{"next":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"next":true}]
 // Message: Missing JSDoc @yield-returns declaration.
 
 /**
@@ -16086,7 +16086,7 @@ function * quux () {
   const ret = yield 5;
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"next":false}}}
-// Options: [{"next":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"next":true}]
 // Message: Unexpected tag `@next`
 
 /**
@@ -16095,7 +16095,7 @@ function * quux () {
 function * quux() {
   yield 5;
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
@@ -16104,7 +16104,7 @@ function * quux() {
 function * quux() {
   yield;
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
@@ -16113,7 +16113,7 @@ function * quux() {
 const quux = async function * () {
   yield;
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
@@ -16122,7 +16122,7 @@ const quux = async function * () {
 async function * quux () {
   yield;
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
@@ -16131,21 +16131,21 @@ async function * quux () {
 function * quux () {
   yield;
 }
-// Options: [{"contexts":["any"],"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"forceRequireYields":true}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
  * @function
  * @generator
  */
-// Options: [{"contexts":["any"],"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"forceRequireYields":true}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
  * @callback
  * @generator
  */
-// Options: [{"contexts":["any"],"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"forceRequireYields":true}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
@@ -16173,7 +16173,7 @@ function * quux () {
 function * quux (foo) {
   yield 'bar';
 }
-// Options: [{"exemptedBy":["notPresent"]}]
+// "jsdoc/require-yields": ["error"|"warn", {"exemptedBy":["notPresent"]}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
@@ -16182,7 +16182,7 @@ function * quux (foo) {
 async function * foo(a) {
   return;
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
@@ -16191,7 +16191,7 @@ async function * foo(a) {
 async function * foo(a) {
   yield Promise.all(a);
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 // Message: Missing JSDoc @yields declaration.
 
 class quux {
@@ -16202,7 +16202,7 @@ class quux {
     yield;
   }
 }
-// Options: [{"contexts":["any"],"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"forceRequireYields":true}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
@@ -16216,14 +16216,14 @@ async function * foo(a) {
 /**
  * @generator
  */
-// Options: [{"contexts":["any"],"withGeneratorTag":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"withGeneratorTag":true}]
 // Message: Missing JSDoc @yields declaration.
 
 /**
  * @generator
  * @yields
  */
-// Options: [{"contexts":["any"],"nextWithGeneratorTag":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"nextWithGeneratorTag":true}]
 // Message: Missing JSDoc @next declaration.
 
 /**
@@ -16426,7 +16426,7 @@ function * quux () {
 
   yield foo;
 }
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  *
@@ -16536,7 +16536,7 @@ function * quux () {
  */
 function quux () {
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 
 /**
  * @yields {void}
@@ -16544,7 +16544,7 @@ function quux () {
  */
 function * quux () {
 }
-// Options: [{"forceRequireNext":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireNext":true}]
 
 /**
  * @yields {void}
@@ -16559,7 +16559,7 @@ function * quux () {
 function * quux () {
   yield undefined;
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 
 /**
  * @yields {void}
@@ -16573,7 +16573,7 @@ function * quux () {
  */
 function * quux () {
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 
 /**
  * @yields {void}
@@ -16581,7 +16581,7 @@ function * quux () {
 function * quux () {
   yield;
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 
 /** @type {SpecialIterator} */
 function * quux () {
@@ -16593,7 +16593,7 @@ function * quux () {
  */
 async function * quux () {
 }
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 
 /**
  *
@@ -16611,7 +16611,7 @@ const quux = async function * () {}
 function * quux () {
   yield;
 }
-// Options: [{"exemptedBy":["type"]}]
+// "jsdoc/require-yields": ["error"|"warn", {"exemptedBy":["type"]}]
 
 /**
  * @param {array} a
@@ -16623,56 +16623,56 @@ async function * foo (a) {
 /**
  *
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @function
  */
-// Options: [{"contexts":["any"]}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @function
  */
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 
 /**
  * @callback
  */
-// Options: [{"forceRequireYields":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"forceRequireYields":true}]
 
 /**
  * @generator
  */
-// Options: [{"withGeneratorTag":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"withGeneratorTag":true}]
 
 /**
  * @generator
  */
-// Options: [{"nextWithGeneratorTag":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"nextWithGeneratorTag":true}]
 
 /**
  * @generator
  * @yields
  */
-// Options: [{"contexts":["any"],"withGeneratorTag":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"withGeneratorTag":true}]
 
 /**
  * @generator
  * @yields
  * @next
  */
-// Options: [{"contexts":["any"],"nextWithGeneratorTag":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"nextWithGeneratorTag":true}]
 
 /**
  * @generator
  */
-// Options: [{"contexts":["any"],"withGeneratorTag":false}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"withGeneratorTag":false}]
 
 /**
  * @generator
  * @yields
  */
-// Options: [{"contexts":["any"],"nextWithGeneratorTag":false}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"nextWithGeneratorTag":false}]
 
 /**
  * @yields
@@ -16689,7 +16689,7 @@ function * quux (foo) {
 function * quux (foo) {
   let a = yield;
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"next":true}]
 
 /**
  * @yields
@@ -16698,23 +16698,23 @@ function * quux (foo) {
 function * quux (foo) {
   const a = yield foo;
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"next":true}]
 
 /**
  *
  */
-// Options: [{"contexts":["any"],"nextWithGeneratorTag":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"nextWithGeneratorTag":true}]
 
 /**
  *
  */
-// Options: [{"contexts":["any"],"next":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"next":true}]
 
 /**
  *
  */
 function quux () {}
-// Options: [{"contexts":["any"],"next":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["any"],"next":true}]
 
 /**
  * @yields {void}
@@ -16722,7 +16722,7 @@ function quux () {}
 function * quux () {
   yield;
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields": ["error"|"warn", {"next":true}]
 
 /**
  *
@@ -16797,7 +16797,7 @@ function * quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"checkGeneratorsOnly":true}]
+// "jsdoc/require-yields-check": ["error"|"warn", {"checkGeneratorsOnly":true}]
 // Message: JSDoc @yields declaration present but yield expression not available in function.
 
 /**
@@ -16806,7 +16806,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Options: [{"checkGeneratorsOnly":true,"next":true}]
+// "jsdoc/require-yields-check": ["error"|"warn", {"checkGeneratorsOnly":true,"next":true}]
 // Message: JSDoc @next declaration present but yield expression with return value not available in function.
 
 /**
@@ -16815,7 +16815,7 @@ function quux (foo) {
 function * quux (foo) {
 
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
 // Message: JSDoc @next declaration present but yield expression with return value not available in function.
 
 /**
@@ -16824,7 +16824,7 @@ function * quux (foo) {
 function * quux (foo) {
   yield;
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
 // Message: JSDoc @next declaration present but yield expression with return value not available in function.
 
 /**
@@ -16833,7 +16833,7 @@ function * quux (foo) {
 function * quux (foo) {
   yield 5;
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
 // Message: JSDoc @next declaration present but yield expression with return value not available in function.
 
 /**
@@ -16852,7 +16852,7 @@ function * quux (foo) {
   yield;
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"next":"yield-returns"}}}
-// Options: [{"next":true}]
+// "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
 // Message: JSDoc @yield-returns declaration present but yield expression with return value not available in function.
 
 /**
@@ -16890,7 +16890,7 @@ function * quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"next":false}}}
-// Options: [{"next":true}]
+// "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
 // Message: Unexpected tag `@next`
 
 /**
@@ -17206,7 +17206,7 @@ function * quux () {
 function * quux (foo) {
 
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
 
 /**
  * @next {SomeType}
@@ -17214,7 +17214,7 @@ function * quux (foo) {
 function * quux (foo) {
   const a = yield;
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
 
 /**
  * @next {SomeType}
@@ -17222,7 +17222,7 @@ function * quux (foo) {
 function * quux (foo) {
   const a = yield 5;
 }
-// Options: [{"next":true}]
+// "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
 ````
 
 
@@ -17425,7 +17425,7 @@ function quux() {
 function quux() {
 
 }
-// Options: [{"allowEmptyNamepaths":false}]
+// "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":false}]
 // Message: Tag @callback must have a name/namepath.
 
 /**
@@ -17448,14 +17448,14 @@ function quux() {
  * @this
  */
  class Bar {};
-// Options: [{"allowEmptyNamepaths":false}]
+// "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":false}]
 // Message: Tag @this must have either a type or namepath in "jsdoc" mode.
 
 /**
  * @aCustomTag
  */
 // Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"required":["typeOrNameRequired"]}}}}
-// Options: [{"allowEmptyNamepaths":false}]
+// "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":false}]
 // Message: Tag @aCustomTag must have either a type or namepath.
 
 /**
@@ -17542,7 +17542,7 @@ function foo(bar) {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
-// Options: [{"allowEmptyNamepaths":false}]
+// "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":false}]
 // Message: Tag @typedef must have a name/namepath in "jsdoc" mode.
 
 /**
@@ -17700,7 +17700,7 @@ function quux() {
 function quux() {
 
 }
-// Options: [{"allowEmptyNamepaths":true}]
+// "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":true}]
 
 /**
  * @class
@@ -17853,7 +17853,7 @@ function foo(bar) {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
-// Options: [{"allowEmptyNamepaths":false}]
+// "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":false}]
 
 /**
  * @private {SomeType}
@@ -17867,7 +17867,7 @@ function quux () {}
 function quux() {
 
 }
-// Options: [{"allowEmptyNamepaths":false}]
+// "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":false}]
 
 /**
  * @see

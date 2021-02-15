@@ -31,7 +31,7 @@ const trimCode = (code) => {
   return lines.join('\n');
 };
 
-const formatCodeSnippet = (setup) => {
+const formatCodeSnippet = (setup, ruleName) => {
   const paragraphs = [];
 
   paragraphs.push(trimCode(setup.code));
@@ -41,7 +41,7 @@ const formatCodeSnippet = (setup) => {
   }
 
   if (setup.options) {
-    paragraphs.push(`// Options: ${JSON.stringify(setup.options)}`);
+    paragraphs.push(`// "jsdoc/${ruleName}": ["error"|"warn", ${JSON.stringify(setup.options).slice(1)}`);
   }
 
   if (setup.errors) {
@@ -58,13 +58,19 @@ const getAssertions = () => {
     return path.basename(filePath, '.js');
   });
 
-  const assertionCodes = assertionFiles.map((filePath) => {
+  const assertionCodes = assertionFiles.map((filePath, idx) => {
     // eslint-disable-next-line import/no-dynamic-require
     const codes = require(filePath);
 
+    const ruleName = _.kebabCase(assertionNames[idx]);
+
     return {
-      invalid: codes.invalid.filter(removeReadmeIgnores).map(formatCodeSnippet),
-      valid: codes.valid.filter(removeReadmeIgnores).map(formatCodeSnippet),
+      invalid: codes.invalid.filter(removeReadmeIgnores).map((setup) => {
+        return formatCodeSnippet(setup, ruleName);
+      }),
+      valid: codes.valid.filter(removeReadmeIgnores).map((setup) => {
+        return formatCodeSnippet(setup, ruleName);
+      }),
     };
   });
 
