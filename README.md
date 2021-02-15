@@ -10064,12 +10064,20 @@ no parameters or return values are found.
 <a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-22-checkgetters-1"></a>
 ##### <code>checkGetters</code>
 
-A value indicating whether getters should be checked. Defaults to `false`.
+A value indicating whether getters should be checked. Besides setting as a
+boolean, this option can be set to the string `"no-setter"` to indicate that
+getters should be checked but only when there is no setter. This may be useful
+if one only wishes documentation on one of the two accessors. Defaults to
+`false`.
 
 <a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-22-checksetters-1"></a>
 ##### <code>checkSetters</code>
 
-A value indicating whether setters should be checked. Defaults to `false`.
+A value indicating whether setters should be checked. Besides setting as a
+boolean, this option can be set to the string `"no-getter"` to indicate that
+setters should be checked but only when there is no getter. This may be useful
+if one only wishes documentation on one of the two accessors. Defaults to
+`false`.
 
 <a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-22-enablefixer-2"></a>
 ##### <code>enableFixer</code>
@@ -10760,6 +10768,24 @@ requestAnimationFrame(draw)
 
 function bench() {
 }
+// Message: Missing JSDoc comment.
+
+class Foo {
+  set aName (val) {}
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkSetters":"no-getter","contexts":["MethodDefinition > FunctionExpression"]}]
+// Message: Missing JSDoc comment.
+
+class Foo {
+  get aName () {}
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkGetters":"no-setter","contexts":["MethodDefinition > FunctionExpression"]}]
+// Message: Missing JSDoc comment.
+
+const obj = {
+  get aName () {},
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkGetters":"no-setter","contexts":["Property > FunctionExpression"]}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -11477,6 +11503,50 @@ class Foo {
     constructor() {}
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"checkConstructors":false,"require":{"MethodDefinition":true}}]
+
+class Foo {
+  get aName () {}
+  set aName (val) {}
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkGetters":"no-setter","checkSetters":false,"contexts":["MethodDefinition > FunctionExpression"]}]
+
+const obj = {
+  get aName () {},
+  set aName (val) {}
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkGetters":"no-setter","checkSetters":false,"contexts":["Property > FunctionExpression"]}]
+
+class Foo {
+  set aName (val) {}
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkSetters":false,"contexts":["MethodDefinition > FunctionExpression"]}]
+
+class Foo {
+  get aName () {}
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkGetters":false,"contexts":["MethodDefinition > FunctionExpression"]}]
+
+class Foo {
+  /**
+   *
+   */
+  set aName (val) {}
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkSetters":"no-getter","contexts":["MethodDefinition > FunctionExpression"]}]
+
+class Foo {
+  /**
+   *
+   */
+  get aName () {}
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkGetters":"no-setter","contexts":["MethodDefinition > FunctionExpression"]}]
+
+class Foo {
+  get aName () {}
+  set aName (val) {}
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkGetters":false,"checkSetters":"no-getter","contexts":["MethodDefinition > FunctionExpression"]}]
 
 class Base {
   constructor() {

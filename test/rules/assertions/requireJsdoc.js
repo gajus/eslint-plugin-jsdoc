@@ -2991,6 +2991,87 @@ function quux (foo) {
       }
       `,
     },
+    {
+      code: `
+        class Foo {
+          set aName (val) {}
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          checkSetters: 'no-getter',
+          contexts: ['MethodDefinition > FunctionExpression'],
+        },
+      ],
+      output: `
+        class Foo {
+          /**
+           *
+           */
+          set aName (val) {}
+        }
+      `,
+    },
+    {
+      code: `
+        class Foo {
+          get aName () {}
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          checkGetters: 'no-setter',
+          contexts: ['MethodDefinition > FunctionExpression'],
+        },
+      ],
+      output: `
+        class Foo {
+          /**
+           *
+           */
+          get aName () {}
+        }
+      `,
+    },
+    {
+      code: `
+        const obj = {
+          get aName () {},
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          checkGetters: 'no-setter',
+          contexts: ['Property > FunctionExpression'],
+        },
+      ],
+      output: `
+        const obj = {
+          /**
+           *
+           */
+          get aName () {},
+        }
+      `,
+    },
   ],
   valid: [{
     code: `
@@ -4536,6 +4617,109 @@ function quux (foo) {
         require: {
           MethodDefinition: true,
         },
+      },
+    ],
+  },
+  {
+    code: `
+      class Foo {
+        get aName () {}
+        set aName (val) {}
+      }
+    `,
+    options: [
+      {
+        checkGetters: 'no-setter',
+        checkSetters: false,
+        contexts: ['MethodDefinition > FunctionExpression'],
+      },
+    ],
+  },
+  {
+    code: `
+      const obj = {
+        get aName () {},
+        set aName (val) {}
+      }
+    `,
+    options: [
+      {
+        checkGetters: 'no-setter',
+        checkSetters: false,
+        contexts: ['Property > FunctionExpression'],
+      },
+    ],
+  },
+  {
+    code: `
+      class Foo {
+        set aName (val) {}
+      }
+    `,
+    options: [
+      {
+        checkSetters: false,
+        contexts: ['MethodDefinition > FunctionExpression'],
+      },
+    ],
+  },
+  {
+    code: `
+      class Foo {
+        get aName () {}
+      }
+    `,
+    options: [
+      {
+        checkGetters: false,
+        contexts: ['MethodDefinition > FunctionExpression'],
+      },
+    ],
+  },
+  {
+    code: `
+      class Foo {
+        /**
+         *
+         */
+        set aName (val) {}
+      }
+    `,
+    options: [
+      {
+        checkSetters: 'no-getter',
+        contexts: ['MethodDefinition > FunctionExpression'],
+      },
+    ],
+  },
+  {
+    code: `
+      class Foo {
+        /**
+         *
+         */
+        get aName () {}
+      }
+    `,
+    options: [
+      {
+        checkGetters: 'no-setter',
+        contexts: ['MethodDefinition > FunctionExpression'],
+      },
+    ],
+  },
+  {
+    code: `
+      class Foo {
+        get aName () {}
+        set aName (val) {}
+      }
+    `,
+    options: [
+      {
+        checkGetters: false,
+        checkSetters: 'no-getter',
+        contexts: ['MethodDefinition > FunctionExpression'],
       },
     ],
   },

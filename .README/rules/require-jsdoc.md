@@ -73,11 +73,19 @@ no parameters or return values are found.
 
 ##### `checkGetters`
 
-A value indicating whether getters should be checked. Defaults to `false`.
+A value indicating whether getters should be checked. Besides setting as a
+boolean, this option can be set to the string `"no-setter"` to indicate that
+getters should be checked but only when there is no setter. This may be useful
+if one only wishes documentation on one of the two accessors. Defaults to
+`false`.
 
 ##### `checkSetters`
 
-A value indicating whether setters should be checked. Defaults to `false`.
+A value indicating whether setters should be checked. Besides setting as a
+boolean, this option can be set to the string `"no-getter"` to indicate that
+setters should be checked but only when there is no getter. This may be useful
+if one only wishes documentation on one of the two accessors. Defaults to
+`false`.
 
 ##### `enableFixer`
 

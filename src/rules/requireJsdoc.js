@@ -16,12 +16,28 @@ const OPTIONS_SCHEMA = {
       type: 'boolean',
     },
     checkGetters: {
+      anyOf: [
+        {
+          type: 'boolean',
+        },
+        {
+          enum: ['no-setter'],
+          type: 'string',
+        },
+      ],
       default: true,
-      type: 'boolean',
     },
     checkSetters: {
+      anyOf: [
+        {
+          type: 'boolean',
+        },
+        {
+          enum: ['no-getter'],
+          type: 'string',
+        },
+      ],
       default: true,
-      type: 'boolean',
     },
     contexts: {
       items: {
