@@ -555,7 +555,7 @@ export default {
       code: `
         /**
          * @example
-         * const test = something?.find((_) => {
+         * const test = something.find((_) => {
          *   return _
          * });
          */

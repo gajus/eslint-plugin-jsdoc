@@ -99,8 +99,10 @@ by decreasing precedence:
   can be useful for enabling reuse of the same rules within `@example` as
   with JavaScript Markdown lintable by
   [other plugins](https://github.com/eslint/eslint-plugin-markdown), e.g.,
-  if one sets `matchingFileName` to `dummy.md` so that `@example` rules will
-  follow one's Markdown rules). For `@example` only.
+  if one sets `matchingFileName` to `dummy.md/*.js` so that `@example`
+  rules will follow rules for fenced JavaScript blocks within one's Markdown
+  rules). (In ESLint 6's process API and `eslint-plugin-markdown` < 2, one
+  would instead use `dummy.md`.) For `@example` only.
 * `matchingFileNameDefaults` - As with `matchingFileName` but for use with
   `checkDefaults` and defaulting to `.jsdoc-defaults` as extension.
 * `matchingFileNameParams` - As with `matchingFileName` but for use with
@@ -116,12 +118,13 @@ by decreasing precedence:
   not be checked. If `matchingFileName` is not set, and this is unset or
   set to `true`, the `.eslintrc.*` configs will be checked as though the file
   name were the same as the file containing the example, with any file
-  extension changed to ".md" (and if there is no file extension, "dummy.md"
-  will be used). This allows convenient sharing of similar rules with often
-  also context-free Markdown as well as use of `overrides` as described under
-  `matchingFileName`. Note that this option (whether set by `matchingFileName`
-  or set manually to `true`) may come at somewhat of a performance penalty
-  as the file's existence is checked by eslint.
+  extension changed to `".md/*.js"` (and if there is no file extension,
+  `"dummy.md/*.js"` will be the result). This allows convenient sharing of
+  similar rules with often also context-free Markdown as well as use of
+  `overrides` as described under `matchingFileName`. Note that this option
+  (whether set by `matchingFileName` or set manually to `true`) may come at
+  somewhat of a performance penalty as the file's existence is checked by
+  eslint.
 * `baseConfig` - Set to an object of rules with the same schema
   as `.eslintrc.*` for defaults.
 
