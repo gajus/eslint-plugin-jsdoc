@@ -86,10 +86,10 @@
     "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
     "lint": "eslint --report-unused-disable-directives ./src ./test .ncurc.js",
     "lint-arg": "eslint --report-unused-disable-directives",
-    "test-cov": "cross-env BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 9000",
-    "test-no-cov": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 9000",
-    "test-index": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 9000 test/rules/index.js",
-    "test": "cross-env BABEL_ENV=test nyc --reporter text-summary mocha --recursive --require @babel/register --reporter progress --timeout 9000"
+    "test-cov": "cross-env BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 12000",
+    "test-no-cov": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 12000",
+    "test-index": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 12000 test/rules/index.js",
+    "test": "cross-env BABEL_ENV=test nyc --reporter text-summary mocha --recursive --require @babel/register --reporter progress --timeout 12000"
   },
   "nyc": {
     "require": [
