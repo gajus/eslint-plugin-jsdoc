@@ -45,7 +45,7 @@ export default iterateJsdoc(({
   if (jsdoc.description) {
     const {description} = utils.getDescription();
     validateDescription(
-      description.replace(/\n+$/, ''),
+      description.replace(/\s+$/, ''),
     );
   }
 

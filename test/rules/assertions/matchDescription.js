@@ -1339,5 +1339,17 @@ export default {
         },
       }],
     },
+
+    // https://github.com/gajus/eslint-plugin-jsdoc/issues/692#issuecomment-780081285
+    {
+      code: `
+      /** Wrap attributes threshold. */
+      const quux = {};
+      `,
+      ignoreReadme: true,
+      options: [{
+        contexts: ['any'],
+      }],
+    },
   ],
 };
