@@ -9117,6 +9117,11 @@ class TestClass {
 function quux () {
 
 }
+
+/** Single line */
+function quux () {
+
+}
 ````
 
 

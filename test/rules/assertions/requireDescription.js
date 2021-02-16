@@ -843,5 +843,13 @@ export default {
           }
       `,
     },
+    {
+      code: `
+          /** Single line */
+          function quux () {
+
+          }
+      `,
+    },
   ],
 };
