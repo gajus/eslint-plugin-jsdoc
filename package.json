@@ -84,7 +84,7 @@
     "create-readme": "babel-node ./src/bin/generateReadme.js",
     "install-offline": "npm install --prefer-offline --no-audit",
     "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
-    "lint": "eslint --report-unused-disable-directives ./src ./test .ncurc.js",
+    "lint": "eslint --report-unused-disable-directives --ignore-pattern '!.ncurc.js' ./src ./test .ncurc.js",
     "lint-arg": "eslint --report-unused-disable-directives",
     "test-cov": "cross-env BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 12000",
     "test-no-cov": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 12000",
