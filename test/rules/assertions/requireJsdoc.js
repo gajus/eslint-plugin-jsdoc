@@ -2,6 +2,10 @@
  * @see https://github.com/eslint/eslint/blob/master/tests/lib/rules/require-jsdoc.js
  */
 
+import {
+  CLIEngine,
+} from 'eslint';
+
 export default {
   invalid: [
     {
@@ -2942,7 +2946,13 @@ function quux (foo) {
       ],
       options: [{
         contexts: [
-          'ClassProperty:has(Decorator[expression.callee.name="Input"])',
+          // Only fixed to support `:has()` with TS later in ESLint 7, but
+          //  for our testing of ESLint 6, we use `>` which is equivalent in
+          //  this case; after having peerDeps. to ESLint 7+, we can remove
+          //  this check and use of `CLIEngine`
+          CLIEngine.version.startsWith('6') ?
+            'ClassProperty > Decorator[expression.callee.name="Input"]' :
+            'ClassProperty:has(Decorator[expression.callee.name="Input"])',
         ],
       }],
       output: `
