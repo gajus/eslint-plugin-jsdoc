@@ -230,10 +230,7 @@ export default iterateJsdoc(({
     disableExtraPropertyReporting = false,
   } = context.options[0] || {};
 
-  const lastSlashPos = checkTypesPattern.lastIndexOf('/');
-  const checkTypesRegex = lastSlashPos === -1 ?
-    new RegExp(checkTypesPattern) :
-    new RegExp(checkTypesPattern.slice(1, lastSlashPos), checkTypesPattern.slice(lastSlashPos + 1));
+  const checkTypesRegex = utils.getRegexFromString(checkTypesPattern);
 
   const jsdocParameterNamesDeep = utils.getJsdocTagsDeep('param');
   if (!jsdocParameterNamesDeep.length) {

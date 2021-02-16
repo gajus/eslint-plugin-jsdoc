@@ -212,6 +212,10 @@ const getUtils = (
     } : null, tag);
   };
 
+  utils.getRegexFromString = (str, requiredFlags) => {
+    return jsdocUtils.getRegexFromString(str, requiredFlags);
+  };
+
   utils.getDescription = () => {
     const descriptions = [];
     let lastDescriptionLine;

@@ -22,22 +22,6 @@ const countChars = (str, ch) => {
   return (str.match(new RegExp(escapeStringRegexp(ch), 'gu')) || []).length;
 };
 
-const getRegexFromString = (regexString) => {
-  const match = regexString.match(/^\/(.*)\/([gimyus]*)$/u);
-  let flags = 'u';
-  let regex = regexString;
-  if (match) {
-    [, regex, flags] = match;
-    if (!flags) {
-      flags = 'u';
-    }
-    const uniqueFlags = [...new Set(flags)];
-    flags = uniqueFlags.join('');
-  }
-
-  return new RegExp(regex, flags);
-};
-
 const defaultMdRules = {
   // "always" newline rule at end unlikely in sample code
   'eol-last': 0,
@@ -135,10 +119,10 @@ export default iterateJsdoc(({
   const expressionRules = noDefaultExampleRules ? undefined : defaultExpressionRules;
 
   if (exampleCodeRegex) {
-    exampleCodeRegex = getRegexFromString(exampleCodeRegex);
+    exampleCodeRegex = utils.getRegexFromString(exampleCodeRegex);
   }
   if (rejectExampleCodeRegex) {
-    rejectExampleCodeRegex = getRegexFromString(rejectExampleCodeRegex);
+    rejectExampleCodeRegex = utils.getRegexFromString(rejectExampleCodeRegex);
   }
 
   const checkSource = ({

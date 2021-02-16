@@ -1179,6 +1179,23 @@ const comparePaths = (name) => {
   };
 };
 
+const getRegexFromString = (regexString, requiredFlags) => {
+  const match = regexString.match(/^\/(.*)\/([gimyus]*)$/us);
+  let flags = 'u';
+  let regex = regexString;
+  if (match) {
+    [, regex, flags] = match;
+    if (!flags) {
+      flags = 'u';
+    }
+  }
+
+  const uniqueFlags = [...new Set(flags + (requiredFlags || ''))];
+  flags = uniqueFlags.join('');
+
+  return new RegExp(regex, flags);
+};
+
 export default {
   comparePaths,
   dropPathSegmentQuotes,
@@ -1191,6 +1208,7 @@ export default {
   getIndent,
   getJsdocTagsDeep,
   getPreferredTagName,
+  getRegexFromString,
   getTagsByType,
   getTagStructureForMode,
   hasATag,

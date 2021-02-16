@@ -30,9 +30,8 @@ export default iterateJsdoc(({
       tagValue = options.tags[tagName];
     }
 
-    const regex = new RegExp(
+    const regex = utils.getRegexFromString(
       stringOrDefault(tagValue, options.matchDescription),
-      'u',
     );
 
     if (!regex.test(description)) {

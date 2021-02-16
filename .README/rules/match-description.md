@@ -11,6 +11,16 @@ by our supported Node versions):
 Applies to the jsdoc block description and `@description` (or `@desc`)
 by default but the `tags` option (see below) may be used to match other tags.
 
+The default (and all regex options) defaults to using (only) the `u` flag, so
+to add your own flags, encapsulate your expression as a string, but like a
+literal, e.g., `/[A-Z].*\\./ui`.
+
+Note that `/` delimiters are optional, but necessary to add flags (besides
+`u`).
+
+Also note that the default or optional regular expressions is *not*
+case-insensitive unless one opts in to add the `i` flag.
+
 #### Options
 
 ##### `matchDescription`
@@ -23,9 +33,6 @@ You can supply your own expression to override the default, passing a
   'jsdoc/match-description': ['error', {matchDescription: '[A-Z].*\\.'}]
 }
 ```
-
-As with the default, the supplied regular expression will be applied with the
-Unicode (`"u"`) flag and is *not* case-insensitive.
 
 ##### `tags`
 

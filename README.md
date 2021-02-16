@@ -5333,8 +5333,13 @@ If present as an array, will be used in place of SPDX identifiers.
 A string to be converted into a `RegExp` (with `u` flag) and whose first
 parenthetical grouping, if present, will match the portion of the license
 description to check (if no grouping is present, then the whole portion
-matched will be used). Defaults to `([^\n]*)`, i.e., the SPDX expression
+matched will be used). Defaults to `/([^\n]*)/gu`, i.e., the SPDX expression
 is expected before any line breaks.
+
+Note that the `/` delimiters are optional, but necessary to add flags.
+
+Defaults to using the `u` flag, so to add your own flags, encapsulate
+your expression as a string, but like a literal, e.g., `/^mit$/ui`.
 
 |||
 |---|---|
@@ -5944,6 +5949,16 @@ by our supported Node versions):
 Applies to the jsdoc block description and `@description` (or `@desc`)
 by default but the `tags` option (see below) may be used to match other tags.
 
+The default (and all regex options) defaults to using (only) the `u` flag, so
+to add your own flags, encapsulate your expression as a string, but like a
+literal, e.g., `/[A-Z].*\\./ui`.
+
+Note that `/` delimiters are optional, but necessary to add flags (besides
+`u`).
+
+Also note that the default or optional regular expressions is *not*
+case-insensitive unless one opts in to add the `i` flag.
+
 <a name="eslint-plugin-jsdoc-rules-match-description-options-11"></a>
 #### Options
 
@@ -5958,9 +5973,6 @@ You can supply your own expression to override the default, passing a
   'jsdoc/match-description': ['error', {matchDescription: '[A-Z].*\\.'}]
 }
 ```
-
-As with the default, the supplied regular expression will be applied with the
-Unicode (`"u"`) flag and is *not* case-insensitive.
 
 <a name="eslint-plugin-jsdoc-rules-match-description-options-11-tags-2"></a>
 ##### <code>tags</code>
@@ -12181,7 +12193,7 @@ export const bboxToObj = function ({x, y, width, height}) {
 ```
 
 By default `checkTypesPattern` is set to
-`/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/`,
+`/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/u`,
 meaning that destructuring will be required only if the type of the `@param`
 (the text between curly brackets) is a match for "Object" or "Array" (with or
 without initial caps), "PlainObject", or "GenericObject", "GenericArray" (or
@@ -12190,6 +12202,9 @@ mean that no complaint will be given about the undocumented destructured
 parameters.
 
 Note that the `/` delimiters are optional, but necessary to add flags.
+
+Defaults to using (only) the `u` flag, so to add your own flags, encapsulate
+your expression as a string, but like a literal, e.g., `/^object$/ui`.
 
 You could set this regular expression to a more expansive list, or you
 could restrict it such that even types matching those strings would not
