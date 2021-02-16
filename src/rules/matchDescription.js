@@ -43,7 +43,10 @@ export default iterateJsdoc(({
   };
 
   if (jsdoc.description) {
-    validateDescription(jsdoc.description);
+    const {description} = utils.getDescription();
+    validateDescription(
+      description.replace(/\n+$/, ''),
+    );
   }
 
   if (!options.tags || !Object.keys(options.tags).length) {

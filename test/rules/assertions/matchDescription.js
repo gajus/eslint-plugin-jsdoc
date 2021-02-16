@@ -1317,5 +1317,27 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * Enable or disable plugin.
+       *
+       * When enabling with this function, the script will be attached to the \`document\` if:.
+       * - the script runs in browser context.
+       * - the \`document\` doesn't have the script already attached.
+       * - the \`loadScript\` option is set to \`true\`.
+       * @param enabled \`true\` to enable, \`false\` to disable. Default: \`true\`.
+       */
+      `,
+      options: [{
+        contexts: ['any'],
+        mainDescription: '/^[A-Z`-].*\\.$/us',
+        matchDescription: '^([A-Z`-].*(\\.|:)|-\\s.*)$',
+        tags: {
+          param: true,
+          returns: true,
+        },
+      }],
+    },
   ],
 };

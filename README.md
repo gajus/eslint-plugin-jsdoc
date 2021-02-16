@@ -5959,6 +5959,9 @@ Note that `/` delimiters are optional, but necessary to add flags (besides
 Also note that the default or optional regular expressions is *not*
 case-insensitive unless one opts in to add the `i` flag.
 
+You can add the `s` flag if you want `.` to match newlines. Note, however,
+that the trailing newlines of a description will not be matched.
+
 <a name="eslint-plugin-jsdoc-rules-match-description-options-11"></a>
 #### Options
 
@@ -6694,6 +6697,17 @@ function quux (foo) {
 
 }
 // "jsdoc/match-description": ["error"|"warn", {"tags":{"template":true}}]
+
+/**
+ * Enable or disable plugin.
+ *
+ * When enabling with this function, the script will be attached to the `document` if:.
+ * - the script runs in browser context.
+ * - the `document` doesn't have the script already attached.
+ * - the `loadScript` option is set to `true`.
+ * @param enabled `true` to enable, `false` to disable. Default: `true`.
+ */
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["any"],"mainDescription":"/^[A-Z`-].*\\.$/us","matchDescription":"^([A-Z`-].*(\\.|:)|-\\s.*)$","tags":{"param":true,"returns":true}}]
 ````
 
 
@@ -9095,6 +9109,14 @@ class TestClass {
   set Test(value) { }
 }
 // "jsdoc/require-description": ["error"|"warn", {"checkSetters":false}]
+
+/**
+ * Multi
+ * line
+ */
+function quux () {
+
+}
 ````
 
 

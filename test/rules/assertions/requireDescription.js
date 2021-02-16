@@ -832,5 +832,16 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * Multi
+           * line
+           */
+          function quux () {
+
+          }
+      `,
+    },
   ],
 };

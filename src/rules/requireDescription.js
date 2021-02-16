@@ -35,7 +35,8 @@ export default iterateJsdoc(({
   };
 
   if (descriptionStyle !== 'tag') {
-    if (checkDescription(jsdoc.description || '')) {
+    const {description} = utils.getDescription();
+    if (checkDescription(description || '')) {
       return;
     }
 

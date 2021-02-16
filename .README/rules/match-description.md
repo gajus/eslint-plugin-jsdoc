@@ -21,6 +21,9 @@ Note that `/` delimiters are optional, but necessary to add flags (besides
 Also note that the default or optional regular expressions is *not*
 case-insensitive unless one opts in to add the `i` flag.
 
+You can add the `s` flag if you want `.` to match newlines. Note, however,
+that the trailing newlines of a description will not be matched.
+
 #### Options
 
 ##### `matchDescription`
