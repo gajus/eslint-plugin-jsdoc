@@ -12,7 +12,11 @@ before_script: >
   node_version=$(node -v);
   if [ ${node_version:3:1} = "." ]; then
     echo "Node 10+"
-    npm install --no-save "eslint@${ESLINT}"
+    if [ ${ESLINT} = "6" ]; then
+      npm install --no-save "eslint@${ESLINT}" eslint-config-canonical@24.4.4
+    else
+      npm install --no-save "eslint@${ESLINT}"
+    fi
     else
       echo "Node 8+"
       npm install --no-save "eslint@${ESLINT}" husky@3.1.0 semantic-release@15.14.0 eslint-config-canonical@18.1.1
