@@ -12,11 +12,12 @@ export default iterateJsdoc(({
 
   const checkHyphens = (jsdocTag, targetTagName, circumstance = mainCircumstance) => {
     const always = !circumstance || circumstance === 'always';
-    if (!jsdocTag.description.trim()) {
+    const desc = utils.getTagDescription(jsdocTag);
+    if (!desc.trim()) {
       return;
     }
 
-    const startsWithHyphen = (/^\s*-/u).test(jsdocTag.description);
+    const startsWithHyphen = (/^\s*-/u).test(desc);
     if (always) {
       if (!startsWithHyphen) {
         report(`There must be a hyphen before @${targetTagName} description.`, (fixer) => {
@@ -24,7 +25,7 @@ export default iterateJsdoc(({
           const sourceLines = sourceCode.getText(jsdocNode).split('\n');
 
           // Get start index of description, accounting for multi-line descriptions
-          const description = jsdocTag.description.split('\n')[0];
+          const description = desc.split('\n')[0];
           const descriptionIndex = sourceLines[lineIndex].lastIndexOf(description);
 
           const replacementLine = sourceLines[lineIndex]
@@ -37,11 +38,11 @@ export default iterateJsdoc(({
       }
     } else if (startsWithHyphen) {
       report(`There must be no hyphen before @${targetTagName} description.`, (fixer) => {
-        const [unwantedPart] = /^\s*-\s*/u.exec(jsdocTag.description);
+        const [unwantedPart] = /^\s*-\s*/u.exec(desc);
 
         const replacement = sourceCode
           .getText(jsdocNode)
-          .replace(jsdocTag.description, jsdocTag.description.slice(unwantedPart.length));
+          .replace(desc, desc.slice(unwantedPart.length));
 
         return fixer.replaceText(jsdocNode, replacement);
       }, jsdocTag);

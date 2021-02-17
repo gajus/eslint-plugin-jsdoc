@@ -15,7 +15,7 @@ export default iterateJsdoc(({
   } = options;
 
   utils.forEachPreferredTag('version', (jsdocParameter, targetTagName) => {
-    const version = jsdocParameter.description.trim();
+    const version = utils.getTagDescription(jsdocParameter).trim();
     if (!version) {
       report(
         `Missing JSDoc @${targetTagName}.`,
@@ -24,14 +24,14 @@ export default iterateJsdoc(({
       );
     } else if (!semver.valid(version)) {
       report(
-        `Invalid JSDoc @${targetTagName}: "${jsdocParameter.description}".`,
+        `Invalid JSDoc @${targetTagName}: "${utils.getTagDescription(jsdocParameter)}".`,
         null,
         jsdocParameter,
       );
     }
   });
   utils.forEachPreferredTag('since', (jsdocParameter, targetTagName) => {
-    const version = jsdocParameter.description.trim();
+    const version = utils.getTagDescription(jsdocParameter).trim();
     if (!version) {
       report(
         `Missing JSDoc @${targetTagName}.`,
@@ -40,7 +40,7 @@ export default iterateJsdoc(({
       );
     } else if (!semver.valid(version)) {
       report(
-        `Invalid JSDoc @${targetTagName}: "${jsdocParameter.description}".`,
+        `Invalid JSDoc @${targetTagName}: "${utils.getTagDescription(jsdocParameter)}".`,
         null,
         jsdocParameter,
       );
@@ -48,7 +48,7 @@ export default iterateJsdoc(({
   });
   utils.forEachPreferredTag('license', (jsdocParameter, targetTagName) => {
     const licenseRegex = utils.getRegexFromString(licensePattern, 'g');
-    const match = jsdocParameter.description.match(licenseRegex);
+    const match = utils.getTagDescription(jsdocParameter).match(licenseRegex);
     const license = match && match[1] || match[0];
     if (!license.trim()) {
       report(
@@ -78,7 +78,7 @@ export default iterateJsdoc(({
   });
 
   utils.forEachPreferredTag('author', (jsdocParameter, targetTagName) => {
-    const author = jsdocParameter.description.trim();
+    const author = utils.getTagDescription(jsdocParameter).trim();
     if (!author) {
       report(
         `Missing JSDoc @${targetTagName}.`,
@@ -87,7 +87,7 @@ export default iterateJsdoc(({
       );
     } else if (allowedAuthors && !allowedAuthors.includes(author)) {
       report(
-        `Invalid JSDoc @${targetTagName}: "${jsdocParameter.description}"; expected one of ${allowedAuthors.join(', ')}.`,
+        `Invalid JSDoc @${targetTagName}: "${utils.getTagDescription(jsdocParameter)}"; expected one of ${allowedAuthors.join(', ')}.`,
         null,
         jsdocParameter,
       );

@@ -216,6 +216,34 @@ const getUtils = (
     return jsdocUtils.getRegexFromString(str, requiredFlags);
   };
 
+  utils.getTagDescription = (tg) => {
+    const descriptions = [];
+    tg.source.some(({
+      tokens: {end, postDelimiter, tag, postTag, name, type, description},
+    }) => {
+      const desc = (
+        tag && postTag ||
+        !tag && !name && !type && postDelimiter || ''
+
+      // Remove space
+      ).slice(1) +
+        (description || '');
+
+      if (end) {
+        if (desc) {
+          descriptions.push(desc);
+        }
+
+        return true;
+      }
+      descriptions.push(desc);
+
+      return false;
+    });
+
+    return descriptions.join('\n');
+  };
+
   utils.getDescription = () => {
     const descriptions = [];
     let lastDescriptionLine;

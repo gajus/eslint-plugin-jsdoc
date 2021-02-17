@@ -6575,6 +6575,31 @@ function quux () {
 // "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
 
 /**
+ * @description Foo
+ * bar.
+ * @param
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
+
+/** @description Foo bar. */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
+
+/**
+ * @description Foo
+ * bar.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
+
+/**
  * Foo. {@see Math.sin}.
  */
 function quux () {
@@ -9208,6 +9233,12 @@ function quux () {
 function quux () {
 
 }
+
+/** @description something */
+function quux () {
+
+}
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
 ````
 
 

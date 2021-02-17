@@ -263,7 +263,7 @@ export default iterateJsdoc(({
         return;
       }
       checkSource({
-        source: `(${tag.description})`,
+        source: `(${utils.getTagDescription(tag)})`,
         targetTagName,
         ...filenameInfo,
       });
@@ -304,7 +304,7 @@ export default iterateJsdoc(({
   const matchingFilenameInfo = getFilenameInfo(matchingFileName);
 
   utils.forEachPreferredTag('example', (tag, targetTagName) => {
-    let source = tag.source[0].tokens.postTag.slice(1) + tag.description;
+    let source = utils.getTagDescription(tag);
     const match = source.match(hasCaptionRegex);
 
     if (captionRequired && (!match || !match[1].trim())) {
