@@ -36,7 +36,7 @@ export default iterateJsdoc(({
   }
 
   functionExamples.forEach((example) => {
-    const exampleContent = _.compact(`${example.name} ${example.description}`.trim().split('\n'));
+    const exampleContent = _.compact(`${example.name} ${utils.getTagDescription(example)}`.trim().split('\n'));
 
     if (!exampleContent.length) {
       report(`Missing JSDoc @${targetTagName} description.`);

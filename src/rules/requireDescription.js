@@ -70,7 +70,7 @@ export default iterateJsdoc(({
   }
 
   functionExamples.forEach((example) => {
-    if (!checkDescription(`${example.name} ${example.description}`)) {
+    if (!checkDescription(`${example.name} ${utils.getTagDescription(example)}`)) {
       report(`Missing JSDoc @${targetTagName} description.`);
     }
   });

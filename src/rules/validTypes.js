@@ -83,10 +83,10 @@ export default iterateJsdoc(({
     };
 
     if (tag.tag === 'borrows') {
-      const thisNamepath = tag.description.replace(asExpression, '').trim();
+      const thisNamepath = utils.getTagDescription(tag).replace(asExpression, '').trim();
 
-      if (!asExpression.test(tag.description) || !thisNamepath) {
-        report(`@borrows must have an "as" expression. Found "${tag.description}"`, null, tag);
+      if (!asExpression.test(utils.getTagDescription(tag)) || !thisNamepath) {
+        report(`@borrows must have an "as" expression. Found "${utils.getTagDescription(tag)}"`, null, tag);
 
         return;
       }
@@ -134,7 +134,7 @@ export default iterateJsdoc(({
       'param', 'arg', 'argument',
       'property', 'prop',
     ].includes(tag.tag) &&
-      (tag.tag !== 'see' || !tag.description.includes('{@link'))
+      (tag.tag !== 'see' || !utils.getTagDescription(tag).includes('{@link'))
     ) {
       const modeInfo = tagMustHaveNamePosition === true ? '' : ` in "${mode}" mode`;
       report(`Tag @${tag.tag} must have a name/namepath${modeInfo}.`, null, tag);

@@ -976,6 +976,58 @@ export default {
     {
       code: `
           /**
+           * @description Foo
+           * bar.
+           * @param
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          tags: {
+            description: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          /** @description Foo bar. */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          tags: {
+            description: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @description Foo
+           * bar.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          tags: {
+            description: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          /**
            * Foo. {@see Math.sin}.
            */
           function quux () {

@@ -851,5 +851,18 @@ export default {
           }
       `,
     },
+    {
+      code: `
+          /** @description something */
+          function quux () {
+
+          }
+      `,
+      options: [
+        {
+          descriptionStyle: 'tag',
+        },
+      ],
+    },
   ],
 };

@@ -175,7 +175,7 @@ export default iterateJsdoc(({
   }
 
   utils.forEachPreferredTag('description', (matchingJsdocTag) => {
-    const desc = `${matchingJsdocTag.name} ${matchingJsdocTag.description}`.trim();
+    const desc = `${matchingJsdocTag.name} ${utils.getTagDescription(matchingJsdocTag)}`.trim();
     validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, matchingJsdocTag, newlineBeforeCapsAssumesBadSentenceEnd);
   }, true);
 
@@ -190,13 +190,13 @@ export default iterateJsdoc(({
   });
 
   tagsWithNames.some((tag) => {
-    const desc = _.trimStart(tag.description, '- ').trimEnd();
+    const desc = _.trimStart(utils.getTagDescription(tag), '- ').trimEnd();
 
     return validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd);
   });
 
   tagsWithoutNames.some((tag) => {
-    const desc = `${tag.name} ${tag.description}`.trim();
+    const desc = `${tag.name} ${utils.getTagDescription(tag)}`.trim();
 
     return validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd);
   });
