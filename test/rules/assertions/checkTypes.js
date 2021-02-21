@@ -1989,6 +1989,28 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @aCustomTag {Number} foo
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @aCustomTag "foo" type "Number"; prefer: ["otherType","anotherType"].',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              type: ['otherType', 'anotherType'],
+            },
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -2521,6 +2543,38 @@ export default {
           structuredTags: {
             aCustomTag: {
               type: false,
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @aCustomTag {otherType} foo
+           */
+      `,
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              type: ['otherType', 'anotherType'],
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @aCustomTag {anotherType|otherType} foo
+           */
+      `,
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              type: ['otherType', 'anotherType'],
             },
           },
         },

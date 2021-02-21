@@ -497,6 +497,7 @@ values are objects with the following optional properties:
         might use this with `@throws` to suggest that only free form text
         is being input or with `@augments` (for jsdoc mode) to disallow
         Closure-style bracketed usage along with a required namepath.
+      - (An array of strings) - A list of permissible types.
   - `required` - Array of one of the following (defaults to an empty array,
       meaning none are required):
     - One or both of the following strings (if both are included, then both
@@ -4449,7 +4450,8 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
 If you define your own tags and don't wish their bracketed portions checked
 for types, you can use `settings.jsdoc.structuredTags` with a tag `type` of
-`false`.
+`false`. If you set their `type` to an array, only those values will be
+permitted.
 
 |||
 |---|---|
@@ -5039,6 +5041,12 @@ function b () {}
  */
 // Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":true}}}}
 // Message: Invalid JSDoc @aCustomTag "foo" type "Number"; prefer: "number".
+
+/**
+ * @aCustomTag {Number} foo
+ */
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":["otherType","anotherType"]}}}}
+// Message: Invalid JSDoc @aCustomTag "foo" type "Number"; prefer: ["otherType","anotherType"].
 ````
 
 The following patterns are not considered problems:
@@ -5308,6 +5316,16 @@ function b () {}
  * @aCustomTag {Number} foo
  */
 // Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":false}}}}
+
+/**
+ * @aCustomTag {otherType} foo
+ */
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":["otherType","anotherType"]}}}}
+
+/**
+ * @aCustomTag {anotherType|otherType} foo
+ */
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":["otherType","anotherType"]}}}}
 ````
 
 

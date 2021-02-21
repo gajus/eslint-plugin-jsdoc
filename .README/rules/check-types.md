@@ -122,7 +122,8 @@ String | **string** | **string** | `("test") instanceof String` -> **`false`**
 
 If you define your own tags and don't wish their bracketed portions checked
 for types, you can use `settings.jsdoc.structuredTags` with a tag `type` of
-`false`.
+`false`. If you set their `type` to an array, only those values will be
+permitted.
 
 |||
 |---|---|
