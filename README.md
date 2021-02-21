@@ -7446,7 +7446,8 @@ the `valid-types` rule to report parsing errors.
 If you define your own tags, you can use `settings.jsdoc.structuredTags`
 to indicate that a tag's `name` is "namepath-defining" (and should prevent
 reporting on use of that namepath elsewhere) and/or that a tag's `type` is
-`false` (and should not be checked for types).
+`false` (and should not be checked for types). If the `type` is an array, that
+array's items will be considered as defined for the purposes of that tag.
 
 <a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-16"></a>
 #### Options
@@ -7616,6 +7617,13 @@ function quux () {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":true}}}}
+// Message: The type 'SomeType' is undefined.
+
+/**
+ * @aCustomTag {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":["aType","anotherType"]}}}}
 // Message: The type 'SomeType' is undefined.
 
 /**
@@ -7963,6 +7971,12 @@ exports.resolve1 = function resolve1(value) {
  */
 function quux () {}
 // Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":false}}}}
+
+/**
+ * @aCustomTag {SomeType}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":["aType","SomeType"]}}}}
 
 /**
  * @namepathDefiner SomeType

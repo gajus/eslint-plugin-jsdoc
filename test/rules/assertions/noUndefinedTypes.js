@@ -340,6 +340,29 @@ export default {
     {
       code: `
       /**
+       * @aCustomTag {SomeType}
+       */
+      function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The type \'SomeType\' is undefined.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              type: ['aType', 'anotherType'],
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
        * @namepathDefiner SomeType
        */
       /**
@@ -914,6 +937,23 @@ export default {
           structuredTags: {
             aCustomTag: {
               type: false,
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @aCustomTag {SomeType}
+       */
+      function quux () {}
+      `,
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            aCustomTag: {
+              type: ['aType', 'SomeType'],
             },
           },
         },

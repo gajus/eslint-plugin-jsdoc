@@ -37,7 +37,7 @@ export default iterateJsdoc(({
   const {definedTypes = []} = context.options[0] || {};
 
   let definedPreferredTypes = [];
-  const {preferredTypes, mode} = settings;
+  const {preferredTypes, structuredTags, mode} = settings;
   if (Object.keys(preferredTypes).length) {
     definedPreferredTypes = Object.values(preferredTypes).map((preferredType) => {
       if (typeof preferredType === 'string') {
@@ -154,7 +154,10 @@ export default iterateJsdoc(({
 
     traverse(parsedType, ({type, name}) => {
       if (type === 'NAME') {
-        if (!allDefinedTypes.has(name)) {
+        const structuredTypes = structuredTags[tag.tag]?.type;
+        if (!allDefinedTypes.has(name) &&
+          (!Array.isArray(structuredTypes) || !structuredTypes.includes(name))
+        ) {
           report(`The type '${name}' is undefined.`, null, tag);
         } else if (!extraTypes.includes(name)) {
           context.markVariableAsUsed(name);
