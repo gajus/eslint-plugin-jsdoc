@@ -428,6 +428,7 @@ values are objects with the following optional properties:
         might use this with `@throws` to suggest that only free form text
         is being input or with `@augments` (for jsdoc mode) to disallow
         Closure-style bracketed usage along with a required namepath.
+      - (An array of strings) - A list of permissible types.
   - `required` - Array of one of the following (defaults to an empty array,
       meaning none are required):
     - One or both of the following strings (if both are included, then both

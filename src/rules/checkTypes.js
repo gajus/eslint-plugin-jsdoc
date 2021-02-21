@@ -71,7 +71,7 @@ export default iterateJsdoc(({
     return utils.tagMightHaveTypePosition(tag.tag);
   });
 
-  const {preferredTypes, mode} = settings;
+  const {preferredTypes, structuredTags, mode} = settings;
   const {
     noDefaults,
     unifyParentAndChildTypeChecks,
@@ -138,6 +138,7 @@ export default iterateJsdoc(({
     } catch {
       return;
     }
+    const tagName = jsdocTag.tag;
 
     traverse(typeAst, (node, parentName, parentNode) => {
       const {type, name} = node;
@@ -149,6 +150,7 @@ export default iterateJsdoc(({
       const [hasMatchingPreferredType, typeName, isGenericMatch] = getPreferredTypeInfo(type, nodeName, parentName, parentNode);
 
       let preferred;
+      let types;
       if (hasMatchingPreferredType) {
         const preferredSetting = preferredTypes[typeName];
         nodeName = typeName === '[]' ? typeName : nodeName;
@@ -172,6 +174,14 @@ export default iterateJsdoc(({
 
           return;
         }
+      } else if (Object.entries(structuredTags).some(([tag, {type: typs}]) => {
+        types = typs;
+
+        return tag === tagName &&
+          Array.isArray(types) &&
+          !types.includes(nodeName);
+      })) {
+        invalidTypes.push([nodeName, types]);
       } else if (!noDefaults && type === 'NAME') {
         for (const strictNativeType of strictNativeTypes) {
           if (strictNativeType === 'object' && mode === 'typescript') {
@@ -199,7 +209,6 @@ export default iterateJsdoc(({
     if (invalidTypes.length) {
       const fixedType = publish(typeAst);
 
-      const tagName = jsdocTag.tag;
       invalidTypes.forEach(([badType, preferredType = '', message]) => {
         const fix = (fixer) => {
           return fixer.replaceText(
@@ -223,7 +232,7 @@ export default iterateJsdoc(({
           message ||
             `Invalid JSDoc @${tagName}${tagValue} type "${badType}"` +
             (preferredType ? '; ' : '.') +
-            (preferredType ? `prefer: "${preferredType}".` : ''),
+            (preferredType ? `prefer: ${JSON.stringify(preferredType)}.` : ''),
           preferredType ? fix : null,
           jsdocTag,
           message ? {
