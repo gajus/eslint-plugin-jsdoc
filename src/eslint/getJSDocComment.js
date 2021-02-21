@@ -14,47 +14,9 @@ const isCommentToken = (token) => {
   return token.type === 'Line' || token.type === 'Block' || token.type === 'Shebang';
 };
 
-const decoratorMetaTokens = new Map([[')', '('], ['>', '<']]);
-
-const getDecorator = (token, sourceCode) => {
-  if (!token) {
-    return false;
-  }
-  if (token.type === 'Punctuator') {
-    const tokenClose = token.value;
-    const tokenOpen = decoratorMetaTokens.get(tokenClose);
-    if (tokenOpen) {
-      let nested = 0;
-      let tokenBefore = token;
-      do {
-        tokenBefore = sourceCode.getTokenBefore(tokenBefore, {includeComments: true});
-        // istanbul ignore if
-        if (tokenBefore && tokenBefore.type === 'Punctuator') {
-          if (tokenBefore.value === tokenClose) {
-            nested++;
-          }
-          if (tokenBefore.value === tokenOpen) {
-            if (nested) {
-              nested--;
-            } else {
-              break;
-            }
-          }
-        }
-      } while (tokenBefore);
-
-      return tokenBefore;
-    }
-  }
-
-  if (token.type === 'Identifier') {
-    const tokenBefore = sourceCode.getTokenBefore(token, {includeComments: true});
-    if (tokenBefore && tokenBefore.type === 'Punctuator' && tokenBefore.value === '@') {
-      return tokenBefore;
-    }
-  }
-
-  return false;
+const getDecorator = (node) => {
+  return node?.declaration?.decorators?.[0] || node?.decorators?.[0] ||
+      node?.parent?.decorators?.[0];
 };
 
 /**
@@ -224,12 +186,11 @@ const findJSDocComment = (astNode, sourceCode, settings) => {
   let tokenBefore = null;
 
   while (currentNode) {
-    tokenBefore = sourceCode.getTokenBefore(currentNode, {includeComments: true});
-    const decorator = getDecorator(tokenBefore, sourceCode);
+    const decorator = getDecorator(currentNode);
     if (decorator) {
       currentNode = decorator;
-      continue;
     }
+    tokenBefore = sourceCode.getTokenBefore(currentNode, {includeComments: true});
     if (!tokenBefore || !isCommentToken(tokenBefore)) {
       return null;
     }

@@ -212,14 +212,10 @@ export default {
         const lines = settings.minLines === 0 && settings.maxLines >= 1 ? 1 : settings.minLines;
         let baseNode = getReducedASTNode(node, sourceCode);
 
-        let decorator;
-        do {
-          const tokenBefore = sourceCode.getTokenBefore(baseNode, {includeComments: true});
-          decorator = getDecorator(tokenBefore, sourceCode);
-          if (decorator) {
-            baseNode = decorator;
-          }
-        } while (decorator);
+        const decorator = getDecorator(baseNode);
+        if (decorator) {
+          baseNode = decorator;
+        }
 
         const indent = jsdocUtils.getIndent({
           text: sourceCode.getText(

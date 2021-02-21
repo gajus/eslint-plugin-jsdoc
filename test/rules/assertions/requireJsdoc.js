@@ -2971,6 +2971,26 @@ function quux (foo) {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      requestAnimationFrame(draw)
+
+      function bench() {
+      }
+      `,
+      errors: [{
+        message: 'Missing JSDoc comment.',
+      }],
+      output: `
+      requestAnimationFrame(draw)
+
+      /**
+       *
+       */
+      function bench() {
+      }
+      `,
+    },
   ],
   valid: [{
     code: `
@@ -4608,6 +4628,28 @@ function quux (foo) {
       },
     }],
     parser: require.resolve('@typescript-eslint/parser'),
+  },
+  {
+    code: `
+    /**
+     * Entity to represent a user in the system.
+     */
+    @Entity('users')
+    export class User {
+    }
+    `,
+    options: [
+      {
+        contexts: ['Decorator'],
+        require: {
+          FunctionDeclaration: false,
+        },
+      },
+    ],
+    parser: require.resolve('@typescript-eslint/parser'),
+    parserOptions: {
+      sourceType: 'module',
+    },
   },
   ],
 };

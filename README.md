@@ -10755,6 +10755,12 @@ export class MyComponentComponent {
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ClassProperty:has(Decorator[expression.callee.name=\"Input\"])"]}]
 // Message: Missing JSDoc comment.
+
+requestAnimationFrame(draw)
+
+function bench() {
+}
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:
@@ -11516,6 +11522,14 @@ const foo = {
 })
 export class UserSettingsState { }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"ClassDeclaration":true}}]
+
+/**
+ * Entity to represent a user in the system.
+ */
+@Entity('users')
+export class User {
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["Decorator"],"require":{"FunctionDeclaration":false}}]
 ````
 
 
