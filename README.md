@@ -3219,6 +3219,18 @@ function quux ({cfg}) {
 
 }
 // "jsdoc/check-param-names": ["error"|"warn", {"disableExtraPropertyReporting":true}]
+
+class A {
+    /**
+     * @param cfg
+     * @param cfg.abc
+     */
+    constructor({
+        [new.target.prop]: cX,
+        abc
+    }) {
+    }
+}
 ````
 
 

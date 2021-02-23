@@ -136,20 +136,19 @@ const getFunctionParameterNames = (
     }
 
     if (param.type === 'Property') {
-      if (param.value.type === 'ArrayPattern') {
+      switch (param.value.type) {
+      case 'ArrayPattern':
         return [param.key.name, param.value.elements.map((prop, idx) => {
           return {
             name: idx,
             restElement: prop.type === 'RestElement',
           };
         })];
-      }
-      if (param.value.type === 'ObjectPattern') {
+      case 'ObjectPattern':
         return [param.key.name, param.value.properties.map((prop) => {
           return getParamName(prop, isProperty);
         })];
-      }
-      if (param.value.type === 'AssignmentPattern') {
+      case 'AssignmentPattern': {
         switch (param.value.left.type) {
         case 'Identifier':
           // Default parameter
@@ -172,19 +171,25 @@ const getFunctionParameterNames = (
           })];
         }
       }
-
-      // As function parameters, these do not allow dynamic properties, etc.
-      /* istanbul ignore else */
-      if (param.key.type === 'Identifier') {
-        return param.key.name;
       }
 
+      switch (param.key.type) {
+      case 'Identifier':
+        return param.key.name;
+
       // The key of an object could also be a string or number
-      /* istanbul ignore else */
-      if (param.key.type === 'Literal') {
+      case 'Literal':
         return param.key.raw ||
           // istanbul ignore next -- `raw` may not be present in all parsers
           param.key.value;
+
+      // case 'MemberExpression':
+      default:
+        // Todo: We should really create a structure (and a corresponding
+        //   option analogous to `checkRestProperty`) which allows for
+        //   (and optionally requires) dynamic properties to have a single
+        //   line of documentation
+        return undefined;
       }
     }
 
@@ -212,7 +217,7 @@ const getFunctionParameterNames = (
       return getParamName(param.parameter, true);
     }
 
-    throw new Error('Unsupported function signature format.');
+    throw new Error(`Unsupported function signature format: \`${param.type}\`.`);
   };
 
   return (functionNode.params || functionNode.value.params).map((param) => {

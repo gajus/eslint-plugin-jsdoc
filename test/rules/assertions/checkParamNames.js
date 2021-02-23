@@ -1624,5 +1624,21 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      class A {
+          /**
+           * @param cfg
+           * @param cfg.abc
+           */
+          constructor({
+              [new.target.prop]: cX,
+              abc
+          }) {
+          }
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };

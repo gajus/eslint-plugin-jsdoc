@@ -54,7 +54,7 @@ describe('jsdocUtils', () => {
               type: 'AssignmentPattern',
             },
           ]});
-        }).to.throw('Unsupported function signature format.');
+        }).to.throw('Unsupported function signature format: `AssignmentPattern`.');
       });
     });
   });
