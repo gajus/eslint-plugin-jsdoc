@@ -1,11 +1,11 @@
 import {
   transforms,
 } from 'comment-parser';
+import alignTransform from '../alignTransform';
 import iterateJsdoc from '../iterateJsdoc';
 
 const {
   flow: commentFlow,
-  align: commentAlign,
   indent: commentIndent,
 } = transforms;
 
@@ -102,9 +102,10 @@ const checkAlignment = ({
   jsdoc,
   jsdocNode,
   report,
+  tags,
   utils,
 }) => {
-  const transform = commentFlow(commentAlign(), commentIndent(indent.length));
+  const transform = commentFlow(alignTransform(tags), commentIndent(indent.length));
   const transformedJsdoc = transform(jsdoc);
 
   const comment = '/*' + jsdocNode.value + '*/';
@@ -144,6 +145,7 @@ export default iterateJsdoc(({
       jsdoc,
       jsdocNode,
       report,
+      tags: applicableTags,
       utils,
     });
 
