@@ -3702,6 +3702,21 @@ The format is as follows:
 }
 ```
 
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-jsxtags"></a>
+#### <code>jsxTags</code>
+
+If this is set to `true`, all of the following tags used to control JSX output are allowed:
+
+```
+jsx
+jsxFrag
+jsxImportSource
+jsxRuntime
+```
+
+For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).
+
+
 |||
 |---|---|
 |Context|everywhere|
@@ -4048,6 +4063,12 @@ function quux (foo) {}
  */
 function quux (foo) {}
 // Message: Invalid JSDoc tag name "externs".
+
+/** @jsx h */
+/** @jsxFrag Fragment */
+/** @jsxImportSource preact */
+/** @jsxRuntime automatic */
+// Message: Invalid JSDoc tag name "jsx".
 ````
 
 The following patterns are not considered problems:
@@ -4320,6 +4341,12 @@ class Foo { }
 export function transient<T>(target?: T): T {
   // ...
 }
+
+/** @jsx h */
+/** @jsxFrag Fragment */
+/** @jsxImportSource preact */
+/** @jsxRuntime automatic */
+// "jsdoc/check-tag-names": ["error"|"warn", {"jsxTags":true}]
 ````
 
 

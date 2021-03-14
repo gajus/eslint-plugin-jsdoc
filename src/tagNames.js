@@ -5,17 +5,8 @@ const jsdocTagsUndocumented = {
   modifies: [],
 };
 
-// https://babeljs.io/docs/en/babel-plugin-transform-react-jsx/
-const jsxTags = {
-  jsx: [],
-  jsxFrag: [],
-  jsxImportSource: [],
-  jsxRuntime: [],
-};
-
 const jsdocTags = {
   ...jsdocTagsUndocumented,
-  ...jsxTags,
   abstract: [
     'virtual',
   ],

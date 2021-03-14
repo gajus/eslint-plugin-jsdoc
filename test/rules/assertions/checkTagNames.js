@@ -581,6 +581,20 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /** @jsx h */
+        /** @jsxFrag Fragment */
+        /** @jsxImportSource preact */
+        /** @jsxRuntime automatic */
+      `,
+      errors: [
+        {message: 'Invalid JSDoc tag name "jsx".'},
+        {message: 'Invalid JSDoc tag name "jsxFrag".'},
+        {message: 'Invalid JSDoc tag name "jsxImportSource".'},
+        {message: 'Invalid JSDoc tag name "jsxRuntime".'},
+      ],
+    },
   ],
   valid: [
     {
@@ -809,6 +823,15 @@ export default {
       parserOptions: {
         sourceType: 'module',
       },
+    },
+    {
+      code: `
+        /** @jsx h */
+        /** @jsxFrag Fragment */
+        /** @jsxImportSource preact */
+        /** @jsxRuntime automatic */
+      `,
+      options: [{jsxTags: true}],
     },
   ],
 };
