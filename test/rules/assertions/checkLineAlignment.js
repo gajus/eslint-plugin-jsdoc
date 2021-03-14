@@ -323,8 +323,8 @@ export default {
       output: `
         /**
          * @namespace
-         * @property  {object} defaults       Description.
-         * @property  {int}    defaults.lorem Description multi words.
+         * @property {object} defaults       Description.
+         * @property {int}    defaults.lorem Description multi words.
          */
         const config = {
             defaults: {
@@ -357,10 +357,10 @@ export default {
         /**
          * My object.
          *
-         * @typedef  {Object} MyObject
+         * @typedef {Object} MyObject
          *
-         * @property {string} lorem    Description.
-         * @property {int}    sit      Description multi words.
+         * @property {string} lorem Description.
+         * @property {int}    sit   Description multi words.
          */
       `,
     },
@@ -386,6 +386,41 @@ export default {
       options: [
         'always',
       ],
+      output: `
+        /**
+         * My object.
+         *
+         * @typedef {Object} MyObject
+         *
+         * @property {{a: number, b: string, c}} lorem Description.
+         * @property {Object.<string, Class>}    sit   Description multi words.
+         * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>}    dolor
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * My object.
+         *
+         * @typedef {Object} MyObject
+         *
+         * @property {{a: number, b: string, c}} lorem Description.
+         * @property {Object.<string, Class>} sit Description multi words.
+         * @property {Object.<string, Class>} amet Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>} dolor
+         */
+      `,
+      errors: [
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['always', {
+        tags: ['typedef', 'property'],
+      }],
       output: `
         /**
          * My object.
@@ -512,6 +547,41 @@ export default {
          *
          * @param {string} lorem Description.
          * @param {int} sit
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * My function.
+         *
+         * @param {string} lorem Description.
+         * @param   {int}    sit
+         *
+         * @return  {string}  Return description
+         *    with multi line, but don't touch.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['always', {
+        tags: ['param'],
+      }],
+      output: `
+        /**
+         * My function.
+         *
+         * @param {string} lorem Description.
+         * @param {int}    sit
+         *
+         * @return  {string}  Return description
+         *    with multi line, but don't touch.
          */
         const fn = ( lorem, sit ) => {}
       `,
@@ -840,8 +910,8 @@ export default {
       code: `
         /**
          * @namespace
-         * @property  {object} defaults       Description.
-         * @property  {int}    defaults.lorem Description multi words.
+         * @property {object} defaults       Description.
+         * @property {int}    defaults.lorem Description multi words.
          */
         const config = {
             defaults: {
@@ -858,10 +928,27 @@ export default {
         /**
          * My object.
          *
-         * @typedef  {Object} MyObject
+         * @typedef {Object} MyObject
          *
-         * @property {string} lorem    Description.
-         * @property {int}    sit      Description multi words.
+         * @property {string} lorem Description.
+         * @property {int}    sit   Description multi words.
+         */
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+        /**
+         * My object.
+         *
+         * @typedef {Object} MyObject
+         *
+         * @property {{a: number, b: string, c}} lorem Description.
+         * @property {Object.<string, Class>}    sit   Description multi words.
+         * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>}    dolor
          */
       `,
       options: [
@@ -881,9 +968,9 @@ export default {
          * @property {Object.<string, Class>}    dolor
          */
       `,
-      options: [
-        'always',
-      ],
+      options: ['always', {
+        tags: ['typedef', 'property'],
+      }],
     },
     {
       code: `
