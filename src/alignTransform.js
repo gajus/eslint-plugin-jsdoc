@@ -136,6 +136,7 @@ const alignTransform = (tags) => {
           nothingAfter.tag = true;
           tokens.postTag = '';
 
+          /* istanbul ignore next: Never happens because the !intoTags return. But it's here for consistency wih the original align transform */
           if (tokens.tag === '') {
             nothingAfter.delim = true;
           }

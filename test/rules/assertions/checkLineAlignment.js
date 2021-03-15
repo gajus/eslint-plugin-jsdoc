@@ -554,6 +554,37 @@ export default {
     {
       code: `
         /**
+         * Function description.
+         *
+         * @param {string} lorem Description.
+         * @param {int} sit Description multi
+           line without *.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem Description.
+         * @param {int}    sit   Description multi
+                                 line without *.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
          * My function.
          *
          * @param {string} lorem Description.
@@ -988,6 +1019,18 @@ export default {
        *
        * @param  {object}  options Options object for each OS.
        * @return {boolean}         True = success, false = failed to create the icon
+       */
+       function quux () {}
+      `,
+      options: ['always'],
+    },
+    {
+      code: `
+      /**
+       * Creates OS based shortcuts for files, folders, and applications.
+       *
+       * @param  {object}  options Options object for each OS.
+       * @return {boolean}
        */
        function quux () {}
       `,
