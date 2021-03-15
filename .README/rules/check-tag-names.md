@@ -187,6 +187,20 @@ The format is as follows:
 }
 ```
 
+#### `jsxTags`
+
+If this is set to `true`, all of the following tags used to control JSX output are allowed:
+
+```
+jsx
+jsxFrag
+jsxImportSource
+jsxRuntime
+```
+
+For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).
+
+
 |||
 |---|---|
 |Context|everywhere|

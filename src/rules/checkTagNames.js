@@ -1,6 +1,14 @@
 import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
+// https://babeljs.io/docs/en/babel-plugin-transform-react-jsx/
+const jsxTagNames = new Set([
+  'jsx',
+  'jsxFrag',
+  'jsxImportSource',
+  'jsxRuntime',
+]);
+
 export default iterateJsdoc(({
   sourceCode,
   jsdoc,
@@ -10,7 +18,7 @@ export default iterateJsdoc(({
   settings,
   jsdocNode,
 }) => {
-  const {definedTags = []} = context.options[0] || {};
+  const {definedTags = [], jsxTags} = context.options[0] || {};
 
   let definedPreferredTags = [];
   const {tagNamePreference, structuredTags} = settings;
@@ -39,6 +47,9 @@ export default iterateJsdoc(({
 
   jsdoc.tags.forEach((jsdocTag) => {
     const tagName = jsdocTag.tag;
+    if (jsxTags && jsxTagNames.has(tagName)) {
+      return;
+    }
     if (utils.isValidTag(tagName, [
       ...definedTags, ...definedPreferredTags, ...definedNonPreferredTags,
       ...definedStructuredTags,
@@ -91,6 +102,9 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
+          },
+          jsxTags: {
+            type: 'boolean',
           },
         },
         type: 'object',
