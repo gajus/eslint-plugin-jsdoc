@@ -59,9 +59,8 @@ const space = (len) => {
 };
 
 const alignTransform = (tags) => {
-// function align(tags) {
   let intoTags = false;
-  let w;
+  let width;
 
   const update = (line, index, source) => {
     const tokens = {...line.tokens};
@@ -77,7 +76,7 @@ const alignTransform = (tags) => {
 
     // dangling '*/'
     if (tokens.end === Markers.end && isEmpty) {
-      tokens.start = space(w.start + 1);
+      tokens.start = space(width.start + 1);
 
       return {
         ...line,
@@ -88,16 +87,16 @@ const alignTransform = (tags) => {
     /* eslint-disable indent */
     switch (tokens.delimiter) {
       case Markers.start:
-        tokens.start = space(w.start);
+        tokens.start = space(width.start);
         break;
       case Markers.delim:
-        tokens.start = space(w.start + 1);
+        tokens.start = space(width.start + 1);
         break;
       default:
         tokens.delimiter = '';
 
         // compensate delimiter
-        tokens.start = space(w.start + 2);
+        tokens.start = space(width.start + 2);
     }
     /* eslint-enable */
 
@@ -147,13 +146,13 @@ const alignTransform = (tags) => {
     tokens.postDelimiter = nothingAfter.delim ? '' : ' ';
 
     if (!nothingAfter.tag) {
-      tokens.postTag = space(w.tag - tokens.tag.length + 1);
+      tokens.postTag = space(width.tag - tokens.tag.length + 1);
     }
     if (!nothingAfter.type) {
-      tokens.postType = space(w.type - tokens.type.length + 1);
+      tokens.postType = space(width.type - tokens.type.length + 1);
     }
     if (!nothingAfter.name) {
-      tokens.postName = space(w.name - tokens.name.length + 1);
+      tokens.postName = space(width.name - tokens.name.length + 1);
     }
 
     return {
@@ -163,7 +162,7 @@ const alignTransform = (tags) => {
   };
 
   return ({source, ...fields}) => {
-    w = source.reduce(getWidth(tags), {...zeroWidth});
+    width = source.reduce(getWidth(tags), {...zeroWidth});
 
     return rewireSource({
       ...fields,
