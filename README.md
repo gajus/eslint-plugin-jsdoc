@@ -2167,6 +2167,15 @@ const fn = ( lorem, sit ) => {}
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
+ * Only return doc.
+ *
+ * @return {boolean}  Return description.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
  * Creates OS based shortcuts for files, folders, and applications.
  *
  * @param  {object}  options  Options object for each OS.
@@ -2378,6 +2387,14 @@ const fn = ( lorem ) => {}
  *
  * @param  {object}  options Options object for each OS.
  * @return {boolean}
+ */
+ function quux () {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Only return doc.
+ *
+ * @return {boolean} Return description.
  */
  function quux () {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
