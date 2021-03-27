@@ -619,6 +619,31 @@ export default {
     },
     {
       code: `
+        /**
+         * Only return doc.
+         *
+         * @return {boolean}  Return description.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['always'],
+      output: `
+        /**
+         * Only return doc.
+         *
+         * @return {boolean} Return description.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
       /**
        * Creates OS based shortcuts for files, folders, and applications.
        *
@@ -1031,6 +1056,17 @@ export default {
        *
        * @param  {object}  options Options object for each OS.
        * @return {boolean}
+       */
+       function quux () {}
+      `,
+      options: ['always'],
+    },
+    {
+      code: `
+      /**
+       * Only return doc.
+       *
+       * @return {boolean} Return description.
        */
        function quux () {}
       `,

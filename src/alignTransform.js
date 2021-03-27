@@ -62,6 +62,50 @@ const alignTransform = (tags) => {
   let intoTags = false;
   let width;
 
+  const alignTokens = (tokens) => {
+    const nothingAfter = {
+      delim: false,
+      name: false,
+      tag: false,
+      type: false,
+    };
+
+    if (tokens.description === '') {
+      nothingAfter.name = true;
+      tokens.postName = '';
+
+      if (tokens.name === '') {
+        nothingAfter.type = true;
+        tokens.postType = '';
+
+        if (tokens.type === '') {
+          nothingAfter.tag = true;
+          tokens.postTag = '';
+
+          /* istanbul ignore next: Never happens because the !intoTags return. But it's here for consistency with the original align transform */
+          if (tokens.tag === '') {
+            nothingAfter.delim = true;
+          }
+        }
+      }
+    }
+
+    tokens.postDelimiter = nothingAfter.delim ? '' : ' ';
+
+    if (!nothingAfter.tag) {
+      tokens.postTag = space(width.tag - tokens.tag.length + 1);
+    }
+    if (!nothingAfter.type) {
+      tokens.postType = space(width.type - tokens.type.length + 1);
+    }
+    if (!nothingAfter.name) {
+      // If post name is empty for all lines (name width 0), don't add post name spacing.
+      tokens.postName = width.name === 0 ? '' : space(width.name - tokens.name.length + 1);
+    }
+
+    return tokens;
+  };
+
   const update = (line, index, source) => {
     const tokens = {...line.tokens};
     if (tokens.tag !== '') {
@@ -117,48 +161,9 @@ const alignTransform = (tags) => {
       };
     }
 
-    const nothingAfter = {
-      delim: false,
-      name: false,
-      tag: false,
-      type: false,
-    };
-
-    if (tokens.description === '') {
-      nothingAfter.name = true;
-      tokens.postName = '';
-
-      if (tokens.name === '') {
-        nothingAfter.type = true;
-        tokens.postType = '';
-
-        if (tokens.type === '') {
-          nothingAfter.tag = true;
-          tokens.postTag = '';
-
-          /* istanbul ignore next: Never happens because the !intoTags return. But it's here for consistency with the original align transform */
-          if (tokens.tag === '') {
-            nothingAfter.delim = true;
-          }
-        }
-      }
-    }
-
-    tokens.postDelimiter = nothingAfter.delim ? '' : ' ';
-
-    if (!nothingAfter.tag) {
-      tokens.postTag = space(width.tag - tokens.tag.length + 1);
-    }
-    if (!nothingAfter.type) {
-      tokens.postType = space(width.type - tokens.type.length + 1);
-    }
-    if (!nothingAfter.name) {
-      tokens.postName = space(width.name - tokens.name.length + 1);
-    }
-
     return {
       ...line,
-      tokens,
+      tokens: alignTokens(tokens),
     };
   };
 
