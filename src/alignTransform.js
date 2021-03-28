@@ -58,7 +58,7 @@ const space = (len) => {
   return ''.padStart(len, ' ');
 };
 
-const alignTransform = (tags) => {
+const alignTransform = (tags, indent) => {
   let intoTags = false;
   let width;
 
@@ -120,7 +120,7 @@ const alignTransform = (tags) => {
 
     // dangling '*/'
     if (tokens.end === Markers.end && isEmpty) {
-      tokens.start = space(width.start + 1);
+      tokens.start = indent + ' ';
 
       return {
         ...line,
@@ -131,16 +131,16 @@ const alignTransform = (tags) => {
     /* eslint-disable indent */
     switch (tokens.delimiter) {
       case Markers.start:
-        tokens.start = space(width.start);
+        tokens.start = indent;
         break;
       case Markers.delim:
-        tokens.start = space(width.start + 1);
+        tokens.start = indent + ' ';
         break;
       default:
         tokens.delimiter = '';
 
         // compensate delimiter
-        tokens.start = space(width.start + 2);
+        tokens.start = indent + '  ';
     }
     /* eslint-enable */
 

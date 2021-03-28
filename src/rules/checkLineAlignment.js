@@ -6,7 +6,6 @@ import iterateJsdoc from '../iterateJsdoc';
 
 const {
   flow: commentFlow,
-  indent: commentIndent,
 } = transforms;
 
 const checkNotAlignedPerTag = (utils, tag) => {
@@ -105,7 +104,7 @@ const checkAlignment = ({
   tags,
   utils,
 }) => {
-  const transform = commentFlow(alignTransform(tags), commentIndent(indent.length));
+  const transform = commentFlow(alignTransform(tags, indent));
   const transformedJsdoc = transform(jsdoc);
 
   const comment = '/*' + jsdocNode.value + '*/';

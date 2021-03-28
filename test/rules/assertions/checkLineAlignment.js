@@ -29,6 +29,37 @@ export default {
         const fn = ( lorem, sit ) => {}
       `,
     },
+    /* eslint-disable no-tabs */
+    {
+      code: `
+				/**
+				 * With tabs.
+				 *
+				 * @param {string} lorem Description.
+				 * @param {int} sit Description multi words.
+				 */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+				/**
+				 * With tabs.
+				 *
+				 * @param {string} lorem Description.
+				 * @param {int}    sit   Description multi words.
+				 */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    /* eslint-enable no-tabs */
     {
       code: `
         /**
@@ -845,6 +876,22 @@ export default {
         'always',
       ],
     },
+    /* eslint-disable no-tabs */
+    {
+      code: `
+				/**
+				 * With tabs.
+				 *
+				 * @param {string} lorem Description.
+				 * @param {int}    sit   Description multi words.
+				 */
+        const fn = ( lorem, sit ) => {}
+      `,
+      options: [
+        'always',
+      ],
+    },
+    /* eslint-enable no-tabs */
     {
       code: `
         /**
