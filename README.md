@@ -1960,6 +1960,16 @@ const fn = ( lorem, sit ) => {}
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
+ * With tabs.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi words.
+ */
+    const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
  * Function description.
  *
  * @param {string} lorem - Description.
@@ -2249,6 +2259,15 @@ The following patterns are not considered problems:
  * @param {int}    sit   Description multi words.
  */
 const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * With tabs.
+ *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description multi words.
+ */
+    const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
