@@ -60,6 +60,7 @@ const defaultMdRules = {
 
 const defaultExpressionRules = {
   ...defaultMdRules,
+  'chai-friendly/no-unused-expressions': 'off',
   'no-new': 'off',
   'no-unused-expressions': 'off',
   quotes: ['error', 'double'],
