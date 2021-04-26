@@ -50,7 +50,7 @@ const checkNotAlignedPerTag = (utils, tag) => {
         callbck(!ret, contentProp);
       }
 
-      return ret;
+      return ret && (callbck || !contentProp);
     });
   };
 

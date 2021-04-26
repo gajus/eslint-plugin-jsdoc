@@ -2303,6 +2303,13 @@ function quux (options) {}
  */
  function quux () {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "never",{"tags":["param"]}]
+
+/**
+ * @param parameter Description.
+ */
+function func(parameter){
+
+}
 ````
 
 

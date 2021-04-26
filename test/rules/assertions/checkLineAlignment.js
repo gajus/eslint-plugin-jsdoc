@@ -943,5 +943,15 @@ export default {
         tags: ['param'],
       }],
     },
+    {
+      code: `
+      /**
+       * @param parameter Description.
+       */
+      function func(parameter){
+
+      }
+      `,
+    },
   ],
 };
