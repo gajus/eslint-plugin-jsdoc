@@ -130,9 +130,7 @@ const assertReadmeIsUpToDate = async () => {
 
 const main = async () => {
   try {
-    const hasCheckFlag = process.argv.some((arg) => {
-      return arg === '--check';
-    });
+    const hasCheckFlag = process.argv.includes('--check');
 
     if (hasCheckFlag) {
       await assertReadmeIsUpToDate();
