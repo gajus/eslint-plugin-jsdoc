@@ -10109,7 +10109,7 @@ add an inline `/** */` instead of the regular, multi-line, indented jsdoc
 block which will otherwise be added. Defaults to an empty array.
 
 Note that you may need to disable `require` items (e.g., `MethodDefinition`)
-if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition:not([accessibility="private"])`).
+if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition:not([accessibility="private"] > FunctionExpression`).
 
 See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
