@@ -682,11 +682,11 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing @param "foo.0"',
+          message: 'Missing @param "foo."0""',
         },
         {
           line: 3,
-          message: 'Missing @param "foo.1"',
+          message: 'Missing @param "foo."1""',
         },
       ],
     },
@@ -1571,12 +1571,12 @@ export default {
       /**
        * @param obj
        * @param obj.data
-       * @param obj.data.0
-       * @param obj.data.1
-       * @param obj.data.2
+       * @param obj.data."0"
+       * @param obj.data."1"
+       * @param obj.data."2"
        * @param obj.defaulting
-       * @param obj.defaulting.0
-       * @param obj.defaulting.1
+       * @param obj.defaulting."0"
+       * @param obj.defaulting."1"
        */
       function Item({
         data: [foo, bar, ...baz],
@@ -1639,6 +1639,16 @@ export default {
       }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * @param root
+       * @param root."0" Ignored
+       * @param root."1" Our "b"
+       */
+      const foo = ([, b]) => b;
+      `,
     },
   ],
 };

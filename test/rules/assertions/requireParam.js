@@ -1006,10 +1006,10 @@ export default {
           message: 'Missing JSDoc @param "root0" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "root0.0" declaration.',
+          message: 'Missing JSDoc @param "root0."0"" declaration.',
         },
         {
-          message: 'Missing JSDoc @param "root0.1" declaration.',
+          message: 'Missing JSDoc @param "root0."1"" declaration.',
         },
         {
           message: 'Missing JSDoc @param "foo" declaration.',
@@ -1018,8 +1018,8 @@ export default {
       output: `
       /**
        * @param root0
-       * @param root0.0
-       * @param root0.1
+       * @param root0."0"
+       * @param root0."1"
        * @param foo
        */
       function quux ([bar, baz], foo) {
@@ -1786,7 +1786,7 @@ export default {
       code: `
       /**
        * @param {GenericArray} cfg
-       * @param {number} cfg.0
+       * @param {number} cfg."0"
        */
       function baar ([a, ...extra]) {
         //
@@ -1794,14 +1794,14 @@ export default {
       `,
       errors: [
         {
-          message: 'Missing JSDoc @param "cfg.1" declaration.',
+          message: 'Missing JSDoc @param "cfg."1"" declaration.',
         },
       ],
       output: `
       /**
        * @param {GenericArray} cfg
-       * @param {number} cfg.0
-       * @param {...any} cfg.1
+       * @param {number} cfg."0"
+       * @param {...any} cfg."1"
        */
       function baar ([a, ...extra]) {
         //
@@ -2898,7 +2898,7 @@ export default {
       code: `
       /**
         * @param {GenericArray} cfg
-        * @param {number} cfg.0
+        * @param {number} cfg."0"
        */
       function baar ([a, ...extra]) {
         //
@@ -3068,12 +3068,12 @@ export default {
       /**
        * @param obj
        * @param obj.data
-       * @param obj.data.0
-       * @param obj.data.1
-       * @param obj.data.2
+       * @param obj.data."0"
+       * @param obj.data."1"
+       * @param obj.data."2"
        * @param obj.defaulting
-       * @param obj.defaulting.0
-       * @param obj.defaulting.1
+       * @param obj.defaulting."0"
+       * @param obj.defaulting."1"
        */
       function Item({
         data: [foo, bar, ...baz],

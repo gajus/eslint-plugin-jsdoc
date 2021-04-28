@@ -2684,7 +2684,7 @@ function quux (error, cde = 1) {
 function quux ([a, b] = []) {
 
 }
-// Message: Missing @param "foo.0"
+// Message: Missing @param "foo."0""
 
 /**
  * @param options
@@ -3191,12 +3191,12 @@ export default function Item({
 /**
  * @param obj
  * @param obj.data
- * @param obj.data.0
- * @param obj.data.1
- * @param obj.data.2
+ * @param obj.data."0"
+ * @param obj.data."1"
+ * @param obj.data."2"
  * @param obj.defaulting
- * @param obj.defaulting.0
- * @param obj.defaulting.1
+ * @param obj.defaulting."0"
+ * @param obj.defaulting."1"
  */
 function Item({
   data: [foo, bar, ...baz],
@@ -3239,6 +3239,13 @@ class A {
     }) {
     }
 }
+
+/**
+ * @param root
+ * @param root."0" Ignored
+ * @param root."1" Our "b"
+ */
+const foo = ([, b]) => b;
 ````
 
 
@@ -13008,12 +13015,12 @@ function quux ({opts: {num, ...extra}}) {
 
 /**
  * @param {GenericArray} cfg
- * @param {number} cfg.0
+ * @param {number} cfg."0"
  */
 function baar ([a, ...extra]) {
   //
 }
-// Message: Missing JSDoc @param "cfg.1" declaration.
+// Message: Missing JSDoc @param "cfg."1"" declaration.
 
 /**
  * @param a
@@ -13613,7 +13620,7 @@ function quux ({num, ...extra}) {
 
 /**
   * @param {GenericArray} cfg
-  * @param {number} cfg.0
+  * @param {number} cfg."0"
  */
 function baar ([a, ...extra]) {
   //
@@ -13716,12 +13723,12 @@ function quux ({ foo: { bar } }) {}
 /**
  * @param obj
  * @param obj.data
- * @param obj.data.0
- * @param obj.data.1
- * @param obj.data.2
+ * @param obj.data."0"
+ * @param obj.data."1"
+ * @param obj.data."2"
  * @param obj.defaulting
- * @param obj.defaulting.0
- * @param obj.defaulting.1
+ * @param obj.defaulting."0"
+ * @param obj.defaulting."1"
  */
 function Item({
   data: [foo, bar, ...baz],

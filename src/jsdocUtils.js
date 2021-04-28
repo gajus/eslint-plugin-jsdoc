@@ -197,8 +197,8 @@ const getFunctionParameterNames = (
       const elements = param.elements || param.left?.elements;
       const roots = elements.map((prop, idx) => {
         return {
-          name: idx,
-          restElement: prop.type === 'RestElement',
+          name: `"${idx}"`,
+          restElement: prop?.type === 'RestElement',
         };
       });
 
