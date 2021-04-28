@@ -54,8 +54,8 @@ function quux ([foo, bar]) {
 ```js
 /**
 * @param cfg
-* @param cfg.0
-* @param cfg.1
+* @param cfg."0"
+* @param cfg."1"
 */
 ```
 
@@ -102,7 +102,7 @@ if missing.
 ```js
 /**
   * @param {GenericArray} cfg
-  * @param {number} cfg.0
+  * @param {number} cfg."0"
  */
 function baar ([a, ...extra]) {
   //
@@ -114,8 +114,8 @@ function baar ([a, ...extra]) {
 ```js
 /**
   * @param {GenericArray} cfg
-  * @param {number} cfg.0
-  * @param {...any} cfg.1
+  * @param {number} cfg."0"
+  * @param {...any} cfg."1"
  */
 function baar ([a, ...extra]) {
   //
@@ -134,8 +134,8 @@ corresponding to `extra`:
 ```js
 /**
   * @param {GenericArray} cfg
-  * @param {number} cfg.0
-  * @param {any} cfg.1
+  * @param {number} cfg."0"
+  * @param {any} cfg."1"
  */
 function baar ([a, ...extra]) {
   //
@@ -274,7 +274,7 @@ function quux ({foo}, [bar], {baz}) {
 * @param arg
 * @param arg.foo
 * @param config0
-* @param config0.0 (`bar`)
+* @param config0."0" (`bar`)
 * @param config1
 * @param config1.baz
 */
