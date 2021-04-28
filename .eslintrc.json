@@ -1,6 +1,9 @@
 {
   "extends": "canonical",
   "root": true,
+  "env": {
+    "browser": false
+  },
   "overrides": [{
     "files": ".ncurc.js",
     "parserOptions": {
