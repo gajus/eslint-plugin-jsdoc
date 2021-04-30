@@ -1,10 +1,10 @@
 import {
+  getJSDocComment,
+} from '@es-joy/jsdoccomment';
+import {
   parse as parseType, traverse,
 } from 'jsdoctypeparser';
 import _ from 'lodash';
-import {
-  getJSDocComment,
-} from '../eslint/getJSDocComment';
 import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc';

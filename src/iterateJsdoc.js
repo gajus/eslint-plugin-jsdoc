@@ -1,4 +1,7 @@
 import {
+  getReducedASTNode, getJSDocComment,
+} from '@es-joy/jsdoccomment';
+import {
   parse as commentParser, stringify as commentStringify,
 } from 'comment-parser';
 import {
@@ -15,9 +18,6 @@ import {
   seedTokens,
 } from 'comment-parser/lib/util';
 import _ from 'lodash';
-import {
-  getJSDocComment, getReducedASTNode,
-} from './eslint/getJSDocComment';
 import jsdocUtils from './jsdocUtils';
 
 /*

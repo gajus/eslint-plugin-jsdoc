@@ -1,7 +1,7 @@
-import debugModule from 'debug';
 import {
   findJSDocComment,
-} from './eslint/getJSDocComment';
+} from '@es-joy/jsdoccomment';
+import debugModule from 'debug';
 
 const debug = debugModule('requireExportJsdoc');
 
