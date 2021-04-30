@@ -1084,15 +1084,22 @@ const enforcedContexts = (context, defaultContexts) => {
 /**
  * @param {string[]} contexts
  * @param {Function} checkJsdoc
+ * @param {Function} handler
  */
-const getContextObject = (contexts, checkJsdoc) => {
+const getContextObject = (contexts, checkJsdoc, handler) => {
   const properties = {};
 
   contexts.forEach((prop) => {
     if (typeof prop === 'object') {
-      properties[prop.context] = checkJsdoc;
+      if (prop.comment) {
+        properties[prop.context] = checkJsdoc.bind(
+          null, null, handler.bind(null, prop.comment),
+        );
+      } else {
+        properties[prop.context] = checkJsdoc.bind(null, null, null);
+      }
     } else {
-      properties[prop] = checkJsdoc;
+      properties[prop] = checkJsdoc.bind(null, null, null);
     }
   });
 

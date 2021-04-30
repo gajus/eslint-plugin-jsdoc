@@ -196,14 +196,15 @@ export default {
       publicOnly, exemptEmptyFunctions, exemptEmptyConstructors, enableFixer,
     } = getOptions(context);
 
-    const checkJsDoc = (node, isFunctionContext) => {
+    const checkJsDoc = (isFunctionContext, handler, node) => {
       const jsDocNode = getJSDocComment(sourceCode, node, settings);
 
       if (jsDocNode) {
         return;
       }
 
-      // For those who have options configured against ANY constructors (or setters or getters) being reported
+      // For those who have options configured against ANY constructors (or
+      //  setters or getters) being reported
       if (jsdocUtils.exemptSpeciaMethods(
         {tags: []}, node, context, [OPTIONS_SCHEMA],
       )) {
@@ -211,10 +212,12 @@ export default {
       }
 
       if (
-        // Avoid reporting param-less, return-less functions (when `exemptEmptyFunctions` option is set)
+        // Avoid reporting param-less, return-less functions (when
+        //  `exemptEmptyFunctions` option is set)
         exemptEmptyFunctions && isFunctionContext ||
 
-        // Avoid reporting  param-less, return-less constructor methods  (when `exemptEmptyConstructors` option is set)
+        // Avoid reporting  param-less, return-less constructor methods (when
+        //  `exemptEmptyConstructors` option is set)
         exemptEmptyConstructors && jsdocUtils.isConstructor(node)
       ) {
         const functionParameterNames = jsdocUtils.getFunctionParameterNames(node);
@@ -288,7 +291,10 @@ export default {
     };
 
     return {
-      ...jsdocUtils.getContextObject(jsdocUtils.enforcedContexts(context, []), checkJsDoc),
+      ...jsdocUtils.getContextObject(
+        jsdocUtils.enforcedContexts(context, []),
+        checkJsDoc,
+      ),
       ArrowFunctionExpression (node) {
         if (!hasOption('ArrowFunctionExpression')) {
           return;
@@ -298,7 +304,7 @@ export default {
           ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
           ['Property', 'ObjectProperty', 'ClassProperty'].includes(node.parent.type) && node === node.parent.value
         ) {
-          checkJsDoc(node, true);
+          checkJsDoc(true, null, node);
         }
       },
 
@@ -307,7 +313,7 @@ export default {
           return;
         }
 
-        checkJsDoc(node);
+        checkJsDoc(false, null, node);
       },
 
       ClassExpression (node) {
@@ -315,7 +321,7 @@ export default {
           return;
         }
 
-        checkJsDoc(node);
+        checkJsDoc(false, null, node);
       },
 
       FunctionDeclaration (node) {
@@ -323,12 +329,12 @@ export default {
           return;
         }
 
-        checkJsDoc(node, true);
+        checkJsDoc(true, null, node);
       },
 
       FunctionExpression (node) {
         if (hasOption('MethodDefinition') && node.parent.type === 'MethodDefinition') {
-          checkJsDoc(node, true);
+          checkJsDoc(true, null, node);
 
           return;
         }
@@ -341,7 +347,7 @@ export default {
           ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
           ['Property', 'ObjectProperty', 'ClassProperty'].includes(node.parent.type) && node === node.parent.value
         ) {
-          checkJsDoc(node, true);
+          checkJsDoc(true, null, node);
         }
       },
     };

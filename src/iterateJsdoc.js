@@ -17,6 +17,10 @@ import {
   seedBlock,
   seedTokens,
 } from 'comment-parser/lib/util';
+import esquery from 'esquery';
+import {
+  parse as jsdoctypeParse,
+} from 'jsdoctypeparser';
 import _ from 'lodash';
 import jsdocUtils from './jsdocUtils';
 
@@ -247,16 +251,15 @@ const getUtils = (
   utils.getDescription = () => {
     const descriptions = [];
     let lastDescriptionLine;
-    if (jsdoc.source[0].tokens.description) {
-      descriptions.push(jsdoc.source[0].tokens.description);
-    }
-    jsdoc.source.slice(1).some(({tokens: {description, tag, end}}, idx) => {
-      if (tag || end) {
-        lastDescriptionLine = idx;
+    jsdoc.source.some(({tokens: {description, tag, end}}, idx) => {
+      if (idx && (tag || end)) {
+        lastDescriptionLine = idx - 1;
 
         return true;
       }
-      descriptions.push(description);
+      if (idx || description) {
+        descriptions.push(description);
+      }
 
       return false;
     });
@@ -705,12 +708,10 @@ const makeReport = (context, commentNode) => {
  */
 
 const iterate = (
+  indent, jsdoc,
   ruleConfig, context, lines, jsdocNode, node, settings,
   sourceCode, iterator, state, iteratingAll,
 ) => {
-  const sourceLine = lines[jsdocNode.loc.start.line - 1];
-  const indent = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
-  const jsdoc = parseComment(jsdocNode, indent);
   const report = makeReport(context, jsdocNode);
 
   const utils = getUtils(
@@ -758,6 +759,14 @@ const iterate = (
   });
 };
 
+const getIndentAndJSDoc = function (lines, jsdocNode) {
+  const sourceLine = lines[jsdocNode.loc.start.line - 1];
+  const indnt = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
+  const jsdc = parseComment(jsdocNode, indnt);
+
+  return [indnt, jsdc];
+};
+
 /**
  * Create an eslint rule that iterates over all JSDocs, regardless of whether
  * they are attached to a function-like node.
@@ -778,7 +787,13 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
       if (!(/^\/\*\*\s/).test(sourceCode.getText(jsdocNode))) {
         return;
       }
+
+      const [indent, jsdoc] = getIndentAndJSDoc(
+        lines, jsdocNode,
+      );
+
       iterate(
+        indent, jsdoc,
         ruleConfig, context, lines, jsdocNode, node,
         settings, sourceCode, iterator,
         state, true,
@@ -886,6 +901,14 @@ export {
   parseComment,
 };
 
+const toCamelCase = (str) => {
+  return str.toLowerCase().replace(/^[a-z]/, (init) => {
+    return init.toUpperCase();
+  }).replace(/_([a-z])/, (__, wordInit) => {
+    return wordInit.toUpperCase();
+  });
+};
+
 /**
  * @param {JsdocVisitor} iterator
  * @param {{
@@ -934,29 +957,255 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       if (!settings) {
         return {};
       }
+      const {mode} = settings;
       const {lines} = sourceCode;
 
-      const checkJsdoc = (node) => {
+      const checkJsdoc = (info, handler, node) => {
         const jsdocNode = getJSDocComment(sourceCode, node, settings);
 
         if (!jsdocNode) {
           return;
         }
 
+        const [indent, jsdoc] = getIndentAndJSDoc(
+          lines, jsdocNode,
+        );
+
+        if (
+          // Note, `handler` should already be bound in its first argument
+          //  with these only to be called after the value of
+          //  `comment`
+          handler && handler(jsdoc) === false
+        ) {
+          return;
+        }
+
         iterate(
+          indent, jsdoc,
           ruleConfig, context, lines, jsdocNode, node,
           settings, sourceCode, iterator,
         );
       };
 
       if (ruleConfig.contextDefaults) {
-        return jsdocUtils.getContextObject(contexts, checkJsdoc);
+        return jsdocUtils.getContextObject(
+          contexts,
+          checkJsdoc,
+          (commentSelector, jsdoc) => {
+            const selector = esquery.parse(commentSelector);
+
+            const {tokens: {
+              delimiter: delimiterRoot,
+              postDelimiter: postDelimiterRoot,
+              end: endRoot,
+              description: descriptionRoot,
+            }} = jsdoc.source[0];
+            const obj = {
+              delimiter: delimiterRoot,
+              description: descriptionRoot,
+
+              // This will be overwritten if there are other entries
+              end: endRoot,
+
+              postDelimiter: postDelimiterRoot,
+            };
+            const ast = {
+              type: 'JSDocBlock',
+              ...obj,
+            };
+
+            const tags = [];
+            let lastDescriptionLine;
+            let lastTagDescriptionHolder = false;
+            let lastTagTypeHolder = false;
+            jsdoc.source.slice(1).forEach((info, idx) => {
+              const {tokens} = info;
+              if (tokens.tag || tokens.end) {
+                if (lastDescriptionLine === undefined) {
+                  lastDescriptionLine = idx;
+                }
+                if (tokens.end) {
+                  ast.end = tokens.end;
+                } else {
+                  const {
+                    // eslint-disable-next-line no-unused-vars -- Discarding
+                    end: ed,
+                    ...tkns
+                  } = tokens;
+
+                  let parsedType = null;
+                  try {
+                    parsedType = jsdoctypeParse(tokens.type, {mode});
+                  } catch {
+                    // Ignore
+                  }
+
+                  // Todo: See about getting jsdoctypeparser to make these
+                  //         changes; the AST might also be rethought to use
+                  //         fewer types and more properties
+                  const sel = esquery.parse('*[type]');
+                  esquery.traverse(parsedType, sel, (node) => {
+                    const {type} = node;
+
+                    node.type = `JSDocType${toCamelCase(type)}`;
+                  });
+
+                  const tag = {
+                    ...tkns,
+                    descriptionLines: [],
+                    parsedType,
+                    rawType: tokens.type,
+                    type: 'JSDocTag',
+                    typeLines: [],
+                  };
+                  if (!lastTagDescriptionHolder) {
+                    const {
+                      delimiter,
+                      description,
+                      postDelimiter,
+                      start,
+                    } = tkns;
+                    tag.descriptionLines = lastTagDescriptionHolder = [
+                      {
+                        delimiter,
+                        description,
+                        postDelimiter,
+                        start,
+                        type: 'JSDocDescriptionLine',
+                      },
+                    ];
+                  }
+                  if (!lastTagTypeHolder) {
+                    const {
+                      delimiter,
+                      type: rawType,
+                      postDelimiter,
+                      start,
+                    } = tkns;
+                    tag.typeLines = lastTagTypeHolder = [
+                      {
+                        delimiter,
+                        postDelimiter,
+                        rawType,
+                        start,
+                        type: 'JSDocTypeLine',
+                      },
+                    ];
+                  }
+                  tags.push(tag);
+                }
+
+                return;
+
+              // Multi-line tag descriptions
+              }
+
+              if (lastTagDescriptionHolder && tokens.description) {
+                const {
+                  delimiter,
+                  description,
+                  postDelimiter,
+                  start,
+                } = tokens;
+                lastTagDescriptionHolder.push(
+                  {
+                    delimiter,
+                    description,
+                    postDelimiter,
+                    start,
+                    type: 'JSDocDescriptionLine',
+                  },
+                );
+
+                return;
+              }
+              if (lastTagTypeHolder && tokens.type) {
+                const {
+                  delimiter,
+                  postDelimiter,
+                  start,
+                  type: rawType,
+                } = tokens;
+                lastTagDescriptionHolder.push(
+                  {
+                    delimiter,
+                    postDelimiter,
+                    rawType,
+                    start,
+                    type: 'JSDocTypeLine',
+                  },
+                );
+
+                return;
+              }
+              ast.description += '\n' + tokens.description;
+            });
+
+            ast.lastDescriptionLine = lastDescriptionLine;
+            ast.tags = tags;
+
+            console.log('jsdoc', jsdoc);
+            console.log('ast', ast);
+
+            /* eslint-disable sort-keys-fix/sort-keys-fix -- Keep in order */
+            const typeVisitorKeys = {
+              NAME: [],
+              NAMED_PARAMETER: ['typeName'],
+              MEMBER: ['owner'],
+              UNION: ['left', 'right'],
+              INTERSECTION: ['left', 'right'],
+              VARIADIC: ['value'],
+              RECORD: ['entries'],
+              RECORD_ENTRY: ['value'],
+              TUPLE: ['entries'],
+              GENERIC: ['subject', 'objects'],
+              MODULE: ['value'],
+              OPTIONAL: ['value'],
+              NULLABLE: ['value'],
+              NOT_NULLABLE: ['value'],
+              FUNCTION: ['params', 'returns', 'this', 'new'],
+              ARROW: ['params', 'returns'],
+              ANY: [],
+              UNKNOWN: [],
+              INNER_MEMBER: ['owner'],
+              INSTANCE_MEMBER: ['owner'],
+              STRING_VALUE: [],
+              NUMBER_VALUE: [],
+              EXTERNAL: [],
+              FILE_PATH: [],
+              PARENTHESIS: ['value'],
+              TYPE_QUERY: ['name'],
+              KEY_QUERY: ['value'],
+              IMPORT: ['path'],
+              /* eslint-enable sort-keys-fix/sort-keys-fix -- Keep in order */
+            };
+
+            const convertedTypeVisitorKeys = Object.entries(
+              typeVisitorKeys,
+            ).reduce((object, [key, value]) => {
+              object[`JSDocType${toCamelCase(key)}`] = value;
+
+              return object;
+            }, {});
+
+            return esquery.matches(ast, selector, null, {
+              visitorKeys: {
+                ...convertedTypeVisitorKeys,
+                JSDocBlock: ['tags'],
+                JSDocDescriptionLine: [],
+                JSDocTag: ['descriptionLines', 'typeLines', 'parsedType'],
+              },
+            });
+          },
+        );
       }
 
+      const checkJsdocNoHandler = checkJsdoc.bind(null, null, null);
+
       return {
-        ArrowFunctionExpression: checkJsdoc,
-        FunctionDeclaration: checkJsdoc,
-        FunctionExpression: checkJsdoc,
+        ArrowFunctionExpression: checkJsdocNoHandler,
+        FunctionDeclaration: checkJsdocNoHandler,
+        FunctionExpression: checkJsdocNoHandler,
       };
     },
     meta: ruleConfig.meta,
