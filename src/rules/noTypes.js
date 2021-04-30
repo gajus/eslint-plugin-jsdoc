@@ -35,7 +35,23 @@ export default iterateJsdoc(({
         properties: {
           contexts: {
             items: {
-              type: 'string',
+              anyOf: [
+                {
+                  type: 'string',
+                },
+                {
+                  additionalProperties: false,
+                  properties: {
+                    comment: {
+                      type: 'string',
+                    },
+                    context: {
+                      type: 'string',
+                    },
+                  },
+                  type: 'object',
+                },
+              ],
             },
             type: 'array',
           },

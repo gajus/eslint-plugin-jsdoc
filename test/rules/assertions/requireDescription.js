@@ -516,6 +516,34 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @class
+           * @implements {Bar}
+           */
+          class quux {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              // comment: 'JSDocBlock[whitespace=/\\s{4}/] > JSDocTag[name="class"]',
+              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTag)',
+              context: 'ClassDeclaration',
+            },
+          ],
+          descriptionStyle: 'tag',
+        },
+      ],
+    },
   ],
   valid: [
     {

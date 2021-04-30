@@ -461,6 +461,34 @@ your files' code which are of interest to check. However, in
 `eslint-plugin-jsdoc`, we also allow you to use these selectors to define
 additional contexts where you wish our own rules to be applied.
 
+#### `contexts` format
+
+While at their simplest, these can be an array of string selectors, one can
+also supply an object with `context` (in place of the string) and one of two
+properties:
+
+1. For `require-jsdoc`, there is also a `inlineCommentBlock` property. See
+    that rule for details.
+2. For other rules, there is a `comment` property which adds to the `context`
+    in requiring that the `comment` AST condition is also met, e.g., to
+    require that certain tags are present and/or or types and type operators
+    are in use. Note that this AST has not been standardized and should be
+    considered experimental. <!-- Make reference to https://github.com/brettz9/jsdoc-eslint-parser/ when stable: One may also use a full-blown parser which supports
+    comment AST as a first class citizen usable anywhere within a normal AST,
+    but this is also experimental. When using this parser, you need not use
+    `comment` and can just use a plain string context. -->
+    In addition to being generally useful for precision in specifying contexts,
+    it is hoped that the ability to specify required tags on structures can
+    be used for requiring `@type` or other types for a minimalist yet adequate
+    specification of types which can be used to compile JavaScript+JSDoc (JJ)
+    to WebAssembly (e.g., by converting it to TypeSscript and then using
+    AssemblyScript to convert to WebAssembly). (It may be possible that one
+    will need to require types with certain structures beyond function
+    declarations and the like, as well as optionally requiring specification
+    of number types.)
+
+#### Discovering available AST definitions
+
 To know all of the AST definitions one may target, it will depend on the
 [parser](https://eslint.org/docs/user-guide/configuring#specifying-parser)
 you are using with ESLint (e.g., `espree` is the default parser for ESLint,
@@ -473,10 +501,12 @@ So you can look up a particular parser to see its rules, e.g., browse through
 the [ESTree docs](https://github.com/estree/estree) as used by Espree or see
 ESLint's [overview of the structure of AST](https://eslint.org/docs/developer-guide/working-with-custom-parsers#the-ast-specification).
 
-However, it can sometimes be even more helpful to get an idea of ASt by just
+However, it can sometimes be even more helpful to get an idea of AST by just
 providing some of your JavaScript to the wonderful
 [AST Explorer](https://astexplorer.net/) tool and see what AST is built out
 of your code. You can set the tool to the specific parser which you are using.
+
+#### Uses/Tips for AST
 
 And if you wish to introspect on the AST of code within your projects, you can
 use [eslint-plugin-query](https://github.com/brettz9/eslint-plugin-query).
