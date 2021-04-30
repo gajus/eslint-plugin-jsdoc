@@ -1,7 +1,7 @@
-import _ from 'lodash';
 import {
   getJSDocComment, getReducedASTNode, getDecorator,
-} from '../eslint/getJSDocComment';
+} from '@es-joy/jsdoccomment';
+import _ from 'lodash';
 import exportParser from '../exportParser';
 import {
   getSettings,
