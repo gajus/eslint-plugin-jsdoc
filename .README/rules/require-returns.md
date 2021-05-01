@@ -28,7 +28,8 @@ Will also report if multiple `@returns` tags are present.
     object. This may be useful for flagging that there has been consideration
     of return type. Defaults to `false`.
 - `contexts` - Set this to an array of strings representing the AST context
-    where you wish the rule to be applied.
+    (or an object with `context` and `comment` properties) where you wish
+    the rule to be applied.
     Overrides the default contexts (see below). Set to `"any"` if you want
     the rule to apply to any jsdoc block throughout your files (as is necessary
     for finding function blocks not attached to a function declaration or

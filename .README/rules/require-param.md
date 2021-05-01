@@ -324,9 +324,9 @@ need destructuring.
 
 ##### `contexts`
 
-Set this to an array of strings representing the AST context
-where you wish the rule to be applied. Overrides the default
-contexts (see below). May be useful for adding such as
+Set this to an array of strings representing the AST context (or an object with
+`context` and `comment` properties) where you wish the rule to be applied.
+Overrides the default contexts (see below). May be useful for adding such as
 `TSMethodSignature` in TypeScript or restricting the contexts
 which are checked.
 

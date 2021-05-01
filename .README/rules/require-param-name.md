@@ -10,8 +10,8 @@ Requires that all function parameters have names.
 
 ##### `contexts`
 
-Set this to an array of strings representing the AST context
-where you wish the rule to be applied.
+Set this to an array of strings representing the AST context (or an object with
+`context` and `comment` properties) where you wish the rule to be applied.
 Overrides the default contexts (see below). Set to `"any"` if you want
 the rule to apply to any jsdoc block throughout your files (as is necessary
 for finding function blocks not attached to a function declaration or
