@@ -20,7 +20,8 @@ option to expect a non-standard `@next` tag.
     that a project is aware of an `undefined`/`void` yield. Defaults to
     `false`.
 - `contexts` - Set this to an array of strings representing the AST context
-    where you wish the rule to be applied.
+    (or an object with `context` and `comment` properties) where you wish
+    the rule to be applied.
     Overrides the default contexts (see below). Set to `"any"` if you want
     the rule to apply to any jsdoc block throughout your files (as is necessary
     for finding function blocks not attached to a function declaration or

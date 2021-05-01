@@ -15,6 +15,8 @@ import matchDescription from './rules/matchDescription';
 import newlineAfterDescription from './rules/newlineAfterDescription';
 import noBadBlocks from './rules/noBadBlocks';
 import noDefaults from './rules/noDefaults';
+import noMissingSyntax from './rules/noMissingSyntax';
+import noRestrictedSyntax from './rules/noRestrictedSyntax';
 import noTypes from './rules/noTypes';
 import noUndefinedTypes from './rules/noUndefinedTypes';
 import requireDescription from './rules/requireDescription';
@@ -62,6 +64,8 @@ export default {
         'jsdoc/newline-after-description': 'warn',
         'jsdoc/no-bad-blocks': 'off',
         'jsdoc/no-defaults': 'off',
+        'jsdoc/no-missing-syntax': 'off',
+        'jsdoc/no-restricted-syntax': 'off',
         'jsdoc/no-types': 'off',
         'jsdoc/no-undefined-types': 'warn',
         'jsdoc/require-description': 'off',
@@ -107,6 +111,8 @@ export default {
     'newline-after-description': newlineAfterDescription,
     'no-bad-blocks': noBadBlocks,
     'no-defaults': noDefaults,
+    'no-missing-syntax': noMissingSyntax,
+    'no-restricted-syntax': noRestrictedSyntax,
     'no-types': noTypes,
     'no-undefined-types': noUndefinedTypes,
     'require-description': requireDescription,

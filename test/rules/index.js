@@ -24,6 +24,8 @@ const ruleTester = new RuleTester();
   'newline-after-description',
   'no-bad-blocks',
   'no-defaults',
+  'no-missing-syntax',
+  'no-restricted-syntax',
   'no-types',
   'no-undefined-types',
   'require-description',
