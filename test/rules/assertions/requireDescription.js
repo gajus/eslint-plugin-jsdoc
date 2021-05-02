@@ -519,7 +519,6 @@ export default {
     {
       code: `
           /**
-           * @class
            * @implements {Bar}
            */
           class quux {
@@ -535,14 +534,83 @@ export default {
         {
           contexts: [
             {
-              // comment: 'JSDocBlock[whitespace=/\\s{4}/] > JSDocTag[name="class"]',
-              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTag)',
+              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTag[rawType="Bar"])',
               context: 'ClassDeclaration',
             },
           ],
           descriptionStyle: 'tag',
         },
       ],
+      settings: {
+        jsdoc: {
+          implementsReplacesDocs: false,
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * Has some
+           *   description already.
+           * @implements {Bar}
+           */
+          class quux {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTag[rawType="Bar"])',
+              context: 'ClassDeclaration',
+            },
+          ],
+          descriptionStyle: 'tag',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          implementsReplacesDocs: false,
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @implements {Bar
+           *   | Foo}
+           */
+          class quux {
+
+          }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @description declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])',
+              context: 'ClassDeclaration',
+            },
+          ],
+          descriptionStyle: 'tag',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          implementsReplacesDocs: false,
+        },
+      },
     },
   ],
   valid: [
@@ -888,6 +956,54 @@ export default {
       `,
       options: [
         {
+          descriptionStyle: 'tag',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @implements {Bar}
+           */
+          class quux {
+
+          }
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JSDocBlock[postDelimiter=/\\s{4}/]:has(JSDocTag[rawType="class"])',
+              context: 'ClassDeclaration',
+            },
+          ],
+          descriptionStyle: 'tag',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          implementsReplacesDocs: false,
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * Has some
+           *   description already.
+           */
+          class quux {
+
+          }
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTag[rawType="{Bar}"])',
+              context: 'ClassDeclaration',
+            },
+          ],
           descriptionStyle: 'tag',
         },
       ],
