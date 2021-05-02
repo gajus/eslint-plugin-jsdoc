@@ -196,7 +196,7 @@ export default {
       publicOnly, exemptEmptyFunctions, exemptEmptyConstructors, enableFixer,
     } = getOptions(context);
 
-    const checkJsDoc = (isFunctionContext, handler, node) => {
+    const checkJsDoc = (info, handler, node) => {
       const jsDocNode = getJSDocComment(sourceCode, node, settings);
 
       if (jsDocNode) {
@@ -214,7 +214,7 @@ export default {
       if (
         // Avoid reporting param-less, return-less functions (when
         //  `exemptEmptyFunctions` option is set)
-        exemptEmptyFunctions && isFunctionContext ||
+        exemptEmptyFunctions && info.isFunctionContext ||
 
         // Avoid reporting  param-less, return-less constructor methods (when
         //  `exemptEmptyConstructors` option is set)
@@ -304,7 +304,7 @@ export default {
           ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
           ['Property', 'ObjectProperty', 'ClassProperty'].includes(node.parent.type) && node === node.parent.value
         ) {
-          checkJsDoc(true, null, node);
+          checkJsDoc({isFunctionContext: true}, null, node);
         }
       },
 
@@ -313,7 +313,7 @@ export default {
           return;
         }
 
-        checkJsDoc(false, null, node);
+        checkJsDoc({isFunctionContext: false}, null, node);
       },
 
       ClassExpression (node) {
@@ -321,7 +321,7 @@ export default {
           return;
         }
 
-        checkJsDoc(false, null, node);
+        checkJsDoc({isFunctionContext: false}, null, node);
       },
 
       FunctionDeclaration (node) {
@@ -329,12 +329,12 @@ export default {
           return;
         }
 
-        checkJsDoc(true, null, node);
+        checkJsDoc({isFunctionContext: true}, null, node);
       },
 
       FunctionExpression (node) {
         if (hasOption('MethodDefinition') && node.parent.type === 'MethodDefinition') {
-          checkJsDoc(true, null, node);
+          checkJsDoc({isFunctionContext: true}, null, node);
 
           return;
         }
@@ -347,7 +347,7 @@ export default {
           ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
           ['Property', 'ObjectProperty', 'ClassProperty'].includes(node.parent.type) && node === node.parent.value
         ) {
-          checkJsDoc(true, null, node);
+          checkJsDoc({isFunctionContext: true}, null, node);
         }
       },
     };

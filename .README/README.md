@@ -469,23 +469,28 @@ properties:
 
 1. For `require-jsdoc`, there is also a `inlineCommentBlock` property. See
     that rule for details.
-2. For other rules, there is a `comment` property which adds to the `context`
+1. For `no-missing-syntax` and `no-restricted-syntax`, there is also a
+    `message` property which allows customization of the message to be shown
+    when the rule is triggered.
+1. For `no-missing-syntax`, there is also a `minimum` property. See that rule.
+1. For other rules, there is a `comment` property which adds to the `context`
     in requiring that the `comment` AST condition is also met, e.g., to
     require that certain tags are present and/or or types and type operators
-    are in use. Note that this AST has not been standardized and should be
-    considered experimental. <!-- Make reference to https://github.com/brettz9/jsdoc-eslint-parser/ when stable: One may also use a full-blown parser which supports
-    comment AST as a first class citizen usable anywhere within a normal AST,
-    but this is also experimental. When using this parser, you need not use
-    `comment` and can just use a plain string context. -->
-    In addition to being generally useful for precision in specifying contexts,
-    it is hoped that the ability to specify required tags on structures can
-    be used for requiring `@type` or other types for a minimalist yet adequate
-    specification of types which can be used to compile JavaScript+JSDoc (JJ)
-    to WebAssembly (e.g., by converting it to TypeSscript and then using
-    AssemblyScript to convert to WebAssembly). (It may be possible that one
-    will need to require types with certain structures beyond function
-    declarations and the like, as well as optionally requiring specification
-    of number types.)
+    are in use. Note that this AST (either for `JSDoc*` or `JSDocType*` AST)
+    has not been standardized and should be considered experimental.
+    Note that this property might also become obsolete if parsers begin to
+    include JSDoc-structured AST. Work has begun on [such a parser](https://github.com/brettz9/jsdoc-eslint-parser/) which is intended to support comment AST as
+    a first class citizen where comment/comment types can be used anywhere
+    within a normal AST selector but this is also experimental. When using
+    such a parser, you need not use `comment` and can just use a plain
+    string context. The determination of the node on which the comment is
+    attached is also subject to change. It may be currently possible for
+    different structures to map to the same comment block. This is because
+    normally when querying to find either the declaration of the function
+    expression for `const quux = function () {}`, the associated comment would,
+    in both cases, generally be expected to be on the line above both, rather
+    than to be immediately preceding the funciton (in the case of the
+    function).
 
 #### Discovering available AST definitions
 
@@ -545,7 +550,7 @@ selector).
 {"gitdown": "include", "file": "./rules/newline-after-description.md"}
 {"gitdown": "include", "file": "./rules/no-bad-blocks.md"}
 {"gitdown": "include", "file": "./rules/no-defaults.md"}
-{"gitdown": "include", "file": "./rules/no-missing-syntax"}
+{"gitdown": "include", "file": "./rules/no-missing-syntax.md"}
 {"gitdown": "include", "file": "./rules/no-restricted-syntax.md"}
 {"gitdown": "include", "file": "./rules/no-types.md"}
 {"gitdown": "include", "file": "./rules/no-undefined-types.md"}

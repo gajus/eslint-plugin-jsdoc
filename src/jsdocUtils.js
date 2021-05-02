@@ -1091,15 +1091,24 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
 
   contexts.forEach((prop) => {
     if (typeof prop === 'object') {
+      const selInfo = {
+        selector: prop.context,
+      };
       if (prop.comment) {
         properties[prop.context] = checkJsdoc.bind(
-          null, null, handler.bind(null, prop.comment),
+          null, {
+            ...selInfo,
+            comment: prop.comment,
+          }, handler.bind(null, prop.comment),
         );
       } else {
-        properties[prop.context] = checkJsdoc.bind(null, null, null);
+        properties[prop.context] = checkJsdoc.bind(null, selInfo, null);
       }
     } else {
-      properties[prop] = checkJsdoc.bind(null, null, null);
+      const selInfo = {
+        selector: prop,
+      };
+      properties[prop] = checkJsdoc.bind(null, selInfo, null);
     }
   });
 
