@@ -2,7 +2,8 @@
 
 Reports when certain comment structures are present.
 
-Note that this rule differs from ESLint's [no-restricted-syntax](https://eslint.org/docs/rules/no-restricted-syntax) rule in expecting values within a single options object's
+Note that this rule differs from ESLint's [no-restricted-syntax](https://eslint.org/docs/rules/no-restricted-syntax)
+rule in expecting values within a single options object's
 `contexts` property, and with the property `context` being used in place of
 `selector` (as well as allowing for `comment`). The format also differs from
 the format expected by [`eslint-plugin-query`](https://github.com/brettz9/eslint-plugin-query).

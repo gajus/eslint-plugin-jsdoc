@@ -553,15 +553,18 @@ properties:
     are in use. Note that this AST (either for `JSDoc*` or `JSDocType*` AST)
     has not been standardized and should be considered experimental.
     Note that this property might also become obsolete if parsers begin to
-    include JSDoc-structured AST. Work has begun on [such a parser](https://github.com/brettz9/jsdoc-eslint-parser/) which is intended to support comment AST as
+    include JSDoc-structured AST. A
+    [parser](https://github.com/brettz9/jsdoc-eslint-parser/) is available
+    which aims to support comment AST as
     a first class citizen where comment/comment types can be used anywhere
-    within a normal AST selector but this is also experimental. When using
-    such a parser, you need not use `comment` and can just use a plain
-    string context. The determination of the node on which the comment is
-    attached is also subject to change. It may be currently possible for
-    different structures to map to the same comment block. This is because
-    normally when querying to find either the declaration of the function
-    expression for `const quux = function () {}`, the associated comment would,
+    within a normal AST selector but this should only be considered
+    experimental. When using such a parser, you need not use `comment` and
+    can just use a plain string context. The determination of the node on
+    which the comment is attached is also subject to change. It may be
+    currently possible for different structures to map to the same comment
+    block. This is because normally when querying to find either the
+    declaration of the function expression for
+    `const quux = function () {}`, the associated comment would,
     in both cases, generally be expected to be on the line above both, rather
     than to be immediately preceding the funciton (in the case of the
     function).
@@ -7442,13 +7445,83 @@ section of our README for more on the expected format.
 The following patterns are considered problems:
 
 ````js
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
 
+}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration"}]}]
+// Message: Syntax is required: FunctionDeclaration
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration","message":"Problematic function syntax: `{{context}}`."}]}]
+// Message: Problematic function syntax: `FunctionDeclaration`.
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":["FunctionDeclaration"]}]
+// Message: Syntax is required: FunctionDeclaration
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// Message: Rule `no-restricted-syntax` is missing a `context` option.
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration","minimum":2}]}]
+// Message: Syntax is required: FunctionDeclaration
 ````
 
 The following patterns are not considered problems:
 
 ````js
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
 
+}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration"}]}]
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+
+/**
+ * @implements {Bar|Foo}
+ */
+function bar () {
+
+}
+
+/**
+ * @implements {Bar|Foo}
+ */
+function baz () {
+
+}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration","minimum":2}]}]
 ````
 
 
@@ -7457,7 +7530,8 @@ The following patterns are not considered problems:
 
 Reports when certain comment structures are present.
 
-Note that this rule differs from ESLint's [no-restricted-syntax](https://eslint.org/docs/rules/no-restricted-syntax) rule in expecting values within a single options object's
+Note that this rule differs from ESLint's [no-restricted-syntax](https://eslint.org/docs/rules/no-restricted-syntax)
+rule in expecting values within a single options object's
 `contexts` property, and with the property `context` being used in place of
 `selector` (as well as allowing for `comment`). The format also differs from
 the format expected by [`eslint-plugin-query`](https://github.com/brettz9/eslint-plugin-query).
@@ -7498,13 +7572,69 @@ section of our README for more on the expected format.
 The following patterns are considered problems:
 
 ````js
+/**
+ *
+ */
+function quux () {
 
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":["FunctionDeclaration"]}]
+// Message: Syntax is restricted: FunctionDeclaration.
+
+/**
+ *
+ */
+function quux () {
+
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"context":"FunctionDeclaration","message":"Oops: `{{context}}`."}]}]
+// Message: Oops: `FunctionDeclaration`.
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration"}]}]
+// Message: Syntax is restricted: FunctionDeclaration.
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration","message":"The foo one: {{context}}."},{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration","message":"The bar one: {{context}}."}]}]
+// Message: The bar one: FunctionDeclaration.
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// Message: Rule `no-restricted-syntax` is missing a `context` option.
 ````
 
 The following patterns are not considered problems:
 
 ````js
+/**
+ *
+ */
+function quux () {
 
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":["FunctionExpression"]}]
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration"}]}]
 ````
 
 
@@ -9218,13 +9348,36 @@ class Foo {
 // Message: Missing JSDoc block description.
 
 /**
- * @class
  * @implements {Bar}
  */
 class quux {
 
 }
-// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTag)","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+// Settings: {"jsdoc":{"implementsReplacesDocs":false}}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTag[rawType=\"Bar\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+// Message: Missing JSDoc @description declaration.
+
+/**
+ * Has some
+ *   description already.
+ * @implements {Bar}
+ */
+class quux {
+
+}
+// Settings: {"jsdoc":{"implementsReplacesDocs":false}}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTag[rawType=\"Bar\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+// Message: Missing JSDoc @description declaration.
+
+/**
+ * @implements {Bar
+ *   | Foo}
+ */
+class quux {
+
+}
+// Settings: {"jsdoc":{"implementsReplacesDocs":false}}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 ````
 
@@ -9423,6 +9576,24 @@ function quux () {
 
 }
 // "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
+
+/**
+ * @implements {Bar}
+ */
+class quux {
+
+}
+// Settings: {"jsdoc":{"implementsReplacesDocs":false}}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=/\\s{4}/]:has(JSDocTag[rawType=\"class\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+
+/**
+ * Has some
+ *   description already.
+ */
+class quux {
+
+}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTag[rawType=\"{Bar}\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
 ````
 
 
