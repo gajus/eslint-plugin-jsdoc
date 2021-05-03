@@ -479,15 +479,18 @@ properties:
     are in use. Note that this AST (either for `JSDoc*` or `JSDocType*` AST)
     has not been standardized and should be considered experimental.
     Note that this property might also become obsolete if parsers begin to
-    include JSDoc-structured AST. Work has begun on [such a parser](https://github.com/brettz9/jsdoc-eslint-parser/) which is intended to support comment AST as
+    include JSDoc-structured AST. A
+    [parser](https://github.com/brettz9/jsdoc-eslint-parser/) is available
+    which aims to support comment AST as
     a first class citizen where comment/comment types can be used anywhere
-    within a normal AST selector but this is also experimental. When using
-    such a parser, you need not use `comment` and can just use a plain
-    string context. The determination of the node on which the comment is
-    attached is also subject to change. It may be currently possible for
-    different structures to map to the same comment block. This is because
-    normally when querying to find either the declaration of the function
-    expression for `const quux = function () {}`, the associated comment would,
+    within a normal AST selector but this should only be considered
+    experimental. When using such a parser, you need not use `comment` and
+    can just use a plain string context. The determination of the node on
+    which the comment is attached is also subject to change. It may be
+    currently possible for different structures to map to the same comment
+    block. This is because normally when querying to find either the
+    declaration of the function expression for
+    `const quux = function () {}`, the associated comment would,
     in both cases, generally be expected to be on the line above both, rather
     than to be immediately preceding the funciton (in the case of the
     function).
