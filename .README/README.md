@@ -493,7 +493,8 @@ properties:
     `const quux = function () {}`, the associated comment would,
     in both cases, generally be expected to be on the line above both, rather
     than to be immediately preceding the funciton (in the case of the
-    function).
+    function). See [@es-joy/jsdoccomment](https://github.com/es-joy/jsdoccomment)
+    for the precise structure of the comment (and comment type) nodes.
 
 #### Discovering available AST definitions
 
