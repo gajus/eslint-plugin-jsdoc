@@ -28,6 +28,130 @@ export default {
     },
     {
       code: `
+
+        /**
+         @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected JSDoc line to have the prefix.',
+        },
+      ],
+      options: ['always', {
+        tags: {
+          any: ['someOtherTag'],
+        },
+      }],
+      output: `
+
+        /**
+         * @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
+
+        /**
+         * @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected JSDoc line to have no prefix.',
+        },
+      ],
+      options: ['never', {
+        tags: {
+          always: ['someOtherTag'],
+        },
+      }],
+      output: `
+
+        /**
+         @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
+
+        /**
+         * @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected JSDoc line to have no prefix.',
+        },
+      ],
+      options: ['always', {
+        tags: {
+          never: ['param'],
+        },
+      }],
+      output: `
+
+        /**
+         @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
+
+        /**
+         @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected JSDoc line to have the prefix.',
+        },
+      ],
+      options: ['never', {
+        tags: {
+          always: ['param'],
+        },
+      }],
+      output: `
+
+        /**
+         * @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
         /**
           @param {Number} foo
          */function quux (foo) {
@@ -136,6 +260,94 @@ export default {
          */
         function quux (foo) {}
       `,
+    },
+    {
+      code: `
+        /** @param {Number} foo */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
+
+        /**
+         @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      options: ['always', {
+        tags: {
+          any: ['param'],
+        },
+      }],
+    },
+    {
+      code: `
+
+        /**
+         * @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      options: ['never', {
+        tags: {
+          always: ['param'],
+        },
+      }],
+    },
+    {
+      code: `
+
+        /**
+         * @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      options: ['always', {
+        tags: {
+          never: ['someOtherTag'],
+        },
+      }],
+    },
+    {
+      code: `
+
+        /**
+         @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      options: ['always', {
+        tags: {
+          never: ['param'],
+        },
+      }],
+    },
+    {
+      code: `
+
+        /**
+         @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      options: ['never', {
+        tags: {
+          always: ['someOtherTag'],
+        },
+      }],
     },
   ],
 };

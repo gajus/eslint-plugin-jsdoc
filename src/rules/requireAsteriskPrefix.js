@@ -5,60 +5,88 @@ export default iterateJsdoc(({
   jsdoc,
   utils,
 }) => {
-  // Todo: `tags` option
-  /*
-  const {
-    tags: tagMap,
-  } = context.options[1] || {};
-  */
+  const [defaultRequireValue = 'always', {
+    tags: tagMap = {},
+  } = {}] = context.options;
 
   const {source} = jsdoc;
 
-  if (context.options[0] === 'never') {
-    source.some(({number, tokens}) => {
-      const {delimiter, tag} = tokens;
-      if (!tag) {
-        // Todo: Reinvestigate upon trying to clean-up non-tag description
-        return false;
-      }
-      if (delimiter) {
-        const fix = () => {
-          tokens.delimiter = '';
-          tokens.postDelimiter = '';
-        };
+  const always = defaultRequireValue === 'always';
+  const never = defaultRequireValue === 'never';
 
-        utils.reportJSDoc('Expected JSDoc line to have no prefix.', {
-          column: 0,
-          line: number,
-        }, fix);
-
-        return true;
-      }
-
-      return false;
-    });
-
-    return;
-  }
-
+  let currentTag;
   source.some(({number, tokens}) => {
-    const {delimiter, tag} = tokens;
-    if (!tag) {
-      // Todo: Reinvestigate upon trying to clean-up non-tag description
-      return false;
-    }
-    if (!delimiter) {
-      const fix = () => {
-        tokens.delimiter = '*';
-        tokens.postDelimiter = ' ';
-      };
+    const {delimiter, tag, end} = tokens;
 
+    const neverFix = () => {
+      tokens.delimiter = '';
+      tokens.postDelimiter = '';
+    };
+    const checkNever = () => {
+      utils.reportJSDoc('Expected JSDoc line to have no prefix.', {
+        column: 0,
+        line: number,
+      }, neverFix);
+
+      return true;
+    };
+
+    const alwaysFix = () => {
+      tokens.delimiter = '*';
+      tokens.postDelimiter = ' ';
+    };
+    const checkAlways = () => {
       utils.reportJSDoc('Expected JSDoc line to have the prefix.', {
         column: 0,
         line: number,
-      }, fix);
+      }, alwaysFix);
 
       return true;
+    };
+
+    if (tag) {
+      // Remove at sign
+      currentTag = tag.slice(1);
+    }
+
+    if (
+      // If this is the end but has a tag, the delimiter will also be
+      //  populated and will be safely ignored later
+      end && !tag
+    ) {
+      return false;
+    }
+
+    if (!currentTag) {
+      if (tagMap.any?.includes('*description')) {
+        return false;
+      }
+      if (delimiter && tagMap.never?.includes('*description')) {
+        return checkNever();
+      }
+      if (!delimiter && tagMap.always?.includes('*description')) {
+        return checkAlways();
+      }
+
+      return false;
+    }
+
+    if (tagMap.any?.includes(currentTag)) {
+      return false;
+    }
+
+    if (delimiter && (
+      never && !tagMap.always?.includes(currentTag) ||
+      tagMap.never?.includes(currentTag)
+    )) {
+      return checkNever();
+    }
+
+    if (!delimiter && (
+      always && !tagMap.never?.includes(currentTag) ||
+      tagMap.always?.includes(currentTag))
+    ) {
+      return checkAlways();
     }
 
     return false;
