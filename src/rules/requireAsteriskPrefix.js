@@ -4,6 +4,7 @@ export default iterateJsdoc(({
   context,
   jsdoc,
   utils,
+  indent,
 }) => {
   const [defaultRequireValue = 'always', {
     tags: tagMap = {},
@@ -16,32 +17,51 @@ export default iterateJsdoc(({
 
   let currentTag;
   source.some(({number, tokens}) => {
-    const {delimiter, tag, end} = tokens;
+    const {delimiter, tag, end, description} = tokens;
 
     const neverFix = () => {
       tokens.delimiter = '';
       tokens.postDelimiter = '';
     };
-    const checkNever = () => {
-      utils.reportJSDoc('Expected JSDoc line to have no prefix.', {
-        column: 0,
-        line: number,
-      }, neverFix);
+    const checkNever = (checkValue) => {
+      if (delimiter && delimiter !== '/**' && (
+        never && !tagMap.always?.includes(checkValue) ||
+        tagMap.never?.includes(checkValue)
+      )) {
+        utils.reportJSDoc('Expected JSDoc line to have no prefix.', {
+          column: 0,
+          line: number,
+        }, neverFix);
 
-      return true;
+        return true;
+      }
+
+      return false;
     };
 
     const alwaysFix = () => {
+      if (!tokens.start) {
+        tokens.start = indent + ' ';
+      }
       tokens.delimiter = '*';
-      tokens.postDelimiter = ' ';
+      tokens.postDelimiter = tag || description ? ' ' : '';
     };
-    const checkAlways = () => {
-      utils.reportJSDoc('Expected JSDoc line to have the prefix.', {
-        column: 0,
-        line: number,
-      }, alwaysFix);
+    const checkAlways = (checkValue) => {
+      if (
+        !delimiter && (
+          always && !tagMap.never?.includes(checkValue) ||
+          tagMap.always?.includes(checkValue)
+        )
+      ) {
+        utils.reportJSDoc('Expected JSDoc line to have the prefix.', {
+          column: 0,
+          line: number,
+        }, alwaysFix);
 
-      return true;
+        return true;
+      }
+
+      return false;
     };
 
     if (tag) {
@@ -61,11 +81,11 @@ export default iterateJsdoc(({
       if (tagMap.any?.includes('*description')) {
         return false;
       }
-      if (delimiter && tagMap.never?.includes('*description')) {
-        return checkNever();
+      if (checkNever('*description')) {
+        return true;
       }
-      if (!delimiter && tagMap.always?.includes('*description')) {
-        return checkAlways();
+      if (checkAlways('*description')) {
+        return true;
       }
 
       return false;
@@ -75,18 +95,12 @@ export default iterateJsdoc(({
       return false;
     }
 
-    if (delimiter && (
-      never && !tagMap.always?.includes(currentTag) ||
-      tagMap.never?.includes(currentTag)
-    )) {
-      return checkNever();
+    if (checkNever(currentTag)) {
+      return true;
     }
 
-    if (!delimiter && (
-      always && !tagMap.never?.includes(currentTag) ||
-      tagMap.always?.includes(currentTag))
-    ) {
-      return checkAlways();
+    if (checkAlways(currentTag)) {
+      return true;
     }
 
     return false;

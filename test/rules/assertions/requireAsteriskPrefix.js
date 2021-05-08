@@ -30,6 +30,91 @@ export default {
       code: `
 
         /**
+         * Desc
+
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Expected JSDoc line to have the prefix.',
+        },
+      ],
+      output: `
+
+        /**
+         * Desc
+         *
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
+
+        /**
+         *
+         Desc
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Expected JSDoc line to have the prefix.',
+        },
+      ],
+      output: `
+
+        /**
+         *
+         * Desc
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
+
+        /**
+         * Desc
+         *
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected JSDoc line to have no prefix.',
+        },
+      ],
+      options: ['never'],
+      output: `
+
+        /**
+         Desc
+         *
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
+
+        /**
          @param {Number} foo
          */
         function quux (foo) {
@@ -346,6 +431,40 @@ export default {
       options: ['never', {
         tags: {
           always: ['someOtherTag'],
+        },
+      }],
+    },
+    {
+      code: `
+
+        /**
+         * Desc
+         *
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      options: ['never', {
+        tags: {
+          any: ['*description'],
+        },
+      }],
+    },
+    {
+      code: `
+
+        /**
+         * Desc
+
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      options: ['always', {
+        tags: {
+          any: ['*description'],
         },
       }],
     },
