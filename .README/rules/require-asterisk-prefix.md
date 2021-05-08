@@ -23,6 +23,7 @@ which applies to the main jsdoc block description.
 {
   'jsdoc/require-asterisk-prefix': ['error', 'always', {
     tags: {
+      always: ['*description'],
       any: ['example', 'license'],
       never: ['copyright']
     }
