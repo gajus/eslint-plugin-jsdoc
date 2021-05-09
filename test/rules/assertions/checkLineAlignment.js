@@ -1080,7 +1080,7 @@ export default {
         /**
          * My object.
          *
-         * @template                             T,U,V
+         * @template                             T
          * @template                             W,X,Y,Z
          * @template {string}                    K               - K must be a string or string literal
          * @template {{ serious(): string }}     Seriousalizable - must have a serious method
