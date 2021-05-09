@@ -34,7 +34,7 @@ which applies to the main jsdoc block description.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|N/A (doc block)|
+|Tags|All or as limited by the `tags` option|
 |Options|(a string matching `"always"|"never"` and optional object with `tags`)|
 
 <!-- assertions requireAsteriskPrefix -->
