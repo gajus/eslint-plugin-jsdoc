@@ -1077,6 +1077,23 @@ export default {
     },
     {
       code: `
+        /**
+         * My object.
+         *
+         * @template                             T,U,V
+         * @template                             W,X,Y,Z
+         * @template {string}                    K               - K must be a string or string literal
+         * @template {{ serious(): string }}     Seriousalizable - must have a serious method
+         *
+         * @param    {{a: number, b: string, c}} lorem           Description.
+         */
+      `,
+      options: ['always', {
+        tags: ['template', 'param'],
+      }],
+    },
+    {
+      code: `
         /** @param {number} lorem */
         const fn = ( lorem ) => {}
       `,
