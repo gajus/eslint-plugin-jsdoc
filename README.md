@@ -8414,6 +8414,218 @@ which applies to the main jsdoc block description.
 |Tags|N/A (doc block)|
 |Options|(a string matching `"always"|"never"` and optional object with `tags`)|
 
+The following patterns are considered problems:
+
+````js
+
+/**
+ @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// Message: Expected JSDoc line to have the prefix.
+
+
+/**
+ * Desc
+
+ */
+function quux (foo) {
+  // with spaces
+}
+// Message: Expected JSDoc line to have the prefix.
+
+
+/**
+ *
+ Desc
+ */
+function quux (foo) {
+  // with spaces
+}
+// Message: Expected JSDoc line to have the prefix.
+
+
+/**
+ * Desc
+ *
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "never"]
+// Message: Expected JSDoc line to have no prefix.
+
+
+/**
+ @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "always",{"tags":{"any":["someOtherTag"]}}]
+// Message: Expected JSDoc line to have the prefix.
+
+
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "never",{"tags":{"always":["someOtherTag"]}}]
+// Message: Expected JSDoc line to have no prefix.
+
+
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "always",{"tags":{"never":["param"]}}]
+// Message: Expected JSDoc line to have no prefix.
+
+
+/**
+ @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "never",{"tags":{"always":["param"]}}]
+// Message: Expected JSDoc line to have the prefix.
+
+/**
+  @param {Number} foo
+ */function quux (foo) {
+  // with spaces
+}
+// Message: Expected JSDoc line to have the prefix.
+
+
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "never"]
+// Message: Expected JSDoc line to have no prefix.
+
+/**
+  *@param {Number} foo
+ */function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "never"]
+// Message: Expected JSDoc line to have no prefix.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * Desc
+ *
+ * @param {Number} foo
+ *   This is more comment.
+ */
+function quux (foo) {
+
+}
+
+/**
+ * Desc
+ *
+ * @param {{
+ * foo: Bar,
+ * bar: Baz
+ * }} foo
+ *
+ */
+function quux (foo) {
+
+}
+
+/*  <- JSDoc must start with 2 stars.
+ So this is unchecked.
+ */
+function quux (foo) {}
+
+/** @param {Number} foo */
+function quux (foo) {
+  // with spaces
+}
+
+
+/**
+ @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "always",{"tags":{"any":["param"]}}]
+
+
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "never",{"tags":{"always":["param"]}}]
+
+
+/**
+ * @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "always",{"tags":{"never":["someOtherTag"]}}]
+
+
+/**
+ @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "always",{"tags":{"never":["param"]}}]
+
+
+/**
+ @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "never",{"tags":{"always":["someOtherTag"]}}]
+
+
+/**
+ * Desc
+ *
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "never",{"tags":{"any":["*description"]}}]
+
+
+/**
+ * Desc
+
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "always",{"tags":{"any":["*description"]}}]
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence"></a>
 ### <code>require-description-complete-sentence</code>
 
