@@ -8428,6 +8428,16 @@ function quux (foo) {
 
 
 /**
+ @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "any",{"tags":{"always":["param"]}}]
+// Message: Expected JSDoc line to have the prefix.
+
+
+/**
  * Desc
 
  */
@@ -8623,6 +8633,15 @@ function quux (foo) {
   // with spaces
 }
 // "jsdoc/require-asterisk-prefix": ["error"|"warn", "always",{"tags":{"any":["*description"]}}]
+
+
+/**
+ @param {Number} foo
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/require-asterisk-prefix": ["error"|"warn", "any",{"tags":{"always":["someOtherTag"]}}]
 ````
 
 

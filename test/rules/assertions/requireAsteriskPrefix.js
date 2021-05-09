@@ -30,6 +30,39 @@ export default {
       code: `
 
         /**
+         @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected JSDoc line to have the prefix.',
+        },
+      ],
+      options: [
+        'any', {
+          tags: {
+            always: ['param'],
+          },
+        },
+      ],
+      output: `
+
+        /**
+         * @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
+
+        /**
          * Desc
 
          */
@@ -467,6 +500,24 @@ export default {
           any: ['*description'],
         },
       }],
+    },
+    {
+      code: `
+
+        /**
+         @param {Number} foo
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      options: [
+        'any', {
+          tags: {
+            always: ['someOtherTag'],
+          },
+        },
+      ],
     },
   ],
 };
