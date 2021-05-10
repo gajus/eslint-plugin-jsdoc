@@ -29,37 +29,6 @@ export default {
         const fn = ( lorem, sit ) => {}
       `,
     },
-    /* eslint-disable no-tabs */
-    {
-      code: `
-				/**
-				 * With tabs.
-				 *
-				 * @param {string} lorem Description.
-				 * @param {int} sit Description multi words.
-				 */
-        const fn = ( lorem, sit ) => {}
-      `,
-      errors: [
-        {
-          message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
-        },
-      ],
-      options: [
-        'always',
-      ],
-      output: `
-				/**
-				 * With tabs.
-				 *
-				 * @param {string} lorem Description.
-				 * @param {int}    sit   Description multi words.
-				 */
-        const fn = ( lorem, sit ) => {}
-      `,
-    },
-    /* eslint-enable no-tabs */
     {
       code: `
         /**
@@ -354,8 +323,8 @@ export default {
       output: `
         /**
          * @namespace
-         * @property {object} defaults       Description.
-         * @property {int}    defaults.lorem Description multi words.
+         * @property  {object} defaults       Description.
+         * @property  {int}    defaults.lorem Description multi words.
          */
         const config = {
             defaults: {
@@ -388,10 +357,10 @@ export default {
         /**
          * My object.
          *
-         * @typedef {Object} MyObject
+         * @typedef  {Object} MyObject
          *
-         * @property {string} lorem Description.
-         * @property {int}    sit   Description multi words.
+         * @property {string} lorem    Description.
+         * @property {int}    sit      Description multi words.
          */
       `,
     },
@@ -417,41 +386,6 @@ export default {
       options: [
         'always',
       ],
-      output: `
-        /**
-         * My object.
-         *
-         * @typedef {Object} MyObject
-         *
-         * @property {{a: number, b: string, c}} lorem Description.
-         * @property {Object.<string, Class>}    sit   Description multi words.
-         * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
-         * @property {Object.<string, Class>}    dolor
-         */
-      `,
-    },
-    {
-      code: `
-        /**
-         * My object.
-         *
-         * @typedef {Object} MyObject
-         *
-         * @property {{a: number, b: string, c}} lorem Description.
-         * @property {Object.<string, Class>} sit Description multi words.
-         * @property {Object.<string, Class>} amet Description} weird {multi} {{words}}.
-         * @property {Object.<string, Class>} dolor
-         */
-      `,
-      errors: [
-        {
-          message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
-        },
-      ],
-      options: ['always', {
-        tags: ['typedef', 'property'],
-      }],
       output: `
         /**
          * My object.
@@ -578,97 +512,6 @@ export default {
          *
          * @param {string} lorem Description.
          * @param {int} sit
-         */
-        const fn = ( lorem, sit ) => {}
-      `,
-    },
-    {
-      code: `
-        /**
-         * Function description.
-         *
-         * @param {string} lorem Description.
-         * @param {int} sit Description multi
-           line without *.
-         */
-        const fn = ( lorem, sit ) => {}
-      `,
-      errors: [
-        {
-          message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
-        },
-      ],
-      options: [
-        'always',
-      ],
-      output: `
-        /**
-         * Function description.
-         *
-         * @param {string} lorem Description.
-         * @param {int}    sit   Description multi
-                                 line without *.
-         */
-        const fn = ( lorem, sit ) => {}
-      `,
-    },
-    {
-      code: `
-        /**
-         * My function.
-         *
-         * @param {string} lorem Description.
-         * @param   {int}    sit
-         *
-         * @return  {string}  Return description
-         *    with multi line, but don't touch.
-         */
-        const fn = ( lorem, sit ) => {}
-      `,
-      errors: [
-        {
-          message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
-        },
-      ],
-      options: ['always', {
-        tags: ['param'],
-      }],
-      output: `
-        /**
-         * My function.
-         *
-         * @param {string} lorem Description.
-         * @param {int}    sit
-         *
-         * @return  {string}  Return description
-         *    with multi line, but don't touch.
-         */
-        const fn = ( lorem, sit ) => {}
-      `,
-    },
-    {
-      code: `
-        /**
-         * Only return doc.
-         *
-         * @return {boolean}  Return description.
-         */
-        const fn = ( lorem, sit ) => {}
-      `,
-      errors: [
-        {
-          message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
-        },
-      ],
-      options: ['always'],
-      output: `
-        /**
-         * Only return doc.
-         *
-         * @return {boolean} Return description.
          */
         const fn = ( lorem, sit ) => {}
       `,
@@ -876,22 +719,6 @@ export default {
         'always',
       ],
     },
-    /* eslint-disable no-tabs */
-    {
-      code: `
-				/**
-				 * With tabs.
-				 *
-				 * @param {string} lorem Description.
-				 * @param {int}    sit   Description multi words.
-				 */
-        const fn = ( lorem, sit ) => {}
-      `,
-      options: [
-        'always',
-      ],
-    },
-    /* eslint-enable no-tabs */
     {
       code: `
         /**
@@ -1013,8 +840,8 @@ export default {
       code: `
         /**
          * @namespace
-         * @property {object} defaults       Description.
-         * @property {int}    defaults.lorem Description multi words.
+         * @property  {object} defaults       Description.
+         * @property  {int}    defaults.lorem Description multi words.
          */
         const config = {
             defaults: {
@@ -1031,27 +858,10 @@ export default {
         /**
          * My object.
          *
-         * @typedef {Object} MyObject
+         * @typedef  {Object} MyObject
          *
-         * @property {string} lorem Description.
-         * @property {int}    sit   Description multi words.
-         */
-      `,
-      options: [
-        'always',
-      ],
-    },
-    {
-      code: `
-        /**
-         * My object.
-         *
-         * @typedef {Object} MyObject
-         *
-         * @property {{a: number, b: string, c}} lorem Description.
-         * @property {Object.<string, Class>}    sit   Description multi words.
-         * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
-         * @property {Object.<string, Class>}    dolor
+         * @property {string} lorem    Description.
+         * @property {int}    sit      Description multi words.
          */
       `,
       options: [
@@ -1071,26 +881,9 @@ export default {
          * @property {Object.<string, Class>}    dolor
          */
       `,
-      options: ['always', {
-        tags: ['typedef', 'property'],
-      }],
-    },
-    {
-      code: `
-        /**
-         * My object.
-         *
-         * @template                             T
-         * @template                             W,X,Y,Z
-         * @template {string}                    K               - K must be a string or string literal
-         * @template {{ serious(): string }}     Seriousalizable - must have a serious method
-         *
-         * @param    {{a: number, b: string, c}} lorem           Description.
-         */
-      `,
-      options: ['always', {
-        tags: ['template', 'param'],
-      }],
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -1108,29 +901,6 @@ export default {
        *
        * @param  {object}  options Options object for each OS.
        * @return {boolean}         True = success, false = failed to create the icon
-       */
-       function quux () {}
-      `,
-      options: ['always'],
-    },
-    {
-      code: `
-      /**
-       * Creates OS based shortcuts for files, folders, and applications.
-       *
-       * @param  {object}  options Options object for each OS.
-       * @return {boolean}
-       */
-       function quux () {}
-      `,
-      options: ['always'],
-    },
-    {
-      code: `
-      /**
-       * Only return doc.
-       *
-       * @return {boolean} Return description.
        */
        function quux () {}
       `,
