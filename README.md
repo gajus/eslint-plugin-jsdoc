@@ -1960,6 +1960,16 @@ const fn = ( lorem, sit ) => {}
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
+ * With tabs.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi words.
+ */
+    const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
  * Function description.
  *
  * @param {string} lorem - Description.
@@ -2091,6 +2101,19 @@ const config = {
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
+ * My object.
+ *
+ * @typedef {Object} MyObject
+ *
+ * @property {{a: number, b: string, c}} lorem Description.
+ * @property {Object.<string, Class>} sit Description multi words.
+ * @property {Object.<string, Class>} amet Description} weird {multi} {{words}}.
+ * @property {Object.<string, Class>} dolor
+ */
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"tags":["typedef","property"]}]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
  * My function.
  *
  * @param {string} lorem  Description.
@@ -2128,6 +2151,39 @@ const fn = ( lorem, sit ) => {}
  */
 const fn = ( lorem, sit ) => {}
 // Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi
+   line without *.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * My function.
+ *
+ * @param {string} lorem Description.
+ * @param   {int}    sit
+ *
+ * @return  {string}  Return description
+ *    with multi line, but don't touch.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"tags":["param"]}]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Only return doc.
+ *
+ * @return {boolean}  Return description.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// Message: Expected JSDoc block lines to be aligned.
 
 /**
  * Creates OS based shortcuts for files, folders, and applications.
@@ -2206,6 +2262,15 @@ const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
+ * With tabs.
+ *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description multi words.
+ */
+    const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
  * Function description.
  *
  * @param {string} lorem - Description.
@@ -2279,8 +2344,8 @@ const fn = ( lorem, sit ) => {}
 
 /**
  * @namespace
- * @property  {object} defaults       Description.
- * @property  {int}    defaults.lorem Description multi words.
+ * @property {object} defaults       Description.
+ * @property {int}    defaults.lorem Description multi words.
  */
 const config = {
     defaults: {
@@ -2292,10 +2357,22 @@ const config = {
 /**
  * My object.
  *
- * @typedef  {Object} MyObject
+ * @typedef {Object} MyObject
  *
- * @property {string} lorem    Description.
- * @property {int}    sit      Description multi words.
+ * @property {string} lorem Description.
+ * @property {int}    sit   Description multi words.
+ */
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * My object.
+ *
+ * @typedef {Object} MyObject
+ *
+ * @property {{a: number, b: string, c}} lorem Description.
+ * @property {Object.<string, Class>}    sit   Description multi words.
+ * @property {Object.<string, Class>}    amet  Description} weird {multi} {{words}}.
+ * @property {Object.<string, Class>}    dolor
  */
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
@@ -2309,7 +2386,19 @@ const config = {
  * @property {Object.<string, Class>}    amet     Description} weird {multi} {{words}}.
  * @property {Object.<string, Class>}    dolor
  */
-// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"tags":["typedef","property"]}]
+
+/**
+ * My object.
+ *
+ * @template                             T
+ * @template                             W,X,Y,Z
+ * @template {string}                    K               - K must be a string or string literal
+ * @template {{ serious(): string }}     Seriousalizable - must have a serious method
+ *
+ * @param    {{a: number, b: string, c}} lorem           Description.
+ */
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"tags":["template","param"]}]
 
 /** @param {number} lorem */
 const fn = ( lorem ) => {}
@@ -2320,6 +2409,23 @@ const fn = ( lorem ) => {}
  *
  * @param  {object}  options Options object for each OS.
  * @return {boolean}         True = success, false = failed to create the icon
+ */
+ function quux () {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Creates OS based shortcuts for files, folders, and applications.
+ *
+ * @param  {object}  options Options object for each OS.
+ * @return {boolean}
+ */
+ function quux () {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Only return doc.
+ *
+ * @return {boolean} Return description.
  */
  function quux () {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
