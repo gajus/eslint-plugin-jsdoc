@@ -141,7 +141,7 @@ const getUtils = (
 
   utils.getDescription = () => {
     const descriptions = [];
-    let lastDescriptionLine;
+    let lastDescriptionLine = 0;
     jsdoc.source.some(({tokens: {description, tag, end}}, idx) => {
       if (idx && (tag || end)) {
         lastDescriptionLine = idx - 1;
