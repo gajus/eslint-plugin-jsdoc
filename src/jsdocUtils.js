@@ -325,10 +325,7 @@ const isValidTag = (
 ) : boolean => {
   const tagNames = getTagNamesForMode(mode, context);
 
-  // Todo[engine:node@>=12]: Switch to flatten
-
-  // eslint-disable-next-line unicorn/prefer-array-flat -- Not yet supported
-  const validTagNames = Object.keys(tagNames).concat(_.flatten(Object.values(tagNames)));
+  const validTagNames = Object.keys(tagNames).concat(Object.values(tagNames).flat());
   const additionalTags = definedTags;
   const allTags = validTagNames.concat(additionalTags);
 
