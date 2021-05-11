@@ -581,4 +581,5 @@ selector).
 {"gitdown": "include", "file": "./rules/require-throws.md"}
 {"gitdown": "include", "file": "./rules/require-yields.md"}
 {"gitdown": "include", "file": "./rules/require-yields-check.md"}
+{"gitdown": "include", "file": "./rules/tag-lines.md"}
 {"gitdown": "include", "file": "./rules/valid-types.md"}
