@@ -123,7 +123,7 @@ export default iterateJsdoc(({
   if (item) {
     readme = readme.slice(0, item.offset) + readmeNewRuleLine + '\n' + readme.slice(item.offset);
   } else {
-    readme += `\n${readmeNewRuleLine}`;
+    readme += `${readmeNewRuleLine}\n`;
   }
 
   await fs.writeFile(readmePath, readme);
