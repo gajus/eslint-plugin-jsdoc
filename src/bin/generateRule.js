@@ -1,4 +1,7 @@
 /* eslint-disable no-console -- CLI */
+import {
+  existsSync,
+} from 'fs';
 import fs from 'fs/promises';
 import _ from 'lodash';
 
@@ -61,7 +64,10 @@ export default iterateJsdoc(({
   const camelCasedRuleName = _.camelCase(ruleName);
 
   const rulePath = `./src/rules/${camelCasedRuleName}.js`;
-  await fs.writeFile(rulePath, ruleTemplate);
+
+  if (!existsSync(rulePath)) {
+    await fs.writeFile(rulePath, ruleTemplate);
+  }
 
   const ruleTestTemplate = `export default {
   invalid: [
@@ -81,7 +87,9 @@ export default iterateJsdoc(({
 `;
 
   const ruleTestPath = `./test/rules/assertions/${camelCasedRuleName}.js`;
-  await fs.writeFile(ruleTestPath, ruleTestTemplate);
+  if (!existsSync(ruleTestPath)) {
+    await fs.writeFile(ruleTestPath, ruleTestTemplate);
+  }
 
   const ruleReadmeTemplate = `### \`${ruleName}\`
 
@@ -97,7 +105,9 @@ export default iterateJsdoc(({
 `;
 
   const ruleReadmePath = `./.README/rules/${ruleName}.md`;
-  await fs.writeFile(ruleReadmePath, ruleReadmeTemplate);
+  if (!existsSync(ruleReadmePath)) {
+    await fs.writeFile(ruleReadmePath, ruleReadmeTemplate);
+  }
 
   const readmePath = './.README/README.md';
 
