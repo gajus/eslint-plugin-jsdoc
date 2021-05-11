@@ -117,9 +117,18 @@ export default iterateJsdoc(({
     // eslint-disable-next-line no-extra-parens
     return oldRule < oldRuleB ? -1 : (oldRule > oldRuleB ? 1 : 0);
   });
+
+  let alreadyIncluded = false;
   const item = offsets.find(({oldRule}) => {
+    alreadyIncluded ||= ruleName === oldRule;
+
     return ruleName < oldRule;
   });
+  if (alreadyIncluded) {
+    console.log('Rule name is already present in README.');
+
+    return;
+  }
   if (item) {
     readme = readme.slice(0, item.offset) + readmeNewRuleLine + '\n' + readme.slice(item.offset);
   } else {
