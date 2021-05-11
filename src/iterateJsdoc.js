@@ -185,19 +185,35 @@ const getUtils = (
   };
 
   utils.removeTag = (tagIndex) => {
-    const {source} = jsdoc.tags[tagIndex];
+    const {source: tagSource} = jsdoc.tags[tagIndex];
     let lastIndex;
     const firstNumber = jsdoc.source[0].number;
-    source.forEach(({number}) => {
+    tagSource.some(({number}, tagIdx) => {
       const sourceIndex = jsdoc.source.findIndex(({
         number: srcNumber, tokens: {end},
       }) => {
         return number === srcNumber && !end;
       });
+      // istanbul ignore else
       if (sourceIndex > -1) {
-        jsdoc.source.splice(sourceIndex, 1);
+        let spliceCount = 1;
+        tagSource.slice(tagIdx + 1).some(({tokens: {tag, end}}) => {
+          if (!tag && !end) {
+            spliceCount++;
+
+            return false;
+          }
+
+          return true;
+        });
+        jsdoc.source.splice(sourceIndex, spliceCount);
         lastIndex = sourceIndex;
+
+        return true;
       }
+
+      // istanbul ignore next
+      return false;
     });
     jsdoc.source.slice(lastIndex).forEach((src, idx) => {
       src.number = firstNumber + lastIndex + idx;

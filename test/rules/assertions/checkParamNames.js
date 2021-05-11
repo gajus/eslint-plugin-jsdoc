@@ -1105,6 +1105,37 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param foo
+           *   on another line
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Duplicate @param "foo"',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+    },
   ],
   valid: [
     {

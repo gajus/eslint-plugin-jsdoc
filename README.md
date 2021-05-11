@@ -3024,6 +3024,17 @@ function quux ({cfg}) {
 
 }
 // Message: @param "root.cfg.foo" does not exist on root
+
+/**
+ * @param foo
+ * @param foo
+ *   on another line
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
+// Message: Duplicate @param "foo"
 ````
 
 The following patterns are not considered problems:
