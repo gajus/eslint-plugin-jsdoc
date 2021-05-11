@@ -142,7 +142,6 @@ export default iterateJsdoc(({
     }
 
     // Todo: Make fixable
-    // Todo: Fix whitespace indent
     const checkRules = function ({
       nonJSPrefacingCols,
       nonJSPrefacingLines,
