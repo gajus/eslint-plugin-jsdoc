@@ -109,47 +109,87 @@ export default iterateJsdoc(({
     await fs.writeFile(ruleReadmePath, ruleReadmeTemplate);
   }
 
-  const readmePath = './.README/README.md';
+  const replaceInOrder = async ({path, oldRegex, checkName, newLine, oldIsCamel}) => {
+    const offsets = [];
 
-  const offsets = [];
-  let readme = await fs.readFile(readmePath, 'utf8');
+    let readme = await fs.readFile(path, 'utf8');
+    readme.replace(
+      oldRegex,
+      (matchedLine, n1, offset, str, {oldRule}) => {
+        offsets.push({
+          matchedLine,
+          offset,
+          oldRule,
+        });
+      },
+    );
 
-  const readmeNewRuleLine = `{"gitdown": "include", "file": "./rules/${ruleName}.md"}`;
+    offsets.sort(({oldRule}, {oldRule: oldRuleB}) => {
+      // eslint-disable-next-line no-extra-parens
+      return oldRule < oldRuleB ? -1 : (oldRule > oldRuleB ? 1 : 0);
+    });
 
-  readme.replace(
-    /\{"gitdown": "include", "file": ".\/rules\/(?<oldRule>[^.]*).md"\}/gu,
-    (__, n1, offset, str, {oldRule}) => {
-      offsets.push({
-        offset,
-        oldRule,
-      });
-    },
-  );
+    let alreadyIncluded = false;
+    const itemIndex = offsets.findIndex(({oldRule}) => {
+      alreadyIncluded ||= oldIsCamel ? camelCasedRuleName === oldRule : ruleName === oldRule;
 
-  offsets.sort(({oldRule}, {oldRule: oldRuleB}) => {
-    // eslint-disable-next-line no-extra-parens
-    return oldRule < oldRuleB ? -1 : (oldRule > oldRuleB ? 1 : 0);
-  });
+      return oldIsCamel ? camelCasedRuleName < oldRule : ruleName < oldRule;
+    });
+    let item = itemIndex !== undefined && offsets[itemIndex];
+    if (item && itemIndex === 0 &&
 
-  let alreadyIncluded = false;
-  const item = offsets.find(({oldRule}) => {
-    alreadyIncluded ||= ruleName === oldRule;
-
-    return ruleName < oldRule;
-  });
-  if (alreadyIncluded) {
-    console.log('Rule name is already present in README.');
-  } else {
-    if (item) {
-      readme = readme.slice(0, item.offset) + readmeNewRuleLine + '\n' + readme.slice(item.offset);
-    } else {
-      readme += `${readmeNewRuleLine}\n`;
+      // This property would not always be sufficient but in this case it is.
+      oldIsCamel
+    ) {
+      item.offset = 0;
     }
+    if (!item) {
+      item = offsets.pop();
+      item.offset += item.matchedLine.length;
+    }
+    if (alreadyIncluded) {
+      console.log(`Rule name is already present in ${checkName}.`);
+    } else {
+      readme = readme.slice(0, item.offset) +
+                (item.offset ? '\n' : '') +
+                newLine +
+                (item.offset ? '' : '\n') +
+                readme.slice(item.offset);
 
-    await fs.writeFile(readmePath, readme);
+      await fs.writeFile(path, readme);
+    }
+  };
 
-    await import('./generateReadme.js');
-  }
+  await replaceInOrder({
+    checkName: 'README',
+    newLine: `{"gitdown": "include", "file": "./rules/${ruleName}.md"}`,
+    oldRegex: /\n\{"gitdown": "include", "file": ".\/rules\/(?<oldRule>[^.]*).md"\}/gu,
+    path: './.README/README.md',
+  });
+
+  await replaceInOrder({
+    checkName: 'index import',
+    newLine: `import ${camelCasedRuleName} from './rules/${camelCasedRuleName}';`,
+    oldIsCamel: true,
+    oldRegex: /\nimport (?<oldRule>[^ ]*) from '.\/rules\/\1';/gu,
+    path: './src/index.js',
+  });
+
+  await replaceInOrder({
+    checkName: 'index recommended',
+    newLine: `${' '.repeat(8)}'jsdoc/${ruleName}': 'off',`,
+    oldRegex: /\n\s{8}'jsdoc\/(?<oldRule>[^']*)': '[^']*',/gu,
+    path: './src/index.js',
+  });
+
+  await replaceInOrder({
+    checkName: 'index rules',
+    newLine: `${' '.repeat(4)}'${ruleName}': ${camelCasedRuleName},`,
+    oldRegex: /\n\s{4}'(?<oldRule>[^']*)': [^,]*,/gu,
+    path: './src/index.js',
+  });
+
+  await import('./generateReadme.js');
 
   console.log('Paths to open for further editing\n');
 
