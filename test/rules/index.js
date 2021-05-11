@@ -4,54 +4,11 @@ import {
 import _ from 'lodash';
 import config from '../../src';
 
+import ruleNames from './ruleNames.json';
+
 const ruleTester = new RuleTester();
 
-(process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : [
-  'check-access',
-  'check-alignment',
-  'check-line-alignment',
-  'check-examples',
-  'check-indentation',
-  'check-param-names',
-  'check-property-names',
-  'check-syntax',
-  'check-tag-names',
-  'check-types',
-  'check-values',
-  'empty-tags',
-  'implements-on-classes',
-  'match-description',
-  'newline-after-description',
-  'no-bad-blocks',
-  'no-defaults',
-  'no-missing-syntax',
-  'no-restricted-syntax',
-  'no-types',
-  'no-undefined-types',
-  'require-asterisk-prefix',
-  'require-description',
-  'require-description-complete-sentence',
-  'require-example',
-  'require-file-overview',
-  'require-hyphen-before-param-description',
-  'require-jsdoc',
-  'require-param',
-  'require-param-description',
-  'require-param-name',
-  'require-param-type',
-  'require-property',
-  'require-property-description',
-  'require-property-name',
-  'require-property-type',
-  'require-returns',
-  'require-returns-check',
-  'require-returns-description',
-  'require-returns-type',
-  'require-throws',
-  'require-yields',
-  'require-yields-check',
-  'valid-types',
-]).forEach((ruleName) => {
+(process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : ruleNames).forEach((ruleName) => {
   const rule = config.rules[ruleName];
 
   const parserOptions = {
