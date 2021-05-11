@@ -3,7 +3,6 @@ import {
 } from 'eslint';
 import _ from 'lodash';
 import config from '../../src';
-
 import ruleNames from './ruleNames.json';
 
 const ruleTester = new RuleTester();
