@@ -67,6 +67,7 @@ JSDoc linting rules for ESLint.
         * [`require-throws`](#eslint-plugin-jsdoc-rules-require-throws)
         * [`require-yields`](#eslint-plugin-jsdoc-rules-require-yields)
         * [`require-yields-check`](#eslint-plugin-jsdoc-rules-require-yields-check)
+        * [`tag-lines`](#eslint-plugin-jsdoc-rules-tag-lines)
         * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
 
 
@@ -18279,6 +18280,156 @@ function * quux (foo) {
 ````
 
 
+<a name="eslint-plugin-jsdoc-rules-tag-lines"></a>
+### <code>tag-lines</code>
+
+Enforces lines (or no lines) between tags.
+
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-37"></a>
+#### Options
+
+The first option is a single string set to "always" or "never" (defaults to
+"never").
+
+The second option is an object with the following optional properties.
+
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-37-count-defaults-to-1"></a>
+##### <code>count</code> (defaults to 1)
+
+Use with "always" to indicate the number of lines to require be present.
+
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-37-noendline-defaults-to-false"></a>
+##### <code>noEndLine</code> (defaults to <code>false</code>)
+
+Use with "always" to indicate tag lines should not be added at the end.
+
+|||
+|---|---|
+|Context|everywhere|
+|Tags|Any|
+|Recommended|false|
+|Settings|N/A|
+|Options|(a string matching `"always" or "never"` and optional object with `count` and `noEndLine`)|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always"]
+// Message: Expected 1 line between tags but found 0
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always",{"count":2}]
+// Message: Expected 2 lines between tags but found 0
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always",{"count":2}]
+// Message: Expected 2 lines between tags but found 1
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always",{"noEndLine":true}]
+// Message: Expected 1 line between tags but found 0
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * @param {number} b
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never"]
+// Message: Expected no lines between tags
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * @param {number} b
+ *
+ */
+// Message: Expected no lines between tags
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * @param {number} b
+ * @param {number} c
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always"]
+// Message: Expected 1 line between tags but found 0
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never"]
+
+/**
+ * @param {string} a
+ *
+ * @param {string} a
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always",{"noEndLine":true}]
+
+/**
+ * @param {string} a
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"noEndLine":true}]
+
+/** @param {number} b */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"noEndLine":true}]
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * @param {number} b
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always"]
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ *
+ * @param {number} b
+ *
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always",{"count":2}]
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-valid-types"></a>
 ### <code>valid-types</code>
 
@@ -18359,7 +18510,7 @@ for valid types (based on the tag's `type` value), and either portion checked
 for presence (based on `false` `name` or `type` values or their `required`
 value). See the setting for more details.
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-37"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-38"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow

@@ -41,6 +41,7 @@ import requireReturnsType from './rules/requireReturnsType';
 import requireThrows from './rules/requireThrows';
 import requireYields from './rules/requireYields';
 import requireYieldsCheck from './rules/requireYieldsCheck';
+import tagLines from './rules/tagLines';
 import validTypes from './rules/validTypes';
 
 export default {
@@ -91,6 +92,7 @@ export default {
         'jsdoc/require-throws': 'off',
         'jsdoc/require-yields': 'warn',
         'jsdoc/require-yields-check': 'warn',
+        'jsdoc/tag-lines': 'warn',
         'jsdoc/valid-types': 'warn',
       },
     },
@@ -139,6 +141,7 @@ export default {
     'require-throws': requireThrows,
     'require-yields': requireYields,
     'require-yields-check': requireYieldsCheck,
+    'tag-lines': tagLines,
     'valid-types': validTypes,
   },
 };

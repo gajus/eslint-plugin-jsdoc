@@ -186,7 +186,11 @@ const getUtils = (
     }];
   };
 
-  utils.removeTag = (tagIndex) => {
+  utils.removeTag = (idx) => {
+    return utils.removeTagItem(idx);
+  };
+
+  utils.removeTagItem = (tagIndex, tagSourceOffset = 0) => {
     const {source: tagSource} = jsdoc.tags[tagIndex];
     let lastIndex;
     const firstNumber = jsdoc.source[0].number;
@@ -208,7 +212,8 @@ const getUtils = (
 
           return true;
         });
-        jsdoc.source.splice(sourceIndex, spliceCount);
+        jsdoc.source.splice(sourceIndex + tagSourceOffset, spliceCount - tagSourceOffset);
+        tagSource.splice(tagIdx + tagSourceOffset, spliceCount - tagSourceOffset);
         lastIndex = sourceIndex;
 
         return true;
@@ -236,6 +241,48 @@ const getUtils = (
     });
     jsdoc.source.slice(number + 1).forEach((src) => {
       src.number++;
+    });
+  };
+
+  utils.addLines = (tagIndex, tagSourceOffset, numLines) => {
+    const {source: tagSource} = jsdoc.tags[tagIndex];
+    let lastIndex;
+    const firstNumber = jsdoc.source[0].number;
+    tagSource.some(({number}) => {
+      const makeLine = () => {
+        return {
+          number,
+          source: '',
+          tokens: seedTokens({
+            delimiter: '*',
+            start: indent + ' ',
+          }),
+        };
+      };
+      const makeLines = () => {
+        return Array.from({length: numLines}, makeLine);
+      };
+      const sourceIndex = jsdoc.source.findIndex(({
+        number: srcNumber, tokens: {end},
+      }) => {
+        return number === srcNumber && !end;
+      });
+      // istanbul ignore else
+      if (sourceIndex > -1) {
+        const lines = makeLines();
+        jsdoc.source.splice(sourceIndex + tagSourceOffset, 0, ...lines);
+
+        // tagSource.splice(tagIdx + 1, 0, ...makeLines());
+        lastIndex = sourceIndex;
+
+        return true;
+      }
+
+      // istanbul ignore next
+      return false;
+    });
+    jsdoc.source.slice(lastIndex).forEach((src, idx) => {
+      src.number = firstNumber + lastIndex + idx;
     });
   };
 
