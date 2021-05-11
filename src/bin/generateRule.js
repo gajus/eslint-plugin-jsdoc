@@ -60,7 +60,8 @@ export default iterateJsdoc(({
 
   const camelCasedRuleName = _.camelCase(ruleName);
 
-  await fs.writeFile(`./src/rules/${camelCasedRuleName}.js`, ruleTemplate);
+  const rulePath = `./src/rules/${camelCasedRuleName}.js`;
+  await fs.writeFile(rulePath, ruleTemplate);
 
   const ruleTestTemplate = `export default {
   invalid: [
@@ -79,7 +80,8 @@ export default iterateJsdoc(({
 };
 `;
 
-  await fs.writeFile(`./test/rules/assertions/${camelCasedRuleName}.js`, ruleTestTemplate);
+  const ruleTestPath = `./test/rules/assertions/${camelCasedRuleName}.js`;
+  await fs.writeFile(ruleTestPath, ruleTestTemplate);
 
   const ruleReadmeTemplate = `### \`${ruleName}\`
 
@@ -94,7 +96,8 @@ export default iterateJsdoc(({
 <!-- assertions ${camelCasedRuleName} -->
 `;
 
-  await fs.writeFile(`./.README/rules/${ruleName}.md`, ruleReadmeTemplate);
+  const ruleReadmePath = `./.README/rules/${ruleName}.md`;
+  await fs.writeFile(ruleReadmePath, ruleReadmeTemplate);
 
   const readmePath = './.README/README.md';
 
@@ -126,16 +129,21 @@ export default iterateJsdoc(({
   });
   if (alreadyIncluded) {
     console.log('Rule name is already present in README.');
-
-    return;
-  }
-  if (item) {
-    readme = readme.slice(0, item.offset) + readmeNewRuleLine + '\n' + readme.slice(item.offset);
   } else {
-    readme += `${readmeNewRuleLine}\n`;
+    if (item) {
+      readme = readme.slice(0, item.offset) + readmeNewRuleLine + '\n' + readme.slice(item.offset);
+    } else {
+      readme += `${readmeNewRuleLine}\n`;
+    }
+
+    await fs.writeFile(readmePath, readme);
+
+    await import('./generateReadme.js');
   }
 
-  await fs.writeFile(readmePath, readme);
+  console.log('Paths to open for further editing\n');
 
-  await import('./generateReadme.js');
+  console.log(`open ${ruleReadmePath}`);
+  console.log(`open ${rulePath}`);
+  console.log(`open ${ruleTestPath}\n`);
 })();
