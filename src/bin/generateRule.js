@@ -40,7 +40,7 @@ const [, , ruleName] = process.argv;
   const ruleTemplate = `import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
-  report,
+  context,
   utils,
 }) => {
   // Rule here
@@ -207,7 +207,7 @@ export default iterateJsdoc(({
   await open([
     // Could even add editor line column numbers like `${rulePath}:1:1`
     ruleReadmePath,
-    rulePath,
     ruleTestPath,
+    rulePath,
   ]);
 })();
