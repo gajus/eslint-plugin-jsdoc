@@ -56,16 +56,6 @@
   "run-if-changed": {
     "package-lock.json": "npm run install-offline"
   },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm test && npm run build && npm run check-readme",
-      "post-commit": "run-if-changed",
-      "post-checkout": "run-if-changed",
-      "post-merge": "run-if-changed",
-      "post-rewrite": "run-if-changed",
-      "pre-commit": "lint-staged"
-    }
-  },
   "keywords": [
     "eslint",
     "plugin",
@@ -93,7 +83,8 @@
     "test-cov": "cross-env BABEL_ENV=test nyc mocha --recursive --require @babel/register --reporter progress --timeout 12000",
     "test-no-cov": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 12000",
     "test-index": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 12000 test/rules/index.js",
-    "test": "cross-env BABEL_ENV=test nyc --reporter text-summary mocha --recursive --require @babel/register --reporter progress --timeout 12000"
+    "test": "cross-env BABEL_ENV=test nyc --reporter text-summary mocha --recursive --require @babel/register --reporter progress --timeout 12000",
+    "prepare": "husky install"
   },
   "nyc": {
     "require": [
