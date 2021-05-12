@@ -557,6 +557,7 @@ selector).
 {"gitdown": "include", "file": "./rules/no-bad-blocks.md"}
 {"gitdown": "include", "file": "./rules/no-defaults.md"}
 {"gitdown": "include", "file": "./rules/no-missing-syntax.md"}
+{"gitdown": "include", "file": "./rules/no-multi-asterisks.md"}
 {"gitdown": "include", "file": "./rules/no-restricted-syntax.md"}
 {"gitdown": "include", "file": "./rules/no-types.md"}
 {"gitdown": "include", "file": "./rules/no-undefined-types.md"}

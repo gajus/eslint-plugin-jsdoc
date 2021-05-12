@@ -17,6 +17,7 @@ import newlineAfterDescription from './rules/newlineAfterDescription';
 import noBadBlocks from './rules/noBadBlocks';
 import noDefaults from './rules/noDefaults';
 import noMissingSyntax from './rules/noMissingSyntax';
+import noMultiAsterisks from './rules/noMultiAsterisks';
 import noRestrictedSyntax from './rules/noRestrictedSyntax';
 import noTypes from './rules/noTypes';
 import noUndefinedTypes from './rules/noUndefinedTypes';
@@ -69,6 +70,7 @@ export default {
         'jsdoc/no-bad-blocks': 'off',
         'jsdoc/no-defaults': 'off',
         'jsdoc/no-missing-syntax': 'off',
+        'jsdoc/no-multi-asterisks': 'warn',
         'jsdoc/no-restricted-syntax': 'off',
         'jsdoc/no-types': 'off',
         'jsdoc/no-undefined-types': 'warn',
@@ -119,6 +121,7 @@ export default {
     'no-bad-blocks': noBadBlocks,
     'no-defaults': noDefaults,
     'no-missing-syntax': noMissingSyntax,
+    'no-multi-asterisks': noMultiAsterisks,
     'no-restricted-syntax': noRestrictedSyntax,
     'no-types': noTypes,
     'no-undefined-types': noUndefinedTypes,
