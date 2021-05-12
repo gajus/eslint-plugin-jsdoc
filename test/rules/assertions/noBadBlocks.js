@@ -124,6 +124,33 @@ export default {
           }
       `,
     },
+    {
+      code: `
+          /***
+           *
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc-like comment to begin with two asterisks.',
+        },
+      ],
+      options: [{
+        preventAllMultiAsteriskBlocks: true,
+      }],
+      output: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }
+      `,
+    },
   ],
   valid: [
     {
@@ -186,6 +213,16 @@ export default {
     {
       code: '/* @custom */',
       options: [{ignore: ['custom']}],
+    },
+    {
+      code: `
+          /***
+           *
+           */
+          function quux (foo) {
+
+          }
+      `,
     },
   ],
 };
