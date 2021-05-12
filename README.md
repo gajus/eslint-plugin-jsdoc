@@ -7276,6 +7276,14 @@ function echo() {
   return 'Something';
 }
 // Message: Expected JSDoc-like comment to begin with two asterisks.
+
+/***
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Message: Expected JSDoc-like comment to begin with two asterisks.
 ````
 
 The following patterns are not considered problems:
