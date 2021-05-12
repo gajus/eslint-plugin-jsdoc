@@ -18,6 +18,7 @@
   "no-bad-blocks",
   "no-defaults",
   "no-missing-syntax",
+  "no-multi-asterisks",
   "no-restricted-syntax",
   "no-types",
   "no-undefined-types",
