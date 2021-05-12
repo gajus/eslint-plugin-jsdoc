@@ -5567,9 +5567,11 @@ This rule checks the values for a handful of tags:
 2. `@since` - As with `@version`
 3. `@license` - Checks that there is a present and valid SPDX identifier
     or is present within an `allowedLicenses` option.
-4. `@author` - Checks there is a value present, and if the option
+4. `@author` - Checks that there is a value present, and if the option
     `allowedAuthors` is present, ensure that the author value is one
     of these array items.
+5. `@variation` - Checks that there iis a value present, and that it is
+    an integer.
 
 <a name="eslint-plugin-jsdoc-rules-check-values-options-8"></a>
 #### Options
@@ -5603,7 +5605,7 @@ your expression as a string, but like a literal, e.g., `/^mit$/ui`.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|`@version`, `@since`, `@license`, `@author`|
+|Tags|`@version`, `@since`, `@license`, `@author`, `@variation`|
 |Recommended|true|
 |Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|
@@ -5626,6 +5628,14 @@ function quux (foo) {
 
 }
 // Message: Invalid JSDoc @version: "3.1".
+
+/**
+ * @variation -3
+ */
+function quux (foo) {
+
+}
+// Message: Invalid JSDoc @variation: "-3".
 
 /**
  * @since
@@ -5712,6 +5722,22 @@ function quux (foo) {
 }
 // "jsdoc/check-values": ["error"|"warn", {"allowedAuthors":["Gajus Kuizinas","golopot"]}]
 // Message: Invalid JSDoc @author: "Brett Zamir"; expected one of Gajus Kuizinas, golopot.
+
+/**
+ * @variation
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @variation.
+
+/**
+ * @variation 5.2
+ */
+function quux (foo) {
+
+}
+// Message: Invalid JSDoc @variation: "5.2".
 ````
 
 The following patterns are not considered problems:
@@ -5806,6 +5832,13 @@ function quux (foo) {
 
 }
 // "jsdoc/check-values": ["error"|"warn", {"allowedAuthors":["Gajus Kuizinas","golopot","Brett Zamir"]}]
+
+/**
+ * @variation 3
+ */
+function quux (foo) {
+
+}
 ````
 
 

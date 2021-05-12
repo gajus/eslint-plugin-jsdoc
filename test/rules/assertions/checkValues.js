@@ -35,6 +35,22 @@ export default {
     {
       code: `
       /**
+       * @variation -3
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @variation: "-3".',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
        * @since
        */
       function quux (foo) {
@@ -209,6 +225,38 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @variation
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @variation.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @variation 5.2
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @variation: "5.2".',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -352,6 +400,16 @@ export default {
           allowedAuthors: ['Gajus Kuizinas', 'golopot', 'Brett Zamir'],
         },
       ],
+    },
+    {
+      code: `
+      /**
+       * @variation 3
+       */
+      function quux (foo) {
+
+      }
+      `,
     },
   ],
 };
