@@ -22,6 +22,7 @@ export default iterateJsdoc(({
         'ts-ignore',
         'ts-nocheck',
       ],
+      preventAllMultiAsteriskBlocks = false,
     } = {},
   ] = context.options;
 
@@ -36,6 +37,9 @@ export default iterateJsdoc(({
       }
       sliceIndex = multiline.length;
       extraAsterisks = true;
+      if (preventAllMultiAsteriskBlocks) {
+        return true;
+      }
     }
 
     const [{tags = {}} = {}] = commentParser(
@@ -83,6 +87,9 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
+          },
+          preventAllMultiAsteriskBlocks: {
+            type: 'boolean',
           },
         },
         type: 'object',

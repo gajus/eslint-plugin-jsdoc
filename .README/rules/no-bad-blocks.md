@@ -1,8 +1,8 @@
 ### `no-bad-blocks`
 
 This rule checks for multi-line-style comments which fail to meet the
-criteria of a jsdoc block, namely that it should begin with two asterisks,
-but which appear to be intended as jsdoc blocks due to the presence
+criteria of a jsdoc block, namely that it should begin with two and only two
+asterisks, but which appear to be intended as jsdoc blocks due to the presence
 of whitespace followed by whitespace or asterisks, and
 an at-sign (`@`) and some non-whitespace (as with a jsdoc block tag).
 
@@ -18,11 +18,16 @@ a multi-comment block and at-sign `/* @`.
 Defaults to `['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck']`
 (some directives [used by TypeScript](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html#ts-check)).
 
+##### `preventAllMultiAsteriskBlocks`
+
+A boolean (defaulting to `false`) which if `true` will prevent all
+multi-asterisked blocks even those without apparent tag content.
+
 |||
 |---|---|
 |Context|Everywhere|
 |Tags|N/A|
 |Recommended|false|
-|Options|`ignore`|
+|Options|`ignore`, `preventAllMultiAsteriskBlocks`|
 
 <!-- assertions noBadBlocks -->
