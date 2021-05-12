@@ -100,6 +100,30 @@ export default {
       }
       `,
     },
+    {
+      code: `
+          /***
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc-like comment to begin with two asterisks.',
+        },
+      ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+    },
   ],
   valid: [
     {

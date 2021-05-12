@@ -3,7 +3,10 @@ import {
 } from 'comment-parser';
 import iterateJsdoc from '../iterateJsdoc';
 
-const commentRegexp = /^\/\*(?!\*)/;
+// Neither a single nor 3+ asterisks are valid jsdoc per
+//  https://jsdoc.app/about-getting-started.html#adding-documentation-comments-to-your-code
+const commentRegexp = /^\/\*(?!\*)/u;
+const extraAsteriskCommentRegexp = /^\/\*{3,}/u;
 
 export default iterateJsdoc(({
   context,
@@ -21,18 +24,29 @@ export default iterateJsdoc(({
       ],
     } = {},
   ] = context.options;
+
+  let extraAsterisks = false;
   const nonJsdocNodes = allComments.filter((comment) => {
     const commentText = sourceCode.getText(comment);
+    let sliceIndex = 2;
     if (!commentRegexp.test(commentText)) {
-      return false;
+      const multiline = extraAsteriskCommentRegexp.exec(commentText)?.[0];
+      if (!multiline) {
+        return false;
+      }
+      sliceIndex = multiline.length;
+      extraAsterisks = true;
     }
 
-    const [{tags = {}} = {}] = commentParser(`${commentText.slice(0, 2)}*${commentText.slice(2)}`);
+    const [{tags = {}} = {}] = commentParser(
+      `${commentText.slice(0, 2)}*${commentText.slice(sliceIndex)}`,
+    );
 
     return tags.length && !tags.some(({tag}) => {
       return ignore.includes(tag);
     });
   });
+
   if (!nonJsdocNodes.length) {
     return;
   }
@@ -43,7 +57,12 @@ export default iterateJsdoc(({
     const fix = (fixer) => {
       const text = sourceCode.getText(node);
 
-      return fixer.replaceText(node, text.replace('/*', '/**'));
+      return fixer.replaceText(
+        node,
+        extraAsterisks ?
+          text.replace(extraAsteriskCommentRegexp, '/**') :
+          text.replace('/*', '/**'),
+      );
     };
     report('Expected JSDoc-like comment to begin with two asterisks.', fix);
   });
