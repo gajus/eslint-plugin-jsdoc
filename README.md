@@ -5570,8 +5570,9 @@ This rule checks the values for a handful of tags:
 4. `@author` - Checks that there is a value present, and if the option
     `allowedAuthors` is present, ensure that the author value is one
     of these array items.
-5. `@variation` - Checks that there iis a value present, and that it is
-    an integer.
+5. `@variation` - If `numericOnlyVariation` is set, will checks that there
+    is a value present, and that it is an integer (otherwise, jsdoc allows any
+    value).
 
 <a name="eslint-plugin-jsdoc-rules-check-values-options-8"></a>
 #### Options
@@ -5601,6 +5602,12 @@ Note that the `/` delimiters are optional, but necessary to add flags.
 
 Defaults to using the `u` flag, so to add your own flags, encapsulate
 your expression as a string, but like a literal, e.g., `/^mit$/ui`.
+
+<a name="eslint-plugin-jsdoc-rules-check-values-options-8-numericonlyvariation"></a>
+##### <code>numericOnlyVariation</code>
+
+Whether to enable validation that `@variation` must be a number. Defaults to
+`false`.
 
 |||
 |---|---|
@@ -5635,6 +5642,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// "jsdoc/check-values": ["error"|"warn", {"numericOnlyVariation":true}]
 // Message: Invalid JSDoc @variation: "-3".
 
 /**
@@ -5729,6 +5737,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// "jsdoc/check-values": ["error"|"warn", {"numericOnlyVariation":true}]
 // Message: Missing JSDoc @variation.
 
 /**
@@ -5737,6 +5746,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
+// "jsdoc/check-values": ["error"|"warn", {"numericOnlyVariation":true}]
 // Message: Invalid JSDoc @variation: "5.2".
 ````
 
@@ -5835,6 +5845,14 @@ function quux (foo) {
 
 /**
  * @variation 3
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-values": ["error"|"warn", {"numericOnlyVariation":true}]
+
+/**
+ * @variation abc
  */
 function quux (foo) {
 
