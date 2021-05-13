@@ -47,6 +47,9 @@ export default {
           message: 'Invalid JSDoc @variation: "-3".',
         },
       ],
+      options: [{
+        numericOnlyVariation: true,
+      }],
     },
     {
       code: `
@@ -240,6 +243,9 @@ export default {
           message: 'Missing JSDoc @variation.',
         },
       ],
+      options: [{
+        numericOnlyVariation: true,
+      }],
     },
     {
       code: `
@@ -256,6 +262,9 @@ export default {
           message: 'Invalid JSDoc @variation: "5.2".',
         },
       ],
+      options: [{
+        numericOnlyVariation: true,
+      }],
     },
   ],
   valid: [
@@ -405,6 +414,19 @@ export default {
       code: `
       /**
        * @variation 3
+       */
+      function quux (foo) {
+
+      }
+      `,
+      options: [{
+        numericOnlyVariation: true,
+      }],
+    },
+    {
+      code: `
+      /**
+       * @variation abc
        */
       function quux (foo) {
 

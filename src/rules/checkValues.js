@@ -11,6 +11,7 @@ export default iterateJsdoc(({
   const {
     allowedLicenses = null,
     allowedAuthors = null,
+    numericOnlyVariation = false,
     licensePattern = '/([^\n]*)/gu',
   } = options;
 
@@ -30,25 +31,27 @@ export default iterateJsdoc(({
       );
     }
   });
-  utils.forEachPreferredTag('variation', (jsdocParameter, targetTagName) => {
-    const variation = utils.getTagDescription(jsdocParameter).trim();
-    if (!variation) {
-      report(
-        `Missing JSDoc @${targetTagName}.`,
-        null,
-        jsdocParameter,
-      );
-    } else if (
-      !Number.isInteger(Number(variation)) ||
-      Number(variation) <= 0
-    ) {
-      report(
-        `Invalid JSDoc @${targetTagName}: "${utils.getTagDescription(jsdocParameter)}".`,
-        null,
-        jsdocParameter,
-      );
-    }
-  });
+  if (numericOnlyVariation) {
+    utils.forEachPreferredTag('variation', (jsdocParameter, targetTagName) => {
+      const variation = utils.getTagDescription(jsdocParameter).trim();
+      if (!variation) {
+        report(
+          `Missing JSDoc @${targetTagName}.`,
+          null,
+          jsdocParameter,
+        );
+      } else if (
+        !Number.isInteger(Number(variation)) ||
+        Number(variation) <= 0
+      ) {
+        report(
+          `Invalid JSDoc @${targetTagName}: "${utils.getTagDescription(jsdocParameter)}".`,
+          null,
+          jsdocParameter,
+        );
+      }
+    });
+  }
   utils.forEachPreferredTag('since', (jsdocParameter, targetTagName) => {
     const version = utils.getTagDescription(jsdocParameter).trim();
     if (!version) {
@@ -144,6 +147,9 @@ export default iterateJsdoc(({
           },
           licensePattern: {
             type: 'string',
+          },
+          numericOnlyVariation: {
+            type: 'boolean',
           },
         },
         type: 'object',
