@@ -13,7 +13,7 @@ The second option is an object with the following optional properties.
 
 Use with "always" to indicate the number of lines to require be present.
 
-##### `noEndLine` (defaults to `false`)
+##### `noEndLines` (defaults to `false`)
 
 Use with "always" to indicate the normal lines after tags should not be
 added after the final tag.
@@ -24,6 +24,6 @@ added after the final tag.
 |Tags|Any|
 |Recommended|false|
 |Settings|N/A|
-|Options|(a string matching `"always" or "never"` and optional object with `count` and `noEndLine`)|
+|Options|(a string matching `"always" or "never"` and optional object with `count` and `noEndLines`)|
 
 <!-- assertions tagLines -->

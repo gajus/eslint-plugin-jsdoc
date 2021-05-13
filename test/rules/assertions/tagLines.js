@@ -88,7 +88,7 @@ export default {
       options: [
         'always',
         {
-          noEndLine: true,
+          noEndLines: true,
         },
       ],
       output: `
@@ -203,7 +203,7 @@ export default {
        */
       `,
       options: ['always', {
-        noEndLine: true,
+        noEndLines: true,
       }],
     },
     {
@@ -213,7 +213,7 @@ export default {
        */
       `,
       options: ['never', {
-        noEndLine: true,
+        noEndLines: true,
       }],
     },
     {
@@ -221,7 +221,7 @@ export default {
       /** @param {number} b */
       `,
       options: ['never', {
-        noEndLine: true,
+        noEndLines: true,
       }],
     },
     {

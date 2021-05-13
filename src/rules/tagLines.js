@@ -9,7 +9,7 @@ export default iterateJsdoc(({
     alwaysNever = 'never',
     {
       count = 1,
-      noEndLine = false,
+      noEndLines = false,
     } = {},
   ] = context.options;
 
@@ -37,7 +37,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  (noEndLine ? jsdoc.tags.slice(0, -1) : jsdoc.tags).some((tg, tagIdx) => {
+  (noEndLines ? jsdoc.tags.slice(0, -1) : jsdoc.tags).some((tg, tagIdx) => {
     const lines = [];
 
     tg.source.forEach(({number, tokens: {tag, name, type, description, end}}, idx) => {
@@ -80,7 +80,7 @@ export default iterateJsdoc(({
           count: {
             type: 'integer',
           },
-          noEndLine: {
+          noEndLines: {
             type: 'boolean',
           },
         },
