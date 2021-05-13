@@ -18362,8 +18362,8 @@ Use with "always" to indicate the number of lines to require be present.
 <a name="eslint-plugin-jsdoc-rules-tag-lines-options-37-noendlines-defaults-to-false"></a>
 ##### <code>noEndLines</code> (defaults to <code>false</code>)
 
-Use with "always" to indicate the normal lines after tags should not be
-added after the final tag.
+Use with "always" to indicate the normal lines to be added after tags should
+not be added after the final tag.
 
 |||
 |---|---|

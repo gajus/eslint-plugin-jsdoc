@@ -15,8 +15,8 @@ Use with "always" to indicate the number of lines to require be present.
 
 ##### `noEndLines` (defaults to `false`)
 
-Use with "always" to indicate the normal lines after tags should not be
-added after the final tag.
+Use with "always" to indicate the normal lines to be added after tags should
+not be added after the final tag.
 
 |||
 |---|---|
