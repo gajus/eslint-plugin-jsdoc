@@ -860,35 +860,6 @@ export default {
       function quux () {}
       `,
     },
-    {
-      code: `
-      /**
-       * Function description
-       *           description with post delimiter.
-       *
-       * @param {string} lorem Description.
-       * @param {int}    sit   Description multi words.
-       */
-      const fn = ( lorem, sit ) => {}
-      `,
-      errors: [
-        {
-          message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
-        },
-      ],
-      options: ['always'],
-      output: `
-      /**
-       * Function description
-       * description with post delimiter.
-       *
-       * @param {string} lorem Description.
-       * @param {int}    sit   Description multi words.
-       */
-      const fn = ( lorem, sit ) => {}
-      `,
-    },
   ],
   valid: [
     {
@@ -1211,21 +1182,6 @@ export default {
 
       }
       `,
-    },
-    {
-      code: `
-        /**
-         * Function description
-         *           description with post delimiter.
-         *
-         * @param {string} lorem Description.
-         * @param {int}    sit   Description multi words.
-         */
-        const fn = ( lorem, sit ) => {}
-      `,
-      options: ['always', {
-        preserveMainDescriptionPostDelimiter: true,
-      }],
     },
   ],
 };

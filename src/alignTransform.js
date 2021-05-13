@@ -58,7 +58,7 @@ const space = (len) => {
   return ''.padStart(len, ' ');
 };
 
-const alignTransform = (tags, indent, preserveMainDescriptionPostDelimiter) => {
+const alignTransform = (tags, indent) => {
   let intoTags = false;
   let width;
 
@@ -145,11 +145,7 @@ const alignTransform = (tags, indent, preserveMainDescriptionPostDelimiter) => {
     /* eslint-enable */
 
     if (!intoTags) {
-      if (tokens.description === '') {
-        tokens.postDelimiter = '';
-      } else if (!preserveMainDescriptionPostDelimiter) {
-        tokens.postDelimiter = ' ';
-      }
+      tokens.postDelimiter = tokens.description === '' ? '' : ' ';
 
       return {
         ...line,

@@ -100,12 +100,11 @@ const checkAlignment = ({
   indent,
   jsdoc,
   jsdocNode,
-  preserveMainDescriptionPostDelimiter,
   report,
   tags,
   utils,
 }) => {
-  const transform = commentFlow(alignTransform(tags, indent, preserveMainDescriptionPostDelimiter));
+  const transform = commentFlow(alignTransform(tags, indent));
   const transformedJsdoc = transform(jsdoc);
 
   const comment = '/*' + jsdocNode.value + '*/';
@@ -132,7 +131,6 @@ export default iterateJsdoc(({
 }) => {
   const {
     tags: applicableTags = ['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return'],
-    preserveMainDescriptionPostDelimiter,
   } = context.options[1] || {};
 
   if (context.options[0] === 'always') {
@@ -145,7 +143,6 @@ export default iterateJsdoc(({
       indent,
       jsdoc,
       jsdocNode,
-      preserveMainDescriptionPostDelimiter,
       report,
       tags: applicableTags,
       utils,
@@ -174,10 +171,6 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
-          preserveMainDescriptionPostDelimiter: {
-            default: false,
-            type: 'boolean',
-          },
           tags: {
             items: {
               type: 'string',
