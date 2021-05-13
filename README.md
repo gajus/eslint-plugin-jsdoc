@@ -2247,6 +2247,17 @@ const fn = ( lorem, sit ) => {}
 function quux () {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "never"]
 // Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Function description
+ *           description with post delimiter.
+ *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// Message: Expected JSDoc block lines to be aligned.
 ````
 
 The following patterns are not considered problems:
@@ -2462,6 +2473,16 @@ function quux (options) {}
 function func(parameter){
 
 }
+
+/**
+ * Function description
+ *           description with post delimiter.
+ *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"preserveMainDescriptionPostDelimiter":true}]
 ````
 
 
