@@ -1929,6 +1929,9 @@ problem is raised when the lines are not aligned. If it is `"never"` then
 a problem should be raised when there is more than one space between each
 line's parts. Defaults to `"never"`.
 
+Note that in addition to alignment, both options will ensure at least one
+space is present after the asterisk delimiter.
+
 After the string, an options object is allowed with the following properties.
 
 <a name="eslint-plugin-jsdoc-rules-check-line-alignment-options-3-tags"></a>
