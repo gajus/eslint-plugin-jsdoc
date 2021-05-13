@@ -18359,8 +18359,8 @@ The second option is an object with the following optional properties.
 
 Use with "always" to indicate the number of lines to require be present.
 
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-37-noendline-defaults-to-false"></a>
-##### <code>noEndLine</code> (defaults to <code>false</code>)
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-37-noendlines-defaults-to-false"></a>
+##### <code>noEndLines</code> (defaults to <code>false</code>)
 
 Use with "always" to indicate the normal lines after tags should not be
 added after the final tag.
@@ -18371,7 +18371,7 @@ added after the final tag.
 |Tags|Any|
 |Recommended|false|
 |Settings|N/A|
-|Options|(a string matching `"always" or "never"` and optional object with `count` and `noEndLine`)|
+|Options|(a string matching `"always" or "never"` and optional object with `count` and `noEndLines`)|
 
 The following patterns are considered problems:
 
@@ -18406,7 +18406,7 @@ The following patterns are considered problems:
  * @param {string} a
  * @param {number} b
  */
-// "jsdoc/tag-lines": ["error"|"warn", "always",{"noEndLine":true}]
+// "jsdoc/tag-lines": ["error"|"warn", "always",{"noEndLines":true}]
 // Message: Expected 1 line between tags but found 0
 
 /**
@@ -18460,15 +18460,15 @@ The following patterns are not considered problems:
  *
  * @param {string} a
  */
-// "jsdoc/tag-lines": ["error"|"warn", "always",{"noEndLine":true}]
+// "jsdoc/tag-lines": ["error"|"warn", "always",{"noEndLines":true}]
 
 /**
  * @param {string} a
  */
-// "jsdoc/tag-lines": ["error"|"warn", "never",{"noEndLine":true}]
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"noEndLines":true}]
 
 /** @param {number} b */
-// "jsdoc/tag-lines": ["error"|"warn", "never",{"noEndLine":true}]
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"noEndLines":true}]
 
 /**
  * Some description
