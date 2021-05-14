@@ -129,6 +129,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @license: "MIT-7"; expected SPDX expression: https://spdx.org/licenses/.',
         },
       ],
@@ -144,6 +145,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @license: "(MIT OR GPL-2.5)"; expected SPDX expression: https://spdx.org/licenses/.',
         },
       ],
@@ -160,6 +162,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @license: "MIT\nSome extra text"; expected SPDX expression: https://spdx.org/licenses/.',
         },
       ],

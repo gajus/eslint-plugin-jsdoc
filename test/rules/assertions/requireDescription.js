@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],
@@ -31,6 +32,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc block description or @description declaration.',
         },
       ],
@@ -51,6 +53,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc block description.',
         },
       ],
@@ -71,6 +74,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Remove the @desc tag to leave a plain block description or add additional description text above the @desc line.',
         },
       ],
@@ -91,6 +95,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Remove the @description tag to leave a plain block description or add additional description text above the @description line.',
         },
       ],
@@ -111,6 +116,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],
@@ -129,6 +135,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],
@@ -150,6 +157,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],
@@ -171,6 +179,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],
@@ -192,6 +201,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @description description.',
         },
       ],
@@ -212,6 +222,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],
@@ -236,6 +247,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],
@@ -259,6 +271,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],
@@ -282,6 +295,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @someDesc description.',
         },
       ],
@@ -312,6 +326,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Unexpected tag `@description`',
         },
       ],
@@ -339,6 +354,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc block description or @description declaration.',
         },
       ],
@@ -527,6 +543,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],
@@ -560,6 +577,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],
@@ -592,6 +610,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @description declaration.',
         },
       ],

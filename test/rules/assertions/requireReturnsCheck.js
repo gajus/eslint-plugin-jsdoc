@@ -118,6 +118,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Unexpected tag `@returns`',
         },
       ],

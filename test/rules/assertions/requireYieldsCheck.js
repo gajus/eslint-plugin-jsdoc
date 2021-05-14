@@ -207,6 +207,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Unexpected tag `@yields`',
         },
       ],
@@ -229,6 +230,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Unexpected tag `@next`',
         },
       ],

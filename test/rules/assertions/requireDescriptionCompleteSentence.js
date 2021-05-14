@@ -35,6 +35,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence should start with an uppercase character.',
         },
       ],
@@ -106,6 +107,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Sentence must end with a period.',
         },
       ],

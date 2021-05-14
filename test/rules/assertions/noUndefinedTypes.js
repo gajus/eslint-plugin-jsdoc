@@ -15,6 +15,7 @@ export default {
           message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
         },
         {
+          line: 3,
           message: 'The type \'HerType\' is undefined.',
         },
       ],
@@ -37,6 +38,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'The type \'HerType\' is undefined.',
         },
       ],
@@ -254,9 +256,11 @@ export default {
       `,
       errors: [
         {
+          line: 7,
           message: 'The type \'TEMPLATE_TYPE_A\' is undefined.',
         },
         {
+          line: 8,
           message: 'The type \'TEMPLATE_TYPE_B\' is undefined.',
         },
       ],

@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Syntax is restricted: FunctionDeclaration.',
         },
       ],
@@ -31,6 +32,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Oops: `FunctionDeclaration`.',
         },
       ],
@@ -54,6 +56,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Syntax is restricted: FunctionDeclaration.',
         },
       ],
@@ -77,6 +80,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'The bar one: FunctionDeclaration.',
         },
       ],
@@ -106,6 +110,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Rule `no-restricted-syntax` is missing a `context` option.',
         },
       ],

@@ -8,6 +8,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @property.',
         },
       ],
@@ -29,6 +30,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @property.',
         },
       ],
@@ -50,6 +52,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @prop.',
         },
       ],
@@ -75,6 +78,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @property.',
         },
       ],

@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @example declaration.',
         },
       ],
@@ -34,6 +35,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @example declaration.',
         },
       ],
@@ -61,6 +63,7 @@ function quux () {
       `,
       errors: [
         {
+          line: 1,
           message: 'Missing JSDoc @example declaration.',
         },
       ],
@@ -83,6 +86,7 @@ function quux () {
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @example description.',
         },
       ],
@@ -98,6 +102,7 @@ function quux () {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @example declaration.',
         },
       ],
@@ -123,6 +128,7 @@ function quux () {
       `,
       errors: [
         {
+          line: 4,
           message: 'Missing JSDoc @example description.',
         },
       ],
@@ -138,6 +144,7 @@ function quux () {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @example declaration.',
         },
       ],
@@ -163,6 +170,7 @@ function quux () {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @example declaration.',
         },
       ],
@@ -244,7 +252,7 @@ function quux () {
       `,
       errors: [
         {
-          line: 3,
+          line: 4,
           message: 'Missing JSDoc @example description.',
         },
       ],
@@ -294,7 +302,7 @@ function quux () {
       `,
       errors: [
         {
-          line: 3,
+          line: 4,
           message: 'Missing JSDoc @example description.',
         },
       ],

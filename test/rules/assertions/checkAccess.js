@@ -71,6 +71,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Unexpected tag `@access`',
         },
       ],
@@ -111,6 +112,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'The @access tag may not be used with specific access-control tags (@package, @private, @protected, or @public).',
         },
       ],
@@ -127,6 +129,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'At most one access-control tag may be present on a jsdoc block.',
         },
       ],
@@ -143,6 +146,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'At most one access-control tag may be present on a jsdoc block.',
         },
       ],
@@ -164,6 +168,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'At most one access-control tag may be present on a jsdoc block.',
         },
       ],
@@ -180,6 +185,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'At most one access-control tag may be present on a jsdoc block.',
         },
       ],
@@ -201,6 +207,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'At most one access-control tag may be present on a jsdoc block.',
         },
       ],

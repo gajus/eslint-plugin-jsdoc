@@ -298,6 +298,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Syntax error in type: bar | foo<',
         },
       ],
@@ -312,6 +313,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Syntax error in type: BadTypeChecked<',
         },
       ],
@@ -330,6 +332,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Syntax error in type: BadTypeChecked<',
         },
       ],
@@ -406,6 +409,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Syntax error in namepath: name<',
         },
       ],
@@ -423,6 +427,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Syntax error in namepath: name<',
         },
       ],
@@ -440,6 +445,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Syntax error in namepath: module:name<',
         },
       ],
@@ -457,6 +463,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@interface should not have a name in "closure" mode.',
         },
       ],
@@ -474,6 +481,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@aCustomTag should not have a name.',
         },
       ],
@@ -497,6 +505,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Tag @typedef must have a name/namepath in "jsdoc" mode.',
         },
       ],
@@ -521,6 +530,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@private should not have a bracketed type in "jsdoc" mode.',
         },
       ],
@@ -540,6 +550,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: '@aCustomTag should not have a bracketed type.',
         },
       ],

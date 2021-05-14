@@ -39,7 +39,7 @@ export default iterateJsdoc(({
     const exampleContent = _.compact(`${example.name} ${utils.getTagDescription(example)}`.trim().split('\n'));
 
     if (!exampleContent.length) {
-      report(`Missing JSDoc @${targetTagName} description.`);
+      report(`Missing JSDoc @${targetTagName} description.`, null, example);
     }
   });
 }, {

@@ -32,12 +32,24 @@ const ruleTester = new RuleTester();
     }
   }
 
+  let count = 0;
   assertions.invalid = assertions.invalid.map((assertion) => {
     Reflect.deleteProperty(assertion, 'ignoreReadme');
     assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
+    assertion.errors.forEach((error) => {
+      if (!('line' in error)) {
+        count++;
+      }
+    });
 
     return assertion;
   });
+  if (count) {
+    // eslint-disable-next-line no-console -- CLI
+    console.log(
+      `Rule, \`${ruleName}\`, missing line numbers in errors: ${count}`,
+    );
+  }
 
   assertions.valid = assertions.valid.map((assertion) => {
     Reflect.deleteProperty(assertion, 'ignoreReadme');

@@ -202,6 +202,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Types are not permitted on @returns.',
         },
       ],
