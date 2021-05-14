@@ -18308,7 +18308,7 @@ not be added after the final tag.
 |---|---|
 |Context|everywhere|
 |Tags|Any|
-|Recommended|false|
+|Recommended|true|
 |Settings|N/A|
 |Options|(a string matching `"always" or "never"` and optional object with `count` and `noEndLines`)|
 
