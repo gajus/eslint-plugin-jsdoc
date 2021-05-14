@@ -12,6 +12,7 @@ import checkValues from './rules/checkValues';
 import emptyTags from './rules/emptyTags';
 import implementsOnClasses from './rules/implementsOnClasses';
 import matchDescription from './rules/matchDescription';
+import multilineBlocks from './rules/multilineBlocks';
 import newlineAfterDescription from './rules/newlineAfterDescription';
 import noBadBlocks from './rules/noBadBlocks';
 import noDefaults from './rules/noDefaults';
@@ -63,6 +64,7 @@ export default {
         'jsdoc/empty-tags': 'warn',
         'jsdoc/implements-on-classes': 'warn',
         'jsdoc/match-description': 'off',
+        'jsdoc/multiline-blocks': 'off',
         'jsdoc/newline-after-description': 'warn',
         'jsdoc/no-bad-blocks': 'off',
         'jsdoc/no-defaults': 'off',
@@ -112,6 +114,7 @@ export default {
     'empty-tags': emptyTags,
     'implements-on-classes': implementsOnClasses,
     'match-description': matchDescription,
+    'multiline-blocks': multilineBlocks,
     'newline-after-description': newlineAfterDescription,
     'no-bad-blocks': noBadBlocks,
     'no-defaults': noDefaults,
