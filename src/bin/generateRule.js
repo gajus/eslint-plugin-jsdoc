@@ -79,6 +79,7 @@ export default iterateJsdoc(({
       code: \`
       \`,
       errors: [{
+        line: '',
         message: '',
       }],
     },
