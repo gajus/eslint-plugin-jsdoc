@@ -217,7 +217,9 @@ export default {
     {
       code: `
           /***
-           *
+           * This is not JSDoc because of the 3 asterisks, but
+           * is allowed without \`preventAllMultiAsteriskBlocks\`, as
+           * some might wish normal multiline comments.
            */
           function quux (foo) {
 

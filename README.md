@@ -7369,7 +7369,9 @@ function quux () {
 // "jsdoc/no-bad-blocks": ["error"|"warn", {"ignore":["custom"]}]
 
 /***
- *
+ * This is not JSDoc because of the 3 asterisks, but
+ * is allowed without `preventAllMultiAsteriskBlocks`, as
+ * some might wish normal multiline comments.
  */
 function quux (foo) {
 
