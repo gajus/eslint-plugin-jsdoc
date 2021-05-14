@@ -68,7 +68,7 @@ export default iterateJsdoc(({
       description: 'Enforces lines (or no lines) between tags.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-tag-lines',
     },
-    fixable: true,
+    fixable: 'code',
     schema: [
       {
         enum: ['always', 'never'],
