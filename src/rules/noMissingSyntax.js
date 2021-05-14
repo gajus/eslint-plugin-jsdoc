@@ -56,9 +56,11 @@ export default iterateJsdoc(({
         !state.selectorMap[contextStr][comment] ||
         state.selectorMap[contextStr][comment] < (cntxt?.minimum ?? 1)
       ) {
-        const message = cntxt?.message ?? 'Syntax is required: {{context}}';
+        const message = cntxt?.message ?? 'Syntax is required: {{context}}' +
+          (comment ? ' with {{comment}}' : '');
         context.report({
           data: {
+            comment,
             context: contextStr,
           },
           loc: {

@@ -11,7 +11,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Syntax is required: FunctionDeclaration',
+          line: 1,
+          message: 'Syntax is required: FunctionDeclaration with ' +
+            'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])',
         },
       ],
       options: [{
@@ -34,7 +36,8 @@ export default {
       `,
       errors: [
         {
-          message: 'Problematic function syntax: `FunctionDeclaration`.',
+          line: 1,
+          message: 'Problematically missing function syntax: `FunctionDeclaration` with `JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])`.',
         },
       ],
       options: [{
@@ -42,7 +45,7 @@ export default {
           {
             comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])',
             context: 'FunctionDeclaration',
-            message: 'Problematic function syntax: `{{context}}`.',
+            message: 'Problematically missing function syntax: `{{context}}` with `{{comment}}`.',
           },
         ],
       }],
@@ -58,6 +61,7 @@ export default {
       `,
       errors: [
         {
+          line: 1,
           message: 'Syntax is required: FunctionDeclaration',
         },
       ],
@@ -78,6 +82,7 @@ export default {
       `,
       errors: [
         {
+          line: 1,
           message: 'Rule `no-restricted-syntax` is missing a `context` option.',
         },
       ],
@@ -94,7 +99,9 @@ export default {
       `,
       errors: [
         {
-          message: 'Syntax is required: FunctionDeclaration',
+          line: 1,
+          message: 'Syntax is required: FunctionDeclaration with ' +
+            'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])',
         },
       ],
       options: [{

@@ -42,7 +42,8 @@ Use the `minimum` property (defaults to 1) to indicate how many are required
 for the rule to be reported.
 
 Use the `message` property to indicate the specific error to be shown when an
-error is reported for that context being found missing.
+error is reported for that context being found missing. You may use
+`{{context}}` and `{{comment}}` with such messages.
 
 Set to `"any"` if you want the rule to apply to any jsdoc block throughout
 your files (as is necessary for finding function blocks not attached to a

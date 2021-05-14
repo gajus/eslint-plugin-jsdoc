@@ -753,15 +753,19 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Missing @param "bbox.x"',
         },
         {
+          line: 4,
           message: 'Missing @param "bbox.y"',
         },
         {
+          line: 4,
           message: 'Missing @param "bbox.width"',
         },
         {
+          line: 4,
           message: 'Missing @param "bbox.height"',
         },
       ],
@@ -783,15 +787,19 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Missing @param "bbox.x"',
         },
         {
+          line: 4,
           message: 'Missing @param "bbox.y"',
         },
         {
+          line: 4,
           message: 'Missing @param "bbox.width"',
         },
         {
+          line: 4,
           message: 'Missing @param "bbox.height"',
         },
       ],
@@ -809,9 +817,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Missing @param "fetchOptions.url"',
         },
         {
+          line: 4,
           message: 'Missing @param "fetchOptions.options"',
         },
       ],
@@ -905,9 +915,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Missing @param "options.foo"',
         },
         {
+          line: 4,
           message: 'Missing @param "options.foo.bar"',
         },
       ],
@@ -958,9 +970,11 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: '@param "props.prop.a" does not exist on props',
         },
         {
+          line: 7,
           message: '@param "props.prop.b" does not exist on props',
         },
       ],

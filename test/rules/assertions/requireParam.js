@@ -17,6 +17,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -40,6 +41,7 @@ export default {
        `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -68,9 +70,11 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.foo" declaration.',
         },
       ],
@@ -95,9 +99,11 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "bar" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0" declaration.',
         },
       ],
@@ -128,6 +134,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "bar" declaration.',
         },
       ],
@@ -157,9 +164,11 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.foo" declaration.',
         },
       ],
@@ -188,9 +197,11 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.foo" declaration.',
         },
       ],
@@ -215,9 +226,11 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.foo" declaration.',
         },
       ],
@@ -242,9 +255,11 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "root1" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root1.foo" declaration.',
         },
       ],
@@ -298,15 +313,19 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.foo" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.bar" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.bar.baz" declaration.',
         },
       ],
@@ -333,15 +352,19 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "arg0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "arg0.foo" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "arg1" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "arg1.bar" declaration.',
         },
       ],
@@ -373,15 +396,19 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "arg" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "arg.foo" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "config0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "config0.bar" declaration.',
         },
       ],
@@ -413,15 +440,19 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "arg" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "arg.foo" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "config0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "config0.bar" declaration.',
         },
       ],
@@ -452,9 +483,11 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "bar" declaration.',
         },
       ],
@@ -479,6 +512,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "bar" declaration.',
         },
       ],
@@ -503,9 +537,11 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "baz" declaration.',
         },
       ],
@@ -532,6 +568,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "baz" declaration.',
         },
       ],
@@ -557,9 +594,11 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "bar" declaration.',
         },
       ],
@@ -585,6 +624,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @arg "foo" declaration.',
         },
       ],
@@ -616,6 +656,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "bar" declaration.',
         },
       ],
@@ -640,6 +681,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -669,6 +711,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -698,6 +741,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -722,6 +766,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -751,6 +796,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -789,6 +835,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -827,6 +874,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -860,6 +908,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -888,6 +937,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -916,6 +966,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Unexpected tag `@param`',
         },
       ],
@@ -937,15 +988,19 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.bar" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.baz" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -970,15 +1025,19 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.bar" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0.baz" declaration.',
         },
       ],
@@ -1003,15 +1062,19 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0."0"" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "root0."1"" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -1664,6 +1727,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
@@ -1695,9 +1759,11 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @param "data" declaration.',
         },
         {
+          line: 3,
           message: 'Missing JSDoc @param "data.last_modified" declaration.',
         },
       ],
@@ -1822,6 +1888,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "extra" declaration.',
         },
       ],
@@ -1971,6 +2038,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @param "param" declaration.',
         },
       ],

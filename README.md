@@ -7601,7 +7601,8 @@ Use the `minimum` property (defaults to 1) to indicate how many are required
 for the rule to be reported.
 
 Use the `message` property to indicate the specific error to be shown when an
-error is reported for that context being found missing.
+error is reported for that context being found missing. You may use
+`{{context}}` and `{{comment}}` with such messages.
 
 Set to `"any"` if you want the rule to apply to any jsdoc block throughout
 your files (as is necessary for finding function blocks not attached to a
@@ -7628,7 +7629,7 @@ function quux () {
 
 }
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration"}]}]
-// Message: Syntax is required: FunctionDeclaration
+// Message: Syntax is required: FunctionDeclaration with JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])
 
 /**
  * @implements {Bar|Foo}
@@ -7636,8 +7637,8 @@ function quux () {
 function quux () {
 
 }
-// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration","message":"Problematic function syntax: `{{context}}`."}]}]
-// Message: Problematic function syntax: `FunctionDeclaration`.
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration","message":"Problematically missing function syntax: `{{context}}` with `{{comment}}`."}]}]
+// Message: Problematically missing function syntax: `FunctionDeclaration` with `JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])`.
 
 /**
  * @implements {Bar|Foo}
@@ -7663,7 +7664,7 @@ function quux () {
 
 }
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration","minimum":2}]}]
-// Message: Syntax is required: FunctionDeclaration
+// Message: Syntax is required: FunctionDeclaration with JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])
 ````
 
 The following patterns are not considered problems:

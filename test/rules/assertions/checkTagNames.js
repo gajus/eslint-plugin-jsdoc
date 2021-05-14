@@ -8,6 +8,10 @@ const buildTagBlock = (tags) => {
   }).join('') + '\n */';
 };
 
+const lineCount = (code) => {
+  return code.match(/\n/g).length;
+};
+
 // We avoid testing all closure tags as too many
 const ALL_JSDOC_TAGS_COMMENT = buildTagBlock(jsdocTags);
 const ALL_TYPESCRIPT_TAGS_COMMENT = buildTagBlock(typeScriptTags);
@@ -296,6 +300,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Blacklisted tag found (`@todo`)',
         },
       ],
@@ -318,6 +323,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Please resolve to-dos or add to the tracker',
         },
       ],
@@ -342,6 +348,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Please use x-todo instead of todo',
         },
       ],
@@ -375,6 +382,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Please use x-todo instead of todo',
         },
       ],
@@ -412,6 +420,7 @@ export default {
           message: 'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.',
         },
         {
+          line: 3,
           message: 'Invalid JSDoc tag (preference). Replace "todo" JSDoc tag with "55".',
         },
       ],
@@ -537,6 +546,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc tag (preference). Replace "returns" JSDoc tag with "return".',
         },
       ],
@@ -556,6 +566,7 @@ export default {
       code: `${ALL_JSDOC_TAGS_COMMENT}\nfunction quux (foo) {}`,
       errors: [
         {
+          line: 1,
           message: 'Unrecognized value `badMode` for `settings.jsdoc.mode`.',
         },
       ],
@@ -569,6 +580,7 @@ export default {
       code: `${ALL_TYPESCRIPT_TAGS_COMMENT}\nfunction quux (foo) {}`,
       errors: [
         {
+          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT),
           message: 'Invalid JSDoc tag name "template".',
         },
       ],
@@ -577,6 +589,7 @@ export default {
       code: `${ONE_CLOSURE_TAGS_COMMENT}\nfunction quux (foo) {}`,
       errors: [
         {
+          line: lineCount(ONE_CLOSURE_TAGS_COMMENT),
           message: 'Invalid JSDoc tag name "externs".',
         },
       ],
@@ -589,10 +602,22 @@ export default {
         /** @jsxRuntime automatic */
       `,
       errors: [
-        {message: 'Invalid JSDoc tag name "jsx".'},
-        {message: 'Invalid JSDoc tag name "jsxFrag".'},
-        {message: 'Invalid JSDoc tag name "jsxImportSource".'},
-        {message: 'Invalid JSDoc tag name "jsxRuntime".'},
+        {
+          line: 2,
+          message: 'Invalid JSDoc tag name "jsx".',
+        },
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag name "jsxFrag".',
+        },
+        {
+          line: 4,
+          message: 'Invalid JSDoc tag name "jsxImportSource".',
+        },
+        {
+          line: 5,
+          message: 'Invalid JSDoc tag name "jsxRuntime".',
+        },
       ],
     },
   ],

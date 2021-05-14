@@ -12,6 +12,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -42,6 +43,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -72,6 +74,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -101,6 +104,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -130,6 +134,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -159,6 +164,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -188,6 +194,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -217,6 +224,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -248,6 +256,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -281,6 +290,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -312,6 +322,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -344,6 +355,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -377,6 +389,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -410,6 +423,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -445,6 +459,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -477,10 +492,12 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
         {
+          line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -510,6 +527,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -539,6 +557,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -568,6 +587,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -595,6 +615,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -628,6 +649,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -659,6 +681,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },
@@ -718,6 +741,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -745,6 +769,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -772,6 +797,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -800,6 +826,7 @@ export default {
       `,
       errors: [
         {
+          line: 7,
           message: 'Expected JSDoc block lines to not be aligned.',
           type: 'Block',
         },
@@ -873,6 +900,7 @@ export default {
       `,
       errors: [
         {
+          line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
           type: 'Block',
         },

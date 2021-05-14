@@ -605,6 +605,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".',
         },
       ],
@@ -635,6 +636,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".',
         },
       ],
@@ -666,6 +668,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".',
         },
       ],
@@ -696,6 +699,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "GenericArray".',
         },
       ],
@@ -726,6 +730,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".',
         },
       ],
@@ -756,6 +761,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".',
         },
       ],
@@ -789,6 +795,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "SpecialTypeArray".',
         },
       ],
@@ -822,6 +829,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -852,6 +860,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -883,6 +892,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -914,6 +924,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -944,6 +955,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -974,6 +986,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -1004,6 +1017,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -1034,6 +1048,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -1067,6 +1082,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -1100,6 +1116,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -1133,6 +1150,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object".',
         },
       ],
@@ -1158,6 +1176,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object".',
         },
       ],
@@ -1180,6 +1199,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -1213,6 +1233,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
@@ -1247,9 +1268,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.".',
         },
       ],
@@ -1282,9 +1305,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.<>".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array.<>".',
         },
       ],
@@ -1317,9 +1342,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array<>".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "Array<>".',
         },
       ],
@@ -1352,9 +1379,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object".',
         },
       ],
@@ -1387,9 +1416,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".',
         },
       ],
@@ -1422,9 +1453,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object.".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object.".',
         },
       ],
@@ -1457,9 +1490,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
         },
       ],
@@ -1492,9 +1527,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array<>".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array<>".',
         },
       ],
@@ -1527,9 +1564,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "<>".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "<>".',
         },
       ],
@@ -1562,6 +1601,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "<>".',
         },
       ],
@@ -1594,6 +1634,7 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "MyArray"; prefer: "<>".',
         },
       ],
@@ -1626,9 +1667,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".',
         },
       ],
@@ -1661,9 +1704,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".',
         },
       ],
@@ -1699,9 +1744,11 @@ export default {
       `,
       errors: [
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
         },
         {
+          line: 4,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
         },
       ],
@@ -1725,7 +1772,10 @@ export default {
     {
       code: '/** @typedef {String} foo */',
       errors: [
-        {message: 'Invalid JSDoc @typedef "foo" type "String"; prefer: "string".'},
+        {
+          line: 1,
+          message: 'Invalid JSDoc @typedef "foo" type "String"; prefer: "string".',
+        },
       ],
       output: '/** @typedef {string} foo */',
     },
@@ -1904,6 +1954,7 @@ export default {
       `,
       errors: [
         {
+          line: 3,
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "[]".',
         },
       ],
