@@ -76,7 +76,8 @@ export default iterateJsdoc(({
   const ruleTestTemplate = `export default {
   invalid: [
     {
-      code: \`\`,
+      code: \`
+      \`,
       errors: [{
         message: '',
       }],
@@ -84,7 +85,8 @@ export default iterateJsdoc(({
   ],
   valid: [
     {
-      code: \`\`,
+      code: \`
+      \`,
     },
   ],
 };
