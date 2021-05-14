@@ -935,6 +935,7 @@ export default {
       `,
       errors: [
         {
+          line: 5,
           message: 'Missing @param "options.foo.bar"',
         },
       ],
@@ -951,6 +952,7 @@ export default {
       `,
       errors: [
         {
+          line: 6,
           message: 'Missing @param "options.foo.bar.baz"',
         },
       ],

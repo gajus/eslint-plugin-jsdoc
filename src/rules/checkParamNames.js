@@ -99,7 +99,16 @@ const validateParameterNames = (
           if (!checkRestProperty && rests[idx]) {
             return;
           }
-          missingProperties.push(name);
+          const missingIndex = actualNames.findIndex((actualName) => {
+            return utils.pathDoesNotBeginWith(name, actualName);
+          });
+          const line = tag.source[0].number - 1 + (missingIndex > -1 ? missingIndex : actualNames.length);
+          missingProperties.push({
+            name,
+            tagPlacement: {
+              line: line === 0 ? 1 : line,
+            },
+          });
         } else if (actualTypes[actualNameIdx].search(checkTypesRegex) === -1 && actualTypes[actualNameIdx] !== '') {
           notCheckingNames.push(name);
         }
@@ -107,8 +116,8 @@ const validateParameterNames = (
 
       const hasMissing = missingProperties.length;
       if (hasMissing) {
-        missingProperties.forEach((missingProperty) => {
-          report(`Missing @${targetTagName} "${missingProperty}"`, null, tag);
+        missingProperties.forEach(({tagPlacement, name: missingProperty}) => {
+          report(`Missing @${targetTagName} "${missingProperty}"`, null, tagPlacement);
         });
       }
 

@@ -1219,6 +1219,11 @@ const comparePaths = (name) => {
   };
 };
 
+const pathDoesNotBeginWith = (name, otherPathName) => {
+  return !name.startsWith(otherPathName) &&
+    !dropPathSegmentQuotes(name).startsWith(dropPathSegmentQuotes(otherPathName));
+};
+
 const getRegexFromString = (regexString, requiredFlags) => {
   const match = regexString.match(/^\/(.*)\/([gimyus]*)$/us);
   let flags = 'u';
@@ -1266,6 +1271,7 @@ export default {
   isValidTag,
   overrideTagStructure,
   parseClosureTemplateTag,
+  pathDoesNotBeginWith,
   setTagStructure,
   tagMightHaveNamepath,
   tagMightHaveNamePosition,
