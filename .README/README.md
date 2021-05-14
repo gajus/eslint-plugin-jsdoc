@@ -552,6 +552,7 @@ selector).
 {"gitdown": "include", "file": "./rules/empty-tags.md"}
 {"gitdown": "include", "file": "./rules/implements-on-classes.md"}
 {"gitdown": "include", "file": "./rules/match-description.md"}
+{"gitdown": "include", "file": "./rules/multiline-blocks.md"}
 {"gitdown": "include", "file": "./rules/newline-after-description.md"}
 {"gitdown": "include", "file": "./rules/no-bad-blocks.md"}
 {"gitdown": "include", "file": "./rules/no-defaults.md"}

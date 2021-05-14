@@ -244,6 +244,20 @@ const getUtils = (
     });
   };
 
+  utils.seedTokens = seedTokens;
+
+  utils.addLine = (sourceIndex, tokens) => {
+    const number = (jsdoc.source[sourceIndex - 1]?.number || 0) + 1;
+    jsdoc.source.splice(sourceIndex, 0, {
+      number,
+      source: '',
+      tokens: seedTokens(tokens),
+    });
+
+    // If necessary, we can rewire the tags (misnamed method)
+    // rewireSource(jsdoc);
+  };
+
   utils.addLines = (tagIndex, tagSourceOffset, numLines) => {
     const {source: tagSource} = jsdoc.tags[tagIndex];
     let lastIndex;
@@ -343,8 +357,8 @@ const getUtils = (
     return jsdocUtils.isValidTag(context, mode, name, definedTags);
   };
 
-  utils.hasATag = (name) => {
-    return jsdocUtils.hasATag(jsdoc, name);
+  utils.hasATag = (names) => {
+    return jsdocUtils.hasATag(jsdoc, names);
   };
 
   utils.hasTag = (name) => {
