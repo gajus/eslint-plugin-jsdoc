@@ -12,7 +12,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @version.',
+          message: 'Missing JSDoc @version value.',
         },
       ],
     },
@@ -63,7 +63,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @since.',
+          message: 'Missing JSDoc @since value.',
         },
       ],
     },
@@ -95,7 +95,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @license.',
+          message: 'Missing JSDoc @license value.',
         },
       ],
     },
@@ -203,7 +203,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @author.',
+          message: 'Missing JSDoc @author value.',
         },
       ],
     },
@@ -240,7 +240,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Missing JSDoc @variation.',
+          message: 'Missing JSDoc @variation value.',
         },
       ],
       options: [{
