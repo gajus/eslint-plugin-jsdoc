@@ -19,7 +19,7 @@ export default iterateJsdoc(({
     const version = utils.getTagDescription(jsdocParameter).trim();
     if (!version) {
       report(
-        `Missing JSDoc @${targetTagName}.`,
+        `Missing JSDoc @${targetTagName} value.`,
         null,
         jsdocParameter,
       );
@@ -36,7 +36,7 @@ export default iterateJsdoc(({
       const variation = utils.getTagDescription(jsdocParameter).trim();
       if (!variation) {
         report(
-          `Missing JSDoc @${targetTagName}.`,
+          `Missing JSDoc @${targetTagName} value.`,
           null,
           jsdocParameter,
         );
@@ -56,7 +56,7 @@ export default iterateJsdoc(({
     const version = utils.getTagDescription(jsdocParameter).trim();
     if (!version) {
       report(
-        `Missing JSDoc @${targetTagName}.`,
+        `Missing JSDoc @${targetTagName} value.`,
         null,
         jsdocParameter,
       );
@@ -74,7 +74,7 @@ export default iterateJsdoc(({
     const license = match && match[1] || match[0];
     if (!license.trim()) {
       report(
-        `Missing JSDoc @${targetTagName}.`,
+        `Missing JSDoc @${targetTagName} value.`,
         null,
         jsdocParameter,
       );
@@ -103,7 +103,7 @@ export default iterateJsdoc(({
     const author = utils.getTagDescription(jsdocParameter).trim();
     if (!author) {
       report(
-        `Missing JSDoc @${targetTagName}.`,
+        `Missing JSDoc @${targetTagName} value.`,
         null,
         jsdocParameter,
       );

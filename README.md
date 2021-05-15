@@ -5626,7 +5626,7 @@ The following patterns are considered problems:
 function quux (foo) {
 
 }
-// Message: Missing JSDoc @version.
+// Message: Missing JSDoc @version value.
 
 /**
  * @version 3.1
@@ -5651,7 +5651,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Missing JSDoc @since.
+// Message: Missing JSDoc @since value.
 
 /**
  * @since 3.1
@@ -5667,7 +5667,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Missing JSDoc @license.
+// Message: Missing JSDoc @license value.
 
 /**
  * @license FOO
@@ -5720,7 +5720,7 @@ Some extra text"; expected SPDX expression: https://spdx.org/licenses/.
 function quux (foo) {
 
 }
-// Message: Missing JSDoc @author.
+// Message: Missing JSDoc @author value.
 
 /**
  * @author Brett Zamir
@@ -5738,7 +5738,7 @@ function quux (foo) {
 
 }
 // "jsdoc/check-values": ["error"|"warn", {"numericOnlyVariation":true}]
-// Message: Missing JSDoc @variation.
+// Message: Missing JSDoc @variation value.
 
 /**
  * @variation 5.2
