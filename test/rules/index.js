@@ -45,10 +45,17 @@ const ruleTester = new RuleTester();
     return assertion;
   });
   if (count) {
-    // eslint-disable-next-line no-console -- CLI
-    console.log(
-      `Rule, \`${ruleName}\`, missing line numbers in errors: ${count}`,
-    );
+    // Make an exception for now for `require-param` as it helps to find the
+    //   many lines were it is missing to know which tests to check without
+    //   adding false (or failing) expectations now
+    if (ruleName === 'require-param') {
+      // eslint-disable-next-line no-console -- CLI
+      console.log(
+        `Rule, \`${ruleName}\`, missing line numbers in errors: ${count}`,
+      );
+    } else {
+      throw new Error(`Rule, \`${ruleName}\`, missing line numbers in errors: ${count}`);
+    }
   }
 
   assertions.valid = assertions.valid.map((assertion) => {
