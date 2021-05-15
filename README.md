@@ -8193,6 +8193,15 @@ The following patterns are considered problems:
  **/
 // "jsdoc/no-multi-asterisks": ["error"|"warn", {"preventAtMiddleLines":false}]
 // Message: Should be no multiple asterisks on end lines.
+
+/** Desc. **/
+// Message: Should be no multiple asterisks on end lines.
+
+/** @someTag name desc. **/
+// Message: Should be no multiple asterisks on end lines.
+
+/** abc * */
+// Message: Should be no multiple asterisks on end lines.
 ````
 
 The following patterns are not considered problems:
@@ -8245,6 +8254,21 @@ The following patterns are not considered problems:
  * @tag {SomeType} and a tag with details
  *
  */
+
+/** abc */
+function foo() {
+    //
+}
+
+/** foo */
+function foo(): void {
+    //
+}
+
+/** @aTag abc */
+function foo() {
+    //
+}
 ````
 
 

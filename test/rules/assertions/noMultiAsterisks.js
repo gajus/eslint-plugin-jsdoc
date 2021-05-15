@@ -179,6 +179,42 @@ export default {
        */
       `,
     },
+    {
+      code: `
+      /** Desc. **/
+      `,
+      errors: [{
+        line: 2,
+        message: 'Should be no multiple asterisks on end lines.',
+      }],
+      output: `
+      /** Desc. */
+      `,
+    },
+    {
+      code: `
+      /** @someTag name desc. **/
+      `,
+      errors: [{
+        line: 2,
+        message: 'Should be no multiple asterisks on end lines.',
+      }],
+      output: `
+      /** @someTag name desc. */
+      `,
+    },
+    {
+      code: `
+      /** abc * */
+      `,
+      errors: [{
+        line: 2,
+        message: 'Should be no multiple asterisks on end lines.',
+      }],
+      output: `
+      /** abc */
+      `,
+    },
   ],
   valid: [
     {
@@ -258,6 +294,31 @@ export default {
        * @tag {SomeType} and a tag with details
        *
        */
+      `,
+    },
+    {
+      code: `
+      /** abc */
+      function foo() {
+          //
+      }
+      `,
+    },
+    {
+      code: `
+      /** foo */
+      function foo(): void {
+          //
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /** @aTag abc */
+      function foo() {
+          //
+      }
       `,
     },
   ],
