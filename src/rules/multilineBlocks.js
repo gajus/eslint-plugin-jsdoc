@@ -96,15 +96,37 @@ export default iterateJsdoc(({
     return;
   }
 
+  const checkZeroLineText = () => {
+    if (
+      noZeroLineText &&
+      (tag || description)
+    ) {
+      const fixer = () => {
+        const line = {...tokens};
+        emptyTokens();
+        const {tokens: {delimiter, start}} = jsdoc.source[1];
+        utils.addLine(1, {...line, delimiter, start});
+      };
+      utils.reportJSDoc(
+        'Should have no text on the "0th" line (after the `/**`).',
+        null, fixer,
+      );
+    }
+  };
+
   if (noMultilineBlocks) {
     if (
       jsdoc.tags.length &&
       (multilineTags.includes('*') || utils.hasATag(multilineTags))
     ) {
+      checkZeroLineText();
+
       return;
     }
 
     if (jsdoc.description.length >= minimumLengthForMultiline) {
+      checkZeroLineText();
+
       return;
     }
 
@@ -120,22 +142,28 @@ export default iterateJsdoc(({
           'your configuration but fixing would result in a single ' +
           'line block which you have prohibited with `noSingleLineBlocks`.',
       );
-    } else if (jsdoc.tags.length > 1) {
-      if (allowMultipleTags) {
+
+      return;
+    }
+
+    if (jsdoc.tags.length > 1) {
+      if (!allowMultipleTags) {
+        utils.reportJSDoc(
+          'Multiline jsdoc blocks are prohibited by ' +
+            'your configuration but the block has multiple tags.',
+        );
+
         return;
       }
-      utils.reportJSDoc(
-        'Multiline jsdoc blocks are prohibited by ' +
-          'your configuration but the block has multiple tags.',
-      );
     } else if (jsdoc.tags.length === 1 && jsdoc.description.trim()) {
-      if (allowMultipleTags) {
+      if (!allowMultipleTags) {
+        utils.reportJSDoc(
+          'Multiline jsdoc blocks are prohibited by ' +
+            'your configuration but the block has a description with a tag.',
+        );
+
         return;
       }
-      utils.reportJSDoc(
-        'Multiline jsdoc blocks are prohibited by ' +
-          'your configuration but the block has a description with a tag.',
-      );
     } else {
       const fixer = () => {
         jsdoc.source = [{
@@ -186,26 +214,12 @@ export default iterateJsdoc(({
           'your configuration.',
         null, fixer,
       );
+
+      return;
     }
-
-    return;
   }
 
-  if (
-    noZeroLineText &&
-    (tag || description)
-  ) {
-    const fixer = () => {
-      const line = {...tokens};
-      emptyTokens();
-      const {tokens: {delimiter, start}} = jsdoc.source[1];
-      utils.addLine(1, {...line, delimiter, start});
-    };
-    utils.reportJSDoc(
-      'Should have no text on the "0th" line (after the `/**`).',
-      null, fixer,
-    );
-  }
+  checkZeroLineText();
 }, {
   iterateAllJsdocs: true,
   meta: {

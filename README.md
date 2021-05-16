@@ -7276,6 +7276,12 @@ The following patterns are considered problems:
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"noMultilineBlocks":true,"noSingleLineBlocks":true}]
 // Message: Multiline jsdoc blocks are prohibited by your configuration but fixing would result in a single line block which you have prohibited with `noSingleLineBlocks`.
+
+/** This comment is bad
+ * It should not have text on line zero
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"minimumLengthForMultiline":50,"noMultilineBlocks":true,"noZeroLineText":true}]
+// Message: Should have no text on the "0th" line (after the `/**`).
 ````
 
 The following patterns are not considered problems:

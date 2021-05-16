@@ -425,6 +425,28 @@ export default {
         noSingleLineBlocks: true,
       }],
     },
+    {
+      code: `
+        /** This comment is bad
+         * It should not have text on line zero
+         */
+      `,
+      errors: [{
+        line: 2,
+        message: 'Should have no text on the "0th" line (after the `/**`).',
+      }],
+      options: [{
+        minimumLengthForMultiline: 50,
+        noMultilineBlocks: true,
+        noZeroLineText: true,
+      }],
+      output: `
+        /**
+         * This comment is bad
+         * It should not have text on line zero
+         */
+      `,
+    },
   ],
   valid: [
     {
