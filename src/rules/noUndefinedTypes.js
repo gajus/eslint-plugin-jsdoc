@@ -1,8 +1,7 @@
 import {
   getJSDocComment,
 } from '@es-joy/jsdoccomment';
-import { traverse } from 'jsdoc-type-pratt-parser'
-import { parseType } from '../parseTypes';
+import { traverse, parse as parseType, tryParse as tryParseType} from 'jsdoc-type-pratt-parser'
 import _ from 'lodash';
 import iterateJsdoc, {
   parseComment,
@@ -145,7 +144,7 @@ export default iterateJsdoc(({
     let parsedType;
 
     try {
-      parsedType = parseType(tag.type, mode);
+      parsedType = mode === 'permissive' ? tryParseType(tag.type) : parseType(tag.type, mode);
     } catch {
       // On syntax error, will be handled by valid-types.
       return;
