@@ -8,6 +8,7 @@ export default iterateJsdoc(({
 }) => {
   const {
     allowMultipleTags = true,
+    noFinalLineText = true,
     noZeroLineText = true,
     noSingleLineBlocks = false,
     singleLineTags = ['lends', 'type'],
@@ -96,7 +97,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  const checkZeroLineText = () => {
+  const lineChecks = () => {
     if (
       noZeroLineText &&
       (tag || description)
@@ -111,6 +112,42 @@ export default iterateJsdoc(({
         'Should have no text on the "0th" line (after the `/**`).',
         null, fixer,
       );
+
+      return;
+    }
+
+    const finalLine = jsdoc.source[jsdoc.source.length - 1];
+    const finalLineTokens = finalLine.tokens;
+    if (
+      noFinalLineText &&
+      finalLineTokens.description.trim()
+    ) {
+      const fixer = () => {
+        const line = {...finalLineTokens};
+        line.description = line.description.trimEnd();
+
+        const {delimiter} = line;
+
+        [
+          'delimiter',
+          'postDelimiter',
+          'tag',
+          'type',
+          'postType',
+          'postTag',
+          'name',
+          'postName',
+          'description',
+        ].forEach((prop) => {
+          finalLineTokens[prop] = '';
+        });
+
+        utils.addLine(jsdoc.source.length - 1, {...line, delimiter, end: ''});
+      };
+      utils.reportJSDoc(
+        'Should have no text on the final line (before the `*/`).',
+        null, fixer,
+      );
     }
   };
 
@@ -119,13 +156,13 @@ export default iterateJsdoc(({
       jsdoc.tags.length &&
       (multilineTags.includes('*') || utils.hasATag(multilineTags))
     ) {
-      checkZeroLineText();
+      lineChecks();
 
       return;
     }
 
     if (jsdoc.description.length >= minimumLengthForMultiline) {
-      checkZeroLineText();
+      lineChecks();
 
       return;
     }
@@ -222,7 +259,7 @@ export default iterateJsdoc(({
     }
   }
 
-  checkZeroLineText();
+  lineChecks();
 }, {
   iterateAllJsdocs: true,
   meta: {
@@ -253,6 +290,9 @@ export default iterateJsdoc(({
                 type: 'array',
               },
             ],
+          },
+          noFinalLineText: {
+            type: 'boolean',
           },
           noMultilineBlocks: {
             type: 'boolean',

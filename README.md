@@ -7138,6 +7138,8 @@ Note that if you set `noSingleLineBlocks` and `noMultilineBlocks` to `true`
 and configure them in a certain manner, you might effectively be prohibiting
 all jsdoc blocks!
 
+Also allows for preventing text at the very beginning or very end of blocks.
+
 <a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-12"></a>
 #### Options
 
@@ -7148,6 +7150,14 @@ A single options object with the following properties.
 
 For multiline blocks, any non-whitespace text immediately after the `/**` and
 space will be reported. (Text after a newline is not reported.)
+
+`noMultilineBlocks` will have priority over this rule if it applies.
+
+<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-12-nofinallinetext-defaults-to-true"></a>
+##### <code>noFinalLineText</code> (defaults to <code>true</code>)
+
+For multiline blocks, any non-whitespace text preceding the `*/` on the final
+line will be reported. (Text preceding a newline is not reported.)
 
 `noMultilineBlocks` will have priority over this rule if it applies.
 
@@ -7218,7 +7228,7 @@ cannot be reliably added after the tag either).
 |Tags|Any (though `singleLineTags` and `multilineTags` control the application)|
 |Recommended|true|
 |Settings||
-|Options|`noZeroLineText`, `noSingleLineBlocks`, `singleLineTags`, `noMultilineBlocks`, `minimumLengthForMultiline`, `multilineTags`, `allowMultipleTags`|
+|Options|`noZeroLineText`, `noSingleLineBlocks`, `singleLineTags`, `noMultilineBlocks`, `minimumLengthForMultiline`, `multilineTags`, `allowMultipleTags`, `noFinalLineText`|
 
 The following patterns are considered problems:
 
@@ -7367,6 +7377,16 @@ The following patterns are considered problems:
  * line. */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"multilineTags":[],"noMultilineBlocks":true}]
 // Message: Multiline jsdoc blocks are prohibited by your configuration.
+
+/**
+ * @someTag {aType} with Description */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineBlocks":true}]
+// Message: Should have no text on the final line (before the `*/`).
+
+/**
+ * Description */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineBlocks":true}]
+// Message: Should have no text on the final line (before the `*/`).
 ````
 
 The following patterns are not considered problems:
@@ -7469,6 +7489,9 @@ The following patterns are not considered problems:
  * @oneTag
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"allowMultipleTags":false,"multilineTags":["oneTag"],"noMultilineBlocks":true}]
+
+/** @someTag with Description */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineBlocks":true}]
 ````
 
 
@@ -8292,6 +8315,14 @@ The following patterns are considered problems:
 // Message: Should be no multiple asterisks on end lines.
 
 /** abc * */
+// Message: Should be no multiple asterisks on end lines.
+
+/**
+ * Preserve user's whitespace when fixing (though one may also
+ *   use an align rule)
+ *
+ * */
+// "jsdoc/no-multi-asterisks": ["error"|"warn", {"preventAtEnd":true}]
 // Message: Should be no multiple asterisks on end lines.
 ````
 

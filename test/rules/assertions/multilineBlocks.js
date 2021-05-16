@@ -467,6 +467,42 @@ export default {
         /** @lends This can be safely fixed to a single line. */
       `,
     },
+    {
+      code: `
+        /**
+         * @someTag {aType} with Description */
+      `,
+      errors: [{
+        line: 2,
+        message: 'Should have no text on the final line (before the `*/`).',
+      }],
+      options: [{
+        noFinalLineBlocks: true,
+      }],
+      output: `
+        /**
+         * @someTag {aType} with Description
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Description */
+      `,
+      errors: [{
+        line: 2,
+        message: 'Should have no text on the final line (before the `*/`).',
+      }],
+      options: [{
+        noFinalLineBlocks: true,
+      }],
+      output: `
+        /**
+         * Description
+         */
+      `,
+    },
   ],
   valid: [
     {
@@ -683,6 +719,14 @@ export default {
         allowMultipleTags: false,
         multilineTags: ['oneTag'],
         noMultilineBlocks: true,
+      }],
+    },
+    {
+      code: `
+        /** @someTag with Description */
+      `,
+      options: [{
+        noFinalLineBlocks: true,
       }],
     },
   ],
