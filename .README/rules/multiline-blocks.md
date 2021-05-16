@@ -7,6 +7,8 @@ Note that if you set `noSingleLineBlocks` and `noMultilineBlocks` to `true`
 and configure them in a certain manner, you might effectively be prohibiting
 all jsdoc blocks!
 
+Also allows for preventing text at the very beginning or very end of blocks.
+
 #### Options
 
 A single options object with the following properties.
@@ -15,6 +17,13 @@ A single options object with the following properties.
 
 For multiline blocks, any non-whitespace text immediately after the `/**` and
 space will be reported. (Text after a newline is not reported.)
+
+`noMultilineBlocks` will have priority over this rule if it applies.
+
+##### `noFinalLineText` (defaults to `true`)
+
+For multiline blocks, any non-whitespace text preceding the `*/` on the final
+line will be reported. (Text preceding a newline is not reported.)
 
 `noMultilineBlocks` will have priority over this rule if it applies.
 
@@ -79,6 +88,6 @@ cannot be reliably added after the tag either).
 |Tags|Any (though `singleLineTags` and `multilineTags` control the application)|
 |Recommended|true|
 |Settings||
-|Options|`noZeroLineText`, `noSingleLineBlocks`, `singleLineTags`, `noMultilineBlocks`, `minimumLengthForMultiline`, `multilineTags`, `allowMultipleTags`|
+|Options|`noZeroLineText`, `noSingleLineBlocks`, `singleLineTags`, `noMultilineBlocks`, `minimumLengthForMultiline`, `multilineTags`, `allowMultipleTags`, `noFinalLineText`|
 
 <!-- assertions multilineBlocks -->

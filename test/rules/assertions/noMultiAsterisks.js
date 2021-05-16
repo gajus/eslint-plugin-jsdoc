@@ -215,6 +215,29 @@ export default {
       /** abc */
       `,
     },
+    {
+      code: `
+      /**
+       * Preserve user's whitespace when fixing (though one may also
+       *   use an align rule)
+       *
+       * */
+      `,
+      errors: [{
+        line: 6,
+        message: 'Should be no multiple asterisks on end lines.',
+      }],
+      options: [{
+        preventAtEnd: true,
+      }],
+      output: `
+      /**
+       * Preserve user's whitespace when fixing (though one may also
+       *   use an align rule)
+       *
+        */
+      `,
+    },
   ],
   valid: [
     {
