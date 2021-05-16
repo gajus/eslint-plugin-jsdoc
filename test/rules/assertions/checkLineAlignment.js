@@ -917,6 +917,47 @@ export default {
       const fn = ( lorem, sit ) => {}
       `,
     },
+    {
+      code: `
+      /**
+       * Function description
+       * description with post delimiter.
+       *
+       * @param  {string} lorem Description.
+       * @param  {int}    sit   Description multi words.
+       *
+       * @return {string}       Return description.
+       */
+      const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['always', {
+        customSpacings: {
+          postDelimiter: 2,
+          postName: 2,
+          postTag: 2,
+          postType: 2,
+        },
+      }],
+      output: `
+      /**
+       * Function description
+       * description with post delimiter.
+       *
+       *  @param   {string}  lorem  Description.
+       *  @param   {int}     sit    Description multi words.
+       *
+       *  @return  {string}         Return description.
+       */
+      const fn = ( lorem, sit ) => {}
+      `,
+    },
   ],
   valid: [
     {

@@ -64,7 +64,12 @@ const space = (len) => {
   return ''.padStart(len, ' ');
 };
 
-const alignTransform = (tags, indent, preserveMainDescriptionPostDelimiter) => {
+const alignTransform = ({
+  customSpacings,
+  tags,
+  indent,
+  preserveMainDescriptionPostDelimiter,
+}) => {
   let intoTags = false;
   let width;
 
@@ -96,17 +101,24 @@ const alignTransform = (tags, indent, preserveMainDescriptionPostDelimiter) => {
       }
     }
 
-    tokens.postDelimiter = nothingAfter.delim ? '' : ' ';
+    const spacings = {
+      postDelimiter: customSpacings?.postDelimiter || 1,
+      postName: customSpacings?.postName || 1,
+      postTag: customSpacings?.postTag || 1,
+      postType: customSpacings?.postType || 1,
+    };
+
+    tokens.postDelimiter = nothingAfter.delim ? '' : space(spacings.postDelimiter);
 
     if (!nothingAfter.tag) {
-      tokens.postTag = space(width.tag - tokens.tag.length + 1);
+      tokens.postTag = space(width.tag - tokens.tag.length + spacings.postTag);
     }
     if (!nothingAfter.type) {
-      tokens.postType = space(width.type - tokens.type.length + 1);
+      tokens.postType = space(width.type - tokens.type.length + spacings.postType);
     }
     if (!nothingAfter.name) {
       // If post name is empty for all lines (name width 0), don't add post name spacing.
-      tokens.postName = width.name === 0 ? '' : space(width.name - tokens.name.length + 1);
+      tokens.postName = width.name === 0 ? '' : space(width.name - tokens.name.length + spacings.postName);
     }
 
     return tokens;
