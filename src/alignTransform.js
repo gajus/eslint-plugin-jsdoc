@@ -1,3 +1,9 @@
+/**
+ * Transform based on https://github.com/syavorsky/comment-parser/blob/master/src/transforms/align.ts
+ *
+ * It contains some customizations to align based on the tags, and some custom options.
+ */
+
 import {
   Markers,
 } from 'comment-parser/lib/primitives';
