@@ -1,5 +1,6 @@
-import { Parser, stringify, traverse } from 'jsdoc-type-pratt-parser';
+import { stringify, traverse } from 'jsdoc-type-pratt-parser';
 import iterateJsdoc from '../iterateJsdoc';
+import { parseType } from '../parseTypes';
 
 const strictNativeTypes = [
   'undefined',
@@ -124,10 +125,7 @@ export default iterateJsdoc(({
     let typeAst;
 
     try {
-      const parser = new Parser({
-        mode
-      });
-      typeAst = parser.parse(jsdocTag.type);
+      typeAst = parseType(jsdocTag.type, mode);
     } catch {
       return;
     }
