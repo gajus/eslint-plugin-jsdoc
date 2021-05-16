@@ -1,9 +1,7 @@
 import {
   getJSDocComment,
 } from '@es-joy/jsdoccomment';
-import {
-  parse as parseType, traverse,
-} from 'jsdoctypeparser';
+import { Parser, traverse } from 'jsdoc-type-pratt-parser'
 import _ from 'lodash';
 import iterateJsdoc, {
   parseComment,
@@ -146,21 +144,25 @@ export default iterateJsdoc(({
     let parsedType;
 
     try {
-      parsedType = parseType(tag.type, {mode});
+      const parser = new Parser({mode})
+      parsedType = parser.parse(tag.type);
     } catch {
       // On syntax error, will be handled by valid-types.
       return;
     }
 
-    traverse(parsedType, ({type, name}) => {
+    traverse(parsedType, ({type, value}, parentNode, property) => {
       if (type === 'NAME') {
+        if (parentNode !== undefined && parentNode.type === 'KEY_VALUE' && property === 'left') {
+          return
+        }
         const structuredTypes = structuredTags[tag.tag]?.type;
-        if (!allDefinedTypes.has(name) &&
-          (!Array.isArray(structuredTypes) || !structuredTypes.includes(name))
+        if (!allDefinedTypes.has(value) &&
+          (!Array.isArray(structuredTypes) || !structuredTypes.includes(value))
         ) {
-          report(`The type '${name}' is undefined.`, null, tag);
-        } else if (!extraTypes.includes(name)) {
-          context.markVariableAsUsed(name);
+          report(`The type '${value}' is undefined.`, null, tag);
+        } else if (!extraTypes.includes(value)) {
+          context.markVariableAsUsed(value);
         }
       }
     });

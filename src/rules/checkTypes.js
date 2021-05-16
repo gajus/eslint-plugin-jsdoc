@@ -1,6 +1,4 @@
-import {
-  parse, traverse, publish,
-} from 'jsdoctypeparser';
+import { Parser, stringify, traverse } from 'jsdoc-type-pratt-parser';
 import iterateJsdoc from '../iterateJsdoc';
 
 const strictNativeTypes = [
@@ -22,40 +20,38 @@ const adjustNames = (type, preferred, isGenericMatch, nodeName, node, parentNode
   let ret = preferred;
   if (isGenericMatch) {
     if (preferred === '[]') {
-      if (parentNode.objects[0].type === 'UNION') {
-        parentNode.objects[0] = {
-          type: 'PARENTHESIS',
-          value: parentNode.objects[0],
-        };
-      }
-      parentNode.meta.syntax = 'SQUARE_BRACKET';
+      parentNode.meta.brackets = '[]';
+      parentNode.meta.dot = false;
       ret = 'Array';
     } else {
       const dotBracketEnd = preferred.match(/\.(?:<>)?$/u);
       if (dotBracketEnd) {
-        parentNode.meta.syntax = 'ANGLE_BRACKET_WITH_DOT';
+        parentNode.meta.brackets = '<>';
+        parentNode.meta.dot = true;
         ret = preferred.slice(0, -dotBracketEnd[0].length);
       } else {
         const bracketEnd = preferred.endsWith('<>');
         if (bracketEnd) {
-          parentNode.meta.syntax = 'ANGLE_BRACKET';
+          parentNode.meta.brackets = '<>';
+          parentNode.meta.dot = false;
           ret = preferred.slice(0, -2);
         } else if (
-          parentNode.meta.syntax === 'SQUARE_BRACKET' &&
+          parentNode.meta.brackets === '[]' &&
           (nodeName === '[]' || nodeName === 'Array')
         ) {
-          parentNode.meta.syntax = 'ANGLE_BRACKET';
+          parentNode.meta.brackets = '<>';
+          parentNode.meta.dot = false;
         }
       }
     }
   } else if (type === 'ANY') {
     node.type = 'NAME';
   }
-  node.name = ret.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
+  node.value = ret.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
 
   // For bare pseudo-types like `<>`
   if (!ret) {
-    node.name = nodeName;
+    node.value = nodeName;
   }
 };
 
@@ -78,52 +74,46 @@ export default iterateJsdoc(({
     exemptTagContexts = [],
   } = context.options[0] || {};
 
-  const getPreferredTypeInfo = (_type, nodeName, parentName, parentNode) => {
+  const getPreferredTypeInfo = (_type, nodeName, parentNode, property) => {
     let hasMatchingPreferredType;
     let isGenericMatch;
     let typeName = nodeName;
     if (Object.keys(preferredTypes).length) {
-      const parentType = parentName === 'subject';
-      if (unifyParentAndChildTypeChecks || parentType) {
-        const syntax = parentNode?.meta?.syntax;
+      const isNameOfGeneric = parentNode !== undefined && parentNode.type === 'GENERIC' && property === 'left';
+      if (unifyParentAndChildTypeChecks || isNameOfGeneric) {
+        const brackets = parentNode?.meta?.brackets;
+        const dot = parentNode?.meta?.dot;
 
-        [
-          ['.', 'ANGLE_BRACKET_WITH_DOT'],
-          ['.<>', 'ANGLE_BRACKET_WITH_DOT'],
-          ['<>', 'ANGLE_BRACKET'],
-        ].some(([checkPostFix, syn]) => {
-          isGenericMatch = preferredTypes?.[nodeName + checkPostFix] !== undefined &&
-            syntax === syn;
-          if (isGenericMatch) {
-            typeName += checkPostFix;
-          }
-
-          return isGenericMatch;
-        });
-        if (!isGenericMatch && parentType) {
-          [
-            ['[]', 'SQUARE_BRACKET'],
-            ['.', 'ANGLE_BRACKET_WITH_DOT'],
-            ['.<>', 'ANGLE_BRACKET_WITH_DOT'],
-            ['<>', 'ANGLE_BRACKET'],
-          ].some(([checkPostFix, syn]) => {
-            isGenericMatch = preferredTypes?.[checkPostFix] !== undefined &&
-              syntax === syn;
-            if (isGenericMatch) {
-              typeName = checkPostFix;
+        if (brackets === '<>') {
+          const checkPostFixes = dot ? ['.', '.<>'] : ['<>'];
+          isGenericMatch = checkPostFixes.some(checkPostFix => {
+            if (preferredTypes?.[nodeName + checkPostFix] !== undefined) {
+              typeName += checkPostFix;
+              return true;
             }
+            return false;
+          });
+        }
 
-            return isGenericMatch;
+        if (!isGenericMatch && property) {
+          const checkPostFixes = dot ? ['.', '.<>'] : [brackets]
+
+          isGenericMatch = checkPostFixes.some(checkPostFix => {
+            if (preferredTypes?.[checkPostFix] !== undefined) {
+              typeName = checkPostFix;
+              return true;
+            }
+            return false;
           });
         }
       }
       const directNameMatch = preferredTypes?.[nodeName] !== undefined &&
         !Object.values(preferredTypes).includes(nodeName);
-      const unifiedSyntaxParentMatch = parentType && directNameMatch && unifyParentAndChildTypeChecks;
+      const unifiedSyntaxParentMatch = property && directNameMatch && unifyParentAndChildTypeChecks;
       isGenericMatch = isGenericMatch || unifiedSyntaxParentMatch;
 
       hasMatchingPreferredType = isGenericMatch ||
-        directNameMatch && !parentType;
+        directNameMatch && !property;
     }
 
     return [hasMatchingPreferredType, typeName, isGenericMatch];
@@ -134,20 +124,23 @@ export default iterateJsdoc(({
     let typeAst;
 
     try {
-      typeAst = parse(jsdocTag.type, {mode});
+      const parser = new Parser({
+        mode
+      });
+      typeAst = parser.parse(jsdocTag.type);
     } catch {
       return;
     }
     const tagName = jsdocTag.tag;
 
-    traverse(typeAst, (node, parentName, parentNode) => {
-      const {type, name} = node;
+    traverse(typeAst, (node, parentNode, property) => {
+      const {type, value} = node;
       if (!['NAME', 'ANY'].includes(type)) {
         return;
       }
-      let nodeName = type === 'ANY' ? '*' : name;
+      let nodeName = type === 'ANY' ? '*' : value;
 
-      const [hasMatchingPreferredType, typeName, isGenericMatch] = getPreferredTypeInfo(type, nodeName, parentName, parentNode);
+      const [hasMatchingPreferredType, typeName, isGenericMatch] = getPreferredTypeInfo(type, nodeName, parentNode, property);
 
       let preferred;
       let types;
@@ -207,7 +200,7 @@ export default iterateJsdoc(({
     });
 
     if (invalidTypes.length) {
-      const fixedType = publish(typeAst);
+      const fixedType = stringify(typeAst);
 
       invalidTypes.forEach(([badType, preferredType = '', message]) => {
         const fix = (fixer) => {
