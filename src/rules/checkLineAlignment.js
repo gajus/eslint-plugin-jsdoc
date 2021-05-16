@@ -8,7 +8,7 @@ const {
   flow: commentFlow,
 } = transforms;
 
-const checkNotAlignedPerTag = (utils, tag) => {
+const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
   /*
   start +
   delimiter +
@@ -61,11 +61,12 @@ const checkNotAlignedPerTag = (utils, tag) => {
     const contentProp = contentProps[idx];
     const contentPropVal = tokens[contentProp];
     const spacerPropVal = tokens[spacerProp];
+    const spacing = customSpacings?.[spacerProp] || 1;
 
     // There will be extra alignment if...
 
-    // 1. There is extra whitespace within a single spacer segment OR
-    return spacerPropVal.length > 1 ||
+    // 1. The spaces doesn't match the space it should have (1 or custom spacing) OR
+    return spacerPropVal.length !== spacing && spacerPropVal.length !== 0 ||
 
       // 2. There is a (single) space, no immediate content, and yet another
       //     space is found subsequently (not separated by intervening content)
@@ -80,7 +81,8 @@ const checkNotAlignedPerTag = (utils, tag) => {
       const contentPropVal = tokens[contentProp];
 
       if (contentPropVal) {
-        tokens[spacerProp] = ' ';
+        const spacing = customSpacings?.[spacerProp] || 1;
+        tokens[spacerProp] = ''.padStart(spacing, ' ');
         followedBySpace(idx, (hasSpace, contentPrp) => {
           if (hasSpace) {
             tokens[contentPrp] = '';
@@ -166,7 +168,7 @@ export default iterateJsdoc(({
 
   const foundTags = utils.getPresentTags(applicableTags);
   foundTags.forEach((tag) => {
-    checkNotAlignedPerTag(utils, tag);
+    checkNotAlignedPerTag(utils, tag, customSpacings);
   });
 }, {
   iterateAllJsdocs: true,
