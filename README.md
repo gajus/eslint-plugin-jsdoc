@@ -18998,8 +18998,11 @@ Enforces lines (or no lines) between tags.
 <a name="eslint-plugin-jsdoc-rules-tag-lines-options-39"></a>
 #### Options
 
-The first option is a single string set to "always" or "never" (defaults to
-"never").
+The first option is a single string set to "always", "never", or "any"
+(defaults to "never").
+
+"any" is only useful with `tags` (allowing non-enforcement of lines except
+for particular tags).
 
 The second option is an object with the following optional properties.
 
@@ -19013,6 +19016,17 @@ Use with "always" to indicate the number of lines to require be present.
 
 Use with "always" to indicate the normal lines to be added after tags should
 not be added after the final tag.
+
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-39-tags-default-to-empty-object"></a>
+##### <code>tags</code> (default to empty object)
+
+Overrides the default behavior depending on specific tags.
+
+An object whose keys are tag names and whose values are objects with the
+following keys:
+
+1. `lines` - Set to `always` or `never` to override.
+2. `count` - Overrides main `count` (for "always")
 
 |||
 |---|---|
@@ -19086,6 +19100,57 @@ The following patterns are considered problems:
  */
 // "jsdoc/tag-lines": ["error"|"warn", "always"]
 // Message: Expected 1 line between tags but found 0
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"tags":{"param":{"lines":"always"}}}]
+// Message: Expected 1 line between tags but found 0
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"tags":{"param":{"lines":"always"}}}]
+// Message: Expected 1 line between tags but found 0
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always",{"tags":{"param":{"lines":"never"}}}]
+// Message: Expected no lines between tags
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"count":2,"tags":{"param":{"lines":"always"}}}]
+// Message: Expected 2 lines between tags but found 1
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"count":5,"tags":{"param":{"count":2,"lines":"always"}}}]
+// Message: Expected 2 lines between tags but found 1
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always",{"tags":{"anotherTag":{"lines":"never"}}}]
+// Message: Expected 1 line between tags but found 0
 ````
 
 The following patterns are not considered problems:
@@ -19138,6 +19203,52 @@ The following patterns are not considered problems:
  *
  */
 // "jsdoc/tag-lines": ["error"|"warn", "always",{"count":2}]
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"tags":{"param":{"lines":"any"}}}]
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always",{"tags":{"param":{"lines":"never"}}}]
+
+/**
+ * Some description
+ * @param {number} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"tags":{"param":{"lines":"any"}}}]
+
+/**
+ * Some description
+ * @param {number} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"tags":{"param":{"lines":"never"}}}]
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ *
+ * @param {number} b
+ *
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"count":5,"tags":{"param":{"count":2,"lines":"always"}}}]
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {number} b
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"tags":{"anotherTag":{"lines":"always"}}}]
 ````
 
 

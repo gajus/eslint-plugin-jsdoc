@@ -173,6 +173,181 @@ export default {
        */
       `,
     },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {number} b
+       */
+      `,
+      errors: [{
+        line: 4,
+        message: 'Expected 1 line between tags but found 0',
+      }],
+      options: ['never', {
+        tags: {
+          param: {
+            lines: 'always',
+          },
+        },
+      }],
+      output: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       * @param {number} b
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {number} b
+       */
+      `,
+      errors: [{
+        line: 4,
+        message: 'Expected 1 line between tags but found 0',
+      }],
+      options: ['never', {
+        tags: {
+          param: {
+            lines: 'always',
+          },
+        },
+      }],
+      output: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       * @param {number} b
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {number} b
+       *
+       */
+      `,
+      errors: [{
+        line: 6,
+        message: 'Expected no lines between tags',
+      }],
+      options: ['always', {
+        tags: {
+          param: {
+            lines: 'never',
+          },
+        },
+      }],
+      output: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {number} b
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       * @param {number} b
+       */
+      `,
+      errors: [{
+        line: 5,
+        message: 'Expected 2 lines between tags but found 1',
+      }],
+      options: ['never', {
+        count: 2,
+        tags: {
+          param: {
+            lines: 'always',
+          },
+        },
+      }],
+      output: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       *
+       * @param {number} b
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       * @param {number} b
+       */
+      `,
+      errors: [{
+        line: 5,
+        message: 'Expected 2 lines between tags but found 1',
+      }],
+      options: ['never', {
+        count: 5,
+        tags: {
+          param: {
+            count: 2,
+            lines: 'always',
+          },
+        },
+      }],
+      output: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       *
+       * @param {number} b
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {number} b
+       */
+      `,
+      errors: [{
+        line: 4,
+        message: 'Expected 1 line between tags but found 0',
+      }],
+      options: ['always', {
+        tags: {
+          anotherTag: {
+            lines: 'never',
+          },
+        },
+      }],
+      output: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       * @param {number} b
+       */
+      `,
+    },
   ],
   valid: [
     {
@@ -250,6 +425,108 @@ export default {
       `,
       options: ['always', {
         count: 2,
+      }],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {number} b
+       */
+      `,
+      options: ['never', {
+        tags: {
+          param: {
+            lines: 'any',
+          },
+        },
+      }],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {number} b
+       */
+      `,
+      options: ['always', {
+        tags: {
+          param: {
+            lines: 'never',
+          },
+        },
+      }],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {number} a
+       * @param {number} b
+       */
+      `,
+      options: ['never', {
+        tags: {
+          param: {
+            lines: 'any',
+          },
+        },
+      }],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {number} a
+       * @param {number} b
+       */
+      `,
+      options: ['never', {
+        tags: {
+          param: {
+            lines: 'never',
+          },
+        },
+      }],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       *
+       * @param {number} b
+       *
+       *
+       */
+      `,
+      options: ['never', {
+        count: 5,
+        tags: {
+          param: {
+            count: 2,
+            lines: 'always',
+          },
+        },
+      }],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {number} b
+       */
+      `,
+      options: ['never', {
+        tags: {
+          anotherTag: {
+            lines: 'always',
+          },
+        },
       }],
     },
   ],
