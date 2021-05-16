@@ -10,50 +10,80 @@ export default iterateJsdoc(({
     {
       count = 1,
       noEndLines = false,
+      tags = {},
     } = {},
   ] = context.options;
 
-  if (alwaysNever === 'never') {
-    jsdoc.tags.some((tg, tagIdx) => {
-      return tg.source.some(({tokens: {tag, name, type, description, end}}, idx) => {
-        const fixer = () => {
-          utils.removeTagItem(tagIdx, idx);
-        };
-        if (!tag && !name && !type && !description && !end) {
-          utils.reportJSDoc(
-            'Expected no lines between tags',
-            {line: tg.source[0].number + 1},
-            fixer,
-            true,
-          );
+  jsdoc.tags.some((tg, tagIdx) => {
+    let lastTag;
 
-          return true;
-        }
-
+    return tg.source.some(({tokens: {tag, name, type, description, end}}, idx) => {
+      const fixer = () => {
+        utils.removeTagItem(tagIdx, idx);
+      };
+      if (lastTag && tags[lastTag.slice(1)]?.lines === 'always') {
         return false;
-      });
-    });
+      }
 
-    return;
-  }
+      if (
+        !tag && !name && !type && !description && !end &&
+        (alwaysNever === 'never' ||
+          lastTag && tags[lastTag.slice(1)]?.lines === 'never'
+        )
+      ) {
+        utils.reportJSDoc(
+          'Expected no lines between tags',
+          {line: tg.source[0].number + 1},
+          fixer,
+        );
+
+        return true;
+      }
+
+      lastTag = tag;
+
+      return false;
+    });
+  });
 
   (noEndLines ? jsdoc.tags.slice(0, -1) : jsdoc.tags).some((tg, tagIdx) => {
     const lines = [];
 
+    let currentTag;
     tg.source.forEach(({number, tokens: {tag, name, type, description, end}}, idx) => {
+      if (tag) {
+        currentTag = tag;
+      }
       if (!tag && !name && !type && !description && !end) {
         lines.push({idx, number});
       }
     });
-    if (lines.length < count) {
+
+    const currentTg = currentTag && tags[currentTag.slice(1)];
+    const tagCount = currentTg?.count;
+
+    const defaultAlways = alwaysNever === 'always' && currentTg?.lines !== 'never' &&
+      currentTg?.lines !== 'any' && lines.length < count;
+
+    let overrideAlways;
+    let fixCount = count;
+    if (!defaultAlways) {
+      fixCount = typeof tagCount === 'number' ? tagCount : count;
+      overrideAlways = currentTg?.lines === 'always' &&
+        lines.length < fixCount;
+    }
+
+    if (defaultAlways || overrideAlways) {
       const fixer = () => {
-        utils.addLines(tagIdx, lines[lines.length - 1]?.idx || 1, count - lines.length);
+        utils.addLines(tagIdx, lines[lines.length - 1]?.idx || 1, fixCount - lines.length);
       };
+      const line = lines[lines.length - 1]?.number || tg.source[0].number;
       utils.reportJSDoc(
-        `Expected ${count} line${count === 1 ? '' : 's'} between tags but found ${lines.length}`,
-        {line: lines[lines.length - 1]?.number || tg.source[0].number},
+        `Expected ${fixCount} line${fixCount === 1 ? '' : 's'} between tags but found ${lines.length}`,
+        {
+          line,
+        },
         fixer,
-        true,
       );
 
       return true;
@@ -71,7 +101,7 @@ export default iterateJsdoc(({
     fixable: 'code',
     schema: [
       {
-        enum: ['always', 'never'],
+        enum: ['always', 'any', 'never'],
         type: 'string',
       },
       {
@@ -82,6 +112,25 @@ export default iterateJsdoc(({
           },
           noEndLines: {
             type: 'boolean',
+          },
+          tags: {
+            properties: {
+              patternProperties: {
+                '.*': {
+                  additionalProperties: false,
+                  properties: {
+                    count: {
+                      type: 'integer',
+                    },
+                    lines: {
+                      enum: ['always', 'never'],
+                      type: 'string',
+                    },
+                  },
+                },
+              },
+            },
+            type: 'object',
           },
         },
         type: 'object',
