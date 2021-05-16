@@ -174,7 +174,7 @@ export default iterateJsdoc(({
               description: desc, tag: tg, type: typ, name: nme,
               postType, postName, postTag,
             },
-          }, idx, arr) => {
+          }) => {
             if (typ) {
               obj.type = typ;
             }
@@ -189,7 +189,10 @@ export default iterateJsdoc(({
             }
             obj.description += desc;
 
-            if ((obj.name || obj.description) && idx === arr.length - 1) {
+            const nameOrDescription = obj.description || obj.name;
+            if (
+              nameOrDescription && nameOrDescription.slice(-1) !== ' '
+            ) {
               obj.description += ' ';
             }
 

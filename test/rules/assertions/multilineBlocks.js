@@ -447,6 +447,26 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @lends This can be safely fixed
+         * to a single
+         * line. */
+      `,
+      errors: [{
+        line: 2,
+        message: 'Multiline jsdoc blocks are prohibited by ' +
+                  'your configuration.',
+      }],
+      options: [{
+        multilineTags: [],
+        noMultilineBlocks: true,
+      }],
+      output: `
+        /** @lends This can be safely fixed to a single line. */
+      `,
+    },
   ],
   valid: [
     {
