@@ -1,6 +1,4 @@
-import {
-  parse,
-} from 'jsdoctypeparser';
+import { Parser } from 'jsdoc-type-pratt-parser';
 import iterateJsdoc from '../iterateJsdoc';
 
 const asExpression = /as\s+/u;
@@ -19,7 +17,8 @@ export default iterateJsdoc(({
 
   const tryParseIgnoreError = (path) => {
     try {
-      parse(path, {mode});
+      const parser = new Parser({mode})
+      parser.parse(path);
 
       return true;
     } catch {
@@ -72,7 +71,8 @@ export default iterateJsdoc(({
 
     const validTypeParsing = function (type) {
       try {
-        parse(type, {mode});
+        const parser = new Parser({mode});
+        parser.parse(type);
       } catch {
         report(`Syntax error in type: ${type}`, null, tag);
 
