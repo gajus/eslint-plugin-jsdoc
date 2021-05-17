@@ -960,6 +960,42 @@ export default {
       /**
        * Function description.
        *
+       * @param  {string} lorem Description.
+       * @param  {int}    sit   Description multi words.
+       *
+       * @return {string}       Return description.
+       */
+      const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['always', {
+        customSpacings: {
+          postName: 3,
+        },
+      }],
+      output: `
+      /**
+       * Function description.
+       *
+       * @param  {string} lorem   Description.
+       * @param  {int}    sit     Description multi words.
+       *
+       * @return {string}         Return description.
+       */
+      const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Function description.
+       *
        *  @param   {string}  lorem Description.
        * @param {int} sit Description multi words.
        */
@@ -985,6 +1021,38 @@ export default {
        *
        *  @param   {string}  lorem Description.
        *  @param   {int}  sit Description multi words.
+       */
+      const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+      /**
+       * Function description.
+       *
+       * @param {string} lorem   Description.
+       * @param {int} sit Description multi words.
+       */
+      const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: ['never', {
+        customSpacings: {
+          postName: 3,
+        },
+      }],
+      output: `
+      /**
+       * Function description.
+       *
+       * @param {string} lorem   Description.
+       * @param {int} sit   Description multi words.
        */
       const fn = ( lorem, sit ) => {}
       `,
@@ -1325,6 +1393,46 @@ export default {
       `,
       options: ['always', {
         preserveMainDescriptionPostDelimiter: true,
+      }],
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         *  @param    {string}  lorem Description.
+         *  @param    {int}     sit   Description multi words.
+         *
+         *  @return   {string}        Return description.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      options: ['always', {
+        customSpacings: {
+          postDelimiter: 2,
+          postTag: 3,
+          postType: 2,
+        },
+      }],
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         *  @param   {string}  lorem Description.
+         *  @param   {int}  sit Description multi words.
+         *
+         *  @return   {string}  Return description.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      options: ['never', {
+        customSpacings: {
+          postDelimiter: 2,
+          postTag: 3,
+          postType: 2,
+        },
       }],
     },
   ],
