@@ -1,9 +1,3 @@
-/**
- * Transform based on https://github.com/syavorsky/comment-parser/blob/master/src/transforms/align.ts
- *
- * It contains some customizations to align based on the tags, and some custom options.
- */
-
 import {
   Markers,
 } from 'comment-parser/lib/primitives';
@@ -64,12 +58,7 @@ const space = (len) => {
   return ''.padStart(len, ' ');
 };
 
-const alignTransform = ({
-  customSpacings,
-  tags,
-  indent,
-  preserveMainDescriptionPostDelimiter,
-}) => {
+const alignTransform = (tags, indent, preserveMainDescriptionPostDelimiter) => {
   let intoTags = false;
   let width;
 
@@ -101,24 +90,17 @@ const alignTransform = ({
       }
     }
 
-    const spacings = {
-      postDelimiter: customSpacings?.postDelimiter || 1,
-      postName: customSpacings?.postName || 1,
-      postTag: customSpacings?.postTag || 1,
-      postType: customSpacings?.postType || 1,
-    };
-
-    tokens.postDelimiter = nothingAfter.delim ? '' : space(spacings.postDelimiter);
+    tokens.postDelimiter = nothingAfter.delim ? '' : ' ';
 
     if (!nothingAfter.tag) {
-      tokens.postTag = space(width.tag - tokens.tag.length + spacings.postTag);
+      tokens.postTag = space(width.tag - tokens.tag.length + 1);
     }
     if (!nothingAfter.type) {
-      tokens.postType = space(width.type - tokens.type.length + spacings.postType);
+      tokens.postType = space(width.type - tokens.type.length + 1);
     }
     if (!nothingAfter.name) {
       // If post name is empty for all lines (name width 0), don't add post name spacing.
-      tokens.postName = width.name === 0 ? '' : space(width.name - tokens.name.length + spacings.postName);
+      tokens.postName = width.name === 0 ? '' : space(width.name - tokens.name.length + 1);
     }
 
     return tokens;

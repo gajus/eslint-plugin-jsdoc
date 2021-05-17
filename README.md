@@ -1944,22 +1944,10 @@ Use this to change the tags which are sought for alignment changes. *Currently*
 *only works with the "never" option.* Defaults to an array of
 `['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return']`.
 
-<a name="eslint-plugin-jsdoc-rules-check-line-alignment-options-3-customspacings"></a>
-##### <code>customSpacings</code>
-
-An object with any of the following keys set to an integer. Affects spacing:
-
-- `postDelimiter` - after the asterisk (e.g., `*   @param`)
-- `postTag` - after the tag (e.g., `* @param  `)
-- `postType` - after the type (e.g., `* @param {someType}   `)
-- `postName` - after the name (e.g., `* @param {someType} name   `)
-
-If a spacing is not defined, it defaults to one.
-
 |||
 |---|---|
 |Context|everywhere|
-|Options|(a string matching `"always" or "never"` and optional object with `tags` and `customSpacings`)|
+|Options|(a string matching `"always" or "never"` and optional object with `tags`)|
 |Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|
@@ -2276,50 +2264,6 @@ function quux () {}
 const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
-
-/**
- * Function description.
- *
- * @param  {string} lorem Description.
- * @param  {int}    sit   Description multi words.
- *
- * @return {string}       Return description.
- */
-const fn = ( lorem, sit ) => {}
-// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"customSpacings":{"postDelimiter":2,"postTag":3,"postType":2}}]
-// Message: Expected JSDoc block lines to be aligned.
-
-/**
- * Function description.
- *
- * @param  {string} lorem Description.
- * @param  {int}    sit   Description multi words.
- *
- * @return {string}       Return description.
- */
-const fn = ( lorem, sit ) => {}
-// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"customSpacings":{"postName":3}}]
-// Message: Expected JSDoc block lines to be aligned.
-
-/**
- * Function description.
- *
- *  @param   {string}  lorem Description.
- * @param {int} sit Description multi words.
- */
-const fn = ( lorem, sit ) => {}
-// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postDelimiter":2,"postTag":3,"postType":2}}]
-// Message: Expected JSDoc block lines to not be aligned.
-
-/**
- * Function description.
- *
- * @param {string} lorem   Description.
- * @param {int} sit Description multi words.
- */
-const fn = ( lorem, sit ) => {}
-// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postName":3}}]
-// Message: Expected JSDoc block lines to not be aligned.
 ````
 
 The following patterns are not considered problems:
@@ -2545,28 +2489,6 @@ function func(parameter){
  */
 const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always",{"preserveMainDescriptionPostDelimiter":true}]
-
-/**
- * Function description.
- *
- *  @param    {string}  lorem Description.
- *  @param    {int}     sit   Description multi words.
- *
- *  @return   {string}        Return description.
- */
-const fn = ( lorem, sit ) => {}
-// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"customSpacings":{"postDelimiter":2,"postTag":3,"postType":2}}]
-
-/**
- * Function description.
- *
- *  @param   {string}  lorem Description.
- *  @param   {int}  sit Description multi words.
- *
- *  @return   {string}  Return description.
- */
-const fn = ( lorem, sit ) => {}
-// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postDelimiter":2,"postTag":3,"postType":2}}]
 ````
 
 
