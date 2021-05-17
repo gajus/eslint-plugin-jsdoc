@@ -2264,6 +2264,50 @@ function quux () {}
 const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param  {string} lorem Description.
+ * @param  {int}    sit   Description multi words.
+ *
+ * @return {string}       Return description.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"customSpacings":{"postDelimiter":2,"postTag":3,"postType":2}}]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param  {string} lorem Description.
+ * @param  {int}    sit   Description multi words.
+ *
+ * @return {string}       Return description.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"customSpacings":{"postName":3}}]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ *  @param   {string}  lorem Description.
+ * @param {int} sit Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postDelimiter":2,"postTag":3,"postType":2}}]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem   Description.
+ * @param {int} sit Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postName":3}}]
+// Message: Expected JSDoc block lines to not be aligned.
 ````
 
 The following patterns are not considered problems:
@@ -2489,6 +2533,28 @@ function func(parameter){
  */
 const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always",{"preserveMainDescriptionPostDelimiter":true}]
+
+/**
+ * Function description.
+ *
+ *  @param    {string}  lorem Description.
+ *  @param    {int}     sit   Description multi words.
+ *
+ *  @return   {string}        Return description.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"customSpacings":{"postDelimiter":2,"postTag":3,"postType":2}}]
+
+/**
+ * Function description.
+ *
+ *  @param   {string}  lorem Description.
+ *  @param   {int}  sit Description multi words.
+ *
+ *  @return   {string}  Return description.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postDelimiter":2,"postTag":3,"postType":2}}]
 ````
 
 
