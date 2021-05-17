@@ -8,7 +8,7 @@ const {
   flow: commentFlow,
 } = transforms;
 
-const checkNotAlignedPerTag = (utils, tag) => {
+const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
   /*
   start +
   delimiter +
@@ -61,11 +61,12 @@ const checkNotAlignedPerTag = (utils, tag) => {
     const contentProp = contentProps[idx];
     const contentPropVal = tokens[contentProp];
     const spacerPropVal = tokens[spacerProp];
+    const spacing = customSpacings?.[spacerProp] || 1;
 
     // There will be extra alignment if...
 
-    // 1. There is extra whitespace within a single spacer segment OR
-    return spacerPropVal.length > 1 ||
+    // 1. The spaces don't match the space it should have (1 or custom spacing) OR
+    return spacerPropVal.length !== spacing && spacerPropVal.length !== 0 ||
 
       // 2. There is a (single) space, no immediate content, and yet another
       //     space is found subsequently (not separated by intervening content)
@@ -80,7 +81,8 @@ const checkNotAlignedPerTag = (utils, tag) => {
       const contentPropVal = tokens[contentProp];
 
       if (contentPropVal) {
-        tokens[spacerProp] = ' ';
+        const spacing = customSpacings?.[spacerProp] || 1;
+        tokens[spacerProp] = ''.padStart(spacing, ' ');
         followedBySpace(idx, (hasSpace, contentPrp) => {
           if (hasSpace) {
             tokens[contentPrp] = '';
@@ -97,6 +99,7 @@ const checkNotAlignedPerTag = (utils, tag) => {
 };
 
 const checkAlignment = ({
+  customSpacings,
   indent,
   jsdoc,
   jsdocNode,
@@ -105,7 +108,14 @@ const checkAlignment = ({
   tags,
   utils,
 }) => {
-  const transform = commentFlow(alignTransform(tags, indent, preserveMainDescriptionPostDelimiter));
+  const transform = commentFlow(
+    alignTransform({
+      customSpacings,
+      indent,
+      preserveMainDescriptionPostDelimiter,
+      tags,
+    }),
+  );
   const transformedJsdoc = transform(jsdoc);
 
   const comment = '/*' + jsdocNode.value + '*/';
@@ -133,6 +143,7 @@ export default iterateJsdoc(({
   const {
     tags: applicableTags = ['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return'],
     preserveMainDescriptionPostDelimiter,
+    customSpacings,
   } = context.options[1] || {};
 
   if (context.options[0] === 'always') {
@@ -142,6 +153,7 @@ export default iterateJsdoc(({
     }
 
     checkAlignment({
+      customSpacings,
       indent,
       jsdoc,
       jsdocNode,
@@ -156,7 +168,7 @@ export default iterateJsdoc(({
 
   const foundTags = utils.getPresentTags(applicableTags);
   foundTags.forEach((tag) => {
-    checkNotAlignedPerTag(utils, tag);
+    checkNotAlignedPerTag(utils, tag, customSpacings);
   });
 }, {
   iterateAllJsdocs: true,
@@ -174,6 +186,23 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          customSpacings: {
+            additionalProperties: false,
+            properties: {
+              postDelimiter: {
+                type: 'integer',
+              },
+              postName: {
+                type: 'integer',
+              },
+              postTag: {
+                type: 'integer',
+              },
+              postType: {
+                type: 'integer',
+              },
+            },
+          },
           preserveMainDescriptionPostDelimiter: {
             default: false,
             type: 'boolean',
