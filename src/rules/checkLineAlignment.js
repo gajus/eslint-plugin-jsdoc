@@ -65,7 +65,7 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
 
     // There will be extra alignment if...
 
-    // 1. The spaces doesn't match the space it should have (1 or custom spacing) OR
+    // 1. The spaces don't match the space it should have (1 or custom spacing) OR
     return spacerPropVal.length !== spacing && spacerPropVal.length !== 0 ||
 
       // 2. There is a (single) space, no immediate content, and yet another
