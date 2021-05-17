@@ -187,7 +187,21 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           customSpacings: {
-            type: 'object',
+            additionalProperties: false,
+            properties: {
+              postDelimiter: {
+                type: 'integer',
+              },
+              postName: {
+                type: 'integer',
+              },
+              postTag: {
+                type: 'integer',
+              },
+              postType: {
+                type: 'integer',
+              },
+            },
           },
           preserveMainDescriptionPostDelimiter: {
             default: false,
