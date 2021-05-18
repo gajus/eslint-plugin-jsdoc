@@ -2320,6 +2320,15 @@ const fn = ( lorem, sit ) => {}
 const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postName":3}}]
 // Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * @param {{
+ * ids: number[]
+ * }} params
+ */
+const myMethod = ({ids}) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// Message: Expected JSDoc block lines to be aligned.
 ````
 
 The following patterns are not considered problems:
