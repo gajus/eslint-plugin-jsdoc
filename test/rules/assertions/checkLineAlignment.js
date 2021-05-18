@@ -1057,38 +1057,6 @@ export default {
       const fn = ( lorem, sit ) => {}
       `,
     },
-    {
-      /* eslint-disable no-tabs */
-      code: `
-				/**
-				 * @param {{
-				 * ids: number[]
-				 * }} params
-				 */
-				const myMethod = ({ids}) => {}
-			`,
-      errors: [
-        {
-          line: 2,
-          message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
-        },
-      ],
-      options: ['always'],
-      output: `
-				/**
-				 * @param {{
-				 *        ids: number[]
-				 *        }}            params
-				 */
-				const myMethod = ({ids}) => {}
-			`,
-      /* eslint-enable no-tabs */
-      parser: require.resolve('@babel/eslint-parser'),
-      parserOptions: {
-        ecmaVersion: 2_021,
-      },
-    },
   ],
   valid: [
     {
