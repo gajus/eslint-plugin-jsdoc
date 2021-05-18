@@ -101,6 +101,10 @@ const alignTransform = ({
       }
     }
 
+    if (tokens.tag === '' && (tokens.type || tokens.name)) {
+      return tokens;
+    }
+
     const spacings = {
       postDelimiter: customSpacings?.postDelimiter || 1,
       postName: customSpacings?.postName || 1,

@@ -1467,5 +1467,16 @@ export default {
         },
       }],
     },
+    {
+      code: `
+        /**
+         * @param {{
+         *        ids: number[]
+         *        }}            params
+         */
+        const fn = ({ids}) => {}
+      `,
+      options: ['always'],
+    },
   ],
 };
