@@ -529,5 +529,31 @@ export default {
         },
       }],
     },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       * This is still part of \`@param\`.
+       * @returns {SomeType} An extended
+       * description.
+       */
+      `,
+      options: ['never'],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @returns {SomeType} An extended
+       * description.
+       *
+       * This is still part of \`@returns\`.
+       */
+      `,
+      options: ['never'],
+    },
   ],
 };

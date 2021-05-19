@@ -17,12 +17,14 @@ export default iterateJsdoc(({
   jsdoc.tags.some((tg, tagIdx) => {
     let lastTag;
 
-    return tg.source.some(({tokens: {tag, name, type, description, end}}, idx) => {
-      const fixer = () => {
-        utils.removeTagItem(tagIdx, idx);
-      };
+    let reportIndex = null;
+    tg.source.forEach(({tokens: {tag, name, type, description, end}}, idx) => {
+      // May be text after a line break within a tag description
+      if (description) {
+        reportIndex = null;
+      }
       if (lastTag && tags[lastTag.slice(1)]?.lines === 'always') {
-        return false;
+        return;
       }
 
       if (
@@ -31,19 +33,27 @@ export default iterateJsdoc(({
           lastTag && tags[lastTag.slice(1)]?.lines === 'never'
         )
       ) {
-        utils.reportJSDoc(
-          'Expected no lines between tags',
-          {line: tg.source[0].number + 1},
-          fixer,
-        );
+        reportIndex = idx;
 
-        return true;
+        return;
       }
 
       lastTag = tag;
-
-      return false;
     });
+    if (reportIndex !== null) {
+      const fixer = () => {
+        utils.removeTagItem(tagIdx, reportIndex);
+      };
+      utils.reportJSDoc(
+        'Expected no lines between tags',
+        {line: tg.source[0].number + 1},
+        fixer,
+      );
+
+      return true;
+    }
+
+    return false;
   });
 
   (noEndLines ? jsdoc.tags.slice(0, -1) : jsdoc.tags).some((tg, tagIdx) => {

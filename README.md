@@ -19249,6 +19249,26 @@ The following patterns are not considered problems:
  * @param {number} b
  */
 // "jsdoc/tag-lines": ["error"|"warn", "never",{"tags":{"anotherTag":{"lines":"always"}}}]
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * This is still part of `@param`.
+ * @returns {SomeType} An extended
+ * description.
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never"]
+
+/**
+ * Some description
+ * @param {string} a
+ * @returns {SomeType} An extended
+ * description.
+ *
+ * This is still part of `@returns`.
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "never"]
 ````
 
 
