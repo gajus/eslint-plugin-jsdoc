@@ -101,6 +101,11 @@ const alignTransform = ({
       }
     }
 
+    // Todo: Avoid fixing alignment of blocks with multiline wrapping of type
+    if (tokens.tag === '' && tokens.type) {
+      return tokens;
+    }
+
     const spacings = {
       postDelimiter: customSpacings?.postDelimiter || 1,
       postName: customSpacings?.postName || 1,
