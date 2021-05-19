@@ -100,7 +100,7 @@ const alignTransform = ({
         }
       }
     }
-
+// Todo: Avoid fixing alignment of blocks with multiline wrapping of type 
     if (tokens.tag === '' && (tokens.type || tokens.name)) {
       return tokens;
     }
