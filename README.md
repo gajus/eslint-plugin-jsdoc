@@ -19151,6 +19151,28 @@ The following patterns are considered problems:
  */
 // "jsdoc/tag-lines": ["error"|"warn", "always",{"tags":{"anotherTag":{"lines":"never"}}}]
 // Message: Expected 1 line between tags but found 0
+
+/**
+ * Some description
+ * @param {string} A broken up
+ *
+ * tag description.
+ * @param {number} b
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always"]
+// Message: Expected 1 line between tags but found 0
+
+/**
+ * Some description
+ * @param {number} b
+ *
+ * @returns {string} A broken up
+ *
+ * tag description.
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always"]
+// Message: Expected 1 line between tags but found 0
 ````
 
 The following patterns are not considered problems:
@@ -19269,6 +19291,30 @@ The following patterns are not considered problems:
  * This is still part of `@returns`.
  */
 // "jsdoc/tag-lines": ["error"|"warn", "never"]
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * This is still part of `@param`.
+ *
+ * @returns {SomeType} An extended
+ * description.
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always"]
+
+/**
+ * Some description
+ * @param {string} a
+ *
+ * @returns {SomeType} An extended
+ * description.
+ *
+ * This is still part of `@returns`.
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "always"]
 ````
 
 

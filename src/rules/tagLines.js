@@ -60,7 +60,12 @@ export default iterateJsdoc(({
     const lines = [];
 
     let currentTag;
+    let tagSourceIdx = 0;
     tg.source.forEach(({number, tokens: {tag, name, type, description, end}}, idx) => {
+      if (description) {
+        lines.splice(0, lines.length);
+        tagSourceIdx = idx;
+      }
       if (tag) {
         currentTag = tag;
       }
@@ -85,9 +90,9 @@ export default iterateJsdoc(({
 
     if (defaultAlways || overrideAlways) {
       const fixer = () => {
-        utils.addLines(tagIdx, lines[lines.length - 1]?.idx || 1, fixCount - lines.length);
+        utils.addLines(tagIdx, lines[lines.length - 1]?.idx || tagSourceIdx + 1, fixCount - lines.length);
       };
-      const line = lines[lines.length - 1]?.number || tg.source[0].number;
+      const line = lines[lines.length - 1]?.number || tg.source[tagSourceIdx].number;
       utils.reportJSDoc(
         `Expected ${fixCount} line${fixCount === 1 ? '' : 's'} between tags but found ${lines.length}`,
         {

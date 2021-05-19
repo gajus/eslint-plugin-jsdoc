@@ -348,6 +348,62 @@ export default {
        */
       `,
     },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} A broken up
+       *
+       * tag description.
+       * @param {number} b
+       *
+       */
+      `,
+      errors: [{
+        line: 6,
+        message: 'Expected 1 line between tags but found 0',
+      }],
+      options: ['always'],
+      output: `
+      /**
+       * Some description
+       * @param {string} A broken up
+       *
+       * tag description.
+       *
+       * @param {number} b
+       *
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {number} b
+       *
+       * @returns {string} A broken up
+       *
+       * tag description.
+       */
+      `,
+      errors: [{
+        line: 8,
+        message: 'Expected 1 line between tags but found 0',
+      }],
+      options: ['always'],
+      output: `
+      /**
+       * Some description
+       * @param {number} b
+       *
+       * @returns {string} A broken up
+       *
+       * tag description.
+       *
+       */
+      `,
+    },
   ],
   valid: [
     {
@@ -554,6 +610,36 @@ export default {
        */
       `,
       options: ['never'],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       * This is still part of \`@param\`.
+       *
+       * @returns {SomeType} An extended
+       * description.
+       *
+       */
+      `,
+      options: ['always'],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       *
+       * @returns {SomeType} An extended
+       * description.
+       *
+       * This is still part of \`@returns\`.
+       *
+       */
+      `,
+      options: ['always'],
     },
   ],
 };
