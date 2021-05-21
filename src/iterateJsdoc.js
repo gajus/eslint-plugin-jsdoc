@@ -100,13 +100,13 @@ const getUtils = (
     return commentStringify(specRewire ? rewireSpecs(tagBlock) : tagBlock);
   };
 
-  utils.reportJSDoc = (msg, tag, handler, specRewire) => {
+  utils.reportJSDoc = (msg, tag, handler, specRewire, data) => {
     report(msg, handler ? (fixer) => {
       handler();
       const replacement = utils.stringify(jsdoc, specRewire);
 
       return fixer.replaceText(jsdocNode, replacement);
-    } : null, tag);
+    } : null, tag, data);
   };
 
   utils.getRegexFromString = (str, requiredFlags) => {
@@ -681,7 +681,7 @@ const iterate = (
   info,
   indent, jsdoc,
   ruleConfig, context, lines, jsdocNode, node, settings,
-  sourceCode, iterator, state, lastComment, iteratingAll,
+  sourceCode, iterator, state, iteratingAll,
 ) => {
   const report = makeReport(context, jsdocNode);
 
@@ -746,8 +746,9 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
  * @param {JsdocVisitor} iterator
  * @param {{meta: any}} ruleConfig
  * @param contexts
+ * @param {boolean} additiveContexts
  */
-const iterateAllJsdocs = (iterator, ruleConfig, contexts) => {
+const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
   const trackedJsdocs = [];
 
   let handler;
@@ -766,21 +767,51 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts) => {
         lines, jsdocNode,
       );
 
-      let lastComment;
-      if (contexts && contexts.every(({comment}) => {
-        lastComment = comment;
+      if (additiveContexts) {
+        contexts.forEach(({comment}, idx) => {
+          if (comment && handler(comment, jsdoc) === false) {
+            return;
+          }
+          iterate(
+            {
+              comment,
+              lastIndex: idx,
+              selector: node?.type,
+            },
+            indent, jsdoc,
+            ruleConfig, context, lines, jsdocNode, node,
+            settings, sourceCode, iterator,
+            state, true,
+          );
+        });
 
-        return handler(comment, jsdoc) === false;
+        return;
+      }
+
+      let lastComment;
+      let lastIndex;
+      if (contexts && contexts.every(({comment}, idx) => {
+        lastComment = comment;
+        lastIndex = idx;
+
+        return comment && handler(comment, jsdoc) === false;
       })) {
         return;
       }
 
       iterate(
-        lastComment ? {comment: lastComment, selector: node?.type} : null,
+        lastComment ? {
+          comment: lastComment,
+          lastIndex,
+          selector: node?.type,
+        } : {
+          lastIndex,
+          selector: node?.type,
+        },
         indent, jsdoc,
         ruleConfig, context, lines, jsdocNode, node,
         settings, sourceCode, iterator,
-        state, lastComment, true,
+        state, true,
       );
     });
     if (lastCall && ruleConfig.exit) {
@@ -931,8 +962,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       }
 
       let contexts;
-      if (ruleConfig.contextDefaults || ruleConfig.contextSelected) {
-        contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
+      if (ruleConfig.contextDefaults || ruleConfig.contextSelected || ruleConfig.matchContext) {
+        contexts = ruleConfig.matchContext && context.options[0]?.match ?
+          context.options[0].match :
+          jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
 
         if (contexts) {
           contexts = contexts.map((obj) => {
@@ -950,7 +983,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         });
         if (hasPlainAny || hasObjectAny) {
           return iterateAllJsdocs(
-            iterator, ruleConfig, hasObjectAny ? contexts : null,
+            iterator, ruleConfig, hasObjectAny ? contexts : null, ruleConfig.matchContext,
           ).create(context);
         }
       }
@@ -988,7 +1021,9 @@ export default function iterateJsdoc (iterator, ruleConfig) {
 
       let contextObject = {};
 
-      if (contexts && (ruleConfig.contextDefaults || ruleConfig.contextSelected)) {
+      if (contexts && (
+        ruleConfig.contextDefaults || ruleConfig.contextSelected || ruleConfig.matchContext
+      )) {
         contextObject = jsdocUtils.getContextObject(
           contexts,
           checkJsdoc,
