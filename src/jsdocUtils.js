@@ -1093,9 +1093,10 @@ const enforcedContexts = (context, defaultContexts) => {
 const getContextObject = (contexts, checkJsdoc, handler) => {
   const properties = {};
 
-  contexts.forEach((prop) => {
+  contexts.forEach((prop, idx) => {
     if (typeof prop === 'object') {
       const selInfo = {
+        lastIndex: idx,
         selector: prop.context,
       };
       if (prop.comment) {
@@ -1110,6 +1111,7 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
       }
     } else {
       const selInfo = {
+        lastIndex: idx,
         selector: prop,
       };
       properties[prop] = checkJsdoc.bind(null, selInfo, null);
