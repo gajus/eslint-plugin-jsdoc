@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 // If supporting Node >= 10, we could loosen the default to this for the
@@ -70,7 +69,7 @@ export default iterateJsdoc(({
   const {tagsWithNames, tagsWithoutNames} = utils.getTagsByType(whitelistedTags);
 
   tagsWithNames.some((tag) => {
-    const description = _.trimStart(utils.getTagDescription(tag), '- ').trim();
+    const description = utils.getTagDescription(tag).replace(/^[- ]*/u, '').trim();
 
     return validateDescription(description, tag);
   });
