@@ -1,4 +1,13 @@
 /* eslint-disable no-console -- CLI */
+
+/**
+ * @example
+ *
+ * ```shell
+ * npm run create-rule my-new-rule --recommended
+ * ```
+ */
+
 import {
   existsSync,
 } from 'fs';
@@ -11,7 +20,9 @@ import open from 'open-editor';
 
 // Todo: Would ideally have prompts, e.g., to ask for whether type was problem/layout, etc.
 
-const [, , ruleName] = process.argv;
+const [, , ruleName, ...options] = process.argv;
+
+const recommended = options.includes('--recommended');
 
 (async () => {
   if (!ruleName) {
@@ -104,7 +115,7 @@ export default iterateJsdoc(({
 |---|---|
 |Context|everywhere|
 |Tags|\`\`|
-|Recommended|false|
+|Recommended|${recommended ? 'true' : 'false'}|
 |Settings||
 |Options||
 
@@ -184,7 +195,7 @@ export default iterateJsdoc(({
 
   await replaceInOrder({
     checkName: 'index recommended',
-    newLine: `${' '.repeat(8)}'jsdoc/${ruleName}': 'off',`,
+    newLine: `${' '.repeat(8)}'jsdoc/${ruleName}': '${recommended ? 'warn' : 'off'}',`,
     oldRegex: /\n\s{8}'jsdoc\/(?<oldRule>[^']*)': '[^']*',/gu,
     path: './src/index.js',
   });
