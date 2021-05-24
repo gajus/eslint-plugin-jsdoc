@@ -65,7 +65,7 @@ export default {
         'jsdoc/empty-tags': 'warn',
         'jsdoc/implements-on-classes': 'warn',
         'jsdoc/match-description': 'off',
-        'jsdoc/multiline-blocks': 'off',
+        'jsdoc/multiline-blocks': 'warn',
         'jsdoc/newline-after-description': 'warn',
         'jsdoc/no-bad-blocks': 'off',
         'jsdoc/no-defaults': 'off',

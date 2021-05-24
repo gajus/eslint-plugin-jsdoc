@@ -123,9 +123,13 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/empty-tags": 1, // Recommended
         "jsdoc/implements-on-classes": 1, // Recommended
         "jsdoc/match-description": 1,
+        "jsdoc/multiline-blocks": 1, // Recommended
         "jsdoc/newline-after-description": 1, // Recommended
         "jsdoc/no-bad-blocks": 1,
         "jsdoc/no-defaults": 1,
+        "jsdoc/no-missing-syntax": 1,
+        "jsdoc/no-multi-asterisks": 1, // Recommended
+        "jsdoc/no-restricted-syntax": 1,
         "jsdoc/no-types": 1,
         "jsdoc/no-undefined-types": 1, // Recommended
         "jsdoc/require-asterisk-prefix": 1,
@@ -150,6 +154,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-throws": 1,
         "jsdoc/require-yields": 1, // Recommended
         "jsdoc/require-yields-check": 1, // Recommended
+        "jsdoc/tag-lines": 1, // Recommended
         "jsdoc/valid-types": 1 // Recommended
     }
 }
