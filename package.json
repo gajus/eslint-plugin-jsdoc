@@ -5,13 +5,13 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "^0.7.2",
+    "@es-joy/jsdoccomment": "^0.8.0-alpha.1",
     "comment-parser": "1.1.5",
     "debug": "^4.3.1",
     "esquery": "^1.4.0",
-    "jsdoc-type-pratt-parser": "^1.0.0-alpha.11.0",
+    "jsdoc-type-pratt-parser": "^1.0.0-alpha.23",
     "lodash": "^4.17.21",
-    "regextras": "^0.7.1",
+    "regextras": "^0.8.0",
     "semver": "^7.3.5",
     "spdx-expression-parse": "^3.0.1"
   },
