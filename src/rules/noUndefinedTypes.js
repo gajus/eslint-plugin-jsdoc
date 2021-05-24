@@ -1,7 +1,9 @@
 import {
   getJSDocComment,
 } from '@es-joy/jsdoccomment';
-import { traverse, parse as parseType, tryParse as tryParseType} from 'jsdoc-type-pratt-parser'
+import {
+  traverse, parse as parseType, tryParse as tryParseType,
+} from 'jsdoc-type-pratt-parser';
 import _ from 'lodash';
 import iterateJsdoc, {
   parseComment,
@@ -150,7 +152,7 @@ export default iterateJsdoc(({
       return;
     }
 
-    traverse(parsedType, ({type, value}, parentNode, property) => {
+    traverse(parsedType, ({type, value}) => {
       if (type === 'JsdocTypeName') {
         const structuredTypes = structuredTags[tag.tag]?.type;
         if (!allDefinedTypes.has(value) &&
