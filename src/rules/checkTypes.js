@@ -1,4 +1,6 @@
-import { parse, stringify, traverse, tryParse } from 'jsdoc-type-pratt-parser';
+import {
+  parse, stringify, traverse, tryParse,
+} from 'jsdoc-type-pratt-parser';
 import iterateJsdoc from '../iterateJsdoc';
 
 const strictNativeTypes = [
@@ -86,23 +88,27 @@ export default iterateJsdoc(({
 
         if (brackets === 'angle') {
           const checkPostFixes = dot ? ['.', '.<>'] : ['<>'];
-          isGenericMatch = checkPostFixes.some(checkPostFix => {
+          isGenericMatch = checkPostFixes.some((checkPostFix) => {
             if (preferredTypes?.[nodeName + checkPostFix] !== undefined) {
               typeName += checkPostFix;
+
               return true;
             }
+
             return false;
           });
         }
 
         if (!isGenericMatch && property) {
-          const checkPostFixes = dot ? ['.', '.<>'] : [brackets === 'angle' ? '<>' : '[]']
+          const checkPostFixes = dot ? ['.', '.<>'] : [brackets === 'angle' ? '<>' : '[]'];
 
-          isGenericMatch = checkPostFixes.some(checkPostFix => {
+          isGenericMatch = checkPostFixes.some((checkPostFix) => {
             if (preferredTypes?.[checkPostFix] !== undefined) {
               typeName = checkPostFix;
+
               return true;
             }
+
             return false;
           });
         }
