@@ -560,7 +560,7 @@ properties:
 1. For other rules, there is a `comment` property which adds to the `context`
     in requiring that the `comment` AST condition is also met, e.g., to
     require that certain tags are present and/or or types and type operators
-    are in use. Note that this AST (either for `JSDoc*` or `JSDocType*` AST)
+    are in use. Note that this AST (either for `Jsdoc*` or `JsdocType*` AST)
     has not been standardized and should be considered experimental.
     Note that this property might also become obsolete if parsers begin to
     include JSDoc-structured AST. A
@@ -8140,8 +8140,8 @@ The following patterns are considered problems:
 function quux () {
 
 }
-// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration"}]}]
-// Message: Syntax is required: FunctionDeclaration with JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration"}]}]
+// Message: Syntax is required: FunctionDeclaration with JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))
 
 /**
  * @implements {Bar|Foo}
@@ -8149,8 +8149,8 @@ function quux () {
 function quux () {
 
 }
-// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration","message":"Problematically missing function syntax: `{{context}}` with `{{comment}}`."}]}]
-// Message: Problematically missing function syntax: `FunctionDeclaration` with `JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])`.
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration","message":"Problematically missing function syntax: `{{context}}` with `{{comment}}`."}]}]
+// Message: Problematically missing function syntax: `FunctionDeclaration` with `JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))`.
 
 /**
  * @implements {Bar|Foo}
@@ -8175,8 +8175,8 @@ function quux () {
 function quux () {
 
 }
-// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration","minimum":2}]}]
-// Message: Syntax is required: FunctionDeclaration with JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"FunctionDeclaration","minimum":2}]}]
+// Message: Syntax is required: FunctionDeclaration with JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))
 ````
 
 The following patterns are not considered problems:
@@ -8188,7 +8188,7 @@ The following patterns are not considered problems:
 function quux () {
 
 }
-// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration"}]}]
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"FunctionDeclaration"}]}]
 
 /**
  * @implements {Bar|Foo}
@@ -8210,7 +8210,7 @@ function bar () {
 function baz () {
 
 }
-// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration","minimum":2}]}]
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"FunctionDeclaration","minimum":2}]}]
 ````
 
 
@@ -8478,7 +8478,7 @@ function quux () {
 function quux () {
 
 }
-// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration"}]}]
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"FunctionDeclaration"}]}]
 // Message: Syntax is restricted: FunctionDeclaration.
 
 /**
@@ -8487,7 +8487,7 @@ function quux () {
 function quux () {
 
 }
-// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration","message":"The foo one: {{context}}."},{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"FunctionDeclaration","message":"The bar one: {{context}}."}]}]
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration","message":"The foo one: {{context}}."},{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"FunctionDeclaration","message":"The bar one: {{context}}."}]}]
 // Message: The bar one: FunctionDeclaration.
 
 /**
@@ -8516,7 +8516,7 @@ function quux () {
 function quux () {
 
 }
-// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Foo\"])","context":"FunctionDeclaration"}]}]
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration"}]}]
 ````
 
 
@@ -10509,7 +10509,7 @@ class quux {
 
 }
 // Settings: {"jsdoc":{"implementsReplacesDocs":false}}
-// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTag[rawType=\"Bar\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[rawType=\"Bar\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -10521,7 +10521,7 @@ class quux {
 
 }
 // Settings: {"jsdoc":{"implementsReplacesDocs":false}}
-// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTag[rawType=\"Bar\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[rawType=\"Bar\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -10532,7 +10532,7 @@ class quux {
 
 }
 // Settings: {"jsdoc":{"implementsReplacesDocs":false}}
-// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTypeUnion[left.name=\"Bar\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
 /**
@@ -10542,7 +10542,7 @@ class quux {
 
 }
 // Settings: {"jsdoc":{"implementsReplacesDocs":false}}
-// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTag[tag=\"implements\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"implements\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 ````
 
@@ -10749,7 +10749,7 @@ class quux {
 
 }
 // Settings: {"jsdoc":{"implementsReplacesDocs":false}}
-// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=/\\s{4}/]:has(JSDocTag[rawType=\"class\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=/\\s{4}/]:has(JsdocTag[rawType=\"class\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
 
 /**
  * Has some
@@ -10758,7 +10758,7 @@ class quux {
 class quux {
 
 }
-// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JSDocBlock[postDelimiter=\"\"]:has(JSDocTag[rawType=\"{Bar}\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[rawType=\"{Bar}\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
 ````
 
 
