@@ -5648,6 +5648,14 @@ function b () {}
  * @aCustomTag {anotherType|otherType} foo
  */
 // Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":["otherType","anotherType"]}}}}
+
+/**
+ * Bad types handled by `valid-types` instead.
+ * @param {str(} foo
+ */
+function quux (foo) {
+
+}
 ````
 
 
@@ -9247,6 +9255,14 @@ class Test {
   method (): this {
     return this;
   }
+}
+
+/**
+ * Bad types ignored here and handled instead by `valid-types`.
+ * @param {string(} foo - Bar.
+ */
+function quux(foo) {
+
 }
 ````
 
@@ -19498,14 +19514,6 @@ function quux() {
 }
 // Settings: {"jsdoc":{"structuredTags":{"see":{"name":"namepath-referencing","required":["name"]}}}}
 // Message: Syntax error in namepath: foo%
-
-/**
- * @alias module:abc#event:foo-bar
- */
-function quux() {
-
-}
-// Message: Syntax error in namepath: module:abc#event:foo-bar
 
 /**
  * @mixes module:namespace.SomeClass~

@@ -26,6 +26,31 @@ export default {
     {
       code: `
           /**
+           * @param {abc} foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
+        },
+      ],
+      ignoreReadme: true,
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+          preferredTypes: {
+            abc: 100,
+          },
+        },
+      },
+    },
+    {
+      code: `
+          /**
            * @param {Number} foo
            */
           function quux (foo) {
@@ -2630,6 +2655,17 @@ export default {
           },
         },
       },
+    },
+    {
+      code: `
+          /**
+           * Bad types handled by \`valid-types\` instead.
+           * @param {str(} foo
+           */
+          function quux (foo) {
+
+          }
+      `,
     },
   ],
 };

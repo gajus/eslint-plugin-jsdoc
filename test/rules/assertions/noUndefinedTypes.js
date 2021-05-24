@@ -997,5 +997,33 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+          /**
+           * Bad types ignored here and handled instead by \`valid-types\`.
+           * @param {string(} foo - Bar.
+           */
+          function quux(foo) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * Bad types ignored here and handled instead by \`valid-types\`.
+           * @param {string(} foo - Bar.
+           */
+          function quux(foo) {
+
+          }
+      `,
+      ignoreReadme: true,
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+        },
+      },
+    },
   ],
 };
