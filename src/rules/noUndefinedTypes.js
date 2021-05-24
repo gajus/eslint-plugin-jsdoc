@@ -151,10 +151,7 @@ export default iterateJsdoc(({
     }
 
     traverse(parsedType, ({type, value}, parentNode, property) => {
-      if (type === 'NAME') {
-        if (parentNode !== undefined && parentNode.type === 'KEY_VALUE' && property === 'left') {
-          return
-        }
+      if (type === 'JsdocTypeName') {
         const structuredTypes = structuredTags[tag.tag]?.type;
         if (!allDefinedTypes.has(value) &&
           (!Array.isArray(structuredTypes) || !structuredTypes.includes(value))

@@ -147,20 +147,6 @@ export default {
     {
       code: `
           /**
-           * @alias module:abc#event:foo-bar
-           */
-          function quux() {
-
-          }
-      `,
-      errors: [{
-        line: 3,
-        message: 'Syntax error in namepath: module:abc#event:foo-bar',
-      }],
-    },
-    {
-      code: `
-          /**
            * @mixes module:namespace.SomeClass~
            */
           function quux() {
