@@ -20,32 +20,32 @@ const adjustNames = (type, preferred, isGenericMatch, nodeName, node, parentNode
   let ret = preferred;
   if (isGenericMatch) {
     if (preferred === '[]') {
-      parentNode.meta.brackets = '[]';
+      parentNode.meta.brackets = 'square';
       parentNode.meta.dot = false;
       ret = 'Array';
     } else {
       const dotBracketEnd = preferred.match(/\.(?:<>)?$/u);
       if (dotBracketEnd) {
-        parentNode.meta.brackets = '<>';
+        parentNode.meta.brackets = 'angle';
         parentNode.meta.dot = true;
         ret = preferred.slice(0, -dotBracketEnd[0].length);
       } else {
         const bracketEnd = preferred.endsWith('<>');
         if (bracketEnd) {
-          parentNode.meta.brackets = '<>';
+          parentNode.meta.brackets = 'angle';
           parentNode.meta.dot = false;
           ret = preferred.slice(0, -2);
         } else if (
-          parentNode.meta.brackets === '[]' &&
+          parentNode.meta.brackets === 'square' &&
           (nodeName === '[]' || nodeName === 'Array')
         ) {
-          parentNode.meta.brackets = '<>';
+          parentNode.meta.brackets = 'angle';
           parentNode.meta.dot = false;
         }
       }
     }
-  } else if (type === 'ANY') {
-    node.type = 'NAME';
+  } else if (type === 'JsdocTypeAny') {
+    node.type = 'JsdocTypeName';
   }
   node.value = ret.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
 
@@ -79,12 +79,12 @@ export default iterateJsdoc(({
     let isGenericMatch;
     let typeName = nodeName;
     if (Object.keys(preferredTypes).length) {
-      const isNameOfGeneric = parentNode !== undefined && parentNode.type === 'GENERIC' && property === 'left';
+      const isNameOfGeneric = parentNode !== undefined && parentNode.type === 'JsdocTypeGeneric' && property === 'left';
       if (unifyParentAndChildTypeChecks || isNameOfGeneric) {
         const brackets = parentNode?.meta?.brackets;
         const dot = parentNode?.meta?.dot;
 
-        if (brackets === '<>') {
+        if (brackets === 'angle') {
           const checkPostFixes = dot ? ['.', '.<>'] : ['<>'];
           isGenericMatch = checkPostFixes.some(checkPostFix => {
             if (preferredTypes?.[nodeName + checkPostFix] !== undefined) {
@@ -96,7 +96,7 @@ export default iterateJsdoc(({
         }
 
         if (!isGenericMatch && property) {
-          const checkPostFixes = dot ? ['.', '.<>'] : [brackets]
+          const checkPostFixes = dot ? ['.', '.<>'] : [brackets === 'angle' ? '<>' : '[]']
 
           isGenericMatch = checkPostFixes.some(checkPostFix => {
             if (preferredTypes?.[checkPostFix] !== undefined) {
@@ -132,10 +132,10 @@ export default iterateJsdoc(({
 
     traverse(typeAst, (node, parentNode, property) => {
       const {type, value} = node;
-      if (!['NAME', 'ANY'].includes(type)) {
+      if (!['JsdocTypeName', 'JsdocTypeAny'].includes(type)) {
         return;
       }
-      let nodeName = type === 'ANY' ? '*' : value;
+      let nodeName = type === 'JsdocTypeAny' ? '*' : value;
 
       const [hasMatchingPreferredType, typeName, isGenericMatch] = getPreferredTypeInfo(type, nodeName, parentNode, property);
 
@@ -172,7 +172,7 @@ export default iterateJsdoc(({
           !types.includes(nodeName);
       })) {
         invalidTypes.push([nodeName, types]);
-      } else if (!noDefaults && type === 'NAME') {
+      } else if (!noDefaults && type === 'JsdocTypeName') {
         for (const strictNativeType of strictNativeTypes) {
           if (strictNativeType === 'object' && mode === 'typescript') {
             continue;
