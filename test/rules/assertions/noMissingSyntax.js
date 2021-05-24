@@ -13,13 +13,13 @@ export default {
         {
           line: 1,
           message: 'Syntax is required: FunctionDeclaration with ' +
-            'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])',
+            'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
         },
       ],
       options: [{
         contexts: [
           {
-            comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])',
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
             context: 'FunctionDeclaration',
           },
         ],
@@ -37,13 +37,14 @@ export default {
       errors: [
         {
           line: 1,
-          message: 'Problematically missing function syntax: `FunctionDeclaration` with `JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])`.',
+          message: 'Problematically missing function syntax: `FunctionDeclaration` ' +
+            'with `JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))`.',
         },
       ],
       options: [{
         contexts: [
           {
-            comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])',
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
             context: 'FunctionDeclaration',
             message: 'Problematically missing function syntax: `{{context}}` with `{{comment}}`.',
           },
@@ -101,13 +102,13 @@ export default {
         {
           line: 1,
           message: 'Syntax is required: FunctionDeclaration with ' +
-            'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])',
+            'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
         },
       ],
       options: [{
         contexts: [
           {
-            comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])',
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
             context: 'FunctionDeclaration',
             minimum: 2,
           },
@@ -128,7 +129,7 @@ export default {
       options: [{
         contexts: [
           {
-            comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])',
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
             context: 'FunctionDeclaration',
           },
         ],
@@ -160,7 +161,7 @@ export default {
       options: [{
         contexts: [
           {
-            comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])',
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
             context: 'FunctionDeclaration',
             minimum: 2,
           },

@@ -63,7 +63,7 @@ export default {
       options: [{
         contexts: [
           {
-            comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])',
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
             context: 'FunctionDeclaration',
           },
         ],
@@ -87,12 +87,12 @@ export default {
       options: [{
         contexts: [
           {
-            comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])',
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
             context: 'FunctionDeclaration',
             message: 'The foo one: {{context}}.',
           },
           {
-            comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])',
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
             context: 'FunctionDeclaration',
             message: 'The bar one: {{context}}.',
           },
@@ -144,7 +144,7 @@ export default {
       options: [{
         contexts: [
           {
-            comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Foo"])',
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
             context: 'FunctionDeclaration',
           },
         ],

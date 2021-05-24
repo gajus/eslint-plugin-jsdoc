@@ -482,7 +482,7 @@ properties:
 1. For other rules, there is a `comment` property which adds to the `context`
     in requiring that the `comment` AST condition is also met, e.g., to
     require that certain tags are present and/or or types and type operators
-    are in use. Note that this AST (either for `JSDoc*` or `JSDocType*` AST)
+    are in use. Note that this AST (either for `Jsdoc*` or `JsdocType*` AST)
     has not been standardized and should be considered experimental.
     Note that this property might also become obsolete if parsers begin to
     include JSDoc-structured AST. A

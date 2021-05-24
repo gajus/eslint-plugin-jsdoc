@@ -551,7 +551,7 @@ export default {
         {
           contexts: [
             {
-              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTag[rawType="Bar"])',
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[rawType="Bar"])',
               context: 'ClassDeclaration',
             },
           ],
@@ -585,7 +585,7 @@ export default {
         {
           contexts: [
             {
-              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTag[rawType="Bar"])',
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[rawType="Bar"])',
               context: 'ClassDeclaration',
             },
           ],
@@ -618,7 +618,7 @@ export default {
         {
           contexts: [
             {
-              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTypeUnion[left.name="Bar"])',
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
               context: 'ClassDeclaration',
             },
           ],
@@ -650,7 +650,7 @@ export default {
         {
           contexts: [
             {
-              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTag[tag="implements"])',
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag="implements"])',
               context: 'ClassDeclaration',
             },
           ],
@@ -1024,7 +1024,7 @@ export default {
         {
           contexts: [
             {
-              comment: 'JSDocBlock[postDelimiter=/\\s{4}/]:has(JSDocTag[rawType="class"])',
+              comment: 'JsdocBlock[postDelimiter=/\\s{4}/]:has(JsdocTag[rawType="class"])',
               context: 'ClassDeclaration',
             },
           ],
@@ -1051,7 +1051,7 @@ export default {
         {
           contexts: [
             {
-              comment: 'JSDocBlock[postDelimiter=""]:has(JSDocTag[rawType="{Bar}"])',
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[rawType="{Bar}"])',
               context: 'ClassDeclaration',
             },
           ],
