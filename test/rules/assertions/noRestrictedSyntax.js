@@ -115,6 +115,28 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @param opt_a
+         * @param opt_b
+         */
+        function a () {}
+      `,
+      errors: [{
+        line: 2,
+        message: 'Only allowing names not matching `/^opt_/i`.',
+      }],
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            context: 'FunctionDeclaration',
+            message: 'Only allowing names not matching `/^opt_/i`.',
+          },
+        ],
+      }],
+    },
   ],
   valid: [
     {

@@ -8505,6 +8505,14 @@ function quux () {
 
 }
 // Message: Rule `no-restricted-syntax` is missing a `context` option.
+
+/**
+ * @param opt_a
+ * @param opt_b
+ */
+function a () {}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"FunctionDeclaration","message":"Only allowing names not matching `/^opt_/i`."}]}]
+// Message: Only allowing names not matching `/^opt_/i`.
 ````
 
 The following patterns are not considered problems:
