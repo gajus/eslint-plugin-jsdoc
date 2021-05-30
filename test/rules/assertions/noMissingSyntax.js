@@ -115,6 +115,49 @@ export default {
         ],
       }],
     },
+    {
+      code: `
+        /**
+         * @param ab
+         * @param cd
+         */
+      `,
+      errors: [{
+        line: 1,
+        message: 'Require names matching `/^opt_/i`.',
+      }],
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            context: 'any',
+            message: 'Require names matching `/^opt_/i`.',
+          },
+        ],
+      }],
+    },
+    {
+      code: `
+        /**
+         * @param ab
+         * @param cd
+         */
+        function quux () {}
+      `,
+      errors: [{
+        line: 1,
+        message: 'Require names matching `/^opt_/i`.',
+      }],
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            context: 'any',
+            message: 'Require names matching `/^opt_/i`.',
+          },
+        ],
+      }],
+    },
   ],
   valid: [
     {
@@ -164,6 +207,41 @@ export default {
             comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
             context: 'FunctionDeclaration',
             minimum: 2,
+          },
+        ],
+      }],
+    },
+    {
+      code: `
+        /**
+         * @param opt_a
+         * @param opt_b
+         */
+      `,
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            context: 'any',
+            message: 'Require names matching `/^opt_/i`.',
+          },
+        ],
+      }],
+    },
+    {
+      code: `
+        /**
+         * @param opt_a
+         * @param opt_b
+         */
+        function quux () {}
+      `,
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            context: 'any',
+            message: 'Require names matching `/^opt_/i`.',
           },
         ],
       }],

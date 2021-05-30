@@ -137,6 +137,76 @@ export default {
         ],
       }],
     },
+    {
+      code: `
+        /**
+         * @param opt_a
+         * @param opt_b
+         */
+        function a () {}
+      `,
+      errors: [{
+        line: 2,
+        message: 'Only allowing names not matching `/^opt_/i`.',
+      }],
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            context: 'any',
+            message: 'Only allowing names not matching `/^opt_/i`.',
+          },
+        ],
+      }],
+    },
+    {
+      code: `
+        /**
+         * @param opt_a
+         * @param opt_b
+         */
+        function a () {}
+      `,
+      errors: [{
+        line: 2,
+        message: 'Only allowing names not matching `/^opt_/i`.',
+      }],
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/not-this/])',
+            context: 'any',
+            message: 'Only allowing names not matching `/^not-this/i`.',
+          },
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            context: 'any',
+            message: 'Only allowing names not matching `/^opt_/i`.',
+          },
+        ],
+      }],
+    },
+    {
+      code: `
+        /**
+         * @param opt_a
+         * @param opt_b
+         */
+      `,
+      errors: [{
+        line: 2,
+        message: 'Only allowing names not matching `/^opt_/i`.',
+      }],
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            context: 'any',
+            message: 'Only allowing names not matching `/^opt_/i`.',
+          },
+        ],
+      }],
+    },
   ],
   valid: [
     {
@@ -168,6 +238,41 @@ export default {
           {
             comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
             context: 'FunctionDeclaration',
+          },
+        ],
+      }],
+    },
+    {
+      code: `
+        /**
+         * @param ab
+         * @param cd
+         */
+        function a () {}
+      `,
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            context: 'any',
+            message: 'Only allowing names not matching `/^opt_/i`.',
+          },
+        ],
+      }],
+    },
+    {
+      code: `
+        /**
+         * @param ab
+         * @param cd
+         */
+      `,
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            context: 'any',
+            message: 'Only allowing names not matching `/^opt_/i`.',
           },
         ],
       }],
