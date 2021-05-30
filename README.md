@@ -10632,6 +10632,16 @@ class quux {
 // Settings: {"jsdoc":{"implementsReplacesDocs":false}}
 // "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"implements\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
+
+/**
+ * @implements {Bar}
+ */
+class quux {
+
+}
+// Settings: {"jsdoc":{"implementsReplacesDocs":false}}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"implements\"])","context":"any"}],"descriptionStyle":"tag"}]
+// Message: Missing JSDoc @description declaration.
 ````
 
 The following patterns are not considered problems:
@@ -10847,6 +10857,21 @@ class quux {
 
 }
 // "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[rawType=\"{Bar}\"])","context":"ClassDeclaration"}],"descriptionStyle":"tag"}]
+
+/**
+ * Has some
+ *   description already.
+ */
+class quux {
+
+}
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[rawType=\"{Bar}\"])","context":"any"}],"descriptionStyle":"tag"}]
+
+/**
+ * Has some
+ *   description already.
+ */
+// "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[rawType=\"{Bar}\"])","context":"any"}],"descriptionStyle":"tag"}]
 ````
 
 
