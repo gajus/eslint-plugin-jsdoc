@@ -14,7 +14,8 @@ export default iterateJsdoc(({
 
   const foundContext = contexts.find((cntxt) => {
     return cntxt === selector ||
-      typeof cntxt === 'object' && selector === cntxt.context &&
+      typeof cntxt === 'object' &&
+      (cntxt.context === 'any' || selector === cntxt.context) &&
         comment === cntxt.comment;
   });
 

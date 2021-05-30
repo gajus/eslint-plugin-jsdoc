@@ -52,9 +52,15 @@ export default iterateJsdoc(({
       const contextStr = typeof cntxt === 'object' ? cntxt.context : cntxt;
       const comment = cntxt?.comment ?? '';
 
-      if (!state.selectorMap[contextStr] ||
-        !state.selectorMap[contextStr][comment] ||
-        state.selectorMap[contextStr][comment] < (cntxt?.minimum ?? 1)
+      const contextKey = contextStr === 'any' ? undefined : contextStr;
+
+      if (
+        (!state.selectorMap[contextKey] ||
+        !state.selectorMap[contextKey][comment] ||
+        state.selectorMap[contextKey][comment] < (cntxt?.minimum ?? 1)) &&
+        (contextStr !== 'any' || Object.values(state.selectorMap).every((cmmnt) => {
+          return !cmmnt[comment] || cmmnt[comment] < (cntxt?.minimum ?? 1);
+        }))
       ) {
         const message = cntxt?.message ?? 'Syntax is required: {{context}}' +
           (comment ? ' with {{comment}}' : '');

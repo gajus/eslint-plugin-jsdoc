@@ -8185,6 +8185,21 @@ function quux () {
 }
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"FunctionDeclaration","minimum":2}]}]
 // Message: Syntax is required: FunctionDeclaration with JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))
+
+/**
+ * @param ab
+ * @param cd
+ */
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Require names matching `/^opt_/i`."}]}]
+// Message: Require names matching `/^opt_/i`.
+
+/**
+ * @param ab
+ * @param cd
+ */
+function quux () {}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Require names matching `/^opt_/i`."}]}]
+// Message: Require names matching `/^opt_/i`.
 ````
 
 The following patterns are not considered problems:
@@ -8219,6 +8234,19 @@ function baz () {
 
 }
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"FunctionDeclaration","minimum":2}]}]
+
+/**
+ * @param opt_a
+ * @param opt_b
+ */
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Require names matching `/^opt_/i`."}]}]
+
+/**
+ * @param opt_a
+ * @param opt_b
+ */
+function quux () {}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Require names matching `/^opt_/i`."}]}]
 ````
 
 
@@ -8513,6 +8541,29 @@ function quux () {
 function a () {}
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"FunctionDeclaration","message":"Only allowing names not matching `/^opt_/i`."}]}]
 // Message: Only allowing names not matching `/^opt_/i`.
+
+/**
+ * @param opt_a
+ * @param opt_b
+ */
+function a () {}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Only allowing names not matching `/^opt_/i`."}]}]
+// Message: Only allowing names not matching `/^opt_/i`.
+
+/**
+ * @param opt_a
+ * @param opt_b
+ */
+function a () {}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/not-this/])","context":"any","message":"Only allowing names not matching `/^not-this/i`."},{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Only allowing names not matching `/^opt_/i`."}]}]
+// Message: Only allowing names not matching `/^opt_/i`.
+
+/**
+ * @param opt_a
+ * @param opt_b
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Only allowing names not matching `/^opt_/i`."}]}]
+// Message: Only allowing names not matching `/^opt_/i`.
 ````
 
 The following patterns are not considered problems:
@@ -8533,6 +8584,19 @@ function quux () {
 
 }
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration"}]}]
+
+/**
+ * @param ab
+ * @param cd
+ */
+function a () {}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Only allowing names not matching `/^opt_/i`."}]}]
+
+/**
+ * @param ab
+ * @param cd
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Only allowing names not matching `/^opt_/i`."}]}]
 ````
 
 

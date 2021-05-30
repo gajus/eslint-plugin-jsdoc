@@ -681,7 +681,7 @@ const iterate = (
   info,
   indent, jsdoc,
   ruleConfig, context, lines, jsdocNode, node, settings,
-  sourceCode, iterator, state, iteratingAll,
+  sourceCode, iterator, state, lastComment, iteratingAll,
 ) => {
   const report = makeReport(context, jsdocNode);
 
@@ -745,10 +745,12 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
  *
  * @param {JsdocVisitor} iterator
  * @param {{meta: any}} ruleConfig
+ * @param contexts
  */
-const iterateAllJsdocs = (iterator, ruleConfig) => {
+const iterateAllJsdocs = (iterator, ruleConfig, contexts) => {
   const trackedJsdocs = [];
 
+  let handler;
   let settings;
   const callIterator = (context, node, jsdocNodes, state, lastCall) => {
     const sourceCode = context.getSourceCode();
@@ -764,12 +766,21 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
         lines, jsdocNode,
       );
 
+      let lastComment;
+      if (contexts && contexts.every(({comment}) => {
+        lastComment = comment;
+
+        return handler(comment, jsdoc) === false;
+      })) {
+        return;
+      }
+
       iterate(
-        null,
+        lastComment ? {comment: lastComment, selector: node?.type} : null,
         indent, jsdoc,
         ruleConfig, context, lines, jsdocNode, node,
         settings, sourceCode, iterator,
-        state, true,
+        state, lastComment, true,
       );
     });
     if (lastCall && ruleConfig.exit) {
@@ -788,6 +799,9 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
       if (!settings) {
         return {};
       }
+      if (contexts) {
+        handler = commentHandler(settings);
+      }
 
       const state = {};
 
@@ -799,11 +813,11 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
             return;
           }
 
-          const comment = getJSDocComment(sourceCode, node, settings);
-          if (trackedJsdocs.includes(comment)) {
+          const commentNode = getJSDocComment(sourceCode, node, settings);
+          if (trackedJsdocs.includes(commentNode)) {
             return;
           }
-          if (!comment) {
+          if (!commentNode) {
             if (ruleConfig.nonComment) {
               ruleConfig.nonComment({
                 node,
@@ -814,8 +828,8 @@ const iterateAllJsdocs = (iterator, ruleConfig) => {
             return;
           }
 
-          trackedJsdocs.push(comment);
-          callIterator(context, node, [comment], state);
+          trackedJsdocs.push(commentNode);
+          callIterator(context, node, [commentNode], state);
         },
         'Program:exit' () {
           const allComments = sourceCode.getAllComments();
@@ -911,18 +925,25 @@ export default function iterateJsdoc (iterator, ruleConfig) {
      *   a list with parser callback function.
      */
     create (context) {
-      let contexts;
-      if (ruleConfig.contextDefaults || ruleConfig.contextSelected) {
-        contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
-        if (contexts?.includes('any')) {
-          return iterateAllJsdocs(iterator, ruleConfig).create(context);
-        }
-      }
-      const sourceCode = context.getSourceCode();
       const settings = getSettings(context);
       if (!settings) {
         return {};
       }
+
+      let contexts;
+      if (ruleConfig.contextDefaults || ruleConfig.contextSelected) {
+        contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
+        const hasPlainAny = contexts?.includes('any');
+        const hasObjectAny = !hasPlainAny && contexts?.find((ctxt) => {
+          return ctxt?.context === 'any';
+        });
+        if (hasPlainAny || hasObjectAny) {
+          return iterateAllJsdocs(
+            iterator, ruleConfig, hasObjectAny ? contexts : null,
+          ).create(context);
+        }
+      }
+      const sourceCode = context.getSourceCode();
       const {lines} = sourceCode;
 
       const state = {};
