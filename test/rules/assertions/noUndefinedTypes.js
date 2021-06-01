@@ -1025,5 +1025,50 @@ export default {
         },
       },
     },
+    {
+      // https://github.com/gajus/eslint-plugin-jsdoc/issues/747
+      code: `
+        /**
+         * Read all content from a Readable stream.
+         *
+         * @param {!module:stream.Readable} readable Readable stream.
+         * @returns {!Promise<!Array<*>>} Content from readable.
+         */
+        module.exports =
+        function readStream(readable) {
+          return new Promise((resolve, reject) => {
+            const data = [];
+            readable
+              .on('data', (d) => data.push(d))
+              .once('error', reject)
+              .once('end', () => resolve(data));
+          });
+        };
+        `,
+      env: {es6: true},
+      ignoreReadme: true,
+    },
+    {
+      // https://github.com/gajus/eslint-plugin-jsdoc/issues/749
+      code: `
+      /**
+       * @param {{message: string|undefined}} options Options.
+       */
+      function MyError(options) {
+      }
+      `,
+      ignoreReadme: true,
+    },
+    {
+      // https://github.com/gajus/eslint-plugin-jsdoc/issues/748
+      code: `
+      /**
+       * @param {{message: string?}} options Options.
+       */
+      function MyError(options) {
+      }
+      `,
+      ignoreReadme: true,
+    },
   ],
 };
