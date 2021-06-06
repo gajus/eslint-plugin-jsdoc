@@ -508,9 +508,16 @@ const isNewPromiseExpression = (node) => {
 };
 
 /**
+ * @callback PromiseFilter
+ * @param {object} node
+ * @returns {boolean}
+ */
+
+/**
  * Checks if a node has a return statement. Void return does not count.
  *
  * @param {object} node
+ * @param {PromiseFilter} promFilter
  * @returns {boolean|Node}
  */
 // eslint-disable-next-line complexity

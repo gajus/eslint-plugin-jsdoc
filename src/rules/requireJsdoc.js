@@ -221,7 +221,7 @@ export default {
         exemptEmptyConstructors && jsdocUtils.isConstructor(node)
       ) {
         const functionParameterNames = jsdocUtils.getFunctionParameterNames(node);
-        if (!functionParameterNames.length && !jsdocUtils.hasReturnValue(node, context)) {
+        if (!functionParameterNames.length && !jsdocUtils.hasReturnValue(node)) {
           return;
         }
       }

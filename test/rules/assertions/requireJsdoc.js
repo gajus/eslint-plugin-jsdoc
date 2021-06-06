@@ -3144,6 +3144,42 @@ function quux (foo) {
         }
       `,
     },
+    {
+      code: `
+      function commandFinished () {
+        return new Promise((resolve) => {
+          client.on('ev', () => {
+            resolve();
+          });
+        });
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      ignoreReadme: true,
+      options: [{
+        exemptEmptyFunctions: true,
+        require: {
+          FunctionDeclaration: true,
+        },
+      }],
+      output: `
+      /**
+       *
+       */
+      function commandFinished () {
+        return new Promise((resolve) => {
+          client.on('ev', () => {
+            resolve();
+          });
+        });
+      }
+      `,
+    },
   ],
   valid: [{
     code: `
