@@ -8197,6 +8197,13 @@ function quux () {
  * @param ab
  * @param cd
  */
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","message":"Require names matching `/^opt_/i`."}]}]
+// Message: Require names matching `/^opt_/i`.
+
+/**
+ * @param ab
+ * @param cd
+ */
 function quux () {}
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Require names matching `/^opt_/i`."}]}]
 // Message: Require names matching `/^opt_/i`.
@@ -8247,6 +8254,13 @@ function baz () {
  */
 function quux () {}
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Require names matching `/^opt_/i`."}]}]
+
+/**
+ * @param opt_a
+ * @param opt_b
+ */
+function quux () {}
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","message":"Require names matching `/^opt_/i`."}]}]
 ````
 
 
@@ -8555,6 +8569,14 @@ function a () {}
  * @param opt_b
  */
 function a () {}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","message":"Only allowing names not matching `/^opt_/i`."}]}]
+// Message: Only allowing names not matching `/^opt_/i`.
+
+/**
+ * @param opt_a
+ * @param opt_b
+ */
+function a () {}
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/not-this/])","context":"any","message":"Only allowing names not matching `/^not-this/i`."},{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Only allowing names not matching `/^opt_/i`."}]}]
 // Message: Only allowing names not matching `/^opt_/i`.
 
@@ -8597,6 +8619,12 @@ function a () {}
  * @param cd
  */
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Only allowing names not matching `/^opt_/i`."}]}]
+
+/**
+ * @param ab
+ * @param cd
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","message":"Only allowing names not matching `/^opt_/i`."}]}]
 ````
 
 

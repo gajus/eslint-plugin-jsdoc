@@ -142,6 +142,26 @@ export default {
          * @param ab
          * @param cd
          */
+      `,
+      errors: [{
+        line: 1,
+        message: 'Require names matching `/^opt_/i`.',
+      }],
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+            message: 'Require names matching `/^opt_/i`.',
+          },
+        ],
+      }],
+    },
+    {
+      code: `
+        /**
+         * @param ab
+         * @param cd
+         */
         function quux () {}
       `,
       errors: [{
@@ -241,6 +261,23 @@ export default {
           {
             comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
             context: 'any',
+            message: 'Require names matching `/^opt_/i`.',
+          },
+        ],
+      }],
+    },
+    {
+      code: `
+        /**
+         * @param opt_a
+         * @param opt_b
+         */
+        function quux () {}
+      `,
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
             message: 'Require names matching `/^opt_/i`.',
           },
         ],

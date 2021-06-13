@@ -15,12 +15,12 @@ export default iterateJsdoc(({
   const foundContext = contexts.find((cntxt) => {
     return cntxt === selector ||
       typeof cntxt === 'object' &&
-      (cntxt.context === 'any' || selector === cntxt.context) &&
+      (!cntxt.context || cntxt.context === 'any' || selector === cntxt.context) &&
         comment === cntxt.comment;
   });
 
   const contextStr = typeof foundContext === 'object' ?
-    foundContext.context :
+    foundContext.context ?? 'any' :
     foundContext;
   const message = foundContext?.message ??
     'Syntax is restricted: {{context}}.';

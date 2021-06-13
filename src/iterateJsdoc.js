@@ -933,6 +933,17 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       let contexts;
       if (ruleConfig.contextDefaults || ruleConfig.contextSelected) {
         contexts = jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
+
+        if (contexts) {
+          contexts = contexts.map((obj) => {
+            if (typeof obj === 'object' && !obj.context) {
+              return {...obj, context: 'any'};
+            }
+
+            return obj;
+          });
+        }
+
         const hasPlainAny = contexts?.includes('any');
         const hasObjectAny = !hasPlainAny && contexts?.find((ctxt) => {
           return ctxt?.context === 'any';

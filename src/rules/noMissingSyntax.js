@@ -49,7 +49,7 @@ export default iterateJsdoc(({
 
     // Report when MISSING
     contexts.some((cntxt) => {
-      const contextStr = typeof cntxt === 'object' ? cntxt.context : cntxt;
+      const contextStr = typeof cntxt === 'object' ? cntxt.context ?? 'any' : cntxt;
       const comment = cntxt?.comment ?? '';
 
       const contextKey = contextStr === 'any' ? undefined : contextStr;
