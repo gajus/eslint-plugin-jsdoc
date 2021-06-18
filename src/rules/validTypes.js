@@ -17,13 +17,9 @@ export default iterateJsdoc(({
   } = context.options[0] || {};
   const {mode} = settings;
 
-  const tryParseIgnoreError = (path) => {
+  const tryParsePathIgnoreError = (path) => {
     try {
-      if (mode === 'permissive') {
-        tryParse(path);
-      } else {
-        parse(path, mode);
-      }
+      tryParse(path);
 
       return true;
     } catch {
@@ -36,7 +32,7 @@ export default iterateJsdoc(({
   // eslint-disable-next-line complexity
   jsdoc.tags.forEach((tag) => {
     const validNamepathParsing = function (namepath, tagName) {
-      if (tryParseIgnoreError(namepath)) {
+      if (tryParsePathIgnoreError(namepath)) {
         return true;
       }
       let handled = false;
@@ -45,21 +41,21 @@ export default iterateJsdoc(({
         switch (tagName) {
         case 'module': {
           if (!namepath.startsWith('module:')) {
-            handled = tryParseIgnoreError(`module:${namepath}`);
+            handled = tryParsePathIgnoreError(`module:${namepath}`);
           }
           break;
         }
         case 'memberof': case 'memberof!': {
           const endChar = namepath.slice(-1);
           if (['#', '.', '~'].includes(endChar)) {
-            handled = tryParseIgnoreError(namepath.slice(0, -1));
+            handled = tryParsePathIgnoreError(namepath.slice(0, -1));
           }
           break;
         }
         case 'borrows': {
           const startChar = namepath.charAt();
           if (['#', '.', '~'].includes(startChar)) {
-            handled = tryParseIgnoreError(namepath.slice(1));
+            handled = tryParsePathIgnoreError(namepath.slice(1));
           }
         }
         }
