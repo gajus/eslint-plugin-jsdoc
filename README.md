@@ -6390,6 +6390,22 @@ You can supply your own expression to override the default, passing a
 }
 ```
 
+<a name="eslint-plugin-jsdoc-rules-match-description-options-11-message"></a>
+##### <code>message</code>
+
+You may provide a custom default message by using the following format:
+
+```js
+{
+  'jsdoc/match-description': ['error', {
+    message: 'The default dscription should begin with a capital letter.'
+  }]
+}
+```
+
+This can be overridden per tag or for the main block description by setting
+`message` within `tags` or `mainDescription`, respectively.
+
 <a name="eslint-plugin-jsdoc-rules-match-description-options-11-tags-2"></a>
 ##### <code>tags</code>
 
@@ -6417,6 +6433,18 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+Alternatively, you may supply an object with a `message` property to indicate
+the error message for that tag.
+
+```js
+{
+  'jsdoc/match-description': ['error', {tags: {
+    param: {message: 'Begin with a hyphen', match: '\\- [A-Z].*\\.'},
+    returns: {message: 'Capitalize for returns (the default)', match: true}
+  }}]
+}
+```
+
 The tags `@param`/`@arg`/`@argument` and `@property`/`@prop` will be properly
 parsed to ensure that the matched "description" text includes only the text
 after the name.
@@ -6430,8 +6458,9 @@ is `xyz`).
 <a name="eslint-plugin-jsdoc-rules-match-description-options-11-maindescription"></a>
 ##### <code>mainDescription</code>
 
-If you wish to override the main function description without changing the
-default `match-description`, you may use `mainDescription`:
+If you wish to override the main block description without changing the
+default `match-description` (which can cascade to the `tags` with `true`),
+you may use `mainDescription`:
 
 ```js
 {
@@ -6446,8 +6475,25 @@ default `match-description`, you may use `mainDescription`:
 ```
 
 There is no need to add `mainDescription: true`, as by default, the main
-function (and only the main function) is linted, though you may disable
-checking it by setting it to `false`.
+block description (and only the main block description) is linted, though you
+may disable checking it by setting it to `false`.
+
+You may also provide an object with `message`:
+
+```js
+{
+  'jsdoc/match-description': ['error', {
+    mainDescription: {
+      message: 'Capitalize first word of JSDoc block descriptions',
+      match: '[A-Z].*\\.'
+    },
+    tags: {
+      param: true,
+      returns: true
+    }
+  }]
+}
+```
 
 <a name="eslint-plugin-jsdoc-rules-match-description-options-11-contexts-1"></a>
 ##### <code>contexts</code>
@@ -6481,6 +6527,15 @@ const q = class {
 }
 // "jsdoc/match-description": ["error"|"warn", {"contexts":["ClassExpression"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * foo.
+ */
+const q = class {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["ClassExpression"],"message":"Needs to begin with a capital letter and end with an end mark."}]
+// Message: Needs to begin with a capital letter and end with an end mark.
 
 /**
  * foo.
@@ -6529,6 +6584,15 @@ function quux () {
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
+ * тест.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"matchDescription":"[А-Я][А-я]+\\.","message":"Needs to begin with a capital letter and end with an end mark."}]
+// Message: Needs to begin with a capital letter and end with an end mark.
+
+/**
  * Abc.
  */
 function quux () {
@@ -6536,6 +6600,15 @@ function quux () {
 }
 // "jsdoc/match-description": ["error"|"warn", {"mainDescription":"[А-Я][А-я]+\\.","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Abc.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":{"match":"[А-Я][А-я]+\\.","message":"Needs to begin with a Cyrillic capital letter and end with a period."},"tags":{"param":true}}]
+// Message: Needs to begin with a Cyrillic capital letter and end with a period.
 
 /**
  * Foo
@@ -6632,6 +6705,17 @@ function quux (foo) {
 }
 // "jsdoc/match-description": ["error"|"warn", {"mainDescription":"^[a-zA-Z]*$","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Foo
+ *
+ * @param foo foo.
+ */
+function quux (foo) {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":{"match":"^[a-zA-Z]*$","message":"Letters only"},"tags":{"param":{"match":true,"message":"Needs to begin with a capital letter and end with a period."}}}]
+// Message: Needs to begin with a capital letter and end with a period.
 
 /**
  * Foo
@@ -6857,6 +6941,16 @@ function quux () {
 function quux () {
 
 }
+
+/**
+ * Foo.
+ *
+ * Bar.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"message":"This won't be shown"}]
 
 /**
  * Тест.
