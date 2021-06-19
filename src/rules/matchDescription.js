@@ -16,28 +16,48 @@ export default iterateJsdoc(({
   context,
   utils,
 }) => {
-  const options = context.options[0] || {};
+  const {
+    mainDescription,
+    matchDescription,
+    message,
+    tags,
+  } = context.options[0] || {};
 
   const validateDescription = (description, tag) => {
-    if (!tag && options.mainDescription === false) {
+    let mainDescriptionMatch = mainDescription;
+    let errorMessage = message;
+    if (typeof mainDescription === 'object') {
+      mainDescriptionMatch = mainDescription.match;
+      errorMessage = mainDescription.message;
+    }
+    if (!tag && mainDescriptionMatch === false) {
       return;
     }
 
-    let tagValue = options.mainDescription;
+    let tagValue = mainDescriptionMatch;
     if (tag) {
       const tagName = tag.tag;
-      tagValue = options.tags[tagName];
+      if (typeof tags[tagName] === 'object') {
+        tagValue = tags[tagName].match;
+        errorMessage = tags[tagName].message;
+      } else {
+        tagValue = tags[tagName];
+      }
     }
 
     const regex = utils.getRegexFromString(
-      stringOrDefault(tagValue, options.matchDescription),
+      stringOrDefault(tagValue, matchDescription),
     );
 
     if (!regex.test(description)) {
-      report('JSDoc description does not satisfy the regex pattern.', null, tag || {
-        // Add one as description would typically be into block
-        line: jsdoc.source[0].number + 1,
-      });
+      report(
+        errorMessage || 'JSDoc description does not satisfy the regex pattern.',
+        null,
+        tag || {
+          // Add one as description would typically be into block
+          line: jsdoc.source[0].number + 1,
+        },
+      );
     }
   };
 
@@ -48,12 +68,12 @@ export default iterateJsdoc(({
     );
   }
 
-  if (!options.tags || !Object.keys(options.tags).length) {
+  if (!tags || !Object.keys(tags).length) {
     return;
   }
 
   const hasOptionTag = (tagName) => {
-    return Boolean(options.tags[tagName]);
+    return Boolean(tags[tagName]);
   };
 
   utils.forEachPreferredTag('description', (matchingJsdocTag, targetTagName) => {
@@ -121,10 +141,33 @@ export default iterateJsdoc(({
               {
                 type: 'boolean',
               },
+              {
+                additionalProperties: false,
+                properties: {
+                  match: {
+                    oneOf: [
+                      {
+                        format: 'regex',
+                        type: 'string',
+                      },
+                      {
+                        type: 'boolean',
+                      },
+                    ],
+                  },
+                  message: {
+                    type: 'string',
+                  },
+                },
+                type: 'object',
+              },
             ],
           },
           matchDescription: {
             format: 'regex',
+            type: 'string',
+          },
+          message: {
             type: 'string',
           },
           tags: {
@@ -138,6 +181,27 @@ export default iterateJsdoc(({
                   {
                     enum: [true],
                     type: 'boolean',
+                  },
+                  {
+                    additionalProperties: false,
+                    properties: {
+                      match: {
+                        oneOf: [
+                          {
+                            format: 'regex',
+                            type: 'string',
+                          },
+                          {
+                            enum: [true],
+                            type: 'boolean',
+                          },
+                        ],
+                      },
+                      message: {
+                        type: 'string',
+                      },
+                    },
+                    type: 'object',
                   },
                 ],
               },

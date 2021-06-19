@@ -37,6 +37,21 @@ You can supply your own expression to override the default, passing a
 }
 ```
 
+##### `message`
+
+You may provide a custom default message by using the following format:
+
+```js
+{
+  'jsdoc/match-description': ['error', {
+    message: 'The default dscription should begin with a capital letter.'
+  }]
+}
+```
+
+This can be overridden per tag or for the main block description by setting
+`message` within `tags` or `mainDescription`, respectively.
+
 ##### `tags`
 
 If you want different regular expressions to apply to tags, you may use
@@ -63,6 +78,18 @@ tag should be linted with the `matchDescription` value (or the default).
 }
 ```
 
+Alternatively, you may supply an object with a `message` property to indicate
+the error message for that tag.
+
+```js
+{
+  'jsdoc/match-description': ['error', {tags: {
+    param: {message: 'Begin with a hyphen', match: '\\- [A-Z].*\\.'},
+    returns: {message: 'Capitalize for returns (the default)', match: true}
+  }}]
+}
+```
+
 The tags `@param`/`@arg`/`@argument` and `@property`/`@prop` will be properly
 parsed to ensure that the matched "description" text includes only the text
 after the name.
@@ -75,8 +102,9 @@ is `xyz`).
 
 ##### `mainDescription`
 
-If you wish to override the main function description without changing the
-default `match-description`, you may use `mainDescription`:
+If you wish to override the main block description without changing the
+default `match-description` (which can cascade to the `tags` with `true`),
+you may use `mainDescription`:
 
 ```js
 {
@@ -91,8 +119,25 @@ default `match-description`, you may use `mainDescription`:
 ```
 
 There is no need to add `mainDescription: true`, as by default, the main
-function (and only the main function) is linted, though you may disable
-checking it by setting it to `false`.
+block description (and only the main block description) is linted, though you
+may disable checking it by setting it to `false`.
+
+You may also provide an object with `message`:
+
+```js
+{
+  'jsdoc/match-description': ['error', {
+    mainDescription: {
+      message: 'Capitalize first word of JSDoc block descriptions',
+      match: '[A-Z].*\\.'
+    },
+    tags: {
+      param: true,
+      returns: true
+    }
+  }]
+}
+```
 
 ##### `contexts`
 

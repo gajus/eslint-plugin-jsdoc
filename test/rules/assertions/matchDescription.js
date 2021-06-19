@@ -28,6 +28,30 @@ export default {
           /**
            * foo.
            */
+          const q = class {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Needs to begin with a capital letter and end with an end mark.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'ClassExpression',
+          ],
+          message: 'Needs to begin with a capital letter and end with an end mark.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * foo.
+           */
       `,
       errors: [
         {
@@ -140,6 +164,26 @@ export default {
     {
       code: `
           /**
+           * тест.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Needs to begin with a capital letter and end with an end mark.',
+        },
+      ],
+      options: [{
+        matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+        message: 'Needs to begin with a capital letter and end with an end mark.',
+      }],
+    },
+    {
+      code: `
+          /**
            * Abc.
            */
           function quux () {
@@ -154,6 +198,31 @@ export default {
       ],
       options: [{
         mainDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+        tags: {
+          param: true,
+        },
+      }],
+    },
+    {
+      code: `
+          /**
+           * Abc.
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Needs to begin with a Cyrillic capital letter and end with a period.',
+        },
+      ],
+      options: [{
+        mainDescription: {
+          match: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+          message: 'Needs to begin with a Cyrillic capital letter and end with a period.',
+        },
         tags: {
           param: true,
         },
@@ -372,6 +441,38 @@ export default {
           mainDescription: '^[a-zA-Z]*$',
           tags: {
             param: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * Foo
+           *
+           * @param foo foo.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Needs to begin with a capital letter and end with a period.',
+        },
+      ],
+      options: [
+        {
+          mainDescription: {
+            match: '^[a-zA-Z]*$',
+            message: 'Letters only',
+          },
+          tags: {
+            param: {
+              match: true,
+              message: 'Needs to begin with a capital letter and end with a period.',
+            },
           },
         },
       ],
@@ -865,6 +966,21 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+          /**
+           * Foo.
+           *
+           * Bar.
+           */
+          function quux () {
+
+          }
+      `,
+      options: [{
+        message: 'This won\'t be shown',
+      }],
     },
     {
       code: `
