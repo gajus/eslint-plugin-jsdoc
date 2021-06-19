@@ -1247,5 +1247,22 @@ export default {
        */
       `,
     },
+    {
+      code: `
+      /**
+       * Foo.
+       *
+       * @fires Foo#bar
+       */
+      export default class Foo {
+
+      }
+      `,
+      ignoreReadme: true,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
 };
