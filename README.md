@@ -18051,6 +18051,12 @@ const itself = (n) => n;
  * Not tracking on nested function
  */
 const nested = () => () => {throw new Error('oops');};
+
+/**
+ */
+async function foo() {
+  throw Error("bar");
+}
 ````
 
 

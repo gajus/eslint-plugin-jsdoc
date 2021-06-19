@@ -997,7 +997,7 @@ const hasThrowValue = (node, innerFunction) => {
   case 'FunctionExpression':
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
-    return !innerFunction && hasThrowValue(node.body, true);
+    return !innerFunction && !node.async && hasThrowValue(node.body, true);
   }
   case 'BlockStatement': {
     return node.body.some((bodyNode) => {

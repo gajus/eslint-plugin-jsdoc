@@ -418,5 +418,17 @@ export default {
       const nested = () => () => {throw new Error('oops');};
       `,
     },
+    {
+      code: `
+      /**
+       */
+      async function foo() {
+        throw Error("bar");
+      }
+      `,
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
   ],
 };
