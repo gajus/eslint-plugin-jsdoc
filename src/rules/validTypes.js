@@ -5,6 +5,18 @@ import iterateJsdoc from '../iterateJsdoc';
 
 const asExpression = /as\s+/u;
 
+const tryParsePathIgnoreError = (path) => {
+  try {
+    tryParse(path);
+
+    return true;
+  } catch {
+    // Keep the original error for including the whole type
+  }
+
+  return false;
+};
+
 export default iterateJsdoc(({
   jsdoc,
   report,
@@ -16,18 +28,6 @@ export default iterateJsdoc(({
     allowEmptyNamepaths = false,
   } = context.options[0] || {};
   const {mode} = settings;
-
-  const tryParsePathIgnoreError = (path) => {
-    try {
-      tryParse(path);
-
-      return true;
-    } catch {
-      // Keep the original error for including the whole type
-    }
-
-    return false;
-  };
 
   // eslint-disable-next-line complexity
   jsdoc.tags.forEach((tag) => {
