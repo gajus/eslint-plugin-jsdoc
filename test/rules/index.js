@@ -7,15 +7,14 @@ import ruleNames from './ruleNames.json';
 
 const ruleTester = new RuleTester();
 
-(process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : ruleNames).forEach((ruleName) => {
+(process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : ruleNames).forEach(async (ruleName) => {
   const rule = config.rules[ruleName];
 
   const parserOptions = {
     ecmaVersion: 6,
   };
 
-  // eslint-disable-next-line import/no-dynamic-require
-  const assertions = require(`./assertions/${_.camelCase(ruleName)}`);
+  const assertions = (await import(`./assertions/${_.camelCase(ruleName)}`)).default;
 
   if (!_.has(rule, 'meta.schema')) {
     const testHasOptions = (item) => {
