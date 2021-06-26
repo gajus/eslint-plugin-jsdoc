@@ -361,6 +361,31 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
+      options: [{
+        configFile: '.eslintrc.json',
+        matchingFileName: '../../jsdocUtils.js',
+      }],
+    },
+    {
+      code: `
+          /**
+           * @example const i = 5;
+           * quux2()
+           */
+          function quux2 () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).',
+        },
+        {
+          line: 4,
+          message: '@example error (semi): Missing semicolon.',
+        },
+      ],
       filename: 'test/rules/data/jsdocUtils.js',
     },
     {
