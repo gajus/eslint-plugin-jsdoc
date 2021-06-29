@@ -36,7 +36,7 @@ export default iterateJsdoc(({
             line: 1,
           },
         },
-        message: 'Rule `no-restricted-syntax` is missing a `context` option.',
+        message: 'Rule `no-missing-syntax` is missing a `context` option.',
       });
 
       return;

@@ -8491,7 +8491,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Rule `no-restricted-syntax` is missing a `context` option.
+// Message: Rule `no-missing-syntax` is missing a `context` option.
 
 /**
  * @implements {Bar|Foo}
