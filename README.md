@@ -8393,19 +8393,22 @@ const a = {};
 <a name="eslint-plugin-jsdoc-rules-no-missing-syntax"></a>
 ### <code>no-missing-syntax</code>
 
-This rule lets you report when certain comment structures are always expected.
-This rule might be especially useful with [`overrides`](https://eslint.org/docs/user-guide/configuring/configuration-files#how-do-overrides-work)
-where you need only require tags and/or types within specific directories
-(e.g., to enforce that a plugins or locale directory always has a certain form
-of export).
+This rule lets you report if certain always expected comment structures are
+missing.
 
 This (along with `no-restricted-syntax`) is a bit similar to Schematron for
 XML or jsontron for JSON--you can validate expectations of there being
 arbitrary structures.
 
-This differs from the rule of the same name in [`eslint-plugin-query`](https://github.com/brettz9/eslint-plugin-query)
-in that this always looks for a comment above a structure (whether or not
+This differs from the rule of the same name in
+[`eslint-plugin-query`](https://github.com/brettz9/eslint-plugin-query)
+in that this rule always looks for a comment above a structure (whether or not
 you have a `comment` condition).
+
+This rule might be especially useful with [`overrides`](https://eslint.org/docs/user-guide/configuring/configuration-files#how-do-overrides-work)
+where you need only require tags and/or types within specific directories
+(e.g., to enforce that a plugins or locale directory always has a certain form
+of export and comment therefor).
 
 In addition to being generally useful for precision in requiring contexts,
 it is hoped that the ability to specify required tags on structures can
