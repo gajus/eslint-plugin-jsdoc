@@ -53,7 +53,10 @@ const ruleTester = new RuleTester();
         `Rule, \`${ruleName}\`, missing line numbers in errors: ${count}`,
       );
     } else {
-      throw new Error(`Rule, \`${ruleName}\`, missing line numbers in errors: ${count}`);
+      // eslint-disable-next-line no-console -- CLI
+      console.error(`Rule, \`${ruleName}\`, missing line numbers in errors: ${count}`);
+
+      return;
     }
   }
 
