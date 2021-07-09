@@ -156,10 +156,12 @@ For `checkDefaults`, `checkParams`, and `checkProperties`, the following
 expression-oriented rules will be used by default as well:
 
 * `quotes` - Will insist on "double".
-* `semi` - Will insist on "never"
+* `semi` - Will insist on "never".
 * `strict` - Disabled.
+* `no-empty-function` - Disabled.
 * `no-new` - Disabled.
 * `no-unused-expressions` - Disabled.
+* `chai-friendly/no-unused-expressions` - Disabled.
 
 ##### Options for checking other than `@example` (`checkDefaults`, `checkParams`, or `checkProperties`)
 

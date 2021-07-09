@@ -1108,10 +1108,12 @@ For `checkDefaults`, `checkParams`, and `checkProperties`, the following
 expression-oriented rules will be used by default as well:
 
 * `quotes` - Will insist on "double".
-* `semi` - Will insist on "never"
+* `semi` - Will insist on "never".
 * `strict` - Disabled.
+* `no-empty-function` - Disabled.
 * `no-new` - Disabled.
 * `no-unused-expressions` - Disabled.
+* `chai-friendly/no-unused-expressions` - Disabled.
 
 <a name="eslint-plugin-jsdoc-rules-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig-options-for-checking-other-than-example-checkdefaults-checkparams-or-checkproperties"></a>
 ##### Options for checking other than <code>@example</code> (<code>checkDefaults</code>, <code>checkParams</code>, or <code>checkProperties</code>)
