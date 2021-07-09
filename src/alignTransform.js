@@ -169,7 +169,7 @@ const alignTransform = ({
 
     if (!intoTags) {
       if (tokens.description === '') {
-        tokens.postDelimiter = '';
+        tokens.postDelimiter = tokens.postDelimiter === '\r' ? '\r' : '';
       } else if (!preserveMainDescriptionPostDelimiter) {
         tokens.postDelimiter = ' ';
       }

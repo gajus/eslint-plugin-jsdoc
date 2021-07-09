@@ -1057,6 +1057,36 @@ export default {
       const fn = ( lorem, sit ) => {}
       `,
     },
+    {
+      code: `\r
+        /**\r
+         * Function description.\r
+         *\r
+         * @param {string} lorem Description.\r
+         * @param {int} sit Description multi words.\r
+         */\r
+        const fn = ( lorem, sit ) => {}\r
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `\r
+        /**\r
+         * Function description.\r
+         *\r
+         * @param {string} lorem Description.\r
+         * @param {int}    sit   Description multi words.\r
+         */\r
+        const fn = ( lorem, sit ) => {}\r
+      `,
+    },
   ],
   valid: [
     {
@@ -1443,6 +1473,18 @@ export default {
          *        }}            params
          */
         const fn = ({ids}) => {}
+      `,
+      options: ['always'],
+    },
+    {
+      code: `\r
+        /**\r
+         * Function description.\r
+         *\r
+         * @param {string} lorem Description.\r
+         * @param {int}    sit   Description multi words.\r
+         */\r
+        const fn = ( lorem, sit ) => {}\r
       `,
       options: ['always'],
     },
