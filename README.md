@@ -2345,6 +2345,8 @@ const fn = ( lorem, sit ) => {}
         *
         * @param {string} lorem Description.
         * @param {int} sit Description multi words.
+        * @param {string} sth   Multi
+        *                       line description.
         */
        const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
@@ -2611,6 +2613,8 @@ const fn = ({ids}) => {}
         *
         * @param {string} lorem Description.
         * @param {int}    sit   Description multi words.
+        * @param {string} sth   Multi
+        *                       line description.
         */
        const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]

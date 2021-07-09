@@ -1064,6 +1064,8 @@ export default {
          *\r
          * @param {string} lorem Description.\r
          * @param {int} sit Description multi words.\r
+         * @param {string} sth   Multi\r
+         *                       line description.\r
          */\r
         const fn = ( lorem, sit ) => {}\r
       `,
@@ -1083,6 +1085,8 @@ export default {
          *\r
          * @param {string} lorem Description.\r
          * @param {int}    sit   Description multi words.\r
+         * @param {string} sth   Multi\r
+         *                       line description.\r
          */\r
         const fn = ( lorem, sit ) => {}\r
       `,
@@ -1483,6 +1487,8 @@ export default {
          *\r
          * @param {string} lorem Description.\r
          * @param {int}    sit   Description multi words.\r
+         * @param {string} sth   Multi\r
+         *                       line description.\r
          */\r
         const fn = ( lorem, sit ) => {}\r
       `,
