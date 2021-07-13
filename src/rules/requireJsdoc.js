@@ -73,6 +73,10 @@ const OPTIONS_SCHEMA = {
       default: false,
       type: 'boolean',
     },
+    fixerMessage: {
+      default: '',
+      type: 'string',
+    },
     publicOnly: {
       oneOf: [
         {
@@ -150,6 +154,7 @@ const getOptions = (context) => {
     exemptEmptyConstructors = true,
     exemptEmptyFunctions = false,
     enableFixer = true,
+    fixerMessage = '',
   } = context.options[0] || {};
 
   return {
@@ -157,6 +162,7 @@ const getOptions = (context) => {
     enableFixer,
     exemptEmptyConstructors,
     exemptEmptyFunctions,
+    fixerMessage,
     publicOnly: ((baseObj) => {
       if (!publicOnly) {
         return false;
@@ -193,7 +199,7 @@ export default {
     const {
       require: requireOption,
       contexts,
-      publicOnly, exemptEmptyFunctions, exemptEmptyConstructors, enableFixer,
+      publicOnly, exemptEmptyFunctions, exemptEmptyConstructors, enableFixer, fixerMessage,
     } = getOptions(context);
 
     const checkJsDoc = (info, handler, node) => {
@@ -247,8 +253,8 @@ export default {
           return ctxt === node.type;
         }) || {};
         const insertion = (inlineCommentBlock ?
-          '/** ' :
-          `/**\n${indent}*\n${indent}`) +
+          `/** ${fixerMessage}` :
+          `/**\n${indent}*${fixerMessage}\n${indent}`) +
             `*/${'\n'.repeat(lines)}${indent.slice(0, -1)}`;
 
         return fixer.insertTextBefore(baseNode, insertion);
