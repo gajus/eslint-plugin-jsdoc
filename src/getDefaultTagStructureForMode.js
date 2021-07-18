@@ -163,12 +163,12 @@ const getDefaultTagStructureForMode = (mode) => {
       ['nameContents', 'namepath-referencing'],
 
       // Does not show curly brackets in either the signature or examples
-      ['typeAllowed', isClosureOrPermissive],
+      ['typeAllowed', isTypescriptOrClosure || isPermissive],
 
-      ['nameRequired', isJsdocOrTypescript],
+      ['nameRequired', isJsdoc],
 
       // "namepath"
-      ['typeOrNameRequired', isClosureOrPermissive],
+      ['typeOrNameRequired', isTypescriptOrClosure || isPermissive],
     ])],
 
     ['external', new Map([

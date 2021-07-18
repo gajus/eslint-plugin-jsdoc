@@ -1264,5 +1264,19 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      /**
+       * @extends {SomeType}
+       */
+      class quux {}
+
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
   ],
 };

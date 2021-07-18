@@ -20538,6 +20538,12 @@ type ComplicatedType<T, U, V, W, X> = never
  *   prop: number
  * }} MyOptions
  */
+
+/**
+ * @extends {SomeType}
+ */
+class quux {}
+// Settings: {"jsdoc":{"mode":"typescript"}}
 ````
 
 
