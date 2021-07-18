@@ -510,6 +510,22 @@ export default {
       options: ['always', {
         tags: {
           param: {
+            lines: 'any',
+          },
+        },
+      }],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {number} b
+       */
+      `,
+      options: ['always', {
+        tags: {
+          param: {
             lines: 'never',
           },
         },
@@ -520,6 +536,23 @@ export default {
       /**
        * Some description
        * @param {number} a
+       * @param {number} b
+       */
+      `,
+      options: ['never', {
+        tags: {
+          param: {
+            lines: 'any',
+          },
+        },
+      }],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {number} a
+       *
        * @param {number} b
        */
       `,

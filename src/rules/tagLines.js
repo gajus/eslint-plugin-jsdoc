@@ -23,7 +23,7 @@ export default iterateJsdoc(({
       if (description) {
         reportIndex = null;
       }
-      if (lastTag && tags[lastTag.slice(1)]?.lines === 'always') {
+      if (lastTag && ['any', 'always'].includes(tags[lastTag.slice(1)]?.lines)) {
         return;
       }
 
@@ -138,7 +138,7 @@ export default iterateJsdoc(({
                       type: 'integer',
                     },
                     lines: {
-                      enum: ['always', 'never'],
+                      enum: ['always', 'never', 'any'],
                       type: 'string',
                     },
                   },

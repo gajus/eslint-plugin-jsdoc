@@ -28,7 +28,7 @@ Overrides the default behavior depending on specific tags.
 An object whose keys are tag names and whose values are objects with the
 following keys:
 
-1. `lines` - Set to `always` or `never` to override.
+1. `lines` - Set to `always`, `never`, or `any` to override.
 2. `count` - Overrides main `count` (for "always")
 
 |||
