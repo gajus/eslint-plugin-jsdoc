@@ -11,6 +11,13 @@ Will also report if multiple `@returns` tags are present.
 
 #### Options
 
+- `exemptGenerators`- Because a generator might be labeled as having a
+  `IterableIterator` `@returns` value (along with an iterator type
+  corresponding to the type of any `yield` statements), projects might wish to
+  leverage `@returns` in generators even without a` return` statement. This
+  option is therefore `true` by default in `typescript` mode (in "jsdoc" mode,
+  one might be more likely to take advantage of `@yields`). Set it to `false`
+  if you wish for a missing `return` to be flagged regardless.
 - `exemptAsync` - By default, functions which return a `Promise` that are not
     detected as resolving with a non-`undefined` value and `async` functions
     (even ones that do not explicitly return a value, as these are returning a

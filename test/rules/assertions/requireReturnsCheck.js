@@ -175,6 +175,53 @@ export default {
     {
       code: `
           /**
+           * @returns {IterableIterator<any>}
+           */
+          function * quux() {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @returns {IterableIterator<any>}
+           */
+          function * quux() {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      options: [{
+        exemptGenerators: false,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+          /**
            * @returns {Promise<void>}
            */
           function quux() {
@@ -790,6 +837,41 @@ export default {
       options: [{
         reportMissingReturnForUndefinedTypes: true,
       }],
+    },
+    {
+      code: `
+          /**
+           * @returns {IterableIterator<any>}
+           */
+          function * quux() {}
+      `,
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @returns {IterableIterator<any>}
+           */
+          function * quux() {}
+      `,
+      options: [{
+        exemptGenerators: true,
+      }],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
     },
   ],
 };
