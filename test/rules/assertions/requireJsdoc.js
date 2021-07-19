@@ -3180,6 +3180,88 @@ function quux (foo) {
       }
       `,
     },
+    {
+      code: `
+      function comment () {
+        return "comment";
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+          fixerMessage: ' TODO: add comment',
+        },
+      ],
+      output: `
+      /**
+       * TODO: add comment
+       */
+      function comment () {
+        return "comment";
+      }
+      `,
+    },
+    {
+      code: `
+      function comment () {
+        return "comment";
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'any',
+            {
+              context: 'FunctionDeclaration',
+              inlineCommentBlock: true,
+            },
+          ],
+          fixerMessage: 'TODO: add comment ',
+        },
+      ],
+      output: `
+      /** TODO: add comment */
+      function comment () {
+        return "comment";
+      }
+      `,
+    },
+    {
+      code: `
+      function comment () {
+        return "comment";
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+          fixerMessage: ' TODO: add comment',
+        },
+      ],
+      output: `
+      function comment () {
+        return "comment";
+      }
+      `,
+    },
   ],
   valid: [{
     code: `

@@ -12911,6 +12911,24 @@ const obj = {
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"checkGetters":"no-setter","contexts":["Property > FunctionExpression"]}]
 // Message: Missing JSDoc comment.
+
+function comment () {
+  return "comment";
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"enableFixer":true,"fixerMessage":" TODO: add comment"}]
+// Message: Missing JSDoc comment.
+
+function comment () {
+  return "comment";
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["any",{"context":"FunctionDeclaration","inlineCommentBlock":true}],"fixerMessage":"TODO: add comment "}]
+// Message: Missing JSDoc comment.
+
+function comment () {
+  return "comment";
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"enableFixer":false,"fixerMessage":" TODO: add comment"}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:
