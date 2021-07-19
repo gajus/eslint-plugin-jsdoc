@@ -3192,7 +3192,6 @@ function quux (foo) {
           message: 'Missing JSDoc comment.',
         },
       ],
-      ignoreReadme: true,
       options: [
         {
           enableFixer: true,
@@ -3220,7 +3219,6 @@ function quux (foo) {
           message: 'Missing JSDoc comment.',
         },
       ],
-      ignoreReadme: true,
       options: [
         {
           contexts: [
@@ -3252,7 +3250,6 @@ function quux (foo) {
           message: 'Missing JSDoc comment.',
         },
       ],
-      ignoreReadme: true,
       options: [
         {
           enableFixer: false,
