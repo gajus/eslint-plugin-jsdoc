@@ -12209,11 +12209,6 @@ if one only wishes documentation on one of the two accessors. Defaults to
 A boolean on whether to enable the fixer (which adds an empty jsdoc block).
 Defaults to `true`.
 
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-fixerMessage-2"></a>
-##### <code>fixerMessage</code>
-A string that determines which message is inserted in the fixers code block (is the fixer is enabled).
-Default to empty string.
-
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -12915,6 +12910,24 @@ const obj = {
   get aName () {},
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"checkGetters":"no-setter","contexts":["Property > FunctionExpression"]}]
+// Message: Missing JSDoc comment.
+
+function comment () {
+  return "comment";
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"enableFixer":true,"fixerMessage":" TODO: add comment"}]
+// Message: Missing JSDoc comment.
+
+function comment () {
+  return "comment";
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["any",{"context":"FunctionDeclaration","inlineCommentBlock":true}],"fixerMessage":"TODO: add comment "}]
+// Message: Missing JSDoc comment.
+
+function comment () {
+  return "comment";
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"enableFixer":false,"fixerMessage":" TODO: add comment"}]
 // Message: Missing JSDoc comment.
 ````
 
