@@ -1543,6 +1543,74 @@ export default {
         ecmaVersion: 8,
       },
     },
+    {
+      code: `
+        export class A {
+          /**
+           * Description.
+           */
+          public f(): string {
+            return "";
+          }
+        }
+
+        export interface B {
+          /**
+           * Description.
+           */
+          f(): string;
+
+          /**
+           * Description.
+           */
+          g: () => string;
+
+          /**
+           * Description.
+           */
+          h(): void;
+
+          /**
+           * Description.
+           */
+          i: () => void;
+        }
+
+        /**
+         * Description.
+         */
+        export function f(): string {
+          return "";
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+        {
+          line: 12,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+        {
+          line: 17,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+        {
+          line: 33,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [{
+        contexts: [
+          ':not(BlockStatement) > FunctionDeclaration',
+          'MethodDefinition',
+          'TSMethodSignature',
+          'TSPropertySignature > TSTypeAnnotation > TSFunctionType',
+        ],
+      }],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {

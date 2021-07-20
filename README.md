@@ -17453,6 +17453,46 @@ async function quux () {
 }
 // "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 // Message: Missing JSDoc @returns declaration.
+
+export class A {
+  /**
+   * Description.
+   */
+  public f(): string {
+    return "";
+  }
+}
+
+export interface B {
+  /**
+   * Description.
+   */
+  f(): string;
+
+  /**
+   * Description.
+   */
+  g: () => string;
+
+  /**
+   * Description.
+   */
+  h(): void;
+
+  /**
+   * Description.
+   */
+  i: () => void;
+}
+
+/**
+ * Description.
+ */
+export function f(): string {
+  return "";
+}
+// "jsdoc/require-returns": ["error"|"warn", {"contexts":[":not(BlockStatement) > FunctionDeclaration","MethodDefinition","TSMethodSignature","TSPropertySignature > TSTypeAnnotation > TSFunctionType"]}]
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:

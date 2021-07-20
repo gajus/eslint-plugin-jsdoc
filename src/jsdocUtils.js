@@ -527,6 +527,14 @@ const hasReturnValue = (node, promFilter) => {
   }
 
   switch (node.type) {
+  case 'TSFunctionType':
+  case 'TSMethodSignature':
+    return ![
+      'TSVoidKeyword',
+      'TSUndefinedKeyword',
+    ].includes(node?.returnType?.typeAnnotation?.type);
+  case 'MethodDefinition':
+    return hasReturnValue(node.value, promFilter);
   case 'FunctionExpression':
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
