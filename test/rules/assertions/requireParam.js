@@ -2224,6 +2224,32 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+        /** Foo. */
+        function foo(a, b, c) {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "a" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "b" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "c" declaration.',
+        },
+      ],
+      output: `
+        /**
+         * Foo.
+         * @param a
+         * @param b
+         * @param c
+         */
+        function foo(a, b, c) {}
+      `,
+    },
   ],
   valid: [
     {

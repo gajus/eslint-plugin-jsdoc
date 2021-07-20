@@ -293,6 +293,9 @@ export default iterateJsdoc(({
     });
   };
 
+  if (missingTags.length && jsdoc.source.length === 1) {
+    utils.makeMultiline();
+  }
   missingTags.forEach(({functionParameterName}) => {
     utils.reportJSDoc(
       `Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`,

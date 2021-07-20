@@ -15179,6 +15179,10 @@ export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 }
 // "jsdoc/require-param": ["error"|"warn", {"useDefaultObjectProperties":true}]
 // Message: Missing JSDoc @param "props.prop.a" declaration.
+
+/** Foo. */
+function foo(a, b, c) {}
+// Message: Missing JSDoc @param "a" declaration.
 ````
 
 The following patterns are not considered problems:

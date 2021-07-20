@@ -2,7 +2,6 @@ import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
   context,
-  indent,
   jsdoc,
   utils,
 }) => {
@@ -18,25 +17,8 @@ export default iterateJsdoc(({
   } = context.options[0] || {};
 
   const {source: [{tokens}]} = jsdoc;
-  const {postDelimiter, description, tag, name, type} = tokens;
+  const {description, tag} = tokens;
   const sourceLength = jsdoc.source.length;
-
-  const emptyTokens = () => {
-    [
-      'start',
-      'postDelimiter',
-      'tag',
-      'type',
-      'postType',
-      'postTag',
-      'name',
-      'postName',
-      'description',
-      'end',
-    ].forEach((prop) => {
-      tokens[prop] = '';
-    });
-  };
 
   const isInvalidSingleLine = (tagName) => {
     return noSingleLineBlocks &&
@@ -50,43 +32,7 @@ export default iterateJsdoc(({
     }
 
     const fixer = () => {
-      let {tokens: {
-        postName, postTag, postType,
-      }} = jsdoc.source[0];
-
-      // Strip trailing leftovers from single line ending
-      if (!description) {
-        if (postName) {
-          postName = '';
-        } else if (postType) {
-          postType = '';
-        // eslint-disable-next-line max-len, no-inline-comments
-        } else /* istanbul ignore else -- `comment-parser` prevents empty blocks currently per https://github.com/syavorsky/comment-parser/issues/128 */ if (postTag) {
-          postTag = '';
-        }
-      }
-
-      emptyTokens();
-
-      utils.addLine(1, {
-        delimiter: '*',
-
-        // If a description were present, it may have whitespace attached
-        //   due to being at the end of the single line
-        description: description.trimEnd(),
-        name,
-        postDelimiter,
-        postName,
-        postTag,
-        postType,
-        start: indent + ' ',
-        tag,
-        type,
-      });
-      utils.addLine(2, {
-        end: '*/',
-        start: indent + ' ',
-      });
+      utils.makeMultiline();
     };
 
     utils.reportJSDoc(
@@ -104,7 +50,7 @@ export default iterateJsdoc(({
     ) {
       const fixer = () => {
         const line = {...tokens};
-        emptyTokens();
+        utils.emptyTokens(tokens);
         const {tokens: {delimiter, start}} = jsdoc.source[1];
         utils.addLine(1, {...line, delimiter, start});
       };

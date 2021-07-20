@@ -246,6 +246,23 @@ const getUtils = (
 
   utils.seedTokens = seedTokens;
 
+  utils.emptyTokens = (tokens) => {
+    [
+      'start',
+      'postDelimiter',
+      'tag',
+      'type',
+      'postType',
+      'postTag',
+      'name',
+      'postName',
+      'description',
+      'end',
+    ].forEach((prop) => {
+      tokens[prop] = '';
+    });
+  };
+
   utils.addLine = (sourceIndex, tokens) => {
     const number = (jsdoc.source[sourceIndex - 1]?.number || 0) + 1;
     jsdoc.source.splice(sourceIndex, 0, {
@@ -297,6 +314,49 @@ const getUtils = (
     });
     jsdoc.source.slice(lastIndex).forEach((src, idx) => {
       src.number = firstNumber + lastIndex + idx;
+    });
+  };
+
+  utils.makeMultiline = () => {
+    const {source: [{tokens}]} = jsdoc;
+    const {postDelimiter, description, tag, name, type} = tokens;
+
+    let {tokens: {
+      postName, postTag, postType,
+    }} = jsdoc.source[0];
+
+    // Strip trailing leftovers from single line ending
+    if (!description) {
+      if (postName) {
+        postName = '';
+      } else if (postType) {
+        postType = '';
+      // eslint-disable-next-line max-len, no-inline-comments
+      } else /* istanbul ignore else -- `comment-parser` prevents empty blocks currently per https://github.com/syavorsky/comment-parser/issues/128 */ if (postTag) {
+        postTag = '';
+      }
+    }
+
+    utils.emptyTokens(tokens);
+
+    utils.addLine(1, {
+      delimiter: '*',
+
+      // If a description were present, it may have whitespace attached
+      //   due to being at the end of the single line
+      description: description.trimEnd(),
+      name,
+      postDelimiter,
+      postName,
+      postTag,
+      postType,
+      start: indent + ' ',
+      tag,
+      type,
+    });
+    utils.addLine(2, {
+      end: '*/',
+      start: indent + ' ',
     });
   };
 
