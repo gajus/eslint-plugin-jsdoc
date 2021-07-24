@@ -6,10 +6,10 @@
 
 import {
   Markers,
-} from 'comment-parser/lib/primitives';
+} from 'comment-parser/primitives';
 import {
   rewireSource,
-} from 'comment-parser/lib/util';
+} from 'comment-parser/util';
 
 const zeroWidth = {
   name: 0,
