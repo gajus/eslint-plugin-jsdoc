@@ -20,7 +20,8 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
   name +
   postName +
   description +
-  end
+  end +
+  lineEnd
    */
   let spacerProps;
   let contentProps;

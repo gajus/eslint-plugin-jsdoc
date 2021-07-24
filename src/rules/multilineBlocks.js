@@ -79,6 +79,7 @@ export default iterateJsdoc(({
           'postDelimiter',
           'tag',
           'type',
+          'lineEnd',
           'postType',
           'postTag',
           'name',
@@ -155,7 +156,7 @@ export default iterateJsdoc(({
           tokens: jsdoc.source.reduce((obj, {
             tokens: {
               description: desc, tag: tg, type: typ, name: nme,
-              postType, postName, postTag,
+              lineEnd, postType, postName, postTag,
             },
           }) => {
             if (typ) {
@@ -178,6 +179,7 @@ export default iterateJsdoc(({
             ) {
               obj.description += ' ';
             }
+            obj.lineEnd = lineEnd;
 
             // Already filtered for multiple tags
             obj.tag += tg;

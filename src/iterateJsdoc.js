@@ -116,7 +116,7 @@ const getUtils = (
   utils.getTagDescription = (tg) => {
     const descriptions = [];
     tg.source.some(({
-      tokens: {end, postDelimiter, tag, postTag, name, type, description},
+      tokens: {end, lineEnd, postDelimiter, tag, postTag, name, type, description},
     }) => {
       const desc = (
         tag && postTag ||
@@ -124,7 +124,7 @@ const getUtils = (
 
       // Remove space
       ).slice(1) +
-        (description || '');
+        (description || '') + (lineEnd || '');
 
       if (end) {
         if (desc) {
@@ -258,6 +258,7 @@ const getUtils = (
       'postName',
       'description',
       'end',
+      'lineEnd',
     ].forEach((prop) => {
       tokens[prop] = '';
     });
@@ -319,7 +320,7 @@ const getUtils = (
 
   utils.makeMultiline = () => {
     const {source: [{tokens}]} = jsdoc;
-    const {postDelimiter, description, tag, name, type} = tokens;
+    const {postDelimiter, description, lineEnd, tag, name, type} = tokens;
 
     let {tokens: {
       postName, postTag, postType,
@@ -345,6 +346,7 @@ const getUtils = (
       // If a description were present, it may have whitespace attached
       //   due to being at the end of the single line
       description: description.trimEnd(),
+      lineEnd,
       name,
       postDelimiter,
       postName,

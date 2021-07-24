@@ -252,6 +252,7 @@ export default iterateJsdoc(({
           delimiter: '*',
           description: '',
           end: '',
+          lineEnd: '',
           name: functionParameterName,
           newAdd: true,
           postDelimiter: ' ',
