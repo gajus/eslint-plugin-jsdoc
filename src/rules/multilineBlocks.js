@@ -190,10 +190,8 @@ export default iterateJsdoc(({
             return obj;
           }, utils.seedTokens({
             delimiter: '/**',
-            description: '',
             end: '*/',
             postDelimiter: ' ',
-            tag: '',
           })),
         }];
       };

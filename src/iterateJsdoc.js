@@ -234,7 +234,6 @@ const getUtils = (
       source: '',
       tokens: seedTokens({
         delimiter: '*',
-        lineEnd: '',
         postDelimiter: ' ',
         start: indent + ' ',
         tag: `@${targetTagName}`,
@@ -288,7 +287,6 @@ const getUtils = (
           source: '',
           tokens: seedTokens({
             delimiter: '*',
-            lineEnd: '',
             start: indent + ' ',
           }),
         };
@@ -348,7 +346,6 @@ const getUtils = (
       // If a description were present, it may have whitespace attached
       //   due to being at the end of the single line
       description: description.trimEnd(),
-      lineEnd,
       name,
       postDelimiter,
       postName,
