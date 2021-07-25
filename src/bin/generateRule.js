@@ -207,7 +207,6 @@ export default iterateJsdoc(({
     path: './src/index.js',
   });
 
-  // eslint-disable-next-line import/extensions
   await import('./generateReadme.js');
 
   /*
