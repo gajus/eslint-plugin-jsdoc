@@ -21,6 +21,7 @@
     "array-element-newline": 0,
     "filenames/match-regex": 0,
     "prefer-named-capture-group": 0,
+    "import/extensions": 0,
     "unicorn/prevent-abbreviations": 0
   }
 }
