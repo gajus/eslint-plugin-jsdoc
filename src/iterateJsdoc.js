@@ -234,6 +234,7 @@ const getUtils = (
       source: '',
       tokens: seedTokens({
         delimiter: '*',
+        lineEnd: '',
         postDelimiter: ' ',
         start: indent + ' ',
         tag: `@${targetTagName}`,
@@ -287,6 +288,7 @@ const getUtils = (
           source: '',
           tokens: seedTokens({
             delimiter: '*',
+            lineEnd: '',
             start: indent + ' ',
           }),
         };
@@ -358,6 +360,7 @@ const getUtils = (
     });
     utils.addLine(2, {
       end: '*/',
+      lineEnd,
       start: indent + ' ',
     });
   };
