@@ -5,8 +5,8 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "0.10.0",
-    "comment-parser": "1.2.0",
+    "@es-joy/jsdoccomment": "0.10.1",
+    "comment-parser": "1.2.1",
     "debug": "^4.3.2",
     "esquery": "^1.4.0",
     "jsdoc-type-pratt-parser": "^1.0.4",
