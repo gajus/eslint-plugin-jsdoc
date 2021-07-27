@@ -5,11 +5,15 @@
  */
 
 import {
-  Markers,
-} from 'comment-parser/primitives';
-import {
+
+  // `comment-parser/util` re-exports
   rewireSource,
-} from 'comment-parser/util';
+} from '@es-joy/jsdoccomment';
+import {
+
+  // `comment-parser/primitives` export
+  Markers,
+} from 'comment-parser';
 
 const zeroWidth = {
   name: 0,

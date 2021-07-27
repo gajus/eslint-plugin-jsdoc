@@ -5,11 +5,11 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "0.10.3",
+    "@es-joy/jsdoccomment": "0.10.6",
     "comment-parser": "1.2.1",
     "debug": "^4.3.2",
     "esquery": "^1.4.0",
-    "jsdoc-type-pratt-parser": "^1.0.4",
+    "jsdoc-type-pratt-parser": "^1.1.1",
     "lodash": "^4.17.21",
     "regextras": "^0.8.0",
     "semver": "^7.3.5",
