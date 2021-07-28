@@ -1,15 +1,17 @@
 import {
   getReducedASTNode, getJSDocComment, commentHandler, parseComment,
-
-  // `comment-parser/util` re-exports
-  rewireSpecs,
-  seedTokens,
 } from '@es-joy/jsdoccomment';
 import {
   stringify as commentStringify,
+  util,
 } from 'comment-parser';
 import _ from 'lodash';
 import jsdocUtils from './jsdocUtils';
+
+const {
+  rewireSpecs,
+  seedTokens,
+} = util;
 
 /*
 const {

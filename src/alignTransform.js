@@ -6,14 +6,12 @@
 
 import {
 
-  // `comment-parser/util` re-exports
-  rewireSource,
-} from '@es-joy/jsdoccomment';
-import {
-
   // `comment-parser/primitives` export
   Markers,
+  util,
 } from 'comment-parser';
+
+const {rewireSource} = util;
 
 const zeroWidth = {
   name: 0,
