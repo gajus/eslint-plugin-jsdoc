@@ -129,18 +129,16 @@ export default iterateJsdoc(({
             type: 'boolean',
           },
           tags: {
-            properties: {
-              patternProperties: {
-                '.*': {
-                  additionalProperties: false,
-                  properties: {
-                    count: {
-                      type: 'integer',
-                    },
-                    lines: {
-                      enum: ['always', 'never', 'any'],
-                      type: 'string',
-                    },
+            patternProperties: {
+              '.*': {
+                additionalProperties: false,
+                properties: {
+                  count: {
+                    type: 'integer',
+                  },
+                  lines: {
+                    enum: ['always', 'never', 'any'],
+                    type: 'string',
                   },
                 },
               },
