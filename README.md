@@ -4773,6 +4773,7 @@ less work to do.
 So in a sense, there are two types of strings in Javascript:
 1. `{string}` literals, also called primitives
 2. `{String}` Objects.
+
 We use the primitives because it's easier to write and uses less memory.
 `{String}` and `{string}` are technically both valid, but they are not the same.
 
