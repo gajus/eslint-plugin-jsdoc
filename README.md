@@ -4770,10 +4770,12 @@ footprint is a tiny little bit smaller, and the
 [GC](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)) has
 less work to do.
 
-So in a sense, there two types of strings in Javascript; `{string}` literals,
-also called primitives and `{String}` Objects. We use the primitives because
-it's easier to write and uses less memory. `{String}` and `{string}` are
-technically both valid, but they are not the same.
+So in a sense, there are two types of strings in Javascript:
+1. `{string}` literals, also called primitives
+2. `{String}` Objects.
+
+We use the primitives because it's easier to write and uses less memory.
+`{String}` and `{string}` are technically both valid, but they are not the same.
 
 ```js
 new String('lard') // String {0: "l", 1: "a", 2: "r", 3: "d", length: 4}
