@@ -29,6 +29,6 @@ Requires that throw statements are documented.
 | Aliases  | `exception` |
 |Recommended|true|
 | Options  | `contexts`, `exemptedBy` |
-| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
+| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 <!-- assertions requireThrows -->
