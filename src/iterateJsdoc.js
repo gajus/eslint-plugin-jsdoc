@@ -78,6 +78,7 @@ const getUtils = (
   const {
     tagNamePreference,
     overrideReplacesDocs,
+    ignoreReplacesDocs,
     implementsReplacesDocs,
     augmentsExtendsReplacesDocs,
     maxLines,
@@ -439,6 +440,8 @@ const getUtils = (
 
   utils.avoidDocs = () => {
     if (
+      ignoreReplacesDocs !== false &&
+        (utils.hasTag('ignore') || utils.classHasTag('ignore')) ||
       overrideReplacesDocs !== false &&
         (utils.hasTag('override') || utils.classHasTag('override')) ||
       implementsReplacesDocs !== false &&
@@ -651,8 +654,10 @@ const getSettings = (context) => {
     // `check-types`, `no-undefined-types`, `valid-types`
     structuredTags: context.settings.jsdoc?.structuredTags ?? {},
 
-    // `require-param`, `require-description`, `require-example`, `require-returns`
+    // `require-param`, `require-description`, `require-example`,
+    // `require-returns`, `require-throw`, `require-yields`
     overrideReplacesDocs: context.settings.jsdoc?.overrideReplacesDocs,
+    ignoreReplacesDocs: context.settings.jsdoc?.ignoreReplacesDocs,
     implementsReplacesDocs: context.settings.jsdoc?.implementsReplacesDocs,
     augmentsExtendsReplacesDocs: context.settings.jsdoc?.augmentsExtendsReplacesDocs,
 

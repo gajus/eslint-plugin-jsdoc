@@ -18,7 +18,7 @@ JSDoc linting rules for ESLint.
         * [`maxLines` and `minLines`](#eslint-plugin-jsdoc-settings-maxlines-and-minlines)
         * [Mode](#eslint-plugin-jsdoc-settings-mode)
         * [Alias Preference](#eslint-plugin-jsdoc-settings-alias-preference)
-        * [`@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`](#eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns)
+        * [`@override`/`@augments`/`@extends`/`@implements`/`@ignore` Without Accompanying `@param`/`@description`/`@example`/`@returns`/`@throws`/`@yields`](#eslint-plugin-jsdoc-settings-override-augments-extends-implements-ignore-without-accompanying-param-description-example-returns-throws-yields)
         * [Settings to Configure `check-types` and `no-undefined-types`](#eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types)
         * [`structuredTags`](#eslint-plugin-jsdoc-settings-structuredtags)
     * [Advanced](#eslint-plugin-jsdoc-advanced)
@@ -389,14 +389,15 @@ This setting is utilized by the the rule for tag name checking
 - `require-returns-description`
 - `require-returns-type`
 
-<a name="eslint-plugin-jsdoc-settings-override-augments-extends-implements-without-accompanying-param-description-example-returns"></a>
-### <code>@override</code>/<code>@augments</code>/<code>@extends</code>/<code>@implements</code> Without Accompanying <code>@param</code>/<code>@description</code>/<code>@example</code>/<code>@returns</code>
+<a name="eslint-plugin-jsdoc-settings-override-augments-extends-implements-ignore-without-accompanying-param-description-example-returns-throws-yields"></a>
+### <code>@override</code>/<code>@augments</code>/<code>@extends</code>/<code>@implements</code>/<code>@ignore</code> Without Accompanying <code>@param</code>/<code>@description</code>/<code>@example</code>/<code>@returns</code>/<code>@throws</code>/<code>@yields</code>
 
 The following settings allows the element(s) they reference to be omitted
 on the JSDoc comment block of the function or that of its parent class
 for any of the "require" rules (i.e., `require-param`, `require-description`,
-`require-example`, or `require-returns`).
+`require-example`, `require-returns`, `require-throws`, `require-yields`).
 
+* `settings.jsdoc.ignoreReplacesDocs` (`@ignore`) - Defaults to `true`
 * `settings.jsdoc.overrideReplacesDocs` (`@override`) - Defaults to `true`
 * `settings.jsdoc.augmentsExtendsReplacesDocs` (`@augments` or its alias
     `@extends`) - Defaults to `false`.
@@ -409,6 +410,7 @@ The format of the configuration is as follows:
     "rules": {},
     "settings": {
         "jsdoc": {
+            "ignoreReplacesDocs": true,
             "overrideReplacesDocs": true,
             "augmentsExtendsReplacesDocs": true,
             "implementsReplacesDocs": true
@@ -10747,7 +10749,7 @@ An options object may have any of the following properties:
 | Aliases  | `desc`                                                                                                        |
 | Recommended | false |
 | Options  | `contexts`, `exemptedBy`, `descriptionStyle`, `checkConstructors`, `checkGetters`, `checkSetters`             |
-| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
+| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
 
 The following patterns are considered problems:
 
@@ -11326,7 +11328,7 @@ report a missing example description after this is added.
 |Tags|`example`|
 |Recommended|false|
 |Options|`exemptedBy`, `exemptNoArguments`, `avoidExampleOnConstructors`, `contexts`|
-|Settings|`overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
+|Settings|`ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
 
@@ -14531,7 +14533,7 @@ supplied as default values. Defaults to `false`.
 | Aliases  | `arg`, `argument` |
 |Recommended | true|
 | Options  | `autoIncrementBase`, `checkDestructured`, `checkDestructuredRoots`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`, `useDefaultObjectProperties`|
-| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
+| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
 
@@ -14724,6 +14726,15 @@ function quux (foo) {
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
+ * @ignore
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"ignoreReplacesDocs":false}}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
  * @implements
  */
 function quux (foo) {
@@ -14760,6 +14771,20 @@ class A {
   }
 }
 // Settings: {"jsdoc":{"overrideReplacesDocs":false}}
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ * @ignore
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"ignoreReplacesDocs":false}}
 // Message: Missing JSDoc @param "foo" declaration.
 
 /**
@@ -15303,6 +15328,14 @@ function quux (foo) {
 // Settings: {"jsdoc":{"overrideReplacesDocs":true}}
 
 /**
+ * @ignore
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"ignoreReplacesDocs":true}}
+
+/**
  * @implements
  */
 class A {
@@ -15409,6 +15442,19 @@ class A {
   }
 }
 // Settings: {"jsdoc":{"overrideReplacesDocs":true}}
+
+/**
+ * @ignore
+ */
+class A {
+  /**
+   *
+   */
+  quux (foo) {
+
+  }
+}
+// Settings: {"jsdoc":{"ignoreReplacesDocs":true}}
 
 /**
  * @implements
@@ -17011,7 +17057,7 @@ Will also report if multiple `@returns` tags are present.
 | Aliases  | `return` |
 |Recommended|true|
 | Options  | `checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync` |
-| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
+| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 The following patterns are considered problems:
 
@@ -18055,7 +18101,7 @@ Requires that throw statements are documented.
 | Aliases  | `exception` |
 |Recommended|true|
 | Options  | `contexts`, `exemptedBy` |
-| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
+| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 The following patterns are considered problems:
 
@@ -18365,7 +18411,7 @@ option to expect a non-standard `@next` tag.
 |Aliases|`yield`|
 |Recommended|true|
 | Options  | `contexts`,  `exemptedBy`, `withGeneratorTag`, `nextWithGeneratorTag`, `forceRequireYields`, `next` |
-| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
+| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 The following patterns are considered problems:
 

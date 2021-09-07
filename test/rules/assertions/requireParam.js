@@ -703,6 +703,36 @@ export default {
     {
       code: `
           /**
+           * @ignore
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * @param foo
+           * @ignore
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          ignoreReplacesDocs: false,
+        },
+      },
+    },
+    {
+      code: `
+          /**
            * @implements
            */
           function quux (foo) {
@@ -816,6 +846,45 @@ export default {
       settings: {
         jsdoc: {
           overrideReplacesDocs: false,
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @ignore
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * @ignore
+           */
+          class A {
+            /**
+             * @param foo
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      settings: {
+        jsdoc: {
+          ignoreReplacesDocs: false,
         },
       },
     },
@@ -2415,6 +2484,21 @@ export default {
     {
       code: `
           /**
+           * @ignore
+           */
+          function quux (foo) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          ignoreReplacesDocs: true,
+        },
+      },
+    },
+    {
+      code: `
+          /**
            * @implements
            */
           class A {
@@ -2577,6 +2661,26 @@ export default {
       settings: {
         jsdoc: {
           overrideReplacesDocs: true,
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @ignore
+           */
+          class A {
+            /**
+             *
+             */
+            quux (foo) {
+
+            }
+          }
+      `,
+      settings: {
+        jsdoc: {
+          ignoreReplacesDocs: true,
         },
       },
     },

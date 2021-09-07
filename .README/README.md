@@ -316,13 +316,14 @@ This setting is utilized by the the rule for tag name checking
 - `require-returns-description`
 - `require-returns-type`
 
-### `@override`/`@augments`/`@extends`/`@implements` Without Accompanying `@param`/`@description`/`@example`/`@returns`
+### `@override`/`@augments`/`@extends`/`@implements`/`@ignore` Without Accompanying `@param`/`@description`/`@example`/`@returns`/`@throws`/`@yields`
 
 The following settings allows the element(s) they reference to be omitted
 on the JSDoc comment block of the function or that of its parent class
 for any of the "require" rules (i.e., `require-param`, `require-description`,
-`require-example`, or `require-returns`).
+`require-example`, `require-returns`, `require-throws`, `require-yields`).
 
+* `settings.jsdoc.ignoreReplacesDocs` (`@ignore`) - Defaults to `true`
 * `settings.jsdoc.overrideReplacesDocs` (`@override`) - Defaults to `true`
 * `settings.jsdoc.augmentsExtendsReplacesDocs` (`@augments` or its alias
     `@extends`) - Defaults to `false`.
@@ -335,6 +336,7 @@ The format of the configuration is as follows:
     "rules": {},
     "settings": {
         "jsdoc": {
+            "ignoreReplacesDocs": true,
             "overrideReplacesDocs": true,
             "augmentsExtendsReplacesDocs": true,
             "implementsReplacesDocs": true

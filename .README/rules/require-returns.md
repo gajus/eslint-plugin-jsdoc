@@ -48,6 +48,6 @@ Will also report if multiple `@returns` tags are present.
 | Aliases  | `return` |
 |Recommended|true|
 | Options  | `checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync` |
-| Settings | `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
+| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 <!-- assertions requireReturns -->
