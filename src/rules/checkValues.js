@@ -12,7 +12,7 @@ export default iterateJsdoc(({
     allowedLicenses = null,
     allowedAuthors = null,
     numericOnlyVariation = false,
-    licensePattern = '/([^\n]*)/gu',
+    licensePattern = '/([^\n\r]*)/gu',
   } = options;
 
   utils.forEachPreferredTag('version', (jsdocParameter, targetTagName) => {

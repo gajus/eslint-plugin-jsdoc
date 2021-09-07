@@ -433,5 +433,14 @@ export default {
       }
       `,
     },
+    {
+      code: `
+      /**
+       * @module test
+       * @license MIT\r
+       */
+      'use strict';
+      `,
+    },
   ],
 };
