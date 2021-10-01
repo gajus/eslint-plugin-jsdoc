@@ -1,9 +1,15 @@
 {
-  "extends": "canonical",
   "root": true,
   "env": {
     "browser": false
   },
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "parser": "babel-eslint"
+  },
+  "plugins": ["vue"],
+  "extends": ["plugin:vue/recommended", "canonical"],
   "overrides": [{
     "files": ".ncurc.js",
     "parserOptions": {
@@ -17,7 +23,12 @@
       "strict": ["error", "global"]
     }
   }],
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "rules": {
+    "linebreak-style": ["error", "windows"],
     "array-element-newline": 0,
     "filenames/match-regex": 0,
     "prefer-named-capture-group": 0,

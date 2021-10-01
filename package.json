@@ -13,7 +13,8 @@
     "lodash": "^4.17.21",
     "regextras": "^0.8.0",
     "semver": "^7.3.5",
-    "spdx-expression-parse": "^3.0.1"
+    "spdx-expression-parse": "^3.0.1",
+    "vue": "^2.6.14"
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
@@ -27,12 +28,14 @@
     "@babel/register": "^7.15.3",
     "@hkdobrev/run-if-changed": "^0.3.1",
     "@typescript-eslint/parser": "^4.31.0",
+    "babel-eslint": "10.1.0",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-istanbul": "^6.0.0",
     "chai": "^4.3.4",
     "cross-env": "^7.0.3",
     "eslint": "7.32.0",
     "eslint-config-canonical": "^27.0.0",
+    "eslint-plugin-vue": "7.18.0",
     "gitdown": "^3.1.4",
     "glob": "^7.1.7",
     "husky": "^7.0.2",
@@ -42,7 +45,8 @@
     "open-editor": "^3.0.0",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.4.7",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "vue-eslint-parser": "^7.11.0"
   },
   "engines": {
     "node": "^12 || ^14 || ^16"
@@ -78,7 +82,8 @@
     "create-rule": "babel-node ./src/bin/generateRule.js",
     "install-offline": "npm install --prefer-offline --no-audit",
     "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
-    "lint": "eslint --report-unused-disable-directives --ignore-pattern '!.ncurc.js' ./src ./test .ncurc.js",
+    "lint": "eslint --report-unused-disable-directives --ignore-pattern '!.ncurc.js' ./src ./test .ncurc.js --ext .js,.vue",
+    "lintReport": "eslint --report-unused-disable-directives --ignore-pattern '!.ncurc.js' ./src .ncurc.js --ext .js,.vue",
     "lint-arg": "eslint --report-unused-disable-directives",
     "test-cov": "cross-env BABEL_ENV=test nyc mocha --parallel --reporter dot --recursive --require @babel/register --timeout 12000",
     "test-no-cov": "cross-env BABEL_ENV=test mocha --parallel --reporter dot --recursive --require @babel/register --timeout 12000",
