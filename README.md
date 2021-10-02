@@ -250,10 +250,8 @@ how many line breaks to add when a block is missing.
     types/namepaths (Closure allows types on some tags which the others do not,
     so these tags will additionally be checked in "closure" mode)
   - For type-checking rules, impacts parsing of types (through
-    [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser)
-    dependency); note that some TypeScript features are
-    [not yet](https://github.com/gajus/eslint-plugin-jsdoc/issues/145)
-    [supported](https://github.com/jsdoctypeparser/jsdoctypeparser/issues/50)
+    [jsdoc-type-pratt-parser](https://github.com/simonseyock/jsdoc-type-pratt-parser)
+    dependency)
   - Check preferred tag names
   - Disallows namepath on `@interface` for "closure" mode in `valid-types` (and
       avoids checking in other rules)
@@ -4753,7 +4751,7 @@ behavior.
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
 
-Note that if there is an error [parsing](https://github.com/jsdoctypeparser/jsdoctypeparser)
+Note that if there is an error [parsing](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser)
 types for a tag, the function will silently ignore that tag, leaving it to
 the `valid-types` rule to report parsing errors.
 
@@ -9155,7 +9153,7 @@ The following types are always considered defined.
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
 also be assumed to be defined.
 
-Also note that if there is an error [parsing](https://github.com/jsdoctypeparser/jsdoctypeparser)
+Also note that if there is an error [parsing](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser)
 types for a tag, the function will silently ignore that tag, leaving it to
 the `valid-types` rule to report parsing errors.
 
@@ -19986,10 +19984,10 @@ The following patterns are not considered problems:
 
 Requires all types to be valid JSDoc, Closure, or TypeScript compiler types
 without syntax errors. Note that what determines a valid type is handled by
-our type parsing engine, [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser),
+our type parsing engine, [jsdoc-type-pratt-parser](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser),
 using [`settings.jsdoc.mode`](#eslint-plugin-jsdoc-settings-mode) to
-determine whether to use jsdoctypeparser's "permissive" mode or the stricter
-"jsdoc", "typescript", "closure" modes.
+determine whether to use jsdoc-type-pratt-parser's "permissive" parsing or
+the stricter "jsdoc", "typescript", "closure" modes.
 
 The following tags have their "type" portions (the segment within brackets)
 checked (though those portions may sometimes be confined to namepaths,

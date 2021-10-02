@@ -17,7 +17,7 @@ supporting `some-new+type-syntax` (within curly brackets) in:
  * @param {some-new+type-syntax} myName
  */
 
-...then please file instead at https://github.com/jsdoctypeparser/jsdoctypeparser/issues/
+...then please file instead at https://github.com/simonseyock/jsdoc-type-pratt-parser/issues/
 -->
 
 ## Motivation
