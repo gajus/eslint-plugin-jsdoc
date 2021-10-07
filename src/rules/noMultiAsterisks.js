@@ -1,6 +1,6 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const middleAsterisks = /^([\t ]|\*[^*]|\*$)+/u;
+const middleAsterisks = /^([\t ]|\*(?!\*))+/u;
 
 export default iterateJsdoc(({
   context,
