@@ -1932,6 +1932,20 @@ function quux () {
 * ```
 */
 // "jsdoc/check-indentation": ["error"|"warn", {"excludeTags":[]}]
+
+/**
+ * @example
+ * ```
+ * @MyDecorator({
+ *   myOptions: 42
+ * })
+ * export class MyClass {}
+ * ```
+ */
+function MyDecorator(options: { myOptions: number }) {
+  return (Base: Function) => {};
+}
+// "jsdoc/check-indentation": ["error"|"warn", {"excludeTags":["example","MyDecorator"]}]
 ````
 
 
