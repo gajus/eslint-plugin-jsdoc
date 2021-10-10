@@ -1,5 +1,8 @@
 ### `check-examples`
 
+> **NOTE**: This rule currently does not work in ESLint 8 (we are waiting for
+> [issue 14745](https://github.com/eslint/eslint/issues/14745)).
+
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules. Also
 has options to lint the default values of optional `@param`/`@arg`/`@argument`
 and `@property`/`@prop` tags or the values of `@default`/`@defaultvalue` tags.

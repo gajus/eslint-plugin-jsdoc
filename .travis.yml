@@ -9,37 +9,26 @@ node_js:
 
 before_install:
   - npm config set depth 0
+install:
+  - echo "Avoid Travis's npm auto-install"
 before_script: >
-  node_version=$(node -v);
-  if [ ${node_version:3:1} = "." ]; then
-    echo "Node 10+"
-    if [ ${ESLINT} = "6" ]; then
-      npm install --legacy-peer-deps --no-save "eslint@${ESLINT}" eslint-config-canonical@24.4.4
-    else
-      npm install --legacy-peer-deps --no-save "eslint@${ESLINT}"
-    fi
-    else
-      echo "Node 8+"
-      npm install --legacy-peer-deps --no-save "eslint@${ESLINT}" husky@3.1.0 semantic-release@15.14.0 eslint-config-canonical@18.1.1
-  fi
+  npm install --legacy-peer-deps --no-save "eslint@${ESLINT}"
 notifications:
   email: false
 script:
   - npm run test
-  - 'if [ -n "${LINT-}" ]; then npm run lint; fi'
+  # Disable until eslint-config-canonical fixed
+  # - 'if [ -n "${LINT-}" ]; then npm run lint; fi'
   - npm run build
 env:
   jobs:
+    - ESLINT=8
     - ESLINT=7
-    - ESLINT=6
 jobs:
   fast_finish: true
   include:
     - node_js: 'lts/*'
       env: LINT=true
-  exclude:
-    - node_js: 8
-      env: ESLINT=7
 after_success:
   - export NODE_ENV=production
   - npm run build

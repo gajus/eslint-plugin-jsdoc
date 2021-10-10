@@ -308,7 +308,7 @@ export default {
 
         if (
           ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
-          ['Property', 'ObjectProperty', 'ClassProperty'].includes(node.parent.type) && node === node.parent.value
+          ['Property', 'ObjectProperty', 'ClassProperty', 'PropertyDefinition'].includes(node.parent.type) && node === node.parent.value
         ) {
           checkJsDoc({isFunctionContext: true}, null, node);
         }
@@ -351,7 +351,7 @@ export default {
 
         if (
           ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
-          ['Property', 'ObjectProperty', 'ClassProperty'].includes(node.parent.type) && node === node.parent.value
+          ['Property', 'ObjectProperty', 'ClassProperty', 'PropertyDefinition'].includes(node.parent.type) && node === node.parent.value
         ) {
           checkJsDoc({isFunctionContext: true}, null, node);
         }

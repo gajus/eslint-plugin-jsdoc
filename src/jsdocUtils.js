@@ -718,6 +718,9 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'ObjectProperty':
   /* eslint-disable no-fallthrough */
   // istanbul ignore next -- In Babel?
+  case 'PropertyDefinition':
+  /* eslint-disable no-fallthrough */
+  // istanbul ignore next -- In Babel?
   case 'ClassProperty':
   /* eslint-enable no-fallthrough */
   case 'Property':
@@ -907,6 +910,9 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
       return hasNonFunctionYield(property, checkYieldReturnValue);
     });
 
+  // istanbul ignore next -- In Babel?
+  case 'PropertyDefinition':
+  /* eslint-disable no-fallthrough */
   // istanbul ignore next -- In Babel?
   case 'ObjectProperty':
   /* eslint-disable no-fallthrough */

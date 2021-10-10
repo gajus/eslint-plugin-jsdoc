@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "0.10.8",
+    "@es-joy/jsdoccomment": "0.11.0",
     "comment-parser": "1.2.4",
     "debug": "^4.3.2",
     "esquery": "^1.4.0",
@@ -26,12 +26,12 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/register": "^7.15.3",
     "@hkdobrev/run-if-changed": "^0.3.1",
-    "@typescript-eslint/parser": "^4.33.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-istanbul": "^6.0.0",
     "chai": "^4.3.4",
     "cross-env": "^7.0.3",
-    "eslint": "7.32.0",
+    "eslint": "^8.0.0",
     "eslint-config-canonical": "^28.0.0",
     "gitdown": "^3.1.4",
     "glob": "^7.2.0",
@@ -48,10 +48,10 @@
     "node": "^12 || ^14 || ^16"
   },
   "lint-staged": {
-    ".eslintignore": "npm run lint",
-    "./*.js": "npm run lint-arg --",
-    "src/**/*.js": "npm run lint-arg --",
-    "test/**/*.js": "npm run lint-arg --"
+    "DISABLE.eslintignore": "npm run lint",
+    "DISABLE./*.js": "npm run lint-arg --",
+    "DISABLEsrc/**/*.js": "npm run lint-arg --",
+    "DISABLEtest/**/*.js": "npm run lint-arg --"
   },
   "run-if-changed": {
     "package-lock.json": "npm run install-offline"
@@ -65,7 +65,7 @@
   "main": "./dist/index.js",
   "name": "eslint-plugin-jsdoc",
   "peerDependencies": {
-    "eslint": "^6.0.0 || ^7.0.0"
+    "eslint": "^7.0.0 || ^8.0.0"
   },
   "repository": {
     "type": "git",
@@ -94,6 +94,9 @@
     "instrument": false,
     "include": [
       "src/"
+    ],
+    "exclude": [
+      "src/rules/checkExamples.js"
     ],
     "check-coverage": true,
     "branches": 100,
