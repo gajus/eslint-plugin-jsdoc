@@ -1,6 +1,8 @@
-import { ESLint, RuleTester } from 'eslint';
+import {
+  ESLint, RuleTester,
+} from 'eslint';
 import _ from 'lodash';
-import semver from 'semver'
+import semver from 'semver';
 import config from '../../src';
 import ruleNames from './ruleNames.json';
 

@@ -3260,7 +3260,7 @@ function quux (foo) {
         {
           line: 3,
           message: 'Missing JSDoc comment.',
-        }
+        },
       ],
       options: [
         {
