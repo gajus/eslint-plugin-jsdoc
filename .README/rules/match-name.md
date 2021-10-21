@@ -53,7 +53,7 @@ be applied, however.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|(The tags specifie by `tags`, including any tag if `*` is set)|
+|Tags|(The tags specified by `tags`, including any tag if `*` is set)|
 |Recommended|false|
 |Settings|`structuredTags`|
 |Options|`match`|
