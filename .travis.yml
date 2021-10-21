@@ -17,8 +17,7 @@ notifications:
   email: false
 script:
   - npm run test
-  # Disable until eslint-config-canonical fixed
-  # - 'if [ -n "${LINT-}" ]; then npm run lint; fi'
+  - 'if [ -n "${LINT-}" ]; then npm run lint; fi'
   - npm run build
 env:
   jobs:
