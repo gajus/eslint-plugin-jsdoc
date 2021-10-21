@@ -709,7 +709,7 @@ const makeReport = (context, commentNode) => {
         start: {line: lineNumber},
       };
 
-      // Todo: Remove once `check-examples` can be restored for ESLint 8+
+      // Todo: Remove ignore once `check-examples` can be restored for ESLint 8+
       // istanbul ignore if
       if (jsdocLoc.column) {
         const colNumber = commentNode.loc.start.column + jsdocLoc.column;
