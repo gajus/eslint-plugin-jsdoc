@@ -86,12 +86,12 @@ export default iterateJsdoc(({
   globalState,
 }) => {
   if (semver.gte(ESLint.version, '8.0.0')) {
-    report({
-      loc: {start: {column: 1, line: 1}},
-      message: 'This rule cannot yet be supported for ESLint 8; you ' +
+    report(
+      'This rule cannot yet be supported for ESLint 8; you ' +
         'should either downgrade to ESLint 7 or disable this rule. The ' +
         'possibility for ESLint 8 support is being tracked at https://github.com/eslint/eslint/issues/14745',
-    });
+      {column: 1, line: 1},
+    );
 
     return;
   }
