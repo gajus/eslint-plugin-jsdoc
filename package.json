@@ -44,9 +44,6 @@
     "semantic-release": "^18.0.0",
     "typescript": "^4.4.3"
   },
-  "engines": {
-    "node": "^12 || ^14 || ^16"
-  },
   "lint-staged": {
     ".eslintignore": "npm run lint",
     "./*.js": "npm run lint-arg --",
