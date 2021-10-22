@@ -3329,7 +3329,7 @@ function quux (foo) {
   }, {
     code: `
         /** This is comment */
-        function someFunciton() {
+        function someFunction() {
           interface FooBar {
             fooBar: string;
           }

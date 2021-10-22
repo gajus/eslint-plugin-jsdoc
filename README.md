@@ -577,7 +577,7 @@ properties:
     declaration of the function expression for
     `const quux = function () {}`, the associated comment would,
     in both cases, generally be expected to be on the line above both, rather
-    than to be immediately preceding the funciton (in the case of the
+    than to be immediately preceding the function (in the case of the
     function). See [@es-joy/jsdoccomment](https://github.com/es-joy/jsdoccomment)
     for the precise structure of the comment (and comment type) nodes.
 
@@ -7361,7 +7361,7 @@ be applied, however.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|(The tags specifie by `tags`, including any tag if `*` is set)|
+|Tags|(The tags specified by `tags`, including any tag if `*` is set)|
 |Recommended|false|
 |Settings|`structuredTags`|
 |Options|`match`|
@@ -12978,7 +12978,7 @@ export class Foo {
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
 
 /** This is comment */
-function someFunciton() {
+function someFunction() {
   interface FooBar {
     fooBar: string;
   }

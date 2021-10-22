@@ -617,7 +617,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'CallExpression':
     return node.callee.name === resolverName && (
 
-      // Implicit or expliit undefined
+      // Implicit or explicit undefined
       node.arguments.length > 1 || node.arguments[0] !== undefined
     ) ||
       node.arguments.some((nde) => {
