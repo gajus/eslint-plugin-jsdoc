@@ -48,10 +48,10 @@
     "node": "^12 || ^14 || ^16 || ^17"
   },
   "lint-staged": {
-    "DISABLE.eslintignore": "npm run lint",
-    "DISABLE./*.js": "npm run lint-arg --",
-    "DISABLEsrc/**/*.js": "npm run lint-arg --",
-    "DISABLEtest/**/*.js": "npm run lint-arg --"
+    ".eslintignore": "npm run lint",
+    "./*.js": "npm run lint-arg --",
+    "src/**/*.js": "npm run lint-arg --",
+    "test/**/*.js": "npm run lint-arg --"
   },
   "run-if-changed": {
     "package-lock.json": "npm run install-offline"
