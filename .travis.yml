@@ -12,7 +12,7 @@ before_install:
 install:
   - echo "Avoid Travis's npm auto-install"
 before_script: >
-  npm install --legacy-peer-deps --no-save "eslint@${ESLINT}"
+  npm install --legacy-peer-deps --no-save "eslint@${ESLINT}" eslint-plugin-promise
 notifications:
   email: false
 script:
