@@ -3,6 +3,7 @@ dist: xenial
 language: node_js
 
 node_js:
+  - "17"
   - "16"
   - "14.14.0"
   - "12.20.0"
