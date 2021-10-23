@@ -945,6 +945,9 @@ function quux (foo) {
 <a name="eslint-plugin-jsdoc-rules-check-examples"></a>
 ### <code>check-examples</code>
 
+> **NOTE**: This rule currently does not work in ESLint 8 (we are waiting for
+> [issue 14745](https://github.com/eslint/eslint/issues/14745)).
+
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules. Also
 has options to lint the default values of optional `@param`/`@arg`/`@argument`
 and `@property`/`@prop` tags or the values of `@default`/`@defaultvalue` tags.
@@ -6914,7 +6917,7 @@ class MyClass {
    */
   myClassField = 1
 }
-// "jsdoc/match-description": ["error"|"warn", {"contexts":["ClassProperty"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["PropertyDefinition"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -7182,7 +7185,7 @@ class MyClass {
    */
   myClassField = 1
 }
-// "jsdoc/match-description": ["error"|"warn", {"contexts":["ClassProperty"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["PropertyDefinition"]}]
 
 /**
  * Foo.
@@ -12813,7 +12816,7 @@ class Animal {
   @SomeAnnotation('optionalParameter')
   tail: boolean;
 }
-// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ClassProperty"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["PropertyDefinition"]}]
 // Message: Missing JSDoc comment.
 
 @Entity('users')
@@ -12907,7 +12910,7 @@ export class MyComponentComponent {
   @Input()
   public value = new EventEmitter();
 }
-// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ClassProperty:has(Decorator[expression.callee.name=\"Input\"])"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["PropertyDefinition > Decorator[expression.callee.name=\"Input\"]"]}]
 // Message: Missing JSDoc comment.
 
 requestAnimationFrame(draw)
@@ -12950,6 +12953,12 @@ function comment () {
   return "comment";
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"enableFixer":false,"fixerMessage":" TODO: add comment"}]
+// Message: Missing JSDoc comment.
+
+export class InovaAutoCompleteComponent {
+  public disabled = false;
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["PropertyDefinition"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
 ````
 

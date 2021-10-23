@@ -26,6 +26,8 @@ const extractSentences = (text, abbreviationsRegex) => {
     .replace(abbreviationsRegex, '');
 
   const sentenceEndGrouping = /([.?!])(?:\s+|$)/u;
+
+  // eslint-disable-next-line unicorn/no-array-method-this-argument
   const puncts = RegExtras(sentenceEndGrouping).map(txt, (punct) => {
     return punct;
   });

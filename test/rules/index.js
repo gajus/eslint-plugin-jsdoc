@@ -1,13 +1,20 @@
 import {
-  RuleTester,
+  ESLint, RuleTester,
 } from 'eslint';
 import _ from 'lodash';
+import semver from 'semver';
 import config from '../../src';
 import ruleNames from './ruleNames.json';
 
 const ruleTester = new RuleTester();
 
 (process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : ruleNames).forEach(async (ruleName) => {
+  if (semver.gte(ESLint.version, '8.0.0') && ruleName === 'check-examples') {
+    // This rule cannot yet be supported for ESLint 8;
+    // The possibility for ESLint 8 support is being tracked at https://github.com/eslint/eslint/issues/14745
+    return;
+  }
+
   const rule = config.rules[ruleName];
 
   const parserOptions = {
