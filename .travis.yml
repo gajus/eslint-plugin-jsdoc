@@ -23,6 +23,7 @@ before_script: >
     sudo apt-get --assume-yes install python3.6
     sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
   fi;
+  npm install cross-env --global
   npm install --legacy-peer-deps --no-save "eslint@${ESLINT}"
 notifications:
   email: false
