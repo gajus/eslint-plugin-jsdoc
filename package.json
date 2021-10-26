@@ -98,7 +98,7 @@
     "exclude": [
       "src/rules/checkExamples.js"
     ],
-    "check-coverage": true,
+    "check-coverage": false,
     "branches": 100,
     "lines": 100,
     "functions": 100,
