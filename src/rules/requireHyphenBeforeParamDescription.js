@@ -52,26 +52,26 @@ export default iterateJsdoc(({
   utils.forEachPreferredTag('param', checkHyphens);
   if (tags) {
     const tagEntries = Object.entries(tags);
-    tagEntries.forEach(([tagName, circumstance]) => {
+    for (const [tagName, circumstance] of tagEntries) {
       if (tagName === '*') {
         const preferredParamTag = utils.getPreferredTagName({tagName: 'param'});
-        jsdoc.tags.forEach(({tag}) => {
+        for (const {tag} of jsdoc.tags) {
           if (tag === preferredParamTag || tagEntries.some(([tagNme]) => {
             return tagNme !== '*' && tagNme === tag;
           })) {
-            return;
+            continue;
           }
           utils.forEachPreferredTag(tag, (jsdocTag, targetTagName) => {
             checkHyphens(jsdocTag, targetTagName, circumstance);
           });
-        });
+        }
 
-        return;
+        continue;
       }
       utils.forEachPreferredTag(tagName, (jsdocTag, targetTagName) => {
         checkHyphens(jsdocTag, targetTagName, circumstance);
       });
-    });
+    }
   }
 }, {
   iterateAllJsdocs: true,

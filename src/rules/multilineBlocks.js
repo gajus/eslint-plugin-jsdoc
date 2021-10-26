@@ -77,7 +77,7 @@ export default iterateJsdoc(({
 
         const {delimiter} = line;
 
-        [
+        for (const prop of [
           'delimiter',
           'postDelimiter',
           'tag',
@@ -88,9 +88,9 @@ export default iterateJsdoc(({
           'name',
           'postName',
           'description',
-        ].forEach((prop) => {
+        ]) {
           finalLineTokens[prop] = '';
-        });
+        }
 
         utils.addLine(jsdoc.source.length - 1, {...line, delimiter, end: ''});
       };

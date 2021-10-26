@@ -19,6 +19,7 @@ const rootNamer = (desiredRoots: string[], currentIndex: number): T => {
   }];
 };
 
+// eslint-disable-next-line complexity
 export default iterateJsdoc(({
   jsdoc,
   utils,
@@ -75,9 +76,9 @@ export default iterateJsdoc(({
   const setParamIndex = (cur, idx) => {
     paramIndex[utils.dropPathSegmentQuotes(String(cur))] = idx;
   };
-  flattenedRoots.forEach((cur, idx) => {
+  for (const [idx, cur] of flattenedRoots.entries()) {
     setParamIndex(cur, idx);
-  });
+  }
 
   const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
     const remainingRoots = functionParameterNames.slice(indexAtFunctionParams || 0);
@@ -101,20 +102,20 @@ export default iterateJsdoc(({
       });
 
     let tagLineCount = 0;
-    tags.forEach(({source}) => {
-      source.forEach(({tokens: {end}}) => {
+    for (const {source} of tags) {
+      for (const {tokens: {end}} of source) {
         if (!end) {
           tagLineCount++;
         }
-      });
-    });
+      }
+    }
 
     return tagLineCount;
   };
 
   let [nextRootName, incremented, namer] = rootNamer([...unnamedRootBase], autoIncrementBase);
 
-  functionParameterNames.forEach((functionParameterName, functionParameterIdx) => {
+  for (const [functionParameterIdx, functionParameterName] of functionParameterNames.entries()) {
     let inc;
     if (Array.isArray(functionParameterName)) {
       const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx] ||
@@ -126,7 +127,7 @@ export default iterateJsdoc(({
       } else if (matchedJsdoc && matchedJsdoc.name) {
         rootName = matchedJsdoc.name;
         if (matchedJsdoc.type && matchedJsdoc.type.search(checkTypesRegex) === -1) {
-          return;
+          continue;
         }
       } else {
         rootName = nextRootName;
@@ -137,14 +138,14 @@ export default iterateJsdoc(({
       const {hasRestElement, hasPropertyRest, rests, names} = functionParameterName[1];
       const notCheckingNames = [];
       if (!enableRestElementFixer && hasRestElement) {
-        return;
+        continue;
       }
 
       if (!checkDestructuredRoots) {
-        return;
+        continue;
       }
 
-      names.forEach((paramName, idx) => {
+      for (const [idx, paramName] of names.entries()) {
         // Add root if the root name is not in the docs (and is not already
         //  in the tags to be fixed)
         if (!jsdocParameterNames.find(({name}) => {
@@ -175,11 +176,11 @@ export default iterateJsdoc(({
         }
 
         if (!checkDestructured) {
-          return;
+          continue;
         }
 
         if (!checkRestProperty && rests[idx]) {
-          return;
+          continue;
         }
 
         const fullParamName = `${rootName}.${paramName}`;
@@ -195,7 +196,7 @@ export default iterateJsdoc(({
         if (notCheckingNames.find((name) => {
           return fullParamName.startsWith(name);
         })) {
-          return;
+          continue;
         }
 
         if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
@@ -210,15 +211,15 @@ export default iterateJsdoc(({
             type: hasRestElement && !hasPropertyRest ? '{...any}' : undefined,
           });
         }
-      });
+      }
 
-      return;
+      continue;
     }
     let funcParamName;
     let type;
     if (typeof functionParameterName === 'object') {
       if (!enableRestElementFixer && functionParameterName.restElement) {
-        return;
+        continue;
       }
       funcParamName = functionParameterName.name;
       type = '{...any}';
@@ -236,7 +237,7 @@ export default iterateJsdoc(({
         type,
       });
     }
-  });
+  }
 
   const fix = ({
     functionParameterIdx, functionParameterName, remove, inc, type,
@@ -273,9 +274,9 @@ export default iterateJsdoc(({
       });
       const firstNumber = jsdoc.source[0].number;
       jsdoc.source.splice(sourceIndex, spliceCount, tokens);
-      jsdoc.source.slice(sourceIndex).forEach((src, idx) => {
+      for (const [idx, src] of jsdoc.source.slice(sourceIndex).entries()) {
         src.number = firstNumber + sourceIndex + idx;
-      });
+      }
     };
     const offset = jsdoc.source.findIndex(({tokens: {tag, end}}) => {
       return tag || end;
@@ -289,21 +290,21 @@ export default iterateJsdoc(({
   };
 
   const fixer = () => {
-    missingTags.forEach((missingTag) => {
+    for (const missingTag of missingTags) {
       fix(missingTag);
-    });
+    }
   };
 
   if (missingTags.length && jsdoc.source.length === 1) {
     utils.makeMultiline();
   }
-  missingTags.forEach(({functionParameterName}) => {
+  for (const {functionParameterName} of missingTags) {
     utils.reportJSDoc(
       `Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`,
       null,
       enableFixer ? fixer : null,
     );
-  });
+  }
 }, {
   contextDefaults: true,
   meta: {

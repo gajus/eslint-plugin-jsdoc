@@ -142,14 +142,14 @@ export default iterateJsdoc(({
     return utils.tagMightHaveTypePosition(tag);
   });
 
-  jsdocTagsWithPossibleType.forEach((tag) => {
+  for (const tag of jsdocTagsWithPossibleType) {
     let parsedType;
 
     try {
       parsedType = mode === 'permissive' ? tryParseType(tag.type) : parseType(tag.type, mode);
     } catch {
       // On syntax error, will be handled by valid-types.
-      return;
+      continue;
     }
 
     traverse(parsedType, ({type, value}) => {
@@ -164,7 +164,7 @@ export default iterateJsdoc(({
         }
       }
     });
-  });
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {

@@ -201,7 +201,9 @@ const alignTransform = ({
 
     return rewireSource({
       ...fields,
-      source: source.map(update),
+      source: source.map((line, index) => {
+        return update(line, index, source);
+      }),
     });
   };
 };

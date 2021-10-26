@@ -77,7 +77,7 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
     return;
   }
   const fix = () => {
-    spacerProps.forEach((spacerProp, idx) => {
+    for (const [idx, spacerProp] of spacerProps.entries()) {
       const contentProp = contentProps[idx];
       const contentPropVal = tokens[contentProp];
 
@@ -92,7 +92,7 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
       } else {
         tokens[spacerProp] = '';
       }
-    });
+    }
 
     utils.setTag(tag, tokens);
   };
@@ -168,9 +168,9 @@ export default iterateJsdoc(({
   }
 
   const foundTags = utils.getPresentTags(applicableTags);
-  foundTags.forEach((tag) => {
+  for (const tag of foundTags) {
     checkNotAlignedPerTag(utils, tag, customSpacings);
-  });
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {

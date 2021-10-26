@@ -69,11 +69,11 @@ export default iterateJsdoc(({
     return;
   }
 
-  functionExamples.forEach((example) => {
+  for (const example of functionExamples) {
     if (!checkDescription(`${example.name} ${utils.getTagDescription(example)}`)) {
       report(`Missing JSDoc @${targetTagName} description.`, null, example);
     }
-  });
+  }
 }, {
   contextDefaults: true,
   meta: {

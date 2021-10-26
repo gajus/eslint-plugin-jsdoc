@@ -1,27 +1,33 @@
 {
-  "extends": "canonical",
-  "root": true,
   "env": {
     "browser": false
   },
-  "overrides": [{
-    "files": ".ncurc.js",
-    "parserOptions": {
-      "sourceType": "script",
-      "ecmaFeatures": {
-        "impliedStrict": false
+  "extends": "canonical",
+  "overrides": [
+    {
+      "files": ".ncurc.js",
+      "parserOptions": {
+        "ecmaFeatures": {
+          "impliedStrict": false
+        },
+        "sourceType": "script"
+      },
+      "rules": {
+        "import/no-commonjs": 0,
+        "strict": [
+          "error",
+          "global"
+        ]
       }
-    },
-    "rules": {
-      "import/no-commonjs": 0,
-      "strict": ["error", "global"]
     }
-  }],
+  ],
+  "root": true,
   "rules": {
     "array-element-newline": 0,
     "filenames/match-regex": 0,
-    "prefer-named-capture-group": 0,
     "import/extensions": 0,
+    "prefer-named-capture-group": 0,
+    "unicorn/no-array-reduce": 0,
     "unicorn/prevent-abbreviations": 0
   }
 }

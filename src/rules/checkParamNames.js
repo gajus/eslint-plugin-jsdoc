@@ -19,6 +19,7 @@ const validateParameterNames = (
 
   let dotted = 0;
 
+  // eslint-disable-next-line complexity
   return paramTags.some(([, tag], index) => {
     let tagsIndex;
     const dupeTagInfo = paramTags.find(([tgsIndex, tg], idx) => {
@@ -86,18 +87,18 @@ const validateParameterNames = (
       const missingProperties = [];
       const notCheckingNames = [];
 
-      expectedNames.forEach((name, idx) => {
+      for (const [idx, name] of expectedNames.entries()) {
         if (notCheckingNames.some((notCheckingName) => {
           return name.startsWith(notCheckingName);
         })) {
-          return;
+          continue;
         }
         const actualNameIdx = actualNames.findIndex((actualName) => {
           return utils.comparePaths(name)(actualName);
         });
         if (actualNameIdx === -1) {
           if (!checkRestProperty && rests[idx]) {
-            return;
+            continue;
           }
           const missingIndex = actualNames.findIndex((actualName) => {
             return utils.pathDoesNotBeginWith(name, actualName);
@@ -112,18 +113,18 @@ const validateParameterNames = (
         } else if (actualTypes[actualNameIdx].search(checkTypesRegex) === -1 && actualTypes[actualNameIdx] !== '') {
           notCheckingNames.push(name);
         }
-      });
+      }
 
       const hasMissing = missingProperties.length;
       if (hasMissing) {
-        missingProperties.forEach(({tagPlacement, name: missingProperty}) => {
+        for (const {tagPlacement, name: missingProperty} of missingProperties) {
           report(`Missing @${targetTagName} "${missingProperty}"`, null, tagPlacement);
-        });
+        }
       }
 
       if (!hasPropertyRest || checkRestProperty) {
         const extraProperties = [];
-        actualNames.forEach((name, idx) => {
+        for (const [idx, name] of actualNames.entries()) {
           const match = name.startsWith(tag.name.trim() + '.');
           if (
             match && !expectedNames.some(
@@ -135,11 +136,11 @@ const validateParameterNames = (
           ) {
             extraProperties.push([name, paramTags[idx][1]]);
           }
-        });
+        }
         if (extraProperties.length) {
-          extraProperties.forEach(([extraProperty, tg]) => {
+          for (const [extraProperty, tg] of extraProperties) {
             report(`@${targetTagName} "${extraProperty}" does not exist on ${tag.name}`, null, tg);
-          });
+          }
 
           return true;
         }

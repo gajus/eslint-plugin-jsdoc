@@ -125,14 +125,14 @@ export default iterateJsdoc(({
     return [hasMatchingPreferredType, typeName, isGenericMatch];
   };
 
-  jsdocTagsWithPossibleType.forEach((jsdocTag) => {
+  for (const jsdocTag of jsdocTagsWithPossibleType) {
     const invalidTypes = [];
     let typeAst;
 
     try {
       typeAst = mode === 'permissive' ? tryParse(jsdocTag.type) : parse(jsdocTag.type, mode);
     } catch {
-      return;
+      continue;
     }
     const tagName = jsdocTag.tag;
 
@@ -205,7 +205,7 @@ export default iterateJsdoc(({
     if (invalidTypes.length) {
       const fixedType = stringify(typeAst);
 
-      invalidTypes.forEach(([badType, preferredType = '', message]) => {
+      for (const [badType, preferredType = '', message] of invalidTypes) {
         const fix = (fixer) => {
           return fixer.replaceText(
             jsdocNode,
@@ -221,7 +221,7 @@ export default iterateJsdoc(({
           return tag === tagName &&
             (types === true || types.includes(jsdocTag.type));
         })) {
-          return;
+          continue;
         }
 
         report(
@@ -236,9 +236,9 @@ export default iterateJsdoc(({
             tagValue,
           } : null,
         );
-      });
+      }
     }
-  });
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {

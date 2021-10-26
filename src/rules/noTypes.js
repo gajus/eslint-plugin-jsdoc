@@ -14,13 +14,15 @@ export default iterateJsdoc(({
 
   const tags = utils.getPresentTags(['param', 'arg', 'argument', 'returns', 'return']);
 
-  tags.forEach((tag) => {
+  for (const tag of tags) {
     if (tag.type) {
       utils.reportJSDoc(`Types are not permitted on @${tag.tag}.`, tag, () => {
-        tag.source.forEach(removeType);
+        for (const source of tag.source) {
+          removeType(source);
+        }
       });
     }
-  });
+  }
 }, {
   contextDefaults: true,
   meta: {

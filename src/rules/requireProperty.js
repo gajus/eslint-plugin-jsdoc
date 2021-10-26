@@ -15,14 +15,14 @@ export default iterateJsdoc(({
     return;
   }
 
-  propertyAssociatedTags.forEach((propertyAssociatedTag) => {
+  for (const propertyAssociatedTag of propertyAssociatedTags) {
     if (!['object', 'Object', 'PlainObject'].includes(propertyAssociatedTag.type)) {
-      return;
+      continue;
     }
     utils.reportJSDoc(`Missing JSDoc @${targetTagName}.`, null, () => {
       utils.addTag(targetTagName);
     });
-  });
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {

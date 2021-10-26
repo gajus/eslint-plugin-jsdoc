@@ -54,6 +54,8 @@ const getIdentifier = function (node, globals, scope, opts) {
 };
 
 let createSymbol = null;
+
+// eslint-disable-next-line complexity
 const getSymbol = function (node, globals, scope, opt) {
   const opts = opt || {};
   /* istanbul ignore next */
@@ -101,11 +103,11 @@ const getSymbol = function (node, globals, scope, opt) {
     return createSymbol(node.left, globals, node.right, scope, opts);
   } case 'ClassBody': {
     const val = createNode();
-    node.body.forEach((method) => {
+    for (const method of node.body) {
       val.props[method.key.name] = createNode();
       val.props[method.key.name].type = 'object';
       val.props[method.key.name].value = method.value;
-    });
+    }
     val.type = 'object';
     val.value = node;
 
@@ -113,7 +115,7 @@ const getSymbol = function (node, globals, scope, opt) {
   } case 'ObjectExpression': {
     const val = createNode();
     val.type = 'object';
-    node.properties.forEach((prop) => {
+    for (const prop of node.properties) {
       if ([
         // @typescript-eslint/parser, espree, acorn, etc.
         'SpreadElement',
@@ -121,14 +123,14 @@ const getSymbol = function (node, globals, scope, opt) {
         // @babel/eslint-parser
         'ExperimentalSpreadProperty',
       ].includes(prop.type)) {
-        return;
+        continue;
       }
       const propVal = getSymbol(prop.value, globals, scope, opts);
       /* istanbul ignore next */
       if (propVal) {
         val.props[prop.key.name] = propVal;
       }
-    });
+    }
 
     return val;
   } case 'Literal': {
@@ -209,22 +211,22 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
 const initVariables = function (node, globals, opts) {
   switch (node.type) {
   case 'Program': {
-    node.body.forEach((childNode) => {
+    for (const childNode of node.body) {
       initVariables(childNode, globals, opts);
-    });
+    }
     break;
   } case 'ExpressionStatement': {
     initVariables(node.expression, globals, opts);
     break;
   } case 'VariableDeclaration': {
-    node.declarations.forEach((declaration) => {
+    for (const declaration of node.declarations) {
       // let and const
       const symbol = createSymbol(declaration.id, globals, null, globals);
       if (opts.initWindow && node.kind === 'var' && globals.props.window) {
         // If var, also add to window
         globals.props.window.props[declaration.id.name] = symbol;
       }
-    });
+    }
     break;
   } case 'ExportNamedDeclaration': {
     if (node.declaration) {
@@ -236,6 +238,7 @@ const initVariables = function (node, globals, opts) {
 };
 
 // Populates variable maps using AST
+// eslint-disable-next-line complexity
 const mapVariables = function (node, globals, opt, isExport) {
   /* istanbul ignore next */
   const opts = opt || {};
@@ -245,9 +248,9 @@ const mapVariables = function (node, globals, opt, isExport) {
     if (opts.ancestorsOnly) {
       return false;
     }
-    node.body.forEach((childNode) => {
+    for (const childNode of node.body) {
       mapVariables(childNode, globals, opts);
-    });
+    }
     break;
   } case 'ExpressionStatement': {
     mapVariables(node.expression, globals, opts);
@@ -256,13 +259,13 @@ const mapVariables = function (node, globals, opt, isExport) {
     createSymbol(node.left, globals, node.right);
     break;
   } case 'VariableDeclaration': {
-    node.declarations.forEach((declaration) => {
+    for (const declaration of node.declarations) {
       const isGlobal = opts.initWindow && node.kind === 'var' && globals.props.window;
       const symbol = createSymbol(declaration.id, globals, declaration.init, globals, isGlobal);
       if (symbol && isExport) {
         symbol.exported = true;
       }
-    });
+    }
     break;
   } case 'FunctionDeclaration': {
     /* istanbul ignore next */
@@ -290,9 +293,9 @@ const mapVariables = function (node, globals, opt, isExport) {
         }
       }
     }
-    node.specifiers.forEach((specifier) => {
+    for (const specifier of node.specifiers) {
       mapVariables(specifier, globals, opts);
-    });
+    }
     break;
   } case 'ExportSpecifier': {
     const symbol = getSymbol(node.local, globals, globals);

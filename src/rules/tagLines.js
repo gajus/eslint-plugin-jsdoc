@@ -18,13 +18,13 @@ export default iterateJsdoc(({
     let lastTag;
 
     let reportIndex = null;
-    tg.source.forEach(({tokens: {tag, name, type, description, end}}, idx) => {
+    for (const [idx, {tokens: {tag, name, type, description, end}}] of tg.source.entries()) {
       // May be text after a line break within a tag description
       if (description) {
         reportIndex = null;
       }
       if (lastTag && ['any', 'always'].includes(tags[lastTag.slice(1)]?.lines)) {
-        return;
+        continue;
       }
 
       if (
@@ -35,11 +35,11 @@ export default iterateJsdoc(({
       ) {
         reportIndex = idx;
 
-        return;
+        continue;
       }
 
       lastTag = tag;
-    });
+    }
     if (reportIndex !== null) {
       const fixer = () => {
         utils.removeTagItem(tagIdx, reportIndex);
@@ -61,7 +61,7 @@ export default iterateJsdoc(({
 
     let currentTag;
     let tagSourceIdx = 0;
-    tg.source.forEach(({number, tokens: {tag, name, type, description, end}}, idx) => {
+    for (const [idx, {number, tokens: {tag, name, type, description, end}}] of tg.source.entries()) {
       if (description) {
         lines.splice(0, lines.length);
         tagSourceIdx = idx;
@@ -72,7 +72,7 @@ export default iterateJsdoc(({
       if (!tag && !name && !type && !description && !end) {
         lines.push({idx, number});
       }
-    });
+    }
 
     const currentTg = currentTag && tags[currentTag.slice(1)];
     const tagCount = currentTg?.count;

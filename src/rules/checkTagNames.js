@@ -45,10 +45,10 @@ export default iterateJsdoc(({
     });
   }
 
-  jsdoc.tags.forEach((jsdocTag) => {
+  for (const jsdocTag of jsdoc.tags) {
     const tagName = jsdocTag.tag;
     if (jsxTags && jsxTagNames.has(tagName)) {
-      return;
+      continue;
     }
     if (utils.isValidTag(tagName, [
       ...definedTags, ...definedPreferredTags, ...definedNonPreferredTags,
@@ -60,7 +60,7 @@ export default iterateJsdoc(({
         tagName,
       });
       if (!preferredTagName) {
-        return;
+        continue;
       }
 
       let message;
@@ -84,7 +84,7 @@ export default iterateJsdoc(({
     } else {
       report(`Invalid JSDoc tag name "${tagName}".`, null, jsdocTag);
     }
-  });
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {

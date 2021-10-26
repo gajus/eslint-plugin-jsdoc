@@ -217,7 +217,7 @@ export default iterateJsdoc(({
       const codeStartLine = tag.line + nonJSPrefacingLines;
       const codeStartCol = likelyNestedJSDocIndentSpace;
 
-      messages.forEach(({message, line, column, severity, ruleId}) => {
+      for (const {message, line, column, severity, ruleId} of messages) {
         const startLine = codeStartLine + line + zeroBasedLineIndexAdjust;
         const startCol = codeStartCol + (
 
@@ -235,10 +235,12 @@ export default iterateJsdoc(({
             line: startLine,
           },
         );
-      });
+      }
     };
 
-    sources.forEach(checkRules);
+    for (const targetSource of sources) {
+      checkRules(targetSource);
+    }
   };
 
   /**

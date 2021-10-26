@@ -236,16 +236,16 @@ const hasParams = (functionNode) => {
  */
 const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object> => {
   const ret = [];
-  jsdoc.tags.forEach(({name, tag, type}, idx) => {
+  for (const [idx, {name, tag, type}] of jsdoc.tags.entries()) {
     if (tag !== targetTagName) {
-      return;
+      continue;
     }
     ret.push({
       idx,
       name,
       type,
     });
-  });
+  }
 
   return ret;
 };
@@ -380,9 +380,9 @@ const ensureMap = (map, tag) => {
 };
 
 const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
-  Object.entries(structuredTags).forEach(([tag, {
+  for (const [tag, {
     name, type, required = [],
-  }]) => {
+  }] of Object.entries(structuredTags)) {
     const tagStruct = ensureMap(tagMap, tag);
 
     tagStruct.set('nameContents', name);
@@ -408,7 +408,7 @@ const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
       throw new Error('Cannot add "typeOrNameRequired" to `require` with the tag\'s `type` set to `false`');
     }
     tagStruct.set('typeOrNameRequired', typeOrNameRequired);
-  });
+  }
 };
 
 const getTagStructureForMode = (mode, structuredTags) => {
@@ -1106,7 +1106,7 @@ const enforcedContexts = (context, defaultContexts) => {
 const getContextObject = (contexts, checkJsdoc, handler) => {
   const properties = {};
 
-  contexts.forEach((prop, idx) => {
+  for (const [idx, prop] of contexts.entries()) {
     if (typeof prop === 'object') {
       const selInfo = {
         lastIndex: idx,
@@ -1129,13 +1129,15 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
       };
       properties[prop] = checkJsdoc.bind(null, selInfo, null);
     }
-  });
+  }
 
   return properties;
 };
 
 const filterTags = (tags, filter) => {
-  return tags.filter(filter);
+  return tags.filter((tag) => {
+    return filter(tag);
+  });
 };
 
 const tagsWithNamesAndDescriptions = new Set([

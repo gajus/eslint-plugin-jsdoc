@@ -169,19 +169,19 @@ const getOptions = (context) => {
       }
 
       const properties = {};
-      Object.keys(baseObj.properties).forEach((prop) => {
+      for (const prop of Object.keys(baseObj.properties)) {
         const opt = getOption(context, baseObj, 'publicOnly', prop);
         properties[prop] = opt;
-      });
+      }
 
       return properties;
     })(OPTIONS_SCHEMA.properties.publicOnly.oneOf[1]),
     require: ((baseObj) => {
       const properties = {};
-      Object.keys(baseObj.properties).forEach((prop) => {
+      for (const prop of Object.keys(baseObj.properties)) {
         const opt = getOption(context, baseObj, 'require', prop);
         properties[prop] = opt;
-      });
+      }
 
       return properties;
     })(OPTIONS_SCHEMA.properties.require),

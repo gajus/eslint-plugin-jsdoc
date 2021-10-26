@@ -31,7 +31,7 @@ export default iterateJsdoc(({
       }) ||
       settings.mode !== 'closure' && emptyIfNotClosure.has(tagName);
   });
-  emptyTags.forEach((tag) => {
+  for (const tag of emptyTags) {
     const content = tag.name || tag.description || tag.type;
     if (content.trim()) {
       const fix = () => {
@@ -39,7 +39,7 @@ export default iterateJsdoc(({
       };
       utils.reportJSDoc(`@${tag.tag} should be empty.`, tag, fix, true);
     }
-  });
+  }
 }, {
   checkInternal: true,
   checkPrivate: true,
