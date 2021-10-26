@@ -23,6 +23,7 @@ export default iterateJsdoc(({
       tokens.delimiter = '';
       tokens.postDelimiter = '';
     };
+
     const checkNever = (checkValue) => {
       if (delimiter && delimiter !== '/**' && (
         never && !tagMap.always?.includes(checkValue) ||
@@ -43,9 +44,11 @@ export default iterateJsdoc(({
       if (!tokens.start) {
         tokens.start = indent + ' ';
       }
+
       tokens.delimiter = '*';
       tokens.postDelimiter = tag || description ? ' ' : '';
     };
+
     const checkAlways = (checkValue) => {
       if (
         !delimiter && (
@@ -81,9 +84,11 @@ export default iterateJsdoc(({
       if (tagMap.any?.includes('*description')) {
         return false;
       }
+
       if (checkNever('*description')) {
         return true;
       }
+
       if (checkAlways('*description')) {
         return true;
       }

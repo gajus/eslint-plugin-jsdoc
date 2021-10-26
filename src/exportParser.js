@@ -17,6 +17,7 @@ const getSymbolValue = function (symbol) {
     /* istanbul ignore next */
     return null;
   }
+
   /* istanbul ignore next */
   if (symbol.type === 'literal') {
     return symbol.value.value;
@@ -59,10 +60,13 @@ let createSymbol = null;
 const getSymbol = function (node, globals, scope, opt) {
   const opts = opt || {};
   /* istanbul ignore next */
+  // eslint-disable-next-line default-case
   switch (node.type) {
   case 'Identifier': {
     return getIdentifier(node, globals, scope, opts);
-  } case 'MemberExpression': {
+  }
+
+  case 'MemberExpression': {
     const obj = getSymbol(node.object, globals, scope, opts);
     const propertySymbol = getSymbol(node.property, globals, scope, {simpleIdentifier: !node.computed});
     const propertyValue = getSymbolValue(propertySymbol);
@@ -87,6 +91,7 @@ const getSymbol = function (node, globals, scope, opt) {
     /* istanbul ignore next */
     return null;
   }
+
   case 'TSTypeAliasDeclaration':
   case 'TSEnumDeclaration': case 'TSInterfaceDeclaration':
   case 'ClassDeclaration': case 'ClassExpression':
@@ -99,20 +104,27 @@ const getSymbol = function (node, globals, scope, opt) {
     val.value = node;
 
     return val;
-  } case 'AssignmentExpression': {
+  }
+
+  case 'AssignmentExpression': {
     return createSymbol(node.left, globals, node.right, scope, opts);
-  } case 'ClassBody': {
+  }
+
+  case 'ClassBody': {
     const val = createNode();
     for (const method of node.body) {
       val.props[method.key.name] = createNode();
       val.props[method.key.name].type = 'object';
       val.props[method.key.name].value = method.value;
     }
+
     val.type = 'object';
     val.value = node;
 
     return val;
-  } case 'ObjectExpression': {
+  }
+
+  case 'ObjectExpression': {
     const val = createNode();
     val.type = 'object';
     for (const prop of node.properties) {
@@ -125,6 +137,7 @@ const getSymbol = function (node, globals, scope, opt) {
       ].includes(prop.type)) {
         continue;
       }
+
       const propVal = getSymbol(prop.value, globals, scope, opts);
       /* istanbul ignore next */
       if (propVal) {
@@ -133,7 +146,9 @@ const getSymbol = function (node, globals, scope, opt) {
     }
 
     return val;
-  } case 'Literal': {
+  }
+
+  case 'Literal': {
     const val = createNode();
     val.type = 'literal';
     val.value = node;
@@ -156,6 +171,7 @@ const createBlockSymbol = function (block, name, value, globals, isGlobal) {
 createSymbol = function (node, globals, value, scope, isGlobal) {
   const block = scope || globals;
   let symbol;
+  // eslint-disable-next-line default-case
   switch (node.type) {
   case 'FunctionDeclaration':
   /* istanbul ignore next */
@@ -168,9 +184,12 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
     if (node.id && node.id.type === 'Identifier') {
       return createSymbol(node.id, globals, node, globals);
     }
+
     /* istanbul ignore next */
     break;
-  } case 'Identifier': {
+  }
+
+  case 'Identifier': {
     if (value) {
       const valueSymbol = getSymbol(value, globals, block);
       /* istanbul ignore next */
@@ -179,6 +198,7 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
 
         return block.props[node.name];
       }
+
       /* istanbul ignore next */
       debug('Identifier: Missing value symbol for %s', node.name);
     } else {
@@ -186,9 +206,12 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
 
       return block.props[node.name];
     }
+
     /* istanbul ignore next */
     break;
-  } case 'MemberExpression': {
+  }
+
+  case 'MemberExpression': {
     symbol = getSymbol(node.object, globals, block);
 
     const propertySymbol = getSymbol(node.property, globals, block, {simpleIdentifier: !node.computed});
@@ -198,6 +221,7 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
 
       return symbol.props[propertyValue];
     }
+
     /* istanbul ignore next */
     debug('MemberExpression: Missing symbol: %s', node.property.name);
     break;
@@ -209,16 +233,22 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
 
 // Creates variables from variable definitions
 const initVariables = function (node, globals, opts) {
+  // eslint-disable-next-line default-case
   switch (node.type) {
   case 'Program': {
     for (const childNode of node.body) {
       initVariables(childNode, globals, opts);
     }
+
     break;
-  } case 'ExpressionStatement': {
+  }
+
+  case 'ExpressionStatement': {
     initVariables(node.expression, globals, opts);
     break;
-  } case 'VariableDeclaration': {
+  }
+
+  case 'VariableDeclaration': {
     for (const declaration of node.declarations) {
       // let and const
       const symbol = createSymbol(declaration.id, globals, null, globals);
@@ -227,11 +257,15 @@ const initVariables = function (node, globals, opts) {
         globals.props.window.props[declaration.id.name] = symbol;
       }
     }
+
     break;
-  } case 'ExportNamedDeclaration': {
+  }
+
+  case 'ExportNamedDeclaration': {
     if (node.declaration) {
       initVariables(node.declaration, globals, opts);
     }
+
     break;
   }
   }
@@ -248,17 +282,25 @@ const mapVariables = function (node, globals, opt, isExport) {
     if (opts.ancestorsOnly) {
       return false;
     }
+
     for (const childNode of node.body) {
       mapVariables(childNode, globals, opts);
     }
+
     break;
-  } case 'ExpressionStatement': {
+  }
+
+  case 'ExpressionStatement': {
     mapVariables(node.expression, globals, opts);
     break;
-  } case 'AssignmentExpression': {
+  }
+
+  case 'AssignmentExpression': {
     createSymbol(node.left, globals, node.right);
     break;
-  } case 'VariableDeclaration': {
+  }
+
+  case 'VariableDeclaration': {
     for (const declaration of node.declarations) {
       const isGlobal = opts.initWindow && node.kind === 'var' && globals.props.window;
       const symbol = createSymbol(declaration.id, globals, declaration.init, globals, isGlobal);
@@ -266,22 +308,31 @@ const mapVariables = function (node, globals, opt, isExport) {
         symbol.exported = true;
       }
     }
+
     break;
-  } case 'FunctionDeclaration': {
+  }
+
+  case 'FunctionDeclaration': {
     /* istanbul ignore next */
     if (node.id.type === 'Identifier') {
       createSymbol(node.id, globals, node, globals, true);
     }
+
     break;
-  } case 'ExportDefaultDeclaration': {
+  }
+
+  case 'ExportDefaultDeclaration': {
     const symbol = createSymbol(node.declaration, globals, node.declaration);
     if (symbol) {
       symbol.exported = true;
     } else if (!node.id) {
       globals.ANONYMOUS_DEFAULT = node.declaration;
     }
+
     break;
-  } case 'ExportNamedDeclaration': {
+  }
+
+  case 'ExportNamedDeclaration': {
     if (node.declaration) {
       if (node.declaration.type === 'VariableDeclaration') {
         mapVariables(node.declaration, globals, opts, true);
@@ -293,21 +344,30 @@ const mapVariables = function (node, globals, opt, isExport) {
         }
       }
     }
+
     for (const specifier of node.specifiers) {
       mapVariables(specifier, globals, opts);
     }
+
     break;
-  } case 'ExportSpecifier': {
+  }
+
+  case 'ExportSpecifier': {
     const symbol = getSymbol(node.local, globals, globals);
     /* istanbul ignore next */
     if (symbol) {
       symbol.exported = true;
     }
+
     break;
-  } case 'ClassDeclaration': {
+  }
+
+  case 'ClassDeclaration': {
     createSymbol(node.id, globals, node.body, globals);
     break;
-  } default: {
+  }
+
+  default: {
     /* istanbul ignore next */
     return false;
   }
@@ -322,6 +382,7 @@ const findNode = function (node, block, cache) {
   if (!block || blockCache.includes(block)) {
     return false;
   }
+
   blockCache = blockCache.slice();
   blockCache.push(block);
 
@@ -356,6 +417,7 @@ const getExportAncestor = function (nde) {
     if (exportTypes.has(node.type)) {
       return node;
     }
+
     node = node.parent;
   }
 
@@ -381,6 +443,7 @@ const isExportByAncestor = function (nde) {
   if (!canExportedByAncestorType.has(nde.type)) {
     return false;
   }
+
   let node = nde.parent;
   while (node) {
     if (exportTypes.has(node.type)) {
@@ -390,6 +453,7 @@ const isExportByAncestor = function (nde) {
     if (!canExportChildrenType.has(node.type)) {
       return false;
     }
+
     node = node.parent;
   }
 
@@ -401,6 +465,7 @@ const findExportedNode = function (block, node, cache) {
   if (block === null) {
     return false;
   }
+
   const blockCache = cache || [];
   const {props} = block;
   for (const propval of Object.values(props)) {
@@ -459,6 +524,7 @@ const parse = function (ast, node, opt) {
     globalVars.props.module.props.exports = createNode();
     globalVars.props.exports = globalVars.props.module.props.exports;
   }
+
   if (opts.initWindow) {
     globalVars.props.window = createNode();
     globalVars.props.window.special = true;

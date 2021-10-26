@@ -24,6 +24,7 @@ export default iterateJsdoc(({
       'The @access tag may not be used with specific access-control tags (@package, @private, @protected, or @public).',
     );
   }
+
   if (accessLength > 1 || individualTagLength > 1) {
     report(
       'At most one access-control tag may be present on a jsdoc block.',

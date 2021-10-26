@@ -52,6 +52,7 @@ export default iterateJsdoc(({
       }
     });
   }
+
   utils.forEachPreferredTag('since', (jsdocParameter, targetTagName) => {
     const version = utils.getTagDescription(jsdocParameter).trim();
     if (!version) {

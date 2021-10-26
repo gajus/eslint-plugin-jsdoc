@@ -38,6 +38,7 @@ export default iterateJsdoc(({
     if (hasRegex && allowed && !disallowed) {
       continue;
     }
+
     if (!hasRegex && reported) {
       continue;
     }

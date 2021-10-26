@@ -76,6 +76,7 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
   if (ok) {
     return;
   }
+
   const fix = () => {
     for (const [idx, spacerProp] of spacerProps.entries()) {
       const contentProp = contentProps[idx];
@@ -96,6 +97,7 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
 
     utils.setTag(tag, tokens);
   };
+
   utils.reportJSDoc('Expected JSDoc block lines to not be aligned.', tag, fix, true);
 };
 

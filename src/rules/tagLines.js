@@ -23,6 +23,7 @@ export default iterateJsdoc(({
       if (description) {
         reportIndex = null;
       }
+
       if (lastTag && ['any', 'always'].includes(tags[lastTag.slice(1)]?.lines)) {
         continue;
       }
@@ -40,10 +41,12 @@ export default iterateJsdoc(({
 
       lastTag = tag;
     }
+
     if (reportIndex !== null) {
       const fixer = () => {
         utils.removeTagItem(tagIdx, reportIndex);
       };
+
       utils.reportJSDoc(
         'Expected no lines between tags',
         {line: tg.source[0].number + 1},
@@ -66,9 +69,11 @@ export default iterateJsdoc(({
         lines.splice(0, lines.length);
         tagSourceIdx = idx;
       }
+
       if (tag) {
         currentTag = tag;
       }
+
       if (!tag && !name && !type && !description && !end) {
         lines.push({idx, number});
       }
@@ -92,6 +97,7 @@ export default iterateJsdoc(({
       const fixer = () => {
         utils.addLines(tagIdx, lines[lines.length - 1]?.idx || tagSourceIdx + 1, fixCount - lines.length);
       };
+
       const line = lines[lines.length - 1]?.number || tg.source[tagSourceIdx].number;
       utils.reportJSDoc(
         `Expected ${fixCount} line${fixCount === 1 ? '' : 's'} between tags but found ${lines.length}`,

@@ -5,7 +5,8 @@ import {
 const buildTagBlock = (tags) => {
   return '/** \n * @' + Object.keys(tags).map((tagName, idx) => {
     return (idx === 0 ? '' : '\n * @') + tagName;
-  }).join('') + '\n */';
+  })
+    .join('') + '\n */';
 };
 
 const lineCount = (code) => {

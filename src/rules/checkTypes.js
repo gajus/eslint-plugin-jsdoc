@@ -49,6 +49,7 @@ const adjustNames = (type, preferred, isGenericMatch, nodeName, node, parentNode
   } else if (type === 'JsdocTypeAny') {
     node.type = 'JsdocTypeName';
   }
+
   node.value = ret.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
 
   // For bare pseudo-types like `<>`
@@ -113,6 +114,7 @@ export default iterateJsdoc(({
           });
         }
       }
+
       const directNameMatch = preferredTypes?.[nodeName] !== undefined &&
         !Object.values(preferredTypes).includes(nodeName);
       const unifiedSyntaxParentMatch = property && directNameMatch && unifyParentAndChildTypeChecks;
@@ -134,6 +136,7 @@ export default iterateJsdoc(({
     } catch {
       continue;
     }
+
     const tagName = jsdocTag.tag;
 
     traverse(typeAst, (node, parentNode, property) => {
@@ -141,6 +144,7 @@ export default iterateJsdoc(({
       if (!['JsdocTypeName', 'JsdocTypeAny'].includes(type)) {
         return;
       }
+
       let nodeName = type === 'JsdocTypeAny' ? '*' : value;
 
       const [hasMatchingPreferredType, typeName, isGenericMatch] = getPreferredTypeInfo(type, nodeName, parentNode, property);
@@ -183,6 +187,7 @@ export default iterateJsdoc(({
           if (strictNativeType === 'object' && mode === 'typescript') {
             continue;
           }
+
           if (strictNativeType.toLowerCase() === nodeName.toLowerCase() &&
             strictNativeType !== nodeName &&
 

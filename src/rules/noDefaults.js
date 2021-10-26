@@ -21,6 +21,7 @@ export default iterateJsdoc(({
       });
     }
   }
+
   const defaultTags = utils.getPresentTags(['default', 'defaultvalue']);
   for (const tag of defaultTags) {
     if (tag.description.trim()) {

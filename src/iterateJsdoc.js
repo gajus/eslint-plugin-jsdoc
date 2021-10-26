@@ -136,6 +136,7 @@ const getUtils = (
 
         return true;
       }
+
       descriptions.push(desc);
 
       return false;
@@ -153,6 +154,7 @@ const getUtils = (
 
         return true;
       }
+
       if (idx || description) {
         descriptions.push(description);
       }
@@ -294,9 +296,11 @@ const getUtils = (
           }),
         };
       };
+
       const makeLines = () => {
         return Array.from({length: numLines}, makeLine);
       };
+
       const sourceIndex = jsdoc.source.findIndex(({
         number: srcNumber, tokens: {end},
       }) => {
@@ -409,6 +413,7 @@ const getUtils = (
           tagName,
         };
       }
+
       const message = isObject && ret.message || defaultMessage;
       report(message, null, utils.getTags(tagName)[0]);
 
@@ -624,6 +629,7 @@ const getUtils = (
     ) {
       return;
     }
+
     const matchingJsdocTags = _.filter(jsdoc.tags, {
       tag: targetTagName,
     });
@@ -775,6 +781,7 @@ const iterate = (
   ) {
     return;
   }
+
   if (
     !ruleConfig.checkPrivate && settings.ignorePrivate &&
     (utils.hasTag('private') || _.filter(jsdoc.tags, {
@@ -844,6 +851,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
           if (comment && handler(comment, jsdoc) === false) {
             continue;
           }
+
           iterate(
             {
               comment,
@@ -903,6 +911,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
         true,
       );
     }
+
     if (lastCall && ruleConfig.exit) {
       ruleConfig.exit({
         context,
@@ -919,6 +928,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
       if (!settings) {
         return {};
       }
+
       if (contexts) {
         handler = commentHandler(settings);
       }
@@ -937,6 +947,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
           if (trackedJsdocs.includes(commentNode)) {
             return;
           }
+
           if (!commentNode) {
             if (ruleConfig.nonComment) {
               ruleConfig.nonComment({
@@ -1022,6 +1033,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   if (!metaType || !['problem', 'suggestion', 'layout'].includes(metaType)) {
     throw new TypeError('Rule must include `meta.type` option (with value "problem", "suggestion", or "layout")');
   }
+
   if (typeof iterator !== 'function') {
     throw new TypeError('The iterator argument must be a function.');
   }
@@ -1076,6 +1088,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           ).create(context);
         }
       }
+
       const sourceCode = context.getSourceCode();
       const {lines} = sourceCode;
 

@@ -55,6 +55,7 @@ export default iterateJsdoc(({
   if (!tagName) {
     return;
   }
+
   const tags = utils.getTags(tagName);
 
   if (tags.length > 1) {

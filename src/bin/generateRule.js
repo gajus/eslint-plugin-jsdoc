@@ -30,6 +30,7 @@ const recommended = options.includes('--recommended');
 
     return;
   }
+
   if ((/[A-Z]/u).test(ruleName)) {
     console.error('Please ensure the rule has no capital letters');
 
@@ -161,10 +162,12 @@ export default iterateJsdoc(({
     ) {
       item.offset = 0;
     }
+
     if (!item) {
       item = offsets.pop();
       item.offset += item.matchedLine.length;
     }
+
     if (alreadyIncluded) {
       console.log(`Rule name is already present in ${checkName}.`);
     } else {

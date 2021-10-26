@@ -9,6 +9,7 @@ node_js:
   - "12.20.0"
 
 before_install:
+  - export PATH="./node_modules/.bin:$PATH"
   - npm config set depth 0
 install:
   - echo "Avoid Travis's npm auto-install"

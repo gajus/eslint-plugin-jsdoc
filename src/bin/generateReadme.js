@@ -8,7 +8,8 @@ import glob from 'glob';
 import _ from 'lodash';
 
 const trimCode = (code) => {
-  let lines = code.replace(/^\n/u, '').trimEnd().split('\n');
+  let lines = code.replace(/^\n/u, '').trimEnd()
+    .split('\n');
 
   const firsLineIndentation = lines[0].match(/^\s+/u);
   const lastLineIndentation = lines[lines.length - 1].match(/^\s+/u);

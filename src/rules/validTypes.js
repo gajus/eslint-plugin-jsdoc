@@ -35,23 +35,29 @@ export default iterateJsdoc(({
       if (tryParsePathIgnoreError(namepath)) {
         return true;
       }
+
       let handled = false;
 
       if (tagName) {
+        // eslint-disable-next-line default-case
         switch (tagName) {
         case 'module': {
           if (!namepath.startsWith('module:')) {
             handled = tryParsePathIgnoreError(`module:${namepath}`);
           }
+
           break;
         }
+
         case 'memberof': case 'memberof!': {
           const endChar = namepath.slice(-1);
           if (['#', '.', '~'].includes(endChar)) {
             handled = tryParsePathIgnoreError(namepath.slice(0, -1));
           }
+
           break;
         }
+
         case 'borrows': {
           const startChar = namepath.charAt();
           if (['#', '.', '~'].includes(startChar)) {
@@ -87,7 +93,8 @@ export default iterateJsdoc(({
     };
 
     if (tag.tag === 'borrows') {
-      const thisNamepath = utils.getTagDescription(tag).replace(asExpression, '').trim();
+      const thisNamepath = utils.getTagDescription(tag).replace(asExpression, '')
+        .trim();
 
       if (!asExpression.test(utils.getTagDescription(tag)) || !thisNamepath) {
         report(`@borrows must have an "as" expression. Found "${utils.getTagDescription(tag)}"`, null, tag);

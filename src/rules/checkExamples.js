@@ -18,6 +18,7 @@ const hasCaptionRegex = /^\s*<caption>([\s\S]*?)<\/caption>/u;
 const escapeStringRegexp = (str) => {
   return str.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
 };
+
 const countChars = (str, ch) => {
   return (str.match(new RegExp(escapeStringRegexp(ch), 'gu')) || []).length;
 };
@@ -99,6 +100,7 @@ export default iterateJsdoc(({
   if (!globalState.has('checkExamples-matchingFileName')) {
     globalState.set('checkExamples-matchingFileName', new Map());
   }
+
   const matchingFileNameMap = globalState.get('checkExamples-matchingFileName');
 
   const options = context.options[0] || {};
@@ -134,6 +136,7 @@ export default iterateJsdoc(({
   if (exampleCodeRegex) {
     exampleCodeRegex = utils.getRegexFromString(exampleCodeRegex);
   }
+
   if (rejectExampleCodeRegex) {
     rejectExampleCodeRegex = utils.getRegexFromString(rejectExampleCodeRegex);
   }
@@ -274,6 +277,7 @@ export default iterateJsdoc(({
       if (!tag.description.trim()) {
         return;
       }
+
       checkSource({
         source: `(${utils.getTagDescription(tag)})`,
         targetTagName,
@@ -281,12 +285,14 @@ export default iterateJsdoc(({
       });
     });
   }
+
   if (checkParams) {
     const filenameInfo = getFilenameInfo(matchingFileNameParams, 'jsdoc-params');
     utils.forEachPreferredTag('param', (tag, targetTagName) => {
       if (!tag.default || !tag.default.trim()) {
         return;
       }
+
       checkSource({
         source: `(${tag.default})`,
         targetTagName,
@@ -294,12 +300,14 @@ export default iterateJsdoc(({
       });
     });
   }
+
   if (checkProperties) {
     const filenameInfo = getFilenameInfo(matchingFileNameProperties, 'jsdoc-properties');
     utils.forEachPreferredTag('property', (tag, targetTagName) => {
       if (!tag.default || !tag.default.trim()) {
         return;
       }
+
       checkSource({
         source: `(${tag.default})`,
         targetTagName,
@@ -385,6 +393,7 @@ export default iterateJsdoc(({
           break;
         }
       }
+
       skipInit = true;
     }
 

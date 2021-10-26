@@ -9,6 +9,7 @@ export default iterateJsdoc(({
   if (!propertyAssociatedTags.length) {
     return;
   }
+
   const targetTagName = utils.getPreferredTagName({tagName: 'property'});
 
   if (utils.hasATag([targetTagName])) {
@@ -19,6 +20,7 @@ export default iterateJsdoc(({
     if (!['object', 'Object', 'PlainObject'].includes(propertyAssociatedTag.type)) {
       continue;
     }
+
     utils.reportJSDoc(`Missing JSDoc @${targetTagName}.`, null, () => {
       utils.addTag(targetTagName);
     });

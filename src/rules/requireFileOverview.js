@@ -73,11 +73,13 @@ export default iterateJsdoc(({
         if (mustExist && !state.hasTag[tagName]) {
           utils.reportSettings(`Missing @${targetTagName}`);
         }
+
         if (preventDuplicates && state.hasDuplicates[tagName]) {
           utils.reportSettings(
             `Duplicate @${targetTagName}`,
           );
         }
+
         if (initialCommentsOnly &&
             state.hasNonCommentBeforeTag[tagName]
         ) {

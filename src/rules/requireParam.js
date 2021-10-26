@@ -29,6 +29,7 @@ export default iterateJsdoc(({
   if (!preferredTagName) {
     return;
   }
+
   const jsdocParameterNames = utils.getJsdocTagsDeep(preferredTagName);
 
   const shallowJsdocParameterNames = jsdocParameterNames.filter((tag) => {
@@ -70,12 +71,15 @@ export default iterateJsdoc(({
   const hasParamIndex = (cur) => {
     return _.has(paramIndex, utils.dropPathSegmentQuotes(String(cur)));
   };
+
   const getParamIndex = (cur) => {
     return paramIndex[utils.dropPathSegmentQuotes(String(cur))];
   };
+
   const setParamIndex = (cur, idx) => {
     paramIndex[utils.dropPathSegmentQuotes(String(cur))] = idx;
   };
+
   for (const [idx, cur] of flattenedRoots.entries()) {
     setParamIndex(cur, idx);
   }
@@ -87,6 +91,7 @@ export default iterateJsdoc(({
         if (Array.isArray(remainingRoot)) {
           return remainingRoot[1].names.includes(name);
         }
+
         if (typeof remainingRoot === 'object') {
           return name === remainingRoot.name;
         }
@@ -215,12 +220,14 @@ export default iterateJsdoc(({
 
       continue;
     }
+
     let funcParamName;
     let type;
     if (typeof functionParameterName === 'object') {
       if (!enableRestElementFixer && functionParameterName.restElement) {
         continue;
       }
+
       funcParamName = functionParameterName.name;
       type = '{...any}';
     } else {
@@ -245,6 +252,7 @@ export default iterateJsdoc(({
     if (inc && !enableRootFixer) {
       return;
     }
+
     const createTokens = (tagIndex, sourceIndex, spliceCount) => {
       // console.log(sourceIndex, tagIndex, jsdoc.tags, jsdoc.source);
       const tokens = {
@@ -278,6 +286,7 @@ export default iterateJsdoc(({
         src.number = firstNumber + sourceIndex + idx;
       }
     };
+
     const offset = jsdoc.source.findIndex(({tokens: {tag, end}}) => {
       return tag || end;
     });
@@ -298,6 +307,7 @@ export default iterateJsdoc(({
   if (missingTags.length && jsdoc.source.length === 1) {
     utils.makeMultiline();
   }
+
   for (const {functionParameterName} of missingTags) {
     utils.reportJSDoc(
       `Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`,

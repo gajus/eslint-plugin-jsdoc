@@ -23,6 +23,7 @@ export default iterateJsdoc(({
       const fix = () => {
         tokens.description = description.replace(middleAsterisks, '');
       };
+
       utils.reportJSDoc(
         'Should be no multiple asterisks on middle lines.',
         {
@@ -60,6 +61,7 @@ export default iterateJsdoc(({
       if (!isSingleLineBlock) {
         tokens.delimiter = '';
       }
+
       tokens.description = (description + delim).replace(endAsterisks, '');
     };
 

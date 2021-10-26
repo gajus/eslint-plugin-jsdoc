@@ -34,6 +34,7 @@ const validateParameterNames = (
 
       return true;
     }
+
     if (tag.name.includes('.')) {
       dotted++;
 
@@ -60,6 +61,7 @@ const validateParameterNames = (
       if (!checkDestructured) {
         return false;
       }
+
       if (tag.type && tag.type.search(checkTypesRegex) === -1) {
         return false;
       }
@@ -73,6 +75,7 @@ const validateParameterNames = (
           report(`@${targetTagName} "${name}" does not match parameter name "${annotationParamName}"`, null, tag);
         }
       }
+
       const tagName = parameterName === undefined ? tag.name.trim() : parameterName;
       const expectedNames = properties.map((name) => {
         return `${tagName}.${name}`;
@@ -93,6 +96,7 @@ const validateParameterNames = (
         })) {
           continue;
         }
+
         const actualNameIdx = actualNames.findIndex((actualName) => {
           return utils.comparePaths(name)(actualName);
         });
@@ -100,6 +104,7 @@ const validateParameterNames = (
           if (!checkRestProperty && rests[idx]) {
             continue;
           }
+
           const missingIndex = actualNames.findIndex((actualName) => {
             return utils.pathDoesNotBeginWith(name, actualName);
           });
@@ -137,6 +142,7 @@ const validateParameterNames = (
             extraProperties.push([name, paramTags[idx][1]]);
           }
         }
+
         if (extraProperties.length) {
           for (const [extraProperty, tg] of extraProperties) {
             report(`@${targetTagName} "${extraProperty}" does not exist on ${tag.name}`, null, tg);
@@ -246,6 +252,7 @@ export default iterateJsdoc(({
   if (!jsdocParameterNamesDeep.length) {
     return;
   }
+
   const functionParameterNames = utils.getFunctionParameterNames(useDefaultObjectProperties);
   const targetTagName = utils.getPreferredTagName({tagName: 'param'});
   const isError = validateParameterNames(

@@ -30,6 +30,7 @@ export default iterateJsdoc(({
       mainDescriptionMatch = mainDescription.match;
       errorMessage = mainDescription.message;
     }
+
     if (!tag && mainDescriptionMatch === false) {
       return;
     }
@@ -89,7 +90,8 @@ export default iterateJsdoc(({
   const {tagsWithNames, tagsWithoutNames} = utils.getTagsByType(whitelistedTags);
 
   tagsWithNames.some((tag) => {
-    const description = utils.getTagDescription(tag).replace(/^[- ]*/u, '').trim();
+    const description = utils.getTagDescription(tag).replace(/^[- ]*/u, '')
+      .trim();
 
     return validateDescription(description, tag);
   });

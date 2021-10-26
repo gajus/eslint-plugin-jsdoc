@@ -10,6 +10,7 @@ export default iterateJsdoc(({
   if (utils.avoidDocs()) {
     return;
   }
+
   const {descriptionStyle = 'body'} = context.options[0] || {};
 
   let targetTagName = utils.getPreferredTagName({
@@ -23,6 +24,7 @@ export default iterateJsdoc(({
   if (!targetTagName) {
     return;
   }
+
   const isBlocked = typeof targetTagName === 'object' && targetTagName.blocked;
   if (isBlocked) {
     targetTagName = targetTagName.tagName;

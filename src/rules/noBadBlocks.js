@@ -35,6 +35,7 @@ export default iterateJsdoc(({
       if (!multiline) {
         return false;
       }
+
       sliceIndex = multiline.length;
       extraAsterisks = true;
       if (preventAllMultiAsteriskBlocks) {
@@ -69,6 +70,7 @@ export default iterateJsdoc(({
           text.replace('/*', '/**'),
       );
     };
+
     report('Expected JSDoc-like comment to begin with two asterisks.', fix);
   }
 }, {

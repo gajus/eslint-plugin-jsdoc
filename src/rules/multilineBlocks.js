@@ -56,6 +56,7 @@ export default iterateJsdoc(({
         const {tokens: {delimiter, start}} = jsdoc.source[1];
         utils.addLine(1, {...line, delimiter, start});
       };
+
       utils.reportJSDoc(
         'Should have no text on the "0th" line (after the `/**`).',
         null,
@@ -94,6 +95,7 @@ export default iterateJsdoc(({
 
         utils.addLine(jsdoc.source.length - 1, {...line, delimiter, end: ''});
       };
+
       utils.reportJSDoc(
         'Should have no text on the final line (before the `*/`).',
         null,
@@ -166,15 +168,19 @@ export default iterateJsdoc(({
             if (typ) {
               obj.type = typ;
             }
+
             if (tg && typ && nme) {
               obj.postType = postType;
             }
+
             if (nme) {
               obj.name += nme;
             }
+
             if (nme && desc) {
               obj.postName = postName;
             }
+
             obj.description += desc;
 
             const nameOrDescription = obj.description || obj.name;
@@ -183,6 +189,7 @@ export default iterateJsdoc(({
             ) {
               obj.description += ' ';
             }
+
             obj.lineEnd = lineEnd;
 
             // Already filtered for multiple tags
@@ -199,6 +206,7 @@ export default iterateJsdoc(({
           })),
         }];
       };
+
       utils.reportJSDoc(
         'Multiline jsdoc blocks are prohibited by ' +
           'your configuration.',

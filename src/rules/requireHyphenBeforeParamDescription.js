@@ -61,6 +61,7 @@ export default iterateJsdoc(({
           })) {
             continue;
           }
+
           utils.forEachPreferredTag(tag, (jsdocTag, targetTagName) => {
             checkHyphens(jsdocTag, targetTagName, circumstance);
           });
@@ -68,6 +69,7 @@ export default iterateJsdoc(({
 
         continue;
       }
+
       utils.forEachPreferredTag(tagName, (jsdocTag, targetTagName) => {
         checkHyphens(jsdocTag, targetTagName, circumstance);
       });

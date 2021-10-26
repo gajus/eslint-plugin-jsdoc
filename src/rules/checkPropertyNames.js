@@ -82,6 +82,7 @@ export default iterateJsdoc(({
   if (!jsdocPropertyNamesDeep.length) {
     return;
   }
+
   const targetTagName = utils.getPreferredTagName({tagName: 'property'});
   const isError = validatePropertyNames(
     targetTagName,

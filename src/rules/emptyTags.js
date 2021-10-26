@@ -37,6 +37,7 @@ export default iterateJsdoc(({
       const fix = () => {
         utils.setTag(tag);
       };
+
       utils.reportJSDoc(`@${tag.tag} should be empty.`, tag, fix, true);
     }
   }

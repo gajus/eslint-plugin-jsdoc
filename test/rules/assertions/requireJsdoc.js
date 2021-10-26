@@ -5043,6 +5043,5 @@ function quux (foo) {
     parserOptions: {
       sourceType: 'module',
     },
-  },
-  ],
+  }],
 };

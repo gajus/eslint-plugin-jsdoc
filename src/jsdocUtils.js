@@ -29,9 +29,11 @@ const flattenRoots = (params, root = '') => {
         if (cur[1].hasRestElement) {
           hasRestElement = true;
         }
+
         if (cur[1].hasPropertyRest) {
           hasPropertyRest = true;
         }
+
         nms = cur[1].names;
       }
 
@@ -39,9 +41,11 @@ const flattenRoots = (params, root = '') => {
       if (flattened.hasRestElement) {
         hasRestElement = true;
       }
+
       if (flattened.hasPropertyRest) {
         hasPropertyRest = true;
       }
+
       const inner = [
         root ? `${root}.${cur[0]}` : cur[0],
         ...flattened.names,
@@ -50,6 +54,7 @@ const flattenRoots = (params, root = '') => {
 
       return acc.concat(inner);
     }
+
     if (typeof cur === 'object') {
       if (cur.isRestProperty) {
         hasPropertyRest = true;
@@ -57,9 +62,11 @@ const flattenRoots = (params, root = '') => {
       } else {
         rests.push(false);
       }
+
       if (cur.restElement) {
         hasRestElement = true;
       }
+
       acc.push(root ? `${root}.${cur.name}` : cur.name);
     } else if (typeof cur !== 'undefined') {
       rests.push(false);
@@ -86,6 +93,7 @@ const getPropertiesFromPropertySignature = (propSignature): T => {
   ) {
     return undefined;
   }
+
   if (propSignature.typeAnnotation && propSignature.typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
     return [propSignature.key.name, propSignature.typeAnnotation.typeAnnotation.members.map((member) => {
       return getPropertiesFromPropertySignature(member);
@@ -136,6 +144,7 @@ const getFunctionParameterNames = (
     }
 
     if (param.type === 'Property') {
+      // eslint-disable-next-line default-case
       switch (param.value.type) {
       case 'ArrayPattern':
         return [param.key.name, param.value.elements.map((prop, idx) => {
@@ -149,6 +158,7 @@ const getFunctionParameterNames = (
           return getParamName(prop, isProperty);
         })];
       case 'AssignmentPattern': {
+        // eslint-disable-next-line default-case
         switch (param.value.left.type) {
         case 'Identifier':
           // Default parameter
@@ -157,6 +167,7 @@ const getFunctionParameterNames = (
               return getParamName(prop, isProperty);
             })];
           }
+
           break;
         case 'ObjectPattern':
           return [param.key.name, param.value.left.properties.map((prop) => {
@@ -240,6 +251,7 @@ const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object
     if (tag !== targetTagName) {
       continue;
     }
+
     ret.push({
       idx,
       name,
@@ -392,21 +404,25 @@ const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
     if (requiredName && name === false) {
       throw new Error('Cannot add "name" to `require` with the tag\'s `name` set to `false`');
     }
+
     tagStruct.set('nameRequired', requiredName);
 
     const requiredType = required.includes('type');
     if (requiredType && type === false) {
       throw new Error('Cannot add "type" to `require` with the tag\'s `type` set to `false`');
     }
+
     tagStruct.set('typeRequired', requiredType);
 
     const typeOrNameRequired = required.includes('typeOrNameRequired');
     if (typeOrNameRequired && name === false) {
       throw new Error('Cannot add "typeOrNameRequired" to `require` with the tag\'s `name` set to `false`');
     }
+
     if (typeOrNameRequired && type === false) {
       throw new Error('Cannot add "typeOrNameRequired" to `require` with the tag\'s `type` set to `false`');
     }
+
     tagStruct.set('typeOrNameRequired', typeOrNameRequired);
   }
 };
@@ -541,11 +557,13 @@ const hasReturnValue = (node, promFilter) => {
   case 'ArrowFunctionExpression': {
     return node.expression || hasReturnValue(node.body, promFilter);
   }
+
   case 'BlockStatement': {
     return node.body.some((bodyNode) => {
       return bodyNode.type !== 'FunctionDeclaration' && hasReturnValue(bodyNode, promFilter);
     });
   }
+
   case 'LabeledStatement':
   case 'WhileStatement':
   case 'DoWhileStatement':
@@ -555,14 +573,17 @@ const hasReturnValue = (node, promFilter) => {
   case 'WithStatement': {
     return hasReturnValue(node.body, promFilter);
   }
+
   case 'IfStatement': {
     return hasReturnValue(node.consequent, promFilter) || hasReturnValue(node.alternate, promFilter);
   }
+
   case 'TryStatement': {
     return hasReturnValue(node.block, promFilter) ||
       hasReturnValue(node.handler && node.handler.body, promFilter) ||
       hasReturnValue(node.finalizer, promFilter);
   }
+
   case 'SwitchStatement': {
     return node.cases.some(
       (someCase) => {
@@ -572,6 +593,7 @@ const hasReturnValue = (node, promFilter) => {
       },
     );
   }
+
   case 'ReturnStatement': {
     // void return does not count.
     if (node.argument === null) {
@@ -586,6 +608,7 @@ const hasReturnValue = (node, promFilter) => {
 
     return true;
   }
+
   default: {
     return false;
   }
@@ -657,17 +680,20 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'WithStatement': {
     return hasNonEmptyResolverCall(node.body, resolverName);
   }
+
   case 'ConditionalExpression':
   case 'IfStatement': {
     return hasNonEmptyResolverCall(node.test, resolverName) ||
       hasNonEmptyResolverCall(node.consequent, resolverName) ||
       hasNonEmptyResolverCall(node.alternate, resolverName);
   }
+
   case 'TryStatement': {
     return hasNonEmptyResolverCall(node.block, resolverName) ||
       hasNonEmptyResolverCall(node.handler && node.handler.body, resolverName) ||
       hasNonEmptyResolverCall(node.finalizer, resolverName);
   }
+
   case 'SwitchStatement': {
     return node.cases.some(
       (someCase) => {
@@ -749,6 +775,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
       return hasNonEmptyResolverCall(nde, resolverName);
     });
   }
+
   case 'VariableDeclarator': {
     return hasNonEmptyResolverCall(node.id, resolverName) ||
       hasNonEmptyResolverCall(node.init, resolverName);
@@ -821,6 +848,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
   if (!node) {
     return false;
   }
+
   switch (node.type) {
   case 'BlockStatement': {
     return node.body.some((bodyNode) => {
@@ -833,6 +861,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
       );
     });
   }
+
   // istanbul ignore next -- In Babel?
   case 'OptionalCallExpression':
   case 'CallExpression':
@@ -843,6 +872,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
   case 'ExpressionStatement': {
     return hasNonFunctionYield(node.expression, checkYieldReturnValue);
   }
+
   case 'LabeledStatement':
   case 'WhileStatement':
   case 'DoWhileStatement':
@@ -852,17 +882,20 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
   case 'WithStatement': {
     return hasNonFunctionYield(node.body, checkYieldReturnValue);
   }
+
   case 'ConditionalExpression':
   case 'IfStatement': {
     return hasNonFunctionYield(node.test, checkYieldReturnValue) ||
       hasNonFunctionYield(node.consequent, checkYieldReturnValue) ||
       hasNonFunctionYield(node.alternate, checkYieldReturnValue);
   }
+
   case 'TryStatement': {
     return hasNonFunctionYield(node.block, checkYieldReturnValue) ||
       hasNonFunctionYield(node.handler && node.handler.body, checkYieldReturnValue) ||
       hasNonFunctionYield(node.finalizer, checkYieldReturnValue);
   }
+
   case 'SwitchStatement': {
     return node.cases.some(
       (someCase) => {
@@ -872,6 +905,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
       },
     );
   }
+
   case 'ArrayPattern':
   case 'ArrayExpression':
     return node.elements.some((element) => {
@@ -885,6 +919,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
       return hasNonFunctionYield(nde, checkYieldReturnValue);
     });
   }
+
   case 'VariableDeclarator': {
     return hasNonFunctionYield(node.id, checkYieldReturnValue) ||
       hasNonFunctionYield(node.init, checkYieldReturnValue);
@@ -972,6 +1007,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
 
     return true;
   }
+
   default: {
     return false;
   }
@@ -1012,11 +1048,13 @@ const hasThrowValue = (node, innerFunction) => {
   case 'ArrowFunctionExpression': {
     return !innerFunction && !node.async && hasThrowValue(node.body, true);
   }
+
   case 'BlockStatement': {
     return node.body.some((bodyNode) => {
       return bodyNode.type !== 'FunctionDeclaration' && hasThrowValue(bodyNode);
     });
   }
+
   case 'LabeledStatement':
   case 'WhileStatement':
   case 'DoWhileStatement':
@@ -1026,6 +1064,7 @@ const hasThrowValue = (node, innerFunction) => {
   case 'WithStatement': {
     return hasThrowValue(node.body);
   }
+
   case 'IfStatement': {
     return hasThrowValue(node.consequent) || hasThrowValue(node.alternate);
   }
@@ -1035,6 +1074,7 @@ const hasThrowValue = (node, innerFunction) => {
     return hasThrowValue(node.handler && node.handler.body) ||
         hasThrowValue(node.finalizer);
   }
+
   case 'SwitchStatement': {
     return node.cases.some(
       (someCase) => {
@@ -1044,6 +1084,7 @@ const hasThrowValue = (node, innerFunction) => {
       },
     );
   }
+
   case 'ThrowStatement': {
     return true;
   }
