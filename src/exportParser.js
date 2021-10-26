@@ -553,7 +553,9 @@ const isUncommentedExport = function (node, sourceCode, opt, settings) {
       return true;
     }
 
-    /** Some typescript types are not in variable map, but inherit exported (interface property and method)*/
+    /**
+     * Some typescript types are not in variable map, but inherit exported (interface property and method)
+     */
     if (
       isExportByAncestor(node) &&
       !findJSDocComment(node, sourceCode, settings)

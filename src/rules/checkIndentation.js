@@ -4,7 +4,7 @@ const maskExcludedContent = (str, excludeTags) => {
   const regContent = new RegExp(`([ \\t]+\\*)[ \\t]@(?:${excludeTags.join('|')})(?=[ \\n])([\\w|\\W]*?\\n)(?=[ \\t]*\\*(?:[ \\t]*@|\\/))`, 'gu');
 
   return str.replace(regContent, (_match, margin, code) => {
-    return new Array(code.match(/\n/gu).length + 1).join(margin + '\n');
+    return Array.from({length: code.match(/\n/gu).length + 1}).join(margin + '\n');
   });
 };
 
@@ -12,7 +12,7 @@ const maskCodeBlocks = (str) => {
   const regContent = /([ \t]+\*)[ \t]```[^\n]*?([\w|\W]*?\n)(?=[ \t]*\*(?:[ \t]*(?:```|@\w+\s)|\/))/gu;
 
   return str.replace(regContent, (_match, margin, code) => {
-    return new Array(code.match(/\n/gu).length + 1).join(margin + '\n');
+    return Array.from({length: code.match(/\n/gu).length + 1}).join(margin + '\n');
   });
 };
 

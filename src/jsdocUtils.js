@@ -1,3 +1,5 @@
+/* eslint-disable jsdoc/no-undefined-types */
+
 import _ from 'lodash';
 import WarnSettings from './WarnSettings';
 import getDefaultTagStructureForMode from './getDefaultTagStructureForMode';
@@ -1095,7 +1097,9 @@ const hasThrowValue = (node, innerFunction) => {
   }
 };
 
-/** @param {string} tag */
+/**
+ * @param {string} tag
+ */
 /*
 const isInlineTag = (tag) => {
   return /^(@link|@linkcode|@linkplain|@tutorial) /u.test(tag);

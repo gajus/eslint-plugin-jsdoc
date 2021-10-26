@@ -1,5 +1,10 @@
+/* eslint-disable jsdoc/valid-types */
+
 import {
-  getReducedASTNode, getJSDocComment, commentHandler, parseComment,
+  getReducedASTNode,
+  getJSDocComment,
+  commentHandler,
+  parseComment,
 } from '@es-joy/jsdoccomment';
 import {
   stringify as commentStringify,

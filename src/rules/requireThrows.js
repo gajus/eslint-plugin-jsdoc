@@ -4,10 +4,8 @@ import iterateJsdoc from '../iterateJsdoc';
  * We can skip checking for a throws value, in case the documentation is inherited
  * or the method is either a constructor or an abstract method.
  *
- * @param {*} utils
- *   a reference to the utils which are used to probe if a tag is present or not.
- * @returns {boolean}
- *   true in case deep checking can be skipped; otherwise false.
+ * @param {*} utils a reference to the utils which are used to probe if a tag is present or not.
+ * @returns {boolean} true in case deep checking can be skipped; otherwise false.
  */
 const canSkip = (utils) => {
   return utils.hasATag([

@@ -249,7 +249,7 @@ export default iterateJsdoc(({
   /**
    *
    * @param {string} filename
-   * @param {string} [ext="md/*.js"] Since `eslint-plugin-markdown` v2, and
+   * @param {string} [ext] Since `eslint-plugin-markdown` v2, and
    *   ESLint 7, this is the default which other JS-fenced rules will used.
    *   Formerly "md" was the default.
    * @returns {{defaultFileName: string, fileName: string}}
