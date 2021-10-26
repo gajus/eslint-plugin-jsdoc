@@ -10,13 +10,13 @@ export default iterateJsdoc(({
     if (noOptionalParamNames && tag.optional) {
       utils.reportJSDoc(`Optional param names are not permitted on @${tag.tag}.`, tag, () => {
         utils.changeTag(tag, {
-          name: tag.name.replace(/([^=]*)(=.+)?/, '$1'),
+          name: tag.name.replace(/([^=]*)(=.+)?/u, '$1'),
         });
       });
     } else if (tag.default) {
       utils.reportJSDoc(`Defaults are not permitted on @${tag.tag}.`, tag, () => {
         utils.changeTag(tag, {
-          name: tag.name.replace(/([^=]*)(=.+)?/, '[$1]'),
+          name: tag.name.replace(/([^=]*)(=.+)?/u, '[$1]'),
         });
       });
     }

@@ -250,6 +250,7 @@ const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object
   return ret;
 };
 
+// eslint-disable-next-line @babel/new-cap
 const modeWarnSettings = WarnSettings();
 
 const getTagNamesForMode = (mode, context) => {

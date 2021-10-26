@@ -254,7 +254,7 @@ export default iterateJsdoc(({
     if (!filename) {
       const jsFileName = context.getFilename();
       if (typeof jsFileName === 'string' && jsFileName.includes('.')) {
-        defaultFileName = jsFileName.replace(/\..*?$/, `.${ext}`);
+        defaultFileName = jsFileName.replace(/\..*?$/u, `.${ext}`);
       } else {
         defaultFileName = `dummy.${ext}`;
       }

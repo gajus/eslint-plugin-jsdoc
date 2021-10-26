@@ -86,7 +86,9 @@ export default iterateJsdoc(({
   const isError = validatePropertyNames(
     targetTagName,
     enableFixer,
-    jsdoc, jsdocNode, utils,
+    jsdoc,
+    jsdocNode,
+    utils,
   );
 
   if (isError) {
@@ -94,8 +96,7 @@ export default iterateJsdoc(({
   }
 
   validatePropertyNamesDeep(
-    targetTagName, jsdocPropertyNamesDeep,
-    jsdoc, report,
+    targetTagName, jsdocPropertyNamesDeep, jsdoc, report,
   );
 }, {
   iterateAllJsdocs: true,

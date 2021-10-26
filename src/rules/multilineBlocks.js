@@ -37,7 +37,9 @@ export default iterateJsdoc(({
 
     utils.reportJSDoc(
       'Single line blocks are not permitted by your configuration.',
-      null, fixer, true,
+      null,
+      fixer,
+      true,
     );
 
     return;
@@ -56,7 +58,8 @@ export default iterateJsdoc(({
       };
       utils.reportJSDoc(
         'Should have no text on the "0th" line (after the `/**`).',
-        null, fixer,
+        null,
+        fixer,
       );
 
       return;
@@ -93,7 +96,8 @@ export default iterateJsdoc(({
       };
       utils.reportJSDoc(
         'Should have no text on the final line (before the `*/`).',
-        null, fixer,
+        null,
+        fixer,
       );
     }
   };
@@ -198,7 +202,8 @@ export default iterateJsdoc(({
       utils.reportJSDoc(
         'Multiline jsdoc blocks are prohibited by ' +
           'your configuration.',
-        null, fixer,
+        null,
+        fixer,
       );
 
       return;

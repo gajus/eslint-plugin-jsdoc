@@ -256,7 +256,10 @@ export default iterateJsdoc(({
     disableExtraPropertyReporting,
     enableFixer,
     functionParameterNames,
-    jsdoc, jsdocNode, utils, report,
+    jsdoc,
+    jsdocNode,
+    utils,
+    report,
   );
 
   if (isError || !checkDestructured) {
@@ -264,9 +267,7 @@ export default iterateJsdoc(({
   }
 
   validateParameterNamesDeep(
-    targetTagName, allowExtraTrailingParamDocs,
-    jsdocParameterNamesDeep,
-    jsdoc, report,
+    targetTagName, allowExtraTrailingParamDocs, jsdocParameterNamesDeep, jsdoc, report,
   );
 }, {
   meta: {

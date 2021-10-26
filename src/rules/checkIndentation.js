@@ -27,7 +27,7 @@ export default iterateJsdoc(({
     excludeTags = ['example'],
   } = options;
 
-  const reg = new RegExp(/^(?:\/?\**|[ \t]*)\*[ \t]{2}/gmu);
+  const reg = /^(?:\/?\**|[ \t]*)\*[ \t]{2}/gmu;
   const textWithoutCodeBlocks = maskCodeBlocks(sourceCode.getText(jsdocNode));
   const text = excludeTags.length ? maskExcludedContent(textWithoutCodeBlocks, excludeTags) : textWithoutCodeBlocks;
 

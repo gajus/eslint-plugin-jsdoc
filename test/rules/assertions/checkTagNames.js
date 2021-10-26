@@ -9,7 +9,7 @@ const buildTagBlock = (tags) => {
 };
 
 const lineCount = (code) => {
-  return code.match(/\n/g).length;
+  return code.match(/\n/ug).length;
 };
 
 // We avoid testing all closure tags as too many

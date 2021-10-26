@@ -637,7 +637,7 @@ const getUtils = (
 };
 
 const getSettings = (context) => {
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  /* eslint-disable canonical/sort-keys */
   const settings = {
     // All rules
     ignorePrivate: Boolean(context.settings.jsdoc?.ignorePrivate),
@@ -665,7 +665,7 @@ const getSettings = (context) => {
     mode: context.settings.jsdoc?.mode ??
       (context.parserPath.includes('@typescript-eslint') ? 'typescript' : 'jsdoc'),
   };
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
+  /* eslint-enable canonical/sort-keys */
 
   jsdocUtils.setTagStructure(settings.mode);
   try {
@@ -831,7 +831,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
 
     const utils = getBasicUtils(context, settings);
     jsdocNodes.forEach((jsdocNode) => {
-      if (!(/^\/\*\*\s/).test(sourceCode.getText(jsdocNode))) {
+      if (!(/^\/\*\*\s/u).test(sourceCode.getText(jsdocNode))) {
         return;
       }
 
@@ -850,10 +850,18 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
               lastIndex: idx,
               selector: node?.type,
             },
-            indent, jsdoc,
-            ruleConfig, context, lines, jsdocNode, node,
-            settings, sourceCode, iterator,
-            state, true,
+            indent,
+            jsdoc,
+            ruleConfig,
+            context,
+            lines,
+            jsdocNode,
+            node,
+            settings,
+            sourceCode,
+            iterator,
+            state,
+            true,
           );
         });
 
@@ -880,10 +888,18 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
           lastIndex,
           selector: node?.type,
         },
-        indent, jsdoc,
-        ruleConfig, context, lines, jsdocNode, node,
-        settings, sourceCode, iterator,
-        state, true,
+        indent,
+        jsdoc,
+        ruleConfig,
+        context,
+        lines,
+        jsdocNode,
+        node,
+        settings,
+        sourceCode,
+        iterator,
+        state,
+        true,
       );
     });
     if (lastCall && ruleConfig.exit) {
@@ -1085,9 +1101,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         }
 
         iterate(
-          info, indent, jsdoc,
-          ruleConfig, context, lines, jsdocNode, node,
-          settings, sourceCode, iterator, state,
+          info, indent, jsdoc, ruleConfig, context, lines, jsdocNode, node, settings, sourceCode, iterator, state,
         );
       };
 

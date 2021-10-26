@@ -23,7 +23,7 @@ export default iterateJsdoc(({
   }
 
   const {description, lastDescriptionLine} = utils.getDescription();
-  const descriptionEndsWithANewline = (/\n\r?$/).test(description);
+  const descriptionEndsWithANewline = (/\n\r?$/u).test(description);
 
   if (always) {
     if (!descriptionEndsWithANewline) {

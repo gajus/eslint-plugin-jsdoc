@@ -28,7 +28,7 @@ const extractSentences = (text, abbreviationsRegex) => {
   const sentenceEndGrouping = /([.?!])(?:\s+|$)/u;
 
   // eslint-disable-next-line unicorn/no-array-method-this-argument
-  const puncts = RegExtras(sentenceEndGrouping).map(txt, (punct) => {
+  const puncts = new RegExtras(sentenceEndGrouping).map(txt, (punct) => {
     return punct;
   });
 
@@ -164,7 +164,7 @@ export default iterateJsdoc(({
 
   const abbreviationsRegex = abbreviations.length ?
     new RegExp('\\b' + abbreviations.map((abbreviation) => {
-      return _.escapeRegExp(abbreviation.replace(/\.$/g, '') + '.');
+      return _.escapeRegExp(abbreviation.replace(/\.$/ug, '') + '.');
     }).join('|') + '(?:$|\\s)', 'gu') :
     '';
 
