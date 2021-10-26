@@ -37,9 +37,11 @@ env:
 jobs:
   fast_finish: true
   include:
-    - node_js: 'lts/*'
+    - node_js: "lts/*"
       env: LINT=true
 after_success:
   - export NODE_ENV=production
   - npm run build
   - semantic-release
+cache:
+  npm: false
