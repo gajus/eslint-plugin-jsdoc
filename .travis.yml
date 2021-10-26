@@ -2,8 +2,8 @@ os: linux
 dist: xenial
 language: node_js
 node_js:
-  - "16"
-  - "14.14.0"
+  # - "16"
+  # - "14.14.0"
   - "12.20.0"
 install:
   - echo "Avoid Travis's npm auto-install"
