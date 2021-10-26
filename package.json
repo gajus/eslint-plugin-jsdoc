@@ -47,23 +47,38 @@
   "engines": {
     "node": "^12 || ^14 || ^16 || ^17"
   },
-  "lint-staged": {
-    ".eslintignore": "npm run lint",
-    "./*.js": "npm run lint-arg --",
-    "src/**/*.js": "npm run lint-arg --",
-    "test/**/*.js": "npm run lint-arg --"
-  },
-  "run-if-changed": {
-    "package-lock.json": "npm run install-offline"
-  },
   "keywords": [
     "eslint",
     "plugin",
     "jsdoc"
   ],
   "license": "BSD-3-Clause",
+  "lint-staged": {
+    "./*.js": "npm run lint-arg --",
+    ".eslintignore": "npm run lint",
+    "src/**/*.js": "npm run lint-arg --",
+    "test/**/*.js": "npm run lint-arg --"
+  },
   "main": "./dist/index.js",
   "name": "eslint-plugin-jsdoc",
+  "nyc": {
+    "branches": 100,
+    "check-coverage": false,
+    "exclude": [
+      "src/rules/checkExamples.js"
+    ],
+    "functions": 100,
+    "include": [
+      "src/"
+    ],
+    "instrument": false,
+    "lines": 100,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false,
+    "statements": 100
+  },
   "peerDependencies": {
     "eslint": "^7.0.0 || ^8.0.0"
   },
@@ -71,38 +86,23 @@
     "type": "git",
     "url": "https://github.com/gajus/eslint-plugin-jsdoc"
   },
+  "run-if-changed": {
+    "package-lock.json": "npm run install-offline"
+  },
   "scripts": {
     "build": "rimraf ./dist && cross-env NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored",
     "check-readme": "babel-node ./src/bin/generateReadme.js --check",
     "create-readme": "babel-node ./src/bin/generateReadme.js",
     "create-rule": "babel-node ./src/bin/generateRule.js",
     "install-offline": "npm install --prefer-offline --no-audit",
-    "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
     "lint": "eslint --report-unused-disable-directives --ignore-pattern '!.ncurc.js' ./src ./test .ncurc.js",
     "lint-arg": "eslint --report-unused-disable-directives",
-    "test-cov": "cross-env BABEL_ENV=test nyc mocha --reporter dot --recursive --require @babel/register --timeout 12000",
-    "test-no-cov": "cross-env BABEL_ENV=test mocha --reporter dot --recursive --require @babel/register --timeout 12000",
-    "test-index": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 12000 test/rules/index.js",
+    "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
+    "prepare": "husky install",
     "test": "cross-env BABEL_ENV=test nyc --reporter text-summary mocha --reporter dot --recursive --require @babel/register --timeout 12000",
-    "prepare": "husky install"
-  },
-  "nyc": {
-    "require": [
-      "@babel/register"
-    ],
-    "sourceMap": false,
-    "instrument": false,
-    "include": [
-      "src/"
-    ],
-    "exclude": [
-      "src/rules/checkExamples.js"
-    ],
-    "check-coverage": false,
-    "branches": 100,
-    "lines": 100,
-    "functions": 100,
-    "statements": 100
+    "test-cov": "cross-env BABEL_ENV=test nyc mocha --reporter dot --recursive --require @babel/register --timeout 12000",
+    "test-index": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 12000 test/rules/index.js",
+    "test-no-cov": "cross-env BABEL_ENV=test mocha --reporter dot --recursive --require @babel/register --timeout 12000"
   },
   "version": "1.0.0"
 }

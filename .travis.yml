@@ -1,45 +1,24 @@
 os: linux
 dist: xenial
 language: node_js
-
 node_js:
   - "16"
   - "14.14.0"
   - "12.20.0"
-
-before_install:
-  - export PATH="./node_modules/.bin:$PATH"
-  - npm config set depth 0
 install:
   - echo "Avoid Travis's npm auto-install"
 before_script: >
-  node_version=$(node -v);
-  if [ ${node_version:1:2} = "17" ]; then
-    echo "Deadsnakes"
-    sudo add-apt-repository --yes ppa:deadsnakes/ppa
-    echo "Update apt-get"
-    sudo apt-get update
-    echo "Install Python3"
-    sudo apt-get --assume-yes install python3.6
-    sudo ln -sf /usr/bin/python3.6 /usr/bin/python3
-  fi;
-  npm install cross-env --global
   npm install --legacy-peer-deps --no-save "eslint@${ESLINT}"
 notifications:
   email: false
 script:
   - npm run test
-  - 'if [ -n "${LINT-}" ]; then npm run lint; fi'
+  - npm run lint
   - npm run build
 env:
   jobs:
     - ESLINT=8
     - ESLINT=7
-jobs:
-  fast_finish: true
-  include:
-    - node_js: "lts/*"
-      env: LINT=true
 after_success:
   - export NODE_ENV=production
   - npm run build
