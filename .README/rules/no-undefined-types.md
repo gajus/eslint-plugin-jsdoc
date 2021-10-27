@@ -33,7 +33,7 @@ The following types are always considered defined.
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
 also be assumed to be defined.
 
-Also note that if there is an error [parsing](https://github.com/jsdoctypeparser/jsdoctypeparser)
+Also note that if there is an error [parsing](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser)
 types for a tag, the function will silently ignore that tag, leaving it to
 the `valid-types` rule to report parsing errors.
 

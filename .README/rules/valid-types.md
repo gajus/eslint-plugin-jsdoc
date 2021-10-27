@@ -2,10 +2,10 @@
 
 Requires all types to be valid JSDoc, Closure, or TypeScript compiler types
 without syntax errors. Note that what determines a valid type is handled by
-our type parsing engine, [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser),
+our type parsing engine, [jsdoc-type-pratt-parser](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser),
 using [`settings.jsdoc.mode`](#eslint-plugin-jsdoc-settings-mode) to
-determine whether to use jsdoctypeparser's "permissive" mode or the stricter
-"jsdoc", "typescript", "closure" modes.
+determine whether to use jsdoc-type-pratt-parser's "permissive" parsing or
+the stricter "jsdoc", "typescript", "closure" modes.
 
 The following tags have their "type" portions (the segment within brackets)
 checked (though those portions may sometimes be confined to namepaths,

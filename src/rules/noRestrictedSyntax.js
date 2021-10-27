@@ -10,6 +10,7 @@ export default iterateJsdoc(({
 
     return;
   }
+
   const {contexts} = context.options[0];
 
   const foundContext = contexts.find((cntxt) => {

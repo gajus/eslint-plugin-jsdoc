@@ -1,5 +1,10 @@
+/* eslint-disable jsdoc/valid-types */
+
 import {
-  getReducedASTNode, getJSDocComment, commentHandler, parseComment,
+  getReducedASTNode,
+  getJSDocComment,
+  commentHandler,
+  parseComment,
 } from '@es-joy/jsdoccomment';
 import {
   stringify as commentStringify,
@@ -136,6 +141,7 @@ const getUtils = (
 
         return true;
       }
+
       descriptions.push(desc);
 
       return false;
@@ -153,6 +159,7 @@ const getUtils = (
 
         return true;
       }
+
       if (idx || description) {
         descriptions.push(description);
       }
@@ -167,12 +174,12 @@ const getUtils = (
   };
 
   utils.changeTag = (tag, ...tokens) => {
-    tag.source.forEach((src, idx) => {
+    for (const [idx, src] of tag.source.entries()) {
       src.tokens = {
         ...src.tokens,
         ...tokens[idx],
       };
-    });
+    }
   };
 
   utils.setTag = (tag, tokens) => {
@@ -225,9 +232,9 @@ const getUtils = (
       // istanbul ignore next
       return false;
     });
-    jsdoc.source.slice(lastIndex).forEach((src, idx) => {
+    for (const [idx, src] of jsdoc.source.slice(lastIndex).entries()) {
       src.number = firstNumber + lastIndex + idx;
-    });
+    }
   };
 
   utils.addTag = (targetTagName) => {
@@ -242,15 +249,15 @@ const getUtils = (
         tag: `@${targetTagName}`,
       }),
     });
-    jsdoc.source.slice(number + 1).forEach((src) => {
+    for (const src of jsdoc.source.slice(number + 1)) {
       src.number++;
-    });
+    }
   };
 
   utils.seedTokens = seedTokens;
 
   utils.emptyTokens = (tokens) => {
-    [
+    for (const prop of [
       'start',
       'postDelimiter',
       'tag',
@@ -262,9 +269,9 @@ const getUtils = (
       'description',
       'end',
       'lineEnd',
-    ].forEach((prop) => {
+    ]) {
       tokens[prop] = '';
-    });
+    }
   };
 
   utils.addLine = (sourceIndex, tokens) => {
@@ -294,9 +301,11 @@ const getUtils = (
           }),
         };
       };
+
       const makeLines = () => {
         return Array.from({length: numLines}, makeLine);
       };
+
       const sourceIndex = jsdoc.source.findIndex(({
         number: srcNumber, tokens: {end},
       }) => {
@@ -316,9 +325,9 @@ const getUtils = (
       // istanbul ignore next
       return false;
     });
-    jsdoc.source.slice(lastIndex).forEach((src, idx) => {
+    for (const [idx, src] of jsdoc.source.slice(lastIndex).entries()) {
       src.number = firstNumber + lastIndex + idx;
-    });
+    }
   };
 
   utils.makeMultiline = () => {
@@ -409,6 +418,7 @@ const getUtils = (
           tagName,
         };
       }
+
       const message = isObject && ret.message || defaultMessage;
       report(message, null, utils.getTags(tagName)[0]);
 
@@ -471,10 +481,10 @@ const getUtils = (
     return false;
   };
 
-  [
+  for (const method of [
     'tagMightHaveNamePosition',
     'tagMightHaveTypePosition',
-  ].forEach((method) => {
+  ]) {
     utils[method] = (tagName, otherModeMaps) => {
       const result = jsdocUtils[method](tagName);
       if (result) {
@@ -491,13 +501,13 @@ const getUtils = (
 
       return otherResult ? {otherMode: true} : false;
     };
-  });
+  }
 
-  [
+  for (const method of [
     'tagMustHaveNamePosition',
     'tagMustHaveTypePosition',
     'tagMissingRequiredTypeOrNamepath',
-  ].forEach((method) => {
+  ]) {
     utils[method] = (tagName, otherModeMaps) => {
       const result = jsdocUtils[method](tagName);
       if (!result) {
@@ -512,16 +522,16 @@ const getUtils = (
 
       return otherResult ? true : {otherMode: false};
     };
-  });
+  }
 
-  [
+  for (const method of [
     'isNamepathDefiningTag',
     'tagMightHaveNamepath',
-  ].forEach((method) => {
+  ]) {
     utils[method] = (tagName) => {
       return jsdocUtils[method](tagName);
     };
-  });
+  }
 
   utils.getTagStructureForMode = (mde) => {
     return jsdocUtils.getTagStructureForMode(mde, settings.structuredTags);
@@ -624,20 +634,21 @@ const getUtils = (
     ) {
       return;
     }
+
     const matchingJsdocTags = _.filter(jsdoc.tags, {
       tag: targetTagName,
     });
 
-    matchingJsdocTags.forEach((matchingJsdocTag) => {
+    for (const matchingJsdocTag of matchingJsdocTags) {
       arrayHandler(matchingJsdocTag, targetTagName);
-    });
+    }
   };
 
   return utils;
 };
 
 const getSettings = (context) => {
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  /* eslint-disable canonical/sort-keys */
   const settings = {
     // All rules
     ignorePrivate: Boolean(context.settings.jsdoc?.ignorePrivate),
@@ -665,7 +676,7 @@ const getSettings = (context) => {
     mode: context.settings.jsdoc?.mode ??
       (context.parserPath.includes('@typescript-eslint') ? 'typescript' : 'jsdoc'),
   };
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
+  /* eslint-enable canonical/sort-keys */
 
   jsdocUtils.setTagStructure(settings.mode);
   try {
@@ -708,6 +719,9 @@ const makeReport = (context, commentNode) => {
         end: {line: lineNumber},
         start: {line: lineNumber},
       };
+
+      // Todo: Remove ignore once `check-examples` can be restored for ESLint 8+
+      // istanbul ignore if
       if (jsdocLoc.column) {
         const colNumber = commentNode.loc.start.column + jsdocLoc.column;
 
@@ -772,6 +786,7 @@ const iterate = (
   ) {
     return;
   }
+
   if (
     !ruleConfig.checkPrivate && settings.ignorePrivate &&
     (utils.hasTag('private') || _.filter(jsdoc.tags, {
@@ -827,9 +842,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
     const {lines} = sourceCode;
 
     const utils = getBasicUtils(context, settings);
-    jsdocNodes.forEach((jsdocNode) => {
-      if (!(/^\/\*\*\s/).test(sourceCode.getText(jsdocNode))) {
-        return;
+    for (const jsdocNode of jsdocNodes) {
+      if (!(/^\/\*\*\s/u).test(sourceCode.getText(jsdocNode))) {
+        continue;
       }
 
       const [indent, jsdoc] = getIndentAndJSDoc(
@@ -837,35 +852,45 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
       );
 
       if (additiveContexts) {
-        contexts.forEach(({comment}, idx) => {
+        for (const [idx, {comment}] of contexts.entries()) {
           if (comment && handler(comment, jsdoc) === false) {
-            return;
+            continue;
           }
+
           iterate(
             {
               comment,
               lastIndex: idx,
               selector: node?.type,
             },
-            indent, jsdoc,
-            ruleConfig, context, lines, jsdocNode, node,
-            settings, sourceCode, iterator,
-            state, true,
+            indent,
+            jsdoc,
+            ruleConfig,
+            context,
+            lines,
+            jsdocNode,
+            node,
+            settings,
+            sourceCode,
+            iterator,
+            state,
+            true,
           );
-        });
+        }
 
-        return;
+        continue;
       }
 
       let lastComment;
       let lastIndex;
+      // eslint-disable-next-line no-loop-func
       if (contexts && contexts.every(({comment}, idx) => {
         lastComment = comment;
         lastIndex = idx;
 
         return comment && handler(comment, jsdoc) === false;
       })) {
-        return;
+        continue;
       }
 
       iterate(
@@ -877,12 +902,21 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
           lastIndex,
           selector: node?.type,
         },
-        indent, jsdoc,
-        ruleConfig, context, lines, jsdocNode, node,
-        settings, sourceCode, iterator,
-        state, true,
+        indent,
+        jsdoc,
+        ruleConfig,
+        context,
+        lines,
+        jsdocNode,
+        node,
+        settings,
+        sourceCode,
+        iterator,
+        state,
+        true,
       );
-    });
+    }
+
     if (lastCall && ruleConfig.exit) {
       ruleConfig.exit({
         context,
@@ -899,6 +933,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
       if (!settings) {
         return {};
       }
+
       if (contexts) {
         handler = commentHandler(settings);
       }
@@ -917,6 +952,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
           if (trackedJsdocs.includes(commentNode)) {
             return;
           }
+
           if (!commentNode) {
             if (ruleConfig.nonComment) {
               ruleConfig.nonComment({
@@ -1002,6 +1038,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   if (!metaType || !['problem', 'suggestion', 'layout'].includes(metaType)) {
     throw new TypeError('Rule must include `meta.type` option (with value "problem", "suggestion", or "layout")');
   }
+
   if (typeof iterator !== 'function') {
     throw new TypeError('The iterator argument must be a function.');
   }
@@ -1056,6 +1093,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           ).create(context);
         }
       }
+
       const sourceCode = context.getSourceCode();
       const {lines} = sourceCode;
 
@@ -1082,9 +1120,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         }
 
         iterate(
-          info, indent, jsdoc,
-          ruleConfig, context, lines, jsdocNode, node,
-          settings, sourceCode, iterator, state,
+          info, indent, jsdoc, ruleConfig, context, lines, jsdocNode, node, settings, sourceCode, iterator, state,
         );
       };
 
@@ -1099,15 +1135,15 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           commentHandler(settings),
         );
       } else {
-        [
+        for (const prop of [
           'ArrowFunctionExpression',
           'FunctionDeclaration',
           'FunctionExpression',
-        ].forEach((prop) => {
+        ]) {
           contextObject[prop] = checkJsdoc.bind(null, {
             selector: prop,
           }, null);
-        });
+        }
       }
 
       if (ruleConfig.exit) {

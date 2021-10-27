@@ -6,10 +6,8 @@ import iterateJsdoc from '../iterateJsdoc';
  *
  * In either of these cases the yield value is optional or not defined.
  *
- * @param {*} utils
- *   a reference to the utils which are used to probe if a tag is present or not.
- * @returns {boolean}
- *   true in case deep checking can be skipped; otherwise false.
+ * @param {*} utils a reference to the utils which are used to probe if a tag is present or not.
+ * @returns {boolean} true in case deep checking can be skipped; otherwise false.
  */
 const canSkip = (utils) => {
   return utils.hasATag([

@@ -344,5 +344,21 @@ export default {
       }
       `,
     },
+    {
+      code: `
+      /**
+       * **Bold**
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Preserve user's bold statement when fixing.
+       *
+       * **Bold example:** Hi there.
+       */
+      `,
+    },
   ],
 };

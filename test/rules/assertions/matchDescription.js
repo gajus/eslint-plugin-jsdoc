@@ -794,7 +794,7 @@ export default {
       options: [
         {
           contexts: [
-            'ClassProperty',
+            'PropertyDefinition',
           ],
         },
       ],
@@ -1269,7 +1269,7 @@ export default {
       options: [
         {
           contexts: [
-            'ClassProperty',
+            'PropertyDefinition',
           ],
         },
       ],

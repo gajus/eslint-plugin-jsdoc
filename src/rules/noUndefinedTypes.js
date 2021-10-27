@@ -44,9 +44,11 @@ export default iterateJsdoc(({
         // May become an empty string but will be filtered out below
         return stripPseudoTypes(preferredType);
       }
+
       if (!preferredType) {
         return undefined;
       }
+
       if (typeof preferredType !== 'object') {
         utils.reportSettings(
           'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
@@ -54,9 +56,10 @@ export default iterateJsdoc(({
       }
 
       return stripPseudoTypes(preferredType.replacement);
-    }).filter((preferredType) => {
-      return preferredType;
-    });
+    })
+      .filter((preferredType) => {
+        return preferredType;
+      });
   }
 
   const typedefDeclarations = _(context.getAllComments())
@@ -96,9 +99,10 @@ export default iterateJsdoc(({
       const jsdoc = parseComment(commentNode, '');
 
       return jsdocUtils.filterTags(jsdoc.tags, (tag) => {
-        return 'template' === tag.tag;
+        return tag.tag === 'template';
       });
-    }).value() :
+    })
+      .value() :
     utils.getPresentTags('template');
 
   const classJsdoc = utils.getClassJsdoc();
@@ -142,14 +146,14 @@ export default iterateJsdoc(({
     return utils.tagMightHaveTypePosition(tag);
   });
 
-  jsdocTagsWithPossibleType.forEach((tag) => {
+  for (const tag of jsdocTagsWithPossibleType) {
     let parsedType;
 
     try {
       parsedType = mode === 'permissive' ? tryParseType(tag.type) : parseType(tag.type, mode);
     } catch {
       // On syntax error, will be handled by valid-types.
-      return;
+      continue;
     }
 
     traverse(parsedType, ({type, value}) => {
@@ -164,7 +168,7 @@ export default iterateJsdoc(({
         }
       }
     });
-  });
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {

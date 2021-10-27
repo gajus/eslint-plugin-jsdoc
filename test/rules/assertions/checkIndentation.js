@@ -289,5 +289,27 @@ export default {
         excludeTags: [],
       }],
     },
+    {
+      code: `
+      /**
+       * @example
+       * \`\`\`
+       * @MyDecorator({
+       *   myOptions: 42
+       * })
+       * export class MyClass {}
+       * \`\`\`
+       */
+      function MyDecorator(options: { myOptions: number }) {
+        return (Base: Function) => {};
+      }
+      `,
+      options: [
+        {
+          excludeTags: ['example', 'MyDecorator'],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };

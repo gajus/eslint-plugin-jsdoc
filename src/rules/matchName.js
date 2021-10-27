@@ -1,5 +1,6 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+// eslint-disable-next-line complexity
 export default iterateJsdoc(({
   context,
   jsdoc,
@@ -30,15 +31,16 @@ export default iterateJsdoc(({
   }
 
   let reported = false;
-  applicableTags.forEach((tag) => {
+  for (const tag of applicableTags) {
     const allowed = !allowNameRegex || allowNameRegex.test(tag.name);
     const disallowed = disallowNameRegex && disallowNameRegex.test(tag.name);
     const hasRegex = allowNameRegex || disallowNameRegex;
     if (hasRegex && allowed && !disallowed) {
-      return;
+      continue;
     }
+
     if (!hasRegex && reported) {
-      return;
+      continue;
     }
 
     const fixer = () => {
@@ -77,7 +79,7 @@ export default iterateJsdoc(({
     if (!hasRegex) {
       reported = true;
     }
-  });
+  }
 }, {
   matchContext: true,
   meta: {

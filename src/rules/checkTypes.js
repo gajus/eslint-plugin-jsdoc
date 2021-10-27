@@ -49,6 +49,7 @@ const adjustNames = (type, preferred, isGenericMatch, nodeName, node, parentNode
   } else if (type === 'JsdocTypeAny') {
     node.type = 'JsdocTypeName';
   }
+
   node.value = ret.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
 
   // For bare pseudo-types like `<>`
@@ -113,6 +114,7 @@ export default iterateJsdoc(({
           });
         }
       }
+
       const directNameMatch = preferredTypes?.[nodeName] !== undefined &&
         !Object.values(preferredTypes).includes(nodeName);
       const unifiedSyntaxParentMatch = property && directNameMatch && unifyParentAndChildTypeChecks;
@@ -125,15 +127,16 @@ export default iterateJsdoc(({
     return [hasMatchingPreferredType, typeName, isGenericMatch];
   };
 
-  jsdocTagsWithPossibleType.forEach((jsdocTag) => {
+  for (const jsdocTag of jsdocTagsWithPossibleType) {
     const invalidTypes = [];
     let typeAst;
 
     try {
       typeAst = mode === 'permissive' ? tryParse(jsdocTag.type) : parse(jsdocTag.type, mode);
     } catch {
-      return;
+      continue;
     }
+
     const tagName = jsdocTag.tag;
 
     traverse(typeAst, (node, parentNode, property) => {
@@ -141,6 +144,7 @@ export default iterateJsdoc(({
       if (!['JsdocTypeName', 'JsdocTypeAny'].includes(type)) {
         return;
       }
+
       let nodeName = type === 'JsdocTypeAny' ? '*' : value;
 
       const [hasMatchingPreferredType, typeName, isGenericMatch] = getPreferredTypeInfo(type, nodeName, parentNode, property);
@@ -183,6 +187,7 @@ export default iterateJsdoc(({
           if (strictNativeType === 'object' && mode === 'typescript') {
             continue;
           }
+
           if (strictNativeType.toLowerCase() === nodeName.toLowerCase() &&
             strictNativeType !== nodeName &&
 
@@ -205,7 +210,7 @@ export default iterateJsdoc(({
     if (invalidTypes.length) {
       const fixedType = stringify(typeAst);
 
-      invalidTypes.forEach(([badType, preferredType = '', message]) => {
+      for (const [badType, preferredType = '', message] of invalidTypes) {
         const fix = (fixer) => {
           return fixer.replaceText(
             jsdocNode,
@@ -221,7 +226,7 @@ export default iterateJsdoc(({
           return tag === tagName &&
             (types === true || types.includes(jsdocTag.type));
         })) {
-          return;
+          continue;
         }
 
         report(
@@ -236,9 +241,9 @@ export default iterateJsdoc(({
             tagValue,
           } : null,
         );
-      });
+      }
     }
-  });
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {

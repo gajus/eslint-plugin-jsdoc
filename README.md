@@ -250,10 +250,8 @@ how many line breaks to add when a block is missing.
     types/namepaths (Closure allows types on some tags which the others do not,
     so these tags will additionally be checked in "closure" mode)
   - For type-checking rules, impacts parsing of types (through
-    [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser)
-    dependency); note that some TypeScript features are
-    [not yet](https://github.com/gajus/eslint-plugin-jsdoc/issues/145)
-    [supported](https://github.com/jsdoctypeparser/jsdoctypeparser/issues/50)
+    [jsdoc-type-pratt-parser](https://github.com/simonseyock/jsdoc-type-pratt-parser)
+    dependency)
   - Check preferred tag names
   - Disallows namepath on `@interface` for "closure" mode in `valid-types` (and
       avoids checking in other rules)
@@ -579,7 +577,7 @@ properties:
     declaration of the function expression for
     `const quux = function () {}`, the associated comment would,
     in both cases, generally be expected to be on the line above both, rather
-    than to be immediately preceding the funciton (in the case of the
+    than to be immediately preceding the function (in the case of the
     function). See [@es-joy/jsdoccomment](https://github.com/es-joy/jsdoccomment)
     for the precise structure of the comment (and comment type) nodes.
 
@@ -946,6 +944,9 @@ function quux (foo) {
 
 <a name="eslint-plugin-jsdoc-rules-check-examples"></a>
 ### <code>check-examples</code>
+
+> **NOTE**: This rule currently does not work in ESLint 8 (we are waiting for
+> [issue 14745](https://github.com/eslint/eslint/issues/14745)).
 
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules. Also
 has options to lint the default values of optional `@param`/`@arg`/`@argument`
@@ -1934,6 +1935,20 @@ function quux () {
 * ```
 */
 // "jsdoc/check-indentation": ["error"|"warn", {"excludeTags":[]}]
+
+/**
+ * @example
+ * ```
+ * @MyDecorator({
+ *   myOptions: 42
+ * })
+ * export class MyClass {}
+ * ```
+ */
+function MyDecorator(options: { myOptions: number }) {
+  return (Base: Function) => {};
+}
+// "jsdoc/check-indentation": ["error"|"warn", {"excludeTags":["example","MyDecorator"]}]
 ````
 
 
@@ -4753,7 +4768,7 @@ behavior.
 See also the documentation on `settings.jsdoc.preferredTypes` which impacts
 the behavior of `check-types`.
 
-Note that if there is an error [parsing](https://github.com/jsdoctypeparser/jsdoctypeparser)
+Note that if there is an error [parsing](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser)
 types for a tag, the function will silently ignore that tag, leaving it to
 the `valid-types` rule to report parsing errors.
 
@@ -6902,7 +6917,7 @@ class MyClass {
    */
   myClassField = 1
 }
-// "jsdoc/match-description": ["error"|"warn", {"contexts":["ClassProperty"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["PropertyDefinition"]}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -7170,7 +7185,7 @@ class MyClass {
    */
   myClassField = 1
 }
-// "jsdoc/match-description": ["error"|"warn", {"contexts":["ClassProperty"]}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["PropertyDefinition"]}]
 
 /**
  * Foo.
@@ -7349,7 +7364,7 @@ be applied, however.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|(The tags specifie by `tags`, including any tag if `*` is set)|
+|Tags|(The tags specified by `tags`, including any tag if `*` is set)|
 |Recommended|false|
 |Settings|`structuredTags`|
 |Options|`match`|
@@ -9155,7 +9170,7 @@ The following types are always considered defined.
 Note that preferred types indicated within `settings.jsdoc.preferredTypes` will
 also be assumed to be defined.
 
-Also note that if there is an error [parsing](https://github.com/jsdoctypeparser/jsdoctypeparser)
+Also note that if there is an error [parsing](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser)
 types for a tag, the function will silently ignore that tag, leaving it to
 the `valid-types` rule to report parsing errors.
 
@@ -12801,7 +12816,7 @@ class Animal {
   @SomeAnnotation('optionalParameter')
   tail: boolean;
 }
-// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ClassProperty"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["PropertyDefinition"]}]
 // Message: Missing JSDoc comment.
 
 @Entity('users')
@@ -12895,7 +12910,7 @@ export class MyComponentComponent {
   @Input()
   public value = new EventEmitter();
 }
-// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ClassProperty:has(Decorator[expression.callee.name=\"Input\"])"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["PropertyDefinition > Decorator[expression.callee.name=\"Input\"]"]}]
 // Message: Missing JSDoc comment.
 
 requestAnimationFrame(draw)
@@ -12939,6 +12954,12 @@ function comment () {
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"enableFixer":false,"fixerMessage":" TODO: add comment"}]
 // Message: Missing JSDoc comment.
+
+export class InovaAutoCompleteComponent {
+  public disabled = false;
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["PropertyDefinition"],"publicOnly":true}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:
@@ -12966,7 +12987,7 @@ export class Foo {
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
 
 /** This is comment */
-function someFunciton() {
+function someFunction() {
   interface FooBar {
     fooBar: string;
   }
@@ -19986,10 +20007,10 @@ The following patterns are not considered problems:
 
 Requires all types to be valid JSDoc, Closure, or TypeScript compiler types
 without syntax errors. Note that what determines a valid type is handled by
-our type parsing engine, [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser),
+our type parsing engine, [jsdoc-type-pratt-parser](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser),
 using [`settings.jsdoc.mode`](#eslint-plugin-jsdoc-settings-mode) to
-determine whether to use jsdoctypeparser's "permissive" mode or the stricter
-"jsdoc", "typescript", "closure" modes.
+determine whether to use jsdoc-type-pratt-parser's "permissive" parsing or
+the stricter "jsdoc", "typescript", "closure" modes.
 
 The following tags have their "type" portions (the segment within brackets)
 checked (though those portions may sometimes be confined to namepaths,

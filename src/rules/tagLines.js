@@ -18,13 +18,14 @@ export default iterateJsdoc(({
     let lastTag;
 
     let reportIndex = null;
-    tg.source.forEach(({tokens: {tag, name, type, description, end}}, idx) => {
+    for (const [idx, {tokens: {tag, name, type, description, end}}] of tg.source.entries()) {
       // May be text after a line break within a tag description
       if (description) {
         reportIndex = null;
       }
+
       if (lastTag && ['any', 'always'].includes(tags[lastTag.slice(1)]?.lines)) {
-        return;
+        continue;
       }
 
       if (
@@ -35,15 +36,17 @@ export default iterateJsdoc(({
       ) {
         reportIndex = idx;
 
-        return;
+        continue;
       }
 
       lastTag = tag;
-    });
+    }
+
     if (reportIndex !== null) {
       const fixer = () => {
         utils.removeTagItem(tagIdx, reportIndex);
       };
+
       utils.reportJSDoc(
         'Expected no lines between tags',
         {line: tg.source[0].number + 1},
@@ -61,18 +64,20 @@ export default iterateJsdoc(({
 
     let currentTag;
     let tagSourceIdx = 0;
-    tg.source.forEach(({number, tokens: {tag, name, type, description, end}}, idx) => {
+    for (const [idx, {number, tokens: {tag, name, type, description, end}}] of tg.source.entries()) {
       if (description) {
         lines.splice(0, lines.length);
         tagSourceIdx = idx;
       }
+
       if (tag) {
         currentTag = tag;
       }
+
       if (!tag && !name && !type && !description && !end) {
         lines.push({idx, number});
       }
-    });
+    }
 
     const currentTg = currentTag && tags[currentTag.slice(1)];
     const tagCount = currentTg?.count;
@@ -92,6 +97,7 @@ export default iterateJsdoc(({
       const fixer = () => {
         utils.addLines(tagIdx, lines[lines.length - 1]?.idx || tagSourceIdx + 1, fixCount - lines.length);
       };
+
       const line = lines[lines.length - 1]?.number || tg.source[tagSourceIdx].number;
       utils.reportJSDoc(
         `Expected ${fixCount} line${fixCount === 1 ? '' : 's'} between tags but found ${lines.length}`,

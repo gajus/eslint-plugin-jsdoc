@@ -30,9 +30,11 @@ export default iterateJsdoc(({
         // May become an empty string but will be filtered out below
         return preferredTag;
       }
+
       if (!preferredTag) {
         return undefined;
       }
+
       if (typeof preferredTag !== 'object') {
         utils.reportSettings(
           'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.',
@@ -40,16 +42,18 @@ export default iterateJsdoc(({
       }
 
       return preferredTag.replacement;
-    }).filter((preferredType) => {
-      return preferredType;
-    });
+    })
+      .filter((preferredType) => {
+        return preferredType;
+      });
   }
 
-  jsdoc.tags.forEach((jsdocTag) => {
+  for (const jsdocTag of jsdoc.tags) {
     const tagName = jsdocTag.tag;
     if (jsxTags && jsxTagNames.has(tagName)) {
-      return;
+      continue;
     }
+
     if (utils.isValidTag(tagName, [
       ...definedTags, ...definedPreferredTags, ...definedNonPreferredTags,
       ...definedStructuredTags,
@@ -60,13 +64,14 @@ export default iterateJsdoc(({
         tagName,
       });
       if (!preferredTagName) {
-        return;
+        continue;
       }
 
       let message;
       if (typeof preferredTagName === 'object') {
         ({message, replacement: preferredTagName} = preferredTagName);
       }
+
       if (!message) {
         message = `Invalid JSDoc tag (preference). Replace "${tagName}" JSDoc tag with "${preferredTagName}".`;
       }
@@ -84,7 +89,7 @@ export default iterateJsdoc(({
     } else {
       report(`Invalid JSDoc tag name "${tagName}".`, null, jsdocTag);
     }
-  });
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {

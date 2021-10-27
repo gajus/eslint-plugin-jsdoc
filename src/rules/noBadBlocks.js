@@ -35,6 +35,7 @@ export default iterateJsdoc(({
       if (!multiline) {
         return false;
       }
+
       sliceIndex = multiline.length;
       extraAsterisks = true;
       if (preventAllMultiAsteriskBlocks) {
@@ -55,9 +56,10 @@ export default iterateJsdoc(({
     return;
   }
 
-  nonJsdocNodes.forEach((node) => {
+  for (const node of nonJsdocNodes) {
     const report = makeReport(context, node);
 
+    // eslint-disable-next-line no-loop-func
     const fix = (fixer) => {
       const text = sourceCode.getText(node);
 
@@ -68,8 +70,9 @@ export default iterateJsdoc(({
           text.replace('/*', '/**'),
       );
     };
+
     report('Expected JSDoc-like comment to begin with two asterisks.', fix);
-  });
+  }
 }, {
   checkFile: true,
   meta: {

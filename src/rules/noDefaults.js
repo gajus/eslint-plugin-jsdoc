@@ -6,23 +6,24 @@ export default iterateJsdoc(({
 }) => {
   const {noOptionalParamNames} = context.options[0] || {};
   const paramTags = utils.getPresentTags(['param', 'arg', 'argument']);
-  paramTags.forEach((tag) => {
+  for (const tag of paramTags) {
     if (noOptionalParamNames && tag.optional) {
       utils.reportJSDoc(`Optional param names are not permitted on @${tag.tag}.`, tag, () => {
         utils.changeTag(tag, {
-          name: tag.name.replace(/([^=]*)(=.+)?/, '$1'),
+          name: tag.name.replace(/([^=]*)(=.+)?/u, '$1'),
         });
       });
     } else if (tag.default) {
       utils.reportJSDoc(`Defaults are not permitted on @${tag.tag}.`, tag, () => {
         utils.changeTag(tag, {
-          name: tag.name.replace(/([^=]*)(=.+)?/, '[$1]'),
+          name: tag.name.replace(/([^=]*)(=.+)?/u, '[$1]'),
         });
       });
     }
-  });
+  }
+
   const defaultTags = utils.getPresentTags(['default', 'defaultvalue']);
-  defaultTags.forEach((tag) => {
+  for (const tag of defaultTags) {
     if (tag.description.trim()) {
       utils.reportJSDoc(`Default values are not permitted on @${tag.tag}.`, tag, () => {
         utils.changeTag(tag, {
@@ -31,7 +32,7 @@ export default iterateJsdoc(({
         });
       });
     }
-  });
+  }
 }, {
   contextDefaults: true,
   meta: {

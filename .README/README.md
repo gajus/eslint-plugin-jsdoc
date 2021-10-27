@@ -179,10 +179,8 @@ how many line breaks to add when a block is missing.
     types/namepaths (Closure allows types on some tags which the others do not,
     so these tags will additionally be checked in "closure" mode)
   - For type-checking rules, impacts parsing of types (through
-    [jsdoctypeparser](https://github.com/jsdoctypeparser/jsdoctypeparser)
-    dependency); note that some TypeScript features are
-    [not yet](https://github.com/gajus/eslint-plugin-jsdoc/issues/145)
-    [supported](https://github.com/jsdoctypeparser/jsdoctypeparser/issues/50)
+    [jsdoc-type-pratt-parser](https://github.com/simonseyock/jsdoc-type-pratt-parser)
+    dependency)
   - Check preferred tag names
   - Disallows namepath on `@interface` for "closure" mode in `valid-types` (and
       avoids checking in other rules)
@@ -500,7 +498,7 @@ properties:
     declaration of the function expression for
     `const quux = function () {}`, the associated comment would,
     in both cases, generally be expected to be on the line above both, rather
-    than to be immediately preceding the funciton (in the case of the
+    than to be immediately preceding the function (in the case of the
     function). See [@es-joy/jsdoccomment](https://github.com/es-joy/jsdoccomment)
     for the precise structure of the comment (and comment type) nodes.
 

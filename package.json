@@ -5,11 +5,11 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "0.10.8",
+    "@es-joy/jsdoccomment": "0.12.0",
     "comment-parser": "1.2.4",
     "debug": "^4.3.2",
     "esquery": "^1.4.0",
-    "jsdoc-type-pratt-parser": "^1.1.1",
+    "jsdoc-type-pratt-parser": "^2.0.0",
     "lodash": "^4.17.21",
     "regextras": "^0.8.0",
     "semver": "^7.3.5",
@@ -18,48 +18,39 @@
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
-    "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
-    "@babel/eslint-parser": "^7.15.4",
-    "@babel/node": "^7.15.4",
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
+    "@babel/eslint-parser": "^7.15.8",
+    "@babel/node": "^7.15.8",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@babel/plugin-transform-flow-strip-types": "^7.14.5",
-    "@babel/preset-env": "^7.15.4",
+    "@babel/preset-env": "^7.15.8",
     "@babel/register": "^7.15.3",
     "@hkdobrev/run-if-changed": "^0.3.1",
-    "@typescript-eslint/parser": "^4.31.0",
+    "@typescript-eslint/parser": "^5.2.0",
     "babel-eslint": "10.1.0",
     "babel-plugin-add-module-exports": "^1.0.4",
-    "babel-plugin-istanbul": "^6.0.0",
+    "babel-plugin-istanbul": "^6.1.1",
     "chai": "^4.3.4",
     "cross-env": "^7.0.3",
-    "eslint": "7.32.0",
-    "eslint-config-canonical": "^27.0.0",
+    "eslint": "^8.1.0",
+    "eslint-config-canonical": "^32.12.1",
     "eslint-plugin-jsdoc": "^36.1.0",
     "eslint-plugin-vue": "7.18.0",
     "gitdown": "^3.1.4",
-    "glob": "^7.1.7",
-    "husky": "^7.0.2",
-    "lint-staged": "^11.1.2",
-    "mocha": "^9.1.1",
+    "glob": "^7.2.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.4",
+    "mocha": "^9.1.3",
     "nyc": "^15.1.0",
     "open-editor": "^3.0.0",
     "rimraf": "^3.0.2",
-    "semantic-release": "^17.4.7",
-    "typescript": "^4.4.2",
+    "semantic-release": "^18.0.0",
+    "typescript": "^4.4.4",
     "vue-eslint-parser": "^7.11.0"
   },
   "engines": {
-    "node": "^12 || ^14 || ^16"
-  },
-  "lint-staged": {
-    ".eslintignore": "npm run lint",
-    "./*.js": "npm run lint-arg --",
-    "src/**/*.js": "npm run lint-arg --",
-    "test/**/*.js": "npm run lint-arg --"
-  },
-  "run-if-changed": {
-    "package-lock.json": "npm run install-offline"
+    "node": "^12 || ^14 || ^16 || ^17"
   },
   "keywords": [
     "eslint",
@@ -67,14 +58,41 @@
     "jsdoc"
   ],
   "license": "BSD-3-Clause",
+  "lint-staged": {
+    "./*.js": "npm run lint-arg --",
+    ".eslintignore": "npm run lint",
+    "src/**/*.js": "npm run lint-arg --",
+    "test/**/*.js": "npm run lint-arg --"
+  },
   "main": "./dist/index.js",
   "name": "eslint-plugin-jsdoc-fork",
+  "nyc": {
+    "branches": 100,
+    "check-coverage": false,
+    "exclude": [
+      "src/rules/checkExamples.js"
+    ],
+    "functions": 100,
+    "include": [
+      "src/"
+    ],
+    "instrument": false,
+    "lines": 100,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false,
+    "statements": 100
+  },
   "peerDependencies": {
-    "eslint": "^6.0.0 || ^7.0.0"
+    "eslint": "^7.0.0 || ^8.0.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/gajus/eslint-plugin-jsdoc"
+  },
+  "run-if-changed": {
+    "package-lock.json": "npm run install-offline"
   },
   "scripts": {
     "build": "rimraf ./dist && cross-env NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored",
@@ -82,30 +100,15 @@
     "create-readme": "babel-node ./src/bin/generateReadme.js",
     "create-rule": "babel-node ./src/bin/generateRule.js",
     "install-offline": "npm install --prefer-offline --no-audit",
-    "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
     "lint": "eslint --report-unused-disable-directives --ignore-pattern '!.ncurc.js' ./src ./test .ncurc.js",
     "lintReport": "eslint --report-unused-disable-directives --ignore-pattern '!.ncurc.js' ./src .ncurc.js --ext .vue --fix",
     "lint-arg": "eslint --report-unused-disable-directives",
-    "test-cov": "cross-env BABEL_ENV=test nyc mocha --parallel --reporter dot --recursive --require @babel/register --timeout 12000",
-    "test-no-cov": "cross-env BABEL_ENV=test mocha --parallel --reporter dot --recursive --require @babel/register --timeout 12000",
+    "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
+    "prepare": "husky install",
+    "test": "cross-env BABEL_ENV=test nyc --reporter text-summary mocha --reporter dot --recursive --require @babel/register --timeout 12000",
+    "test-cov": "cross-env BABEL_ENV=test nyc mocha --reporter dot --recursive --require @babel/register --timeout 12000",
     "test-index": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 12000 test/rules/index.js",
-    "test": "cross-env BABEL_ENV=test nyc --reporter text-summary mocha --parallel --reporter dot --recursive --require @babel/register --timeout 12000",
-    "prepare": "husky install"
-  },
-  "nyc": {
-    "require": [
-      "@babel/register"
-    ],
-    "sourceMap": false,
-    "instrument": false,
-    "include": [
-      "src/"
-    ],
-    "check-coverage": true,
-    "branches": 100,
-    "lines": 100,
-    "functions": 100,
-    "statements": 100
+    "test-no-cov": "cross-env BABEL_ENV=test mocha --reporter dot --recursive --require @babel/register --timeout 12000"
   },
   "version": "1.0.0"
 }

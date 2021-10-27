@@ -35,13 +35,13 @@ export default iterateJsdoc(({
     return;
   }
 
-  functionExamples.forEach((example) => {
+  for (const example of functionExamples) {
     const exampleContent = _.compact(`${example.name} ${utils.getTagDescription(example)}`.trim().split('\n'));
 
     if (!exampleContent.length) {
       report(`Missing JSDoc @${targetTagName} description.`, null, example);
     }
-  });
+  }
 }, {
   contextDefaults: true,
   meta: {

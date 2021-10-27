@@ -397,9 +397,9 @@ export default {
       code: `\r
       /**\r
        * @foo\r
-       * Test\u00a0\r
-       * abc\u00a0\r
-       * @bar\u00a0\r
+       * Test\u00A0\r
+       * abc\u00A0\r
+       * @bar\u00A0\r
        */\r
       `,
     },
@@ -408,9 +408,9 @@ export default {
       /**\r
        * \r
        * @foo\r
-       * Test\u00a0\r
-       * abc\u00a0\r
-       * @bar\u00a0\r
+       * Test\u00A0\r
+       * abc\u00A0\r
+       * @bar\u00A0\r
        */\r
       `,
     },

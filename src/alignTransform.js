@@ -120,9 +120,11 @@ const alignTransform = ({
     if (!nothingAfter.tag) {
       tokens.postTag = space(width.tag - tokens.tag.length + spacings.postTag);
     }
+
     if (!nothingAfter.type) {
       tokens.postType = space(width.type - tokens.type.length + spacings.postType);
     }
+
     if (!nothingAfter.name) {
       // If post name is empty for all lines (name width 0), don't add post name spacing.
       tokens.postName = width.name === 0 ? '' : space(width.name - tokens.name.length + spacings.postName);
@@ -201,7 +203,9 @@ const alignTransform = ({
 
     return rewireSource({
       ...fields,
-      source: source.map(update),
+      source: source.map((line, index) => {
+        return update(line, index, source);
+      }),
     });
   };
 };

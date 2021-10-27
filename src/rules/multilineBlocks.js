@@ -37,7 +37,9 @@ export default iterateJsdoc(({
 
     utils.reportJSDoc(
       'Single line blocks are not permitted by your configuration.',
-      null, fixer, true,
+      null,
+      fixer,
+      true,
     );
 
     return;
@@ -54,9 +56,11 @@ export default iterateJsdoc(({
         const {tokens: {delimiter, start}} = jsdoc.source[1];
         utils.addLine(1, {...line, delimiter, start});
       };
+
       utils.reportJSDoc(
         'Should have no text on the "0th" line (after the `/**`).',
-        null, fixer,
+        null,
+        fixer,
       );
 
       return;
@@ -74,7 +78,7 @@ export default iterateJsdoc(({
 
         const {delimiter} = line;
 
-        [
+        for (const prop of [
           'delimiter',
           'postDelimiter',
           'tag',
@@ -85,15 +89,17 @@ export default iterateJsdoc(({
           'name',
           'postName',
           'description',
-        ].forEach((prop) => {
+        ]) {
           finalLineTokens[prop] = '';
-        });
+        }
 
         utils.addLine(jsdoc.source.length - 1, {...line, delimiter, end: ''});
       };
+
       utils.reportJSDoc(
         'Should have no text on the final line (before the `*/`).',
-        null, fixer,
+        null,
+        fixer,
       );
     }
   };
@@ -162,15 +168,19 @@ export default iterateJsdoc(({
             if (typ) {
               obj.type = typ;
             }
+
             if (tg && typ && nme) {
               obj.postType = postType;
             }
+
             if (nme) {
               obj.name += nme;
             }
+
             if (nme && desc) {
               obj.postName = postName;
             }
+
             obj.description += desc;
 
             const nameOrDescription = obj.description || obj.name;
@@ -179,6 +189,7 @@ export default iterateJsdoc(({
             ) {
               obj.description += ' ';
             }
+
             obj.lineEnd = lineEnd;
 
             // Already filtered for multiple tags
@@ -195,10 +206,12 @@ export default iterateJsdoc(({
           })),
         }];
       };
+
       utils.reportJSDoc(
         'Multiline jsdoc blocks are prohibited by ' +
           'your configuration.',
-        null, fixer,
+        null,
+        fixer,
       );
 
       return;

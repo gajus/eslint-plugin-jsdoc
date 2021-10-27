@@ -1,9 +1,9 @@
-// Todo: When peerDeps bump to ESLint 7, see about replacing `CLIEngine`
-//  with non-deprecated `ESLint` class:
+// Todo: When replace `CLIEngine` with `ESLint` when feature set complete per https://github.com/eslint/eslint/issues/14745
 // https://github.com/eslint/eslint/blob/master/docs/user-guide/migrating-to-7.0.0.md#-the-cliengine-class-has-been-deprecated
 import {
-  CLIEngine,
+  CLIEngine, ESLint,
 } from 'eslint';
+import semver from 'semver';
 import iterateJsdoc from '../iterateJsdoc';
 
 const zeroBasedLineIndexAdjust = -1;
@@ -18,6 +18,7 @@ const hasCaptionRegex = /^\s*<caption>([\s\S]*?)<\/caption>/u;
 const escapeStringRegexp = (str) => {
   return str.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
 };
+
 const countChars = (str, ch) => {
   return (str.match(new RegExp(escapeStringRegexp(ch), 'gu')) || []).length;
 };
@@ -85,9 +86,21 @@ export default iterateJsdoc(({
   context,
   globalState,
 }) => {
+  if (semver.gte(ESLint.version, '8.0.0')) {
+    report(
+      'This rule cannot yet be supported for ESLint 8; you ' +
+        'should either downgrade to ESLint 7 or disable this rule. The ' +
+        'possibility for ESLint 8 support is being tracked at https://github.com/eslint/eslint/issues/14745',
+      {column: 1, line: 1},
+    );
+
+    return;
+  }
+
   if (!globalState.has('checkExamples-matchingFileName')) {
     globalState.set('checkExamples-matchingFileName', new Map());
   }
+
   const matchingFileNameMap = globalState.get('checkExamples-matchingFileName');
 
   const options = context.options[0] || {};
@@ -123,6 +136,7 @@ export default iterateJsdoc(({
   if (exampleCodeRegex) {
     exampleCodeRegex = utils.getRegexFromString(exampleCodeRegex);
   }
+
   if (rejectExampleCodeRegex) {
     rejectExampleCodeRegex = utils.getRegexFromString(rejectExampleCodeRegex);
   }
@@ -196,8 +210,7 @@ export default iterateJsdoc(({
         matchingFileNameMap.set(fileNameMapKey, cliFile);
       }
 
-      const {results: [{messages}]} =
-        cliFile.executeOnText(src);
+      const {results: [{messages}]} = cliFile.executeOnText(src);
 
       if (!('line' in tag)) {
         tag.line = tag.source[0].number;
@@ -207,7 +220,7 @@ export default iterateJsdoc(({
       const codeStartLine = tag.line + nonJSPrefacingLines;
       const codeStartCol = likelyNestedJSDocIndentSpace;
 
-      messages.forEach(({message, line, column, severity, ruleId}) => {
+      for (const {message, line, column, severity, ruleId} of messages) {
         const startLine = codeStartLine + line + zeroBasedLineIndexAdjust;
         const startCol = codeStartCol + (
 
@@ -225,16 +238,18 @@ export default iterateJsdoc(({
             line: startLine,
           },
         );
-      });
+      }
     };
 
-    sources.forEach(checkRules);
+    for (const targetSource of sources) {
+      checkRules(targetSource);
+    }
   };
 
   /**
    *
    * @param {string} filename
-   * @param {string} [ext="md/*.js"] Since `eslint-plugin-markdown` v2, and
+   * @param {string} [ext] Since `eslint-plugin-markdown` v2, and
    *   ESLint 7, this is the default which other JS-fenced rules will used.
    *   Formerly "md" was the default.
    * @returns {{defaultFileName: string, fileName: string}}
@@ -244,7 +259,7 @@ export default iterateJsdoc(({
     if (!filename) {
       const jsFileName = context.getFilename();
       if (typeof jsFileName === 'string' && jsFileName.includes('.')) {
-        defaultFileName = jsFileName.replace(/\..*?$/, `.${ext}`);
+        defaultFileName = jsFileName.replace(/\..*?$/u, `.${ext}`);
       } else {
         defaultFileName = `dummy.${ext}`;
       }
@@ -262,6 +277,7 @@ export default iterateJsdoc(({
       if (!tag.description.trim()) {
         return;
       }
+
       checkSource({
         source: `(${utils.getTagDescription(tag)})`,
         targetTagName,
@@ -269,12 +285,14 @@ export default iterateJsdoc(({
       });
     });
   }
+
   if (checkParams) {
     const filenameInfo = getFilenameInfo(matchingFileNameParams, 'jsdoc-params');
     utils.forEachPreferredTag('param', (tag, targetTagName) => {
       if (!tag.default || !tag.default.trim()) {
         return;
       }
+
       checkSource({
         source: `(${tag.default})`,
         targetTagName,
@@ -282,12 +300,14 @@ export default iterateJsdoc(({
       });
     });
   }
+
   if (checkProperties) {
     const filenameInfo = getFilenameInfo(matchingFileNameProperties, 'jsdoc-properties');
     utils.forEachPreferredTag('property', (tag, targetTagName) => {
       if (!tag.default || !tag.default.trim()) {
         return;
       }
+
       checkSource({
         source: `(${tag.default})`,
         targetTagName,
@@ -373,6 +393,7 @@ export default iterateJsdoc(({
           break;
         }
       }
+
       skipInit = true;
     }
 

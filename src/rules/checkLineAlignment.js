@@ -76,8 +76,9 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
   if (ok) {
     return;
   }
+
   const fix = () => {
-    spacerProps.forEach((spacerProp, idx) => {
+    for (const [idx, spacerProp] of spacerProps.entries()) {
       const contentProp = contentProps[idx];
       const contentPropVal = tokens[contentProp];
 
@@ -92,10 +93,11 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
       } else {
         tokens[spacerProp] = '';
       }
-    });
+    }
 
     utils.setTag(tag, tokens);
   };
+
   utils.reportJSDoc('Expected JSDoc block lines to not be aligned.', tag, fix, true);
 };
 
@@ -168,9 +170,9 @@ export default iterateJsdoc(({
   }
 
   const foundTags = utils.getPresentTags(applicableTags);
-  foundTags.forEach((tag) => {
+  for (const tag of foundTags) {
     checkNotAlignedPerTag(utils, tag, customSpacings);
-  });
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {

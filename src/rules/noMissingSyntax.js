@@ -10,9 +10,11 @@ const incrementSelector = (state, selector, comment) => {
   if (!state.selectorMap[selector]) {
     state.selectorMap[selector] = {};
   }
+
   if (!state.selectorMap[selector][comment]) {
     state.selectorMap[selector][comment] = 0;
   }
+
   state.selectorMap[selector][comment]++;
 };
 
@@ -41,6 +43,7 @@ export default iterateJsdoc(({
 
       return;
     }
+
     setDefaults(state);
 
     const {

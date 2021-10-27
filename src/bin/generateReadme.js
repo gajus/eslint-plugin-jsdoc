@@ -7,12 +7,9 @@ import Gitdown from 'gitdown';
 import glob from 'glob';
 import _ from 'lodash';
 
-const removeReadmeIgnores = ({ignoreReadme}) => {
-  return !ignoreReadme;
-};
-
 const trimCode = (code) => {
-  let lines = code.replace(/^\n/u, '').trimEnd().split('\n');
+  let lines = code.replace(/^\n/u, '').trimEnd()
+    .split('\n');
 
   const firsLineIndentation = lines[0].match(/^\s+/u);
   const lastLineIndentation = lines[lines.length - 1].match(/^\s+/u);
@@ -65,10 +62,14 @@ const getAssertions = () => {
     const ruleName = _.kebabCase(assertionNames[idx]);
 
     return {
-      invalid: codes.invalid.filter(removeReadmeIgnores).map((setup) => {
+      invalid: codes.invalid.filter(({ignoreReadme}) => {
+        return !ignoreReadme;
+      }).map((setup) => {
         return formatCodeSnippet(setup, ruleName);
       }),
-      valid: codes.valid.filter(removeReadmeIgnores).map((setup) => {
+      valid: codes.valid.filter(({ignoreReadme}) => {
+        return !ignoreReadme;
+      }).map((setup) => {
         return formatCodeSnippet(setup, ruleName);
       }),
     };

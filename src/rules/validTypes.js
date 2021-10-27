@@ -17,6 +17,7 @@ const tryParsePathIgnoreError = (path) => {
   return false;
 };
 
+// eslint-disable-next-line complexity
 export default iterateJsdoc(({
   jsdoc,
   report,
@@ -29,29 +30,34 @@ export default iterateJsdoc(({
   } = context.options[0] || {};
   const {mode} = settings;
 
-  // eslint-disable-next-line complexity
-  jsdoc.tags.forEach((tag) => {
+  for (const tag of jsdoc.tags) {
     const validNamepathParsing = function (namepath, tagName) {
       if (tryParsePathIgnoreError(namepath)) {
         return true;
       }
+
       let handled = false;
 
       if (tagName) {
+        // eslint-disable-next-line default-case
         switch (tagName) {
         case 'module': {
           if (!namepath.startsWith('module:')) {
             handled = tryParsePathIgnoreError(`module:${namepath}`);
           }
+
           break;
         }
+
         case 'memberof': case 'memberof!': {
           const endChar = namepath.slice(-1);
           if (['#', '.', '~'].includes(endChar)) {
             handled = tryParsePathIgnoreError(namepath.slice(0, -1));
           }
+
           break;
         }
+
         case 'borrows': {
           const startChar = namepath.charAt();
           if (['#', '.', '~'].includes(startChar)) {
@@ -87,12 +93,13 @@ export default iterateJsdoc(({
     };
 
     if (tag.tag === 'borrows') {
-      const thisNamepath = utils.getTagDescription(tag).replace(asExpression, '').trim();
+      const thisNamepath = utils.getTagDescription(tag).replace(asExpression, '')
+        .trim();
 
       if (!asExpression.test(utils.getTagDescription(tag)) || !thisNamepath) {
         report(`@borrows must have an "as" expression. Found "${utils.getTagDescription(tag)}"`, null, tag);
 
-        return;
+        continue;
       }
 
       if (validNamepathParsing(thisNamepath, 'borrows')) {
@@ -101,7 +108,7 @@ export default iterateJsdoc(({
         validNamepathParsing(thatNamepath);
       }
 
-      return;
+      continue;
     }
 
     const otherModeMaps = ['jsdoc', 'typescript', 'closure', 'permissive'].filter(
@@ -117,7 +124,7 @@ export default iterateJsdoc(({
       const modeInfo = tagMightHaveNamePosition === false ? '' : ` in "${mode}" mode`;
       report(`@${tag.tag} should not have a name${modeInfo}.`, null, tag);
 
-      return;
+      continue;
     }
 
     const mightHaveTypePosition = utils.tagMightHaveTypePosition(tag.tag, otherModeMaps);
@@ -125,7 +132,7 @@ export default iterateJsdoc(({
       const modeInfo = mightHaveTypePosition === false ? '' : ` in "${mode}" mode`;
       report(`@${tag.tag} should not have a bracketed type${modeInfo}.`, null, tag);
 
-      return;
+      continue;
     }
 
     // REQUIRED NAME
@@ -143,7 +150,7 @@ export default iterateJsdoc(({
       const modeInfo = tagMustHaveNamePosition === true ? '' : ` in "${mode}" mode`;
       report(`Tag @${tag.tag} must have a name/namepath${modeInfo}.`, null, tag);
 
-      return;
+      continue;
     }
 
     // REQUIRED TYPE
@@ -152,7 +159,7 @@ export default iterateJsdoc(({
       const modeInfo = mustHaveTypePosition === true ? '' : ` in "${mode}" mode`;
       report(`Tag @${tag.tag} must have a type${modeInfo}.`, null, tag);
 
-      return;
+      continue;
     }
 
     // REQUIRED TYPE OR NAME/NAMEPATH
@@ -161,7 +168,7 @@ export default iterateJsdoc(({
       const modeInfo = tagMissingRequiredTypeOrNamepath === true ? '' : ` in "${mode}" mode`;
       report(`Tag @${tag.tag} must have either a type or namepath${modeInfo}.`, null, tag);
 
-      return;
+      continue;
     }
 
     // VALID TYPE
@@ -178,14 +185,14 @@ export default iterateJsdoc(({
 
     if (hasNameOrNamepathPosition) {
       if (mode !== 'jsdoc' && tag.tag === 'template') {
-        utils.parseClosureTemplateTag(tag).forEach((namepath) => {
+        for (const namepath of utils.parseClosureTemplateTag(tag)) {
           validNamepathParsing(namepath);
-        });
+        }
       } else {
         validNamepathParsing(tag.name, tag.tag);
       }
     }
-  });
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {

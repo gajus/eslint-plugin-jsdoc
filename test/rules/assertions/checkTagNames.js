@@ -5,11 +5,12 @@ import {
 const buildTagBlock = (tags) => {
   return '/** \n * @' + Object.keys(tags).map((tagName, idx) => {
     return (idx === 0 ? '' : '\n * @') + tagName;
-  }).join('') + '\n */';
+  })
+    .join('') + '\n */';
 };
 
 const lineCount = (code) => {
-  return code.match(/\n/g).length;
+  return code.match(/\n/ug).length;
 };
 
 // We avoid testing all closure tags as too many
