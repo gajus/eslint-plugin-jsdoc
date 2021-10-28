@@ -281,6 +281,33 @@ export default {
       `,
     },
     {
+      code: `\r\n
+      /**\r\n
+       * Service for fetching symbols.\r\n
+       * @param {object} $http - Injected http helper.\r\n
+       * @param {object} $q - Injected Promise api helper.\r\n
+       * @param {object} $location - Injected window location object.\r\n
+       * @param {object} REPORT_DIALOG_CONSTANTS - Injected handle.\r\n
+       */\r\n
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a newline after the description of the JSDoc block.',
+        },
+      ],
+      output: `\r\n
+      /**\r\n
+       * Service for fetching symbols.\r\n
+       *\r\n
+       * @param {object} $http - Injected http helper.\r\n
+       * @param {object} $q - Injected Promise api helper.\r\n
+       * @param {object} $location - Injected window location object.\r\n
+       * @param {object} REPORT_DIALOG_CONSTANTS - Injected handle.\r\n
+       */\r\n
+      `,
+    },
+    {
       code: `
       /** An example function.
        *
