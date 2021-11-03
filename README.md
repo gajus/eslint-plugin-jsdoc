@@ -8825,6 +8825,16 @@ function foo(): void {
 function foo() {
     //
 }
+
+/**
+ * **Bold**
+ */
+
+/**
+ * Preserve user's bold statement when fixing.
+ *
+ * **Bold example:** Hi there.
+ */
 ````
 
 
