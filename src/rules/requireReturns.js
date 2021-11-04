@@ -98,7 +98,7 @@ export default iterateJsdoc(({
   contextDefaults: true,
   meta: {
     docs: {
-      description: 'Requires returns are documented.',
+      description: 'Requires that returns are documented.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns',
     },
     schema: [
