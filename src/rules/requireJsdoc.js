@@ -139,7 +139,11 @@ const OPTIONS_SCHEMA = {
 };
 
 const getOption = (context, baseObject, option, key) => {
-  if (option in context.options[0] && key in context.options[0][option]) {
+  if (context.options[0] && option in context.options[0] &&
+    // Todo: boolean shouldn't be returning property, but tests currently require
+    (typeof context.options[0][option] === 'boolean' ||
+    key in context.options[0][option])
+  ) {
     return context.options[0][option][key];
   }
 
