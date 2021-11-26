@@ -320,7 +320,7 @@ const getPreferredTagName = (
     Object
       .entries(tagPreference)
       .map(([key, value]) => {
-        return [key.replace('tag ', ''), value];
+        return [key.replace(/^tag /u, ''), value];
       }),
   );
 
