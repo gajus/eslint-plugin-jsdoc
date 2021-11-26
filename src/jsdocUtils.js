@@ -1,6 +1,5 @@
 /* eslint-disable jsdoc/no-undefined-types */
 
-import _ from 'lodash';
 import WarnSettings from './WarnSettings';
 import getDefaultTagStructureForMode from './getDefaultTagStructureForMode';
 import {
@@ -110,8 +109,11 @@ const getFunctionParameterNames = (
 ) : Array<T> => {
   // eslint-disable-next-line complexity
   const getParamName = (param, isProperty) => {
-    if (_.has(param, 'typeAnnotation') || _.has(param, 'left.typeAnnotation')) {
-      const typeAnnotation = _.has(param, 'left.typeAnnotation') ? param.left.typeAnnotation : param.typeAnnotation;
+    const hasLeftTypeAnnotation = 'left' in param && 'typeAnnotation' in param.left;
+
+    if ('typeAnnotation' in param || hasLeftTypeAnnotation) {
+      const typeAnnotation = hasLeftTypeAnnotation ? param.left.typeAnnotation : param.typeAnnotation;
+
       if (typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
         const propertyNames = typeAnnotation.typeAnnotation.members.map((member) => {
           return getPropertiesFromPropertySignature(member);
@@ -120,19 +122,21 @@ const getFunctionParameterNames = (
           ...flattenRoots(propertyNames),
           annotationParamName: param.name,
         };
-        if (_.has(param, 'name') || _.has(param, 'left.name')) {
-          return [_.has(param, 'left.name') ? param.left.name : param.name, flattened];
+        const hasLeftName = 'left' in param && 'name' in param.left;
+
+        if ('name' in param || hasLeftName) {
+          return [hasLeftName ? param.left.name : param.name, flattened];
         }
 
         return [undefined, flattened];
       }
     }
 
-    if (_.has(param, 'name')) {
+    if ('name' in param) {
       return param.name;
     }
 
-    if (_.has(param, 'left.name')) {
+    if ('left' in param && 'name' in param.left) {
       return param.left.name;
     }
 
@@ -312,11 +316,15 @@ const getPreferredTagName = (
   // e.g. 'tag constructor' for 'constructor':
   // https://github.com/eslint/eslint/issues/13289
   // https://github.com/gajus/eslint-plugin-jsdoc/issues/537
-  const tagPreferenceFixed = _.mapKeys(tagPreference, (_value, key) => {
-    return key.replace('tag ', '');
-  });
+  const tagPreferenceFixed = Object.fromEntries(
+    Object
+      .entries(tagPreference)
+      .map(([key, value]) => {
+        return [key.replace('tag ', ''), value];
+      }),
+  );
 
-  if (_.has(tagPreferenceFixed, name)) {
+  if (name in tagPreferenceFixed) {
     return tagPreferenceFixed[name];
   }
 
@@ -350,7 +358,7 @@ const isValidTag = (
 const hasTag = (jsdoc : Object, targetTagName : string) : boolean => {
   const targetTagLower = targetTagName.toLowerCase();
 
-  return _.some(jsdoc.tags, (doc : Object) => {
+  return jsdoc.tags.some((doc : Object) => {
     return doc.tag.toLowerCase() === targetTagLower;
   });
 };

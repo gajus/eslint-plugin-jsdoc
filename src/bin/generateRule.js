@@ -15,7 +15,7 @@ import fs from 'fs/promises';
 import {
   resolve,
 } from 'path';
-import _ from 'lodash';
+import camelCase from 'camelcase';
 import open from 'open-editor';
 
 // Todo: Would ideally have prompts, e.g., to ask for whether type was problem/layout, etc.
@@ -77,7 +77,7 @@ export default iterateJsdoc(({
 });
 `;
 
-  const camelCasedRuleName = _.camelCase(ruleName);
+  const camelCasedRuleName = camelCase(ruleName);
 
   const rulePath = `./src/rules/${camelCasedRuleName}.js`;
 

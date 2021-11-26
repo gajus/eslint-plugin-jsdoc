@@ -140,11 +140,11 @@ const OPTIONS_SCHEMA = {
 };
 
 const getOption = (context, baseObject, option, key) => {
-  if (!_.has(context, `options[0][${option}][${key}]`)) {
-    return baseObject.properties[key].default;
+  if (option in context.options[0] && key in context.options[0][option]) {
+    return context.options[0][option][key];
   }
 
-  return context.options[0][option][key];
+  return baseObject.properties[key].default;
 };
 
 const getOptions = (context) => {

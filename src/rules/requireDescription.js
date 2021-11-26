@@ -1,5 +1,12 @@
-import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
+
+const checkDescription = (description) => {
+  return description
+    .trim()
+    .split('\n')
+    .filter(Boolean)
+    .length;
+};
 
 export default iterateJsdoc(({
   jsdoc,
@@ -30,12 +37,6 @@ export default iterateJsdoc(({
     targetTagName = targetTagName.tagName;
   }
 
-  const checkDescription = (description) => {
-    const exampleContent = _.compact(description.trim().split('\n'));
-
-    return exampleContent.length;
-  };
-
   if (descriptionStyle !== 'tag') {
     const {description} = utils.getDescription();
     if (checkDescription(description || '')) {
@@ -57,8 +58,8 @@ export default iterateJsdoc(({
 
   const functionExamples = isBlocked ?
     [] :
-    _.filter(jsdoc.tags, {
-      tag: targetTagName,
+    jsdoc.tags.filter(({tag}) => {
+      return tag === targetTagName;
     });
 
   if (!functionExamples.length) {

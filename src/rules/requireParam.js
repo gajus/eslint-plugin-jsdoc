@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 type T = [string, () => T];
@@ -69,7 +68,7 @@ export default iterateJsdoc(({
 
   const paramIndex = {};
   const hasParamIndex = (cur) => {
-    return _.has(paramIndex, utils.dropPathSegmentQuotes(String(cur)));
+    return utils.dropPathSegmentQuotes(String(cur)) in paramIndex;
   };
 
   const getParamIndex = (cur) => {
