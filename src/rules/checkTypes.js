@@ -210,17 +210,17 @@ export default iterateJsdoc(({
     if (invalidTypes.length) {
       const fixedType = stringify(typeAst);
 
-      for (const [badType, preferredType = '', message] of invalidTypes) {
-        const fix = (fixer) => {
-          return fixer.replaceText(
-            jsdocNode,
-            sourceCode.getText(jsdocNode).replace(
-              `{${jsdocTag.type}}`,
-              `{${fixedType}}`,
-            ),
-          );
-        };
+      const fix = (fixer) => {
+        return fixer.replaceText(
+          jsdocNode,
+          sourceCode.getText(jsdocNode).replace(
+            `{${jsdocTag.type}}`,
+            `{${fixedType}}`,
+          ),
+        );
+      };
 
+      for (const [badType, preferredType = '', message] of invalidTypes) {
         const tagValue = jsdocTag.name ? ` "${jsdocTag.name}"` : '';
         if (exemptTagContexts.some(({tag, types}) => {
           return tag === tagName &&
