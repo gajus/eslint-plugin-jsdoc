@@ -4,7 +4,6 @@ import {
 import {
   traverse, parse as parseType, tryParse as tryParseType,
 } from 'jsdoc-type-pratt-parser';
-import _ from 'lodash';
 import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc';
@@ -62,7 +61,7 @@ export default iterateJsdoc(({
       });
   }
 
-  const typedefDeclarations = _(context.getAllComments())
+  const typedefDeclarations = context.getAllComments()
     .filter((comment) => {
       return comment.value.startsWith('*');
     })
@@ -76,8 +75,7 @@ export default iterateJsdoc(({
     })
     .map((tag) => {
       return tag.name;
-    })
-    .value();
+    });
 
   const ancestorNodes = [];
   let currentScope = scopeManager.acquire(node);
@@ -90,7 +88,7 @@ export default iterateJsdoc(({
   // `currentScope` may be `null` or `Program`, so in such a case,
   //  we look to present tags instead
   let templateTags = ancestorNodes.length ?
-    _(ancestorNodes).flatMap((ancestorNode) => {
+    ancestorNodes.flatMap((ancestorNode) => {
       const commentNode = getJSDocComment(sourceCode, ancestorNode, settings);
       if (!commentNode) {
         return [];
@@ -101,8 +99,7 @@ export default iterateJsdoc(({
       return jsdocUtils.filterTags(jsdoc.tags, (tag) => {
         return tag.tag === 'template';
       });
-    })
-      .value() :
+    }) :
     utils.getPresentTags('template');
 
   const classJsdoc = utils.getClassJsdoc();
