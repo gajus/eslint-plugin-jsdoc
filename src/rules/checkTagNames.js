@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import escapeStringRegexp from 'escape-string-regexp';
 import iterateJsdoc from '../iterateJsdoc';
 
 // https://babeljs.io/docs/en/babel-plugin-transform-react-jsx/
@@ -79,7 +79,7 @@ export default iterateJsdoc(({
       if (preferredTagName !== tagName) {
         report(message, (fixer) => {
           const replacement = sourceCode.getText(jsdocNode).replace(
-            new RegExp(`@${_.escapeRegExp(tagName)}\\b`, 'u'),
+            new RegExp(`@${escapeStringRegexp(tagName)}\\b`, 'u'),
             `@${preferredTagName}`,
           );
 

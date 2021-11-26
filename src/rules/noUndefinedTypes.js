@@ -115,7 +115,7 @@ export default iterateJsdoc(({
     );
   }
 
-  const closureGenericTypes = _.flatMap(templateTags, (tag) => {
+  const closureGenericTypes = templateTags.flatMap((tag) => {
     return utils.parseClosureTemplateTag(tag);
   });
 
@@ -130,9 +130,9 @@ export default iterateJsdoc(({
     // If the file is a module, concat the variables from the module scope.
     .concat(
       cjsOrESMScope ?
-        _.flatMap(globalScope.childScopes, ({variables}) => {
+        globalScope.childScopes.flatMap(({variables}) => {
           return variables;
-        }, []).map(({name}) => {
+        }).map(({name}) => {
           return name;
         }) : [],
     )

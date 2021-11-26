@@ -1,7 +1,8 @@
+import camelCase from 'camelcase';
 import {
   RuleTester,
 } from 'eslint';
-import _ from 'lodash';
+import defaultsDeep from 'lodash.defaultsdeep';
 import config from '../../src';
 import ruleNames from './ruleNames.json';
 
@@ -21,9 +22,9 @@ const main = async () => {
       ecmaVersion: 6,
     };
 
-    const assertions = (await import(`./assertions/${_.camelCase(ruleName)}`)).default;
+    const assertions = (await import(`./assertions/${camelCase(ruleName)}`)).default;
 
-    if (!_.has(rule, 'meta.schema') && (
+    if (!('meta' in rule && 'schema' in rule.meta) && (
       assertions.invalid.some((item) => {
         return item.options;
       }) ||
@@ -40,7 +41,7 @@ const main = async () => {
     let count = 0;
     assertions.invalid = assertions.invalid.map((assertion) => {
       Reflect.deleteProperty(assertion, 'ignoreReadme');
-      assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
+      assertion.parserOptions = defaultsDeep(assertion.parserOptions, parserOptions);
       for (const error of assertion.errors) {
         if (!('line' in error)) {
           count++;
@@ -76,7 +77,7 @@ const main = async () => {
         throw new Error(`Valid assertions for rule ${ruleName} should not have an \`output\` property.`);
       }
 
-      assertion.parserOptions = _.defaultsDeep(assertion.parserOptions, parserOptions);
+      assertion.parserOptions = defaultsDeep(assertion.parserOptions, parserOptions);
 
       return assertion;
     });

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
@@ -17,8 +16,8 @@ export default iterateJsdoc(({
 
   const targetTagName = 'example';
 
-  const functionExamples = _.filter(jsdoc.tags, {
-    tag: targetTagName,
+  const functionExamples = jsdoc.tags.filter(({tag}) => {
+    return tag === targetTagName;
   });
 
   if (!functionExamples.length) {
@@ -36,7 +35,10 @@ export default iterateJsdoc(({
   }
 
   for (const example of functionExamples) {
-    const exampleContent = _.compact(`${example.name} ${utils.getTagDescription(example)}`.trim().split('\n'));
+    const exampleContent = `${example.name} ${utils.getTagDescription(example)}`
+      .trim()
+      .split('\n')
+      .filter(Boolean);
 
     if (!exampleContent.length) {
       report(`Missing JSDoc @${targetTagName} description.`, null, example);

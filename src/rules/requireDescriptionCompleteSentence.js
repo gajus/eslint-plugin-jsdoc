@@ -1,3 +1,4 @@
+import escapeStringRegexp from 'escape-string-regexp';
 import _ from 'lodash';
 import {
   RegExtras,
@@ -89,7 +90,7 @@ const validateDescription = (
       if (!/[.:?!]$/u.test(paragraph)) {
         const line = paragraph.split('\n').pop();
 
-        text = text.replace(new RegExp(`${_.escapeRegExp(line)}$`, 'mu'), `${line}.`);
+        text = text.replace(new RegExp(`${escapeStringRegexp(line)}$`, 'mu'), `${line}.`);
       }
 
       for (const sentence of sentences.filter((sentence_) => {
@@ -99,13 +100,13 @@ const validateDescription = (
         const beginning = sentence.split('\n')[0];
 
         if (tag.tag) {
-          const reg = new RegExp(`(@${_.escapeRegExp(tag.tag)}.*)${_.escapeRegExp(beginning)}`, 'u');
+          const reg = new RegExp(`(@${escapeStringRegexp(tag.tag)}.*)${escapeStringRegexp(beginning)}`, 'u');
 
           text = text.replace(reg, (_$0, $1) => {
             return $1 + capitalize(beginning);
           });
         } else {
-          text = text.replace(new RegExp('((?:[.!?]|\\*|\\})\\s*)' + _.escapeRegExp(beginning), 'u'), '$1' + capitalize(beginning));
+          text = text.replace(new RegExp('((?:[.!?]|\\*|\\})\\s*)' + escapeStringRegexp(beginning), 'u'), '$1' + capitalize(beginning));
         }
       }
 
@@ -164,7 +165,7 @@ export default iterateJsdoc(({
 
   const abbreviationsRegex = abbreviations.length ?
     new RegExp('\\b' + abbreviations.map((abbreviation) => {
-      return _.escapeRegExp(abbreviation.replace(/\.$/ug, '') + '.');
+      return escapeStringRegexp(abbreviation.replace(/\.$/ug, '') + '.');
     }).join('|') + '(?:$|\\s)', 'gu') :
     '';
 
@@ -192,7 +193,7 @@ export default iterateJsdoc(({
   });
 
   tagsWithNames.some((tag) => {
-    const desc = _.trimStart(utils.getTagDescription(tag), '- ').trimEnd();
+    const desc = utils.getTagDescription(tag).replace(/^- /u, '').trimEnd();
 
     return validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd);
   });

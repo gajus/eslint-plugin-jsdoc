@@ -16,7 +16,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  if (_.has(context.options, 0)) {
+  if (0 in context.options) {
     always = context.options[0] === 'always';
   } else {
     always = true;

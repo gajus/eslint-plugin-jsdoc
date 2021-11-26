@@ -3,9 +3,9 @@
  */
 import fs from 'fs';
 import path from 'path';
+import decamelize from 'decamelize';
 import Gitdown from 'gitdown';
 import glob from 'glob';
-import _ from 'lodash';
 
 const trimCode = (code) => {
   let lines = code.replace(/^\n/u, '').trimEnd()
@@ -59,7 +59,7 @@ const getAssertions = () => {
     // eslint-disable-next-line import/no-dynamic-require
     const codes = require(filePath);
 
-    const ruleName = _.kebabCase(assertionNames[idx]);
+    const ruleName = decamelize(assertionNames[idx], {separator: '-'});
 
     return {
       invalid: codes.invalid.filter(({ignoreReadme}) => {
@@ -75,7 +75,9 @@ const getAssertions = () => {
     };
   });
 
-  return _.zipObject(assertionNames, assertionCodes);
+  return Object.fromEntries(assertionNames.map((assertionName, index) => {
+    return [assertionName, assertionCodes[index]];
+  }));
 };
 
 const getSomeBranch = () => {

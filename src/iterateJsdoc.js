@@ -10,7 +10,6 @@ import {
   stringify as commentStringify,
   util,
 } from 'comment-parser';
-import _ from 'lodash';
 import jsdocUtils from './jsdocUtils';
 
 const {
@@ -635,8 +634,8 @@ const getUtils = (
       return;
     }
 
-    const matchingJsdocTags = _.filter(jsdoc.tags, {
-      tag: targetTagName,
+    const matchingJsdocTags = jsdoc.tags.filter(({tag}) => {
+      return tag === targetTagName;
     });
 
     for (const matchingJsdocTag of matchingJsdocTags) {
@@ -789,11 +788,16 @@ const iterate = (
 
   if (
     !ruleConfig.checkPrivate && settings.ignorePrivate &&
-    (utils.hasTag('private') || _.filter(jsdoc.tags, {
-      tag: 'access',
-    }).some(({description}) => {
-      return description === 'private';
-    }))
+    (
+      utils.hasTag('private') ||
+      jsdoc.tags
+        .filter(({tag}) => {
+          return tag === 'access';
+        })
+        .some(({description}) => {
+          return description === 'private';
+        })
+    )
   ) {
     return;
   }
