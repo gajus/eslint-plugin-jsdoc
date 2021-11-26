@@ -1,5 +1,4 @@
 import escapeStringRegexp from 'escape-string-regexp';
-import _ from 'lodash';
 import {
   RegExtras,
 } from 'regextras/dist/main-umd';
