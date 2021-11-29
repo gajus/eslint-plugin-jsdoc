@@ -8,12 +8,17 @@ node_js:
 install:
   - echo "Avoid Travis's npm auto-install"
 before_script: >
-  npm install --legacy-peer-deps --no-save "eslint@${ESLINT}"
+  if [ ${ESLINT} = "7" ]; then
+    npm install --no-save "eslint@${ESLINT}" eslint-config-canonical@24.4.4
+  else
+    npm install --no-save "eslint@${ESLINT}"
+    npm run lint
+  fi
+
 notifications:
   email: false
 script:
   - npm run test
-  - npm run lint
   - npm run build
 env:
   jobs:
