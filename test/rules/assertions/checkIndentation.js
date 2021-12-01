@@ -311,5 +311,21 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+       * @example \`\`\`
+       * @MyDecorator({
+       *   myOptions: 42
+       * })
+       * export class MyClass {}
+       * \`\`\`
+       */
+      function MyDecorator(options: { myOptions: number }) {
+        return (Base: Function) => {};
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
