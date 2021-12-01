@@ -1,7 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc';
 
 const maskExcludedContent = (str, excludeTags) => {
-  const regContent = new RegExp(`([ \\t]+\\*)[ \\t]@(?:${excludeTags.join('|')})(?=[ \\n])([\\w|\\W]*?\\n)(?=[ \\t]*\\*(?:[ \\t]*@|\\/))`, 'gu');
+  const regContent = new RegExp(`([ \\t]+\\*)[ \\t]@(?:${excludeTags.join('|')})(?=[ \\n])([\\w|\\W]*?\\n)(?=[ \\t]*\\*(?:[ \\t]*@\\w+\\s|\\/))`, 'gu');
 
   return str.replace(regContent, (_match, margin, code) => {
     return (margin + '\n').repeat(code.match(/\n/gu).length);
