@@ -595,10 +595,10 @@ function quux (foo) {
         },
       }],
       output: `
-        export default /**
+        /**
          *
          */
-        () => {}
+        export default () => {}
       `,
       parserOptions: {
         sourceType: 'module',
@@ -626,10 +626,10 @@ function quux (foo) {
         },
       }],
       output: `
-      export default (/**
+      /**
        *
        */
-      function () {})
+      export default (function () {})
       `,
       parserOptions: {
         sourceType: 'module',
@@ -3277,6 +3277,37 @@ function quux (foo) {
       }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        export default (arg) => arg;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [{
+        publicOnly: true,
+        require: {
+          ArrowFunctionExpression: true,
+          ClassDeclaration: true,
+          ClassExpression: true,
+          FunctionDeclaration: true,
+          FunctionExpression: true,
+          MethodDefinition: true,
+        },
+      }],
+      output: `
+        /**
+         *
+         */
+        export default (arg) => arg;
+      `,
       parserOptions: {
         sourceType: 'module',
       },
