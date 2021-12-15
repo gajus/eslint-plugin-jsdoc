@@ -411,12 +411,16 @@ const findNode = function (node, block, cache) {
 };
 
 const exportTypes = new Set(['ExportNamedDeclaration', 'ExportDefaultDeclaration']);
+const ignorableNestedTypes = new Set([
+  'FunctionDeclaration', 'ArrowFunctionExpression', 'FunctionExpression',
+]);
 const getExportAncestor = function (nde) {
   let node = nde;
   let idx = 0;
+  const ignorableIfDeep = ignorableNestedTypes.has(nde?.type);
   while (node) {
     // Ignore functions nested more deeply than say `export default function () {}`
-    if (idx >= 2 && nde.type === 'FunctionDeclaration') {
+    if (idx >= 2 && ignorableIfDeep) {
       break;
     }
 

@@ -12996,6 +12996,16 @@ export function outer() {
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
+
+export const outer = () => {
+    const inner = () => {
+        console.log('foo');
+    };
+
+    inner();
+};
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:
