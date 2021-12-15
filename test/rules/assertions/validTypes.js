@@ -736,6 +736,72 @@ export default {
     {
       code: `
           /**
+           * @param {{ foo: string }} bar
+           */
+          function quux() {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {{ "foo": string }} bar
+           */
+          function quux() {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {{ readonly "foo": string }} bar
+           */
+          function quux() {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @param readonly
+           */
+          function quux() {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {boolean} readonly
+           */
+          function quux() {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {object} params
+           * @param {boolean} params.readonly
+           */
+          function quux() {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            * @param {string} foo
            */
           function quux() {
