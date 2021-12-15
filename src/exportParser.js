@@ -413,12 +413,19 @@ const findNode = function (node, block, cache) {
 const exportTypes = new Set(['ExportNamedDeclaration', 'ExportDefaultDeclaration']);
 const getExportAncestor = function (nde) {
   let node = nde;
+  let idx = 0;
   while (node) {
+    // Ignore functions nested more deeply than say `export default function () {}`
+    if (idx >= 2 && nde.type === 'FunctionDeclaration') {
+      break;
+    }
+
     if (exportTypes.has(node.type)) {
       return node;
     }
 
     node = node.parent;
+    idx++;
   }
 
   return false;

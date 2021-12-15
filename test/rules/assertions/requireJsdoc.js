@@ -3312,6 +3312,49 @@ function quux (foo) {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      export function outer() {
+          function inner() {
+              console.log('foo');
+          }
+
+          inner();
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [{
+        publicOnly: true,
+        require: {
+          ArrowFunctionExpression: true,
+          ClassDeclaration: true,
+          ClassExpression: true,
+          FunctionDeclaration: true,
+          FunctionExpression: true,
+          MethodDefinition: true,
+        },
+      }],
+      output: `
+      /**
+       *
+       */
+      export function outer() {
+          function inner() {
+              console.log('foo');
+          }
+
+          inner();
+      }
+      `,
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [{
     code: `
