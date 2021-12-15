@@ -58,7 +58,7 @@ describe('iterateJsdoc', () => {
   });
   describe('parseComment', () => {
     context('Parses comments', () => {
-      it('', () => {
+      it('parses a comment', () => {
         const tagSource = [
           {
             number: 1,
