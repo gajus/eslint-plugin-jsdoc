@@ -721,6 +721,66 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @suppress
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tag @suppress must have a type in "closure" mode.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @suppress {visibility} sth
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@suppress should not have a name in "closure" mode.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @suppress {visibility|blah}
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in supresss type: blah',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -1275,6 +1335,20 @@ export default {
       settings: {
         jsdoc: {
           mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @suppress {visibility|underscore}
+       */
+      function quux() {
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
         },
       },
     },

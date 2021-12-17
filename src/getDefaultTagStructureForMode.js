@@ -396,6 +396,11 @@ const getDefaultTagStructureForMode = (mode) => {
       ['typeAllowed', isClosureOrPermissive],
     ])],
 
+    ['suppress', new Map([
+      ['nameContents', !isClosure],
+      ['typeRequired', isClosure],
+    ])],
+
     ['template', new Map([
       ['nameContents', isJsdoc ? 'text' : 'namepath-referencing'],
 

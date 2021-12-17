@@ -1,9 +1,66 @@
 import {
-  tryParse, parse,
+  tryParse, parse, traverse,
 } from 'jsdoc-type-pratt-parser';
 import iterateJsdoc from '../iterateJsdoc';
 
 const asExpression = /as\s+/u;
+
+const suppressTypes = new Set([
+  // https://github.com/google/closure-compiler/wiki/@suppress-annotations
+  // https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/parsing/ParserConfig.properties#L154
+  'accessControls',
+  'checkDebuggerStatement',
+  'checkPrototypalTypes',
+  'checkRegExp',
+  'checkTypes',
+  'checkVars',
+  'closureDepMethodUsageChecks',
+  'const',
+  'constantProperty',
+  'deprecated',
+  'duplicate',
+  'es5Strict',
+  'externsValidation',
+  'extraProvide',
+  'extraRequire',
+  'globalThis',
+  'invalidCasts',
+  'lateProvide',
+  'legacyGoogScopeRequire',
+  'lintChecks',
+  'messageConventions',
+  'misplacedTypeAnnotation',
+  'missingOverride',
+  'missingPolyfill',
+  'missingProperties',
+  'missingProvide',
+  'missingRequire',
+  'missingSourcesWarnings',
+  'moduleLoad',
+  'nonStandardJsDocs',
+  'partialAlias',
+  'polymer',
+  'reportUnknownTypes',
+  'strictMissingProperties',
+  'strictModuleDepCheck',
+  'strictPrimitiveOperators',
+  'suspiciousCode',
+
+  // Not documented in enum
+  'switch',
+  'transitionalSuspiciousCodeWarnings',
+  'undefinedNames',
+  'undefinedVars',
+  'underscore',
+  'unknownDefines',
+  'untranspilableFeatures',
+  'unusedLocalVariables',
+  'unusedPrivateMembers',
+  'useOfGoogProvide',
+  'uselessCode',
+  'visibility',
+  'with',
+]);
 
 const tryParsePathIgnoreError = (path) => {
   try {
@@ -109,6 +166,25 @@ export default iterateJsdoc(({
       }
 
       continue;
+    }
+
+    if (tag.tag === 'suppress' && mode === 'closure') {
+      let parsedTypes;
+
+      try {
+        parsedTypes = tryParse(tag.type);
+      } catch {
+        // Ignore
+      }
+
+      if (parsedTypes) {
+        traverse(parsedTypes, (node) => {
+          const {value: type} = node;
+          if (type !== undefined && !suppressTypes.has(type)) {
+            report(`Syntax error in supresss type: ${type}`, null, tag);
+          }
+        });
+      }
     }
 
     const otherModeMaps = ['jsdoc', 'typescript', 'closure', 'permissive'].filter(
