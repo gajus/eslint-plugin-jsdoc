@@ -11,8 +11,8 @@ the format expected by [`eslint-plugin-query`](https://github.com/brettz9/eslint
 Unlike those rules, this is specific to finding comments attached to
 structures, (whether or not you add a specific `comment` condition).
 
-Note that if your parser supports comment AST (as [jsdoc-eslint-parser/](https://github.com/brettz9/jsdoc-eslint-parser/) is designed to do), you can just use ESLint's
-rule.
+Note that if your parser supports comment AST (as [jsdoc-eslint-parser](https://github.com/brettz9/jsdoc-eslint-parser)
+is designed to do), you can just use ESLint's rule.
 
 #### Options
 
