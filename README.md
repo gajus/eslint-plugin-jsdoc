@@ -9404,6 +9404,14 @@ function foo (bar) {
 };
 // Settings: {"jsdoc":{"mode":"closure"}}
 // Message: The type 'TEMPLATE_TYPE' is undefined.
+
+/**
+ * @suppress {visibility}
+ */
+function foo () {
+}
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: The type 'visibility' is undefined.
 ````
 
 The following patterns are not considered problems:
@@ -9757,6 +9765,13 @@ class Test {
 function quux(foo) {
 
 }
+
+/**
+ * @suppress {visibility}
+ */
+function foo () {
+}
+// Settings: {"jsdoc":{"mode":"closure"}}
 ````
 
 

@@ -140,7 +140,7 @@ export default iterateJsdoc(({
     .concat(settings.mode === 'jsdoc' ? [] : closureGenericTypes));
 
   const jsdocTagsWithPossibleType = utils.filterTags(({tag}) => {
-    return utils.tagMightHaveTypePosition(tag);
+    return utils.tagMightHaveTypePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
   });
 
   for (const tag of jsdocTagsWithPossibleType) {

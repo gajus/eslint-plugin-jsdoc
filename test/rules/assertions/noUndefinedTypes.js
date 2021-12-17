@@ -426,6 +426,26 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @suppress {visibility}
+       */
+      function foo () {
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The type \'visibility\' is undefined.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -1069,6 +1089,20 @@ export default {
       }
       `,
       ignoreReadme: true,
+    },
+    {
+      code: `
+      /**
+       * @suppress {visibility}
+       */
+      function foo () {
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
     },
   ],
 };
