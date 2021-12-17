@@ -20561,6 +20561,27 @@ parseArray = function(parser) {
 };
 // Settings: {"jsdoc":{"mode":"closure"}}
 // Message: Syntax error in namepath: R<~
+
+/**
+ * @suppress
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Tag @suppress must have a type in "closure" mode.
+
+/**
+ * @suppress {visibility} sth
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: @suppress should not have a name in "closure" mode.
+
+/**
+ * @suppress {visibility|blah}
+ */
+function quux () {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Syntax error in supresss type: blah
 ````
 
 The following patterns are not considered problems:
@@ -20876,6 +20897,13 @@ type ComplicatedType<T, U, V, W, X> = never
  */
 class quux {}
 // Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @suppress {visibility|underscore}
+ */
+function quux() {
+}
+// Settings: {"jsdoc":{"mode":"closure"}}
 ````
 
 
