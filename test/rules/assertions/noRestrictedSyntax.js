@@ -111,6 +111,36 @@ export default {
       errors: [
         {
           line: 2,
+          message: 'The bar one: FunctionDeclaration.',
+        },
+      ],
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+            context: 'FunctionDeclaration',
+            message: 'The bar one: {{context}}.',
+          },
+          {
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+            context: 'FunctionDeclaration',
+            message: 'The foo one: {{context}}.',
+          },
+        ],
+      }],
+    },
+    {
+      code: `
+      /**
+       * @implements {Bar|Foo}
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          line: 2,
           message: 'Rule `no-restricted-syntax` is missing a `context` option.',
         },
       ],
