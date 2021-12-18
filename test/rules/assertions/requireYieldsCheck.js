@@ -443,6 +443,15 @@ export default {
     {
       code: `
           /**
+           * @yields {never} Foo.
+           */
+          function * quux () {
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            * @yields {void} Foo.
            */
           function * quux () {
@@ -713,6 +722,19 @@ export default {
            */
           function * quux (foo) {
             const a = yield 5;
+          }
+      `,
+      options: [{
+        next: true,
+      }],
+    },
+    {
+      code: `
+          /**
+           * @next {never}
+           */
+          function * quux (foo) {
+
           }
       `,
       options: [{

@@ -71,6 +71,10 @@ export default iterateJsdoc(({
   );
   if (preferredYieldTagName) {
     const shouldReportYields = () => {
+      if (yieldTag.type.trim() === 'never') {
+        return false;
+      }
+
       if (checkGeneratorsOnly && !utils.isGenerator()) {
         return true;
       }
@@ -90,6 +94,10 @@ export default iterateJsdoc(({
     );
     if (preferredNextTagName) {
       const shouldReportNext = () => {
+        if (nextTag.type.trim() === 'never') {
+          return false;
+        }
+
         if (checkGeneratorsOnly && !utils.isGenerator()) {
           return true;
         }

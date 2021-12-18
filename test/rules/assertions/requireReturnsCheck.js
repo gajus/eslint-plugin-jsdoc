@@ -522,6 +522,25 @@ export default {
     {
       code: `
           /**
+           * @returns {never} Foo.
+           */
+          function quux () {
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @returns {never} Foo.
+           */
+          function quux () {
+            return undefined;
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            * @returns {void} Foo.
            */
           function quux () {

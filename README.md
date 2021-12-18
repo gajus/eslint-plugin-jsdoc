@@ -16638,6 +16638,19 @@ function quux () {
 }
 
 /**
+ * @returns {never} Foo.
+ */
+function quux () {
+}
+
+/**
+ * @returns {never} Foo.
+ */
+function quux () {
+  return undefined;
+}
+
+/**
  * @returns {void} Foo.
  */
 function quux () {
@@ -19584,6 +19597,12 @@ function * quux () {
 }
 
 /**
+ * @yields {never} Foo.
+ */
+function * quux () {
+}
+
+/**
  * @yields {void} Foo.
  */
 function * quux () {
@@ -19787,6 +19806,14 @@ function * quux (foo) {
  */
 function * quux (foo) {
   const a = yield 5;
+}
+// "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
+
+/**
+ * @next {never}
+ */
+function * quux (foo) {
+
 }
 // "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
 ````

@@ -66,10 +66,19 @@ export default iterateJsdoc(({
     return;
   }
 
+  const [tag] = tags;
+
   // In case a return value is declared in JSDoc, we also expect one in the code.
-  if ((reportMissingReturnForUndefinedTypes || utils.hasDefinedTypeTag(tags[0])) && !utils.hasValueOrExecutorHasNonEmptyResolveValue(
-    exemptAsync,
-  ) && (!exemptGenerators || !node.generator)) {
+  if (
+    tag.type.trim() !== 'never' &&
+    (
+      reportMissingReturnForUndefinedTypes ||
+      utils.hasDefinedTypeTag(tag)
+    ) &&
+    !utils.hasValueOrExecutorHasNonEmptyResolveValue(
+      exemptAsync,
+    ) && (!exemptGenerators || !node.generator)
+  ) {
     report(`JSDoc @${tagName} declaration present but return expression not available in function.`);
   }
 }, {
