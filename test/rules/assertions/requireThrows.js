@@ -334,6 +334,22 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @throws {never}
+           */
+          function quux (foo) {
+            throw new Error('err')
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @throws declaration set to "never" but throw value found.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -355,6 +371,16 @@ export default {
             try {
               throw new Error('err')
             } catch(e) {}
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @throws {object}
+           */
+          function quux (foo) {
+            throw new Error('err')
           }
       `,
     },
@@ -429,6 +455,15 @@ export default {
       parserOptions: {
         ecmaVersion: 8,
       },
+    },
+    {
+      code: `
+        /**
+         * @throws {never}
+         */
+        function quux (foo) {
+        }
+      `,
     },
   ],
 };

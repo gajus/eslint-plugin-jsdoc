@@ -72,6 +72,10 @@ export default iterateJsdoc(({
   if (preferredYieldTagName) {
     const shouldReportYields = () => {
       if (yieldTag.type.trim() === 'never') {
+        if (utils.hasYieldValue()) {
+          report(`JSDoc @${preferredYieldTagName} declaration set with "never" but yield expression is present in function.`);
+        }
+
         return false;
       }
 
@@ -95,6 +99,10 @@ export default iterateJsdoc(({
     if (preferredNextTagName) {
       const shouldReportNext = () => {
         if (nextTag.type.trim() === 'never') {
+          if (utils.hasYieldReturnValue()) {
+            report(`JSDoc @${preferredNextTagName} declaration set with "never" but yield expression with return value is present in function.`);
+          }
+
           return false;
         }
 

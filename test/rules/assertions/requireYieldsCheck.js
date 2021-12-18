@@ -297,6 +297,37 @@ export default {
         ecmaVersion: 2_018,
       },
     },
+    {
+      code: `
+          /**
+           * @yields {never} Foo.
+           */
+          function * quux () {
+            yield 5;
+          }
+      `,
+      errors: [{
+        line: 2,
+        message: 'JSDoc @yields declaration set with "never" but yield expression is present in function.',
+      }],
+    },
+    {
+      code: `
+          /**
+           * @next {never}
+           */
+          function * quux (foo) {
+            const a = yield;
+          }
+      `,
+      errors: [{
+        line: 2,
+        message: 'JSDoc @next declaration set with "never" but yield expression with return value is present in function.',
+      }],
+      options: [{
+        next: true,
+      }],
+    },
   ],
   valid: [
     {

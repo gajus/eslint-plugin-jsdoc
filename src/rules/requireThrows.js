@@ -47,6 +47,10 @@ export default iterateJsdoc(({
 
   const shouldReport = () => {
     if (!missingThrowsTag) {
+      if (tag.type.trim() === 'never' && iteratingFunction && utils.hasThrowValue()) {
+        report(`JSDoc @${tagName} declaration set to "never" but throw value found.`);
+      }
+
       return false;
     }
 
