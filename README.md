@@ -16507,6 +16507,22 @@ async function foo() {
 function quux () {}
 // "jsdoc/require-returns-check": ["error"|"warn", {"reportMissingReturnForUndefinedTypes":true}]
 // Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {never} Foo.
+ */
+function quux () {
+  return undefined;
+}
+// Message: JSDoc @returns declaration set with "never" but return expression is present in function.
+
+/**
+ * @returns {never}
+ */
+function quux (foo) {
+  return foo;
+}
+// Message: JSDoc @returns declaration set with "never" but return expression is present in function.
 ````
 
 The following patterns are not considered problems:
@@ -16641,13 +16657,6 @@ function quux () {
  * @returns {never} Foo.
  */
 function quux () {
-}
-
-/**
- * @returns {never} Foo.
- */
-function quux () {
-  return undefined;
 }
 
 /**
@@ -18445,6 +18454,14 @@ const directThrowAfterArrow = (b) => {
   return a;
 };
 // Message: Missing JSDoc @throws declaration.
+
+/**
+ * @throws {never}
+ */
+function quux (foo) {
+  throw new Error('err')
+}
+// Message: JSDoc @throws declaration set to "never" but throw value found.
 ````
 
 The following patterns are not considered problems:
@@ -18464,6 +18481,13 @@ function quux (foo) {
   try {
     throw new Error('err')
   } catch(e) {}
+}
+
+/**
+ * @throws {object}
+ */
+function quux (foo) {
+  throw new Error('err')
 }
 
 /**
@@ -18508,6 +18532,12 @@ const nested = () => () => {throw new Error('oops');};
  */
 async function foo() {
   throw Error("bar");
+}
+
+/**
+ * @throws {never}
+ */
+function quux (foo) {
 }
 ````
 
@@ -19493,6 +19523,23 @@ async function * quux() {}
  */
 const quux = async function * () {}
 // Message: JSDoc @yields declaration present but yield expression not available in function.
+
+/**
+ * @yields {never} Foo.
+ */
+function * quux () {
+  yield 5;
+}
+// Message: JSDoc @yields declaration set with "never" but yield expression is present in function.
+
+/**
+ * @next {never}
+ */
+function * quux (foo) {
+  const a = yield;
+}
+// "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
+// Message: JSDoc @next declaration set with "never" but yield expression with return value is present in function.
 ````
 
 The following patterns are not considered problems:

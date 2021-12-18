@@ -68,9 +68,17 @@ export default iterateJsdoc(({
 
   const [tag] = tags;
 
+  const returnNever = tag.type.trim() === 'never';
+
+  if (returnNever && utils.hasValueOrExecutorHasNonEmptyResolveValue(false)) {
+    report(`JSDoc @${tagName} declaration set with "never" but return expression is present in function.`);
+
+    return;
+  }
+
   // In case a return value is declared in JSDoc, we also expect one in the code.
   if (
-    tag.type.trim() !== 'never' &&
+    !returnNever &&
     (
       reportMissingReturnForUndefinedTypes ||
       utils.hasDefinedTypeTag(tag)

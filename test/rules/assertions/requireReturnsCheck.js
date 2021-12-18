@@ -325,6 +325,38 @@ export default {
         reportMissingReturnForUndefinedTypes: true,
       }],
     },
+    {
+      code: `
+          /**
+           * @returns {never} Foo.
+           */
+          function quux () {
+            return undefined;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration set with "never" but return expression is present in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {never}
+           */
+          function quux (foo) {
+            return foo;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration set with "never" but return expression is present in function.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -525,16 +557,6 @@ export default {
            * @returns {never} Foo.
            */
           function quux () {
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @returns {never} Foo.
-           */
-          function quux () {
-            return undefined;
           }
       `,
     },
