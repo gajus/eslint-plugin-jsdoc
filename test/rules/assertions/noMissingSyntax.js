@@ -395,5 +395,27 @@ export default {
         ],
       }],
     },
+    {
+      code: `
+      /**
+       * @implements {Bar|Foo}
+       */
+      function quux () {
+
+      }
+      `,
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+            context: 'any',
+          },
+          {
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(2))',
+            context: 'FunctionDeclaration',
+          },
+        ],
+      }],
+    },
   ],
 };
