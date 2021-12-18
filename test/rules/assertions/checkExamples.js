@@ -364,8 +364,8 @@ export default {
     {
       code: `
           /**
-           * @example const i = 5;
-           * quux2()
+           * @example const j = 5;
+           * quux2();
            */
           function quux2 () {
 
@@ -374,11 +374,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).',
-        },
-        {
-          line: 4,
-          message: '@example error (semi): Missing semicolon.',
+          message: '@example warning (id-length): Identifier name \'j\' is too short (< 2).',
         },
       ],
       options: [
@@ -390,8 +386,8 @@ export default {
     {
       code: `
           /**
-           * @example const i = 5;
-           * quux2()
+           * @example const k = 5;
+           * quux2();
            */
           function quux2 () {
 
@@ -400,11 +396,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).',
-        },
-        {
-          line: 4,
-          message: '@example error (semi): Missing semicolon.',
+          message: '@example warning (id-length): Identifier name \'k\' is too short (< 2).',
         },
       ],
       options: [
@@ -417,8 +409,8 @@ export default {
     {
       code: `
           /**
-           * @example const i = 5;
-           * quux2()
+           * @example const m = 5;
+           * quux2();
            */
           function quux2 () {
 
@@ -427,11 +419,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@example warning (id-length): Identifier name \'i\' is too short (< 2).',
-        },
-        {
-          line: 4,
-          message: '@example error (semi): Missing semicolon.',
+          message: '@example warning (id-length): Identifier name \'m\' is too short (< 2).',
         },
       ],
       filename: 'test/rules/data/jsdocUtils.js',
