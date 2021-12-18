@@ -1159,28 +1159,40 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
   const properties = {};
 
   for (const [idx, prop] of contexts.entries()) {
+    let property;
+    let value;
+
     if (typeof prop === 'object') {
       const selInfo = {
         lastIndex: idx,
         selector: prop.context,
       };
       if (prop.comment) {
-        properties[prop.context] = checkJsdoc.bind(
+        property = prop.context;
+        value = checkJsdoc.bind(
           null, {
             ...selInfo,
             comment: prop.comment,
           }, handler.bind(null, prop.comment),
         );
       } else {
-        properties[prop.context] = checkJsdoc.bind(null, selInfo, null);
+        property = prop.context;
+        value = checkJsdoc.bind(null, selInfo, null);
       }
     } else {
       const selInfo = {
         lastIndex: idx,
         selector: prop,
       };
-      properties[prop] = checkJsdoc.bind(null, selInfo, null);
+      property = prop;
+      value = checkJsdoc.bind(null, selInfo, null);
     }
+
+    const old = properties[property];
+    properties[property] = old ? function (...args) {
+      old(...args);
+      value(...args);
+    } : value;
   }
 
   return properties;
