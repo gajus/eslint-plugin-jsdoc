@@ -1,3 +1,4 @@
+import esquery from 'esquery';
 import iterateJsdoc from '../iterateJsdoc';
 
 const setDefaults = (state) => {
@@ -19,12 +20,38 @@ const incrementSelector = (state, selector, comment) => {
 };
 
 export default iterateJsdoc(({
-  info: {selector, comment},
+  context,
+  node,
+  info: {comment},
   state,
 }) => {
+  if (!context.options[0]) {
+    // Handle error later
+    return;
+  }
+
+  const {contexts} = context.options[0];
+
+  const foundContext = contexts.find((cntxt) => {
+    return typeof cntxt === 'string' ?
+      esquery.matches(node, esquery.parse(cntxt)) :
+      (!cntxt.context || cntxt.context === 'any' || esquery.matches(node, esquery.parse(cntxt.context))) &&
+        comment === cntxt.comment;
+  });
+
+  // We are not on the *particular* matching context/comment, so don't assume
+  //   we need reporting
+  if (!foundContext) {
+    return;
+  }
+
+  const contextStr = typeof foundContext === 'object' ?
+    foundContext.context ?? 'any' :
+    foundContext;
+
   setDefaults(state);
 
-  incrementSelector(state, selector, comment);
+  incrementSelector(state, contextStr, comment);
 }, {
   contextSelected: true,
   exit ({

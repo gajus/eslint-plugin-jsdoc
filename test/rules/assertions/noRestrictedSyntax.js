@@ -258,6 +258,38 @@ export default {
         ],
       }],
     },
+    {
+      code: `
+        /**
+         * @enum {String}
+         * Object holding values of some custom enum
+         */
+        const MY_ENUM = Object.freeze({
+          VAL_A: "myvala"
+        } as const);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '@enum not allowed on declarations',
+        },
+      ],
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])',
+            context: 'any',
+            message: 'Access modifier tags must come first',
+          },
+          {
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag="enum"])',
+            context: ':declaration',
+            message: '@enum not allowed on declarations',
+          },
+        ],
+      }],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {

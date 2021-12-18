@@ -1,8 +1,10 @@
+import esquery from 'esquery';
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
+  node,
   context,
-  info: {selector, comment},
+  info: {comment},
   report,
 }) => {
   if (!context.options.length) {
@@ -14,9 +16,9 @@ export default iterateJsdoc(({
   const {contexts} = context.options[0];
 
   const foundContext = contexts.find((cntxt) => {
-    return cntxt === selector ||
-      typeof cntxt === 'object' &&
-      (!cntxt.context || cntxt.context === 'any' || selector === cntxt.context) &&
+    return typeof cntxt === 'string' ?
+      esquery.matches(node, esquery.parse(cntxt)) :
+      (!cntxt.context || cntxt.context === 'any' || esquery.matches(node, esquery.parse(cntxt.context))) &&
         comment === cntxt.comment;
   });
 

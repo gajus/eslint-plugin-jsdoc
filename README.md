@@ -8549,6 +8549,25 @@ function quux () {
 function quux () {
 
 }
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"any"},{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":":function"}]}]
+// Message: Syntax is required: :function with JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))
+
+/**
+ * @private
+ * Object holding values of some custom enum
+ */
+const MY_ENUM = Object.freeze({
+  VAL_A: "myvala"
+} as const);
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=/private|protected/])","context":":declaration","message":"Requiring private/protected tags here"},{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"enum\"])","context":"any","message":"@enum required on declarations"}]}]
+// Message: @enum required on declarations
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration","message":"Problematically missing function syntax: `{{context}}` with `{{comment}}`."}]}]
 // Message: Problematically missing function syntax: `FunctionDeclaration` with `JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))`.
 
@@ -8956,6 +8975,15 @@ function quux () {
 function quux () {
 
 }
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"FunctionDeclaration","message":"The bar one: {{context}}."},{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration","message":"The foo one: {{context}}."}]}]
+// Message: The bar one: FunctionDeclaration.
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
 // Message: Rule `no-restricted-syntax` is missing a `context` option.
 
 /**
@@ -8996,6 +9024,16 @@ function a () {}
  */
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Only allowing names not matching `/^opt_/i`."}]}]
 // Message: Only allowing names not matching `/^opt_/i`.
+
+/**
+ * @enum {String}
+ * Object holding values of some custom enum
+ */
+const MY_ENUM = Object.freeze({
+  VAL_A: "myvala"
+} as const);
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])","context":"any","message":"Access modifier tags must come first"},{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"enum\"])","context":":declaration","message":"@enum not allowed on declarations"}]}]
+// Message: @enum not allowed on declarations
 ````
 
 The following patterns are not considered problems:
