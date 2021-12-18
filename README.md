@@ -1259,33 +1259,33 @@ function quux () {}
 // Message: @example error (semi): Missing semicolon.
 
 /**
- * @example const i = 5;
- * quux2()
+ * @example const j = 5;
+ * quux2();
  */
 function quux2 () {
 
 }
 // "jsdoc/check-examples": ["error"|"warn", {"matchingFileName":"../../jsdocUtils.js"}]
-// Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
+// Message: @example warning (id-length): Identifier name 'j' is too short (< 2).
 
 /**
- * @example const i = 5;
- * quux2()
+ * @example const k = 5;
+ * quux2();
  */
 function quux2 () {
 
 }
 // "jsdoc/check-examples": ["error"|"warn", {"configFile":".eslintrc.json","matchingFileName":"../../jsdocUtils.js"}]
-// Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
+// Message: @example warning (id-length): Identifier name 'k' is too short (< 2).
 
 /**
- * @example const i = 5;
- * quux2()
+ * @example const m = 5;
+ * quux2();
  */
 function quux2 () {
 
 }
-// Message: @example warning (id-length): Identifier name 'i' is too short (< 2).
+// Message: @example warning (id-length): Identifier name 'm' is too short (< 2).
 
 /**
  * @example const i = 5;
