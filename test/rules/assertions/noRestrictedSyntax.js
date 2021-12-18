@@ -314,5 +314,31 @@ export default {
         ],
       }],
     },
+    {
+      code: `
+        /**
+         * @enum {String}
+         * Object holding values of some custom enum
+         */
+        const MY_ENUM = Object.freeze({
+          VAL_A: "myvala"
+        } as const);
+      `,
+      options: [{
+        contexts: [
+          {
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])',
+            context: 'any',
+            message: 'Access modifier tags must come first',
+          },
+          {
+            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag="enum"])',
+            context: ':declaration:not(TSEnumDeclaration):not(:has(ObjectExpression)), :function',
+            message: '@enum is only allowed on potential enum types',
+          },
+        ],
+      }],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };

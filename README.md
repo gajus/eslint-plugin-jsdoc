@@ -9018,6 +9018,15 @@ function a () {}
  * @param cd
  */
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","message":"Only allowing names not matching `/^opt_/i`."}]}]
+
+/**
+ * @enum {String}
+ * Object holding values of some custom enum
+ */
+const MY_ENUM = Object.freeze({
+  VAL_A: "myvala"
+} as const);
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])","context":"any","message":"Access modifier tags must come first"},{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"enum\"])","context":":declaration:not(TSEnumDeclaration):not(:has(ObjectExpression)), :function","message":"@enum is only allowed on potential enum types"}]}]
 ````
 
 

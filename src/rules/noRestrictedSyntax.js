@@ -20,6 +20,12 @@ export default iterateJsdoc(({
         comment === cntxt.comment;
   });
 
+  // We are not on the *particular* matching context/comment, so don't assume
+  //   we need reporting
+  if (!foundContext) {
+    return;
+  }
+
   const contextStr = typeof foundContext === 'object' ?
     foundContext.context ?? 'any' :
     foundContext;
