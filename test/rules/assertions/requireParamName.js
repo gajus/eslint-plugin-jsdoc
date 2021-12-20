@@ -47,9 +47,13 @@ export default {
           message: 'There must be an identifier after @param tag.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -64,9 +68,13 @@ export default {
           message: 'There must be an identifier after @param tag.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -81,9 +89,13 @@ export default {
           message: 'There must be an identifier after @param tag.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -131,7 +143,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },

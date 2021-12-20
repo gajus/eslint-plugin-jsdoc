@@ -51,7 +51,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const tagName = utils.getPreferredTagName({tagName: 'returns'});
+  const tagName = utils.getPreferredTagName({
+    tagName: 'returns',
+  });
   if (!tagName) {
     return;
   }
@@ -65,7 +67,9 @@ export default iterateJsdoc(({
   const iteratingFunction = utils.isIteratingFunction();
 
   // In case the code returns something, we expect a return value in JSDoc.
-  const [tag] = tags;
+  const [
+    tag,
+  ] = tags;
   const missingReturnTag = typeof tag === 'undefined' || tag === null;
 
   const shouldReport = () => {

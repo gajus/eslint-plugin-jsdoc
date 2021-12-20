@@ -1,6 +1,8 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const removeType = ({tokens}) => {
+const removeType = ({
+  tokens,
+}) => {
   tokens.postTag = '';
   tokens.type = '';
 };
@@ -12,7 +14,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const tags = utils.getPresentTags(['param', 'arg', 'argument', 'returns', 'return']);
+  const tags = utils.getPresentTags([
+    'param', 'arg', 'argument', 'returns', 'return',
+  ]);
 
   for (const tag of tags) {
     if (tag.type) {

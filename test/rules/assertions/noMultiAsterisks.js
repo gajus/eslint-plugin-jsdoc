@@ -7,10 +7,12 @@ export default {
        **
        */
       `,
-      errors: [{
-        line: 4,
-        message: 'Should be no multiple asterisks on middle lines.',
-      }],
+      errors: [
+        {
+          line: 4,
+          message: 'Should be no multiple asterisks on middle lines.',
+        },
+      ],
       output: `
       /**
        *
@@ -25,13 +27,17 @@ export default {
        **
        */
       `,
-      errors: [{
-        line: 4,
-        message: 'Should be no multiple asterisks on middle lines.',
-      }],
-      options: [{
-        preventAtMiddleLines: true,
-      }],
+      errors: [
+        {
+          line: 4,
+          message: 'Should be no multiple asterisks on middle lines.',
+        },
+      ],
+      options: [
+        {
+          preventAtMiddleLines: true,
+        },
+      ],
       output: `
       /**
        *
@@ -46,13 +52,17 @@ export default {
        **
        */
       `,
-      errors: [{
-        line: 4,
-        message: 'Should be no multiple asterisks on middle lines.',
-      }],
-      options: [{
-        preventAtEnd: false,
-      }],
+      errors: [
+        {
+          line: 4,
+          message: 'Should be no multiple asterisks on middle lines.',
+        },
+      ],
+      options: [
+        {
+          preventAtEnd: false,
+        },
+      ],
       output: `
       /**
        *
@@ -68,10 +78,12 @@ export default {
        **
        */
       `,
-      errors: [{
-        line: 5,
-        message: 'Should be no multiple asterisks on middle lines.',
-      }],
+      errors: [
+        {
+          line: 5,
+          message: 'Should be no multiple asterisks on middle lines.',
+        },
+      ],
       output: `
       /**
        * With a description
@@ -87,10 +99,12 @@ export default {
        *
        */
       `,
-      errors: [{
-        line: 3,
-        message: 'Should be no multiple asterisks on middle lines.',
-      }],
+      errors: [
+        {
+          line: 3,
+          message: 'Should be no multiple asterisks on middle lines.',
+        },
+      ],
       output: `
       /**
        *
@@ -105,10 +119,12 @@ export default {
        *
        **/
       `,
-      errors: [{
-        line: 5,
-        message: 'Should be no multiple asterisks on end lines.',
-      }],
+      errors: [
+        {
+          line: 5,
+          message: 'Should be no multiple asterisks on end lines.',
+        },
+      ],
       output: `
       /**
        * Desc.
@@ -123,13 +139,17 @@ export default {
        *
        **/
       `,
-      errors: [{
-        line: 5,
-        message: 'Should be no multiple asterisks on end lines.',
-      }],
-      options: [{
-        preventAtEnd: true,
-      }],
+      errors: [
+        {
+          line: 5,
+          message: 'Should be no multiple asterisks on end lines.',
+        },
+      ],
+      options: [
+        {
+          preventAtEnd: true,
+        },
+      ],
       output: `
       /**
        * Desc.
@@ -144,13 +164,17 @@ export default {
        *
        abc * **/
       `,
-      errors: [{
-        line: 5,
-        message: 'Should be no multiple asterisks on end lines.',
-      }],
-      options: [{
-        preventAtEnd: true,
-      }],
+      errors: [
+        {
+          line: 5,
+          message: 'Should be no multiple asterisks on end lines.',
+        },
+      ],
+      options: [
+        {
+          preventAtEnd: true,
+        },
+      ],
       output: `
       /**
        * Desc.
@@ -165,13 +189,17 @@ export default {
        *
        **/
       `,
-      errors: [{
-        line: 5,
-        message: 'Should be no multiple asterisks on end lines.',
-      }],
-      options: [{
-        preventAtMiddleLines: false,
-      }],
+      errors: [
+        {
+          line: 5,
+          message: 'Should be no multiple asterisks on end lines.',
+        },
+      ],
+      options: [
+        {
+          preventAtMiddleLines: false,
+        },
+      ],
       output: `
       /**
        * Desc.
@@ -183,10 +211,12 @@ export default {
       code: `
       /** Desc. **/
       `,
-      errors: [{
-        line: 2,
-        message: 'Should be no multiple asterisks on end lines.',
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Should be no multiple asterisks on end lines.',
+        },
+      ],
       output: `
       /** Desc. */
       `,
@@ -195,10 +225,12 @@ export default {
       code: `
       /** @someTag name desc. **/
       `,
-      errors: [{
-        line: 2,
-        message: 'Should be no multiple asterisks on end lines.',
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Should be no multiple asterisks on end lines.',
+        },
+      ],
       output: `
       /** @someTag name desc. */
       `,
@@ -207,10 +239,12 @@ export default {
       code: `
       /** abc * */
       `,
-      errors: [{
-        line: 2,
-        message: 'Should be no multiple asterisks on end lines.',
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Should be no multiple asterisks on end lines.',
+        },
+      ],
       output: `
       /** abc */
       `,
@@ -223,13 +257,17 @@ export default {
        *
        * */
       `,
-      errors: [{
-        line: 6,
-        message: 'Should be no multiple asterisks on end lines.',
-      }],
-      options: [{
-        preventAtEnd: true,
-      }],
+      errors: [
+        {
+          line: 6,
+          message: 'Should be no multiple asterisks on end lines.',
+        },
+      ],
+      options: [
+        {
+          preventAtEnd: true,
+        },
+      ],
       output: `
       /**
        * Preserve user's whitespace when fixing (though one may also
@@ -271,9 +309,11 @@ export default {
        *
        */
       `,
-      options: [{
-        preventAtMiddleLines: false,
-      }],
+      options: [
+        {
+          preventAtMiddleLines: false,
+        },
+      ],
     },
     {
       code: `
@@ -282,9 +322,11 @@ export default {
        *
        **/
       `,
-      options: [{
-        preventAtEnd: false,
-      }],
+      options: [
+        {
+          preventAtEnd: false,
+        },
+      ],
     },
     {
       code: `

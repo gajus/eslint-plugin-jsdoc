@@ -157,9 +157,11 @@ export default {
           message: 'JSDoc description does not satisfy the regex pattern.',
         },
       ],
-      options: [{
-        matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
-      }],
+      options: [
+        {
+          matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+        },
+      ],
     },
     {
       code: `
@@ -176,10 +178,12 @@ export default {
           message: 'Needs to begin with a capital letter and end with an end mark.',
         },
       ],
-      options: [{
-        matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
-        message: 'Needs to begin with a capital letter and end with an end mark.',
-      }],
+      options: [
+        {
+          matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+          message: 'Needs to begin with a capital letter and end with an end mark.',
+        },
+      ],
     },
     {
       code: `
@@ -196,12 +200,14 @@ export default {
           message: 'JSDoc description does not satisfy the regex pattern.',
         },
       ],
-      options: [{
-        mainDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
-        tags: {
-          param: true,
+      options: [
+        {
+          mainDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+          tags: {
+            param: true,
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -218,15 +224,17 @@ export default {
           message: 'Needs to begin with a Cyrillic capital letter and end with a period.',
         },
       ],
-      options: [{
-        mainDescription: {
-          match: '[\u0410-\u042F][\u0410-\u044F]+\\.',
-          message: 'Needs to begin with a Cyrillic capital letter and end with a period.',
+      options: [
+        {
+          mainDescription: {
+            match: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+            message: 'Needs to begin with a Cyrillic capital letter and end with a period.',
+          },
+          tags: {
+            param: true,
+          },
         },
-        tags: {
-          param: true,
-        },
-      }],
+      ],
     },
     {
       code: `
@@ -725,11 +733,13 @@ export default {
           message: 'JSDoc description does not satisfy the regex pattern.',
         },
       ],
-      options: [{
-        tags: {
-          param: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+      options: [
+        {
+          tags: {
+            param: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -747,11 +757,13 @@ export default {
           message: 'JSDoc description does not satisfy the regex pattern.',
         },
       ],
-      options: [{
-        tags: {
-          description: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+      options: [
+        {
+          tags: {
+            description: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -862,11 +874,13 @@ export default {
           message: 'JSDoc description does not satisfy the regex pattern.',
         },
       ],
-      options: [{
-        tags: {
-          param: true,
+      options: [
+        {
+          tags: {
+            param: true,
+          },
         },
-      }],
+      ],
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -978,9 +992,11 @@ export default {
 
           }
       `,
-      options: [{
-        message: 'This won\'t be shown',
-      }],
+      options: [
+        {
+          message: 'This won\'t be shown',
+        },
+      ],
     },
     {
       code: `
@@ -991,9 +1007,11 @@ export default {
 
           }
       `,
-      options: [{
-        matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
-      }],
+      options: [
+        {
+          matchDescription: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+        },
+      ],
     },
     {
       code: `
@@ -1005,11 +1023,13 @@ export default {
 
           }
       `,
-      options: [{
-        tags: {
-          returns: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+      options: [
+        {
+          tags: {
+            returns: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -1021,11 +1041,13 @@ export default {
 
           }
       `,
-      options: [{
-        tags: {
-          description: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+      options: [
+        {
+          tags: {
+            description: '[\u0410-\u042F][\u0410-\u044F]+\\.',
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -1231,7 +1253,9 @@ export default {
           }
       `,
       options: [
-        {mainDescription: false},
+        {
+          mainDescription: false,
+        },
       ],
     },
     {
@@ -1254,7 +1278,9 @@ export default {
           }
       `,
       options: [
-        {mainDescription: true},
+        {
+          mainDescription: true,
+        },
       ],
     },
     {
@@ -1304,8 +1330,7 @@ export default {
       `,
       options: [
         {
-          contexts: [
-          ],
+          contexts: [],
         },
       ],
     },
@@ -1320,8 +1345,7 @@ export default {
       `,
       options: [
         {
-          contexts: [
-          ],
+          contexts: [],
         },
       ],
     },
@@ -1336,8 +1360,7 @@ export default {
       `,
       options: [
         {
-          contexts: [
-          ],
+          contexts: [],
         },
       ],
     },
@@ -1351,9 +1374,11 @@ export default {
           }
       `,
       options: [
-        {tags: {
-          param: true,
-        }},
+        {
+          tags: {
+            param: true,
+          },
+        },
       ],
     },
     {
@@ -1497,15 +1522,19 @@ export default {
        * @param enabled \`true\` to enable, \`false\` to disable. Default: \`true\`.
        */
       `,
-      options: [{
-        contexts: ['any'],
-        mainDescription: '/^[A-Z`-].*\\.$/us',
-        matchDescription: '^([A-Z`-].*(\\.|:)|-\\s.*)$',
-        tags: {
-          param: true,
-          returns: true,
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          mainDescription: '/^[A-Z`-].*\\.$/us',
+          matchDescription: '^([A-Z`-].*(\\.|:)|-\\s.*)$',
+          tags: {
+            param: true,
+            returns: true,
+          },
         },
-      }],
+      ],
     },
 
     // https://github.com/gajus/eslint-plugin-jsdoc/issues/692#issuecomment-780081285
@@ -1515,9 +1544,13 @@ export default {
       const quux = {};
       `,
       ignoreReadme: true,
-      options: [{
-        contexts: ['any'],
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
     },
   ],
 };

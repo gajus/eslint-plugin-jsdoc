@@ -48,16 +48,20 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 1,
-        message: 'Cannot add "name" to `require` with the tag\'s `name` set to `false`',
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Cannot add "name" to `require` with the tag\'s `name` set to `false`',
+        },
+      ],
       settings: {
         jsdoc: {
           structuredTags: {
             see: {
               name: false,
-              required: ['name'],
+              required: [
+                'name',
+              ],
             },
           },
         },
@@ -65,11 +69,17 @@ export default {
     },
     {
       code: '/* @ts-ignore */',
-      errors: [{
-        line: 1,
-        message: 'Expected JSDoc-like comment to begin with two asterisks.',
-      }],
-      options: [{ignore: []}],
+      errors: [
+        {
+          line: 1,
+          message: 'Expected JSDoc-like comment to begin with two asterisks.',
+        },
+      ],
+      options: [
+        {
+          ignore: [],
+        },
+      ],
       output: '/** @ts-ignore */',
     },
     {
@@ -139,9 +149,11 @@ export default {
           message: 'Expected JSDoc-like comment to begin with two asterisks.',
         },
       ],
-      options: [{
-        preventAllMultiAsteriskBlocks: true,
-      }],
+      options: [
+        {
+          preventAllMultiAsteriskBlocks: true,
+        },
+      ],
       output: `
           /**
            *
@@ -212,7 +224,13 @@ export default {
     },
     {
       code: '/* @custom */',
-      options: [{ignore: ['custom']}],
+      options: [
+        {
+          ignore: [
+            'custom',
+          ],
+        },
+      ],
     },
     {
       code: `

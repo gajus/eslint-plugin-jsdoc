@@ -424,7 +424,9 @@ export default {
       `,
       options: [
         {
-          exemptedBy: ['type'],
+          exemptedBy: [
+            'type',
+          ],
         },
       ],
     },

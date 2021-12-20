@@ -195,5 +195,7 @@ const closureTags = {
 };
 
 export {
-  jsdocTags, closureTags, typeScriptTags,
+  jsdocTags,
+  closureTags,
+  typeScriptTags,
 };

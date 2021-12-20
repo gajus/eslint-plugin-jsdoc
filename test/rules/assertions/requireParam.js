@@ -47,7 +47,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['FunctionDeclaration'],
+          contexts: [
+            'FunctionDeclaration',
+          ],
         },
       ],
       output: `
@@ -370,7 +372,9 @@ export default {
       ],
       options: [
         {
-          unnamedRootBase: ['arg'],
+          unnamedRootBase: [
+            'arg',
+          ],
         },
       ],
       output: `
@@ -414,7 +418,9 @@ export default {
       ],
       options: [
         {
-          unnamedRootBase: ['arg', 'config'],
+          unnamedRootBase: [
+            'arg', 'config',
+          ],
         },
       ],
       output: `
@@ -459,7 +465,9 @@ export default {
       options: [
         {
           enableRootFixer: false,
-          unnamedRootBase: ['arg', 'config'],
+          unnamedRootBase: [
+            'arg', 'config',
+          ],
         },
       ],
       output: `
@@ -1174,7 +1182,9 @@ export default {
       ],
       options: [
         {
-          exemptedBy: ['notPresent'],
+          exemptedBy: [
+            'notPresent',
+          ],
         },
       ],
       output: `
@@ -1293,7 +1303,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSMethodSignature'],
+          contexts: [
+            'TSMethodSignature',
+          ],
         },
       ],
       output: `
@@ -1328,7 +1340,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSEmptyBodyFunctionExpression'],
+          contexts: [
+            'TSEmptyBodyFunctionExpression',
+          ],
         },
       ],
       output: `
@@ -1367,7 +1381,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSEmptyBodyFunctionExpression'],
+          contexts: [
+            'TSEmptyBodyFunctionExpression',
+          ],
         },
       ],
       output: `
@@ -1399,7 +1415,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       output: `
@@ -1426,7 +1444,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       output: `
@@ -1457,7 +1477,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       output: `
@@ -1491,7 +1513,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       output: `
@@ -1523,7 +1547,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       output: `
@@ -1556,7 +1582,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       output: `
@@ -1589,7 +1617,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       output: `
@@ -1620,7 +1650,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       output: `
@@ -1649,7 +1681,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       output: `
@@ -1679,7 +1713,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       output: `
@@ -2274,9 +2310,11 @@ export default {
           message: 'Missing JSDoc @param "props.prop.b" declaration.',
         },
       ],
-      options: [{
-        useDefaultObjectProperties: true,
-      }],
+      options: [
+        {
+          useDefaultObjectProperties: true,
+        },
+      ],
       output: `
       /**
       * Returns a number.
@@ -2369,7 +2407,9 @@ export default {
       `,
       options: [
         {
-          unnamedRootBase: ['arg'],
+          unnamedRootBase: [
+            'arg',
+          ],
         },
       ],
     },
@@ -2389,7 +2429,9 @@ export default {
       `,
       options: [
         {
-          unnamedRootBase: ['arg', 'config'],
+          unnamedRootBase: [
+            'arg', 'config',
+          ],
         },
       ],
     },
@@ -2899,7 +2941,9 @@ export default {
       `,
       options: [
         {
-          exemptedBy: ['type'],
+          exemptedBy: [
+            'type',
+          ],
         },
       ],
     },
@@ -2989,7 +3033,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['ArrowFunctionExpression'],
+          contexts: [
+            'ArrowFunctionExpression',
+          ],
         },
       ],
     },
@@ -3007,7 +3053,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['TSFunctionType'],
+          contexts: [
+            'TSFunctionType',
+          ],
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
@@ -3291,9 +3339,11 @@ export default {
       export function testFn1 ({ prop = { a: 1, b: 2 } }) {
       }
       `,
-      options: [{
-        useDefaultObjectProperties: false,
-      }],
+      options: [
+        {
+          useDefaultObjectProperties: false,
+        },
+      ],
       parserOptions: {
         sourceType: 'module',
       },

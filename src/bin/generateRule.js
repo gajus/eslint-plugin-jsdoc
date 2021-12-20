@@ -20,7 +20,10 @@ import open from 'open-editor';
 
 // Todo: Would ideally have prompts, e.g., to ask for whether type was problem/layout, etc.
 
-const [, , ruleName, ...options] = process.argv;
+const [
+  , , ruleName,
+  ...options
+] = process.argv;
 
 const recommended = options.includes('--recommended');
 
@@ -128,13 +131,21 @@ export default iterateJsdoc(({
     await fs.writeFile(ruleReadmePath, ruleReadmeTemplate);
   }
 
-  const replaceInOrder = async ({path, oldRegex, checkName, newLine, oldIsCamel}) => {
+  const replaceInOrder = async ({
+    path,
+    oldRegex,
+    checkName,
+    newLine,
+    oldIsCamel,
+  }) => {
     const offsets = [];
 
     let readme = await fs.readFile(path, 'utf8');
     readme.replace(
       oldRegex,
-      (matchedLine, n1, offset, str, {oldRule}) => {
+      (matchedLine, n1, offset, str, {
+        oldRule,
+      }) => {
         offsets.push({
           matchedLine,
           offset,
@@ -143,13 +154,19 @@ export default iterateJsdoc(({
       },
     );
 
-    offsets.sort(({oldRule}, {oldRule: oldRuleB}) => {
+    offsets.sort(({
+      oldRule,
+    }, {
+      oldRule: oldRuleB,
+    }) => {
       // eslint-disable-next-line no-extra-parens
       return oldRule < oldRuleB ? -1 : (oldRule > oldRuleB ? 1 : 0);
     });
 
     let alreadyIncluded = false;
-    const itemIndex = offsets.findIndex(({oldRule}) => {
+    const itemIndex = offsets.findIndex(({
+      oldRule,
+    }) => {
       alreadyIncluded ||= oldIsCamel ? camelCasedRuleName === oldRule : ruleName === oldRule;
 
       return oldIsCamel ? camelCasedRuleName < oldRule : ruleName < oldRule;

@@ -464,9 +464,13 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['always', {
-        tags: ['typedef', 'property'],
-      }],
+      options: [
+        'always', {
+          tags: [
+            'typedef', 'property',
+          ],
+        },
+      ],
       output: `
         /**
          * My object.
@@ -654,9 +658,13 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['always', {
-        tags: ['param'],
-      }],
+      options: [
+        'always', {
+          tags: [
+            'param',
+          ],
+        },
+      ],
       output: `
         /**
          * My function.
@@ -686,7 +694,9 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['always'],
+      options: [
+        'always',
+      ],
       output: `
         /**
          * Only return doc.
@@ -718,7 +728,9 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['never'],
+      options: [
+        'never',
+      ],
       output: `
       /**
        * Creates OS based shortcuts for files, folders, and applications.
@@ -746,7 +758,9 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['never'],
+      options: [
+        'never',
+      ],
       output: `
       /**
        * Creates OS based shortcuts for files, folders, and applications.
@@ -774,7 +788,9 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['never'],
+      options: [
+        'never',
+      ],
       output: `
       /**
        * Creates OS based shortcuts for files, folders, and applications.
@@ -802,7 +818,9 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['never'],
+      options: [
+        'never',
+      ],
       output: `
       /**
        * Creates OS based shortcuts for files, folders, and applications.
@@ -831,9 +849,13 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['never', {
-        tags: ['param', 'return'],
-      }],
+      options: [
+        'never', {
+          tags: [
+            'param', 'return',
+          ],
+        },
+      ],
       output: `
       /**
        * Creates OS based shortcuts for files, folders, and applications.
@@ -874,7 +896,9 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['never'],
+      options: [
+        'never',
+      ],
       output: `
       /**
        * Returns the value stored in the process.env for a given
@@ -905,7 +929,9 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['always'],
+      options: [
+        'always',
+      ],
       output: `
       /**
        * Function description
@@ -936,13 +962,15 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['always', {
-        customSpacings: {
-          postDelimiter: 2,
-          postTag: 3,
-          postType: 2,
+      options: [
+        'always', {
+          customSpacings: {
+            postDelimiter: 2,
+            postTag: 3,
+            postType: 2,
+          },
         },
-      }],
+      ],
       output: `
       /**
        * Function description.
@@ -974,11 +1002,13 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['always', {
-        customSpacings: {
-          postName: 3,
+      options: [
+        'always', {
+          customSpacings: {
+            postName: 3,
+          },
         },
-      }],
+      ],
       output: `
       /**
        * Function description.
@@ -1008,13 +1038,15 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['never', {
-        customSpacings: {
-          postDelimiter: 2,
-          postTag: 3,
-          postType: 2,
+      options: [
+        'never', {
+          customSpacings: {
+            postDelimiter: 2,
+            postTag: 3,
+            postType: 2,
+          },
         },
-      }],
+      ],
       output: `
       /**
        * Function description.
@@ -1042,11 +1074,13 @@ export default {
           type: 'Block',
         },
       ],
-      options: ['never', {
-        customSpacings: {
-          postName: 3,
+      options: [
+        'never', {
+          customSpacings: {
+            postName: 3,
+          },
         },
-      }],
+      ],
       output: `
       /**
        * Function description.
@@ -1302,9 +1336,13 @@ export default {
          * @property {Object.<string, Class>}    dolor
          */
       `,
-      options: ['always', {
-        tags: ['typedef', 'property'],
-      }],
+      options: [
+        'always', {
+          tags: [
+            'typedef', 'property',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1319,9 +1357,13 @@ export default {
          * @param    {{a: number, b: string, c}} lorem           Description.
          */
       `,
-      options: ['always', {
-        tags: ['template', 'param'],
-      }],
+      options: [
+        'always', {
+          tags: [
+            'template', 'param',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1342,7 +1384,9 @@ export default {
        */
        function quux () {}
       `,
-      options: ['always'],
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -1354,7 +1398,9 @@ export default {
        */
        function quux () {}
       `,
-      options: ['always'],
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -1365,7 +1411,9 @@ export default {
        */
        function quux () {}
       `,
-      options: ['always'],
+      options: [
+        'always',
+      ],
     },
     {
       code: `
@@ -1400,9 +1448,13 @@ export default {
        */
        function quux () {}
       `,
-      options: ['never', {
-        tags: ['param'],
-      }],
+      options: [
+        'never', {
+          tags: [
+            'param',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1425,9 +1477,11 @@ export default {
          */
         const fn = ( lorem, sit ) => {}
       `,
-      options: ['always', {
-        preserveMainDescriptionPostDelimiter: true,
-      }],
+      options: [
+        'always', {
+          preserveMainDescriptionPostDelimiter: true,
+        },
+      ],
     },
     {
       code: `
@@ -1441,13 +1495,15 @@ export default {
          */
         const fn = ( lorem, sit ) => {}
       `,
-      options: ['always', {
-        customSpacings: {
-          postDelimiter: 2,
-          postTag: 3,
-          postType: 2,
+      options: [
+        'always', {
+          customSpacings: {
+            postDelimiter: 2,
+            postTag: 3,
+            postType: 2,
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -1461,13 +1517,15 @@ export default {
          */
         const fn = ( lorem, sit ) => {}
       `,
-      options: ['never', {
-        customSpacings: {
-          postDelimiter: 2,
-          postTag: 3,
-          postType: 2,
+      options: [
+        'never', {
+          customSpacings: {
+            postDelimiter: 2,
+            postTag: 3,
+            postType: 2,
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -1478,7 +1536,9 @@ export default {
          */
         const fn = ({ids}) => {}
       `,
-      options: ['always'],
+      options: [
+        'always',
+      ],
     },
     {
       code: `\r
@@ -1492,7 +1552,9 @@ export default {
          */\r
         const fn = ( lorem, sit ) => {}\r
       `,
-      options: ['always'],
+      options: [
+        'always',
+      ],
     },
   ],
 };

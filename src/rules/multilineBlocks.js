@@ -10,14 +10,27 @@ export default iterateJsdoc(({
     noFinalLineText = true,
     noZeroLineText = true,
     noSingleLineBlocks = false,
-    singleLineTags = ['lends', 'type'],
+    singleLineTags = [
+      'lends', 'type',
+    ],
     noMultilineBlocks = false,
     minimumLengthForMultiline = Number.POSITIVE_INFINITY,
-    multilineTags = ['*'],
+    multilineTags = [
+      '*',
+    ],
   } = context.options[0] || {};
 
-  const {source: [{tokens}]} = jsdoc;
-  const {description, tag} = tokens;
+  const {
+    source: [
+      {
+        tokens,
+      },
+    ],
+  } = jsdoc;
+  const {
+    description,
+    tag,
+  } = tokens;
   const sourceLength = jsdoc.source.length;
 
   const isInvalidSingleLine = (tagName) => {
@@ -51,10 +64,21 @@ export default iterateJsdoc(({
       (tag || description)
     ) {
       const fixer = () => {
-        const line = {...tokens};
+        const line = {
+          ...tokens,
+        };
         utils.emptyTokens(tokens);
-        const {tokens: {delimiter, start}} = jsdoc.source[1];
-        utils.addLine(1, {...line, delimiter, start});
+        const {
+          tokens: {
+            delimiter,
+            start,
+          },
+        } = jsdoc.source[1];
+        utils.addLine(1, {
+          ...line,
+          delimiter,
+          start,
+        });
       };
 
       utils.reportJSDoc(
@@ -73,10 +97,14 @@ export default iterateJsdoc(({
       finalLineTokens.description.trim()
     ) {
       const fixer = () => {
-        const line = {...finalLineTokens};
+        const line = {
+          ...finalLineTokens,
+        };
         line.description = line.description.trimEnd();
 
-        const {delimiter} = line;
+        const {
+          delimiter,
+        } = line;
 
         for (const prop of [
           'delimiter',
@@ -93,7 +121,11 @@ export default iterateJsdoc(({
           finalLineTokens[prop] = '';
         }
 
-        utils.addLine(jsdoc.source.length - 1, {...line, delimiter, end: ''});
+        utils.addLine(jsdoc.source.length - 1, {
+          ...line,
+          delimiter,
+          end: '',
+        });
       };
 
       utils.reportJSDoc(
@@ -123,7 +155,9 @@ export default iterateJsdoc(({
     if (
       noSingleLineBlocks &&
       (!jsdoc.tags.length ||
-      !utils.filterTags(({tag: tg}) => {
+      !utils.filterTags(({
+        tag: tg,
+      }) => {
         return !isInvalidSingleLine(tg);
       }).length)
     ) {
@@ -156,55 +190,63 @@ export default iterateJsdoc(({
       }
     } else {
       const fixer = () => {
-        jsdoc.source = [{
-          number: 1,
-          source: '',
-          tokens: jsdoc.source.reduce((obj, {
-            tokens: {
-              description: desc, tag: tg, type: typ, name: nme,
-              lineEnd, postType, postName, postTag,
-            },
-          }) => {
-            if (typ) {
-              obj.type = typ;
-            }
+        jsdoc.source = [
+          {
+            number: 1,
+            source: '',
+            tokens: jsdoc.source.reduce((obj, {
+              tokens: {
+                description: desc,
+                tag: tg,
+                type: typ,
+                name: nme,
+                lineEnd,
+                postType,
+                postName,
+                postTag,
+              },
+            }) => {
+              if (typ) {
+                obj.type = typ;
+              }
 
-            if (tg && typ && nme) {
-              obj.postType = postType;
-            }
+              if (tg && typ && nme) {
+                obj.postType = postType;
+              }
 
-            if (nme) {
-              obj.name += nme;
-            }
+              if (nme) {
+                obj.name += nme;
+              }
 
-            if (nme && desc) {
-              obj.postName = postName;
-            }
+              if (nme && desc) {
+                obj.postName = postName;
+              }
 
-            obj.description += desc;
+              obj.description += desc;
 
-            const nameOrDescription = obj.description || obj.name;
-            if (
-              nameOrDescription && nameOrDescription.slice(-1) !== ' '
-            ) {
-              obj.description += ' ';
-            }
+              const nameOrDescription = obj.description || obj.name;
+              if (
+                nameOrDescription && nameOrDescription.slice(-1) !== ' '
+              ) {
+                obj.description += ' ';
+              }
 
-            obj.lineEnd = lineEnd;
+              obj.lineEnd = lineEnd;
 
-            // Already filtered for multiple tags
-            obj.tag += tg;
-            if (tg) {
-              obj.postTag = postTag || ' ';
-            }
+              // Already filtered for multiple tags
+              obj.tag += tg;
+              if (tg) {
+                obj.postTag = postTag || ' ';
+              }
 
-            return obj;
-          }, utils.seedTokens({
-            delimiter: '/**',
-            end: '*/',
-            postDelimiter: ' ',
-          })),
-        }];
+              return obj;
+            }, utils.seedTokens({
+              delimiter: '/**',
+              end: '*/',
+              postDelimiter: ' ',
+            })),
+          },
+        ];
       };
 
       utils.reportJSDoc(
@@ -240,7 +282,9 @@ export default iterateJsdoc(({
           multilineTags: {
             anyOf: [
               {
-                enum: ['*'],
+                enum: [
+                  '*',
+                ],
                 type: 'string',
               }, {
                 items: {

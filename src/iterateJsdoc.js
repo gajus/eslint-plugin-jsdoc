@@ -27,7 +27,10 @@ const {
 
 const globalState = new Map();
 
-const getBasicUtils = (context, {tagNamePreference, mode}) => {
+const getBasicUtils = (context, {
+  tagNamePreference,
+  mode,
+}) => {
   const utils = {};
   utils.reportSettings = (message) => {
     context.report({
@@ -47,7 +50,9 @@ const getBasicUtils = (context, {tagNamePreference, mode}) => {
 
   utils.pathDoesNotBeginWith = jsdocUtils.pathDoesNotBeginWith;
 
-  utils.getPreferredTagNameObject = ({tagName}) => {
+  utils.getPreferredTagNameObject = ({
+    tagName,
+  }) => {
     const ret = jsdocUtils.getPreferredTagName(context, mode, tagName, tagNamePreference);
     const isObject = ret && typeof ret === 'object';
     if (ret === false || isObject && !ret.replacement) {
@@ -100,7 +105,9 @@ const getUtils = (
   };
 
   utils.isVirtualFunction = () => {
-    return iteratingAll && utils.hasATag(['callback', 'function', 'func', 'method']);
+    return iteratingAll && utils.hasATag([
+      'callback', 'function', 'func', 'method',
+    ]);
   };
 
   utils.stringify = (tagBlock, specRewire) => {
@@ -123,7 +130,16 @@ const getUtils = (
   utils.getTagDescription = (tg) => {
     const descriptions = [];
     tg.source.some(({
-      tokens: {end, lineEnd, postDelimiter, tag, postTag, name, type, description},
+      tokens: {
+        end,
+        lineEnd,
+        postDelimiter,
+        tag,
+        postTag,
+        name,
+        type,
+        description,
+      },
     }) => {
       const desc = (
         tag && postTag ||
@@ -152,7 +168,13 @@ const getUtils = (
   utils.getDescription = () => {
     const descriptions = [];
     let lastDescriptionLine = 0;
-    jsdoc.source.some(({tokens: {description, tag, end}}, idx) => {
+    jsdoc.source.some(({
+      tokens: {
+        description,
+        tag,
+        end,
+      },
+    }, idx) => {
       if (idx && (tag || end)) {
         lastDescriptionLine = idx - 1;
 
@@ -173,7 +195,10 @@ const getUtils = (
   };
 
   utils.changeTag = (tag, ...tokens) => {
-    for (const [idx, src] of tag.source.entries()) {
+    for (const [
+      idx,
+      src,
+    ] of tag.source.entries()) {
       src.tokens = {
         ...src.tokens,
         ...tokens[idx],
@@ -182,17 +207,19 @@ const getUtils = (
   };
 
   utils.setTag = (tag, tokens) => {
-    tag.source = [{
+    tag.source = [
+      {
       // Or tag.source[0].number?
-      number: tag.line,
-      tokens: seedTokens({
-        delimiter: '*',
-        postDelimiter: ' ',
-        start: indent + ' ',
-        tag: '@' + tag.tag,
-        ...tokens,
-      }),
-    }];
+        number: tag.line,
+        tokens: seedTokens({
+          delimiter: '*',
+          postDelimiter: ' ',
+          start: indent + ' ',
+          tag: '@' + tag.tag,
+          ...tokens,
+        }),
+      },
+    ];
   };
 
   utils.removeTag = (idx) => {
@@ -200,19 +227,31 @@ const getUtils = (
   };
 
   utils.removeTagItem = (tagIndex, tagSourceOffset = 0) => {
-    const {source: tagSource} = jsdoc.tags[tagIndex];
+    const {
+      source: tagSource,
+    } = jsdoc.tags[tagIndex];
     let lastIndex;
     const firstNumber = jsdoc.source[0].number;
-    tagSource.some(({number}, tagIdx) => {
+    tagSource.some(({
+      number,
+    }, tagIdx) => {
       const sourceIndex = jsdoc.source.findIndex(({
-        number: srcNumber, tokens: {end},
+        number: srcNumber,
+        tokens: {
+          end,
+        },
       }) => {
         return number === srcNumber && !end;
       });
       // istanbul ignore else
       if (sourceIndex > -1) {
         let spliceCount = 1;
-        tagSource.slice(tagIdx + 1).some(({tokens: {tag, end}}) => {
+        tagSource.slice(tagIdx + 1).some(({
+          tokens: {
+            tag,
+            end,
+          },
+        }) => {
           if (!tag && !end) {
             spliceCount++;
 
@@ -231,7 +270,10 @@ const getUtils = (
       // istanbul ignore next
       return false;
     });
-    for (const [idx, src] of jsdoc.source.slice(lastIndex).entries()) {
+    for (const [
+      idx,
+      src,
+    ] of jsdoc.source.slice(lastIndex).entries()) {
       src.number = firstNumber + lastIndex + idx;
     }
   };
@@ -286,10 +328,14 @@ const getUtils = (
   };
 
   utils.addLines = (tagIndex, tagSourceOffset, numLines) => {
-    const {source: tagSource} = jsdoc.tags[tagIndex];
+    const {
+      source: tagSource,
+    } = jsdoc.tags[tagIndex];
     let lastIndex;
     const firstNumber = jsdoc.source[0].number;
-    tagSource.some(({number}) => {
+    tagSource.some(({
+      number,
+    }) => {
       const makeLine = () => {
         return {
           number,
@@ -302,11 +348,16 @@ const getUtils = (
       };
 
       const makeLines = () => {
-        return Array.from({length: numLines}, makeLine);
+        return Array.from({
+          length: numLines,
+        }, makeLine);
       };
 
       const sourceIndex = jsdoc.source.findIndex(({
-        number: srcNumber, tokens: {end},
+        number: srcNumber,
+        tokens: {
+          end,
+        },
       }) => {
         return number === srcNumber && !end;
       });
@@ -324,18 +375,38 @@ const getUtils = (
       // istanbul ignore next
       return false;
     });
-    for (const [idx, src] of jsdoc.source.slice(lastIndex).entries()) {
+    for (const [
+      idx,
+      src,
+    ] of jsdoc.source.slice(lastIndex).entries()) {
       src.number = firstNumber + lastIndex + idx;
     }
   };
 
   utils.makeMultiline = () => {
-    const {source: [{tokens}]} = jsdoc;
-    const {postDelimiter, description, lineEnd, tag, name, type} = tokens;
+    const {
+      source: [
+        {
+          tokens,
+        },
+      ],
+    } = jsdoc;
+    const {
+      postDelimiter,
+      description,
+      lineEnd,
+      tag,
+      name,
+      type,
+    } = tokens;
 
-    let {tokens: {
-      postName, postTag, postType,
-    }} = jsdoc.source[0];
+    let {
+      tokens: {
+        postName,
+        postTag,
+        postType,
+      },
+    } = jsdoc.source[0];
 
     // Strip trailing leftovers from single line ending
     if (!description) {
@@ -389,7 +460,9 @@ const getUtils = (
     return node && (
       node.generator ||
       node.type === 'MethodDefinition' && node.value.generator ||
-      ['ExportNamedDeclaration', 'ExportDefaultDeclaration'].includes(node.type) &&
+      [
+        'ExportNamedDeclaration', 'ExportDefaultDeclaration',
+      ].includes(node.type) &&
         node.declaration.generator
     );
   };
@@ -399,7 +472,9 @@ const getUtils = (
   };
 
   utils.getJsdocTagsDeep = (tagName) => {
-    const name = utils.getPreferredTagName({tagName});
+    const name = utils.getPreferredTagName({
+      tagName,
+    });
     if (!name) {
       return false;
     }
@@ -407,7 +482,12 @@ const getUtils = (
     return jsdocUtils.getJsdocTagsDeep(jsdoc, name);
   };
 
-  utils.getPreferredTagName = ({tagName, skipReportingBlockedTag = false, allowObjectReturn = false, defaultMessage = `Unexpected tag \`@${tagName}\``}) => {
+  utils.getPreferredTagName = ({
+    tagName,
+    skipReportingBlockedTag = false,
+    allowObjectReturn = false,
+    defaultMessage = `Unexpected tag \`@${tagName}\``,
+  }) => {
     const ret = jsdocUtils.getPreferredTagName(context, mode, tagName, tagNamePreference);
     const isObject = ret && typeof ret === 'object';
     if (utils.hasTag(tagName) && (ret === false || isObject && !ret.replacement)) {
@@ -457,7 +537,9 @@ const getUtils = (
         (utils.hasTag('implements') || utils.classHasTag('implements')) ||
 
       augmentsExtendsReplacesDocs &&
-        (utils.hasATag(['augments', 'extends']) ||
+        (utils.hasATag([
+          'augments', 'extends',
+        ]) ||
           utils.classHasTag('augments') ||
             utils.classHasTag('extends'))) {
       return true;
@@ -471,7 +553,9 @@ const getUtils = (
 
     const exemptedBy = context.options[0]?.exemptedBy ?? [
       'inheritDoc',
-      ...mode === 'closure' ? [] : ['inheritdoc'],
+      ...mode === 'closure' ? [] : [
+        'inheritdoc',
+      ],
     ];
     if (exemptedBy.length && utils.getPresentTags(exemptedBy).length) {
       return true;
@@ -498,7 +582,9 @@ const getUtils = (
         return jsdocUtils[method](tagName, otherModeMap);
       });
 
-      return otherResult ? {otherMode: true} : false;
+      return otherResult ? {
+        otherMode: true,
+      } : false;
     };
   }
 
@@ -519,7 +605,9 @@ const getUtils = (
         return jsdocUtils[method](tagName, otherModeMap);
       });
 
-      return otherResult ? true : {otherMode: false};
+      return otherResult ? true : {
+        otherMode: false,
+      };
     };
   }
 
@@ -545,7 +633,9 @@ const getUtils = (
   };
 
   utils.hasYieldValue = () => {
-    if (['ExportNamedDeclaration', 'ExportDefaultDeclaration'].includes(node.type)) {
+    if ([
+      'ExportNamedDeclaration', 'ExportDefaultDeclaration',
+    ].includes(node.type)) {
       return jsdocUtils.hasYieldValue(node.declaration);
     }
 
@@ -585,14 +675,20 @@ const getUtils = (
   };
 
   utils.hasOptionTag = (tagName) => {
-    const {tags} = context.options[0] ?? {};
+    const {
+      tags,
+    } = context.options[0] ?? {};
 
     return Boolean(tags && tags.includes(tagName));
   };
 
   utils.getClassNode = () => {
-    return [...ancestors, node].reverse().find((parent) => {
-      return parent && ['ClassDeclaration', 'ClassExpression'].includes(parent.type);
+    return [
+      ...ancestors, node,
+    ].reverse().find((parent) => {
+      return parent && [
+        'ClassDeclaration', 'ClassExpression',
+      ].includes(parent.type);
     }) || null;
   };
 
@@ -634,7 +730,9 @@ const getUtils = (
       return;
     }
 
-    const matchingJsdocTags = jsdoc.tags.filter(({tag}) => {
+    const matchingJsdocTags = jsdoc.tags.filter(({
+      tag,
+    }) => {
       return tag === targetTagName;
     });
 
@@ -715,8 +813,12 @@ const makeReport = (context, commentNode) => {
       const lineNumber = commentNode.loc.start.line + jsdocLoc.line;
 
       loc = {
-        end: {line: lineNumber},
-        start: {line: lineNumber},
+        end: {
+          line: lineNumber,
+        },
+        start: {
+          line: lineNumber,
+        },
       };
 
       // Todo: Remove ignore once `check-examples` can be restored for ESLint 8+
@@ -791,10 +893,14 @@ const iterate = (
     (
       utils.hasTag('private') ||
       jsdoc.tags
-        .filter(({tag}) => {
+        .filter(({
+          tag,
+        }) => {
           return tag === 'access';
         })
-        .some(({description}) => {
+        .some(({
+          description,
+        }) => {
           return description === 'private';
         })
     )
@@ -824,7 +930,9 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
   const indnt = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
   const jsdc = parseComment(jsdocNode, indnt);
 
-  return [indnt, jsdc];
+  return [
+    indnt, jsdc,
+  ];
 };
 
 /**
@@ -843,7 +951,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
   let settings;
   const callIterator = (context, node, jsdocNodes, state, lastCall) => {
     const sourceCode = context.getSourceCode();
-    const {lines} = sourceCode;
+    const {
+      lines,
+    } = sourceCode;
 
     const utils = getBasicUtils(context, settings);
     for (const jsdocNode of jsdocNodes) {
@@ -851,12 +961,20 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
         continue;
       }
 
-      const [indent, jsdoc] = getIndentAndJSDoc(
+      const [
+        indent,
+        jsdoc,
+      ] = getIndentAndJSDoc(
         lines, jsdocNode,
       );
 
       if (additiveContexts) {
-        for (const [idx, {comment}] of contexts.entries()) {
+        for (const [
+          idx,
+          {
+            comment,
+          },
+        ] of contexts.entries()) {
           if (comment && handler(comment, jsdoc) === false) {
             continue;
           }
@@ -888,7 +1006,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
       let lastComment;
       let lastIndex;
       // eslint-disable-next-line no-loop-func
-      if (contexts && contexts.every(({comment}, idx) => {
+      if (contexts && contexts.every(({
+        comment,
+      }, idx) => {
         lastComment = comment;
         lastIndex = idx;
 
@@ -969,7 +1089,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
           }
 
           trackedJsdocs.push(commentNode);
-          callIterator(context, node, [commentNode], state);
+          callIterator(context, node, [
+            commentNode,
+          ], state);
         },
         'Program:exit' () {
           const allComments = sourceCode.getAllComments();
@@ -1004,7 +1126,9 @@ const checkFile = (iterator, ruleConfig) => {
       return {
         'Program:exit' () {
           const allComments = sourceCode.getAllComments();
-          const {lines} = sourceCode;
+          const {
+            lines,
+          } = sourceCode;
           const utils = getBasicUtils(context, settings);
 
           iterator({
@@ -1040,7 +1164,9 @@ export {
  */
 export default function iterateJsdoc (iterator, ruleConfig) {
   const metaType = ruleConfig?.meta?.type;
-  if (!metaType || !['problem', 'suggestion', 'layout'].includes(metaType)) {
+  if (!metaType || ![
+    'problem', 'suggestion', 'layout',
+  ].includes(metaType)) {
     throw new TypeError('Rule must include `meta.type` option (with value "problem", "suggestion", or "layout")');
   }
 
@@ -1081,7 +1207,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         if (contexts) {
           contexts = contexts.map((obj) => {
             if (typeof obj === 'object' && !obj.context) {
-              return {...obj, context: 'any'};
+              return {
+                ...obj,
+                context: 'any',
+              };
             }
 
             return obj;
@@ -1100,7 +1229,9 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       }
 
       const sourceCode = context.getSourceCode();
-      const {lines} = sourceCode;
+      const {
+        lines,
+      } = sourceCode;
 
       const state = {};
 
@@ -1111,7 +1242,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           return;
         }
 
-        const [indent, jsdoc] = getIndentAndJSDoc(
+        const [
+          indent,
+          jsdoc,
+        ] = getIndentAndJSDoc(
           lines, jsdocNode,
         );
 

@@ -12,9 +12,17 @@ export default iterateJsdoc(({
     preventAtMiddleLines = true,
   } = context.options[0] || {};
 
-  jsdoc.source.some(({tokens, number}) => {
+  jsdoc.source.some(({
+    tokens,
+    number,
+  }) => {
     const {
-      delimiter, tag, name, type, description, end,
+      delimiter,
+      tag,
+      name,
+      type,
+      description,
+      end,
     } = tokens;
     if (
       preventAtMiddleLines &&

@@ -17,7 +17,9 @@ describe('jsdocUtils', () => {
     });
     context('with preferences', () => {
       it('returns the preferred tag name', () => {
-        expect(jsdocUtils.getPreferredTagName({}, 'jsdoc', 'return', {returns: 'return'})).to.equal('return');
+        expect(jsdocUtils.getPreferredTagName({}, 'jsdoc', 'return', {
+          returns: 'return',
+        })).to.equal('return');
       });
     });
   });
@@ -39,7 +41,9 @@ describe('jsdocUtils', () => {
     });
     context('tag is valid and customized', () => {
       it('returns true', () => {
-        expect(jsdocUtils.isValidTag({}, 'jsdoc', 'foobar', ['foobar'])).to.equal(true);
+        expect(jsdocUtils.isValidTag({}, 'jsdoc', 'foobar', [
+          'foobar',
+        ])).to.equal(true);
       });
     });
   });
@@ -47,11 +51,13 @@ describe('jsdocUtils', () => {
     context('Unhandled param type', () => {
       it('should throw with an unknown param type', () => {
         expect(() => {
-          jsdocUtils.getFunctionParameterNames({params: [
-            {
-              type: 'AssignmentPattern',
-            },
-          ]});
+          jsdocUtils.getFunctionParameterNames({
+            params: [
+              {
+                type: 'AssignmentPattern',
+              },
+            ],
+          });
         }).to.throw('Unsupported function signature format: `AssignmentPattern`.');
       });
     });
@@ -66,11 +72,23 @@ describe('jsdocUtils', () => {
   describe('flattenRoots()', () => {
     context('Provided root', () => {
       it('should prepend properties with provided root', () => {
-        const roots = [['data', ['last_modified']], ['options', ['headers']]];
+        const roots = [
+          [
+            'data', [
+              'last_modified',
+            ],
+          ], [
+            'options', [
+              'headers',
+            ],
+          ],
+        ];
         const expected = {
           hasPropertyRest: false,
           hasRestElement: false,
-          names: ['base.data', 'base.data.last_modified', 'base.options', 'base.options.headers'],
+          names: [
+            'base.data', 'base.data.last_modified', 'base.options', 'base.options.headers',
+          ],
           rests: [
             false,
             false,
@@ -84,11 +102,23 @@ describe('jsdocUtils', () => {
 
     context('Without root', () => {
       it('should prepend properties with provided root', () => {
-        const roots = [['data', ['last_modified']], ['options', ['headers']]];
+        const roots = [
+          [
+            'data', [
+              'last_modified',
+            ],
+          ], [
+            'options', [
+              'headers',
+            ],
+          ],
+        ];
         const expected = {
           hasPropertyRest: false,
           hasRestElement: false,
-          names: ['data', 'data.last_modified', 'options', 'options.headers'],
+          names: [
+            'data', 'data.last_modified', 'options', 'options.headers',
+          ],
           rests: [
             false,
             false,

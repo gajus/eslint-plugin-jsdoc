@@ -24,9 +24,13 @@ export default iterateJsdoc(({
   jsdoc,
   utils,
 }) => {
-  const emptyTags = utils.filterTags(({tag: tagName}) => {
+  const emptyTags = utils.filterTags(({
+    tag: tagName,
+  }) => {
     return defaultEmptyTags.has(tagName) ||
-      utils.hasOptionTag(tagName) && jsdoc.tags.some(({tag}) => {
+      utils.hasOptionTag(tagName) && jsdoc.tags.some(({
+        tag,
+      }) => {
         return tag === tagName;
       }) ||
       settings.mode !== 'closure' && emptyIfNotClosure.has(tagName);

@@ -5,10 +5,14 @@ export default iterateJsdoc(({
   context,
   jsdoc,
   report,
-  info: {lastIndex},
+  info: {
+    lastIndex,
+  },
   utils,
 }) => {
-  const {match} = context.options[0] || {};
+  const {
+    match,
+  } = context.options[0] || {};
   if (!match) {
     report('Rule `no-restricted-syntax` is missing a `match` option.');
 
@@ -19,7 +23,9 @@ export default iterateJsdoc(({
     allowName,
     disallowName,
     replacement,
-    tags = ['*'],
+    tags = [
+      '*',
+    ],
   } = match[lastIndex];
 
   const allowNameRegex = allowName && utils.getRegexFromString(allowName);
@@ -49,7 +55,9 @@ export default iterateJsdoc(({
       );
     };
 
-    let {message} = match[lastIndex];
+    let {
+      message,
+    } = match[lastIndex];
     if (!message) {
       if (hasRegex) {
         message = disallowed ?
@@ -123,7 +131,9 @@ export default iterateJsdoc(({
             type: 'array',
           },
         },
-        required: ['match'],
+        required: [
+          'match',
+        ],
         type: 'object',
       },
     ],

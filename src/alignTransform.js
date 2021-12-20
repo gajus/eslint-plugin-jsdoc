@@ -11,7 +11,9 @@ import {
   util,
 } from 'comment-parser';
 
-const {rewireSource} = util;
+const {
+  rewireSource,
+} = util;
 
 const zeroWidth = {
   name: 0,
@@ -48,7 +50,9 @@ const shouldAlign = (tags, index, source) => {
 };
 
 const getWidth = (tags) => {
-  return (width, {tokens}, index, source) => {
+  return (width, {
+    tokens,
+  }, index, source) => {
     if (!shouldAlign(tags, index, source)) {
       return width;
     }
@@ -134,7 +138,9 @@ const alignTransform = ({
   };
 
   const update = (line, index, source) => {
-    const tokens = {...line.tokens};
+    const tokens = {
+      ...line.tokens,
+    };
     if (tokens.tag !== '') {
       intoTags = true;
     }
@@ -198,8 +204,13 @@ const alignTransform = ({
     };
   };
 
-  return ({source, ...fields}) => {
-    width = source.reduce(getWidth(tags), {...zeroWidth});
+  return ({
+    source,
+    ...fields
+  }) => {
+    width = source.reduce(getWidth(tags), {
+      ...zeroWidth,
+    });
 
     return rewireSource({
       ...fields,

@@ -45,7 +45,9 @@ export default {
       options: [
         'any', {
           tags: {
-            always: ['param'],
+            always: [
+              'param',
+            ],
           },
         },
       ],
@@ -132,7 +134,9 @@ export default {
           message: 'Expected JSDoc line to have no prefix.',
         },
       ],
-      options: ['never'],
+      options: [
+        'never',
+      ],
       output: `
 
         /**
@@ -160,11 +164,15 @@ export default {
           message: 'Expected JSDoc line to have the prefix.',
         },
       ],
-      options: ['always', {
-        tags: {
-          any: ['someOtherTag'],
+      options: [
+        'always', {
+          tags: {
+            any: [
+              'someOtherTag',
+            ],
+          },
         },
-      }],
+      ],
       output: `
 
         /**
@@ -191,11 +199,15 @@ export default {
           message: 'Expected JSDoc line to have no prefix.',
         },
       ],
-      options: ['never', {
-        tags: {
-          always: ['someOtherTag'],
+      options: [
+        'never', {
+          tags: {
+            always: [
+              'someOtherTag',
+            ],
+          },
         },
-      }],
+      ],
       output: `
 
         /**
@@ -222,11 +234,15 @@ export default {
           message: 'Expected JSDoc line to have no prefix.',
         },
       ],
-      options: ['always', {
-        tags: {
-          never: ['param'],
+      options: [
+        'always', {
+          tags: {
+            never: [
+              'param',
+            ],
+          },
         },
-      }],
+      ],
       output: `
 
         /**
@@ -253,11 +269,15 @@ export default {
           message: 'Expected JSDoc line to have the prefix.',
         },
       ],
-      options: ['never', {
-        tags: {
-          always: ['param'],
+      options: [
+        'never', {
+          tags: {
+            always: [
+              'param',
+            ],
+          },
         },
-      }],
+      ],
       output: `
 
         /**
@@ -306,7 +326,9 @@ export default {
           message: 'Expected JSDoc line to have no prefix.',
         },
       ],
-      options: ['never'],
+      options: [
+        'never',
+      ],
       output: `
 
         /**
@@ -331,7 +353,9 @@ export default {
           message: 'Expected JSDoc line to have no prefix.',
         },
       ],
-      options: ['never'],
+      options: [
+        'never',
+      ],
       output: `
         /**
           @param {Number} foo
@@ -397,11 +421,15 @@ export default {
           // with spaces
         }
       `,
-      options: ['always', {
-        tags: {
-          any: ['param'],
+      options: [
+        'always', {
+          tags: {
+            any: [
+              'param',
+            ],
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -413,11 +441,15 @@ export default {
           // with spaces
         }
       `,
-      options: ['never', {
-        tags: {
-          always: ['param'],
+      options: [
+        'never', {
+          tags: {
+            always: [
+              'param',
+            ],
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -429,11 +461,15 @@ export default {
           // with spaces
         }
       `,
-      options: ['always', {
-        tags: {
-          never: ['someOtherTag'],
+      options: [
+        'always', {
+          tags: {
+            never: [
+              'someOtherTag',
+            ],
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -445,11 +481,15 @@ export default {
           // with spaces
         }
       `,
-      options: ['always', {
-        tags: {
-          never: ['param'],
+      options: [
+        'always', {
+          tags: {
+            never: [
+              'param',
+            ],
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -461,11 +501,15 @@ export default {
           // with spaces
         }
       `,
-      options: ['never', {
-        tags: {
-          always: ['someOtherTag'],
+      options: [
+        'never', {
+          tags: {
+            always: [
+              'someOtherTag',
+            ],
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -478,11 +522,15 @@ export default {
           // with spaces
         }
       `,
-      options: ['never', {
-        tags: {
-          any: ['*description'],
+      options: [
+        'never', {
+          tags: {
+            any: [
+              '*description',
+            ],
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -495,11 +543,15 @@ export default {
           // with spaces
         }
       `,
-      options: ['always', {
-        tags: {
-          any: ['*description'],
+      options: [
+        'always', {
+          tags: {
+            any: [
+              '*description',
+            ],
+          },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -514,7 +566,9 @@ export default {
       options: [
         'any', {
           tags: {
-            always: ['someOtherTag'],
+            always: [
+              'someOtherTag',
+            ],
           },
         },
       ],

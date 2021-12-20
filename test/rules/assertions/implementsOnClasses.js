@@ -33,7 +33,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -55,7 +57,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -74,7 +78,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -123,7 +129,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['MethodDefinition'],
+          contexts: [
+            'MethodDefinition',
+          ],
         },
       ],
     },
@@ -149,7 +157,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -178,7 +188,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -190,7 +202,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },

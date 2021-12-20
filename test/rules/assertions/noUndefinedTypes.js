@@ -85,9 +85,13 @@ export default {
           message: 'The type \'HisType\' is undefined.',
         },
       ],
-      options: [{
-        definedTypes: ['MyType'],
-      }],
+      options: [
+        {
+          definedTypes: [
+            'MyType',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -106,9 +110,13 @@ export default {
           message: 'The type \'HisType\' is undefined.',
         },
       ],
-      options: [{
-        definedTypes: ['MyType'],
-      }],
+      options: [
+        {
+          definedTypes: [
+            'MyType',
+          ],
+        },
+      ],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -136,9 +144,13 @@ export default {
           message: 'The type \'HerType\' is undefined.',
         },
       ],
-      options: [{
-        definedTypes: ['MyType'],
-      }],
+      options: [
+        {
+          definedTypes: [
+            'MyType',
+          ],
+        },
+      ],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -358,7 +370,9 @@ export default {
         jsdoc: {
           structuredTags: {
             aCustomTag: {
-              type: ['aType', 'anotherType'],
+              type: [
+                'aType', 'anotherType',
+              ],
             },
           },
         },
@@ -641,9 +655,13 @@ export default {
 
         }
       `,
-      options: [{
-        definedTypes: ['MyType', 'HisType'],
-      }],
+      options: [
+        {
+          definedTypes: [
+            'MyType', 'HisType',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -656,9 +674,13 @@ export default {
 
         }
       `,
-      options: [{
-        definedTypes: ['MyType'],
-      }],
+      options: [
+        {
+          definedTypes: [
+            'MyType',
+          ],
+        },
+      ],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -681,9 +703,13 @@ export default {
 
         }
       `,
-      options: [{
-        definedTypes: ['MyType'],
-      }],
+      options: [
+        {
+          definedTypes: [
+            'MyType',
+          ],
+        },
+      ],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -977,7 +1003,9 @@ export default {
         jsdoc: {
           structuredTags: {
             aCustomTag: {
-              type: ['aType', 'SomeType'],
+              type: [
+                'aType', 'SomeType',
+              ],
             },
           },
         },
@@ -1065,7 +1093,9 @@ export default {
           });
         };
         `,
-      env: {es6: true},
+      env: {
+        es6: true,
+      },
       ignoreReadme: true,
     },
     {

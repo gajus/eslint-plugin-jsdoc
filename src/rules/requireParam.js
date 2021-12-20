@@ -13,9 +13,11 @@ const rootNamer = (desiredRoots: string[], currentIndex: number): T => {
     name = desiredRoots.shift();
   }
 
-  return [name, incremented, () => {
-    return rootNamer(desiredRoots, idx);
-  }];
+  return [
+    name, incremented, () => {
+      return rootNamer(desiredRoots, idx);
+    },
+  ];
 };
 
 // eslint-disable-next-line complexity
@@ -24,7 +26,9 @@ export default iterateJsdoc(({
   utils,
   context,
 }) => {
-  const preferredTagName = utils.getPreferredTagName({tagName: 'param'});
+  const preferredTagName = utils.getPreferredTagName({
+    tagName: 'param',
+  });
   if (!preferredTagName) {
     return;
   }
@@ -34,8 +38,10 @@ export default iterateJsdoc(({
   const shallowJsdocParameterNames = jsdocParameterNames.filter((tag) => {
     return !tag.name.includes('.');
   }).map((tag, idx) => {
-    return {...tag,
-      idx};
+    return {
+      ...tag,
+      idx,
+    };
   });
 
   if (utils.avoidDocs()) {
@@ -56,7 +62,9 @@ export default iterateJsdoc(({
     enableFixer = true,
     enableRootFixer = true,
     enableRestElementFixer = true,
-    unnamedRootBase = ['root'],
+    unnamedRootBase = [
+      'root',
+    ],
     useDefaultObjectProperties = false,
   } = context.options[0] || {};
 
@@ -79,13 +87,19 @@ export default iterateJsdoc(({
     paramIndex[utils.dropPathSegmentQuotes(String(cur))] = idx;
   };
 
-  for (const [idx, cur] of flattenedRoots.entries()) {
+  for (const [
+    idx,
+    cur,
+  ] of flattenedRoots.entries()) {
     setParamIndex(cur, idx);
   }
 
   const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
     const remainingRoots = functionParameterNames.slice(indexAtFunctionParams || 0);
-    const foundIndex = jsdocTags.findIndex(({name, newAdd}) => {
+    const foundIndex = jsdocTags.findIndex(({
+      name,
+      newAdd,
+    }) => {
       return !newAdd && remainingRoots.some((remainingRoot) => {
         if (Array.isArray(remainingRoot)) {
           return remainingRoot[1].names.includes(name);
@@ -101,13 +115,21 @@ export default iterateJsdoc(({
 
     const tags = foundIndex > -1 ?
       jsdocTags.slice(0, foundIndex) :
-      jsdocTags.filter(({tag}) => {
+      jsdocTags.filter(({
+        tag,
+      }) => {
         return tag === preferredTagName;
       });
 
     let tagLineCount = 0;
-    for (const {source} of tags) {
-      for (const {tokens: {end}} of source) {
+    for (const {
+      source,
+    } of tags) {
+      for (const {
+        tokens: {
+          end,
+        },
+      } of source) {
         if (!end) {
           tagLineCount++;
         }
@@ -117,9 +139,18 @@ export default iterateJsdoc(({
     return tagLineCount;
   };
 
-  let [nextRootName, incremented, namer] = rootNamer([...unnamedRootBase], autoIncrementBase);
+  let [
+    nextRootName,
+    incremented,
+    namer,
+  ] = rootNamer([
+    ...unnamedRootBase,
+  ], autoIncrementBase);
 
-  for (const [functionParameterIdx, functionParameterName] of functionParameterNames.entries()) {
+  for (const [
+    functionParameterIdx,
+    functionParameterName,
+  ] of functionParameterNames.entries()) {
     let inc;
     if (Array.isArray(functionParameterName)) {
       const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx] ||
@@ -136,10 +167,19 @@ export default iterateJsdoc(({
       } else {
         rootName = nextRootName;
         inc = incremented;
-        [nextRootName, incremented, namer] = namer();
+        [
+          nextRootName,
+          incremented,
+          namer,
+        ] = namer();
       }
 
-      const {hasRestElement, hasPropertyRest, rests, names} = functionParameterName[1];
+      const {
+        hasRestElement,
+        hasPropertyRest,
+        rests,
+        names,
+      } = functionParameterName[1];
       const notCheckingNames = [];
       if (!enableRestElementFixer && hasRestElement) {
         continue;
@@ -149,15 +189,24 @@ export default iterateJsdoc(({
         continue;
       }
 
-      for (const [idx, paramName] of names.entries()) {
+      for (const [
+        idx,
+        paramName,
+      ] of names.entries()) {
         // Add root if the root name is not in the docs (and is not already
         //  in the tags to be fixed)
-        if (!jsdocParameterNames.find(({name}) => {
+        if (!jsdocParameterNames.find(({
+          name,
+        }) => {
           return name === rootName;
-        }) && !missingTags.find(({functionParameterName: fpn}) => {
+        }) && !missingTags.find(({
+          functionParameterName: fpn,
+        }) => {
           return fpn === rootName;
         })) {
-          const emptyParamIdx = jsdocParameterNames.findIndex(({name}) => {
+          const emptyParamIdx = jsdocParameterNames.findIndex(({
+            name,
+          }) => {
             return !name;
           });
 
@@ -189,7 +238,10 @@ export default iterateJsdoc(({
 
         const fullParamName = `${rootName}.${paramName}`;
 
-        const notCheckingName = jsdocParameterNames.find(({name, type: paramType}) => {
+        const notCheckingName = jsdocParameterNames.find(({
+          name,
+          type: paramType,
+        }) => {
           return utils.comparePaths(name)(fullParamName) && paramType.search(checkTypesRegex) === -1 && paramType !== '';
         });
 
@@ -203,7 +255,9 @@ export default iterateJsdoc(({
           continue;
         }
 
-        if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
+        if (jsdocParameterNames && !jsdocParameterNames.find(({
+          name,
+        }) => {
           return utils.comparePaths(name)(fullParamName);
         })) {
           missingTags.push({
@@ -233,7 +287,9 @@ export default iterateJsdoc(({
       funcParamName = functionParameterName;
     }
 
-    if (jsdocParameterNames && !jsdocParameterNames.find(({name}) => {
+    if (jsdocParameterNames && !jsdocParameterNames.find(({
+      name,
+    }) => {
       return name === funcParamName;
     })) {
       missingTags.push({
@@ -246,7 +302,11 @@ export default iterateJsdoc(({
   }
 
   const fix = ({
-    functionParameterIdx, functionParameterName, remove, inc, type,
+    functionParameterIdx,
+    functionParameterName,
+    remove,
+    inc,
+    type,
   }) => {
     if (inc && !enableRootFixer) {
       return;
@@ -275,18 +335,28 @@ export default iterateJsdoc(({
       jsdoc.tags.splice(tagIndex, spliceCount, {
         name: functionParameterName,
         newAdd: true,
-        source: [tokens],
+        source: [
+          tokens,
+        ],
         tag: preferredTagName,
         type: type ?? '',
       });
       const firstNumber = jsdoc.source[0].number;
       jsdoc.source.splice(sourceIndex, spliceCount, tokens);
-      for (const [idx, src] of jsdoc.source.slice(sourceIndex).entries()) {
+      for (const [
+        idx,
+        src,
+      ] of jsdoc.source.slice(sourceIndex).entries()) {
         src.number = firstNumber + sourceIndex + idx;
       }
     };
 
-    const offset = jsdoc.source.findIndex(({tokens: {tag, end}}) => {
+    const offset = jsdoc.source.findIndex(({
+      tokens: {
+        tag,
+        end,
+      },
+    }) => {
       return tag || end;
     });
     if (remove) {
@@ -307,7 +377,9 @@ export default iterateJsdoc(({
     utils.makeMultiline();
   }
 
-  for (const {functionParameterName} of missingTags) {
+  for (const {
+    functionParameterName,
+  } of missingTags) {
     utils.reportJSDoc(
       `Missing JSDoc @${preferredTagName} "${functionParameterName}" declaration.`,
       null,

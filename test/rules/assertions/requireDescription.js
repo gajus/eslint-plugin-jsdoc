@@ -122,7 +122,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['ClassDeclaration'],
+          contexts: [
+            'ClassDeclaration',
+          ],
           descriptionStyle: 'tag',
         },
       ],
@@ -141,29 +143,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
-          descriptionStyle: 'tag',
-        },
-      ],
-    },
-    {
-      code: `
-          /**
-           *
-           */
-          class quux {
-
-          }
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Missing JSDoc @description declaration.',
-        },
-      ],
-      options: [
-        {
-          contexts: ['ClassDeclaration'],
+          contexts: [
+            'any',
+          ],
           descriptionStyle: 'tag',
         },
       ],
@@ -185,7 +167,33 @@ export default {
       ],
       options: [
         {
-          contexts: ['ClassDeclaration'],
+          contexts: [
+            'ClassDeclaration',
+          ],
+          descriptionStyle: 'tag',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          class quux {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @description declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'ClassDeclaration',
+          ],
           descriptionStyle: 'tag',
         },
       ],
@@ -387,7 +395,9 @@ export default {
       ],
       options: [
         {
-          exemptedBy: ['notPresent'],
+          exemptedBy: [
+            'notPresent',
+          ],
         },
       ],
     },
@@ -528,7 +538,9 @@ export default {
       options: [
         {
           checkConstructors: false,
-          contexts: ['MethodDefinition'],
+          contexts: [
+            'MethodDefinition',
+          ],
         },
       ],
     },
@@ -781,7 +793,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['ClassDeclaration'],
+          contexts: [
+            'ClassDeclaration',
+          ],
         },
       ],
     },
@@ -796,7 +810,9 @@ export default {
       `,
       options: [
         {
-          exemptedBy: ['type'],
+          exemptedBy: [
+            'type',
+          ],
         },
       ],
     },

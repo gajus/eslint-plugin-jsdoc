@@ -165,9 +165,11 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
-      options: [{
-        exemptAsync: false,
-      }],
+      options: [
+        {
+          exemptAsync: false,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -207,9 +209,11 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
-      options: [{
-        exemptGenerators: false,
-      }],
+      options: [
+        {
+          exemptGenerators: false,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -234,9 +238,11 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
-      options: [{
-        exemptAsync: false,
-      }],
+      options: [
+        {
+          exemptAsync: false,
+        },
+      ],
     },
     {
       code: `
@@ -257,9 +263,11 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
-      options: [{
-        exemptAsync: false,
-      }],
+      options: [
+        {
+          exemptAsync: false,
+        },
+      ],
     },
     {
       code: `
@@ -277,9 +285,11 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
-      options: [{
-        exemptAsync: false,
-      }],
+      options: [
+        {
+          exemptAsync: false,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -300,10 +310,12 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
-      options: [{
-        exemptAsync: false,
-        reportMissingReturnForUndefinedTypes: true,
-      }],
+      options: [
+        {
+          exemptAsync: false,
+          reportMissingReturnForUndefinedTypes: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -321,9 +333,11 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
-      options: [{
-        reportMissingReturnForUndefinedTypes: true,
-      }],
+      options: [
+        {
+          reportMissingReturnForUndefinedTypes: true,
+        },
+      ],
     },
     {
       code: `
@@ -812,9 +826,11 @@ export default {
             return 5;
           }
       `,
-      options: [{
-        exemptAsync: false,
-      }],
+      options: [
+        {
+          exemptAsync: false,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -832,9 +848,11 @@ export default {
             })
           }
       `,
-      options: [{
-        exemptAsync: false,
-      }],
+      options: [
+        {
+          exemptAsync: false,
+        },
+      ],
     },
     {
       code: `
@@ -846,9 +864,11 @@ export default {
           return new Promise(resolve => resolve());
         }
       `,
-      options: [{
-        reportMissingReturnForUndefinedTypes: true,
-      }],
+      options: [
+        {
+          reportMissingReturnForUndefinedTypes: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -862,9 +882,11 @@ export default {
             return undefined;
           }
       `,
-      options: [{
-        reportMissingReturnForUndefinedTypes: true,
-      }],
+      options: [
+        {
+          reportMissingReturnForUndefinedTypes: true,
+        },
+      ],
     },
     {
       code: `
@@ -875,9 +897,11 @@ export default {
             return 'abc';
           }
       `,
-      options: [{
-        reportMissingReturnForUndefinedTypes: true,
-      }],
+      options: [
+        {
+          reportMissingReturnForUndefinedTypes: true,
+        },
+      ],
     },
     {
       code: `
@@ -902,9 +926,11 @@ export default {
            */
           function * quux() {}
       `,
-      options: [{
-        exemptGenerators: true,
-      }],
+      options: [
+        {
+          exemptGenerators: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },

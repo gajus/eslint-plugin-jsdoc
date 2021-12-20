@@ -59,15 +59,21 @@ const getAssertions = () => {
     // eslint-disable-next-line import/no-dynamic-require
     const codes = require(filePath);
 
-    const ruleName = decamelize(assertionNames[idx], {separator: '-'});
+    const ruleName = decamelize(assertionNames[idx], {
+      separator: '-',
+    });
 
     return {
-      invalid: codes.invalid.filter(({ignoreReadme}) => {
+      invalid: codes.invalid.filter(({
+        ignoreReadme,
+      }) => {
         return !ignoreReadme;
       }).map((setup) => {
         return formatCodeSnippet(setup, ruleName);
       }),
-      valid: codes.valid.filter(({ignoreReadme}) => {
+      valid: codes.valid.filter(({
+        ignoreReadme,
+      }) => {
         return !ignoreReadme;
       }).map((setup) => {
         return formatCodeSnippet(setup, ruleName);
@@ -76,13 +82,17 @@ const getAssertions = () => {
   });
 
   return Object.fromEntries(assertionNames.map((assertionName, index) => {
-    return [assertionName, assertionCodes[index]];
+    return [
+      assertionName, assertionCodes[index],
+    ];
   }));
 };
 
 const getSomeBranch = () => {
   const gitConfig = fs.readFileSync(path.join(__dirname, '../../.git/config')).toString();
-  const [, branch] = /\[branch "([^"]+)"\]/u.exec(gitConfig) || [];
+  const [
+    , branch,
+  ] = /\[branch "([^"]+)"\]/u.exec(gitConfig) || [];
 
   return branch;
 };

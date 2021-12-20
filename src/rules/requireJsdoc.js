@@ -1,5 +1,7 @@
 import {
-  getJSDocComment, getReducedASTNode, getDecorator,
+  getJSDocComment,
+  getReducedASTNode,
+  getDecorator,
 } from '@es-joy/jsdoccomment';
 import exportParser from '../exportParser';
 import {
@@ -20,7 +22,9 @@ const OPTIONS_SCHEMA = {
           type: 'boolean',
         },
         {
-          enum: ['no-setter'],
+          enum: [
+            'no-setter',
+          ],
           type: 'string',
         },
       ],
@@ -32,7 +36,9 @@ const OPTIONS_SCHEMA = {
           type: 'boolean',
         },
         {
-          enum: ['no-getter'],
+          enum: [
+            'no-getter',
+          ],
           type: 'string',
         },
       ],
@@ -202,7 +208,11 @@ export default {
     const {
       require: requireOption,
       contexts,
-      publicOnly, exemptEmptyFunctions, exemptEmptyConstructors, enableFixer, fixerMessage,
+      publicOnly,
+      exemptEmptyFunctions,
+      exemptEmptyConstructors,
+      enableFixer,
+      fixerMessage,
     } = getOptions(context);
 
     const checkJsDoc = (info, handler, node) => {
@@ -215,7 +225,11 @@ export default {
       // For those who have options configured against ANY constructors (or
       //  setters or getters) being reported
       if (jsdocUtils.exemptSpeciaMethods(
-        {tags: []}, node, context, [OPTIONS_SCHEMA],
+        {
+          tags: [],
+        }, node, context, [
+          OPTIONS_SCHEMA,
+        ],
       )) {
         return;
       }
@@ -252,7 +266,11 @@ export default {
           ),
         });
 
-        const {inlineCommentBlock} = contexts.find(({context: ctxt}) => {
+        const {
+          inlineCommentBlock,
+        } = contexts.find(({
+          context: ctxt,
+        }) => {
           return ctxt === node.type;
         }) || {};
         const insertion = (inlineCommentBlock ?
@@ -310,10 +328,16 @@ export default {
         }
 
         if (
-          ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
-          ['Property', 'ObjectProperty', 'ClassProperty', 'PropertyDefinition'].includes(node.parent.type) && node === node.parent.value
+          [
+            'VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration',
+          ].includes(node.parent.type) ||
+          [
+            'Property', 'ObjectProperty', 'ClassProperty', 'PropertyDefinition',
+          ].includes(node.parent.type) && node === node.parent.value
         ) {
-          checkJsDoc({isFunctionContext: true}, null, node);
+          checkJsDoc({
+            isFunctionContext: true,
+          }, null, node);
         }
       },
 
@@ -322,7 +346,9 @@ export default {
           return;
         }
 
-        checkJsDoc({isFunctionContext: false}, null, node);
+        checkJsDoc({
+          isFunctionContext: false,
+        }, null, node);
       },
 
       ClassExpression (node) {
@@ -330,7 +356,9 @@ export default {
           return;
         }
 
-        checkJsDoc({isFunctionContext: false}, null, node);
+        checkJsDoc({
+          isFunctionContext: false,
+        }, null, node);
       },
 
       FunctionDeclaration (node) {
@@ -338,12 +366,16 @@ export default {
           return;
         }
 
-        checkJsDoc({isFunctionContext: true}, null, node);
+        checkJsDoc({
+          isFunctionContext: true,
+        }, null, node);
       },
 
       FunctionExpression (node) {
         if (hasOption('MethodDefinition') && node.parent.type === 'MethodDefinition') {
-          checkJsDoc({isFunctionContext: true}, null, node);
+          checkJsDoc({
+            isFunctionContext: true,
+          }, null, node);
 
           return;
         }
@@ -353,10 +385,16 @@ export default {
         }
 
         if (
-          ['VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration'].includes(node.parent.type) ||
-          ['Property', 'ObjectProperty', 'ClassProperty', 'PropertyDefinition'].includes(node.parent.type) && node === node.parent.value
+          [
+            'VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration',
+          ].includes(node.parent.type) ||
+          [
+            'Property', 'ObjectProperty', 'ClassProperty', 'PropertyDefinition',
+          ].includes(node.parent.type) && node === node.parent.value
         ) {
-          checkJsDoc({isFunctionContext: true}, null, node);
+          checkJsDoc({
+            isFunctionContext: true,
+          }, null, node);
         }
       },
     };

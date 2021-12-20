@@ -47,9 +47,11 @@ export default {
           message: 'Invalid JSDoc @variation: "-3".',
         },
       ],
-      options: [{
-        numericOnlyVariation: true,
-      }],
+      options: [
+        {
+          numericOnlyVariation: true,
+        },
+      ],
     },
     {
       code: `
@@ -132,7 +134,9 @@ export default {
       ],
       options: [
         {
-          allowedLicenses: ['BAR', 'BAX'],
+          allowedLicenses: [
+            'BAR', 'BAX',
+          ],
         },
       ],
     },
@@ -224,7 +228,9 @@ export default {
       ],
       options: [
         {
-          allowedAuthors: ['Gajus Kuizinas', 'golopot'],
+          allowedAuthors: [
+            'Gajus Kuizinas', 'golopot',
+          ],
         },
       ],
     },
@@ -243,9 +249,11 @@ export default {
           message: 'Missing JSDoc @variation value.',
         },
       ],
-      options: [{
-        numericOnlyVariation: true,
-      }],
+      options: [
+        {
+          numericOnlyVariation: true,
+        },
+      ],
     },
     {
       code: `
@@ -262,9 +270,11 @@ export default {
           message: 'Invalid JSDoc @variation: "5.2".',
         },
       ],
-      options: [{
-        numericOnlyVariation: true,
-      }],
+      options: [
+        {
+          numericOnlyVariation: true,
+        },
+      ],
     },
   ],
   valid: [
@@ -350,7 +360,9 @@ export default {
       `,
       options: [
         {
-          allowedLicenses: ['FOO', 'BAR', 'BAX'],
+          allowedLicenses: [
+            'FOO', 'BAR', 'BAX',
+          ],
         },
       ],
     },
@@ -406,7 +418,9 @@ export default {
       `,
       options: [
         {
-          allowedAuthors: ['Gajus Kuizinas', 'golopot', 'Brett Zamir'],
+          allowedAuthors: [
+            'Gajus Kuizinas', 'golopot', 'Brett Zamir',
+          ],
         },
       ],
     },
@@ -419,9 +433,11 @@ export default {
 
       }
       `,
-      options: [{
-        numericOnlyVariation: true,
-      }],
+      options: [
+        {
+          numericOnlyVariation: true,
+        },
+      ],
     },
     {
       code: `

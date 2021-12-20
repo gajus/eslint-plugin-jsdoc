@@ -35,7 +35,9 @@ const canSkip = (utils) => {
 };
 
 const checkTagName = (utils, report, tagName) => {
-  const preferredTagName = utils.getPreferredTagName({tagName});
+  const preferredTagName = utils.getPreferredTagName({
+    tagName,
+  });
   if (!preferredTagName) {
     return [];
   }
@@ -47,10 +49,14 @@ const checkTagName = (utils, report, tagName) => {
   }
 
   // In case the code yields something, we expect a yields value in JSDoc.
-  const [tag] = tags;
+  const [
+    tag,
+  ] = tags;
   const missingTag = typeof tag === 'undefined' || tag === null;
 
-  return [preferredTagName, missingTag];
+  return [
+    preferredTagName, missingTag,
+  ];
 };
 
 export default iterateJsdoc(({
@@ -74,7 +80,10 @@ export default iterateJsdoc(({
 
   const iteratingFunction = utils.isIteratingFunction();
 
-  const [preferredYieldTagName, missingYieldTag] = checkTagName(
+  const [
+    preferredYieldTagName,
+    missingYieldTag,
+  ] = checkTagName(
     utils, report, 'yields',
   );
   if (preferredYieldTagName) {
@@ -99,7 +108,10 @@ export default iterateJsdoc(({
   }
 
   if (next || nextWithGeneratorTag || forceRequireNext) {
-    const [preferredNextTagName, missingNextTag] = checkTagName(
+    const [
+      preferredNextTagName,
+      missingNextTag,
+    ] = checkTagName(
       utils, report, 'next',
     );
     if (!preferredNextTagName) {

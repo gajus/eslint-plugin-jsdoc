@@ -3,7 +3,9 @@
 import WarnSettings from './WarnSettings';
 import getDefaultTagStructureForMode from './getDefaultTagStructureForMode';
 import {
-  jsdocTags, closureTags, typeScriptTags,
+  jsdocTags,
+  closureTags,
+  typeScriptTags,
 } from './tagNames';
 
 type ParserMode = "jsdoc"|"typescript"|"closure";
@@ -96,9 +98,11 @@ const getPropertiesFromPropertySignature = (propSignature): T => {
   }
 
   if (propSignature.typeAnnotation && propSignature.typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
-    return [propSignature.key.name, propSignature.typeAnnotation.typeAnnotation.members.map((member) => {
-      return getPropertiesFromPropertySignature(member);
-    })];
+    return [
+      propSignature.key.name, propSignature.typeAnnotation.typeAnnotation.members.map((member) => {
+        return getPropertiesFromPropertySignature(member);
+      }),
+    ];
   }
 
   return propSignature.key.name;
@@ -125,10 +129,14 @@ const getFunctionParameterNames = (
         const hasLeftName = 'left' in param && 'name' in param.left;
 
         if ('name' in param || hasLeftName) {
-          return [hasLeftName ? param.left.name : param.name, flattened];
+          return [
+            hasLeftName ? param.left.name : param.name, flattened,
+          ];
         }
 
-        return [undefined, flattened];
+        return [
+          undefined, flattened,
+        ];
       }
     }
 
@@ -146,46 +154,58 @@ const getFunctionParameterNames = (
         return getParamName(prop, true);
       });
 
-      return [undefined, flattenRoots(roots)];
+      return [
+        undefined, flattenRoots(roots),
+      ];
     }
 
     if (param.type === 'Property') {
       // eslint-disable-next-line default-case
       switch (param.value.type) {
       case 'ArrayPattern':
-        return [param.key.name, param.value.elements.map((prop, idx) => {
-          return {
-            name: idx,
-            restElement: prop.type === 'RestElement',
-          };
-        })];
+        return [
+          param.key.name, param.value.elements.map((prop, idx) => {
+            return {
+              name: idx,
+              restElement: prop.type === 'RestElement',
+            };
+          }),
+        ];
       case 'ObjectPattern':
-        return [param.key.name, param.value.properties.map((prop) => {
-          return getParamName(prop, isProperty);
-        })];
+        return [
+          param.key.name, param.value.properties.map((prop) => {
+            return getParamName(prop, isProperty);
+          }),
+        ];
       case 'AssignmentPattern': {
         // eslint-disable-next-line default-case
         switch (param.value.left.type) {
         case 'Identifier':
           // Default parameter
           if (checkDefaultObjects && param.value.right.type === 'ObjectExpression') {
-            return [param.key.name, param.value.right.properties.map((prop) => {
-              return getParamName(prop, isProperty);
-            })];
+            return [
+              param.key.name, param.value.right.properties.map((prop) => {
+                return getParamName(prop, isProperty);
+              }),
+            ];
           }
 
           break;
         case 'ObjectPattern':
-          return [param.key.name, param.value.left.properties.map((prop) => {
-            return getParamName(prop, isProperty);
-          })];
+          return [
+            param.key.name, param.value.left.properties.map((prop) => {
+              return getParamName(prop, isProperty);
+            }),
+          ];
         case 'ArrayPattern':
-          return [param.key.name, param.value.left.elements.map((prop, idx) => {
-            return {
-              name: idx,
-              restElement: prop.type === 'RestElement',
-            };
-          })];
+          return [
+            param.key.name, param.value.left.elements.map((prop, idx) => {
+              return {
+                name: idx,
+                restElement: prop.type === 'RestElement',
+              };
+            }),
+          ];
         }
       }
       }
@@ -219,10 +239,14 @@ const getFunctionParameterNames = (
         };
       });
 
-      return [undefined, flattenRoots(roots)];
+      return [
+        undefined, flattenRoots(roots),
+      ];
     }
 
-    if (['RestElement', 'ExperimentalRestProperty'].includes(param.type)) {
+    if ([
+      'RestElement', 'ExperimentalRestProperty',
+    ].includes(param.type)) {
       return {
         isRestProperty: isProperty,
         name: param.argument.name,
@@ -253,7 +277,14 @@ const hasParams = (functionNode) => {
  */
 const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object> => {
   const ret = [];
-  for (const [idx, {name, tag, type}] of jsdoc.tags.entries()) {
+  for (const [
+    idx,
+    {
+      name,
+      tag,
+      type,
+    },
+  ] of jsdoc.tags.entries()) {
     if (tag !== targetTagName) {
       continue;
     }
@@ -318,8 +349,13 @@ const getPreferredTagName = (
   const tagPreferenceFixed = Object.fromEntries(
     Object
       .entries(tagPreference)
-      .map(([key, value]) => {
-        return [key.replace(/^tag /u, ''), value];
+      .map(([
+        key,
+        value,
+      ]) => {
+        return [
+          key.replace(/^tag /u, ''), value,
+        ];
       }),
   );
 
@@ -329,7 +365,9 @@ const getPreferredTagName = (
 
   const tagNames = getTagNamesForMode(mode, context);
 
-  const preferredTagName = Object.entries(tagNames).find(([, aliases]) => {
+  const preferredTagName = Object.entries(tagNames).find(([
+    , aliases,
+  ]) => {
     return aliases.includes(name);
   })?.[0];
   if (preferredTagName) {
@@ -401,9 +439,14 @@ const ensureMap = (map, tag) => {
 };
 
 const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
-  for (const [tag, {
-    name, type, required = [],
-  }] of Object.entries(structuredTags)) {
+  for (const [
+    tag,
+    {
+      name,
+      type,
+      required = [],
+    },
+  ] of Object.entries(structuredTags)) {
     const tagStruct = ensureMap(tagMap, tag);
 
     tagStruct.set('nameContents', name);
@@ -840,13 +883,22 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn) => 
       return true;
     }
 
-    const [{params, body} = {}] = prom.arguments;
+    const [
+      {
+        params,
+        body,
+      } = {},
+    ] = prom.arguments;
 
     if (!params?.length) {
       return false;
     }
 
-    const [{name: resolverName}] = params;
+    const [
+      {
+        name: resolverName,
+      },
+    ] = params;
 
     return hasNonEmptyResolverCall(body, resolverName);
   });
@@ -1158,7 +1210,10 @@ const enforcedContexts = (context, defaultContexts) => {
 const getContextObject = (contexts, checkJsdoc, handler) => {
   const properties = {};
 
-  for (const [idx, prop] of contexts.entries()) {
+  for (const [
+    idx,
+    prop,
+  ] of contexts.entries()) {
     let property;
     let value;
 
@@ -1216,7 +1271,9 @@ const getTagsByType = (context, mode, tags, tagPreference) => {
   const descName = getPreferredTagName(context, mode, 'description', tagPreference);
   const tagsWithoutNames = [];
   const tagsWithNames = filterTags(tags, (tag) => {
-    const {tag: tagName} = tag;
+    const {
+      tag: tagName,
+    } = tag;
     const tagWithName = tagsWithNamesAndDescriptions.has(tagName);
     if (!tagWithName && tagName !== descName) {
       tagsWithoutNames.push(tag);
@@ -1249,12 +1306,23 @@ const isSetter = (node) => {
 };
 
 const hasAccessorPair = (node) => {
-  const {type, kind: sourceKind, key: {name: sourceName}} = node;
+  const {
+    type,
+    kind: sourceKind,
+    key: {
+      name: sourceName,
+    },
+  } = node;
   const oppositeKind = sourceKind === 'get' ? 'set' : 'get';
 
   const children = type === 'MethodDefinition' ? 'body' : 'properties';
 
-  return node.parent[children].some(({kind, key: {name}}) => {
+  return node.parent[children].some(({
+    kind,
+    key: {
+      name,
+    },
+  }) => {
     return kind === oppositeKind && name === sourceName;
   });
 };
@@ -1317,13 +1385,18 @@ const getRegexFromString = (regexString, requiredFlags) => {
   let flags = 'u';
   let regex = regexString;
   if (match) {
-    [, regex, flags] = match;
+    [
+      , regex,
+      flags,
+    ] = match;
     if (!flags) {
       flags = 'u';
     }
   }
 
-  const uniqueFlags = [...new Set(flags + (requiredFlags || ''))];
+  const uniqueFlags = [
+    ...new Set(flags + (requiredFlags || '')),
+  ];
   flags = uniqueFlags.join('');
 
   return new RegExp(regex, flags);

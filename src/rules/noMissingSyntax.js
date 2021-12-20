@@ -22,7 +22,9 @@ const incrementSelector = (state, selector, comment) => {
 export default iterateJsdoc(({
   context,
   node,
-  info: {comment},
+  info: {
+    comment,
+  },
   state,
 }) => {
   if (!context.options[0]) {
@@ -30,7 +32,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const {contexts} = context.options[0];
+  const {
+    contexts,
+  } = context.options[0];
 
   const foundContext = contexts.find((cntxt) => {
     return typeof cntxt === 'string' ?
@@ -49,7 +53,8 @@ export default iterateJsdoc(({
 }, {
   contextSelected: true,
   exit ({
-    context, state,
+    context,
+    state,
   }) {
     if (!context.options.length) {
       context.report({
@@ -94,8 +99,12 @@ export default iterateJsdoc(({
             context: contextStr,
           },
           loc: {
-            end: {line: 1},
-            start: {line: 1},
+            end: {
+              line: 1,
+            },
+            start: {
+              line: 1,
+            },
           },
           message,
         });

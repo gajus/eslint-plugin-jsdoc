@@ -40,429 +40,737 @@ const getDefaultTagStructureForMode = (mode) => {
   //  inline)
 
   return new Map([
-    ['alias', new Map([
+    [
+      'alias', new Map([
       // Signature seems to require a "namepath" (and no counter-examples)
-      ['nameContents', 'namepath-referencing'],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
 
-      // "namepath"
-      ['typeOrNameRequired', true],
-    ])],
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['arg', new Map([
-      ['nameContents', 'namepath-defining'],
+    [
+      'arg', new Map([
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // See `param`
-      ['nameRequired', true],
+        // See `param`
+        [
+          'nameRequired', true,
+        ],
 
-      // Has no formal signature in the docs but shows curly brackets
-      //   in the examples
-      ['typeAllowed', true],
-    ])],
+        // Has no formal signature in the docs but shows curly brackets
+        //   in the examples
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['argument', new Map([
-      ['nameContents', 'namepath-defining'],
+    [
+      'argument', new Map([
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // See `param`
-      ['nameRequired', true],
+        // See `param`
+        [
+          'nameRequired', true,
+        ],
 
-      // Has no formal signature in the docs but shows curly brackets
-      //   in the examples
-      ['typeAllowed', true],
-    ])],
+        // Has no formal signature in the docs but shows curly brackets
+        //   in the examples
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['augments', new Map([
+    [
+      'augments', new Map([
       // Signature seems to require a "namepath" (and no counter-examples)
-      ['nameContents', 'namepath-referencing'],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
 
-      // Does not show curly brackets in either the signature or examples
-      ['typeAllowed', true],
+        // Does not show curly brackets in either the signature or examples
+        [
+          'typeAllowed', true,
+        ],
 
-      // "namepath"
-      ['typeOrNameRequired', true],
-    ])],
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['borrows', new Map([
+    [
+      'borrows', new Map([
       // `borrows` has a different format, however, so needs special parsing;
       //   seems to require both, and as "namepath"'s
-      ['nameContents', 'namepath-referencing'],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
 
-      // "namepath"
-      ['typeOrNameRequired', true],
-    ])],
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['callback', new Map([
+    [
+      'callback', new Map([
       // Seems to require a "namepath" in the signature (with no
       //   counter-examples)
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // "namepath"
-      ['nameRequired', true],
-    ])],
+        // "namepath"
+        [
+          'nameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['class', new Map([
+    [
+      'class', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      ['typeAllowed', true],
-    ])],
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['const', new Map([
+    [
+      'const', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      ['typeAllowed', true],
-    ])],
-    ['constant', new Map([
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
+    [
+      'constant', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      ['typeAllowed', true],
-    ])],
-    ['constructor', new Map([
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
+    [
+      'constructor', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      ['typeAllowed', true],
-    ])],
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['define', new Map([
-      ['typeRequired', isClosure],
-    ])],
+    [
+      'define', new Map([
+        [
+          'typeRequired', isClosure,
+        ],
+      ]),
+    ],
 
-    ['emits', new Map([
+    [
+      'emits', new Map([
       // Signature seems to require a "name" (of an event) and no counter-examples
-      ['nameContents', 'namepath-referencing'],
-    ])],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
+      ]),
+    ],
 
-    ['enum', new Map([
+    [
+      'enum', new Map([
       // Has example showing curly brackets but not in doc signature
-      ['typeAllowed', true],
-    ])],
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['event', new Map([
+    [
+      'event', new Map([
       // The doc signature of `event` seems to require a "name"
-      ['nameRequired', true],
+        [
+          'nameRequired', true,
+        ],
 
-      // Appears to require a "name" in its signature, albeit somewhat
-      //  different from other "name"'s (including as described
-      //  at https://jsdoc.app/about-namepaths.html )
-      ['nameContents', 'namepath-defining'],
-    ])],
+        // Appears to require a "name" in its signature, albeit somewhat
+        //  different from other "name"'s (including as described
+        //  at https://jsdoc.app/about-namepaths.html )
+        [
+          'nameContents', 'namepath-defining',
+        ],
+      ]),
+    ],
 
-    ['exception', new Map([
+    [
+      'exception', new Map([
       // Shows curly brackets in the signature and in the examples
-      ['typeAllowed', true],
-    ])],
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['export', new Map([
-      ['typeAllowed', isClosureOrPermissive],
-    ])],
+    [
+      'export', new Map([
+        [
+          'typeAllowed', isClosureOrPermissive,
+        ],
+      ]),
+    ],
 
-    ['extends', new Map([
+    [
+      'extends', new Map([
       // Signature seems to require a "namepath" (and no counter-examples)
-      ['nameContents', 'namepath-referencing'],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
 
-      // Does not show curly brackets in either the signature or examples
-      ['typeAllowed', isTypescriptOrClosure || isPermissive],
+        // Does not show curly brackets in either the signature or examples
+        [
+          'typeAllowed', isTypescriptOrClosure || isPermissive,
+        ],
 
-      ['nameRequired', isJsdoc],
+        [
+          'nameRequired', isJsdoc,
+        ],
 
-      // "namepath"
-      ['typeOrNameRequired', isTypescriptOrClosure || isPermissive],
-    ])],
+        // "namepath"
+        [
+          'typeOrNameRequired', isTypescriptOrClosure || isPermissive,
+        ],
+      ]),
+    ],
 
-    ['external', new Map([
+    [
+      'external', new Map([
       // Appears to require a "name" in its signature, albeit somewhat
       //  different from other "name"'s (including as described
       //  at https://jsdoc.app/about-namepaths.html )
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // "name" (and a special syntax for the `external` name)
-      ['nameRequired', true],
-    ])],
+        // "name" (and a special syntax for the `external` name)
+        [
+          'nameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['fires', new Map([
+    [
+      'fires', new Map([
       // Signature seems to require a "name" (of an event) and no
       //  counter-examples
-      ['nameContents', 'namepath-referencing'],
-    ])],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
+      ]),
+    ],
 
-    ['function', new Map([
+    [
+      'function', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
-    ])],
-    ['func', new Map([
+        [
+          'nameContents', 'namepath-defining',
+        ],
+      ]),
+    ],
+    [
+      'func', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
-    ])],
+        [
+          'nameContents', 'namepath-defining',
+        ],
+      ]),
+    ],
 
-    ['host', new Map([
+    [
+      'host', new Map([
       // Appears to require a "name" in its signature, albeit somewhat
       //  different from other "name"'s (including as described
       //  at https://jsdoc.app/about-namepaths.html )
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // See `external`
-      ['nameRequired', true],
+        // See `external`
+        [
+          'nameRequired', true,
+        ],
 
-      // "namepath"
-      ['typeOrNameRequired', true],
-    ])],
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['interface', new Map([
+    [
+      'interface', new Map([
       // Allows for "name" in signature, but indicates as optional
-      [
-        'nameContents',
-        isJsdocTypescriptOrPermissive ? 'namepath-defining' : false,
-      ],
-    ])],
+        [
+          'nameContents',
+          isJsdocTypescriptOrPermissive ? 'namepath-defining' : false,
+        ],
+      ]),
+    ],
 
-    ['implements', new Map([
+    [
+      'implements', new Map([
       // Shows curly brackets in the doc signature and examples
       // "typeExpression"
-      ['typeRequired', true],
-    ])],
+        [
+          'typeRequired', true,
+        ],
+      ]),
+    ],
 
-    ['lends', new Map([
+    [
+      'lends', new Map([
       // Signature seems to require a "namepath" (and no counter-examples)
-      ['nameContents', 'namepath-referencing'],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
 
-      // "namepath"
-      ['typeOrNameRequired', true],
-    ])],
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['listens', new Map([
+    [
+      'listens', new Map([
       // Signature seems to require a "name" (of an event) and no
       //  counter-examples
-      ['nameContents', 'namepath-referencing'],
-    ])],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
+      ]),
+    ],
 
-    ['member', new Map([
+    [
+      'member', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // Has example showing curly brackets but not in doc signature
-      ['typeAllowed', true],
-    ])],
+        // Has example showing curly brackets but not in doc signature
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['memberof', new Map([
+    [
+      'memberof', new Map([
       // Signature seems to require a "namepath" (and no counter-examples),
       //  though it allows an incomplete namepath ending with connecting symbol
-      ['nameContents', 'namepath-referencing'],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
 
-      // "namepath"
-      ['typeOrNameRequired', true],
-    ])],
-    ['memberof!', new Map([
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
+    [
+      'memberof!', new Map([
       // Signature seems to require a "namepath" (and no counter-examples),
       //  though it allows an incomplete namepath ending with connecting symbol
-      ['nameContents', 'namepath-referencing'],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
 
-      // "namepath"
-      ['typeOrNameRequired', true],
-    ])],
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['method', new Map([
+    [
+      'method', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
-    ])],
-    ['mixes', new Map([
+        [
+          'nameContents', 'namepath-defining',
+        ],
+      ]),
+    ],
+    [
+      'mixes', new Map([
       // Signature seems to require a "OtherObjectPath" with no
       //   counter-examples
-      ['nameContents', 'namepath-referencing'],
+        [
+          'nameContents', 'namepath-referencing',
+        ],
 
-      // "OtherObjectPath"
-      ['typeOrNameRequired', true],
-    ])],
+        // "OtherObjectPath"
+        [
+          'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['mixin', new Map([
+    [
+      'mixin', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
-    ])],
+        [
+          'nameContents', 'namepath-defining',
+        ],
+      ]),
+    ],
 
-    ['modifies', new Map([
+    [
+      'modifies', new Map([
       // Has no documentation, but test example has curly brackets, and
       //  "name" would be suggested rather than "namepath" based on example;
       //  not sure if name is required
-      ['typeAllowed', true],
-    ])],
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['module', new Map([
+    [
+      'module', new Map([
       // Optional "name" and no curly brackets
       //  this block impacts `no-undefined-types` and `valid-types` (search for
       //  "isNamepathDefiningTag|tagMightHaveNamepath|tagMightHaveEitherTypeOrNamePosition")
-      ['nameContents', isJsdoc ? 'namepath-defining' : 'text'],
+        [
+          'nameContents', isJsdoc ? 'namepath-defining' : 'text',
+        ],
 
-      // Shows the signature with curly brackets but not in the example
-      ['typeAllowed', true],
-    ])],
+        // Shows the signature with curly brackets but not in the example
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['name', new Map([
+    [
+      'name', new Map([
       // Seems to require a "namepath" in the signature (with no
       //   counter-examples)
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // "namepath"
-      ['nameRequired', true],
+        // "namepath"
+        [
+          'nameRequired', true,
+        ],
 
-      // "namepath"
-      ['typeOrNameRequired', true],
-    ])],
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['namespace', new Map([
+    [
+      'namespace', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // Shows the signature with curly brackets but not in the example
-      ['typeAllowed', true],
-    ])],
-    ['package', new Map([
-      // Shows the signature with curly brackets but not in the example
-      // "typeExpression"
-      ['typeAllowed', isClosureOrPermissive],
-    ])],
-
-    ['param', new Map([
-      ['nameContents', 'namepath-defining'],
-
-      // Though no signature provided requiring, per
-      //  https://jsdoc.app/tags-param.html:
-      // "The @param tag requires you to specify the name of the parameter you
-      //  are documenting."
-      ['nameRequired', true],
-
-      // Has no formal signature in the docs but shows curly brackets
-      //   in the examples
-      ['typeAllowed', true],
-    ])],
-
-    ['private', new Map([
+        // Shows the signature with curly brackets but not in the example
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
+    [
+      'package', new Map([
       // Shows the signature with curly brackets but not in the example
       // "typeExpression"
-      ['typeAllowed', isClosureOrPermissive],
-    ])],
+        [
+          'typeAllowed', isClosureOrPermissive,
+        ],
+      ]),
+    ],
 
-    ['prop', new Map([
-      ['nameContents', 'namepath-defining'],
+    [
+      'param', new Map([
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // See `property`
-      ['nameRequired', true],
+        // Though no signature provided requiring, per
+        //  https://jsdoc.app/tags-param.html:
+        // "The @param tag requires you to specify the name of the parameter you
+        //  are documenting."
+        [
+          'nameRequired', true,
+        ],
 
-      // Has no formal signature in the docs but shows curly brackets
-      //   in the examples
-      ['typeAllowed', true],
-    ])],
+        // Has no formal signature in the docs but shows curly brackets
+        //   in the examples
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['property', new Map([
-      ['nameContents', 'namepath-defining'],
-
-      // No docs indicate required, but since parallel to `param`, we treat as
-      //   such:
-      ['nameRequired', true],
-
-      // Has no formal signature in the docs but shows curly brackets
-      //   in the examples
-      ['typeAllowed', true],
-    ])],
-
-    ['protected', new Map([
+    [
+      'private', new Map([
       // Shows the signature with curly brackets but not in the example
       // "typeExpression"
-      ['typeAllowed', isClosureOrPermissive],
-    ])],
+        [
+          'typeAllowed', isClosureOrPermissive,
+        ],
+      ]),
+    ],
 
-    ['public', new Map([
+    [
+      'prop', new Map([
+        [
+          'nameContents', 'namepath-defining',
+        ],
+
+        // See `property`
+        [
+          'nameRequired', true,
+        ],
+
+        // Has no formal signature in the docs but shows curly brackets
+        //   in the examples
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
+
+    [
+      'property', new Map([
+        [
+          'nameContents', 'namepath-defining',
+        ],
+
+        // No docs indicate required, but since parallel to `param`, we treat as
+        //   such:
+        [
+          'nameRequired', true,
+        ],
+
+        // Has no formal signature in the docs but shows curly brackets
+        //   in the examples
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
+
+    [
+      'protected', new Map([
+      // Shows the signature with curly brackets but not in the example
+      // "typeExpression"
+        [
+          'typeAllowed', isClosureOrPermissive,
+        ],
+      ]),
+    ],
+
+    [
+      'public', new Map([
       // Does not show a signature nor show curly brackets in the example
-      ['typeAllowed', isClosureOrPermissive],
-    ])],
+        [
+          'typeAllowed', isClosureOrPermissive,
+        ],
+      ]),
+    ],
 
-    ['returns', new Map([
+    [
+      'returns', new Map([
       // Shows curly brackets in the signature and in the examples
-      ['typeAllowed', true],
-    ])],
-    ['return', new Map([
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
+    [
+      'return', new Map([
       // Shows curly brackets in the signature and in the examples
-      ['typeAllowed', true],
-    ])],
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['see', new Map([
+    [
+      'see', new Map([
       // Signature allows for "namepath" or text, so user must configure to
       //  'namepath-referencing' to enforce checks
-      ['nameContents', 'text'],
-    ])],
+        [
+          'nameContents', 'text',
+        ],
+      ]),
+    ],
 
-    ['static', new Map([
+    [
+      'static', new Map([
       // Does not show a signature nor show curly brackets in the example
-      ['typeAllowed', isClosureOrPermissive],
-    ])],
+        [
+          'typeAllowed', isClosureOrPermissive,
+        ],
+      ]),
+    ],
 
-    ['suppress', new Map([
-      ['nameContents', !isClosure],
-      ['typeRequired', isClosure],
-    ])],
+    [
+      'suppress', new Map([
+        [
+          'nameContents', !isClosure,
+        ],
+        [
+          'typeRequired', isClosure,
+        ],
+      ]),
+    ],
 
-    ['template', new Map([
-      ['nameContents', isJsdoc ? 'text' : 'namepath-referencing'],
+    [
+      'template', new Map([
+        [
+          'nameContents', isJsdoc ? 'text' : 'namepath-referencing',
+        ],
 
-      // Though defines `nameContents: 'namepath-defining'` in a sense, it is
-      //   not parseable in the same way for template (e.g., allowing commas),
-      //   so not adding
-      ['typeAllowed', isTypescriptOrClosure || isPermissive],
-    ])],
+        // Though defines `nameContents: 'namepath-defining'` in a sense, it is
+        //   not parseable in the same way for template (e.g., allowing commas),
+        //   so not adding
+        [
+          'typeAllowed', isTypescriptOrClosure || isPermissive,
+        ],
+      ]),
+    ],
 
-    ['this', new Map([
+    [
+      'this', new Map([
       // Signature seems to require a "namepath" (and no counter-examples)
       // Not used with namepath in Closure/TypeScript, however
-      ['nameContents', isJsdoc ? 'namepath-referencing' : false],
+        [
+          'nameContents', isJsdoc ? 'namepath-referencing' : false,
+        ],
 
-      ['typeRequired', isTypescriptOrClosure],
+        [
+          'typeRequired', isTypescriptOrClosure,
+        ],
 
-      // namepath
-      ['typeOrNameRequired', isJsdoc],
-    ])],
+        // namepath
+        [
+          'typeOrNameRequired', isJsdoc,
+        ],
+      ]),
+    ],
 
-    ['throws', new Map([
+    [
+      'throws', new Map([
       // Shows curly brackets in the signature and in the examples
-      ['typeAllowed', true],
-    ])],
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['type', new Map([
+    [
+      'type', new Map([
       // Shows curly brackets in the doc signature and examples
       // "typeName"
-      ['typeRequired', true],
-    ])],
+        [
+          'typeRequired', true,
+        ],
+      ]),
+    ],
 
-    ['typedef', new Map([
+    [
+      'typedef', new Map([
       // Seems to require a "namepath" in the signature (with no
       //  counter-examples)
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // "namepath"
-      ['nameRequired', isJsdocTypescriptOrPermissive],
+        // "namepath"
+        [
+          'nameRequired', isJsdocTypescriptOrPermissive,
+        ],
 
-      // Has example showing curly brackets but not in doc signature
-      ['typeAllowed', true],
+        // Has example showing curly brackets but not in doc signature
+        [
+          'typeAllowed', true,
+        ],
 
-      // "namepath"
-      ['typeOrNameRequired', true],
-    ])],
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
 
-    ['var', new Map([
+    [
+      'var', new Map([
       // Allows for "name"'s in signature, but indicated as optional
-      ['nameContents', 'namepath-defining'],
+        [
+          'nameContents', 'namepath-defining',
+        ],
 
-      // Has example showing curly brackets but not in doc signature
-      ['typeAllowed', true],
-    ])],
+        // Has example showing curly brackets but not in doc signature
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
 
-    ['yields', new Map([
+    [
+      'yields', new Map([
       // Shows curly brackets in the signature and in the examples
-      ['typeAllowed', true],
-    ])],
-    ['yield', new Map([
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
+    [
+      'yield', new Map([
       // Shows curly brackets in the signature and in the examples
-      ['typeAllowed', true],
-    ])],
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
   ]);
 };
 

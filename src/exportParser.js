@@ -32,7 +32,9 @@ const getIdentifier = function (node, globals, scope, opts) {
     // Type is Identier for noncomputed properties
     const identifierLiteral = createNode();
     identifierLiteral.type = 'literal';
-    identifierLiteral.value = {value: node.name};
+    identifierLiteral.value = {
+      value: node.name,
+    };
 
     return identifierLiteral;
   }
@@ -68,7 +70,9 @@ const getSymbol = function (node, globals, scope, opt) {
 
   case 'MemberExpression': {
     const obj = getSymbol(node.object, globals, scope, opts);
-    const propertySymbol = getSymbol(node.property, globals, scope, {simpleIdentifier: !node.computed});
+    const propertySymbol = getSymbol(node.property, globals, scope, {
+      simpleIdentifier: !node.computed,
+    });
     const propertyValue = getSymbolValue(propertySymbol);
 
     /* istanbul ignore next */
@@ -214,7 +218,9 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
   case 'MemberExpression': {
     symbol = getSymbol(node.object, globals, block);
 
-    const propertySymbol = getSymbol(node.property, globals, block, {simpleIdentifier: !node.computed});
+    const propertySymbol = getSymbol(node.property, globals, block, {
+      simpleIdentifier: !node.computed,
+    });
     const propertyValue = getSymbolValue(propertySymbol);
     if (symbol && propertyValue) {
       createBlockSymbol(symbol, propertyValue, getSymbol(value, globals, block), globals, isGlobal);
@@ -393,7 +399,9 @@ const findNode = function (node, block, cache) {
     return true;
   }
 
-  const {props = block.body} = block;
+  const {
+    props = block.body,
+  } = block;
   for (const propval of Object.values(props || {})) {
     if (Array.isArray(propval)) {
       /* istanbul ignore if */
@@ -410,7 +418,9 @@ const findNode = function (node, block, cache) {
   return false;
 };
 
-const exportTypes = new Set(['ExportNamedDeclaration', 'ExportDefaultDeclaration']);
+const exportTypes = new Set([
+  'ExportNamedDeclaration', 'ExportDefaultDeclaration',
+]);
 const ignorableNestedTypes = new Set([
   'FunctionDeclaration', 'ArrowFunctionExpression', 'FunctionExpression',
 ]);
@@ -478,7 +488,9 @@ const findExportedNode = function (block, node, cache) {
   }
 
   const blockCache = cache || [];
-  const {props} = block;
+  const {
+    props,
+  } = block;
   for (const propval of Object.values(props)) {
     blockCache.push(propval);
     if (propval.exported && (node === propval.value || findNode(node, propval.value))) {

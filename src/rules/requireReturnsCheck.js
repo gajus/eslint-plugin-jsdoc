@@ -49,7 +49,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const tagName = utils.getPreferredTagName({tagName: 'returns'});
+  const tagName = utils.getPreferredTagName({
+    tagName: 'returns',
+  });
   if (!tagName) {
     return;
   }
@@ -66,7 +68,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const [tag] = tags;
+  const [
+    tag,
+  ] = tags;
 
   const returnNever = tag.type.trim() === 'never';
 

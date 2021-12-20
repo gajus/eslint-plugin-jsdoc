@@ -1,5 +1,8 @@
 import {
-  parse, stringify, traverse, tryParse,
+  parse,
+  stringify,
+  traverse,
+  tryParse,
 } from 'jsdoc-type-pratt-parser';
 import iterateJsdoc from '../iterateJsdoc';
 
@@ -70,7 +73,11 @@ export default iterateJsdoc(({
     return utils.tagMightHaveTypePosition(tag.tag);
   });
 
-  const {preferredTypes, structuredTags, mode} = settings;
+  const {
+    preferredTypes,
+    structuredTags,
+    mode,
+  } = settings;
   const {
     noDefaults,
     unifyParentAndChildTypeChecks,
@@ -88,7 +95,11 @@ export default iterateJsdoc(({
         const dot = parentNode?.meta?.dot;
 
         if (brackets === 'angle') {
-          const checkPostFixes = dot ? ['.', '.<>'] : ['<>'];
+          const checkPostFixes = dot ? [
+            '.', '.<>',
+          ] : [
+            '<>',
+          ];
           isGenericMatch = checkPostFixes.some((checkPostFix) => {
             if (preferredTypes?.[nodeName + checkPostFix] !== undefined) {
               typeName += checkPostFix;
@@ -101,7 +112,11 @@ export default iterateJsdoc(({
         }
 
         if (!isGenericMatch && property) {
-          const checkPostFixes = dot ? ['.', '.<>'] : [brackets === 'angle' ? '<>' : '[]'];
+          const checkPostFixes = dot ? [
+            '.', '.<>',
+          ] : [
+            brackets === 'angle' ? '<>' : '[]',
+          ];
 
           isGenericMatch = checkPostFixes.some((checkPostFix) => {
             if (preferredTypes?.[checkPostFix] !== undefined) {
@@ -124,7 +139,9 @@ export default iterateJsdoc(({
         directNameMatch && !property;
     }
 
-    return [hasMatchingPreferredType, typeName, isGenericMatch];
+    return [
+      hasMatchingPreferredType, typeName, isGenericMatch,
+    ];
   };
 
   for (const jsdocTag of jsdocTagsWithPossibleType) {
@@ -140,14 +157,23 @@ export default iterateJsdoc(({
     const tagName = jsdocTag.tag;
 
     traverse(typeAst, (node, parentNode, property) => {
-      const {type, value} = node;
-      if (!['JsdocTypeName', 'JsdocTypeAny'].includes(type)) {
+      const {
+        type,
+        value,
+      } = node;
+      if (![
+        'JsdocTypeName', 'JsdocTypeAny',
+      ].includes(type)) {
         return;
       }
 
       let nodeName = type === 'JsdocTypeAny' ? '*' : value;
 
-      const [hasMatchingPreferredType, typeName, isGenericMatch] = getPreferredTypeInfo(type, nodeName, parentNode, property);
+      const [
+        hasMatchingPreferredType,
+        typeName,
+        isGenericMatch,
+      ] = getPreferredTypeInfo(type, nodeName, parentNode, property);
 
       let preferred;
       let types;
@@ -156,10 +182,14 @@ export default iterateJsdoc(({
         nodeName = typeName === '[]' ? typeName : nodeName;
 
         if (!preferredSetting) {
-          invalidTypes.push([nodeName]);
+          invalidTypes.push([
+            nodeName,
+          ]);
         } else if (typeof preferredSetting === 'string') {
           preferred = preferredSetting;
-          invalidTypes.push([nodeName, preferred]);
+          invalidTypes.push([
+            nodeName, preferred,
+          ]);
         } else if (typeof preferredSetting === 'object') {
           preferred = preferredSetting?.replacement;
           invalidTypes.push([
@@ -174,14 +204,21 @@ export default iterateJsdoc(({
 
           return;
         }
-      } else if (Object.entries(structuredTags).some(([tag, {type: typs}]) => {
+      } else if (Object.entries(structuredTags).some(([
+        tag,
+        {
+          type: typs,
+        },
+      ]) => {
         types = typs;
 
         return tag === tagName &&
           Array.isArray(types) &&
           !types.includes(nodeName);
       })) {
-        invalidTypes.push([nodeName, types]);
+        invalidTypes.push([
+          nodeName, types,
+        ]);
       } else if (!noDefaults && type === 'JsdocTypeName') {
         for (const strictNativeType of strictNativeTypes) {
           if (strictNativeType === 'object' && mode === 'typescript') {
@@ -195,7 +232,9 @@ export default iterateJsdoc(({
             (!preferredTypes || preferredTypes?.[strictNativeType] === undefined)
           ) {
             preferred = strictNativeType;
-            invalidTypes.push([nodeName, preferred]);
+            invalidTypes.push([
+              nodeName, preferred,
+            ]);
             break;
           }
         }
@@ -220,9 +259,16 @@ export default iterateJsdoc(({
         );
       };
 
-      for (const [badType, preferredType = '', message] of invalidTypes) {
+      for (const [
+        badType,
+        preferredType = '',
+        message,
+      ] of invalidTypes) {
         const tagValue = jsdocTag.name ? ` "${jsdocTag.name}"` : '';
-        if (exemptTagContexts.some(({tag, types}) => {
+        if (exemptTagContexts.some(({
+          tag,
+          types,
+        }) => {
           return tag === tagName &&
             (types === true || types.includes(jsdocTag.type));
         })) {

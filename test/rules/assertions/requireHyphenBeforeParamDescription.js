@@ -269,9 +269,11 @@ export default {
         },
       ],
       options: [
-        'always', {tags: {
-          property: 'always',
-        }},
+        'always', {
+          tags: {
+            property: 'always',
+          },
+        },
       ],
       output: `
           /**
@@ -293,9 +295,11 @@ export default {
         },
       ],
       options: [
-        'always', {tags: {
-          template: 'always',
-        }},
+        'always', {
+          tags: {
+            template: 'always',
+          },
+        },
       ],
       output: `
           /**
@@ -317,9 +321,11 @@ export default {
         },
       ],
       options: [
-        'never', {tags: {
-          property: 'never',
-        }},
+        'never', {
+          tags: {
+            property: 'never',
+          },
+        },
       ],
       output: `
           /**
@@ -445,9 +451,11 @@ export default {
           }
       `,
       options: [
-        'always', {tags: {
-          '*': 'always',
-        }},
+        'always', {
+          tags: {
+            '*': 'always',
+          },
+        },
       ],
     },
     {
@@ -458,9 +466,11 @@ export default {
            */
       `,
       options: [
-        'always', {tags: {
-          property: 'always',
-        }},
+        'always', {
+          tags: {
+            property: 'always',
+          },
+        },
       ],
     },
     {
@@ -471,9 +481,11 @@ export default {
            */
       `,
       options: [
-        'never', {tags: {
-          property: 'never',
-        }},
+        'never', {
+          tags: {
+            property: 'never',
+          },
+        },
       ],
     },
     {
@@ -484,9 +496,11 @@ export default {
            */
       `,
       options: [
-        'never', {tags: {
-          '*': 'always',
-        }},
+        'never', {
+          tags: {
+            '*': 'always',
+          },
+        },
       ],
     },
     {
@@ -498,7 +512,9 @@ export default {
       function main(argv) {
       };
       `,
-      options: ['never'],
+      options: [
+        'never',
+      ],
     },
   ],
 };

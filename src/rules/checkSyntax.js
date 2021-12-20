@@ -5,7 +5,9 @@ export default iterateJsdoc(({
   report,
   settings,
 }) => {
-  const {mode} = settings;
+  const {
+    mode,
+  } = settings;
 
   // Don't check for "permissive" and "closure"
   if (mode === 'jsdoc' || mode === 'typescript') {

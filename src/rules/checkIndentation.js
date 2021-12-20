@@ -24,7 +24,9 @@ export default iterateJsdoc(({
 }) => {
   const options = context.options[0] || {};
   const {
-    excludeTags = ['example'],
+    excludeTags = [
+      'example',
+    ],
   } = options;
 
   const reg = /^(?:\/?\**|[ \t]*)\*[ \t]{2}/gmu;
@@ -44,19 +46,21 @@ export default iterateJsdoc(({
       description: 'Reports invalid padding inside JSDoc blocks.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-indentation',
     },
-    schema: [{
-      additionalProperties: false,
-      properties: {
-        excludeTags: {
-          items: {
-            pattern: '^\\S+$',
-            type: 'string',
+    schema: [
+      {
+        additionalProperties: false,
+        properties: {
+          excludeTags: {
+            items: {
+              pattern: '^\\S+$',
+              type: 'string',
+            },
+            type: 'array',
           },
-          type: 'array',
         },
+        type: 'object',
       },
-      type: 'object',
-    }],
+    ],
     type: 'layout',
   },
 });

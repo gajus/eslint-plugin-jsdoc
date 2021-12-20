@@ -18,7 +18,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const {descriptionStyle = 'body'} = context.options[0] || {};
+  const {
+    descriptionStyle = 'body',
+  } = context.options[0] || {};
 
   let targetTagName = utils.getPreferredTagName({
     // We skip reporting except when `@description` is essential to the rule,
@@ -38,15 +40,23 @@ export default iterateJsdoc(({
   }
 
   if (descriptionStyle !== 'tag') {
-    const {description} = utils.getDescription();
+    const {
+      description,
+    } = utils.getDescription();
     if (checkDescription(description || '')) {
       return;
     }
 
     if (descriptionStyle === 'body') {
-      const descTags = utils.getPresentTags(['desc', 'description']);
+      const descTags = utils.getPresentTags([
+        'desc', 'description',
+      ]);
       if (descTags.length) {
-        const [{tag: tagName}] = descTags;
+        const [
+          {
+            tag: tagName,
+          },
+        ] = descTags;
         report(`Remove the @${tagName} tag to leave a plain block description or add additional description text above the @${tagName} line.`);
       } else {
         report('Missing JSDoc block description.');
@@ -58,7 +68,9 @@ export default iterateJsdoc(({
 
   const functionExamples = isBlocked ?
     [] :
-    jsdoc.tags.filter(({tag}) => {
+    jsdoc.tags.filter(({
+      tag,
+    }) => {
       return tag === targetTagName;
     });
 
@@ -123,7 +135,9 @@ export default iterateJsdoc(({
             type: 'array',
           },
           descriptionStyle: {
-            enum: ['body', 'tag', 'any'],
+            enum: [
+              'body', 'tag', 'any',
+            ],
             type: 'string',
           },
           exemptedBy: {

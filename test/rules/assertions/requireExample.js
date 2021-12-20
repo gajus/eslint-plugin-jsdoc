@@ -150,7 +150,9 @@ function quux () {
       ],
       options: [
         {
-          contexts: ['ClassDeclaration'],
+          contexts: [
+            'ClassDeclaration',
+          ],
         },
       ],
       output: `
@@ -176,7 +178,9 @@ function quux () {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
       output: `
@@ -201,7 +205,9 @@ function quux () {
       ],
       options: [
         {
-          exemptedBy: ['notPresent'],
+          exemptedBy: [
+            'notPresent',
+          ],
         },
       ],
       output: `
@@ -426,7 +432,9 @@ function quux () {
       `,
       options: [
         {
-          exemptedBy: ['type'],
+          exemptedBy: [
+            'type',
+          ],
         },
       ],
     },
@@ -441,7 +449,9 @@ function quux () {
       `,
       options: [
         {
-          contexts: ['ClassDeclaration'],
+          contexts: [
+            'ClassDeclaration',
+          ],
         },
       ],
     },
@@ -456,7 +466,9 @@ function quux () {
       `,
       options: [
         {
-          contexts: ['ClassDeclaration'],
+          contexts: [
+            'ClassDeclaration',
+          ],
         },
       ],
     },

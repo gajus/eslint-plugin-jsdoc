@@ -3,21 +3,31 @@ import iterateJsdoc from '../iterateJsdoc';
 export default iterateJsdoc(({
   utils,
 }) => {
-  const propertyAssociatedTags = utils.filterTags(({tag}) => {
-    return ['typedef', 'namespace'].includes(tag);
+  const propertyAssociatedTags = utils.filterTags(({
+    tag,
+  }) => {
+    return [
+      'typedef', 'namespace',
+    ].includes(tag);
   });
   if (!propertyAssociatedTags.length) {
     return;
   }
 
-  const targetTagName = utils.getPreferredTagName({tagName: 'property'});
+  const targetTagName = utils.getPreferredTagName({
+    tagName: 'property',
+  });
 
-  if (utils.hasATag([targetTagName])) {
+  if (utils.hasATag([
+    targetTagName,
+  ])) {
     return;
   }
 
   for (const propertyAssociatedTag of propertyAssociatedTags) {
-    if (!['object', 'Object', 'PlainObject'].includes(propertyAssociatedTag.type)) {
+    if (![
+      'object', 'Object', 'PlainObject',
+    ].includes(propertyAssociatedTag.type)) {
       continue;
     }
 

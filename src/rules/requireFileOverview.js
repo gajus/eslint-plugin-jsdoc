@@ -31,7 +31,9 @@ export default iterateJsdoc(({
   setDefaults(state);
 
   for (const tagName of Object.keys(tags)) {
-    const targetTagName = utils.getPreferredTagName({tagName});
+    const targetTagName = utils.getPreferredTagName({
+      tagName,
+    });
 
     const hasTag = targetTagName && utils.hasTag(targetTagName);
 
@@ -51,18 +53,27 @@ export default iterateJsdoc(({
     }
   }
 }, {
-  exit ({context, state, utils}) {
+  exit ({
+    context,
+    state,
+    utils,
+  }) {
     setDefaults(state);
     const {
       tags = defaultTags,
     } = context.options[0] || {};
 
-    for (const [tagName, {
-      mustExist = false,
-      preventDuplicates = false,
-      initialCommentsOnly = false,
-    }] of Object.entries(tags)) {
-      const obj = utils.getPreferredTagNameObject({tagName});
+    for (const [
+      tagName,
+      {
+        mustExist = false,
+        preventDuplicates = false,
+        initialCommentsOnly = false,
+      },
+    ] of Object.entries(tags)) {
+      const obj = utils.getPreferredTagNameObject({
+        tagName,
+      });
       if (obj && obj.blocked) {
         utils.reportSettings(
           `\`settings.jsdoc.tagNamePreference\` cannot block @${obj.tagName} ` +
@@ -126,7 +137,10 @@ export default iterateJsdoc(({
     ],
     type: 'suggestion',
   },
-  nonComment ({state, node}) {
+  nonComment ({
+    state,
+    node,
+  }) {
     if (!state.hasNonComment) {
       state.hasNonComment = node.range[0];
     }
