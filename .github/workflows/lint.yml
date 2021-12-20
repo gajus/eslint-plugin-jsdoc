@@ -1,0 +1,27 @@
+name: Lint
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v2
+
+      - name: ⎔ Setup node for problem matcher
+        if: github.event.pull_request
+        uses: actions/setup-node@v2
+
+      - name: 📥 Download deps
+        run: npm install
+
+      - name: 🧪 Run lint
+        run: npm run lint

@@ -12,7 +12,6 @@ before_script: >
     npm install --no-save "eslint@${ESLINT}" eslint-config-canonical@24.4.4
   else
     npm install --no-save "eslint@${ESLINT}"
-    npm run lint
   fi
 
 notifications:
