@@ -57,10 +57,8 @@
   ],
   "license": "BSD-3-Clause",
   "lint-staged": {
-    "./*.js": "npm run lint-arg --",
-    ".eslintignore": "npm run lint",
-    "src/**/*.js": "npm run lint-arg --",
-    "test/**/*.js": "npm run lint-arg --"
+    ".eslintignore": ["npm run lint-fix", "git add ."],
+    "*.js": "npm run lint-arg -- --fix"
   },
   "main": "./dist/index.js",
   "name": "eslint-plugin-jsdoc",
@@ -98,9 +96,9 @@
     "create-readme": "babel-node ./src/bin/generateReadme.js",
     "create-rule": "babel-node ./src/bin/generateRule.js",
     "install-offline": "npm install --prefer-offline --no-audit",
-    "lint": "eslint --report-unused-disable-directives --ignore-pattern '!.ncurc.js' ./src ./test .ncurc.js",
+    "lint": "npm run lint-arg -- .",
     "lint-arg": "eslint --report-unused-disable-directives",
-    "lint-fix": "eslint --report-unused-disable-directives --fix ./src ./test",
+    "lint-fix": "npm run lint-arg -- --fix .",
     "prepare": "husky install",
     "test": "cross-env BABEL_ENV=test nyc --reporter text-summary mocha --reporter dot --recursive --require @babel/register --timeout 12000",
     "test-cov": "cross-env BABEL_ENV=test nyc mocha --reporter dot --recursive --require @babel/register --timeout 12000",

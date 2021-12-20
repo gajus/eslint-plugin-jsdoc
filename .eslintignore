@@ -1,0 +1,6 @@
+# built files
+dist/
+# local developer scratch area
+.ignore/
+# root dot javascript files
+!.*.js

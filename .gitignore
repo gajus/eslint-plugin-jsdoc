@@ -8,9 +8,11 @@ pnpm-lock.yaml
 !.babelrc.json
 !.editorconfig
 !.eslintrc.json
+!.eslintignore
 !.gitignore
 !.npmignore
 !.README
 !.travis.yml
 !.ncurc.js
 !.github
+!.husky
