@@ -55,7 +55,7 @@ can use `npm run test-index`.
 To test specific rules, you can supply a comma-separated list with the `--rule`
 flag passed to `test-index`, e.g., for `check-examples` and `require-example`:
 
-`npm run --rule=check-examples,require-example test-index`.
+`npm run test-index --rule=check-examples,require-example`.
 
 You can further limit this by providing `--invalid` and/or `--valid` flags
 with a comma-separated list of 0-based indexes that you wish to include (also
