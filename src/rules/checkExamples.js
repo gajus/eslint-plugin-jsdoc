@@ -390,8 +390,8 @@ export default iterateJsdoc(({
       while ((exampleCode = exampleCodeRegex.exec(source)) !== null) {
         const {
           index,
-          '0': n0,
-          '1': n1,
+          0: n0,
+          1: n1,
         } = exampleCode;
 
         // Count anything preceding user regex match (can affect line numbering)
