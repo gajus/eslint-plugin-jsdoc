@@ -31,9 +31,13 @@ export default {
           message: 'Missing JSDoc @param "foo" type.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -48,9 +52,13 @@ export default {
           message: 'Missing JSDoc @param "foo" type.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -65,9 +73,13 @@ export default {
           message: 'Missing JSDoc @param "foo" type.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -146,9 +158,13 @@ export default {
 
           }
       `,
-      options: [{
-        contexts: ['any'],
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
     },
     {
       code: `

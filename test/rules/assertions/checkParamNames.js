@@ -871,16 +871,20 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 1,
-        message: 'Cannot add "name" to `require` with the tag\'s `name` set to `false`',
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Cannot add "name" to `require` with the tag\'s `name` set to `false`',
+        },
+      ],
       settings: {
         jsdoc: {
           structuredTags: {
             see: {
               name: false,
-              required: ['name'],
+              required: [
+                'name',
+              ],
             },
           },
         },
@@ -896,13 +900,17 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 4,
-        message: 'Expected @param names to be "root, baz". Got "root, foo".',
-      }],
-      options: [{
-        checkDestructured: false,
-      }],
+      errors: [
+        {
+          line: 4,
+          message: 'Expected @param names to be "root, baz". Got "root, foo".',
+        },
+      ],
+      options: [
+        {
+          checkDestructured: false,
+        },
+      ],
     },
     {
       code: `
@@ -980,9 +988,11 @@ export default {
           message: '@param "props.prop.b" does not exist on props',
         },
       ],
-      options: [{
-        useDefaultObjectProperties: false,
-      }],
+      options: [
+        {
+          useDefaultObjectProperties: false,
+        },
+      ],
       parserOptions: {
         sourceType: 'module',
       },
@@ -1533,9 +1543,11 @@ export default {
 
           }
       `,
-      options: [{
-        checkDestructured: false,
-      }],
+      options: [
+        {
+          checkDestructured: false,
+        },
+      ],
     },
     {
       code: `
@@ -1645,9 +1657,11 @@ export default {
       export function testFn1 ({ prop = { a: 1, b: 2 } }) {
       }
       `,
-      options: [{
-        useDefaultObjectProperties: true,
-      }],
+      options: [
+        {
+          useDefaultObjectProperties: true,
+        },
+      ],
       parserOptions: {
         sourceType: 'module',
       },

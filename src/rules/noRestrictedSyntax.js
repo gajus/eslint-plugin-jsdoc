@@ -4,7 +4,9 @@ import iterateJsdoc from '../iterateJsdoc';
 export default iterateJsdoc(({
   node,
   context,
-  info: {comment},
+  info: {
+    comment,
+  },
   report,
 }) => {
   if (!context.options.length) {
@@ -13,7 +15,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const {contexts} = context.options[0];
+  const {
+    contexts,
+  } = context.options[0];
 
   const foundContext = contexts.find((cntxt) => {
     return typeof cntxt === 'string' ?
@@ -75,7 +79,9 @@ export default iterateJsdoc(({
             type: 'array',
           },
         },
-        required: ['contexts'],
+        required: [
+          'contexts',
+        ],
         type: 'object',
       },
     ],

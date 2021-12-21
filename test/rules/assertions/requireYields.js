@@ -52,9 +52,11 @@ export default {
           message: 'Missing JSDoc @next declaration.',
         },
       ],
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -72,9 +74,11 @@ export default {
           message: 'Missing JSDoc @next declaration.',
         },
       ],
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -90,9 +94,11 @@ export default {
           message: 'Missing JSDoc @next declaration.',
         },
       ],
-      options: [{
-        forceRequireNext: true,
-      }],
+      options: [
+        {
+          forceRequireNext: true,
+        },
+      ],
     },
     {
       code: `
@@ -109,9 +115,11 @@ export default {
           message: 'Missing JSDoc @next declaration.',
         },
       ],
-      options: [{
-        forceRequireNext: true,
-      }],
+      options: [
+        {
+          forceRequireNext: true,
+        },
+      ],
     },
     {
       code: `
@@ -168,9 +176,11 @@ export default {
           message: 'Missing JSDoc @yield-returns declaration.',
         },
       ],
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -195,9 +205,11 @@ export default {
           message: 'Unexpected tag `@next`',
         },
       ],
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -221,9 +233,11 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -243,9 +257,11 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -265,9 +281,11 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 2_018,
       },
@@ -287,9 +305,11 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 2_018,
       },
@@ -309,10 +329,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceRequireYields: true,
+        },
+      ],
     },
     {
       code: `
@@ -327,10 +351,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceRequireYields: true,
+        },
+      ],
     },
     {
       code: `
@@ -345,10 +373,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceRequireYields: true,
+        },
+      ],
     },
     {
       code: `
@@ -408,7 +440,9 @@ export default {
       ],
       options: [
         {
-          exemptedBy: ['notPresent'],
+          exemptedBy: [
+            'notPresent',
+          ],
         },
       ],
     },
@@ -427,9 +461,11 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 2_018,
       },
@@ -449,9 +485,11 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 2_018,
       },
@@ -473,10 +511,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceRequireYields: true,
+        },
+      ],
     },
     {
       code: `
@@ -509,10 +551,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        withGeneratorTag: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          withGeneratorTag: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 2_018,
       },
@@ -530,10 +576,14 @@ export default {
           message: 'Missing JSDoc @next declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        nextWithGeneratorTag: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          nextWithGeneratorTag: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 2_018,
       },
@@ -1240,9 +1290,13 @@ export default {
         },
       ],
       ignoreReadme: true,
-      options: [{
-        contexts: ['ExportNamedDeclaration'],
-      }],
+      options: [
+        {
+          contexts: [
+            'ExportNamedDeclaration',
+          ],
+        },
+      ],
       parserOptions: {
         sourceType: 'module',
       },
@@ -1265,9 +1319,13 @@ export default {
         },
       ],
       ignoreReadme: true,
-      options: [{
-        contexts: ['MethodDefinition > FunctionExpression'],
-      }],
+      options: [
+        {
+          contexts: [
+            'MethodDefinition > FunctionExpression',
+          ],
+        },
+      ],
       parserOptions: {
         sourceType: 'module',
       },
@@ -1297,7 +1355,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -1457,9 +1517,11 @@ export default {
           function quux () {
           }
       `,
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
     },
     {
       code: `
@@ -1470,9 +1532,11 @@ export default {
           function * quux () {
           }
       `,
-      options: [{
-        forceRequireNext: true,
-      }],
+      options: [
+        {
+          forceRequireNext: true,
+        },
+      ],
     },
     {
       code: `
@@ -1493,9 +1557,11 @@ export default {
             yield undefined;
           }
       `,
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
     },
     {
       code: `
@@ -1515,9 +1581,11 @@ export default {
           function * quux () {
           }
       `,
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
     },
     {
       code: `
@@ -1528,9 +1596,11 @@ export default {
             yield;
           }
       `,
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
     },
     {
       code: `
@@ -1548,9 +1618,11 @@ export default {
           async function * quux () {
           }
       `,
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 2_018,
       },
@@ -1588,7 +1660,9 @@ export default {
       `,
       options: [
         {
-          exemptedBy: ['type'],
+          exemptedBy: [
+            'type',
+          ],
         },
       ],
     },
@@ -1613,7 +1687,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -1625,7 +1701,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -1635,9 +1713,11 @@ export default {
            * @function
            */
       `,
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
     },
     {
       code: `
@@ -1645,9 +1725,11 @@ export default {
            * @callback
            */
       `,
-      options: [{
-        forceRequireYields: true,
-      }],
+      options: [
+        {
+          forceRequireYields: true,
+        },
+      ],
     },
     {
       code: `
@@ -1655,9 +1737,11 @@ export default {
            * @generator
            */
       `,
-      options: [{
-        withGeneratorTag: true,
-      }],
+      options: [
+        {
+          withGeneratorTag: true,
+        },
+      ],
     },
     {
       code: `
@@ -1665,9 +1749,11 @@ export default {
            * @generator
            */
       `,
-      options: [{
-        nextWithGeneratorTag: true,
-      }],
+      options: [
+        {
+          nextWithGeneratorTag: true,
+        },
+      ],
     },
     {
       code: `
@@ -1676,10 +1762,14 @@ export default {
            * @yields
            */
       `,
-      options: [{
-        contexts: ['any'],
-        withGeneratorTag: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          withGeneratorTag: true,
+        },
+      ],
     },
     {
       code: `
@@ -1689,10 +1779,14 @@ export default {
            * @next
            */
       `,
-      options: [{
-        contexts: ['any'],
-        nextWithGeneratorTag: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          nextWithGeneratorTag: true,
+        },
+      ],
     },
     {
       code: `
@@ -1700,10 +1794,14 @@ export default {
            * @generator
            */
       `,
-      options: [{
-        contexts: ['any'],
-        withGeneratorTag: false,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          withGeneratorTag: false,
+        },
+      ],
     },
     {
       code: `
@@ -1712,10 +1810,14 @@ export default {
            * @yields
            */
       `,
-      options: [{
-        contexts: ['any'],
-        nextWithGeneratorTag: false,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          nextWithGeneratorTag: false,
+        },
+      ],
     },
     {
       code: `
@@ -1738,9 +1840,11 @@ export default {
             let a = yield;
           }
       `,
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -1752,9 +1856,11 @@ export default {
             const a = yield foo;
           }
       `,
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -1762,10 +1868,14 @@ export default {
            *
            */
       `,
-      options: [{
-        contexts: ['any'],
-        nextWithGeneratorTag: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          nextWithGeneratorTag: true,
+        },
+      ],
     },
     {
       code: `
@@ -1773,10 +1883,14 @@ export default {
            *
            */
       `,
-      options: [{
-        contexts: ['any'],
-        next: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -1785,10 +1899,14 @@ export default {
            */
           function quux () {}
       `,
-      options: [{
-        contexts: ['any'],
-        next: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -1799,9 +1917,11 @@ export default {
             yield;
           }
       `,
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `

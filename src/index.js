@@ -50,7 +50,9 @@ import validTypes from './rules/validTypes';
 export default {
   configs: {
     recommended: {
-      plugins: ['jsdoc'],
+      plugins: [
+        'jsdoc',
+      ],
       rules: {
         'jsdoc/check-access': 'warn',
         'jsdoc/check-alignment': 'warn',

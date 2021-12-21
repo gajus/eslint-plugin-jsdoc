@@ -18,13 +18,26 @@ export default iterateJsdoc(({
     let lastTag;
 
     let reportIndex = null;
-    for (const [idx, {tokens: {tag, name, type, description, end}}] of tg.source.entries()) {
+    for (const [
+      idx,
+      {
+        tokens: {
+          tag,
+          name,
+          type,
+          description,
+          end,
+        },
+      },
+    ] of tg.source.entries()) {
       // May be text after a line break within a tag description
       if (description) {
         reportIndex = null;
       }
 
-      if (lastTag && ['any', 'always'].includes(tags[lastTag.slice(1)]?.lines)) {
+      if (lastTag && [
+        'any', 'always',
+      ].includes(tags[lastTag.slice(1)]?.lines)) {
         continue;
       }
 
@@ -49,7 +62,9 @@ export default iterateJsdoc(({
 
       utils.reportJSDoc(
         'Expected no lines between tags',
-        {line: tg.source[0].number + 1},
+        {
+          line: tg.source[0].number + 1,
+        },
         fixer,
       );
 
@@ -64,7 +79,19 @@ export default iterateJsdoc(({
 
     let currentTag;
     let tagSourceIdx = 0;
-    for (const [idx, {number, tokens: {tag, name, type, description, end}}] of tg.source.entries()) {
+    for (const [
+      idx,
+      {
+        number,
+        tokens: {
+          tag,
+          name,
+          type,
+          description,
+          end,
+        },
+      },
+    ] of tg.source.entries()) {
       if (description) {
         lines.splice(0, lines.length);
         tagSourceIdx = idx;
@@ -75,7 +102,10 @@ export default iterateJsdoc(({
       }
 
       if (!tag && !name && !type && !description && !end) {
-        lines.push({idx, number});
+        lines.push({
+          idx,
+          number,
+        });
       }
     }
 
@@ -122,7 +152,9 @@ export default iterateJsdoc(({
     fixable: 'code',
     schema: [
       {
-        enum: ['always', 'any', 'never'],
+        enum: [
+          'always', 'any', 'never',
+        ],
         type: 'string',
       },
       {
@@ -143,7 +175,9 @@ export default iterateJsdoc(({
                     type: 'integer',
                   },
                   lines: {
-                    enum: ['always', 'never', 'any'],
+                    enum: [
+                      'always', 'never', 'any',
+                    ],
                     type: 'string',
                   },
                 },

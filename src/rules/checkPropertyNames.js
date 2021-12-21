@@ -5,13 +5,20 @@ const validatePropertyNames = (
   enableFixer : boolean,
   jsdoc, jsdocNode, utils,
 ) => {
-  const propertyTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
+  const propertyTags = Object.entries(jsdoc.tags).filter(([
+    , tag,
+  ]) => {
     return tag.tag === targetTagName;
   });
 
-  return propertyTags.some(([, tag], index) => {
+  return propertyTags.some(([
+    , tag,
+  ], index) => {
     let tagsIndex;
-    const dupeTagInfo = propertyTags.find(([tgsIndex, tg], idx) => {
+    const dupeTagInfo = propertyTags.find(([
+      tgsIndex,
+      tg,
+    ], idx) => {
       tagsIndex = tgsIndex;
 
       return tg.name === tag.name && idx !== index;
@@ -34,7 +41,10 @@ const validatePropertyNamesDeep = (
 ) => {
   let lastRealProperty;
 
-  return jsdocPropertyNames.some(({name: jsdocPropertyName, idx}) => {
+  return jsdocPropertyNames.some(({
+    name: jsdocPropertyName,
+    idx,
+  }) => {
     const isPropertyPath = jsdocPropertyName.includes('.');
 
     if (isPropertyPath) {
@@ -83,7 +93,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const targetTagName = utils.getPreferredTagName({tagName: 'property'});
+  const targetTagName = utils.getPreferredTagName({
+    tagName: 'property',
+  });
   const isError = validatePropertyNames(
     targetTagName,
     enableFixer,

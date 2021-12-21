@@ -73,10 +73,12 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 3,
-        message: 'Syntax error in namepath: foo%',
-      }],
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in namepath: foo%',
+        },
+      ],
     },
     {
       code: `
@@ -87,10 +89,12 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 3,
-        message: 'Syntax error in namepath: #foo',
-      }],
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in namepath: #foo',
+        },
+      ],
     },
     {
       code: `
@@ -101,10 +105,12 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 3,
-        message: 'Syntax error in namepath: bar%',
-      }],
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in namepath: bar%',
+        },
+      ],
     },
     {
       code: `
@@ -115,10 +121,12 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 3,
-        message: '@borrows must have an "as" expression. Found ""',
-      }],
+      errors: [
+        {
+          line: 3,
+          message: '@borrows must have an "as" expression. Found ""',
+        },
+      ],
     },
     {
       code: `
@@ -129,16 +137,20 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 3,
-        message: 'Syntax error in namepath: foo%',
-      }],
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in namepath: foo%',
+        },
+      ],
       settings: {
         jsdoc: {
           structuredTags: {
             see: {
               name: 'namepath-referencing',
-              required: ['name'],
+              required: [
+                'name',
+              ],
             },
           },
         },
@@ -153,10 +165,12 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 3,
-        message: 'Syntax error in namepath: module:namespace.SomeClass~',
-      }],
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in namepath: module:namespace.SomeClass~',
+        },
+      ],
     },
     {
       code: `
@@ -167,13 +181,17 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 3,
-        message: 'Tag @callback must have a name/namepath.',
-      }],
-      options: [{
-        allowEmptyNamepaths: false,
-      }],
+      errors: [
+        {
+          line: 3,
+          message: 'Tag @callback must have a name/namepath.',
+        },
+      ],
+      options: [
+        {
+          allowEmptyNamepaths: false,
+        },
+      ],
     },
     {
       code: `
@@ -255,7 +273,9 @@ export default {
         jsdoc: {
           structuredTags: {
             aCustomTag: {
-              required: ['typeOrNameRequired'],
+              required: [
+                'typeOrNameRequired',
+              ],
             },
           },
         },
@@ -559,16 +579,20 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 1,
-        message: 'Cannot add "name" to `require` with the tag\'s `name` set to `false`',
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Cannot add "name" to `require` with the tag\'s `name` set to `false`',
+        },
+      ],
       settings: {
         jsdoc: {
           structuredTags: {
             see: {
               name: false,
-              required: ['name'],
+              required: [
+                'name',
+              ],
             },
           },
         },
@@ -583,15 +607,19 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 1,
-        message: 'Cannot add "type" to `require` with the tag\'s `type` set to `false`',
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Cannot add "type" to `require` with the tag\'s `type` set to `false`',
+        },
+      ],
       settings: {
         jsdoc: {
           structuredTags: {
             see: {
-              required: ['type'],
+              required: [
+                'type',
+              ],
               type: false,
             },
           },
@@ -607,16 +635,20 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 1,
-        message: 'Cannot add "typeOrNameRequired" to `require` with the tag\'s `name` set to `false`',
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Cannot add "typeOrNameRequired" to `require` with the tag\'s `name` set to `false`',
+        },
+      ],
       settings: {
         jsdoc: {
           structuredTags: {
             see: {
               name: false,
-              required: ['typeOrNameRequired'],
+              required: [
+                'typeOrNameRequired',
+              ],
             },
           },
         },
@@ -631,15 +663,19 @@ export default {
 
           }
       `,
-      errors: [{
-        line: 1,
-        message: 'Cannot add "typeOrNameRequired" to `require` with the tag\'s `type` set to `false`',
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Cannot add "typeOrNameRequired" to `require` with the tag\'s `type` set to `false`',
+        },
+      ],
       settings: {
         jsdoc: {
           structuredTags: {
             see: {
-              required: ['typeOrNameRequired'],
+              required: [
+                'typeOrNameRequired',
+              ],
               type: false,
             },
           },
@@ -872,9 +908,11 @@ export default {
 
           }
       `,
-      options: [{
-        allowEmptyNamepaths: true,
-      }],
+      options: [
+        {
+          allowEmptyNamepaths: true,
+        },
+      ],
     },
     {
       code: `
@@ -900,7 +938,9 @@ export default {
           structuredTags: {
             see: {
               name: 'namepath-referencing',
-              required: ['name'],
+              required: [
+                'name',
+              ],
             },
           },
         },

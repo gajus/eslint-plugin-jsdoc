@@ -2,7 +2,9 @@ import {
   getJSDocComment,
 } from '@es-joy/jsdoccomment';
 import {
-  traverse, parse as parseType, tryParse as tryParseType,
+  traverse,
+  parse as parseType,
+  tryParse as tryParseType,
 } from 'jsdoc-type-pratt-parser';
 import iterateJsdoc, {
   parseComment,
@@ -30,13 +32,23 @@ export default iterateJsdoc(({
   sourceCode,
   utils,
 }) => {
-  const {scopeManager} = sourceCode;
-  const {globalScope} = scopeManager;
+  const {
+    scopeManager,
+  } = sourceCode;
+  const {
+    globalScope,
+  } = scopeManager;
 
-  const {definedTypes = []} = context.options[0] || {};
+  const {
+    definedTypes = [],
+  } = context.options[0] || {};
 
   let definedPreferredTypes = [];
-  const {preferredTypes, structuredTags, mode} = settings;
+  const {
+    preferredTypes,
+    structuredTags,
+    mode,
+  } = settings;
   if (Object.keys(preferredTypes).length) {
     definedPreferredTypes = Object.values(preferredTypes).map((preferredType) => {
       if (typeof preferredType === 'string') {
@@ -69,7 +81,9 @@ export default iterateJsdoc(({
       return parseComment(commentNode, '');
     })
     .flatMap((doc) => {
-      return doc.tags.filter(({tag}) => {
+      return doc.tags.filter(({
+        tag,
+      }) => {
         return utils.isNamepathDefiningTag(tag);
       });
     })
@@ -106,7 +120,9 @@ export default iterateJsdoc(({
   if (classJsdoc?.tags) {
     templateTags = templateTags.concat(
       classJsdoc.tags
-        .filter(({tag}) => {
+        .filter(({
+          tag,
+        }) => {
           return tag === 'template';
         }),
     );
@@ -120,16 +136,22 @@ export default iterateJsdoc(({
   //  Program scope inside
   const cjsOrESMScope = globalScope.childScopes[0]?.block.type === 'Program';
 
-  const allDefinedTypes = new Set(globalScope.variables.map(({name}) => {
+  const allDefinedTypes = new Set(globalScope.variables.map(({
+    name,
+  }) => {
     return name;
   })
 
     // If the file is a module, concat the variables from the module scope.
     .concat(
       cjsOrESMScope ?
-        globalScope.childScopes.flatMap(({variables}) => {
+        globalScope.childScopes.flatMap(({
+          variables,
+        }) => {
           return variables;
-        }).map(({name}) => {
+        }).map(({
+          name,
+        }) => {
           return name;
         }) : [],
     )
@@ -139,7 +161,9 @@ export default iterateJsdoc(({
     .concat(definedPreferredTypes)
     .concat(settings.mode === 'jsdoc' ? [] : closureGenericTypes));
 
-  const jsdocTagsWithPossibleType = utils.filterTags(({tag}) => {
+  const jsdocTagsWithPossibleType = utils.filterTags(({
+    tag,
+  }) => {
     return utils.tagMightHaveTypePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
   });
 
@@ -153,7 +177,10 @@ export default iterateJsdoc(({
       continue;
     }
 
-    traverse(parsedType, ({type, value}) => {
+    traverse(parsedType, ({
+      type,
+      value,
+    }) => {
       if (type === 'JsdocTypeName') {
         const structuredTypes = structuredTags[tag.tag]?.type;
         if (!allDefinedTypes.has(value) &&

@@ -191,14 +191,16 @@ export default {
           message: 'Missing JSDoc comment.',
         },
       ],
-      options: [{
-        contexts: [
-          'TSMethodSignature',
-        ],
-        publicOnly: {
-          ancestorsOnly: true,
+      options: [
+        {
+          contexts: [
+            'TSMethodSignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
         },
-      }],
+      ],
       output: `
       /**
        * Foo interface documentation.
@@ -369,12 +371,14 @@ function quux (foo) {
           type: 'FunctionExpression',
         },
       ],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
         },
-      }],
+      ],
       output: `
           /**
            *
@@ -401,12 +405,14 @@ function quux (foo) {
           type: 'FunctionDeclaration',
         },
       ],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionDeclaration: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionDeclaration: true,
+          },
         },
-      }],
+      ],
       output: `
           /**
            *
@@ -433,12 +439,14 @@ function quux (foo) {
           type: 'ArrowFunctionExpression',
         },
       ],
-      options: [{
-        publicOnly: true,
-        require: {
-          ArrowFunctionExpression: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+          },
         },
-      }],
+      ],
       output: `
           /**
            *
@@ -464,10 +472,14 @@ function quux (foo) {
           type: 'ArrowFunctionExpression',
         },
       ],
-      options: [{
-        contexts: ['ArrowFunctionExpression'],
-        publicOnly: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'ArrowFunctionExpression',
+          ],
+          publicOnly: true,
+        },
+      ],
       output: `
           /**
            *
@@ -493,12 +505,16 @@ function quux (foo) {
           type: 'ArrowFunctionExpression',
         },
       ],
-      options: [{
-        contexts: [{
-          context: 'ArrowFunctionExpression',
-        }],
-        publicOnly: true,
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              context: 'ArrowFunctionExpression',
+            },
+          ],
+          publicOnly: true,
+        },
+      ],
       output: `
           /**
            *
@@ -524,12 +540,14 @@ function quux (foo) {
           type: 'ClassExpression',
         },
       ],
-      options: [{
-        publicOnly: true,
-        require: {
-          ClassExpression: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ClassExpression: true,
+          },
         },
-      }],
+      ],
       output: `
           /**
            *
@@ -553,16 +571,18 @@ function quux (foo) {
           type: 'FunctionDeclaration',
         },
       ],
-      options: [{
-        publicOnly: {
-          cjs: false,
-          esm: true,
-          window: false,
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+            esm: true,
+            window: false,
+          },
+          require: {
+            FunctionDeclaration: true,
+          },
         },
-        require: {
-          FunctionDeclaration: true,
-        },
-      }],
+      ],
       output: `
         /**
          *
@@ -584,16 +604,18 @@ function quux (foo) {
           type: 'ArrowFunctionExpression',
         },
       ],
-      options: [{
-        publicOnly: {
-          cjs: false,
-          esm: true,
-          window: false,
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+            esm: true,
+            window: false,
+          },
+          require: {
+            ArrowFunctionExpression: true,
+          },
         },
-        require: {
-          ArrowFunctionExpression: true,
-        },
-      }],
+      ],
       output: `
         /**
          *
@@ -615,16 +637,18 @@ function quux (foo) {
           type: 'FunctionExpression',
         },
       ],
-      options: [{
-        publicOnly: {
-          cjs: false,
-          esm: true,
-          window: false,
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+            esm: true,
+            window: false,
+          },
+          require: {
+            FunctionExpression: true,
+          },
         },
-        require: {
-          FunctionExpression: true,
-        },
-      }],
+      ],
       output: `
       /**
        *
@@ -646,16 +670,18 @@ function quux (foo) {
           type: 'ClassDeclaration',
         },
       ],
-      options: [{
-        publicOnly: {
-          cjs: false,
-          esm: true,
-          window: false,
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+            esm: true,
+            window: false,
+          },
+          require: {
+            ClassDeclaration: true,
+          },
         },
-        require: {
-          ClassDeclaration: true,
-        },
-      }],
+      ],
       output: `
         /**
          *
@@ -698,7 +724,9 @@ function quux (foo) {
         },
       ],
       options: [
-        {exemptEmptyFunctions: true},
+        {
+          exemptEmptyFunctions: true,
+        },
       ],
       output: `
         /**
@@ -720,7 +748,9 @@ function quux (foo) {
         },
       ],
       options: [
-        {exemptEmptyFunctions: true},
+        {
+          exemptEmptyFunctions: true,
+        },
       ],
       output: `
         /**
@@ -740,11 +770,13 @@ function quux (foo) {
       code: `
       function myFunction() {}
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
+        },
+      ],
       output: `
       /**
        *
@@ -762,17 +794,21 @@ function quux (foo) {
                  this.a = xs;
             }
          }`,
-      errors: [{
-        line: 5,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        require: {
-          ClassDeclaration: true,
-          MethodDefinition: true,
+      errors: [
+        {
+          line: 5,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
       output:
         `/**
           * Description for A.
@@ -800,17 +836,21 @@ function quux (foo) {
                 this.a = xs;
             }
         }`,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration',
-      }],
-      options: [{
-        require: {
-          ClassDeclaration: true,
-          MethodDefinition: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'ClassDeclaration',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
       output: `
         /**
          *
@@ -839,17 +879,21 @@ function quux (foo) {
                 this.a = xs;
             }
         }`,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration',
-      }],
-      options: [{
-        require: {
-          ClassDeclaration: true,
-          MethodDefinition: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'ClassDeclaration',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
       output: `
         /**
          *
@@ -878,17 +922,21 @@ function quux (foo) {
                 this.a = xs;
             }
         }`,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration',
-      }],
-      options: [{
-        require: {
-          ClassDeclaration: true,
-          MethodDefinition: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'ClassDeclaration',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
       output: `
         /**
          *
@@ -917,17 +965,21 @@ function quux (foo) {
                 this.a = xs;
             }
         }`,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration',
-      }],
-      options: [{
-        require: {
-          ClassDeclaration: true,
-          MethodDefinition: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'ClassDeclaration',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
       output: `
         /**
          *
@@ -949,16 +1001,20 @@ function quux (foo) {
       code: `
       var myFunction = () => {}
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'ArrowFunctionExpression',
-      }],
-      options: [{
-        require: {
-          ArrowFunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'ArrowFunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
       output: `
       /**
        *
@@ -973,16 +1029,20 @@ function quux (foo) {
       code: `
       var myFunction = () => () => {}
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'ArrowFunctionExpression',
-      }],
-      options: [{
-        require: {
-          ArrowFunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'ArrowFunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
       output: `
       /**
        *
@@ -997,16 +1057,20 @@ function quux (foo) {
       code: `
       var foo = function() {}
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
       /**
        *
@@ -1018,16 +1082,20 @@ function quux (foo) {
       code: `
       const foo = {bar() {}}
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
       const foo = {/**
        *
@@ -1042,16 +1110,20 @@ function quux (foo) {
       code: `
       var foo = {bar: function() {}}
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
       var foo = {/**
        *
@@ -1063,13 +1135,17 @@ function quux (foo) {
       code: `
         function foo (abc) {}
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
+        },
+      ],
       options: [
-        {exemptEmptyFunctions: false},
+        {
+          exemptEmptyFunctions: false,
+        },
       ],
       output: `
         /**
@@ -1084,13 +1160,17 @@ function quux (foo) {
           return true;
         }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
+        },
+      ],
       options: [
-        {exemptEmptyFunctions: false},
+        {
+          exemptEmptyFunctions: false,
+        },
       ],
       output: `
         /**
@@ -1110,17 +1190,21 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
           /**
            *
@@ -1139,19 +1223,23 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: {
-          ancestorsOnly: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-        require: {
-          FunctionExpression: true,
+      ],
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
         },
-      }],
+      ],
       output: `
           /**
            *
@@ -1172,17 +1260,21 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 3,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
           module.exports = {
             /**
@@ -1207,17 +1299,21 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 4,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
           module.exports = {
             test: {
@@ -1244,19 +1340,23 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 4,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: {
-          ancestorsOnly: true,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-        require: {
-          FunctionExpression: true,
+      ],
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
         },
-      }],
+      ],
       output: `
           module.exports = {
             test: {
@@ -1279,17 +1379,21 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
           /**
            *
@@ -1313,17 +1417,21 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 9,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 9,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
           /**
           *
@@ -1350,17 +1458,21 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
           /**
            *
@@ -1385,17 +1497,21 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'ArrowFunctionExpression',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          ArrowFunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'ArrowFunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
       output: `
           /**
            *
@@ -1420,17 +1536,21 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 3,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          MethodDefinition: true,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            MethodDefinition: true,
+          },
+        },
+      ],
       output: `
         class Test {
             /**
@@ -1449,17 +1569,21 @@ function quux (foo) {
 
           }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
           /**
            *
@@ -1478,19 +1602,23 @@ function quux (foo) {
 
           }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
-      options: [{
-        publicOnly: {
-          ancestorsOnly: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
         },
-        require: {
-          FunctionExpression: true,
+      ],
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
         },
-      }],
+      ],
       output: `
           /**
            *
@@ -1510,17 +1638,21 @@ function quux (foo) {
           }
           export default quux;
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
           /**
            *
@@ -1540,17 +1672,21 @@ function quux (foo) {
 
           }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
           /**
            *
@@ -1569,19 +1705,23 @@ function quux (foo) {
 
           }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
-      options: [{
-        publicOnly: {
-          ancestorsOnly: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
         },
-        require: {
-          FunctionExpression: true,
+      ],
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
         },
-      }],
+      ],
       output: `
           /**
            *
@@ -1608,12 +1748,14 @@ function quux (foo) {
           message: 'Missing JSDoc comment.',
         },
       ],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
         },
-      }],
+      ],
       output: `
           /**
            *
@@ -1635,17 +1777,21 @@ function quux (foo) {
           }
           export { test as test2 }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          FunctionExpression: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
       output: `
           /**
            *
@@ -1665,17 +1811,21 @@ function quux (foo) {
 
          }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration',
-      }],
-      options: [{
-        publicOnly: true,
-        require: {
-          ClassDeclaration: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'ClassDeclaration',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ClassDeclaration: true,
+          },
+        },
+      ],
       output: `
          /**
           *
@@ -1694,19 +1844,23 @@ function quux (foo) {
 
          }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'ClassDeclaration',
-      }],
-      options: [{
-        publicOnly: {
-          ancestorsOnly: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'ClassDeclaration',
         },
-        require: {
-          ClassDeclaration: true,
+      ],
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            ClassDeclaration: true,
+          },
         },
-      }],
+      ],
       output: `
          /**
           *
@@ -1725,19 +1879,23 @@ function quux (foo) {
 
           }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: {
-          window: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-        require: {
-          FunctionExpression: true,
+      ],
+      options: [
+        {
+          publicOnly: {
+            window: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
         },
-      }],
+      ],
       output: `
           /**
            *
@@ -1756,19 +1914,23 @@ function quux (foo) {
 
           }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: {
-          window: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-        require: {
-          FunctionExpression: true,
+      ],
+      options: [
+        {
+          publicOnly: {
+            window: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
         },
-      }],
+      ],
       output: `
           /**
            *
@@ -1787,16 +1949,20 @@ function quux (foo) {
 
           }
       `,
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
-      options: [{
-        publicOnly: {
-          window: true,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
         },
-      }],
+      ],
+      options: [
+        {
+          publicOnly: {
+            window: true,
+          },
+        },
+      ],
       output: `
           /**
            *
@@ -1818,21 +1984,25 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionExpression',
-      }],
-      options: [{
-        publicOnly: {
-          cjs: true,
-          esm: false,
-          window: false,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionExpression',
         },
-        require: {
-          FunctionExpression: true,
+      ],
+      options: [
+        {
+          publicOnly: {
+            cjs: true,
+            esm: false,
+            window: false,
+          },
+          require: {
+            FunctionExpression: true,
+          },
         },
-      }],
+      ],
       output: `
         /**
          *
@@ -1851,21 +2021,25 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
-      options: [{
-        publicOnly: {
-          cjs: false,
-          esm: true,
-          window: false,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
         },
-        require: {
-          FunctionDeclaration: true,
+      ],
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+            esm: true,
+            window: false,
+          },
+          require: {
+            FunctionDeclaration: true,
+          },
         },
-      }],
+      ],
       output: `
         /**
          *
@@ -1888,21 +2062,25 @@ function quux (foo) {
       env: {
         node: true,
       },
-      errors: [{
-        line: 2,
-        message: 'Missing JSDoc comment.',
-        type: 'FunctionDeclaration',
-      }],
-      options: [{
-        publicOnly: {
-          cjs: false,
-          esm: true,
-          window: false,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'FunctionDeclaration',
         },
-        require: {
-          FunctionDeclaration: true,
+      ],
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+            esm: true,
+            window: false,
+          },
+          require: {
+            FunctionDeclaration: true,
+          },
         },
-      }],
+      ],
       output: `
         /**
          *
@@ -1965,11 +2143,13 @@ function quux (foo) {
           message: 'Missing JSDoc comment.',
         },
       ],
-      options: [{
-        contexts: [
-          'TSMethodSignature',
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            'TSMethodSignature',
+          ],
+        },
+      ],
       output: `
       /**
        * Foo interface documentation.
@@ -2000,12 +2180,14 @@ function quux (foo) {
           message: 'Missing JSDoc comment.',
         },
       ],
-      options: [{
-        exemptEmptyFunctions: true,
-        require: {
-          ClassDeclaration: true,
+      options: [
+        {
+          exemptEmptyFunctions: true,
+          require: {
+            ClassDeclaration: true,
+          },
         },
-      }],
+      ],
       output: `
       /**
        *
@@ -2587,7 +2769,9 @@ function quux (foo) {
       ],
       options: [
         {
-          contexts: ['PropertyDefinition'],
+          contexts: [
+            'PropertyDefinition',
+          ],
         },
       ],
       output: `
@@ -2770,16 +2954,20 @@ function quux (foo) {
 
           }
       `,
-      errors: [{
-        line: 1,
-        message: 'Cannot add "name" to `require` with the tag\'s `name` set to `false`',
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Cannot add "name" to `require` with the tag\'s `name` set to `false`',
+        },
+      ],
       settings: {
         jsdoc: {
           structuredTags: {
             see: {
               name: false,
-              required: ['name'],
+              required: [
+                'name',
+              ],
             },
           },
         },
@@ -2791,21 +2979,25 @@ function quux (foo) {
         aFunc() {}
       }
       `,
-      errors: [{
-        line: 3,
-        message: 'Missing JSDoc comment.',
-      }],
-      options: [{
-        checkConstructors: false,
-        require: {
-          ArrowFunctionExpression: true,
-          ClassDeclaration: false,
-          ClassExpression: true,
-          FunctionDeclaration: true,
-          FunctionExpression: true,
-          MethodDefinition: true,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
         },
-      }],
+      ],
+      options: [
+        {
+          checkConstructors: false,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: false,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
       output: `
       class Test {
         /**
@@ -2822,23 +3014,27 @@ function quux (foo) {
         anotherFunc() {}
       }
       `,
-      errors: [{
-        line: 3,
-        message: 'Missing JSDoc comment.',
-      }, {
-        line: 4,
-        message: 'Missing JSDoc comment.',
-      }],
-      options: [{
-        require: {
-          ArrowFunctionExpression: true,
-          ClassDeclaration: false,
-          ClassExpression: true,
-          FunctionDeclaration: true,
-          FunctionExpression: true,
-          MethodDefinition: true,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        }, {
+          line: 4,
+          message: 'Missing JSDoc comment.',
         },
-      }],
+      ],
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: false,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
       output: `
       class Test {
         /**
@@ -2867,7 +3063,9 @@ function quux (foo) {
       ],
       options: [
         {
-          contexts: ['TSEnumDeclaration'],
+          contexts: [
+            'TSEnumDeclaration',
+          ],
           publicOnly: true,
         },
       ],
@@ -2899,7 +3097,9 @@ function quux (foo) {
       ],
       options: [
         {
-          contexts: ['TSInterfaceDeclaration'],
+          contexts: [
+            'TSInterfaceDeclaration',
+          ],
           publicOnly: true,
         },
       ],
@@ -2929,7 +3129,9 @@ function quux (foo) {
       ],
       options: [
         {
-          contexts: ['TSTypeAliasDeclaration'],
+          contexts: [
+            'TSTypeAliasDeclaration',
+          ],
           publicOnly: true,
         },
       ],
@@ -2968,7 +3170,9 @@ function quux (foo) {
       ],
       options: [
         {
-          contexts: ['TSPropertySignature', 'TSMethodSignature'],
+          contexts: [
+            'TSPropertySignature', 'TSMethodSignature',
+          ],
           publicOnly: true,
         },
       ],
@@ -3011,9 +3215,13 @@ function quux (foo) {
           message: 'Missing JSDoc comment.',
         },
       ],
-      options: [{
-        contexts: ['PropertyDefinition > Decorator[expression.callee.name="Input"]'],
-      }],
+      options: [
+        {
+          contexts: [
+            'PropertyDefinition > Decorator[expression.callee.name="Input"]',
+          ],
+        },
+      ],
       output: `
       export class MyComponentComponent {
         @Output()
@@ -3037,10 +3245,12 @@ function quux (foo) {
       function bench() {
       }
       `,
-      errors: [{
-        line: 4,
-        message: 'Missing JSDoc comment.',
-      }],
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
       output: `
       requestAnimationFrame(draw)
 
@@ -3066,7 +3276,9 @@ function quux (foo) {
       options: [
         {
           checkSetters: 'no-getter',
-          contexts: ['MethodDefinition > FunctionExpression'],
+          contexts: [
+            'MethodDefinition > FunctionExpression',
+          ],
         },
       ],
       output: `
@@ -3093,7 +3305,9 @@ function quux (foo) {
       options: [
         {
           checkGetters: 'no-setter',
-          contexts: ['MethodDefinition > FunctionExpression'],
+          contexts: [
+            'MethodDefinition > FunctionExpression',
+          ],
         },
       ],
       output: `
@@ -3120,7 +3334,9 @@ function quux (foo) {
       options: [
         {
           checkGetters: 'no-setter',
-          contexts: ['Property > FunctionExpression'],
+          contexts: [
+            'Property > FunctionExpression',
+          ],
         },
       ],
       output: `
@@ -3149,12 +3365,14 @@ function quux (foo) {
         },
       ],
       ignoreReadme: true,
-      options: [{
-        exemptEmptyFunctions: true,
-        require: {
-          FunctionDeclaration: true,
+      options: [
+        {
+          exemptEmptyFunctions: true,
+          require: {
+            FunctionDeclaration: true,
+          },
         },
-      }],
+      ],
       output: `
       /**
        *
@@ -3264,7 +3482,9 @@ function quux (foo) {
       ],
       options: [
         {
-          contexts: ['PropertyDefinition'],
+          contexts: [
+            'PropertyDefinition',
+          ],
           publicOnly: true,
         },
       ],
@@ -3291,17 +3511,19 @@ function quux (foo) {
           message: 'Missing JSDoc comment.',
         },
       ],
-      options: [{
-        publicOnly: true,
-        require: {
-          ArrowFunctionExpression: true,
-          ClassDeclaration: true,
-          ClassExpression: true,
-          FunctionDeclaration: true,
-          FunctionExpression: true,
-          MethodDefinition: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
         },
-      }],
+      ],
       output: `
         /**
          *
@@ -3328,17 +3550,19 @@ function quux (foo) {
           message: 'Missing JSDoc comment.',
         },
       ],
-      options: [{
-        publicOnly: true,
-        require: {
-          ArrowFunctionExpression: true,
-          ClassDeclaration: true,
-          ClassExpression: true,
-          FunctionDeclaration: true,
-          FunctionExpression: true,
-          MethodDefinition: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
         },
-      }],
+      ],
       output: `
       /**
        *
@@ -3371,17 +3595,19 @@ function quux (foo) {
           message: 'Missing JSDoc comment.',
         },
       ],
-      options: [{
-        publicOnly: true,
-        require: {
-          ArrowFunctionExpression: true,
-          ClassDeclaration: true,
-          ClassExpression: true,
-          FunctionDeclaration: true,
-          FunctionExpression: true,
-          MethodDefinition: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
         },
-      }],
+      ],
       output: `
       /**
        *
@@ -3399,47 +3625,48 @@ function quux (foo) {
       },
     },
   ],
-  valid: [{
-    code: `
+  valid: [
+    {
+      code: `
       interface FooBar {
         fooBar: string;
       }
     `,
-    options: [
-      {
-        contexts: [
-          'TSInterfaceDeclaration',
-          'TSMethodSignature',
-          'TSPropertySignature',
-        ],
-        publicOnly: {
-          ancestorsOnly: true,
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
         },
-      },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-  }, {
-    code: `
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    }, {
+      code: `
       /** This is comment */
       interface FooBar {
         fooBar: string;
       }
     `,
-    options: [
-      {
-        contexts: [
-          'TSInterfaceDeclaration',
-          'TSMethodSignature',
-          'TSPropertySignature',
-        ],
-        publicOnly: {
-          ancestorsOnly: true,
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
         },
-      },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-  }, {
-    code: `
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    }, {
+      code: `
         /** This is comment */
         export class Foo {
           someMethod() {
@@ -3449,21 +3676,21 @@ function quux (foo) {
           }
         }
     `,
-    options: [
-      {
-        contexts: [
-          'TSInterfaceDeclaration',
-          'TSMethodSignature',
-          'TSPropertySignature',
-        ],
-        publicOnly: {
-          ancestorsOnly: true,
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
         },
-      },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-  }, {
-    code: `
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    }, {
+      code: `
         /** This is comment */
         function someFunction() {
           interface FooBar {
@@ -3472,21 +3699,21 @@ function quux (foo) {
         }
 
     `,
-    options: [
-      {
-        contexts: [
-          'TSInterfaceDeclaration',
-          'TSMethodSignature',
-          'TSPropertySignature',
-        ],
-        publicOnly: {
-          ancestorsOnly: true,
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
         },
-      },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-  }, {
-    code: `
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    }, {
+      code: `
         /** This is comment */
         export function foo() {
           interface bar {
@@ -3494,27 +3721,27 @@ function quux (foo) {
           }
         }
     `,
-    options: [
-      {
-        contexts: [
-          'TSInterfaceDeclaration',
-          'TSMethodSignature',
-          'TSPropertySignature',
-        ],
-        publicOnly: {
-          ancestorsOnly: true,
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+          publicOnly: {
+            ancestorsOnly: true,
+          },
         },
-      },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-  }, {
-    code: `
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    }, {
+      code: `
         /**
          *
          */
     `,
-  }, {
-    code: `
+    }, {
+      code: `
       var array = [1,2,3];
       array.forEach(function() {});
 
@@ -3603,9 +3830,9 @@ function quux (foo) {
       var object = { name: 'key'};
       Object.keys(object).forEach(function() {})
     `,
-  },
-  {
-    code: `
+    },
+    {
+      code: `
        /**
         * @func myFunction
         */
@@ -3614,15 +3841,15 @@ function quux (foo) {
 
        }
        `,
-    settings: {
-      jsdoc: {
-        maxLines: 2,
-        minLines: 0,
+      settings: {
+        jsdoc: {
+          maxLines: 2,
+          minLines: 0,
+        },
       },
     },
-  },
-  {
-    code: `
+    {
+      code: `
      /**
       * @func myFunction
       */
@@ -3632,28 +3859,28 @@ function quux (foo) {
 
      }
      `,
-    settings: {
-      jsdoc: {
-        maxLines: 3,
-        minLines: 0,
+      settings: {
+        jsdoc: {
+          maxLines: 3,
+          minLines: 0,
+        },
       },
     },
-  },
-  {
-    code: `
+    {
+      code: `
         /** @func myFunction */  function myFunction() {
 
         }
    `,
-    settings: {
-      jsdoc: {
-        maxLines: 0,
-        minLines: 0,
+      settings: {
+        jsdoc: {
+          maxLines: 0,
+          minLines: 0,
+        },
       },
     },
-  },
-  {
-    code: `
+    {
+      code: `
         /**
          * @func myFunction
          */
@@ -3662,35 +3889,39 @@ function quux (foo) {
 
         }
     `,
-    settings: {
-      jsdoc: {
-        maxLines: 3,
-        minLines: 2,
+      settings: {
+        jsdoc: {
+          maxLines: 3,
+          minLines: 2,
+        },
       },
     },
-  },
-  {
-    code: 'function myFunction() {}',
-    options: [{
-      require: {
-        ClassDeclaration: true,
-        FunctionDeclaration: false,
-        MethodDefinition: true,
-      },
-    }],
-  },
-  {
-    code: 'var myFunction = function() {}',
-    options: [{
-      require: {
-        ClassDeclaration: true,
-        FunctionDeclaration: false,
-        MethodDefinition: true,
-      },
-    }],
-  },
-  {
-    code: `
+    {
+      code: 'function myFunction() {}',
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            FunctionDeclaration: false,
+            MethodDefinition: true,
+          },
+        },
+      ],
+    },
+    {
+      code: 'var myFunction = function() {}',
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            FunctionDeclaration: false,
+            MethodDefinition: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
       /**
        * Description for A.
        */
@@ -3703,18 +3934,20 @@ function quux (foo) {
               this.a = xs;
           }
       }`,
-    options: [{
-      require: {
-        ClassDeclaration: true,
-        MethodDefinition: true,
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
     },
-  },
-  {
-    code:
+    {
+      code:
       `/**
         * Description for A.
         */
@@ -3727,18 +3960,20 @@ function quux (foo) {
                this.a = xs;
            }
        }`,
-    options: [{
-      require: {
-        ClassDeclaration: true,
-        MethodDefinition: true,
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
     },
-  },
-  {
-    code:
+    {
+      code:
       `/**
        * Description for A.
        */
@@ -3751,19 +3986,21 @@ function quux (foo) {
               this.a = xs;
           }
       }`,
-    options: [{
-      require: {
-        ClassDeclaration: true,
-        MethodDefinition: true,
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module',
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
-      sourceType: 'module',
     },
-  },
-  {
-    code:
+    {
+      code:
       `/**
          * Description for A.
          */
@@ -3776,175 +4013,201 @@ function quux (foo) {
                 this.a = xs;
             }
         }`,
-    options: [{
-      require: {
-        ClassDeclaration: true,
-        MethodDefinition: true,
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module',
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
-      sourceType: 'module',
     },
-  },
-  {
-    code:
+    {
+      code:
       `class A {
           constructor(xs) {
               this.a = xs;
           }
       }`,
-    options: [{
-      require: {
-        ClassDeclaration: false,
-        MethodDefinition: false,
+      options: [
+        {
+          require: {
+            ClassDeclaration: false,
+            MethodDefinition: false,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
     },
-  },
-  {
-    code:
+    {
+      code:
       `/**
        * Function doing something
        */
        var myFunction = () => {}`,
-    options: [{
-      require: {
-        ArrowFunctionExpression: true,
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
     },
-  },
-  {
-    code:
+    {
+      code:
       `/**
        * Function doing something
        */
        var myFunction = function () {}`,
-    options: [{
-      require: {
-        ArrowFunctionExpression: true,
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
     },
-  },
-  {
-    code:
+    {
+      code:
       `/**
        * Function doing something
        */
        var myFunction = () => {}`,
-    options: [{
-      require: {
-        ArrowFunctionExpression: false,
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: false,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
     },
-  },
-  {
-    code:
+    {
+      code:
       `/**
         Function doing something
        */
        var myFunction = () => () => {}`,
-    options: [{
-      require: {
-        ArrowFunctionExpression: true,
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
     },
-  },
-  {
-    code: 'setTimeout(() => {}, 10);',
-    options: [{
-      require: {
-        ArrowFunctionExpression: true,
+    {
+      code: 'setTimeout(() => {}, 10);',
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
     },
-  },
-  {
-    code:
+    {
+      code:
       `/**
        JSDoc Block
        */
        var foo = function() {}`,
-    options: [{
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-  },
-  {
-    code:
+      options: [
+        {
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+    },
+    {
+      code:
       `const foo = {/**
        JSDoc Block
        */
        bar() {}}`,
-    options: [{
-      require: {
-        FunctionExpression: true,
+      options: [
+        {
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
     },
-  },
-  {
-    code:
+    {
+      code:
       `var foo = {/**
        JSDoc Block
        */
        bar: function() {}}`,
-    options: [{
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-  },
-  {
-    code: ' var foo = { [function() {}]: 1 };',
-    options: [{
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
+      options: [
+        {
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
     },
-  },
-  {
-    code: `
+    {
+      code: ' var foo = { [function() {}]: 1 };',
+      options: [
+        {
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
+      },
+    },
+    {
+      code: `
       function foo () {}
     `,
-    options: [
-      {exemptEmptyFunctions: true},
-    ],
-  },
-  {
-    code: `
+      options: [
+        {
+          exemptEmptyFunctions: true,
+        },
+      ],
+    },
+    {
+      code: `
       function foo () {
         return;
       }
     `,
-    options: [
-      {exemptEmptyFunctions: true},
-    ],
-  },
-  {
-    code: `
+      options: [
+        {
+          exemptEmptyFunctions: true,
+        },
+      ],
+    },
+    {
+      code: `
       const test = {};
       /**
        * test
@@ -3956,18 +4219,20 @@ function quux (foo) {
         prop: { prop2: test.method }
       }
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      env: {
+        node: true,
       },
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
      /**
       *
       */
@@ -3979,18 +4244,20 @@ function quux (foo) {
        prop: { prop2: test }
      }
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      env: {
+        node: true,
       },
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
       /**
        *
        */
@@ -4002,22 +4269,24 @@ function quux (foo) {
         prop: { prop2: test }
       }
     `,
-    env: {
-      node: true,
+      env: {
+        node: true,
+      },
+      options: [
+        {
+          publicOnly: {
+            cjs: true,
+            esm: false,
+            window: false,
+          },
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
     },
-    options: [{
-      publicOnly: {
-        cjs: true,
-        esm: false,
-        window: false,
-      },
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4029,22 +4298,24 @@ function quux (foo) {
         prop: { prop2: test }
       }
     `,
-    env: {
-      node: true,
+      env: {
+        node: true,
+      },
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+            esm: true,
+            window: false,
+          },
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
     },
-    options: [{
-      publicOnly: {
-        cjs: false,
-        esm: true,
-        window: false,
-      },
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4056,18 +4327,20 @@ function quux (foo) {
       prop: { prop2: test }
       }
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: true,
-      require: {
-        ArrowFunctionExpression: true,
+      env: {
+        node: true,
       },
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
       const test = () => {
 
       }
@@ -4075,20 +4348,22 @@ function quux (foo) {
         prop: { prop2: test }
       }
     `,
-    env: {
-      node: true,
+      env: {
+        node: true,
+      },
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
     },
-    options: [{
-      publicOnly: {
-        ancestorsOnly: true,
-      },
-      require: {
-        ArrowFunctionExpression: true,
-      },
-    }],
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4100,18 +4375,20 @@ function quux (foo) {
       prop: window
       }
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      env: {
+        node: true,
       },
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
       test = function() {
 
       }
@@ -4127,18 +4404,20 @@ function quux (foo) {
       prop: { prop2: test }
       }
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      env: {
+        node: true,
       },
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
       test = function() {
 
       }
@@ -4149,18 +4428,20 @@ function quux (foo) {
       prop: { prop2: test }
       }
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      env: {
+        node: true,
       },
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
       /**
        *
        */
@@ -4179,18 +4460,20 @@ function quux (foo) {
       prop: { prop2: test }
       }
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      env: {
+        node: true,
       },
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
     class Test {
       /**
        * Test
@@ -4201,18 +4484,20 @@ function quux (foo) {
     }
     module.exports = Test;
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: true,
-      require: {
-        MethodDefinition: true,
+      env: {
+        node: true,
       },
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            MethodDefinition: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
       /**
        *
        */
@@ -4220,18 +4505,20 @@ function quux (foo) {
 
       }
     `,
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4239,20 +4526,22 @@ function quux (foo) {
 
       }
     `,
-    options: [{
-      publicOnly: {
-        ancestorsOnly: true,
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4261,37 +4550,41 @@ function quux (foo) {
       }
       export default quux;
     `,
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       function quux () {
 
       }
       export default quux;
     `,
-    options: [{
-      publicOnly: {
-        ancestorsOnly: true,
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4299,18 +4592,20 @@ function quux (foo) {
 
       }
     `,
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4318,20 +4613,22 @@ function quux (foo) {
 
       }
     `,
-    options: [{
-      publicOnly: {
-        ancestorsOnly: true,
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4341,18 +4638,20 @@ function quux (foo) {
       var test2 = 2;
       export { test, test2 }
     `,
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4361,18 +4660,20 @@ function quux (foo) {
       }
       export { test as test2 }
     `,
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4380,20 +4681,22 @@ function quux (foo) {
 
       }
     `,
-    options: [{
-      publicOnly: {
-        ancestorsOnly: true,
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          require: {
+            ClassDeclaration: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-      require: {
-        ClassDeclaration: true,
-      },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4401,51 +4704,57 @@ function quux (foo) {
 
       }
     `,
-    options: [{
-      publicOnly: {
-        window: true,
+      options: [
+        {
+          publicOnly: {
+            window: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       let test = function () {
 
       }
     `,
-    options: [{
-      publicOnly: {
-        window: true,
+      options: [
+        {
+          publicOnly: {
+            window: true,
+          },
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       let test = class {
 
       }
     `,
-    options: [{
-      publicOnly: true,
-      require: {
-        ClassExpression: false,
-      },
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ClassExpression: false,
+          },
+        },
+      ],
+    },
+    {
+      code: `
       /**
        *
        */
@@ -4453,91 +4762,99 @@ function quux (foo) {
 
       }
     `,
-    options: [{
-      publicOnly: true,
-      require: {
-        ClassExpression: true,
-      },
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ClassExpression: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
       export function someMethod() {
 
       }
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: {
-        cjs: true,
-        esm: false,
-        window: false,
+      env: {
+        node: true,
       },
-      require: {
-        FunctionDeclaration: true,
+      options: [
+        {
+          publicOnly: {
+            cjs: true,
+            esm: false,
+            window: false,
+          },
+          require: {
+            FunctionDeclaration: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module',
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
-      sourceType: 'module',
-    },
-  }, {
-    code: `
+    }, {
+      code: `
       export function someMethod() {
 
       }
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: {
-        cjs: true,
-        esm: false,
-        window: false,
+      env: {
+        node: true,
       },
-      require: {
-        FunctionDeclaration: true,
+      options: [
+        {
+          publicOnly: {
+            cjs: true,
+            esm: false,
+            window: false,
+          },
+          require: {
+            FunctionDeclaration: true,
+          },
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 6,
+        sourceType: 'module',
       },
-    }],
-    parserOptions: {
-      ecmaVersion: 6,
-      sourceType: 'module',
-    },
-  }, {
-    code: `
+    }, {
+      code: `
       exports.someMethod = function() {
 
       }
     `,
-    env: {
-      node: true,
-    },
-    options: [{
-      publicOnly: {
-        cjs: false,
-        esm: true,
-        window: false,
+      env: {
+        node: true,
       },
-      require: {
-        FunctionExpression: true,
-      },
-    }],
-  }, {
-    code: `
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+            esm: true,
+            window: false,
+          },
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+    }, {
+      code: `
         const myObject = {
           myProp: true
         };
     `,
-    options: [
-      {
-        contexts: [],
-      },
-    ],
-  }, {
-    code: `
+      options: [
+        {
+          contexts: [],
+        },
+      ],
+    }, {
+      code: `
       function bear() {}
       /**
        *
@@ -4546,17 +4863,19 @@ function quux (foo) {
       }
       export default quux;
     `,
-    options: [{
-      publicOnly: true,
-      require: {
-        FunctionExpression: true,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
-    }],
-    parserOptions: {
-      sourceType: 'module',
-    },
-  }, {
-    code: `
+    }, {
+      code: `
     /**
      * This example interface is great!
      */
@@ -4567,20 +4886,20 @@ function quux (foo) {
       test: string
     }
     `,
-    options: [
-      {
-        contexts: [
-          'TSInterfaceDeclaration',
-        ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
     /**
      * This example interface is great!
      */
@@ -4591,19 +4910,19 @@ function quux (foo) {
       test: string
     }
     `,
-    options: [
-      {
-        contexts: [
-          'TSInterfaceDeclaration',
-        ],
+      options: [
+        {
+          contexts: [
+            'TSInterfaceDeclaration',
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
-    },
-  }, {
-    code: `
+    }, {
+      code: `
     /**
      * This example type is great!
      */
@@ -4614,20 +4933,20 @@ function quux (foo) {
       test: string
     };
     `,
-    options: [
-      {
-        contexts: [
-          'TSTypeAliasDeclaration',
-        ],
+      options: [
+        {
+          contexts: [
+            'TSTypeAliasDeclaration',
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
     /**
      * This example type is great!
      */
@@ -4638,19 +4957,19 @@ function quux (foo) {
       test: string
     };
     `,
-    options: [
-      {
-        contexts: [
-          'TSTypeAliasDeclaration',
-        ],
+      options: [
+        {
+          contexts: [
+            'TSTypeAliasDeclaration',
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
-    },
-  }, {
-    code: `
+    }, {
+      code: `
     /**
      * This example enum is great!
      */
@@ -4661,20 +4980,20 @@ function quux (foo) {
       test = 123
     }
     `,
-    options: [
-      {
-        contexts: [
-          'TSEnumDeclaration',
-        ],
+      options: [
+        {
+          contexts: [
+            'TSEnumDeclaration',
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
     /**
      * This example enum is great!
      */
@@ -4685,49 +5004,49 @@ function quux (foo) {
       test = 123
     }
     `,
-    options: [
-      {
-        contexts: [
-          'TSEnumDeclaration',
-        ],
+      options: [
+        {
+          contexts: [
+            'TSEnumDeclaration',
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
+    {
     // https://github.com/gajus/eslint-plugin-jsdoc/issues/378
-    code: `
+      code: `
     const foo = {...{}};
     function bar() {}
     `,
-    options: [
-      {
-        exemptEmptyFunctions: false,
-        publicOnly: true,
-        require: {
-          ArrowFunctionExpression: true,
-          ClassDeclaration: true,
-          ClassExpression: true,
-          FunctionDeclaration: true,
-          FunctionExpression: false,
-          MethodDefinition: true,
+      options: [
+        {
+          exemptEmptyFunctions: false,
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: false,
+            MethodDefinition: true,
+          },
         },
+      ],
+      parser: require.resolve('@babel/eslint-parser'),
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+        ecmaVersion: 2_017,
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@babel/eslint-parser'),
-    parserOptions: {
-      ecmaFeatures: {
-        jsx: true,
-      },
-      ecmaVersion: 2_017,
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
     /**
      * Class documentation
      */
@@ -4736,21 +5055,21 @@ function quux (foo) {
      // ....
     }
     `,
-    options: [
-      {
-        exemptEmptyFunctions: false,
-        require: {
-          ClassDeclaration: true,
+      options: [
+        {
+          exemptEmptyFunctions: false,
+          require: {
+            ClassDeclaration: true,
+          },
         },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
     const a = {};
     const b = {
       ...a
@@ -4758,20 +5077,22 @@ function quux (foo) {
 
     export default b;
     `,
-    options: [
-      {
-        contexts: ['ObjectExpression'],
-        exemptEmptyFunctions: false,
-        publicOnly: true,
+      options: [
+        {
+          contexts: [
+            'ObjectExpression',
+          ],
+          exemptEmptyFunctions: false,
+          publicOnly: true,
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
     /**
      * Foo interface documentation.
      */
@@ -4787,44 +5108,46 @@ function quux (foo) {
       meow(): void;
     }
     `,
-    options: [{
-      contexts: [
-        'TSMethodSignature',
+      options: [
+        {
+          contexts: [
+            'TSMethodSignature',
+          ],
+        },
       ],
-    }],
-    parser: require.resolve('@typescript-eslint/parser'),
-  },
-  {
-    code: `
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
     export default class Test {
       private abc(a) {
         this.a = a;
       }
     }
     `,
-    options: [
-      {
-        contexts: [
-          'MethodDefinition:not([accessibility="private"]) > FunctionExpression',
-        ],
-        publicOnly: true,
-        require: {
-          ArrowFunctionExpression: false,
-          ClassDeclaration: false,
-          ClassExpression: false,
-          FunctionDeclaration: false,
-          FunctionExpression: false,
-          MethodDefinition: false,
+      options: [
+        {
+          contexts: [
+            'MethodDefinition:not([accessibility="private"]) > FunctionExpression',
+          ],
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: false,
+            ClassExpression: false,
+            FunctionDeclaration: false,
+            FunctionExpression: false,
+            MethodDefinition: false,
+          },
         },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
     /**
      * Basic application controller.
      */
@@ -4841,25 +5164,25 @@ function quux (foo) {
       }
     }
     `,
-    options: [
-      {
-        require: {
-          ArrowFunctionExpression: false,
-          ClassDeclaration: true,
-          ClassExpression: true,
-          FunctionDeclaration: true,
-          FunctionExpression: false,
-          MethodDefinition: true,
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: false,
+            MethodDefinition: true,
+          },
         },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
     /**
      * Entity to represent a user in the system.
      */
@@ -4867,25 +5190,25 @@ function quux (foo) {
     export class User {
     }
     `,
-    options: [
-      {
-        require: {
-          ArrowFunctionExpression: false,
-          ClassDeclaration: true,
-          ClassExpression: true,
-          FunctionDeclaration: true,
-          FunctionExpression: false,
-          MethodDefinition: true,
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: false,
+            MethodDefinition: true,
+          },
         },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
     /**
      * Entity to represent a user in the system.
      */
@@ -4893,25 +5216,25 @@ function quux (foo) {
     export class User {
     }
     `,
-    options: [
-      {
-        require: {
-          ArrowFunctionExpression: false,
-          ClassDeclaration: true,
-          ClassExpression: true,
-          FunctionDeclaration: true,
-          FunctionExpression: false,
-          MethodDefinition: true,
+      options: [
+        {
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: false,
+            MethodDefinition: true,
+          },
         },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  },
-  {
-    code: `
+    {
+      code: `
       /**
        *
        */
@@ -4919,17 +5242,17 @@ function quux (foo) {
           constructor() {}
       }
     `,
-    options: [
-      {
-        exemptEmptyConstructors: true,
-        require: {
-          MethodDefinition: true,
+      options: [
+        {
+          exemptEmptyConstructors: true,
+          require: {
+            MethodDefinition: true,
+          },
         },
-      },
-    ],
-  },
-  {
-    code: `
+      ],
+    },
+    {
+      code: `
       /**
        *
        */
@@ -4937,73 +5260,81 @@ function quux (foo) {
           constructor() {}
       }
     `,
-    options: [
-      {
-        checkConstructors: false,
-        require: {
-          MethodDefinition: true,
+      options: [
+        {
+          checkConstructors: false,
+          require: {
+            MethodDefinition: true,
+          },
         },
-      },
-    ],
-  },
-  {
-    code: `
+      ],
+    },
+    {
+      code: `
       class Foo {
         get aName () {}
         set aName (val) {}
       }
     `,
-    options: [
-      {
-        checkGetters: 'no-setter',
-        checkSetters: false,
-        contexts: ['MethodDefinition > FunctionExpression'],
-      },
-    ],
-  },
-  {
-    code: `
+      options: [
+        {
+          checkGetters: 'no-setter',
+          checkSetters: false,
+          contexts: [
+            'MethodDefinition > FunctionExpression',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
       const obj = {
         get aName () {},
         set aName (val) {}
       }
     `,
-    options: [
-      {
-        checkGetters: 'no-setter',
-        checkSetters: false,
-        contexts: ['Property > FunctionExpression'],
-      },
-    ],
-  },
-  {
-    code: `
+      options: [
+        {
+          checkGetters: 'no-setter',
+          checkSetters: false,
+          contexts: [
+            'Property > FunctionExpression',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
       class Foo {
         set aName (val) {}
       }
     `,
-    options: [
-      {
-        checkSetters: false,
-        contexts: ['MethodDefinition > FunctionExpression'],
-      },
-    ],
-  },
-  {
-    code: `
+      options: [
+        {
+          checkSetters: false,
+          contexts: [
+            'MethodDefinition > FunctionExpression',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
       class Foo {
         get aName () {}
       }
     `,
-    options: [
-      {
-        checkGetters: false,
-        contexts: ['MethodDefinition > FunctionExpression'],
-      },
-    ],
-  },
-  {
-    code: `
+      options: [
+        {
+          checkGetters: false,
+          contexts: [
+            'MethodDefinition > FunctionExpression',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
       class Foo {
         /**
          *
@@ -5011,15 +5342,17 @@ function quux (foo) {
         set aName (val) {}
       }
     `,
-    options: [
-      {
-        checkSetters: 'no-getter',
-        contexts: ['MethodDefinition > FunctionExpression'],
-      },
-    ],
-  },
-  {
-    code: `
+      options: [
+        {
+          checkSetters: 'no-getter',
+          contexts: [
+            'MethodDefinition > FunctionExpression',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
       class Foo {
         /**
          *
@@ -5027,61 +5360,69 @@ function quux (foo) {
         get aName () {}
       }
     `,
-    options: [
-      {
-        checkGetters: 'no-setter',
-        contexts: ['MethodDefinition > FunctionExpression'],
-      },
-    ],
-  },
-  {
-    code: `
+      options: [
+        {
+          checkGetters: 'no-setter',
+          contexts: [
+            'MethodDefinition > FunctionExpression',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
       class Foo {
         get aName () {}
         set aName (val) {}
       }
     `,
-    options: [
-      {
-        checkGetters: false,
-        checkSetters: 'no-getter',
-        contexts: ['MethodDefinition > FunctionExpression'],
-      },
-    ],
-  },
-  {
-    code: `
+      options: [
+        {
+          checkGetters: false,
+          checkSetters: 'no-getter',
+          contexts: [
+            'MethodDefinition > FunctionExpression',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
     class Base {
       constructor() {
       }
     }
     `,
-    options: [{
-      contexts: ['MethodDefinition'],
-      exemptEmptyConstructors: true,
-    }],
-  },
-  {
-    code: `
+      options: [
+        {
+          contexts: [
+            'MethodDefinition',
+          ],
+          exemptEmptyConstructors: true,
+        },
+      ],
+    },
+    {
+      code: `
     /**
      * This is a text.
      */
     export function a(); // Reports an error
     `,
-    options: [
-      {
-        contexts: [
-          'TSDeclareFunction',
-        ],
-        require: {
-          FunctionDeclaration: true,
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          require: {
+            FunctionDeclaration: true,
+          },
         },
-      },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-  },
-  {
-    code: `
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
     /**
      * Foo
      */
@@ -5093,32 +5434,36 @@ function quux (foo) {
       console.log('foo');
     }
 `,
-    options: [{
-      publicOnly: true,
-    }],
-    parser: require.resolve('@typescript-eslint/parser'),
-  },
-  {
-    code: `
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
     const foo = {
       bar: () => {
         // ...
       }
     }
     `,
-    options: [{
-      contexts: [
-        ':not(Property) > ArrowFunctionExpression',
+      options: [
+        {
+          contexts: [
+            ':not(Property) > ArrowFunctionExpression',
+          ],
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: true,
+            ClassExpression: true,
+          },
+        },
       ],
-      require: {
-        ArrowFunctionExpression: false,
-        ClassDeclaration: true,
-        ClassExpression: true,
-      },
-    }],
-  },
-  {
-    code: `
+    },
+    {
+      code: `
     /** Defines the current user's settings. */
     @Injectable({
       providedIn: 'root',
@@ -5132,15 +5477,17 @@ function quux (foo) {
     })
     export class UserSettingsState { }
     `,
-    options: [{
-      require: {
-        ClassDeclaration: true,
-      },
-    }],
-    parser: require.resolve('@typescript-eslint/parser'),
-  },
-  {
-    code: `
+      options: [
+        {
+          require: {
+            ClassDeclaration: true,
+          },
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
     /**
      * Entity to represent a user in the system.
      */
@@ -5148,17 +5495,20 @@ function quux (foo) {
     export class User {
     }
     `,
-    options: [
-      {
-        contexts: ['Decorator'],
-        require: {
-          FunctionDeclaration: false,
+      options: [
+        {
+          contexts: [
+            'Decorator',
+          ],
+          require: {
+            FunctionDeclaration: false,
+          },
         },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
       },
-    ],
-    parser: require.resolve('@typescript-eslint/parser'),
-    parserOptions: {
-      sourceType: 'module',
     },
-  }],
+  ],
 };

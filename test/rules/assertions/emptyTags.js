@@ -101,7 +101,9 @@ export default {
       ],
       options: [
         {
-          tags: ['event'],
+          tags: [
+            'event',
+          ],
         },
       ],
       output: `

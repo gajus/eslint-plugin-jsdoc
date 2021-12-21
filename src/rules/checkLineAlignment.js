@@ -27,14 +27,24 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
   let contentProps;
   const mightHaveNamepath = utils.tagMightHaveNamepath(tag.tag);
   if (mightHaveNamepath) {
-    spacerProps = ['postDelimiter', 'postTag', 'postType', 'postName'];
-    contentProps = ['tag', 'type', 'name', 'description'];
+    spacerProps = [
+      'postDelimiter', 'postTag', 'postType', 'postName',
+    ];
+    contentProps = [
+      'tag', 'type', 'name', 'description',
+    ];
   } else {
-    spacerProps = ['postDelimiter', 'postTag', 'postType'];
-    contentProps = ['tag', 'type', 'description'];
+    spacerProps = [
+      'postDelimiter', 'postTag', 'postType',
+    ];
+    contentProps = [
+      'tag', 'type', 'description',
+    ];
   }
 
-  const {tokens} = tag.source[0];
+  const {
+    tokens,
+  } = tag.source[0];
 
   const followedBySpace = (idx, callbck) => {
     const nextIndex = idx + 1;
@@ -78,7 +88,10 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
   }
 
   const fix = () => {
-    for (const [idx, spacerProp] of spacerProps.entries()) {
+    for (const [
+      idx,
+      spacerProp,
+    ] of spacerProps.entries()) {
       const contentProp = contentProps[idx];
       const contentPropVal = tokens[contentProp];
 
@@ -144,7 +157,9 @@ export default iterateJsdoc(({
   utils,
 }) => {
   const {
-    tags: applicableTags = ['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return'],
+    tags: applicableTags = [
+      'param', 'arg', 'argument', 'property', 'prop', 'returns', 'return',
+    ],
     preserveMainDescriptionPostDelimiter,
     customSpacings,
   } = context.options[1] || {};
@@ -183,7 +198,9 @@ export default iterateJsdoc(({
     fixable: 'whitespace',
     schema: [
       {
-        enum: ['always', 'never'],
+        enum: [
+          'always', 'never',
+        ],
         type: 'string',
       },
       {

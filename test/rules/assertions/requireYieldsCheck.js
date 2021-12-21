@@ -31,9 +31,11 @@ export default {
           message: 'JSDoc @yields declaration present but yield expression not available in function.',
         },
       ],
-      options: [{
-        checkGeneratorsOnly: true,
-      }],
+      options: [
+        {
+          checkGeneratorsOnly: true,
+        },
+      ],
     },
     {
       code: `
@@ -50,10 +52,12 @@ export default {
           message: 'JSDoc @next declaration present but yield expression with return value not available in function.',
         },
       ],
-      options: [{
-        checkGeneratorsOnly: true,
-        next: true,
-      }],
+      options: [
+        {
+          checkGeneratorsOnly: true,
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -70,9 +74,11 @@ export default {
           message: 'JSDoc @next declaration present but yield expression with return value not available in function.',
         },
       ],
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -89,9 +95,11 @@ export default {
           message: 'JSDoc @next declaration present but yield expression with return value not available in function.',
         },
       ],
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -108,9 +116,11 @@ export default {
           message: 'JSDoc @next declaration present but yield expression with return value not available in function.',
         },
       ],
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -150,9 +160,11 @@ export default {
           message: 'JSDoc @yield-returns declaration present but yield expression with return value not available in function.',
         },
       ],
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -234,9 +246,11 @@ export default {
           message: 'Unexpected tag `@next`',
         },
       ],
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -306,10 +320,12 @@ export default {
             yield 5;
           }
       `,
-      errors: [{
-        line: 2,
-        message: 'JSDoc @yields declaration set with "never" but yield expression is present in function.',
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @yields declaration set with "never" but yield expression is present in function.',
+        },
+      ],
     },
     {
       code: `
@@ -320,13 +336,17 @@ export default {
             const a = yield;
           }
       `,
-      errors: [{
-        line: 2,
-        message: 'JSDoc @next declaration set with "never" but yield expression with return value is present in function.',
-      }],
-      options: [{
-        next: true,
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @next declaration set with "never" but yield expression with return value is present in function.',
+        },
+      ],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
   ],
   valid: [
@@ -729,9 +749,11 @@ export default {
 
           }
       `,
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -742,9 +764,11 @@ export default {
             const a = yield;
           }
       `,
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -755,9 +779,11 @@ export default {
             const a = yield 5;
           }
       `,
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
     {
       code: `
@@ -768,9 +794,11 @@ export default {
 
           }
       `,
-      options: [{
-        next: true,
-      }],
+      options: [
+        {
+          next: true,
+        },
+      ],
     },
   ],
 };

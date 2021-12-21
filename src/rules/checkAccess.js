@@ -1,6 +1,8 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const accessLevels = ['package', 'private', 'protected', 'public'];
+const accessLevels = [
+  'package', 'private', 'protected', 'public',
+];
 
 export default iterateJsdoc(({
   report,

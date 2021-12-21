@@ -63,7 +63,9 @@ export default iterateJsdoc(({
   };
 
   if (jsdoc.description) {
-    const {description} = utils.getDescription();
+    const {
+      description,
+    } = utils.getDescription();
     validateDescription(
       description.replace(/\s+$/u, ''),
     );
@@ -84,10 +86,15 @@ export default iterateJsdoc(({
     }
   }, true);
 
-  const whitelistedTags = utils.filterTags(({tag: tagName}) => {
+  const whitelistedTags = utils.filterTags(({
+    tag: tagName,
+  }) => {
     return hasOptionTag(tagName);
   });
-  const {tagsWithNames, tagsWithoutNames} = utils.getTagsByType(whitelistedTags);
+  const {
+    tagsWithNames,
+    tagsWithoutNames,
+  } = utils.getTagsByType(whitelistedTags);
 
   tagsWithNames.some((tag) => {
     const description = utils.getTagDescription(tag).replace(/^[- ]*/u, '')
@@ -181,7 +188,9 @@ export default iterateJsdoc(({
                     type: 'string',
                   },
                   {
-                    enum: [true],
+                    enum: [
+                      true,
+                    ],
                     type: 'boolean',
                   },
                   {
@@ -194,7 +203,9 @@ export default iterateJsdoc(({
                             type: 'string',
                           },
                           {
-                            enum: [true],
+                            enum: [
+                              true,
+                            ],
                             type: 'boolean',
                           },
                         ],

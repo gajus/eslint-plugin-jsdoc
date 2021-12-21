@@ -68,9 +68,11 @@ export default {
           message: 'There must be no indentation.',
         },
       ],
-      options: [{
-        excludeTags: [],
-      }],
+      options: [
+        {
+          excludeTags: [],
+        },
+      ],
     },
     {
       code: `
@@ -156,9 +158,11 @@ export default {
           message: 'There must be no indentation.',
         },
       ],
-      options: [{
-        excludeTags: [],
-      }],
+      options: [
+        {
+          excludeTags: [],
+        },
+      ],
     },
     {
       code: `
@@ -180,9 +184,11 @@ export default {
           message: 'There must be no indentation.',
         },
       ],
-      options: [{
-        excludeTags: [],
-      }],
+      options: [
+        {
+          excludeTags: [],
+        },
+      ],
     },
   ],
   valid: [
@@ -238,9 +244,13 @@ export default {
 
           }
       `,
-      options: [{
-        excludeTags: ['example', 'returns'],
-      }],
+      options: [
+        {
+          excludeTags: [
+            'example', 'returns',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -285,9 +295,11 @@ export default {
           * \`\`\`
           */
       `,
-      options: [{
-        excludeTags: [],
-      }],
+      options: [
+        {
+          excludeTags: [],
+        },
+      ],
     },
     {
       code: `
@@ -306,7 +318,9 @@ export default {
       `,
       options: [
         {
-          excludeTags: ['example', 'MyDecorator'],
+          excludeTags: [
+            'example', 'MyDecorator',
+          ],
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),

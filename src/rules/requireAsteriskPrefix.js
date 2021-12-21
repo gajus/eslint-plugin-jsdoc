@@ -6,18 +6,31 @@ export default iterateJsdoc(({
   utils,
   indent,
 }) => {
-  const [defaultRequireValue = 'always', {
-    tags: tagMap = {},
-  } = {}] = context.options;
+  const [
+    defaultRequireValue = 'always',
+    {
+      tags: tagMap = {},
+    } = {},
+  ] = context.options;
 
-  const {source} = jsdoc;
+  const {
+    source,
+  } = jsdoc;
 
   const always = defaultRequireValue === 'always';
   const never = defaultRequireValue === 'never';
 
   let currentTag;
-  source.some(({number, tokens}) => {
-    const {delimiter, tag, end, description} = tokens;
+  source.some(({
+    number,
+    tokens,
+  }) => {
+    const {
+      delimiter,
+      tag,
+      end,
+      description,
+    } = tokens;
 
     const neverFix = () => {
       tokens.delimiter = '';
@@ -116,7 +129,9 @@ export default iterateJsdoc(({
     fixable: 'code',
     schema: [
       {
-        enum: ['always', 'never', 'any'],
+        enum: [
+          'always', 'never', 'any',
+        ],
         type: 'string',
       },
       {

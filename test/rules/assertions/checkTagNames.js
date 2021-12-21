@@ -1,5 +1,7 @@
 import {
-  jsdocTags, typeScriptTags, closureTags,
+  jsdocTags,
+  typeScriptTags,
+  closureTags,
 } from '../../../src/tagNames';
 
 const buildTagBlock = (tags) => {
@@ -16,7 +18,9 @@ const lineCount = (code) => {
 // We avoid testing all closure tags as too many
 const ALL_JSDOC_TAGS_COMMENT = buildTagBlock(jsdocTags);
 const ALL_TYPESCRIPT_TAGS_COMMENT = buildTagBlock(typeScriptTags);
-const ONE_CLOSURE_TAGS_COMMENT = buildTagBlock({externs: closureTags.externs});
+const ONE_CLOSURE_TAGS_COMMENT = buildTagBlock({
+  externs: closureTags.externs,
+});
 
 export default {
   invalid: [
@@ -48,7 +52,9 @@ export default {
           structuredTags: {
             parameter: {
               name: 'namepath-referencing',
-              required: ['type', 'name'],
+              required: [
+                'type', 'name',
+              ],
               type: true,
             },
           },
@@ -266,9 +272,13 @@ export default {
           message: 'Invalid JSDoc tag name "baz".',
         },
       ],
-      options: [{
-        definedTags: ['bar'],
-      }],
+      options: [
+        {
+          definedTags: [
+            'bar',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -286,9 +296,13 @@ export default {
           message: 'Invalid JSDoc tag name "baz".',
         },
       ],
-      options: [{
-        definedTags: ['bar'],
-      }],
+      options: [
+        {
+          definedTags: [
+            'bar',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -485,7 +499,9 @@ export default {
       ],
       options: [
         {
-          definedTags: ['abcd'],
+          definedTags: [
+            'abcd',
+          ],
         },
       ],
       output: `
@@ -674,7 +690,9 @@ export default {
           structuredTags: {
             parameter: {
               name: 'namepath-referencing',
-              required: ['type', 'name'],
+              required: [
+                'type', 'name',
+              ],
               type: true,
             },
           },
@@ -690,9 +708,13 @@ export default {
 
           }
       `,
-      options: [{
-        definedTags: ['bar'],
-      }],
+      options: [
+        {
+          definedTags: [
+            'bar',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -703,9 +725,13 @@ export default {
 
           }
       `,
-      options: [{
-        definedTags: ['baz', 'bar'],
-      }],
+      options: [
+        {
+          definedTags: [
+            'baz', 'bar',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -857,7 +883,11 @@ export default {
         /** @jsxImportSource preact */
         /** @jsxRuntime automatic */
       `,
-      options: [{jsxTags: true}],
+      options: [
+        {
+          jsxTags: true,
+        },
+      ],
     },
   ],
 };

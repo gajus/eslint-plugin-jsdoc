@@ -168,7 +168,9 @@ export default iterateJsdoc(({
     }).join('|') + '(?:$|\\s)', 'gu') :
     '';
 
-  const {description} = utils.getDescription();
+  const {
+    description,
+  } = utils.getDescription();
 
   if (validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, {
     line: jsdoc.source[0].number + 1,
@@ -181,10 +183,16 @@ export default iterateJsdoc(({
     validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, matchingJsdocTag, newlineBeforeCapsAssumesBadSentenceEnd);
   }, true);
 
-  const {tagsWithNames} = utils.getTagsByType(jsdoc.tags);
-  const tagsWithoutNames = utils.filterTags(({tag: tagName}) => {
+  const {
+    tagsWithNames,
+  } = utils.getTagsByType(jsdoc.tags);
+  const tagsWithoutNames = utils.filterTags(({
+    tag: tagName,
+  }) => {
     return otherDescriptiveTags.has(tagName) ||
-      utils.hasOptionTag(tagName) && !tagsWithNames.some(({tag}) => {
+      utils.hasOptionTag(tagName) && !tagsWithNames.some(({
+        tag,
+      }) => {
         // If user accidentally adds tags with names (or like `returns`
         //  get parsed as having names), do not add to this list
         return tag === tagName;

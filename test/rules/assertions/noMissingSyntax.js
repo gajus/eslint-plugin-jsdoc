@@ -16,14 +16,16 @@ export default {
             'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -41,18 +43,20 @@ export default {
             'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-          },
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+            },
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -70,18 +74,20 @@ export default {
             'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
-            context: 'any',
-          },
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
-            context: ':function',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+              context: 'any',
+            },
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+              context: ':function',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -99,20 +105,22 @@ export default {
           message: '@enum required on declarations',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag=/private|protected/])',
-            context: ':declaration',
-            message: 'Requiring private/protected tags here',
-          },
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag="enum"])',
-            context: 'any',
-            message: '@enum required on declarations',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag=/private|protected/])',
+              context: ':declaration',
+              message: 'Requiring private/protected tags here',
+            },
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag="enum"])',
+              context: 'any',
+              message: '@enum required on declarations',
+            },
+          ],
+        },
+      ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
     {
@@ -131,15 +139,17 @@ export default {
             'with `JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))`.',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-            message: 'Problematically missing function syntax: `{{context}}` with `{{comment}}`.',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+              message: 'Problematically missing function syntax: `{{context}}` with `{{comment}}`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -156,11 +166,13 @@ export default {
           message: 'Syntax is required: FunctionDeclaration',
         },
       ],
-      options: [{
-        contexts: [
-          'FunctionDeclaration',
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            'FunctionDeclaration',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -195,15 +207,17 @@ export default {
             'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-            minimum: 2,
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+              minimum: 2,
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -212,19 +226,23 @@ export default {
          * @param cd
          */
       `,
-      errors: [{
-        line: 1,
-        message: 'Require names matching `/^opt_/i`.',
-      }],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            context: 'any',
-            message: 'Require names matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Require names matching `/^opt_/i`.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'any',
+              message: 'Require names matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -233,18 +251,22 @@ export default {
          * @param cd
          */
       `,
-      errors: [{
-        line: 1,
-        message: 'Require names matching `/^opt_/i`.',
-      }],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            message: 'Require names matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Require names matching `/^opt_/i`.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              message: 'Require names matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -254,19 +276,23 @@ export default {
          */
         function quux () {}
       `,
-      errors: [{
-        line: 1,
-        message: 'Require names matching `/^opt_/i`.',
-      }],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            context: 'any',
-            message: 'Require names matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Require names matching `/^opt_/i`.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'any',
+              message: 'Require names matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
   ],
   valid: [
@@ -279,14 +305,16 @@ export default {
 
       }
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -311,15 +339,17 @@ export default {
 
       }
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-            minimum: 2,
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+              minimum: 2,
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -328,33 +358,17 @@ export default {
          * @param opt_b
          */
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            context: 'any',
-            message: 'Require names matching `/^opt_/i`.',
-          },
-        ],
-      }],
-    },
-    {
-      code: `
-        /**
-         * @param opt_a
-         * @param opt_b
-         */
-        function quux () {}
-      `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            context: 'any',
-            message: 'Require names matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'any',
+              message: 'Require names matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -364,14 +378,36 @@ export default {
          */
         function quux () {}
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            message: 'Require names matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'any',
+              message: 'Require names matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param opt_a
+         * @param opt_b
+         */
+        function quux () {}
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              message: 'Require names matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -382,18 +418,20 @@ export default {
 
       }
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-          },
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(2))',
-            context: 'FunctionDeclaration',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+            },
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(2))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -404,18 +442,20 @@ export default {
 
       }
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
-            context: 'any',
-          },
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(2))',
-            context: 'FunctionDeclaration',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+              context: 'any',
+            },
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(2))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
     },
   ],
 };

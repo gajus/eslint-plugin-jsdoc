@@ -31,7 +31,9 @@ const canSkip = (utils, settings) => {
 };
 
 const checkTagName = (utils, report, tagName) => {
-  const preferredTagName = utils.getPreferredTagName({tagName});
+  const preferredTagName = utils.getPreferredTagName({
+    tagName,
+  });
   if (!preferredTagName) {
     return [];
   }
@@ -48,7 +50,9 @@ const checkTagName = (utils, report, tagName) => {
     return [];
   }
 
-  return [preferredTagName, tags[0]];
+  return [
+    preferredTagName, tags[0],
+  ];
 };
 
 export default iterateJsdoc(({
@@ -66,7 +70,10 @@ export default iterateJsdoc(({
     checkGeneratorsOnly = false,
   } = context.options[0] || {};
 
-  const [preferredYieldTagName, yieldTag] = checkTagName(
+  const [
+    preferredYieldTagName,
+    yieldTag,
+  ] = checkTagName(
     utils, report, 'yields',
   );
   if (preferredYieldTagName) {
@@ -93,7 +100,10 @@ export default iterateJsdoc(({
   }
 
   if (next) {
-    const [preferredNextTagName, nextTag] = checkTagName(
+    const [
+      preferredNextTagName,
+      nextTag,
+    ] = checkTagName(
       utils, report, 'next',
     );
     if (preferredNextTagName) {

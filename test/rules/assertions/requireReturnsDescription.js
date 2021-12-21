@@ -49,7 +49,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -68,7 +70,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -87,7 +91,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -170,7 +176,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },

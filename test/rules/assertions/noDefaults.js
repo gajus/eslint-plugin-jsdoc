@@ -129,7 +129,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
       output: `
@@ -156,7 +158,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
       output: `
@@ -181,7 +185,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
       output: `
@@ -206,7 +212,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
       output: `
@@ -231,7 +239,9 @@ export default {
       ],
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
       output: `
@@ -278,7 +288,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -322,7 +334,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },

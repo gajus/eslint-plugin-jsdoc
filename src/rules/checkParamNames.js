@@ -10,19 +10,28 @@ const validateParameterNames = (
   enableFixer: boolean,
   functionParameterNames : Array<string>, jsdoc, _jsdocNode, utils, report,
 ) => {
-  const paramTags = Object.entries(jsdoc.tags).filter(([, tag]) => {
+  const paramTags = Object.entries(jsdoc.tags).filter(([
+    , tag,
+  ]) => {
     return tag.tag === targetTagName;
   });
-  const paramTagsNonNested = paramTags.filter(([, tag]) => {
+  const paramTagsNonNested = paramTags.filter(([
+    , tag,
+  ]) => {
     return !tag.name.includes('.');
   });
 
   let dotted = 0;
 
   // eslint-disable-next-line complexity
-  return paramTags.some(([, tag], index) => {
+  return paramTags.some(([
+    , tag,
+  ], index) => {
     let tagsIndex;
-    const dupeTagInfo = paramTags.find(([tgsIndex, tg], idx) => {
+    const dupeTagInfo = paramTags.find(([
+      tgsIndex,
+      tg,
+    ], idx) => {
       tagsIndex = tgsIndex;
 
       return tg.name === tag.name && idx !== index;
@@ -66,9 +75,15 @@ const validateParameterNames = (
         return false;
       }
 
-      const [parameterName, {
-        names: properties, hasPropertyRest, rests, annotationParamName,
-      }] = functionParameterName;
+      const [
+        parameterName,
+        {
+          names: properties,
+          hasPropertyRest,
+          rests,
+          annotationParamName,
+        },
+      ] = functionParameterName;
       if (annotationParamName !== undefined) {
         const name = tag.name.trim();
         if (name !== annotationParamName) {
@@ -80,17 +95,24 @@ const validateParameterNames = (
       const expectedNames = properties.map((name) => {
         return `${tagName}.${name}`;
       });
-      const actualNames = paramTags.map(([, paramTag]) => {
+      const actualNames = paramTags.map(([
+        , paramTag,
+      ]) => {
         return paramTag.name.trim();
       });
-      const actualTypes = paramTags.map(([, paramTag]) => {
+      const actualTypes = paramTags.map(([
+        , paramTag,
+      ]) => {
         return paramTag.type;
       });
 
       const missingProperties = [];
       const notCheckingNames = [];
 
-      for (const [idx, name] of expectedNames.entries()) {
+      for (const [
+        idx,
+        name,
+      ] of expectedNames.entries()) {
         if (notCheckingNames.some((notCheckingName) => {
           return name.startsWith(notCheckingName);
         })) {
@@ -122,14 +144,20 @@ const validateParameterNames = (
 
       const hasMissing = missingProperties.length;
       if (hasMissing) {
-        for (const {tagPlacement, name: missingProperty} of missingProperties) {
+        for (const {
+          tagPlacement,
+          name: missingProperty,
+        } of missingProperties) {
           report(`Missing @${targetTagName} "${missingProperty}"`, null, tagPlacement);
         }
       }
 
       if (!hasPropertyRest || checkRestProperty) {
         const extraProperties = [];
-        for (const [idx, name] of actualNames.entries()) {
+        for (const [
+          idx,
+          name,
+        ] of actualNames.entries()) {
           const match = name.startsWith(tag.name.trim() + '.');
           if (
             match && !expectedNames.some(
@@ -139,12 +167,17 @@ const validateParameterNames = (
               return prop.split('.').length >= name.split('.').length - 1;
             }))
           ) {
-            extraProperties.push([name, paramTags[idx][1]]);
+            extraProperties.push([
+              name, paramTags[idx][1],
+            ]);
           }
         }
 
         if (extraProperties.length) {
-          for (const [extraProperty, tg] of extraProperties) {
+          for (const [
+            extraProperty,
+            tg,
+          ] of extraProperties) {
             report(`@${targetTagName} "${extraProperty}" does not exist on ${tag.name}`, null, tg);
           }
 
@@ -157,7 +190,9 @@ const validateParameterNames = (
 
     let funcParamName;
     if (typeof functionParameterName === 'object') {
-      const {name} = functionParameterName;
+      const {
+        name,
+      } = functionParameterName;
       funcParamName = name;
     } else {
       funcParamName = functionParameterName;
@@ -165,7 +200,11 @@ const validateParameterNames = (
 
     if (funcParamName !== tag.name.trim()) {
       // Todo: Improve for array or object child items
-      const actualNames = paramTagsNonNested.map(([, {name}]) => {
+      const actualNames = paramTagsNonNested.map(([
+        , {
+          name,
+        },
+      ]) => {
         return name.trim();
       });
       const expectedNames = functionParameterNames.map((item, idx) => {
@@ -195,7 +234,10 @@ const validateParameterNamesDeep = (
 ) => {
   let lastRealParameter;
 
-  return jsdocParameterNames.some(({name: jsdocParameterName, idx}) => {
+  return jsdocParameterNames.some(({
+    name: jsdocParameterName,
+    idx,
+  }) => {
     const isPropertyPath = jsdocParameterName.includes('.');
 
     if (isPropertyPath) {
@@ -254,7 +296,9 @@ export default iterateJsdoc(({
   }
 
   const functionParameterNames = utils.getFunctionParameterNames(useDefaultObjectProperties);
-  const targetTagName = utils.getPreferredTagName({tagName: 'param'});
+  const targetTagName = utils.getPreferredTagName({
+    tagName: 'param',
+  });
   const isError = validateParameterNames(
     targetTagName,
     allowExtraTrailingParamDocs,

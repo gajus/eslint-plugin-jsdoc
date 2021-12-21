@@ -16,7 +16,9 @@ export default iterateJsdoc(({
 
   const targetTagName = 'example';
 
-  const functionExamples = jsdoc.tags.filter(({tag}) => {
+  const functionExamples = jsdoc.tags.filter(({
+    tag,
+  }) => {
     return tag === targetTagName;
   });
 

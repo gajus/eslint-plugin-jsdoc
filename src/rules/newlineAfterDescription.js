@@ -21,7 +21,10 @@ export default iterateJsdoc(({
     always = true;
   }
 
-  const {description, lastDescriptionLine} = utils.getDescription();
+  const {
+    description,
+    lastDescriptionLine,
+  } = utils.getDescription();
   const descriptionEndsWithANewline = (/\n\r?$/u).test(description);
 
   if (always) {
@@ -60,7 +63,9 @@ export default iterateJsdoc(({
     fixable: 'whitespace',
     schema: [
       {
-        enum: ['always', 'never'],
+        enum: [
+          'always', 'never',
+        ],
         type: 'string',
       },
     ],

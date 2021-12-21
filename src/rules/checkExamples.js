@@ -1,7 +1,8 @@
 // Todo: When replace `CLIEngine` with `ESLint` when feature set complete per https://github.com/eslint/eslint/issues/14745
 // https://github.com/eslint/eslint/blob/master/docs/user-guide/migrating-to-7.0.0.md#-the-cliengine-class-has-been-deprecated
 import {
-  CLIEngine, ESLint,
+  CLIEngine,
+  ESLint,
 } from 'eslint';
 import semver from 'semver';
 import iterateJsdoc from '../iterateJsdoc';
@@ -65,8 +66,12 @@ const defaultExpressionRules = {
   'no-empty-function': 'off',
   'no-new': 'off',
   'no-unused-expressions': 'off',
-  quotes: ['error', 'double'],
-  semi: ['error', 'never'],
+  quotes: [
+    'error', 'double',
+  ],
+  semi: [
+    'error', 'never',
+  ],
   strict: 'off',
 };
 
@@ -77,7 +82,9 @@ const getLinesCols = (text) => {
     text.slice(text.lastIndexOf('\n') + 1).length :
     text.length;
 
-  return [matchLines, colDelta];
+  return [
+    matchLines, colDelta,
+  ];
 };
 
 export default iterateJsdoc(({
@@ -91,7 +98,10 @@ export default iterateJsdoc(({
       'This rule cannot yet be supported for ESLint 8; you ' +
         'should either downgrade to ESLint 7 or disable this rule. The ' +
         'possibility for ESLint 8 support is being tracked at https://github.com/eslint/eslint/issues/14745',
-      {column: 1, line: 1},
+      {
+        column: 1,
+        line: 1,
+      },
     );
 
     return;
@@ -142,11 +152,18 @@ export default iterateJsdoc(({
   }
 
   const checkSource = ({
-    filename, defaultFileName,
+    filename,
+    defaultFileName,
     rules = expressionRules,
     lines = 0,
     cols = 0,
-    skipInit, source, targetTagName, sources = [], tag = {line: 0},
+    skipInit,
+    source,
+    targetTagName,
+    sources = [],
+    tag = {
+      line: 0,
+    },
   }) => {
     if (!skipInit) {
       sources.push({
@@ -210,7 +227,13 @@ export default iterateJsdoc(({
         matchingFileNameMap.set(fileNameMapKey, cliFile);
       }
 
-      const {results: [{messages}]} = cliFile.executeOnText(src);
+      const {
+        results: [
+          {
+            messages,
+          },
+        ],
+      } = cliFile.executeOnText(src);
 
       if (!('line' in tag)) {
         tag.line = tag.source[0].number;
@@ -220,7 +243,13 @@ export default iterateJsdoc(({
       const codeStartLine = tag.line + nonJSPrefacingLines;
       const codeStartCol = likelyNestedJSDocIndentSpace;
 
-      for (const {message, line, column, severity, ruleId} of messages) {
+      for (const {
+        message,
+        line,
+        column,
+        severity,
+        ruleId,
+      } of messages) {
         const startLine = codeStartLine + line + zeroBasedLineIndexAdjust;
         const startCol = codeStartCol + (
 
@@ -316,7 +345,9 @@ export default iterateJsdoc(({
     });
   }
 
-  const tagName = utils.getPreferredTagName({tagName: 'example'});
+  const tagName = utils.getPreferredTagName({
+    tagName: 'example',
+  });
   if (!utils.hasTag(tagName)) {
     return;
   }
@@ -332,7 +363,12 @@ export default iterateJsdoc(({
     }
 
     source = source.replace(hasCaptionRegex, '');
-    const [lines, cols] = match ? getLinesCols(match[0]) : [0, 0];
+    const [
+      lines,
+      cols,
+    ] = match ? getLinesCols(match[0]) : [
+      0, 0,
+    ];
 
     if (exampleCodeRegex && !exampleCodeRegex.test(source) ||
       rejectExampleCodeRegex && rejectExampleCodeRegex.test(source)
@@ -352,12 +388,19 @@ export default iterateJsdoc(({
       let exampleCode;
       exampleCodeRegex.lastIndex = 0;
       while ((exampleCode = exampleCodeRegex.exec(source)) !== null) {
-        const {index, 0: n0, 1: n1} = exampleCode;
+        const {
+          index,
+          '0': n0,
+          '1': n1,
+        } = exampleCode;
 
         // Count anything preceding user regex match (can affect line numbering)
         const preMatch = source.slice(startingIndex, index);
 
-        const [preMatchLines, colDelta] = getLinesCols(preMatch);
+        const [
+          preMatchLines,
+          colDelta,
+        ] = getLinesCols(preMatch);
 
         let nonJSPreface;
         let nonJSPrefaceLineCount;

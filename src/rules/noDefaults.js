@@ -4,8 +4,12 @@ export default iterateJsdoc(({
   context,
   utils,
 }) => {
-  const {noOptionalParamNames} = context.options[0] || {};
-  const paramTags = utils.getPresentTags(['param', 'arg', 'argument']);
+  const {
+    noOptionalParamNames,
+  } = context.options[0] || {};
+  const paramTags = utils.getPresentTags([
+    'param', 'arg', 'argument',
+  ]);
   for (const tag of paramTags) {
     if (noOptionalParamNames && tag.optional) {
       utils.reportJSDoc(`Optional param names are not permitted on @${tag.tag}.`, tag, () => {
@@ -22,7 +26,9 @@ export default iterateJsdoc(({
     }
   }
 
-  const defaultTags = utils.getPresentTags(['default', 'defaultvalue']);
+  const defaultTags = utils.getPresentTags([
+    'default', 'defaultvalue',
+  ]);
   for (const tag of defaultTags) {
     if (tag.description.trim()) {
       utils.reportJSDoc(`Default values are not permitted on @${tag.tag}.`, tag, () => {

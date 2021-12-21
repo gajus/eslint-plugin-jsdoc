@@ -8,7 +8,12 @@ export default iterateJsdoc(({
   jsdoc,
   jsdocNode,
 }) => {
-  const [mainCircumstance, {tags} = {}] = context.options;
+  const [
+    mainCircumstance,
+    {
+      tags,
+    } = {},
+  ] = context.options;
 
   const checkHyphens = (jsdocTag, targetTagName, circumstance = mainCircumstance) => {
     const always = !circumstance || circumstance === 'always';
@@ -38,7 +43,9 @@ export default iterateJsdoc(({
       }
     } else if (startsWithHyphen) {
       report(`There must be no hyphen before @${targetTagName} description.`, (fixer) => {
-        const [unwantedPart] = /^\s*-\s*/u.exec(desc);
+        const [
+          unwantedPart,
+        ] = /^\s*-\s*/u.exec(desc);
 
         const replacement = sourceCode
           .getText(jsdocNode)
@@ -52,11 +59,20 @@ export default iterateJsdoc(({
   utils.forEachPreferredTag('param', checkHyphens);
   if (tags) {
     const tagEntries = Object.entries(tags);
-    for (const [tagName, circumstance] of tagEntries) {
+    for (const [
+      tagName,
+      circumstance,
+    ] of tagEntries) {
       if (tagName === '*') {
-        const preferredParamTag = utils.getPreferredTagName({tagName: 'param'});
-        for (const {tag} of jsdoc.tags) {
-          if (tag === preferredParamTag || tagEntries.some(([tagNme]) => {
+        const preferredParamTag = utils.getPreferredTagName({
+          tagName: 'param',
+        });
+        for (const {
+          tag,
+        } of jsdoc.tags) {
+          if (tag === preferredParamTag || tagEntries.some(([
+            tagNme,
+          ]) => {
             return tagNme !== '*' && tagNme === tag;
           })) {
             continue;
@@ -85,7 +101,9 @@ export default iterateJsdoc(({
     fixable: 'code',
     schema: [
       {
-        enum: ['always', 'never'],
+        enum: [
+          'always', 'never',
+        ],
         type: 'string',
       },
       {
@@ -96,14 +114,18 @@ export default iterateJsdoc(({
               {
                 patternProperties: {
                   '.*': {
-                    enum: ['always', 'never'],
+                    enum: [
+                      'always', 'never',
+                    ],
                     type: 'string',
                   },
                 },
                 type: 'object',
               },
               {
-                enum: ['any'],
+                enum: [
+                  'any',
+                ],
                 type: 'string',
               },
             ],

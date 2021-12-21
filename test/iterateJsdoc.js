@@ -2,8 +2,9 @@ import {
   expect,
 } from 'chai';
 import {
+  parseComment,
   // eslint-disable-next-line import/no-named-default
-  parseComment, default as iterateJsdoc,
+  default as iterateJsdoc,
 } from '../src/iterateJsdoc';
 
 describe('iterateJsdoc', () => {
@@ -20,12 +21,20 @@ describe('iterateJsdoc', () => {
         context('Invalid iterator', () => {
           it('throws with missing function', () => {
             expect(() => {
-              iterateJsdoc(undefined, {meta: {type: 'suggestion'}});
+              iterateJsdoc(undefined, {
+                meta: {
+                  type: 'suggestion',
+                },
+              });
             }).to.throw(TypeError);
           });
           it('throws with object missing `returns` method', () => {
             expect(() => {
-              iterateJsdoc({}, {meta: {type: 'suggestion'}});
+              iterateJsdoc({}, {
+                meta: {
+                  type: 'suggestion',
+                },
+              });
             }).to.throw(TypeError);
           });
         });
@@ -37,12 +46,18 @@ describe('iterateJsdoc', () => {
           });
           it('throws with empty meta', () => {
             expect(() => {
-              iterateJsdoc(() => {}, {meta: {}});
+              iterateJsdoc(() => {}, {
+                meta: {},
+              });
             }).to.throw(TypeError);
           });
           it('throws with bad type', () => {
             expect(() => {
-              iterateJsdoc(() => {}, {meta: {type: 'bad'}});
+              iterateJsdoc(() => {}, {
+                meta: {
+                  type: 'bad',
+                },
+              });
             }).to.throw(TypeError);
           });
         });
@@ -50,7 +65,11 @@ describe('iterateJsdoc', () => {
       context('Valid arguments', () => {
         it('Does not throw with function and options', () => {
           expect(() => {
-            iterateJsdoc(() => {}, {meta: {type: 'suggestion'}});
+            iterateJsdoc(() => {}, {
+              meta: {
+                type: 'suggestion',
+              },
+            });
           }).to.not.throw();
         });
       });
@@ -97,9 +116,11 @@ describe('iterateJsdoc', () => {
             },
           },
         ];
-        expect(parseComment({value: `* SomeDescription
+        expect(parseComment({
+          value: `* SomeDescription
           @param {MyType} name desc
-        `}, '')).to.deep.equal({
+        `,
+        }, '')).to.deep.equal({
           description: 'SomeDescription',
           problems: [],
           source: [

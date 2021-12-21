@@ -212,9 +212,11 @@ export default {
           message: 'A line of text is started with an uppercase character, but preceding line does not end the sentence.',
         },
       ],
-      options: [{
-        newlineBeforeCapsAssumesBadSentenceEnd: true,
-      }],
+      options: [
+        {
+          newlineBeforeCapsAssumesBadSentenceEnd: true,
+        },
+      ],
     },
     {
       code: `
@@ -591,7 +593,9 @@ export default {
       ],
       options: [
         {
-          tags: ['see'],
+          tags: [
+            'see',
+          ],
         },
       ],
       output: `
@@ -618,9 +622,13 @@ export default {
           message: 'Sentence must end with a period.',
         },
       ],
-      options: [{
-        tags: ['param'],
-      }],
+      options: [
+        {
+          tags: [
+            'param',
+          ],
+        },
+      ],
       output: `
         /**
          * @param foo Foo bar.
@@ -652,9 +660,13 @@ export default {
           message: 'Sentence must end with a period.',
         },
       ],
-      options: [{
-        abbreviations: ['Mr'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'Mr',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -671,9 +683,13 @@ export default {
           message: 'Sentence must end with a period.',
         },
       ],
-      options: [{
-        abbreviations: ['Mr.'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'Mr.',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -690,9 +706,13 @@ export default {
           message: 'Sentence must end with a period.',
         },
       ],
-      options: [{
-        abbreviations: ['Mr'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'Mr',
+          ],
+        },
+      ],
       output: `
           /**
            * Sorry, but this isn't a complete sentence Mr. .
@@ -717,9 +737,13 @@ export default {
           message: 'Sentence must end with a period.',
         },
       ],
-      options: [{
-        abbreviations: ['Mr', 'Mrs'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'Mr', 'Mrs',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -736,9 +760,13 @@ export default {
           message: 'Sentence must end with a period.',
         },
       ],
-      options: [{
-        abbreviations: ['Mr'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'Mr',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -755,9 +783,13 @@ export default {
           message: 'Sentence must end with a period.',
         },
       ],
-      options: [{
-        abbreviations: ['Mr'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'Mr',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -850,9 +882,11 @@ export default {
           message: 'A line of text is started with an uppercase character, but preceding line does not end the sentence.',
         },
       ],
-      options: [{
-        newlineBeforeCapsAssumesBadSentenceEnd: true,
-      }],
+      options: [
+        {
+          newlineBeforeCapsAssumesBadSentenceEnd: true,
+        },
+      ],
     },
     {
       code: `
@@ -873,7 +907,9 @@ export default {
       ],
       options: [
         {
-          tags: ['template'],
+          tags: [
+            'template',
+          ],
         },
       ],
       output: `
@@ -1139,7 +1175,9 @@ export default {
       `,
       options: [
         {
-          tags: ['param'],
+          tags: [
+            'param',
+          ],
         },
       ],
     },
@@ -1152,9 +1190,13 @@ export default {
 
         }
       `,
-      options: [{
-        tags: ['param'],
-      }],
+      options: [
+        {
+          tags: [
+            'param',
+          ],
+        },
+      ],
       settings: {
         jsdoc: {
           tagNamePreference: {
@@ -1243,9 +1285,13 @@ export default {
 
           }
       `,
-      options: [{
-        abbreviations: ['Mr.'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'Mr.',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1266,9 +1312,13 @@ export default {
 
           }
       `,
-      options: [{
-        abbreviations: ['Mr', 'Mrs'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'Mr', 'Mrs',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1279,9 +1329,13 @@ export default {
 
           }
       `,
-      options: [{
-        abbreviations: ['Mr'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'Mr',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1312,9 +1366,13 @@ export default {
 
           }
       `,
-      options: [{
-        abbreviations: ['Mr'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'Mr',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1326,9 +1384,13 @@ export default {
 
           }
       `,
-      options: [{
-        abbreviations: ['etc', 'e.g.', 'i.e.'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'etc', 'e.g.', 'i.e.',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -1341,9 +1403,13 @@ export default {
 
        }
        `,
-      options: [{
-        abbreviations: ['etc', 'e.g.', 'i.e.'],
-      }],
+      options: [
+        {
+          abbreviations: [
+            'etc', 'e.g.', 'i.e.',
+          ],
+        },
+      ],
     },
     {
       code: `

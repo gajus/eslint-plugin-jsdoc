@@ -1,5 +1,7 @@
 import {
-  tryParse, parse, traverse,
+  tryParse,
+  parse,
+  traverse,
 } from 'jsdoc-type-pratt-parser';
 import iterateJsdoc from '../iterateJsdoc';
 
@@ -85,7 +87,9 @@ export default iterateJsdoc(({
   const {
     allowEmptyNamepaths = false,
   } = context.options[0] || {};
-  const {mode} = settings;
+  const {
+    mode,
+  } = settings;
 
   for (const tag of jsdoc.tags) {
     const validNamepathParsing = function (namepath, tagName) {
@@ -108,7 +112,9 @@ export default iterateJsdoc(({
 
         case 'memberof': case 'memberof!': {
           const endChar = namepath.slice(-1);
-          if (['#', '.', '~'].includes(endChar)) {
+          if ([
+            '#', '.', '~',
+          ].includes(endChar)) {
             handled = tryParsePathIgnoreError(namepath.slice(0, -1));
           }
 
@@ -117,7 +123,9 @@ export default iterateJsdoc(({
 
         case 'borrows': {
           const startChar = namepath.charAt();
-          if (['#', '.', '~'].includes(startChar)) {
+          if ([
+            '#', '.', '~',
+          ].includes(startChar)) {
             handled = tryParsePathIgnoreError(namepath.slice(1));
           }
         }
@@ -179,7 +187,9 @@ export default iterateJsdoc(({
 
       if (parsedTypes) {
         traverse(parsedTypes, (node) => {
-          const {value: type} = node;
+          const {
+            value: type,
+          } = node;
           if (type !== undefined && !suppressTypes.has(type)) {
             report(`Syntax error in supresss type: ${type}`, null, tag);
           }
@@ -187,7 +197,9 @@ export default iterateJsdoc(({
       }
     }
 
-    const otherModeMaps = ['jsdoc', 'typescript', 'closure', 'permissive'].filter(
+    const otherModeMaps = [
+      'jsdoc', 'typescript', 'closure', 'permissive',
+    ].filter(
       (mde) => {
         return mde !== mode;
       },

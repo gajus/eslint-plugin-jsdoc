@@ -118,9 +118,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -138,9 +140,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -158,9 +162,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -178,9 +184,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -199,9 +207,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -217,10 +227,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -234,10 +248,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -251,10 +269,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -288,9 +310,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          forceReturnsWithAsync: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -308,10 +332,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceReturnsWithAsync: true,
+        },
+      ],
     },
     {
       code: `
@@ -326,10 +354,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceReturnsWithAsync: true,
+        },
+      ],
     },
     {
       code: `
@@ -389,7 +421,9 @@ export default {
       ],
       options: [
         {
-          exemptedBy: ['notPresent'],
+          exemptedBy: [
+            'notPresent',
+          ],
         },
       ],
     },
@@ -408,9 +442,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          forceReturnsWithAsync: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -430,9 +466,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          forceReturnsWithAsync: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -452,9 +490,11 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        checkGetters: true,
-      }],
+      options: [
+        {
+          checkGetters: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -521,10 +561,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        contexts: ['any'],
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -1601,14 +1645,16 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      options: [{
-        contexts: [
-          ':not(BlockStatement) > FunctionDeclaration',
-          'MethodDefinition',
-          'TSMethodSignature',
-          'TSPropertySignature > TSTypeAnnotation > TSFunctionType',
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            ':not(BlockStatement) > FunctionDeclaration',
+            'MethodDefinition',
+            'TSMethodSignature',
+            'TSPropertySignature > TSTypeAnnotation > TSFunctionType',
+          ],
+        },
+      ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
@@ -1636,7 +1682,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -1846,9 +1894,11 @@ export default {
         }
       }
       `,
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -1870,9 +1920,11 @@ export default {
           function quux () {
           }
       `,
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -1893,9 +1945,11 @@ export default {
             return undefined;
           }
       `,
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -1915,9 +1969,11 @@ export default {
           function quux () {
           }
       `,
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -1928,9 +1984,11 @@ export default {
             return;
           }
       `,
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -1948,9 +2006,11 @@ export default {
           async function quux () {
           }
       `,
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -1963,9 +2023,11 @@ export default {
           async function quux () {
           }
       `,
-      options: [{
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          forceReturnsWithAsync: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -2028,9 +2090,11 @@ export default {
           function quux () {
           }
       `,
-      options: [{
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          forceReturnsWithAsync: true,
+        },
+      ],
     },
     {
       code: `
@@ -2043,7 +2107,9 @@ export default {
       `,
       options: [
         {
-          exemptedBy: ['type'],
+          exemptedBy: [
+            'type',
+          ],
         },
       ],
     },
@@ -2068,7 +2134,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -2080,7 +2148,9 @@ export default {
       `,
       options: [
         {
-          contexts: ['any'],
+          contexts: [
+            'any',
+          ],
         },
       ],
     },
@@ -2090,9 +2160,11 @@ export default {
            * @function
            */
       `,
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -2100,9 +2172,11 @@ export default {
            * @callback
            */
       `,
-      options: [{
-        forceRequireReturn: true,
-      }],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
     },
     {
       code: `
@@ -2111,9 +2185,11 @@ export default {
            * @async
            */
       `,
-      options: [{
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          forceReturnsWithAsync: true,
+        },
+      ],
     },
     {
       code: `
@@ -2122,9 +2198,11 @@ export default {
            * @async
            */
       `,
-      options: [{
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          forceReturnsWithAsync: true,
+        },
+      ],
     },
     {
       code: `
@@ -2132,10 +2210,14 @@ export default {
            * @function
            */
       `,
-      options: [{
-        contexts: ['any'],
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceReturnsWithAsync: true,
+        },
+      ],
     },
     {
       code: `
@@ -2143,10 +2225,14 @@ export default {
            * @callback
            */
       `,
-      options: [{
-        contexts: ['any'],
-        forceReturnsWithAsync: true,
-      }],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          forceReturnsWithAsync: true,
+        },
+      ],
     },
     {
       code: `
@@ -2156,9 +2242,11 @@ export default {
             }
           }
       `,
-      options: [{
-        checkGetters: false,
-      }],
+      options: [
+        {
+          checkGetters: false,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -2172,9 +2260,11 @@ export default {
             }
           }
       `,
-      options: [{
-        checkGetters: true,
-      }],
+      options: [
+        {
+          checkGetters: true,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },
@@ -2188,9 +2278,11 @@ export default {
             }
           }
       `,
-      options: [{
-        checkGetters: false,
-      }],
+      options: [
+        {
+          checkGetters: false,
+        },
+      ],
       parserOptions: {
         ecmaVersion: 8,
       },

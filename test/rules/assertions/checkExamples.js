@@ -22,15 +22,19 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            'no-alert': 2,
-            semi: ['error', 'always'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              'no-alert': 2,
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
+          checkEslintrc: false,
         },
-        checkEslintrc: false,
-      }],
+      ],
     },
     {
       code: `
@@ -51,15 +55,19 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            'no-alert': 2,
-            semi: ['error', 'always'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              'no-alert': 2,
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
+          checkEslintrc: false,
         },
-        checkEslintrc: false,
-      }],
+      ],
     },
     {
       code: `
@@ -78,15 +86,19 @@ export default {
           message: '@example error (semi): Extra semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            semi: ['error', 'never'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              semi: [
+                'error', 'never',
+              ],
+            },
           },
+          checkEslintrc: false,
+          exampleCodeRegex: '```js([\\s\\S]*)```',
         },
-        checkEslintrc: false,
-        exampleCodeRegex: '```js([\\s\\S]*)```',
-      }],
+      ],
     },
     {
       code: `
@@ -105,15 +117,19 @@ export default {
           message: '@example error (semi): Extra semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            semi: ['error', 'never'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              semi: [
+                'error', 'never',
+              ],
+            },
           },
+          checkEslintrc: false,
+          exampleCodeRegex: '```js ([\\s\\S]*)```',
         },
-        checkEslintrc: false,
-        exampleCodeRegex: '```js ([\\s\\S]*)```',
-      }],
+      ],
     },
     {
       code: `
@@ -131,15 +147,19 @@ export default {
           message: '@example error (semi): Extra semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            semi: ['error', 'never'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              semi: [
+                'error', 'never',
+              ],
+            },
           },
+          checkEslintrc: false,
+          exampleCodeRegex: '```js ([\\s\\S]*)```',
         },
-        checkEslintrc: false,
-        exampleCodeRegex: '```js ([\\s\\S]*)```',
-      }],
+      ],
     },
     {
       code: `
@@ -157,15 +177,19 @@ export default {
           message: '@example error (semi): Extra semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            semi: ['error', 'never'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              semi: [
+                'error', 'never',
+              ],
+            },
           },
+          checkEslintrc: false,
+          exampleCodeRegex: '```\njs ([\\s\\S]*)```',
         },
-        checkEslintrc: false,
-        exampleCodeRegex: '```\njs ([\\s\\S]*)```',
-      }],
+      ],
     },
     {
       code: `
@@ -188,15 +212,19 @@ export default {
           message: '@example error (semi): Extra semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            semi: ['error', 'never'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              semi: [
+                'error', 'never',
+              ],
+            },
           },
+          checkEslintrc: false,
+          rejectExampleCodeRegex: '^\\s*<.*>\\s*$',
         },
-        checkEslintrc: false,
-        rejectExampleCodeRegex: '^\\s*<.*>\\s*$',
-      }],
+      ],
     },
     {
       code: `
@@ -214,15 +242,19 @@ export default {
           message: '@example error (no-undef): \'quux\' is not defined.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            'no-undef': ['error'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              'no-undef': [
+                'error',
+              ],
+            },
           },
+          checkEslintrc: false,
+          noDefaultExampleRules: true,
         },
-        checkEslintrc: false,
-        noDefaultExampleRules: true,
-      }],
+      ],
     },
     {
       code: `
@@ -243,10 +275,12 @@ export default {
           message: 'Caption is expected for examples.',
         },
       ],
-      options: [{
-        captionRequired: true,
-        checkEslintrc: false,
-      }],
+      options: [
+        {
+          captionRequired: true,
+          checkEslintrc: false,
+        },
+      ],
     },
     {
       code: `
@@ -263,15 +297,19 @@ export default {
           message: '@example error (indent): Expected indentation of 0 spaces but found 1.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            indent: ['error'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              indent: [
+                'error',
+              ],
+            },
           },
+          checkEslintrc: false,
+          noDefaultExampleRules: false,
         },
-        checkEslintrc: false,
-        noDefaultExampleRules: false,
-      }],
+      ],
     },
     {
       code: `
@@ -286,11 +324,13 @@ export default {
           message: '@example error: Unused eslint-disable directive (no problems were reported from \'semi\').',
         },
       ],
-      options: [{
-        checkEslintrc: false,
-        noDefaultExampleRules: true,
-        reportUnusedDisableDirectives: true,
-      }],
+      options: [
+        {
+          checkEslintrc: false,
+          noDefaultExampleRules: true,
+          reportUnusedDisableDirectives: true,
+        },
+      ],
     },
     {
       code: `
@@ -306,16 +346,20 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        allowInlineConfig: false,
-        baseConfig: {
-          rules: {
-            semi: ['error', 'always'],
+      options: [
+        {
+          allowInlineConfig: false,
+          baseConfig: {
+            rules: {
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
+          checkEslintrc: false,
+          noDefaultExampleRules: true,
         },
-        checkEslintrc: false,
-        noDefaultExampleRules: true,
-      }],
+      ],
     },
     {
       code: `
@@ -337,9 +381,11 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        matchingFileName: '../../jsdocUtils.js',
-      }],
+      options: [
+        {
+          matchingFileName: '../../jsdocUtils.js',
+        },
+      ],
     },
     {
       code: `
@@ -361,10 +407,12 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        configFile: '.eslintrc.json',
-        matchingFileName: '../../jsdocUtils.js',
-      }],
+      options: [
+        {
+          configFile: '.eslintrc.json',
+          matchingFileName: '../../jsdocUtils.js',
+        },
+      ],
     },
     {
       code: `
@@ -452,9 +500,11 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        matchingFileName: 'dummy.js',
-      }],
+      options: [
+        {
+          matchingFileName: 'dummy.js',
+        },
+      ],
     },
     {
       code: `
@@ -473,9 +523,11 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        matchingFileName: 'dummy.js',
-      }],
+      options: [
+        {
+          matchingFileName: 'dummy.js',
+        },
+      ],
     },
     {
       code: `
@@ -494,10 +546,12 @@ export default {
           message: '@example error: Parsing error: The keyword \'const\' is reserved',
         },
       ],
-      options: [{
-        checkEslintrc: false,
-        matchingFileName: 'dummy.js',
-      }],
+      options: [
+        {
+          checkEslintrc: false,
+          matchingFileName: 'dummy.js',
+        },
+      ],
     },
     {
       code: `
@@ -516,16 +570,20 @@ export default {
           message: '@example warning (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            semi: ['warn', 'always'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              semi: [
+                'warn', 'always',
+              ],
+            },
           },
+          checkEslintrc: false,
+          exampleCodeRegex: '// begin[\\s\\S]*// end',
+          noDefaultExampleRules: true,
         },
-        checkEslintrc: false,
-        exampleCodeRegex: '// begin[\\s\\S]*// end',
-        noDefaultExampleRules: true,
-      }],
+      ],
     },
     {
       code: `
@@ -541,10 +599,12 @@ export default {
           message: 'Caption is expected for examples.',
         },
       ],
-      options: [{
-        captionRequired: true,
-        checkEslintrc: false,
-      }],
+      options: [
+        {
+          captionRequired: true,
+          checkEslintrc: false,
+        },
+      ],
     },
     {
       code: `
@@ -563,18 +623,22 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          parser: '@typescript-eslint/parser',
-          parserOptions: {
-            ecmaVersion: 6,
+      options: [
+        {
+          baseConfig: {
+            parser: '@typescript-eslint/parser',
+            parserOptions: {
+              ecmaVersion: 6,
+            },
+            rules: {
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
-          rules: {
-            semi: ['error', 'always'],
-          },
+          checkEslintrc: false,
         },
-        checkEslintrc: false,
-      }],
+      ],
     },
     {
       code: `
@@ -594,16 +658,20 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          parserOptions: {
-            ecmaVersion: 6,
-          },
-          rules: {
-            semi: ['error', 'always'],
+      options: [
+        {
+          baseConfig: {
+            parserOptions: {
+              ecmaVersion: 6,
+            },
+            rules: {
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
         },
-      }],
+      ],
     },
     {
       code: `
@@ -646,7 +714,9 @@ export default {
               sourceType: 'module',
             },
             rules: {
-              semi: ['error', 'always'],
+              semi: [
+                'error', 'always',
+              ],
             },
           },
           checkEslintrc: false,
@@ -679,16 +749,20 @@ export default {
           message: '@example warning (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            semi: ['warn', 'always'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              semi: [
+                'warn', 'always',
+              ],
+            },
           },
+          checkEslintrc: false,
+          exampleCodeRegex: '/\\/\\/ begin[\\s\\S]*?// end/g',
+          noDefaultExampleRules: true,
         },
-        checkEslintrc: false,
-        exampleCodeRegex: '/\\/\\/ begin[\\s\\S]*?// end/g',
-        noDefaultExampleRules: true,
-      }],
+      ],
     },
     {
       code: `
@@ -706,15 +780,19 @@ export default {
           message: '@example error (indent): Expected indentation of 0 spaces but found 2.',
         },
       ],
-      options: [{
-        baseConfig: {
-          rules: {
-            indent: ['error'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              indent: [
+                'error',
+              ],
+            },
           },
+          checkEslintrc: false,
+          noDefaultExampleRules: false,
         },
-        checkEslintrc: false,
-        noDefaultExampleRules: false,
-      }],
+      ],
     },
     {
       code: `
@@ -798,19 +876,23 @@ export default {
           message: '@example error (semi): Missing semicolon.',
         },
       ],
-      options: [{
-        baseConfig: {
-          parserOptions: {
-            ecmaVersion: 2_015,
-            sourceType: 'module',
+      options: [
+        {
+          baseConfig: {
+            parserOptions: {
+              ecmaVersion: 2_015,
+              sourceType: 'module',
+            },
+            rules: {
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
-          rules: {
-            semi: ['error', 'always'],
-          },
+          captionRequired: true,
+          checkEslintrc: false,
         },
-        captionRequired: true,
-        checkEslintrc: false,
-      }],
+      ],
     },
   ],
   valid: [
@@ -825,15 +907,19 @@ export default {
 
           }
       `,
-      options: [{
-        baseConfig: {
-          rules: {
-            semi: ['error', 'always'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
+          checkEslintrc: false,
+          exampleCodeRegex: '```js([\\s\\S]*)```',
         },
-        checkEslintrc: false,
-        exampleCodeRegex: '```js([\\s\\S]*)```',
-      }],
+      ],
     },
     {
       code: `
@@ -846,15 +932,19 @@ export default {
 
           }
       `,
-      options: [{
-        baseConfig: {
-          rules: {
-            semi: ['error', 'always'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
+          checkEslintrc: false,
+          exampleCodeRegex: '/```js([\\s\\S]*)```/',
         },
-        checkEslintrc: false,
-        exampleCodeRegex: '/```js([\\s\\S]*)```/',
-      }],
+      ],
     },
     {
       code: `
@@ -866,9 +956,11 @@ export default {
 
           }
       `,
-      options: [{
-        checkEslintrc: false,
-      }],
+      options: [
+        {
+          checkEslintrc: false,
+        },
+      ],
     },
     {
       code: `
@@ -880,15 +972,19 @@ export default {
 
           }
       `,
-      options: [{
-        baseConfig: {
-          rules: {
-            'no-undef': ['error'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              'no-undef': [
+                'error',
+              ],
+            },
           },
+          checkEslintrc: false,
+          noDefaultExampleRules: false,
         },
-        checkEslintrc: false,
-        noDefaultExampleRules: false,
-      }],
+      ],
     },
     {
       code: `
@@ -899,15 +995,19 @@ export default {
 
           }
       `,
-      options: [{
-        baseConfig: {
-          rules: {
-            indent: ['error'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              indent: [
+                'error',
+              ],
+            },
           },
+          checkEslintrc: false,
+          noDefaultExampleRules: false,
         },
-        checkEslintrc: false,
-        noDefaultExampleRules: false,
-      }],
+      ],
     },
     {
       code: `
@@ -922,10 +1022,12 @@ export default {
 
           }
       `,
-      options: [{
-        captionRequired: true,
-        checkEslintrc: false,
-      }],
+      options: [
+        {
+          captionRequired: true,
+          checkEslintrc: false,
+        },
+      ],
     },
     {
       code: `
@@ -934,11 +1036,13 @@ export default {
        */
       function quux () {}
 `,
-      options: [{
-        checkEslintrc: false,
-        noDefaultExampleRules: true,
-        reportUnusedDisableDirectives: false,
-      }],
+      options: [
+        {
+          checkEslintrc: false,
+          noDefaultExampleRules: true,
+          reportUnusedDisableDirectives: false,
+        },
+      ],
     },
     {
       code: `
@@ -948,16 +1052,20 @@ export default {
        */
       function quux () {}
 `,
-      options: [{
-        allowInlineConfig: true,
-        baseConfig: {
-          rules: {
-            semi: ['error', 'always'],
+      options: [
+        {
+          allowInlineConfig: true,
+          baseConfig: {
+            rules: {
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
+          checkEslintrc: false,
+          noDefaultExampleRules: true,
         },
-        checkEslintrc: false,
-        noDefaultExampleRules: true,
-      }],
+      ],
     },
     {
       code: `
@@ -970,15 +1078,19 @@ export default {
 
           };
       `,
-      options: [{
-        baseConfig: {
-          rules: {
-            semi: ['error', 'never'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              semi: [
+                'error', 'never',
+              ],
+            },
           },
+          checkEslintrc: false,
+          exampleCodeRegex: '```js([\\s\\S]*)```',
         },
-        checkEslintrc: false,
-        exampleCodeRegex: '```js([\\s\\S]*)```',
-      }],
+      ],
     },
     {
       code: `
@@ -990,15 +1102,19 @@ export default {
       */
      function quux () {}
 `,
-      options: [{
-        baseConfig: {
-          rules: {
-            indent: ['error'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              indent: [
+                'error',
+              ],
+            },
           },
+          checkEslintrc: false,
+          noDefaultExampleRules: false,
         },
-        checkEslintrc: false,
-        noDefaultExampleRules: false,
-      }],
+      ],
     },
     {
       code: `
@@ -1011,18 +1127,22 @@ export default {
 
         }
       `,
-      options: [{
-        baseConfig: {
-          parser: '@typescript-eslint/parser',
-          parserOptions: {
-            ecmaVersion: 6,
+      options: [
+        {
+          baseConfig: {
+            parser: '@typescript-eslint/parser',
+            parserOptions: {
+              ecmaVersion: 6,
+            },
+            rules: {
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
-          rules: {
-            semi: ['error', 'always'],
-          },
+          checkEslintrc: false,
         },
-        checkEslintrc: false,
-      }],
+      ],
     },
     {
       code: `
@@ -1053,15 +1173,19 @@ export default {
 
           }
       `,
-      options: [{
-        baseConfig: {
-          rules: {
-            indent: ['error'],
+      options: [
+        {
+          baseConfig: {
+            rules: {
+              indent: [
+                'error',
+              ],
+            },
           },
+          checkEslintrc: false,
+          noDefaultExampleRules: false,
         },
-        checkEslintrc: false,
-        noDefaultExampleRules: false,
-      }],
+      ],
     },
     {
       code: `
@@ -1095,16 +1219,22 @@ export default {
       function quux () {
       }
       `,
-      options: [{
-        baseConfig: {
-          plugins: ['jsdoc'],
-          rules: {
-            'jsdoc/require-file-overview': ['error'],
+      options: [
+        {
+          baseConfig: {
+            plugins: [
+              'jsdoc',
+            ],
+            rules: {
+              'jsdoc/require-file-overview': [
+                'error',
+              ],
+            },
           },
+          checkEslintrc: false,
+          noDefaultExampleRules: false,
         },
-        checkEslintrc: false,
-        noDefaultExampleRules: false,
-      }],
+      ],
     },
     {
       code: `
@@ -1247,19 +1377,23 @@ export default {
         return false;
       };
       `,
-      options: [{
-        baseConfig: {
-          parserOptions: {
-            ecmaVersion: 2_015,
-            sourceType: 'module',
+      options: [
+        {
+          baseConfig: {
+            parserOptions: {
+              ecmaVersion: 2_015,
+              sourceType: 'module',
+            },
+            rules: {
+              semi: [
+                'error', 'always',
+              ],
+            },
           },
-          rules: {
-            semi: ['error', 'always'],
-          },
+          captionRequired: true,
+          checkEslintrc: false,
         },
-        captionRequired: true,
-        checkEslintrc: false,
-      }],
+      ],
     },
   ],
 };

@@ -15,11 +15,13 @@ export default {
           message: 'Syntax is restricted: FunctionDeclaration.',
         },
       ],
-      options: [{
-        contexts: [
-          'FunctionDeclaration',
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            'FunctionDeclaration',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -36,14 +38,16 @@ export default {
           message: 'Oops: `FunctionDeclaration`.',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            context: 'FunctionDeclaration',
-            message: 'Oops: `{{context}}`.',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              context: 'FunctionDeclaration',
+              message: 'Oops: `{{context}}`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -60,14 +64,16 @@ export default {
           message: 'Syntax is restricted: FunctionDeclaration.',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -84,20 +90,22 @@ export default {
           message: 'The bar one: FunctionDeclaration.',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-            message: 'The foo one: {{context}}.',
-          },
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-            message: 'The bar one: {{context}}.',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+              message: 'The foo one: {{context}}.',
+            },
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+              message: 'The bar one: {{context}}.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -114,20 +122,22 @@ export default {
           message: 'The bar one: FunctionDeclaration.',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-            message: 'The bar one: {{context}}.',
-          },
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-            message: 'The foo one: {{context}}.',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+              message: 'The bar one: {{context}}.',
+            },
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+              message: 'The foo one: {{context}}.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -153,19 +163,23 @@ export default {
          */
         function a () {}
       `,
-      errors: [{
-        line: 2,
-        message: 'Only allowing names not matching `/^opt_/i`.',
-      }],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            context: 'FunctionDeclaration',
-            message: 'Only allowing names not matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Only allowing names not matching `/^opt_/i`.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'FunctionDeclaration',
+              message: 'Only allowing names not matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -175,19 +189,23 @@ export default {
          */
         function a () {}
       `,
-      errors: [{
-        line: 2,
-        message: 'Only allowing names not matching `/^opt_/i`.',
-      }],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            context: 'any',
-            message: 'Only allowing names not matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Only allowing names not matching `/^opt_/i`.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'any',
+              message: 'Only allowing names not matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -197,18 +215,22 @@ export default {
          */
         function a () {}
       `,
-      errors: [{
-        line: 2,
-        message: 'Only allowing names not matching `/^opt_/i`.',
-      }],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            message: 'Only allowing names not matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Only allowing names not matching `/^opt_/i`.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              message: 'Only allowing names not matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -218,24 +240,28 @@ export default {
          */
         function a () {}
       `,
-      errors: [{
-        line: 2,
-        message: 'Only allowing names not matching `/^opt_/i`.',
-      }],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/not-this/])',
-            context: 'any',
-            message: 'Only allowing names not matching `/^not-this/i`.',
-          },
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            context: 'any',
-            message: 'Only allowing names not matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Only allowing names not matching `/^opt_/i`.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/not-this/])',
+              context: 'any',
+              message: 'Only allowing names not matching `/^not-this/i`.',
+            },
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'any',
+              message: 'Only allowing names not matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -244,19 +270,23 @@ export default {
          * @param opt_b
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Only allowing names not matching `/^opt_/i`.',
-      }],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            context: 'any',
-            message: 'Only allowing names not matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Only allowing names not matching `/^opt_/i`.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'any',
+              message: 'Only allowing names not matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -274,20 +304,22 @@ export default {
           message: '@enum not allowed on declarations',
         },
       ],
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])',
-            context: 'any',
-            message: 'Access modifier tags must come first',
-          },
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag="enum"])',
-            context: ':declaration',
-            message: '@enum not allowed on declarations',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])',
+              context: 'any',
+              message: 'Access modifier tags must come first',
+            },
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag="enum"])',
+              context: ':declaration',
+              message: '@enum not allowed on declarations',
+            },
+          ],
+        },
+      ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
@@ -301,11 +333,13 @@ export default {
 
       }
       `,
-      options: [{
-        contexts: [
-          'FunctionExpression',
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            'FunctionExpression',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -316,14 +350,16 @@ export default {
 
       }
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
-            context: 'FunctionDeclaration',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -333,15 +369,17 @@ export default {
          */
         function a () {}
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            context: 'any',
-            message: 'Only allowing names not matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'any',
+              message: 'Only allowing names not matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -350,15 +388,17 @@ export default {
          * @param cd
          */
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            context: 'any',
-            message: 'Only allowing names not matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'any',
+              message: 'Only allowing names not matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -367,14 +407,16 @@ export default {
          * @param cd
          */
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
-            message: 'Only allowing names not matching `/^opt_/i`.',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              message: 'Only allowing names not matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -386,20 +428,22 @@ export default {
           VAL_A: "myvala"
         } as const);
       `,
-      options: [{
-        contexts: [
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])',
-            context: 'any',
-            message: 'Access modifier tags must come first',
-          },
-          {
-            comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag="enum"])',
-            context: ':declaration:not(TSEnumDeclaration):not(:has(ObjectExpression)), :function',
-            message: '@enum is only allowed on potential enum types',
-          },
-        ],
-      }],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])',
+              context: 'any',
+              message: 'Access modifier tags must come first',
+            },
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag="enum"])',
+              context: ':declaration:not(TSEnumDeclaration):not(:has(ObjectExpression)), :function',
+              message: '@enum is only allowed on potential enum types',
+            },
+          ],
+        },
+      ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
   ],

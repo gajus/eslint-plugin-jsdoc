@@ -420,9 +420,11 @@ export default {
           message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".',
         },
       ],
-      options: [{
-        noDefaults: true,
-      }],
+      options: [
+        {
+          noDefaults: true,
+        },
+      ],
       output: `
           /**
            * @param {Abc} foo
@@ -790,9 +792,11 @@ export default {
           message: 'Invalid JSDoc @param "foo" type "[]"; prefer: "SpecialTypeArray".',
         },
       ],
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       output: `
       /**
        * @param {SpecialTypeArray<string>} foo
@@ -824,9 +828,11 @@ export default {
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "SpecialTypeArray".',
         },
       ],
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       output: `
       /**
        * @param {SpecialTypeArray<string>} foo
@@ -1077,9 +1083,11 @@ export default {
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       output: `
       /**
        * @param {GenericObject.<string>} foo
@@ -1111,9 +1119,11 @@ export default {
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       output: `
       /**
        * @param {GenericObject<string>} foo
@@ -1145,9 +1155,11 @@ export default {
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       output: `
       /**
        * @param {GenericObject} foo
@@ -1179,9 +1191,11 @@ export default {
           message: 'Invalid JSDoc @param "foo" type "object".',
         },
       ],
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -1228,9 +1242,11 @@ export default {
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       output: `
       /**
        * @param {GenericObject.<string, number>} foo
@@ -1262,9 +1278,11 @@ export default {
           message: 'Invalid JSDoc @param "foo" type "object"; prefer: "GenericObject".',
         },
       ],
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       output: `
       /**
        * @param {GenericObject<string, number>} foo
@@ -1737,9 +1755,11 @@ export default {
           message: 'Invalid JSDoc @param "foo" type "Array"; prefer: "Array.".',
         },
       ],
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       output: `
       /**
        *
@@ -1811,10 +1831,12 @@ export default {
        */
       function quux () {}
       `,
-      errors: [{
-        line: 3,
-        message: 'Invalid JSDoc @this type "array"; prefer: "Array".',
-      }],
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @this type "array"; prefer: "Array".',
+        },
+      ],
       output: `
       /**
        * @this {Array}
@@ -1834,10 +1856,12 @@ export default {
        */
       function quux () {}
       `,
-      errors: [{
-        line: 3,
-        message: 'Invalid JSDoc @export type "array"; prefer: "Array".',
-      }],
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @export type "array"; prefer: "Array".',
+        },
+      ],
       output: `
       /**
        * @export {Array}
@@ -1865,10 +1889,12 @@ export default {
       ],
       options: [
         {
-          exemptTagContexts: [{
-            tag: 'typedef',
-            types: true,
-          }],
+          exemptTagContexts: [
+            {
+              tag: 'typedef',
+              types: true,
+            },
+          ],
         },
       ],
       output: `
@@ -1895,10 +1921,14 @@ export default {
       ],
       options: [
         {
-          exemptTagContexts: [{
-            tag: 'typedef',
-            types: ['array'],
-          }],
+          exemptTagContexts: [
+            {
+              tag: 'typedef',
+              types: [
+                'array',
+              ],
+            },
+          ],
         },
       ],
       output: '/** @typedef {Object} foo */',
@@ -1925,10 +1955,14 @@ export default {
       ],
       options: [
         {
-          exemptTagContexts: [{
-            tag: 'typedef',
-            types: ['object'],
-          }],
+          exemptTagContexts: [
+            {
+              tag: 'typedef',
+              types: [
+                'object',
+              ],
+            },
+          ],
         },
       ],
       output: `
@@ -1947,16 +1981,22 @@ export default {
     },
     {
       code: '/** @typedef {object<string, string>} foo */',
-      errors: [{
-        line: 1,
-        message: 'Invalid JSDoc @typedef "foo" type "object"; prefer: "Object<>".',
-      }],
+      errors: [
+        {
+          line: 1,
+          message: 'Invalid JSDoc @typedef "foo" type "object"; prefer: "Object<>".',
+        },
+      ],
       options: [
         {
-          exemptTagContexts: [{
-            tag: 'typedef',
-            types: ['object'],
-          }],
+          exemptTagContexts: [
+            {
+              tag: 'typedef',
+              types: [
+                'object',
+              ],
+            },
+          ],
         },
       ],
       output: '/** @typedef {Object<string, string>} foo */',
@@ -2081,7 +2121,9 @@ export default {
         jsdoc: {
           structuredTags: {
             aCustomTag: {
-              type: ['otherType', 'anotherType'],
+              type: [
+                'otherType', 'anotherType',
+              ],
             },
           },
         },
@@ -2169,9 +2211,11 @@ export default {
 
           }
       `,
-      options: [{
-        noDefaults: true,
-      }],
+      options: [
+        {
+          noDefaults: true,
+        },
+      ],
     },
     {
       code: `
@@ -2262,9 +2306,11 @@ export default {
 
       }
       `,
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -2300,9 +2346,11 @@ export default {
 
       }
       `,
-      options: [{
-        unifyParentAndChildTypeChecks: true,
-      }],
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -2508,10 +2556,12 @@ export default {
       code: '/** @typedef {object} foo */',
       options: [
         {
-          exemptTagContexts: [{
-            tag: 'typedef',
-            types: true,
-          }],
+          exemptTagContexts: [
+            {
+              tag: 'typedef',
+              types: true,
+            },
+          ],
         },
       ],
       settings: {
@@ -2536,10 +2586,14 @@ export default {
       code: '/** @typedef {object<string, string>} foo */',
       options: [
         {
-          exemptTagContexts: [{
-            tag: 'typedef',
-            types: ['object<string, string>'],
-          }],
+          exemptTagContexts: [
+            {
+              tag: 'typedef',
+              types: [
+                'object<string, string>',
+              ],
+            },
+          ],
         },
       ],
       settings: {
@@ -2634,7 +2688,9 @@ export default {
         jsdoc: {
           structuredTags: {
             aCustomTag: {
-              type: ['otherType', 'anotherType'],
+              type: [
+                'otherType', 'anotherType',
+              ],
             },
           },
         },
@@ -2650,7 +2706,9 @@ export default {
         jsdoc: {
           structuredTags: {
             aCustomTag: {
-              type: ['otherType', 'anotherType'],
+              type: [
+                'otherType', 'anotherType',
+              ],
             },
           },
         },

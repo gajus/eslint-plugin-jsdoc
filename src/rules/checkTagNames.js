@@ -18,10 +18,16 @@ export default iterateJsdoc(({
   settings,
   jsdocNode,
 }) => {
-  const {definedTags = [], jsxTags} = context.options[0] || {};
+  const {
+    definedTags = [],
+    jsxTags,
+  } = context.options[0] || {};
 
   let definedPreferredTags = [];
-  const {tagNamePreference, structuredTags} = settings;
+  const {
+    tagNamePreference,
+    structuredTags,
+  } = settings;
   const definedStructuredTags = Object.keys(structuredTags);
   const definedNonPreferredTags = Object.keys(tagNamePreference);
   if (definedNonPreferredTags.length) {
@@ -69,7 +75,10 @@ export default iterateJsdoc(({
 
       let message;
       if (typeof preferredTagName === 'object') {
-        ({message, replacement: preferredTagName} = preferredTagName);
+        ({
+          message,
+          replacement: preferredTagName,
+        } = preferredTagName);
       }
 
       if (!message) {

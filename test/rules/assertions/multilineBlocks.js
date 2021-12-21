@@ -6,10 +6,12 @@ export default {
          * because the rest is multiline
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Should have no text on the "0th" line (after the `/**`).',
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Should have no text on the "0th" line (after the `/**`).',
+        },
+      ],
       output: `
         /**
          * Reported up here
@@ -23,13 +25,17 @@ export default {
          * because the rest is multiline
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Should have no text on the "0th" line (after the `/**`).',
-      }],
-      options: [{
-        noZeroLineText: true,
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Should have no text on the "0th" line (after the `/**`).',
+        },
+      ],
+      options: [
+        {
+          noZeroLineText: true,
+        },
+      ],
       output: `
         /**
          * Reported up here
@@ -43,13 +49,17 @@ export default {
          * because the rest is multiline
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Should have no text on the "0th" line (after the `/**`).',
-      }],
-      options: [{
-        noZeroLineText: true,
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Should have no text on the "0th" line (after the `/**`).',
+        },
+      ],
+      options: [
+        {
+          noZeroLineText: true,
+        },
+      ],
       output: `
         /**
          * @abc {aType} aName Reported up here
@@ -61,13 +71,17 @@ export default {
       code: `
         /** @tag */
       `,
-      errors: [{
-        line: 2,
-        message: 'Single line blocks are not permitted by your configuration.',
-      }],
-      options: [{
-        noSingleLineBlocks: true,
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Single line blocks are not permitted by your configuration.',
+        },
+      ],
+      options: [
+        {
+          noSingleLineBlocks: true,
+        },
+      ],
       output: `
         /**
          * @tag
@@ -78,13 +92,17 @@ export default {
       code: `
         /** @tag {someType} */
       `,
-      errors: [{
-        line: 2,
-        message: 'Single line blocks are not permitted by your configuration.',
-      }],
-      options: [{
-        noSingleLineBlocks: true,
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Single line blocks are not permitted by your configuration.',
+        },
+      ],
+      options: [
+        {
+          noSingleLineBlocks: true,
+        },
+      ],
       output: `
         /**
          * @tag {someType}
@@ -95,13 +113,17 @@ export default {
       code: `
         /** @tag {someType} aName */
       `,
-      errors: [{
-        line: 2,
-        message: 'Single line blocks are not permitted by your configuration.',
-      }],
-      options: [{
-        noSingleLineBlocks: true,
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Single line blocks are not permitted by your configuration.',
+        },
+      ],
+      options: [
+        {
+          noSingleLineBlocks: true,
+        },
+      ],
       output: `
         /**
          * @tag {someType} aName
@@ -112,14 +134,20 @@ export default {
       code: `
         /** @tag */
       `,
-      errors: [{
-        line: 2,
-        message: 'Single line blocks are not permitted by your configuration.',
-      }],
-      options: [{
-        noSingleLineBlocks: true,
-        singleLineTags: ['someOtherTag'],
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Single line blocks are not permitted by your configuration.',
+        },
+      ],
+      options: [
+        {
+          noSingleLineBlocks: true,
+          singleLineTags: [
+            'someOtherTag',
+          ],
+        },
+      ],
       output: `
         /**
          * @tag
@@ -130,14 +158,20 @@ export default {
       code: `
         /** desc */
       `,
-      errors: [{
-        line: 2,
-        message: 'Single line blocks are not permitted by your configuration.',
-      }],
-      options: [{
-        noSingleLineBlocks: true,
-        singleLineTags: ['*'],
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Single line blocks are not permitted by your configuration.',
+        },
+      ],
+      options: [
+        {
+          noSingleLineBlocks: true,
+          singleLineTags: [
+            '*',
+          ],
+        },
+      ],
       output: `
         /**
          * desc
@@ -150,14 +184,18 @@ export default {
          * Desc.
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration.',
-      }],
-      options: [{
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          noMultilineBlocks: true,
+        },
+      ],
       output: `
         /** Desc. */
       `,
@@ -168,14 +206,18 @@ export default {
          *
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration.',
-      }],
-      options: [{
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          noMultilineBlocks: true,
+        },
+      ],
       output: `
         /** desc */
       `,
@@ -186,17 +228,21 @@ export default {
          *
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration but fixing would result in a single ' +
                   'line block which you have prohibited with ' +
                   '`noSingleLineBlocks`.',
-      }],
-      options: [{
-        noMultilineBlocks: true,
-        noSingleLineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          noMultilineBlocks: true,
+          noSingleLineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -204,14 +250,18 @@ export default {
          *
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration.',
-      }],
-      options: [{
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          noMultilineBlocks: true,
+        },
+      ],
       output: `
         /** */
       `,
@@ -222,15 +272,19 @@ export default {
          * This is not long enough to be permitted.
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration.',
-      }],
-      options: [{
-        minimumLengthForMultiline: 100,
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          minimumLengthForMultiline: 100,
+          noMultilineBlocks: true,
+        },
+      ],
       output: `
         /** This is not long enough to be permitted. */
       `,
@@ -241,16 +295,20 @@ export default {
          * This is not long enough to be permitted.
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration.',
-      }],
-      options: [{
-        allowMultipleTags: true,
-        minimumLengthForMultiline: 100,
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          allowMultipleTags: true,
+          minimumLengthForMultiline: 100,
+          noMultilineBlocks: true,
+        },
+      ],
       output: `
         /** This is not long enough to be permitted. */
       `,
@@ -262,16 +320,22 @@ export default {
          * @notTheRightTag
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by your ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by your ' +
           'configuration but the block has a description with a tag.',
-      }],
-      options: [{
-        allowMultipleTags: false,
-        multilineTags: ['onlyThisIsExempted'],
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          allowMultipleTags: false,
+          multilineTags: [
+            'onlyThisIsExempted',
+          ],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -281,16 +345,20 @@ export default {
          * @anotherTag
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration but the block has multiple tags.',
-      }],
-      options: [{
-        allowMultipleTags: false,
-        multilineTags: [],
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          allowMultipleTags: false,
+          multilineTags: [],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -299,16 +367,20 @@ export default {
          * @oneTag
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by your ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by your ' +
           'configuration but the block has a description with a tag.',
-      }],
-      options: [{
-        allowMultipleTags: false,
-        multilineTags: [],
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          allowMultipleTags: false,
+          multilineTags: [],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -316,15 +388,21 @@ export default {
          * This has no tags so is not permitted.
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration.',
-      }],
-      options: [{
-        multilineTags: ['*'],
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          multilineTags: [
+            '*',
+          ],
+          noMultilineBlocks: true,
+        },
+      ],
       output: `
         /** This has no tags so is not permitted. */
       `,
@@ -336,17 +414,23 @@ export default {
          * @notTheRightTag
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by your ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by your ' +
           'configuration but the block has a description with a tag.',
-      }],
-      options: [{
-        allowMultipleTags: false,
-        minimumLengthForMultiline: 500,
-        multilineTags: ['onlyThisIsExempted'],
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          allowMultipleTags: false,
+          minimumLengthForMultiline: 500,
+          multilineTags: [
+            'onlyThisIsExempted',
+          ],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -354,16 +438,20 @@ export default {
          * @lends This can be safely fixed to a single line.
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration.',
-      }],
-      options: [{
-        multilineTags: [],
-        noMultilineBlocks: true,
-        noSingleLineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          multilineTags: [],
+          noMultilineBlocks: true,
+          noSingleLineBlocks: true,
+        },
+      ],
       output: `
         /** @lends This can be safely fixed to a single line. */
       `,
@@ -374,16 +462,20 @@ export default {
          * @type {aType} This can be safely fixed to a single line.
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration.',
-      }],
-      options: [{
-        multilineTags: [],
-        noMultilineBlocks: true,
-        noSingleLineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          multilineTags: [],
+          noMultilineBlocks: true,
+          noSingleLineBlocks: true,
+        },
+      ],
       output: `
         /** @type {aType} This can be safely fixed to a single line. */
       `,
@@ -394,15 +486,19 @@ export default {
          * @aTag
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration.',
-      }],
-      options: [{
-        multilineTags: [],
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          multilineTags: [],
+          noMultilineBlocks: true,
+        },
+      ],
       output: `
         /** @aTag */
       `,
@@ -413,17 +509,21 @@ export default {
          * This is a problem when single and multiline are blocked.
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration but fixing would result in a single ' +
                   'line block which you have prohibited with ' +
                   '`noSingleLineBlocks`.',
-      }],
-      options: [{
-        noMultilineBlocks: true,
-        noSingleLineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          noMultilineBlocks: true,
+          noSingleLineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -431,15 +531,19 @@ export default {
          * It should not have text on line zero
          */
       `,
-      errors: [{
-        line: 2,
-        message: 'Should have no text on the "0th" line (after the `/**`).',
-      }],
-      options: [{
-        minimumLengthForMultiline: 50,
-        noMultilineBlocks: true,
-        noZeroLineText: true,
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Should have no text on the "0th" line (after the `/**`).',
+        },
+      ],
+      options: [
+        {
+          minimumLengthForMultiline: 50,
+          noMultilineBlocks: true,
+          noZeroLineText: true,
+        },
+      ],
       output: `
         /**
          * This comment is bad
@@ -454,15 +558,19 @@ export default {
          * to a single
          * line. */
       `,
-      errors: [{
-        line: 2,
-        message: 'Multiline jsdoc blocks are prohibited by ' +
+      errors: [
+        {
+          line: 2,
+          message: 'Multiline jsdoc blocks are prohibited by ' +
                   'your configuration.',
-      }],
-      options: [{
-        multilineTags: [],
-        noMultilineBlocks: true,
-      }],
+        },
+      ],
+      options: [
+        {
+          multilineTags: [],
+          noMultilineBlocks: true,
+        },
+      ],
       output: `
         /** @lends This can be safely fixed to a single line. */
       `,
@@ -472,13 +580,17 @@ export default {
         /**
          * @someTag {aType} with Description */
       `,
-      errors: [{
-        line: 2,
-        message: 'Should have no text on the final line (before the `*/`).',
-      }],
-      options: [{
-        noFinalLineBlocks: true,
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Should have no text on the final line (before the `*/`).',
+        },
+      ],
+      options: [
+        {
+          noFinalLineBlocks: true,
+        },
+      ],
       output: `
         /**
          * @someTag {aType} with Description
@@ -490,13 +602,17 @@ export default {
         /**
          * Description */
       `,
-      errors: [{
-        line: 2,
-        message: 'Should have no text on the final line (before the `*/`).',
-      }],
-      options: [{
-        noFinalLineBlocks: true,
-      }],
+      errors: [
+        {
+          line: 2,
+          message: 'Should have no text on the final line (before the `*/`).',
+        },
+      ],
+      options: [
+        {
+          noFinalLineBlocks: true,
+        },
+      ],
       output: `
         /**
          * Description
@@ -523,9 +639,11 @@ export default {
          * because the rest is multiline
          */
       `,
-      options: [{
-        noZeroLineText: false,
-      }],
+      options: [
+        {
+          noZeroLineText: false,
+        },
+      ],
     },
     {
       code: `
@@ -536,27 +654,37 @@ export default {
       code: `
         /** @lends */
       `,
-      options: [{
-        noSingleLineBlocks: true,
-      }],
+      options: [
+        {
+          noSingleLineBlocks: true,
+        },
+      ],
     },
     {
       code: `
         /** @tag */
       `,
-      options: [{
-        noSingleLineBlocks: true,
-        singleLineTags: ['tag'],
-      }],
+      options: [
+        {
+          noSingleLineBlocks: true,
+          singleLineTags: [
+            'tag',
+          ],
+        },
+      ],
     },
     {
       code: `
         /** @tag */
       `,
-      options: [{
-        noSingleLineBlocks: true,
-        singleLineTags: ['*'],
-      }],
+      options: [
+        {
+          noSingleLineBlocks: true,
+          singleLineTags: [
+            '*',
+          ],
+        },
+      ],
     },
     {
       code: `
@@ -571,17 +699,21 @@ export default {
          *
          */
       `,
-      options: [{
-        noMultilineBlocks: false,
-      }],
+      options: [
+        {
+          noMultilineBlocks: false,
+        },
+      ],
     },
     {
       code: `
         /** Test */
       `,
-      options: [{
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -589,10 +721,12 @@ export default {
          * This is long enough to be permitted by our config.
          */
       `,
-      options: [{
-        minimumLengthForMultiline: 25,
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          minimumLengthForMultiline: 25,
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -600,10 +734,12 @@ export default {
          * This is long enough to be permitted by our config.
          */
       `,
-      options: [{
-        minimumLengthForMultiline: 50,
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          minimumLengthForMultiline: 50,
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -612,19 +748,27 @@ export default {
          * @theRightTag
          */
       `,
-      options: [{
-        multilineTags: ['theRightTag'],
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          multilineTags: [
+            'theRightTag',
+          ],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
         /** This has no tags but is single line so is not permitted. */
       `,
-      options: [{
-        multilineTags: ['*'],
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          multilineTags: [
+            '*',
+          ],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -633,11 +777,15 @@ export default {
          * @notTheRightTag
          */
       `,
-      options: [{
-        minimumLengthForMultiline: 10,
-        multilineTags: ['onlyThisIsExempted'],
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          minimumLengthForMultiline: 10,
+          multilineTags: [
+            'onlyThisIsExempted',
+          ],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -646,11 +794,15 @@ export default {
          * @theRightTag
          */
       `,
-      options: [{
-        minimumLengthForMultiline: 500,
-        multilineTags: ['theRightTag'],
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          minimumLengthForMultiline: 500,
+          multilineTags: [
+            'theRightTag',
+          ],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -663,10 +815,12 @@ export default {
          * @lends This is ok per multiline
          */
       `,
-      options: [{
-        noMultilineBlocks: true,
-        noSingleLineBlocks: true,
-      }],
+      options: [
+        {
+          noMultilineBlocks: true,
+          noSingleLineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -676,10 +830,12 @@ export default {
          * @anotherTag
          */
       `,
-      options: [{
-        multilineTags: [],
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          multilineTags: [],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -689,11 +845,13 @@ export default {
          * @anotherTag
          */
       `,
-      options: [{
-        allowMultipleTags: true,
-        multilineTags: [],
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          allowMultipleTags: true,
+          multilineTags: [],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -702,11 +860,13 @@ export default {
          * @oneTag
          */
       `,
-      options: [{
-        allowMultipleTags: true,
-        multilineTags: [],
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          allowMultipleTags: true,
+          multilineTags: [],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
@@ -715,19 +875,25 @@ export default {
          * @oneTag
          */
       `,
-      options: [{
-        allowMultipleTags: false,
-        multilineTags: ['oneTag'],
-        noMultilineBlocks: true,
-      }],
+      options: [
+        {
+          allowMultipleTags: false,
+          multilineTags: [
+            'oneTag',
+          ],
+          noMultilineBlocks: true,
+        },
+      ],
     },
     {
       code: `
         /** @someTag with Description */
       `,
-      options: [{
-        noFinalLineBlocks: true,
-      }],
+      options: [
+        {
+          noFinalLineBlocks: true,
+        },
+      ],
     },
   ],
 };
