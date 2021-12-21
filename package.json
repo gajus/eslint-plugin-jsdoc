@@ -61,6 +61,14 @@
   },
   "main": "./dist/index.js",
   "name": "eslint-plugin-jsdoc",
+  "mocha": {
+    "require": [
+      "@babel/register"
+    ],
+    "reporter": "dot",
+    "recursive": true,
+    "timeout": 12000
+  },
   "nyc": {
     "branches": 100,
     "check-coverage": false,
@@ -73,6 +81,7 @@
     ],
     "instrument": false,
     "lines": 100,
+    "reporter": "text-summary",
     "require": [
       "@babel/register"
     ],
@@ -99,10 +108,10 @@
     "lint-arg": "eslint --report-unused-disable-directives",
     "lint-fix": "npm run lint-arg -- --fix .",
     "prepare": "husky install",
-    "test": "cross-env BABEL_ENV=test nyc --reporter text-summary mocha --reporter dot --recursive --require @babel/register --timeout 12000",
-    "test-cov": "cross-env BABEL_ENV=test TIMING=1 nyc mocha --reporter dot --recursive --require @babel/register --timeout 12000",
-    "test-index": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 12000 test/rules/index.js",
-    "test-no-cov": "cross-env BABEL_ENV=test mocha --reporter dot --recursive --require @babel/register --timeout 12000"
+    "test-no-cov": "cross-env BABEL_ENV=test mocha",
+    "test": "nyc npm run test-no-cov",
+    "test-cov": "cross-env TIMING=1 nyc --reporter text npm run test-no-cov",
+    "test-index": "npm run test-no-cov -- test/rules/index.js"
   },
   "version": "1.0.0"
 }
