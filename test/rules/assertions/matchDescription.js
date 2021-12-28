@@ -1552,5 +1552,23 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @constructor
+         * @todo Ok.
+         */
+        function quux () {
+        }
+      `,
+      options: [
+        {
+          mainDescription: false,
+          tags: {
+            todo: true,
+          },
+        },
+      ],
+    },
   ],
 };

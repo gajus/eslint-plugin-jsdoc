@@ -7315,6 +7315,14 @@ function quux (foo) {
  * @param enabled `true` to enable, `false` to disable. Default: `true`.
  */
 // "jsdoc/match-description": ["error"|"warn", {"contexts":["any"],"mainDescription":"/^[A-Z`-].*\\.$/us","matchDescription":"^([A-Z`-].*(\\.|:)|-\\s.*)$","tags":{"param":true,"returns":true}}]
+
+/**
+ * @constructor
+ * @todo Ok.
+ */
+function quux () {
+}
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":false,"tags":{"todo":true}}]
 ````
 
 

@@ -31,7 +31,9 @@ export default iterateJsdoc(({
       errorMessage = mainDescription.message;
     }
 
-    if (!tag && mainDescriptionMatch === false) {
+    if (mainDescriptionMatch === false && (
+      !tag || !Object.prototype.hasOwnProperty.call(tags, tag.tag))
+    ) {
       return;
     }
 
