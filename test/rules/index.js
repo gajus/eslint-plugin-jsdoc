@@ -24,7 +24,15 @@ const main = async () => {
       ecmaVersion: 6,
     };
 
-    const assertions = (await import(`./assertions/${camelCase(ruleName)}`)).default;
+    // Catch syntax errors
+    let assertions;
+    try {
+      assertions = (await import(`./assertions/${camelCase(ruleName)}`)).default;
+    } catch (error) {
+      // eslint-disable-next-line no-console -- Reporting back to tester
+      console.error(error);
+      return;
+    }
 
     if (!('meta' in rule && 'schema' in rule.meta) && (
       assertions.invalid.some((item) => {
