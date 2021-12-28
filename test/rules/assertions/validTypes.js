@@ -1392,5 +1392,17 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @param {string} id
+       * @param {Object} options
+       * @param {boolean} options.isSet
+       * @param {string} options.module
+       */
+      function quux ( id, options ) {
+      }
+      `,
+    },
   ],
 };

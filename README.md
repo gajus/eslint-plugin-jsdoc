@@ -20951,6 +20951,15 @@ class quux {}
 function quux() {
 }
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @param {string} id
+ * @param {Object} options
+ * @param {boolean} options.isSet
+ * @param {string} options.module
+ */
+function quux ( id, options ) {
+}
 ````
 
 
