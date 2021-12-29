@@ -1,6 +1,13 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-const middleAsterisks = /^([\t ]|\*(?!\*))+/u;
+const middleAsterisksBlockWS = /^([\t ]|\*(?!\*))+/u;
+const middleAsterisksNoBlockWS = /^\*+/u;
+
+const endAsterisksSingleLineBlockWS = /\*((?:\*|(?: |\t))*)\*$/u;
+const endAsterisksMultipleLineBlockWS = /((?:\*|(?: |\t))*)\*$/u;
+
+const endAsterisksSingleLineNoBlockWS = /\*(\**)\*$/u;
+const endAsterisksMultipleLineNoBlockWS = /(\**)\*$/u;
 
 export default iterateJsdoc(({
   context,
@@ -8,10 +15,14 @@ export default iterateJsdoc(({
   utils,
 }) => {
   const {
+    allowWhitespace = false,
     preventAtEnd = true,
     preventAtMiddleLines = true,
   } = context.options[0] || {};
 
+  const middleAsterisks = allowWhitespace ? middleAsterisksNoBlockWS : middleAsterisksBlockWS;
+
+  // eslint-disable-next-line complexity -- Todo
   jsdoc.source.some(({
     tokens,
     number,
@@ -23,11 +34,18 @@ export default iterateJsdoc(({
       type,
       description,
       end,
+      postDelimiter,
     } = tokens;
+
     if (
       preventAtMiddleLines &&
-      !end && !tag && !type && !name && middleAsterisks.test(description)
+      !end && !tag && !type && !name &&
+      (
+        !allowWhitespace && middleAsterisks.test(description) ||
+        allowWhitespace && middleAsterisks.test(postDelimiter + description)
+      )
     ) {
+      // console.log('description', JSON.stringify(description));
       const fix = () => {
         tokens.description = description.replace(middleAsterisks, '');
       };
@@ -50,11 +68,16 @@ export default iterateJsdoc(({
 
     const isSingleLineBlock = delimiter === '/**';
     const delim = isSingleLineBlock ? '*' : delimiter;
-    const endAsterisks = isSingleLineBlock ?
-      /\*((?:\*|(?: |\t))*)\*$/u :
-      /((?:\*|(?: |\t))*)\*$/u;
+    let endAsterisks;
+    if (allowWhitespace) {
+      endAsterisks = isSingleLineBlock ? endAsterisksSingleLineNoBlockWS : endAsterisksMultipleLineNoBlockWS;
+    } else {
+      endAsterisks = isSingleLineBlock ? endAsterisksSingleLineBlockWS : endAsterisksMultipleLineBlockWS;
+    }
 
-    const endingAsterisksAndSpaces = (description + delim).match(
+    const endingAsterisksAndSpaces = (
+      allowWhitespace ? postDelimiter + description + delim : description + delim
+    ).match(
       endAsterisks,
     );
 
@@ -96,6 +119,9 @@ export default iterateJsdoc(({
       {
         additionalProperies: false,
         properties: {
+          allowWhitespace: {
+            type: 'boolean',
+          },
           preventAtEnd: {
             type: 'boolean',
           },

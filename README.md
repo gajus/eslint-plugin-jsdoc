@@ -8712,6 +8712,17 @@ and that rule is for catching blocks which only seem like jsdoc).
 <a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18"></a>
 #### Options
 
+<a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18-allowwhitespace-defaults-to-false"></a>
+##### <code>allowWhitespace</code> (defaults to <code>false</code>)
+
+Set to `true` if you wish to allow asterisks after a space (as with Markdown):
+
+```js
+/**
+ * *bold* text
+ */
+```
+
 <a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18-preventatmiddlelines-defaults-to-true"></a>
 ##### <code>preventAtMiddleLines</code> (defaults to <code>true</code>)
 
@@ -8823,6 +8834,25 @@ The following patterns are considered problems:
  * */
 // "jsdoc/no-multi-asterisks": ["error"|"warn", {"preventAtEnd":true}]
 // Message: Should be no multiple asterisks on end lines.
+
+/**
+ * The method does 2 things:
+ * * Thing 1
+ * * Thing 2
+ */
+// "jsdoc/no-multi-asterisks": ["error"|"warn", {"allowWhitespace":false}]
+// Message: Should be no multiple asterisks on middle lines.
+
+/**
+ * This muti-line comment contains some
+ * *non-standard bold* syntax
+ */
+// "jsdoc/no-multi-asterisks": ["error"|"warn", {"allowWhitespace":false}]
+// Message: Should be no multiple asterisks on middle lines.
+
+/** Desc. **/
+// "jsdoc/no-multi-asterisks": ["error"|"warn", {"allowWhitespace":true}]
+// Message: Should be no multiple asterisks on end lines.
 ````
 
 The following patterns are not considered problems:
@@ -8900,6 +8930,25 @@ function foo() {
  *
  * **Bold example:** Hi there.
  */
+
+/**
+ * The method does 2 things:
+ * * Thing 1
+ * * Thing 2
+ */
+// "jsdoc/no-multi-asterisks": ["error"|"warn", {"allowWhitespace":true}]
+
+/**
+ * This muti-line comment contains some
+ * *non-standard bold* syntax
+ */
+// "jsdoc/no-multi-asterisks": ["error"|"warn", {"allowWhitespace":true}]
+
+/** abc */
+function foo() {
+    //
+}
+// "jsdoc/no-multi-asterisks": ["error"|"warn", {"allowWhitespace":true}]
 ````
 
 
