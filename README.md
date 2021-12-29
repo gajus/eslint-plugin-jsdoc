@@ -8170,7 +8170,8 @@ Defaults to `['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck']`
 ##### <code>preventAllMultiAsteriskBlocks</code>
 
 A boolean (defaulting to `false`) which if `true` will prevent all
-multi-asterisked blocks even those without apparent tag content.
+JSDoc-like blocks with more than two initial asterisks even those without
+apparent tag content.
 
 |||
 |---|---|
