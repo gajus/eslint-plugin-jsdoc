@@ -276,6 +276,77 @@ export default {
         */
       `,
     },
+    {
+      code: `
+      /**
+       * The method does 2 things:
+       * * Thing 1
+       * * Thing 2
+       */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Should be no multiple asterisks on middle lines.',
+        },
+      ],
+      options: [
+        {
+          allowWhitespace: false,
+        },
+      ],
+      output: `
+      /**
+       * The method does 2 things:
+       * Thing 1
+       * * Thing 2
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * This muti-line comment contains some
+       * *non-standard bold* syntax
+       */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Should be no multiple asterisks on middle lines.',
+        },
+      ],
+      options: [
+        {
+          allowWhitespace: false,
+        },
+      ],
+      output: `
+      /**
+       * This muti-line comment contains some
+       * non-standard bold* syntax
+       */
+      `,
+    },
+    {
+      code: `
+      /** Desc. **/
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Should be no multiple asterisks on end lines.',
+        },
+      ],
+      options: [
+        {
+          allowWhitespace: true,
+        },
+      ],
+      output: `
+      /** Desc. */
+      `,
+    },
   ],
   valid: [
     {
@@ -401,6 +472,46 @@ export default {
        * **Bold example:** Hi there.
        */
       `,
+    },
+    {
+      code: `
+      /**
+       * The method does 2 things:
+       * * Thing 1
+       * * Thing 2
+       */
+      `,
+      options: [
+        {
+          allowWhitespace: true,
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * This muti-line comment contains some
+       * *non-standard bold* syntax
+       */
+      `,
+      options: [
+        {
+          allowWhitespace: true,
+        },
+      ],
+    },
+    {
+      code: `
+      /** abc */
+      function foo() {
+          //
+      }
+      `,
+      options: [
+        {
+          allowWhitespace: true,
+        },
+      ],
     },
   ],
 };

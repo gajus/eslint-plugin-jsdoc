@@ -8,6 +8,16 @@ and that rule is for catching blocks which only seem like jsdoc).
 
 #### Options
 
+##### `allowWhitespace` (defaults to `false`)
+
+Set to `true` if you wish to allow asterisks after a space (as with Markdown):
+
+```js
+/**
+ * *bold* text
+ */
+```
+
 ##### `preventAtMiddleLines` (defaults to `true`)
 
 Prevent the likes of this:
