@@ -92,41 +92,34 @@ export default iterateJsdoc(({
     });
 
   const ancestorNodes = [];
-  let currentScope = scopeManager.acquire(node);
 
-  while (currentScope && currentScope.block.type !== 'Program') {
-    ancestorNodes.push(currentScope.block);
-    currentScope = currentScope.upper;
+  let currentNode = node;
+  // No need for Program node?
+  while (currentNode?.parent) {
+    ancestorNodes.push(currentNode);
+    currentNode = currentNode.parent;
   }
+
+  const getTemplateTags = function (ancestorNode) {
+    const commentNode = getJSDocComment(sourceCode, ancestorNode, settings);
+    if (!commentNode) {
+      return [];
+    }
+
+    const jsdoc = parseComment(commentNode, '');
+
+    return jsdocUtils.filterTags(jsdoc.tags, (tag) => {
+      return tag.tag === 'template';
+    });
+  };
 
   // `currentScope` may be `null` or `Program`, so in such a case,
   //  we look to present tags instead
-  let templateTags = ancestorNodes.length ?
+  const templateTags = ancestorNodes.length ?
     ancestorNodes.flatMap((ancestorNode) => {
-      const commentNode = getJSDocComment(sourceCode, ancestorNode, settings);
-      if (!commentNode) {
-        return [];
-      }
-
-      const jsdoc = parseComment(commentNode, '');
-
-      return jsdocUtils.filterTags(jsdoc.tags, (tag) => {
-        return tag.tag === 'template';
-      });
+      return getTemplateTags(ancestorNode);
     }) :
     utils.getPresentTags('template');
-
-  const classJsdoc = utils.getClassJsdoc();
-  if (classJsdoc?.tags) {
-    templateTags = templateTags.concat(
-      classJsdoc.tags
-        .filter(({
-          tag,
-        }) => {
-          return tag === 'template';
-        }),
-    );
-  }
 
   const closureGenericTypes = templateTags.flatMap((tag) => {
     return utils.parseClosureTemplateTag(tag);

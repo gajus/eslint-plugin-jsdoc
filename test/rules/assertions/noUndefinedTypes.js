@@ -1110,6 +1110,66 @@ export default {
       ignoreReadme: true,
     },
     {
+      code: `
+      /**
+       * @template T
+       * @param {T} arg
+       * @returns {[T]}
+       */
+      function genericFunctionExample(arg) {
+        const result = /** @type {[T]} */ (new Array());
+        result[0] = arg;
+        return result;
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /** @typedef QDigestNode */
+      class A {
+        /**
+         * @template {object} T
+         * @param {(node: QDigestNode) => T} callback
+         * @returns {T[]}
+         */
+        map(callback) {
+          /** @type {T[]} */
+          let vals;
+          return vals;
+        }
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @template T
+       * @param {T} arg
+       */
+      function example(arg) {
+
+        /** @param {T} */
+        function inner(x) {
+        }
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
       // https://github.com/gajus/eslint-plugin-jsdoc/issues/748
       code: `
       /**
@@ -1131,6 +1191,27 @@ export default {
       settings: {
         jsdoc: {
           mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @template T
+       */
+      export class Foo {
+        // cast to T
+        getType() {
+          const x = "hello";
+          const y = /** @type {T} */ (x);
+          return y;
+        }
+      }
+      `,
+      parser: require.resolve('@babel/eslint-parser'),
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
         },
       },
     },

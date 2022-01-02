@@ -9897,11 +9897,63 @@ function quux(foo) {
 }
 
 /**
+ * @template T
+ * @param {T} arg
+ * @returns {[T]}
+ */
+function genericFunctionExample(arg) {
+  const result = /** @type {[T]} */ (new Array());
+  result[0] = arg;
+  return result;
+}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/** @typedef QDigestNode */
+class A {
+  /**
+   * @template {object} T
+   * @param {(node: QDigestNode) => T} callback
+   * @returns {T[]}
+   */
+  map(callback) {
+    /** @type {T[]} */
+    let vals;
+    return vals;
+  }
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @template T
+ * @param {T} arg
+ */
+function example(arg) {
+
+  /** @param {T} */
+  function inner(x) {
+  }
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
  * @suppress {visibility}
  */
 function foo () {
 }
 // Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ * @template T
+ */
+export class Foo {
+  // cast to T
+  getType() {
+    const x = "hello";
+    const y = /** @type {T} */ (x);
+    return y;
+  }
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
 ````
 
 
