@@ -101,7 +101,7 @@
     "lint-fix": "npm run lint-arg -- --fix .",
     "prepare": "husky install",
     "test": "cross-env BABEL_ENV=test nyc --reporter text-summary mocha --reporter dot --recursive --require @babel/register --timeout 12000",
-    "test-cov": "cross-env BABEL_ENV=test nyc mocha --reporter dot --recursive --require @babel/register --timeout 12000",
+    "test-cov": "cross-env BABEL_ENV=test TIMING=1 nyc mocha --reporter dot --recursive --require @babel/register --timeout 12000",
     "test-index": "cross-env BABEL_ENV=test mocha --recursive --require @babel/register --reporter progress --timeout 12000 test/rules/index.js",
     "test-no-cov": "cross-env BABEL_ENV=test mocha --reporter dot --recursive --require @babel/register --timeout 12000"
   },
