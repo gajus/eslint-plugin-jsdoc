@@ -1,11 +1,10 @@
 import {
   getJSDocComment,
-} from '@es-joy/jsdoccomment';
-import {
+
   traverse,
   parse as parseType,
   tryParse as tryParseType,
-} from 'jsdoc-type-pratt-parser';
+} from '@es-joy/jsdoccomment';
 import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc';

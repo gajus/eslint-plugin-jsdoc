@@ -3,7 +3,7 @@ import {
   stringify,
   traverse,
   tryParse,
-} from 'jsdoc-type-pratt-parser';
+} from '@es-joy/jsdoccomment';
 import iterateJsdoc from '../iterateJsdoc';
 
 const strictNativeTypes = [

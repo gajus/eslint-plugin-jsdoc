@@ -2,7 +2,7 @@ import {
   tryParse,
   parse,
   traverse,
-} from 'jsdoc-type-pratt-parser';
+} from '@es-joy/jsdoccomment';
 import iterateJsdoc from '../iterateJsdoc';
 
 const asExpression = /as\s+/u;
