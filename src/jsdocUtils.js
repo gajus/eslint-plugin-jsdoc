@@ -1298,11 +1298,11 @@ const isConstructor = (node) => {
 };
 
 const isGetter = (node) => {
-  return node && node.parent.kind === 'get';
+  return node && node.parent?.kind === 'get';
 };
 
 const isSetter = (node) => {
-  return node && node.parent.kind === 'set';
+  return node && node.parent?.kind === 'set';
 };
 
 const hasAccessorPair = (node) => {

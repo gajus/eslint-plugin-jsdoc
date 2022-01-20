@@ -2472,5 +2472,26 @@ export default {
         ecmaVersion: 8,
       },
     },
+    {
+      code: `
+      /** Enumerates possible genders for a product's target demographic. */
+      enum Gender {
+        Unisex,
+        Mens,
+        Women
+      }
+
+      export default Gender;
+      `,
+      ignoreReadme: true,
+      options: [
+        {
+          contexts: [
+            ':not(:matches(VariableDeclarator))',
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
