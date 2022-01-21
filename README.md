@@ -5438,6 +5438,15 @@ function b () {}
  */
 // Settings: {"jsdoc":{"structuredTags":{"aCustomTag":{"type":["otherType","anotherType"]}}}}
 // Message: Invalid JSDoc @aCustomTag "foo" type "Number"; prefer: ["otherType","anotherType"].
+
+/**
+ * @param {Object[]} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object"}}}
+// Message: Invalid JSDoc @param "foo" type "Object"; prefer: "object".
 ````
 
 The following patterns are not considered problems:

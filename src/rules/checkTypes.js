@@ -221,7 +221,7 @@ export default iterateJsdoc(({
         ]);
       } else if (!noDefaults && type === 'JsdocTypeName') {
         for (const strictNativeType of strictNativeTypes) {
-          if (strictNativeType === 'object' && mode === 'typescript') {
+          if (strictNativeType === 'object' && mode === 'typescript' && !preferredTypes?.[nodeName]) {
             continue;
           }
 
