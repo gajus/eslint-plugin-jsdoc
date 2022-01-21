@@ -5447,6 +5447,15 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object"}}}
 // Message: Invalid JSDoc @param "foo" type "Object"; prefer: "object".
+
+/**
+ * @param {object.<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"object.<>":"Object"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object".
 ````
 
 The following patterns are not considered problems:
@@ -5734,6 +5743,14 @@ function b () {}
 function quux (foo) {
 
 }
+
+/**
+ * @param {Object.<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
 ````
 
 

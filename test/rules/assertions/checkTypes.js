@@ -2161,6 +2161,38 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @param {object.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object".',
+        },
+      ],
+      output: `
+      /**
+       * @param {Object.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+          preferredTypes: {
+            'object.<>': 'Object',
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -2756,6 +2788,21 @@ export default {
 
           }
       `,
+    },
+    {
+      code: `
+      /**
+       * @param {Object.<string>} foo
+       */
+      function quux (foo) {
+
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
     },
   ],
 };
