@@ -322,6 +322,31 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /** @type {React.FunctionComponent<{ children: React.ReactNode }>}*/
+      const MyComponent = ({ children }) => {
+         return children;
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The `FunctionComponent` type is not allowed. Please use `FC` instead.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag="type"]:has([value=/FunctionComponent/]))',
+              context: 'any',
+              message: 'The `FunctionComponent` type is not allowed. Please use `FC` instead.',
+            },
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {

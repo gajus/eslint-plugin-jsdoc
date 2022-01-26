@@ -9126,6 +9126,13 @@ const MY_ENUM = Object.freeze({
 } as const);
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])","context":"any","message":"Access modifier tags must come first"},{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"enum\"])","context":":declaration","message":"@enum not allowed on declarations"}]}]
 // Message: @enum not allowed on declarations
+
+/** @type {React.FunctionComponent<{ children: React.ReactNode }>}*/
+const MyComponent = ({ children }) => {
+   return children;
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"type\"]:has([value=/FunctionComponent/]))","context":"any","message":"The `FunctionComponent` type is not allowed. Please use `FC` instead."}]}]
+// Message: The `FunctionComponent` type is not allowed. Please use `FC` instead.
 ````
 
 The following patterns are not considered problems:
