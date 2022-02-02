@@ -45,6 +45,7 @@
   "require-throws",
   "require-yields",
   "require-yields-check",
+  "sort-tags",
   "tag-lines",
   "valid-types"
 ]
