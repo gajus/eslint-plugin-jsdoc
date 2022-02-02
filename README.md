@@ -70,6 +70,7 @@ JSDoc linting rules for ESLint.
         * [`require-throws`](#eslint-plugin-jsdoc-rules-require-throws)
         * [`require-yields`](#eslint-plugin-jsdoc-rules-require-yields)
         * [`require-yields-check`](#eslint-plugin-jsdoc-rules-require-yields-check)
+        * [`sort-tags`](#eslint-plugin-jsdoc-rules-sort-tags)
         * [`tag-lines`](#eslint-plugin-jsdoc-rules-tag-lines)
         * [`valid-types`](#eslint-plugin-jsdoc-rules-valid-types)
 
@@ -20056,12 +20057,349 @@ function * quux (foo) {
 ````
 
 
+<a name="eslint-plugin-jsdoc-rules-sort-tags"></a>
+### <code>sort-tags</code>
+
+Sorts tags by a specified sequence according to tag name.
+
+(Default order originally inspired by [`@homer0/prettier-plugin-jsdoc`](https://github.com/homer0/packages/tree/main/packages/public/prettier-plugin-jsdoc).)
+
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40"></a>
+#### Options
+
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40-tagsequence"></a>
+##### <code>tagSequence</code>
+
+An array of tag names indicating the preferred sequence for sorting tags.
+
+Tag names earlier in the list will be arranged first. The relative position of
+tags of the same name will not be changed.
+
+Tags not in the list will be sorted alphabetically at the end (or in place of
+the pseudo-tag `-other` placed within `tagSequence`) if `alphabetizeExtras` is
+enabled and in their order of appearance otherwise (so if you want all your
+tags alphabetized, supply an empty array with `alphabetizeExtras` enabled).
+
+Defaults to the array below.
+
+Please note that this order is still experimental, so if you want to retain
+a fixed order that doesn't change into the future, supply your own
+`tagSequence`.
+
+```js
+[
+  // Brief descriptions
+  'summary',
+  'typeSummary',
+
+  // Module/file-level
+  'module',
+  'exports',
+  'file',
+  'fileoverview',
+  'overview',
+
+  // Identifying (name, type)
+  'typedef',
+  'interface',
+  'record',
+  'template',
+  'name',
+  'kind',
+  'type',
+  'alias',
+  'external',
+  'host',
+  'callback',
+  'func',
+  'function',
+  'method',
+  'class',
+  'constructor',
+
+  // Relationships
+  'modifies',
+  'mixes',
+  'mixin',
+  'mixinClass',
+  'mixinFunction',
+  'namespace',
+  'borrows',
+  'constructs',
+  'lends',
+  'implements',
+  'requires',
+
+  // Long descriptions
+  'desc',
+  'description',
+  'classdesc',
+  'tutorial',
+  'copyright',
+  'license',
+
+  // Simple annotations
+  'const',
+  'constant',
+  'final',
+  'global',
+  'readonly',
+  'abstract',
+  'virtual',
+  'var',
+  'member',
+  'memberof',
+  'memberof!',
+  'inner',
+  'instance',
+  'inheritdoc',
+  'inheritDoc',
+  'override',
+  'hideconstructor',
+
+  // Core function/object info
+  'param',
+  'arg',
+  'argument',
+  'prop',
+  'property',
+  'return',
+  'returns',
+
+  // Important behavior details
+  'async',
+  'generator',
+  'default',
+  'defaultvalue',
+  'enum',
+  'augments',
+  'extends',
+  'throws',
+  'exception',
+  'yield',
+  'yields',
+  'event',
+  'fires',
+  'emits',
+  'listens',
+  'this',
+
+  // Access
+  'static',
+  'private',
+  'protected',
+  'public',
+  'access',
+  'package',
+
+  '-other',
+
+  // Supplementary descriptions
+  'see',
+  'example',
+
+  // METADATA
+
+  // Other Closure (undocumented) metadata
+  'closurePrimitive',
+  'customElement',
+  'expose',
+  'hidden',
+  'idGenerator',
+  'meaning',
+  'ngInject',
+  'owner',
+  'wizaction',
+
+  // Other Closure (documented) metadata
+  'define',
+  'dict',
+  'export',
+  'externs',
+  'implicitCast',
+  'noalias',
+  'nocollapse',
+  'nocompile',
+  'noinline',
+  'nosideeffects',
+  'polymer',
+  'polymerBehavior',
+  'preserve',
+  'struct',
+  'suppress',
+  'unrestricted',
+
+  // @homer0/prettier-plugin-jsdoc metadata
+  'category',
+
+  // Non-Closure metadata
+  'ignore',
+  'author',
+  'version',
+  'variation',
+  'since',
+  'deprecated',
+  'todo',
+];
+```
+
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40-alphabetizeextras"></a>
+##### <code>alphabetizeExtras</code>
+
+Defaults to `false`. Alphabetizes any items not within `tagSequence` after any
+items within `tagSequence` (or in place of the special `-other` pseudo-tag)
+are sorted.
+
+|||
+|---|---|
+|Context|everywhere|
+|Tags|any|
+|Recommended|false|
+|Settings||
+|Options|`tagSequence`, `alphabetizeExtras`|
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @returns {string}
+ * @param b
+ * @param a
+ */
+function quux () {}
+// Message: Tags are not in the prescribed order: summary, typeSummary, module, exports, file, fileoverview, overview, typedef, interface, record, template, name, kind, type, alias, external, host, callback, func, function, method, class, constructor, modifies, mixes, mixin, mixinClass, mixinFunction, namespace, borrows, constructs, lends, implements, requires, desc, description, classdesc, tutorial, copyright, license, const, constant, final, global, readonly, abstract, virtual, var, member, memberof, memberof!, inner, instance, inheritdoc, inheritDoc, override, hideconstructor, param, arg, argument, prop, property, return, returns, async, generator, default, defaultvalue, enum, augments, extends, throws, exception, yield, yields, event, fires, emits, listens, this, static, private, protected, public, access, package, -other, see, example, closurePrimitive, customElement, expose, hidden, idGenerator, meaning, ngInject, owner, wizaction, define, dict, export, externs, implicitCast, noalias, nocollapse, nocompile, noinline, nosideeffects, polymer, polymerBehavior, preserve, struct, suppress, unrestricted, category, ignore, author, version, variation, since, deprecated, todo
+
+/**
+ * Some description
+ * @returns {string}
+ * @param b
+ * @param a
+ */
+function quux () {}
+// Message: Tags are not in the prescribed order: summary, typeSummary, module, exports, file, fileoverview, overview, typedef, interface, record, template, name, kind, type, alias, external, host, callback, func, function, method, class, constructor, modifies, mixes, mixin, mixinClass, mixinFunction, namespace, borrows, constructs, lends, implements, requires, desc, description, classdesc, tutorial, copyright, license, const, constant, final, global, readonly, abstract, virtual, var, member, memberof, memberof!, inner, instance, inheritdoc, inheritDoc, override, hideconstructor, param, arg, argument, prop, property, return, returns, async, generator, default, defaultvalue, enum, augments, extends, throws, exception, yield, yields, event, fires, emits, listens, this, static, private, protected, public, access, package, -other, see, example, closurePrimitive, customElement, expose, hidden, idGenerator, meaning, ngInject, owner, wizaction, define, dict, export, externs, implicitCast, noalias, nocollapse, nocompile, noinline, nosideeffects, polymer, polymerBehavior, preserve, struct, suppress, unrestricted, category, ignore, author, version, variation, since, deprecated, todo
+
+/**
+ * @returns {string}
+ * @param b A long
+ *   description
+ * @param a
+ */
+function quux () {}
+// Message: Tags are not in the prescribed order: summary, typeSummary, module, exports, file, fileoverview, overview, typedef, interface, record, template, name, kind, type, alias, external, host, callback, func, function, method, class, constructor, modifies, mixes, mixin, mixinClass, mixinFunction, namespace, borrows, constructs, lends, implements, requires, desc, description, classdesc, tutorial, copyright, license, const, constant, final, global, readonly, abstract, virtual, var, member, memberof, memberof!, inner, instance, inheritdoc, inheritDoc, override, hideconstructor, param, arg, argument, prop, property, return, returns, async, generator, default, defaultvalue, enum, augments, extends, throws, exception, yield, yields, event, fires, emits, listens, this, static, private, protected, public, access, package, -other, see, example, closurePrimitive, customElement, expose, hidden, idGenerator, meaning, ngInject, owner, wizaction, define, dict, export, externs, implicitCast, noalias, nocollapse, nocompile, noinline, nosideeffects, polymer, polymerBehavior, preserve, struct, suppress, unrestricted, category, ignore, author, version, variation, since, deprecated, todo
+
+/**
+ * Some description
+ * @returns {string}
+ * @param b A long
+ *   description
+ * @param a
+ */
+function quux () {}
+// Message: Tags are not in the prescribed order: summary, typeSummary, module, exports, file, fileoverview, overview, typedef, interface, record, template, name, kind, type, alias, external, host, callback, func, function, method, class, constructor, modifies, mixes, mixin, mixinClass, mixinFunction, namespace, borrows, constructs, lends, implements, requires, desc, description, classdesc, tutorial, copyright, license, const, constant, final, global, readonly, abstract, virtual, var, member, memberof, memberof!, inner, instance, inheritdoc, inheritDoc, override, hideconstructor, param, arg, argument, prop, property, return, returns, async, generator, default, defaultvalue, enum, augments, extends, throws, exception, yield, yields, event, fires, emits, listens, this, static, private, protected, public, access, package, -other, see, example, closurePrimitive, customElement, expose, hidden, idGenerator, meaning, ngInject, owner, wizaction, define, dict, export, externs, implicitCast, noalias, nocollapse, nocompile, noinline, nosideeffects, polymer, polymerBehavior, preserve, struct, suppress, unrestricted, category, ignore, author, version, variation, since, deprecated, todo
+
+/**
+ * @param b A long
+ *   description
+ * @returns {string}
+ * @param a
+ */
+function quux () {}
+// Message: Tags are not in the prescribed order: summary, typeSummary, module, exports, file, fileoverview, overview, typedef, interface, record, template, name, kind, type, alias, external, host, callback, func, function, method, class, constructor, modifies, mixes, mixin, mixinClass, mixinFunction, namespace, borrows, constructs, lends, implements, requires, desc, description, classdesc, tutorial, copyright, license, const, constant, final, global, readonly, abstract, virtual, var, member, memberof, memberof!, inner, instance, inheritdoc, inheritDoc, override, hideconstructor, param, arg, argument, prop, property, return, returns, async, generator, default, defaultvalue, enum, augments, extends, throws, exception, yield, yields, event, fires, emits, listens, this, static, private, protected, public, access, package, -other, see, example, closurePrimitive, customElement, expose, hidden, idGenerator, meaning, ngInject, owner, wizaction, define, dict, export, externs, implicitCast, noalias, nocollapse, nocompile, noinline, nosideeffects, polymer, polymerBehavior, preserve, struct, suppress, unrestricted, category, ignore, author, version, variation, since, deprecated, todo
+
+/**
+ * @def
+ * @xyz
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"alphabetizeExtras":true}]
+// Message: Tags are not in the prescribed order: summary, typeSummary, module, exports, file, fileoverview, overview, typedef, interface, record, template, name, kind, type, alias, external, host, callback, func, function, method, class, constructor, modifies, mixes, mixin, mixinClass, mixinFunction, namespace, borrows, constructs, lends, implements, requires, desc, description, classdesc, tutorial, copyright, license, const, constant, final, global, readonly, abstract, virtual, var, member, memberof, memberof!, inner, instance, inheritdoc, inheritDoc, override, hideconstructor, param, arg, argument, prop, property, return, returns, async, generator, default, defaultvalue, enum, augments, extends, throws, exception, yield, yields, event, fires, emits, listens, this, static, private, protected, public, access, package, -other, see, example, closurePrimitive, customElement, expose, hidden, idGenerator, meaning, ngInject, owner, wizaction, define, dict, export, externs, implicitCast, noalias, nocollapse, nocompile, noinline, nosideeffects, polymer, polymerBehavior, preserve, struct, suppress, unrestricted, category, ignore, author, version, variation, since, deprecated, todo
+
+/**
+ * @xyz
+ * @def
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":["def","xyz","abc"]}]
+// Message: Tags are not in the prescribed order: def, xyz, abc
+
+/**
+ * @returns {string}
+ * @ignore
+ * @param b A long
+ *   description
+ * @param a
+ * @module
+ */
+function quux () {}
+// Message: Tags are not in the prescribed order: summary, typeSummary, module, exports, file, fileoverview, overview, typedef, interface, record, template, name, kind, type, alias, external, host, callback, func, function, method, class, constructor, modifies, mixes, mixin, mixinClass, mixinFunction, namespace, borrows, constructs, lends, implements, requires, desc, description, classdesc, tutorial, copyright, license, const, constant, final, global, readonly, abstract, virtual, var, member, memberof, memberof!, inner, instance, inheritdoc, inheritDoc, override, hideconstructor, param, arg, argument, prop, property, return, returns, async, generator, default, defaultvalue, enum, augments, extends, throws, exception, yield, yields, event, fires, emits, listens, this, static, private, protected, public, access, package, -other, see, example, closurePrimitive, customElement, expose, hidden, idGenerator, meaning, ngInject, owner, wizaction, define, dict, export, externs, implicitCast, noalias, nocollapse, nocompile, noinline, nosideeffects, polymer, polymerBehavior, preserve, struct, suppress, unrestricted, category, ignore, author, version, variation, since, deprecated, todo
+
+/**
+ * @xyz
+ * @abc
+ * @abc
+ * @def
+ * @xyz
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"alphabetizeExtras":true}]
+// Message: Tags are not in the prescribed order: summary, typeSummary, module, exports, file, fileoverview, overview, typedef, interface, record, template, name, kind, type, alias, external, host, callback, func, function, method, class, constructor, modifies, mixes, mixin, mixinClass, mixinFunction, namespace, borrows, constructs, lends, implements, requires, desc, description, classdesc, tutorial, copyright, license, const, constant, final, global, readonly, abstract, virtual, var, member, memberof, memberof!, inner, instance, inheritdoc, inheritDoc, override, hideconstructor, param, arg, argument, prop, property, return, returns, async, generator, default, defaultvalue, enum, augments, extends, throws, exception, yield, yields, event, fires, emits, listens, this, static, private, protected, public, access, package, -other, see, example, closurePrimitive, customElement, expose, hidden, idGenerator, meaning, ngInject, owner, wizaction, define, dict, export, externs, implicitCast, noalias, nocollapse, nocompile, noinline, nosideeffects, polymer, polymerBehavior, preserve, struct, suppress, unrestricted, category, ignore, author, version, variation, since, deprecated, todo
+
+/**
+ * @param b A long
+ *   description
+ * @module
+ */
+function quux () {}
+// Message: Tags are not in the prescribed order: summary, typeSummary, module, exports, file, fileoverview, overview, typedef, interface, record, template, name, kind, type, alias, external, host, callback, func, function, method, class, constructor, modifies, mixes, mixin, mixinClass, mixinFunction, namespace, borrows, constructs, lends, implements, requires, desc, description, classdesc, tutorial, copyright, license, const, constant, final, global, readonly, abstract, virtual, var, member, memberof, memberof!, inner, instance, inheritdoc, inheritDoc, override, hideconstructor, param, arg, argument, prop, property, return, returns, async, generator, default, defaultvalue, enum, augments, extends, throws, exception, yield, yields, event, fires, emits, listens, this, static, private, protected, public, access, package, -other, see, example, closurePrimitive, customElement, expose, hidden, idGenerator, meaning, ngInject, owner, wizaction, define, dict, export, externs, implicitCast, noalias, nocollapse, nocompile, noinline, nosideeffects, polymer, polymerBehavior, preserve, struct, suppress, unrestricted, category, ignore, author, version, variation, since, deprecated, todo
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @param b
+ * @param a
+ * @returns {string}
+ */
+function quux () {}
+
+/**
+ * @abc
+ * @def
+ * @xyz
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"alphabetizeExtras":true}]
+
+/**
+ * @def
+ * @xyz
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"alphabetizeExtras":false}]
+
+/**
+ * @def
+ * @xyz
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":["def","xyz","abc"]}]
+
+/** @def */
+function quux () {}
+````
+
+
 <a name="eslint-plugin-jsdoc-rules-tag-lines"></a>
 ### <code>tag-lines</code>
 
 Enforces lines (or no lines) between tags.
 
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-40"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41"></a>
 #### Options
 
 The first option is a single string set to "always", "never", or "any"
@@ -20072,18 +20410,18 @@ for particular tags).
 
 The second option is an object with the following optional properties.
 
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-40-count-defaults-to-1"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-count-defaults-to-1"></a>
 ##### <code>count</code> (defaults to 1)
 
 Use with "always" to indicate the number of lines to require be present.
 
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-40-noendlines-defaults-to-false"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-noendlines-defaults-to-false"></a>
 ##### <code>noEndLines</code> (defaults to <code>false</code>)
 
 Use with "always" to indicate the normal lines to be added after tags should
 not be added after the final tag.
 
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-40-tags-default-to-empty-object"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-tags-default-to-empty-object"></a>
 ##### <code>tags</code> (default to empty object)
 
 Overrides the default behavior depending on specific tags.
@@ -20479,7 +20817,7 @@ for valid types (based on the tag's `type` value), and either portion checked
 for presence (based on `false` `name` or `type` values or their `required`
 value). See the setting for more details.
 
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-41"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-42"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow

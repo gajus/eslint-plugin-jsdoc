@@ -276,10 +276,17 @@ const getUtils = (
     ] of jsdoc.source.slice(lastIndex).entries()) {
       src.number = firstNumber + lastIndex + idx;
     }
+
+    // Todo: Once rewiring of tags may be fixed in comment-parser to reflect missing tags,
+    //         this step should be added here (so that, e.g., if accessing `jsdoc.tags`,
+    //         such as to add a new tag, the correct information will be available)
   };
 
-  utils.addTag = (targetTagName) => {
-    const number = (jsdoc.tags[jsdoc.tags.length - 1]?.source[0]?.number ?? 0) + 1;
+  utils.addTag = (
+    targetTagName,
+    number = (jsdoc.tags[jsdoc.tags.length - 1]?.source[0]?.number ?? 0) + 1,
+    tokens = {},
+  ) => {
     jsdoc.source.splice(number, 0, {
       number,
       source: '',
@@ -288,11 +295,29 @@ const getUtils = (
         postDelimiter: ' ',
         start: indent + ' ',
         tag: `@${targetTagName}`,
+        ...tokens,
       }),
     });
     for (const src of jsdoc.source.slice(number + 1)) {
       src.number++;
     }
+  };
+
+  utils.getFirstLine = () => {
+    let firstLine;
+    for (const {
+      number,
+      tokens: {
+        tag,
+      },
+    } of jsdoc.source) {
+      if (tag) {
+        firstLine = number;
+        break;
+      }
+    }
+
+    return firstLine;
   };
 
   utils.seedTokens = seedTokens;
@@ -323,6 +348,9 @@ const getUtils = (
       tokens: seedTokens(tokens),
     });
 
+    for (const src of jsdoc.source.slice(number + 1)) {
+      src.number++;
+    }
     // If necessary, we can rewire the tags (misnamed method)
     // rewireSource(jsdoc);
   };
