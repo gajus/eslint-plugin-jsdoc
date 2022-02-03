@@ -4728,7 +4728,7 @@ number
 bigint
 string
 symbol
-object
+object (For TypeScript's sake, however, using `Object` when specifying child types on it like `Object<string, number>`)
 Array
 Function
 Date
@@ -4789,7 +4789,7 @@ the `valid-types` rule to report parsing errors.
 
 Why are `boolean`, `number` and `string` exempt from starting with a capital
 letter? Let's take `string` as an example. In Javascript, everything is an
-object. The string Object has prototypes for string functions such as
+object. The `String` object has prototypes for string functions such as
 `.toUpperCase()`.
 
 Fortunately we don't have to write `new String()` everywhere in our code.
@@ -4812,17 +4812,28 @@ new String('lard') // String {0: "l", 1: "a", 2: "r", 3: "d", length: 4}
 new String('lard') === 'lard' // false
 ```
 
-To make things more confusing, there are also object literals and object
-Objects. But object literals are still static Objects and object Objects are
-instantiated Objects. So an object primitive is still an object Object.
+To make things more confusing, there are also object literals (like `{}`) and
+`Object` objects. But object literals are still static `Object`s and `Object`
+objects are instantiated objects. So an object primitive is still an `Object`
+object.
 
 However, `Object.create(null)` objects are not `instanceof Object`, however, so
-in the case of this Object we lower-case to indicate possible support for
-these objects.
+in the case of such a plain object we lower-case to indicate possible support
+for these objects. Also, nowadays, TypeScript also discourages use of `Object`
+as a lone type. However, one additional complexity is that TypeScript allows and
+actually [currently requires](https://github.com/microsoft/TypeScript/issues/20555)
+`Object` (with the initial upper-case) if used in the syntax
+`Object.<keyType, valueType>` or `Object<keyType, valueType`, perhaps to
+adhere to what [JSDoc documents](https://jsdoc.app/tags-type.html).
+
+So, for optimal compatibility with TypeScript (especially since TypeScript
+tools can be used on plain JavaScript with JSDoc), we are now allowing this
+TypeScript approach by default.
 
 Basically, for primitives, we want to define the type as a primitive, because
 that's what we use in 99.9% of cases. For everything else, we use the type
-rather than the primitive. Otherwise it would all just be `{object}`.
+rather than the primitive. Otherwise it would all just be `{object}` (with the
+additional exception of the special case of `Object.<>` just mentioned).
 
 In short: It's not about consistency, rather about the 99.9% use case. (And
 some functions might not even support the objects if they are checking for
@@ -5456,6 +5467,30 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"object.<>":"Object"}}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object".
+
+/**
+ * @param {object.<string, number>} foo
+ */
+function quux (foo) {
+}
+// Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object","object.<>":"Object<>","Object.<>":"Object<>","object<>":"Object<>"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
+
+/**
+ * @param {Object.<string, number>} foo
+ */
+function quux (foo) {
+}
+// Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object","object.<>":"Object<>","Object.<>":"Object<>","object<>":"Object<>"}}}
+// Message: Invalid JSDoc @param "foo" type "Object"; prefer: "Object<>".
+
+/**
+ * @param {object<string, number>} foo
+ */
+function quux (foo) {
+}
+// Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object","object.<>":"Object<>","Object.<>":"Object<>","object<>":"Object<>"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
 ````
 
 The following patterns are not considered problems:
@@ -5751,6 +5786,18 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @typedef {object} foo
+ */
+function a () {}
+// Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object","object.<>":"Object<>","object<>":"Object<>"}}}
+
+/**
+ * @typedef {Object<string, number>} foo
+ */
+function a () {}
+// Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object","object.<>":"Object<>","object<>":"Object<>"}}}
 ````
 
 
