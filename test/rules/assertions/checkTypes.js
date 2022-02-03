@@ -2193,6 +2193,105 @@ export default {
         },
       },
     },
+    {
+      code: `
+        /**
+         * @param {object.<string, number>} foo
+         */
+        function quux (foo) {
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".',
+        },
+      ],
+      output: `
+        /**
+         * @param {Object<string, number>} foo
+         */
+        function quux (foo) {
+        }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+          preferredTypes: {
+            Object: 'object',
+            'object.<>': 'Object<>',
+            'Object.<>': 'Object<>',
+            'object<>': 'Object<>',
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @param {Object.<string, number>} foo
+         */
+        function quux (foo) {
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "Object"; prefer: "Object<>".',
+        },
+      ],
+      output: `
+        /**
+         * @param {Object<string, number>} foo
+         */
+        function quux (foo) {
+        }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+          preferredTypes: {
+            Object: 'object',
+            'object.<>': 'Object<>',
+            'Object.<>': 'Object<>',
+            'object<>': 'Object<>',
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @param {object<string, number>} foo
+         */
+        function quux (foo) {
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".',
+        },
+      ],
+      output: `
+        /**
+         * @param {Object<string, number>} foo
+         */
+        function quux (foo) {
+        }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+          preferredTypes: {
+            Object: 'object',
+            'object.<>': 'Object<>',
+            'Object.<>': 'Object<>',
+            'object<>': 'Object<>',
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -2801,6 +2900,42 @@ export default {
       settings: {
         jsdoc: {
           mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} foo
+         */
+        function a () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+          preferredTypes: {
+            Object: 'object',
+            'object.<>': 'Object<>',
+            'object<>': 'Object<>',
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @typedef {Object<string, number>} foo
+         */
+        function a () {}
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+          preferredTypes: {
+            Object: 'object',
+            'object.<>': 'Object<>',
+            'object<>': 'Object<>',
+          },
         },
       },
     },

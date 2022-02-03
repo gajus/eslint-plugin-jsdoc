@@ -156,6 +156,7 @@ export default iterateJsdoc(({
 
     const tagName = jsdocTag.tag;
 
+    // eslint-disable-next-line complexity -- To refactor
     traverse(typeAst, (node, parentNode, property) => {
       const {
         type,
@@ -221,12 +222,28 @@ export default iterateJsdoc(({
         ]);
       } else if (!noDefaults && type === 'JsdocTypeName') {
         for (const strictNativeType of strictNativeTypes) {
-          if (strictNativeType === 'object' && mode === 'typescript' && !preferredTypes?.[nodeName]) {
+          if (
+            // Todo: Avoid typescript condition if moving to default typescript
+            strictNativeType === 'object' && mode === 'typescript' &&
+            (
+              // This is not set to remap with exact type match (e.g.,
+              //   `object: 'Object'`), so can ignore (including if circular)
+              !preferredTypes?.[nodeName] ||
+              // Although present on `preferredTypes` for remapping, this is a
+              //   parent object without a parent match (and not
+              //   `unifyParentAndChildTypeChecks`) and we don't want
+              //   `object<>` given TypeScript issue https://github.com/microsoft/TypeScript/issues/20555
+              parentNode?.elements.length && (
+                parentNode?.left.type === 'JsdocTypeName' &&
+                parentNode?.left.value === 'Object'
+              )
+            )
+          ) {
             continue;
           }
 
-          if (strictNativeType.toLowerCase() === nodeName.toLowerCase() &&
-            strictNativeType !== nodeName &&
+          if (strictNativeType !== nodeName &&
+            strictNativeType.toLowerCase() === nodeName.toLowerCase() &&
 
             // Don't report if user has own map for a strict native type
             (!preferredTypes || preferredTypes?.[strictNativeType] === undefined)
