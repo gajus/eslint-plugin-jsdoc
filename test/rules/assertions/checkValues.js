@@ -35,6 +35,40 @@ export default {
     {
       code: `
       /**
+       * @kind
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @kind value.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @kind -3
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @kind: "-3"; must be one of: class, ' +
+            'constant, event, external, file, function, member, mixin, ' +
+            'module, namespace, typedef.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
        * @variation -3
        */
       function quux (foo) {
@@ -456,6 +490,16 @@ export default {
        * @license MIT\r
        */
       'use strict';
+      `,
+    },
+    {
+      code: `
+      /**
+       * @kind function
+       */
+      function quux (foo) {
+
+      }
       `,
     },
   ],

@@ -13,6 +13,9 @@ This rule checks the values for a handful of tags:
 5. `@variation` - If `numericOnlyVariation` is set, will checks that there
     is a value present, and that it is an integer (otherwise, jsdoc allows any
     value).
+6. `@kind` - Insists that it be one of the allowed values: 'class',
+    'constant', 'event', 'external', 'file', 'function', 'member', 'mixin',
+    'module', 'namespace', 'typedef',
 
 #### Options
 
@@ -47,7 +50,7 @@ Whether to enable validation that `@variation` must be a number. Defaults to
 |||
 |---|---|
 |Context|everywhere|
-|Tags|`@version`, `@since`, `@license`, `@author`, `@variation`|
+|Tags|`@version`, `@since`, `@kind`, `@license`, `@author`, `@variation`|
 |Recommended|true|
 |Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|

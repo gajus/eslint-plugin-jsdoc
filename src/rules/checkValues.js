@@ -2,6 +2,20 @@ import semver from 'semver';
 import spdxExpressionParse from 'spdx-expression-parse';
 import iterateJsdoc from '../iterateJsdoc';
 
+const allowedKinds = new Set([
+  'class',
+  'constant',
+  'event',
+  'external',
+  'file',
+  'function',
+  'member',
+  'mixin',
+  'module',
+  'namespace',
+  'typedef',
+]);
+
 export default iterateJsdoc(({
   utils,
   report,
@@ -31,6 +45,27 @@ export default iterateJsdoc(({
       );
     }
   });
+
+  utils.forEachPreferredTag('kind', (jsdocParameter, targetTagName) => {
+    const kind = utils.getTagDescription(jsdocParameter).trim();
+    if (!kind) {
+      report(
+        `Missing JSDoc @${targetTagName} value.`,
+        null,
+        jsdocParameter,
+      );
+    } else if (!allowedKinds.has(kind)) {
+      report(
+        `Invalid JSDoc @${targetTagName}: "${utils.getTagDescription(jsdocParameter)}"; ` +
+        `must be one of: ${[
+          ...allowedKinds,
+        ].join(', ')}.`,
+        null,
+        jsdocParameter,
+      );
+    }
+  });
+
   if (numericOnlyVariation) {
     utils.forEachPreferredTag('variation', (jsdocParameter, targetTagName) => {
       const variation = utils.getTagDescription(jsdocParameter).trim();
