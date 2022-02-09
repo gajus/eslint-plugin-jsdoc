@@ -5818,6 +5818,9 @@ This rule checks the values for a handful of tags:
 5. `@variation` - If `numericOnlyVariation` is set, will checks that there
     is a value present, and that it is an integer (otherwise, jsdoc allows any
     value).
+6. `@kind` - Insists that it be one of the allowed values: 'class',
+    'constant', 'event', 'external', 'file', 'function', 'member', 'mixin',
+    'module', 'namespace', 'typedef',
 
 <a name="eslint-plugin-jsdoc-rules-check-values-options-8"></a>
 #### Options
@@ -5857,7 +5860,7 @@ Whether to enable validation that `@variation` must be a number. Defaults to
 |||
 |---|---|
 |Context|everywhere|
-|Tags|`@version`, `@since`, `@license`, `@author`, `@variation`|
+|Tags|`@version`, `@since`, `@kind`, `@license`, `@author`, `@variation`|
 |Recommended|true|
 |Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|
@@ -5880,6 +5883,22 @@ function quux (foo) {
 
 }
 // Message: Invalid JSDoc @version: "3.1".
+
+/**
+ * @kind
+ */
+function quux (foo) {
+
+}
+// Message: Missing JSDoc @kind value.
+
+/**
+ * @kind -3
+ */
+function quux (foo) {
+
+}
+// Message: Invalid JSDoc @kind: "-3"; must be one of: class, constant, event, external, file, function, member, mixin, module, namespace, typedef.
 
 /**
  * @variation -3
@@ -6108,6 +6127,13 @@ function quux (foo) {
  * @license MIT
  */
 'use strict';
+
+/**
+ * @kind function
+ */
+function quux (foo) {
+
+}
 ````
 
 
