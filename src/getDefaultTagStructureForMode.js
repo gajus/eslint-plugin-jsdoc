@@ -150,6 +150,11 @@ const getDefaultTagStructureForMode = (mode) => {
           'nameContents', 'namepath-defining',
         ],
 
+        // Not in use, but should be this value if using to power `empty-tags`
+        [
+          'nameAllowed', true,
+        ],
+
         [
           'typeAllowed', true,
         ],
@@ -194,6 +199,23 @@ const getDefaultTagStructureForMode = (mode) => {
     ],
 
     [
+      'constructs', new Map([
+        // Allows for "name"'s in signature, but indicated as optional
+        [
+          'nameContents', 'namepath-defining',
+        ],
+
+        [
+          'nameRequired', false,
+        ],
+
+        [
+          'typeAllowed', false,
+        ],
+      ]),
+    ],
+
+    [
       'define', new Map([
         [
           'typeRequired', isClosure,
@@ -206,6 +228,14 @@ const getDefaultTagStructureForMode = (mode) => {
         // Signature seems to require a "name" (of an event) and no counter-examples
         [
           'nameContents', 'namepath-referencing',
+        ],
+
+        [
+          'nameRequired', true,
+        ],
+
+        [
+          'typeAllowed', false,
         ],
       ]),
     ],
@@ -244,8 +274,25 @@ const getDefaultTagStructureForMode = (mode) => {
       ]),
     ],
 
+    // Closure
     [
       'export', new Map([
+        [
+          'typeAllowed', isClosureOrPermissive,
+        ],
+      ]),
+    ],
+
+    [
+      'exports', new Map([
+        [
+          'nameContents', 'namepath-defining',
+        ],
+
+        [
+          'nameRequired', isJsdoc,
+        ],
+
         [
           'typeAllowed', isClosureOrPermissive,
         ],
@@ -288,6 +335,10 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'nameRequired', true,
         ],
+
+        [
+          'typeAllowed', false,
+        ],
       ]),
     ],
 
@@ -298,6 +349,14 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'nameContents', 'namepath-referencing',
         ],
+
+        [
+          'nameRequired', true,
+        ],
+
+        [
+          'typeAllowed', false,
+        ],
       ]),
     ],
 
@@ -306,6 +365,14 @@ const getDefaultTagStructureForMode = (mode) => {
         // Allows for "name"'s in signature, but indicated as optional
         [
           'nameContents', 'namepath-defining',
+        ],
+
+        [
+          'nameRequired', false,
+        ],
+
+        [
+          'typeAllowed', false,
         ],
       ]),
     ],
@@ -332,9 +399,8 @@ const getDefaultTagStructureForMode = (mode) => {
           'nameRequired', true,
         ],
 
-        // "namepath"
         [
-          'typeOrNameRequired', true,
+          'typeAllowed', false,
         ],
       ]),
     ],
@@ -345,6 +411,15 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'nameContents',
           isJsdocTypescriptOrPermissive ? 'namepath-defining' : false,
+        ],
+
+        // Not in use, but should be this value if using to power `empty-tags`
+        [
+          'nameAllowed', isClosure,
+        ],
+
+        [
+          'typeAllowed', false,
         ],
       ]),
     ],
@@ -379,6 +454,14 @@ const getDefaultTagStructureForMode = (mode) => {
         //  counter-examples
         [
           'nameContents', 'namepath-referencing',
+        ],
+
+        [
+          'nameRequired', true,
+        ],
+
+        [
+          'typeAllowed', false,
         ],
       ]),
     ],
@@ -454,6 +537,14 @@ const getDefaultTagStructureForMode = (mode) => {
         // Allows for "name"'s in signature, but indicated as optional
         [
           'nameContents', 'namepath-defining',
+        ],
+
+        [
+          'nameRequired', false,
+        ],
+
+        [
+          'typeAllowed', false,
         ],
       ]),
     ],
@@ -614,6 +705,19 @@ const getDefaultTagStructureForMode = (mode) => {
         // Does not show a signature nor show curly brackets in the example
         [
           'typeAllowed', isClosureOrPermissive,
+        ],
+      ]),
+    ],
+
+    [
+      'requires', new Map([
+        // <someModuleName>
+        [
+          'nameRequired', true,
+        ],
+
+        [
+          'typeAllowed', false,
         ],
       ]),
     ],

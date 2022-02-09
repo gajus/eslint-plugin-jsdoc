@@ -21275,7 +21275,7 @@ function quux() {
 
 /**
  *
- * @fires {module:namespace.SomeClass#event:ext_anevent}
+ * @fires module:namespace.SomeClass#event:ext_anevent
  */
 function quux() {
 

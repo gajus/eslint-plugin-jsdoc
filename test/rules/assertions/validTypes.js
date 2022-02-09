@@ -817,6 +817,163 @@ export default {
         },
       },
     },
+    {
+      code: `
+          makeClass('Menu',
+            /**
+             * @constructs {abc}
+             * @param items
+             */
+            function (items) { },
+            {
+                /** @memberof Menu# */
+                show: function(){
+                }
+            }
+          );
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@constructs should not have a bracketed type.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+            /**
+             * @emits
+             */
+            function quux (items) {
+            }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tag @emits must have a name/namepath.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+            /**
+             * @requires
+             */
+            function quux (items) {
+            }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tag @requires must have a name/namepath.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+            /**
+             * @exports {SomeType}
+             */
+            function quux (items) {
+            }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@exports should not have a bracketed type in "jsdoc" mode.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+            /**
+             * @external {SomeType}
+             */
+            function quux (items) {
+            }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@external should not have a bracketed type.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           * @fires {module:namespace.SomeClass#event:ext_anevent} name
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@fires should not have a bracketed type.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           * @fires
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Tag @fires must have a name/namepath.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           *
+           * @host {SomeType}
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@host should not have a bracketed type.',
+        },
+      ],
+      ignoreReadme: true,
+    },
+    {
+      code: `
+      /**
+       * @listens
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tag @listens must have a name/namepath.',
+        },
+      ],
+      ignoreReadme: true,
+    },
   ],
   valid: [
     {
@@ -950,7 +1107,7 @@ export default {
       code: `
           /**
            *
-           * @fires {module:namespace.SomeClass#event:ext_anevent}
+           * @fires module:namespace.SomeClass#event:ext_anevent
            */
           function quux() {
 
@@ -1403,6 +1560,33 @@ export default {
       function quux ( id, options ) {
       }
       `,
+    },
+    {
+      code: `
+            /**
+             * @exports {SomeType}
+             */
+            function quux (items) {
+            }
+      `,
+      ignoreReadme: true,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           * @function
+           */
+          function quux() {
+
+          }
+      `,
+      ignoreReadme: true,
     },
   ],
 };
