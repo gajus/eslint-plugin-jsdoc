@@ -4,6 +4,7 @@ const getDefaultTagStructureForMode = (mode) => {
   const isTypescript = mode === 'typescript';
   const isPermissive = mode === 'permissive';
 
+  const isJsdocOrPermissive = isJsdoc || isPermissive;
   const isJsdocOrTypescript = isJsdoc || isTypescript;
   const isTypescriptOrClosure = isTypescript || isClosure;
   const isClosureOrPermissive = isClosure || isPermissive;
@@ -724,19 +725,25 @@ const getDefaultTagStructureForMode = (mode) => {
           'nameContents', 'namepath-defining',
         ],
 
+        // TypeScript may allow it to be dropped if followed by @property or @member;
+        //   also shown as missing in Closure
         // "namepath"
         [
-          'nameRequired', isJsdocTypescriptOrPermissive,
+          'nameRequired', isJsdocOrPermissive,
         ],
+
+        // Is not `typeRequired` for TypeScript because it gives an error:
+        // JSDoc '@typedef' tag should either have a type annotation or be followed by '@property' or '@member' tags.
 
         // Has example showing curly brackets but not in doc signature
         [
           'typeAllowed', true,
         ],
 
+        // TypeScript may allow it to be dropped if followed by @property or @member
         // "namepath"
         [
-          'typeOrNameRequired', true,
+          'typeOrNameRequired', !isTypescript,
         ],
       ]),
     ],
