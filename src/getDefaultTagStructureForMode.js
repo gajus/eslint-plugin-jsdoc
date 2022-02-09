@@ -129,8 +129,9 @@ const getDefaultTagStructureForMode = (mode) => {
 
     [
       'callback', new Map([
-      // Seems to require a "namepath" in the signature (with no
-      //   counter-examples)
+        // Seems to require a "namepath" in the signature (with no
+        //   counter-examples); TypeScript does not enforce but seems
+        //   problematic as not attached so presumably not useable without it
         [
           'nameContents', 'namepath-defining',
         ],
