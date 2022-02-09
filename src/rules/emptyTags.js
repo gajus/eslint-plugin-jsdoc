@@ -19,6 +19,10 @@ const emptyIfNotClosure = new Set([
   'inheritdoc',
 ]);
 
+const emptyIfClosure = new Set([
+  'interface',
+]);
+
 export default iterateJsdoc(({
   settings,
   jsdoc,
@@ -33,6 +37,7 @@ export default iterateJsdoc(({
       }) => {
         return tag === tagName;
       }) ||
+      settings.mode === 'closure' && emptyIfClosure.has(tagName) ||
       settings.mode !== 'closure' && emptyIfNotClosure.has(tagName);
   });
   for (const tag of emptyTags) {

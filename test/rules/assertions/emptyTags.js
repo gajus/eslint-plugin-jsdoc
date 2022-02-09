@@ -26,6 +26,29 @@ export default {
     },
     {
       code: `
+          /**
+           * @interface extra text
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@interface should be empty.',
+        },
+      ],
+      output: `
+          /**
+           * @interface
+           */
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
       class Test {
           /**
            * @abstract extra text

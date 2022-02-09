@@ -6177,6 +6177,12 @@ function quux () {
 }
 // Message: @abstract should be empty.
 
+/**
+ * @interface extra text
+ */
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: @interface should be empty.
+
 class Test {
     /**
      * @abstract extra text
