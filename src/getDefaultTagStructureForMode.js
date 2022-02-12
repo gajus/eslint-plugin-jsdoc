@@ -813,6 +813,19 @@ const getDefaultTagStructureForMode = (mode) => {
     ],
 
     [
+      'tutorial', new Map([
+        // (a tutorial ID)
+        [
+          'nameRequired', true,
+        ],
+
+        [
+          'typeAllowed', false,
+        ],
+      ]),
+    ],
+
+    [
       'type', new Map([
         // Shows curly brackets in the doc signature and examples
         // "typeName"
