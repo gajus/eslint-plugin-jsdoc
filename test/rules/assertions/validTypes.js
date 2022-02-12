@@ -1588,5 +1588,27 @@ export default {
       `,
       ignoreReadme: true,
     },
+    {
+      code: `
+        /**
+         * @param {Store}          context
+         * @param {Store.commit}   context.commit
+         * @param {Store.getters}  context.getters
+         * @param {Store.dispatch} context.dispatch
+         * @param {object}         payload
+         * @param {object}         payload.new
+         * @param {string}         payload.libraryType
+         */
+        const updateStyleVersion = async (
+          { commit, getters, dispatch },
+          { new: newPayload, libraryType }
+        ) => {
+        }
+      `,
+      ignoreReadme: true,
+      parserOptions: {
+        ecmaVersion: 2_017,
+      },
+    },
   ],
 };
