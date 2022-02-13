@@ -871,6 +871,7 @@ const makeReport = (context, commentNode) => {
   return report;
 };
 
+/* eslint-disable jsdoc/no-undefined-types -- Need to build this in; see https://www.typescriptlang.org/docs/handbook/utility-types.html */
 /**
  * @typedef {ReturnType<typeof getUtils>} Utils
  * @typedef {ReturnType<typeof getSettings>} Settings
@@ -888,6 +889,7 @@ const makeReport = (context, commentNode) => {
  *   }
  * ) => any } JsdocVisitor
  */
+/* eslint-enable jsdoc/no-undefined-types -- Need to build this in */
 
 const iterate = (
   info,

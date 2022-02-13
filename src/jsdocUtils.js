@@ -8,7 +8,9 @@ import {
   typeScriptTags,
 } from './tagNames';
 
-type ParserMode = "jsdoc"|"typescript"|"closure";
+/**
+ * @typedef {"jsdoc"|"typescript"|"closure"} ParserMode
+ */
 
 let tagStructure;
 
@@ -87,8 +89,11 @@ const flattenRoots = (params, root = '') => {
   };
 };
 
-type T = string | [?string, T];
-const getPropertiesFromPropertySignature = (propSignature): T => {
+/**
+ * @param {object} propSignature
+ * @returns {undefined|Array|string}
+ */
+const getPropertiesFromPropertySignature = (propSignature) => {
   if (
     propSignature.type === 'TSIndexSignature' ||
     propSignature.type === 'TSConstructSignatureDeclaration' ||
@@ -108,9 +113,14 @@ const getPropertiesFromPropertySignature = (propSignature): T => {
   return propSignature.key.name;
 };
 
+/**
+ * @param {object} functionNode
+ * @param {boolean} checkDefaultObjects
+ * @returns {Array}
+ */
 const getFunctionParameterNames = (
-  functionNode : Object, checkDefaultObjects: Boolean,
-) : Array<T> => {
+  functionNode, checkDefaultObjects,
+) => {
   // eslint-disable-next-line complexity
   const getParamName = (param, isProperty) => {
     const hasLeftTypeAnnotation = 'left' in param && 'typeAnnotation' in param.left;
@@ -266,6 +276,10 @@ const getFunctionParameterNames = (
   });
 };
 
+/**
+ * @param {Node} functionNode
+ * @returns {Integer}
+ */
 const hasParams = (functionNode) => {
   // Should also check `functionNode.value.params` if supporting `MethodDefinition`
   return functionNode.params.length;
@@ -274,8 +288,12 @@ const hasParams = (functionNode) => {
 /**
  * Gets all names of the target type, including those that refer to a path, e.g.
  * "@param foo; @param foo.bar".
+ *
+ * @param {object} jsdoc
+ * @param {string} targetTagName
+ * @returns {Array<object>}
  */
-const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object> => {
+const getJsdocTagsDeep = (jsdoc, targetTagName) => {
   const ret = [];
   for (const [
     idx,
@@ -301,6 +319,10 @@ const getJsdocTagsDeep = (jsdoc : Object, targetTagName : string) : Array<Object
 
 const modeWarnSettings = WarnSettings();
 
+/**
+ * @param {string} mode
+ * @param context
+ */
 const getTagNamesForMode = (mode, context) => {
   switch (mode) {
   case 'jsdoc':
@@ -328,12 +350,19 @@ const getTagNamesForMode = (mode, context) => {
   }
 };
 
+/**
+ * @param context
+ * @param {ParserMode} mode
+ * @param {string} name
+ * @param {object} tagPreference
+ * @returns {string|object}
+ */
 const getPreferredTagName = (
   context,
-  mode : ParserMode,
-  name : string,
-  tagPreference : Object = {},
-) : string|Object => {
+  mode,
+  name,
+  tagPreference = {},
+) => {
   const prefValues = Object.values(tagPreference);
   if (prefValues.includes(name) || prefValues.some((prefVal) => {
     return prefVal && typeof prefVal === 'object' && prefVal.replacement === name;
@@ -377,12 +406,19 @@ const getPreferredTagName = (
   return name;
 };
 
+/**
+ * @param context
+ * @param {ParserMode} mode
+ * @param {string} name
+ * @param {Array} definedTags
+ * @returns {boolean}
+ */
 const isValidTag = (
   context,
-  mode : ParserMode,
-  name : string,
-  definedTags : Array,
-) : boolean => {
+  mode,
+  name,
+  definedTags,
+) => {
   const tagNames = getTagNamesForMode(mode, context);
 
   const validTagNames = Object.keys(tagNames).concat(Object.values(tagNames).flat());
@@ -392,15 +428,25 @@ const isValidTag = (
   return allTags.includes(name);
 };
 
-const hasTag = (jsdoc : Object, targetTagName : string) : boolean => {
+/**
+ * @param {object} jsdoc
+ * @param {string} targetTagName
+ * @returns {boolean}
+ */
+const hasTag = (jsdoc, targetTagName) => {
   const targetTagLower = targetTagName.toLowerCase();
 
-  return jsdoc.tags.some((doc : Object) => {
+  return jsdoc.tags.some((doc) => {
     return doc.tag.toLowerCase() === targetTagLower;
   });
 };
 
-const hasATag = (jsdoc : Object, targetTagNames : Array) : boolean => {
+/**
+ * @param {object} jsdoc
+ * @param {Array} targetTagNames
+ * @returns {boolean}
+ */
+const hasATag = (jsdoc, targetTagNames) => {
   return targetTagNames.some((targetTagName) => {
     return hasTag(jsdoc, targetTagName);
   });
@@ -430,6 +476,11 @@ const hasDefinedTypeTag = (tag) => {
   return true;
 };
 
+/**
+ * @param map
+ * @param tag
+ * @returns {Map}
+ */
 const ensureMap = (map, tag) => {
   if (!map.has(tag)) {
     map.set(tag, new Map());
@@ -438,6 +489,10 @@ const ensureMap = (map, tag) => {
   return map.get(tag);
 };
 
+/**
+ * @param structuredTags
+ * @param tagMap
+ */
 const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
   for (const [
     tag,
@@ -479,6 +534,11 @@ const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
   }
 };
 
+/**
+ * @param mode
+ * @param structuredTags
+ * @returns {Map}
+ */
 const getTagStructureForMode = (mode, structuredTags) => {
   const tagStruct = getDefaultTagStructureForMode(mode);
 
@@ -491,18 +551,33 @@ const getTagStructureForMode = (mode, structuredTags) => {
   return tagStruct;
 };
 
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
 const isNamepathDefiningTag = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
   return tagStruct.get('nameContents') === 'namepath-defining';
 };
 
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
 const tagMustHaveTypePosition = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
   return tagStruct.get('typeRequired');
 };
 
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
 const tagMightHaveTypePosition = (tag, tagMap = tagStructure) => {
   if (tagMustHaveTypePosition(tag, tagMap)) {
     return true;
@@ -519,6 +594,11 @@ const namepathTypes = new Set([
   'namepath-defining', 'namepath-referencing',
 ]);
 
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
 const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
@@ -527,28 +607,53 @@ const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
   return ret === undefined ? true : Boolean(ret);
 };
 
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
 const tagMightHaveNamepath = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
   return namepathTypes.has(tagStruct.get('nameContents'));
 };
 
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
 const tagMustHaveNamePosition = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
   return tagStruct.get('nameRequired');
 };
 
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
 const tagMightHaveEitherTypeOrNamePosition = (tag, tagMap) => {
   return tagMightHaveTypePosition(tag, tagMap) || tagMightHaveNamepath(tag, tagMap);
 };
 
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
 const tagMustHaveEitherTypeOrNamePosition = (tag, tagMap) => {
   const tagStruct = ensureMap(tagMap, tag);
 
   return tagStruct.get('typeOrNameRequired');
 };
 
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
 const tagMissingRequiredTypeOrNamepath = (tag, tagMap = tagStructure) => {
   const mustHaveTypePosition = tagMustHaveTypePosition(tag.tag, tagMap);
   const mightHaveTypePosition = tagMightHaveTypePosition(tag.tag, tagMap);
@@ -1368,6 +1473,10 @@ const dropPathSegmentQuotes = (str) => {
   return str.replace(/\.(['"])(.*)\1/gu, '.$2');
 };
 
+/**
+ * @param {string} name
+ * @returns {(otherPathName: string) => void}
+ */
 const comparePaths = (name) => {
   return (otherPathName) => {
     return otherPathName === name ||
@@ -1375,11 +1484,21 @@ const comparePaths = (name) => {
   };
 };
 
+/**
+ * @param {string} name
+ * @param {string} otherPathName
+ * @returns {boolean}
+ */
 const pathDoesNotBeginWith = (name, otherPathName) => {
   return !name.startsWith(otherPathName) &&
     !dropPathSegmentQuotes(name).startsWith(dropPathSegmentQuotes(otherPathName));
 };
 
+/**
+ * @param {string} regexString
+ * @param {string} requiredFlags
+ * @returns {RegExp}
+ */
 const getRegexFromString = (regexString, requiredFlags) => {
   const match = regexString.match(/^\/(.*)\/([gimyus]*)$/us);
   let flags = 'u';

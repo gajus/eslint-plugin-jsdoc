@@ -1,7 +1,12 @@
 import iterateJsdoc from '../iterateJsdoc';
 
-type T = [string, () => T];
-const rootNamer = (desiredRoots: string[], currentIndex: number): T => {
+/**
+ * @template T
+ * @param {string[]} desiredRoots
+ * @param {number} currentIndex
+ * @returns {[string, boolean, () => T]}
+ */
+const rootNamer = (desiredRoots, currentIndex) => {
   let name;
   let idx = currentIndex;
   const incremented = desiredRoots.length <= 1;

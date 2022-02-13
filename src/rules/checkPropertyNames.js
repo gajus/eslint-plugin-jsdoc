@@ -1,8 +1,16 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+/**
+ * @param {string} targetTagName
+ * @param {boolean} enableFixer
+ * @param jsdoc
+ * @param jsdocNode
+ * @param utils
+ * @returns {boolean}
+ */
 const validatePropertyNames = (
-  targetTagName : string,
-  enableFixer : boolean,
+  targetTagName,
+  enableFixer,
   jsdoc, jsdocNode, utils,
 ) => {
   const propertyTags = Object.entries(jsdoc.tags).filter(([
@@ -35,9 +43,15 @@ const validatePropertyNames = (
   });
 };
 
+/**
+ * @param {string} targetTagName
+ * @param {string[]} jsdocPropertyNames
+ * @param jsdoc
+ * @param {Function} report
+ */
 const validatePropertyNamesDeep = (
-  targetTagName : string,
-  jsdocPropertyNames : Array<string>, jsdoc, report : Function,
+  targetTagName,
+  jsdocPropertyNames, jsdoc, report,
 ) => {
   let lastRealProperty;
 

@@ -22,6 +22,11 @@
       }
     }
   ],
+  "settings": {
+    "jsdoc": {
+      "mode": "typescript"
+    }
+  },
   "root": true,
   "rules": {
     "array-element-newline": 0,

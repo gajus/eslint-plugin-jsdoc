@@ -2197,6 +2197,32 @@ function quux (foo) {
       }
       `,
       parser: require.resolve('@babel/eslint-parser'),
+      parserOptions: {
+        babelOptions: {
+          env: {
+            test: {
+              plugins: [
+                'istanbul',
+              ],
+            },
+          },
+          plugins: [
+            '@babel/plugin-transform-flow-strip-types',
+            '@babel/plugin-syntax-class-properties',
+            'add-module-exports',
+          ],
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                targets: {
+                  node: 12,
+                },
+              },
+            ],
+          ],
+        },
+      },
     },
     {
       code: `

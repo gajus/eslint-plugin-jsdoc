@@ -1,14 +1,29 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+/**
+ * @param {string} targetTagName
+ * @param {boolean} allowExtraTrailingParamDocs
+ * @param {boolean} checkDestructured
+ * @param {boolean} checkRestProperty
+ * @param {RegExp} checkTypesRegex
+ * @param {boolean} disableExtraPropertyReporting
+ * @param {boolean} enableFixer
+ * @param {Array<string>} functionParameterNames
+ * @param jsdoc
+ * @param _jsdocNode
+ * @param utils
+ * @param report
+ * @returns {boolean}
+ */
 const validateParameterNames = (
-  targetTagName : string,
-  allowExtraTrailingParamDocs: boolean,
-  checkDestructured : boolean,
-  checkRestProperty : boolean,
-  checkTypesRegex : RegExp,
+  targetTagName,
+  allowExtraTrailingParamDocs,
+  checkDestructured,
+  checkRestProperty,
+  checkTypesRegex,
   disableExtraPropertyReporting,
-  enableFixer: boolean,
-  functionParameterNames : Array<string>, jsdoc, _jsdocNode, utils, report,
+  enableFixer,
+  functionParameterNames, jsdoc, _jsdocNode, utils, report,
 ) => {
   const paramTags = Object.entries(jsdoc.tags).filter(([
     , tag,
@@ -228,9 +243,17 @@ const validateParameterNames = (
   });
 };
 
+/**
+ * @param {string} targetTagName
+ * @param {boolean} _allowExtraTrailingParamDocs
+ * @param {Array<string>} jsdocParameterNames
+ * @param jsdoc
+ * @param {Function} report
+ * @returns {boolean}
+ */
 const validateParameterNamesDeep = (
-  targetTagName : string, _allowExtraTrailingParamDocs: boolean,
-  jsdocParameterNames : Array<string>, jsdoc, report : Function,
+  targetTagName, _allowExtraTrailingParamDocs,
+  jsdocParameterNames, jsdoc, report,
 ) => {
   let lastRealParameter;
 
