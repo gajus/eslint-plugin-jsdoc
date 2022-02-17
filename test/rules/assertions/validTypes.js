@@ -1610,5 +1610,14 @@ export default {
         ecmaVersion: 2_017,
       },
     },
+    {
+      code: `
+      /**
+       * @module module:scenarios/scenarios
+       * @requires scenarios/effects
+       */
+      `,
+      ignoreReadme: true,
+    },
   ],
 };

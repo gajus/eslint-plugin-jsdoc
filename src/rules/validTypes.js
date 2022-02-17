@@ -102,6 +102,7 @@ export default iterateJsdoc(({
       if (tagName) {
         // eslint-disable-next-line default-case
         switch (tagName) {
+        case 'requires':
         case 'module': {
           if (!namepath.startsWith('module:')) {
             handled = tryParsePathIgnoreError(`module:${namepath}`);
