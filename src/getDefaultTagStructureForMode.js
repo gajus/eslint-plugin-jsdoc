@@ -713,10 +713,6 @@ const getDefaultTagStructureForMode = (mode) => {
       'requires', new Map([
         // <someModuleName>
         [
-          'nameContents', 'namepath-referencing',
-        ],
-
-        [
           'nameRequired', true,
         ],
 
