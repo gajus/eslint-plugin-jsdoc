@@ -71,7 +71,7 @@
   },
   "nyc": {
     "branches": 100,
-    "check-coverage": false,
+    "check-coverage": true,
     "exclude": [
       "src/rules/checkExamples.js"
     ],
