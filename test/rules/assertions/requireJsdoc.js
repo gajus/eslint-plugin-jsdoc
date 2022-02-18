@@ -3650,6 +3650,82 @@ function quux (foo) {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      /**
+       *
+       */
+      export class InovaAutoCompleteComponent {
+        public disabled = false;
+      }
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'PropertyDefinition',
+          ],
+          publicOnly: true,
+        },
+      ],
+      output: `
+      /**
+       *
+       */
+      export class InovaAutoCompleteComponent {
+        /**
+         *
+         */
+        public disabled = false;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          /**
+          * Some comment.
+          */
+          export class Component {
+              public foo?: number;
+          }
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          checkConstructors: false,
+          contexts: [
+            'PropertyDefinition',
+          ],
+          publicOnly: true,
+        },
+      ],
+      output: `
+          /**
+          * Some comment.
+          */
+          export class Component {
+              /**
+               *
+               */
+              public foo?: number;
+          }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {

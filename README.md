@@ -13322,6 +13322,24 @@ export const outer = () => {
 };
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
+
+/**
+ *
+ */
+export class InovaAutoCompleteComponent {
+  public disabled = false;
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["PropertyDefinition"],"publicOnly":true}]
+// Message: Missing JSDoc comment.
+
+/**
+* Some comment.
+*/
+export class Component {
+    public foo?: number;
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkConstructors":false,"contexts":["PropertyDefinition"],"publicOnly":true}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

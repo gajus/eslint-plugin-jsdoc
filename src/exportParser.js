@@ -445,23 +445,26 @@ const getExportAncestor = function (nde) {
   return false;
 };
 
-const canExportedByAncestorType = new Set([
+const canBeExportedByAncestorType = new Set([
   'TSPropertySignature',
   'TSMethodSignature',
   'ClassProperty',
+  'PropertyDefinition',
   'Method',
 ]);
 
 const canExportChildrenType = new Set([
   'TSInterfaceBody',
   'TSInterfaceDeclaration',
+  'ClassDeclaration',
+  'ClassBody',
   'ClassDefinition',
   'ClassExpression',
   'Program',
 ]);
 
 const isExportByAncestor = function (nde) {
-  if (!canExportedByAncestorType.has(nde.type)) {
+  if (!canBeExportedByAncestorType.has(nde.type)) {
     return false;
   }
 
