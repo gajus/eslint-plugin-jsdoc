@@ -9261,6 +9261,12 @@ const MY_ENUM = Object.freeze({
   VAL_A: "myvala"
 } as const);
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])","context":"any","message":"Access modifier tags must come first"},{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"enum\"])","context":":declaration:not(TSEnumDeclaration):not(:has(ObjectExpression)), :function","message":"@enum is only allowed on potential enum types"}]}]
+
+/**
+ * @param {(...args: any[]) => any} fn
+ * @returns {(...args: any[]) => any}
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"type\"]:has([value=/FunctionComponent/]))","context":"any","message":"The `FunctionComponent` type is not allowed. Please use `FC` instead."}]}]
 ````
 
 

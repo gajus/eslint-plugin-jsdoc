@@ -471,5 +471,24 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+        /**
+         * @param {(...args: any[]) => any} fn
+         * @returns {(...args: any[]) => any}
+         */
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag="type"]:has([value=/FunctionComponent/]))',
+              context: 'any',
+              message: 'The `FunctionComponent` type is not allowed. Please use `FC` instead.',
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
