@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v2
+
+      - name: ⎔ Setup node for problem matcher
+        if: github.event.pull_request
+        uses: actions/setup-node@v2
+
+      - name: 📥 Download deps
+        run: npm install
+
+      - name: 🧪 Run lint
+        run: npm run lint
+
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        node:
+          - 14.17.0
+          - 16
+          - 17
+          - 18
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        eslint:
+          - 7
+          - 8
+
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v3
+
+      - name: ⎔ Setup node ${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: 📥 Download deps
+        run: npm install
+
+      - name: Install ESLint 7
+        if: matrix.eslint == 7
+        run: npm install --no-save --legacy-peer-deps eslint@7 eslint-config-canonical@32.1.0 mocha@9
+
+      - name: 🏗 Build
+        run: npm run build
+
+      - name: Run coverage
+        run: npm run test
+
+  release:
+    name: Release
+    if: ${{ github.repository == 'gajus/eslint-plugin-jsdoc' &&
+      contains('refs/heads/master',
+      github.ref) && github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 📥 Download deps
+        run: npm install
+
+      - name: 🏗 Build
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: 🚢 Release
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          extra_plugins: |
+            @semantic-release/git
+          branches: |
+            [
+              'master'
+            ]
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
