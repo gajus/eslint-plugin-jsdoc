@@ -86,10 +86,27 @@ export default iterateJsdoc(({
   });
 
   const {
-    preferredTypes,
+    preferredTypes: preferredTypesOriginal,
     structuredTags,
     mode,
   } = settings;
+
+  const injectObjectPreferredTypes = !('Object' in preferredTypesOriginal ||
+    'object' in preferredTypesOriginal ||
+    'object.<>' in preferredTypesOriginal ||
+    'Object.<>' in preferredTypesOriginal ||
+    'object<>' in preferredTypesOriginal);
+
+  const preferredTypes = {
+    ...injectObjectPreferredTypes ? {
+      Object: 'object',
+      'object.<>': 'Object<>',
+      'Object.<>': 'Object<>',
+      'object<>': 'Object<>',
+    } : {},
+    ...preferredTypesOriginal,
+  };
+
   const {
     noDefaults,
     unifyParentAndChildTypeChecks,
@@ -110,56 +127,55 @@ export default iterateJsdoc(({
     let hasMatchingPreferredType = false;
     let isGenericMatch = false;
     let typeName = typeNodeName;
-    if (Object.keys(preferredTypes).length) {
-      const isNameOfGeneric = parentNode !== undefined && parentNode.type === 'JsdocTypeGeneric' && property === 'left';
-      if (unifyParentAndChildTypeChecks || isNameOfGeneric) {
-        const brackets = parentNode?.meta?.brackets;
-        const dot = parentNode?.meta?.dot;
 
-        if (brackets === 'angle') {
-          const checkPostFixes = dot ? [
-            '.', '.<>',
-          ] : [
-            '<>',
-          ];
-          isGenericMatch = checkPostFixes.some((checkPostFix) => {
-            if (preferredTypes?.[typeNodeName + checkPostFix] !== undefined) {
-              typeName += checkPostFix;
+    const isNameOfGeneric = parentNode !== undefined && parentNode.type === 'JsdocTypeGeneric' && property === 'left';
+    if (unifyParentAndChildTypeChecks || isNameOfGeneric) {
+      const brackets = parentNode?.meta?.brackets;
+      const dot = parentNode?.meta?.dot;
 
-              return true;
-            }
+      if (brackets === 'angle') {
+        const checkPostFixes = dot ? [
+          '.', '.<>',
+        ] : [
+          '<>',
+        ];
+        isGenericMatch = checkPostFixes.some((checkPostFix) => {
+          if (preferredTypes?.[typeNodeName + checkPostFix] !== undefined) {
+            typeName += checkPostFix;
 
-            return false;
-          });
-        }
+            return true;
+          }
 
-        if (!isGenericMatch && property) {
-          const checkPostFixes = dot ? [
-            '.', '.<>',
-          ] : [
-            brackets === 'angle' ? '<>' : '[]',
-          ];
-
-          isGenericMatch = checkPostFixes.some((checkPostFix) => {
-            if (preferredTypes?.[checkPostFix] !== undefined) {
-              typeName = checkPostFix;
-
-              return true;
-            }
-
-            return false;
-          });
-        }
+          return false;
+        });
       }
 
-      const directNameMatch = preferredTypes?.[typeNodeName] !== undefined &&
-        !Object.values(preferredTypes).includes(typeNodeName);
-      const unifiedSyntaxParentMatch = property && directNameMatch && unifyParentAndChildTypeChecks;
-      isGenericMatch = isGenericMatch || unifiedSyntaxParentMatch;
+      if (!isGenericMatch && property) {
+        const checkPostFixes = dot ? [
+          '.', '.<>',
+        ] : [
+          brackets === 'angle' ? '<>' : '[]',
+        ];
 
-      hasMatchingPreferredType = isGenericMatch ||
-        directNameMatch && !property;
+        isGenericMatch = checkPostFixes.some((checkPostFix) => {
+          if (preferredTypes?.[checkPostFix] !== undefined) {
+            typeName = checkPostFix;
+
+            return true;
+          }
+
+          return false;
+        });
+      }
     }
+
+    const directNameMatch = preferredTypes?.[typeNodeName] !== undefined &&
+      !Object.values(preferredTypes).includes(typeNodeName);
+    const unifiedSyntaxParentMatch = property && directNameMatch && unifyParentAndChildTypeChecks;
+    isGenericMatch = isGenericMatch || unifiedSyntaxParentMatch;
+
+    hasMatchingPreferredType = isGenericMatch ||
+      directNameMatch && !property;
 
     return [
       hasMatchingPreferredType, typeName, isGenericMatch,
