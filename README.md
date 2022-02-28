@@ -17701,14 +17701,6 @@ class quux {
 // Message: Missing JSDoc @returns declaration.
 
 /**
- * @param {array} a
- */
-async function foo(a) {
-  return Promise.all(a);
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
  *
  */
 function quux (foo) {
@@ -18004,6 +17996,21 @@ export function f(): string {
   return "";
 }
 // "jsdoc/require-returns": ["error"|"warn", {"contexts":[":not(BlockStatement) > FunctionDeclaration","MethodDefinition","TSMethodSignature","TSPropertySignature > TSTypeAnnotation > TSFunctionType"]}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * @param ms time in millis
+ */
+export const sleep = (ms: number) =>
+  new Promise<string>((res) => setTimeout(res, ms));
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * @param ms time in millis
+ */
+export const sleep = (ms: number) => {
+  return new Promise<string>((res) => setTimeout(res, ms));
+};
 // Message: Missing JSDoc @returns declaration.
 ````
 
@@ -18488,6 +18495,26 @@ function quux () {
 async function foo() {
   return new Promise(resolve => resolve());
 }
+
+/**
+ * @param {array} a
+ */
+async function foo(a) {
+  return Promise.all(a);
+}
+
+/**
+ * @param ms time in millis
+ */
+export const sleep = (ms: number) =>
+  new Promise<void>((res) => setTimeout(res, ms));
+
+/**
+ * @param ms time in millis
+ */
+export const sleep = (ms: number) => {
+  return new Promise<void>((res) => setTimeout(res, ms));
+};
 ````
 
 

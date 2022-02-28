@@ -90,7 +90,7 @@ export default iterateJsdoc(({
       return true;
     }
 
-    return iteratingFunction && utils.hasValueOrExecutorHasNonEmptyResolveValue(
+    return !isAsync && iteratingFunction && utils.hasValueOrExecutorHasNonEmptyResolveValue(
       forceReturnsWithAsync,
     );
   };

@@ -572,25 +572,6 @@ export default {
     },
     {
       code: `
-      /**
-       * @param {array} a
-       */
-      async function foo(a) {
-        return Promise.all(a);
-      }
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Missing JSDoc @returns declaration.',
-        },
-      ],
-      parserOptions: {
-        ecmaVersion: 8,
-      },
-    },
-    {
-      code: `
           /**
            *
            */
@@ -1657,6 +1638,39 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+        /**
+         * @param ms time in millis
+         */
+        export const sleep = (ms: number) =>
+          new Promise<string>((res) => setTimeout(res, ms));
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        /**
+         * @param ms time in millis
+         */
+        export const sleep = (ms: number) => {
+          return new Promise<string>((res) => setTimeout(res, ms));
+        };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
@@ -2491,6 +2505,40 @@ export default {
           ],
         },
       ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * @param {array} a
+       */
+      async function foo(a) {
+        return Promise.all(a);
+      }
+      `,
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+        /**
+         * @param ms time in millis
+         */
+        export const sleep = (ms: number) =>
+          new Promise<void>((res) => setTimeout(res, ms));
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        /**
+         * @param ms time in millis
+         */
+        export const sleep = (ms: number) => {
+          return new Promise<void>((res) => setTimeout(res, ms));
+        };
+      `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
   ],

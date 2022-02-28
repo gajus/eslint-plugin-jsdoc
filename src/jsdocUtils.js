@@ -681,6 +681,10 @@ const isNewPromiseExpression = (node) => {
     node.callee.name === 'Promise';
 };
 
+const isVoidPromise = (node) => {
+  return node.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
+};
+
 /**
  * @callback PromiseFilter
  * @param {object} node
@@ -712,7 +716,8 @@ const hasReturnValue = (node, promFilter) => {
   case 'FunctionExpression':
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
-    return node.expression || hasReturnValue(node.body, promFilter);
+    return node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node?.body)) ||
+      hasReturnValue(node.body, promFilter);
   }
 
   case 'BlockStatement': {
@@ -986,6 +991,10 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn) => 
   return hasReturnValue(node, (prom) => {
     if (anyPromiseAsReturn) {
       return true;
+    }
+
+    if (isVoidPromise(prom)) {
+      return false;
     }
 
     const [
