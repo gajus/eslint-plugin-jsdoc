@@ -9549,7 +9549,7 @@ The following types are always considered defined.
 - `null`, `undefined`, `void`, `string`, `boolean`, `object`,
   `function`, `symbol`
 - `number`, `bigint`, `NaN`, `Infinity`
-- `any`, `*`
+- `any`, `*`, `never`, `unknown`, `const`
 - `this`, `true`, `false`
 - `Array`, `Object`, `RegExp`, `Date`, `Function`
 
@@ -9898,14 +9898,6 @@ function foo () {
 }
 
 /**
- *
- *
- */
-function foo () {
-
-}
-
-/**
  * @param {MyType} foo - Bar.
  * @param {HisType} bar - Foo.
  */
@@ -10189,6 +10181,11 @@ export class Foo {
   }
 }
 // Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @type {const}
+ */
+const a = 'string';
 ````
 
 

@@ -636,17 +636,6 @@ export default {
     },
     {
       code: `
-      /**
-       *
-       *
-       */
-      function foo () {
-
-      }
-      `,
-    },
-    {
-      code: `
         /**
          * @param {MyType} foo - Bar.
          * @param {HisType} bar - Foo.
@@ -1214,6 +1203,14 @@ export default {
           mode: 'typescript',
         },
       },
+    },
+    {
+      code: `
+        /**
+         * @type {const}
+         */
+        const a = 'string';
+      `,
     },
   ],
 };
