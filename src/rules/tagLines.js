@@ -9,6 +9,7 @@ export default iterateJsdoc(({
     alwaysNever = 'never',
     {
       count = 1,
+      dropEndLines = false,
       noEndLines = false,
       tags = {},
     } = {},
@@ -16,6 +17,7 @@ export default iterateJsdoc(({
 
   jsdoc.tags.some((tg, tagIdx) => {
     let lastTag;
+    let lastEmpty = null;
 
     let reportIndex = null;
     for (const [
@@ -41,8 +43,9 @@ export default iterateJsdoc(({
         continue;
       }
 
+      const empty = !tag && !name && !type && !description;
       if (
-        !tag && !name && !type && !description && !end &&
+        empty && !end &&
         (alwaysNever === 'never' ||
           lastTag && tags[lastTag.slice(1)]?.lines === 'never'
         )
@@ -52,7 +55,27 @@ export default iterateJsdoc(({
         continue;
       }
 
+      if (!end) {
+        lastEmpty = empty ? idx : null;
+      }
+
       lastTag = tag;
+    }
+
+    if (dropEndLines && lastEmpty !== null && tagIdx === jsdoc.tags.length - 1) {
+      const fixer = () => {
+        utils.removeTagItem(tagIdx, lastEmpty);
+      };
+
+      utils.reportJSDoc(
+        'Expected no trailing lines',
+        {
+          line: tg.source[lastEmpty].number,
+        },
+        fixer,
+      );
+
+      return true;
     }
 
     if (reportIndex !== null) {
@@ -162,6 +185,9 @@ export default iterateJsdoc(({
         properties: {
           count: {
             type: 'integer',
+          },
+          dropEndLines: {
+            type: 'boolean',
           },
           noEndLines: {
             type: 'boolean',

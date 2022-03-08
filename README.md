@@ -20695,7 +20695,7 @@ The first option is a single string set to "always", "never", or "any"
 (defaults to "never").
 
 "any" is only useful with `tags` (allowing non-enforcement of lines except
-for particular tags).
+for particular tags) or with `dropEndLines`.
 
 The second option is an object with the following optional properties.
 
@@ -20711,6 +20711,12 @@ Use with "always" to indicate the number of lines to require be present.
 
 Use with "always" to indicate the normal lines to be added after tags should
 not be added after the final tag.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-dropendlines-defaults-to-false"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-dropendlines-defaults-to-false"></a>
+##### <code>dropEndLines</code> (defaults to <code>false</code>)
+
+If defined, will drop end lines for the final tag only.
 
 <a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-tags-default-to-empty-object"></a>
 <a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-tags-default-to-empty-object"></a>
@@ -20869,6 +20875,20 @@ The following patterns are considered problems:
  */
 // "jsdoc/tag-lines": ["error"|"warn", "always"]
 // Message: Expected 1 line between tags but found 0
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {string} b
+ *
+ * @returns {SomeType} An extended
+ * description.
+ *
+ * This is still part of `@returns`.
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"dropEndLines":true}]
+// Message: Expected no trailing lines
 ````
 
 The following patterns are not considered problems:
@@ -21026,6 +21046,18 @@ The following patterns are not considered problems:
  *
  */
 // "jsdoc/tag-lines": ["error"|"warn", "always"]
+
+/**
+ * Some description
+ * @param {string} a
+ * @param {string} b
+ *
+ * @returns {SomeType} An extended
+ * description.
+ *
+ * This is still part of `@returns`.
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"dropEndLines":true}]
 ````
 
 

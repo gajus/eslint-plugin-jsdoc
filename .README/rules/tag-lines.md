@@ -8,7 +8,7 @@ The first option is a single string set to "always", "never", or "any"
 (defaults to "never").
 
 "any" is only useful with `tags` (allowing non-enforcement of lines except
-for particular tags).
+for particular tags) or with `dropEndLines`.
 
 The second option is an object with the following optional properties.
 
@@ -20,6 +20,10 @@ Use with "always" to indicate the number of lines to require be present.
 
 Use with "always" to indicate the normal lines to be added after tags should
 not be added after the final tag.
+
+##### `dropEndLines` (defaults to `false`)
+
+If defined, will drop end lines for the final tag only.
 
 ##### `tags` (default to empty object)
 
