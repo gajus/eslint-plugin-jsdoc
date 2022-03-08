@@ -446,7 +446,7 @@ export default {
       ],
       options: [
         {
-          mainDescription: '^[a-zA-Z]*$',
+          mainDescription: '^[a-zA-Z]*\\s*$',
           tags: {
             param: true,
           },
@@ -473,7 +473,7 @@ export default {
       options: [
         {
           mainDescription: {
-            match: '^[a-zA-Z]*$',
+            match: '^[a-zA-Z]*\\s*$',
             message: 'Letters only',
           },
           tags: {
@@ -911,6 +911,28 @@ export default {
           },
         },
       },
+    },
+    {
+      code: `
+          /**
+           * Description with extra new line
+           *
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
+      options: [
+        {
+          matchDescription: '[\\s\\S]*\\S$',
+        },
+      ],
     },
   ],
   valid: [
