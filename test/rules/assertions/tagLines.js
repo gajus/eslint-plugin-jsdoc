@@ -460,6 +460,45 @@ export default {
        */
       `,
     },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {string} b
+       *
+       * @returns {SomeType} An extended
+       * description.
+       *
+       * This is still part of \`@returns\`.
+       *
+       */
+      `,
+      errors: [
+        {
+          line: 11,
+          message: 'Expected no trailing lines',
+        },
+      ],
+      options: [
+        'any',
+        {
+          dropEndLines: true,
+        },
+      ],
+      output: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {string} b
+       *
+       * @returns {SomeType} An extended
+       * description.
+       *
+       * This is still part of \`@returns\`.
+       */
+      `,
+    },
   ],
   valid: [
     {
@@ -764,6 +803,26 @@ export default {
       `,
       options: [
         'always',
+      ],
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {string} b
+       *
+       * @returns {SomeType} An extended
+       * description.
+       *
+       * This is still part of \`@returns\`.
+       */
+      `,
+      options: [
+        'any',
+        {
+          dropEndLines: true,
+        },
       ],
     },
   ],
