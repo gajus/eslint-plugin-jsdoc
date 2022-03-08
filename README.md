@@ -6608,7 +6608,7 @@ The default is this basic expression to match English sentences (Support
 for Unicode upper case may be added in a future version when it can be handled
 by our supported Node versions):
 
-``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]$``
+``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]\\s*$``
 
 Applies to the jsdoc block description and `@description` (or `@desc`)
 by default but the `tags` option (see below) may be used to match other tags.
@@ -6960,7 +6960,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// "jsdoc/match-description": ["error"|"warn", {"mainDescription":"^[a-zA-Z]*$","tags":{"param":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":"^[a-zA-Z]*\\s*$","tags":{"param":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -6971,7 +6971,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// "jsdoc/match-description": ["error"|"warn", {"mainDescription":{"match":"^[a-zA-Z]*$","message":"Letters only"},"tags":{"param":{"match":true,"message":"Needs to begin with a capital letter and end with a period."}}}]
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":{"match":"^[a-zA-Z]*\\s*$","message":"Letters only"},"tags":{"param":{"match":true,"message":"Needs to begin with a capital letter and end with a period."}}}]
 // Message: Needs to begin with a capital letter and end with a period.
 
 /**
@@ -7150,6 +7150,16 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+// Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * Description with extra new line
+ *
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"matchDescription":"[\\s\\S]*\\S$"}]
 // Message: JSDoc description does not satisfy the regex pattern.
 ````
 
