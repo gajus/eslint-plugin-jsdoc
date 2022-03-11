@@ -934,6 +934,28 @@ export default {
         },
       ],
     },
+    {
+      code: `
+         /**
+          *
+          * This function does lots of things.
+          */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
+      options: [
+        {
+          matchDescription: '^\\S[\\s\\S]*\\S$',
+        },
+      ],
+    },
   ],
   valid: [
     {
