@@ -1,34 +1,37 @@
 // These are Visual Studio Code settings that should apply to this particular repository
 {
-    // ----------------
-    // Vanilla settings
-    // ----------------
+  // ----------------
+  // Vanilla settings
+  // ----------------
 
-    // This matches the Canonical ESLint Config
-    // https://www.npmjs.com/package/eslint-config-canonical
-    "editor.rulers": [100],
-    "editor.tabSize": 2,
+  // This matches the Canonical ESLint Config
+  // https://www.npmjs.com/package/eslint-config-canonical
+  "editor.rulers": [100],
+  "editor.tabSize": 2,
 
-    // Linux line endings are used in this project
-    "files.eol": "\n",
+  // Linux line endings are used in this project
+  "files.eol": "\n",
 
-    // Automatically removing all trailing whitespace when saving a file
-    "files.trimTrailingWhitespace": true,
-    "[markdown]": {
-      // The "README.md" has deliberate trailing whitespace, so we exempt all Markdown files as a
-      // workaround
-      "files.trimTrailingWhitespace": false
-    },
+  // Automatically removing all trailing whitespace when saving a file
+  "files.trimTrailingWhitespace": true,
 
-    // ----------
-    // JavaScript
-    // ----------
+  // ----------
+  // JavaScript
+  // ----------
 
-    // Automatically run the formatter when a JavaScript file is saved
-    "[javascript]": {
-      "editor.codeActionsOnSave": [
-        "source.fixAll.eslint",
-      ],
-      "editor.tabSize": 2,
-    },
-  }
+  // Automatically run the formatter when a JavaScript file is saved
+  "[javascript]": {
+    "editor.codeActionsOnSave": ["source.fixAll.eslint"],
+    "editor.tabSize": 2
+  },
+
+  // --------
+  // Markdown
+  // --------
+
+  // The "README.md" has deliberate trailing whitespace, so we exempt all Markdown files as a
+  // workaround
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+}
