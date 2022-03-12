@@ -177,6 +177,8 @@ which enables the rules commented above as "recommended":
 
 You can then selectively add to or override the recommended rules.
 
+Note that some of the rules from the "recommended" config only apply in certain contexts, like when the JSDoc is attached to a function. If you want to use a more strict configuration with the rules configured to apply in every context, then extend from the "recommended-all-contexts" config instead.
+
 <a name="user-content-eslint-plugin-jsdoc-options"></a>
 <a name="eslint-plugin-jsdoc-options"></a>
 ## Options
@@ -4324,7 +4326,7 @@ function quux (foo) {}
 // Settings: {"jsdoc":{"mode":"closure"}}
 // Message: Invalid JSDoc tag (preference). Replace "returns" JSDoc tag with "return".
 
-/** 
+/**
  * @modifies
  * @abstract
  * @access
@@ -4400,7 +4402,7 @@ function quux (foo) {}
 // Settings: {"jsdoc":{"mode":"badMode"}}
 // Message: Unrecognized value `badMode` for `settings.jsdoc.mode`.
 
-/** 
+/**
  * @modifies
  * @abstract
  * @access
@@ -4476,7 +4478,7 @@ function quux (foo) {}
 function quux (foo) {}
 // Message: Invalid JSDoc tag name "template".
 
-/** 
+/**
  * @externs
  */
 function quux (foo) {}
@@ -4557,7 +4559,7 @@ function quux (foo) {}
 function quux (foo) {}
 // Settings: {"jsdoc":{"mode":"closure"}}
 
-/** 
+/**
  * @modifies
  * @abstract
  * @access
@@ -4631,7 +4633,7 @@ function quux (foo) {}
  */
 function quux (foo) {}
 
-/** 
+/**
  * @modifies
  * @abstract
  * @access
@@ -4707,7 +4709,7 @@ function quux (foo) {}
 function quux (foo) {}
 // Settings: {"jsdoc":{"mode":"typescript"}}
 
-/** 
+/**
  * @externs
  */
 function quux (foo) {}
@@ -8323,7 +8325,7 @@ function quux () {
 
 
      /**
-      * 
+      *
       * @foo
       * Test 
       * abc 
@@ -8340,10 +8342,10 @@ function quux () {
 
 /**
  * Parses query string to object containing URL parameters
- * 
+ *
  * @param queryString
  * Input string
- * 
+ *
  * @returns
  * Object containing URL parameters
  */
@@ -10797,7 +10799,7 @@ function quux () {
 // Message: Sentence must end with a period.
 
 /**
- * Sorry, but this isn't a complete sentence Mr. 
+ * Sorry, but this isn't a complete sentence Mr.
  */
 function quux () {
 
@@ -11127,7 +11129,7 @@ function quux () {
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr."]}]
 
 /**
- * Sorry, but this isn't a complete sentence Mr. 
+ * Sorry, but this isn't a complete sentence Mr.
  */
 function quux () {
 
