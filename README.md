@@ -7675,14 +7675,14 @@ function quux () {
  * @property opt_a
  * @param {Bar|Foo} opt_b
  */
-// "jsdoc/match-name": ["error"|"warn", {"match":[{"comment":"JSDocBlock:has(JSDocTag[tag=\"param\"][name=/opt_/] > JSDocTypeUnion:has(JsdocTypeName[value=\"Bar\"]:nth-child(1)))"}]}]
+// "jsdoc/match-name": ["error"|"warn", {"match":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"param\"][name=/opt_/] > JsdocTypeUnion:has(JsdocTypeName[value=\"Bar\"]:nth-child(1)))"}]}]
 // Message: Prohibited context for "opt_a".
 
 /**
  * @property opt_a
  * @param {Bar|Foo} opt_b
  */
-// "jsdoc/match-name": ["error"|"warn", {"match":[{"comment":"JSDocBlock:has(JSDocTag[tag=\"param\"][name=/opt_/] > JSDocTypeUnion:has(JsdocTypeName[value=\"Bar\"]:nth-child(1)))","message":"Don't use `opt_` prefixes with Bar|..."}]}]
+// "jsdoc/match-name": ["error"|"warn", {"match":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"param\"][name=/opt_/] > JsdocTypeUnion:has(JsdocTypeName[value=\"Bar\"]:nth-child(1)))","message":"Don't use `opt_` prefixes with Bar|..."}]}]
 // Message: Don't use `opt_` prefixes with Bar|...
 
 /**
@@ -7754,7 +7754,7 @@ class A {
  * @property opt_a
  * @param {Foo|Bar} opt_b
  */
-// "jsdoc/match-name": ["error"|"warn", {"match":[{"comment":"JSDocBlock > JSDocTag[tag=\"param\"] > JSDocTypeUnion[left.name=\"Bar\"]","disallowName":"/^opt_/i"}]}]
+// "jsdoc/match-name": ["error"|"warn", {"match":[{"comment":"JsdocBlock > JsdocTag[tag=\"param\"] > JsdocTypeUnion[left.name=\"Bar\"]","disallowName":"/^opt_/i"}]}]
 ````
 
 

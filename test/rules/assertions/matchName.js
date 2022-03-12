@@ -279,7 +279,7 @@ export default {
         {
           match: [
             {
-              comment: 'JSDocBlock:has(JSDocTag[tag="param"][name=/opt_/] > JSDocTypeUnion:has(JsdocTypeName[value="Bar"]:nth-child(1)))',
+              comment: 'JsdocBlock:has(JsdocTag[tag="param"][name=/opt_/] > JsdocTypeUnion:has(JsdocTypeName[value="Bar"]:nth-child(1)))',
             },
           ],
         },
@@ -302,7 +302,7 @@ export default {
         {
           match: [
             {
-              comment: 'JSDocBlock:has(JSDocTag[tag="param"][name=/opt_/] > JSDocTypeUnion:has(JsdocTypeName[value="Bar"]:nth-child(1)))',
+              comment: 'JsdocBlock:has(JsdocTag[tag="param"][name=/opt_/] > JsdocTypeUnion:has(JsdocTypeName[value="Bar"]:nth-child(1)))',
               message: 'Don\'t use `opt_` prefixes with Bar|...',
             },
           ],
@@ -511,7 +511,7 @@ export default {
         {
           match: [
             {
-              comment: 'JSDocBlock > JSDocTag[tag="param"] > JSDocTypeUnion[left.name="Bar"]',
+              comment: 'JsdocBlock > JsdocTag[tag="param"] > JsdocTypeUnion[left.name="Bar"]',
               disallowName: '/^opt_/i',
             },
           ],
