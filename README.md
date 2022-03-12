@@ -177,6 +177,8 @@ which enables the rules commented above as "recommended":
 
 You can then selectively add to or override the recommended rules.
 
+Note that some of the rules from the "recommended" config only apply in certain contexts, like when the JSDoc is attached to a function. If you want to use a more strict configuration with the rules configured to apply in every context, then extend from the "recommended-all-contexts" config instead.
+
 <a name="user-content-eslint-plugin-jsdoc-options"></a>
 <a name="eslint-plugin-jsdoc-options"></a>
 ## Options
