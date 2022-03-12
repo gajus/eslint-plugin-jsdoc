@@ -16,3 +16,4 @@ pnpm-lock.yaml
 !.ncurc.js
 !.github
 !.husky
+!.vscode
