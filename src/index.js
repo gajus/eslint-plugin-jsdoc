@@ -48,65 +48,92 @@ import sortTags from './rules/sortTags';
 import tagLines from './rules/tagLines';
 import validTypes from './rules/validTypes';
 
+/** The rules for the provided "recommended" ESLint config. */
+const recommendedRules = {
+  'jsdoc/check-access': 'warn',
+  'jsdoc/check-alignment': 'warn',
+  'jsdoc/check-examples': 'off',
+  'jsdoc/check-indentation': 'off',
+  'jsdoc/check-line-alignment': 'off',
+  'jsdoc/check-param-names': 'warn',
+  'jsdoc/check-property-names': 'warn',
+  'jsdoc/check-syntax': 'off',
+  'jsdoc/check-tag-names': 'warn',
+  'jsdoc/check-types': 'warn',
+  'jsdoc/check-values': 'warn',
+  'jsdoc/empty-tags': 'warn',
+  'jsdoc/implements-on-classes': 'warn',
+  'jsdoc/match-description': 'off',
+  'jsdoc/match-name': 'off',
+  'jsdoc/multiline-blocks': 'warn',
+  'jsdoc/newline-after-description': 'warn',
+  'jsdoc/no-bad-blocks': 'off',
+  'jsdoc/no-defaults': 'off',
+  'jsdoc/no-missing-syntax': 'off',
+  'jsdoc/no-multi-asterisks': 'warn',
+  'jsdoc/no-restricted-syntax': 'off',
+  'jsdoc/no-types': 'off',
+  'jsdoc/no-undefined-types': 'warn',
+  'jsdoc/require-asterisk-prefix': 'off',
+  'jsdoc/require-description': 'off',
+  'jsdoc/require-description-complete-sentence': 'off',
+  'jsdoc/require-example': 'off',
+  'jsdoc/require-file-overview': 'off',
+  'jsdoc/require-hyphen-before-param-description': 'off',
+  'jsdoc/require-jsdoc': 'warn',
+  'jsdoc/require-param': 'warn',
+  'jsdoc/require-param-description': 'warn',
+  'jsdoc/require-param-name': 'warn',
+  'jsdoc/require-param-type': 'warn',
+  'jsdoc/require-property': 'warn',
+  'jsdoc/require-property-description': 'warn',
+  'jsdoc/require-property-name': 'warn',
+  'jsdoc/require-property-type': 'warn',
+  'jsdoc/require-returns': 'warn',
+  'jsdoc/require-returns-check': 'warn',
+  'jsdoc/require-returns-description': 'warn',
+  'jsdoc/require-returns-type': 'warn',
+  'jsdoc/require-throws': 'off',
+  'jsdoc/require-yields': 'warn',
+  'jsdoc/require-yields-check': 'warn',
+  'jsdoc/sort-tags': 'off',
+  'jsdoc/tag-lines': 'warn',
+  'jsdoc/valid-types': 'warn',
+};
+
+/**
+ * The rules for the provided "recommended-all-contexts" ESLint config. These are inherited from the
+ * "recommended" config, except they apply in all contexts. (By default, some of the rules only
+ * apply in certain contexts, like when they are attached to a function. In the strict config, the
+ * rules will apply all of the time.
+ */
+const recommendedAllContextsRules = {};
+for (const [key, value] of Object.entries(recommendedRules)) {
+  const ruleProperties = {
+    contexts: ['any'],
+  };
+  strictRules[key] = [value, ruleProperties];
+}
+
 export default {
   configs: {
     recommended: {
       plugins: [
         'jsdoc',
       ],
-      rules: {
-        'jsdoc/check-access': 'warn',
-        'jsdoc/check-alignment': 'warn',
-        'jsdoc/check-examples': 'off',
-        'jsdoc/check-indentation': 'off',
-        'jsdoc/check-line-alignment': 'off',
-        'jsdoc/check-param-names': 'warn',
-        'jsdoc/check-property-names': 'warn',
-        'jsdoc/check-syntax': 'off',
-        'jsdoc/check-tag-names': 'warn',
-        'jsdoc/check-types': 'warn',
-        'jsdoc/check-values': 'warn',
-        'jsdoc/empty-tags': 'warn',
-        'jsdoc/implements-on-classes': 'warn',
-        'jsdoc/match-description': 'off',
-        'jsdoc/match-name': 'off',
-        'jsdoc/multiline-blocks': 'warn',
-        'jsdoc/newline-after-description': 'warn',
-        'jsdoc/no-bad-blocks': 'off',
-        'jsdoc/no-defaults': 'off',
-        'jsdoc/no-missing-syntax': 'off',
-        'jsdoc/no-multi-asterisks': 'warn',
-        'jsdoc/no-restricted-syntax': 'off',
-        'jsdoc/no-types': 'off',
-        'jsdoc/no-undefined-types': 'warn',
-        'jsdoc/require-asterisk-prefix': 'off',
-        'jsdoc/require-description': 'off',
-        'jsdoc/require-description-complete-sentence': 'off',
-        'jsdoc/require-example': 'off',
-        'jsdoc/require-file-overview': 'off',
-        'jsdoc/require-hyphen-before-param-description': 'off',
-        'jsdoc/require-jsdoc': 'warn',
-        'jsdoc/require-param': 'warn',
-        'jsdoc/require-param-description': 'warn',
-        'jsdoc/require-param-name': 'warn',
-        'jsdoc/require-param-type': 'warn',
-        'jsdoc/require-property': 'warn',
-        'jsdoc/require-property-description': 'warn',
-        'jsdoc/require-property-name': 'warn',
-        'jsdoc/require-property-type': 'warn',
-        'jsdoc/require-returns': 'warn',
-        'jsdoc/require-returns-check': 'warn',
-        'jsdoc/require-returns-description': 'warn',
-        'jsdoc/require-returns-type': 'warn',
-        'jsdoc/require-throws': 'off',
-        'jsdoc/require-yields': 'warn',
-        'jsdoc/require-yields-check': 'warn',
-        'jsdoc/sort-tags': 'off',
-        'jsdoc/tag-lines': 'warn',
-        'jsdoc/valid-types': 'warn',
-      },
+
+      rules: recommendedRules,
+    },
+
+    'recommended-all-contexts': {
+      plugins: [
+        'jsdoc',
+      ],
+
+      rules: recommendedAllContextsRules,
     },
   },
+
   rules: {
     'check-access': checkAccess,
     'check-alignment': checkAlignment,
