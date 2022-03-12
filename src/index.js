@@ -112,7 +112,7 @@ for (const [key, value] of Object.entries(recommendedRules)) {
   const ruleProperties = {
     contexts: ['any'],
   };
-  strictRules[key] = [value, ruleProperties];
+  recommendedAllContextsRules[key] = [value, ruleProperties];
 }
 
 export default {
