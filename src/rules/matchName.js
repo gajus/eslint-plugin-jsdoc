@@ -50,9 +50,14 @@ export default iterateJsdoc(({
     }
 
     const fixer = () => {
-      tag.source[0].tokens.name = tag.source[0].tokens.name.replace(
-        disallowNameRegex, replacement,
-      );
+      for (const src of tag.source) {
+        if (src.tokens.name) {
+          src.tokens.name = src.tokens.name.replace(
+            disallowNameRegex, replacement,
+          );
+          break;
+        }
+      }
     };
 
     let {

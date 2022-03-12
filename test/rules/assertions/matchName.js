@@ -325,6 +325,38 @@ export default {
       ],
       options: [],
     },
+    {
+      code: `
+        /**
+         * @param {
+         *   someType
+         * } opt_a
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Only allowing names not matching `/^opt_/i` but found "opt_a".',
+        },
+      ],
+      options: [
+        {
+          match: [
+            {
+              disallowName: '/^opt_/i',
+              replacement: '',
+            },
+          ],
+        },
+      ],
+      output: `
+        /**
+         * @param {
+         *   someType
+         * } a
+         */
+      `,
+    },
   ],
   valid: [
     {

@@ -7685,6 +7685,14 @@ function quux () {
 function quux () {}
 // "jsdoc/match-name": ["error"|"warn", ]
 // Message: Rule `no-restricted-syntax` is missing a `match` option.
+
+/**
+ * @param {
+ *   someType
+ * } opt_a
+ */
+// "jsdoc/match-name": ["error"|"warn", {"match":[{"disallowName":"/^opt_/i","replacement":""}]}]
+// Message: Only allowing names not matching `/^opt_/i` but found "opt_a".
 ````
 
 The following patterns are not considered problems:
