@@ -7171,6 +7171,13 @@ function quux () {
  }
 // "jsdoc/match-description": ["error"|"warn", {"matchDescription":"^\\S[\\s\\S]*\\S$"}]
 // Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ *
+ * @param
+ */
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["any"],"matchDescription":"^\\S[\\s\\S]*\\S$"}]
+// Message: JSDoc description does not satisfy the regex pattern.
 ````
 
 The following patterns are not considered problems:

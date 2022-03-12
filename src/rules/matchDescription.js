@@ -23,7 +23,7 @@ export default iterateJsdoc(({
     tags,
   } = context.options[0] || {};
 
-  const validateDescription = (description, tag) => {
+  const validateDescription = (desc, tag) => {
     let mainDescriptionMatch = mainDescription;
     let errorMessage = message;
     if (typeof mainDescription === 'object') {
@@ -52,7 +52,7 @@ export default iterateJsdoc(({
       stringOrDefault(tagValue, matchDescription),
     );
 
-    if (!regex.test(description)) {
+    if (!regex.test(desc)) {
       report(
         errorMessage || 'JSDoc description does not satisfy the regex pattern.',
         null,
@@ -64,10 +64,10 @@ export default iterateJsdoc(({
     }
   };
 
-  if (jsdoc.description) {
-    const {
-      description,
-    } = utils.getDescription();
+  const {
+    description,
+  } = utils.getDescription();
+  if (description) {
     validateDescription(description);
   }
 
@@ -80,9 +80,9 @@ export default iterateJsdoc(({
   };
 
   utils.forEachPreferredTag('description', (matchingJsdocTag, targetTagName) => {
-    const description = (matchingJsdocTag.name + ' ' + utils.getTagDescription(matchingJsdocTag)).trim();
+    const desc = (matchingJsdocTag.name + ' ' + utils.getTagDescription(matchingJsdocTag)).trim();
     if (hasOptionTag(targetTagName)) {
-      validateDescription(description, matchingJsdocTag);
+      validateDescription(desc, matchingJsdocTag);
     }
   }, true);
 
@@ -97,16 +97,16 @@ export default iterateJsdoc(({
   } = utils.getTagsByType(whitelistedTags);
 
   tagsWithNames.some((tag) => {
-    const description = utils.getTagDescription(tag).replace(/^[- ]*/u, '')
+    const desc = utils.getTagDescription(tag).replace(/^[- ]*/u, '')
       .trim();
 
-    return validateDescription(description, tag);
+    return validateDescription(desc, tag);
   });
 
   tagsWithoutNames.some((tag) => {
-    const description = (tag.name + ' ' + utils.getTagDescription(tag)).trim();
+    const desc = (tag.name + ' ' + utils.getTagDescription(tag)).trim();
 
-    return validateDescription(description, tag);
+    return validateDescription(desc, tag);
   });
 }, {
   contextDefaults: true,

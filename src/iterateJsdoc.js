@@ -182,7 +182,7 @@ const getUtils = (
       }
 
       if (idx || description) {
-        descriptions.push(description);
+        descriptions.push(description || (descriptions.length ? '' : '\n'));
       }
 
       return false;

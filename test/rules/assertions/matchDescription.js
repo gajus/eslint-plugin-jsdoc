@@ -956,6 +956,28 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         *
+         * @param
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          matchDescription: '^\\S[\\s\\S]*\\S$',
+        },
+      ],
+    },
   ],
   valid: [
     {
