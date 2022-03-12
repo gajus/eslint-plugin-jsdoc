@@ -104,7 +104,7 @@ const recommendedRules = {
 /**
  * The rules for the provided "recommended-all-contexts" ESLint config. These are inherited from the
  * "recommended" config, except they apply in all contexts. (By default, some of the rules only
- * apply in certain contexts, like when they are attached to a function. In the strict config, the
+ * apply in certain contexts, like when they are attached to a function. In this stricter config, the
  * rules will apply all of the time.
  */
 const recommendedAllContextsRules = {};
