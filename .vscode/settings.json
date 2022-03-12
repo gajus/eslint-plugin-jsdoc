@@ -14,6 +14,11 @@
 
     // Automatically removing all trailing whitespace when saving a file
     "files.trimTrailingWhitespace": true,
+    "[markdown]": {
+      // The "README.md" has deliberate trailing whitespace, so we exempt all Markdown files as a
+      // workaround
+      "files.trimTrailingWhitespace": false
+    },
 
     // ----------
     // JavaScript
