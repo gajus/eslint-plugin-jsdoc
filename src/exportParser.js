@@ -456,6 +456,8 @@ const canBeExportedByAncestorType = new Set([
 const canExportChildrenType = new Set([
   'TSInterfaceBody',
   'TSInterfaceDeclaration',
+  'TSTypeLiteral',
+  'TSTypeAliasDeclaration',
   'ClassDeclaration',
   'ClassBody',
   'ClassDefinition',

@@ -3726,6 +3726,96 @@ function quux (foo) {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+        /** Alpha of all types */
+        export type Alpha = {
+          one: string;
+          two: number;
+        };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 5,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      ignoreReadme: true,
+      options: [
+        {
+          contexts: [
+            'TSPropertySignature',
+          ],
+          publicOnly: true,
+        },
+      ],
+      output: `
+        /** Alpha of all types */
+        export type Alpha = {
+          /**
+           *
+           */
+          one: string;
+          /**
+           *
+           */
+          two: number;
+        };
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        export type Alpha = {
+          one: string;
+          two: number;
+        };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      ignoreReadme: true,
+      options: [
+        {
+          contexts: [
+            'TSTypeAliasDeclaration',
+            'TSPropertySignature',
+          ],
+          publicOnly: true,
+        },
+      ],
+      output: `
+        /**
+         *
+         */
+        export type Alpha = {
+          /**
+           *
+           */
+          one: string;
+          /**
+           *
+           */
+          two: number;
+        };
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
