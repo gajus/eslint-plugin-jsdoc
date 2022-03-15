@@ -490,5 +490,21 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /** Does something very important. */
+        function foo(): string;
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[endLine=0][description!=/^\\S[\\s\\S]*\\S\\s$/]',
+            },
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
