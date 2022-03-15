@@ -7533,6 +7533,10 @@ function quux (foo) {
 function quux () {
 }
 // "jsdoc/match-description": ["error"|"warn", {"mainDescription":false,"tags":{"todo":true}}]
+
+/** Does something very important. */
+function foo(): string;
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[endLine!=0]"}],"matchDescription":"^\\S[\\s\\S]*\\S$"}]
 ````
 
 

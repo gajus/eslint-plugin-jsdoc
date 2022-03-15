@@ -1636,5 +1636,22 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /** Does something very important. */
+        function foo(): string;
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[endLine!=0]',
+            },
+          ],
+          matchDescription: '^\\S[\\s\\S]*\\S$',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
