@@ -569,7 +569,7 @@ While at their simplest, these can be an array of string selectors, one can
 also supply an object with `context` (in place of the string) and one of two
 properties:
 
-1. For `require-jsdoc`, there is also a `inlineCommentBlock` property. See
+1. For `require-jsdoc`, there is also an `inlineCommentBlock` property. See
     that rule for details.
 1. For `no-missing-syntax` and `no-restricted-syntax`, there is also a
     `message` property which allows customization of the message to be shown
