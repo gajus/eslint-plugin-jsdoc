@@ -7178,6 +7178,11 @@ function quux () {
  */
 // "jsdoc/match-description": ["error"|"warn", {"contexts":["any"],"matchDescription":"^\\S[\\s\\S]*\\S$"}]
 // Message: JSDoc description does not satisfy the regex pattern.
+
+/** Does something very important. */
+function foo(): string;
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[endLine=0]"}],"matchDescription":"^\\S[\\s\\S]*\\S$"}]
+// Message: JSDoc description does not satisfy the regex pattern.
 ````
 
 The following patterns are not considered problems:
@@ -7537,6 +7542,14 @@ function quux () {
 /** Does something very important. */
 function foo(): string;
 // "jsdoc/match-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[endLine!=0]"}],"matchDescription":"^\\S[\\s\\S]*\\S$"}]
+
+/**
+ * This is my favorite function, foo.
+ *
+ * @returns Nothing.
+ */
+function foo(): void;
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[endLine!=0]:not(:has(JsdocTag))"}],"matchDescription":"^\\S[\\s\\S]*\\S$"}]
 ````
 
 

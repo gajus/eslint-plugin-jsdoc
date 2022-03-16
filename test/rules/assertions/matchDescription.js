@@ -978,6 +978,29 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /** Does something very important. */
+        function foo(): string;
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description does not satisfy the regex pattern.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[endLine=0]',
+            },
+          ],
+          matchDescription: '^\\S[\\s\\S]*\\S$',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
@@ -1646,6 +1669,27 @@ export default {
           contexts: [
             {
               comment: 'JsdocBlock[endLine!=0]',
+            },
+          ],
+          matchDescription: '^\\S[\\s\\S]*\\S$',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        /**
+         * This is my favorite function, foo.
+         *
+         * @returns Nothing.
+         */
+        function foo(): void;
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[endLine!=0]:not(:has(JsdocTag))',
             },
           ],
           matchDescription: '^\\S[\\s\\S]*\\S$',
