@@ -6,7 +6,7 @@ The default is this basic expression to match English sentences (Support
 for Unicode upper case may be added in a future version when it can be handled
 by our supported Node versions):
 
-``^([A-Z]|[`\\d_])[\\s\\S]*[.?!`]\\s*$``
+``^\n?([A-Z`\\d_][\\s\\S]*[.?!`]\\s*)?$``
 
 Applies to the jsdoc block description and `@description` (or `@desc`)
 by default but the `tags` option (see below) may be used to match other tags.

@@ -17,6 +17,7 @@ export default {
       ],
       output: `
           /**
+           *
            * @example
            */
           function quux () {
@@ -46,6 +47,7 @@ export default {
       ],
       output: `
           /**
+           *
            * @example
            */
           function quux (someParam) {
@@ -68,6 +70,7 @@ function quux () {
         },
       ],
       output: `/**
+ *
  * @example
  */
 function quux () {
@@ -157,6 +160,7 @@ function quux () {
       ],
       output: `
           /**
+           *
            * @example
            */
           class quux {
@@ -185,6 +189,7 @@ function quux () {
       ],
       output: `
           /**
+           *
            * @example
            */
       `,
@@ -212,6 +217,7 @@ function quux () {
       ],
       output: `
           /**
+           *
            * @example
            */
           function quux () {
@@ -241,6 +247,7 @@ function quux () {
       output: `
       class TestClass {
         /**
+         *
          * @example
          */
         get Test() { }
@@ -291,6 +298,7 @@ function quux () {
       output: `
       class TestClass {
         /**
+         *
          * @example
          */
         set Test(value) { }

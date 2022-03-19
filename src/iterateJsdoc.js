@@ -1,5 +1,3 @@
-/* eslint-disable jsdoc/valid-types */
-
 import {
   getReducedASTNode,
   getJSDocComment,
@@ -284,7 +282,13 @@ const getUtils = (
 
   utils.addTag = (
     targetTagName,
-    number = (jsdoc.tags[jsdoc.tags.length - 1]?.source[0]?.number ?? 0) + 1,
+    number = (jsdoc.tags[jsdoc.tags.length - 1]?.source[0]?.number ?? jsdoc.source.findIndex(({
+      tokens: {
+        tag,
+      },
+    }) => {
+      return tag;
+    }) - 1) + 1,
     tokens = {},
   ) => {
     jsdoc.source.splice(number, 0, {

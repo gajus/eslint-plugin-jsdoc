@@ -2,7 +2,7 @@ import iterateJsdoc from '../iterateJsdoc';
 
 // If supporting Node >= 10, we could loosen the default to this for the
 //   initial letter: \\p{Upper}
-const matchDescriptionDefault = '^[A-Z`\\d_][\\s\\S]*[.?!`]\\s*$';
+const matchDescriptionDefault = '^\n?([A-Z`\\d_][\\s\\S]*[.?!`]\\s*)?$';
 
 const stringOrDefault = (value, userDefault) => {
   return typeof value === 'string' ?

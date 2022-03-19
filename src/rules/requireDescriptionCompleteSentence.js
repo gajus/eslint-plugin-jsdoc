@@ -74,7 +74,7 @@ const validateDescription = (
   description, reportOrig, jsdocNode, abbreviationsRegex,
   sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd,
 ) => {
-  if (!description) {
+  if (!description || (/^\n+$/u).test(description)) {
     return false;
   }
 

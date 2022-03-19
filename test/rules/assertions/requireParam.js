@@ -23,6 +23,7 @@ export default {
       ],
       output: `
           /**
+           *
            * @param foo
            */
           function quux (foo) {
@@ -54,6 +55,7 @@ export default {
       ],
       output: `
            /**
+            *
             * @param foo
             */
            function quux (foo) {
@@ -82,6 +84,7 @@ export default {
       ],
       output: `
           /**
+           *
            * @param root0
            * @param root0.foo
            */
@@ -209,6 +212,7 @@ export default {
       ],
       output: `
           /**
+           *
            * @param root0
            * @param root0.foo
            */
@@ -379,6 +383,7 @@ export default {
       ],
       output: `
           /**
+           *
            * @param arg0
            * @param arg0.foo
            * @param arg1
@@ -425,6 +430,7 @@ export default {
       ],
       output: `
           /**
+           *
            * @param arg
            * @param arg.foo
            * @param config0
@@ -472,6 +478,7 @@ export default {
       ],
       output: `
           /**
+           *
            * @param arg
            * @param arg.foo
            */
@@ -501,6 +508,7 @@ export default {
       ],
       output: `
           /**
+           *
            * @param foo
            * @param bar
            */
@@ -844,6 +852,7 @@ export default {
            */
           class A {
             /**
+             *
              * @param foo
              */
             quux (foo) {
@@ -883,6 +892,7 @@ export default {
            */
           class A {
             /**
+             *
              * @param foo
              */
             quux (foo) {
@@ -922,6 +932,7 @@ export default {
            */
           class A {
             /**
+             *
              * @param foo
              */
             quux (foo) {
@@ -961,6 +972,7 @@ export default {
            */
           class A {
             /**
+             *
              * @param foo
              */
             quux (foo) {
@@ -995,6 +1007,7 @@ export default {
            */
           class A {
             /**
+             *
              * @param foo
              */
             quux (foo) {
@@ -1083,6 +1096,7 @@ export default {
       ],
       output: `
       /**
+       *
        * @param root0
        * @param root0.bar
        * @param root0.baz
@@ -1120,6 +1134,7 @@ export default {
       ],
       output: `
       /**
+       *
        * @param foo
        * @param root0
        * @param root0.bar
@@ -1157,6 +1172,7 @@ export default {
       ],
       output: `
       /**
+       *
        * @param root0
        * @param root0."0"
        * @param root0."1"
@@ -1189,6 +1205,7 @@ export default {
       ],
       output: `
           /**
+           *
            * @param foo
            */
           function quux (foo) {
@@ -1393,6 +1410,7 @@ export default {
       declare class TestClass
       {
       /**
+       *
        * @param id
        */
       TestMethod(id);

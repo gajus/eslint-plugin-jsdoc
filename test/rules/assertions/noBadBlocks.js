@@ -223,6 +223,9 @@ export default {
       code: '/* */',
     },
     {
+      code: '/** */',
+    },
+    {
       code: '/* @custom */',
       options: [
         {
@@ -243,6 +246,9 @@ export default {
 
           }
       `,
+    },
+    {
+      code: '/***/',
     },
   ],
 };

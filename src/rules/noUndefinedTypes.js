@@ -74,7 +74,7 @@ export default iterateJsdoc(({
 
   const typedefDeclarations = context.getAllComments()
     .filter((comment) => {
-      return comment.value.startsWith('*');
+      return (/^\*\s/u).test(comment.value);
     })
     .map((commentNode) => {
       return parseComment(commentNode, '');
