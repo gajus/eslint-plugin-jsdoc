@@ -9576,6 +9576,9 @@ function quux (foo) {
  * @callback
  * @param {number} foo
  */
+
+/*** Oops that's too many asterisks by accident **/
+function a () {}
 ````
 
 

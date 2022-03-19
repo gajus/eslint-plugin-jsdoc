@@ -268,5 +268,11 @@ export default {
            */
       `,
     },
+    {
+      code: `
+        /*** Oops that's too many asterisks by accident **/
+        function a () {}
+      `,
+    },
   ],
 };
