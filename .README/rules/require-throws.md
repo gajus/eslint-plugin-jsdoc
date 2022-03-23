@@ -2,6 +2,13 @@
 
 Requires that throw statements are documented.
 
+Note that since throw statements within async functions end up as rejected
+Promises, they are not considered as throw statements for the purposes of this
+rule. See [issue 755](https://github.com/gajus/eslint-plugin-jsdoc/issues/755)
+for our desire for a separate tag to document rejection types and see
+[this discussion](https://stackoverflow.com/questions/50071115/typescript-promise-rejection-type)
+on why TypeScript doesn't offer such a feature.
+
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
