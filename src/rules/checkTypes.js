@@ -21,7 +21,19 @@ const strictNativeTypes = [
   'RegExp',
 ];
 
-const adjustNames = (type, preferred, isGenericMatch, nodeName, node, parentNode) => {
+/**
+ * Adjusts the parent type node `meta` for generic matches (or type node
+ * `type` for `JsdocTypeAny`) and sets the type node `value`.
+ *
+ * @param {string} type The actual type
+ * @param {string} preferred The preferred type
+ * @param {boolean} isGenericMatch
+ * @param {string} typeNodeName
+ * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} node
+ * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} parentNode
+ * @returns {void}
+ */
+const adjustNames = (type, preferred, isGenericMatch, typeNodeName, node, parentNode) => {
   let ret = preferred;
   if (isGenericMatch) {
     if (preferred === '[]') {
@@ -42,7 +54,7 @@ const adjustNames = (type, preferred, isGenericMatch, nodeName, node, parentNode
           ret = preferred.slice(0, -2);
         } else if (
           parentNode.meta.brackets === 'square' &&
-          (nodeName === '[]' || nodeName === 'Array')
+          (typeNodeName === '[]' || typeNodeName === 'Array')
         ) {
           parentNode.meta.brackets = 'angle';
           parentNode.meta.dot = false;
@@ -57,7 +69,7 @@ const adjustNames = (type, preferred, isGenericMatch, nodeName, node, parentNode
 
   // For bare pseudo-types like `<>`
   if (!ret) {
-    node.value = nodeName;
+    node.value = typeNodeName;
   }
 };
 
@@ -84,10 +96,20 @@ export default iterateJsdoc(({
     exemptTagContexts = [],
   } = context.options[0] || {};
 
-  const getPreferredTypeInfo = (_type, nodeName, parentNode, property) => {
-    let hasMatchingPreferredType;
-    let isGenericMatch;
-    let typeName = nodeName;
+  /**
+   * Gets information about the preferred type: whether there is a matching
+   * preferred type, what the type is, and whether it is a match to a generic.
+   *
+   * @param {string} _type Not currently in use
+   * @param {string} typeNodeName
+   * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} parentNode
+   * @param {string} property
+   * @returns {[hasMatchingPreferredType: boolean, typeName: string, isGenericMatch: boolean]}
+   */
+  const getPreferredTypeInfo = (_type, typeNodeName, parentNode, property) => {
+    let hasMatchingPreferredType = false;
+    let isGenericMatch = false;
+    let typeName = typeNodeName;
     if (Object.keys(preferredTypes).length) {
       const isNameOfGeneric = parentNode !== undefined && parentNode.type === 'JsdocTypeGeneric' && property === 'left';
       if (unifyParentAndChildTypeChecks || isNameOfGeneric) {
@@ -101,7 +123,7 @@ export default iterateJsdoc(({
             '<>',
           ];
           isGenericMatch = checkPostFixes.some((checkPostFix) => {
-            if (preferredTypes?.[nodeName + checkPostFix] !== undefined) {
+            if (preferredTypes?.[typeNodeName + checkPostFix] !== undefined) {
               typeName += checkPostFix;
 
               return true;
@@ -130,8 +152,8 @@ export default iterateJsdoc(({
         }
       }
 
-      const directNameMatch = preferredTypes?.[nodeName] !== undefined &&
-        !Object.values(preferredTypes).includes(nodeName);
+      const directNameMatch = preferredTypes?.[typeNodeName] !== undefined &&
+        !Object.values(preferredTypes).includes(typeNodeName);
       const unifiedSyntaxParentMatch = property && directNameMatch && unifyParentAndChildTypeChecks;
       isGenericMatch = isGenericMatch || unifiedSyntaxParentMatch;
 
@@ -142,6 +164,128 @@ export default iterateJsdoc(({
     return [
       hasMatchingPreferredType, typeName, isGenericMatch,
     ];
+  };
+
+  /**
+   * @param {string} typeNodeName
+   * @param {string} preferred
+   * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} parentNode
+   * @param {string[]} invalidTypes
+   * @returns {string} The `preferred` string, optionally changed
+   */
+  const check = (typeNodeName, preferred, parentNode, invalidTypes) => {
+    let changedPreferred = preferred;
+    for (const strictNativeType of strictNativeTypes) {
+      if (
+        // Todo: Avoid typescript condition if moving to default typescript
+        strictNativeType === 'object' && mode === 'typescript' &&
+        (
+          // This is not set to remap with exact type match (e.g.,
+          //   `object: 'Object'`), so can ignore (including if circular)
+          !preferredTypes?.[typeNodeName] ||
+          // Although present on `preferredTypes` for remapping, this is a
+          //   parent object without a parent match (and not
+          //   `unifyParentAndChildTypeChecks`) and we don't want
+          //   `object<>` given TypeScript issue https://github.com/microsoft/TypeScript/issues/20555
+          parentNode?.elements.length && (
+            parentNode?.left.type === 'JsdocTypeName' &&
+            parentNode?.left.value === 'Object'
+          )
+        )
+      ) {
+        continue;
+      }
+
+      if (strictNativeType !== typeNodeName &&
+        strictNativeType.toLowerCase() === typeNodeName.toLowerCase() &&
+
+        // Don't report if user has own map for a strict native type
+        (!preferredTypes || preferredTypes?.[strictNativeType] === undefined)
+      ) {
+        changedPreferred = strictNativeType;
+        invalidTypes.push([
+          typeNodeName, changedPreferred,
+        ]);
+        break;
+      }
+    }
+
+    return changedPreferred;
+  };
+
+  /**
+   * Collect invalid type info.
+   *
+   * @param {string} type
+   * @param {string} value
+   * @param {string} tagName
+   * @param {string} property
+   * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} node
+   * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} parentNode
+   * @param {string[]} invalidTypes
+   * @returns {void}
+   */
+  const getInvalidTypes = (type, value, tagName, property, node, parentNode, invalidTypes) => {
+    let typeNodeName = type === 'JsdocTypeAny' ? '*' : value;
+
+    const [
+      hasMatchingPreferredType,
+      typeName,
+      isGenericMatch,
+    ] = getPreferredTypeInfo(type, typeNodeName, parentNode, property);
+
+    let preferred;
+    let types;
+    if (hasMatchingPreferredType) {
+      const preferredSetting = preferredTypes[typeName];
+      typeNodeName = typeName === '[]' ? typeName : typeNodeName;
+
+      if (!preferredSetting) {
+        invalidTypes.push([
+          typeNodeName,
+        ]);
+      } else if (typeof preferredSetting === 'string') {
+        preferred = preferredSetting;
+        invalidTypes.push([
+          typeNodeName, preferred,
+        ]);
+      } else if (typeof preferredSetting === 'object') {
+        preferred = preferredSetting?.replacement;
+        invalidTypes.push([
+          typeNodeName,
+          preferred,
+          preferredSetting?.message,
+        ]);
+      } else {
+        utils.reportSettings(
+          'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
+        );
+
+        return;
+      }
+    } else if (Object.entries(structuredTags).some(([
+      tag,
+      {
+        type: typs,
+      },
+    ]) => {
+      types = typs;
+
+      return tag === tagName &&
+        Array.isArray(types) &&
+        !types.includes(typeNodeName);
+    })) {
+      invalidTypes.push([
+        typeNodeName, types,
+      ]);
+    } else if (!noDefaults && type === 'JsdocTypeName') {
+      preferred = check(typeNodeName, preferred, parentNode, invalidTypes);
+    }
+
+    // For fixer
+    if (preferred) {
+      adjustNames(type, preferred, isGenericMatch, typeNodeName, node, parentNode);
+    }
   };
 
   for (const jsdocTag of jsdocTagsWithPossibleType) {
@@ -156,7 +300,6 @@ export default iterateJsdoc(({
 
     const tagName = jsdocTag.tag;
 
-    // eslint-disable-next-line complexity -- To refactor
     traverse(typeAst, (node, parentNode, property) => {
       const {
         type,
@@ -168,104 +311,16 @@ export default iterateJsdoc(({
         return;
       }
 
-      let nodeName = type === 'JsdocTypeAny' ? '*' : value;
-
-      const [
-        hasMatchingPreferredType,
-        typeName,
-        isGenericMatch,
-      ] = getPreferredTypeInfo(type, nodeName, parentNode, property);
-
-      let preferred;
-      let types;
-      if (hasMatchingPreferredType) {
-        const preferredSetting = preferredTypes[typeName];
-        nodeName = typeName === '[]' ? typeName : nodeName;
-
-        if (!preferredSetting) {
-          invalidTypes.push([
-            nodeName,
-          ]);
-        } else if (typeof preferredSetting === 'string') {
-          preferred = preferredSetting;
-          invalidTypes.push([
-            nodeName, preferred,
-          ]);
-        } else if (typeof preferredSetting === 'object') {
-          preferred = preferredSetting?.replacement;
-          invalidTypes.push([
-            nodeName,
-            preferred,
-            preferredSetting?.message,
-          ]);
-        } else {
-          utils.reportSettings(
-            'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
-          );
-
-          return;
-        }
-      } else if (Object.entries(structuredTags).some(([
-        tag,
-        {
-          type: typs,
-        },
-      ]) => {
-        types = typs;
-
-        return tag === tagName &&
-          Array.isArray(types) &&
-          !types.includes(nodeName);
-      })) {
-        invalidTypes.push([
-          nodeName, types,
-        ]);
-      } else if (!noDefaults && type === 'JsdocTypeName') {
-        for (const strictNativeType of strictNativeTypes) {
-          if (
-            // Todo: Avoid typescript condition if moving to default typescript
-            strictNativeType === 'object' && mode === 'typescript' &&
-            (
-              // This is not set to remap with exact type match (e.g.,
-              //   `object: 'Object'`), so can ignore (including if circular)
-              !preferredTypes?.[nodeName] ||
-              // Although present on `preferredTypes` for remapping, this is a
-              //   parent object without a parent match (and not
-              //   `unifyParentAndChildTypeChecks`) and we don't want
-              //   `object<>` given TypeScript issue https://github.com/microsoft/TypeScript/issues/20555
-              parentNode?.elements.length && (
-                parentNode?.left.type === 'JsdocTypeName' &&
-                parentNode?.left.value === 'Object'
-              )
-            )
-          ) {
-            continue;
-          }
-
-          if (strictNativeType !== nodeName &&
-            strictNativeType.toLowerCase() === nodeName.toLowerCase() &&
-
-            // Don't report if user has own map for a strict native type
-            (!preferredTypes || preferredTypes?.[strictNativeType] === undefined)
-          ) {
-            preferred = strictNativeType;
-            invalidTypes.push([
-              nodeName, preferred,
-            ]);
-            break;
-          }
-        }
-      }
-
-      // For fixer
-      if (preferred) {
-        adjustNames(type, preferred, isGenericMatch, nodeName, node, parentNode);
-      }
+      getInvalidTypes(type, value, tagName, property, node, parentNode, invalidTypes);
     });
 
     if (invalidTypes.length) {
       const fixedType = stringify(typeAst);
 
+      /**
+       * @param {any} fixer The ESLint fixer
+       * @returns {string}
+       */
       const fix = (fixer) => {
         return fixer.replaceText(
           jsdocNode,
