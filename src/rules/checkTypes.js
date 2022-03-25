@@ -167,13 +167,16 @@ export default iterateJsdoc(({
   };
 
   /**
+   * Iterates strict types to see if any should be added to `invalidTypes` (and
+   * the the relevant strict type returned as the new preferred type).
+   *
    * @param {string} typeNodeName
    * @param {string} preferred
    * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} parentNode
    * @param {string[]} invalidTypes
-   * @returns {string} The `preferred` string, optionally changed
+   * @returns {string} The `preferred` type string, optionally changed
    */
-  const check = (typeNodeName, preferred, parentNode, invalidTypes) => {
+  const checkNativeTypes = (typeNodeName, preferred, parentNode, invalidTypes) => {
     let changedPreferred = preferred;
     for (const strictNativeType of strictNativeTypes) {
       if (
@@ -279,7 +282,7 @@ export default iterateJsdoc(({
         typeNodeName, types,
       ]);
     } else if (!noDefaults && type === 'JsdocTypeName') {
-      preferred = check(typeNodeName, preferred, parentNode, invalidTypes);
+      preferred = checkNativeTypes(typeNodeName, preferred, parentNode, invalidTypes);
     }
 
     // For fixer
