@@ -979,7 +979,7 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
  * @param {boolean} additiveContexts
  */
 const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
-  const trackedJsdocs = [];
+  const trackedJsdocs = new Set();
 
   let handler;
   let settings;
@@ -1107,7 +1107,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
           }
 
           const commentNode = getJSDocComment(sourceCode, node, settings);
-          if (trackedJsdocs.includes(commentNode)) {
+          if (trackedJsdocs.has(commentNode)) {
             return;
           }
 
@@ -1122,7 +1122,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
             return;
           }
 
-          trackedJsdocs.push(commentNode);
+          trackedJsdocs.add(commentNode);
           callIterator(context, node, [
             commentNode,
           ], state);
@@ -1130,7 +1130,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveContexts) => {
         'Program:exit' () {
           const allComments = sourceCode.getAllComments();
           const untrackedJSdoc = allComments.filter((node) => {
-            return !trackedJsdocs.includes(node);
+            return !trackedJsdocs.has(node);
           });
 
           callIterator(context, null, untrackedJSdoc, state, true);
