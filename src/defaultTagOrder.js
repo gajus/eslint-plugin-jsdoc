@@ -50,6 +50,10 @@ const defaultTagOrder = [
   'license',
 
   // Simple annotations
+
+  // TypeScript
+  'internal',
+
   'const',
   'constant',
   'final',
