@@ -121,6 +121,9 @@ const jsdocTags = {
 const typeScriptTags = {
   ...jsdocTags,
 
+  // https://www.typescriptlang.org/tsconfig/#stripInternal
+  internal: [],
+
   // `@template` is also in TypeScript per:
   //      https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc
   template: [],
@@ -146,6 +149,7 @@ const undocumentedClosureTags = {
 const {
   /* eslint-disable no-unused-vars */
   inheritdoc,
+  internal,
 
   // Will be inverted to prefer `return`
   returns,

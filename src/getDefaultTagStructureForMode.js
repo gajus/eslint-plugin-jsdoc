@@ -425,6 +425,19 @@ const getDefaultTagStructureForMode = (mode) => {
     ],
 
     [
+      'internal', new Map([
+        // https://www.typescriptlang.org/tsconfig/#stripInternal
+        [
+          'nameContents', false,
+        ],
+        // Not in use, but should be this value if using to power `empty-tags`
+        [
+          'nameAllowed', false,
+        ],
+      ]),
+    ],
+
+    [
       'implements', new Map([
         // Shows curly brackets in the doc signature and examples
         // "typeExpression"

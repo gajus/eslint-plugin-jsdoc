@@ -597,6 +597,10 @@ export default {
       code: `${ALL_TYPESCRIPT_TAGS_COMMENT}\nfunction quux (foo) {}`,
       errors: [
         {
+          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 1,
+          message: 'Invalid JSDoc tag name "internal".',
+        },
+        {
           line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT),
           message: 'Invalid JSDoc tag name "template".',
         },
@@ -888,6 +892,18 @@ export default {
           jsxTags: true,
         },
       ],
+    },
+    {
+      code: `
+      /**
+       * @internal
+       */
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
     },
   ],
 };
