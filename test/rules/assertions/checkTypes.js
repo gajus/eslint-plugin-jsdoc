@@ -2356,6 +2356,46 @@ export default {
         },
       },
     },
+    {
+      code: `
+        /**
+         *
+         * @param {Object} param
+         * @return {Object | String}
+         */
+        function abc(param) {
+          if (param.a)
+            return {};
+          return 'abc';
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid JSDoc @param "param" type "Object"; prefer: "object".',
+        },
+        {
+          line: 5,
+          message: 'Invalid JSDoc @return type "Object"; prefer: "object".',
+        },
+        {
+          line: 5,
+          message: 'Invalid JSDoc @return type "String"; prefer: "string".',
+        },
+      ],
+      output: `
+        /**
+         *
+         * @param {object} param
+         * @return {Object | String}
+         */
+        function abc(param) {
+          if (param.a)
+            return {};
+          return 'abc';
+        }
+      `,
+    },
   ],
   valid: [
     {

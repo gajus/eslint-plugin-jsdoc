@@ -5576,6 +5576,18 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"mode":"typescript"}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
+
+/**
+ *
+ * @param {Object} param
+ * @return {Object | String}
+ */
+function abc(param) {
+  if (param.a)
+    return {};
+  return 'abc';
+}
+// Message: Invalid JSDoc @param "param" type "Object"; prefer: "object".
 ````
 
 The following patterns are not considered problems:

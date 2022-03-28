@@ -206,8 +206,8 @@ export default iterateJsdoc(({
           //   `unifyParentAndChildTypeChecks`) and we don't want
           //   `object<>` given TypeScript issue https://github.com/microsoft/TypeScript/issues/20555
           parentNode?.elements.length && (
-            parentNode?.left.type === 'JsdocTypeName' &&
-            parentNode?.left.value === 'Object'
+            parentNode?.left?.type === 'JsdocTypeName' &&
+            parentNode?.left?.value === 'Object'
           )
         )
       ) {
