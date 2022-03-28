@@ -2048,7 +2048,7 @@ export default {
         function a () {}
 
         /**
-         * @typedef {Object} foo
+         * @typedef {Object<string>} foo
          */
         function b () {}
       `,
@@ -2065,7 +2065,7 @@ export default {
         function a () {}
 
         /**
-         * @typedef {Object} foo
+         * @typedef {Object<string>} foo
          */
         function b () {}
       `,
@@ -2289,6 +2289,70 @@ export default {
             'Object.<>': 'Object<>',
             'object<>': 'Object<>',
           },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @param {object.<string>} foo
+         */
+        function quux (foo) {
+
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".',
+        },
+      ],
+      output: `
+        /**
+         * @param {Object<string>} foo
+         */
+        function quux (foo) {
+
+        }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+          preferredTypes: {
+            Object: 'object',
+            'object.<>': 'Object<>',
+            'Object.<>': 'Object<>',
+            'object<>': 'Object<>',
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @param {object.<string>} foo
+         */
+        function quux (foo) {
+
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".',
+        },
+      ],
+      output: `
+        /**
+         * @param {Object<string>} foo
+         */
+        function quux (foo) {
+
+        }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
         },
       },
     },
@@ -2815,7 +2879,7 @@ export default {
         function a () {}
 
         /**
-         * @typedef {Object} foo
+         * @typedef {Object<string>} foo
          */
         function b () {}
       `,
@@ -2891,7 +2955,7 @@ export default {
     {
       code: `
       /**
-       * @param {Object.<string>} foo
+       * @param {Object<string>} foo
        */
       function quux (foo) {
 

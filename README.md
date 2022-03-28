@@ -4890,11 +4890,12 @@ as a lone type. However, one additional complexity is that TypeScript allows and
 actually [currently requires](https://github.com/microsoft/TypeScript/issues/20555)
 `Object` (with the initial upper-case) if used in the syntax
 `Object.<keyType, valueType>` or `Object<keyType, valueType`, perhaps to
-adhere to what [JSDoc documents](https://jsdoc.app/tags-type.html).
+adhere to that which [JSDoc documents](https://jsdoc.app/tags-type.html).
 
 So, for optimal compatibility with TypeScript (especially since TypeScript
-tools can be used on plain JavaScript with JSDoc), we are now allowing this
-TypeScript approach by default.
+tools can be used on plain JavaScript with JSDoc), we are now requiring this
+TypeScript approach by default (if you set `object` type `preferredTypes` in
+TypeScript mode, the defaults will not apply).
 
 Basically, for primitives, we want to define the type as a primitive, because
 that's what we use in 99.9% of cases. For everything else, we use the type
@@ -5498,7 +5499,7 @@ function quux (foo) {
 function a () {}
 
 /**
- * @typedef {Object} foo
+ * @typedef {Object<string>} foo
  */
 function b () {}
 // Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"object":"Object"}}}
@@ -5556,6 +5557,24 @@ function quux (foo) {
 function quux (foo) {
 }
 // Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object","object.<>":"Object<>","Object.<>":"Object<>","object<>":"Object<>"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
+
+/**
+ * @param {object.<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object","object.<>":"Object<>","Object.<>":"Object<>","object<>":"Object<>"}}}
+// Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
+
+/**
+ * @param {object.<string>} foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
 // Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
 ````
 
@@ -5817,7 +5836,7 @@ function b () {}
 function a () {}
 
 /**
- * @typedef {Object} foo
+ * @typedef {Object<string>} foo
  */
 function b () {}
 // Settings: {"jsdoc":{"mode":"typescript"}}
@@ -5846,7 +5865,7 @@ function quux (foo) {
 }
 
 /**
- * @param {Object.<string>} foo
+ * @param {Object<string>} foo
  */
 function quux (foo) {
 
