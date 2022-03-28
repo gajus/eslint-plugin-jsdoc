@@ -126,7 +126,7 @@ export default iterateJsdoc(({
 
   // In modules, including Node, there is a global scope at top with the
   //  Program scope inside
-  const cjsOrESMScope = globalScope.childScopes[0]?.block.type === 'Program';
+  const cjsOrESMScope = globalScope.childScopes[0]?.block?.type === 'Program';
 
   const allDefinedTypes = new Set(globalScope.variables.map(({
     name,

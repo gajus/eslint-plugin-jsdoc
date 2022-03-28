@@ -677,12 +677,12 @@ const tagMissingRequiredTypeOrNamepath = (tag, tagMap = tagStructure) => {
  * @returns {boolean}
  */
 const isNewPromiseExpression = (node) => {
-  return node.type === 'NewExpression' && node.callee.type === 'Identifier' &&
+  return node && node.type === 'NewExpression' && node.callee.type === 'Identifier' &&
     node.callee.name === 'Promise';
 };
 
 const isVoidPromise = (node) => {
-  return node.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
+  return node?.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
 };
 
 /**
@@ -716,7 +716,7 @@ const hasReturnValue = (node, promFilter) => {
   case 'FunctionExpression':
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
-    return node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node?.body)) ||
+    return node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node.body)) ||
       hasReturnValue(node.body, promFilter);
   }
 
