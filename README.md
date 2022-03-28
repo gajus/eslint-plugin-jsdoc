@@ -5883,6 +5883,17 @@ function a () {}
  */
 function a () {}
 // Settings: {"jsdoc":{"mode":"typescript","preferredTypes":{"Object":"object","object.<>":"Object<>","object<>":"Object<>"}}}
+
+/**
+ * Does something.
+ *
+ * @param {Object<string,string>} spec - Foo.
+ */
+function foo(spec) {
+    return spec;
+}
+
+foo()
 ````
 
 

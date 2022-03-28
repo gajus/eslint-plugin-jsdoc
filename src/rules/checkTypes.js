@@ -196,8 +196,7 @@ export default iterateJsdoc(({
     let changedPreferred = preferred;
     for (const strictNativeType of strictNativeTypes) {
       if (
-        // Todo: Avoid typescript condition if moving to default typescript
-        strictNativeType === 'object' && mode === 'typescript' &&
+        strictNativeType === 'object' &&
         (
           // This is not set to remap with exact type match (e.g.,
           //   `object: 'Object'`), so can ignore (including if circular)

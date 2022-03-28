@@ -3003,5 +3003,19 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * Does something.
+       *
+       * @param {Object<string,string>} spec - Foo.
+       */
+      function foo(spec) {
+          return spec;
+      }
+
+      foo()
+      `,
+    },
   ],
 };
