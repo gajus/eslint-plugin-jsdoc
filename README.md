@@ -9889,6 +9889,18 @@ function foo () {
 }
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 // Message: The type 'visibility' is undefined.
+
+/**
+* @typedef Todo
+* @property description
+* @property otherStuff
+*/
+/**
+ * @type {Omit<Todo, "description">}
+ */
+const a = new Todo();
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: The type 'Omit' is undefined.
 ````
 
 The following patterns are not considered problems:
@@ -10302,6 +10314,17 @@ export class Foo {
  * @type {const}
  */
 const a = 'string';
+
+/**
+* @typedef Todo
+* @property description
+* @property otherStuff
+*/
+/**
+ * @type {Omit<Todo, "description">}
+ */
+const a = new Todo();
+// Settings: {"jsdoc":{"mode":"typescript"}}
 ````
 
 

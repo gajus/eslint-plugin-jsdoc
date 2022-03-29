@@ -19,6 +19,30 @@ const extraTypes = [
   'Array', 'Object', 'RegExp', 'Date', 'Function',
 ];
 
+// https://www.typescriptlang.org/docs/handbook/utility-types.html
+const typescriptGlobals = [
+  'Partial',
+  'Required',
+  'Readonly',
+  'Record',
+  'Pick',
+  'Omit',
+  'Exclude',
+  'Extract',
+  'NonNullable',
+  'Parameters',
+  'ConstructorParameters',
+  'ReturnType',
+  'InstanceType',
+  'ThisParameterType',
+  'OmitThisParameter',
+  'ThisType',
+  'Uppercase',
+  'Lowercase',
+  'Capitalize',
+  'Uncapitalize',
+];
+
 const stripPseudoTypes = (str) => {
   return str && str.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
 };
@@ -151,7 +175,14 @@ export default iterateJsdoc(({
     .concat(typedefDeclarations)
     .concat(definedTypes)
     .concat(definedPreferredTypes)
-    .concat(settings.mode === 'jsdoc' ? [] : closureGenericTypes));
+    .concat(
+      settings.mode === 'jsdoc' ?
+        [] :
+        [
+          ...settings.mode === 'typescript' ? typescriptGlobals : [],
+          ...closureGenericTypes,
+        ],
+    ));
 
   const jsdocTagsWithPossibleType = utils.filterTags(({
     tag,

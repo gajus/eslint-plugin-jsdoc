@@ -460,6 +460,30 @@ export default {
         },
       },
     },
+    {
+      code: `
+        /**
+        * @typedef Todo
+        * @property description
+        * @property otherStuff
+        */
+        /**
+         * @type {Omit<Todo, "description">}
+         */
+        const a = new Todo();
+      `,
+      errors: [
+        {
+          line: 8,
+          message: 'The type \'Omit\' is undefined.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -1215,6 +1239,24 @@ export default {
          */
         const a = 'string';
       `,
+    },
+    {
+      code: `
+        /**
+        * @typedef Todo
+        * @property description
+        * @property otherStuff
+        */
+        /**
+         * @type {Omit<Todo, "description">}
+         */
+        const a = new Todo();
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
     },
   ],
 };
