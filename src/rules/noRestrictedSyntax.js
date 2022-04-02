@@ -36,9 +36,11 @@ export default iterateJsdoc(({
     foundContext.context ?? 'any' :
     foundContext;
   const message = foundContext?.message ??
-    'Syntax is restricted: {{context}}.';
+    'Syntax is restricted: {{context}}' +
+      (comment ? ' with {{comment}}' : '');
 
   report(message, null, null, {
+    comment,
     context: contextStr,
   });
 }, {

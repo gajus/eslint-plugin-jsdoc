@@ -12,7 +12,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Syntax is restricted: FunctionDeclaration.',
+          message: 'Syntax is restricted: FunctionDeclaration',
         },
       ],
       options: [
@@ -61,7 +61,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Syntax is restricted: FunctionDeclaration.',
+          message: 'Syntax is restricted: FunctionDeclaration with JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))',
         },
       ],
       options: [

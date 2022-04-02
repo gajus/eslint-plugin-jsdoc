@@ -9328,7 +9328,7 @@ function quux () {
 
 }
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":["FunctionDeclaration"]}]
-// Message: Syntax is restricted: FunctionDeclaration.
+// Message: Syntax is restricted: FunctionDeclaration
 
 /**
  *
@@ -9346,7 +9346,7 @@ function quux () {
 
 }
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Bar\"]:nth-child(1))","context":"FunctionDeclaration"}]}]
-// Message: Syntax is restricted: FunctionDeclaration.
+// Message: Syntax is restricted: FunctionDeclaration with JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Bar"]:nth-child(1))
 
 /**
  * @implements {Bar|Foo}
