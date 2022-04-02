@@ -10,7 +10,6 @@ import iterateJsdoc from '../iterateJsdoc';
  * @param {boolean} enableFixer
  * @param {Array<string>} functionParameterNames
  * @param jsdoc
- * @param _jsdocNode
  * @param utils
  * @param report
  * @returns {boolean}
@@ -23,7 +22,7 @@ const validateParameterNames = (
   checkTypesRegex,
   disableExtraPropertyReporting,
   enableFixer,
-  functionParameterNames, jsdoc, _jsdocNode, utils, report,
+  functionParameterNames, jsdoc, utils, report,
 ) => {
   const paramTags = Object.entries(jsdoc.tags).filter(([
     , tag,
@@ -297,7 +296,6 @@ const validateParameterNamesDeep = (
 export default iterateJsdoc(({
   context,
   jsdoc,
-  jsdocNode,
   report,
   utils,
 }) => {
@@ -332,7 +330,6 @@ export default iterateJsdoc(({
     enableFixer,
     functionParameterNames,
     jsdoc,
-    jsdocNode,
     utils,
     report,
   );

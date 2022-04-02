@@ -4,14 +4,13 @@ import iterateJsdoc from '../iterateJsdoc';
  * @param {string} targetTagName
  * @param {boolean} enableFixer
  * @param jsdoc
- * @param jsdocNode
  * @param utils
  * @returns {boolean}
  */
 const validatePropertyNames = (
   targetTagName,
   enableFixer,
-  jsdoc, jsdocNode, utils,
+  jsdoc, utils,
 ) => {
   const propertyTags = Object.entries(jsdoc.tags).filter(([
     , tag,
@@ -95,7 +94,6 @@ const validatePropertyNamesDeep = (
 export default iterateJsdoc(({
   context,
   jsdoc,
-  jsdocNode,
   report,
   utils,
 }) => {
@@ -114,7 +112,6 @@ export default iterateJsdoc(({
     targetTagName,
     enableFixer,
     jsdoc,
-    jsdocNode,
     utils,
   );
 
