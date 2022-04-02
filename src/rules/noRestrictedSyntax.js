@@ -7,6 +7,7 @@ export default iterateJsdoc(({
   info: {
     comment,
   },
+  sourceCode,
   report,
 }) => {
   if (!context.options.length) {
@@ -21,8 +22,12 @@ export default iterateJsdoc(({
 
   const foundContext = contexts.find((cntxt) => {
     return typeof cntxt === 'string' ?
-      esquery.matches(node, esquery.parse(cntxt)) :
-      (!cntxt.context || cntxt.context === 'any' || esquery.matches(node, esquery.parse(cntxt.context))) &&
+      esquery.matches(node, esquery.parse(cntxt), null, {
+        visitorKeys: sourceCode.visitorKeys,
+      }) :
+      (!cntxt.context || cntxt.context === 'any' || esquery.matches(node, esquery.parse(cntxt.context), null, {
+        visitorKeys: sourceCode.visitorKeys,
+      })) &&
         comment === cntxt.comment;
   });
 

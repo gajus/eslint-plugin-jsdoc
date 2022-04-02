@@ -1271,7 +1271,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
 
       const checkJsdoc = (info, handler, node) => {
         const jsdocNode = getJSDocComment(sourceCode, node, settings);
-
         if (!jsdocNode) {
           return;
         }

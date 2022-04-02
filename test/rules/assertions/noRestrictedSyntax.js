@@ -347,6 +347,31 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        class a {
+          /** */
+          private b () {}
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax is restricted: MethodDefinition:not([accessibility="public"]):has(JsdocBlock)',
+        },
+      ],
+      ignoreReadme: true,
+      options: [
+        {
+          contexts: [
+            {
+              context: 'MethodDefinition:not([accessibility="public"]):has(JsdocBlock)',
+            },
+          ],
+        },
+      ],
+      parser: require.resolve('@es-joy/jsdoc-eslint-parser/typescript'),
+    },
   ],
   valid: [
     {
