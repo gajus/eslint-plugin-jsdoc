@@ -22,16 +22,9 @@ const extractSentences = (text, abbreviationsRegex) => {
     // Remove custom abbreviations
     .replace(abbreviationsRegex, '');
 
-  const sentenceEndGrouping = /([.?!])(?:\s+|$)/u;
+  const sentenceEndGrouping = /([.?!])(?:\s+|$)/ug;
 
-  const puncts = [];
-  let matches;
-  let n0;
-  let index = 0;
-  while ((matches = sentenceEndGrouping.exec(txt)) !== null) {
-    n0 = matches.splice(0, 1);
-    puncts.push(matches.concat(index++, n0));
-  }
+  const puncts = txt.matchAll(sentenceEndGrouping);
 
   return txt
 
