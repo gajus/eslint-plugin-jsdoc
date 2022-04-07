@@ -326,6 +326,65 @@ function quux () {
         },
       ],
     },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (someParam) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+          /**
+           *
+           * @example
+           */
+          function quux (someParam) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (someParam) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+        },
+      ],
+      output: `
+          /**
+           *
+           */
+          function quux (someParam) {
+
+          }
+      `,
+    },
   ],
   valid: [
     {
