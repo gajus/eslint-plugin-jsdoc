@@ -11,6 +11,7 @@ export default iterateJsdoc(({
   }
 
   const {
+    enableFixer = true,
     exemptNoArguments = false,
   } = context.options[0] || {};
 
@@ -30,7 +31,9 @@ export default iterateJsdoc(({
     }
 
     utils.reportJSDoc(`Missing JSDoc @${targetTagName} declaration.`, null, () => {
-      utils.addTag(targetTagName);
+      if (enableFixer) {
+        utils.addTag(targetTagName);
+      }
     });
 
     return;
@@ -91,6 +94,10 @@ export default iterateJsdoc(({
               ],
             },
             type: 'array',
+          },
+          enableFixer: {
+            default: true,
+            type: 'boolean',
           },
           exemptedBy: {
             items: {

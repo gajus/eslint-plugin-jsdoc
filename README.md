@@ -11939,6 +11939,13 @@ A value indicating whether getters should be checked. Defaults to `false`.
 
 A value indicating whether setters should be checked. Defaults to `false`.
 
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-enablefixer-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-25-enablefixer-2"></a>
+##### <code>enableFixer</code>
+
+A boolean on whether to enable the fixer (which adds an empty `@example` block).
+Defaults to `true`.
+
 <a name="user-content-eslint-plugin-jsdoc-rules-require-example-fixer"></a>
 <a name="eslint-plugin-jsdoc-rules-require-example-fixer"></a>
 #### Fixer
@@ -11951,7 +11958,7 @@ report a missing example description after this is added.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`example`|
 |Recommended|false|
-|Options|`exemptedBy`, `exemptNoArguments`, `avoidExampleOnConstructors`, `contexts`|
+|Options|`exemptedBy`, `exemptNoArguments`, `contexts`, `checkConstructors`, `checkGetters`, `checkSetters`, `enableFixer`|
 |Settings|`ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 The following patterns are considered problems:
@@ -12065,6 +12072,24 @@ class TestClass {
 }
 // "jsdoc/require-example": ["error"|"warn", {"checkSetters":true}]
 // Message: Missing JSDoc @example description.
+
+/**
+ *
+ */
+function quux (someParam) {
+
+}
+// "jsdoc/require-example": ["error"|"warn", {"enableFixer":true}]
+// Message: Missing JSDoc @example declaration.
+
+/**
+ *
+ */
+function quux (someParam) {
+
+}
+// "jsdoc/require-example": ["error"|"warn", {"enableFixer":false}]
+// Message: Missing JSDoc @example declaration.
 ````
 
 The following patterns are not considered problems:
@@ -12852,8 +12877,8 @@ setters should be checked but only when there is no getter. This may be useful
 if one only wishes documentation on one of the two accessors. Defaults to
 `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-enablefixer-2"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-enablefixer-2"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-enablefixer-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-enablefixer-3"></a>
 ##### <code>enableFixer</code>
 
 A boolean on whether to enable the fixer (which adds an empty jsdoc block).
@@ -15030,8 +15055,8 @@ function signature, it may appear that there is an actual property named
 
 An options object accepts the following optional properties:
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-enablefixer-3"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-enablefixer-3"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-enablefixer-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-32-enablefixer-4"></a>
 ##### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.

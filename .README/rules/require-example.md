@@ -47,6 +47,11 @@ A value indicating whether getters should be checked. Defaults to `false`.
 
 A value indicating whether setters should be checked. Defaults to `false`.
 
+##### `enableFixer`
+
+A boolean on whether to enable the fixer (which adds an empty `@example` block).
+Defaults to `true`.
+
 #### Fixer
 
 The fixer for `require-example` will add an empty `@example`, but it will still
@@ -57,7 +62,7 @@ report a missing example description after this is added.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`example`|
 |Recommended|false|
-|Options|`exemptedBy`, `exemptNoArguments`, `avoidExampleOnConstructors`, `contexts`|
+|Options|`exemptedBy`, `exemptNoArguments`, `contexts`, `checkConstructors`, `checkGetters`, `checkSetters`, `enableFixer`|
 |Settings|`ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <!-- assertions requireExample -->
