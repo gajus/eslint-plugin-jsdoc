@@ -10,5 +10,8 @@ module.exports = {
     'decamelize',
     'escape-string-regexp',
     'open-editor',
+
+    // Todo[engine:node@>=16]: Requires Node 16
+    'eslint-config-canonical',
   ],
 };
