@@ -27,7 +27,21 @@ npm run build
 ## Coding standards
 
 The project follows ESLint rules from [`canonical`](https://www.npmjs.com/package/eslint-config-canonical)
-and testing follows its subconfig, `canonical/mocha`.
+and testing follows its subconfig, `canonical/mocha`. You can run
+`npm run lint` to check the linting if your IDE is not already indicating
+items needing fixing.
+
+## Documentation building
+
+In order to make changes that are reflected in the README, you will need to
+modify files within the `.README` directory. `.README/README.md` contains the
+main README skeleton and details on the project, its global `settings`, etc.,
+while the documentation for specific rules (that will get pulled into the
+README) ought to be modified within the relevant file within `.README/rules`.
+Once these files are modified, you can run `npm run create-readme` to have
+these files integrated into the main `/README.md`. While you should include
+the built file in your PR, you will do not want to make manual changes
+directly to this file as they will be overwritten.
 
 ## Testing
 
