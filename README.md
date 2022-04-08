@@ -198,7 +198,7 @@ object supplied as the second argument in an array after the error level
         // The options vary by rule, but are generally added to an options
         //  object as follows:
         {
-          avoidExampleOnConstructors: true,
+          checkConstructors: true,
           exemptedBy: ['type']
         }
     ]
