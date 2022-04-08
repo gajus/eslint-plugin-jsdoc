@@ -1,7 +1,4 @@
 import escapeStringRegexp from 'escape-string-regexp';
-import {
-  RegExtras,
-} from 'regextras/dist/main-umd';
 import iterateJsdoc from '../iterateJsdoc';
 
 const otherDescriptiveTags = new Set([
@@ -25,12 +22,9 @@ const extractSentences = (text, abbreviationsRegex) => {
     // Remove custom abbreviations
     .replace(abbreviationsRegex, '');
 
-  const sentenceEndGrouping = /([.?!])(?:\s+|$)/u;
+  const sentenceEndGrouping = /([.?!])(?:\s+|$)/ug;
 
-  // eslint-disable-next-line unicorn/no-array-method-this-argument
-  const puncts = new RegExtras(sentenceEndGrouping).map(txt, (punct) => {
-    return punct;
-  });
+  const puncts = txt.matchAll(sentenceEndGrouping);
 
   return txt
 

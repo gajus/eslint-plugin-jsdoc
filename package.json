@@ -10,7 +10,6 @@
     "debug": "^4.3.4",
     "escape-string-regexp": "^4.0.0",
     "esquery": "^1.4.0",
-    "regextras": "^0.8.0",
     "semver": "^7.3.6",
     "spdx-expression-parse": "^3.0.1"
   },
@@ -48,7 +47,7 @@
     "typescript": "^4.6.3"
   },
   "engines": {
-    "node": "^12 || ^14 || ^16 || ^17"
+    "node": "^14 || ^16 || ^17"
   },
   "keywords": [
     "eslint",

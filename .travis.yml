@@ -2,9 +2,9 @@ os: linux
 dist: xenial
 language: node_js
 node_js:
-  - "12.22.0"
   - "14.17.0"
   - "16"
+  - "17"
 install:
   - npm install --legacy-peer-deps
 before_script: >
