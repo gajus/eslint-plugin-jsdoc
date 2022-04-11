@@ -12884,12 +12884,19 @@ if one only wishes documentation on one of the two accessors. Defaults to
 A boolean on whether to enable the fixer (which adds an empty jsdoc block).
 Defaults to `true`.
 
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-minlinecount"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-minlinecount"></a>
+##### <code>minLineCount</code>
+
+An integer to indicate a minimum number of lines expected for a node in order
+for it to require documentation. Defaults to 0.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
 |Recommended|true|
-|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`|
 
 The following patterns are considered problems:
 
@@ -13675,6 +13682,14 @@ module.exports = class Utility {
   }
 };
 // "jsdoc/require-jsdoc": ["error"|"warn", {"enableFixer":false,"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+function quux () {
+  return 3;
+}
+
+function b () {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"minLineCount":2}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -14489,6 +14504,13 @@ export class UserSettingsState { }
 export class User {
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["Decorator"],"require":{"FunctionDeclaration":false}}]
+
+  function quux () {
+  return 3;
+}
+
+function b () {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"minLineCount":4}]
 ````
 
 

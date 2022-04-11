@@ -82,6 +82,10 @@ const OPTIONS_SCHEMA = {
       default: '',
       type: 'string',
     },
+    minLineCount: {
+      default: 0,
+      type: 'integer',
+    },
     publicOnly: {
       oneOf: [
         {
@@ -164,6 +168,7 @@ const getOptions = (context) => {
     exemptEmptyFunctions = false,
     enableFixer = true,
     fixerMessage = '',
+    minLineCount = 0,
   } = context.options[0] || {};
 
   return {
@@ -172,6 +177,7 @@ const getOptions = (context) => {
     exemptEmptyConstructors,
     exemptEmptyFunctions,
     fixerMessage,
+    minLineCount,
     publicOnly: ((baseObj) => {
       if (!publicOnly) {
         return false;
@@ -213,9 +219,18 @@ export default {
       exemptEmptyConstructors,
       enableFixer,
       fixerMessage,
+      minLineCount,
     } = getOptions(context);
 
     const checkJsDoc = (info, handler, node) => {
+      if (
+        // Optimize
+        minLineCount &&
+        (sourceCode.getText(node).match(/\n/gu)?.length ?? 0) < minLineCount
+      ) {
+        return;
+      }
+
       const jsDocNode = getJSDocComment(sourceCode, node, settings);
 
       if (jsDocNode) {

@@ -3816,7 +3816,6 @@ function quux (foo) {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
-
     {
       code: `
          class Utility {
@@ -3882,6 +3881,36 @@ function quux (foo) {
           },
         },
       ],
+    },
+    {
+      code: `
+        function quux () {
+          return 3;
+        }
+
+        function b () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          minLineCount: 2,
+        },
+      ],
+      output: `
+        /**
+         *
+         */
+        function quux () {
+          return 3;
+        }
+
+        function b () {}
+      `,
     },
   ],
   valid: [
@@ -5828,6 +5857,20 @@ function quux (foo) {
             FunctionExpression: true,
             MethodDefinition: true,
           },
+        },
+      ],
+    },
+    {
+      code: `
+          function quux () {
+          return 3;
+        }
+
+        function b () {}
+      `,
+      options: [
+        {
+          minLineCount: 4,
         },
       ],
     },
