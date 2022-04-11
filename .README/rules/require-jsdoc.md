@@ -41,7 +41,8 @@ contexts where you wish the rule to be applied (e.g., `Property` for
 properties). If specified as an object, it should have a `context` property
 and can have an `inlineCommentBlock` property which, if set to `true`, will
 add an inline `/** */` instead of the regular, multi-line, indented jsdoc
-block which will otherwise be added. Defaults to an empty array.
+block which will otherwise be added. Defaults to an empty array. Contexts
+may also have their own `minLineCount` property.
 
 Note that you may need to disable `require` items (e.g., `MethodDefinition`)
 if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition:not([accessibility="private"] > FunctionExpression`).
@@ -95,7 +96,8 @@ Defaults to `true`.
 ##### `minLineCount`
 
 An integer to indicate a minimum number of lines expected for a node in order
-for it to require documentation. Defaults to 0.
+for it to require documentation. Defaults to `undefined`. This option will
+apply to any context; see `contexts` for line counts per context.
 
 |||
 |---|---|

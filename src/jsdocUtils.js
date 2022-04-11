@@ -271,7 +271,7 @@ const getFunctionParameterNames = (
     throw new Error(`Unsupported function signature format: \`${param.type}\`.`);
   };
 
-  return (functionNode.params || functionNode.value.params).map((param) => {
+  return functionNode.params.map((param) => {
     return getParamName(param);
   });
 };

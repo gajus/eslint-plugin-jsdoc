@@ -59,6 +59,9 @@ const OPTIONS_SCHEMA = {
               inlineCommentBlock: {
                 type: 'boolean',
               },
+              minLineCount: {
+                type: 'integer',
+              },
             },
             type: 'object',
           },
@@ -83,7 +86,6 @@ const OPTIONS_SCHEMA = {
       type: 'string',
     },
     minLineCount: {
-      default: 0,
       type: 'integer',
     },
     publicOnly: {
@@ -168,7 +170,7 @@ const getOptions = (context) => {
     exemptEmptyFunctions = false,
     enableFixer = true,
     fixerMessage = '',
-    minLineCount = 0,
+    minLineCount = undefined,
   } = context.options[0] || {};
 
   return {
@@ -225,10 +227,31 @@ export default {
     const checkJsDoc = (info, handler, node) => {
       if (
         // Optimize
-        minLineCount &&
-        (sourceCode.getText(node).match(/\n/gu)?.length ?? 0) < minLineCount
+        minLineCount !== undefined || contexts.some(({
+          minLineCount: count,
+        }) => {
+          return count !== undefined;
+        })
       ) {
-        return;
+        const underMinLine = (count) => {
+          return count !== undefined && count >
+            (sourceCode.getText(node).match(/\n/gu)?.length ?? 0) + 1;
+        };
+
+        if (underMinLine(minLineCount)) {
+          return;
+        }
+
+        const {
+          minLineCount: contextMinLineCount,
+        } = contexts.find(({
+          context: ctxt,
+        }) => {
+          return ctxt === (info.selector || node.type);
+        }) || {};
+        if (underMinLine(contextMinLineCount)) {
+          return;
+        }
       }
 
       const jsDocNode = getJSDocComment(sourceCode, node, settings);
@@ -387,14 +410,6 @@ export default {
       },
 
       FunctionExpression (node) {
-        if (hasOption('MethodDefinition') && node.parent.type === 'MethodDefinition') {
-          checkJsDoc({
-            isFunctionContext: true,
-          }, null, node);
-
-          return;
-        }
-
         if (!hasOption('FunctionExpression')) {
           return;
         }
@@ -411,6 +426,17 @@ export default {
             isFunctionContext: true,
           }, null, node);
         }
+      },
+
+      MethodDefinition (node) {
+        if (!hasOption('MethodDefinition')) {
+          return;
+        }
+
+        checkJsDoc({
+          isFunctionContext: true,
+          selector: 'MethodDefinition',
+        }, null, node.value);
       },
     };
   },

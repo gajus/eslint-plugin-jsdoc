@@ -569,8 +569,8 @@ While at their simplest, these can be an array of string selectors, one can
 also supply an object with `context` (in place of the string) and one of two
 properties:
 
-1. For `require-jsdoc`, there is also an `inlineCommentBlock` property. See
-    that rule for details.
+1. For `require-jsdoc`, there are also `inlineCommentBlock` and
+    `minLineCount` properties. See that rule for details.
 1. For `no-missing-syntax` and `no-restricted-syntax`, there is also a
     `message` property which allows customization of the message to be shown
     when the rule is triggered.
@@ -12821,7 +12821,8 @@ contexts where you wish the rule to be applied (e.g., `Property` for
 properties). If specified as an object, it should have a `context` property
 and can have an `inlineCommentBlock` property which, if set to `true`, will
 add an inline `/** */` instead of the regular, multi-line, indented jsdoc
-block which will otherwise be added. Defaults to an empty array.
+block which will otherwise be added. Defaults to an empty array. Contexts
+may also have their own `minLineCount` property.
 
 Note that you may need to disable `require` items (e.g., `MethodDefinition`)
 if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition:not([accessibility="private"] > FunctionExpression`).
@@ -12889,7 +12890,8 @@ Defaults to `true`.
 ##### <code>minLineCount</code>
 
 An integer to indicate a minimum number of lines expected for a node in order
-for it to require documentation. Defaults to 0.
+for it to require documentation. Defaults to `undefined`. This option will
+apply to any context; see `contexts` for line counts per context.
 
 |||
 |---|---|
@@ -13690,6 +13692,33 @@ function quux () {
 
 function b () {}
 // "jsdoc/require-jsdoc": ["error"|"warn", {"minLineCount":2}]
+// Message: Missing JSDoc comment.
+
+function quux () {
+  return 3;
+}
+
+var a = {};
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":[{"context":"FunctionDeclaration","minLineCount":2},{"context":"VariableDeclaration","minLineCount":2}],"require":{"FunctionDeclaration":false}}]
+// Message: Missing JSDoc comment.
+
+function quux () {
+  return 3;
+}
+
+var a = {
+  b: 1,
+  c: 2
+};
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":[{"context":"FunctionDeclaration","minLineCount":4},{"context":"VariableDeclaration","minLineCount":2}],"require":{"FunctionDeclaration":false}}]
+// Message: Missing JSDoc comment.
+
+class A {
+  setId(newId: number): void {
+    this.id = id;
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":[{"context":"MethodDefinition","minLineCount":3}],"require":{"ClassDeclaration":false,"FunctionExpression":false,"MethodDefinition":false}}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -14511,6 +14540,23 @@ export class User {
 
 function b () {}
 // "jsdoc/require-jsdoc": ["error"|"warn", {"minLineCount":4}]
+
+function quux () {
+  return 3;
+}
+
+var a = {
+  b: 1,
+  c: 2
+};
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":[{"context":"FunctionDeclaration","minLineCount":4},{"context":"VariableDeclaration","minLineCount":5}],"require":{"FunctionDeclaration":false}}]
+
+class A {
+  setId(newId: number): void {
+    this.id = id;
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":[{"context":"MethodDefinition","minLineCount":4}],"require":{"ClassDeclaration":false,"FunctionExpression":false,"MethodDefinition":false}}]
 ````
 
 
