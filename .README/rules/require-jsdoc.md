@@ -92,11 +92,16 @@ if one only wishes documentation on one of the two accessors. Defaults to
 A boolean on whether to enable the fixer (which adds an empty jsdoc block).
 Defaults to `true`.
 
+##### `minLineCount`
+
+An integer to indicate a minimum number of lines expected for a node in order
+for it to require documentation. Defaults to 0.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
 |Recommended|true|
-|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`|
 
 <!-- assertions requireJsdoc -->
