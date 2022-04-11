@@ -3912,6 +3912,137 @@ function quux (foo) {
         function b () {}
       `,
     },
+    {
+      code: `
+        function quux () {
+          return 3;
+        }
+
+        var a = {};
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              context: 'FunctionDeclaration',
+              minLineCount: 2,
+            },
+            {
+              context: 'VariableDeclaration',
+              minLineCount: 2,
+            },
+          ],
+          require: {
+            FunctionDeclaration: false,
+          },
+        },
+      ],
+      output: `
+        /**
+         *
+         */
+        function quux () {
+          return 3;
+        }
+
+        var a = {};
+      `,
+    },
+    {
+      code: `
+        function quux () {
+          return 3;
+        }
+
+        var a = {
+          b: 1,
+          c: 2
+        };
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              context: 'FunctionDeclaration',
+              minLineCount: 4,
+            },
+            {
+              context: 'VariableDeclaration',
+              minLineCount: 2,
+            },
+          ],
+          require: {
+            FunctionDeclaration: false,
+          },
+        },
+      ],
+      output: `
+        function quux () {
+          return 3;
+        }
+
+        /**
+         *
+         */
+        var a = {
+          b: 1,
+          c: 2
+        };
+      `,
+    },
+    {
+      code: `
+        class A {
+          setId(newId: number): void {
+            this.id = id;
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              context: 'MethodDefinition',
+              minLineCount: 3,
+            },
+          ],
+          require: {
+            ClassDeclaration: false,
+            FunctionExpression: false,
+            MethodDefinition: false,
+          },
+        },
+      ],
+      output: `
+        class A {
+          /**
+           *
+           */
+          setId(newId: number): void {
+            this.id = id;
+          }
+        }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
@@ -5873,6 +6004,60 @@ function quux (foo) {
           minLineCount: 4,
         },
       ],
+    },
+    {
+      code: `
+        function quux () {
+          return 3;
+        }
+
+        var a = {
+          b: 1,
+          c: 2
+        };
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              context: 'FunctionDeclaration',
+              minLineCount: 4,
+            },
+            {
+              context: 'VariableDeclaration',
+              minLineCount: 5,
+            },
+          ],
+          require: {
+            FunctionDeclaration: false,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+        class A {
+          setId(newId: number): void {
+            this.id = id;
+          }
+        }
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              context: 'MethodDefinition',
+              minLineCount: 4,
+            },
+          ],
+          require: {
+            ClassDeclaration: false,
+            FunctionExpression: false,
+            MethodDefinition: false,
+          },
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
 };
