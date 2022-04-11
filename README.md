@@ -13652,6 +13652,30 @@ export class Component {
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"checkConstructors":false,"contexts":["PropertyDefinition"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
+
+class Utility {
+    /**
+     *
+     */
+    mthd() {
+        return false;
+    }
+}
+
+module.exports = Utility;
+// "jsdoc/require-jsdoc": ["error"|"warn", {"enableFixer":false,"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
+
+/**
+ *
+ */
+module.exports = class Utility {
+  mthd() {
+    return false;
+  }
+};
+// "jsdoc/require-jsdoc": ["error"|"warn", {"enableFixer":false,"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 The following patterns are not considered problems:

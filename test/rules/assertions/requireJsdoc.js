@@ -3816,6 +3816,73 @@ function quux (foo) {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+
+    {
+      code: `
+         class Utility {
+             /**
+              *
+              */
+             mthd() {
+                 return false;
+             }
+         }
+
+         module.exports = Utility;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        module.exports = class Utility {
+          mthd() {
+            return false;
+          }
+        };
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -5701,6 +5768,68 @@ function quux (foo) {
       parserOptions: {
         sourceType: 'module',
       },
+    },
+    {
+      code: `
+        function main () {
+          class Utility {
+             /**
+              *
+              */
+             mthd() {
+                 return false;
+             }
+           }
+         }
+
+         module.exports = main;
+      `,
+      ignoreReadme: true,
+      options: [
+        {
+          enableFixer: false,
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: false,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+        function main () {
+          const a = class Utility {
+             /**
+              *
+              */
+             mthd() {
+                 return false;
+             }
+           }
+         }
+
+         module.exports = main;
+      `,
+      ignoreReadme: true,
+      options: [
+        {
+          enableFixer: false,
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: false,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
     },
   ],
 };

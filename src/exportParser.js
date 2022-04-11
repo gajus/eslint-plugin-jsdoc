@@ -96,9 +96,13 @@ const getSymbol = function (node, globals, scope, opt) {
     return null;
   }
 
+  case 'ClassExpression': {
+    return getSymbol(node.body, globals, scope, opts);
+  }
+
   case 'TSTypeAliasDeclaration':
   case 'TSEnumDeclaration': case 'TSInterfaceDeclaration':
-  case 'ClassDeclaration': case 'ClassExpression':
+  case 'ClassDeclaration':
   case 'FunctionExpression': case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
     const val = createNode();
@@ -123,7 +127,7 @@ const getSymbol = function (node, globals, scope, opt) {
     }
 
     val.type = 'object';
-    val.value = node;
+    val.value = node.parent;
 
     return val;
   }
@@ -510,9 +514,9 @@ const findExportedNode = function (block, node, cache) {
 };
 
 const isNodeExported = function (node, globals, opt) {
+  const moduleExports = globals.props.module?.props?.exports;
   if (
-    opt.initModuleExports && globals.props.module && globals.props.module.props.exports &&
-    findNode(node, globals.props.module.props.exports)
+    opt.initModuleExports && moduleExports && findNode(node, moduleExports)
   ) {
     return true;
   }
