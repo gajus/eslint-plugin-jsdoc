@@ -3366,5 +3366,29 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      /**
+       * [A description]
+       */
+      class A {
+        /**
+         * @param config
+         */
+        constructor (config: SomeConfig) {
+          super(config);
+        }
+      }
+      `,
+      ignoreReadme: true,
+      options: [
+        {
+          contexts: [
+            'MethodDefinition',
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
