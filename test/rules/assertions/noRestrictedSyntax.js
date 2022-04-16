@@ -370,7 +370,7 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@es-joy/jsdoc-eslint-parser/typescript'),
+      parser: require.resolve('@es-joy/jsdoc-eslint-parser/typescript.js'),
     },
   ],
   valid: [
