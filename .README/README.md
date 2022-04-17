@@ -492,14 +492,11 @@ properties:
     within a normal AST selector but this should only be considered
     experimental. When using such a parser, you need not use `comment` and
     can just use a plain string context. The determination of the node on
-    which the comment is attached is also subject to change. It may be
-    currently possible for different structures to map to the same comment
-    block. This is because normally when querying to find either the
-    declaration of the function expression for
-    `const quux = function () {}`, the associated comment would,
-    in both cases, generally be expected to be on the line above both, rather
-    than to be immediately preceding the function (in the case of the
-    function). See [@es-joy/jsdoccomment](https://github.com/es-joy/jsdoccomment)
+    which the comment is attached is based more on actual location than
+    semantics (e.g., it will be attached to a `VariableDeclaration` if above
+    that rather than to the `FunctionExpression` it is fundamentally
+    describing). See
+    [@es-joy/jsdoccomment](https://github.com/es-joy/jsdoccomment)
     for the precise structure of the comment (and comment type) nodes.
 
 #### Discovering available AST definitions
