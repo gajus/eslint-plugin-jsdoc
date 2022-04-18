@@ -37,6 +37,7 @@
     "gitdown": "^3.1.5",
     "glob": "^8.0.1",
     "husky": "^7.0.4",
+    "jsdoc-type-pratt-parser": "^2.2.5",
     "lint-staged": "^12.3.8",
     "lodash.defaultsdeep": "^4.6.1",
     "mocha": "^9.2.2",

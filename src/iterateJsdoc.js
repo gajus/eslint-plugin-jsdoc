@@ -737,9 +737,7 @@ const getUtils = (
     });
 
     if (classJsdocNode) {
-      const indnt = ' '.repeat(classJsdocNode.loc.start.column);
-
-      return parseComment(classJsdocNode, indnt);
+      return parseComment(classJsdocNode, '');
     }
 
     return null;
@@ -962,7 +960,7 @@ const iterate = (
 const getIndentAndJSDoc = function (lines, jsdocNode) {
   const sourceLine = lines[jsdocNode.loc.start.line - 1];
   const indnt = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
-  const jsdc = parseComment(jsdocNode, indnt);
+  const jsdc = parseComment(jsdocNode, '');
 
   return [
     indnt, jsdc,
