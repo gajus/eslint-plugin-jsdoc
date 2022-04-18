@@ -858,6 +858,9 @@ const makeReport = (context, commentNode) => {
 
         loc.end.column = colNumber;
         loc.start.column = colNumber;
+      } else {
+        loc.end.column = 0;
+        loc.start.column = 0;
       }
     }
 

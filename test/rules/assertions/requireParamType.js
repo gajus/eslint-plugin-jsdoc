@@ -11,6 +11,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 3,
           message: 'Missing JSDoc @param "foo" type.',
         },
@@ -27,6 +28,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 3,
           message: 'Missing JSDoc @param "foo" type.',
         },
@@ -48,6 +50,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 4,
           message: 'Missing JSDoc @param "foo" type.',
         },
@@ -69,6 +72,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 4,
           message: 'Missing JSDoc @param "foo" type.',
         },
@@ -92,6 +96,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 3,
           message: 'Missing JSDoc @arg "foo" type.',
         },
@@ -115,6 +120,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 3,
           message: 'Unexpected tag `@param`',
         },
