@@ -19,6 +19,22 @@ export default {
     },
     {
       code: `
+      /**
+       * @param {a xxx
+       */
+      function quux () {
+      }
+      `,
+      errors: [
+        {
+          column: 1,
+          line: 3,
+          message: 'Missing JSDoc @param "" type.',
+        },
+      ],
+    },
+    {
+      code: `
           /**
            * @param foo
            */
