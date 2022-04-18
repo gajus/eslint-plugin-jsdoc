@@ -844,9 +844,11 @@ const makeReport = (context, commentNode) => {
 
       loc = {
         end: {
+          column: 0,
           line: lineNumber,
         },
         start: {
+          column: 0,
           line: lineNumber,
         },
       };

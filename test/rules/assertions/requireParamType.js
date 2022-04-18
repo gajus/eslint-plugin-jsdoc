@@ -11,8 +11,25 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 3,
           message: 'Missing JSDoc @param "foo" type.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @param {a xxx
+       */
+      function quux () {
+      }
+      `,
+      errors: [
+        {
+          column: 1,
+          line: 3,
+          message: 'Missing JSDoc @param "" type.',
         },
       ],
     },
@@ -27,6 +44,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 3,
           message: 'Missing JSDoc @param "foo" type.',
         },
@@ -48,6 +66,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 4,
           message: 'Missing JSDoc @param "foo" type.',
         },
@@ -69,6 +88,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 4,
           message: 'Missing JSDoc @param "foo" type.',
         },
@@ -92,6 +112,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 3,
           message: 'Missing JSDoc @arg "foo" type.',
         },
@@ -115,6 +136,7 @@ export default {
       `,
       errors: [
         {
+          column: 1,
           line: 3,
           message: 'Unexpected tag `@param`',
         },

@@ -14868,6 +14868,13 @@ function quux (foo) {
 // Message: Missing JSDoc @param "foo" type.
 
 /**
+ * @param {a xxx
+ */
+function quux () {
+}
+// Message: Missing JSDoc @param "" type.
+
+/**
  * @param foo
  */
 function quux (foo) {
