@@ -1,5 +1,5 @@
 os: linux
-dist: xenial
+dist: focal
 language: node_js
 node_js:
   - "14.17.0"
