@@ -320,8 +320,13 @@ export default {
       };
 
       const report = () => {
+        const {
+          start,
+        } = node.loc;
         const loc = {
-          end: node.loc.start + 1,
+          end: {
+            line: start.line + 1,
+          },
           start: node.loc.start,
         };
         context.report({

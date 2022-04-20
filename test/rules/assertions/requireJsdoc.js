@@ -226,7 +226,8 @@ function quux (foo) {
 }`,
       errors: [
         {
-          endLine: undefined,
+          column: 1,
+          endLine: 3,
           line: 2,
           message: 'Missing JSDoc comment.',
         },
@@ -699,7 +700,7 @@ function quux (foo) {
           }`,
       errors: [
         {
-          endLine: undefined,
+          endLine: 3,
           line: 2,
           message: 'Missing JSDoc comment.',
         },
