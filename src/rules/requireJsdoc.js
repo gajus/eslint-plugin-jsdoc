@@ -325,7 +325,7 @@ export default {
         } = node.loc;
         const loc = {
           end: {
-            column: start.column,
+            column: 0,
             line: start.line + 1,
           },
           start: node.loc.start,
