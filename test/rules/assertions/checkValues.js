@@ -310,6 +310,49 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @license license-prefix Oops
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @license: "Oops"; expected SPDX expression: https://spdx.org/licenses/.',
+        },
+      ],
+      options: [
+        {
+          licensePattern: '(?<=license-prefix ).*',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @license Oops
+       * Copyright 2022
+       */
+      function quux (foo) {
+
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @license: "Oops"; expected SPDX expression: https://spdx.org/licenses/.',
+        },
+      ],
+      options: [
+        {
+          licensePattern: '^([^\n]+)\nCopyright',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -501,6 +544,53 @@ export default {
 
       }
       `,
+    },
+    {
+      code: `
+      /**
+       * @license license-prefix MIT
+       */
+      function quux (foo) {
+
+      }
+      `,
+      options: [
+        {
+          licensePattern: '(?<=license-prefix )MIT|GPL3.0',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @license
+       * Copyright 2022
+       */
+      function quux (foo) {
+
+      }
+      `,
+      options: [
+        {
+          licensePattern: '^([^\n]+)(?!\nCopyright)',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @license MIT
+       * Copyright 2022
+       */
+      function quux (foo) {
+
+      }
+      `,
+      options: [
+        {
+          licensePattern: '^([^\n]+)\nCopyright',
+        },
+      ],
     },
   ],
 };

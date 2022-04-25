@@ -6122,6 +6122,25 @@ function quux (foo) {
 }
 // "jsdoc/check-values": ["error"|"warn", {"numericOnlyVariation":true}]
 // Message: Invalid JSDoc @variation: "5.2".
+
+/**
+ * @license license-prefix Oops
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-values": ["error"|"warn", {"licensePattern":"(?<=license-prefix ).*"}]
+// Message: Invalid JSDoc @license: "Oops"; expected SPDX expression: https://spdx.org/licenses/.
+
+/**
+ * @license Oops
+ * Copyright 2022
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-values": ["error"|"warn", {"licensePattern":"^([^\n]+)\nCopyright"}]
+// Message: Invalid JSDoc @license: "Oops"; expected SPDX expression: https://spdx.org/licenses/.
 ````
 
 The following patterns are not considered problems:
@@ -6244,6 +6263,32 @@ function quux (foo) {
 function quux (foo) {
 
 }
+
+/**
+ * @license license-prefix MIT
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-values": ["error"|"warn", {"licensePattern":"(?<=license-prefix )MIT|GPL3.0"}]
+
+/**
+ * @license
+ * Copyright 2022
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-values": ["error"|"warn", {"licensePattern":"^([^\n]+)(?!\nCopyright)"}]
+
+/**
+ * @license MIT
+ * Copyright 2022
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-values": ["error"|"warn", {"licensePattern":"^([^\n]+)\nCopyright"}]
 ````
 
 

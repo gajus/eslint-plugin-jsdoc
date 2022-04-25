@@ -106,31 +106,43 @@ export default iterateJsdoc(({
   });
   utils.forEachPreferredTag('license', (jsdocParameter, targetTagName) => {
     const licenseRegex = utils.getRegexFromString(licensePattern, 'g');
-    const match = utils.getTagDescription(jsdocParameter).match(licenseRegex);
-    const license = match && match[1] || match[0];
-    if (!license.trim()) {
-      report(
-        `Missing JSDoc @${targetTagName} value.`,
-        null,
-        jsdocParameter,
-      );
-    } else if (allowedLicenses) {
-      if (allowedLicenses !== true && !allowedLicenses.includes(license)) {
-        report(
-          `Invalid JSDoc @${targetTagName}: "${license}"; expected one of ${allowedLicenses.join(', ')}.`,
-          null,
-          jsdocParameter,
-        );
+    const matches = utils.getTagDescription(jsdocParameter).matchAll(licenseRegex);
+    let positiveMatch = false;
+    for (const match of matches) {
+      const license = match[1] || match[0];
+      if (license) {
+        positiveMatch = true;
       }
-    } else {
-      try {
-        spdxExpressionParse(license);
-      } catch {
+
+      if (!license.trim()) {
+        // Avoid reporting again as empty match
+        if (positiveMatch) {
+          return;
+        }
+
         report(
-          `Invalid JSDoc @${targetTagName}: "${license}"; expected SPDX expression: https://spdx.org/licenses/.`,
+          `Missing JSDoc @${targetTagName} value.`,
           null,
           jsdocParameter,
         );
+      } else if (allowedLicenses) {
+        if (allowedLicenses !== true && !allowedLicenses.includes(license)) {
+          report(
+            `Invalid JSDoc @${targetTagName}: "${license}"; expected one of ${allowedLicenses.join(', ')}.`,
+            null,
+            jsdocParameter,
+          );
+        }
+      } else {
+        try {
+          spdxExpressionParse(license);
+        } catch {
+          report(
+            `Invalid JSDoc @${targetTagName}: "${license}"; expected SPDX expression: https://spdx.org/licenses/.`,
+            null,
+            jsdocParameter,
+          );
+        }
       }
     }
   });
