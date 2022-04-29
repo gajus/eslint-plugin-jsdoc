@@ -1296,12 +1296,16 @@ const parseClosureTemplateTag = (tag) => {
 };
 
 /**
+ * @typedef {true|string[]} DefaultContexts
+ */
+
+/**
  * Checks user option for `contexts` array, defaulting to
  *   contexts designated by the rule. Returns an array of
  *   ESTree AST types, indicating allowable contexts.
  *
  * @param {*} context
- * @param {true|string[]} defaultContexts
+ * @param {DefaultContexts} defaultContexts
  * @returns {string[]}
  */
 const enforcedContexts = (context, defaultContexts) => {
