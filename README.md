@@ -10367,6 +10367,19 @@ const a = 'string';
  */
 const a = new Todo();
 // Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @template A, [B=SomeDefault]
+ */
+class Foo {
+  /**
+   * @param {A} baz
+   * @return {B}
+   */
+  bar (baz) {
+  }
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
 ````
 
 

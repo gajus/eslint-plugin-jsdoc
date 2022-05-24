@@ -1258,5 +1258,25 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @template A, [B=SomeDefault]
+       */
+      class Foo {
+        /**
+         * @param {A} baz
+         * @return {B}
+         */
+        bar (baz) {
+        }
+      }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
   ],
 };
