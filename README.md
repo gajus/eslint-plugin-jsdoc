@@ -11411,6 +11411,7 @@ An options object may have any of the following properties:
     Defaults to `true`.
 - `checkSetters` - A value indicating whether setters should be checked.
     Defaults to `true`.
+- `publicOnly`: - A value indicating whether only exported constructs should be checked
 
 |          |                                                                                                               |
 | -------- | ------------------------------------------------------------------------------------------------------------- |
@@ -11696,6 +11697,44 @@ class quux {
 // Settings: {"jsdoc":{"implementsReplacesDocs":false}}
 // "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"implements\"])","context":"any"}],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
+
+/**
+ *
+ */
+export function quux (foo) {
+
+}
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc block description.
+
+/**
+ *
+ */
+module.exports = function quux (foo) {
+
+}
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":{"cjs":true,"esm":false}}]
+// Message: Missing JSDoc block description.
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":false}]
+// Message: Missing JSDoc block description.
+
+export default class Class {
+  /**
+   *
+   */
+  quux(foo) {
+
+  }
+}
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc block description.
 ````
 
 The following patterns are not considered problems:
@@ -11926,6 +11965,40 @@ class quux {
  *   description already.
  */
 // "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[rawType=\"{Bar}\"])","context":"any"}],"descriptionStyle":"tag"}]
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":true}]
+
+/**
+ * description
+ */
+export function quux (foo) {
+
+}
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":true}]
+
+/**
+ *
+ */
+module.exports = function quux (foo) {
+
+}
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":{"cjs":false}}]
+
+class Class {
+  /**
+   *
+   */
+  quux(foo) {
+
+  }
+}
+// "jsdoc/require-description": ["error"|"warn", {"publicOnly":true}]
 ````
 
 
@@ -14625,6 +14698,16 @@ Requires that each `@param` tag has a `description` value.
 <a name="eslint-plugin-jsdoc-rules-require-param-description-options-29"></a>
 #### Options
 
+Accepts one optional options object with the following optional keys.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29-publiconly-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-29-publiconly-1"></a>
+##### <code>publicOnly</code>
+
+This option will insist that missing jsdoc blocks are only reported for
+function bodies / class declarations that are exported from the module.
+For more information see the documentation of `require-jsdoc`.
+
 <a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29-contexts-8"></a>
 <a name="eslint-plugin-jsdoc-rules-require-param-description-options-29-contexts-8"></a>
 ##### <code>contexts</code>
@@ -14699,6 +14782,44 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
+
+/**
+ * @param foo
+ */
+export function quux (foo) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc @param "foo" description.
+
+/**
+ * @param foo
+ */
+module.exports = function quux (foo) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":{"cjs":true,"esm":false}}]
+// Message: Missing JSDoc @param "foo" description.
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":false}]
+// Message: Missing JSDoc @param "foo" description.
+
+export default class Class {
+  /**
+   * @param foo
+   */
+  quux(foo) {
+
+  }
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc @param "foo" description.
 ````
 
 The following patterns are not considered problems:
@@ -14735,6 +14856,40 @@ function quux (foo) {
  * @callback
  * @param foo
  */
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":true}]
+
+/**
+ * @param foo - description
+ */
+export function quux (foo) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":true}]
+
+/**
+ * @param
+ */
+module.exports = function quux (foo) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":{"cjs":false}}]
+
+class Class {
+  /**
+   * @param foo
+   */
+  quux(foo) {
+
+  }
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"publicOnly":true}]
 ````
 
 
@@ -17665,6 +17820,16 @@ or if it is `Promise<void>` or `Promise<undefined>`.
 <a name="eslint-plugin-jsdoc-rules-require-returns-description-options-34"></a>
 #### Options
 
+Accepts one optional options object with the following optional keys.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-description-options-34-publiconly-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-34-publiconly-2"></a>
+##### <code>publicOnly</code>
+
+This option will insist that missing jsdoc blocks are only reported for
+function bodies / class declarations that are exported from the module.
+For more information see the documentation of `require-jsdoc`.
+
 <a name="user-content-eslint-plugin-jsdoc-rules-require-returns-description-options-34-contexts-12"></a>
 <a name="eslint-plugin-jsdoc-rules-require-returns-description-options-34-contexts-12"></a>
 ##### <code>contexts</code>
@@ -17747,6 +17912,44 @@ function quux () {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":false}}}
 // Message: Unexpected tag `@returns`
+
+/**
+ * @returns
+ */
+export function quux (foo) {
+
+}
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc @returns description.
+
+/**
+ * @returns
+ */
+module.exports = function quux (foo) {
+
+}
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":{"cjs":true,"esm":false}}]
+// Message: Missing JSDoc @returns description.
+
+/**
+ * @returns
+ */
+function quux (foo) {
+
+}
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":false}]
+// Message: Missing JSDoc @returns description.
+
+export default class Class {
+  /**
+   * @returns
+   */
+  quux(foo) {
+
+  }
+}
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":true}]
+// Message: Missing JSDoc @returns description.
 ````
 
 The following patterns are not considered problems:
@@ -17811,6 +18014,40 @@ function quux () {
  * @callback
  * @returns
  */
+
+/**
+ * @returns
+ */
+function quux (foo) {
+
+}
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":true}]
+
+/**
+ * @returns - description
+ */
+export function quux (foo) {
+
+}
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":true}]
+
+/**
+ * @returns
+ */
+module.exports = function quux (foo) {
+
+}
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":{"cjs":false}}]
+
+class Class {
+  /**
+   * @returns
+   */
+  quux(foo) {
+
+  }
+}
+// "jsdoc/require-returns-description": ["error"|"warn", {"publicOnly":true}]
 ````
 
 

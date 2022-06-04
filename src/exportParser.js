@@ -601,7 +601,24 @@ const isUncommentedExport = function (node, sourceCode, opt, settings) {
   return isNodeExported(node, parseResult.globalVars, opt);
 };
 
+const isPublic = function (node, sourceCode, opt) {
+  const normalizedOpts = {
+    ancestorsOnly: Boolean(opt?.ancestorsOnly ?? false),
+    esm: Boolean(opt?.esm ?? true),
+    initModuleExports: Boolean(opt?.cjs ?? true),
+    initWindow: Boolean(opt?.window ?? false),
+  };
+  if (normalizedOpts.esm && (getExportAncestor(node) || isExportByAncestor(node))) {
+    return true;
+  }
+
+  const parseResult = parse(sourceCode.ast, node, normalizedOpts);
+
+  return isNodeExported(node, parseResult.globalVars, normalizedOpts);
+};
+
 export default {
+  isPublic,
   isUncommentedExport,
   parse,
 };

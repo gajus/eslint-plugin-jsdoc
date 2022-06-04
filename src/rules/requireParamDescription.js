@@ -46,6 +46,33 @@ export default iterateJsdoc(({
             },
             type: 'array',
           },
+          publicOnly: {
+            oneOf: [
+              {
+                default: false,
+                type: 'boolean',
+              },
+              {
+                additionalProperties: false,
+                default: {},
+                properties: {
+                  ancestorsOnly: {
+                    type: 'boolean',
+                  },
+                  cjs: {
+                    type: 'boolean',
+                  },
+                  esm: {
+                    type: 'boolean',
+                  },
+                  window: {
+                    type: 'boolean',
+                  },
+                },
+                type: 'object',
+              },
+            ],
+          },
         },
         type: 'object',
       },

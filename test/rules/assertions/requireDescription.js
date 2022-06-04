@@ -707,6 +707,101 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           *
+           */
+          export function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          module.exports = function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: {
+            cjs: true,
+            esm: false,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: false,
+        },
+      ],
+    },
+    {
+      code: `
+          export default class Class {
+            /**
+             *
+             */
+            quux(foo) {
+
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [
     {
@@ -1145,6 +1240,73 @@ export default {
             },
           ],
           descriptionStyle: 'tag',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * description
+           */
+          export function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          module.exports = function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          class Class {
+            /**
+             *
+             */
+            quux(foo) {
+
+            }
+          }
+      `,
+      options: [
+        {
+          publicOnly: true,
         },
       ],
     },

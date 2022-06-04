@@ -143,6 +143,104 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @returns
+           */
+          export function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @returns description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          /**
+           * @returns
+           */
+          module.exports = function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @returns description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: {
+            cjs: true,
+            esm: false,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @returns description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: false,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          export default class Class {
+            /**
+             * @returns
+             */
+            quux(foo) {
+
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @returns description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [
     {
@@ -237,6 +335,73 @@ export default {
            * @returns
            */
       `,
+    },
+    {
+      code: `
+          /**
+           * @returns
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns - description
+           */
+          export function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          /**
+           * @returns
+           */
+          module.exports = function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          class Class {
+            /**
+             * @returns
+             */
+            quux(foo) {
+
+            }
+          }
+      `,
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
     },
   ],
 };

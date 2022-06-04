@@ -127,6 +127,101 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          export function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "foo" description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          module.exports = function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "foo" description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: {
+            cjs: true,
+            esm: false,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "foo" description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: false,
+        },
+      ],
+    },
+    {
+      code: `
+          export default class Class {
+            /**
+             * @param foo
+             */
+            quux(foo) {
+
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @param "foo" description.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [
     {
@@ -195,6 +290,73 @@ export default {
       }
       `,
       ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param foo - description
+           */
+          export function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          /**
+           * @param
+           */
+          module.exports = function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          publicOnly: {
+            cjs: false,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+          class Class {
+            /**
+             * @param foo
+             */
+            quux(foo) {
+
+            }
+          }
+      `,
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
     },
   ],
 };
