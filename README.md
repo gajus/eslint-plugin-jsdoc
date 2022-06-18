@@ -2682,6 +2682,22 @@ const fn = ({ids}) => {}
         */
        const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Function description.
+ *
+ * @param lorem Description.
+ * @param sit   Description multi words.
+ */
+const fn = ( lorem, sit ) => {};
+
+/**
+ * Function description.
+ *
+ * @return Return description.
+ */
+const fn2 = () => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 ````
 
 
