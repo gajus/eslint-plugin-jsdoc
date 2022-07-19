@@ -44,7 +44,7 @@ You may provide a custom default message by using the following format:
 ```js
 {
   'jsdoc/match-description': ['error', {
-    message: 'The default dscription should begin with a capital letter.'
+    message: 'The default description should begin with a capital letter.'
   }]
 }
 ```
