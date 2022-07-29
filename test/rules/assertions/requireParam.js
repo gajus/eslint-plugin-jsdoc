@@ -3390,5 +3390,37 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+       * Test
+       */
+      `,
+      ignoreReadme: true,
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * Helper function to warp to a custom stage/level.
+       */
+       export function setCustomStage(): void {}
+       `,
+      ignoreReadme: true,
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
