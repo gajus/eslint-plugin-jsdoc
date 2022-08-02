@@ -396,7 +396,7 @@ const getPreferredTagName = (
       }),
   );
 
-  if (name in tagPreferenceFixed) {
+  if (Object.prototype.hasOwnProperty.call(tagPreferenceFixed, name)) {
     return tagPreferenceFixed[name];
   }
 
