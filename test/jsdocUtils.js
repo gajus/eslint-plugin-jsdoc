@@ -10,6 +10,12 @@ describe('jsdocUtils', () => {
         it('returns the primary tag name', () => {
           expect(jsdocUtils.getPreferredTagName({}, 'jsdoc', 'return')).to.equal('returns');
         });
+        it('works with the constructor tag', () => {
+          expect(jsdocUtils.getPreferredTagName({}, 'jsdoc', 'constructor')).to.equal('class');
+        });
+      });
+      it('works with tags that clash with prototype properties', () => {
+        expect(jsdocUtils.getPreferredTagName({}, 'jsdoc', 'toString')).to.equal('toString');
       });
       it('returns the primary tag name', () => {
         expect(jsdocUtils.getPreferredTagName({}, 'jsdoc', 'returns')).to.equal('returns');

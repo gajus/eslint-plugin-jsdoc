@@ -4500,6 +4500,15 @@ function quux (foo) {}
 /** @jsxImportSource preact */
 /** @jsxRuntime automatic */
 // Message: Invalid JSDoc tag name "jsx".
+
+/**
+ * @constructor
+ */
+function Test() {
+  this.works = false;
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
+// Message: Invalid JSDoc tag (preference). Replace "constructor" JSDoc tag with "class".
 ````
 
 The following patterns are not considered problems:
