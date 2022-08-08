@@ -641,6 +641,37 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @constructor
+       */
+      function Test() {
+        this.works = false;
+      }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc tag (preference). Replace "constructor" JSDoc tag with "class".',
+        },
+      ],
+      output: `
+      /**
+       * @class
+       */
+      function Test() {
+        this.works = false;
+      }
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            returns: 'return',
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
