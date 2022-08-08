@@ -973,6 +973,7 @@ const enforcedContexts = (context, defaultContexts) => {
       'ArrowFunctionExpression',
       'FunctionDeclaration',
       'FunctionExpression',
+      'TSDeclareFunction',
     ] : defaultContexts,
   } = context.options[0] || {};
 

@@ -1353,6 +1353,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           'ArrowFunctionExpression',
           'FunctionDeclaration',
           'FunctionExpression',
+          'TSDeclareFunction',
         ]) {
           contextObject[prop] = checkJsdoc.bind(null, {
             selector: prop,

@@ -3280,6 +3280,12 @@ function quux (foo) {
 }
 // "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
 // Message: Duplicate @param "foo"
+
+/**
+ * @param barr This is the description of bar. Oops, we misspelled "bar" as "barr".
+ */
+declare function foo(bar: number) {}
+// Message: Expected @param names to be "bar". Got "barr".
 ````
 
 The following patterns are not considered problems:

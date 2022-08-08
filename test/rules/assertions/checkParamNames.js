@@ -1162,6 +1162,21 @@ export default {
           }
       `,
     },
+    {
+      code: `
+      /**
+       * @param barr This is the description of bar. Oops, we misspelled "bar" as "barr".
+       */
+      declare function foo(bar: number) {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "bar". Got "barr".',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
