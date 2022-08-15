@@ -119,7 +119,10 @@ const generateReadme = async () => {
 
     return 'The following patterns are considered problems:\n\n````js\n' + ruleAssertions.invalid.join('\n\n') +
       '\n````\n\nThe following patterns are not considered problems:\n\n````js\n' + ruleAssertions.valid.join('\n\n') + '\n````\n';
-  });
+
+  // Allow relative paths in source for #902 but generate compiled file in
+  //   manner compatible with GitHub and npmjs.com
+  }).replace(/\(\.\.\/#/gu, '(#user-content-eslint-plugin-jsdoc-');
 
   return documentBody;
 };

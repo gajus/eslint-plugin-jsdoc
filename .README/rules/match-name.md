@@ -36,7 +36,7 @@ properties, all of which act to confine one another:
 
 - `context` - AST to confine the allowing or disallowing to jsdoc blocks
     associated with a particular context. See the
-    ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+    ["AST and Selectors"](../#advanced-ast-and-selectors)
     section of our README for more on the expected format.
 - `comment` - As with `context` but AST for the JSDoc block comment and types
 

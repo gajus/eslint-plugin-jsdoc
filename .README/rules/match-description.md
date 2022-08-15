@@ -147,7 +147,7 @@ Set this to an array of strings representing the AST context (or an object with
 classes). Overrides the default contexts (see below). Set to `"any"` if you
 want the rule to apply to any jsdoc block throughout your files.
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
 |||

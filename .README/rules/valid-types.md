@@ -3,7 +3,7 @@
 Requires all types to be valid JSDoc, Closure, or TypeScript compiler types
 without syntax errors. Note that what determines a valid type is handled by
 our type parsing engine, [jsdoc-type-pratt-parser](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser),
-using [`settings.jsdoc.mode`](#eslint-plugin-jsdoc-settings-mode) to
+using [`settings.jsdoc.mode`](../#settings-mode) to
 determine whether to use jsdoc-type-pratt-parser's "permissive" parsing or
 the stricter "jsdoc", "typescript", "closure" modes.
 

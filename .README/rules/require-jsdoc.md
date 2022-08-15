@@ -47,7 +47,7 @@ may also have their own `minLineCount` property.
 Note that you may need to disable `require` items (e.g., `MethodDefinition`)
 if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition:not([accessibility="private"] > FunctionExpression`).
 
-See the ["AST and Selectors"](#eslint-plugin-jsdoc-advanced-ast-and-selectors)
+See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
 ##### `exemptEmptyConstructors`
