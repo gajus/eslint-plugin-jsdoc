@@ -68,6 +68,7 @@ JSDoc linting rules for ESLint.
         * [`require-returns-type`](#user-content-eslint-plugin-jsdoc-rules-require-returns-type)
         * [`require-returns`](#user-content-eslint-plugin-jsdoc-rules-require-returns)
         * [`require-throws`](#user-content-eslint-plugin-jsdoc-rules-require-throws)
+        * [`require-throws-type`](#user-content-eslint-plugin-jsdoc-rules-require-throws-type)
         * [`require-yields`](#user-content-eslint-plugin-jsdoc-rules-require-yields)
         * [`require-yields-check`](#user-content-eslint-plugin-jsdoc-rules-require-yields-check)
         * [`sort-tags`](#user-content-eslint-plugin-jsdoc-rules-sort-tags)
@@ -19367,6 +19368,95 @@ function quux (foo) {
 ````
 
 
+<a name="user-content-eslint-plugin-jsdoc-rules-require-throws-type"></a>
+<a name="eslint-plugin-jsdoc-rules-require-throws-type"></a>
+### <code>require-throws-type</code>
+
+Requires that `@throws` tag has `type` value.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-require-throws-type-options-38"></a>
+<a name="eslint-plugin-jsdoc-rules-require-throws-type-options-38"></a>
+#### Options
+
+<a name="user-content-eslint-plugin-jsdoc-rules-require-throws-type-options-38-contexts-14"></a>
+<a name="eslint-plugin-jsdoc-rules-require-throws-type-options-38-contexts-14"></a>
+##### <code>contexts</code>
+
+| | |
+| -------- | --- |
+| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
+| Tags     | `throws` |
+| Aliases  | `throws` |
+|Recommended|true|
+| Options  | `contexts`, `exemptedBy` |
+| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
+
+The following patterns are considered problems:
+
+````js
+/**
+ * @throws
+ */
+function quux (foo) {
+  throw new Error('err');
+}
+// Message: Missing JSDoc @throws type.
+
+/**
+ * @throws
+ */
+function quux (foo) {
+  if (true) {
+    throw new RangeError('err');
+  }
+}
+// Message: Missing JSDoc @throws type.
+
+/**
+ * @throws
+ */
+function quux (foo) {
+  try {
+    // do nothing
+  } finally {
+    throw new SyntaxError(e.message)
+  }
+}
+// Message: Missing JSDoc @throws type.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * @throws {Error} An error.
+ */
+function quux () {
+  throw new Error('err')
+}
+
+/**
+ * @throws {RangeError}
+ */
+function quux (foo) {
+  if (true) {
+    throw new RangeError('err');
+  }
+}
+
+/**
+ * @throws {SyntaxError}
+ */
+function quux (foo) {
+  try {
+    // do nothing
+  } finally {
+    throw new SyntaxError(e.message)
+  }
+}
+````
+
+
 <a name="user-content-eslint-plugin-jsdoc-rules-require-yields"></a>
 <a name="eslint-plugin-jsdoc-rules-require-yields"></a>
 ### <code>require-yields</code>
@@ -19378,8 +19468,8 @@ Will also report if multiple `@yields` tags are present.
 See the `next`, `forceRequireNext`, and `nextWithGeneratorTag` options for an
 option to expect a non-standard `@next` tag.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-yields-options-38"></a>
-<a name="eslint-plugin-jsdoc-rules-require-yields-options-38"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-yields-options-39"></a>
+<a name="eslint-plugin-jsdoc-rules-require-yields-options-39"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
@@ -20190,8 +20280,8 @@ function bodies.
 
 Will also report if multiple `@yields` tags are present.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-yields-check-options-39"></a>
-<a name="eslint-plugin-jsdoc-rules-require-yields-check-options-39"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-yields-check-options-40"></a>
+<a name="eslint-plugin-jsdoc-rules-require-yields-check-options-40"></a>
 #### Options
 
 - `checkGeneratorsOnly` - Avoids checking the function body and merely insists
@@ -20703,12 +20793,12 @@ Sorts tags by a specified sequence according to tag name.
 
 (Default order originally inspired by [`@homer0/prettier-plugin-jsdoc`](https://github.com/homer0/packages/tree/main/packages/public/prettier-plugin-jsdoc).)
 
-<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40"></a>
-<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-41"></a>
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-41"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40-tagsequence"></a>
-<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40-tagsequence"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-41-tagsequence"></a>
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-41-tagsequence"></a>
 ##### <code>tagSequence</code>
 
 An array of tag names indicating the preferred sequence for sorting tags.
@@ -20884,8 +20974,8 @@ a fixed order that doesn't change into the future, supply your own
 ];
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40-alphabetizeextras"></a>
-<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40-alphabetizeextras"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-41-alphabetizeextras"></a>
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-41-alphabetizeextras"></a>
 ##### <code>alphabetizeExtras</code>
 
 Defaults to `false`. Alphabetizes any items not within `tagSequence` after any
@@ -21042,8 +21132,8 @@ function quux () {}
 
 Enforces lines (or no lines) between tags.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41"></a>
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-42"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-42"></a>
 #### Options
 
 The first option is a single string set to "always", "never", or "any"
@@ -21054,27 +21144,27 @@ for particular tags) or with `dropEndLines`.
 
 The second option is an object with the following optional properties.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-count-defaults-to-1"></a>
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-count-defaults-to-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-42-count-defaults-to-1"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-42-count-defaults-to-1"></a>
 ##### <code>count</code> (defaults to 1)
 
 Use with "always" to indicate the number of lines to require be present.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-noendlines-defaults-to-false"></a>
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-noendlines-defaults-to-false"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-42-noendlines-defaults-to-false"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-42-noendlines-defaults-to-false"></a>
 ##### <code>noEndLines</code> (defaults to <code>false</code>)
 
 Use with "always" to indicate the normal lines to be added after tags should
 not be added after the final tag.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-dropendlines-defaults-to-false"></a>
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-dropendlines-defaults-to-false"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-42-dropendlines-defaults-to-false"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-42-dropendlines-defaults-to-false"></a>
 ##### <code>dropEndLines</code> (defaults to <code>false</code>)
 
 If defined, will drop end lines for the final tag only.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-tags-default-to-empty-object"></a>
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-tags-default-to-empty-object"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-42-tags-default-to-empty-object"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-42-tags-default-to-empty-object"></a>
 ##### <code>tags</code> (default to empty object)
 
 Overrides the default behavior depending on specific tags.
@@ -21497,8 +21587,8 @@ for valid types (based on the tag's `type` value), and either portion checked
 for presence (based on `false` `name` or `type` values or their `required`
 value). See the setting for more details.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-valid-types-options-42"></a>
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-42"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-valid-types-options-43"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-43"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow

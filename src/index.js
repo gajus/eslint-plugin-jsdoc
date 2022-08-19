@@ -42,6 +42,7 @@ import requireReturnsCheck from './rules/requireReturnsCheck';
 import requireReturnsDescription from './rules/requireReturnsDescription';
 import requireReturnsType from './rules/requireReturnsType';
 import requireThrows from './rules/requireThrows';
+import requireThrowsType from './rules/requireThrowsType';
 import requireYields from './rules/requireYields';
 import requireYieldsCheck from './rules/requireYieldsCheck';
 import sortTags from './rules/sortTags';
@@ -99,6 +100,7 @@ export default {
         'jsdoc/require-returns-description': 'warn',
         'jsdoc/require-returns-type': 'warn',
         'jsdoc/require-throws': 'off',
+        'jsdoc/require-throws-type': 'off',
         'jsdoc/require-yields': 'warn',
         'jsdoc/require-yields-check': 'warn',
         'jsdoc/sort-tags': 'off',
@@ -152,6 +154,7 @@ export default {
     'require-returns-description': requireReturnsDescription,
     'require-returns-type': requireReturnsType,
     'require-throws': requireThrows,
+    'require-throws-type': requireThrowsType,
     'require-yields': requireYields,
     'require-yields-check': requireYieldsCheck,
     'sort-tags': sortTags,

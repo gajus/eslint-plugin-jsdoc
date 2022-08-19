@@ -583,6 +583,7 @@ selector).
 {"gitdown": "include", "file": "./rules/require-returns-type.md"}
 {"gitdown": "include", "file": "./rules/require-returns.md"}
 {"gitdown": "include", "file": "./rules/require-throws.md"}
+{"gitdown": "include", "file": "./rules/require-throws-type.md"}
 {"gitdown": "include", "file": "./rules/require-yields.md"}
 {"gitdown": "include", "file": "./rules/require-yields-check.md"}
 {"gitdown": "include", "file": "./rules/sort-tags.md"}

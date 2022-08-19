@@ -43,6 +43,7 @@
   "require-returns-description",
   "require-returns-type",
   "require-throws",
+  "require-throws-type",
   "require-yields",
   "require-yields-check",
   "sort-tags",
