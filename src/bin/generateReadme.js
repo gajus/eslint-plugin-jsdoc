@@ -49,7 +49,7 @@ const formatCodeSnippet = (setup, ruleName) => {
 };
 
 const getAssertions = () => {
-  const assertionFiles = glob.sync(path.resolve(__dirname, '../../test/rules/assertions/*.js'));
+  const assertionFiles = glob.sync(path.resolve(__dirname, '../../test/rules/assertions/*.js').replaceAll('\\', '/'));
 
   const assertionNames = assertionFiles.map((filePath) => {
     return path.basename(filePath, '.js');
