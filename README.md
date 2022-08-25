@@ -2403,14 +2403,14 @@ const fn = ( lorem, sit ) => {}
 // Message: Expected JSDoc block lines to not be aligned.
 
 
-       /**
-        * Function description.
-        *
-        * @param {string} lorem Description.
-        * @param {int} sit Description multi words.
-        * @param {string} sth   Multi
-        *                       line description.
-        */
+       /**\r
+        * Function description.\r
+        *\r
+        * @param {string} lorem Description.\r
+        * @param {int} sit Description multi words.\r
+        * @param {string} sth   Multi\r
+        *                       line description.\r
+        */\r
        const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
@@ -2671,14 +2671,14 @@ const fn = ({ids}) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 
-       /**
-        * Function description.
-        *
-        * @param {string} lorem Description.
-        * @param {int}    sit   Description multi words.
-        * @param {string} sth   Multi
-        *                       line description.
-        */
+       /**\r
+        * Function description.\r
+        *\r
+        * @param {string} lorem Description.\r
+        * @param {int}    sit   Description multi words.\r
+        * @param {string} sth   Multi\r
+        *                       line description.\r
+        */\r
        const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
@@ -6288,7 +6288,7 @@ function quux (foo) {
 
 /**
  * @module test
- * @license MIT
+ * @license MIT\r
  */
 'use strict';
 
@@ -8365,14 +8365,14 @@ function quux () {
 // Message: There must be no newline after the description of the JSDoc block.
 
 
-         /**
-          * Bar.
-          *
-          * Bar.
-          *
-          * @bar
-          */
-         function quux () {
+         /**\r
+          * Bar.\r
+          *\r
+          * Bar.\r
+          *\r
+          * @bar\r
+          */\r
+         function quux () {\r
 
          }
 // "jsdoc/newline-after-description": ["error"|"warn", "never"]
@@ -8396,12 +8396,12 @@ function quux () {
 // Message: There must be a newline after the description of the JSDoc block.
 
 
-     /**
-      * Service for fetching symbols.
-      * @param {object} $http - Injected http helper.
-      * @param {object} $q - Injected Promise api helper.
-      * @param {object} $location - Injected window location object.
-      * @param {object} REPORT_DIALOG_CONSTANTS - Injected handle.
+     /**\r
+      * Service for fetching symbols.\r
+      * @param {object} $http - Injected http helper.\r
+      * @param {object} $q - Injected Promise api helper.\r
+      * @param {object} $location - Injected window location object.\r
+      * @param {object} REPORT_DIALOG_CONSTANTS - Injected handle.\r
       */
 // Message: There must be a newline after the description of the JSDoc block.
 
@@ -8464,20 +8464,20 @@ function quux () {
 // "jsdoc/newline-after-description": ["error"|"warn", "never"]
 
 
-     /**
-      * @foo
-      * Test 
-      * abc 
-      * @bar 
+     /**\r
+      * @foo\r
+      * Test \r
+      * abc \r
+      * @bar \r
       */
 
 
-     /**
-      * 
-      * @foo
-      * Test 
-      * abc 
-      * @bar 
+     /**\r
+      * \r
+      * @foo\r
+      * Test \r
+      * abc \r
+      * @bar \r
       */
 
 /***
@@ -8488,16 +8488,16 @@ function quux () {
 }
 // "jsdoc/newline-after-description": ["error"|"warn", "always"]
 
-/**
- * Parses query string to object containing URL parameters
- * 
- * @param queryString
- * Input string
- * 
- * @returns
- * Object containing URL parameters
- */
-export function parseQueryString(queryString: string): { [key: string]: string } {    // <-- Line 10 that fails
+/**\r
+ * Parses query string to object containing URL parameters\r
+ * \r
+ * @param queryString\r
+ * Input string\r
+ * \r
+ * @returns\r
+ * Object containing URL parameters\r
+ */\r
+export function parseQueryString(queryString: string): { [key: string]: string } {    // <-- Line 10 that fails\r
 
 }
 

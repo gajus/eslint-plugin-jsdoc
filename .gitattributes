@@ -1,0 +1,3 @@
+# Use LF line endings on all files by default.
+# Allows safely disabling the "linebreak-style" linting rule.
+* text eol=lf

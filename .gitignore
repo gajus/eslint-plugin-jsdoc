@@ -9,6 +9,7 @@ pnpm-lock.yaml
 !.editorconfig
 !.eslintrc.json
 !.eslintignore
+!.gitattributes
 !.gitignore
 !.npmignore
 !.README
