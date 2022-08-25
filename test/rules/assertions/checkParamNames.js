@@ -1726,5 +1726,14 @@ export default {
       const foo = ([, b]) => b;
       `,
     },
+    {
+      code: `
+      /**
+       * @param arg1 This is the description for arg1.
+       */
+      function foo(this: void, arg1: number): void;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };

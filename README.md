@@ -3660,6 +3660,11 @@ class A {
  * @param root."1" Our "b"
  */
 const foo = ([, b]) => b;
+
+/**
+ * @param arg1 This is the description for arg1.
+ */
+function foo(this: void, arg1: number): void;
 ````
 
 

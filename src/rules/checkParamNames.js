@@ -64,7 +64,10 @@ const validateParameterNames = (
       return false;
     }
 
-    const functionParameterName = functionParameterNames[index - dotted];
+    let functionParameterName = functionParameterNames[index - dotted];
+    if (functionParameterName === 'this') {
+      functionParameterName = functionParameterNames[index - dotted + 1];
+    }
 
     if (!functionParameterName) {
       if (allowExtraTrailingParamDocs) {
@@ -227,6 +230,8 @@ const validateParameterNames = (
         }
 
         return item;
+      }).filter((item) => {
+        return item !== 'this';
       }).join(', ');
 
       report(
