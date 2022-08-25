@@ -25,7 +25,7 @@ const trimCode = (code) => {
     return line.slice(lineIndentSize);
   });
 
-  return lines.join('\n');
+  return lines.join('\n').replaceAll('\r', '\\r');
 };
 
 const formatCodeSnippet = (setup, ruleName) => {
