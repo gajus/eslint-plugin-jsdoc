@@ -17685,6 +17685,14 @@ function * quux() {}
 function * quux() {}
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 // "jsdoc/require-returns-check": ["error"|"warn", {"exemptGenerators":true}]
+
+/**
+ * @param {unknown} val
+ * @returns { asserts val is number }
+ */
+function assertNumber(val) {
+  assert(typeof val === 'number');
+}
 ````
 
 

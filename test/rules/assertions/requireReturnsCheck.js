@@ -940,5 +940,16 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @param {unknown} val
+       * @returns { asserts val is number }
+       */
+      function assertNumber(val) {
+        assert(typeof val === 'number');
+      }
+      `,
+    },
   ],
 };

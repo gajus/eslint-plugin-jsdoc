@@ -72,7 +72,14 @@ export default iterateJsdoc(({
     tag,
   ] = tags;
 
-  const returnNever = tag.type.trim() === 'never';
+  const type = tag.type.trim();
+
+  // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions
+  if (/asserts\s/u.test(type)) {
+    return;
+  }
+
+  const returnNever = type === 'never';
 
   if (returnNever && utils.hasValueOrExecutorHasNonEmptyResolveValue(false)) {
     report(`JSDoc @${tagName} declaration set with "never" but return expression is present in function.`);
