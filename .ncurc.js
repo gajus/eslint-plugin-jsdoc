@@ -7,6 +7,7 @@ module.exports = {
   dep: 'prod,dev,optional,bundle',
   reject: [
     // Todo: When package converted to ESM
+    'camelcase',
     'decamelize',
     'escape-string-regexp',
     'open-editor',
