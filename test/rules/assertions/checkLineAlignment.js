@@ -1577,5 +1577,103 @@ export default {
         'always',
       ],
     },
+    {
+      code: `
+      /**
+       * Function description.
+       *
+       * @param lorem Description.
+       * @param sit   Description multi words.
+       * @return      Return description.
+       */
+      const fn = ( lorem, sit ) => {};
+
+      /**
+       * Function description.
+       *
+       * @param lorem Description.
+       * @param sit   Description multi words.
+       * @returns     Return description.
+       */
+      const fn2 = ( lorem, sit ) => {};
+
+      /**
+       * Function description.
+       *
+       * @param a Description.
+       * @param b Description multi words.
+       * @returns Return description.
+       */
+      const fn3 = ( a, b ) => {};
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+      /**
+       * Function description.
+       *
+       * @argument lorem Description.
+       * @return         Return description.
+       */
+      const fn = ( lorem ) => {};
+
+      /**
+       * Function description.
+       *
+       * @argument lorem Description.
+       * @returns        Return description.
+       */
+      const fn2 = ( lorem ) => {};
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+      /**
+       * Function description.
+       *
+       * @arg a   Description.
+       * @returns Return description.
+       */
+      const fn = ( a ) => {};
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+      /**
+       * Function description.
+       *
+       * @arg   lorem Description.
+       * @param sit   Return description.
+       */
+      const fn = ( lorem, sit ) => {};
+      `,
+      options: [
+        'always',
+      ],
+    },
+    {
+      code: `
+      /**
+       * Function description.
+       *
+       * @arg      a Description.
+       * @argument b Second description.
+       * @returns    Return description.
+       */
+      const fn = ( a, b ) => {};
+      `,
+      options: [
+        'always',
+      ],
+    },
   ],
 };

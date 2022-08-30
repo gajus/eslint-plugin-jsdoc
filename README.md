@@ -2697,6 +2697,79 @@ const fn = ( lorem, sit ) => {};
  */
 const fn2 = () => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Function description.
+ *
+ * @param lorem Description.
+ * @param sit   Description multi words.
+ * @return      Return description.
+ */
+const fn = ( lorem, sit ) => {};
+
+/**
+ * Function description.
+ *
+ * @param lorem Description.
+ * @param sit   Description multi words.
+ * @returns     Return description.
+ */
+const fn2 = ( lorem, sit ) => {};
+
+/**
+ * Function description.
+ *
+ * @param a Description.
+ * @param b Description multi words.
+ * @returns Return description.
+ */
+const fn3 = ( a, b ) => {};
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Function description.
+ *
+ * @argument lorem Description.
+ * @return         Return description.
+ */
+const fn = ( lorem ) => {};
+
+/**
+ * Function description.
+ *
+ * @argument lorem Description.
+ * @returns        Return description.
+ */
+const fn2 = ( lorem ) => {};
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Function description.
+ *
+ * @arg a   Description.
+ * @returns Return description.
+ */
+const fn = ( a ) => {};
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Function description.
+ *
+ * @arg   lorem Description.
+ * @param sit   Return description.
+ */
+const fn = ( lorem, sit ) => {};
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * Function description.
+ *
+ * @arg      a Description.
+ * @argument b Second description.
+ * @returns    Return description.
+ */
+const fn = ( a, b ) => {};
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 ````
 
 

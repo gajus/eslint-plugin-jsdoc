@@ -66,6 +66,35 @@ const getWidth = (tags) => {
   };
 };
 
+const getTypelessInfo = (fields) => {
+  const hasNoTypes = fields.tags.every(({
+    type,
+  }) => {
+    return !type;
+  });
+  const maxNamedTagLength = Math.max(...fields.tags.map(({
+    tag,
+    name,
+  }) => {
+    return name.length === 0 ? -1 : tag.length;
+  }).filter((length) => {
+    return length !== -1;
+  })) + 1;
+  const maxUnnamedTagLength = Math.max(...fields.tags.map(({
+    tag,
+    name,
+  }) => {
+    return name.length === 0 ? tag.length : -1;
+  }).filter((length) => {
+    return length !== -1;
+  })) + 1;
+  return {
+    hasNoTypes,
+    maxNamedTagLength,
+    maxUnnamedTagLength,
+  };
+};
+
 const space = (len) => {
   return ''.padStart(len, ' ');
 };
@@ -79,7 +108,7 @@ const alignTransform = ({
   let intoTags = false;
   let width;
 
-  const alignTokens = (tokens, hasNoTypes) => {
+  const alignTokens = (tokens, typelessInfo) => {
     const nothingAfter = {
       delim: false,
       name: false,
@@ -107,9 +136,18 @@ const alignTransform = ({
       }
     }
 
-    if (hasNoTypes) {
+    let untypedNameAdjustment = 0;
+    let untypedTypeAdjustment = 0;
+    if (typelessInfo.hasNoTypes) {
       nothingAfter.tag = true;
       tokens.postTag = '';
+      if (tokens.name === '') {
+        untypedNameAdjustment = typelessInfo.maxNamedTagLength - tokens.tag.length;
+      } else {
+        untypedNameAdjustment = typelessInfo.maxNamedTagLength > typelessInfo.maxUnnamedTagLength ? 0 :
+          Math.max(0, typelessInfo.maxUnnamedTagLength - (tokens.tag.length + tokens.name.length + 1));
+        untypedTypeAdjustment = typelessInfo.maxNamedTagLength - tokens.tag.length;
+      }
     }
 
     // Todo: Avoid fixing alignment of blocks with multiline wrapping of type
@@ -131,18 +169,18 @@ const alignTransform = ({
     }
 
     if (!nothingAfter.type) {
-      tokens.postType = space(width.type - tokens.type.length + spacings.postType);
+      tokens.postType = space(width.type - tokens.type.length + spacings.postType + untypedTypeAdjustment);
     }
 
     if (!nothingAfter.name) {
       // If post name is empty for all lines (name width 0), don't add post name spacing.
-      tokens.postName = width.name === 0 ? '' : space(width.name - tokens.name.length + spacings.postName);
+      tokens.postName = width.name === 0 ? '' : space(width.name - tokens.name.length + spacings.postName + untypedNameAdjustment);
     }
 
     return tokens;
   };
 
-  const update = (line, index, source, hasNoTypes) => {
+  const update = (line, index, source, typelessInfo) => {
     const tokens = {
       ...line.tokens,
     };
@@ -205,7 +243,7 @@ const alignTransform = ({
 
     return {
       ...line,
-      tokens: alignTokens(tokens, hasNoTypes),
+      tokens: alignTokens(tokens, typelessInfo),
     };
   };
 
@@ -216,16 +254,13 @@ const alignTransform = ({
     width = source.reduce(getWidth(tags), {
       ...zeroWidth,
     });
-    const hasNoTypes = fields.tags.every(({
-      type,
-    }) => {
-      return !type;
-    });
+
+    const typelessInfo = getTypelessInfo(fields);
 
     return rewireSource({
       ...fields,
       source: source.map((line, index) => {
-        return update(line, index, source, hasNoTypes);
+        return update(line, index, source, typelessInfo);
       }),
     });
   };
