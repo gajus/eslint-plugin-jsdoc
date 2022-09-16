@@ -1671,6 +1671,61 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       */
+      export function readFixture(path: string): Promise<Buffer>;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       */
+      export function readFixture(path: string): void;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       */
+      export function readFixture(path: string);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          forceRequireReturn: true,
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
@@ -2538,6 +2593,46 @@ export default {
         export const sleep = (ms: number) => {
           return new Promise<void>((res) => setTimeout(res, ms));
         };
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       *
+       * @returns The file contents as buffer.
+       */
+      export function readFixture(path: string): Promise<Buffer>;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       *
+       * @returns {void}.
+       */
+      export function readFixture(path: string): void;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       */
+      export function readFixture(path: string): void;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       */
+      export function readFixture(path: string);
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
