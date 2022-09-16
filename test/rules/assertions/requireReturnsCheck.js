@@ -371,6 +371,68 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       *
+       * @param path The path to resolve relative to the fixture base. It will be normalized for the
+       * operating system.
+       *
+       * @returns The file contents as buffer.
+       */
+      export function readFixture(path: string): void;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       *
+       * @param path The path to resolve relative to the fixture base. It will be normalized for the
+       * operating system.
+       *
+       * @returns The file contents as buffer.
+       */
+      export function readFixture(path: string);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       *
+       * @param path The path to resolve relative to the fixture base. It will be normalized for the
+       * operating system.
+       *
+       * @returns The file contents as buffer.
+       */
+      export function readFixture(path: string): void {
+        return;
+      };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
@@ -950,6 +1012,50 @@ export default {
         assert(typeof val === 'number');
       }
       `,
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       *
+       * @param path The path to resolve relative to the fixture base. It will be normalized for the
+       * operating system.
+       *
+       * @returns The file contents as buffer.
+       */
+      export function readFixture(path: string): Promise<Buffer>;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       *
+       * @param path The path to resolve relative to the fixture base. It will be normalized for the
+       * operating system.
+       *
+       * @returns The file contents as buffer.
+       */
+      export function readFixture(path: string): Promise<Buffer> {
+        return new Promise(() => {});
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       *
+       * @param path The path to resolve relative to the fixture base. It will be normalized for the
+       * operating system.
+       *
+       * @returns {void} The file contents as buffer.
+       */
+      export function readFixture(path: string);
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
 };

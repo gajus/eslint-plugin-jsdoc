@@ -17382,6 +17382,41 @@ function quux (foo) {
   return foo;
 }
 // Message: JSDoc @returns declaration set with "never" but return expression is present in function.
+
+/**
+ * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns The file contents as buffer.
+ */
+export function readFixture(path: string): void;
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns The file contents as buffer.
+ */
+export function readFixture(path: string);
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns The file contents as buffer.
+ */
+export function readFixture(path: string): void {
+  return;
+};
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 The following patterns are not considered problems:
@@ -17766,6 +17801,38 @@ function * quux() {}
 function assertNumber(val) {
   assert(typeof val === 'number');
 }
+
+/**
+ * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns The file contents as buffer.
+ */
+export function readFixture(path: string): Promise<Buffer>;
+
+/**
+ * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns The file contents as buffer.
+ */
+export function readFixture(path: string): Promise<Buffer> {
+  return new Promise(() => {});
+}
+
+/**
+ * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns {void} The file contents as buffer.
+ */
+export function readFixture(path: string);
 ````
 
 
@@ -18640,6 +18707,26 @@ export const sleep = (ms: number) => {
   return new Promise<string>((res) => setTimeout(res, ms));
 };
 // Message: Missing JSDoc @returns declaration.
+
+/**
+ * Reads a test fixture.
+ */
+export function readFixture(path: string): Promise<Buffer>;
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * Reads a test fixture.
+ */
+export function readFixture(path: string): void;
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * Reads a test fixture.
+ */
+export function readFixture(path: string);
+// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:
@@ -19143,6 +19230,30 @@ export const sleep = (ms: number) =>
 export const sleep = (ms: number) => {
   return new Promise<void>((res) => setTimeout(res, ms));
 };
+
+/**
+ * Reads a test fixture.
+ *
+ * @returns The file contents as buffer.
+ */
+export function readFixture(path: string): Promise<Buffer>;
+
+/**
+ * Reads a test fixture.
+ *
+ * @returns {void}.
+ */
+export function readFixture(path: string): void;
+
+/**
+ * Reads a test fixture.
+ */
+export function readFixture(path: string): void;
+
+/**
+ * Reads a test fixture.
+ */
+export function readFixture(path: string);
 ````
 
 

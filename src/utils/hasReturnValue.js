@@ -15,6 +15,10 @@ const isVoidPromise = (node) => {
   return node?.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
 };
 
+const undefinedKeywords = new Set([
+  'TSVoidKeyword', 'TSUndefinedKeyword', 'TSNeverKeyword',
+]);
+
 /**
  * @callback PromiseFilter
  * @param {object} node
@@ -35,12 +39,13 @@ const hasReturnValue = (node, promFilter) => {
   }
 
   switch (node.type) {
+  case 'TSDeclareFunction':
   case 'TSFunctionType':
-  case 'TSMethodSignature':
-    return ![
-      'TSVoidKeyword',
-      'TSUndefinedKeyword',
-    ].includes(node?.returnType?.typeAnnotation?.type);
+  case 'TSMethodSignature': {
+    const type = node?.returnType?.typeAnnotation?.type;
+    return type && !undefinedKeywords.has(type);
+  }
+
   case 'MethodDefinition':
     return hasReturnValue(node.value, promFilter);
   case 'FunctionExpression':
