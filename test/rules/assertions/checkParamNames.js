@@ -1735,5 +1735,47 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      declare global {
+        /**
+         * @param arg1 This is the number for foo.
+         */
+        function foo(this: void, arg1: number): void;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      class A {
+        /**
+         * Helper function
+         * @param collisionFunc
+         */
+        public registerCustomPickup(
+          collisionFunc: (this: void, player: EntityPlayer) => boolean = () => true,
+        ): void {}
+       }
+      `,
+      ignoreReadme: true,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      class A {
+        /**
+         * Helper function
+         * @param collisionFunc
+         */
+        @Exported
+        public registerCustomPickup(
+          collisionFunc: (this: void, player: EntityPlayer) => boolean = () => true,
+        ): void {}
+       }
+      `,
+      ignoreReadme: true,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };

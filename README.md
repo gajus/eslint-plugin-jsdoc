@@ -3738,6 +3738,13 @@ const foo = ([, b]) => b;
  * @param arg1 This is the description for arg1.
  */
 function foo(this: void, arg1: number): void;
+
+declare global {
+  /**
+   * @param arg1 This is the number for foo.
+   */
+  function foo(this: void, arg1: number): void;
+}
 ````
 
 
