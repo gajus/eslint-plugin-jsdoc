@@ -2414,6 +2414,17 @@ const fn = ( lorem, sit ) => {}
        const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi
+ *   line with asterisks.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// Message: Expected JSDoc block lines to be aligned.
 ````
 
 The following patterns are not considered problems:
