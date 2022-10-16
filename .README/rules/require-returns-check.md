@@ -2,10 +2,11 @@
 
 Requires a return statement (or non-`undefined` Promise resolve value) in
 function bodies if a `@returns` tag (without a `void` or `undefined` type)
-is specified in the function's jsdoc comment.
+is specified in the function's JSDoc comment.
 
 Will also report `@returns {void}` and `@returns {undefined}` if `exemptAsync`
-is set to `false` no non-`undefined` returned or resolved value is found.
+is set to `false` and a non-`undefined` value is returned or a resolved value
+is found. Also reports if `@returns {never}` is discovered with a return value.
 
 Will also report if multiple `@returns` tags are present.
 
