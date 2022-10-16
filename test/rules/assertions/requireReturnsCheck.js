@@ -414,6 +414,25 @@ export default {
     {
       code: `
       /**
+       * @returns {SomeType}
+       */
+      function quux (path) {
+        if (true) {
+          return;
+        }
+        return 15;
+      };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
        * Reads a test fixture.
        *
        * @param path The path to resolve relative to the fixture base. It will be normalized for the
@@ -432,6 +451,143 @@ export default {
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            if (true) {
+              return true;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            if (true) {
+            } else {
+              return;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux (someVar) {
+            switch (someVar) {
+            case 1:
+              return true;
+            case 2:
+              return;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {boolean}
+           */
+          const quux = (someVar) => {
+            if (someVar) {
+              return true;
+            }
+          };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            try {
+              return true;
+            } catch (error) {
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            try {
+              return true;
+            } catch (error) {
+              return true;
+            } finally {
+              return;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            try {
+            } catch (error) {
+            } finally {
+              return true;
+            }
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
     },
   ],
   valid: [
@@ -676,7 +832,7 @@ export default {
               return true;
             } catch (err) {
             }
-            return;
+            return true;
           }
       `,
     },
@@ -690,7 +846,7 @@ export default {
             } finally {
               return true;
             }
-            return;
+            return true;
           }
       `,
     },
@@ -701,7 +857,7 @@ export default {
            */
           function quux () {
             try {
-              return;
+              return true;
             } catch (err) {
             }
             return true;
@@ -719,7 +875,7 @@ export default {
             } catch (err) {
               return true;
             }
-            return;
+            return true;
           }
       `,
     },
@@ -733,7 +889,7 @@ export default {
             case 'abc':
               return true;
             }
-            return;
+            return true;
           }
       `,
     },
@@ -745,7 +901,7 @@ export default {
           function quux () {
             switch (true) {
             case 'abc':
-              return;
+              return true;
             }
             return true;
           }
@@ -760,7 +916,7 @@ export default {
             for (const i of abc) {
               return true;
             }
-            return;
+            return true;
           }
       `,
     },
@@ -771,6 +927,30 @@ export default {
            */
           function quux () {
             for (const a in b) {
+              return true;
+            }
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            for (const a of b) {
+              return true;
+            }
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            loop: for (const a of b) {
               return true;
             }
           }
@@ -820,21 +1000,9 @@ export default {
            */
           function quux () {
             if (true) {
-              return;
-            }
-            return true;
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @returns {true}
-           */
-          function quux () {
-            if (true) {
               return true;
             }
+            return true;
           }
       `,
     },
@@ -858,11 +1026,11 @@ export default {
            */
           function quux () {
             if (true) {
-              return;
+              return true;
             } else {
               return true;
             }
-            return;
+            return true;
           }
       `,
     },
@@ -1056,6 +1224,41 @@ export default {
       export function readFixture(path: string);
       `,
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * @returns {SomeType}
+       */
+      function quux (path) {
+        if (true) {
+          return 5;
+        }
+        return 15;
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+       * @returns {*} Foo.
+       */
+      const quux = () => new Promise((resolve) => {
+        resolve(3);
+      });
+      `,
+    },
+    {
+      code: `
+      /**
+       * @returns {*} Foo.
+       */
+      const quux = function () {
+        return new Promise((resolve) => {
+          resolve(3);
+        });
+      };
+      `,
     },
   ],
 };
