@@ -1777,5 +1777,23 @@ export default {
       ignoreReadme: true,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      declare global {
+        /**
+         * @param r Range is 0-1.
+         * @param g Range is 0-1.
+         * @param b Range is 0-1.
+         */
+        function Color(
+          this: void,
+          r: float,
+          g: float,
+          b: float,
+        ): Color;
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };

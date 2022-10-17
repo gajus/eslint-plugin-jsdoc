@@ -36,6 +36,7 @@ const validateParameterNames = (
   });
 
   let dotted = 0;
+  let thisOffset = 0;
 
   // eslint-disable-next-line complexity
   return paramTags.some(([
@@ -64,9 +65,10 @@ const validateParameterNames = (
       return false;
     }
 
-    let functionParameterName = functionParameterNames[index - dotted];
+    let functionParameterName = functionParameterNames[index - dotted + thisOffset];
     if (functionParameterName === 'this') {
-      functionParameterName = functionParameterNames[index - dotted + 1];
+      ++thisOffset;
+      functionParameterName = functionParameterNames[index - dotted + thisOffset];
     }
 
     if (!functionParameterName) {
