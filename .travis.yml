@@ -6,6 +6,7 @@ node_js:
   - "16"
   - "17"
   - "18"
+  - "19"
 install:
   - npm install --legacy-peer-deps
 before_script: >
