@@ -16,7 +16,7 @@
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
     "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.19.3",
+    "@babel/core": "^7.19.6",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/node": "^7.19.1",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
@@ -32,7 +32,7 @@
     "chai": "^4.3.6",
     "cross-env": "^7.0.3",
     "decamelize": "^5.0.1",
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "eslint-config-canonical": "~33.0.1",
     "gitdown": "^3.1.5",
     "glob": "^8.0.3",
