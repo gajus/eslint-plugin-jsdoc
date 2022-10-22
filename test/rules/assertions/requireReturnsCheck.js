@@ -589,6 +589,47 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            if (true) {
+              throw new Error('abc');
+            }
+
+            throw new Error('def');
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            if (true) {
+              return true;
+            }
+
+            const a = () => {};
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      ignoreReadme: true,
+    },
   ],
   valid: [
     {
@@ -1258,6 +1299,20 @@ export default {
           resolve(3);
         });
       };
+      `,
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            if (true) {
+              return true;
+            }
+
+            throw new Error('Fail');
+          }
       `,
     },
   ],

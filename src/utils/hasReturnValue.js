@@ -84,6 +84,10 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
     );
   }
 
+  case 'ThrowStatement': {
+    return true;
+  }
+
   case 'ReturnStatement': {
     // void return does not count.
     if (node.argument === null) {
@@ -418,8 +422,9 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
 const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, allBranches) => {
   const hasReturnMethod = allBranches ?
     (nde, promiseFilter) => {
+      let hasReturn;
       try {
-        hasReturnValue(nde, true, promiseFilter);
+        hasReturn = hasReturnValue(nde, true, promiseFilter);
       } catch (error) {
         // istanbul ignore else
         if (error.message === 'Null return') {
@@ -430,7 +435,9 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, all
         throw error;
       }
 
-      return allBrancheshaveReturnValues(nde, promiseFilter);
+      // `hasReturn` check needed since `throw` treated as valid return by
+      //   `allBrancheshaveReturnValues`
+      return hasReturn && allBrancheshaveReturnValues(nde, promiseFilter);
     } :
     (nde, promiseFilter) => {
       return hasReturnValue(nde, false, promiseFilter);

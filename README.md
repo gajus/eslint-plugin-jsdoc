@@ -17552,6 +17552,18 @@ function quux () {
   }
 }
 // Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    throw new Error('abc');
+  }
+
+  throw new Error('def');
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 The following patterns are not considered problems:
@@ -18003,6 +18015,17 @@ const quux = function () {
     resolve(3);
   });
 };
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    return true;
+  }
+
+  throw new Error('Fail');
+}
 ````
 
 
