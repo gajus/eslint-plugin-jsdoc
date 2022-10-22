@@ -16916,6 +16916,25 @@ function Item({
 export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 }
 // "jsdoc/require-param": ["error"|"warn", {"useDefaultObjectProperties":false}]
+
+/**
+ * @param this The this object
+ * @param bar number to return
+ * @returns number returned back to caller
+ */
+function foo(this: T, bar: number): number {
+  console.log(this.name);
+  return bar;
+}
+
+/**
+ * @param bar number to return
+ * @returns number returned back to caller
+ */
+function foo(this: T, bar: number): number {
+  console.log(this.name);
+  return bar;
+}
 ````
 
 

@@ -296,7 +296,7 @@ export default iterateJsdoc(({
       name,
     }) => {
       return name === funcParamName;
-    })) {
+    }) && funcParamName !== 'this') {
       missingTags.push({
         functionParameterIdx: getParamIndex(funcParamName),
         functionParameterName: funcParamName,
