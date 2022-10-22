@@ -680,8 +680,8 @@ const getUtils = (
     return jsdocUtils.hasDefinedTypeTag(tag);
   };
 
-  utils.hasValueOrExecutorHasNonEmptyResolveValue = (anyPromiseAsReturn, allBranches) => {
-    return jsdocUtils.hasValueOrExecutorHasNonEmptyResolveValue(node, anyPromiseAsReturn, allBranches);
+  utils.hasValueOrExecutorHasNonEmptyResolveValue = (anyPromiseAsReturn) => {
+    return jsdocUtils.hasValueOrExecutorHasNonEmptyResolveValue(node, anyPromiseAsReturn);
   };
 
   utils.hasYieldValue = () => {

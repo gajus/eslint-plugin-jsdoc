@@ -17208,11 +17208,10 @@ The following patterns are not considered problems:
 
 Requires a return statement (or non-`undefined` Promise resolve value) in
 function bodies if a `@returns` tag (without a `void` or `undefined` type)
-is specified in the function's JSDoc comment.
+is specified in the function's jsdoc comment.
 
 Will also report `@returns {void}` and `@returns {undefined}` if `exemptAsync`
-is set to `false` and a non-`undefined` value is returned or a resolved value
-is found. Also reports if `@returns {never}` is discovered with a return value.
+is set to `false` no non-`undefined` returned or resolved value is found.
 
 Will also report if multiple `@returns` tags are present.
 
@@ -17439,17 +17438,6 @@ export function readFixture(path: string);
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- * @returns {SomeType}
- */
-function quux (path) {
-  if (true) {
-    return;
-  }
-  return 15;
-};
-// Message: JSDoc @returns declaration present but return expression not available in function.
-
-/**
  * Reads a test fixture.
  *
  * @param path The path to resolve relative to the fixture base. It will be normalized for the
@@ -17460,87 +17448,6 @@ function quux (path) {
 export function readFixture(path: string): void {
   return;
 };
-// Message: JSDoc @returns declaration present but return expression not available in function.
-
-/**
- * @returns {true}
- */
-function quux () {
-  if (true) {
-    return true;
-  }
-}
-// Message: JSDoc @returns declaration present but return expression not available in function.
-
-/**
- * @returns {true}
- */
-function quux () {
-  if (true) {
-  } else {
-    return;
-  }
-}
-// Message: JSDoc @returns declaration present but return expression not available in function.
-
-/**
- * @returns {true}
- */
-function quux (someVar) {
-  switch (someVar) {
-  case 1:
-    return true;
-  case 2:
-    return;
-  }
-}
-// Message: JSDoc @returns declaration present but return expression not available in function.
-
-/**
- * @returns {boolean}
- */
-const quux = (someVar) => {
-  if (someVar) {
-    return true;
-  }
-};
-// Message: JSDoc @returns declaration present but return expression not available in function.
-
-/**
- * @returns {true}
- */
-function quux () {
-  try {
-    return true;
-  } catch (error) {
-  }
-}
-// Message: JSDoc @returns declaration present but return expression not available in function.
-
-/**
- * @returns {true}
- */
-function quux () {
-  try {
-    return true;
-  } catch (error) {
-    return true;
-  } finally {
-    return;
-  }
-}
-// Message: JSDoc @returns declaration present but return expression not available in function.
-
-/**
- * @returns {true}
- */
-function quux () {
-  try {
-  } catch (error) {
-  } finally {
-    return true;
-  }
-}
 // Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
@@ -17707,7 +17614,7 @@ function quux () {
     return true;
   } catch (err) {
   }
-  return true;
+  return;
 }
 
 /**
@@ -17718,7 +17625,7 @@ function quux () {
   } finally {
     return true;
   }
-  return true;
+  return;
 }
 
 /**
@@ -17726,7 +17633,7 @@ function quux () {
  */
 function quux () {
   try {
-    return true;
+    return;
   } catch (err) {
   }
   return true;
@@ -17741,7 +17648,7 @@ function quux () {
   } catch (err) {
     return true;
   }
-  return true;
+  return;
 }
 
 /**
@@ -17752,7 +17659,7 @@ function quux () {
   case 'abc':
     return true;
   }
-  return true;
+  return;
 }
 
 /**
@@ -17761,7 +17668,7 @@ function quux () {
 function quux () {
   switch (true) {
   case 'abc':
-    return true;
+    return;
   }
   return true;
 }
@@ -17773,7 +17680,7 @@ function quux () {
   for (const i of abc) {
     return true;
   }
-  return true;
+  return;
 }
 
 /**
@@ -17781,24 +17688,6 @@ function quux () {
  */
 function quux () {
   for (const a in b) {
-    return true;
-  }
-}
-
-/**
- * @returns {true}
- */
-function quux () {
-  for (const a of b) {
-    return true;
-  }
-}
-
-/**
- * @returns {true}
- */
-function quux () {
-  loop: for (const a of b) {
     return true;
   }
 }
@@ -17836,9 +17725,18 @@ function quux () {
  */
 function quux () {
   if (true) {
-    return true;
+    return;
   }
   return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    return true;
+  }
 }
 
 /**
@@ -17856,11 +17754,11 @@ function quux () {
  */
 function quux () {
   if (true) {
-    return true;
+    return;
   } else {
     return true;
   }
-  return true;
+  return;
 }
 
 /**
@@ -17967,32 +17865,6 @@ export function readFixture(path: string): Promise<Buffer> {
  * @returns {void} The file contents as buffer.
  */
 export function readFixture(path: string);
-
-/**
- * @returns {SomeType}
- */
-function quux (path) {
-  if (true) {
-    return 5;
-  }
-  return 15;
-};
-
-/**
- * @returns {*} Foo.
- */
-const quux = () => new Promise((resolve) => {
-  resolve(3);
-});
-
-/**
- * @returns {*} Foo.
- */
-const quux = function () {
-  return new Promise((resolve) => {
-    resolve(3);
-  });
-};
 ````
 
 

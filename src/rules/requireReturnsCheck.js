@@ -96,7 +96,6 @@ export default iterateJsdoc(({
     ) &&
     !utils.hasValueOrExecutorHasNonEmptyResolveValue(
       exemptAsync,
-      true,
     ) && (!exemptGenerators || !node.generator)
   ) {
     report(`JSDoc @${tagName} declaration present but return expression not available in function.`);

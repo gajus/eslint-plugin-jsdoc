@@ -20,92 +20,6 @@ const undefinedKeywords = new Set([
 ]);
 
 /**
- * Checks if a node has a return statement. Void return does not count.
- *
- * @param {object} node
- * @param {PromiseFilter} promFilter
- * @returns {boolean|Node}
- */
-// eslint-disable-next-line complexity
-const allBrancheshaveReturnValues = (node, promFilter) => {
-  if (!node) {
-    return false;
-  }
-
-  switch (node.type) {
-  case 'TSDeclareFunction':
-  case 'TSFunctionType':
-  case 'TSMethodSignature': {
-    const type = node?.returnType?.typeAnnotation?.type;
-    return type && !undefinedKeywords.has(type);
-  }
-
-  // case 'MethodDefinition':
-  //   return allBrancheshaveReturnValues(node.value, promFilter);
-  case 'FunctionExpression':
-  case 'FunctionDeclaration':
-  case 'ArrowFunctionExpression': {
-    return node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node.body)) ||
-      allBrancheshaveReturnValues(node.body, promFilter);
-  }
-
-  case 'BlockStatement': {
-    const lastBodyNode = node.body.slice(-1)[0];
-    return allBrancheshaveReturnValues(lastBodyNode, promFilter);
-  }
-
-  case 'LabeledStatement':
-  case 'WhileStatement':
-  case 'DoWhileStatement':
-  case 'ForStatement':
-  case 'ForInStatement':
-  case 'ForOfStatement':
-  case 'WithStatement': {
-    return allBrancheshaveReturnValues(node.body, promFilter);
-  }
-
-  case 'IfStatement': {
-    return allBrancheshaveReturnValues(node.consequent, promFilter) && allBrancheshaveReturnValues(node.alternate, promFilter);
-  }
-
-  case 'TryStatement': {
-    return allBrancheshaveReturnValues(node.block, promFilter) &&
-      allBrancheshaveReturnValues(node.handler && node.handler.body, promFilter) &&
-      allBrancheshaveReturnValues(node.finalizer, promFilter);
-  }
-
-  case 'SwitchStatement': {
-    return node.cases.every(
-      (someCase) => {
-        return someCase.consequent.every((nde) => {
-          return allBrancheshaveReturnValues(nde, promFilter);
-        });
-      },
-    );
-  }
-
-  case 'ReturnStatement': {
-    // void return does not count.
-    if (node.argument === null) {
-      return false;
-    }
-
-    if (promFilter && isNewPromiseExpression(node.argument)) {
-      // Let caller decide how to filter, but this is, at the least,
-      //   a return of sorts and truthy
-      return promFilter(node.argument);
-    }
-
-    return true;
-  }
-
-  default: {
-    return false;
-  }
-  }
-};
-
-/**
  * @callback PromiseFilter
  * @param {object} node
  * @returns {boolean}
@@ -115,12 +29,11 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
  * Checks if a node has a return statement. Void return does not count.
  *
  * @param {object} node
- * @param {boolean} throwOnNullReturn
  * @param {PromiseFilter} promFilter
  * @returns {boolean|Node}
  */
 // eslint-disable-next-line complexity
-const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
+const hasReturnValue = (node, promFilter) => {
   if (!node) {
     return false;
   }
@@ -134,17 +47,17 @@ const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
   }
 
   case 'MethodDefinition':
-    return hasReturnValue(node.value, throwOnNullReturn, promFilter);
+    return hasReturnValue(node.value, promFilter);
   case 'FunctionExpression':
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
     return node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node.body)) ||
-      hasReturnValue(node.body, throwOnNullReturn, promFilter);
+      hasReturnValue(node.body, promFilter);
   }
 
   case 'BlockStatement': {
     return node.body.some((bodyNode) => {
-      return bodyNode.type !== 'FunctionDeclaration' && hasReturnValue(bodyNode, throwOnNullReturn, promFilter);
+      return bodyNode.type !== 'FunctionDeclaration' && hasReturnValue(bodyNode, promFilter);
     });
   }
 
@@ -155,25 +68,24 @@ const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
   case 'ForInStatement':
   case 'ForOfStatement':
   case 'WithStatement': {
-    return hasReturnValue(node.body, throwOnNullReturn, promFilter);
+    return hasReturnValue(node.body, promFilter);
   }
 
   case 'IfStatement': {
-    return hasReturnValue(node.consequent, throwOnNullReturn, promFilter) ||
-      hasReturnValue(node.alternate, throwOnNullReturn, promFilter);
+    return hasReturnValue(node.consequent, promFilter) || hasReturnValue(node.alternate, promFilter);
   }
 
   case 'TryStatement': {
-    return hasReturnValue(node.block, throwOnNullReturn, promFilter) ||
-      hasReturnValue(node.handler && node.handler.body, throwOnNullReturn, promFilter) ||
-      hasReturnValue(node.finalizer, throwOnNullReturn, promFilter);
+    return hasReturnValue(node.block, promFilter) ||
+      hasReturnValue(node.handler && node.handler.body, promFilter) ||
+      hasReturnValue(node.finalizer, promFilter);
   }
 
   case 'SwitchStatement': {
     return node.cases.some(
       (someCase) => {
         return someCase.consequent.some((nde) => {
-          return hasReturnValue(nde, throwOnNullReturn, promFilter);
+          return hasReturnValue(nde, promFilter);
         });
       },
     );
@@ -182,10 +94,6 @@ const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
   case 'ReturnStatement': {
     // void return does not count.
     if (node.argument === null) {
-      if (throwOnNullReturn) {
-        throw new Error('Null return');
-      }
-
       return false;
     }
 
@@ -412,31 +320,10 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
  *
  * @param {object} node
  * @param {boolean} anyPromiseAsReturn
- * @param {boolean} allBranches
  * @returns {boolean}
  */
-const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, allBranches) => {
-  const hasReturnMethod = allBranches ?
-    (nde, promiseFilter) => {
-      try {
-        hasReturnValue(nde, true, promiseFilter);
-      } catch (error) {
-        // istanbul ignore else
-        if (error.message === 'Null return') {
-          return false;
-        }
-
-        // istanbul ignore next
-        throw error;
-      }
-
-      return allBrancheshaveReturnValues(nde, promiseFilter);
-    } :
-    (nde, promiseFilter) => {
-      return hasReturnValue(nde, false, promiseFilter);
-    };
-
-  return hasReturnMethod(node, (prom) => {
+const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn) => {
+  return hasReturnValue(node, (prom) => {
     if (anyPromiseAsReturn) {
       return true;
     }
