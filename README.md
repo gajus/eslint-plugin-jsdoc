@@ -17572,6 +17572,34 @@ function quux () {
   throw new Error('def');
 }
 // Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns Baz.
+ */
+function foo() {
+    switch (true) {
+        default:
+            switch (false) {
+                default: return;
+            }
+            return "baz";
+    }
+};
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns Baz.
+ */
+function foo() {
+    switch (true) {
+        default:
+            switch (false) {
+                default: return;
+            }
+            return "baz";
+    }
+};
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 The following patterns are not considered problems:
@@ -18034,6 +18062,19 @@ function quux () {
 
   throw new Error('Fail');
 }
+
+/**
+ * @returns Baz.
+ */
+function foo() {
+    switch (true) {
+        default:
+            switch (false) {
+                default: break;
+            }
+            return "baz";
+    }
+};
 ````
 
 

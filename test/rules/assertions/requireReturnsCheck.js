@@ -630,6 +630,50 @@ export default {
       ],
       ignoreReadme: true,
     },
+    {
+      code: `
+      /**
+       * @returns Baz.
+       */
+      function foo() {
+          switch (true) {
+              default:
+                  switch (false) {
+                      default: return;
+                  }
+                  return "baz";
+          }
+      };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @returns Baz.
+       */
+      function foo() {
+          switch (true) {
+              default:
+                  switch (false) {
+                      default: return;
+                  }
+                  return "baz";
+          }
+      };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1313,6 +1357,22 @@ export default {
 
             throw new Error('Fail');
           }
+      `,
+    },
+    {
+      code: `
+      /**
+       * @returns Baz.
+       */
+      function foo() {
+          switch (true) {
+              default:
+                  switch (false) {
+                      default: break;
+                  }
+                  return "baz";
+          }
+      };
       `,
     },
   ],
