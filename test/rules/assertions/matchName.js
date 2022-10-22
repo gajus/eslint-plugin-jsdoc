@@ -511,7 +511,7 @@ export default {
         {
           match: [
             {
-              comment: 'JsdocBlock > JsdocTag[tag="param"] > JsdocTypeUnion[left.name="Bar"]',
+              comment: 'JsdocBlock:has(JsdocTag[tag="param"]:has(JsdocTypeUnion:has(JsdocTypeName[value="Bar"]:nth-child(1))))',
               disallowName: '/^opt_/i',
             },
           ],

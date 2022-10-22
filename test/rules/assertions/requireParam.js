@@ -2375,6 +2375,39 @@ export default {
         function foo(a, b, c) {}
       `,
     },
+    {
+      code: `
+        /**
+         * @param foo Some number.
+         * @param bar Some number.
+         */
+        export function myPublicFunction(foo: number, bar: number, baz: number) {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "baz" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag="param"])',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
+      output: `
+        /**
+         * @param foo Some number.
+         * @param bar Some number.
+         * @param baz
+         */
+        export function myPublicFunction(foo: number, bar: number, baz: number) {}
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {

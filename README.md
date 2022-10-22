@@ -8012,7 +8012,7 @@ class A {
  * @property opt_a
  * @param {Foo|Bar} opt_b
  */
-// "jsdoc/match-name": ["error"|"warn", {"match":[{"comment":"JsdocBlock > JsdocTag[tag=\"param\"] > JsdocTypeUnion[left.name=\"Bar\"]","disallowName":"/^opt_/i"}]}]
+// "jsdoc/match-name": ["error"|"warn", {"match":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"param\"]:has(JsdocTypeUnion:has(JsdocTypeName[value=\"Bar\"]:nth-child(1))))","disallowName":"/^opt_/i"}]}]
 ````
 
 
@@ -16264,6 +16264,14 @@ export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 /** Foo. */
 function foo(a, b, c) {}
 // Message: Missing JSDoc @param "a" declaration.
+
+/**
+ * @param foo Some number.
+ * @param bar Some number.
+ */
+export function myPublicFunction(foo: number, bar: number, baz: number) {}
+// "jsdoc/require-param": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"param\"])","context":"FunctionDeclaration"}]}]
+// Message: Missing JSDoc @param "baz" declaration.
 ````
 
 The following patterns are not considered problems:
