@@ -3770,6 +3770,16 @@ declare global {
     b: float,
   ): Color;
 }
+
+/**
+ * @param this desc
+ * @param bar number to return
+ * @returns number returned back to caller
+ */
+function foo(this: T, bar: number): number {
+  console.log(this.name);
+  return bar;
+}
 ````
 
 

@@ -66,7 +66,7 @@ const validateParameterNames = (
     }
 
     let functionParameterName = functionParameterNames[index - dotted + thisOffset];
-    if (functionParameterName === 'this') {
+    if (functionParameterName === 'this' && tag.name.trim() !== 'this') {
       ++thisOffset;
       functionParameterName = functionParameterNames[index - dotted + thisOffset];
     }
