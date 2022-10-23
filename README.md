@@ -18094,6 +18094,42 @@ function foo() {
             return "baz";
     }
 };
+
+/**
+ * Return a V1 style query identifier.
+ *
+ * @param {string} id - The query identifier.
+ * @returns {string} V1 style query identifier.
+ */
+function v1QueryId(id) {
+    switch (id) {
+        case 'addq':
+        case 'aliq':
+        case 'locq':
+            return id.substring(3);
+        case 'lost':
+            return id.substring(4);
+        default:
+            return id;
+    }
+}
+
+/**
+ * Parses the required header fields for the given SIP message.
+ *
+ * @param {string} logPrefix - The log prefix.
+ * @param {string} sipMessage - The SIP message.
+ * @param {string[]} headers - The header fields to be parsed.
+ * @returns {object} Object with parsed header fields.
+ */
+function parseSipHeaders(logPrefix, sipMessage, headers) {
+    try {
+        return esappSip.parseHeaders(sipMessage, headers);
+    } catch (err) {
+        logger.error(logPrefix, 'Failed to parse');
+        return {};
+    }
+}
 ````
 
 

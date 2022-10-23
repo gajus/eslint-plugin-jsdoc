@@ -163,15 +163,17 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
 
   case 'TryStatement': {
     return allBrancheshaveReturnValues(node.block, promFilter) &&
-      allBrancheshaveReturnValues(node.handler && node.handler.body, promFilter) &&
-      allBrancheshaveReturnValues(node.finalizer, promFilter);
+      (!node.handler ||
+        allBrancheshaveReturnValues(node.handler && node.handler.body, promFilter)) &&
+      (!node.finalizer ||
+        allBrancheshaveReturnValues(node.finalizer, promFilter));
   }
 
   case 'SwitchStatement': {
     return node.cases.every(
       (someCase) => {
         const nde = someCase.consequent.slice(-1)[0];
-        return allBrancheshaveReturnValues(nde, promFilter);
+        return !nde || allBrancheshaveReturnValues(nde, promFilter);
       },
     );
   }
