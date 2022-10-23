@@ -974,6 +974,84 @@ export default {
       ],
       ignoreReadme: true,
     },
+    {
+      code: `
+      /**
+       * @param {Object[]} employees
+       * @param {string} employees[.name - The name of an employee.
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid name: unpaired brackets',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @param {Object[]} employees
+       * @param {string} [] - The name of an employee.
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid name: empty name',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @param {Object[]} employees
+       * @param {string} [] - The name of an employee.
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Invalid name: empty name',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @param {string} [name=] - The name of an employee.
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid name: empty default value',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @param {string} [name==] - The name of an employee.
+       */
+      function quux () {}
+
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid name: invalid default value syntax',
+        },
+      ],
+    },
   ],
   valid: [
     {

@@ -158,6 +158,16 @@ export default iterateJsdoc(({
       return true;
     };
 
+    if (tag.problems.length) {
+      const msg = tag.problems.reduce((str, {
+        message,
+      }) => {
+        return str + '; ' + message;
+      }, '').slice(2);
+      report(`Invalid name: ${msg}`, null, tag);
+      continue;
+    }
+
     if (tag.tag === 'borrows') {
       const thisNamepath = utils.getTagDescription(tag).replace(asExpression, '')
         .trim();

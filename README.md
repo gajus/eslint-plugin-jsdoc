@@ -22332,6 +22332,39 @@ function quux () {}
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
 // Message: Syntax error in supresss type: blah
+
+/**
+ * @param {Object[]} employees
+ * @param {string} employees[.name - The name of an employee.
+ */
+function quux () {}
+// Message: Invalid name: unpaired brackets
+
+/**
+ * @param {Object[]} employees
+ * @param {string} [] - The name of an employee.
+ */
+function quux () {}
+// Message: Invalid name: empty name
+
+/**
+ * @param {Object[]} employees
+ * @param {string} [] - The name of an employee.
+ */
+function quux () {}
+// Message: Invalid name: empty name
+
+/**
+ * @param {string} [name=] - The name of an employee.
+ */
+function quux () {}
+// Message: Invalid name: empty default value
+
+/**
+ * @param {string} [name==] - The name of an employee.
+ */
+function quux () {}
+// Message: Invalid name: invalid default value syntax
 ````
 
 The following patterns are not considered problems:
