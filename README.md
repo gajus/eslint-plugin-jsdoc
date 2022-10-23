@@ -17572,18 +17572,6 @@ function quux () {
  * @returns {true}
  */
 function quux () {
-  try {
-  } catch (error) {
-  } finally {
-    return true;
-  }
-}
-// Message: JSDoc @returns declaration present but return expression not available in function.
-
-/**
- * @returns {true}
- */
-function quux () {
   if (true) {
     throw new Error('abc');
   }
@@ -18129,6 +18117,29 @@ function parseSipHeaders(logPrefix, sipMessage, headers) {
         logger.error(logPrefix, 'Failed to parse');
         return {};
     }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+  } catch (error) {
+  } finally {
+    return true;
+  }
+}
+
+/** Returns true.
+ *
+ * @returns {boolean} true
+ */
+function getTrue() {
+  try {
+    return true;
+  } finally {
+    console.log('returning...');
+  }
 }
 ````
 

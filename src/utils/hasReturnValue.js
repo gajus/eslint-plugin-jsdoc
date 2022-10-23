@@ -162,11 +162,28 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
   }
 
   case 'TryStatement': {
-    return allBrancheshaveReturnValues(node.block, promFilter) &&
-      (!node.handler ||
-        allBrancheshaveReturnValues(node.handler && node.handler.body, promFilter)) &&
-      (!node.finalizer ||
-        allBrancheshaveReturnValues(node.finalizer, promFilter));
+    // If `finally` returns, all return
+    return node.finalizer && allBrancheshaveReturnValues(node.finalizer, promFilter) ||
+      // Return in `try`/`catch` may still occur despite `finally`
+      allBrancheshaveReturnValues(node.block, promFilter) &&
+        (!node.handler ||
+          allBrancheshaveReturnValues(node.handler && node.handler.body, promFilter)) &&
+          (!node.finalizer || (() => {
+            try {
+              hasReturnValue(node.finalizer, true, promFilter);
+            } catch (error) {
+              // istanbul ignore else
+              if (error.message === 'Null return') {
+                return false;
+              }
+
+              // istanbul ignore next
+              throw error;
+            }
+
+            // As long as not an explicit empty return, then return true
+            return true;
+          })());
   }
 
   case 'SwitchStatement': {

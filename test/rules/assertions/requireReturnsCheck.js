@@ -575,26 +575,6 @@ export default {
            * @returns {true}
            */
           function quux () {
-            try {
-            } catch (error) {
-            } finally {
-              return true;
-            }
-          }
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'JSDoc @returns declaration present but return expression not available in function.',
-        },
-      ],
-    },
-    {
-      code: `
-          /**
-           * @returns {true}
-           */
-          function quux () {
             if (true) {
               throw new Error('abc');
             }
@@ -1414,6 +1394,35 @@ export default {
               logger.error(logPrefix, 'Failed to parse');
               return {};
           }
+      }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @returns {true}
+           */
+          function quux () {
+            try {
+            } catch (error) {
+            } finally {
+              return true;
+            }
+          }
+      `,
+    },
+    {
+      code: `
+      /** Returns true.
+       *
+       * @returns {boolean} true
+       */
+      function getTrue() {
+        try {
+          return true;
+        } finally {
+          console.log('returning...');
+        }
       }
       `,
     },
