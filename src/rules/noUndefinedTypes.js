@@ -19,8 +19,8 @@ const extraTypes = [
   'Array', 'Object', 'RegExp', 'Date', 'Function',
 ];
 
-// https://www.typescriptlang.org/docs/handbook/utility-types.html
 const typescriptGlobals = [
+  // https://www.typescriptlang.org/docs/handbook/utility-types.html
   'Partial',
   'Required',
   'Readonly',
