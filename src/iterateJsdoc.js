@@ -1,5 +1,4 @@
 import {
-  getReducedASTNode,
   getJSDocComment,
   commentHandler,
   parseComment,
@@ -1147,14 +1146,8 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
 
       return {
         '*:not(Program)' (node) {
-          const reducedNode = getReducedASTNode(node, sourceCode);
-
-          if (node !== reducedNode) {
-            return;
-          }
-
           const commentNode = getJSDocComment(sourceCode, node, settings);
-          if (trackedJsdocs.has(commentNode)) {
+          if (!ruleConfig.noTracking && trackedJsdocs.has(commentNode)) {
             return;
           }
 

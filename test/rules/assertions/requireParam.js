@@ -2408,6 +2408,49 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+       * Helper function to warp to a custom stage/level.
+       *
+       * @param name The name
+       * @param firstFloor Optional.
+       */
+       export function setCustomStage(
+         name: string,
+         firstFloor = true,
+         verbose = false,
+       ): void {}
+       `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "verbose" declaration.',
+        },
+      ],
+      ignoreReadme: true,
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
+      output: `
+      /**
+       * Helper function to warp to a custom stage/level.
+       *
+       * @param name The name
+       * @param firstFloor Optional.
+       * @param verbose
+       */
+       export function setCustomStage(
+         name: string,
+         firstFloor = true,
+         verbose = false,
+       ): void {}
+       `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {

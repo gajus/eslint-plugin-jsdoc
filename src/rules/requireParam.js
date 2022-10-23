@@ -31,24 +31,6 @@ export default iterateJsdoc(({
   utils,
   context,
 }) => {
-  const preferredTagName = utils.getPreferredTagName({
-    tagName: 'param',
-  });
-  if (!preferredTagName) {
-    return;
-  }
-
-  const jsdocParameterNames = utils.getJsdocTagsDeep(preferredTagName);
-
-  const shallowJsdocParameterNames = jsdocParameterNames.filter((tag) => {
-    return !tag.name.includes('.');
-  }).map((tag, idx) => {
-    return {
-      ...tag,
-      idx,
-    };
-  });
-
   if (utils.avoidDocs()) {
     return;
   }
@@ -73,10 +55,32 @@ export default iterateJsdoc(({
     useDefaultObjectProperties = false,
   } = context.options[0] || {};
 
+  const preferredTagName = utils.getPreferredTagName({
+    tagName: 'param',
+  });
+  if (!preferredTagName) {
+    return;
+  }
+
+  const functionParameterNames = utils.getFunctionParameterNames(useDefaultObjectProperties);
+  if (!functionParameterNames.length) {
+    return;
+  }
+
+  const jsdocParameterNames = utils.getJsdocTagsDeep(preferredTagName);
+
+  const shallowJsdocParameterNames = jsdocParameterNames.filter((tag) => {
+    return !tag.name.includes('.');
+  }).map((tag, idx) => {
+    return {
+      ...tag,
+      idx,
+    };
+  });
+
   const checkTypesRegex = utils.getRegexFromString(checkTypesPattern);
 
   const missingTags = [];
-  const functionParameterNames = utils.getFunctionParameterNames(useDefaultObjectProperties);
   const flattenedRoots = utils.flattenRoots(functionParameterNames).names;
 
   const paramIndex = {};
@@ -486,4 +490,9 @@ export default iterateJsdoc(({
     ],
     type: 'suggestion',
   },
+
+  // We cannot cache comment nodes as the contexts may recur with the
+  //  same comment node but a different JS node, and we may need the different
+  //  JS node to ensure we iterate its context
+  noTracking: true,
 });
