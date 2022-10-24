@@ -1,5 +1,8 @@
 /* eslint-disable jsdoc/no-undefined-types */
 
+import {
+  tryParse,
+} from '@es-joy/jsdoccomment';
 import WarnSettings from './WarnSettings';
 import getDefaultTagStructureForMode from './getDefaultTagStructureForMode';
 import {
@@ -465,10 +468,11 @@ const hasATag = (jsdoc, targetTagNames) => {
  *
  * @param {JsDocTag} tag
  *   the tag which should be checked.
+ * @param {"jsdoc"|"closure"|"typescript"} mode
  * @returns {boolean}
  *   true in case a defined type is declared; otherwise false.
  */
-const hasDefinedTypeTag = (tag) => {
+const hasDefinedTypeTag = (tag, mode) => {
   // The function should not continue in the event the type is not defined...
   if (typeof tag === 'undefined' || tag === null) {
     return false;
@@ -476,7 +480,32 @@ const hasDefinedTypeTag = (tag) => {
 
   // .. same applies if it declares an `{undefined}` or `{void}` type
   const tagType = tag.type.trim();
+
+  // Exit early if matching
   if (tagType === 'undefined' || tagType === 'void') {
+    return false;
+  }
+
+  let parsedTypes;
+  try {
+    parsedTypes = tryParse(
+      tagType,
+      mode === 'permissive' ? undefined : [
+        mode,
+      ],
+    );
+  } catch {
+    // Ignore
+  }
+
+  if (
+    // We do not traverse deeply as it could be, e.g., `Promise<void>`
+    parsedTypes &&
+    parsedTypes.type === 'JsdocTypeUnion' &&
+    parsedTypes.elements.find((elem) => {
+      return elem.type === 'JsdocTypeUndefined' ||
+        elem.type === 'JsdocTypeName' && elem.value === 'void';
+    })) {
     return false;
   }
 

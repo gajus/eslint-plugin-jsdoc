@@ -1426,5 +1426,37 @@ export default {
       }
       `,
     },
+    {
+      code: `
+      /**
+       * Maybe return a boolean.
+       * @returns {boolean|void} true, or undefined.
+       */
+      function maybeTrue() {
+        if (Math.random() > 0.5) {
+          return true;
+        }
+      }
+      `,
+    },
+    {
+      code: `
+      /**
+       * Maybe return a boolean.
+       * @return {boolean|void} true, or undefined.
+       */
+      function maybeTrue() {
+        if (Math.random() > 0.5) {
+          return true;
+        }
+      }
+      `,
+      ignoreReadme: true,
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+        },
+      },
+    },
   ],
 };

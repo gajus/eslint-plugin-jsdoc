@@ -18141,6 +18141,16 @@ function getTrue() {
     console.log('returning...');
   }
 }
+
+/**
+ * Maybe return a boolean.
+ * @returns {boolean|void} true, or undefined.
+ */
+function maybeTrue() {
+  if (Math.random() > 0.5) {
+    return true;
+  }
+}
 ````
 
 

@@ -676,7 +676,7 @@ const getUtils = (
   };
 
   utils.hasDefinedTypeTag = (tag) => {
-    return jsdocUtils.hasDefinedTypeTag(tag);
+    return jsdocUtils.hasDefinedTypeTag(tag, settings.mode);
   };
 
   utils.hasValueOrExecutorHasNonEmptyResolveValue = (anyPromiseAsReturn, allBranches) => {
