@@ -31,6 +31,7 @@ An options object may have any of the following properties:
     Defaults to `true`.
 - `checkSetters` - A value indicating whether setters should be checked.
     Defaults to `true`.
+- `publicOnly`: - A value indicating whether only exported constructs should be checked
 
 |          |                                                                                                               |
 | -------- | ------------------------------------------------------------------------------------------------------------- |

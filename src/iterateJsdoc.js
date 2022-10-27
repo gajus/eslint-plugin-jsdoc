@@ -7,6 +7,7 @@ import {
   stringify as commentStringify,
   util,
 } from 'comment-parser';
+import exportParser from './exportParser.js';
 import jsdocUtils from './jsdocUtils';
 
 const {
@@ -957,6 +958,14 @@ const iterate = (
           return description === 'private';
         })
     )
+  ) {
+    return;
+  }
+
+  if (
+    context.options[0] &&
+    context.options[0].publicOnly &&
+    !exportParser.isPublic(node, sourceCode, context.options[0].publicOnly)
   ) {
     return;
   }

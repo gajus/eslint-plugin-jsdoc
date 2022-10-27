@@ -6,6 +6,14 @@ or if it is `Promise<void>` or `Promise<undefined>`.
 
 #### Options
 
+Accepts one optional options object with the following optional keys.
+
+##### `publicOnly`
+
+This option will insist that missing jsdoc blocks are only reported for
+function bodies / class declarations that are exported from the module.
+For more information see the documentation of `require-jsdoc`.
+
 ##### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
