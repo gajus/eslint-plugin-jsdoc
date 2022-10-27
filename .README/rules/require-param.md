@@ -23,7 +23,7 @@ function quux ({foo: bar, baz: bax = 5}) {
 }
 ```
 
-..the fixed jsdoc will be:
+...the fixed jsdoc will be:
 
 ```js
 /**
