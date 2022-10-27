@@ -153,6 +153,96 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @param {number} foo Foo description
+           * @param {object} root
+           * @param {boolean} baz Baz description
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing root description for @param.',
+        },
+      ],
+      options: [
+        {
+          setDefaultDestructuredRootDescription: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {number} foo Foo description
+           * @param {object} root The root object
+           * @param {boolean} baz Baz description
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {number} foo Foo description
+           * @param {object} root
+           * @param {boolean} baz Baz description
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing root description for @param.',
+        },
+      ],
+      options: [
+        {
+          defaultDestructuredRootDescription: 'Root description',
+          setDefaultDestructuredRootDescription: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {number} foo Foo description
+           * @param {object} root Root description
+           * @param {boolean} baz Baz description
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {number} foo Foo description
+           * @param {object} root
+           * @param {boolean} baz Baz description
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @param "root" description.',
+        },
+      ],
+      options: [
+        {
+          setDefaultDestructuredRootDescription: false,
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -241,6 +331,40 @@ export default {
           ],
         },
       ],
+    },
+    {
+      code: `
+          /**
+           * @param {number} foo Foo description
+           * @param {object} root
+           * @param {boolean} baz Baz description
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          exemptDestructuredRootsFromChecks: true,
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @param {number} foo Foo description
+           * @param {object} root
+           * @param {object} root.bar
+           */
+          function quux (foo, {bar: {baz}}) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          exemptDestructuredRootsFromChecks: true,
+        },
+      },
     },
   ],
 };

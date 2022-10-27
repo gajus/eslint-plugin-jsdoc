@@ -2,7 +2,24 @@
 
 Requires that each `@param` tag has a `type` value.
 
+Will exempt destructured roots and their children if
+`settings.exemptDestructuredRootsFromChecks` is set to `true` (e.g.,
+`@param props` will be exempted from requiring a type given
+`function someFunc ({child1, child2})`).
+
 #### Options
+
+##### `setDefaultDestructuredRootType`
+
+Whether to set a default destructured root type. For example, you may wish
+to avoid manually having to set the type for a `@param`
+corresponding to a destructured root object as it is always going to be an
+object. Uses `defaultDestructuredRootType` for the type string. Defaults to
+`false`.
+
+##### `defaultDestructuredRootType`
+
+The type string to set by default for destructured roots. Defaults to "object".
 
 ##### `contexts`
 
@@ -23,6 +40,7 @@ section of our README for more on the expected format.
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
-|Options|`contexts`|
+|Options|`setDefaultDestructuredRootType`, `defaultDestructuredRootType`, `contexts`|
+|Settings|`exemptDestructuredRootsFromChecks`|
 
 <!-- assertions requireParamType -->
