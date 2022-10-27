@@ -2,7 +2,25 @@
 
 Requires that each `@param` tag has a `description` value.
 
+Will exempt destructured roots and their children if
+`settings.exemptDestructuredRootsFromChecks` is set to `true` (e.g.,
+`@param {object} props` will be exempted from requiring a description given
+`function someFunc ({child1, child2})`).
+
 #### Options
+
+##### `setDefaultDestructuredRootDescription`
+
+Whether to set a default destructured root description. For example, you may
+wish to avoid manually having to set the description for a `@param`
+corresponding to a destructured root object as it should always be the same
+type of object. Uses `defaultDestructuredRootDescription` for the description
+string. Defaults to `false`.
+
+##### `defaultDestructuredRootDescription`
+
+The description string to set by default for destructured roots. Defaults to
+"The root object".
 
 ##### `contexts`
 
@@ -23,6 +41,7 @@ section of our README for more on the expected format.
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
-|Options|`contexts`|
+|Options|`setDefaultDestructuredRootDescription`, `defaultDestructuredRootDescription`, `contexts`|
+|Settings|`exemptDestructuredRootsFromChecks`|
 
 <!-- assertions requireParamDescription -->

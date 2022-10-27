@@ -818,6 +818,9 @@ const getSettings = (context) => {
     implementsReplacesDocs: context.settings.jsdoc?.implementsReplacesDocs,
     augmentsExtendsReplacesDocs: context.settings.jsdoc?.augmentsExtendsReplacesDocs,
 
+    // `require-param-type`, `require-param-description`
+    exemptDestructuredRootsFromChecks: context.settings.jsdoc?.exemptDestructuredRootsFromChecks,
+
     // Many rules, e.g., `check-tag-names`
     mode: context.settings.jsdoc?.mode ??
       (context.parserPath.includes('@typescript-eslint') ? 'typescript' : 'jsdoc'),

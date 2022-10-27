@@ -14772,9 +14772,31 @@ class A {
 
 Requires that each `@param` tag has a `description` value.
 
+Will exempt destructured roots and their children if
+`settings.exemptDestructuredRootsFromChecks` is set to `true` (e.g.,
+`@param {object} props` will be exempted from requiring a description given
+`function someFunc ({child1, child2})`).
+
 <a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29"></a>
 <a name="eslint-plugin-jsdoc-rules-require-param-description-options-29"></a>
 #### Options
+
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29-setdefaultdestructuredrootdescription"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-29-setdefaultdestructuredrootdescription"></a>
+##### <code>setDefaultDestructuredRootDescription</code>
+
+Whether to set a default destructured root description. For example, you may
+wish to avoid manually having to set the description for a `@param`
+corresponding to a destructured root object as it should always be the same
+type of object. Uses `defaultDestructuredRootDescription` for the description
+string. Defaults to `false`.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29-defaultdestructuredrootdescription"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-29-defaultdestructuredrootdescription"></a>
+##### <code>defaultDestructuredRootDescription</code>
+
+The description string to set by default for destructured roots. Defaults to
+"The root object".
 
 <a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29-contexts-8"></a>
 <a name="eslint-plugin-jsdoc-rules-require-param-description-options-29-contexts-8"></a>
@@ -14797,7 +14819,8 @@ section of our README for more on the expected format.
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
-|Options|`contexts`|
+|Options|`setDefaultDestructuredRootDescription`, `defaultDestructuredRootDescription`, `contexts`|
+|Settings|`exemptDestructuredRootsFromChecks`|
 
 The following patterns are considered problems:
 
@@ -14859,6 +14882,39 @@ function quux (foo) {
 }
 // "jsdoc/require-param-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag:not([name=props]))","context":"FunctionDeclaration"}]}]
 // Message: Missing JSDoc @param "foo" description.
+
+/**
+ * @param {number} foo Foo description
+ * @param {object} root
+ * @param {boolean} baz Baz description
+ */
+function quux (foo, {bar}, baz) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"setDefaultDestructuredRootDescription":true}]
+// Message: Missing root description for @param.
+
+/**
+ * @param {number} foo Foo description
+ * @param {object} root
+ * @param {boolean} baz Baz description
+ */
+function quux (foo, {bar}, baz) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"defaultDestructuredRootDescription":"Root description","setDefaultDestructuredRootDescription":true}]
+// Message: Missing root description for @param.
+
+/**
+ * @param {number} foo Foo description
+ * @param {object} root
+ * @param {boolean} baz Baz description
+ */
+function quux (foo, {bar}, baz) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"setDefaultDestructuredRootDescription":false}]
+// Message: Missing JSDoc @param "root" description.
 ````
 
 The following patterns are not considered problems:
@@ -14903,6 +14959,26 @@ function quux (props) {
 
 }
 // "jsdoc/require-param-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag:not([name=props]))","context":"FunctionDeclaration"}]}]
+
+/**
+ * @param {number} foo Foo description
+ * @param {object} root
+ * @param {boolean} baz Baz description
+ */
+function quux (foo, {bar}, baz) {
+
+}
+// Settings: {"jsdoc":{"exemptDestructuredRootsFromChecks":true}}
+
+/**
+ * @param {number} foo Foo description
+ * @param {object} root
+ * @param {object} root.bar
+ */
+function quux (foo, {bar: {baz}}) {
+
+}
+// Settings: {"jsdoc":{"exemptDestructuredRootsFromChecks":true}}
 ````
 
 
@@ -15055,9 +15131,30 @@ function example(cb) {
 
 Requires that each `@param` tag has a `type` value.
 
+Will exempt destructured roots and their children if
+`settings.exemptDestructuredRootsFromChecks` is set to `true` (e.g.,
+`@param props` will be exempted from requiring a type given
+`function someFunc ({child1, child2})`).
+
 <a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-31"></a>
 <a name="eslint-plugin-jsdoc-rules-require-param-type-options-31"></a>
 #### Options
+
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-31-setdefaultdestructuredroottype"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-31-setdefaultdestructuredroottype"></a>
+##### <code>setDefaultDestructuredRootType</code>
+
+Whether to set a default destructured root type. For example, you may wish
+to avoid manually having to set the type for a `@param`
+corresponding to a destructured root object as it is always going to be an
+object. Uses `defaultDestructuredRootType` for the type string. Defaults to
+`false`.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-31-defaultdestructuredroottype"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-31-defaultdestructuredroottype"></a>
+##### <code>defaultDestructuredRootType</code>
+
+The type string to set by default for destructured roots. Defaults to "object".
 
 <a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-31-contexts-10"></a>
 <a name="eslint-plugin-jsdoc-rules-require-param-type-options-31-contexts-10"></a>
@@ -15080,7 +15177,8 @@ section of our README for more on the expected format.
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
-|Options|`contexts`|
+|Options|`setDefaultDestructuredRootType`, `defaultDestructuredRootType`, `contexts`|
+|Settings|`exemptDestructuredRootsFromChecks`|
 
 The following patterns are considered problems:
 
@@ -15140,6 +15238,39 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
+
+/**
+ * @param {number} foo
+ * @param root
+ * @param {boolean} baz
+ */
+function quux (foo, {bar}, baz) {
+
+}
+// "jsdoc/require-param-type": ["error"|"warn", {"setDefaultDestructuredRootType":true}]
+// Message: Missing root type for @param.
+
+/**
+ * @param {number} foo
+ * @param root
+ * @param {boolean} baz
+ */
+function quux (foo, {bar}, baz) {
+
+}
+// "jsdoc/require-param-type": ["error"|"warn", {"defaultDestructuredRootType":"Object","setDefaultDestructuredRootType":true}]
+// Message: Missing root type for @param.
+
+/**
+ * @param {number} foo
+ * @param root
+ * @param {boolean} baz
+ */
+function quux (foo, {bar}, baz) {
+
+}
+// "jsdoc/require-param-type": ["error"|"warn", {"setDefaultDestructuredRootType":false}]
+// Message: Missing JSDoc @param "root" type.
 ````
 
 The following patterns are not considered problems:
@@ -15176,6 +15307,26 @@ function quux (foo) {
  * @callback
  * @param foo
  */
+
+/**
+ * @param {number} foo
+ * @param root
+ * @param {boolean} baz
+ */
+function quux (foo, {bar}, baz) {
+
+}
+// Settings: {"jsdoc":{"exemptDestructuredRootsFromChecks":true}}
+
+/**
+ * @param {number} foo
+ * @param root
+ * @param root.bar
+ */
+function quux (foo, {bar: {baz}}) {
+
+}
+// Settings: {"jsdoc":{"exemptDestructuredRootsFromChecks":true}}
 ````
 
 

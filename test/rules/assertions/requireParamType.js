@@ -149,6 +149,96 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @param {number} foo
+           * @param root
+           * @param {boolean} baz
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing root type for @param.',
+        },
+      ],
+      options: [
+        {
+          setDefaultDestructuredRootType: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {number} foo
+           * @param {object} root
+           * @param {boolean} baz
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {number} foo
+           * @param root
+           * @param {boolean} baz
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing root type for @param.',
+        },
+      ],
+      options: [
+        {
+          defaultDestructuredRootType: 'Object',
+          setDefaultDestructuredRootType: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {number} foo
+           * @param {Object} root
+           * @param {boolean} baz
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {number} foo
+           * @param root
+           * @param {boolean} baz
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc @param "root" type.',
+        },
+      ],
+      options: [
+        {
+          setDefaultDestructuredRootType: false,
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -203,6 +293,40 @@ export default {
            * @param foo
            */
       `,
+    },
+    {
+      code: `
+          /**
+           * @param {number} foo
+           * @param root
+           * @param {boolean} baz
+           */
+          function quux (foo, {bar}, baz) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          exemptDestructuredRootsFromChecks: true,
+        },
+      },
+    },
+    {
+      code: `
+          /**
+           * @param {number} foo
+           * @param root
+           * @param root.bar
+           */
+          function quux (foo, {bar: {baz}}) {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          exemptDestructuredRootsFromChecks: true,
+        },
+      },
     },
   ],
 };

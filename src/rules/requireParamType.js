@@ -1,11 +1,38 @@
 import iterateJsdoc from '../iterateJsdoc';
 
 export default iterateJsdoc(({
+  context,
   report,
+  settings,
   utils,
 }) => {
+  const {
+    defaultDestructuredRootType = 'object',
+    setDefaultDestructuredRootType = false,
+  } = context.options[0] || {};
+
+  const functionParameterNames = utils.getFunctionParameterNames();
+
+  let rootCount = -1;
   utils.forEachPreferredTag('param', (jsdocParameter, targetTagName) => {
+    rootCount += jsdocParameter.name.includes('.') ? 0 : 1;
     if (!jsdocParameter.type) {
+      if (Array.isArray(functionParameterNames[rootCount])) {
+        if (settings.exemptDestructuredRootsFromChecks) {
+          return;
+        }
+
+        if (setDefaultDestructuredRootType) {
+          utils.reportJSDoc(`Missing root type for @${targetTagName}.`, jsdocParameter, () => {
+            utils.changeTag(jsdocParameter, {
+              postType: ' ',
+              type: `{${defaultDestructuredRootType}}`,
+            });
+          });
+          return;
+        }
+      }
+
       report(
         `Missing JSDoc @${targetTagName} "${jsdocParameter.name}" type.`,
         null,
@@ -20,6 +47,7 @@ export default iterateJsdoc(({
       description: 'Requires that each `@param` tag has a `type` value.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param-type',
     },
+    fixable: 'code',
     schema: [
       {
         additionalProperties: false,
@@ -45,6 +73,12 @@ export default iterateJsdoc(({
               ],
             },
             type: 'array',
+          },
+          defaultDestructuredRootType: {
+            type: 'string',
+          },
+          setDefaultDestructuredRootType: {
+            type: 'boolean',
           },
         },
         type: 'object',
