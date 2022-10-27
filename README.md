@@ -14850,6 +14850,15 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag:not([name=props]))","context":"FunctionDeclaration"}]}]
+// Message: Missing JSDoc @param "foo" description.
 ````
 
 The following patterns are not considered problems:
@@ -14886,6 +14895,14 @@ function quux (foo) {
  * @callback
  * @param foo
  */
+
+/**
+ * @param props
+ */
+function quux (props) {
+
+}
+// "jsdoc/require-param-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag:not([name=props]))","context":"FunctionDeclaration"}]}]
 ````
 
 

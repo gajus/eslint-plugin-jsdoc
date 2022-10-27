@@ -127,6 +127,32 @@ export default {
         },
       },
     },
+    {
+      code: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @param "foo" description.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag:not([name=props]))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -195,6 +221,26 @@ export default {
       }
       `,
       ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           * @param props
+           */
+          function quux (props) {
+
+          }
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag:not([name=props]))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
     },
   ],
 };
