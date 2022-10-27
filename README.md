@@ -2788,7 +2788,8 @@ const fn = ( a, b ) => {};
 <a name="eslint-plugin-jsdoc-rules-check-param-names"></a>
 ### <code>check-param-names</code>
 
-Ensures that parameter names in JSDoc match those in the function declaration.
+Ensures that parameter names in JSDoc are matched by corresponding items in
+the function declaration.
 
 <a name="user-content-eslint-plugin-jsdoc-rules-check-param-names-destructuring"></a>
 <a name="eslint-plugin-jsdoc-rules-check-param-names-destructuring"></a>

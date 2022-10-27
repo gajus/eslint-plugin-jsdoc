@@ -1,6 +1,7 @@
 ### `check-param-names`
 
-Ensures that parameter names in JSDoc match those in the function declaration.
+Ensures that parameter names in JSDoc are matched by corresponding items in
+the function declaration.
 
 #### Destructuring
 
