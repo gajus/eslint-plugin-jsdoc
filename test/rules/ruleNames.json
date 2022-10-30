@@ -47,5 +47,6 @@
   "require-yields-check",
   "sort-tags",
   "tag-lines",
+  "text-escaping",
   "valid-types"
 ]
