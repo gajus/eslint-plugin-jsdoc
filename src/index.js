@@ -46,6 +46,7 @@ import requireYields from './rules/requireYields';
 import requireYieldsCheck from './rules/requireYieldsCheck';
 import sortTags from './rules/sortTags';
 import tagLines from './rules/tagLines';
+import textEscaping from './rules/textEscaping';
 import validTypes from './rules/validTypes';
 
 export default {
@@ -103,6 +104,7 @@ export default {
         'jsdoc/require-yields-check': 'warn',
         'jsdoc/sort-tags': 'off',
         'jsdoc/tag-lines': 'warn',
+        'jsdoc/text-escaping': 'off',
         'jsdoc/valid-types': 'warn',
       },
     },
@@ -156,6 +158,7 @@ export default {
     'require-yields-check': requireYieldsCheck,
     'sort-tags': sortTags,
     'tag-lines': tagLines,
+    'text-escaping': textEscaping,
     'valid-types': validTypes,
   },
 };

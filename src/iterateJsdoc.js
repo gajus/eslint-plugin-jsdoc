@@ -144,7 +144,7 @@ const getUtils = (
     return jsdocUtils.getRegexFromString(str, requiredFlags);
   };
 
-  utils.getTagDescription = (tg) => {
+  utils.getTagDescription = (tg, returnArray) => {
     const descriptions = [];
     tg.source.some(({
       tokens: {
@@ -179,7 +179,26 @@ const getUtils = (
       return false;
     });
 
-    return descriptions.join('\n');
+    return returnArray ? descriptions : descriptions.join('\n');
+  };
+
+  utils.setTagDescription = (tg, matcher, setter) => {
+    let finalIdx = 0;
+    tg.source.some(({
+      tokens: {
+        description,
+      },
+    }, idx) => {
+      if (description && matcher.test(description)) {
+        tg.source[idx].tokens.description = setter(description);
+        finalIdx = idx;
+        return true;
+      }
+
+      return false;
+    });
+
+    return finalIdx;
   };
 
   utils.getDescription = () => {
@@ -207,8 +226,35 @@ const getUtils = (
 
     return {
       description: descriptions.join('\n'),
+      descriptions,
       lastDescriptionLine,
     };
+  };
+
+  utils.setDescriptionLines = (matcher, setter) => {
+    let finalIdx = 0;
+    jsdoc.source.some(({
+      tokens: {
+        description,
+        tag,
+        end,
+      },
+    }, idx) => {
+      // istanbul ignore if -- Already checked
+      if (idx && (tag || end)) {
+        return true;
+      }
+
+      if (description && matcher.test(description)) {
+        jsdoc.source[idx].tokens.description = setter(description);
+        finalIdx = idx;
+        return true;
+      }
+
+      return false;
+    });
+
+    return finalIdx;
   };
 
   utils.changeTag = (tag, ...tokens) => {
