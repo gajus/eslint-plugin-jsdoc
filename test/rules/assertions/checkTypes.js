@@ -2396,6 +2396,31 @@ export default {
         }
       `,
     },
+    {
+      code: `
+        /**
+         * @param {object} root
+         * @param {number} root.a
+         * @param {object} b
+         */
+        function a () {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Invalid JSDoc @param "b" type "object".',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: {
+              skipRootChecking: true,
+            },
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -3056,6 +3081,25 @@ export default {
 
       foo()
       `,
+    },
+    {
+      code: `
+        /**
+         * @param {object} root
+         * @param {number} root.a
+         */
+        function a () {}
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            object: {
+              message: 'Won\'t see this message',
+              skipRootChecking: true,
+            },
+          },
+        },
+      },
     },
   ],
 };

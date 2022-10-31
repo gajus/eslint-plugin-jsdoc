@@ -480,6 +480,8 @@ The format of the configuration is as follows:
       - a string type to be preferred in its place (and which `fix` mode
         can replace)
       - `false` (for forbidding the type)
+    - an optional key `skipRootChecking` (for `check-types`) to allow for this
+      type in the context of a root (i.e., a parent object of some child type)
 
 Note that the preferred types indicated as targets in
 `settings.jsdoc.preferredTypes` map will be assumed to be defined by
@@ -5737,6 +5739,15 @@ function abc(param) {
   return 'abc';
 }
 // Message: Invalid JSDoc @param "param" type "Object"; prefer: "object".
+
+/**
+ * @param {object} root
+ * @param {number} root.a
+ * @param {object} b
+ */
+function a () {}
+// Settings: {"jsdoc":{"preferredTypes":{"object":{"skipRootChecking":true}}}}
+// Message: Invalid JSDoc @param "b" type "object".
 ````
 
 The following patterns are not considered problems:
@@ -6055,6 +6066,13 @@ function foo(spec) {
 }
 
 foo()
+
+/**
+ * @param {object} root
+ * @param {number} root.a
+ */
+function a () {}
+// Settings: {"jsdoc":{"preferredTypes":{"object":{"message":"Won't see this message","skipRootChecking":true}}}}
 ````
 
 

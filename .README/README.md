@@ -391,6 +391,8 @@ The format of the configuration is as follows:
       - a string type to be preferred in its place (and which `fix` mode
         can replace)
       - `false` (for forbidding the type)
+    - an optional key `skipRootChecking` (for `check-types`) to allow for this
+      type in the context of a root (i.e., a parent object of some child type)
 
 Note that the preferred types indicated as targets in
 `settings.jsdoc.preferredTypes` map will be assumed to be defined by

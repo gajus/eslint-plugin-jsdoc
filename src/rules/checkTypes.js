@@ -237,13 +237,15 @@ export default iterateJsdoc(({
    * @param {string} type
    * @param {string} value
    * @param {string} tagName
+   * @param {string} nameInTag
+   * @param {number} idx
    * @param {string} property
    * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} node
    * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} parentNode
    * @param {string[]} invalidTypes
    * @returns {void}
    */
-  const getInvalidTypes = (type, value, tagName, property, node, parentNode, invalidTypes) => {
+  const getInvalidTypes = (type, value, tagName, nameInTag, idx, property, node, parentNode, invalidTypes) => {
     let typeNodeName = type === 'JsdocTypeAny' ? '*' : value;
 
     const [
@@ -267,13 +269,17 @@ export default iterateJsdoc(({
         invalidTypes.push([
           typeNodeName, preferred,
         ]);
-      } else if (typeof preferredSetting === 'object') {
-        preferred = preferredSetting?.replacement;
-        invalidTypes.push([
-          typeNodeName,
-          preferred,
-          preferredSetting?.message,
-        ]);
+      } else if (preferredSetting && typeof preferredSetting === 'object') {
+        const nextItem = preferredSetting.skipRootChecking && jsdocTagsWithPossibleType[idx + 1];
+
+        if (!nextItem || !nextItem.name.startsWith(`${nameInTag}.`)) {
+          preferred = preferredSetting.replacement;
+          invalidTypes.push([
+            typeNodeName,
+            preferred,
+            preferredSetting.message,
+          ]);
+        }
       } else {
         utils.reportSettings(
           'Invalid `settings.jsdoc.preferredTypes`. Values must be falsy, a string, or an object.',
@@ -306,7 +312,10 @@ export default iterateJsdoc(({
     }
   };
 
-  for (const jsdocTag of jsdocTagsWithPossibleType) {
+  for (const [
+    idx,
+    jsdocTag,
+  ] of jsdocTagsWithPossibleType.entries()) {
     const invalidTypes = [];
     let typeAst;
 
@@ -316,7 +325,10 @@ export default iterateJsdoc(({
       continue;
     }
 
-    const tagName = jsdocTag.tag;
+    const {
+      tag: tagName,
+      name: nameInTag,
+    } = jsdocTag;
 
     traverse(typeAst, (node, parentNode, property) => {
       const {
@@ -329,7 +341,7 @@ export default iterateJsdoc(({
         return;
       }
 
-      getInvalidTypes(type, value, tagName, property, node, parentNode, invalidTypes);
+      getInvalidTypes(type, value, tagName, nameInTag, idx, property, node, parentNode, invalidTypes);
     });
 
     if (invalidTypes.length) {
