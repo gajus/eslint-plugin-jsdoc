@@ -189,8 +189,10 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
   case 'SwitchStatement': {
     return node.cases.every(
       (someCase) => {
-        const nde = someCase.consequent.slice(-1)[0];
-        return !nde || allBrancheshaveReturnValues(nde, promFilter);
+        return !someCase.consequent.some((consNode) => {
+          return consNode.type === 'BreakStatement' ||
+            consNode.type === 'ReturnStatement' && consNode.argument === null;
+        });
       },
     );
   }

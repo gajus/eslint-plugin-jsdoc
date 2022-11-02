@@ -18321,6 +18321,22 @@ function maybeTrue() {
     return true;
   }
 }
+
+/**
+ * @param {AST} astNode
+ * @returns {AST}
+ */
+const getTSFunctionComment = function (astNode) {
+  switch (greatGrandparent.type) {
+  case 'VariableDeclarator':
+    if (greatGreatGrandparent.type === 'VariableDeclaration') {
+      return greatGreatGrandparent;
+    }
+
+  default:
+    return astNode;
+  }
+};
 ````
 
 
