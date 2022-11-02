@@ -9641,6 +9641,16 @@ const MyComponent = ({ children }) => {
 }
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"type\"]:has([value=/FunctionComponent/]))","context":"any","message":"The `FunctionComponent` type is not allowed. Please use `FC` instead."}]}]
 // Message: The `FunctionComponent` type is not allowed. Please use `FC` instead.
+
+/** Some text and more */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][descriptionEndLine=0]","context":"any","message":"Requiring descriptive text on 0th line only"}]}]
+// Message: Requiring descriptive text on 0th line only
+
+/** Some text and
+* more
+*/
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][hasPreterminalDescription=0]","context":"any","message":"Requiring descriptive text on 0th line and no preterminal description"}]}]
+// Message: Requiring descriptive text on 0th line and no preterminal description
 ````
 
 The following patterns are not considered problems:
@@ -9699,6 +9709,13 @@ const MY_ENUM = Object.freeze({
 /** Does something very important. */
 function foo(): string;
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[endLine=0][description!=/^\\S[\\s\\S]*\\S\\s$/]"}]}]
+
+/** Some text and more */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][descriptionEndLine=1]","context":"any","message":"Requiring descriptive text on 0th line and no final newline"}]}]
+
+/** Some text and
+* more */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][hasPreterminalDescription=0]","context":"any","message":"Requiring descriptive text on 0th line and no preterminal description"}]}]
 ````
 
 

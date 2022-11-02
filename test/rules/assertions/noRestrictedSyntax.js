@@ -372,6 +372,52 @@ export default {
       ],
       parser: require.resolve('@es-joy/jsdoc-eslint-parser/typescript.js'),
     },
+    {
+      code: `
+        /** Some text and more */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Requiring descriptive text on 0th line only',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[descriptionStartLine=0][descriptionEndLine=0]',
+              context: 'any',
+              message: 'Requiring descriptive text on 0th line only',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /** Some text and
+        * more
+        */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Requiring descriptive text on 0th line and no preterminal description',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[descriptionStartLine=0][hasPreterminalDescription=0]',
+              context: 'any',
+              message: 'Requiring descriptive text on 0th line and no preterminal description',
+            },
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -530,6 +576,39 @@ export default {
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        /** Some text and more */
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[descriptionStartLine=0][descriptionEndLine=1]',
+              context: 'any',
+              message: 'Requiring descriptive text on 0th line and no final newline',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /** Some text and
+        * more */
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[descriptionStartLine=0][hasPreterminalDescription=0]',
+              context: 'any',
+              message: 'Requiring descriptive text on 0th line and no preterminal description',
+            },
+          ],
+        },
+      ],
     },
   ],
 };
