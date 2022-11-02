@@ -418,6 +418,29 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /** Some text
+        * @param sth Param text followed by no newline */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Requiring descriptive text on 0th line but no preterminal description',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[descriptionStartLine=0][hasPreterminalTagDescription=1]',
+              context: 'any',
+              message: 'Requiring descriptive text on 0th line but no preterminal description',
+            },
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -605,6 +628,24 @@ export default {
               comment: 'JsdocBlock[descriptionStartLine=0][hasPreterminalDescription=0]',
               context: 'any',
               message: 'Requiring descriptive text on 0th line and no preterminal description',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /** Some text
+        * @param sth Param text followed by newline
+        */
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock[descriptionStartLine=0][hasPreterminalTagDescription=1]',
+              context: 'any',
+              message: 'Requiring descriptive text on 0th line but no preterminal description',
             },
           ],
         },

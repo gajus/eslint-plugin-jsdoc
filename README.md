@@ -9651,6 +9651,11 @@ const MyComponent = ({ children }) => {
 */
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][hasPreterminalDescription=0]","context":"any","message":"Requiring descriptive text on 0th line and no preterminal description"}]}]
 // Message: Requiring descriptive text on 0th line and no preterminal description
+
+/** Some text
+* @param sth Param text followed by no newline */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][hasPreterminalTagDescription=1]","context":"any","message":"Requiring descriptive text on 0th line but no preterminal description"}]}]
+// Message: Requiring descriptive text on 0th line but no preterminal description
 ````
 
 The following patterns are not considered problems:
@@ -9716,6 +9721,11 @@ function foo(): string;
 /** Some text and
 * more */
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][hasPreterminalDescription=0]","context":"any","message":"Requiring descriptive text on 0th line and no preterminal description"}]}]
+
+/** Some text
+* @param sth Param text followed by newline
+*/
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][hasPreterminalTagDescription=1]","context":"any","message":"Requiring descriptive text on 0th line but no preterminal description"}]}]
 ````
 
 
