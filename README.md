@@ -18382,6 +18382,16 @@ const getTSFunctionComment = function (astNode) {
     return astNode;
   }
 };
+
+const f =
+  /**
+   * Description.
+   *
+   * @returns Result.
+   */
+  () => {
+    return function () {};
+  };
 ````
 
 

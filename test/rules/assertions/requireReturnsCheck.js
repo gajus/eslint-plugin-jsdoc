@@ -1477,5 +1477,18 @@ export default {
       };
       `,
     },
+    {
+      code: `
+      const f =
+        /**
+         * Description.
+         *
+         * @returns Result.
+         */
+        () => {
+          return function () {};
+        };
+      `,
+    },
   ],
 };
