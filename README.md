@@ -18392,6 +18392,17 @@ const f =
   () => {
     return function () {};
   };
+
+/**
+ * Description.
+ *
+ * @returns Result.
+ */
+export function f(): string {
+  return "";
+
+  interface I {}
+}
 ````
 
 

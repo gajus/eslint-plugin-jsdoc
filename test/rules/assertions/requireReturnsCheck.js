@@ -1490,5 +1490,20 @@ export default {
         };
       `,
     },
+    {
+      code: `
+      /**
+       * Description.
+       *
+       * @returns Result.
+       */
+      export function f(): string {
+        return "";
+
+        interface I {}
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };

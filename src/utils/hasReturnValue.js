@@ -139,7 +139,9 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
     return node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node.body)) ||
-      allBrancheshaveReturnValues(node.body, promFilter);
+      allBrancheshaveReturnValues(node.body, promFilter) || node.body.body.some((nde) => {
+      return nde.type === 'ReturnStatement';
+    });
   }
 
   case 'BlockStatement': {
