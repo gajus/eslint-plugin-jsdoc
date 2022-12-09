@@ -9656,6 +9656,12 @@ const MyComponent = ({ children }) => {
 * @param sth Param text followed by no newline */
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][hasPreterminalTagDescription=1]","context":"any","message":"Requiring descriptive text on 0th line but no preterminal description"}]}]
 // Message: Requiring descriptive text on 0th line but no preterminal description
+
+/**
+ *
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=see]))","context":"any","message":"@see required on each block"}]}]
+// Message: @see required on each block
 ````
 
 The following patterns are not considered problems:

@@ -441,6 +441,30 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         *
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '@see required on each block',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:not(*:has(JsdocTag[tag=see]))',
+              context: 'any',
+              message: '@see required on each block',
+            },
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {
