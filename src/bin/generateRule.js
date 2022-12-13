@@ -115,7 +115,9 @@ export default iterateJsdoc(({
     await fs.writeFile(ruleTestPath, ruleTestTemplate);
   }
 
-  const ruleReadmeTemplate = `### \`${ruleName}\`
+  const ruleReadmeTemplate = `# \`${ruleName}\`
+
+## Introduction
 
 |||
 |---|---|
@@ -125,10 +127,18 @@ export default iterateJsdoc(({
 |Settings||
 |Options||
 
-<!-- assertions ${camelCasedRuleName} -->
+import Assertions from '@site/src/components/Assertions.js';
+
+## Failed assertions
+
+<Assertions rule="${camelCasedRuleName}" />
+
+## Passing assertions
+
+<Assertions rule="${camelCasedRuleName}" passing />
 `;
 
-  const ruleReadmePath = `./.README/rules/${ruleName}.md`;
+  const ruleReadmePath = `./doc-site/docs/Rules/${ruleName}.mdx`;
   if (!existsSync(ruleReadmePath)) {
     await fs.writeFile(ruleReadmePath, ruleReadmeTemplate);
   }
@@ -201,13 +211,6 @@ export default iterateJsdoc(({
   };
 
   await replaceInOrder({
-    checkName: 'README',
-    newLine: `{"gitdown": "include", "file": "./rules/${ruleName}.md"}`,
-    oldRegex: /\n\{"gitdown": "include", "file": ".\/rules\/(?<oldRule>[^.]*).md"\}/gu,
-    path: './.README/README.md',
-  });
-
-  await replaceInOrder({
     checkName: 'index import',
     newLine: `import ${camelCasedRuleName} from './rules/${camelCasedRuleName}';`,
     oldIsCamel: true,
@@ -228,8 +231,6 @@ export default iterateJsdoc(({
     oldRegex: /\n\s{4}'(?<oldRule>[^']*)': [^,]*,/gu,
     path: './src/index.js',
   });
-
-  await import('./generateReadme.js');
 
   /*
   console.log('Paths to open for further editing\n');

@@ -4,3 +4,5 @@ dist/
 .ignore/
 # root dot javascript files
 !.*.js
+# Docs
+doc-site/

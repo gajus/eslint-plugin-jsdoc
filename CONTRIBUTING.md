@@ -33,15 +33,13 @@ items needing fixing.
 
 ## Documentation building
 
-To make changes that are reflected in the README, you will need to
-modify files within the `.README` directory. `.README/README.md` contains the
-main README skeleton and details on the project, its global `settings`, etc.,
-while the documentation for specific rules (that will be pulled into the
-README) ought to be modified within the relevant file within `.README/rules`.
-Once these files are modified, you can run `npm run create-readme` to have
-these files integrated into the main `/README.md`. While you should include
-the built file in your PR, you will not want to make manual changes
-directly to this file, as they will be overwritten.
+To make changes that are reflected in the docs, you will need to
+modify files within the `doc-site/docs/Rules` directory.
+
+See [Docusaurus](https://docusaurus.io/docs/) for more on the format.
+
+To start up Docusaurus, run `npm run docs` which will also build a file
+needed by our Docusaurus configuration.
 
 ## Testing
 

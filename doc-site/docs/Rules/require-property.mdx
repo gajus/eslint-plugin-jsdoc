@@ -1,0 +1,29 @@
+# `require-property`
+
+## Introduction
+
+Requires that all `@typedef` and `@namespace` tags have `@property`
+when their type is a plain `object`, `Object`, or `PlainObject`.
+
+Note that any other type, including a subtype of object such as
+`object<string, string>`, will not be reported.
+
+## Fixer
+
+The fixer for `require-property` will add an empty `@property`.
+
+|||
+|---|---|
+|Context|Everywhere|
+|Tags|`typedef`, `namespace`|
+|Recommended|true|
+
+import Assertions from '@site/src/components/Assertions.js';
+
+## Failed assertions
+
+<Assertions rule="requireProperty" />
+
+## Passing assertions
+
+<Assertions rule="requireProperty" passing />
