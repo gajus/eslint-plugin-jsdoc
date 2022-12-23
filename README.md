@@ -4975,8 +4975,9 @@ RegExp
   - with the key `unifyParentAndChildTypeChecks` which will treat
     `settings.jsdoc.preferredTypes` keys such as `SomeType` as matching
     not only child types such as an unadorned `SomeType` but also
-    `SomeType<aChildType>`, `SomeType.<aChildType>`, or if `SomeType` is
-    `Array` (or `[]`), it will match `aChildType[]`. If this is `false` or
+    `SomeType<aChildType>` and `SomeType.<aChildType>` (and if the type is
+    instead `Array` (or `[]`), it will match `aChildType[]`). If this
+    option is `false` or
     unset, the former format will only apply to types which are not parent
     types/unions whereas the latter formats will only apply for parent
     types/unions. The special types `[]`, `.<>` (or `.`), and `<>`
@@ -6073,6 +6074,13 @@ foo()
  */
 function a () {}
 // Settings: {"jsdoc":{"preferredTypes":{"object":{"message":"Won't see this message","skipRootChecking":true}}}}
+
+/**
+ * @returns {string | undefined} a string or undefined
+ */
+function quux () {}
+// Settings: {"jsdoc":{"preferredTypes":{"[]":{"message":"Do not use *[], use Array<*> instead","replacement":"Array"}}}}
+// "jsdoc/check-types": ["error"|"warn", {"unifyParentAndChildTypeChecks":true}]
 ````
 
 

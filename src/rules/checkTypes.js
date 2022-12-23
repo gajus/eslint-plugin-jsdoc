@@ -53,7 +53,7 @@ const adjustNames = (type, preferred, isGenericMatch, typeNodeName, node, parent
           parentNode.meta.dot = false;
           ret = preferred.slice(0, -2);
         } else if (
-          parentNode.meta.brackets === 'square' &&
+          parentNode.meta?.brackets === 'square' &&
           (typeNodeName === '[]' || typeNodeName === 'Array')
         ) {
           parentNode.meta.brackets = 'angle';
@@ -150,7 +150,7 @@ export default iterateJsdoc(({
         });
       }
 
-      if (!isGenericMatch && property) {
+      if (!isGenericMatch && property && parentNode.type === 'JsdocTypeGeneric') {
         const checkPostFixes = dot ? [
           '.', '.<>',
         ] : [

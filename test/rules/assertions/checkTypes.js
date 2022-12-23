@@ -3101,5 +3101,28 @@ export default {
         },
       },
     },
+    {
+      code: `
+        /**
+         * @returns {string | undefined} a string or undefined
+         */
+        function quux () {}
+      `,
+      options: [
+        {
+          unifyParentAndChildTypeChecks: true,
+        },
+      ],
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            '[]': {
+              message: 'Do not use *[], use Array<*> instead',
+              replacement: 'Array',
+            },
+          },
+        },
+      },
+    },
   ],
 };
