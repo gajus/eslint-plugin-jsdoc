@@ -126,6 +126,8 @@ In short: It's not about consistency, rather about the 99.9% use case. (And
 some functions might not even support the objects if they are checking for
 identity.)
 
+## Comparisons
+
 type name | `typeof` | check-types | testcase
 --|--|--|--
 **Array** | object | **Array** | `([]) instanceof Array` -> `true`
@@ -141,6 +143,10 @@ If you define your own tags and don't wish their bracketed portions checked
 for types, you can use `settings.jsdoc.structuredTags` with a tag `type` of
 `false`. If you set their `type` to an array, only those values will be
 permitted.
+
+## Fixer
+
+(Todo)
 
 |||
 |---|---|

@@ -2,8 +2,15 @@
 sidebar_position: 2
 ---
 
-Add `plugins` section to [.eslintrc.*](https://eslint.org/docs/user-guide/configuring#configuration-file-formats)
-and specify `eslint-plugin-jsdoc` as a plugin.
+To enable rules in the ESLint [.eslintrc.*](https://eslint.org/docs/user-guide/configuring#configuration-file-formats)
+file:
+
+1. Add `plugin:jsdoc/recommended` to `extends` in your ESLint
+  configuration file to enable rules that report common problems.
+  These have a check mark :heavy_check_mark: on the main [rule page](../Rules/index.md). In addition to using these bundled rules, you can add
+  additional optional rules, and you can also disable bundled rules
+  or override their default options.
+2. Add a `plugins` section, specifying `eslint-plugin-jsdoc` as a plugin.
 
 ```json
 {
@@ -13,7 +20,12 @@ and specify `eslint-plugin-jsdoc` as a plugin.
 }
 ```
 
-Finally, enable all of the rules that you would like to use.
+No rules are enabled by default by adding the plugin in this way,
+but this is required if you have not added the plugin to `extends`,
+and wish to opt in to specific rules.
+
+You can then enable (or add overrides for) all of the rules that
+you would like to use.
 
 ```javascript
 {
@@ -68,15 +80,3 @@ Finally, enable all of the rules that you would like to use.
     }
 }
 ```
-
-Or you can simply add the following to [.eslintrc.*](https://eslint.org/docs/user-guide/configuring#configuration-file-formats),
-which enables the rules commented above as "recommended":
-
-
-```json
-{
-  "extends": ["plugin:jsdoc/recommended"]
-}
-```
-
-You can then selectively add to or override the recommended rules.
