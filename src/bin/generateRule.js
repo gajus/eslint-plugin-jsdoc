@@ -93,10 +93,12 @@ export default iterateJsdoc(({
     {
       code: \`
       \`,
-      errors: [{
-        line: '',
-        message: '',
-      }],
+      errors: [
+        {
+          line: '',
+          message: '',
+        },
+      ],
     },
   ],
   valid: [
