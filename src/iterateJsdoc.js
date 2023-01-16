@@ -213,6 +213,9 @@ const getUtils = (
     }, idx) => {
       if (idx && (tag || end)) {
         lastDescriptionLine = idx - 1;
+        if (!tag && description) {
+          descriptions.push(description);
+        }
 
         return true;
       }

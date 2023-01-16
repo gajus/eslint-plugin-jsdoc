@@ -11582,6 +11582,9 @@ function speak() {
 export default (foo) => {
   foo()
 }
+
+/** @file To learn more,
+ * see: https://github.com/d3/d3-ease. */
 ````
 
 

@@ -1436,5 +1436,11 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      /** @file To learn more,
+       * see: https://github.com/d3/d3-ease. */
+      `,
+    },
   ],
 };
