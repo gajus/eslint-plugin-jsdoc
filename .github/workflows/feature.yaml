@@ -1,0 +1,63 @@
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: setup repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npm run lint
+    timeout-minutes: 10
+  test:
+    runs-on: ubuntu-latest
+    name: Test (Node.js ${{ matrix.node_js_version }})
+    steps:
+      - name: setup repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '${{ matrix.node_js_version }}'
+      - run: npm ci
+      - run: npm run test
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        node_js_version:
+          - '14.17.0'
+          - '16'
+          - '18'
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: setup repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npm run build
+    timeout-minutes: 10
+name: Lint, test and build
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
