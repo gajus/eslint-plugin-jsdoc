@@ -36,7 +36,6 @@ jobs:
           - '14.17.0'
           - '16'
           - '18'
-          - '19'
   build:
     runs-on: ubuntu-latest
     name: Build
