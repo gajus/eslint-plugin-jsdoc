@@ -108,6 +108,7 @@
     "build": "rimraf ./dist && cross-env NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored",
     "generate-assertions": "babel-node ./src/bin/generateAssertions.js",
     "docs": "npm run generate-assertions && cd doc-site && npm start",
+    "build-docs": "cd doc-site && npm run build",
     "create-rule": "babel-node ./src/bin/generateRule.js",
     "install-offline": "npm install --prefer-offline --no-audit",
     "lint": "npm run lint-arg -- .",
