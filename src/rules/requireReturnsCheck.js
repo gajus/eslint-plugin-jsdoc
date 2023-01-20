@@ -92,7 +92,7 @@ export default iterateJsdoc(({
     !returnNever &&
     (
       reportMissingReturnForUndefinedTypes ||
-      !utils.mayBeUndefinedTypeTag(tag)
+      utils.hasDefinedTypeTag(tag)
     ) &&
     !utils.hasValueOrExecutorHasNonEmptyResolveValue(
       exemptAsync,

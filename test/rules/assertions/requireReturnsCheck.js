@@ -701,7 +701,7 @@ export default {
     {
       code: `
           /**
-           * @returns {SomeType} Foo.
+           * @returns {*} Foo.
            */
           const quux = () => foo;
       `,
@@ -1306,7 +1306,7 @@ export default {
     {
       code: `
       /**
-       * @returns {SomeType} Foo.
+       * @returns {*} Foo.
        */
       const quux = () => new Promise((resolve) => {
         resolve(3);
@@ -1316,7 +1316,7 @@ export default {
     {
       code: `
       /**
-       * @returns {SomeType} Foo.
+       * @returns {*} Foo.
        */
       const quux = function () {
         return new Promise((resolve) => {
@@ -1504,19 +1504,6 @@ export default {
       }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
-    },
-    {
-      code: `
-      /**
-       * @param {boolean} bar A fun variable.
-       * @returns {*} Anything at all!
-       */
-      function foo( bar ) {
-        if ( bar ) {
-          return functionWithUnknownReturnType();
-        }
-      }
-      `,
     },
   ],
 };
