@@ -464,26 +464,29 @@ const hasATag = (jsdoc, targetTagNames) => {
 };
 
 /**
- * Checks if the JSDoc comment declares a defined type.
+ * Checks if the JSDoc comment has an undefined type.
  *
  * @param {JsDocTag} tag
  *   the tag which should be checked.
  * @param {"jsdoc"|"closure"|"typescript"} mode
  * @returns {boolean}
- *   true in case a defined type is declared; otherwise false.
+ *   true in case a defined type is undeclared; otherwise false.
  */
-const hasDefinedTypeTag = (tag, mode) => {
+const mayBeUndefinedTypeTag = (tag, mode) => {
   // The function should not continue in the event the type is not defined...
   if (typeof tag === 'undefined' || tag === null) {
-    return false;
+    return true;
   }
 
   // .. same applies if it declares an `{undefined}` or `{void}` type
   const tagType = tag.type.trim();
 
   // Exit early if matching
-  if (tagType === 'undefined' || tagType === 'void') {
-    return false;
+  if (
+    tagType === 'undefined' || tagType === 'void' ||
+    tagType === '*' || tagType === 'any'
+  ) {
+    return true;
   }
 
   let parsedTypes;
@@ -506,11 +509,11 @@ const hasDefinedTypeTag = (tag, mode) => {
       return elem.type === 'JsdocTypeUndefined' ||
         elem.type === 'JsdocTypeName' && elem.value === 'void';
     })) {
-    return false;
+    return true;
   }
 
   // In any other case, a type is present
-  return true;
+  return false;
 };
 
 /**
@@ -1239,7 +1242,6 @@ export default {
   getTagsByType,
   getTagStructureForMode,
   hasATag,
-  hasDefinedTypeTag,
   hasParams,
   hasReturnValue,
   hasTag,
@@ -1251,6 +1253,7 @@ export default {
   isNamepathDefiningTag,
   isSetter,
   isValidTag,
+  mayBeUndefinedTypeTag,
   overrideTagStructure,
   parseClosureTemplateTag,
   pathDoesNotBeginWith,

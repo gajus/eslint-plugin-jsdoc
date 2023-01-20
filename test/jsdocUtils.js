@@ -68,10 +68,10 @@ describe('jsdocUtils', () => {
       });
     });
   });
-  describe('hasDefinedTypeTag()', () => {
+  describe('mayBeUndefinedTypeTag()', () => {
     context('Missing tag', () => {
       it('should return `false` with a missing tag', () => {
-        expect(jsdocUtils.hasDefinedTypeTag(null)).to.equal(false);
+        expect(jsdocUtils.mayBeUndefinedTypeTag(null)).to.equal(true);
       });
     });
   });
