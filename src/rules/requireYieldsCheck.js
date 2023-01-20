@@ -90,7 +90,7 @@ export default iterateJsdoc(({
         return true;
       }
 
-      return !utils.mayBeUndefinedTypeTag(yieldTag) && !utils.hasYieldValue();
+      return utils.hasDefinedTypeTag(yieldTag) && !utils.hasYieldValue();
     };
 
     // In case a yield value is declared in JSDoc, we also expect one in the code.
@@ -120,7 +120,7 @@ export default iterateJsdoc(({
           return true;
         }
 
-        return !utils.mayBeUndefinedTypeTag(nextTag) && !utils.hasYieldReturnValue();
+        return utils.hasDefinedTypeTag(nextTag) && !utils.hasYieldReturnValue();
       };
 
       if (shouldReportNext()) {

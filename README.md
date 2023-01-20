@@ -17875,7 +17875,7 @@ function quux () {
 }
 
 /**
- * @returns {SomeType} Foo.
+ * @returns {*} Foo.
  */
 const quux = () => foo;
 
@@ -18276,14 +18276,14 @@ function quux (path) {
 };
 
 /**
- * @returns {SomeType} Foo.
+ * @returns {*} Foo.
  */
 const quux = () => new Promise((resolve) => {
   resolve(3);
 });
 
 /**
- * @returns {SomeType} Foo.
+ * @returns {*} Foo.
  */
 const quux = function () {
   return new Promise((resolve) => {
@@ -18419,16 +18419,6 @@ export function f(): string {
   return "";
 
   interface I {}
-}
-
-/**
- * @param {boolean} bar A fun variable.
- * @returns {*} Anything at all!
- */
-function foo( bar ) {
-  if ( bar ) {
-    return functionWithUnknownReturnType();
-  }
 }
 ````
 

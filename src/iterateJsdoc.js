@@ -724,8 +724,8 @@ const getUtils = (
     return jsdocUtils.getTagStructureForMode(mde, settings.structuredTags);
   };
 
-  utils.mayBeUndefinedTypeTag = (tag) => {
-    return jsdocUtils.mayBeUndefinedTypeTag(tag, settings.mode);
+  utils.hasDefinedTypeTag = (tag) => {
+    return jsdocUtils.hasDefinedTypeTag(tag, settings.mode);
   };
 
   utils.hasValueOrExecutorHasNonEmptyResolveValue = (anyPromiseAsReturn, allBranches) => {
