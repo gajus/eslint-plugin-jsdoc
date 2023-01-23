@@ -17813,7 +17813,7 @@ function quux () {
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- * @returns Baz.
+ * @returns {SomeType} Baz.
  */
 function foo() {
     switch (true) {
@@ -17827,7 +17827,7 @@ function foo() {
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- * @returns Baz.
+ * @returns {SomeType} Baz.
  */
 function foo() {
     switch (true) {
@@ -18249,6 +18249,16 @@ export function readFixture(path: string): Promise<Buffer>;
  * @param path The path to resolve relative to the fixture base. It will be normalized for the
  * operating system.
  *
+ * @returns {SomeType} The file contents as buffer.
+ */
+export function readFixture(path: string): Promise<Buffer>;
+
+/**
+ * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
  * @returns The file contents as buffer.
  */
 export function readFixture(path: string): Promise<Buffer> {
@@ -18430,6 +18440,41 @@ function foo( bar ) {
     return functionWithUnknownReturnType();
   }
 }
+
+/**
+ * @returns Baz.
+ */
+function foo() {
+    switch (true) {
+        default:
+            switch (false) {
+                default: return;
+            }
+            return "baz";
+    }
+};
+
+/**
+ * @returns Baz.
+ */
+function foo() {
+    switch (true) {
+        default:
+            switch (false) {
+                default: return;
+            }
+            return "baz";
+    }
+};
+
+/**
+ * @returns
+ */
+const quux = (someVar) => {
+  if (someVar) {
+    return true;
+  }
+};
 ````
 
 

@@ -613,7 +613,7 @@ export default {
     {
       code: `
       /**
-       * @returns Baz.
+       * @returns {SomeType} Baz.
        */
       function foo() {
           switch (true) {
@@ -635,7 +635,7 @@ export default {
     {
       code: `
       /**
-       * @returns Baz.
+       * @returns {SomeType} Baz.
        */
       function foo() {
           switch (true) {
@@ -1268,6 +1268,20 @@ export default {
        * @param path The path to resolve relative to the fixture base. It will be normalized for the
        * operating system.
        *
+       * @returns {SomeType} The file contents as buffer.
+       */
+      export function readFixture(path: string): Promise<Buffer>;
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+      /**
+       * Reads a test fixture.
+       *
+       * @param path The path to resolve relative to the fixture base. It will be normalized for the
+       * operating system.
+       *
        * @returns The file contents as buffer.
        */
       export function readFixture(path: string): Promise<Buffer> {
@@ -1517,6 +1531,50 @@ export default {
         }
       }
       `,
+    },
+    {
+      code: `
+      /**
+       * @returns Baz.
+       */
+      function foo() {
+          switch (true) {
+              default:
+                  switch (false) {
+                      default: return;
+                  }
+                  return "baz";
+          }
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+       * @returns Baz.
+       */
+      function foo() {
+          switch (true) {
+              default:
+                  switch (false) {
+                      default: return;
+                  }
+                  return "baz";
+          }
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+       * @returns
+       */
+      const quux = (someVar) => {
+        if (someVar) {
+          return true;
+        }
+      };
+  `,
     },
   ],
 };
