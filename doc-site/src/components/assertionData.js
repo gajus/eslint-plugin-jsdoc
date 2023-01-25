@@ -1220,7 +1220,8 @@ export default {
       "/**\n * This is fun, i.e. enjoyable, but not superlatively so, e.g. not\n * super, wonderful, etc..\n */\nfunction quux () {\n\n}\n// \"jsdoc/require-description-complete-sentence\": [\"error\"|\"warn\", {\"abbreviations\":[\"etc\",\"e.g.\",\"i.e.\"]}]",
       "\n**\n* Do not have dynamic content; e.g. homepage. Here a simple unique id\n* suffices.\n*/\nfunction quux () {\n\n}\n// \"jsdoc/require-description-complete-sentence\": [\"error\"|\"warn\", {\"abbreviations\":[\"etc\",\"e.g.\",\"i.e.\"]}]",
       "/**\n * Implements support for the\n * Swahili voice synthesizer.\n */\nfunction speak() {\n}",
-      "/**\n * @param foo\n *\n * @returns {void}\n */\nexport default (foo) => {\n  foo()\n}"
+      "/**\n * @param foo\n *\n * @returns {void}\n */\nexport default (foo) => {\n  foo()\n}",
+      "/** @file To learn more,\n * see: https://github.com/d3/d3-ease. */"
     ]
   },
   "requireExample": {
@@ -1965,15 +1966,15 @@ export default {
       "/**\n * @returns {true}\n */\nfunction quux () {\n  try {\n    return true;\n  } catch (error) {\n  }\n}\n// Message: JSDoc @returns declaration present but return expression not available in function.",
       "/**\n * @returns {true}\n */\nfunction quux () {\n  try {\n    return true;\n  } catch (error) {\n    return true;\n  } finally {\n    return;\n  }\n}\n// Message: JSDoc @returns declaration present but return expression not available in function.",
       "/**\n * @returns {true}\n */\nfunction quux () {\n  if (true) {\n    throw new Error('abc');\n  }\n\n  throw new Error('def');\n}\n// Message: JSDoc @returns declaration present but return expression not available in function.",
-      "/**\n * @returns Baz.\n */\nfunction foo() {\n    switch (true) {\n        default:\n            switch (false) {\n                default: return;\n            }\n            return \"baz\";\n    }\n};\n// Message: JSDoc @returns declaration present but return expression not available in function.",
-      "/**\n * @returns Baz.\n */\nfunction foo() {\n    switch (true) {\n        default:\n            switch (false) {\n                default: return;\n            }\n            return \"baz\";\n    }\n};\n// Message: JSDoc @returns declaration present but return expression not available in function."
+      "/**\n * @returns {SomeType} Baz.\n */\nfunction foo() {\n    switch (true) {\n        default:\n            switch (false) {\n                default: return;\n            }\n            return \"baz\";\n    }\n};\n// Message: JSDoc @returns declaration present but return expression not available in function.",
+      "/**\n * @returns {SomeType} Baz.\n */\nfunction foo() {\n    switch (true) {\n        default:\n            switch (false) {\n                default: return;\n            }\n            return \"baz\";\n    }\n};\n// Message: JSDoc @returns declaration present but return expression not available in function."
     ],
     "valid": [
       "/**\n * @returns Foo.\n */\nfunction quux () {\n\n  return foo;\n}",
       "/**\n * @returns {string} Foo.\n */\nfunction quux () {\n\n  return foo;\n}",
       "/**\n * @returns {string} Foo.\n */\nfunction quux () {\n\n  return foo;\n}",
       "/**\n *\n */\nfunction quux () {\n}",
-      "/**\n * @returns {*} Foo.\n */\nconst quux = () => foo;",
+      "/**\n * @returns {SomeType} Foo.\n */\nconst quux = () => foo;",
       "/**\n * @returns {undefined} Foo.\n */\nfunction quux () {}",
       "/**\n * @returns { void } Foo.\n */\nfunction quux () {}",
       "/**\n * @returns {Promise<void>}\n */\nasync function quux() {}",
@@ -2017,11 +2018,12 @@ export default {
       "/**\n * @returns {IterableIterator<any>}\n */\nfunction * quux() {}\n// Settings: {\"jsdoc\":{\"mode\":\"jsdoc\"}}\n// \"jsdoc/require-returns-check\": [\"error\"|\"warn\", {\"exemptGenerators\":true}]",
       "/**\n * @param {unknown} val\n * @returns { asserts val is number }\n */\nfunction assertNumber(val) {\n  assert(typeof val === 'number');\n}",
       "/**\n * Reads a test fixture.\n *\n * @param path The path to resolve relative to the fixture base. It will be normalized for the\n * operating system.\n *\n * @returns The file contents as buffer.\n */\nexport function readFixture(path: string): Promise<Buffer>;",
+      "/**\n * Reads a test fixture.\n *\n * @param path The path to resolve relative to the fixture base. It will be normalized for the\n * operating system.\n *\n * @returns {SomeType} The file contents as buffer.\n */\nexport function readFixture(path: string): Promise<Buffer>;",
       "/**\n * Reads a test fixture.\n *\n * @param path The path to resolve relative to the fixture base. It will be normalized for the\n * operating system.\n *\n * @returns The file contents as buffer.\n */\nexport function readFixture(path: string): Promise<Buffer> {\n  return new Promise(() => {});\n}",
       "/**\n * Reads a test fixture.\n *\n * @param path The path to resolve relative to the fixture base. It will be normalized for the\n * operating system.\n *\n * @returns {void} The file contents as buffer.\n */\nexport function readFixture(path: string);",
       "/**\n * @returns {SomeType}\n */\nfunction quux (path) {\n  if (true) {\n    return 5;\n  }\n  return 15;\n};",
-      "/**\n * @returns {*} Foo.\n */\nconst quux = () => new Promise((resolve) => {\n  resolve(3);\n});",
-      "/**\n * @returns {*} Foo.\n */\nconst quux = function () {\n  return new Promise((resolve) => {\n    resolve(3);\n  });\n};",
+      "/**\n * @returns {SomeType} Foo.\n */\nconst quux = () => new Promise((resolve) => {\n  resolve(3);\n});",
+      "/**\n * @returns {SomeType} Foo.\n */\nconst quux = function () {\n  return new Promise((resolve) => {\n    resolve(3);\n  });\n};",
       "/**\n * @returns {true}\n */\nfunction quux () {\n  if (true) {\n    return true;\n  }\n\n  throw new Error('Fail');\n}",
       "/**\n * @returns Baz.\n */\nfunction foo() {\n    switch (true) {\n        default:\n            switch (false) {\n                default: break;\n            }\n            return \"baz\";\n    }\n};",
       "/**\n * Return a V1 style query identifier.\n *\n * @param {string} id - The query identifier.\n * @returns {string} V1 style query identifier.\n */\nfunction v1QueryId(id) {\n    switch (id) {\n        case 'addq':\n        case 'aliq':\n        case 'locq':\n            return id.substring(3);\n        case 'lost':\n            return id.substring(4);\n        default:\n            return id;\n    }\n}",
@@ -2031,7 +2033,11 @@ export default {
       "/**\n * Maybe return a boolean.\n * @returns {boolean|void} true, or undefined.\n */\nfunction maybeTrue() {\n  if (Math.random() > 0.5) {\n    return true;\n  }\n}",
       "/**\n * @param {AST} astNode\n * @returns {AST}\n */\nconst getTSFunctionComment = function (astNode) {\n  switch (greatGrandparent.type) {\n  case 'VariableDeclarator':\n    if (greatGreatGrandparent.type === 'VariableDeclaration') {\n      return greatGreatGrandparent;\n    }\n\n  default:\n    return astNode;\n  }\n};",
       "const f =\n  /**\n   * Description.\n   *\n   * @returns Result.\n   */\n  () => {\n    return function () {};\n  };",
-      "/**\n * Description.\n *\n * @returns Result.\n */\nexport function f(): string {\n  return \"\";\n\n  interface I {}\n}"
+      "/**\n * Description.\n *\n * @returns Result.\n */\nexport function f(): string {\n  return \"\";\n\n  interface I {}\n}",
+      "/**\n * @param {boolean} bar A fun variable.\n * @returns {*} Anything at all!\n */\nfunction foo( bar ) {\n  if ( bar ) {\n    return functionWithUnknownReturnType();\n  }\n}",
+      "/**\n * @returns Baz.\n */\nfunction foo() {\n    switch (true) {\n        default:\n            switch (false) {\n                default: return;\n            }\n            return \"baz\";\n    }\n};",
+      "/**\n * @returns Baz.\n */\nfunction foo() {\n    switch (true) {\n        default:\n            switch (false) {\n                default: return;\n            }\n            return \"baz\";\n    }\n};",
+      "/**\n * @returns\n */\nconst quux = (someVar) => {\n  if (someVar) {\n    return true;\n  }\n};"
     ]
   },
   "requireReturnsDescription": {
