@@ -2031,10 +2031,10 @@ for example.
 This rule allows one optional string argument. If it is `"always"` then a
 problem is raised when the lines are not aligned. If it is `"never"` then
 a problem should be raised when there is more than one space between each
-line's parts. Defaults to `"never"`.
+line's parts. If it is `"any"`, no alignment is made. Defaults to `"never"`.
 
-Note that in addition to alignment, both options will ensure at least one
-space is present after the asterisk delimiter.
+Note that in addition to alignment, the "never" and "always" options will both
+ensure that at least one space is present after the asterisk delimiter.
 
 After the string, an options object is allowed with the following properties.
 
@@ -2042,8 +2042,7 @@ After the string, an options object is allowed with the following properties.
 <a name="eslint-plugin-jsdoc-rules-check-line-alignment-options-3-tags"></a>
 ##### <code>tags</code>
 
-Use this to change the tags which are sought for alignment changes. *Currently*
-*only works with the "never" option.* Defaults to an array of
+Use this to change the tags which are sought for alignment changes. Defaults to an array of
 `['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return']`.
 
 <a name="user-content-eslint-plugin-jsdoc-rules-check-line-alignment-options-3-customspacings"></a>
@@ -2060,10 +2059,24 @@ An object with any of the following keys set to an integer. Affects spacing:
 
 If a spacing is not defined, it defaults to one.
 
+<a name="user-content-eslint-plugin-jsdoc-rules-check-line-alignment-options-3-preservemaindescriptionpostdelimiter"></a>
+<a name="eslint-plugin-jsdoc-rules-check-line-alignment-options-3-preservemaindescriptionpostdelimiter"></a>
+##### <code>preserveMainDescriptionPostDelimiter</code>
+
+A boolean to determine whether to preserve the post-delimiter spacing of the
+main description. If `false` or unset, will be set to a single space.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-check-line-alignment-options-3-wrapindent"></a>
+<a name="eslint-plugin-jsdoc-rules-check-line-alignment-options-3-wrapindent"></a>
+##### <code>wrapIndent</code>
+
+The indent that will be applied for tag text after the first line.
+Default to the empty string (no indent).
+
 |||
 |---|---|
 |Context|everywhere|
-|Options|(a string matching `"always" or "never"` and optional object with `tags` and `customSpacings`)|
+|Options|(a string matching `"always"`, `"never"`, or `"any"` and optional object with `tags`, `customSpacings`, `preserveMainDescriptionPostDelimiter`, and `wrapIndent`)|
 |Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|
@@ -2508,6 +2521,53 @@ const fn = ( lorem, sit ) => {}
 const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postHyphen":2}}]
 // Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * @param {string} lorem Description
+ * with multiple lines.
+ */
+function quux () {
+}
+// "jsdoc/check-line-alignment": ["error"|"warn", "any",{"wrapIndent":"  "}]
+// Message: Expected wrap indent
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi
+ * line with asterisks.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"wrapIndent":"  "}]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * My function.
+ *
+ * @param {string} lorem Description.
+ * @param   {int}    sit   Description multiple
+ * lines.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"  "}]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * @property {boolean} tls_verify_client_certificate - Whether our API should
+ *   enable TLS client authentication
+ */
+function quux () {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"   "}]
+// Message: Expected wrap indent
+
+/**
+ * @property {boolean} tls_verify_client_certificate - Whether our API should
+ *   enable TLS client authentication
+ */
+function quux () {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":""}]
+// Message: Expected wrap indent
 ````
 
 The following patterns are not considered problems:
@@ -2866,10 +2926,58 @@ const fn = ( a, b ) => {};
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 
 /**
+ * @param {string} lorem Description
+ *   with multiple lines.
+ */
+function quux () {
+}
+// "jsdoc/check-line-alignment": ["error"|"warn", "any",{"wrapIndent":"  "}]
+
+/**
+ * @param {string} lorem Description
+ *   with multiple lines.
+ */
+function quux () {
+}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"  "}]
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description multi
+ *                         line with asterisks.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"wrapIndent":"  "}]
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description multi
+ *                         line with
+ *                         asterisks.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"wrapIndent":"  "}]
+
+/**
+ * @param {
+ *   string | number
+ * } lorem Description
+ *   with multiple lines.
+ */
+function quux () {
+}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"  "}]
+
+/**
  * @param {string|string[]|TemplateResult|TemplateResult[]} event.detail.description -
  *    Notification description
  */
 function quux () {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"   "}]
 ````
 
 

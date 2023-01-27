@@ -9,17 +9,16 @@ for example.
 This rule allows one optional string argument. If it is `"always"` then a
 problem is raised when the lines are not aligned. If it is `"never"` then
 a problem should be raised when there is more than one space between each
-line's parts. Defaults to `"never"`.
+line's parts. If it is `"any"`, no alignment is made. Defaults to `"never"`.
 
-Note that in addition to alignment, both options will ensure at least one
-space is present after the asterisk delimiter.
+Note that in addition to alignment, the "never" and "always" options will both
+ensure that at least one space is present after the asterisk delimiter.
 
 After the string, an options object is allowed with the following properties.
 
 ##### `tags`
 
-Use this to change the tags which are sought for alignment changes. *Currently*
-*only works with the "never" option.* Defaults to an array of
+Use this to change the tags which are sought for alignment changes. Defaults to an array of
 `['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return']`.
 
 ##### `customSpacings`
@@ -34,10 +33,20 @@ An object with any of the following keys set to an integer. Affects spacing:
 
 If a spacing is not defined, it defaults to one.
 
+##### `preserveMainDescriptionPostDelimiter`
+
+A boolean to determine whether to preserve the post-delimiter spacing of the
+main description. If `false` or unset, will be set to a single space.
+
+##### `wrapIndent`
+
+The indent that will be applied for tag text after the first line.
+Default to the empty string (no indent).
+
 |||
 |---|---|
 |Context|everywhere|
-|Options|(a string matching `"always" or "never"` and optional object with `tags` and `customSpacings`)|
+|Options|(a string matching `"always"`, `"never"`, or `"any"` and optional object with `tags`, `customSpacings`, `preserveMainDescriptionPostDelimiter`, and `wrapIndent`)|
 |Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|

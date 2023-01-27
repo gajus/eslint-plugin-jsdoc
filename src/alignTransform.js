@@ -104,6 +104,7 @@ const alignTransform = ({
   tags,
   indent,
   preserveMainDescriptionPostDelimiter,
+  wrapIndent,
 }) => {
   let intoTags = false;
   let width;
@@ -180,10 +181,11 @@ const alignTransform = ({
     return tokens;
   };
 
-  const update = (line, index, source, typelessInfo) => {
+  const update = (line, index, source, typelessInfo, indentTag) => {
     const tokens = {
       ...line.tokens,
     };
+
     if (tokens.tag !== '') {
       intoTags = true;
     }
@@ -204,21 +206,19 @@ const alignTransform = ({
       };
     }
 
-    /* eslint-disable indent */
     switch (tokens.delimiter) {
-      case Markers.start:
-        tokens.start = indent;
-        break;
-      case Markers.delim:
-        tokens.start = indent + ' ';
-        break;
-      default:
-        tokens.delimiter = '';
+    case Markers.start:
+      tokens.start = indent;
+      break;
+    case Markers.delim:
+      tokens.start = indent + ' ';
+      break;
+    default:
+      tokens.delimiter = '';
 
-        // compensate delimiter
-        tokens.start = indent + '  ';
+      // compensate delimiter
+      tokens.start = indent + '  ';
     }
-    /* eslint-enable */
 
     if (!intoTags) {
       if (tokens.description === '') {
@@ -240,16 +240,16 @@ const alignTransform = ({
     );
 
     // Not align.
-    if (!shouldAlign(tags, index, source)) {
-      return {
-        ...line,
-        tokens,
-      };
+    if (shouldAlign(tags, index, source)) {
+      alignTokens(tokens, typelessInfo);
+      if (indentTag) {
+        tokens.postDelimiter += wrapIndent;
+      }
     }
 
     return {
       ...line,
-      tokens: alignTokens(tokens, typelessInfo),
+      tokens,
     };
   };
 
@@ -263,10 +263,19 @@ const alignTransform = ({
 
     const typelessInfo = getTypelessInfo(fields);
 
+    let tagIndentMode = false;
+
     return rewireSource({
       ...fields,
       source: source.map((line, index) => {
-        return update(line, index, source, typelessInfo);
+        const indentTag = tagIndentMode && !line.tokens.tag && line.tokens.description;
+        const ret = update(line, index, source, typelessInfo, indentTag);
+
+        if (line.tokens.tag) {
+          tagIndentMode = true;
+        }
+
+        return ret;
       }),
     });
   };
