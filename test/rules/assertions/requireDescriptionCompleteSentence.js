@@ -200,6 +200,34 @@ export default {
       code: `
           /**
            * Foo
+           *
+           * @param x
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Sentence must end with a period.',
+        },
+      ],
+      output: `
+          /**
+           * Foo.
+           *
+           * @param x
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * Foo
            * Bar.
            */
           function quux () {
