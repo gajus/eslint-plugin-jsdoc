@@ -137,6 +137,7 @@ const checkAlignment = ({
   report,
   tags,
   utils,
+  wrapIndent,
 }) => {
   const transform = commentFlow(
     alignTransform({
@@ -144,6 +145,7 @@ const checkAlignment = ({
       indent,
       preserveMainDescriptionPostDelimiter,
       tags,
+      wrapIndent,
     }),
   );
   const transformedJsdoc = transform(jsdoc);
@@ -176,6 +178,7 @@ export default iterateJsdoc(({
     ],
     preserveMainDescriptionPostDelimiter,
     customSpacings,
+    wrapIndent = '',
   } = context.options[1] || {};
 
   if (context.options[0] === 'always') {
@@ -193,14 +196,48 @@ export default iterateJsdoc(({
       report,
       tags: applicableTags,
       utils,
+      wrapIndent,
     });
 
     return;
   }
 
   const foundTags = utils.getPresentTags(applicableTags);
+  if (context.options[0] !== 'any') {
+    for (const tag of foundTags) {
+      checkNotAlignedPerTag(utils, tag, customSpacings);
+    }
+  }
+
   for (const tag of foundTags) {
-    checkNotAlignedPerTag(utils, tag, customSpacings);
+    if (tag.source.length > 1) {
+      let idx = 0;
+      for (const {
+        tokens,
+      // Avoid the tag line
+      } of tag.source.slice(1)) {
+        idx++;
+
+        if (
+          !tokens.description ||
+          // Avoid first lines after multiline type
+          tokens.type ||
+          tokens.name
+        ) {
+          continue;
+        }
+
+        // Don't include a single separating space/tab
+        if (tokens.postDelimiter.slice(1) !== wrapIndent) {
+          utils.reportJSDoc('Expected wrap indent', {
+            line: tag.source[0].number + idx,
+          }, () => {
+            tokens.postDelimiter = tokens.postDelimiter.charAt() + wrapIndent;
+          });
+          return;
+        }
+      }
+    }
   }
 }, {
   iterateAllJsdocs: true,
@@ -213,7 +250,7 @@ export default iterateJsdoc(({
     schema: [
       {
         enum: [
-          'always', 'never',
+          'always', 'never', 'any',
         ],
         type: 'string',
       },
@@ -249,6 +286,9 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
+          },
+          wrapIndent: {
+            type: 'string',
           },
         },
         type: 'object',
