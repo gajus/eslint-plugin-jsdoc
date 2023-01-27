@@ -11012,6 +11012,16 @@ function quux () {
 
 /**
  * Foo
+ *
+ * @param x
+ */
+function quux () {
+
+}
+// Message: Sentence must end with a period.
+
+/**
+ * Foo
  * Bar.
  */
 function quux () {
