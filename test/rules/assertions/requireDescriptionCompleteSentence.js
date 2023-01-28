@@ -1470,5 +1470,23 @@ export default {
        * see: https://github.com/d3/d3-ease. */
       `,
     },
+    {
+      code: `
+      /**
+       * Maps the state to props.
+       *
+       * @param {object} state - The current state.
+       * @param {object} ownProps - The props currently passed to the component.
+       * @returns {{
+       *    currentSupplierIntId: number,
+       *    currentAccountIntId: number,
+       *    isLoading: boolean
+       *    }} - The props.
+       */
+      const mapStateToProps = (state, ownProps) => {
+      }
+      `,
+      ignoreReadme: true,
+    },
   ],
 };
