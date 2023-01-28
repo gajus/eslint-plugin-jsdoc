@@ -72,7 +72,7 @@ const validateDescription = (
     return false;
   }
 
-  const paragraphs = extractParagraphs(description);
+  const paragraphs = extractParagraphs(description).filter(Boolean);
 
   return paragraphs.some((paragraph, parIdx) => {
     const sentences = extractSentences(paragraph, abbreviationsRegex);
