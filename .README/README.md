@@ -107,6 +107,15 @@ which enables the rules commented above as "recommended":
 
 You can then selectively add to or override the recommended rules.
 
+Alternatively, if you wish to have all linting issues reported
+as failing errors, you may use the "recommended-error" config:
+
+```json
+{
+  "extends": ["plugin:jsdoc/recommended-error"]
+}
+```
+
 ## Options
 
 Rules may, as per the [ESLint user guide](https://eslint.org/docs/user-guide/configuring), have their own individual options. In `eslint-plugin-jsdoc`, a few options,
