@@ -951,6 +951,22 @@ export default {
           }
       `,
     },
+    {
+      code: `
+      /**
+       * Just a component.
+       * @param {Object} props Свойства.
+       * @return {ReactElement}.
+       */
+      function quux () {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Sentence must be more than punctuation.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1031,7 +1047,7 @@ export default {
     {
       code: `
           /**
-           * Foo. {@see Math.sin}.
+           * Foo {@see Math.sin}.
            */
           function quux () {
 
@@ -1487,6 +1503,16 @@ export default {
       }
       `,
       ignoreReadme: true,
+    },
+    {
+      code: `
+          /**
+           * This is a complete sentence...
+           */
+          function quux () {
+
+          }
+      `,
     },
   ],
 };
