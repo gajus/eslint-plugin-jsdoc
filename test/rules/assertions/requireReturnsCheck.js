@@ -654,6 +654,29 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @returns {number}
+         */
+        function foo() {
+          let n = 1;
+          while (n > 0.5) {
+            n = Math.random();
+            if (n < 0.2) {
+              return n;
+            }
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+
   ],
   valid: [
     {
@@ -1575,6 +1598,21 @@ export default {
         }
       };
   `,
+    },
+    {
+      code: `
+        /**
+         * @returns {number}
+         */
+        function foo() {
+          while (true) {
+            const n = Math.random();
+            if (n < 0.5) {
+              return n;
+            }
+          }
+        }
+      `,
     },
   ],
 };
