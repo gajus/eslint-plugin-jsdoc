@@ -9680,6 +9680,18 @@ const MyComponent = ({ children }) => {
  */
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=see]))","context":"any","message":"@see required on each block"}]}]
 // Message: @see required on each block
+
+/**
+ * @type {{a: string}}
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])","context":"any","message":"@type should be limited to numeric or string literals and names"},{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))","context":"any","message":"@type names should only be recognized primitive types or literals"}]}]
+// Message: @type should be limited to numeric or string literals and names
+
+/**
+ * @type {abc}
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])","context":"any","message":"@type should be limited to numeric or string literals and names"},{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))","context":"any","message":"@type names should only be recognized primitive types or literals"}]}]
+// Message: @type names should only be recognized primitive types or literals
 ````
 
 The following patterns are not considered problems:
@@ -9750,6 +9762,16 @@ function foo(): string;
 * @param sth Param text followed by newline
 */
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][hasPreterminalTagDescription=1]","context":"any","message":"Requiring descriptive text on 0th line but no preterminal description"}]}]
+
+/**
+ * @type {123}
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])","context":"any","message":"@type should be limited to numeric or string literals and names"},{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))","context":"any","message":"@type names should only be recognized primitive types or literals"}]}]
+
+/**
+ * @type {boolean}
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])","context":"any","message":"@type should be limited to numeric or string literals and names"},{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))","context":"any","message":"@type names should only be recognized primitive types or literals"}]}]
 ````
 
 
