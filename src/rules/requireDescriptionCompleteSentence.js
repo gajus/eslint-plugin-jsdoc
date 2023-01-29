@@ -101,7 +101,7 @@ const validateDescription = (
             return $1 + capitalize(beginning);
           });
         } else {
-          text = text.replace(new RegExp('((?:[.!?]|\\*|\\})\\s*)' + escapeStringRegexp(beginning), 'u'), '$1' + capitalize(beginning));
+          text = text.replace(new RegExp('((?:[.?!]|\\*|\\})\\s*)' + escapeStringRegexp(beginning), 'u'), '$1' + capitalize(beginning));
         }
       }
 
@@ -123,25 +123,25 @@ const validateDescription = (
     if (sentences.some((sentence) => {
       return (/^[.?!]$/u).test(sentence);
     })) {
-      report('Sentence must be more than punctuation.', null, tag);
+      report('Sentences must be more than punctuation.', null, tag);
     }
 
     if (sentences.some((sentence) => {
       return !(/^\s*$/u).test(sentence) && !isCapitalized(sentence) && !isTable(sentence);
     })) {
-      report('Sentence should start with an uppercase character.', fix, tag);
+      report('Sentences should start with an uppercase character.', fix, tag);
     }
 
     const paragraphNoAbbreviations = paragraph.replace(abbreviationsRegex, '');
 
-    if (!/[.!?|]\s*$/u.test(paragraphNoAbbreviations)) {
-      report('Sentence must end with a period.', fix, tag);
+    if (!/(?:[.?!|]|```)\s*$/u.test(paragraphNoAbbreviations)) {
+      report('Sentences must end with a period.', fix, tag);
 
       return true;
     }
 
     if (newlineBeforeCapsAssumesBadSentenceEnd && !isNewLinePrecededByAPeriod(paragraphNoAbbreviations)) {
-      report('A line of text is started with an uppercase character, but preceding line does not end the sentence.', null, tag);
+      report('A line of text is started with an uppercase character, but the preceding line does not end the sentence.', null, tag);
 
       return true;
     }
@@ -170,9 +170,33 @@ export default iterateJsdoc(({
     }).join('|') + '(?:$|\\s)', 'gu') :
     '';
 
-  const {
+  let {
     description,
   } = utils.getDescription();
+
+  const indices = [
+    ...description.matchAll(/```[\s\S]*```/gu),
+  ].map((match) => {
+    const {
+      index,
+    } = match;
+    const [
+      {
+        length,
+      },
+    ] = match;
+    return {
+      index,
+      length,
+    };
+  }).reverse();
+
+  for (const {
+    index,
+    length,
+  } of indices) {
+    description = description.slice(0, index) + description.slice(index + length);
+  }
 
   if (validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, {
     line: jsdoc.source[0].number + 1,

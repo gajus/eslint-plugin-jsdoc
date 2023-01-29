@@ -12,7 +12,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -36,7 +36,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -60,7 +60,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -84,7 +84,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -108,7 +108,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -134,7 +134,7 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -160,7 +160,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -184,7 +184,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -210,7 +210,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -237,7 +237,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'A line of text is started with an uppercase character, but preceding line does not end the sentence.',
+          message: 'A line of text is started with an uppercase character, but the preceding line does not end the sentence.',
         },
       ],
       options: [
@@ -260,7 +260,7 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -288,11 +288,11 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
         {
           line: 5,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -318,11 +318,11 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -348,11 +348,11 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
         {
           line: 5,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -380,7 +380,7 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -411,7 +411,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -440,7 +440,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -464,7 +464,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -488,11 +488,11 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -518,11 +518,11 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
         {
           line: 5,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -546,7 +546,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -568,7 +568,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -592,7 +592,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       output: `
@@ -616,7 +616,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       options: [
@@ -647,7 +647,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       options: [
@@ -685,7 +685,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       options: [
@@ -708,7 +708,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       options: [
@@ -731,7 +731,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       options: [
@@ -762,7 +762,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       options: [
@@ -785,7 +785,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       options: [
@@ -808,7 +808,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence must end with a period.',
+          message: 'Sentences must end with a period.',
         },
       ],
       options: [
@@ -831,7 +831,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -856,7 +856,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -882,7 +882,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       output: `
@@ -907,7 +907,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'A line of text is started with an uppercase character, but preceding line does not end the sentence.',
+          message: 'A line of text is started with an uppercase character, but the preceding line does not end the sentence.',
         },
       ],
       options: [
@@ -930,7 +930,7 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence should start with an uppercase character.',
+          message: 'Sentences should start with an uppercase character.',
         },
       ],
       options: [
@@ -963,7 +963,7 @@ export default {
       errors: [
         {
           line: 5,
-          message: 'Sentence must be more than punctuation.',
+          message: 'Sentences must be more than punctuation.',
         },
       ],
     },
@@ -1508,6 +1508,62 @@ export default {
       code: `
           /**
            * This is a complete sentence...
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * He wanted a few items: a jacket and shirt...
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * The code in question was...
+           * \`\`\`
+           * alert('hello');
+           * \`\`\`
+           */
+          function quux () {
+
+          }
+      `,
+    },
+    {
+      code: `
+      /**
+       * @param {number|string|Date|Object|OverType|WhateverElse} multiType -
+       * Nice long explanation...
+       */
+      function test (multiType) {
+      }
+      `,
+    },
+    {
+      code: `
+      /**
+       * Any kind of fowl (e.g., a duck).
+       */
+      function quux () {}
+      `,
+    },
+    {
+      code: `
+          /**
+           * The code in question was...
+           * \`\`\`
+           * do something
+           *
+           * interesting
+           * \`\`\`
            */
           function quux () {
 
