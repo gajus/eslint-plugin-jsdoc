@@ -465,6 +465,64 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @type {{a: string}}
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '@type should be limited to numeric or string literals and names',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])',
+              context: 'any',
+              message: '@type should be limited to numeric or string literals and names',
+            },
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))',
+              context: 'any',
+              message: '@type names should only be recognized primitive types or literals',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @type {abc}
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '@type names should only be recognized primitive types or literals',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])',
+              context: 'any',
+              message: '@type should be limited to numeric or string literals and names',
+            },
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))',
+              context: 'any',
+              message: '@type names should only be recognized primitive types or literals',
+            },
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -670,6 +728,52 @@ export default {
               comment: 'JsdocBlock[descriptionStartLine=0][hasPreterminalTagDescription=1]',
               context: 'any',
               message: 'Requiring descriptive text on 0th line but no preterminal description',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @type {123}
+         */
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])',
+              context: 'any',
+              message: '@type should be limited to numeric or string literals and names',
+            },
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))',
+              context: 'any',
+              message: '@type names should only be recognized primitive types or literals',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @type {boolean}
+         */
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])',
+              context: 'any',
+              message: '@type should be limited to numeric or string literals and names',
+            },
+            {
+              comment: 'JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))',
+              context: 'any',
+              message: '@type names should only be recognized primitive types or literals',
             },
           ],
         },
