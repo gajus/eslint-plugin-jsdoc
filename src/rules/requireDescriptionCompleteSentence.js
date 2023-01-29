@@ -24,7 +24,11 @@ const extractSentences = (text, abbreviationsRegex) => {
 
   const sentenceEndGrouping = /([.?!])(?:\s+|$)/ug;
 
-  const puncts = txt.matchAll(sentenceEndGrouping);
+  const puncts = [
+    ...txt.matchAll(sentenceEndGrouping),
+  ].map((sentEnd) => {
+    return sentEnd[0];
+  });
 
   return txt
 
@@ -32,7 +36,7 @@ const extractSentences = (text, abbreviationsRegex) => {
 
     // Re-add the dot.
     .map((sentence, idx) => {
-      return /^\s*$/u.test(sentence) ? sentence : `${sentence}${puncts[idx] || ''}`;
+      return !puncts[idx] && /^\s*$/u.test(sentence) ? sentence : `${sentence}${puncts[idx] || ''}`;
     });
 };
 
@@ -117,6 +121,12 @@ const validateDescription = (
       tagObj.column = 0;
       reportOrig(msg, fixer, tagObj);
     };
+
+    if (sentences.some((sentence) => {
+      return (/^[.?!]$/u).test(sentence);
+    })) {
+      report('Sentence must be more than punctuation.', null, tag);
+    }
 
     if (sentences.some((sentence) => {
       return !(/^\s*$/u).test(sentence) && !isCapitalized(sentence) && !isTable(sentence);

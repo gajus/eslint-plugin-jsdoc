@@ -11296,6 +11296,14 @@ function quux (foo) {
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"tags":["template"]}]
 // Message: Sentence should start with an uppercase character.
+
+/**
+ * Just a component.
+ * @param {Object} props Свойства.
+ * @return {ReactElement}.
+ */
+function quux () {}
+// Message: Sentence must be more than punctuation.
 ````
 
 The following patterns are not considered problems:
@@ -11355,7 +11363,7 @@ function quux () {
 }
 
 /**
- * Foo. {@see Math.sin}.
+ * Foo {@see Math.sin}.
  */
 function quux () {
 
@@ -11627,6 +11635,13 @@ export default (foo) => {
 
 /** @file To learn more,
  * see: https://github.com/d3/d3-ease. */
+
+/**
+ * This is a complete sentence...
+ */
+function quux () {
+
+}
 ````
 
 
