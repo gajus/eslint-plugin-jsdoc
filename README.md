@@ -17881,6 +17881,20 @@ function foo() {
     }
 };
 // Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {number}
+ */
+function foo() {
+  let n = 1;
+  while (n > 0.5) {
+    n = Math.random();
+    if (n < 0.2) {
+      return n;
+    }
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 The following patterns are not considered problems:
@@ -18517,6 +18531,18 @@ const quux = (someVar) => {
     return true;
   }
 };
+
+/**
+ * @returns {number}
+ */
+function foo() {
+  while (true) {
+    const n = Math.random();
+    if (n < 0.5) {
+      return n;
+    }
+  }
+}
 ````
 
 
