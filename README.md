@@ -10981,7 +10981,7 @@ The following patterns are considered problems:
 function quux () {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * foo?
@@ -10989,7 +10989,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * @description foo.
@@ -10997,7 +10997,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * Foo)
@@ -11005,7 +11005,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * `foo` is a variable
@@ -11013,7 +11013,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * Foo.
@@ -11023,7 +11023,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * тест.
@@ -11031,7 +11031,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * Foo
@@ -11039,7 +11039,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * Foo
@@ -11049,7 +11049,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * Foo
@@ -11059,7 +11059,7 @@ function quux () {
 
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"newlineBeforeCapsAssumesBadSentenceEnd":true}]
-// Message: A line of text is started with an uppercase character, but preceding line does not end the sentence.
+// Message: A line of text is started with an uppercase character, but the preceding line does not end the sentence.
 
 /**
  * Foo.
@@ -11069,7 +11069,7 @@ function quux () {
 function quux (foo) {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * Foo.
@@ -11079,7 +11079,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * {@see Foo.bar} buz
@@ -11087,7 +11087,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * Foo.
@@ -11097,7 +11097,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * Foo.
@@ -11107,7 +11107,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * lorem ipsum dolor sit amet, consectetur adipiscing elit. pellentesque elit diam,
@@ -11120,7 +11120,7 @@ function quux (foo) {
 function longDescription (foo) {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * @arg {number} foo - Foo
@@ -11128,7 +11128,7 @@ function longDescription (foo) {
 function quux (foo) {
 
 }
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * @argument {number} foo - Foo
@@ -11136,7 +11136,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * @return {number} foo
@@ -11144,7 +11144,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * Returns bar.
@@ -11154,13 +11154,13 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * @throws {object} Hello World
  * hello world
 */
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * @summary Foo
@@ -11168,7 +11168,7 @@ function quux (foo) {
 function quux () {
 
 }
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * @throws {SomeType} Foo
@@ -11176,7 +11176,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * @see Foo
@@ -11185,7 +11185,7 @@ function quux () {
 
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"tags":["see"]}]
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * @param foo Foo bar
@@ -11195,7 +11195,7 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"tags":["param"]}]
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * Sorry, but this isn't a complete sentence, Mr.
@@ -11204,7 +11204,7 @@ function quux () {
 
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr"]}]
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * Sorry, but this isn't a complete sentence Mr.
@@ -11213,7 +11213,7 @@ function quux () {
 
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr."]}]
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * Sorry, but this isn't a complete sentence Mr. 
@@ -11222,7 +11222,7 @@ function quux () {
 
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr"]}]
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * Sorry, but this isn't a complete sentence Mr. and Mrs.
@@ -11231,7 +11231,7 @@ function quux () {
 
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr","Mrs"]}]
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * This is a complete sentence. But this isn't, Mr.
@@ -11240,7 +11240,7 @@ function quux () {
 
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr"]}]
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * This is a complete Mr. sentence. But this isn't, Mr.
@@ -11249,7 +11249,7 @@ function quux () {
 
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["Mr"]}]
-// Message: Sentence must end with a period.
+// Message: Sentences must end with a period.
 
 /**
  * This is a complete Mr. sentence.
@@ -11257,7 +11257,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * This is fun, i.e. enjoyable, but not superlatively so, e.g. not
@@ -11266,7 +11266,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * Do not have dynamic content; e.g. homepage. Here a simple unique id
@@ -11275,7 +11275,7 @@ function quux () {
  function quux () {
 
  }
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * Implements support for the
@@ -11284,7 +11284,7 @@ function quux () {
 function speak() {
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"newlineBeforeCapsAssumesBadSentenceEnd":true}]
-// Message: A line of text is started with an uppercase character, but preceding line does not end the sentence.
+// Message: A line of text is started with an uppercase character, but the preceding line does not end the sentence.
 
 /**
  * Foo.
@@ -11295,7 +11295,7 @@ function quux (foo) {
 
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"tags":["template"]}]
-// Message: Sentence should start with an uppercase character.
+// Message: Sentences should start with an uppercase character.
 
 /**
  * Just a component.
@@ -11303,7 +11303,7 @@ function quux (foo) {
  * @return {ReactElement}.
  */
 function quux () {}
-// Message: Sentence must be more than punctuation.
+// Message: Sentences must be more than punctuation.
 ````
 
 The following patterns are not considered problems:
@@ -11638,6 +11638,47 @@ export default (foo) => {
 
 /**
  * This is a complete sentence...
+ */
+function quux () {
+
+}
+
+/**
+ * He wanted a few items: a jacket and shirt...
+ */
+function quux () {
+
+}
+
+/**
+ * The code in question was...
+ * ```
+ * alert('hello');
+ * ```
+ */
+function quux () {
+
+}
+
+/**
+ * @param {number|string|Date|Object|OverType|WhateverElse} multiType -
+ * Nice long explanation...
+ */
+function test (multiType) {
+}
+
+/**
+ * Any kind of fowl (e.g., a duck).
+ */
+function quux () {}
+
+/**
+ * The code in question was...
+ * ```
+ * do something
+ *
+ * interesting
+ * ```
  */
 function quux () {
 
