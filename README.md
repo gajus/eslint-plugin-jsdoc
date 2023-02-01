@@ -9692,6 +9692,36 @@ const MyComponent = ({ children }) => {
  */
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])","context":"any","message":"@type should be limited to numeric or string literals and names"},{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))","context":"any","message":"@type names should only be recognized primitive types or literals"}]}]
 // Message: @type names should only be recognized primitive types or literals
+
+/**
+ *
+ */
+function test(): string { }
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"FunctionDeclaration[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"Functions with non-void return types must have a @returns tag"}]}]
+// Message: Functions with non-void return types must have a @returns tag
+
+/**
+ *
+ */
+let test = (): string => { };
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"ArrowFunctionExpression[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"Functions with non-void return types must have a @returns tag"}]}]
+// Message: Functions with non-void return types must have a @returns tag
+
+/**
+ * @returns
+ */
+let test: () => string;
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]:has(JsdocDescriptionLine)))","context":"VariableDeclaration:has(*[typeAnnotation.typeAnnotation.type=/TSFunctionType/][typeAnnotation.typeAnnotation.returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/])","message":"FunctionType's with non-void return types must have a @returns tag with a description"}]}]
+// Message: FunctionType's with non-void return types must have a @returns tag with a description
+
+/**
+ *
+ */
+class Test {
+  abstract Test(): string;
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"TSEmptyBodyFunctionExpression[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"methods with non-void return types must have a @returns tag"}]}]
+// Message: methods with non-void return types must have a @returns tag
 ````
 
 The following patterns are not considered problems:
@@ -9772,6 +9802,32 @@ function foo(): string;
  * @type {boolean}
  */
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])","context":"any","message":"@type should be limited to numeric or string literals and names"},{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))","context":"any","message":"@type names should only be recognized primitive types or literals"}]}]
+
+/**
+ *
+ */
+function test(): void { }
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"FunctionDeclaration[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"Functions with return types must have a @returns tag"}]}]
+
+/**
+ *
+ */
+let test = (): undefined => { };
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"ArrowFunctionExpression[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"Functions with non-void return types must have a @returns tag"}]}]
+
+/**
+ * @returns A description
+ */
+let test: () => string;
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]:has(JsdocDescriptionLine)))","context":"VariableDeclaration:has(*[typeAnnotation.typeAnnotation.type=/TSFunctionType/])","message":"FunctionType's with non-void return types must have a @returns tag"}]}]
+
+/**
+ *
+ */
+class Test {
+  abstract Test(): void;
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"TSEmptyBodyFunctionExpression[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"methods with non-void return types must have a @returns tag"}]}]
 ````
 
 
