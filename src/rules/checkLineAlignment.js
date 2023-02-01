@@ -64,6 +64,13 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
     });
   };
 
+  const postHyphenSpacing = customSpacings?.postHyphen ?? 1;
+  const exactHyphenSpacing = new RegExp(`^\\s*-\\s{${postHyphenSpacing},${postHyphenSpacing}}(?!\\s)`, 'u');
+  const hasNoHyphen = !(/^\s*-/u).test(tokens.description);
+  const hasExactHyphenSpacing = exactHyphenSpacing.test(
+    tokens.description,
+  );
+
   // If checking alignment on multiple lines, need to check other `source`
   //   items
   // Go through `post*` spacing properties and exit to indicate problem if
@@ -82,7 +89,7 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
       // 2. There is a (single) space, no immediate content, and yet another
       //     space is found subsequently (not separated by intervening content)
       spacerPropVal && !contentPropVal && followedBySpace(idx);
-  });
+  }) && (hasNoHyphen || hasExactHyphenSpacing);
   if (ok) {
     return;
   }
@@ -106,6 +113,13 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
       } else {
         tokens[spacerProp] = '';
       }
+    }
+
+    if (!hasExactHyphenSpacing) {
+      const hyphenSpacing = /^\s*-\s*/u;
+      tokens.description = tokens.description.replace(
+        hyphenSpacing, '-' + ''.padStart(postHyphenSpacing, ' '),
+      );
     }
 
     utils.setTag(tag, tokens);
@@ -210,6 +224,9 @@ export default iterateJsdoc(({
             additionalProperties: false,
             properties: {
               postDelimiter: {
+                type: 'integer',
+              },
+              postHyphen: {
                 type: 'integer',
               },
               postName: {

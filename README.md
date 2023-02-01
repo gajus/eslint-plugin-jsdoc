@@ -2047,6 +2047,7 @@ An object with any of the following keys set to an integer. Affects spacing:
 - `postTag` - after the tag (e.g., `* @param  `)
 - `postType` - after the type (e.g., `* @param {someType}   `)
 - `postName` - after the name (e.g., `* @param {someType} name   `)
+- `postHyphens` - after any hyphens in the description (e.g., `* @param {someType} name -  A description`)
 
 If a spacing is not defined, it defaults to one.
 
@@ -2438,6 +2439,66 @@ const fn = ( lorem, sit ) => {}
 const fn = ( lorem, sit ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
 // Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem - Description.
+ * @param {int}    sit   -   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never"]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem -  Description.
+ * @param {int}    sit   -   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postHyphen":2}}]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem - Description.
+ * @param {int} sit -  Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postHyphen":2}}]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem - Description.
+ * @param {int}    sit   -  Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"customSpacings":{"postHyphen":2}}]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem -  Description.
+ * @param {int}    sit   -   Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"customSpacings":{"postHyphen":2}}]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
+ * @param   {string} lorem -  Description.
+ * @param {int} sit -  Description multi words.
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"customSpacings":{"postHyphen":2}}]
+// Message: Expected JSDoc block lines to not be aligned.
 ````
 
 The following patterns are not considered problems:
