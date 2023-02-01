@@ -1157,6 +1157,208 @@ export default {
         const fn = ( lorem, sit ) => {}
       `,
     },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem - Description.
+         * @param {int}    sit   -   Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'never',
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem - Description.
+         * @param {int} sit - Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem -  Description.
+         * @param {int}    sit   -   Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'never',
+        {
+          customSpacings: {
+            postHyphen: 2,
+          },
+        },
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem -  Description.
+         * @param {int} sit -  Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem - Description.
+         * @param {int} sit -  Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'never',
+        {
+          customSpacings: {
+            postHyphen: 2,
+          },
+        },
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem -  Description.
+         * @param {int} sit -  Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem - Description.
+         * @param {int}    sit   -  Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always', {
+          customSpacings: {
+            postHyphen: 2,
+          },
+        },
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem -  Description.
+         * @param {int}    sit   -  Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem -  Description.
+         * @param {int}    sit   -   Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always', {
+          customSpacings: {
+            postHyphen: 2,
+          },
+        },
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem -  Description.
+         * @param {int}    sit   -  Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param   {string} lorem -  Description.
+         * @param {int} sit -  Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Expected JSDoc block lines to not be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'never', {
+          customSpacings: {
+            postHyphen: 2,
+          },
+        },
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem -  Description.
+         * @param {int} sit -  Description multi words.
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+    },
   ],
   valid: [
     {

@@ -30,6 +30,7 @@ An object with any of the following keys set to an integer. Affects spacing:
 - `postTag` - after the tag (e.g., `* @param  `)
 - `postType` - after the type (e.g., `* @param {someType}   `)
 - `postName` - after the name (e.g., `* @param {someType} name   `)
+- `postHyphens` - after any hyphens in the description (e.g., `* @param {someType} name -  A description`)
 
 If a spacing is not defined, it defaults to one.
 

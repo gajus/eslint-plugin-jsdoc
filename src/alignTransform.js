@@ -233,6 +233,12 @@ const alignTransform = ({
       };
     }
 
+    const postHyphenSpacing = customSpacings?.postHyphen ?? 1;
+    const hyphenSpacing = /^\s*-\s*/u;
+    tokens.description = tokens.description.replace(
+      hyphenSpacing, '-' + ''.padStart(postHyphenSpacing, ' '),
+    );
+
     // Not align.
     if (!shouldAlign(tags, index, source)) {
       return {
