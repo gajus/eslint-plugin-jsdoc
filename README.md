@@ -22635,7 +22635,8 @@ The following tags have their name/namepath portion (the non-whitespace
 text after the tag name) checked:
 
 1. Name(path)-defining tags requiring namepath: `@event`, `@callback`,
-    `@external`, `@host`, `@name`, `@typedef`, and `@template`
+    `@exports` (JSDoc only),
+    `@external`, `@host`, `@name`, `@typedef` (JSDoc only), and `@template`
     (TypeScript/Closure only); `@param` (`@arg`, `@argument`) and `@property`
     (`@prop`) also fall into this category, but while this rule will check
     their namepath validity, we leave the requiring of the name portion
@@ -22644,11 +22645,11 @@ text after the tag name) checked:
 1. Name(path)-defining tags (which may have value without namepath or their
     namepath can be expressed elsewhere on the block):
     `@class`, `@constructor`, `@constant`, `@const`, `@function`, `@func`,
-    `@method`, `@interface` (TypeScript tag only), `@member`, `@var`,
+    `@method`, `@interface` (non-Closure only), `@member`, `@var`,
     `@mixin`, `@namespace`, `@module` (module paths are not planned for
     TypeScript)
 1. Name(path)-pointing tags requiring namepath: `@alias`, `@augments`,
-    `@extends`, `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@this`
+    `@extends` (JSDoc only), `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@requires`, `@this`
     (jsdoc only)
 1. Name(path)-pointing tags (which may have value without namepath or their
     namepath can be expressed elsewhere on the block): `@listens`, `@fires`,
