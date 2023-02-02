@@ -9,6 +9,10 @@ name will actually be part of the description (e.g., for
 `structuredTags` setting (if `name: false`, this rule will not apply to
 that tag).
 
+#### Fixer
+
+Will replace `disallowName` with `replacement` if these are provided.
+
 #### Options
 
 A single options object with the following properties:

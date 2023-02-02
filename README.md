@@ -7845,6 +7845,12 @@ name will actually be part of the description (e.g., for
 `structuredTags` setting (if `name: false`, this rule will not apply to
 that tag).
 
+<a name="user-content-eslint-plugin-jsdoc-rules-match-name-fixer"></a>
+<a name="eslint-plugin-jsdoc-rules-match-name-fixer"></a>
+#### Fixer
+
+Will replace `disallowName` with `replacement` if these are provided.
+
 <a name="user-content-eslint-plugin-jsdoc-rules-match-name-options-12"></a>
 <a name="eslint-plugin-jsdoc-rules-match-name-options-12"></a>
 #### Options
@@ -10976,6 +10982,15 @@ Requires that block description, explicit `@description`, and
 * Periods after items within the `abbreviations` option array are not treated
   as sentence endings.
 
+<a name="user-content-eslint-plugin-jsdoc-rules-require-description-complete-sentence-fixer-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-fixer-1"></a>
+#### Fixer
+
+If sentences do not end with terminal punctuation, a period will be added.
+
+If sentences do not start with an uppercase character, the initial
+letter will be capitalized.
+
 <a name="user-content-eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-23"></a>
 <a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-23"></a>
 #### Options
@@ -12369,8 +12384,8 @@ A value indicating whether setters should be checked. Defaults to `false`.
 A boolean on whether to enable the fixer (which adds an empty `@example` block).
 Defaults to `true`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-fixer"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-fixer"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-fixer-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-fixer-2"></a>
 #### Fixer
 
 The fixer for `require-example` will add an empty `@example`, but it will still
@@ -15553,16 +15568,16 @@ function quux (foo, {bar: {baz}}) {
 
 Requires that all function parameters are documented.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-fixer-1"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-fixer-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-3"></a>
 #### Fixer
 
 Adds `@param <name>` for each tag present in the function signature but
 missing in the jsdoc. Can be disabled by setting the `enableFixer`
 option to `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-fixer-1-destructured-object-and-array-naming"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-destructured-object-and-array-naming"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-fixer-3-destructured-object-and-array-naming"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-3-destructured-object-and-array-naming"></a>
 ##### Destructured object and array naming
 
 When the fixer is applied to destructured objects, only the input name is
@@ -15614,8 +15629,8 @@ function quux ([foo, bar]) {
 */
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-fixer-1-missing-root-fixing"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-missing-root-fixing"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-fixer-3-missing-root-fixing"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-3-missing-root-fixing"></a>
 ##### Missing root fixing
 
 Note that unless `enableRootFixer` (or `enableFixer`) is set to `false`,
@@ -15650,8 +15665,8 @@ numeric component).
 And one can have the count begin at another number (e.g., `1`) by changing
 `autoIncrementBase` from the default of `0`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-fixer-1-rest-element-restelement-insertions"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-rest-element-restelement-insertions"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-fixer-3-rest-element-restelement-insertions"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-3-rest-element-restelement-insertions"></a>
 ##### Rest Element (<code>RestElement</code>) insertions
 
 The fixer will automatically report/insert
@@ -15703,8 +15718,8 @@ function baar ([a, ...extra]) {
 
 ...because it does not use the `...` syntax in the type.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-fixer-1-object-rest-property-insertions"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-fixer-1-object-rest-property-insertions"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-fixer-3-object-rest-property-insertions"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-fixer-3-object-rest-property-insertions"></a>
 ##### Object Rest Property insertions
 
 If the `checkRestProperty` option is set to `true` (`false` by default),
@@ -17334,8 +17349,8 @@ when their type is a plain `object`, `Object`, or `PlainObject`.
 Note that any other type, including a subtype of object such as
 `object<string, string>`, will not be reported.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-property-fixer-2"></a>
-<a name="eslint-plugin-jsdoc-rules-require-property-fixer-2"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-property-fixer-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-property-fixer-4"></a>
 #### Fixer
 
 The fixer for `require-property` will add an empty `@property`.
