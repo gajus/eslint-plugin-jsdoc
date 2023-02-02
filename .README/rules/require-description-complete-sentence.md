@@ -14,6 +14,13 @@ Requires that block description, explicit `@description`, and
 * Periods after items within the `abbreviations` option array are not treated
   as sentence endings.
 
+#### Fixer
+
+If sentences do not end with terminal punctuation, a period will be added.
+
+If sentences do not start with an uppercase character, the initial
+letter will be capitalized.
+
 #### Options
 
 ##### `tags`
