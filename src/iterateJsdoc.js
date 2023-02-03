@@ -873,6 +873,9 @@ const getSettings = (context) => {
     // Many rules, e.g., `check-tag-names`
     mode: context.settings.jsdoc?.mode ??
       (context.parserPath.includes('@typescript-eslint') ? 'typescript' : 'jsdoc'),
+
+    // Many rules
+    contexts: context.settings.jsdoc?.contexts,
   };
   /* eslint-enable canonical/sort-keys */
 
@@ -1176,6 +1179,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
     if (lastCall && ruleConfig.exit) {
       ruleConfig.exit({
         context,
+        settings,
         state,
         utils,
       });
@@ -1323,7 +1327,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       if (ruleConfig.contextDefaults || ruleConfig.contextSelected || ruleConfig.matchContext) {
         contexts = ruleConfig.matchContext && context.options[0]?.match ?
           context.options[0].match :
-          jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults);
+          jsdocUtils.enforcedContexts(context, ruleConfig.contextDefaults, ruleConfig.nonGlobalSettings ? {} : settings);
 
         if (contexts) {
           contexts = contexts.map((obj) => {
@@ -1410,6 +1414,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         contextObject['Program:exit'] = () => {
           ruleConfig.exit({
             context,
+            settings,
             state,
           });
         };

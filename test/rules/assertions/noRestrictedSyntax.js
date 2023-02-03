@@ -151,9 +151,32 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Rule `no-restricted-syntax` is missing a `context` option.',
+          message: 'Rule `no-restricted-syntax` is missing a `contexts` option.',
         },
       ],
+    },
+    {
+      code: `
+      /**
+       * @implements {Bar|Foo}
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Rule `no-restricted-syntax` is missing a `contexts` option.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          contexts: [
+            'FunctionDeclaration',
+          ],
+        },
+      },
     },
     {
       code: `

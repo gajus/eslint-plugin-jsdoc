@@ -508,6 +508,43 @@ function quux (foo) {
       ],
       options: [
         {
+          publicOnly: true,
+        },
+      ],
+      output: `
+          /**
+           *
+           */
+          export const test = () => {
+
+          };
+      `,
+      parserOptions: {
+        sourceType: 'module',
+      },
+      settings: {
+        jsdoc: {
+          contexts: [
+            'ArrowFunctionExpression',
+          ],
+        },
+      },
+    },
+    {
+      code: `
+          export const test = () => {
+
+          };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+          type: 'ArrowFunctionExpression',
+        },
+      ],
+      options: [
+        {
           contexts: [
             {
               context: 'ArrowFunctionExpression',

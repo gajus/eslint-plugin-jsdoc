@@ -462,6 +462,12 @@ values are objects with the following optional properties:
         name (`@throws Some text`); does not require that both exist but
         disallows just an empty tag.
 
+### `contexts`
+
+`settings.jsdoc.contexts` can be used as the default for any rules
+with a `contexts` property option. See the "AST and Selectors" section
+for more on this format.
+
 ## Advanced
 
 ### AST and Selectors

@@ -997,17 +997,16 @@ const parseClosureTemplateTag = (tag) => {
  *
  * @param {*} context
  * @param {DefaultContexts} defaultContexts
+ * @param settings
  * @returns {string[]}
  */
-const enforcedContexts = (context, defaultContexts) => {
-  const {
-    contexts = defaultContexts === true ? [
-      'ArrowFunctionExpression',
-      'FunctionDeclaration',
-      'FunctionExpression',
-      'TSDeclareFunction',
-    ] : defaultContexts,
-  } = context.options[0] || {};
+const enforcedContexts = (context, defaultContexts, settings) => {
+  const contexts = context.options[0]?.contexts || settings.contexts || (defaultContexts === true ? [
+    'ArrowFunctionExpression',
+    'FunctionDeclaration',
+    'FunctionExpression',
+    'TSDeclareFunction',
+  ] : defaultContexts);
 
   return contexts;
 };
