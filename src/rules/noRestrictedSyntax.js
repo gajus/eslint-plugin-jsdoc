@@ -11,7 +11,7 @@ export default iterateJsdoc(({
   report,
 }) => {
   if (!context.options.length) {
-    report('Rule `no-restricted-syntax` is missing a `context` option.');
+    report('Rule `no-restricted-syntax` is missing a `contexts` option.');
 
     return;
   }
@@ -94,4 +94,5 @@ export default iterateJsdoc(({
     ],
     type: 'suggestion',
   },
+  nonGlobalSettings: true,
 });

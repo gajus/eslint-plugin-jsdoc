@@ -59,9 +59,10 @@ export default iterateJsdoc(({
   contextSelected: true,
   exit ({
     context,
+    settings,
     state,
   }) {
-    if (!context.options.length) {
+    if (!context.options.length && !settings.contexts) {
       context.report({
         loc: {
           start: {
@@ -69,17 +70,16 @@ export default iterateJsdoc(({
             line: 1,
           },
         },
-        message: 'Rule `no-missing-syntax` is missing a `context` option.',
+        message: 'Rule `no-missing-syntax` is missing a `contexts` option.',
       });
 
       return;
     }
 
     setDefaults(state);
-
     const {
-      contexts,
-    } = context.options[0];
+      contexts = settings?.contexts,
+    } = context.options[0] || {};
 
     // Report when MISSING
     contexts.some((cntxt) => {

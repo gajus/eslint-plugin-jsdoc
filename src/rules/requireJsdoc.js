@@ -162,10 +162,10 @@ const getOption = (context, baseObject, option, key) => {
   return baseObject.properties[key].default;
 };
 
-const getOptions = (context) => {
+const getOptions = (context, settings) => {
   const {
     publicOnly,
-    contexts = [],
+    contexts = settings.contexts || [],
     exemptEmptyConstructors = true,
     exemptEmptyFunctions = false,
     enableFixer = true,
@@ -222,7 +222,7 @@ export default {
       enableFixer,
       fixerMessage,
       minLineCount,
-    } = getOptions(context);
+    } = getOptions(context, settings);
 
     const checkJsDoc = (info, handler, node) => {
       if (
@@ -363,7 +363,7 @@ export default {
 
     return {
       ...jsdocUtils.getContextObject(
-        jsdocUtils.enforcedContexts(context, []),
+        jsdocUtils.enforcedContexts(context, [], settings),
         checkJsDoc,
       ),
       ArrowFunctionExpression (node) {

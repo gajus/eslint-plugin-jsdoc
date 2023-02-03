@@ -21,6 +21,7 @@ JSDoc linting rules for ESLint.
         * [`@override`/`@augments`/`@extends`/`@implements`/`@ignore` Without Accompanying `@param`/`@description`/`@example`/`@returns`/`@throws`/`@yields`](#user-content-eslint-plugin-jsdoc-settings-override-augments-extends-implements-ignore-without-accompanying-param-description-example-returns-throws-yields)
         * [Settings to Configure `check-types` and `no-undefined-types`](#user-content-eslint-plugin-jsdoc-settings-settings-to-configure-check-types-and-no-undefined-types)
         * [`structuredTags`](#user-content-eslint-plugin-jsdoc-settings-structuredtags)
+        * [`contexts`](#user-content-eslint-plugin-jsdoc-settings-contexts)
     * [Advanced](#user-content-eslint-plugin-jsdoc-advanced)
         * [AST and Selectors](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
     * [Rules](#user-content-eslint-plugin-jsdoc-rules)
@@ -552,6 +553,14 @@ values are objects with the following optional properties:
     - `"typeOrName"` - Must have either type (e.g., `@throws {aType}`) or
         name (`@throws Some text`); does not require that both exist but
         disallows just an empty tag.
+
+<a name="user-content-eslint-plugin-jsdoc-settings-contexts"></a>
+<a name="eslint-plugin-jsdoc-settings-contexts"></a>
+### <code>contexts</code>
+
+`settings.jsdoc.contexts` can be used as the default for any rules
+with a `contexts` property option. See the "AST and Selectors" section
+for more on this format.
 
 <a name="user-content-eslint-plugin-jsdoc-advanced"></a>
 <a name="eslint-plugin-jsdoc-advanced"></a>
@@ -6756,8 +6765,8 @@ function is adhering.
 <a name="eslint-plugin-jsdoc-rules-implements-on-classes-options-10"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-implements-on-classes-options-10-contexts"></a>
-<a name="eslint-plugin-jsdoc-rules-implements-on-classes-options-10-contexts"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-implements-on-classes-options-10-contexts-1"></a>
+<a name="eslint-plugin-jsdoc-rules-implements-on-classes-options-10-contexts-1"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -7091,8 +7100,8 @@ You may also provide an object with `message`:
 }
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-11-contexts-1"></a>
-<a name="eslint-plugin-jsdoc-rules-match-description-options-11-contexts-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-11-contexts-2"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-11-contexts-2"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -8922,8 +8931,8 @@ the presence of ES6 default parameters (bearing in mind that such
 "defaults" are only applied when the supplied value is missing or
 `undefined` but not for `null` or other "falsey" values).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-defaults-options-16-contexts-2"></a>
-<a name="eslint-plugin-jsdoc-rules-no-defaults-options-16-contexts-2"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-defaults-options-16-contexts-3"></a>
+<a name="eslint-plugin-jsdoc-rules-no-defaults-options-16-contexts-3"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -9113,8 +9122,8 @@ not report if there were only a function declaration of the name "ignoreMe"
 <a name="eslint-plugin-jsdoc-rules-no-missing-syntax-options-17"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-missing-syntax-options-17-contexts-3"></a>
-<a name="eslint-plugin-jsdoc-rules-no-missing-syntax-options-17-contexts-3"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-missing-syntax-options-17-contexts-4"></a>
+<a name="eslint-plugin-jsdoc-rules-no-missing-syntax-options-17-contexts-4"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -9152,6 +9161,15 @@ function quux () {
 
 }
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration"}]}]
+// Message: Syntax is required: FunctionDeclaration with JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration"}]}}
 // Message: Syntax is required: FunctionDeclaration with JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))
 
 /**
@@ -9206,7 +9224,7 @@ function quux () {
 function quux () {
 
 }
-// Message: Rule `no-missing-syntax` is missing a `context` option.
+// Message: Rule `no-missing-syntax` is missing a `contexts` option.
 
 /**
  * @implements {Bar|Foo}
@@ -9590,8 +9608,8 @@ is designed to do), you can just use ESLint's rule.
 <a name="eslint-plugin-jsdoc-rules-no-restricted-syntax-options-19"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-restricted-syntax-options-19-contexts-4"></a>
-<a name="eslint-plugin-jsdoc-rules-no-restricted-syntax-options-19-contexts-4"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-restricted-syntax-options-19-contexts-5"></a>
+<a name="eslint-plugin-jsdoc-rules-no-restricted-syntax-options-19-contexts-5"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -9669,7 +9687,16 @@ function quux () {
 function quux () {
 
 }
-// Message: Rule `no-restricted-syntax` is missing a `context` option.
+// Message: Rule `no-restricted-syntax` is missing a `contexts` option.
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"contexts":["FunctionDeclaration"]}}
+// Message: Rule `no-restricted-syntax` is missing a `contexts` option.
 
 /**
  * @param opt_a
@@ -9911,8 +9938,8 @@ the type information would be redundant with TypeScript.
 <a name="eslint-plugin-jsdoc-rules-no-types-options-20"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-types-options-20-contexts-5"></a>
-<a name="eslint-plugin-jsdoc-rules-no-types-options-20-contexts-5"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-types-options-20-contexts-6"></a>
+<a name="eslint-plugin-jsdoc-rules-no-types-options-20-contexts-6"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -11925,6 +11952,16 @@ class quux {
 /**
  *
  */
+class quux {
+
+}
+// Settings: {"jsdoc":{"contexts":["ClassDeclaration"]}}
+// "jsdoc/require-description": ["error"|"warn", {"descriptionStyle":"tag"}]
+// Message: Missing JSDoc @description declaration.
+
+/**
+ *
+ */
 // "jsdoc/require-description": ["error"|"warn", {"contexts":["any"],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
 
@@ -12406,8 +12443,8 @@ exemption of the rule.
 Boolean to indicate that no-argument functions should not be reported for
 missing `@example` declarations.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-contexts-6"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-options-25-contexts-6"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-contexts-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-25-contexts-7"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -13311,8 +13348,8 @@ An object with the following optional boolean keys which all default to
 - `FunctionExpression`
 - `MethodDefinition`
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-contexts-7"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-contexts-7"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-contexts-8"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-contexts-8"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings or objects representing the additional AST
@@ -13508,6 +13545,13 @@ export const test = () => {
 
 };
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ArrowFunctionExpression"],"publicOnly":true}]
+// Message: Missing JSDoc comment.
+
+export const test = () => {
+
+};
+// Settings: {"jsdoc":{"contexts":["ArrowFunctionExpression"]}}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true}]
 // Message: Missing JSDoc comment.
 
 export const test = () => {
@@ -15091,8 +15135,8 @@ string. Defaults to `false`.
 The description string to set by default for destructured roots. Defaults to
 "The root object".
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29-contexts-8"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-29-contexts-8"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29-contexts-9"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-29-contexts-9"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -15289,8 +15333,8 @@ Requires that all function parameters have names.
 <a name="eslint-plugin-jsdoc-rules-require-param-name-options-30"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-name-options-30-contexts-9"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-name-options-30-contexts-9"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-name-options-30-contexts-10"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-30-contexts-10"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -15449,8 +15493,8 @@ object. Uses `defaultDestructuredRootType` for the type string. Defaults to
 
 The type string to set by default for destructured roots. Defaults to "object".
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-31-contexts-10"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-31-contexts-10"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-31-contexts-11"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-31-contexts-11"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -15977,8 +16021,8 @@ You could set this regular expression to a more expansive list, or you
 could restrict it such that even types matching those strings would not
 need destructuring.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-contexts-11"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-contexts-11"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-contexts-12"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-32-contexts-12"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -18746,8 +18790,8 @@ or if it is `Promise<void>` or `Promise<undefined>`.
 <a name="eslint-plugin-jsdoc-rules-require-returns-description-options-34"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-description-options-34-contexts-12"></a>
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-34-contexts-12"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-description-options-34-contexts-13"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-34-contexts-13"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -18905,8 +18949,8 @@ Requires that `@returns` tag has `type` value.
 <a name="eslint-plugin-jsdoc-rules-require-returns-type-options-35"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-type-options-35-contexts-13"></a>
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-35-contexts-13"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-type-options-35-contexts-14"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-35-contexts-14"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with

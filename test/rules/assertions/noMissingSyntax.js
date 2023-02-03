@@ -43,6 +43,33 @@ export default {
             'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
         },
       ],
+      settings: {
+        jsdoc: {
+          contexts: [
+            {
+              comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @implements {Bar|Foo}
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Syntax is required: FunctionDeclaration with ' +
+            'JsdocBlock[postDelimiter=""]:has(JsdocTypeUnion > JsdocTypeName[value="Foo"]:nth-child(1))',
+        },
+      ],
       options: [
         {
           contexts: [
@@ -186,7 +213,7 @@ export default {
       errors: [
         {
           line: 1,
-          message: 'Rule `no-missing-syntax` is missing a `context` option.',
+          message: 'Rule `no-missing-syntax` is missing a `contexts` option.',
         },
       ],
     },
