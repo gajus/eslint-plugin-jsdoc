@@ -1909,5 +1909,14 @@ export default {
         'always',
       ],
     },
+    {
+      code: `
+      /**
+       * @param {string|string[]|TemplateResult|TemplateResult[]} event.detail.description -
+       *    Notification description
+       */
+      function quux () {}
+      `,
+    },
   ],
 };

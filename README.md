@@ -2864,6 +2864,12 @@ const fn = ( lorem, sit ) => {};
  */
 const fn = ( a, b ) => {};
 // "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+
+/**
+ * @param {string|string[]|TemplateResult|TemplateResult[]} event.detail.description -
+ *    Notification description
+ */
+function quux () {}
 ````
 
 
