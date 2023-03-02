@@ -3,12 +3,16 @@ import {
   ESLint,
   RuleTester,
 } from 'eslint';
+import pkg from 'eslint/use-at-your-own-risk';
 import defaultsDeep from 'lodash.defaultsdeep';
 import semver from 'semver';
 import config from '../../src';
 import ruleNames from './ruleNames.json';
 
 const ruleTester = new RuleTester();
+const {
+  FlatRuleTester,
+} = pkg;
 
 const main = async () => {
   for (const ruleName of process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : ruleNames) {
@@ -115,6 +119,25 @@ const main = async () => {
     }
 
     ruleTester.run(ruleName, rule, assertions);
+  }
+
+  // Catch syntax errors
+  let flatRuleNames;
+  try {
+    flatRuleNames = (await import('./assertions/flatConfig.js')).default;
+  } catch (error) {
+    // eslint-disable-next-line no-console -- Reporting back to tester
+    console.error(error);
+    return;
+  }
+
+  const fakeRuleTester = new FlatRuleTester();
+  for (const [
+    ruleName,
+    assertions,
+  ] of Object.entries(flatRuleNames)) {
+    const rule = config.rules[ruleName];
+    fakeRuleTester.run(ruleName, rule, assertions);
   }
 };
 

@@ -872,7 +872,12 @@ const getSettings = (context) => {
 
     // Many rules, e.g., `check-tag-names`
     mode: context.settings.jsdoc?.mode ??
-      (context.parserPath.includes('@typescript-eslint') ? 'typescript' : 'jsdoc'),
+      (context.parserPath?.includes('@typescript-eslint') ?
+        // Todo: Waiting for TS parser to label itself:
+        // https://github.com/eslint/eslint/pull/16944
+        // https://github.com/typescript-eslint/typescript-eslint/issues/6541
+        // || context.languageOptions?.parser?.meta?.name?.includes('typescript') ?
+        'typescript' : 'jsdoc'),
 
     // Many rules
     contexts: context.settings.jsdoc?.contexts,
