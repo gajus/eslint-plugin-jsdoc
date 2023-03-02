@@ -49,7 +49,9 @@ const formatCodeSnippet = (setup, ruleName) => {
 };
 
 const getAssertions = () => {
-  const assertionFiles = glob.sync(path.resolve(__dirname, '../../test/rules/assertions/*.js').replaceAll('\\', '/'));
+  const assertionFiles = glob.sync(path.resolve(__dirname, '../../test/rules/assertions/*.js').replaceAll('\\', '/')).filter((file) => {
+    return !file.includes('flatConfig');
+  });
 
   const assertionNames = assertionFiles.map((filePath) => {
     return path.basename(filePath, '.js');
