@@ -10,5 +10,6 @@ module.exports = {
 
     // Todo[engine:node@>=16]: Requires Node 16
     'eslint-config-canonical',
+    'glob',
   ],
 };
