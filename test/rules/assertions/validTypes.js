@@ -1717,5 +1717,22 @@ export default {
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @param {typeof obj["level1"]["level2"]} foo
+           * @param {Parameters<testFunc>[0]} ghi
+           * @param {{[key: string]: string}} hjk
+           */
+          function quux() {
+
+          }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
   ],
 };

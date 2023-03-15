@@ -23617,6 +23617,16 @@ function assign(employees) {
   // ...
 }
 // "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":true,"checkSeesForNamepaths":false}]
+
+/**
+ * @param {typeof obj["level1"]["level2"]} foo
+ * @param {Parameters<testFunc>[0]} ghi
+ * @param {{[key: string]: string}} hjk
+ */
+function quux() {
+
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
 ````
 
 
