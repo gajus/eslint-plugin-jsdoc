@@ -105,21 +105,8 @@ const index = {
   },
 };
 
-for (const [
-  config,
-  warnOrError,
-] of [
-    [
-      'recommended',
-      'warn',
-    ],
-    [
-      'recommended-error',
-      'error',
-    ],
-  ]
-) {
-  index.configs[config] = {
+const createRecommendedRuleset = (warnOrError) => {
+  return {
     plugins: [
       'jsdoc',
     ],
@@ -176,6 +163,26 @@ for (const [
       'jsdoc/valid-types': warnOrError,
     },
   };
-}
+};
+
+const createRecommendedTypeScriptRuleset = (warnOrError) => {
+  const ruleset = createRecommendedRuleset(warnOrError);
+
+  return {
+    ...ruleset,
+    rules: {
+      ...ruleset.rules,
+      'jsdoc/no-types': warnOrError,
+      'jsdoc/require-param-type': 'off',
+      'jsdoc/require-property-type': 'off',
+      'jsdoc/require-returns-type': 'off',
+    },
+  };
+};
+
+index.configs.recommended = createRecommendedRuleset('warn');
+index.configs['recommended-error'] = createRecommendedRuleset('error');
+index.configs['recommended-typescript'] = createRecommendedTypeScriptRuleset('warn');
+index.configs['recommended-typescript-error'] = createRecommendedTypeScriptRuleset('error');
 
 export default index;
