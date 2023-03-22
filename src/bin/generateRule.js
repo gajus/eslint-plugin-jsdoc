@@ -4,7 +4,7 @@
  * @example
  *
  * ```shell
- * npm run create-rule my-new-rule --recommended
+ * npm run create-rule my-new-rule -- --recommended
  * ```
  */
 
@@ -217,8 +217,8 @@ export default iterateJsdoc(({
 
   await replaceInOrder({
     checkName: 'index recommended',
-    newLine: `${' '.repeat(8)}'jsdoc/${ruleName}': '${recommended ? 'warn' : 'off'}',`,
-    oldRegex: /\n\s{8}'jsdoc\/(?<oldRule>[^']*)': '[^']*',/gu,
+    newLine: `${' '.repeat(6)}'jsdoc/${ruleName}': ${recommended ? 'warnOrError' : '\'off\''},`,
+    oldRegex: /\n\s{6}'jsdoc\/(?<oldRule>[^']*)': .*?,/gu,
     path: './src/index.js',
   });
 
