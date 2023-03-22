@@ -172,10 +172,12 @@ const createRecommendedTypeScriptRuleset = (warnOrError) => {
     ...ruleset,
     rules: {
       ...ruleset.rules,
-      'jsdoc/no-types': warnOrError,
-      'jsdoc/require-param-type': 'off',
-      'jsdoc/require-property-type': 'off',
-      'jsdoc/require-returns-type': 'off',
+      /* eslint-disable indent -- Extra indent to avoid use by auto-rule-editing */
+        'jsdoc/no-types': warnOrError,
+        'jsdoc/require-param-type': 'off',
+        'jsdoc/require-property-type': 'off',
+        'jsdoc/require-returns-type': 'off',
+      /* eslint-enable indent */
     },
   };
 };
