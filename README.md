@@ -4501,6 +4501,64 @@ jsxRuntime
 
 For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).
 
+<a name="user-content-eslint-plugin-jsdoc-rules-check-tag-names-typed"></a>
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-typed"></a>
+#### <code>typed</code>
+
+If this is set to `true`, additionally checks for tag names that are redundant when using a type checker such as TypeScript.
+
+These tags are always unnecessary when using TypeScript or similar:
+
+```
+augments
+callback
+class
+enum
+implements
+private
+property
+protected
+public
+readonly
+this
+type
+typedef
+```
+
+These tags are unnecessary except when inside a TypeScript `declare` context:
+
+```
+abstract
+access
+class
+constant
+constructs
+default
+enum
+export
+exports
+function
+global
+inherits
+instance
+interface
+member
+memberof
+memberOf
+method
+mixes
+mixin
+module
+name
+namespace
+override
+property
+requires
+static
+this
+```
+
+Additionally, for `@param` and `@return` tags, the rule will flag unnecessary type descriptions (e.g. `@param {string}`).
 
 |||
 |---|---|
@@ -4513,6 +4571,52 @@ For more information, see the [babel documentation](https://babeljs.io/docs/en/b
 The following patterns are considered problems:
 
 ````js
+/** @type {string} */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/** @abstract */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@abstract' is generally redundant outside of `declare` contexts when using a type system.
+
+const a = {
+  /** @abstract */
+  b: true,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@abstract' is generally redundant outside of `declare` contexts when using a type system.
+
+/** @template */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@template' without a name is redundant when using a type system.
+
+/**
+ * Prior description.
+ *  
+ * @template
+ */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@template' without a name is redundant when using a type system.
+
+/** @param {string} */
+function takesOne(param) {}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@param' without a description is redundant when using a type system.
+
+/** @param {boolean} param */
+function takesOne(param) {}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@param' without a description is redundant when using a type system.
+
+/** @param {boolean} param - takes description */
+function takesOne(param) {}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: Describing the type of '@param' is redundant when using a type system.
+
 /** @typoo {string} */
 let a;
 // Message: Invalid JSDoc tag name "typoo".
@@ -4869,6 +4973,36 @@ function Test() {
 The following patterns are not considered problems:
 
 ````js
+/** @abstract */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @abstract */
+declare let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @abstract */
+{ declare let a; }
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+function test() {
+  /** @abstract */
+  declare let a;
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @abstract - default */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @template name */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["template"],"typed":true}]
+
+/** @param param - takes information */
+function takesOne(param) {}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
 /**
  * @param foo
  */

@@ -26,6 +26,148 @@ export default {
   invalid: [
     {
       code: `
+        /** @type {string} */
+        let a;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '\'@type\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @abstract */
+        let a;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '\'@abstract\' is generally redundant outside of `declare` contexts when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        const a = {
+          /** @abstract */
+          b: true,
+        };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '\'@abstract\' is generally redundant outside of `declare` contexts when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @template */
+        let a;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '\'@template\' without a name is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Prior description.
+         *  
+         * @template
+         */
+        let a;
+      `,
+      errors: [
+        {
+          line: 5,
+          message: '\'@template\' without a name is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @param {string} */
+        function takesOne(param) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '\'@param\' without a description is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @param {boolean} param */
+        function takesOne(param) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '\'@param\' without a description is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @param {boolean} param - takes description */
+        function takesOne(param) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Describing the type of \'@param\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
         /** @typoo {string} */
         let a;
       `,
@@ -674,6 +816,95 @@ export default {
     },
   ],
   valid: [
+    {
+      code: `
+        /** @abstract */
+        let a;
+      `,
+      filename: 'file.d.ts',
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @abstract */
+        declare let a;
+      `,
+      filename: 'file.d.ts',
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        /** @abstract */
+        { declare let a; }
+      `,
+      filename: 'file.d.ts',
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        function test() {
+          /** @abstract */
+          declare let a;
+        }
+      `,
+      filename: 'file.d.ts',
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        /** @abstract - default */
+        let a;
+      `,
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @template name */
+        let a;
+      `,
+      options: [
+        {
+          definedTags: [
+            'template',
+          ],
+          typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @param param - takes information */
+        function takesOne(param) {}
+      `,
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
     {
       code: `
           /**

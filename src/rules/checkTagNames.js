@@ -9,18 +9,74 @@ const jsxTagNames = new Set([
   'jsxRuntime',
 ]);
 
+const typedTagsAlwaysUnnecessary = new Set([
+  'augments',
+  'callback',
+  'class',
+  'enum',
+  'implements',
+  'private',
+  'property',
+  'protected',
+  'public',
+  'readonly',
+  'this',
+  'type',
+  'typedef',
+]);
+
+const typedTagsUnnecessaryOutsideDeclare = new Set([
+  'abstract',
+  'access',
+  'class',
+  'constant',
+  'constructs',
+  'default',
+  'enum',
+  'export',
+  'exports',
+  'function',
+  'global',
+  'inherits',
+  'instance',
+  'interface',
+  'member',
+  'memberof',
+  'memberOf',
+  'method',
+  'mixes',
+  'mixin',
+  'module',
+  'name',
+  'namespace',
+  'override',
+  'property',
+  'requires',
+  'static',
+  'this',
+]);
+
+const typedTagsParamReturn = new Set([
+  'param',
+  'parameter',
+  'return',
+  'returns',
+]);
+
 export default iterateJsdoc(({
   sourceCode,
   jsdoc,
   report,
   utils,
   context,
+  node,
   settings,
   jsdocNode,
 }) => {
   const {
     definedTags = [],
     jsxTags,
+    typed,
   } = context.options[0] || {};
 
   let definedPreferredTags = [];
@@ -54,9 +110,80 @@ export default iterateJsdoc(({
       });
   }
 
+  const isInAmbientContext = (subNode) => {
+    return subNode.type === 'Program' ?
+      context.getFilename().endsWith('.d.ts') :
+      Boolean(subNode.declare) || isInAmbientContext(subNode.parent);
+  };
+
+  const tagIsRedundantWhenTyped = (jsdocTag) => {
+    if (!typedTagsUnnecessaryOutsideDeclare.has(jsdocTag.tag)) {
+      return false;
+    }
+
+    if (jsdocTag.description.trim() === 'default' || jsdocTag.name === 'default') {
+      return false;
+    }
+
+    if (context.getFilename().endsWith('.d.ts') && node.parent.type === 'Program') {
+      return false;
+    }
+
+    if (isInAmbientContext(node)) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const tagRedundantlyChecksParamOrReturnTyped = (jsdocTag) => {
+    if (!typedTagsParamReturn.has(jsdocTag.tag)) {
+      return false;
+    }
+
+    if (!jsdocTag.description) {
+      report(`'@${jsdocTag.tag}' without a description is redundant when using a type system.`, null, jsdocTag);
+      return true;
+    }
+
+    if (jsdocTag.type) {
+      report(`Describing the type of '@${jsdocTag.tag}' is redundant when using a type system.`, null, jsdocTag);
+      return true;
+    }
+
+    return false;
+  };
+
+  const checkTagForTypedValidity = (jsdocTag) => {
+    if (typedTagsAlwaysUnnecessary.has(jsdocTag.tag)) {
+      report(`'@${jsdocTag.tag}' is redundant when using a type system.`, null, jsdocTag);
+      return true;
+    }
+
+    if (tagIsRedundantWhenTyped(jsdocTag)) {
+      report(`'@${jsdocTag.tag}' is generally redundant outside of \`declare\` contexts when using a type system.`, null, jsdocTag);
+      return true;
+    }
+
+    if (jsdocTag.tag === 'template' && !jsdocTag.name) {
+      report('\'@template\' without a name is redundant when using a type system.', null, jsdocTag);
+      return true;
+    }
+
+    if (tagRedundantlyChecksParamOrReturnTyped(jsdocTag)) {
+      return true;
+    }
+
+    return false;
+  };
+
   for (const jsdocTag of jsdoc.tags) {
     const tagName = jsdocTag.tag;
     if (jsxTags && jsxTagNames.has(tagName)) {
+      continue;
+    }
+
+    if (typed && checkTagForTypedValidity(jsdocTag)) {
       continue;
     }
 
@@ -118,6 +245,9 @@ export default iterateJsdoc(({
             type: 'array',
           },
           jsxTags: {
+            type: 'boolean',
+          },
+          typed: {
             type: 'boolean',
           },
         },
