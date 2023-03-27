@@ -12,6 +12,7 @@
   "check-values",
   "empty-tags",
   "implements-on-classes",
+  "informative-docs",
   "match-description",
   "match-name",
   "multiline-blocks",
