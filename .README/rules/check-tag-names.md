@@ -200,6 +200,62 @@ jsxRuntime
 
 For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).
 
+#### `typed`
+
+If this is set to `true`, additionally checks for tag names that are redundant when using a type checker such as TypeScript.
+
+These tags are always unnecessary when using TypeScript or similar:
+
+```
+augments
+callback
+class
+enum
+implements
+private
+property
+protected
+public
+readonly
+this
+type
+typedef
+```
+
+These tags are unnecessary except when inside a TypeScript `declare` context:
+
+```
+abstract
+access
+class
+constant
+constructs
+default
+enum
+export
+exports
+function
+global
+inherits
+instance
+interface
+member
+memberof
+memberOf
+method
+mixes
+mixin
+module
+name
+namespace
+override
+property
+requires
+static
+this
+```
+
+Additionally, for `@param` and `@return` tags, the rule will flag unnecessary type descriptions (e.g. `@param {string}`).
 
 |||
 |---|---|
