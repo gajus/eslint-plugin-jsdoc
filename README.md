@@ -38,6 +38,7 @@ JSDoc linting rules for ESLint.
         * [`check-values`](#user-content-eslint-plugin-jsdoc-rules-check-values)
         * [`empty-tags`](#user-content-eslint-plugin-jsdoc-rules-empty-tags)
         * [`implements-on-classes`](#user-content-eslint-plugin-jsdoc-rules-implements-on-classes)
+        * [`informative-docs`](#user-content-eslint-plugin-jsdoc-rules-informative-docs)
         * [`match-description`](#user-content-eslint-plugin-jsdoc-rules-match-description)
         * [`match-name`](#user-content-eslint-plugin-jsdoc-rules-match-name)
         * [`multiline-blocks`](#user-content-eslint-plugin-jsdoc-rules-multiline-blocks)
@@ -7279,6 +7280,378 @@ function quux () {
 ````
 
 
+<a name="user-content-eslint-plugin-jsdoc-rules-informative-docs"></a>
+<a name="eslint-plugin-jsdoc-rules-informative-docs"></a>
+### <code>informative-docs</code>
+
+Reports on JSDoc texts that serve only to restart their attached name.
+
+Devs sometimes write JSDoc descriptions that add no additional information just to fill out the doc:
+
+```js
+/** The user id. */
+let userId;
+```
+
+Those "uninformative" docs comments take up space without being helpful.
+This rule requires all docs comments contain at least one word not already in the code.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-informative-docs-options-11"></a>
+<a name="eslint-plugin-jsdoc-rules-informative-docs-options-11"></a>
+#### Options
+
+<a name="user-content-eslint-plugin-jsdoc-rules-informative-docs-aliases"></a>
+<a name="eslint-plugin-jsdoc-rules-informative-docs-aliases"></a>
+#### <code>aliases</code>
+
+The `aliases` option allows indicating words as synonyms (aliases) of each other.
+
+For example, with `{ aliases: { emoji: ["smiley", "winkey"] } }`, the following comment would be considered uninformative:
+
+```js
+/** A smiley/winkey. */
+let emoji;
+```
+
+The default `aliases` option is:
+
+```json
+{
+  "a": ["an", "our"]
+}
+```
+
+<a name="user-content-eslint-plugin-jsdoc-rules-informative-docs-uselesswords"></a>
+<a name="eslint-plugin-jsdoc-rules-informative-docs-uselesswords"></a>
+#### <code>uselessWords</code>
+
+Words that are ignored when searching for one that adds meaning.
+
+For example, with `{ uselessWords: ["our"] }`, the following comment would be considered uninformative:
+
+```js
+/** Our text. */
+let text;
+```
+
+The default `uselessWords` option is:
+
+```json
+["a", "an", "i", "in", "of", "s", "the"]
+```
+
+|||
+|---|---|
+|Context|everywhere|
+|Tags|any|
+|Recommended|false|
+|Settings||
+|Options|`aliases`, `uselessWords`|
+
+The following patterns are considered problems:
+
+````js
+/** the  */
+let myValue = 3;
+// Message: This description only repeats the name it describes.
+
+/** The user id. */
+let userId: string;
+// Message: This description only repeats the name it describes.
+
+/** the my value */
+let myValue = 3;
+// Message: This description only repeats the name it describes.
+
+/** value **/
+let myValue,
+  count = 3;
+// Message: This description only repeats the name it describes.
+
+let myValue,
+  /** count **/
+  count = 3;
+// Message: This description only repeats the name it describes.
+
+/**
+ * the foo.
+ */
+function foo() {}
+// Message: This description only repeats the name it describes.
+
+/**
+ * the value foo.
+ */
+const value = function foo() {}
+// Message: This description only repeats the name it describes.
+
+const value = {
+  /**
+   * the  prop.
+   */
+  prop: true,
+}
+// Message: This description only repeats the name it describes.
+
+/**
+ * name
+ */
+class Name {}
+// Message: This description only repeats the name it describes.
+
+/**
+ * abc def
+ */
+const abc = class Def {}
+// Message: This description only repeats the name it describes.
+
+class Abc {
+  /** the abc def! */
+  def;
+}
+// Message: This description only repeats the name it describes.
+
+const _ = class Abc {
+  /** the abc def! */
+  def;
+}
+// Message: This description only repeats the name it describes.
+
+class Abc {
+  /** the abc def! */
+  def() {};
+}
+// Message: This description only repeats the name it describes.
+
+class Abc {
+  /** def */
+  accessor def;
+}
+// Message: This description only repeats the name it describes.
+
+class Abc {
+  /** def */
+  def() {}
+}
+// Message: This description only repeats the name it describes.
+
+class Abc {
+  /** def */
+  abstract accessor def;
+}
+// Message: This description only repeats the name it describes.
+
+class Abc {
+  /** def */
+  abstract def();
+}
+// Message: This description only repeats the name it describes.
+
+class Abc {
+  /** def */
+  abstract def;
+}
+// Message: This description only repeats the name it describes.
+
+/** abc */
+namespace Abc {}
+// Message: This description only repeats the name it describes.
+
+class Abc {
+  /** def */
+  def();
+  def() {}
+}
+// Message: This description only repeats the name it describes.
+
+/** abc */
+declare function abc();
+// Message: This description only repeats the name it describes.
+
+/** abc */
+enum Abc {}
+// Message: This description only repeats the name it describes.
+
+enum Abc {
+  /** def */
+  def,
+}
+// Message: This description only repeats the name it describes.
+
+/** def */
+interface Def {}
+// Message: This description only repeats the name it describes.
+
+/** def */
+type Def = {};
+// Message: This description only repeats the name it describes.
+
+/**
+ * count
+ *
+ * @description the value
+ */
+let value = 3;
+// Message: This tag description only repeats the name it describes.
+
+/** @param {number} param - the param */
+function takesOne(param) {}
+// Message: This tag description only repeats the name it describes.
+
+/** @other param - takes one */
+function takesOne(param) {}
+// Message: This tag description only repeats the name it describes.
+
+/**
+ * takes one
+ * @other param - takes one
+ */
+function takesOne(param) {}
+// Message: This description only repeats the name it describes.
+
+/**
+ * - takes one
+ * @other param - takes one
+ */
+function takesOne(param) {}
+// Message: This description only repeats the name it describes.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**   */
+let myValue = 3;
+
+/** count */
+let myValue = 3;
+
+/** Informative info user id. */
+let userId: string;
+
+let myValue,
+  /** count value **/
+  count = 3;
+
+/**
+ * Does X Y Z work.
+ */
+function foo() {}
+
+const value = {
+  /**
+   * the truthiness of the prop.
+   */
+  prop: true,
+}
+
+const value = {
+  /**
+   * the truthiness of the prop.
+   */
+  ['prop']: true,
+}
+
+/**
+ * abc def ghi
+ */
+const abc = function def() {}
+
+/**
+ * name extra
+ */
+class Name {}
+
+/**
+ * abc name extra
+ */
+const abc = class Name {}
+
+class Abc {
+  /** ghi */
+  def;
+}
+
+class Abc {
+  /** ghi */
+  accessor def;
+}
+
+class Abc {
+  /** ghi */
+  def() {}
+}
+
+class Abc {
+  /** ghi */
+  abstract accessor def;
+}
+
+class Abc {
+  /** ghi */
+  abstract def();
+}
+
+class Abc {
+  /** ghi */
+  abstract def;
+}
+
+/** abc */
+namespace Def {}
+
+class Abc {
+  /** ghi */
+  def();
+  def() {}
+}
+
+/** abc */
+declare function def();
+
+/** abc */
+enum Def {}
+
+enum Abc {
+  /** def */
+  ghi,
+}
+
+/** abc */
+interface Def {}
+
+/** abc */
+type Def = {};
+
+/** abc */
+type Def = {};
+
+/**
+ * count
+ *
+ * @description increment value
+ */
+let value = 3;
+
+/**
+ * count
+ *
+ * @unknownTag - increment value
+ */
+let value = 3;
+
+/**
+ * @other param - takes one two
+ */
+function takesOne(param) {}
+
+/**
+ * takes abc param
+ */
+function takesOne(param) {}
+````
+
+
 <a name="user-content-eslint-plugin-jsdoc-rules-match-description"></a>
 <a name="eslint-plugin-jsdoc-rules-match-description"></a>
 ### <code>match-description</code>
@@ -7307,12 +7680,12 @@ case-insensitive unless one opts in to add the `i` flag.
 You can add the `s` flag if you want `.` to match newlines. Note, however,
 that the trailing newlines of a description will not be matched.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-11"></a>
-<a name="eslint-plugin-jsdoc-rules-match-description-options-11"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-12"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-12"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-11-matchdescription"></a>
-<a name="eslint-plugin-jsdoc-rules-match-description-options-11-matchdescription"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-12-matchdescription"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-12-matchdescription"></a>
 ##### <code>matchDescription</code>
 
 You can supply your own expression to override the default, passing a
@@ -7324,8 +7697,8 @@ You can supply your own expression to override the default, passing a
 }
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-11-message"></a>
-<a name="eslint-plugin-jsdoc-rules-match-description-options-11-message"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-12-message"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-12-message"></a>
 ##### <code>message</code>
 
 You may provide a custom default message by using the following format:
@@ -7341,8 +7714,8 @@ You may provide a custom default message by using the following format:
 This can be overridden per tag or for the main block description by setting
 `message` within `tags` or `mainDescription`, respectively.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-11-tags-2"></a>
-<a name="eslint-plugin-jsdoc-rules-match-description-options-11-tags-2"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-12-tags-2"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-12-tags-2"></a>
 ##### <code>tags</code>
 
 If you want different regular expressions to apply to tags, you may use
@@ -7391,8 +7764,8 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-11-maindescription"></a>
-<a name="eslint-plugin-jsdoc-rules-match-description-options-11-maindescription"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-12-maindescription"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-12-maindescription"></a>
 ##### <code>mainDescription</code>
 
 If you wish to override the main block description without changing the
@@ -7432,8 +7805,8 @@ You may also provide an object with `message`:
 }
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-11-contexts-2"></a>
-<a name="eslint-plugin-jsdoc-rules-match-description-options-11-contexts-2"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-match-description-options-12-contexts-2"></a>
+<a name="eslint-plugin-jsdoc-rules-match-description-options-12-contexts-2"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -8253,14 +8626,14 @@ that tag).
 
 Will replace `disallowName` with `replacement` if these are provided.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-match-name-options-12"></a>
-<a name="eslint-plugin-jsdoc-rules-match-name-options-12"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-match-name-options-13"></a>
+<a name="eslint-plugin-jsdoc-rules-match-name-options-13"></a>
 #### Options
 
 A single options object with the following properties:
 
-<a name="user-content-eslint-plugin-jsdoc-rules-match-name-options-12-match"></a>
-<a name="eslint-plugin-jsdoc-rules-match-name-options-12-match"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-match-name-options-13-match"></a>
+<a name="eslint-plugin-jsdoc-rules-match-name-options-13-match"></a>
 ##### <code>match</code>
 
 `match` is a required option containing an array of objects which determine
@@ -8475,14 +8848,14 @@ all jsdoc blocks!
 
 Also allows for preventing text at the very beginning or very end of blocks.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-13"></a>
-<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-13"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-14"></a>
+<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-14"></a>
 #### Options
 
 A single options object with the following properties.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-13-nozerolinetext-defaults-to-true"></a>
-<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-13-nozerolinetext-defaults-to-true"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-14-nozerolinetext-defaults-to-true"></a>
+<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-14-nozerolinetext-defaults-to-true"></a>
 ##### <code>noZeroLineText</code> (defaults to <code>true</code>)
 
 For multiline blocks, any non-whitespace text immediately after the `/**` and
@@ -8490,8 +8863,8 @@ space will be reported. (Text after a newline is not reported.)
 
 `noMultilineBlocks` will have priority over this rule if it applies.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-13-nofinallinetext-defaults-to-true"></a>
-<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-13-nofinallinetext-defaults-to-true"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-14-nofinallinetext-defaults-to-true"></a>
+<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-14-nofinallinetext-defaults-to-true"></a>
 ##### <code>noFinalLineText</code> (defaults to <code>true</code>)
 
 For multiline blocks, any non-whitespace text preceding the `*/` on the final
@@ -8499,15 +8872,15 @@ line will be reported. (Text preceding a newline is not reported.)
 
 `noMultilineBlocks` will have priority over this rule if it applies.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-13-nosinglelineblocks-defaults-to-false"></a>
-<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-13-nosinglelineblocks-defaults-to-false"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-14-nosinglelineblocks-defaults-to-false"></a>
+<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-14-nosinglelineblocks-defaults-to-false"></a>
 ##### <code>noSingleLineBlocks</code> (defaults to <code>false</code>)
 
 If this is `true`, any single line blocks will be reported, except those which
 are whitelisted in `singleLineTags`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-13-singlelinetags-defaults-to-lends-type"></a>
-<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-13-singlelinetags-defaults-to-lends-type"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-14-singlelinetags-defaults-to-lends-type"></a>
+<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-14-singlelinetags-defaults-to-lends-type"></a>
 ##### <code>singleLineTags</code> (defaults to <code>[&#39;lends&#39;, &#39;type&#39;]</code>)
 
 An array of tags which can nevertheless be allowed as single line blocks when
@@ -8516,16 +8889,16 @@ cause all single line blocks to be reported. If `'*'` is present, then
 the presence of a tag will allow single line blocks (but not if a tag is
 missing).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-13-nomultilineblocks-defaults-to-false"></a>
-<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-13-nomultilineblocks-defaults-to-false"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-14-nomultilineblocks-defaults-to-false"></a>
+<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-14-nomultilineblocks-defaults-to-false"></a>
 ##### <code>noMultilineBlocks</code> (defaults to <code>false</code>)
 
 Requires that jsdoc blocks are restricted to single lines only unless impacted
 by the options `minimumLengthForMultiline`, `multilineTags`, or
 `allowMultipleTags`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-13-minimumlengthformultiline-defaults-to-not-being-in-effect"></a>
-<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-13-minimumlengthformultiline-defaults-to-not-being-in-effect"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-14-minimumlengthformultiline-defaults-to-not-being-in-effect"></a>
+<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-14-minimumlengthformultiline-defaults-to-not-being-in-effect"></a>
 ##### <code>minimumLengthForMultiline</code> (defaults to not being in effect)
 
 If `noMultilineBlocks` is set with this numeric option, multiline blocks will
@@ -8534,8 +8907,8 @@ be permitted if containing at least the given amount of text.
 If not set, multiline blocks will not be permitted regardless of length unless
 a relevant tag is present and `multilineTags` is set.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-13-multilinetags-defaults-to"></a>
-<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-13-multilinetags-defaults-to"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-14-multilinetags-defaults-to"></a>
+<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-14-multilinetags-defaults-to"></a>
 ##### <code>multilineTags</code> (defaults to <code>[&#39;*&#39;]</code>)
 
 If `noMultilineBlocks` is set with this option, multiline blocks may be allowed
@@ -8551,8 +8924,8 @@ such a tag will cause multiline blocks to be allowed.
 You may set this to an empty array to prevent any tag from permitting multiple
 lines.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-13-allowmultipletags-defaults-to-true"></a>
-<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-13-allowmultipletags-defaults-to-true"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-multiline-blocks-options-14-allowmultipletags-defaults-to-true"></a>
+<a name="eslint-plugin-jsdoc-rules-multiline-blocks-options-14-allowmultipletags-defaults-to-true"></a>
 ##### <code>allowMultipleTags</code> (defaults to <code>true</code>)
 
 If `noMultilineBlocks` is set to `true` with this option and multiple tags are
@@ -8845,8 +9218,8 @@ The following patterns are not considered problems:
 
 Enforces a consistent padding of the block description.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-newline-after-description-options-14"></a>
-<a name="eslint-plugin-jsdoc-rules-newline-after-description-options-14"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-newline-after-description-options-15"></a>
+<a name="eslint-plugin-jsdoc-rules-newline-after-description-options-15"></a>
 #### Options
 
 This rule allows one optional string argument. If it is `"always"` then a
@@ -9090,14 +9463,14 @@ asterisks, but which appear to be intended as jsdoc blocks due to the presence
 of whitespace followed by whitespace or asterisks, and
 an at-sign (`@`) and some non-whitespace (as with a jsdoc block tag).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-bad-blocks-options-15"></a>
-<a name="eslint-plugin-jsdoc-rules-no-bad-blocks-options-15"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-bad-blocks-options-16"></a>
+<a name="eslint-plugin-jsdoc-rules-no-bad-blocks-options-16"></a>
 #### Options
 
 Takes an optional options object with the following.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-bad-blocks-options-15-ignore"></a>
-<a name="eslint-plugin-jsdoc-rules-no-bad-blocks-options-15-ignore"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-bad-blocks-options-16-ignore"></a>
+<a name="eslint-plugin-jsdoc-rules-no-bad-blocks-options-16-ignore"></a>
 ##### <code>ignore</code>
 
 An array of directives that will not be reported if present at the beginning of
@@ -9106,8 +9479,8 @@ a multi-comment block and at-sign `/* @`.
 Defaults to `['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck']`
 (some directives [used by TypeScript](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html#ts-check)).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-bad-blocks-options-15-preventallmultiasteriskblocks"></a>
-<a name="eslint-plugin-jsdoc-rules-no-bad-blocks-options-15-preventallmultiasteriskblocks"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-bad-blocks-options-16-preventallmultiasteriskblocks"></a>
+<a name="eslint-plugin-jsdoc-rules-no-bad-blocks-options-16-preventallmultiasteriskblocks"></a>
 ##### <code>preventAllMultiAsteriskBlocks</code>
 
 A boolean (defaulting to `false`) which if `true` will prevent all
@@ -9319,12 +9692,12 @@ tag is attached).
 Unless your `@default` is on a function, you will need to set `contexts`
 to an appropriate context, including, if you wish, "any".
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-defaults-options-16"></a>
-<a name="eslint-plugin-jsdoc-rules-no-defaults-options-16"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-defaults-options-17"></a>
+<a name="eslint-plugin-jsdoc-rules-no-defaults-options-17"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-defaults-options-16-nooptionalparamnames"></a>
-<a name="eslint-plugin-jsdoc-rules-no-defaults-options-16-nooptionalparamnames"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-defaults-options-17-nooptionalparamnames"></a>
+<a name="eslint-plugin-jsdoc-rules-no-defaults-options-17-nooptionalparamnames"></a>
 ##### <code>noOptionalParamNames</code>
 
 Set this to `true` to report the presence of optional parameters. May be
@@ -9333,8 +9706,8 @@ the presence of ES6 default parameters (bearing in mind that such
 "defaults" are only applied when the supplied value is missing or
 `undefined` but not for `null` or other "falsey" values).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-defaults-options-16-contexts-3"></a>
-<a name="eslint-plugin-jsdoc-rules-no-defaults-options-16-contexts-3"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-defaults-options-17-contexts-3"></a>
+<a name="eslint-plugin-jsdoc-rules-no-defaults-options-17-contexts-3"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -9520,12 +9893,12 @@ which are not adequate to satisfy a condition, e.g.,
 not report if there were only a function declaration of the name "ignoreMe"
 (though it would report by function declarations of other names).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-missing-syntax-options-17"></a>
-<a name="eslint-plugin-jsdoc-rules-no-missing-syntax-options-17"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-missing-syntax-options-18"></a>
+<a name="eslint-plugin-jsdoc-rules-no-missing-syntax-options-18"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-missing-syntax-options-17-contexts-4"></a>
-<a name="eslint-plugin-jsdoc-rules-no-missing-syntax-options-17-contexts-4"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-missing-syntax-options-18-contexts-4"></a>
+<a name="eslint-plugin-jsdoc-rules-no-missing-syntax-options-18-contexts-4"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -9741,12 +10114,12 @@ Note that if you wish to prevent multiple asterisks at the very beginning of
 the jsdoc block, you should use `no-bad-blocks` (as that is not proper jsdoc
 and that rule is for catching blocks which only seem like jsdoc).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18"></a>
-<a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-multi-asterisks-options-19"></a>
+<a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-19"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18-allowwhitespace-defaults-to-false"></a>
-<a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18-allowwhitespace-defaults-to-false"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-multi-asterisks-options-19-allowwhitespace-defaults-to-false"></a>
+<a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-19-allowwhitespace-defaults-to-false"></a>
 ##### <code>allowWhitespace</code> (defaults to <code>false</code>)
 
 Set to `true` if you wish to allow asterisks after a space (as with Markdown):
@@ -9757,8 +10130,8 @@ Set to `true` if you wish to allow asterisks after a space (as with Markdown):
  */
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18-preventatmiddlelines-defaults-to-true"></a>
-<a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18-preventatmiddlelines-defaults-to-true"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-multi-asterisks-options-19-preventatmiddlelines-defaults-to-true"></a>
+<a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-19-preventatmiddlelines-defaults-to-true"></a>
 ##### <code>preventAtMiddleLines</code> (defaults to <code>true</code>)
 
 Prevent the likes of this:
@@ -9770,8 +10143,8 @@ Prevent the likes of this:
  */
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18-preventatend-defaults-to-true"></a>
-<a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-18-preventatend-defaults-to-true"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-multi-asterisks-options-19-preventatend-defaults-to-true"></a>
+<a name="eslint-plugin-jsdoc-rules-no-multi-asterisks-options-19-preventatend-defaults-to-true"></a>
 ##### <code>preventAtEnd</code> (defaults to <code>true</code>)
 
 Prevent the likes of this:
@@ -10006,12 +10379,12 @@ structures, (whether or not you add a specific `comment` condition).
 Note that if your parser supports comment AST (as [jsdoc-eslint-parser](https://github.com/brettz9/jsdoc-eslint-parser)
 is designed to do), you can just use ESLint's rule.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-restricted-syntax-options-19"></a>
-<a name="eslint-plugin-jsdoc-rules-no-restricted-syntax-options-19"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-restricted-syntax-options-20"></a>
+<a name="eslint-plugin-jsdoc-rules-no-restricted-syntax-options-20"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-restricted-syntax-options-19-contexts-5"></a>
-<a name="eslint-plugin-jsdoc-rules-no-restricted-syntax-options-19-contexts-5"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-restricted-syntax-options-20-contexts-5"></a>
+<a name="eslint-plugin-jsdoc-rules-no-restricted-syntax-options-20-contexts-5"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -10336,12 +10709,12 @@ This rule reports types being used on `@param` or `@returns`.
 The rule is intended to prevent the indication of types on tags where
 the type information would be redundant with TypeScript.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-types-options-20"></a>
-<a name="eslint-plugin-jsdoc-rules-no-types-options-20"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-types-options-21"></a>
+<a name="eslint-plugin-jsdoc-rules-no-types-options-21"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-types-options-20-contexts-6"></a>
-<a name="eslint-plugin-jsdoc-rules-no-types-options-20-contexts-6"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-types-options-21-contexts-6"></a>
+<a name="eslint-plugin-jsdoc-rules-no-types-options-21-contexts-6"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -10515,8 +10888,8 @@ reporting on use of that namepath elsewhere) and/or that a tag's `type` is
 `false` (and should not be checked for types). If the `type` is an array, that
 array's items will be considered as defined for the purposes of that tag.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-no-undefined-types-options-21"></a>
-<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-21"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-no-undefined-types-options-22"></a>
+<a name="eslint-plugin-jsdoc-rules-no-undefined-types-options-22"></a>
 #### Options
 
 An option object may have the following key:
@@ -11184,8 +11557,8 @@ class Foo {
 
 Requires that each JSDoc line starts with an `*`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-22"></a>
-<a name="eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-22"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-23"></a>
+<a name="eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-23"></a>
 #### Options
 
 This rule allows an optional string argument. If it is `"always"` then a
@@ -11196,8 +11569,8 @@ and use the `tags` option to apply to specific tags only.
 
 After the string option, one may add an object with the following.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-22-tags-3"></a>
-<a name="eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-22-tags-3"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-23-tags-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-asterisk-prefix-options-23-tags-3"></a>
 ##### <code>tags</code>
 
 If you want different values to apply to specific tags, you may use
@@ -11481,12 +11854,12 @@ If sentences do not end with terminal punctuation, a period will be added.
 If sentences do not start with an uppercase character, the initial
 letter will be capitalized.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-23"></a>
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-23"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-24"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-24"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-23-tags-4"></a>
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-23-tags-4"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-24-tags-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-24-tags-4"></a>
 ##### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
@@ -11510,16 +11883,16 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-23-abbreviations"></a>
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-23-abbreviations"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-24-abbreviations"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-24-abbreviations"></a>
 ##### <code>abbreviations</code>
 
 You can provide an `abbreviations` options array to avoid such strings of text
 being treated as sentence endings when followed by dots. The `.` is not
 necessary at the end of the array items.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-23-newlinebeforecapsassumesbadsentenceend"></a>
-<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-23-newlinebeforecapsassumesbadsentenceend"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-24-newlinebeforecapsassumesbadsentenceend"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-complete-sentence-options-24-newlinebeforecapsassumesbadsentenceend"></a>
 ##### <code>newlineBeforeCapsAssumesBadSentenceEnd</code>
 
 When `false` (the new default), we will not assume capital letters after
@@ -12260,8 +12633,8 @@ Requires that all functions have a description.
   is `"tag"`) must have a non-empty description that explains the purpose of
   the method.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-description-options-24"></a>
-<a name="eslint-plugin-jsdoc-rules-require-description-options-24"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-description-options-25"></a>
+<a name="eslint-plugin-jsdoc-rules-require-description-options-25"></a>
 #### Options
 
 An options object may have any of the following properties:
@@ -12822,14 +13195,14 @@ Requires that all functions have examples.
 * Every example tag must have a non-empty description that explains the
   method's usage.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-options-25"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-26"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-26"></a>
 #### Options
 
 This rule has an object option.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-exemptedby"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-options-25-exemptedby"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-26-exemptedby"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-26-exemptedby"></a>
 ##### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document
@@ -12838,15 +13211,15 @@ block avoids the need for an `@example`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-exemptnoarguments"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-options-25-exemptnoarguments"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-26-exemptnoarguments"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-26-exemptnoarguments"></a>
 ##### <code>exemptNoArguments</code>
 
 Boolean to indicate that no-argument functions should not be reported for
 missing `@example` declarations.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-contexts-7"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-options-25-contexts-7"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-26-contexts-7"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-26-contexts-7"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -12858,27 +13231,27 @@ want the rule to apply to any jsdoc block throughout your files.
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-checkconstructors"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-options-25-checkconstructors"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-26-checkconstructors"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-26-checkconstructors"></a>
 ##### <code>checkConstructors</code>
 
 A value indicating whether `constructor`s should be checked.
 Defaults to `true`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-checkgetters"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-options-25-checkgetters"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-26-checkgetters"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-26-checkgetters"></a>
 ##### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-checksetters"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-options-25-checksetters"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-26-checksetters"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-26-checksetters"></a>
 ##### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Defaults to `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-enablefixer-3"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-options-25-enablefixer-3"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-26-enablefixer-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-26-enablefixer-3"></a>
 ##### <code>enableFixer</code>
 
 A boolean on whether to enable the fixer (which adds an empty `@example` block).
@@ -13191,12 +13564,12 @@ Checks that:
   as being when the overview tag is not preceded by anything other than
   a comment.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-file-overview-options-26"></a>
-<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-26"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-file-overview-options-27"></a>
+<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-27"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-file-overview-options-26-tags-5"></a>
-<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-26-tags-5"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-file-overview-options-27-tags-5"></a>
+<a name="eslint-plugin-jsdoc-rules-require-file-overview-options-27-tags-5"></a>
 ##### <code>tags</code>
 
 The keys of this object are tag names, and the values are configuration
@@ -13480,8 +13853,8 @@ function quux () {
 
 Requires (or disallows) a hyphen before the `@param` description.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-27"></a>
-<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-27"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-28"></a>
+<a name="eslint-plugin-jsdoc-rules-require-hyphen-before-param-description-options-28"></a>
 #### Options
 
 This rule takes one optional string argument and an optional options object.
@@ -13713,14 +14086,14 @@ function main(argv) {
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29"></a>
 #### Options
 
 Accepts one optional options object with the following optional keys.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-publiconly"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-publiconly"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29-publiconly"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29-publiconly"></a>
 ##### <code>publicOnly</code>
 
 This option will insist that missing jsdoc blocks are only reported for
@@ -13736,8 +14109,8 @@ otherwise noted):
 - `cjs` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
 - `window` - Window global exports are checked for JSDoc comments
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-require"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-require"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29-require"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29-require"></a>
 ##### <code>require</code>
 
 An object with the following optional boolean keys which all default to
@@ -13750,8 +14123,8 @@ An object with the following optional boolean keys which all default to
 - `FunctionExpression`
 - `MethodDefinition`
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-contexts-8"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-contexts-8"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29-contexts-8"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29-contexts-8"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings or objects representing the additional AST
@@ -13768,8 +14141,8 @@ if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-exemptemptyconstructors"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-exemptemptyconstructors"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29-exemptemptyconstructors"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29-exemptemptyconstructors"></a>
 ##### <code>exemptEmptyConstructors</code>
 
 Default: true
@@ -13778,8 +14151,8 @@ When `true`, the rule will not report missing jsdoc blocks above constructors
 with no parameters or return values (this is enabled by default as the class
 name or description should be seen as sufficient to convey intent).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-exemptemptyfunctions"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-exemptemptyfunctions"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29-exemptemptyfunctions"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29-exemptemptyfunctions"></a>
 ##### <code>exemptEmptyFunctions</code>
 
 Default: false.
@@ -13788,16 +14161,16 @@ When `true`, the rule will not report missing jsdoc blocks above
 functions/methods with no parameters or return values (intended where
 function/method names are sufficient for themselves as documentation).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-checkconstructors-1"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-checkconstructors-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29-checkconstructors-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29-checkconstructors-1"></a>
 ##### <code>checkConstructors</code>
 
 A value indicating whether `constructor`s should be checked. Defaults to
 `true`. When `true`, `exemptEmptyConstructors` may still avoid reporting when
 no parameters or return values are found.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-checkgetters-1"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-checkgetters-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29-checkgetters-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29-checkgetters-1"></a>
 ##### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Besides setting as a
@@ -13806,8 +14179,8 @@ getters should be checked but only when there is no setter. This may be useful
 if one only wishes documentation on one of the two accessors. Defaults to
 `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-checksetters-1"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-checksetters-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29-checksetters-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29-checksetters-1"></a>
 ##### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Besides setting as a
@@ -13816,15 +14189,15 @@ setters should be checked but only when there is no getter. This may be useful
 if one only wishes documentation on one of the two accessors. Defaults to
 `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-enablefixer-4"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-enablefixer-4"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29-enablefixer-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29-enablefixer-4"></a>
 ##### <code>enableFixer</code>
 
 A boolean on whether to enable the fixer (which adds an empty jsdoc block).
 Defaults to `true`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-minlinecount"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-minlinecount"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-29-minlinecount"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-29-minlinecount"></a>
 ##### <code>minLineCount</code>
 
 An integer to indicate a minimum number of lines expected for a node in order
@@ -15516,12 +15889,12 @@ Will exempt destructured roots and their children if
 `@param {object} props` will be exempted from requiring a description given
 `function someFunc ({child1, child2})`).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-29"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-30"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-30"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29-setdefaultdestructuredrootdescription"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-29-setdefaultdestructuredrootdescription"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-30-setdefaultdestructuredrootdescription"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-30-setdefaultdestructuredrootdescription"></a>
 ##### <code>setDefaultDestructuredRootDescription</code>
 
 Whether to set a default destructured root description. For example, you may
@@ -15530,15 +15903,15 @@ corresponding to a destructured root object as it should always be the same
 type of object. Uses `defaultDestructuredRootDescription` for the description
 string. Defaults to `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29-defaultdestructuredrootdescription"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-29-defaultdestructuredrootdescription"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-30-defaultdestructuredrootdescription"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-30-defaultdestructuredrootdescription"></a>
 ##### <code>defaultDestructuredRootDescription</code>
 
 The description string to set by default for destructured roots. Defaults to
 "The root object".
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-29-contexts-9"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-description-options-29-contexts-9"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-description-options-30-contexts-9"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-description-options-30-contexts-9"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -15731,12 +16104,12 @@ Requires that all function parameters have names.
 >
 > [JSDoc](https://jsdoc.app/tags-param.html#overview)
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-name-options-30"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-name-options-30"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-name-options-31"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-31"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-name-options-30-contexts-10"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-name-options-30-contexts-10"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-name-options-31-contexts-10"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-name-options-31-contexts-10"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -15875,12 +16248,12 @@ Will exempt destructured roots and their children if
 `@param props` will be exempted from requiring a type given
 `function someFunc ({child1, child2})`).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-31"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-31"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-32"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-32"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-31-setdefaultdestructuredroottype"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-31-setdefaultdestructuredroottype"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-32-setdefaultdestructuredroottype"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-32-setdefaultdestructuredroottype"></a>
 ##### <code>setDefaultDestructuredRootType</code>
 
 Whether to set a default destructured root type. For example, you may wish
@@ -15889,14 +16262,14 @@ corresponding to a destructured root object as it is always going to be an
 object. Uses `defaultDestructuredRootType` for the type string. Defaults to
 `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-31-defaultdestructuredroottype"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-31-defaultdestructuredroottype"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-32-defaultdestructuredroottype"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-32-defaultdestructuredroottype"></a>
 ##### <code>defaultDestructuredRootType</code>
 
 The type string to set by default for destructured roots. Defaults to "object".
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-31-contexts-11"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-type-options-31-contexts-11"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-type-options-32-contexts-11"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-type-options-32-contexts-11"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -16261,35 +16634,35 @@ other properties, so in looking at the docs alone without looking at the
 function signature, it may appear that there is an actual property named
 `extra`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33"></a>
 #### Options
 
 An options object accepts the following optional properties:
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-enablefixer-5"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-enablefixer-5"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-enablefixer-5"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-enablefixer-5"></a>
 ##### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-enablerootfixer"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-enablerootfixer"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-enablerootfixer"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-enablerootfixer"></a>
 ##### <code>enableRootFixer</code>
 
 Whether to enable the auto-adding of incrementing roots (see the "Fixer"
 section). Defaults to `true`. Has no effect if `enableFixer` is set to
 `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-enablerestelementfixer"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-enablerestelementfixer"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-enablerestelementfixer"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-enablerestelementfixer"></a>
 ##### <code>enableRestElementFixer</code>
 
 Whether to enable the rest element fixer (see
 "Rest Element (`RestElement`) insertions"). Defaults to `true`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-checkrestproperty-1"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-checkrestproperty-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-checkrestproperty-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-checkrestproperty-1"></a>
 ##### <code>checkRestProperty</code>
 
 If set to `true`, will report (and add fixer insertions) for missing rest
@@ -16343,15 +16716,15 @@ function quux ({num, ...extra}) {
 }
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-autoincrementbase"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-autoincrementbase"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-autoincrementbase"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-autoincrementbase"></a>
 ##### <code>autoIncrementBase</code>
 
 Numeric to indicate the number at which to begin auto-incrementing roots.
 Defaults to `0`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-unnamedrootbase"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-unnamedrootbase"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-unnamedrootbase"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-unnamedrootbase"></a>
 ##### <code>unnamedRootBase</code>
 
 An array of root names to use in the fixer when roots are missing. Defaults
@@ -16377,8 +16750,8 @@ function quux ({foo}, [bar], {baz}) {
 */
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-exemptedby-1"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-exemptedby-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-exemptedby-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-exemptedby-1"></a>
 ##### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document block
@@ -16387,8 +16760,8 @@ avoids the need for a `@param`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-checktypespattern-1"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-checktypespattern-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-checktypespattern-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-checktypespattern-1"></a>
 ##### <code>checkTypesPattern</code>
 
 When one specifies a type, unless it is of a generic type, like `object`
@@ -16423,8 +16796,8 @@ You could set this regular expression to a more expansive list, or you
 could restrict it such that even types matching those strings would not
 need destructuring.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-contexts-12"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-contexts-12"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-contexts-12"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-contexts-12"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -16436,33 +16809,33 @@ which are checked.
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-checkconstructors-2"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-checkconstructors-2"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-checkconstructors-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-checkconstructors-2"></a>
 ##### <code>checkConstructors</code>
 
 A value indicating whether `constructor`s should be checked. Defaults to
 `true`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-checkgetters-2"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-checkgetters-2"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-checkgetters-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-checkgetters-2"></a>
 ##### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-checksetters-2"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-checksetters-2"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-checksetters-2"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-checksetters-2"></a>
 ##### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Defaults to `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-checkdestructured-1"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-checkdestructured-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-checkdestructured-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-checkdestructured-1"></a>
 ##### <code>checkDestructured</code>
 
 Whether to require destructured properties. Defaults to `true`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-checkdestructuredroots"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-checkdestructuredroots"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-checkdestructuredroots"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-checkdestructuredroots"></a>
 ##### <code>checkDestructuredRoots</code>
 
 Whether to check the existence of a corresponding `@param` for root objects
@@ -16475,8 +16848,8 @@ implied to be `false` (i.e., the inside of the roots will not be checked
 either, e.g., it will also not complain if `a` or `b` do not have their own
 documentation). Defaults to `true`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-usedefaultobjectproperties-1"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-usedefaultobjectproperties-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-33-usedefaultobjectproperties-1"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-33-usedefaultobjectproperties-1"></a>
 ##### <code>useDefaultObjectProperties</code>
 
 Set to `true` if you wish to expect documentation of properties on objects
@@ -18161,8 +18534,8 @@ is found. Also reports if `@returns {never}` is discovered with a return value.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-check-options-33"></a>
-<a name="eslint-plugin-jsdoc-rules-require-returns-check-options-33"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-check-options-34"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-check-options-34"></a>
 #### Options
 
 - `exemptGenerators`- Because a generator might be labeled as having a
@@ -19188,12 +19561,12 @@ Requires that the `@returns` tag has a `description` value. The error
 will not be reported if the return value is `void` or `undefined`
 or if it is `Promise<void>` or `Promise<undefined>`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-description-options-34"></a>
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-34"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-description-options-35"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-35"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-description-options-34-contexts-13"></a>
-<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-34-contexts-13"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-description-options-35-contexts-13"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-description-options-35-contexts-13"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -19347,12 +19720,12 @@ function quux () {
 
 Requires that `@returns` tag has `type` value.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-type-options-35"></a>
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-35"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-type-options-36"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-36"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-type-options-35-contexts-14"></a>
-<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-35-contexts-14"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-type-options-36-contexts-14"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-type-options-36-contexts-14"></a>
 ##### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -19473,8 +19846,8 @@ Requires that returns are documented.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-options-36"></a>
-<a name="eslint-plugin-jsdoc-rules-require-returns-options-36"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-returns-options-37"></a>
+<a name="eslint-plugin-jsdoc-rules-require-returns-options-37"></a>
 #### Options
 
 - `checkConstructors` - A value indicating whether `constructor`s should
@@ -20614,8 +20987,8 @@ for our desire for a separate tag to document rejection types and see
 [this discussion](https://stackoverflow.com/questions/50071115/typescript-promise-rejection-type)
 on why TypeScript doesn't offer such a feature.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-throws-options-37"></a>
-<a name="eslint-plugin-jsdoc-rules-require-throws-options-37"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-throws-options-38"></a>
+<a name="eslint-plugin-jsdoc-rules-require-throws-options-38"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
@@ -20919,8 +21292,8 @@ Will also report if multiple `@yields` tags are present.
 See the `next`, `forceRequireNext`, and `nextWithGeneratorTag` options for an
 option to expect a non-standard `@next` tag.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-yields-options-38"></a>
-<a name="eslint-plugin-jsdoc-rules-require-yields-options-38"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-yields-options-39"></a>
+<a name="eslint-plugin-jsdoc-rules-require-yields-options-39"></a>
 #### Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
@@ -21731,8 +22104,8 @@ function bodies.
 
 Will also report if multiple `@yields` tags are present.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-yields-check-options-39"></a>
-<a name="eslint-plugin-jsdoc-rules-require-yields-check-options-39"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-yields-check-options-40"></a>
+<a name="eslint-plugin-jsdoc-rules-require-yields-check-options-40"></a>
 #### Options
 
 - `checkGeneratorsOnly` - Avoids checking the function body and merely insists
@@ -22244,12 +22617,12 @@ Sorts tags by a specified sequence according to tag name.
 
 (Default order originally inspired by [`@homer0/prettier-plugin-jsdoc`](https://github.com/homer0/packages/tree/main/packages/public/prettier-plugin-jsdoc).)
 
-<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40"></a>
-<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-41"></a>
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-41"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40-tagsequence"></a>
-<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40-tagsequence"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-41-tagsequence"></a>
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-41-tagsequence"></a>
 ##### <code>tagSequence</code>
 
 An array of tag names indicating the preferred sequence for sorting tags.
@@ -22425,8 +22798,8 @@ a fixed order that doesn't change into the future, supply your own
 ];
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40-alphabetizeextras"></a>
-<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40-alphabetizeextras"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-41-alphabetizeextras"></a>
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-41-alphabetizeextras"></a>
 ##### <code>alphabetizeExtras</code>
 
 Defaults to `false`. Alphabetizes any items not within `tagSequence` after any
@@ -22583,8 +22956,8 @@ function quux () {}
 
 Enforces lines (or no lines) between tags.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41"></a>
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-42"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-42"></a>
 #### Options
 
 The first option is a single string set to "always", "never", or "any"
@@ -22595,27 +22968,27 @@ for particular tags) or with `dropEndLines`.
 
 The second option is an object with the following optional properties.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-count-defaults-to-1"></a>
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-count-defaults-to-1"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-42-count-defaults-to-1"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-42-count-defaults-to-1"></a>
 ##### <code>count</code> (defaults to 1)
 
 Use with "always" to indicate the number of lines to require be present.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-noendlines-defaults-to-false"></a>
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-noendlines-defaults-to-false"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-42-noendlines-defaults-to-false"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-42-noendlines-defaults-to-false"></a>
 ##### <code>noEndLines</code> (defaults to <code>false</code>)
 
 Use with "always" to indicate the normal lines to be added after tags should
 not be added after the final tag.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-dropendlines-defaults-to-false"></a>
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-dropendlines-defaults-to-false"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-42-dropendlines-defaults-to-false"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-42-dropendlines-defaults-to-false"></a>
 ##### <code>dropEndLines</code> (defaults to <code>false</code>)
 
 If defined, will drop end lines for the final tag only.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-tags-default-to-empty-object"></a>
-<a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-tags-default-to-empty-object"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-42-tags-default-to-empty-object"></a>
+<a name="eslint-plugin-jsdoc-rules-tag-lines-options-42-tags-default-to-empty-object"></a>
 ##### <code>tags</code> (default to empty object)
 
 Overrides the default behavior depending on specific tags.
@@ -22969,19 +23342,19 @@ Markdown and you therefore do not wish for it to be accidentally interpreted
 as such by the likes of Visual Studio Code or if you wish to view it escaped
 within it or your documentation.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-text-escaping-options-42"></a>
-<a name="eslint-plugin-jsdoc-rules-text-escaping-options-42"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-text-escaping-options-43"></a>
+<a name="eslint-plugin-jsdoc-rules-text-escaping-options-43"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-text-escaping-options-42-escapehtml"></a>
-<a name="eslint-plugin-jsdoc-rules-text-escaping-options-42-escapehtml"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-text-escaping-options-43-escapehtml"></a>
+<a name="eslint-plugin-jsdoc-rules-text-escaping-options-43-escapehtml"></a>
 ##### <code>escapeHTML</code>
 
 This option escapes all `<` and `&` characters (except those followed by
 whitespace which are treated as literals by Visual Studio Code).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-text-escaping-options-42-escapemarkdown"></a>
-<a name="eslint-plugin-jsdoc-rules-text-escaping-options-42-escapemarkdown"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-text-escaping-options-43-escapemarkdown"></a>
+<a name="eslint-plugin-jsdoc-rules-text-escaping-options-43-escapemarkdown"></a>
 ##### <code>escapeMarkdown</code>
 
 This option escapes the first backtick (`` ` ``) in a paired sequence.
@@ -23188,8 +23561,8 @@ for valid types (based on the tag's `type` value), and either portion checked
 for presence (based on `false` `name` or `type` values or their `required`
 value). See the setting for more details.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-valid-types-options-43"></a>
-<a name="eslint-plugin-jsdoc-rules-valid-types-options-43"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-valid-types-options-44"></a>
+<a name="eslint-plugin-jsdoc-rules-valid-types-options-44"></a>
 #### Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow

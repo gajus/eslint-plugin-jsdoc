@@ -601,6 +601,7 @@ selector).
 {"gitdown": "include", "file": "./rules/check-values.md"}
 {"gitdown": "include", "file": "./rules/empty-tags.md"}
 {"gitdown": "include", "file": "./rules/implements-on-classes.md"}
+{"gitdown": "include", "file": "./rules/informative-docs.md"}
 {"gitdown": "include", "file": "./rules/match-description.md"}
 {"gitdown": "include", "file": "./rules/match-name.md"}
 {"gitdown": "include", "file": "./rules/multiline-blocks.md"}

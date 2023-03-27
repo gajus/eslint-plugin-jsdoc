@@ -11,6 +11,7 @@ import checkTypes from './rules/checkTypes';
 import checkValues from './rules/checkValues';
 import emptyTags from './rules/emptyTags';
 import implementsOnClasses from './rules/implementsOnClasses';
+import informativeDocs from './rules/informativeDocs';
 import matchDescription from './rules/matchDescription';
 import matchName from './rules/matchName';
 import multilineBlocks from './rules/multilineBlocks';
@@ -66,6 +67,7 @@ const index = {
     'check-values': checkValues,
     'empty-tags': emptyTags,
     'implements-on-classes': implementsOnClasses,
+    'informative-docs': informativeDocs,
     'match-description': matchDescription,
     'match-name': matchName,
     'multiline-blocks': multilineBlocks,
@@ -126,6 +128,7 @@ const createRecommendedRuleset = (warnOrError) => {
       'jsdoc/check-values': warnOrError,
       'jsdoc/empty-tags': warnOrError,
       'jsdoc/implements-on-classes': warnOrError,
+      'jsdoc/informative-docs': warnOrError,
       'jsdoc/match-description': 'off',
       'jsdoc/match-name': 'off',
       'jsdoc/multiline-blocks': warnOrError,
