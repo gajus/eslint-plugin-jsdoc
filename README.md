@@ -4594,6 +4594,13 @@ let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@abstract' is generally redundant outside of `declare` contexts when using a type system.
 
+const a = {
+  /** @abstract */
+  b: true,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@abstract' is generally redundant outside of `declare` contexts when using a type system.
+
 /** @template */
 let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]

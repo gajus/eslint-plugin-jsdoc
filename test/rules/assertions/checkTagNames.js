@@ -41,6 +41,7 @@ export default {
         },
       ],
       output: `
+        
         let a;
       `,
     },
@@ -108,33 +109,35 @@ export default {
         },
       ],
       output: `
+        
         let a;
       `,
     },
-    // {
-    //   code: `
-    //     const a = {
-    //       /** @abstract */
-    //       b: true,
-    //     };
-    //   `,
-    //   errors: [
-    //     {
-    //       line: 3,
-    //       message: '\'@abstract\' is generally redundant outside of `declare` contexts when using a type system.',
-    //     },
-    //   ],
-    //   options: [
-    //     {
-    //       typed: true,
-    //     },
-    //   ],
-    //   output: `
-    //     const a = {
-    //       b: true,
-    //     };
-    //   `,
-    // },
+    {
+      code: `
+        const a = {
+          /** @abstract */
+          b: true,
+        };
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '\'@abstract\' is generally redundant outside of `declare` contexts when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        const a = {
+          
+          b: true,
+        };
+      `,
+    },
     {
       code: `
         /** @template */
@@ -152,6 +155,7 @@ export default {
         },
       ],
       output: `
+        
         let a;
       `,
     },
@@ -200,6 +204,7 @@ export default {
         },
       ],
       output: `
+        
         function takesOne(param) {}
       `,
     },
@@ -220,6 +225,7 @@ export default {
         },
       ],
       output: `
+        
         function takesOne(param) {}
       `,
     },
