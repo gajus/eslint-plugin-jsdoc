@@ -137,9 +137,7 @@ const getUtils = (
       const replacement = utils.stringify(jsdoc, specRewire);
 
       if (!replacement) {
-        return fixer.removeRange([
-          0, jsdocNode.range[1],
-        ]);
+        return fixer.removeRange(jsdocNode.range);
       }
 
       return fixer.replaceText(jsdocNode, replacement);
