@@ -136,18 +136,34 @@ export default iterateJsdoc(({
     return true;
   };
 
-  const tagRedundantlyChecksParamOrReturnTyped = (jsdocTag) => {
+  const reportWithTypeRemovalFixer = (message, jsdocTag, tagIndex, additionalTagChanges) => {
+    utils.reportJSDoc(message, jsdocTag, () => {
+      if (jsdocTag.description.trim()) {
+        utils.changeTag(jsdocTag, {
+          postType: '',
+          type: '',
+          ...additionalTagChanges,
+        });
+      } else {
+        utils.removeTag(tagIndex, {
+          removeEmptyBlock: true,
+        });
+      }
+    }, true);
+  };
+
+  const tagRedundantlyChecksParamOrReturnTyped = (jsdocTag, tagIndex) => {
     if (!typedTagsParamReturn.has(jsdocTag.tag)) {
       return false;
     }
 
-    if (!jsdocTag.description) {
-      report(`'@${jsdocTag.tag}' without a description is redundant when using a type system.`, null, jsdocTag);
+    if (!jsdocTag.description.trim()) {
+      reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' without a description is redundant when using a type system.`, jsdocTag, tagIndex);
       return true;
     }
 
     if (jsdocTag.type) {
-      report(`Describing the type of '@${jsdocTag.tag}' is redundant when using a type system.`, null, jsdocTag);
+      reportWithTypeRemovalFixer(`Describing the type of '@${jsdocTag.tag}' is redundant when using a type system.`, jsdocTag, tagIndex);
       return true;
     }
 
@@ -156,25 +172,24 @@ export default iterateJsdoc(({
 
   const checkTagForTypedValidity = (jsdocTag, tagIndex) => {
     if (typedTagsAlwaysUnnecessary.has(jsdocTag.tag)) {
-      utils.reportJSDoc(`'@${jsdocTag.tag}' is redundant when using a type system.`, jsdocTag, () => {
-        utils.removeTag(tagIndex, {
-          removeEmptyBlock: true,
-        });
-      }, true);
+      reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' is redundant when using a type system.`, jsdocTag, tagIndex, {
+        postTag: '',
+        tag: '',
+      });
       return true;
     }
 
     if (tagIsRedundantWhenTyped(jsdocTag)) {
-      report(`'@${jsdocTag.tag}' is generally redundant outside of \`declare\` contexts when using a type system.`, null, jsdocTag);
+      reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' is generally redundant outside of \`declare\` contexts when using a type system.`, jsdocTag, tagIndex);
       return true;
     }
 
     if (jsdocTag.tag === 'template' && !jsdocTag.name) {
-      report('\'@template\' without a name is redundant when using a type system.', null, jsdocTag);
+      reportWithTypeRemovalFixer('\'@template\' without a name is redundant when using a type system.', jsdocTag, tagIndex);
       return true;
     }
 
-    if (tagRedundantlyChecksParamOrReturnTyped(jsdocTag)) {
+    if (tagRedundantlyChecksParamOrReturnTyped(jsdocTag, tagIndex)) {
       return true;
     }
 
