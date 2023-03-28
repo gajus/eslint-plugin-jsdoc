@@ -157,7 +157,9 @@ export default iterateJsdoc(({
   const checkTagForTypedValidity = (jsdocTag, tagIndex) => {
     if (typedTagsAlwaysUnnecessary.has(jsdocTag.tag)) {
       utils.reportJSDoc(`'@${jsdocTag.tag}' is redundant when using a type system.`, jsdocTag, () => {
-        utils.removeTag(tagIndex);
+        utils.removeTag(tagIndex, {
+          removeEmptyBlock: true,
+        });
       }, true);
       return true;
     }

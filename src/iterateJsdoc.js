@@ -136,6 +136,12 @@ const getUtils = (
       handler();
       const replacement = utils.stringify(jsdoc, specRewire);
 
+      if (!replacement) {
+        return fixer.removeRange([
+          0, jsdocNode.range[1],
+        ]);
+      }
+
       return fixer.replaceText(jsdocNode, replacement);
     } : null, tag, data);
   };
@@ -288,11 +294,10 @@ const getUtils = (
     ];
   };
 
-  utils.removeTag = (idx) => {
-    return utils.removeTagItem(idx);
-  };
-
-  utils.removeTagItem = (tagIndex, tagSourceOffset = 0) => {
+  utils.removeTag = (tagIndex, {
+    removeEmptyBlock = false,
+    tagSourceOffset = 0,
+  } = {}) => {
     const {
       source: tagSource,
     } = jsdoc.tags[tagIndex];
@@ -303,11 +308,8 @@ const getUtils = (
     }, tagIdx) => {
       const sourceIndex = jsdoc.source.findIndex(({
         number: srcNumber,
-        tokens: {
-          end,
-        },
       }) => {
-        return number === srcNumber && !end;
+        return number === srcNumber;
       });
       // istanbul ignore else
       if (sourceIndex > -1) {
@@ -315,10 +317,10 @@ const getUtils = (
         tagSource.slice(tagIdx + 1).some(({
           tokens: {
             tag,
-            end,
+            end: ending,
           },
         }) => {
-          if (!tag && !end) {
+          if (!tag && !ending) {
             spliceCount++;
 
             return false;
@@ -326,7 +328,34 @@ const getUtils = (
 
           return true;
         });
-        jsdoc.source.splice(sourceIndex + tagSourceOffset, spliceCount - tagSourceOffset);
+
+        const spliceIdx = sourceIndex + tagSourceOffset;
+
+        const {
+          delimiter,
+          end,
+        } = jsdoc.source[spliceIdx].tokens;
+
+        /* istanbul ignore if -- Currently want to clear entirely if removing tags */
+        if (!removeEmptyBlock && (end || delimiter === '/**')) {
+          const {
+            tokens,
+          } = jsdoc.source[spliceIdx];
+          for (const item of [
+            'tag',
+            'postTag',
+            'type',
+            'postType',
+            'name',
+            'postName',
+            'description',
+          ]) {
+            tokens[item] = '';
+          }
+        } else {
+          jsdoc.source.splice(spliceIdx, spliceCount - tagSourceOffset);
+        }
+
         tagSource.splice(tagIdx + tagSourceOffset, spliceCount - tagSourceOffset);
         lastIndex = sourceIndex;
 
