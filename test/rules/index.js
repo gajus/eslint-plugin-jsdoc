@@ -121,23 +121,25 @@ const main = async () => {
     ruleTester.run(ruleName, rule, assertions);
   }
 
-  // Catch syntax errors
-  let flatRuleNames;
-  try {
-    flatRuleNames = (await import('./assertions/flatConfig.js')).default;
-  } catch (error) {
-    // eslint-disable-next-line no-console -- Reporting back to tester
-    console.error(error);
-    return;
-  }
+  if (!process.env.npm_config_rule) {
+    // Catch syntax errors
+    let flatRuleNames;
+    try {
+      flatRuleNames = (await import('./assertions/flatConfig.js')).default;
+    } catch (error) {
+      // eslint-disable-next-line no-console -- Reporting back to tester
+      console.error(error);
+      return;
+    }
 
-  const fakeRuleTester = new FlatRuleTester();
-  for (const [
-    ruleName,
-    assertions,
-  ] of Object.entries(flatRuleNames)) {
-    const rule = config.rules[ruleName];
-    fakeRuleTester.run(ruleName, rule, assertions);
+    const fakeRuleTester = new FlatRuleTester();
+    for (const [
+      ruleName,
+      assertions,
+    ] of Object.entries(flatRuleNames)) {
+      const rule = config.rules[ruleName];
+      fakeRuleTester.run(ruleName, rule, assertions);
+    }
   }
 };
 
