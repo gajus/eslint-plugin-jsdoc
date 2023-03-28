@@ -4576,15 +4576,21 @@ let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@type' is redundant when using a type system.
 
-/** @abstract */
+/** @type {string} - extra info */
 let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
-// Message: '@abstract' is generally redundant outside of `declare` contexts when using a type system.
+// Message: '@type' is redundant when using a type system.
 
-const a = {
-  /** @abstract */
-  b: true,
-};
+/**
+ * Existing comment.
+ *  @type {string}
+ */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/** @abstract */
+let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@abstract' is generally redundant outside of `declare` contexts when using a type system.
 
@@ -4608,6 +4614,14 @@ function takesOne(param) {}
 // Message: '@param' without a description is redundant when using a type system.
 
 /** @param {boolean} param */
+function takesOne(param) {}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@param' without a description is redundant when using a type system.
+
+/**
+ * Existing comment
+ *  @param {boolean} param
+ */
 function takesOne(param) {}
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@param' without a description is redundant when using a type system.
