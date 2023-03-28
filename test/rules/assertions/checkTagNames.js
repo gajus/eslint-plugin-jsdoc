@@ -40,6 +40,9 @@ export default {
           typed: true,
         },
       ],
+      output: `
+        let a;
+      `,
     },
     {
       code: `

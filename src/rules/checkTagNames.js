@@ -154,9 +154,11 @@ export default iterateJsdoc(({
     return false;
   };
 
-  const checkTagForTypedValidity = (jsdocTag) => {
+  const checkTagForTypedValidity = (jsdocTag, tagIndex) => {
     if (typedTagsAlwaysUnnecessary.has(jsdocTag.tag)) {
-      report(`'@${jsdocTag.tag}' is redundant when using a type system.`, null, jsdocTag);
+      utils.reportJSDoc(`'@${jsdocTag.tag}' is redundant when using a type system.`, jsdocTag, () => {
+        utils.removeTag(tagIndex);
+      }, true);
       return true;
     }
 
@@ -177,13 +179,14 @@ export default iterateJsdoc(({
     return false;
   };
 
-  for (const jsdocTag of jsdoc.tags) {
+  for (let tagIndex = 0; tagIndex < jsdoc.tags.length; tagIndex += 1) {
+    const jsdocTag = jsdoc.tags[tagIndex];
     const tagName = jsdocTag.tag;
     if (jsxTags && jsxTagNames.has(tagName)) {
       continue;
     }
 
-    if (typed && checkTagForTypedValidity(jsdocTag)) {
+    if (typed && checkTagForTypedValidity(jsdocTag, tagIndex)) {
       continue;
     }
 
