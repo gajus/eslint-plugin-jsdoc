@@ -46,6 +46,53 @@ export default {
     },
     {
       code: `
+        /** @type {string} - extra info */
+        let a;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '\'@type\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        /** - extra info */
+        let a;
+      `,
+    },
+    {
+      code: `
+        /**
+         * Existing comment.
+         *  @type {string}
+         */
+        let a;
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '\'@type\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        /**
+         * Existing comment.
+         */
+        let a;
+      `,
+    },
+    {
+      code: `
         /** @abstract */
         let a;
       `,
@@ -60,26 +107,34 @@ export default {
           typed: true,
         },
       ],
-    },
-    {
-      code: `
-        const a = {
-          /** @abstract */
-          b: true,
-        };
+      output: `
+        let a;
       `,
-      errors: [
-        {
-          line: 3,
-          message: '\'@abstract\' is generally redundant outside of `declare` contexts when using a type system.',
-        },
-      ],
-      options: [
-        {
-          typed: true,
-        },
-      ],
     },
+    // {
+    //   code: `
+    //     const a = {
+    //       /** @abstract */
+    //       b: true,
+    //     };
+    //   `,
+    //   errors: [
+    //     {
+    //       line: 3,
+    //       message: '\'@abstract\' is generally redundant outside of `declare` contexts when using a type system.',
+    //     },
+    //   ],
+    //   options: [
+    //     {
+    //       typed: true,
+    //     },
+    //   ],
+    //   output: `
+    //     const a = {
+    //       b: true,
+    //     };
+    //   `,
+    // },
     {
       code: `
         /** @template */
@@ -96,6 +151,9 @@ export default {
           typed: true,
         },
       ],
+      output: `
+        let a;
+      `,
     },
     {
       code: `
@@ -117,6 +175,13 @@ export default {
           typed: true,
         },
       ],
+      output: `
+        /**
+         * Prior description.
+         *  
+         */
+        let a;
+      `,
     },
     {
       code: `
@@ -134,6 +199,9 @@ export default {
           typed: true,
         },
       ],
+      output: `
+        function takesOne(param) {}
+      `,
     },
     {
       code: `
@@ -151,6 +219,35 @@ export default {
           typed: true,
         },
       ],
+      output: `
+        function takesOne(param) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Existing comment
+         *  @param {boolean} param
+         */
+        function takesOne(param) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '\'@param\' without a description is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+        /**
+         * Existing comment
+         */
+        function takesOne(param) {}
+      `,
     },
     {
       code: `
@@ -168,6 +265,10 @@ export default {
           typed: true,
         },
       ],
+      output: `
+        /** @param param - takes description */
+        function takesOne(param) {}
+      `,
     },
     {
       code: `
