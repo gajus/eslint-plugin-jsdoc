@@ -64,7 +64,9 @@ export default iterateJsdoc(({
 
     if (dropEndLines && lastEmpty !== null && tagIdx === jsdoc.tags.length - 1) {
       const fixer = () => {
-        utils.removeTagItem(tagIdx, lastEmpty);
+        utils.removeTag(tagIdx, {
+          tagSourceOffset: lastEmpty,
+        });
       };
 
       utils.reportJSDoc(
@@ -80,7 +82,9 @@ export default iterateJsdoc(({
 
     if (reportIndex !== null) {
       const fixer = () => {
-        utils.removeTagItem(tagIdx, reportIndex);
+        utils.removeTag(tagIdx, {
+          tagSourceOffset: reportIndex,
+        });
       };
 
       utils.reportJSDoc(
