@@ -25,6 +25,58 @@ const ONE_CLOSURE_TAGS_COMMENT = buildTagBlock({
 export default {
   invalid: [
     {
+      code: `/** @type {string} */let a;
+      `,
+      errors: [
+        {
+          line: 1,
+          message: '\'@type\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `let a;
+      `,
+    },
+    {
+      code: `/** @type {string} */ let a;
+      `,
+      errors: [
+        {
+          line: 1,
+          message: '\'@type\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `let a;
+      `,
+    },
+    {
+      code: `/** @type {string} */
+        let a;
+      `,
+      errors: [
+        {
+          line: 1,
+          message: '\'@type\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `        let a;
+      `,
+    },
+    {
       code: `
         /** @type {string} */
         let a;
@@ -41,7 +93,6 @@ export default {
         },
       ],
       output: `
-        
         let a;
       `,
     },
@@ -109,7 +160,6 @@ export default {
         },
       ],
       output: `
-        
         let a;
       `,
     },
@@ -133,7 +183,6 @@ export default {
       ],
       output: `
         const a = {
-          
           b: true,
         };
       `,
@@ -155,7 +204,6 @@ export default {
         },
       ],
       output: `
-        
         let a;
       `,
     },
@@ -163,7 +211,7 @@ export default {
       code: `
         /**
          * Prior description.
-         *  
+         *
          * @template
          */
         let a;
@@ -182,7 +230,7 @@ export default {
       output: `
         /**
          * Prior description.
-         *  
+         *
          */
         let a;
       `,
@@ -204,7 +252,6 @@ export default {
         },
       ],
       output: `
-        
         function takesOne(param) {}
       `,
     },
@@ -225,7 +272,6 @@ export default {
         },
       ],
       output: `
-        
         function takesOne(param) {}
       `,
     },

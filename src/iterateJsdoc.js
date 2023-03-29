@@ -137,7 +137,23 @@ const getUtils = (
       const replacement = utils.stringify(jsdoc, specRewire);
 
       if (!replacement) {
-        return fixer.removeRange(jsdocNode.range);
+        const text = sourceCode.getText();
+        const lastLineBreakPos = text.slice(
+          0, jsdocNode.range[0],
+        ).search(/\n[ \t]*$/u);
+        if (lastLineBreakPos > -1) {
+          return fixer.removeRange([
+            lastLineBreakPos, jsdocNode.range[1],
+          ]);
+        }
+
+        return fixer.removeRange(
+          (/\s/u).test(text.charAt(jsdocNode.range[1])) ?
+            [
+              jsdocNode.range[0], jsdocNode.range[1] + 1,
+            ] :
+            jsdocNode.range,
+        );
       }
 
       return fixer.replaceText(jsdocNode, replacement);
