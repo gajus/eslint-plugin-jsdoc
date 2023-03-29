@@ -4571,6 +4571,19 @@ Additionally, for `@param` and `@return` tags, the rule will flag unnecessary ty
 The following patterns are considered problems:
 
 ````js
+/** @type {string} */let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/** @type {string} */ let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/** @type {string} */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
 /** @type {string} */
 let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
@@ -4608,7 +4621,7 @@ let a;
 
 /**
  * Prior description.
- *  
+ *
  * @template
  */
 let a;
