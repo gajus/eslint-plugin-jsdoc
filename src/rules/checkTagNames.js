@@ -56,13 +56,6 @@ const typedTagsUnnecessaryOutsideDeclare = new Set([
   'this',
 ]);
 
-const typedTagsParamReturn = new Set([
-  'param',
-  'parameter',
-  'return',
-  'returns',
-]);
-
 export default iterateJsdoc(({
   sourceCode,
   jsdoc,
@@ -152,24 +145,6 @@ export default iterateJsdoc(({
     }, true);
   };
 
-  const tagRedundantlyChecksParamOrReturnTyped = (jsdocTag, tagIndex) => {
-    if (!typedTagsParamReturn.has(jsdocTag.tag)) {
-      return false;
-    }
-
-    if (!jsdocTag.description.trim()) {
-      reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' without a description is redundant when using a type system.`, jsdocTag, tagIndex);
-      return true;
-    }
-
-    if (jsdocTag.type) {
-      reportWithTypeRemovalFixer(`Describing the type of '@${jsdocTag.tag}' is redundant when using a type system.`, jsdocTag, tagIndex);
-      return true;
-    }
-
-    return false;
-  };
-
   const checkTagForTypedValidity = (jsdocTag, tagIndex) => {
     if (typedTagsAlwaysUnnecessary.has(jsdocTag.tag)) {
       reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' is redundant when using a type system.`, jsdocTag, tagIndex, {
@@ -186,10 +161,6 @@ export default iterateJsdoc(({
 
     if (jsdocTag.tag === 'template' && !jsdocTag.name) {
       reportWithTypeRemovalFixer('\'@template\' without a name is redundant when using a type system.', jsdocTag, tagIndex);
-      return true;
-    }
-
-    if (tagRedundantlyChecksParamOrReturnTyped(jsdocTag, tagIndex)) {
       return true;
     }
 

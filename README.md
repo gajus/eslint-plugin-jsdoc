@@ -4628,29 +4628,6 @@ let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@template' without a name is redundant when using a type system.
 
-/** @param {string} */
-function takesOne(param) {}
-// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
-// Message: '@param' without a description is redundant when using a type system.
-
-/** @param {boolean} param */
-function takesOne(param) {}
-// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
-// Message: '@param' without a description is redundant when using a type system.
-
-/**
- * Existing comment
- *  @param {boolean} param
- */
-function takesOne(param) {}
-// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
-// Message: '@param' without a description is redundant when using a type system.
-
-/** @param {boolean} param - takes description */
-function takesOne(param) {}
-// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
-// Message: Describing the type of '@param' is redundant when using a type system.
-
 /** @typoo {string} */
 let a;
 // Message: Invalid JSDoc tag name "typoo".
