@@ -135,7 +135,7 @@ const getFunctionParameterNames = (
     if ('typeAnnotation' in param || hasLeftTypeAnnotation) {
       const typeAnnotation = hasLeftTypeAnnotation ? param.left.typeAnnotation : param.typeAnnotation;
 
-      if (typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
+      if (typeAnnotation?.typeAnnotation?.type === 'TSTypeLiteral') {
         const propertyNames = typeAnnotation.typeAnnotation.members.map((member) => {
           return getPropertiesFromPropertySignature(member);
         });
