@@ -114,7 +114,7 @@ export default iterateJsdoc(({
       return false;
     }
 
-    if (jsdocTag.description.trim() === 'default' || jsdocTag.name === 'default') {
+    if (jsdocTag.name === 'default') {
       return false;
     }
 
@@ -155,7 +155,7 @@ export default iterateJsdoc(({
     }
 
     if (tagIsRedundantWhenTyped(jsdocTag)) {
-      reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' is generally redundant outside of \`declare\` contexts when using a type system.`, jsdocTag, tagIndex);
+      reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' is redundant outside of ambient (\`declare\`/\`.d.ts\`) contexts when using a type system.`, jsdocTag, tagIndex);
       return true;
     }
 

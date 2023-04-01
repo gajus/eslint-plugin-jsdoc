@@ -151,7 +151,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: '\'@abstract\' is generally redundant outside of `declare` contexts when using a type system.',
+          message: '\'@abstract\' is redundant outside of ambient (`declare`/`.d.ts`) contexts when using a type system.',
         },
       ],
       options: [
@@ -173,7 +173,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: '\'@abstract\' is generally redundant outside of `declare` contexts when using a type system.',
+          message: '\'@abstract\' is redundant outside of ambient (`declare`/`.d.ts`) contexts when using a type system.',
         },
       ],
       options: [
@@ -937,17 +937,6 @@ export default {
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
-    },
-    {
-      code: `
-        /** @abstract - default */
-        let a;
-      `,
-      options: [
-        {
-          typed: true,
-        },
-      ],
     },
     {
       code: `
