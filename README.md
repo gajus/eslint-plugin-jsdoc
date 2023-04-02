@@ -4605,14 +4605,14 @@ let a;
 /** @abstract */
 let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
-// Message: '@abstract' is generally redundant outside of `declare` contexts when using a type system.
+// Message: '@abstract' is redundant outside of ambient (`declare`/`.d.ts`) contexts when using a type system.
 
 const a = {
   /** @abstract */
   b: true,
 };
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
-// Message: '@abstract' is generally redundant outside of `declare` contexts when using a type system.
+// Message: '@abstract' is redundant outside of ambient (`declare`/`.d.ts`) contexts when using a type system.
 
 /** @template */
 let a;
@@ -4984,6 +4984,14 @@ function Test() {
 The following patterns are not considered problems:
 
 ````js
+/** @default 0 */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @default 0 */
+declare let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
 /** @abstract */
 let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
@@ -5002,13 +5010,9 @@ function test() {
 }
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 
-/** @abstract - default */
-let a;
-// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
-
 /** @template name */
 let a;
-// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["template"],"typed":true}]
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 
 /** @param param - takes information */
 function takesOne(param) {}
