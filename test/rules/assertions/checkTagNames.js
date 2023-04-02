@@ -887,6 +887,32 @@ export default {
   valid: [
     {
       code: `
+        /** @default 0 */
+        let a;
+      `,
+      filename: 'file.ts',
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        /** @default 0 */
+        declare let a;
+      `,
+      filename: 'file.d.ts',
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
         /** @abstract */
         let a;
       `,
@@ -945,9 +971,6 @@ export default {
       `,
       options: [
         {
-          definedTags: [
-            'template',
-          ],
           typed: true,
         },
       ],

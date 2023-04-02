@@ -25,6 +25,10 @@ const typedTagsAlwaysUnnecessary = new Set([
   'typedef',
 ]);
 
+const typedTagsNeedingName = new Set([
+  'template',
+]);
+
 const typedTagsUnnecessaryOutsideDeclare = new Set([
   'abstract',
   'access',
@@ -114,7 +118,7 @@ export default iterateJsdoc(({
       return false;
     }
 
-    if (jsdocTag.name === 'default') {
+    if (jsdocTag.tag === 'default') {
       return false;
     }
 
@@ -159,8 +163,8 @@ export default iterateJsdoc(({
       return true;
     }
 
-    if (jsdocTag.tag === 'template' && !jsdocTag.name) {
-      reportWithTypeRemovalFixer('\'@template\' without a name is redundant when using a type system.', jsdocTag, tagIndex);
+    if (typedTagsNeedingName.has(jsdocTag.tag) && !jsdocTag.name) {
+      reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' without a name is redundant when using a type system.`, jsdocTag, tagIndex);
       return true;
     }
 
@@ -178,10 +182,15 @@ export default iterateJsdoc(({
       continue;
     }
 
-    if (utils.isValidTag(tagName, [
-      ...definedTags, ...definedPreferredTags, ...definedNonPreferredTags,
+    const validTags = [
+      ...definedTags,
+      ...definedPreferredTags,
+      ...definedNonPreferredTags,
       ...definedStructuredTags,
-    ])) {
+      ...typed ? typedTagsNeedingName : [],
+    ];
+
+    if (utils.isValidTag(tagName, validTags)) {
       let preferredTagName = utils.getPreferredTagName({
         allowObjectReturn: true,
         defaultMessage: `Blacklisted tag found (\`@${tagName}\`)`,
