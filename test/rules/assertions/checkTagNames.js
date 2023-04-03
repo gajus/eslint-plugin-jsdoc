@@ -42,6 +42,22 @@ export default {
       `,
     },
     {
+      code: `/** @type {string} */let a;
+      `,
+      errors: [
+        {
+          line: 1,
+          message: '\'@type\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+          typed: true,
+        },
+      ],
+    },
+    {
       code: `/** @type {string} */ let a;
       `,
       errors: [
@@ -162,6 +178,24 @@ export default {
       output: `
         let a;
       `,
+    },
+    {
+      code: `
+        /** @abstract */
+        let a;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '\'@abstract\' is redundant outside of ambient (`declare`/`.d.ts`) contexts when using a type system.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+          typed: true,
+        },
+      ],
     },
     {
       code: `

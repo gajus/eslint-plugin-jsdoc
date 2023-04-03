@@ -4486,6 +4486,12 @@ The format is as follows:
 }
 ```
 
+<a name="user-content-eslint-plugin-jsdoc-rules-check-tag-names-options-6-enablefixer-2"></a>
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-6-enablefixer-2"></a>
+##### <code>enableFixer</code>
+
+Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#user-content-typed).
+
 <a name="user-content-eslint-plugin-jsdoc-rules-check-tag-names-jsxtags"></a>
 <a name="eslint-plugin-jsdoc-rules-check-tag-names-jsxtags"></a>
 #### <code>jsxTags</code>
@@ -4575,6 +4581,10 @@ The following patterns are considered problems:
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@type' is redundant when using a type system.
 
+/** @type {string} */let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"enableFixer":false,"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
 /** @type {string} */ let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@type' is redundant when using a type system.
@@ -4605,6 +4615,11 @@ let a;
 /** @abstract */
 let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@abstract' is redundant outside of ambient (`declare`/`.d.ts`) contexts when using a type system.
+
+/** @abstract */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"enableFixer":false,"typed":true}]
 // Message: '@abstract' is redundant outside of ambient (`declare`/`.d.ts`) contexts when using a type system.
 
 const a = {
@@ -12769,8 +12784,8 @@ A value indicating whether getters should be checked. Defaults to `false`.
 
 A value indicating whether setters should be checked. Defaults to `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-enablefixer-2"></a>
-<a name="eslint-plugin-jsdoc-rules-require-example-options-25-enablefixer-2"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-example-options-25-enablefixer-3"></a>
+<a name="eslint-plugin-jsdoc-rules-require-example-options-25-enablefixer-3"></a>
 ##### <code>enableFixer</code>
 
 A boolean on whether to enable the fixer (which adds an empty `@example` block).
@@ -13708,8 +13723,8 @@ setters should be checked but only when there is no getter. This may be useful
 if one only wishes documentation on one of the two accessors. Defaults to
 `false`.
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-enablefixer-3"></a>
-<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-enablefixer-3"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-jsdoc-options-28-enablefixer-4"></a>
+<a name="eslint-plugin-jsdoc-rules-require-jsdoc-options-28-enablefixer-4"></a>
 ##### <code>enableFixer</code>
 
 A boolean on whether to enable the fixer (which adds an empty jsdoc block).
@@ -16159,8 +16174,8 @@ function signature, it may appear that there is an actual property named
 
 An options object accepts the following optional properties:
 
-<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-enablefixer-4"></a>
-<a name="eslint-plugin-jsdoc-rules-require-param-options-32-enablefixer-4"></a>
+<a name="user-content-eslint-plugin-jsdoc-rules-require-param-options-32-enablefixer-5"></a>
+<a name="eslint-plugin-jsdoc-rules-require-param-options-32-enablefixer-5"></a>
 ##### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.

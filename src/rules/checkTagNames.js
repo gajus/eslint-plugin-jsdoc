@@ -72,6 +72,7 @@ export default iterateJsdoc(({
 }) => {
   const {
     definedTags = [],
+    enableFixer = true,
     jsxTags,
     typed,
   } = context.options[0] || {};
@@ -133,8 +134,8 @@ export default iterateJsdoc(({
     return true;
   };
 
-  const reportWithTypeRemovalFixer = (message, jsdocTag, tagIndex, additionalTagChanges) => {
-    utils.reportJSDoc(message, jsdocTag, () => {
+  const reportWithTagRemovalFixer = (message, jsdocTag, tagIndex, additionalTagChanges) => {
+    utils.reportJSDoc(message, jsdocTag, enableFixer ? () => {
       if (jsdocTag.description.trim()) {
         utils.changeTag(jsdocTag, {
           postType: '',
@@ -146,12 +147,12 @@ export default iterateJsdoc(({
           removeEmptyBlock: true,
         });
       }
-    }, true);
+    } : null, true);
   };
 
   const checkTagForTypedValidity = (jsdocTag, tagIndex) => {
     if (typedTagsAlwaysUnnecessary.has(jsdocTag.tag)) {
-      reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' is redundant when using a type system.`, jsdocTag, tagIndex, {
+      reportWithTagRemovalFixer(`'@${jsdocTag.tag}' is redundant when using a type system.`, jsdocTag, tagIndex, {
         postTag: '',
         tag: '',
       });
@@ -159,12 +160,12 @@ export default iterateJsdoc(({
     }
 
     if (tagIsRedundantWhenTyped(jsdocTag)) {
-      reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' is redundant outside of ambient (\`declare\`/\`.d.ts\`) contexts when using a type system.`, jsdocTag, tagIndex);
+      reportWithTagRemovalFixer(`'@${jsdocTag.tag}' is redundant outside of ambient (\`declare\`/\`.d.ts\`) contexts when using a type system.`, jsdocTag, tagIndex);
       return true;
     }
 
     if (typedTagsNeedingName.has(jsdocTag.tag) && !jsdocTag.name) {
-      reportWithTypeRemovalFixer(`'@${jsdocTag.tag}' without a name is redundant when using a type system.`, jsdocTag, tagIndex);
+      reportWithTagRemovalFixer(`'@${jsdocTag.tag}' without a name is redundant when using a type system.`, jsdocTag, tagIndex);
       return true;
     }
 
@@ -243,6 +244,9 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
+          },
+          enableFixer: {
+            type: 'boolean',
           },
           jsxTags: {
             type: 'boolean',

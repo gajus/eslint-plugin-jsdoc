@@ -187,6 +187,10 @@ The format is as follows:
 }
 ```
 
+##### `enableFixer`
+
+Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#typed).
+
 #### `jsxTags`
 
 If this is set to `true`, all of the following tags used to control JSX output are allowed:
