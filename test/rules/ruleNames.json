@@ -17,6 +17,7 @@
   "multiline-blocks",
   "newline-after-description",
   "no-bad-blocks",
+  "no-blank-block-descriptions",
   "no-defaults",
   "no-missing-syntax",
   "no-multi-asterisks",

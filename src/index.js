@@ -16,6 +16,7 @@ import matchName from './rules/matchName';
 import multilineBlocks from './rules/multilineBlocks';
 import newlineAfterDescription from './rules/newlineAfterDescription';
 import noBadBlocks from './rules/noBadBlocks';
+import noBlankBlockDescriptions from './rules/noBlankBlockDescriptions';
 import noDefaults from './rules/noDefaults';
 import noMissingSyntax from './rules/noMissingSyntax';
 import noMultiAsterisks from './rules/noMultiAsterisks';
@@ -70,6 +71,7 @@ const index = {
     'multiline-blocks': multilineBlocks,
     'newline-after-description': newlineAfterDescription,
     'no-bad-blocks': noBadBlocks,
+    'no-blank-block-descriptions': noBlankBlockDescriptions,
     'no-defaults': noDefaults,
     'no-missing-syntax': noMissingSyntax,
     'no-multi-asterisks': noMultiAsterisks,
@@ -129,6 +131,7 @@ const createRecommendedRuleset = (warnOrError) => {
       'jsdoc/multiline-blocks': warnOrError,
       'jsdoc/newline-after-description': warnOrError,
       'jsdoc/no-bad-blocks': 'off',
+      'jsdoc/no-blank-block-descriptions': 'off',
       'jsdoc/no-defaults': 'off',
       'jsdoc/no-missing-syntax': 'off',
       'jsdoc/no-multi-asterisks': warnOrError,

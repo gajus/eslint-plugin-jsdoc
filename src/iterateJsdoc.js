@@ -254,6 +254,52 @@ const getUtils = (
     };
   };
 
+  utils.setBlockDescription = (setter) => {
+    const descLines = [];
+    let startIdx;
+    let endIdx;
+    let info;
+
+    jsdoc.source.some(({
+      tokens: {
+        description,
+        start,
+        delimiter,
+        postDelimiter,
+        tag,
+        end,
+      },
+    }, idx) => {
+      if (delimiter === '/**') {
+        return false;
+      }
+
+      if (startIdx === undefined) {
+        startIdx = idx;
+        info = {
+          delimiter,
+          postDelimiter,
+          start,
+        };
+      }
+
+      if (tag || end) {
+        endIdx = idx;
+        return true;
+      }
+
+      descLines.push(description);
+      return false;
+    });
+
+    /* istanbul ignore else -- Won't be called if missing */
+    if (descLines.length) {
+      jsdoc.source.splice(
+        startIdx, endIdx - startIdx, ...setter(info, seedTokens, descLines),
+      );
+    }
+  };
+
   utils.setDescriptionLines = (matcher, setter) => {
     let finalIdx = 0;
     jsdoc.source.some(({
