@@ -8537,12 +8537,12 @@ The following patterns are considered problems:
 
 /**
  * @someTag {aType} with Description */
-// "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineBlocks":true}]
+// "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineText":true}]
 // Message: Should have no text on the final line (before the `*/`).
 
 /**
  * Description */
-// "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineBlocks":true}]
+// "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineText":true}]
 // Message: Should have no text on the final line (before the `*/`).
 ````
 
@@ -8648,7 +8648,7 @@ The following patterns are not considered problems:
 // "jsdoc/multiline-blocks": ["error"|"warn", {"allowMultipleTags":false,"multilineTags":["oneTag"],"noMultilineBlocks":true}]
 
 /** @someTag with Description */
-// "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineBlocks":true}]
+// "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineText":true}]
 ````
 
 
@@ -23647,7 +23647,7 @@ function quux ( id, options ) {
 function assign(employees) {
   // ...
 }
-// "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":true,"checkSeesForNamepaths":false}]
+// "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":true}]
 
 /**
  * @param {typeof obj["level1"]["level2"]} foo

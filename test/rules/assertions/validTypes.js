@@ -1713,7 +1713,6 @@ export default {
       options: [
         {
           allowEmptyNamepaths: true,
-          checkSeesForNamepaths: false,
         },
       ],
     },
