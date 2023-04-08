@@ -301,7 +301,7 @@ export default iterateJsdoc(({
     },
     schema: [
       {
-        additionalProperies: false,
+        additionalProperties: false,
         properties: {
           allowEmptyNamepaths: {
             default: false,

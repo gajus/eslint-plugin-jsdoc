@@ -181,7 +181,7 @@ export default iterateJsdoc(({
         type: 'string',
       },
       {
-        additionalProperies: false,
+        additionalProperties: false,
         properties: {
           count: {
             type: 'integer',

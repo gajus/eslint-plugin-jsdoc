@@ -112,7 +112,7 @@ export default iterateJsdoc(({
     fixable: 'code',
     schema: [
       {
-        additionalProperies: false,
+        additionalProperties: false,
         properties: {
           // Option properties here (or remove the object)
           escapeHTML: {
