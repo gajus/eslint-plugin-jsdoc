@@ -43,6 +43,7 @@ JSDoc linting rules for ESLint.
         * [`multiline-blocks`](#user-content-eslint-plugin-jsdoc-rules-multiline-blocks)
         * [`newline-after-description`](#user-content-eslint-plugin-jsdoc-rules-newline-after-description)
         * [`no-bad-blocks`](#user-content-eslint-plugin-jsdoc-rules-no-bad-blocks)
+        * [`no-blank-block-descriptions`](#user-content-eslint-plugin-jsdoc-rules-no-blank-block-descriptions)
         * [`no-defaults`](#user-content-eslint-plugin-jsdoc-rules-no-defaults)
         * [`no-missing-syntax`](#user-content-eslint-plugin-jsdoc-rules-no-missing-syntax)
         * [`no-multi-asterisks`](#user-content-eslint-plugin-jsdoc-rules-no-multi-asterisks)
@@ -9222,6 +9223,76 @@ function quux (foo) {
 }
 
 /***/
+````
+
+
+<a name="user-content-eslint-plugin-jsdoc-rules-no-blank-block-descriptions"></a>
+<a name="eslint-plugin-jsdoc-rules-no-blank-block-descriptions"></a>
+### <code>no-blank-block-descriptions</code>
+
+If tags are present, this rule will prevent empty lines in the
+block description.
+
+If no tags are present, this rule will prevent extra empty lines
+in the block description.
+
+|||
+|---|---|
+|Context|everywhere|
+|Tags|(Block description)|
+|Recommended|false|
+|Settings||
+|Options||
+
+The following patterns are considered problems:
+
+````js
+/**
+ *
+ * @param {number} x
+ */
+function functionWithClearName(x) {}
+// Message: There should be no blank lines in block descriptions followed by tags.
+
+/**
+ *
+ *
+ */
+function functionWithClearName() {}
+// Message: There should be no extra blank lines in block descriptions not followed by tags.
+````
+
+The following patterns are not considered problems:
+
+````js
+/**
+ * Non-empty description
+ * @param {number} x
+ */
+function functionWithClearName(x) {}
+
+/**
+ * @param {number} x
+ */
+function functionWithClearName(x) {}
+
+/**
+ *
+ */
+function functionWithClearName() {}
+
+/**
+ */
+function functionWithClearName() {}
+
+/** */
+function functionWithClearName() {}
+
+/** Some desc. */
+function functionWithClearName() {}
+
+/** @someTag */
+function functionWithClearName() {}
 ````
 
 
