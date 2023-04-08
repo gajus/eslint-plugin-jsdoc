@@ -68,7 +68,7 @@ export default iterateJsdoc(({
     },
     schema: [
       {
-        additionalProperies: false,
+        additionalProperties: false,
         properties: {
           // Option properties here (or remove the object)
         },
@@ -95,7 +95,7 @@ export default iterateJsdoc(({
       \`,
       errors: [
         {
-          line: '',
+          line: 2,
           message: '',
         },
       ],

@@ -168,7 +168,7 @@ export default iterateJsdoc(({
     fixable: 'code',
     schema: [
       {
-        additionalProperies: false,
+        additionalProperties: false,
         properties: {
           alphabetizeExtras: {
             type: 'boolean',

@@ -103,10 +103,10 @@ export default iterateJsdoc(({
     fixable: 'code',
     schema: [
       {
-        additionalProperies: false,
+        additionalProperties: false,
         properties: {
           match: {
-            additionalProperies: false,
+            additionalProperties: false,
             items: {
               properties: {
                 allowName: {
