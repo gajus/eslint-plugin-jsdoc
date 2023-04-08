@@ -588,7 +588,7 @@ export default {
       ],
       options: [
         {
-          noFinalLineBlocks: true,
+          noFinalLineText: true,
         },
       ],
       output: `
@@ -610,7 +610,7 @@ export default {
       ],
       options: [
         {
-          noFinalLineBlocks: true,
+          noFinalLineText: true,
         },
       ],
       output: `
@@ -891,7 +891,7 @@ export default {
       `,
       options: [
         {
-          noFinalLineBlocks: true,
+          noFinalLineText: true,
         },
       ],
     },
