@@ -4492,9 +4492,9 @@ The format is as follows:
 
 Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#user-content-typed).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-check-tag-names-jsxtags"></a>
-<a name="eslint-plugin-jsdoc-rules-check-tag-names-jsxtags"></a>
-#### <code>jsxTags</code>
+<a name="user-content-eslint-plugin-jsdoc-rules-check-tag-names-options-6-jsxtags"></a>
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-6-jsxtags"></a>
+##### <code>jsxTags</code>
 
 If this is set to `true`, all of the following tags used to control JSX output are allowed:
 
@@ -4507,9 +4507,9 @@ jsxRuntime
 
 For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).
 
-<a name="user-content-eslint-plugin-jsdoc-rules-check-tag-names-typed"></a>
-<a name="eslint-plugin-jsdoc-rules-check-tag-names-typed"></a>
-#### <code>typed</code>
+<a name="user-content-eslint-plugin-jsdoc-rules-check-tag-names-options-6-typed"></a>
+<a name="eslint-plugin-jsdoc-rules-check-tag-names-options-6-typed"></a>
+##### <code>typed</code>
 
 If this is set to `true`, additionally checks for tag names that are redundant when using a type checker such as TypeScript.
 
@@ -4564,14 +4564,12 @@ static
 this
 ```
 
-Additionally, for `@param` and `@return` tags, the rule will flag unnecessary type descriptions (e.g. `@param {string}`).
-
 |||
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|true|
-|Options|`definedTags`|
+|Options|`definedTags`, `enableFixer`, `jsxTags`, `typed`|
 |Settings|`tagNamePreference`, `mode`|
 
 The following patterns are considered problems:
