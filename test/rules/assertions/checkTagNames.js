@@ -1282,5 +1282,26 @@ export default {
         },
       },
     },
+    {
+      code: `
+        interface WebTwain {
+          /**
+           * Converts the images specified by the indices to base64 synchronously.
+           * @function WebTwain#ConvertToBase64
+           * @returns {Base64Result}
+       
+          ConvertToBase64(): Base64Result;
+          */
+
+          /**
+           * Converts the images specified by the indices to base64 asynchronously.
+           * @function WebTwain#ConvertToBase64
+           * @returns {boolean}
+           */
+          ConvertToBase64(): boolean;
+        }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
