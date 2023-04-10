@@ -73,6 +73,11 @@ const adjustNames = (type, preferred, isGenericMatch, typeNodeName, node, parent
   }
 };
 
+const getMessage = (upperCase) => {
+  return 'Use object shorthand or index signatures instead of ' +
+  '`' + (upperCase ? 'O' : 'o') + 'bject`, e.g., `{[key: string]: string}`';
+};
+
 export default iterateJsdoc(({
   jsdocNode,
   sourceCode,
@@ -97,13 +102,35 @@ export default iterateJsdoc(({
     'Object.<>' in preferredTypesOriginal ||
     'object<>' in preferredTypesOriginal);
 
-  const preferredTypes = {
-    ...injectObjectPreferredTypes ? {
+  const info = {
+    message: getMessage(),
+    replacement: false,
+  };
+
+  const infoUC = {
+    message: getMessage(true),
+    replacement: false,
+  };
+
+  const typeToInject = mode === 'typescript' ?
+    {
+      Object: 'object',
+      'object.<>': info,
+      'Object.<>': infoUC,
+      'object<>': info,
+      'Object<>': infoUC,
+    } :
+    {
       Object: 'object',
       'object.<>': 'Object<>',
       'Object.<>': 'Object<>',
       'object<>': 'Object<>',
-    } : {},
+    };
+
+  const preferredTypes = {
+    ...injectObjectPreferredTypes ?
+      typeToInject :
+      {},
     ...preferredTypesOriginal,
   };
 
@@ -364,7 +391,7 @@ export default iterateJsdoc(({
       for (const [
         badType,
         preferredType = '',
-        message,
+        msg,
       ] of invalidTypes) {
         const tagValue = jsdocTag.name ? ` "${jsdocTag.name}"` : '';
         if (exemptTagContexts.some(({
@@ -378,13 +405,13 @@ export default iterateJsdoc(({
         }
 
         report(
-          message ||
+          msg ||
             `Invalid JSDoc @${tagName}${tagValue} type "${badType}"` +
             (preferredType ? '; ' : '.') +
             (preferredType ? `prefer: ${JSON.stringify(preferredType)}.` : ''),
           preferredType ? fix : null,
           jsdocTag,
-          message ? {
+          msg ? {
             tagName,
             tagValue,
           } : null,
