@@ -123,7 +123,9 @@ export default iterateJsdoc(({
       return false;
     }
 
-    if (context.getFilename().endsWith('.d.ts') && node.parent.type === 'Program') {
+    if (context.getFilename().endsWith('.d.ts') && [
+      'Program', null, undefined,
+    ].includes(node?.parent?.type)) {
       return false;
     }
 
