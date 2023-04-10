@@ -173,6 +173,11 @@ const createRecommendedTypeScriptRuleset = (warnOrError) => {
     rules: {
       ...ruleset.rules,
       /* eslint-disable indent -- Extra indent to avoid use by auto-rule-editing */
+        'jsdoc/check-tag-names': [
+          warnOrError, {
+            typed: true,
+          },
+        ],
         'jsdoc/no-types': warnOrError,
         'jsdoc/require-param-type': 'off',
         'jsdoc/require-property-type': 'off',
