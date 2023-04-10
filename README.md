@@ -5442,7 +5442,8 @@ object.
 
 However, `Object.create(null)` objects are not `instanceof Object`, however, so
 in the case of such a plain object we lower-case to indicate possible support
-for these objects. Also, nowadays, TypeScript also discourages use of `Object`
+for these objects. Also, nowadays, TypeScript also [discourages](https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html#:~:text=%E2%9D%8C%20Don't%20ever%20use,used%20appropriately%20in%20JavaScript%20code.)
+use of `Object`
 as a lone type. However, one additional complexity is that TypeScript allows and
 actually [currently requires](https://github.com/microsoft/TypeScript/issues/20555)
 `Object` (with the initial upper-case) if used in the syntax
@@ -5451,8 +5452,14 @@ adhere to that which [JSDoc documents](https://jsdoc.app/tags-type.html).
 
 So, for optimal compatibility with TypeScript (especially since TypeScript
 tools can be used on plain JavaScript with JSDoc), we are now requiring this
-TypeScript approach by default (if you set `object` type `preferredTypes` in
-TypeScript mode, the defaults will not apply).
+TypeScript approach by default in non-"typescript" mode (if you set
+`object` type `preferredTypes` in TypeScript mode, the defaults will
+not apply).
+
+However, for "typescript" mode, a still better choice exists—using index signatures such as `{[key: string]: string}` or using a more precise
+shorthand object syntax (e.g., `{a: string, b: number}`). This is superior
+for TypeScript because the likes of `Object<string, number>` is not useable
+in native TypeScript syntax, even if it is allowed within JSDoc.
 
 Basically, for primitives, we want to define the type as a primitive, because
 that's what we use in 99.9% of cases. For everything else, we use the type
@@ -6132,7 +6139,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"mode":"typescript"}}
-// Message: Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".
+// Message: Use object shorthand or index signatures instead of `object`, e.g., `{[key: string]: string}`
 
 /**
  *
@@ -6414,7 +6421,7 @@ function b () {}
 function a () {}
 
 /**
- * @typedef {Object<string>} foo
+ * @typedef {{[key: string]: number}} foo
  */
 function b () {}
 // Settings: {"jsdoc":{"mode":"typescript"}}
@@ -6443,7 +6450,7 @@ function quux (foo) {
 }
 
 /**
- * @param {Object<string>} foo
+ * @param {{[key: string]: number}} foo
  */
 function quux (foo) {
 

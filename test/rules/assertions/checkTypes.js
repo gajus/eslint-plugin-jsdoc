@@ -2339,17 +2339,9 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".',
+          message: 'Use object shorthand or index signatures instead of `object`, e.g., `{[key: string]: string}`',
         },
       ],
-      output: `
-        /**
-         * @param {Object<string>} foo
-         */
-        function quux (foo) {
-
-        }
-      `,
       settings: {
         jsdoc: {
           mode: 'typescript',
@@ -2944,7 +2936,7 @@ export default {
         function a () {}
 
         /**
-         * @typedef {Object<string>} foo
+         * @typedef {{[key: string]: number}} foo
          */
         function b () {}
       `,
@@ -3020,7 +3012,7 @@ export default {
     {
       code: `
       /**
-       * @param {Object<string>} foo
+       * @param {{[key: string]: number}} foo
        */
       function quux (foo) {
 
