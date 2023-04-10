@@ -14,7 +14,7 @@ This rule requires all docs comments contain at least one word not already in th
 
 #### Options
 
-#### `aliases`
+##### `aliases`
 
 The `aliases` option allows indicating words as synonyms (aliases) of each other.
 
@@ -33,7 +33,7 @@ The default `aliases` option is:
 }
 ```
 
-#### `uselessWords`
+##### `uselessWords`
 
 Words that are ignored when searching for one that adds meaning.
 

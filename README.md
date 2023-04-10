@@ -7300,9 +7300,9 @@ This rule requires all docs comments contain at least one word not already in th
 <a name="eslint-plugin-jsdoc-rules-informative-docs-options-11"></a>
 #### Options
 
-<a name="user-content-eslint-plugin-jsdoc-rules-informative-docs-aliases"></a>
-<a name="eslint-plugin-jsdoc-rules-informative-docs-aliases"></a>
-#### <code>aliases</code>
+<a name="user-content-eslint-plugin-jsdoc-rules-informative-docs-options-11-aliases"></a>
+<a name="eslint-plugin-jsdoc-rules-informative-docs-options-11-aliases"></a>
+##### <code>aliases</code>
 
 The `aliases` option allows indicating words as synonyms (aliases) of each other.
 
@@ -7321,9 +7321,9 @@ The default `aliases` option is:
 }
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-rules-informative-docs-uselesswords"></a>
-<a name="eslint-plugin-jsdoc-rules-informative-docs-uselesswords"></a>
-#### <code>uselessWords</code>
+<a name="user-content-eslint-plugin-jsdoc-rules-informative-docs-options-11-uselesswords"></a>
+<a name="eslint-plugin-jsdoc-rules-informative-docs-options-11-uselesswords"></a>
+##### <code>uselessWords</code>
 
 Words that are ignored when searching for one that adds meaning.
 
