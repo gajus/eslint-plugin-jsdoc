@@ -128,7 +128,7 @@ const createRecommendedRuleset = (warnOrError) => {
       'jsdoc/check-values': warnOrError,
       'jsdoc/empty-tags': warnOrError,
       'jsdoc/implements-on-classes': warnOrError,
-      'jsdoc/informative-docs': warnOrError,
+      'jsdoc/informative-docs': 'off',
       'jsdoc/match-description': 'off',
       'jsdoc/match-name': 'off',
       'jsdoc/multiline-blocks': warnOrError,
