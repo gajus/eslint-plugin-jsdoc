@@ -22385,6 +22385,18 @@ Sorts tags by a specified sequence according to tag name.
 
 (Default order originally inspired by [`@homer0/prettier-plugin-jsdoc`](https://github.com/homer0/packages/tree/main/packages/public/prettier-plugin-jsdoc).)
 
+Optionally allows adding line breaks between tag groups and/or between tags
+within a tag group.
+
+Please note: unless you are disabling reporting of line breaks, this rule
+should not be used with the default "never" or "always" options of
+`tag-lines` (a rule enabled by default with the recommended config) as
+that rule adds its own line breaks after tags and may interfere with any
+line break setting this rule will attempt to do when not disabled.
+
+You may, however, safely set the "any" option in that rule along with
+`startLines` and/or `endLines`.
+
 <a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40"></a>
 <a name="eslint-plugin-jsdoc-rules-sort-tags-options-40"></a>
 #### Options
@@ -22393,24 +22405,32 @@ Sorts tags by a specified sequence according to tag name.
 <a name="eslint-plugin-jsdoc-rules-sort-tags-options-40-tagsequence"></a>
 ##### <code>tagSequence</code>
 
-An array of tag names indicating the preferred sequence for sorting tags.
+An array of tag group objects indicating the preferred sequence for sorting tags.
+
+Each item in the array should be an object with a `tags` property set to an array
+of tag names.
 
 Tag names earlier in the list will be arranged first. The relative position of
 tags of the same name will not be changed.
 
-Tags not in the list will be sorted alphabetically at the end (or in place of
-the pseudo-tag `-other` placed within `tagSequence`) if `alphabetizeExtras` is
-enabled and in their order of appearance otherwise (so if you want all your
-tags alphabetized, supply an empty array with `alphabetizeExtras` enabled).
+Earlier groups will also be arranged before later groups, but with the added
+feature that additional line breaks may be added between (or before or after)
+such groups (depending on the setting of `linesBetween`).
 
-Defaults to the array below.
+Tag names not in the list will be grouped together at the end. The pseudo-tag
+`-other` can be used to place them anywhere else if desired. The tags will be
+placed in their order of appearance, or alphabetized if `alphabetizeExtras`
+is enabled, see more below about that option.
+
+Defaults to the array below (noting that it is just a single tag group with
+no lines between groups by default).
 
 Please note that this order is still experimental, so if you want to retain
 a fixed order that doesn't change into the future, supply your own
 `tagSequence`.
 
 ```js
-[
+[{tags: [
   // Brief descriptions
   'summary',
   'typeSummary',
@@ -22563,7 +22583,7 @@ a fixed order that doesn't change into the future, supply your own
   'since',
   'deprecated',
   'todo',
-];
+]}];
 ```
 
 <a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40-alphabetizeextras"></a>
@@ -22574,13 +22594,41 @@ Defaults to `false`. Alphabetizes any items not within `tagSequence` after any
 items within `tagSequence` (or in place of the special `-other` pseudo-tag)
 are sorted.
 
+If you want all your tags alphabetized, you can supply an empty array for
+`tagSequence` along with setting this option to `true`.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40-linesbetween"></a>
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40-linesbetween"></a>
+##### <code>linesBetween</code>
+
+Indicates the number of lines to be added between tag groups. Defaults to 1.
+Do not set to 0 or 2+ if you are using `tag-lines` and `"always"` and do not
+set to 1+ if you are using `tag-lines` and `"never"`.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40-reporttaggroupspacing"></a>
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40-reporttaggroupspacing"></a>
+##### <code>reportTagGroupSpacing</code>
+
+Whether to enable reporting and fixing of line breaks between tag groups
+as set by `linesBetween`. Defaults to `true`. Note that the very last tag
+will not have spacing applied regardless. For adding line breaks there, you
+may wish to use the `endLines` option of the `tag-lines` rule.
+
+<a name="user-content-eslint-plugin-jsdoc-rules-sort-tags-options-40-reportintrataggroupspacing"></a>
+<a name="eslint-plugin-jsdoc-rules-sort-tags-options-40-reportintrataggroupspacing"></a>
+##### <code>reportIntraTagGroupSpacing</code>
+
+Whether to enable reporting and fixing of line breaks within tags of a given
+tag group. Defaults to `true` which will remove any line breaks at the end of
+such tags. Do not use with `true` if you are using `tag-lines` and `always`.
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|any|
 |Recommended|false|
 |Settings||
-|Options|`tagSequence`, `alphabetizeExtras`|
+|Options|`tagSequence`, `alphabetizeExtras`, `linesBetween`, `reportTagGroupSpacing`, `reportIntraTagGroupSpacing`|
 
 The following patterns are considered problems:
 
@@ -22645,7 +22693,16 @@ function quux () {}
  * @abc
  */
 function quux () {}
-// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":["def","xyz","abc"]}]
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["def","xyz","abc"]}]}]
+// Message: Tags are not in the prescribed order: def, xyz, abc
+
+/**
+ * @xyz
+ * @def
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["def","xyz"]},{"tags":["abc"]}]}]
 // Message: Tags are not in the prescribed order: def, xyz, abc
 
 /**
@@ -22677,6 +22734,135 @@ function quux () {}
  */
 function quux () {}
 // Message: Tags are not in the prescribed order: summary, typeSummary, module, exports, file, fileoverview, overview, typedef, interface, record, template, name, kind, type, alias, external, host, callback, func, function, method, class, constructor, modifies, mixes, mixin, mixinClass, mixinFunction, namespace, borrows, constructs, lends, implements, requires, desc, description, classdesc, tutorial, copyright, license, internal, const, constant, final, global, readonly, abstract, virtual, var, member, memberof, memberof!, inner, instance, inheritdoc, inheritDoc, override, hideconstructor, param, arg, argument, prop, property, return, returns, async, generator, default, defaultvalue, enum, augments, extends, throws, exception, yield, yields, event, fires, emits, listens, this, static, private, protected, public, access, package, -other, see, example, closurePrimitive, customElement, expose, hidden, idGenerator, meaning, ngInject, owner, wizaction, define, dict, export, externs, implicitCast, noalias, nocollapse, nocompile, noinline, nosideeffects, polymer, polymerBehavior, preserve, struct, suppress, unrestricted, category, ignore, author, version, variation, since, deprecated, todo
+
+/**
+ * @def
+ * @xyz
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":2,"tagSequence":[{"tags":["qrs"]},{"tags":["def","xyz"]},{"tags":["abc"]}]}]
+// Message: Tag groups do not have the expected whitespace
+
+/**
+ * @def
+ * @xyz
+ *
+ *
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":1,"tagSequence":[{"tags":["qrs"]},{"tags":["def","xyz"]},{"tags":["abc"]}]}]
+// Message: Tag groups do not have the expected whitespace
+
+/**
+ * @def
+ * @xyz A multiline
+ * description
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":2,"tagSequence":[{"tags":["qrs"]},{"tags":["def","xyz"]},{"tags":["abc"]}]}]
+// Message: Tag groups do not have the expected whitespace
+
+/**
+ * @def
+ * @xyz
+ * @xyz
+ *
+ *
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":1,"tagSequence":[{"tags":["qrs"]},{"tags":["def","xyz"]},{"tags":["abc"]}]}]
+// Message: Tag groups do not have the expected whitespace
+
+/**
+ * Foo
+ *
+ * @param {(
+ *  req: express.Request,
+ *  done: (error: any, user?: any, info?: any) => void
+ * ) => void} verify - callback to excute custom authentication logic
+ * @see https://github.com/jaredhanson/passport/blob/v0.4.1/lib/middleware/authenticate.js#L217
+ *
+ */
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["since","access"]},{"tags":["class","augments","mixes"]},{"tags":["alias","memberof"]},{"tags":["see","link","global"]},{"tags":["fires","listens"]},{"tags":["param"]},{"tags":["yields"]},{"tags":["returns"]}]}]
+// Message: Tags are not in the prescribed order: since, access, class, augments, mixes, alias, memberof, see, link, global, fires, listens, param, yields, returns
+
+/**
+ * Summary. (use period)
+ *
+ * Description. (use period)
+ *
+ * @since      1.0.1
+ * @access     private
+ *
+ * @class
+ * @mixes    mixin
+ *
+ * @alias    realName
+ * @memberof namespace
+ *
+ * @see  Function/class relied on
+ * @global
+ *
+ * @tutorial Asd
+ * @license MIT
+ *
+ * @fires   eventName
+ * @fires   className#eventName
+ * @listens event:eventName
+ * @listens className~event:eventName
+ *
+ * @tutorial Asd
+ * @license MIT
+ *
+ * @yields {string} Yielded value description.
+ *
+ * @param {string} var1 - Description.
+ * @param {string} var2 - Description of optional variable.
+ * @param {string} var3 - Description of optional variable with default variable.
+ * @param {object} objectVar - Description.
+ * @param {string} objectVar.key - Description of a key in the objectVar parameter.
+ *
+ * @returns {string} Return value description.
+ */
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["since","access"]},{"tags":["class","augments","mixes"]},{"tags":["alias","memberof"]},{"tags":["see","link","global"]},{"tags":["fires","listens"]},{"tags":["param"]},{"tags":["yields"]},{"tags":["returns"]}]}]
+// Message: Tags are not in the prescribed order: since, access, class, augments, mixes, alias, memberof, see, link, global, fires, listens, param, yields, returns
+
+/**
+ * @def
+ * @zzz
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":1,"tagSequence":[{"tags":["qrs"]},{"tags":["def","-other","xyz"]},{"tags":["abc"]}]}]
+// Message: Tag groups do not have the expected whitespace
+
+/**
+ * @xyz
+ * @def
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"alphabetizeExtras":true,"tagSequence":[]}]
+// Message: Tags are not in the prescribed order: (alphabetical)
+
+/**
+ * @example
+ * enum Color { Red, Green, Blue }
+ * faker.helpers.enumValue(Color) // 1 (Green)
+ *
+ * enum Direction { North = 'North', South = 'South'}
+ * faker.helpers.enumValue(Direction) // 'South'
+ *
+ * enum HttpStatus { Ok = 200, Created = 201, BadRequest = 400, Unauthorized = 401 }
+ * faker.helpers.enumValue(HttpStatus) // 200 (Ok)
+ * @since 8.0.0
+ */
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["internal"]},{"tags":["template","param"]},{"tags":["returns"]},{"tags":["throws"]},{"tags":["see"]},{"tags":["example"]},{"tags":["since"]},{"tags":["deprecated"]}]}]
+// Message: Tag groups do not have the expected whitespace
 ````
 
 The following patterns are not considered problems:
@@ -22711,10 +22897,86 @@ function quux () {}
  * @abc
  */
 function quux () {}
-// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":["def","xyz","abc"]}]
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["def","xyz","abc"]}]}]
 
 /** @def */
 function quux () {}
+
+/**
+ * @def
+ * @xyz
+ *
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":1,"tagSequence":[{"tags":["qrs"]},{"tags":["def","xyz"]},{"tags":["abc"]}]}]
+
+/**
+ * @def
+ * @xyz A multiline
+ * description
+ *
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":1,"tagSequence":[{"tags":["qrs"]},{"tags":["def","xyz"]},{"tags":["abc"]}]}]
+
+/**
+ * Foo
+ *
+ * @see https://github.com/jaredhanson/passport/blob/v0.4.1/lib/middleware/authenticate.js#L217
+ *
+ * @param {(
+ *  req: express.Request,
+ *  done: (error: any, user?: any, info?: any) => void
+ * ) => void} verify - callback to excute custom authentication logic
+ */
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["since","access"]},{"tags":["class","augments","mixes"]},{"tags":["alias","memberof"]},{"tags":["see","link","global"]},{"tags":["fires","listens"]},{"tags":["param"]},{"tags":["yields"]},{"tags":["returns"]}]}]
+
+/**
+ * Constructor.
+ *
+ * @public
+ *
+ * @param {string} [message] - Error message.
+ */
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["since","access"]},{"tags":["class","augments","mixes"]},{"tags":["alias","memberof"]},{"tags":["public","protected","private","override"]},{"tags":["override","async"]},{"tags":["see","link","global"]},{"tags":["param"]},{"tags":["yields"]},{"tags":["returns"]},{"tags":["fires","-other","listens"]}]}]
+
+/**
+ * @param options.mode The mode to generate the birthdate. Supported modes are `'age'` and `'year'` .
+ *
+ * There are two modes available `'age'` and `'year'`:
+ * - `'age'`: The min and max options define the age of the person (e.g. `18` - `42`).
+ * - `'year'`: The min and max options define the range the birthdate may be in (e.g. `1900` - `2000`).
+ *
+ * Defaults to `year`.
+ *
+ * @example
+ */
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["internal"]},{"tags":["template","param"]},{"tags":["returns"]},{"tags":["throws"]},{"tags":["see"]},{"tags":["example"]},{"tags":["since"]},{"tags":["deprecated"]}]}]
+
+/**
+ * @example
+ * enum Color { Red, Green, Blue }
+ * faker.helpers.enumValue(Color) // 1 (Green)
+ *
+ * enum Direction { North = 'North', South = 'South'}
+ * faker.helpers.enumValue(Direction) // 'South'
+ *
+ * enum HttpStatus { Ok = 200, Created = 201, BadRequest = 400, Unauthorized = 401 }
+ * faker.helpers.enumValue(HttpStatus) // 200 (Ok)
+ *
+ * @since 8.0.0
+ */
+// "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["internal"]},{"tags":["template","param"]},{"tags":["returns"]},{"tags":["throws"]},{"tags":["see"]},{"tags":["example"]},{"tags":["since"]},{"tags":["deprecated"]}]}]
+
+/**
+ * @def
+ * @xyz
+ * @abc
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":2,"reportTagGroupSpacing":false,"tagSequence":[{"tags":["qrs"]},{"tags":["def","xyz"]},{"tags":["abc"]}]}]
 ````
 
 
