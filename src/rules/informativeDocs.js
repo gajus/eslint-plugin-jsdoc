@@ -1,3 +1,6 @@
+import {
+  areDocsInformative,
+} from 'are-docs-informative';
 import iterateJsdoc from '../iterateJsdoc';
 
 const defaultAliases = {
@@ -66,40 +69,13 @@ export default iterateJsdoc(({
   } = context.options[0] || {};
   const nodeNames = getNamesFromNode(node);
 
-  const normalizeWord = (word) => {
-    const wordLower = word.toLowerCase();
-
-    return aliases[wordLower] ?? wordLower;
-  };
-
-  const splitTextIntoWords = (...names) => {
-    return names.flatMap((name) => {
-      return name
-        .replace(/\W+/gu, ' ')
-        .replace(/([a-z])([A-Z])/gu, '$1 $2')
-        .trim()
-        .split(' ');
-    })
-      .map(normalizeWord);
-  };
-
   const descriptionIsRedundant = (text, extraName = '') => {
-    if (!text) {
-      return false;
-    }
-
-    const split = splitTextIntoWords(text);
-    const words = new Set(split);
-
-    for (const nameWord of splitTextIntoWords(...nodeNames, extraName)) {
-      words.delete(nameWord);
-    }
-
-    for (const uselessWord of uselessWords) {
-      words.delete(uselessWord);
-    }
-
-    return !words.size;
+    return Boolean(text) && !areDocsInformative(text, [
+      extraName, nodeNames,
+    ].filter(Boolean).join(' '), {
+      aliases,
+      uselessWords,
+    });
   };
 
   const {
