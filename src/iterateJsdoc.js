@@ -128,7 +128,12 @@ const getUtils = (
   };
 
   utils.stringify = (tagBlock, specRewire) => {
-    return commentStringify(specRewire ? rewireSpecs(tagBlock) : tagBlock);
+    let block;
+    if (specRewire) {
+      block = rewireSpecs(tagBlock);
+    }
+
+    return commentStringify(specRewire ? block : tagBlock);
   };
 
   utils.reportJSDoc = (msg, tag, handler, specRewire, data) => {
