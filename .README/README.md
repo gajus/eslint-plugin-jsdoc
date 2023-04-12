@@ -56,10 +56,12 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-values": 1, // Recommended
         "jsdoc/empty-tags": 1, // Recommended
         "jsdoc/implements-on-classes": 1, // Recommended
+        "jsdoc/informative-docs": 1,
         "jsdoc/match-description": 1,
         "jsdoc/multiline-blocks": 1, // Recommended
         "jsdoc/newline-after-description": 1, // Recommended
         "jsdoc/no-bad-blocks": 1,
+        "jsdoc/no-blank-block-descriptions": 1,
         "jsdoc/no-defaults": 1,
         "jsdoc/no-missing-syntax": 1,
         "jsdoc/no-multi-asterisks": 1, // Recommended
