@@ -102,7 +102,7 @@ export default {
       options: [
         'always',
         {
-          noEndLines: true,
+          applyToEndTag: false,
         },
       ],
       output: `
@@ -415,6 +415,9 @@ export default {
       ],
       options: [
         'always',
+        {
+          endLines: null,
+        },
       ],
       output: `
       /**
@@ -477,13 +480,13 @@ export default {
       errors: [
         {
           line: 11,
-          message: 'Expected no trailing lines',
+          message: 'Expected 0 trailing lines',
         },
       ],
       options: [
         'any',
         {
-          dropEndLines: true,
+          endLines: 0,
         },
       ],
       output: `
@@ -497,6 +500,201 @@ export default {
        *
        * This is still part of \`@returns\`.
        */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {string} b
+       *
+       * @returns {SomeType} An extended
+       * description.
+       *
+       * This is still part of \`@returns\`.
+       *
+       *
+       *
+       */
+      `,
+      errors: [
+        {
+          line: 12,
+          message: 'Expected 1 trailing lines',
+        },
+      ],
+      options: [
+        'any',
+        {
+          endLines: 1,
+        },
+      ],
+      output: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {string} b
+       *
+       * @returns {SomeType} An extended
+       * description.
+       *
+       * This is still part of \`@returns\`.
+       *
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {string} b
+       *
+       * @returns {SomeType} An extended
+       * description.
+       *
+       * This is still part of \`@returns\`.
+       *
+       */
+      `,
+      errors: [
+        {
+          line: 11,
+          message: 'Expected 2 trailing lines',
+        },
+      ],
+      options: [
+        'any',
+        {
+          endLines: 2,
+        },
+      ],
+      output: `
+      /**
+       * Some description
+       * @param {string} a
+       * @param {string} b
+       *
+       * @returns {SomeType} An extended
+       * description.
+       *
+       * This is still part of \`@returns\`.
+       *
+       *
+       */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Some description
+         *
+         *
+         * @param {string} a
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected only 1 line after block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          startLines: 1,
+        },
+      ],
+      output: `
+        /**
+         * Some description
+         *
+         * @param {string} a
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Some description
+         *
+         * @param {string} a
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected only 0 line after block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          startLines: 0,
+        },
+      ],
+      output: `
+        /**
+         * Some description
+         * @param {string} a
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Some description
+         *
+         * @param {string} a
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected 2 lines after block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          startLines: 2,
+        },
+      ],
+      output: `
+        /**
+         * Some description
+         *
+         *
+         * @param {string} a
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Some description
+         * @param {string} a
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected 1 lines after block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          startLines: 1,
+        },
+      ],
+      output: `
+        /**
+         * Some description
+         *
+         * @param {string} a
+         */
       `,
     },
   ],
@@ -532,7 +730,7 @@ export default {
       `,
       options: [
         'always', {
-          noEndLines: true,
+          applyToEndTag: false,
         },
       ],
     },
@@ -544,7 +742,7 @@ export default {
       `,
       options: [
         'never', {
-          noEndLines: true,
+          applyToEndTag: false,
         },
       ],
     },
@@ -554,7 +752,7 @@ export default {
       `,
       options: [
         'never', {
-          noEndLines: true,
+          applyToEndTag: false,
         },
       ],
     },
@@ -570,6 +768,9 @@ export default {
       `,
       options: [
         'always',
+        {
+          endLines: null,
+        },
       ],
     },
     {
@@ -587,6 +788,7 @@ export default {
       options: [
         'always', {
           count: 2,
+          endLines: null,
         },
       ],
     },
@@ -786,6 +988,9 @@ export default {
       `,
       options: [
         'always',
+        {
+          endLines: null,
+        },
       ],
     },
     {
@@ -803,6 +1008,9 @@ export default {
       `,
       options: [
         'always',
+        {
+          endLines: null,
+        },
       ],
     },
     {
@@ -821,7 +1029,67 @@ export default {
       options: [
         'any',
         {
-          dropEndLines: true,
+          endLines: 0,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Some description
+         *
+         * @param {string} a
+         */
+      `,
+      options: [
+        'any',
+        {
+          startLines: 1,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Some description
+         * @param {string} a
+         *
+         */
+      `,
+      options: [
+        'any',
+        {
+          endLines: 1,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Some description
+         *
+         *
+         * @param {string} a
+         */
+      `,
+      options: [
+        'never',
+        {
+          startLines: null,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Some description
+         * @param {string} a
+         */
+      `,
+      options: [
+        'never',
+        {
+          startLines: null,
         },
       ],
     },

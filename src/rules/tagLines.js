@@ -9,17 +9,20 @@ export default iterateJsdoc(({
     alwaysNever = 'never',
     {
       count = 1,
-      dropEndLines = false,
-      noEndLines = false,
+      endLines = 0,
+      startLines = 0,
+      applyToEndTag = true,
       tags = {},
     } = {},
   ] = context.options;
 
+  // eslint-disable-next-line complexity -- Temporary
   jsdoc.tags.some((tg, tagIdx) => {
     let lastTag;
     let lastEmpty = null;
 
     let reportIndex = null;
+    let emptyLinesCount = 0;
     for (const [
       idx,
       {
@@ -56,26 +59,51 @@ export default iterateJsdoc(({
       }
 
       if (!end) {
+        if (empty) {
+          emptyLinesCount++;
+        } else {
+          emptyLinesCount = 0;
+        }
+
         lastEmpty = empty ? idx : null;
       }
 
       lastTag = tag;
     }
 
-    if (dropEndLines && lastEmpty !== null && tagIdx === jsdoc.tags.length - 1) {
-      const fixer = () => {
-        utils.removeTag(tagIdx, {
-          tagSourceOffset: lastEmpty,
-        });
-      };
+    if (
+      typeof endLines === 'number' &&
+      lastEmpty !== null && tagIdx === jsdoc.tags.length - 1
+    ) {
+      const lineDiff = endLines - emptyLinesCount;
 
-      utils.reportJSDoc(
-        'Expected no trailing lines',
-        {
-          line: tg.source[lastEmpty].number,
-        },
-        fixer,
-      );
+      if (lineDiff < 0) {
+        const fixer = () => {
+          utils.removeTag(tagIdx, {
+            tagSourceOffset: lastEmpty + lineDiff + 1,
+          });
+        };
+
+        utils.reportJSDoc(
+          `Expected ${endLines} trailing lines`,
+          {
+            line: tg.source[lastEmpty].number + lineDiff + 1,
+          },
+          fixer,
+        );
+      } else if (lineDiff > 0) {
+        const fixer = () => {
+          utils.addLines(tagIdx, lastEmpty, endLines - emptyLinesCount);
+        };
+
+        utils.reportJSDoc(
+          `Expected ${endLines} trailing lines`,
+          {
+            line: tg.source[lastEmpty].number,
+          },
+          fixer,
+        );
+      }
 
       return true;
     }
@@ -101,7 +129,7 @@ export default iterateJsdoc(({
     return false;
   });
 
-  (noEndLines ? jsdoc.tags.slice(0, -1) : jsdoc.tags).some((tg, tagIdx) => {
+  (applyToEndTag ? jsdoc.tags : jsdoc.tags.slice(0, -1)).some((tg, tagIdx) => {
     const lines = [];
 
     let currentTag;
@@ -169,6 +197,63 @@ export default iterateJsdoc(({
 
     return false;
   });
+
+  if (typeof startLines === 'number') {
+    const {
+      description,
+      lastDescriptionLine,
+    } = utils.getDescription();
+    const trailingLines = description.match(/\n+$/u)?.[0]?.length;
+    const trailingDiff = (trailingLines ?? 0) - startLines;
+    if (trailingDiff > 0) {
+      utils.reportJSDoc(
+        `Expected only ${startLines} line after block description`,
+        {
+          line: lastDescriptionLine - trailingDiff,
+        },
+        () => {
+          utils.setBlockDescription((info, seedTokens, descLines) => {
+            return descLines.slice(0, -trailingDiff).map((desc) => {
+              return {
+                tokens: seedTokens({
+                  ...info,
+                  description: desc,
+                  postDelimiter: desc.trim() ? info.postDelimiter : '',
+                }),
+              };
+            });
+          });
+        },
+      );
+    } else if (trailingDiff < 0) {
+      utils.reportJSDoc(
+        `Expected ${startLines} lines after block description`,
+        {
+          line: lastDescriptionLine,
+        },
+        () => {
+          utils.setBlockDescription((info, seedTokens, descLines) => {
+            return [
+              ...descLines,
+              ...Array.from({
+                length: -trailingDiff,
+              }, () => {
+                return '';
+              }),
+            ].map((desc) => {
+              return {
+                tokens: seedTokens({
+                  ...info,
+                  description: desc,
+                  postDelimiter: desc.trim() ? info.postDelimiter : '',
+                }),
+              };
+            });
+          });
+        },
+      );
+    }
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {
@@ -187,14 +272,31 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          applyToEndTag: {
+            type: 'boolean',
+          },
           count: {
             type: 'integer',
           },
-          dropEndLines: {
-            type: 'boolean',
+          endLines: {
+            anyOf: [
+              {
+                type: 'integer',
+              },
+              {
+                type: 'null',
+              },
+            ],
           },
-          noEndLines: {
-            type: 'boolean',
+          startLines: {
+            anyOf: [
+              {
+                type: 'integer',
+              },
+              {
+                type: 'null',
+              },
+            ],
           },
           tags: {
             patternProperties: {
