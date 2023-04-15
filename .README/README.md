@@ -59,7 +59,6 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/informative-docs": 1,
         "jsdoc/match-description": 1,
         "jsdoc/multiline-blocks": 1, // Recommended
-        "jsdoc/newline-after-description": 1, // Recommended
         "jsdoc/no-bad-blocks": 1,
         "jsdoc/no-blank-block-descriptions": 1,
         "jsdoc/no-defaults": 1,
@@ -607,7 +606,6 @@ selector).
 {"gitdown": "include", "file": "./rules/match-description.md"}
 {"gitdown": "include", "file": "./rules/match-name.md"}
 {"gitdown": "include", "file": "./rules/multiline-blocks.md"}
-{"gitdown": "include", "file": "./rules/newline-after-description.md"}
 {"gitdown": "include", "file": "./rules/no-bad-blocks.md"}
 {"gitdown": "include", "file": "./rules/no-blank-block-descriptions.md"}
 {"gitdown": "include", "file": "./rules/no-defaults.md"}
