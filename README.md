@@ -20446,6 +20446,22 @@ export function readFixture(path: string): void;
 export function readFixture(path: string);
 // "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 // Message: Missing JSDoc @returns declaration.
+
+/**
+ * @param {array} a
+ */
+async function foo(a) {
+  return Promise.all(a);
+}
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ * Description.
+ */
+export default async function demo() {
+  return true;
+}
+// Message: Missing JSDoc @returns declaration.
 ````
 
 The following patterns are not considered problems:
@@ -20928,13 +20944,6 @@ function quux () {
  */
 async function foo() {
   return new Promise(resolve => resolve());
-}
-
-/**
- * @param {array} a
- */
-async function foo(a) {
-  return Promise.all(a);
 }
 
 /**

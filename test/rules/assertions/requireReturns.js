@@ -1726,6 +1726,45 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+       * @param {array} a
+       */
+      async function foo(a) {
+        return Promise.all(a);
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 8,
+      },
+    },
+    {
+      code: `
+      /**
+       * Description.
+       */
+      export default async function demo() {
+        return true;
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      parserOptions: {
+        ecmaVersion: 8,
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [
     {
@@ -2561,19 +2600,6 @@ export default {
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
-    },
-    {
-      code: `
-      /**
-       * @param {array} a
-       */
-      async function foo(a) {
-        return Promise.all(a);
-      }
-      `,
-      parserOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
