@@ -1124,5 +1124,20 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * Toggles the deselect all icon button action
+       */
+      function updateIconButton () {
+      }
+      `,
+      options: [
+        'never',
+        {
+          startLines: 1,
+        },
+      ],
+    },
   ],
 };
