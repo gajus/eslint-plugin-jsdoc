@@ -199,6 +199,10 @@ export default iterateJsdoc(({
   });
 
   if (typeof startLines === 'number') {
+    if (!jsdoc.tags.length) {
+      return;
+    }
+
     const {
       description,
       lastDescriptionLine,

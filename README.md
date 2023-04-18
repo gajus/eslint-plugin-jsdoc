@@ -23481,6 +23481,13 @@ function processSass (input) {
 function processSass (input) {
 }
 // "jsdoc/tag-lines": ["error"|"warn", "never",{"startLines":1}]
+
+/**
+ * Toggles the deselect all icon button action
+ */
+function updateIconButton () {
+}
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"startLines":1}]
 ````
 
 
