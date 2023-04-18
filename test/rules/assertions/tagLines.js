@@ -1093,5 +1093,36 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @param {string} input
+       */
+      function processSass (input) {
+      }
+      `,
+      options: [
+        'never',
+        {
+          startLines: 1,
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       *
+       * @param {string} input
+       */
+      function processSass (input) {
+      }
+      `,
+      options: [
+        'never',
+        {
+          startLines: 1,
+        },
+      ],
+    },
   ],
 };

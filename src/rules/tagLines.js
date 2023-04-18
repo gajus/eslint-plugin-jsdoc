@@ -203,6 +203,10 @@ export default iterateJsdoc(({
       description,
       lastDescriptionLine,
     } = utils.getDescription();
+    if (!(/\S/u).test(description)) {
+      return;
+    }
+
     const trailingLines = description.match(/\n+$/u)?.[0]?.length;
     const trailingDiff = (trailingLines ?? 0) - startLines;
     if (trailingDiff > 0) {
