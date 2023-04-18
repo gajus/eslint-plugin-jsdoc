@@ -34,7 +34,8 @@ added after tags should not be added after the final tag.
 ##### `startLines` (defaults to `0`)
 
 If not set to `null`, will enforce end lines to the given count before the
-first tag only.
+first tag only, unless there is only whitespace content, in which case,
+a line count will not be enforced.
 
 ##### `endLines` (defaults to `0`)
 

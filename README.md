@@ -23026,7 +23026,8 @@ added after tags should not be added after the final tag.
 ##### <code>startLines</code> (defaults to <code>0</code>)
 
 If not set to `null`, will enforce end lines to the given count before the
-first tag only.
+first tag only, unless there is only whitespace content, in which case,
+a line count will not be enforced.
 
 <a name="user-content-eslint-plugin-jsdoc-rules-tag-lines-options-41-endlines-defaults-to-0"></a>
 <a name="eslint-plugin-jsdoc-rules-tag-lines-options-41-endlines-defaults-to-0"></a>
@@ -23465,6 +23466,21 @@ The following patterns are not considered problems:
  * @param {string} a
  */
 // "jsdoc/tag-lines": ["error"|"warn", "never",{"startLines":null}]
+
+/**
+ * @param {string} input
+ */
+function processSass (input) {
+}
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"startLines":1}]
+
+/**
+ *
+ * @param {string} input
+ */
+function processSass (input) {
+}
+// "jsdoc/tag-lines": ["error"|"warn", "never",{"startLines":1}]
 ````
 
 
