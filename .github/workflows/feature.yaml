@@ -10,7 +10,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
       - run: npm ci
       - run: npm run lint
     timeout-minutes: 10
@@ -35,6 +35,7 @@ jobs:
         node_js_version:
           - '16'
           - '18'
+          - '20'
   build:
     runs-on: ubuntu-latest
     name: Build
@@ -46,7 +47,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
       - run: npm ci
       - run: npm run build
     timeout-minutes: 10
