@@ -229,6 +229,7 @@ const getUtils = (
   utils.getDescription = () => {
     const descriptions = [];
     let lastDescriptionLine = 0;
+    let tagsBegun = false;
     jsdoc.source.some(({
       tokens: {
         description,
@@ -236,16 +237,20 @@ const getUtils = (
         end,
       },
     }, idx) => {
+      if (tag) {
+        tagsBegun = true;
+      }
+
       if (idx && (tag || end)) {
         lastDescriptionLine = idx - 1;
-        if (!tag && description) {
+        if (!tagsBegun && description) {
           descriptions.push(description);
         }
 
         return true;
       }
 
-      if (idx || description) {
+      if (!tagsBegun && (idx || description)) {
         descriptions.push(description || (descriptions.length ? '' : '\n'));
       }
 
