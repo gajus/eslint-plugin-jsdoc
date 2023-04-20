@@ -1488,6 +1488,12 @@ export default {
     },
     {
       code: `
+      /** To learn more,
+       * see: https://github.com/d3/d3-ease. */
+      `,
+    },
+    {
+      code: `
       /**
        * Maps the state to props.
        *

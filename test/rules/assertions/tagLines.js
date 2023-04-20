@@ -1139,5 +1139,23 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /** A class. */
+      class _Foo {
+        /** @param arg Argument. */
+        conststructor(arg: string) {
+          console.log(arg);
+        }
+      }
+      `,
+      options: [
+        'any',
+        {
+          startLines: 1,
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };
