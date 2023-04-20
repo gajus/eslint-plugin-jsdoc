@@ -12329,6 +12329,9 @@ export default (foo) => {
 /** @file To learn more,
  * see: https://github.com/d3/d3-ease. */
 
+/** To learn more,
+ * see: https://github.com/d3/d3-ease. */
+
 /**
  * This is a complete sentence...
  */
@@ -23488,6 +23491,15 @@ function processSass (input) {
 function updateIconButton () {
 }
 // "jsdoc/tag-lines": ["error"|"warn", "never",{"startLines":1}]
+
+/** A class. */
+class _Foo {
+  /** @param arg Argument. */
+  conststructor(arg: string) {
+    console.log(arg);
+  }
+}
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"startLines":1}]
 ````
 
 
