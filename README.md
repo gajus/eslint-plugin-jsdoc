@@ -5013,6 +5013,27 @@ function Test() {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
 // Message: Invalid JSDoc tag (preference). Replace "constructor" JSDoc tag with "class".
+
+/** @typedef {Object} MyObject
+ * @property {string} id - my id
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@typedef' is redundant when using a type system.
+
+/**
+ * @property {string} id - my id
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/** @typedef {Object} MyObject */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@typedef' is redundant when using a type system.
+
+/** @typedef {Object} MyObject
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@typedef' is redundant when using a type system.
 ````
 
 The following patterns are not considered problems:

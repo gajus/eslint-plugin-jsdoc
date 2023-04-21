@@ -925,6 +925,93 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /** @typedef {Object} MyObject
+       * @property {string} id - my id
+       */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '\'@typedef\' is redundant when using a type system.',
+        },
+        {
+          line: 3,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+      /**
+       * @property {string} id - my id
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * @property {string} id - my id
+       */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '\'@property\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+      /**
+       * id - my id
+       */
+      `,
+    },
+    {
+      code: `
+      /** @typedef {Object} MyObject */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '\'@typedef\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+      `,
+    },
+    {
+      code: `
+      /** @typedef {Object} MyObject
+       */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '\'@typedef\' is redundant when using a type system.',
+        },
+      ],
+      options: [
+        {
+          typed: true,
+        },
+      ],
+      output: `
+      `,
+    },
   ],
   valid: [
     {
