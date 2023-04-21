@@ -407,11 +407,15 @@ const getUtils = (
         } = jsdoc.source[spliceIdx].tokens;
 
         /* istanbul ignore if -- Currently want to clear entirely if removing tags */
-        if (!removeEmptyBlock && (end || delimiter === '/**')) {
+        if (
+          spliceIdx === 0 && jsdoc.tags.length >= 2 ||
+          !removeEmptyBlock && (end || delimiter === '/**')
+        ) {
           const {
             tokens,
           } = jsdoc.source[spliceIdx];
           for (const item of [
+            'postDelimiter',
             'tag',
             'postTag',
             'type',
@@ -423,10 +427,10 @@ const getUtils = (
             tokens[item] = '';
           }
         } else {
-          jsdoc.source.splice(spliceIdx, spliceCount - tagSourceOffset);
+          jsdoc.source.splice(spliceIdx, spliceCount - tagSourceOffset + (spliceIdx ? 0 : jsdoc.source.length));
+          tagSource.splice(tagIdx + tagSourceOffset, spliceCount - tagSourceOffset + (spliceIdx ? 0 : jsdoc.source.length));
         }
 
-        tagSource.splice(tagIdx + tagSourceOffset, spliceCount - tagSourceOffset);
         lastIndex = sourceIndex;
 
         return true;
