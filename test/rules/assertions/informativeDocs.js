@@ -749,5 +749,15 @@ export default {
         function takesOne(param) {}
       `,
     },
+    {
+      code: `
+        /**
+         * @class 
+         *
+         * @param {number} value - Some useful text
+         */      
+        function MyAmazingThing(value) {}
+      `,
+    },
   ],
 };
