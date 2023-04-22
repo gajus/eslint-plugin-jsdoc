@@ -4471,6 +4471,22 @@ typeSummary
 wizaction
 ```
 
+If you instead wish to reject a normally valid tag, e.g., `@todo`, one may set the
+tag to `false`:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "todo": false
+            }
+        }
+    }
+}
+```
+
 <a name="user-content-eslint-plugin-jsdoc-rules-check-tag-names-options-6"></a>
 <a name="eslint-plugin-jsdoc-rules-check-tag-names-options-6"></a>
 #### Options
