@@ -18,6 +18,7 @@
   "multiline-blocks",
   "no-bad-blocks",
   "no-blank-block-descriptions",
+  "no-blank-blocks",
   "no-defaults",
   "no-missing-syntax",
   "no-multi-asterisks",

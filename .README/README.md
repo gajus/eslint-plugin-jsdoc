@@ -608,6 +608,7 @@ selector).
 {"gitdown": "include", "file": "./rules/multiline-blocks.md"}
 {"gitdown": "include", "file": "./rules/no-bad-blocks.md"}
 {"gitdown": "include", "file": "./rules/no-blank-block-descriptions.md"}
+{"gitdown": "include", "file": "./rules/no-blank-blocks.md"}
 {"gitdown": "include", "file": "./rules/no-defaults.md"}
 {"gitdown": "include", "file": "./rules/no-missing-syntax.md"}
 {"gitdown": "include", "file": "./rules/no-multi-asterisks.md"}
