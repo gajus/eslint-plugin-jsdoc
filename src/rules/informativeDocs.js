@@ -70,7 +70,8 @@ export default iterateJsdoc(({
   const nodeNames = getNamesFromNode(node);
 
   const descriptionIsRedundant = (text, extraName = '') => {
-    return Boolean(text) && !areDocsInformative(text, [
+    const textTrimmed = text.trim();
+    return Boolean(textTrimmed) && !areDocsInformative(textTrimmed, [
       extraName, nodeNames,
     ].filter(Boolean).join(' '), {
       aliases,

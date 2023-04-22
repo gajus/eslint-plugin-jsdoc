@@ -7649,6 +7649,13 @@ function takesOne(param) {}
  * takes abc param
  */
 function takesOne(param) {}
+
+/**
+ * @class 
+ *
+ * @param {number} value - Some useful text
+ */      
+function MyAmazingThing(value) {}
 ````
 
 
