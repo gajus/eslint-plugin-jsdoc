@@ -174,6 +174,22 @@ typeSummary
 wizaction
 ```
 
+If you instead wish to reject a normally valid tag, e.g., `@todo`, one may set the
+tag to `false`:
+
+```json
+{
+    "rules": {},
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "todo": false
+            }
+        }
+    }
+}
+```
+
 #### Options
 
 ##### `definedTags`
