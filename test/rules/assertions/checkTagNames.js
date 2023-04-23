@@ -842,8 +842,16 @@ export default {
       code: `${ALL_TYPESCRIPT_TAGS_COMMENT}\nfunction quux (foo) {}`,
       errors: [
         {
-          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 1,
+          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 3,
           message: 'Invalid JSDoc tag name "internal".',
+        },
+        {
+          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 2,
+          message: 'Invalid JSDoc tag name "overload".',
+        },
+        {
+          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 1,
+          message: 'Invalid JSDoc tag name "satisfies".',
         },
         {
           line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT),
@@ -1289,7 +1297,7 @@ export default {
            * Converts the images specified by the indices to base64 synchronously.
            * @function WebTwain#ConvertToBase64
            * @returns {Base64Result}
-       
+
           ConvertToBase64(): Base64Result;
           */
 
@@ -1302,6 +1310,19 @@ export default {
         }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        /**
+         * @overload
+         * @satisfies
+         */
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
     },
   ],
 };

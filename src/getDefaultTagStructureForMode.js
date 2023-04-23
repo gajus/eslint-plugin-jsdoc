@@ -757,6 +757,15 @@ const getDefaultTagStructureForMode = (mode) => {
     ],
 
     [
+      'satisfies', new Map([
+        // Shows curly brackets in the doc signature and examples
+        [
+          'typeRequired', true,
+        ],
+      ]),
+    ],
+
+    [
       'see', new Map([
         // Signature allows for "namepath" or text, so user must configure to
         //  'namepath-referencing' to enforce checks

@@ -124,6 +124,12 @@ const typeScriptTags = {
   // https://www.typescriptlang.org/tsconfig/#stripInternal
   internal: [],
 
+  // https://devblogs.microsoft.com/typescript/announcing-typescript-5-0/#overload-support-in-jsdoc
+  overload: [],
+
+  // https://devblogs.microsoft.com/typescript/announcing-typescript-5-0/#satisfies-support-in-jsdoc
+  satisfies: [],
+
   // `@template` is also in TypeScript per:
   //      https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc
   template: [],
@@ -150,6 +156,8 @@ const {
   /* eslint-disable no-unused-vars */
   inheritdoc,
   internal,
+  overload,
+  satisfies,
 
   // Will be inverted to prefer `return`
   returns,
