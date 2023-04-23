@@ -55,6 +55,7 @@ const defaultTagOrder = [
 
       // TypeScript
       'internal',
+      'overload',
 
       'const',
       'constant',
@@ -100,6 +101,9 @@ const defaultTagOrder = [
       'emits',
       'listens',
       'this',
+
+      // TypeScript
+      'satisfies',
 
       // Access
       'static',

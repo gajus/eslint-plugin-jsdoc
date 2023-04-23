@@ -10,6 +10,7 @@ const defaultEmptyTags = new Set([
 
   // jsdoc doesn't use but allow for TypeScript
   'internal',
+  'overload',
 ]);
 
 const emptyIfNotClosure = new Set([
