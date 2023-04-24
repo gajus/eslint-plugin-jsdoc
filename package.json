@@ -108,8 +108,8 @@
   },
   "scripts": {
     "build": "rimraf ./dist && cross-env NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored",
-    "check-readme": "babel-node ./src/bin/generateReadme.js --check",
-    "create-readme": "babel-node ./src/bin/generateReadme.js",
+    "check-readme": "babel-node ./src/bin/generateDocs.js --check",
+    "create-readme": "babel-node ./src/bin/generateDocs.js",
     "create-rule": "babel-node ./src/bin/generateRule.js",
     "install-offline": "npm install --prefer-offline --no-audit",
     "lint": "npm run lint-arg -- .",

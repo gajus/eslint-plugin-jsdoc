@@ -1,6 +1,7 @@
 ### `sort-tags`
 
-Sorts tags by a specified sequence according to tag name.
+Sorts tags by a specified sequence according to tag name, optionally
+adding line breaks between tag groups.
 
 (Default order originally inspired by [`@homer0/prettier-plugin-jsdoc`](https://github.com/homer0/packages/tree/main/packages/public/prettier-plugin-jsdoc).)
 
