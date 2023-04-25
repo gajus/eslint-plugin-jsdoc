@@ -1,4 +1,6 @@
-### `text-escaping`
+# `text-escaping`
+
+{"gitdown": "contents", "rootId": "text-escaping"}
 
 This rule can auto-escape certain characters that are input within block and
 tag descriptions.
@@ -8,16 +10,22 @@ Markdown and you therefore do not wish for it to be accidentally interpreted
 as such by the likes of Visual Studio Code or if you wish to view it escaped
 within it or your documentation.
 
-#### Options
+## Fixer
 
-##### `escapeHTML`
+(TODO)
+
+## Options
+
+### `escapeHTML`
 
 This option escapes all `<` and `&` characters (except those followed by
 whitespace which are treated as literals by Visual Studio Code).
 
-##### `escapeMarkdown`
+### `escapeMarkdown`
 
 This option escapes the first backtick (`` ` ``) in a paired sequence.
+
+## Context and settings
 
 |||
 |---|---|
@@ -27,4 +35,10 @@ This option escapes the first backtick (`` ` ``) in a paired sequence.
 |Settings||
 |Options||
 
-<!-- assertions textEscaping -->
+## Failing examples
+
+<!-- assertions-failing textEscaping -->
+
+## Passing examples
+
+<!-- assertions-passing textEscaping -->

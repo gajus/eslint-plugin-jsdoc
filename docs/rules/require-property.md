@@ -1,8 +1,17 @@
 <a name="user-content-require-property-type"></a>
 <a name="require-property-type"></a>
-### <code>require-property-type</code>
+# <code>require-property-type</code>
 
-Requires that each `@property` tag has a `type` value.
+* [Context and settings](#user-content-require-property-type-context-and-settings)
+* [Failing examples](#user-content-require-property-type-failing-examples)
+* [Passing examples](#user-content-require-property-type-passing-examples)
+
+
+Requires that each `@property` tag has a type value (within curly brackets).
+
+<a name="user-content-require-property-type-context-and-settings"></a>
+<a name="require-property-type-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -11,6 +20,8 @@ Requires that each `@property` tag has a `type` value.
 |Aliases|`prop`|
 |Recommended|true|
 
+<a name="user-content-require-property-type-failing-examples"></a>
+<a name="require-property-type-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -37,6 +48,10 @@ The following patterns are considered problems:
 // Message: Unexpected tag `@property`
 ````
 
+
+
+<a name="user-content-require-property-type-passing-examples"></a>
+<a name="require-property-type-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

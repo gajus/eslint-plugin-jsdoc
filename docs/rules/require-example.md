@@ -1,6 +1,18 @@
 <a name="user-content-require-example"></a>
 <a name="require-example"></a>
-### <code>require-example</code>
+# <code>require-example</code>
+
+* [Fixer](#user-content-require-example-fixer)
+* [Options](#user-content-require-example-options)
+    * [`exemptedBy`](#user-content-require-example-options-exemptedby)
+    * [`exemptNoArguments`](#user-content-require-example-options-exemptnoarguments)
+    * [`contexts`](#user-content-require-example-options-contexts)
+    * [`checkConstructors`](#user-content-require-example-options-checkconstructors)
+    * [`checkGetters`](#user-content-require-example-options-checkgetters)
+    * [`checkSetters`](#user-content-require-example-options-checksetters)
+    * [`enableFixer`](#user-content-require-example-options-enablefixer)
+* [Context and settings](#user-content-require-example-context-and-settings)
+
 
 Requires that all functions have examples.
 
@@ -8,15 +20,22 @@ Requires that all functions have examples.
 * Every example tag must have a non-empty description that explains the
   method's usage.
 
+<a name="user-content-require-example-fixer"></a>
+<a name="require-example-fixer"></a>
+## Fixer
+
+The fixer for `require-example` will add an empty `@example`, but it will still
+report a missing example description after this is added.
+
 <a name="user-content-require-example-options"></a>
 <a name="require-example-options"></a>
-#### Options
+## Options
 
 This rule has an object option.
 
 <a name="user-content-require-example-options-exemptedby"></a>
 <a name="require-example-options-exemptedby"></a>
-##### <code>exemptedBy</code>
+### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document
 block avoids the need for an `@example`. Defaults to an array with
@@ -26,14 +45,14 @@ exemption of the rule.
 
 <a name="user-content-require-example-options-exemptnoarguments"></a>
 <a name="require-example-options-exemptnoarguments"></a>
-##### <code>exemptNoArguments</code>
+### <code>exemptNoArguments</code>
 
 Boolean to indicate that no-argument functions should not be reported for
 missing `@example` declarations.
 
 <a name="user-content-require-example-options-contexts"></a>
 <a name="require-example-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -46,36 +65,33 @@ section of our README for more on the expected format.
 
 <a name="user-content-require-example-options-checkconstructors"></a>
 <a name="require-example-options-checkconstructors"></a>
-##### <code>checkConstructors</code>
+### <code>checkConstructors</code>
 
 A value indicating whether `constructor`s should be checked.
 Defaults to `true`.
 
 <a name="user-content-require-example-options-checkgetters"></a>
 <a name="require-example-options-checkgetters"></a>
-##### <code>checkGetters</code>
+### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
 <a name="user-content-require-example-options-checksetters"></a>
 <a name="require-example-options-checksetters"></a>
-##### <code>checkSetters</code>
+### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Defaults to `false`.
 
 <a name="user-content-require-example-options-enablefixer"></a>
 <a name="require-example-options-enablefixer"></a>
-##### <code>enableFixer</code>
+### <code>enableFixer</code>
 
 A boolean on whether to enable the fixer (which adds an empty `@example` block).
 Defaults to `true`.
 
-<a name="user-content-require-example-fixer"></a>
-<a name="require-example-fixer"></a>
-#### Fixer
-
-The fixer for `require-example` will add an empty `@example`, but it will still
-report a missing example description after this is added.
+<a name="user-content-require-example-context-and-settings"></a>
+<a name="require-example-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -85,7 +101,9 @@ report a missing example description after this is added.
 |Options|`exemptedBy`, `exemptNoArguments`, `contexts`, `checkConstructors`, `checkGetters`, `checkSetters`, `enableFixer`|
 |Settings|`ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
-## Failing examples
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
+# Failing examples
 
 The following patterns are considered problems:
 
@@ -218,6 +236,10 @@ function quux (someParam) {
 // Message: Missing JSDoc @example declaration.
 ````
 
+
+
+<a name="user-content-failing-examples-passing-examples"></a>
+<a name="failing-examples-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

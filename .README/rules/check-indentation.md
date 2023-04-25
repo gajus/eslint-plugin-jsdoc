@@ -1,4 +1,6 @@
-### `check-indentation`
+# `check-indentation`
+
+{"gitdown": "contents", "rootId": "check-indentation"}
 
 Reports invalid padding inside JSDoc blocks.
 
@@ -16,11 +18,11 @@ the following description is not reported:
  */
 ```
 
-#### Options
+## Options
 
 This rule has an object option.
 
-##### `excludeTags`
+### `excludeTags`
 
 Array of tags (e.g., `['example', 'description']`) whose content will be
 "hidden" from the `check-indentation` rule. Defaults to `['example']`.
@@ -42,6 +44,8 @@ report a padding issue:
  */
 ```
 
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -49,4 +53,10 @@ report a padding issue:
 |Recommended|false|
 |Options| `excludeTags` |
 
-<!-- assertions checkIndentation -->
+## Failing examples
+
+<!-- assertions-failing checkIndentation -->
+
+## Passing examples
+
+<!-- assertions-passing checkIndentation -->

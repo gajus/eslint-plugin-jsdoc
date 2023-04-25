@@ -1,6 +1,12 @@
 <a name="user-content-require-yields-check"></a>
 <a name="require-yields-check"></a>
-### <code>require-yields-check</code>
+# <code>require-yields-check</code>
+
+* [Options](#user-content-require-yields-check-options)
+* [Context and settings](#user-content-require-yields-check-context-and-settings)
+* [Failing examples](#user-content-require-yields-check-failing-examples)
+* [Passing examples](#user-content-require-yields-check-passing-examples)
+
 
 Ensures that if a `@yields` is present that a `yield` (or `yield` with a
 value) is present in the function body (or that if a `@next` is present that
@@ -19,7 +25,7 @@ Will also report if multiple `@yields` tags are present.
 
 <a name="user-content-require-yields-check-options"></a>
 <a name="require-yields-check-options"></a>
-#### Options
+## Options
 
 - `checkGeneratorsOnly` - Avoids checking the function body and merely insists
     that all generators have `@yields`. This can be an optimization with the
@@ -38,6 +44,10 @@ Will also report if multiple `@yields` tags are present.
     merely has plain `yield;` or `yield value;` statements without returning
     the values. Defaults to `false`.
 
+<a name="user-content-require-yields-check-context-and-settings"></a>
+<a name="require-yields-check-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -45,6 +55,9 @@ Will also report if multiple `@yields` tags are present.
 |Aliases|`yield`|
 |Recommended|true|
 |Options|`checkGeneratorsOnly`|
+
+<a name="user-content-require-yields-check-failing-examples"></a>
+<a name="require-yields-check-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -200,6 +213,10 @@ function * quux (foo) {
 // Message: JSDoc @next declaration set with "never" but yield expression with return value is present in function.
 ````
 
+
+
+<a name="user-content-require-yields-check-passing-examples"></a>
+<a name="require-yields-check-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

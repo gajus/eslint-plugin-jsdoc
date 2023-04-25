@@ -1,6 +1,15 @@
 <a name="user-content-require-param-description"></a>
 <a name="require-param-description"></a>
-### <code>require-param-description</code>
+# <code>require-param-description</code>
+
+* [Options](#user-content-require-param-description-options)
+    * [`setDefaultDestructuredRootDescription`](#user-content-require-param-description-options-setdefaultdestructuredrootdescription)
+    * [`defaultDestructuredRootDescription`](#user-content-require-param-description-options-defaultdestructuredrootdescription)
+    * [`contexts`](#user-content-require-param-description-options-contexts)
+* [Context and settings](#user-content-require-param-description-context-and-settings)
+* [Failing examples](#user-content-require-param-description-failing-examples)
+* [Passing examples](#user-content-require-param-description-passing-examples)
+
 
 Requires that each `@param` tag has a `description` value.
 
@@ -11,11 +20,11 @@ Will exempt destructured roots and their children if
 
 <a name="user-content-require-param-description-options"></a>
 <a name="require-param-description-options"></a>
-#### Options
+## Options
 
 <a name="user-content-require-param-description-options-setdefaultdestructuredrootdescription"></a>
 <a name="require-param-description-options-setdefaultdestructuredrootdescription"></a>
-##### <code>setDefaultDestructuredRootDescription</code>
+### <code>setDefaultDestructuredRootDescription</code>
 
 Whether to set a default destructured root description. For example, you may
 wish to avoid manually having to set the description for a `@param`
@@ -25,14 +34,14 @@ string. Defaults to `false`.
 
 <a name="user-content-require-param-description-options-defaultdestructuredrootdescription"></a>
 <a name="require-param-description-options-defaultdestructuredrootdescription"></a>
-##### <code>defaultDestructuredRootDescription</code>
+### <code>defaultDestructuredRootDescription</code>
 
 The description string to set by default for destructured roots. Defaults to
 "The root object".
 
 <a name="user-content-require-param-description-options-contexts"></a>
 <a name="require-param-description-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -45,6 +54,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+<a name="user-content-require-param-description-context-and-settings"></a>
+<a name="require-param-description-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -54,6 +67,8 @@ section of our README for more on the expected format.
 |Options|`setDefaultDestructuredRootDescription`, `defaultDestructuredRootDescription`, `contexts`|
 |Settings|`exemptDestructuredRootsFromChecks`|
 
+<a name="user-content-require-param-description-failing-examples"></a>
+<a name="require-param-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -151,6 +166,10 @@ function quux (foo, {bar}, baz) {
 // Message: Missing JSDoc @param "root" description.
 ````
 
+
+
+<a name="user-content-require-param-description-passing-examples"></a>
+<a name="require-param-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

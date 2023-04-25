@@ -1,4 +1,6 @@
-### `no-restricted-syntax`
+# `no-restricted-syntax`
+
+{"gitdown": "contents", "rootId": "no-restricted-syntax"}
 
 Reports when certain comment structures are present.
 
@@ -14,9 +16,9 @@ structures, (whether or not you add a specific `comment` condition).
 Note that if your parser supports comment AST (as [jsdoc-eslint-parser](https://github.com/brettz9/jsdoc-eslint-parser)
 is designed to do), you can just use ESLint's rule.
 
-#### Options
+## Options
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -32,6 +34,8 @@ aliases `@func` or `@method`) (including those associated with an `@interface`).
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|None except those indicated by `contexts`|
@@ -39,4 +43,10 @@ section of our README for more on the expected format.
 |Recommended|false|
 |Options|`contexts`|
 
-<!-- assertions noRestrictedSyntax -->
+## Failing examples
+
+<!-- assertions-failing noRestrictedSyntax -->
+
+## Passing examples
+
+<!-- assertions-passing noRestrictedSyntax -->

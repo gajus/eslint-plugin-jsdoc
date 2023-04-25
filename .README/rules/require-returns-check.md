@@ -1,8 +1,11 @@
-### `require-returns-check`
+# `require-returns-check`
 
-Requires a return statement (or non-`undefined` Promise resolve value) in
-function bodies if a `@returns` tag (without a `void` or `undefined` type)
-is specified in the function's JSDoc comment.
+{"gitdown": "contents", "rootId": "require-returns-check"}
+
+Requires a return statement (or non-`undefined` Promise resolve value)
+be present in a
+function body if a `@returns` tag (without a `void` or `undefined` type)
+is specified in the function's JSDoc comment block.
 
 Will also report `@returns {void}` and `@returns {undefined}` if `exemptAsync`
 is set to `false` and a non-`undefined` value is returned or a resolved value
@@ -10,7 +13,7 @@ is found. Also reports if `@returns {never}` is discovered with a return value.
 
 Will also report if multiple `@returns` tags are present.
 
-#### Options
+## Options
 
 - `exemptGenerators`- Because a generator might be labeled as having a
   `IterableIterator` `@returns` value (along with an iterator type
@@ -34,6 +37,8 @@ Will also report if multiple `@returns` tags are present.
     Unlike `require-returns`, with this option in the rule, one can
      *discourage* the labeling of `undefined` types. Defaults to `false`.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -42,4 +47,10 @@ Will also report if multiple `@returns` tags are present.
 |Options|`exemptAsync`, `reportMissingReturnForUndefinedTypes`|
 |Recommended|true|
 
-<!-- assertions requireReturnsCheck -->
+## Failing examples
+
+<!-- assertions-failing requireReturnsCheck -->
+
+## Passing examples
+
+<!-- assertions-passing requireReturnsCheck -->

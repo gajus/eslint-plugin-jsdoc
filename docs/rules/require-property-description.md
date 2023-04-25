@@ -1,18 +1,28 @@
 <a name="user-content-require-property"></a>
 <a name="require-property"></a>
-### <code>require-property</code>
+# <code>require-property</code>
+
+* [Fixer](#user-content-require-property-fixer)
+* [Context and settings](#user-content-require-property-context-and-settings)
+* [Failing examples](#user-content-require-property-failing-examples)
+* [Passing examples](#user-content-require-property-passing-examples)
+
 
 Requires that all `@typedef` and `@namespace` tags have `@property`
-when their type is a plain `object`, `Object`, or `PlainObject`.
+tags when their type is a plain `object`, `Object`, or `PlainObject`.
 
 Note that any other type, including a subtype of object such as
 `object<string, string>`, will not be reported.
 
 <a name="user-content-require-property-fixer"></a>
 <a name="require-property-fixer"></a>
-#### Fixer
+## Fixer
 
 The fixer for `require-property` will add an empty `@property`.
+
+<a name="user-content-require-property-context-and-settings"></a>
+<a name="require-property-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -20,6 +30,8 @@ The fixer for `require-property` will add an empty `@property`.
 |Tags|`typedef`, `namespace`|
 |Recommended|true|
 
+<a name="user-content-require-property-failing-examples"></a>
+<a name="require-property-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -50,6 +62,10 @@ class Test {
 // Message: Missing JSDoc @property.
 ````
 
+
+
+<a name="user-content-require-property-passing-examples"></a>
+<a name="require-property-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

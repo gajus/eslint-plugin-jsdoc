@@ -1,4 +1,6 @@
-### `require-yields`
+# `require-yields`
+
+{"gitdown": "contents", "rootId": "require-yields"}
 
 Requires that yields are documented.
 
@@ -7,7 +9,7 @@ Will also report if multiple `@yields` tags are present.
 See the `next`, `forceRequireNext`, and `nextWithGeneratorTag` options for an
 option to expect a non-standard `@next` tag.
 
-#### Options
+## Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
     document block avoids the need for a `@yields`. Defaults to an array
@@ -55,6 +57,8 @@ option to expect a non-standard `@next` tag.
     `any` if you want to catch `@generator` with `@callback` or such not
     attached to a function.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|Generator functions (`FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled)|
@@ -64,4 +68,10 @@ option to expect a non-standard `@next` tag.
 | Options  | `contexts`,  `exemptedBy`, `withGeneratorTag`, `nextWithGeneratorTag`, `forceRequireYields`, `next` |
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
-<!-- assertions requireYields -->
+## Failing examples
+
+<!-- assertions-failing requireYields -->
+
+## Passing examples
+
+<!-- assertions-passing requireYields -->

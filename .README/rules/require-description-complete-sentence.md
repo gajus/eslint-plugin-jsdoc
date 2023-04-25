@@ -1,4 +1,6 @@
-### `require-description-complete-sentence`
+# `require-description-complete-sentence`
+
+{"gitdown": "contents", "rootId": "require-description-complete-sentence"}
 
 Requires that block description, explicit `@description`, and
 `@param`/`@returns` tag descriptions are written in complete sentences, i.e.,
@@ -14,16 +16,16 @@ Requires that block description, explicit `@description`, and
 * Periods after items within the `abbreviations` option array are not treated
   as sentence endings.
 
-#### Fixer
+## Fixer
 
 If sentences do not end with terminal punctuation, a period will be added.
 
 If sentences do not start with an uppercase character, the initial
 letter will be capitalized.
 
-#### Options
+## Options
 
-##### `tags`
+### `tags`
 
 If you want additional tags to be checked for their descriptions, you may
 add them within this option.
@@ -46,17 +48,19 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-##### `abbreviations`
+### `abbreviations`
 
 You can provide an `abbreviations` options array to avoid such strings of text
 being treated as sentence endings when followed by dots. The `.` is not
 necessary at the end of the array items.
 
-##### `newlineBeforeCapsAssumesBadSentenceEnd`
+### `newlineBeforeCapsAssumesBadSentenceEnd`
 
 When `false` (the new default), we will not assume capital letters after
 newlines are an incorrect way to end the sentence (they may be proper
 nouns, for example).
+
+## Context and settings
 
 |||
 |---|---|
@@ -65,4 +69,11 @@ nouns, for example).
 |Aliases|`arg`, `argument`, `return`, `desc`, `prop`, `fileoverview`, `overview`, `exception`, `yield`|
 |Recommended|false|
 |Options|`tags`, `abbreviations`, `newlineBeforeCapsAssumesBadSentenceEnd`|
-<!-- assertions requireDescriptionCompleteSentence -->
+
+## Failing examples
+
+<!-- assertions-failing requireDescriptionCompleteSentence -->
+
+## Passing examples
+
+<!-- assertions-passing requireDescriptionCompleteSentence -->

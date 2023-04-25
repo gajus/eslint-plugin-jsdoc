@@ -2,6 +2,8 @@
 <a name="match-name"></a>
 ### <code>match-name</code>
 
+
+
 Reports the name portion of a JSDoc tag if matching or not matching
 a given regular expression.
 
@@ -11,21 +13,21 @@ name will actually be part of the description (e.g., for
 `structuredTags` setting (if `name: false`, this rule will not apply to
 that tag).
 
-<a name="user-content-match-name-fixer"></a>
-<a name="match-name-fixer"></a>
-#### Fixer
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
+## Fixer
 
 Will replace `disallowName` with `replacement` if these are provided.
 
-<a name="user-content-match-name-options"></a>
-<a name="match-name-options"></a>
-#### Options
+<a name="user-content-options"></a>
+<a name="options"></a>
+## Options
 
 A single options object with the following properties:
 
-<a name="user-content-match-name-options-match"></a>
-<a name="match-name-options-match"></a>
-##### <code>match</code>
+<a name="user-content-options-match"></a>
+<a name="options-match"></a>
+### <code>match</code>
 
 `match` is a required option containing an array of objects which determine
 the conditions whereby a name is reported as being problematic.
@@ -62,6 +64,10 @@ tag of the desired tag and/or name and no `disallowName` (or `allowName`) is
 supplied. In such a case, only one error will be reported, but no fixer will
 be applied, however.
 
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -70,6 +76,8 @@ be applied, however.
 |Settings|`structuredTags`|
 |Options|`match`|
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -172,6 +180,10 @@ function quux () {}
 // Message: Only allowing names not matching `/^opt_/i` but found "opt_a".
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

@@ -1,6 +1,11 @@
 <a name="user-content-check-access"></a>
 <a name="check-access"></a>
-### <code>check-access</code>
+# <code>check-access</code>
+
+* [Context and settings](#user-content-check-access-context-and-settings)
+* [Failing examples](#user-content-check-access-failing-examples)
+* [Passing examples](#user-content-check-access-passing-examples)
+
 
 Checks that `@access` tags use one of the following values:
 
@@ -13,6 +18,10 @@ Also reports:
 - Use of multiple instances of `@access` (or the `@public`, etc. style tags)
   on the same doc block.
 
+<a name="user-content-check-access-context-and-settings"></a>
+<a name="check-access-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -21,6 +30,8 @@ Also reports:
 |Settings||
 |Options||
 
+<a name="user-content-check-access-failing-examples"></a>
+<a name="check-access-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -126,6 +137,10 @@ function quux (foo) {
 // Message: At most one access-control tag may be present on a jsdoc block.
 ````
 
+
+
+<a name="user-content-check-access-passing-examples"></a>
+<a name="check-access-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

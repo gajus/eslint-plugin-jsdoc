@@ -1,6 +1,13 @@
 <a name="user-content-implements-on-classes"></a>
 <a name="implements-on-classes"></a>
-### <code>implements-on-classes</code>
+# <code>implements-on-classes</code>
+
+* [Options](#user-content-implements-on-classes-options)
+    * [`contexts`](#user-content-implements-on-classes-options-contexts)
+* [Context and settings](#user-content-implements-on-classes-context-and-settings)
+* [Failing examples](#user-content-implements-on-classes-failing-examples)
+* [Passing examples](#user-content-implements-on-classes-passing-examples)
+
 
 Reports an issue with any non-constructor function using `@implements`.
 
@@ -13,11 +20,11 @@ function is adhering.
 
 <a name="user-content-implements-on-classes-options"></a>
 <a name="implements-on-classes-options"></a>
-#### Options
+## Options
 
 <a name="user-content-implements-on-classes-options-contexts"></a>
 <a name="implements-on-classes-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -31,6 +38,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+<a name="user-content-implements-on-classes-context-and-settings"></a>
+<a name="implements-on-classes-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -38,6 +49,8 @@ section of our README for more on the expected format.
 |Recommended|true|
 |Options|`contexts`|
 
+<a name="user-content-implements-on-classes-failing-examples"></a>
+<a name="implements-on-classes-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -115,6 +128,10 @@ class Foo {
 // Message: @implements used on a non-constructor function
 ````
 
+
+
+<a name="user-content-implements-on-classes-passing-examples"></a>
+<a name="implements-on-classes-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

@@ -1,6 +1,16 @@
 <a name="user-content-require-description-complete-sentence"></a>
 <a name="require-description-complete-sentence"></a>
-### <code>require-description-complete-sentence</code>
+# <code>require-description-complete-sentence</code>
+
+* [Fixer](#user-content-require-description-complete-sentence-fixer)
+* [Options](#user-content-require-description-complete-sentence-options)
+    * [`tags`](#user-content-require-description-complete-sentence-options-tags)
+    * [`abbreviations`](#user-content-require-description-complete-sentence-options-abbreviations)
+    * [`newlineBeforeCapsAssumesBadSentenceEnd`](#user-content-require-description-complete-sentence-options-newlinebeforecapsassumesbadsentenceend)
+* [Context and settings](#user-content-require-description-complete-sentence-context-and-settings)
+* [Failing examples](#user-content-require-description-complete-sentence-failing-examples)
+* [Passing examples](#user-content-require-description-complete-sentence-passing-examples)
+
 
 Requires that block description, explicit `@description`, and
 `@param`/`@returns` tag descriptions are written in complete sentences, i.e.,
@@ -18,7 +28,7 @@ Requires that block description, explicit `@description`, and
 
 <a name="user-content-require-description-complete-sentence-fixer"></a>
 <a name="require-description-complete-sentence-fixer"></a>
-#### Fixer
+## Fixer
 
 If sentences do not end with terminal punctuation, a period will be added.
 
@@ -27,11 +37,11 @@ letter will be capitalized.
 
 <a name="user-content-require-description-complete-sentence-options"></a>
 <a name="require-description-complete-sentence-options"></a>
-#### Options
+## Options
 
 <a name="user-content-require-description-complete-sentence-options-tags"></a>
 <a name="require-description-complete-sentence-options-tags"></a>
-##### <code>tags</code>
+### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
 add them within this option.
@@ -56,7 +66,7 @@ is `xyz`).
 
 <a name="user-content-require-description-complete-sentence-options-abbreviations"></a>
 <a name="require-description-complete-sentence-options-abbreviations"></a>
-##### <code>abbreviations</code>
+### <code>abbreviations</code>
 
 You can provide an `abbreviations` options array to avoid such strings of text
 being treated as sentence endings when followed by dots. The `.` is not
@@ -64,11 +74,15 @@ necessary at the end of the array items.
 
 <a name="user-content-require-description-complete-sentence-options-newlinebeforecapsassumesbadsentenceend"></a>
 <a name="require-description-complete-sentence-options-newlinebeforecapsassumesbadsentenceend"></a>
-##### <code>newlineBeforeCapsAssumesBadSentenceEnd</code>
+### <code>newlineBeforeCapsAssumesBadSentenceEnd</code>
 
 When `false` (the new default), we will not assume capital letters after
 newlines are an incorrect way to end the sentence (they may be proper
 nouns, for example).
+
+<a name="user-content-require-description-complete-sentence-context-and-settings"></a>
+<a name="require-description-complete-sentence-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -77,6 +91,9 @@ nouns, for example).
 |Aliases|`arg`, `argument`, `return`, `desc`, `prop`, `fileoverview`, `overview`, `exception`, `yield`|
 |Recommended|false|
 |Options|`tags`, `abbreviations`, `newlineBeforeCapsAssumesBadSentenceEnd`|
+
+<a name="user-content-require-description-complete-sentence-failing-examples"></a>
+<a name="require-description-complete-sentence-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -413,6 +430,10 @@ function quux () {}
 // Message: Sentences must be more than punctuation.
 ````
 
+
+
+<a name="user-content-require-description-complete-sentence-passing-examples"></a>
+<a name="require-description-complete-sentence-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

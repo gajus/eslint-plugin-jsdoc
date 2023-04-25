@@ -1,4 +1,6 @@
-### `sort-tags`
+# `sort-tags`
+
+{"gitdown": "contents", "rootId": "sort-tags"}
 
 Sorts tags by a specified sequence according to tag name, optionally
 adding line breaks between tag groups.
@@ -17,9 +19,13 @@ line break setting this rule will attempt to do when not disabled.
 You may, however, safely set the "any" option in that rule along with
 `startLines` and/or `endLines`.
 
-#### Options
+## Fixer
 
-##### `tagSequence`
+(TODO)
+
+## Options
+
+### `tagSequence`
 
 An array of tag group objects indicating the preferred sequence for sorting tags.
 
@@ -202,7 +208,7 @@ a fixed order that doesn't change into the future, supply your own
 ]}];
 ```
 
-##### `alphabetizeExtras`
+### `alphabetizeExtras`
 
 Defaults to `false`. Alphabetizes any items not within `tagSequence` after any
 items within `tagSequence` (or in place of the special `-other` pseudo-tag)
@@ -211,24 +217,26 @@ are sorted.
 If you want all your tags alphabetized, you can supply an empty array for
 `tagSequence` along with setting this option to `true`.
 
-##### `linesBetween`
+### `linesBetween`
 
 Indicates the number of lines to be added between tag groups. Defaults to 1.
 Do not set to 0 or 2+ if you are using `tag-lines` and `"always"` and do not
 set to 1+ if you are using `tag-lines` and `"never"`.
 
-##### `reportTagGroupSpacing`
+### `reportTagGroupSpacing`
 
 Whether to enable reporting and fixing of line breaks between tag groups
 as set by `linesBetween`. Defaults to `true`. Note that the very last tag
 will not have spacing applied regardless. For adding line breaks there, you
 may wish to use the `endLines` option of the `tag-lines` rule.
 
-##### `reportIntraTagGroupSpacing`
+### `reportIntraTagGroupSpacing`
 
 Whether to enable reporting and fixing of line breaks within tags of a given
 tag group. Defaults to `true` which will remove any line breaks at the end of
 such tags. Do not use with `true` if you are using `tag-lines` and `always`.
+
+## Context and settings
 
 |||
 |---|---|
@@ -238,4 +246,10 @@ such tags. Do not use with `true` if you are using `tag-lines` and `always`.
 |Settings||
 |Options|`tagSequence`, `alphabetizeExtras`, `linesBetween`, `reportTagGroupSpacing`, `reportIntraTagGroupSpacing`|
 
-<!-- assertions sortTags -->
+## Failing examples
+
+<!-- assertions-failing sortTags -->
+
+## Passing examples
+
+<!-- assertions-passing sortTags -->

@@ -2,11 +2,19 @@
 <a name="require-asterisk-prefix"></a>
 ### <code>require-asterisk-prefix</code>
 
+
+
 Requires that each JSDoc line starts with an `*`.
 
-<a name="user-content-require-asterisk-prefix-options"></a>
-<a name="require-asterisk-prefix-options"></a>
-#### Options
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
+## Fixer
+
+(TODO)
+
+<a name="user-content-options"></a>
+<a name="options"></a>
+## Options
 
 This rule allows an optional string argument. If it is `"always"` then a
 problem is raised when there is no asterisk prefix on a given jsdoc line. If
@@ -16,9 +24,9 @@ and use the `tags` option to apply to specific tags only.
 
 After the string option, one may add an object with the following.
 
-<a name="user-content-require-asterisk-prefix-options-tags"></a>
-<a name="require-asterisk-prefix-options-tags"></a>
-##### <code>tags</code>
+<a name="user-content-options-tags"></a>
+<a name="options-tags"></a>
+### <code>tags</code>
 
 If you want different values to apply to specific tags, you may use
 the `tags` option object. The keys are `always`, `never`, or `any` and
@@ -37,12 +45,18 @@ which applies to the main jsdoc block description.
 }
 ```
 
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|All or as limited by the `tags` option|
 |Options|(a string matching `"always"|"never"` and optional object with `tags`)|
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -164,6 +178,10 @@ function quux (foo) {
 // Message: Expected JSDoc line to have no prefix.
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

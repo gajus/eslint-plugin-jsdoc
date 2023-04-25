@@ -1,6 +1,17 @@
 <a name="user-content-check-tag-names"></a>
 <a name="check-tag-names"></a>
-### <code>check-tag-names</code>
+# <code>check-tag-names</code>
+
+* [Fixer](#user-content-check-tag-names-fixer)
+* [Options](#user-content-check-tag-names-options)
+    * [`definedTags`](#user-content-check-tag-names-options-definedtags)
+    * [`enableFixer`](#user-content-check-tag-names-options-enablefixer)
+    * [`jsxTags`](#user-content-check-tag-names-options-jsxtags)
+    * [`typed`](#user-content-check-tag-names-options-typed)
+* [Context and settings](#user-content-check-tag-names-context-and-settings)
+* [Failing examples](#user-content-check-tag-names-failing-examples)
+* [Passing examples](#user-content-check-tag-names-passing-examples)
+
 
 Reports invalid block tag names.
 
@@ -192,13 +203,19 @@ tag to `false`:
 }
 ```
 
+<a name="user-content-check-tag-names-fixer"></a>
+<a name="check-tag-names-fixer"></a>
+## Fixer
+
+(Todo)
+
 <a name="user-content-check-tag-names-options"></a>
 <a name="check-tag-names-options"></a>
-#### Options
+## Options
 
 <a name="user-content-check-tag-names-options-definedtags"></a>
 <a name="check-tag-names-options-definedtags"></a>
-##### <code>definedTags</code>
+### <code>definedTags</code>
 
 Use an array of `definedTags` strings to configure additional, allowed tags.
 The format is as follows:
@@ -211,13 +228,13 @@ The format is as follows:
 
 <a name="user-content-check-tag-names-options-enablefixer"></a>
 <a name="check-tag-names-options-enablefixer"></a>
-##### <code>enableFixer</code>
+### <code>enableFixer</code>
 
 Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#user-content-typed).
 
 <a name="user-content-check-tag-names-options-jsxtags"></a>
 <a name="check-tag-names-options-jsxtags"></a>
-##### <code>jsxTags</code>
+### <code>jsxTags</code>
 
 If this is set to `true`, all of the following tags used to control JSX output are allowed:
 
@@ -232,7 +249,7 @@ For more information, see the [babel documentation](https://babeljs.io/docs/en/b
 
 <a name="user-content-check-tag-names-options-typed"></a>
 <a name="check-tag-names-options-typed"></a>
-##### <code>typed</code>
+### <code>typed</code>
 
 If this is set to `true`, additionally checks for tag names that are redundant when using a type checker such as TypeScript.
 
@@ -287,6 +304,10 @@ static
 this
 ```
 
+<a name="user-content-check-tag-names-context-and-settings"></a>
+<a name="check-tag-names-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -295,6 +316,8 @@ this
 |Options|`definedTags`, `enableFixer`, `jsxTags`, `typed`|
 |Settings|`tagNamePreference`, `mode`|
 
+<a name="user-content-check-tag-names-failing-examples"></a>
+<a name="check-tag-names-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -742,6 +765,10 @@ function Test() {
 // Message: '@typedef' is redundant when using a type system.
 ````
 
+
+
+<a name="user-content-check-tag-names-passing-examples"></a>
+<a name="check-tag-names-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

@@ -1,6 +1,15 @@
 <a name="user-content-check-types"></a>
 <a name="check-types"></a>
-### <code>check-types</code>
+# <code>check-types</code>
+
+* [Options](#user-content-check-types-options)
+* [Why not capital case everything?](#user-content-check-types-why-not-capital-case-everything)
+* [Comparisons](#user-content-check-types-comparisons)
+* [Fixer](#user-content-check-types-fixer)
+* [Context and settings](#user-content-check-types-context-and-settings)
+* [Failing examples](#user-content-check-types-failing-examples)
+* [Passing examples](#user-content-check-types-passing-examples)
+
 
 Reports invalid types.
 
@@ -24,7 +33,7 @@ RegExp
 
 <a name="user-content-check-types-options"></a>
 <a name="check-types-options"></a>
-#### Options
+## Options
 
 `check-types` allows one option:
 
@@ -75,7 +84,7 @@ the `valid-types` rule to report parsing errors.
 
 <a name="user-content-check-types-why-not-capital-case-everything"></a>
 <a name="check-types-why-not-capital-case-everything"></a>
-#### Why not capital case everything?
+## Why not capital case everything?
 
 Why are `boolean`, `number` and `string` exempt from starting with a capital
 letter? Let's take `string` as an example. In Javascript, everything is an
@@ -137,6 +146,10 @@ In short: It's not about consistency, rather about the 99.9% use case. (And
 some functions might not even support the objects if they are checking for
 identity.)
 
+<a name="user-content-check-types-comparisons"></a>
+<a name="check-types-comparisons"></a>
+## Comparisons
+
 type name | `typeof` | check-types | testcase
 --|--|--|--
 **Array** | object | **Array** | `([]) instanceof Array` -> `true`
@@ -153,6 +166,16 @@ for types, you can use `settings.jsdoc.structuredTags` with a tag `type` of
 `false`. If you set their `type` to an array, only those values will be
 permitted.
 
+<a name="user-content-check-types-fixer"></a>
+<a name="check-types-fixer"></a>
+## Fixer
+
+(Todo)
+
+<a name="user-content-check-types-context-and-settings"></a>
+<a name="check-types-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -163,6 +186,8 @@ permitted.
 |Options|`noDefaults`, `exemptTagContexts`, `unifyParentAndChildTypeChecks`|
 |Settings|`preferredTypes`, `mode`, `structuredTags`|
 
+<a name="user-content-check-types-failing-examples"></a>
+<a name="check-types-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -832,6 +857,10 @@ function a () {}
 // Message: Invalid JSDoc @param "b" type "object".
 ````
 
+
+
+<a name="user-content-check-types-passing-examples"></a>
+<a name="check-types-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

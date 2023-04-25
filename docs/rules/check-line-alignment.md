@@ -1,14 +1,31 @@
 <a name="user-content-check-line-alignment"></a>
 <a name="check-line-alignment"></a>
-### <code>check-line-alignment</code>
+# <code>check-line-alignment</code>
+
+* [Fixer](#user-content-check-line-alignment-fixer)
+* [Options](#user-content-check-line-alignment-options)
+    * [`tags`](#user-content-check-line-alignment-options-tags)
+    * [`customSpacings`](#user-content-check-line-alignment-options-customspacings)
+    * [`preserveMainDescriptionPostDelimiter`](#user-content-check-line-alignment-options-preservemaindescriptionpostdelimiter)
+    * [`wrapIndent`](#user-content-check-line-alignment-options-wrapindent)
+* [Context and settings](#user-content-check-line-alignment-context-and-settings)
+* [Failing examples](#user-content-check-line-alignment-failing-examples)
+* [Passing examples](#user-content-check-line-alignment-passing-examples)
+
 
 Reports invalid alignment of JSDoc block lines. This is a
 [standard recommended to WordPress code](https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/javascript/#aligning-comments),
 for example.
 
+<a name="user-content-check-line-alignment-fixer"></a>
+<a name="check-line-alignment-fixer"></a>
+## Fixer
+
+(TODO)
+
 <a name="user-content-check-line-alignment-options"></a>
 <a name="check-line-alignment-options"></a>
-#### Options
+## Options
 
 This rule allows one optional string argument. If it is `"always"` then a
 problem is raised when the lines are not aligned. If it is `"never"` then
@@ -22,14 +39,14 @@ After the string, an options object is allowed with the following properties.
 
 <a name="user-content-check-line-alignment-options-tags"></a>
 <a name="check-line-alignment-options-tags"></a>
-##### <code>tags</code>
+### <code>tags</code>
 
 Use this to change the tags which are sought for alignment changes. Defaults to an array of
 `['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return']`.
 
 <a name="user-content-check-line-alignment-options-customspacings"></a>
 <a name="check-line-alignment-options-customspacings"></a>
-##### <code>customSpacings</code>
+### <code>customSpacings</code>
 
 An object with any of the following keys set to an integer. Affects spacing:
 
@@ -43,17 +60,21 @@ If a spacing is not defined, it defaults to one.
 
 <a name="user-content-check-line-alignment-options-preservemaindescriptionpostdelimiter"></a>
 <a name="check-line-alignment-options-preservemaindescriptionpostdelimiter"></a>
-##### <code>preserveMainDescriptionPostDelimiter</code>
+### <code>preserveMainDescriptionPostDelimiter</code>
 
 A boolean to determine whether to preserve the post-delimiter spacing of the
 main description. If `false` or unset, will be set to a single space.
 
 <a name="user-content-check-line-alignment-options-wrapindent"></a>
 <a name="check-line-alignment-options-wrapindent"></a>
-##### <code>wrapIndent</code>
+### <code>wrapIndent</code>
 
 The indent that will be applied for tag text after the first line.
 Default to the empty string (no indent).
+
+<a name="user-content-check-line-alignment-context-and-settings"></a>
+<a name="check-line-alignment-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -63,6 +84,8 @@ Default to the empty string (no indent).
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|
 
+<a name="user-content-check-line-alignment-failing-examples"></a>
+<a name="check-line-alignment-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -554,6 +577,10 @@ function quux () {}
 // Message: Expected wrap indent
 ````
 
+
+
+<a name="user-content-check-line-alignment-passing-examples"></a>
+<a name="check-line-alignment-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

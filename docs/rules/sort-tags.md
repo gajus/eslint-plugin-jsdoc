@@ -1,6 +1,18 @@
 <a name="user-content-sort-tags"></a>
 <a name="sort-tags"></a>
-### <code>sort-tags</code>
+# <code>sort-tags</code>
+
+* [Fixer](#user-content-sort-tags-fixer)
+* [Options](#user-content-sort-tags-options)
+    * [`tagSequence`](#user-content-sort-tags-options-tagsequence)
+    * [`alphabetizeExtras`](#user-content-sort-tags-options-alphabetizeextras)
+    * [`linesBetween`](#user-content-sort-tags-options-linesbetween)
+    * [`reportTagGroupSpacing`](#user-content-sort-tags-options-reporttaggroupspacing)
+    * [`reportIntraTagGroupSpacing`](#user-content-sort-tags-options-reportintrataggroupspacing)
+* [Context and settings](#user-content-sort-tags-context-and-settings)
+* [Failing examples](#user-content-sort-tags-failing-examples)
+* [Passing examples](#user-content-sort-tags-passing-examples)
+
 
 Sorts tags by a specified sequence according to tag name, optionally
 adding line breaks between tag groups.
@@ -19,13 +31,19 @@ line break setting this rule will attempt to do when not disabled.
 You may, however, safely set the "any" option in that rule along with
 `startLines` and/or `endLines`.
 
+<a name="user-content-sort-tags-fixer"></a>
+<a name="sort-tags-fixer"></a>
+## Fixer
+
+(TODO)
+
 <a name="user-content-sort-tags-options"></a>
 <a name="sort-tags-options"></a>
-#### Options
+## Options
 
 <a name="user-content-sort-tags-options-tagsequence"></a>
 <a name="sort-tags-options-tagsequence"></a>
-##### <code>tagSequence</code>
+### <code>tagSequence</code>
 
 An array of tag group objects indicating the preferred sequence for sorting tags.
 
@@ -210,7 +228,7 @@ a fixed order that doesn't change into the future, supply your own
 
 <a name="user-content-sort-tags-options-alphabetizeextras"></a>
 <a name="sort-tags-options-alphabetizeextras"></a>
-##### <code>alphabetizeExtras</code>
+### <code>alphabetizeExtras</code>
 
 Defaults to `false`. Alphabetizes any items not within `tagSequence` after any
 items within `tagSequence` (or in place of the special `-other` pseudo-tag)
@@ -221,7 +239,7 @@ If you want all your tags alphabetized, you can supply an empty array for
 
 <a name="user-content-sort-tags-options-linesbetween"></a>
 <a name="sort-tags-options-linesbetween"></a>
-##### <code>linesBetween</code>
+### <code>linesBetween</code>
 
 Indicates the number of lines to be added between tag groups. Defaults to 1.
 Do not set to 0 or 2+ if you are using `tag-lines` and `"always"` and do not
@@ -229,7 +247,7 @@ set to 1+ if you are using `tag-lines` and `"never"`.
 
 <a name="user-content-sort-tags-options-reporttaggroupspacing"></a>
 <a name="sort-tags-options-reporttaggroupspacing"></a>
-##### <code>reportTagGroupSpacing</code>
+### <code>reportTagGroupSpacing</code>
 
 Whether to enable reporting and fixing of line breaks between tag groups
 as set by `linesBetween`. Defaults to `true`. Note that the very last tag
@@ -238,11 +256,15 @@ may wish to use the `endLines` option of the `tag-lines` rule.
 
 <a name="user-content-sort-tags-options-reportintrataggroupspacing"></a>
 <a name="sort-tags-options-reportintrataggroupspacing"></a>
-##### <code>reportIntraTagGroupSpacing</code>
+### <code>reportIntraTagGroupSpacing</code>
 
 Whether to enable reporting and fixing of line breaks within tags of a given
 tag group. Defaults to `true` which will remove any line breaks at the end of
 such tags. Do not use with `true` if you are using `tag-lines` and `always`.
+
+<a name="user-content-sort-tags-context-and-settings"></a>
+<a name="sort-tags-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -252,6 +274,8 @@ such tags. Do not use with `true` if you are using `tag-lines` and `always`.
 |Settings||
 |Options|`tagSequence`, `alphabetizeExtras`, `linesBetween`, `reportTagGroupSpacing`, `reportIntraTagGroupSpacing`|
 
+<a name="user-content-sort-tags-failing-examples"></a>
+<a name="sort-tags-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -489,6 +513,10 @@ function quux () {}
 // Message: Tag groups do not have the expected whitespace
 ````
 
+
+
+<a name="user-content-sort-tags-passing-examples"></a>
+<a name="sort-tags-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

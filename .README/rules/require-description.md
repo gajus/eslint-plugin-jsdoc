@@ -1,4 +1,6 @@
-### `require-description`
+# `require-description`
+
+{"gitdown": "contents", "rootId": "require-description"}
 
 Requires that all functions have a description.
 
@@ -9,7 +11,7 @@ Requires that all functions have a description.
   is `"tag"`) must have a non-empty description that explains the purpose of
   the method.
 
-#### Options
+## Options
 
 An options object may have any of the following properties:
 
@@ -32,13 +34,21 @@ An options object may have any of the following properties:
 - `checkSetters` - A value indicating whether setters should be checked.
     Defaults to `true`.
 
-|          |                                                                                                               |
-| -------- | ------------------------------------------------------------------------------------------------------------- |
-| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
-| Tags     | `description` or jsdoc block                                                                                  |
-| Aliases  | `desc`                                                                                                        |
-| Recommended | false |
-| Options  | `contexts`, `exemptedBy`, `descriptionStyle`, `checkConstructors`, `checkGetters`, `checkSetters`             |
-| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
+## Context and settings
 
-<!-- assertions requireDescription -->
+| | |
+| -------- | ---------------------- |
+| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
+| Tags     | `description` or jsdoc block |
+| Aliases  | `desc` |
+| Recommended | false |
+| Options  | `contexts`, `exemptedBy`, `descriptionStyle`, `checkConstructors`, `checkGetters`, `checkSetters` |
+| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
+
+## Failing examples
+
+<!-- assertions-failing requireDescription -->
+
+## Passing examples
+
+<!-- assertions-passing requireDescription -->

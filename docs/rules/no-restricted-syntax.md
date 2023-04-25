@@ -1,6 +1,13 @@
 <a name="user-content-no-restricted-syntax"></a>
 <a name="no-restricted-syntax"></a>
-### <code>no-restricted-syntax</code>
+# <code>no-restricted-syntax</code>
+
+* [Options](#user-content-no-restricted-syntax-options)
+    * [`contexts`](#user-content-no-restricted-syntax-options-contexts)
+* [Context and settings](#user-content-no-restricted-syntax-context-and-settings)
+* [Failing examples](#user-content-no-restricted-syntax-failing-examples)
+* [Passing examples](#user-content-no-restricted-syntax-passing-examples)
+
 
 Reports when certain comment structures are present.
 
@@ -18,11 +25,11 @@ is designed to do), you can just use ESLint's rule.
 
 <a name="user-content-no-restricted-syntax-options"></a>
 <a name="no-restricted-syntax-options"></a>
-#### Options
+## Options
 
 <a name="user-content-no-restricted-syntax-options-contexts"></a>
 <a name="no-restricted-syntax-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -38,6 +45,10 @@ aliases `@func` or `@method`) (including those associated with an `@interface`).
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+<a name="user-content-no-restricted-syntax-context-and-settings"></a>
+<a name="no-restricted-syntax-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|None except those indicated by `contexts`|
@@ -45,6 +56,8 @@ section of our README for more on the expected format.
 |Recommended|false|
 |Options|`contexts`|
 
+<a name="user-content-no-restricted-syntax-failing-examples"></a>
+<a name="no-restricted-syntax-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -232,6 +245,10 @@ class Test {
 // Message: methods with non-void return types must have a @returns tag
 ````
 
+
+
+<a name="user-content-no-restricted-syntax-passing-examples"></a>
+<a name="no-restricted-syntax-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

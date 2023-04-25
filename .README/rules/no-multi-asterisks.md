@@ -1,14 +1,20 @@
 ### `no-multi-asterisks`
 
+{"gitdown": "contents", "rootId": "no-multi-asterisks"}
+
 Prevents use of multiple asterisks at the beginning of lines.
 
 Note that if you wish to prevent multiple asterisks at the very beginning of
 the jsdoc block, you should use `no-bad-blocks` (as that is not proper jsdoc
 and that rule is for catching blocks which only seem like jsdoc).
 
-#### Options
+## Fixer
 
-##### `allowWhitespace` (defaults to `false`)
+(TODO)
+
+## Options
+
+### `allowWhitespace` (defaults to `false`)
 
 Set to `true` if you wish to allow asterisks after a space (as with Markdown):
 
@@ -18,7 +24,7 @@ Set to `true` if you wish to allow asterisks after a space (as with Markdown):
  */
 ```
 
-##### `preventAtMiddleLines` (defaults to `true`)
+### `preventAtMiddleLines` (defaults to `true`)
 
 Prevent the likes of this:
 
@@ -29,7 +35,7 @@ Prevent the likes of this:
  */
 ```
 
-##### `preventAtEnd` (defaults to `true`)
+### `preventAtEnd` (defaults to `true`)
 
 Prevent the likes of this:
 
@@ -40,6 +46,8 @@ Prevent the likes of this:
  **/
 ```
 
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -48,4 +56,10 @@ Prevent the likes of this:
 |Settings||
 |Options|`preventAtEnd`, `preventAtMiddleLines`|
 
-<!-- assertions noMultiAsterisks -->
+## Failing examples
+
+<!-- assertions-failing noMultiAsterisks -->
+
+## Passing examples
+
+<!-- assertions-passing noMultiAsterisks -->

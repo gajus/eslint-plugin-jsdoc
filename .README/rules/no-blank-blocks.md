@@ -1,6 +1,12 @@
-### `no-blank-blocks`
+# `no-blank-blocks`
+
+{"gitdown": "contents", "rootId": "no-blank-blocks"}
 
 Reports and optionally removes blocks with whitespace only.
+
+## Fixer
+
+(TODO)
 
 #### Options
 
@@ -16,4 +22,10 @@ Whether or not to auto-remove the blank block. Defaults to `false`.
 |Settings||
 |Options|`enableFixer`|
 
-<!-- assertions noBlankBlocks -->
+## Failing examples
+
+<!-- assertions-failing noBlankBlocks -->
+
+## Passing examples
+
+<!-- assertions-passing noBlankBlocks -->

@@ -1,6 +1,13 @@
 <a name="user-content-no-missing-syntax"></a>
 <a name="no-missing-syntax"></a>
-### <code>no-missing-syntax</code>
+# <code>no-missing-syntax</code>
+
+* [Options](#user-content-no-missing-syntax-options)
+    * [`contexts`](#user-content-no-missing-syntax-options-contexts)
+* [Context and settings](#user-content-no-missing-syntax-context-and-settings)
+* [Failing examples](#user-content-no-missing-syntax-failing-examples)
+* [Passing examples](#user-content-no-missing-syntax-passing-examples)
+
 
 This rule lets you report if certain always expected comment structures are
 missing.
@@ -38,11 +45,11 @@ not report if there were only a function declaration of the name "ignoreMe"
 
 <a name="user-content-no-missing-syntax-options"></a>
 <a name="no-missing-syntax-options"></a>
-#### Options
+## Options
 
 <a name="user-content-no-missing-syntax-options-contexts"></a>
 <a name="no-missing-syntax-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -62,6 +69,10 @@ aliases `@func` or `@method`) (including those associated with an `@interface`).
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+<a name="user-content-no-missing-syntax-context-and-settings"></a>
+<a name="no-missing-syntax-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|None except those indicated by `contexts`|
@@ -69,6 +80,8 @@ section of our README for more on the expected format.
 |Recommended|false|
 |Options|`contexts`|
 
+<a name="user-content-no-missing-syntax-failing-examples"></a>
+<a name="no-missing-syntax-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -178,6 +191,10 @@ function quux () {}
 // Message: Require names matching `/^opt_/i`.
 ````
 
+
+
+<a name="user-content-no-missing-syntax-passing-examples"></a>
+<a name="no-missing-syntax-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

@@ -1,9 +1,15 @@
-### `check-param-names`
+# `check-param-names`
+
+{"gitdown": "contents", "rootId": "check-param-names"}
 
 Ensures that parameter names in JSDoc are matched by corresponding items in
 the function declaration.
 
-#### Destructuring
+## Fixer
+
+(Todo)
+
+## Destructuring
 
 Note that by default the rule will not report parameters present on the docs
 but non-existing on the function signature when an object rest property is part
@@ -28,17 +34,17 @@ other properties, so in looking at the docs alone without looking at the
 function signature, the disadvantage of enabling this option is that it
 may appear that there is an actual property named `extra`.
 
-#### Options
+## Options
 
-##### `checkRestProperty`
+### `checkRestProperty`
 
 See the "Destructuring" section. Defaults to `false`.
 
-##### `checkTypesPattern`
+### `checkTypesPattern`
 
 See `require-param` under the option of the same name.
 
-##### `enableFixer`
+### `enableFixer`
 
 Set to `true` to auto-remove `@param` duplicates (based on identical
 names).
@@ -47,25 +53,25 @@ Note that this option will remove duplicates of the same name even if
 the definitions do not match in other ways (e.g., the second param will
 be removed even if it has a different type or description).
 
-##### `allowExtraTrailingParamDocs`
+### `allowExtraTrailingParamDocs`
 
 If set to `true`, this option will allow extra `@param` definitions (e.g.,
 representing future expected or virtual params) to be present without needing
 their presence within the function signature. Other inconsistencies between
 `@param`'s and present function parameters will still be reported.
 
-##### `checkDestructured`
+### `checkDestructured`
 
 Whether to check destructured properties. Defaults to `true`.
 
-##### `useDefaultObjectProperties`
+### `useDefaultObjectProperties`
 
 Set to `true` if you wish to avoid reporting of child property documentation
 where instead of destructuring, a whole plain object is supplied as default
 value but you wish its keys to be considered as signalling that the properties
 are present and can therefore be documented. Defaults to `false`.
 
-##### `disableExtraPropertyReporting`
+### `disableExtraPropertyReporting`
 
 Whether to check for extra destructured properties. Defaults to `false`. Change
 to `true` if you want to be able to document properties which are not actually
@@ -75,6 +81,8 @@ item at the same level is destructured as destructuring will prevent other
 access and this option is only intended to permit documenting extra properties
 that are available and actually used in the function.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -82,4 +90,11 @@ that are available and actually used in the function.
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
-<!-- assertions checkParamNames -->
+
+## Failing examples
+
+<!-- assertions-failing checkParamNames -->
+
+## Passing examples
+
+<!-- assertions-passing checkParamNames -->

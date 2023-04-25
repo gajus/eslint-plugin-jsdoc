@@ -2,6 +2,8 @@
 <a name="multiline-blocks"></a>
 ### <code>multiline-blocks</code>
 
+
+
 Controls how and whether jsdoc blocks can be expressed as single or multiple
 line blocks.
 
@@ -11,40 +13,46 @@ all jsdoc blocks!
 
 Also allows for preventing text at the very beginning or very end of blocks.
 
-<a name="user-content-multiline-blocks-options"></a>
-<a name="multiline-blocks-options"></a>
-#### Options
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
+## Fixer
+
+(TODO)
+
+<a name="user-content-options"></a>
+<a name="options"></a>
+## Options
 
 A single options object with the following properties.
 
-<a name="user-content-multiline-blocks-options-nozerolinetext-defaults-to-true"></a>
-<a name="multiline-blocks-options-nozerolinetext-defaults-to-true"></a>
-##### <code>noZeroLineText</code> (defaults to <code>true</code>)
+<a name="user-content-options-nozerolinetext-defaults-to-true"></a>
+<a name="options-nozerolinetext-defaults-to-true"></a>
+### <code>noZeroLineText</code> (defaults to <code>true</code>)
 
 For multiline blocks, any non-whitespace text immediately after the `/**` and
 space will be reported. (Text after a newline is not reported.)
 
 `noMultilineBlocks` will have priority over this rule if it applies.
 
-<a name="user-content-multiline-blocks-options-nofinallinetext-defaults-to-true"></a>
-<a name="multiline-blocks-options-nofinallinetext-defaults-to-true"></a>
-##### <code>noFinalLineText</code> (defaults to <code>true</code>)
+<a name="user-content-options-nofinallinetext-defaults-to-true"></a>
+<a name="options-nofinallinetext-defaults-to-true"></a>
+### <code>noFinalLineText</code> (defaults to <code>true</code>)
 
 For multiline blocks, any non-whitespace text preceding the `*/` on the final
 line will be reported. (Text preceding a newline is not reported.)
 
 `noMultilineBlocks` will have priority over this rule if it applies.
 
-<a name="user-content-multiline-blocks-options-nosinglelineblocks-defaults-to-false"></a>
-<a name="multiline-blocks-options-nosinglelineblocks-defaults-to-false"></a>
-##### <code>noSingleLineBlocks</code> (defaults to <code>false</code>)
+<a name="user-content-options-nosinglelineblocks-defaults-to-false"></a>
+<a name="options-nosinglelineblocks-defaults-to-false"></a>
+### <code>noSingleLineBlocks</code> (defaults to <code>false</code>)
 
 If this is `true`, any single line blocks will be reported, except those which
 are whitelisted in `singleLineTags`.
 
-<a name="user-content-multiline-blocks-options-singlelinetags-defaults-to-lends-type"></a>
-<a name="multiline-blocks-options-singlelinetags-defaults-to-lends-type"></a>
-##### <code>singleLineTags</code> (defaults to <code>[&#39;lends&#39;, &#39;type&#39;]</code>)
+<a name="user-content-options-singlelinetags-defaults-to-lends-type"></a>
+<a name="options-singlelinetags-defaults-to-lends-type"></a>
+### <code>singleLineTags</code> (defaults to <code>[&#39;lends&#39;, &#39;type&#39;]</code>)
 
 An array of tags which can nevertheless be allowed as single line blocks when
 `noSingleLineBlocks` is set.  You may set this to a empty array to
@@ -52,17 +60,17 @@ cause all single line blocks to be reported. If `'*'` is present, then
 the presence of a tag will allow single line blocks (but not if a tag is
 missing).
 
-<a name="user-content-multiline-blocks-options-nomultilineblocks-defaults-to-false"></a>
-<a name="multiline-blocks-options-nomultilineblocks-defaults-to-false"></a>
-##### <code>noMultilineBlocks</code> (defaults to <code>false</code>)
+<a name="user-content-options-nomultilineblocks-defaults-to-false"></a>
+<a name="options-nomultilineblocks-defaults-to-false"></a>
+### <code>noMultilineBlocks</code> (defaults to <code>false</code>)
 
 Requires that jsdoc blocks are restricted to single lines only unless impacted
 by the options `minimumLengthForMultiline`, `multilineTags`, or
 `allowMultipleTags`.
 
-<a name="user-content-multiline-blocks-options-minimumlengthformultiline-defaults-to-not-being-in-effect"></a>
-<a name="multiline-blocks-options-minimumlengthformultiline-defaults-to-not-being-in-effect"></a>
-##### <code>minimumLengthForMultiline</code> (defaults to not being in effect)
+<a name="user-content-options-minimumlengthformultiline-defaults-to-not-being-in-effect"></a>
+<a name="options-minimumlengthformultiline-defaults-to-not-being-in-effect"></a>
+### <code>minimumLengthForMultiline</code> (defaults to not being in effect)
 
 If `noMultilineBlocks` is set with this numeric option, multiline blocks will
 be permitted if containing at least the given amount of text.
@@ -70,9 +78,9 @@ be permitted if containing at least the given amount of text.
 If not set, multiline blocks will not be permitted regardless of length unless
 a relevant tag is present and `multilineTags` is set.
 
-<a name="user-content-multiline-blocks-options-multilinetags-defaults-to"></a>
-<a name="multiline-blocks-options-multilinetags-defaults-to"></a>
-##### <code>multilineTags</code> (defaults to <code>[&#39;*&#39;]</code>)
+<a name="user-content-options-multilinetags-defaults-to"></a>
+<a name="options-multilinetags-defaults-to"></a>
+### <code>multilineTags</code> (defaults to <code>[&#39;*&#39;]</code>)
 
 If `noMultilineBlocks` is set with this option, multiline blocks may be allowed
 regardless of length as long as a tag or a tag of a certain type is present.
@@ -87,9 +95,9 @@ such a tag will cause multiline blocks to be allowed.
 You may set this to an empty array to prevent any tag from permitting multiple
 lines.
 
-<a name="user-content-multiline-blocks-options-allowmultipletags-defaults-to-true"></a>
-<a name="multiline-blocks-options-allowmultipletags-defaults-to-true"></a>
-##### <code>allowMultipleTags</code> (defaults to <code>true</code>)
+<a name="user-content-options-allowmultipletags-defaults-to-true"></a>
+<a name="options-allowmultipletags-defaults-to-true"></a>
+### <code>allowMultipleTags</code> (defaults to <code>true</code>)
 
 If `noMultilineBlocks` is set to `true` with this option and multiple tags are
 found in a block, an error will not be reported.
@@ -102,6 +110,10 @@ This option will also be applied when there is a block description and a single
 tag (since a description cannot precede a tag on a single line, and also
 cannot be reliably added after the tag either).
 
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -110,6 +122,8 @@ cannot be reliably added after the tag either).
 |Settings||
 |Options|`noZeroLineText`, `noSingleLineBlocks`, `singleLineTags`, `noMultilineBlocks`, `minimumLengthForMultiline`, `multilineTags`, `allowMultipleTags`, `noFinalLineText`|
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -271,6 +285,10 @@ The following patterns are considered problems:
 // Message: Should have no text on the final line (before the `*/`).
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

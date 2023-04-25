@@ -1,6 +1,12 @@
 <a name="user-content-no-undefined-types"></a>
 <a name="no-undefined-types"></a>
-### <code>no-undefined-types</code>
+# <code>no-undefined-types</code>
+
+* [Options](#user-content-no-undefined-types-options)
+* [Context and settings](#user-content-no-undefined-types-context-and-settings)
+* [Failing examples](#user-content-no-undefined-types-failing-examples)
+* [Passing examples](#user-content-no-undefined-types-passing-examples)
+
 
 Checks that types in jsdoc comments are defined. This can be used to check
 unimported types.
@@ -47,13 +53,17 @@ array's items will be considered as defined for the purposes of that tag.
 
 <a name="user-content-no-undefined-types-options"></a>
 <a name="no-undefined-types-options"></a>
-#### Options
+## Options
 
 An option object may have the following key:
 
 - `definedTypes` - This array can be populated to indicate other types which
   are automatically considered as defined (in addition to globals, etc.).
   Defaults to an empty array.
+
+<a name="user-content-no-undefined-types-context-and-settings"></a>
+<a name="no-undefined-types-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -65,6 +75,9 @@ An option object may have the following key:
 |Options|`definedTypes`|
 |Settings|`preferredTypes`, `mode`, `structuredTags`|
 
+
+<a name="user-content-no-undefined-types-failing-examples"></a>
+<a name="no-undefined-types-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -272,6 +285,10 @@ const a = new Todo();
 // Message: The type 'Omit' is undefined.
 ````
 
+
+
+<a name="user-content-no-undefined-types-passing-examples"></a>
+<a name="no-undefined-types-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

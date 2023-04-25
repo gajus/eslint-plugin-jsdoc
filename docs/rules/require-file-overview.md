@@ -1,6 +1,13 @@
 <a name="user-content-require-file-overview"></a>
 <a name="require-file-overview"></a>
-### <code>require-file-overview</code>
+# <code>require-file-overview</code>
+
+* [Options](#user-content-require-file-overview-options)
+    * [`tags`](#user-content-require-file-overview-options-tags)
+* [Context and settings](#user-content-require-file-overview-context-and-settings)
+* [Failing examples](#user-content-require-file-overview-failing-examples)
+* [Passing examples](#user-content-require-file-overview-passing-examples)
+
 
 Checks that:
 
@@ -14,11 +21,11 @@ Checks that:
 
 <a name="user-content-require-file-overview-options"></a>
 <a name="require-file-overview-options"></a>
-#### Options
+## Options
 
 <a name="user-content-require-file-overview-options-tags"></a>
 <a name="require-file-overview-options-tags"></a>
-##### <code>tags</code>
+### <code>tags</code>
 
 The keys of this object are tag names, and the values are configuration
 objects indicating what will be checked for these whole-file tags.
@@ -73,6 +80,10 @@ in this configuration object regardless of whether you have configured
 `fileoverview` instead of `file` on `tagNamePreference` (i.e., `fileoverview`
 will be checked, but you must use `file` on the configuration object).
 
+<a name="user-content-require-file-overview-context-and-settings"></a>
+<a name="require-file-overview-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|Everywhere|
@@ -81,6 +92,8 @@ will be checked, but you must use `file` on the configuration object).
 |Recommended|false|
 |Options|`tags`|
 
+<a name="user-content-require-file-overview-failing-examples"></a>
+<a name="require-file-overview-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -218,6 +231,10 @@ function quux () {
 // Message: Duplicate @file
 ````
 
+
+
+<a name="user-content-require-file-overview-passing-examples"></a>
+<a name="require-file-overview-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

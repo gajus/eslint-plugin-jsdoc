@@ -1,4 +1,6 @@
-### `require-yields-check`
+# `require-yields-check`
+
+{"gitdown": "contents", "rootId": "require-yields-check"}
 
 Ensures that if a `@yields` is present that a `yield` (or `yield` with a
 value) is present in the function body (or that if a `@next` is present that
@@ -15,7 +17,7 @@ function bodies.
 
 Will also report if multiple `@yields` tags are present.
 
-#### Options
+## Options
 
 - `checkGeneratorsOnly` - Avoids checking the function body and merely insists
     that all generators have `@yields`. This can be an optimization with the
@@ -34,6 +36,8 @@ Will also report if multiple `@yields` tags are present.
     merely has plain `yield;` or `yield value;` statements without returning
     the values. Defaults to `false`.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -41,4 +45,11 @@ Will also report if multiple `@yields` tags are present.
 |Aliases|`yield`|
 |Recommended|true|
 |Options|`checkGeneratorsOnly`|
-<!-- assertions requireYieldsCheck -->
+
+## Failing examples
+
+<!-- assertions-failing requireYieldsCheck -->
+
+## Passing examples
+
+<!-- assertions-passing requireYieldsCheck -->

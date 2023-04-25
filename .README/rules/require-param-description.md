@@ -1,4 +1,6 @@
-### `require-param-description`
+# `require-param-description`
+
+{"gitdown": "contents", "rootId": "require-param-description"}
 
 Requires that each `@param` tag has a `description` value.
 
@@ -7,9 +9,9 @@ Will exempt destructured roots and their children if
 `@param {object} props` will be exempted from requiring a description given
 `function someFunc ({child1, child2})`).
 
-#### Options
+## Options
 
-##### `setDefaultDestructuredRootDescription`
+### `setDefaultDestructuredRootDescription`
 
 Whether to set a default destructured root description. For example, you may
 wish to avoid manually having to set the description for a `@param`
@@ -17,12 +19,12 @@ corresponding to a destructured root object as it should always be the same
 type of object. Uses `defaultDestructuredRootDescription` for the description
 string. Defaults to `false`.
 
-##### `defaultDestructuredRootDescription`
+### `defaultDestructuredRootDescription`
 
 The description string to set by default for destructured roots. Defaults to
 "The root object".
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -35,6 +37,8 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -44,4 +48,10 @@ section of our README for more on the expected format.
 |Options|`setDefaultDestructuredRootDescription`, `defaultDestructuredRootDescription`, `contexts`|
 |Settings|`exemptDestructuredRootsFromChecks`|
 
-<!-- assertions requireParamDescription -->
+## Failing examples
+
+<!-- assertions-failing requireParamDescription -->
+
+## Passing examples
+
+<!-- assertions-passing requireParamDescription -->

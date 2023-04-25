@@ -1,4 +1,6 @@
-### `match-description`
+# `match-description`
+
+{"gitdown": "contents", "rootId": "match-description"}
 
 Enforces a regular expression pattern on descriptions.
 
@@ -24,9 +26,9 @@ case-insensitive unless one opts in to add the `i` flag.
 You can add the `s` flag if you want `.` to match newlines. Note, however,
 that the trailing newlines of a description will not be matched.
 
-#### Options
+## Options
 
-##### `matchDescription`
+### `matchDescription`
 
 You can supply your own expression to override the default, passing a
 `matchDescription` string on the options object.
@@ -37,7 +39,7 @@ You can supply your own expression to override the default, passing a
 }
 ```
 
-##### `message`
+### `message`
 
 You may provide a custom default message by using the following format:
 
@@ -52,7 +54,7 @@ You may provide a custom default message by using the following format:
 This can be overridden per tag or for the main block description by setting
 `message` within `tags` or `mainDescription`, respectively.
 
-##### `tags`
+### `tags`
 
 If you want different regular expressions to apply to tags, you may use
 the `tags` option object:
@@ -100,7 +102,7 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-##### `mainDescription`
+### `mainDescription`
 
 If you wish to override the main block description without changing the
 default `match-description` (which can cascade to the `tags` with `true`),
@@ -139,7 +141,7 @@ You may also provide an object with `message`:
 }
 ```
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -150,6 +152,8 @@ want the rule to apply to any jsdoc block throughout your files.
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -159,4 +163,10 @@ section of our README for more on the expected format.
 |Settings||
 |Options|`contexts`, `tags` (accepts tags with names and optional type such as 'param', 'arg', 'argument', 'property', and 'prop', and accepts arbitrary list of other tags with an optional type (but without names), e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
-<!-- assertions matchDescription -->
+## Failing examples
+
+<!-- assertions-failing matchDescription -->
+
+## Passing examples
+
+<!-- assertions-passing matchDescription -->

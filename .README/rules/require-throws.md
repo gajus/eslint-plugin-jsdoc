@@ -1,4 +1,6 @@
-### `require-throws`
+# `require-throws`
+
+{"gitdown": "contents", "rootId": "require-throws"}
 
 Requires that throw statements are documented.
 
@@ -9,7 +11,7 @@ for our desire for a separate tag to document rejection types and see
 [this discussion](https://stackoverflow.com/questions/50071115/typescript-promise-rejection-type)
 on why TypeScript doesn't offer such a feature.
 
-#### Options
+## Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
     document block avoids the need for a `@throws`. Defaults to an array
@@ -29,6 +31,8 @@ on why TypeScript doesn't offer such a feature.
 'jsdoc/require-throws': 'error',
 ```
 
+## Context and settings
+
 | | |
 | -------- | --- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
@@ -38,4 +42,10 @@ on why TypeScript doesn't offer such a feature.
 | Options  | `contexts`, `exemptedBy` |
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
-<!-- assertions requireThrows -->
+## Failing examples
+
+<!-- assertions-failing requireThrows -->
+
+## Passing examples
+
+<!-- assertions-passing requireThrows -->

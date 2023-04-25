@@ -1,5 +1,7 @@
 ### `empty-tags`
 
+{"gitdown": "contents", "rootId": "empty-tags"}
+
 Expects the following tags to be empty of any content:
 
 - `@abstract`
@@ -31,9 +33,13 @@ causes rules not to take effect).
 Similarly, `@internal` will still be checked for content by this rule even with
 `settings.jsdoc.ignoreInternal` set to `true`.
 
-#### Options
+## Fixer
 
-##### `tags`
+(Todo)
+
+## Options
+
+### `tags`
 
 If you want additional tags to be checked for their descriptions, you may
 add them within this option.
@@ -44,10 +50,19 @@ add them within this option.
 }
 ```
 
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags| `abstract`, `async`, `generator`, `global`, `hideconstructor`, `ignore`, `inheritdoc`, `inner`, `instance`, `internal`, `override`, `readonly`, `package`, `private`, `protected`, `public`, `static` and others added by `tags`|
 |Recommended|true|
 |Options|`tags`|
-<!-- assertions emptyTags -->
+
+## Failing examples
+
+<!-- assertions-failing emptyTags -->
+
+## Passing examples
+
+<!-- assertions-passing emptyTags -->

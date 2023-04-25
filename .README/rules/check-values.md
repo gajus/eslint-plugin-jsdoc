@@ -1,4 +1,6 @@
-### `check-values`
+# `check-values`
+
+{"gitdown": "contents", "rootId": "check-values"}
 
 This rule checks the values for a handful of tags:
 
@@ -17,19 +19,19 @@ This rule checks the values for a handful of tags:
     'constant', 'event', 'external', 'file', 'function', 'member', 'mixin',
     'module', 'namespace', 'typedef',
 
-#### Options
+## Options
 
-##### `allowedAuthors`
+### `allowedAuthors`
 
 An array of allowable author values. If absent, only non-whitespace will
 be checked for.
 
-##### `allowedLicenses`
+### `allowedLicenses`
 
 An array of allowable license values or `true` to allow any license text.
 If present as an array, will be used in place of SPDX identifiers.
 
-##### `licensePattern`
+### `licensePattern`
 
 A string to be converted into a `RegExp` (with `u` flag) and whose first
 parenthetical grouping, if present, will match the portion of the license
@@ -42,10 +44,12 @@ Note that the `/` delimiters are optional, but necessary to add flags.
 Defaults to using the `u` flag, so to add your own flags, encapsulate
 your expression as a string, but like a literal, e.g., `/^mit$/ui`.
 
-##### `numericOnlyVariation`
+### `numericOnlyVariation`
 
 Whether to enable validation that `@variation` must be a number. Defaults to
 `false`.
+
+## Context and settings
 
 |||
 |---|---|
@@ -55,4 +59,10 @@ Whether to enable validation that `@variation` must be a number. Defaults to
 |Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|
 
-<!-- assertions checkValues -->
+## Failing examples
+
+<!-- assertions-failing checkValues -->
+
+## Passing examples
+
+<!-- assertions-passing checkValues -->

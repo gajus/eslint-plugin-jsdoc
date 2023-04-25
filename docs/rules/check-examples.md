@@ -1,6 +1,19 @@
 <a name="user-content-check-examples"></a>
 <a name="check-examples"></a>
-### <code>check-examples</code>
+# <code>check-examples</code>
+
+* [Options](#user-content-check-examples-options)
+    * [`captionRequired`](#user-content-check-examples-options-captionrequired)
+    * [`exampleCodeRegex` and `rejectExampleCodeRegex`](#user-content-check-examples-options-examplecoderegex-and-rejectexamplecoderegex)
+    * [`paddedIndent`](#user-content-check-examples-options-paddedindent)
+    * [`reportUnusedDisableDirectives`](#user-content-check-examples-options-reportunuseddisabledirectives)
+* [Options for Determining ESLint Rule Applicability (`allowInlineConfig`, `noDefaultExampleRules`, `matchingFileName`, `configFile`, `checkEslintrc`, and `baseConfig`)](#user-content-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig)
+    * [Rules Disabled by Default Unless `noDefaultExampleRules` is Set to `true`](#user-content-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true)
+    * [Options for checking other than `@example` (`checkDefaults`, `checkParams`, or `checkProperties`)](#user-content-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig-options-for-checking-other-than-example-checkdefaults-checkparams-or-checkproperties)
+* [Context and settings](#user-content-check-examples-context-and-settings)
+* [Failing examples](#user-content-check-examples-failing-examples)
+* [Passing examples](#user-content-check-examples-passing-examples)
+
 
 > **NOTE**: This rule currently does not work in ESLint 8 (we are waiting for
 > [issue 14745](https://github.com/eslint/eslint/issues/14745)).
@@ -11,13 +24,13 @@ and `@property`/`@prop` tags or the values of `@default`/`@defaultvalue` tags.
 
 <a name="user-content-check-examples-options"></a>
 <a name="check-examples-options"></a>
-#### Options
+## Options
 
 The options below all default to no-op/`false` except as noted.
 
 <a name="user-content-check-examples-options-captionrequired"></a>
 <a name="check-examples-options-captionrequired"></a>
-##### <code>captionRequired</code>
+### <code>captionRequired</code>
 
 JSDoc specs use of an optional `<caption>` element at the beginning of
 `@example`.
@@ -29,7 +42,7 @@ Used only for `@example`.
 
 <a name="user-content-check-examples-options-examplecoderegex-and-rejectexamplecoderegex"></a>
 <a name="check-examples-options-examplecoderegex-and-rejectexamplecoderegex"></a>
-##### <code>exampleCodeRegex</code> and <code>rejectExampleCodeRegex</code>
+### <code>exampleCodeRegex</code> and <code>rejectExampleCodeRegex</code>
 
 JSDoc does not specify a formal means for delimiting code blocks within
 `@example` (it uses generic syntax highlighting techniques for its own
@@ -59,7 +72,7 @@ before doing the regex matching.
 
 <a name="user-content-check-examples-options-paddedindent"></a>
 <a name="check-examples-options-paddedindent"></a>
-##### <code>paddedIndent</code>
+### <code>paddedIndent</code>
 
 This integer property allows one to add a fixed amount of whitespace at the
 beginning of the second or later lines of the example to be stripped so as
@@ -81,7 +94,7 @@ Only applied to `@example` linting.
 
 <a name="user-content-check-examples-options-reportunuseddisabledirectives"></a>
 <a name="check-examples-options-reportunuseddisabledirectives"></a>
-##### <code>reportUnusedDisableDirectives</code>
+### <code>reportUnusedDisableDirectives</code>
 
 If not set to `false`, `reportUnusedDisableDirectives` will report disabled
 directives which are not used (and thus not needed). Defaults to `true`.
@@ -94,7 +107,7 @@ needed by the resolved rules will be reported as with the ESLint
 
 <a name="user-content-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig"></a>
 <a name="check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig"></a>
-#### Options for Determining ESLint Rule Applicability (<code>allowInlineConfig</code>, <code>noDefaultExampleRules</code>, <code>matchingFileName</code>, <code>configFile</code>, <code>checkEslintrc</code>, and <code>baseConfig</code>)
+## Options for Determining ESLint Rule Applicability (<code>allowInlineConfig</code>, <code>noDefaultExampleRules</code>, <code>matchingFileName</code>, <code>configFile</code>, <code>checkEslintrc</code>, and <code>baseConfig</code>)
 
 The following options determine which individual ESLint rules will be
 applied to the JavaScript found within the `@example` tags (as determined
@@ -147,7 +160,7 @@ by decreasing precedence:
 
 <a name="user-content-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
 <a name="check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig-rules-disabled-by-default-unless-nodefaultexamplerules-is-set-to-true"></a>
-##### Rules Disabled by Default Unless <code>noDefaultExampleRules</code> is Set to <code>true</code>
+### Rules Disabled by Default Unless <code>noDefaultExampleRules</code> is Set to <code>true</code>
 
 * `eol-last` - Insisting that a newline "always" be at the end is less likely
   to be desired in sample code as with the code file convention.
@@ -184,11 +197,15 @@ expression-oriented rules will be used by default as well:
 
 <a name="user-content-check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig-options-for-checking-other-than-example-checkdefaults-checkparams-or-checkproperties"></a>
 <a name="check-examples-options-for-determining-eslint-rule-applicability-allowinlineconfig-nodefaultexamplerules-matchingfilename-configfile-checkeslintrc-and-baseconfig-options-for-checking-other-than-example-checkdefaults-checkparams-or-checkproperties"></a>
-##### Options for checking other than <code>@example</code> (<code>checkDefaults</code>, <code>checkParams</code>, or <code>checkProperties</code>)
+### Options for checking other than <code>@example</code> (<code>checkDefaults</code>, <code>checkParams</code>, or <code>checkProperties</code>)
 
 * `checkDefaults` - Whether to check the values of `@default`/`@defaultvalue` tags
 * `checkParams` - Whether to check `@param`/`@arg`/`@argument` default values
 * `checkProperties` - Whether to check `@property`/`@prop` default values
+
+<a name="user-content-check-examples-context-and-settings"></a>
+<a name="check-examples-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -197,6 +214,8 @@ expression-oriented rules will be used by default as well:
 |Recommended|false|
 |Options| *See above* |
 
+<a name="user-content-check-examples-failing-examples"></a>
+<a name="check-examples-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -536,6 +555,10 @@ const functionName = function (paramOne, paramTwo,
 // Message: @example error (semi): Missing semicolon.
 ````
 
+
+
+<a name="user-content-check-examples-passing-examples"></a>
+<a name="check-examples-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

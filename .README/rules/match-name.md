@@ -1,5 +1,7 @@
 ### `match-name`
 
+{"gitdown": "contents", "rootId": "match-name"}
+
 Reports the name portion of a JSDoc tag if matching or not matching
 a given regular expression.
 
@@ -9,15 +11,15 @@ name will actually be part of the description (e.g., for
 `structuredTags` setting (if `name: false`, this rule will not apply to
 that tag).
 
-#### Fixer
+## Fixer
 
 Will replace `disallowName` with `replacement` if these are provided.
 
-#### Options
+## Options
 
 A single options object with the following properties:
 
-##### `match`
+### `match`
 
 `match` is a required option containing an array of objects which determine
 the conditions whereby a name is reported as being problematic.
@@ -54,6 +56,8 @@ tag of the desired tag and/or name and no `disallowName` (or `allowName`) is
 supplied. In such a case, only one error will be reported, but no fixer will
 be applied, however.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -62,4 +66,10 @@ be applied, however.
 |Settings|`structuredTags`|
 |Options|`match`|
 
-<!-- assertions matchName -->
+## Failing examples
+
+<!-- assertions-failing matchName -->
+
+## Passing examples
+
+<!-- assertions-passing matchName -->

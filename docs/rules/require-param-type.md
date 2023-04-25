@@ -1,8 +1,15 @@
 <a name="user-content-require-param-name"></a>
 <a name="require-param-name"></a>
-### <code>require-param-name</code>
+# <code>require-param-name</code>
 
-Requires that all function parameters have names.
+* [Options](#user-content-require-param-name-options)
+    * [`contexts`](#user-content-require-param-name-options-contexts)
+* [Context and settings](#user-content-require-param-name-context-and-settings)
+* [Failing examples](#user-content-require-param-name-failing-examples)
+* [Passing examples](#user-content-require-param-name-passing-examples)
+
+
+Requires that all `@param` tags have names.
 
 > The `@param` tag requires you to specify the name of the parameter you are documenting. You can also include the parameter's type, enclosed in curly brackets, and a description of the parameter.
 >
@@ -10,11 +17,11 @@ Requires that all function parameters have names.
 
 <a name="user-content-require-param-name-options"></a>
 <a name="require-param-name-options"></a>
-#### Options
+## Options
 
 <a name="user-content-require-param-name-options-contexts"></a>
 <a name="require-param-name-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -27,6 +34,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+<a name="user-content-require-param-name-context-and-settings"></a>
+<a name="require-param-name-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -35,6 +46,8 @@ section of our README for more on the expected format.
 |Recommended|true|
 |Options|`contexts`|
 
+<a name="user-content-require-param-name-failing-examples"></a>
+<a name="require-param-name-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -89,6 +102,10 @@ function quux (foo) {
 // Message: Unexpected tag `@param`
 ````
 
+
+
+<a name="user-content-require-param-name-passing-examples"></a>
+<a name="require-param-name-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

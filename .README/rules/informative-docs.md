@@ -1,4 +1,6 @@
-### `informative-docs`
+# `informative-docs`
+
+{"gitdown": "contents", "rootId": "informative-docs"}
 
 Reports on JSDoc texts that serve only to restart their attached name.
 
@@ -12,9 +14,9 @@ let userId;
 Those "uninformative" docs comments take up space without being helpful.
 This rule requires all docs comments contain at least one word not already in the code.
 
-#### Options
+## Options
 
-##### `aliases`
+### `aliases`
 
 The `aliases` option allows indicating words as synonyms (aliases) of each other.
 
@@ -33,7 +35,7 @@ The default `aliases` option is:
 }
 ```
 
-##### `uselessWords`
+### `uselessWords`
 
 Words that are ignored when searching for one that adds meaning.
 
@@ -50,6 +52,8 @@ The default `uselessWords` option is:
 ["a", "an", "i", "in", "of", "s", "the"]
 ```
 
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -58,4 +62,10 @@ The default `uselessWords` option is:
 |Settings||
 |Options|`aliases`, `uselessWords`|
 
-<!-- assertions informativeDocs -->
+## Failing examples
+
+<!-- assertions-failing informativeDocs -->
+
+## Passing examples
+
+<!-- assertions-passing informativeDocs -->

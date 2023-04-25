@@ -1,4 +1,6 @@
-### `no-defaults`
+# `no-defaults`
+
+{"gitdown": "contents", "rootId": "no-defaults"}
 
 This rule reports defaults being used on the relevant portion of `@param`
 or `@default`. It also optionally reports the presence of the
@@ -12,9 +14,13 @@ tag is attached).
 Unless your `@default` is on a function, you will need to set `contexts`
 to an appropriate context, including, if you wish, "any".
 
-#### Options
+## Fixer
 
-##### `noOptionalParamNames`
+(TODO)
+
+## Options
+
+### `noOptionalParamNames`
 
 Set this to `true` to report the presence of optional parameters. May be
 used if the project is insisting on optionality being indicated by
@@ -22,7 +28,7 @@ the presence of ES6 default parameters (bearing in mind that such
 "defaults" are only applied when the supplied value is missing or
 `undefined` but not for `null` or other "falsey" values).
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -35,6 +41,8 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -43,4 +51,10 @@ section of our README for more on the expected format.
 |Recommended|false|
 |Options|`contexts`, `noOptionalParamNames`|
 
-<!-- assertions noDefaults -->
+## Failing examples
+
+<!-- assertions-failing noDefaults -->
+
+## Passing examples
+
+<!-- assertions-passing noDefaults -->

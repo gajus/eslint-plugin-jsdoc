@@ -1,6 +1,16 @@
 <a name="user-content-check-values"></a>
 <a name="check-values"></a>
-### <code>check-values</code>
+# <code>check-values</code>
+
+* [Options](#user-content-check-values-options)
+    * [`allowedAuthors`](#user-content-check-values-options-allowedauthors)
+    * [`allowedLicenses`](#user-content-check-values-options-allowedlicenses)
+    * [`licensePattern`](#user-content-check-values-options-licensepattern)
+    * [`numericOnlyVariation`](#user-content-check-values-options-numericonlyvariation)
+* [Context and settings](#user-content-check-values-context-and-settings)
+* [Failing examples](#user-content-check-values-failing-examples)
+* [Passing examples](#user-content-check-values-passing-examples)
+
 
 This rule checks the values for a handful of tags:
 
@@ -21,25 +31,25 @@ This rule checks the values for a handful of tags:
 
 <a name="user-content-check-values-options"></a>
 <a name="check-values-options"></a>
-#### Options
+## Options
 
 <a name="user-content-check-values-options-allowedauthors"></a>
 <a name="check-values-options-allowedauthors"></a>
-##### <code>allowedAuthors</code>
+### <code>allowedAuthors</code>
 
 An array of allowable author values. If absent, only non-whitespace will
 be checked for.
 
 <a name="user-content-check-values-options-allowedlicenses"></a>
 <a name="check-values-options-allowedlicenses"></a>
-##### <code>allowedLicenses</code>
+### <code>allowedLicenses</code>
 
 An array of allowable license values or `true` to allow any license text.
 If present as an array, will be used in place of SPDX identifiers.
 
 <a name="user-content-check-values-options-licensepattern"></a>
 <a name="check-values-options-licensepattern"></a>
-##### <code>licensePattern</code>
+### <code>licensePattern</code>
 
 A string to be converted into a `RegExp` (with `u` flag) and whose first
 parenthetical grouping, if present, will match the portion of the license
@@ -54,10 +64,14 @@ your expression as a string, but like a literal, e.g., `/^mit$/ui`.
 
 <a name="user-content-check-values-options-numericonlyvariation"></a>
 <a name="check-values-options-numericonlyvariation"></a>
-##### <code>numericOnlyVariation</code>
+### <code>numericOnlyVariation</code>
 
 Whether to enable validation that `@variation` must be a number. Defaults to
 `false`.
+
+<a name="user-content-check-values-context-and-settings"></a>
+<a name="check-values-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -67,6 +81,8 @@ Whether to enable validation that `@variation` must be a number. Defaults to
 |Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
 |Settings|`tagNamePreference`|
 
+<a name="user-content-check-values-failing-examples"></a>
+<a name="check-values-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -237,6 +253,10 @@ function quux (foo) {
 // Message: Invalid JSDoc @license: "Oops"; expected SPDX expression: https://spdx.org/licenses/.
 ````
 
+
+
+<a name="user-content-check-values-passing-examples"></a>
+<a name="check-values-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

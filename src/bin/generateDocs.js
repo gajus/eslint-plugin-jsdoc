@@ -142,18 +142,19 @@ const generateDocs = async () => {
 
   return docContents.map((docContent) => {
     return docContent.replace(
-      /<!-- assertions ([a-z]+?) -->/gui,
-      (assertionsBlock, ruleName) => {
+      /<!-- assertions-(passing|failing) ([a-z]+?) -->/gui,
+      (assertionsBlock, passingFailing, ruleName) => {
         const ruleAssertions = assertions[ruleName];
 
         if (!ruleAssertions) {
           throw new Error(`No assertions available for rule "${ruleName}".`);
         }
 
-        return '## Failing examples\n\nThe following patterns are considered problems:\n\n````js\n' +
-              ruleAssertions.invalid.join('\n\n') + '\n````\n\n' +
-          '## Passing examples\n\nThe following patterns are not considered problems:\n\n````js\n' +
-              ruleAssertions.valid.join('\n\n') + '\n````\n';
+        return passingFailing === 'failing' ?
+          'The following patterns are considered problems:\n\n````js\n' +
+            ruleAssertions.invalid.join('\n\n') + '\n````\n\n' :
+          'The following patterns are not considered problems:\n\n````js\n' +
+            ruleAssertions.valid.join('\n\n') + '\n````\n';
       },
     // Allow relative paths in source for #902 but generate compiled file in
     //   manner compatible with GitHub and npmjs.com
