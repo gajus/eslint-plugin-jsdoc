@@ -2,6 +2,8 @@
 <a name="empty-tags"></a>
 ### <code>empty-tags</code>
 
+
+
 Expects the following tags to be empty of any content:
 
 - `@abstract`
@@ -33,13 +35,19 @@ causes rules not to take effect).
 Similarly, `@internal` will still be checked for content by this rule even with
 `settings.jsdoc.ignoreInternal` set to `true`.
 
-<a name="user-content-empty-tags-options"></a>
-<a name="empty-tags-options"></a>
-#### Options
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
+## Fixer
 
-<a name="user-content-empty-tags-options-tags"></a>
-<a name="empty-tags-options-tags"></a>
-##### <code>tags</code>
+(Todo)
+
+<a name="user-content-options"></a>
+<a name="options"></a>
+## Options
+
+<a name="user-content-options-tags"></a>
+<a name="options-tags"></a>
+### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
 add them within this option.
@@ -50,12 +58,19 @@ add them within this option.
 }
 ```
 
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags| `abstract`, `async`, `generator`, `global`, `hideconstructor`, `ignore`, `inheritdoc`, `inner`, `instance`, `internal`, `override`, `readonly`, `package`, `private`, `protected`, `public`, `static` and others added by `tags`|
 |Recommended|true|
 |Options|`tags`|
+
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -130,6 +145,10 @@ function quux () {
 // Message: @private should be empty.
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

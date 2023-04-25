@@ -1,10 +1,17 @@
 <a name="user-content-require-returns-check"></a>
 <a name="require-returns-check"></a>
-### <code>require-returns-check</code>
+# <code>require-returns-check</code>
 
-Requires a return statement (or non-`undefined` Promise resolve value) in
-function bodies if a `@returns` tag (without a `void` or `undefined` type)
-is specified in the function's JSDoc comment.
+* [Options](#user-content-require-returns-check-options)
+* [Context and settings](#user-content-require-returns-check-context-and-settings)
+* [Failing examples](#user-content-require-returns-check-failing-examples)
+* [Passing examples](#user-content-require-returns-check-passing-examples)
+
+
+Requires a return statement (or non-`undefined` Promise resolve value)
+be present in a
+function body if a `@returns` tag (without a `void` or `undefined` type)
+is specified in the function's JSDoc comment block.
 
 Will also report `@returns {void}` and `@returns {undefined}` if `exemptAsync`
 is set to `false` and a non-`undefined` value is returned or a resolved value
@@ -14,7 +21,7 @@ Will also report if multiple `@returns` tags are present.
 
 <a name="user-content-require-returns-check-options"></a>
 <a name="require-returns-check-options"></a>
-#### Options
+## Options
 
 - `exemptGenerators`- Because a generator might be labeled as having a
   `IterableIterator` `@returns` value (along with an iterator type
@@ -38,6 +45,10 @@ Will also report if multiple `@returns` tags are present.
     Unlike `require-returns`, with this option in the rule, one can
      *discourage* the labeling of `undefined` types. Defaults to `false`.
 
+<a name="user-content-require-returns-check-context-and-settings"></a>
+<a name="require-returns-check-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -46,6 +57,8 @@ Will also report if multiple `@returns` tags are present.
 |Options|`exemptAsync`, `reportMissingReturnForUndefinedTypes`|
 |Recommended|true|
 
+<a name="user-content-require-returns-check-failing-examples"></a>
+<a name="require-returns-check-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -384,6 +397,10 @@ function foo() {
 // Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
+
+
+<a name="user-content-require-returns-check-passing-examples"></a>
+<a name="require-returns-check-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

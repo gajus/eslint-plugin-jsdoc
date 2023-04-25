@@ -1,12 +1,14 @@
-### `require-returns-description`
+# `require-returns-description`
+
+{"gitdown": "contents", "rootId": "require-returns-description"}
 
 Requires that the `@returns` tag has a `description` value. The error
 will not be reported if the return value is `void` or `undefined`
 or if it is `Promise<void>` or `Promise<undefined>`.
 
-#### Options
+## Options
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -19,6 +21,8 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -27,4 +31,10 @@ section of our README for more on the expected format.
 |Recommended|true|
 |Options|`contexts`|
 
-<!-- assertions requireReturnsDescription -->
+## Failing examples
+
+<!-- assertions-failing requireReturnsDescription -->
+
+## Passing examples
+
+<!-- assertions-passing requireReturnsDescription -->

@@ -1,4 +1,6 @@
-### `require-example`
+# `require-example`
+
+{"gitdown": "contents", "rootId": "require-example"}
 
 Requires that all functions have examples.
 
@@ -6,11 +8,16 @@ Requires that all functions have examples.
 * Every example tag must have a non-empty description that explains the
   method's usage.
 
-#### Options
+## Fixer
+
+The fixer for `require-example` will add an empty `@example`, but it will still
+report a missing example description after this is added.
+
+## Options
 
 This rule has an object option.
 
-##### `exemptedBy`
+### `exemptedBy`
 
 Array of tags (e.g., `['type']`) whose presence on the document
 block avoids the need for an `@example`. Defaults to an array with
@@ -18,12 +25,12 @@ block avoids the need for an `@example`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
-##### `exemptNoArguments`
+### `exemptNoArguments`
 
 Boolean to indicate that no-argument functions should not be reported for
 missing `@example` declarations.
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -34,28 +41,25 @@ want the rule to apply to any jsdoc block throughout your files.
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
-##### `checkConstructors`
+### `checkConstructors`
 
 A value indicating whether `constructor`s should be checked.
 Defaults to `true`.
 
-##### `checkGetters`
+### `checkGetters`
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
-##### `checkSetters`
+### `checkSetters`
 
 A value indicating whether setters should be checked. Defaults to `false`.
 
-##### `enableFixer`
+### `enableFixer`
 
 A boolean on whether to enable the fixer (which adds an empty `@example` block).
 Defaults to `true`.
 
-#### Fixer
-
-The fixer for `require-example` will add an empty `@example`, but it will still
-report a missing example description after this is added.
+## Context and settings
 
 |||
 |---|---|
@@ -65,4 +69,10 @@ report a missing example description after this is added.
 |Options|`exemptedBy`, `exemptNoArguments`, `contexts`, `checkConstructors`, `checkGetters`, `checkSetters`, `enableFixer`|
 |Settings|`ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
-<!-- assertions requireExample -->
+# Failing examples
+
+<!-- assertions-failing requireExample -->
+
+## Passing examples
+
+<!-- assertions-passing requireExample -->

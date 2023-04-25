@@ -1,6 +1,12 @@
 <a name="user-content-require-description"></a>
 <a name="require-description"></a>
-### <code>require-description</code>
+# <code>require-description</code>
+
+* [Options](#user-content-require-description-options)
+* [Context and settings](#user-content-require-description-context-and-settings)
+* [Failing examples](#user-content-require-description-failing-examples)
+* [Passing examples](#user-content-require-description-passing-examples)
+
 
 Requires that all functions have a description.
 
@@ -13,7 +19,7 @@ Requires that all functions have a description.
 
 <a name="user-content-require-description-options"></a>
 <a name="require-description-options"></a>
-#### Options
+## Options
 
 An options object may have any of the following properties:
 
@@ -36,15 +42,21 @@ An options object may have any of the following properties:
 - `checkSetters` - A value indicating whether setters should be checked.
     Defaults to `true`.
 
-|          |                                                                                                               |
-| -------- | ------------------------------------------------------------------------------------------------------------- |
-| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
-| Tags     | `description` or jsdoc block                                                                                  |
-| Aliases  | `desc`                                                                                                        |
-| Recommended | false |
-| Options  | `contexts`, `exemptedBy`, `descriptionStyle`, `checkConstructors`, `checkGetters`, `checkSetters`             |
-| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`                               |
+<a name="user-content-require-description-context-and-settings"></a>
+<a name="require-description-context-and-settings"></a>
+## Context and settings
 
+| | |
+| -------- | ---------------------- |
+| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
+| Tags     | `description` or jsdoc block |
+| Aliases  | `desc` |
+| Recommended | false |
+| Options  | `contexts`, `exemptedBy`, `descriptionStyle`, `checkConstructors`, `checkGetters`, `checkSetters` |
+| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
+
+<a name="user-content-require-description-failing-examples"></a>
+<a name="require-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -334,6 +346,10 @@ class quux {
 // Message: Missing JSDoc @description declaration.
 ````
 
+
+
+<a name="user-content-require-description-passing-examples"></a>
+<a name="require-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

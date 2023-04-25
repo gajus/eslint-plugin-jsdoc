@@ -1,10 +1,18 @@
 ### `no-blank-block-descriptions`
 
+{"gitdown": "contents", "rootId": "no-blank-block-descriptions"}
+
 If tags are present, this rule will prevent empty lines in the
 block description.
 
 If no tags are present, this rule will prevent extra empty lines
 in the block description.
+
+## Fixer
+
+(TODO)
+
+## Context and settings
 
 |||
 |---|---|
@@ -14,4 +22,10 @@ in the block description.
 |Settings||
 |Options||
 
-<!-- assertions noBlankBlockDescriptions -->
+## Failing examples
+
+<!-- assertions-failing noBlankBlockDescriptions -->
+
+## Passing examples
+
+<!-- assertions-passing noBlankBlockDescriptions -->

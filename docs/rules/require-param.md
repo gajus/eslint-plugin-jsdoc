@@ -1,8 +1,17 @@
 <a name="user-content-require-param-type"></a>
 <a name="require-param-type"></a>
-### <code>require-param-type</code>
+# <code>require-param-type</code>
 
-Requires that each `@param` tag has a `type` value.
+* [Options](#user-content-require-param-type-options)
+    * [`setDefaultDestructuredRootType`](#user-content-require-param-type-options-setdefaultdestructuredroottype)
+    * [`defaultDestructuredRootType`](#user-content-require-param-type-options-defaultdestructuredroottype)
+    * [`contexts`](#user-content-require-param-type-options-contexts)
+* [Context and settings](#user-content-require-param-type-context-and-settings)
+* [Failing examples](#user-content-require-param-type-failing-examples)
+* [Passing examples](#user-content-require-param-type-passing-examples)
+
+
+Requires that each `@param` tag has a `type` value (within curly brackets).
 
 Will exempt destructured roots and their children if
 `settings.exemptDestructuredRootsFromChecks` is set to `true` (e.g.,
@@ -11,11 +20,11 @@ Will exempt destructured roots and their children if
 
 <a name="user-content-require-param-type-options"></a>
 <a name="require-param-type-options"></a>
-#### Options
+## Options
 
 <a name="user-content-require-param-type-options-setdefaultdestructuredroottype"></a>
 <a name="require-param-type-options-setdefaultdestructuredroottype"></a>
-##### <code>setDefaultDestructuredRootType</code>
+### <code>setDefaultDestructuredRootType</code>
 
 Whether to set a default destructured root type. For example, you may wish
 to avoid manually having to set the type for a `@param`
@@ -25,13 +34,13 @@ object. Uses `defaultDestructuredRootType` for the type string. Defaults to
 
 <a name="user-content-require-param-type-options-defaultdestructuredroottype"></a>
 <a name="require-param-type-options-defaultdestructuredroottype"></a>
-##### <code>defaultDestructuredRootType</code>
+### <code>defaultDestructuredRootType</code>
 
 The type string to set by default for destructured roots. Defaults to "object".
 
 <a name="user-content-require-param-type-options-contexts"></a>
 <a name="require-param-type-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -44,6 +53,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+<a name="user-content-require-param-type-context-and-settings"></a>
+<a name="require-param-type-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -53,6 +66,8 @@ section of our README for more on the expected format.
 |Options|`setDefaultDestructuredRootType`, `defaultDestructuredRootType`, `contexts`|
 |Settings|`exemptDestructuredRootsFromChecks`|
 
+<a name="user-content-require-param-type-failing-examples"></a>
+<a name="require-param-type-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -148,6 +163,10 @@ function quux (foo, {bar}, baz) {
 // Message: Missing JSDoc @param "root" type.
 ````
 
+
+
+<a name="user-content-require-param-type-passing-examples"></a>
+<a name="require-param-type-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

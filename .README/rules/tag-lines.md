@@ -1,4 +1,6 @@
-### `tag-lines`
+# `tag-lines`
+
+{"gitdown": "contents", "rootId": "tag-lines"}
 
 Enforces lines (or no lines) between tags.
 
@@ -9,7 +11,11 @@ The "always" or "never" options of this rule should not
 be used with the linebreak-setting options of the `sort-tags` rule as both
 may try to impose a conflicting number of lines.
 
-#### Options
+## Fixer
+
+(TODO)
+
+## Options
 
 The first option is a single string set to "always", "never", or "any"
 (defaults to "never").
@@ -22,27 +28,27 @@ between tags.
 
 The second option is an object with the following optional properties.
 
-##### `count` (defaults to 1)
+### `count` (defaults to 1)
 
 Use with "always" to indicate the number of lines to require be present.
 
-##### `applyToEndTag` (defaults to `true`)
+### `applyToEndTag` (defaults to `true`)
 
 Set to `false` and use with "always" to indicate the normal lines to be
 added after tags should not be added after the final tag.
 
-##### `startLines` (defaults to `0`)
+### `startLines` (defaults to `0`)
 
 If not set to `null`, will enforce end lines to the given count before the
 first tag only, unless there is only whitespace content, in which case,
 a line count will not be enforced.
 
-##### `endLines` (defaults to `0`)
+### `endLines` (defaults to `0`)
 
 If not set to `null`, will enforce end lines to the given count on the
 final tag only.
 
-##### `tags` (default to empty object)
+### `tags` (default to empty object)
 
 Overrides the default behavior depending on specific tags.
 
@@ -52,6 +58,8 @@ following keys:
 1. `lines` - Set to `always`, `never`, or `any` to override.
 2. `count` - Overrides main `count` (for "always")
 
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -60,4 +68,10 @@ following keys:
 |Settings|N/A|
 |Options|(a string matching `"always"`, `"never"`, or `"any"` and optional object with `count`, `applyToEndTag`, `startLines`, `endLines`)|
 
-<!-- assertions tagLines -->
+## Failing examples
+
+<!-- assertions-failing tagLines -->
+
+## Passing examples
+
+<!-- assertions-passing tagLines -->

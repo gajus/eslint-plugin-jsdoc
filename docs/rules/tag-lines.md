@@ -1,6 +1,18 @@
 <a name="user-content-tag-lines"></a>
 <a name="tag-lines"></a>
-### <code>tag-lines</code>
+# <code>tag-lines</code>
+
+* [Fixer](#user-content-tag-lines-fixer)
+* [Options](#user-content-tag-lines-options)
+    * [`count` (defaults to 1)](#user-content-tag-lines-options-count-defaults-to-1)
+    * [`applyToEndTag` (defaults to `true`)](#user-content-tag-lines-options-applytoendtag-defaults-to-true)
+    * [`startLines` (defaults to `0`)](#user-content-tag-lines-options-startlines-defaults-to-0)
+    * [`endLines` (defaults to `0`)](#user-content-tag-lines-options-endlines-defaults-to-0)
+    * [`tags` (default to empty object)](#user-content-tag-lines-options-tags-default-to-empty-object)
+* [Context and settings](#user-content-tag-lines-context-and-settings)
+* [Failing examples](#user-content-tag-lines-failing-examples)
+* [Passing examples](#user-content-tag-lines-passing-examples)
+
 
 Enforces lines (or no lines) between tags.
 
@@ -11,9 +23,15 @@ The "always" or "never" options of this rule should not
 be used with the linebreak-setting options of the `sort-tags` rule as both
 may try to impose a conflicting number of lines.
 
+<a name="user-content-tag-lines-fixer"></a>
+<a name="tag-lines-fixer"></a>
+## Fixer
+
+(TODO)
+
 <a name="user-content-tag-lines-options"></a>
 <a name="tag-lines-options"></a>
-#### Options
+## Options
 
 The first option is a single string set to "always", "never", or "any"
 (defaults to "never").
@@ -28,20 +46,20 @@ The second option is an object with the following optional properties.
 
 <a name="user-content-tag-lines-options-count-defaults-to-1"></a>
 <a name="tag-lines-options-count-defaults-to-1"></a>
-##### <code>count</code> (defaults to 1)
+### <code>count</code> (defaults to 1)
 
 Use with "always" to indicate the number of lines to require be present.
 
 <a name="user-content-tag-lines-options-applytoendtag-defaults-to-true"></a>
 <a name="tag-lines-options-applytoendtag-defaults-to-true"></a>
-##### <code>applyToEndTag</code> (defaults to <code>true</code>)
+### <code>applyToEndTag</code> (defaults to <code>true</code>)
 
 Set to `false` and use with "always" to indicate the normal lines to be
 added after tags should not be added after the final tag.
 
 <a name="user-content-tag-lines-options-startlines-defaults-to-0"></a>
 <a name="tag-lines-options-startlines-defaults-to-0"></a>
-##### <code>startLines</code> (defaults to <code>0</code>)
+### <code>startLines</code> (defaults to <code>0</code>)
 
 If not set to `null`, will enforce end lines to the given count before the
 first tag only, unless there is only whitespace content, in which case,
@@ -49,14 +67,14 @@ a line count will not be enforced.
 
 <a name="user-content-tag-lines-options-endlines-defaults-to-0"></a>
 <a name="tag-lines-options-endlines-defaults-to-0"></a>
-##### <code>endLines</code> (defaults to <code>0</code>)
+### <code>endLines</code> (defaults to <code>0</code>)
 
 If not set to `null`, will enforce end lines to the given count on the
 final tag only.
 
 <a name="user-content-tag-lines-options-tags-default-to-empty-object"></a>
 <a name="tag-lines-options-tags-default-to-empty-object"></a>
-##### <code>tags</code> (default to empty object)
+### <code>tags</code> (default to empty object)
 
 Overrides the default behavior depending on specific tags.
 
@@ -66,6 +84,10 @@ following keys:
 1. `lines` - Set to `always`, `never`, or `any` to override.
 2. `count` - Overrides main `count` (for "always")
 
+<a name="user-content-tag-lines-context-and-settings"></a>
+<a name="tag-lines-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -74,6 +96,8 @@ following keys:
 |Settings|N/A|
 |Options|(a string matching `"always"`, `"never"`, or `"any"` and optional object with `count`, `applyToEndTag`, `startLines`, `endLines`)|
 
+<a name="user-content-tag-lines-failing-examples"></a>
+<a name="tag-lines-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -291,6 +315,10 @@ The following patterns are considered problems:
 // Message: Expected 1 lines after block description
 ````
 
+
+
+<a name="user-content-tag-lines-passing-examples"></a>
+<a name="tag-lines-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

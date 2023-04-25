@@ -1,6 +1,12 @@
 <a name="user-content-require-throws"></a>
 <a name="require-throws"></a>
-### <code>require-throws</code>
+# <code>require-throws</code>
+
+* [Options](#user-content-require-throws-options)
+* [Context and settings](#user-content-require-throws-context-and-settings)
+* [Failing examples](#user-content-require-throws-failing-examples)
+* [Passing examples](#user-content-require-throws-passing-examples)
+
 
 Requires that throw statements are documented.
 
@@ -13,7 +19,7 @@ on why TypeScript doesn't offer such a feature.
 
 <a name="user-content-require-throws-options"></a>
 <a name="require-throws-options"></a>
-#### Options
+## Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
     document block avoids the need for a `@throws`. Defaults to an array
@@ -33,6 +39,10 @@ on why TypeScript doesn't offer such a feature.
 'jsdoc/require-throws': 'error',
 ```
 
+<a name="user-content-require-throws-context-and-settings"></a>
+<a name="require-throws-context-and-settings"></a>
+## Context and settings
+
 | | |
 | -------- | --- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
@@ -42,6 +52,8 @@ on why TypeScript doesn't offer such a feature.
 | Options  | `contexts`, `exemptedBy` |
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
+<a name="user-content-require-throws-failing-examples"></a>
+<a name="require-throws-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -229,6 +241,10 @@ function quux (foo) {
 // Message: JSDoc @throws declaration set to "never" but throw value found.
 ````
 
+
+
+<a name="user-content-require-throws-passing-examples"></a>
+<a name="require-throws-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

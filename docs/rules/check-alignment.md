@@ -1,8 +1,24 @@
 <a name="user-content-check-alignment"></a>
 <a name="check-alignment"></a>
-### <code>check-alignment</code>
+# <code>check-alignment</code>
+
+* [Fixer](#user-content-check-alignment-fixer)
+* [Context and settings](#user-content-check-alignment-context-and-settings)
+* [Failing examples](#user-content-check-alignment-failing-examples)
+* [Passing examples](#user-content-check-alignment-passing-examples)
+
 
 Reports invalid alignment of JSDoc block asterisks.
+
+<a name="user-content-check-alignment-fixer"></a>
+<a name="check-alignment-fixer"></a>
+## Fixer
+
+Fixes alignment.
+
+<a name="user-content-check-alignment-context-and-settings"></a>
+<a name="check-alignment-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -10,6 +26,8 @@ Reports invalid alignment of JSDoc block asterisks.
 |Tags|N/A|
 |Recommended|true|
 
+<a name="user-content-check-alignment-failing-examples"></a>
+<a name="check-alignment-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -94,6 +112,10 @@ class Foo {
 // Message: Expected JSDoc block to be aligned.
 ````
 
+
+
+<a name="user-content-check-alignment-passing-examples"></a>
+<a name="check-alignment-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

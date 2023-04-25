@@ -1,4 +1,6 @@
-### `check-examples`
+# `check-examples`
+
+{"gitdown": "contents", "rootId": "check-examples"}
 
 > **NOTE**: This rule currently does not work in ESLint 8 (we are waiting for
 > [issue 14745](https://github.com/eslint/eslint/issues/14745)).
@@ -7,11 +9,11 @@ Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules. Also
 has options to lint the default values of optional `@param`/`@arg`/`@argument`
 and `@property`/`@prop` tags or the values of `@default`/`@defaultvalue` tags.
 
-#### Options
+## Options
 
 The options below all default to no-op/`false` except as noted.
 
-##### `captionRequired`
+### `captionRequired`
 
 JSDoc specs use of an optional `<caption>` element at the beginning of
 `@example`.
@@ -21,7 +23,7 @@ the beginning of any `@example`.
 
 Used only for `@example`.
 
-##### `exampleCodeRegex` and `rejectExampleCodeRegex`
+### `exampleCodeRegex` and `rejectExampleCodeRegex`
 
 JSDoc does not specify a formal means for delimiting code blocks within
 `@example` (it uses generic syntax highlighting techniques for its own
@@ -49,7 +51,7 @@ If neither is in use, all examples will be matched. Note also that even if
 `captionRequired` is not set, any initial `<caption>` will be stripped out
 before doing the regex matching.
 
-##### `paddedIndent`
+### `paddedIndent`
 
 This integer property allows one to add a fixed amount of whitespace at the
 beginning of the second or later lines of the example to be stripped so as
@@ -69,7 +71,7 @@ out before evaluation.
 
 Only applied to `@example` linting.
 
-##### `reportUnusedDisableDirectives`
+### `reportUnusedDisableDirectives`
 
 If not set to `false`, `reportUnusedDisableDirectives` will report disabled
 directives which are not used (and thus not needed). Defaults to `true`.
@@ -80,7 +82,7 @@ Inline ESLint config within `@example` JavaScript is allowed (or within
 needed by the resolved rules will be reported as with the ESLint
 `--report-unused-disable-directives` command.
 
-#### Options for Determining ESLint Rule Applicability (`allowInlineConfig`, `noDefaultExampleRules`, `matchingFileName`, `configFile`, `checkEslintrc`, and `baseConfig`)
+## Options for Determining ESLint Rule Applicability (`allowInlineConfig`, `noDefaultExampleRules`, `matchingFileName`, `configFile`, `checkEslintrc`, and `baseConfig`)
 
 The following options determine which individual ESLint rules will be
 applied to the JavaScript found within the `@example` tags (as determined
@@ -131,7 +133,7 @@ by decreasing precedence:
 * `baseConfig` - Set to an object of rules with the same schema
   as `.eslintrc.*` for defaults.
 
-##### Rules Disabled by Default Unless `noDefaultExampleRules` is Set to `true`
+### Rules Disabled by Default Unless `noDefaultExampleRules` is Set to `true`
 
 * `eol-last` - Insisting that a newline "always" be at the end is less likely
   to be desired in sample code as with the code file convention.
@@ -166,11 +168,13 @@ expression-oriented rules will be used by default as well:
 * `no-unused-expressions` - Disabled.
 * `chai-friendly/no-unused-expressions` - Disabled.
 
-##### Options for checking other than `@example` (`checkDefaults`, `checkParams`, or `checkProperties`)
+### Options for checking other than `@example` (`checkDefaults`, `checkParams`, or `checkProperties`)
 
 * `checkDefaults` - Whether to check the values of `@default`/`@defaultvalue` tags
 * `checkParams` - Whether to check `@param`/`@arg`/`@argument` default values
 * `checkProperties` - Whether to check `@property`/`@prop` default values
+
+## Context and settings
 
 |||
 |---|---|
@@ -179,4 +183,10 @@ expression-oriented rules will be used by default as well:
 |Recommended|false|
 |Options| *See above* |
 
-<!-- assertions checkExamples -->
+## Failing examples
+
+<!-- assertions-failing checkExamples -->
+
+## Passing examples
+
+<!-- assertions-passing checkExamples -->

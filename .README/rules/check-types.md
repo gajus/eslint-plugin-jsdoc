@@ -1,4 +1,6 @@
-### `check-types`
+# `check-types`
+
+{"gitdown": "contents", "rootId": "check-types"}
 
 Reports invalid types.
 
@@ -20,7 +22,7 @@ Date
 RegExp
 ```
 
-#### Options
+## Options
 
 `check-types` allows one option:
 
@@ -69,7 +71,7 @@ Note that if there is an error [parsing](https://github.com/jsdoc-type-pratt-par
 types for a tag, the function will silently ignore that tag, leaving it to
 the `valid-types` rule to report parsing errors.
 
-#### Why not capital case everything?
+## Why not capital case everything?
 
 Why are `boolean`, `number` and `string` exempt from starting with a capital
 letter? Let's take `string` as an example. In Javascript, everything is an
@@ -131,6 +133,8 @@ In short: It's not about consistency, rather about the 99.9% use case. (And
 some functions might not even support the objects if they are checking for
 identity.)
 
+## Comparisons
+
 type name | `typeof` | check-types | testcase
 --|--|--|--
 **Array** | object | **Array** | `([]) instanceof Array` -> `true`
@@ -147,6 +151,12 @@ for types, you can use `settings.jsdoc.structuredTags` with a tag `type` of
 `false`. If you set their `type` to an array, only those values will be
 permitted.
 
+## Fixer
+
+(Todo)
+
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -157,4 +167,10 @@ permitted.
 |Options|`noDefaults`, `exemptTagContexts`, `unifyParentAndChildTypeChecks`|
 |Settings|`preferredTypes`, `mode`, `structuredTags`|
 
-<!-- assertions checkTypes -->
+## Failing examples
+
+<!-- assertions-failing checkTypes -->
+
+## Passing examples
+
+<!-- assertions-passing checkTypes -->

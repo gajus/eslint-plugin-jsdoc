@@ -1,8 +1,14 @@
-### `require-hyphen-before-param-description`
+# `require-hyphen-before-param-description`
+
+{"gitdown": "contents", "rootId": "require-hyphen-before-param-description"}
 
 Requires (or disallows) a hyphen before the `@param` description.
 
-#### Options
+## Fixer
+
+(Todo)
+
+## Options
 
 This rule takes one optional string argument and an optional options object.
 
@@ -21,6 +27,8 @@ other tags besides the `@param` tag (or the `@arg` tag if so set):
   `@param` tag which follows the main string option setting and besides any
   other `tags` entries).
 
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -29,4 +37,10 @@ other tags besides the `@param` tag (or the `@arg` tag if so set):
 |Recommended|false|
 |Options|a string matching `"always" or "never"` followed by an optional object with a `tags` property|
 
-<!-- assertions requireHyphenBeforeParamDescription -->
+## Failing examples
+
+<!-- assertions-failing requireHyphenBeforeParamDescription -->
+
+## Passing examples
+
+<!-- assertions-passing requireHyphenBeforeParamDescription -->

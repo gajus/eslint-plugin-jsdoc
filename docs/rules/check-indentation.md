@@ -1,6 +1,13 @@
 <a name="user-content-check-indentation"></a>
 <a name="check-indentation"></a>
-### <code>check-indentation</code>
+# <code>check-indentation</code>
+
+* [Options](#user-content-check-indentation-options)
+    * [`excludeTags`](#user-content-check-indentation-options-excludetags)
+* [Context and settings](#user-content-check-indentation-context-and-settings)
+* [Failing examples](#user-content-check-indentation-failing-examples)
+* [Passing examples](#user-content-check-indentation-passing-examples)
+
 
 Reports invalid padding inside JSDoc blocks.
 
@@ -20,13 +27,13 @@ the following description is not reported:
 
 <a name="user-content-check-indentation-options"></a>
 <a name="check-indentation-options"></a>
-#### Options
+## Options
 
 This rule has an object option.
 
 <a name="user-content-check-indentation-options-excludetags"></a>
 <a name="check-indentation-options-excludetags"></a>
-##### <code>excludeTags</code>
+### <code>excludeTags</code>
 
 Array of tags (e.g., `['example', 'description']`) whose content will be
 "hidden" from the `check-indentation` rule. Defaults to `['example']`.
@@ -48,6 +55,10 @@ report a padding issue:
  */
 ```
 
+<a name="user-content-check-indentation-context-and-settings"></a>
+<a name="check-indentation-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -55,6 +66,8 @@ report a padding issue:
 |Recommended|false|
 |Options| `excludeTags` |
 
+<a name="user-content-check-indentation-failing-examples"></a>
+<a name="check-indentation-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -167,6 +180,10 @@ function quux () {
 // Message: There must be no indentation.
 ````
 
+
+
+<a name="user-content-check-indentation-passing-examples"></a>
+<a name="check-indentation-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

@@ -1,14 +1,16 @@
-### `require-param`
+# `require-param`
+
+{"gitdown": "contents", "rootId": "require-param"}
 
 Requires that all function parameters are documented.
 
-#### Fixer
+## Fixer
 
 Adds `@param <name>` for each tag present in the function signature but
 missing in the jsdoc. Can be disabled by setting the `enableFixer`
 option to `false`.
 
-##### Destructured object and array naming
+### Destructured object and array naming
 
 When the fixer is applied to destructured objects, only the input name is
 used.
@@ -59,7 +61,7 @@ function quux ([foo, bar]) {
 */
 ```
 
-##### Missing root fixing
+### Missing root fixing
 
 Note that unless `enableRootFixer` (or `enableFixer`) is set to `false`,
 missing roots will be added and auto-incremented. The default behavior
@@ -93,7 +95,7 @@ numeric component).
 And one can have the count begin at another number (e.g., `1`) by changing
 `autoIncrementBase` from the default of `0`.
 
-##### Rest Element (`RestElement`) insertions
+### Rest Element (`RestElement`) insertions
 
 The fixer will automatically report/insert
 [jsdoc repeatable parameters](https://jsdoc.app/tags-param.html#multiple-types-and-repeatable-parameters)
@@ -144,7 +146,7 @@ function baar ([a, ...extra]) {
 
 ...because it does not use the `...` syntax in the type.
 
-##### Object Rest Property insertions
+### Object Rest Property insertions
 
 If the `checkRestProperty` option is set to `true` (`false` by default),
 missing rest properties will be reported with documentation auto-inserted:
@@ -178,26 +180,26 @@ other properties, so in looking at the docs alone without looking at the
 function signature, it may appear that there is an actual property named
 `extra`.
 
-#### Options
+## Options
 
 An options object accepts the following optional properties:
 
-##### `enableFixer`
+### `enableFixer`
 
 Whether to enable the fixer. Defaults to `true`.
 
-##### `enableRootFixer`
+### `enableRootFixer`
 
 Whether to enable the auto-adding of incrementing roots (see the "Fixer"
 section). Defaults to `true`. Has no effect if `enableFixer` is set to
 `false`.
 
-##### `enableRestElementFixer`
+### `enableRestElementFixer`
 
 Whether to enable the rest element fixer (see
 "Rest Element (`RestElement`) insertions"). Defaults to `true`.
 
-##### `checkRestProperty`
+### `checkRestProperty`
 
 If set to `true`, will report (and add fixer insertions) for missing rest
 properties. Defaults to `false`.
@@ -250,12 +252,12 @@ function quux ({num, ...extra}) {
 }
 ```
 
-##### `autoIncrementBase`
+### `autoIncrementBase`
 
 Numeric to indicate the number at which to begin auto-incrementing roots.
 Defaults to `0`.
 
-##### `unnamedRootBase`
+### `unnamedRootBase`
 
 An array of root names to use in the fixer when roots are missing. Defaults
 to `['root']`. Note that only when all items in the array besides the last
@@ -280,7 +282,7 @@ function quux ({foo}, [bar], {baz}) {
 */
 ```
 
-##### `exemptedBy`
+### `exemptedBy`
 
 Array of tags (e.g., `['type']`) whose presence on the document block
 avoids the need for a `@param`. Defaults to an array with
@@ -288,7 +290,7 @@ avoids the need for a `@param`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
-##### `checkTypesPattern`
+### `checkTypesPattern`
 
 When one specifies a type, unless it is of a generic type, like `object`
 or `array`, it may be considered unnecessary to have that object's
@@ -322,7 +324,7 @@ You could set this regular expression to a more expansive list, or you
 could restrict it such that even types matching those strings would not
 need destructuring.
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -333,24 +335,24 @@ which are checked.
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
-##### `checkConstructors`
+### `checkConstructors`
 
 A value indicating whether `constructor`s should be checked. Defaults to
 `true`.
 
-##### `checkGetters`
+### `checkGetters`
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
-##### `checkSetters`
+### `checkSetters`
 
 A value indicating whether setters should be checked. Defaults to `false`.
 
-##### `checkDestructured`
+### `checkDestructured`
 
 Whether to require destructured properties. Defaults to `true`.
 
-##### `checkDestructuredRoots`
+### `checkDestructuredRoots`
 
 Whether to check the existence of a corresponding `@param` for root objects
 of destructured properties (e.g., that for `function ({a, b}) {}`, that there
@@ -362,10 +364,12 @@ implied to be `false` (i.e., the inside of the roots will not be checked
 either, e.g., it will also not complain if `a` or `b` do not have their own
 documentation). Defaults to `true`.
 
-##### `useDefaultObjectProperties`
+### `useDefaultObjectProperties`
 
 Set to `true` if you wish to expect documentation of properties on objects
 supplied as default values. Defaults to `false`.
+
+## Context and settings
 
 |          |                      |
 | -------- | ----------------------------------------------------------------------------- |
@@ -376,4 +380,10 @@ supplied as default values. Defaults to `false`.
 | Options  | `autoIncrementBase`, `checkDestructured`, `checkDestructuredRoots`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`, `useDefaultObjectProperties`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
-<!-- assertions requireParam -->
+## Failing examples
+
+<!-- assertions-failing requireParam -->
+
+## Passing examples
+
+<!-- assertions-passing requireParam -->

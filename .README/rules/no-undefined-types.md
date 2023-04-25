@@ -1,4 +1,6 @@
-### `no-undefined-types`
+# `no-undefined-types`
+
+{"gitdown": "contents", "rootId": "no-undefined-types"}
 
 Checks that types in jsdoc comments are defined. This can be used to check
 unimported types.
@@ -43,13 +45,15 @@ reporting on use of that namepath elsewhere) and/or that a tag's `type` is
 `false` (and should not be checked for types). If the `type` is an array, that
 array's items will be considered as defined for the purposes of that tag.
 
-#### Options
+## Options
 
 An option object may have the following key:
 
 - `definedTypes` - This array can be populated to indicate other types which
   are automatically considered as defined (in addition to globals, etc.).
   Defaults to an empty array.
+
+## Context and settings
 
 |||
 |---|---|
@@ -61,4 +65,11 @@ An option object may have the following key:
 |Options|`definedTypes`|
 |Settings|`preferredTypes`, `mode`, `structuredTags`|
 
-<!-- assertions noUndefinedTypes -->
+
+## Failing examples
+
+<!-- assertions-failing noUndefinedTypes -->
+
+## Passing examples
+
+<!-- assertions-passing noUndefinedTypes -->

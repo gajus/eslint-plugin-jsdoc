@@ -2,19 +2,27 @@
 <a name="no-multi-asterisks"></a>
 ### <code>no-multi-asterisks</code>
 
+
+
 Prevents use of multiple asterisks at the beginning of lines.
 
 Note that if you wish to prevent multiple asterisks at the very beginning of
 the jsdoc block, you should use `no-bad-blocks` (as that is not proper jsdoc
 and that rule is for catching blocks which only seem like jsdoc).
 
-<a name="user-content-no-multi-asterisks-options"></a>
-<a name="no-multi-asterisks-options"></a>
-#### Options
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
+## Fixer
 
-<a name="user-content-no-multi-asterisks-options-allowwhitespace-defaults-to-false"></a>
-<a name="no-multi-asterisks-options-allowwhitespace-defaults-to-false"></a>
-##### <code>allowWhitespace</code> (defaults to <code>false</code>)
+(TODO)
+
+<a name="user-content-options"></a>
+<a name="options"></a>
+## Options
+
+<a name="user-content-options-allowwhitespace-defaults-to-false"></a>
+<a name="options-allowwhitespace-defaults-to-false"></a>
+### <code>allowWhitespace</code> (defaults to <code>false</code>)
 
 Set to `true` if you wish to allow asterisks after a space (as with Markdown):
 
@@ -24,9 +32,9 @@ Set to `true` if you wish to allow asterisks after a space (as with Markdown):
  */
 ```
 
-<a name="user-content-no-multi-asterisks-options-preventatmiddlelines-defaults-to-true"></a>
-<a name="no-multi-asterisks-options-preventatmiddlelines-defaults-to-true"></a>
-##### <code>preventAtMiddleLines</code> (defaults to <code>true</code>)
+<a name="user-content-options-preventatmiddlelines-defaults-to-true"></a>
+<a name="options-preventatmiddlelines-defaults-to-true"></a>
+### <code>preventAtMiddleLines</code> (defaults to <code>true</code>)
 
 Prevent the likes of this:
 
@@ -37,9 +45,9 @@ Prevent the likes of this:
  */
 ```
 
-<a name="user-content-no-multi-asterisks-options-preventatend-defaults-to-true"></a>
-<a name="no-multi-asterisks-options-preventatend-defaults-to-true"></a>
-##### <code>preventAtEnd</code> (defaults to <code>true</code>)
+<a name="user-content-options-preventatend-defaults-to-true"></a>
+<a name="options-preventatend-defaults-to-true"></a>
+### <code>preventAtEnd</code> (defaults to <code>true</code>)
 
 Prevent the likes of this:
 
@@ -50,6 +58,10 @@ Prevent the likes of this:
  **/
 ```
 
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -58,6 +70,8 @@ Prevent the likes of this:
 |Settings||
 |Options|`preventAtEnd`, `preventAtMiddleLines`|
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -160,6 +174,10 @@ The following patterns are considered problems:
 // Message: Should be no multiple asterisks on end lines.
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

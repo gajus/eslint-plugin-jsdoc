@@ -1,10 +1,12 @@
-### `require-returns-type`
+# `require-returns-type`
 
-Requires that `@returns` tag has `type` value.
+{"gitdown": "contents", "rootId": "require-returns-type"}
 
-#### Options
+Requires that `@returns` tag has a `type` value (in curly brackets).
 
-##### `contexts`
+## Options
+
+### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -17,6 +19,8 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -25,4 +29,10 @@ section of our README for more on the expected format.
 |Recommended|true|
 |Options|`contexts`|
 
-<!-- assertions requireReturnsType -->
+## Failing examples
+
+<!-- assertions-failing requireReturnsType -->
+
+## Passing examples
+
+<!-- assertions-passing requireReturnsType -->

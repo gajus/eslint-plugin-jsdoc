@@ -1,6 +1,17 @@
 <a name="user-content-match-description"></a>
 <a name="match-description"></a>
-### <code>match-description</code>
+# <code>match-description</code>
+
+* [Options](#user-content-match-description-options)
+    * [`matchDescription`](#user-content-match-description-options-matchdescription)
+    * [`message`](#user-content-match-description-options-message)
+    * [`tags`](#user-content-match-description-options-tags)
+    * [`mainDescription`](#user-content-match-description-options-maindescription)
+    * [`contexts`](#user-content-match-description-options-contexts)
+* [Context and settings](#user-content-match-description-context-and-settings)
+* [Failing examples](#user-content-match-description-failing-examples)
+* [Passing examples](#user-content-match-description-passing-examples)
+
 
 Enforces a regular expression pattern on descriptions.
 
@@ -28,11 +39,11 @@ that the trailing newlines of a description will not be matched.
 
 <a name="user-content-match-description-options"></a>
 <a name="match-description-options"></a>
-#### Options
+## Options
 
 <a name="user-content-match-description-options-matchdescription"></a>
 <a name="match-description-options-matchdescription"></a>
-##### <code>matchDescription</code>
+### <code>matchDescription</code>
 
 You can supply your own expression to override the default, passing a
 `matchDescription` string on the options object.
@@ -45,7 +56,7 @@ You can supply your own expression to override the default, passing a
 
 <a name="user-content-match-description-options-message"></a>
 <a name="match-description-options-message"></a>
-##### <code>message</code>
+### <code>message</code>
 
 You may provide a custom default message by using the following format:
 
@@ -62,7 +73,7 @@ This can be overridden per tag or for the main block description by setting
 
 <a name="user-content-match-description-options-tags"></a>
 <a name="match-description-options-tags"></a>
-##### <code>tags</code>
+### <code>tags</code>
 
 If you want different regular expressions to apply to tags, you may use
 the `tags` option object:
@@ -112,7 +123,7 @@ is `xyz`).
 
 <a name="user-content-match-description-options-maindescription"></a>
 <a name="match-description-options-maindescription"></a>
-##### <code>mainDescription</code>
+### <code>mainDescription</code>
 
 If you wish to override the main block description without changing the
 default `match-description` (which can cascade to the `tags` with `true`),
@@ -153,7 +164,7 @@ You may also provide an object with `message`:
 
 <a name="user-content-match-description-options-contexts"></a>
 <a name="match-description-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -164,6 +175,10 @@ want the rule to apply to any jsdoc block throughout your files.
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+<a name="user-content-match-description-context-and-settings"></a>
+<a name="match-description-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -173,6 +188,8 @@ section of our README for more on the expected format.
 |Settings||
 |Options|`contexts`, `tags` (accepts tags with names and optional type such as 'param', 'arg', 'argument', 'property', and 'prop', and accepts arbitrary list of other tags with an optional type (but without names), e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
 
+<a name="user-content-match-description-failing-examples"></a>
+<a name="match-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -587,6 +604,10 @@ function foo(): string;
 // Message: JSDoc description does not satisfy the regex pattern.
 ````
 
+
+
+<a name="user-content-match-description-passing-examples"></a>
+<a name="match-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

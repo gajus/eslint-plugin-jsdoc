@@ -1,6 +1,15 @@
 <a name="user-content-no-defaults"></a>
 <a name="no-defaults"></a>
-### <code>no-defaults</code>
+# <code>no-defaults</code>
+
+* [Fixer](#user-content-no-defaults-fixer)
+* [Options](#user-content-no-defaults-options)
+    * [`noOptionalParamNames`](#user-content-no-defaults-options-nooptionalparamnames)
+    * [`contexts`](#user-content-no-defaults-options-contexts)
+* [Context and settings](#user-content-no-defaults-context-and-settings)
+* [Failing examples](#user-content-no-defaults-failing-examples)
+* [Passing examples](#user-content-no-defaults-passing-examples)
+
 
 This rule reports defaults being used on the relevant portion of `@param`
 or `@default`. It also optionally reports the presence of the
@@ -14,13 +23,19 @@ tag is attached).
 Unless your `@default` is on a function, you will need to set `contexts`
 to an appropriate context, including, if you wish, "any".
 
+<a name="user-content-no-defaults-fixer"></a>
+<a name="no-defaults-fixer"></a>
+## Fixer
+
+(TODO)
+
 <a name="user-content-no-defaults-options"></a>
 <a name="no-defaults-options"></a>
-#### Options
+## Options
 
 <a name="user-content-no-defaults-options-nooptionalparamnames"></a>
 <a name="no-defaults-options-nooptionalparamnames"></a>
-##### <code>noOptionalParamNames</code>
+### <code>noOptionalParamNames</code>
 
 Set this to `true` to report the presence of optional parameters. May be
 used if the project is insisting on optionality being indicated by
@@ -30,7 +45,7 @@ the presence of ES6 default parameters (bearing in mind that such
 
 <a name="user-content-no-defaults-options-contexts"></a>
 <a name="no-defaults-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -43,6 +58,10 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+<a name="user-content-no-defaults-context-and-settings"></a>
+<a name="no-defaults-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -51,6 +70,8 @@ section of our README for more on the expected format.
 |Recommended|false|
 |Options|`contexts`, `noOptionalParamNames`|
 
+<a name="user-content-no-defaults-failing-examples"></a>
+<a name="no-defaults-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -131,6 +152,10 @@ const a = {};
 // Message: Default values are not permitted on @defaultvalue.
 ````
 
+
+
+<a name="user-content-no-defaults-passing-examples"></a>
+<a name="no-defaults-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

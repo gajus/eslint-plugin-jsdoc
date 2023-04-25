@@ -1,6 +1,14 @@
 <a name="user-content-informative-docs"></a>
 <a name="informative-docs"></a>
-### <code>informative-docs</code>
+# <code>informative-docs</code>
+
+* [Options](#user-content-informative-docs-options)
+    * [`aliases`](#user-content-informative-docs-options-aliases)
+    * [`uselessWords`](#user-content-informative-docs-options-uselesswords)
+* [Context and settings](#user-content-informative-docs-context-and-settings)
+* [Failing examples](#user-content-informative-docs-failing-examples)
+* [Passing examples](#user-content-informative-docs-passing-examples)
+
 
 Reports on JSDoc texts that serve only to restart their attached name.
 
@@ -16,11 +24,11 @@ This rule requires all docs comments contain at least one word not already in th
 
 <a name="user-content-informative-docs-options"></a>
 <a name="informative-docs-options"></a>
-#### Options
+## Options
 
 <a name="user-content-informative-docs-options-aliases"></a>
 <a name="informative-docs-options-aliases"></a>
-##### <code>aliases</code>
+### <code>aliases</code>
 
 The `aliases` option allows indicating words as synonyms (aliases) of each other.
 
@@ -41,7 +49,7 @@ The default `aliases` option is:
 
 <a name="user-content-informative-docs-options-uselesswords"></a>
 <a name="informative-docs-options-uselesswords"></a>
-##### <code>uselessWords</code>
+### <code>uselessWords</code>
 
 Words that are ignored when searching for one that adds meaning.
 
@@ -58,6 +66,10 @@ The default `uselessWords` option is:
 ["a", "an", "i", "in", "of", "s", "the"]
 ```
 
+<a name="user-content-informative-docs-context-and-settings"></a>
+<a name="informative-docs-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -66,6 +78,8 @@ The default `uselessWords` option is:
 |Settings||
 |Options|`aliases`, `uselessWords`|
 
+<a name="user-content-informative-docs-failing-examples"></a>
+<a name="informative-docs-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -237,6 +251,10 @@ function takesOne(param) {}
 // Message: This description only repeats the name it describes.
 ````
 
+
+
+<a name="user-content-informative-docs-passing-examples"></a>
+<a name="informative-docs-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

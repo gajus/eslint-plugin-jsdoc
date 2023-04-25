@@ -1,19 +1,44 @@
 <a name="user-content-require-jsdoc"></a>
 <a name="require-jsdoc"></a>
-### <code>require-jsdoc</code>
+# <code>require-jsdoc</code>
+
+* [Fixer](#user-content-require-jsdoc-fixer)
+* [Options](#user-content-require-jsdoc-options)
+    * [`publicOnly`](#user-content-require-jsdoc-options-publiconly)
+    * [`require`](#user-content-require-jsdoc-options-require)
+    * [`contexts`](#user-content-require-jsdoc-options-contexts)
+    * [`exemptEmptyConstructors`](#user-content-require-jsdoc-options-exemptemptyconstructors)
+    * [`exemptEmptyFunctions`](#user-content-require-jsdoc-options-exemptemptyfunctions)
+    * [`checkConstructors`](#user-content-require-jsdoc-options-checkconstructors)
+    * [`checkGetters`](#user-content-require-jsdoc-options-checkgetters)
+    * [`checkSetters`](#user-content-require-jsdoc-options-checksetters)
+    * [`enableFixer`](#user-content-require-jsdoc-options-enablefixer)
+    * [`minLineCount`](#user-content-require-jsdoc-options-minlinecount)
+* [Context and settings](#user-content-require-jsdoc-context-and-settings)
+* [Failing examples](#user-content-require-jsdoc-failing-examples)
+* [Passing examples](#user-content-require-jsdoc-passing-examples)
+
 
 Checks for presence of jsdoc comments, on class declarations as well as
 functions.
 
+<a name="user-content-require-jsdoc-fixer"></a>
+<a name="require-jsdoc-fixer"></a>
+## Fixer
+
+Adds an empty JSDoc block unless `enableFixer` is set to `false`. See
+the `contexts` option for how `inlineCommentBlock` can control the style
+of the generated JSDoc block.
+
 <a name="user-content-require-jsdoc-options"></a>
 <a name="require-jsdoc-options"></a>
-#### Options
+## Options
 
 Accepts one optional options object with the following optional keys.
 
 <a name="user-content-require-jsdoc-options-publiconly"></a>
 <a name="require-jsdoc-options-publiconly"></a>
-##### <code>publicOnly</code>
+### <code>publicOnly</code>
 
 This option will insist that missing jsdoc blocks are only reported for
 function bodies / class declarations that are exported from the module.
@@ -30,7 +55,7 @@ otherwise noted):
 
 <a name="user-content-require-jsdoc-options-require"></a>
 <a name="require-jsdoc-options-require"></a>
-##### <code>require</code>
+### <code>require</code>
 
 An object with the following optional boolean keys which all default to
 `false` except as noted, indicating the contexts where the rule will apply:
@@ -44,7 +69,7 @@ An object with the following optional boolean keys which all default to
 
 <a name="user-content-require-jsdoc-options-contexts"></a>
 <a name="require-jsdoc-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings or objects representing the additional AST
 contexts where you wish the rule to be applied (e.g., `Property` for
@@ -62,7 +87,7 @@ section of our README for more on the expected format.
 
 <a name="user-content-require-jsdoc-options-exemptemptyconstructors"></a>
 <a name="require-jsdoc-options-exemptemptyconstructors"></a>
-##### <code>exemptEmptyConstructors</code>
+### <code>exemptEmptyConstructors</code>
 
 Default: true
 
@@ -72,7 +97,7 @@ name or description should be seen as sufficient to convey intent).
 
 <a name="user-content-require-jsdoc-options-exemptemptyfunctions"></a>
 <a name="require-jsdoc-options-exemptemptyfunctions"></a>
-##### <code>exemptEmptyFunctions</code>
+### <code>exemptEmptyFunctions</code>
 
 Default: false.
 
@@ -82,7 +107,7 @@ function/method names are sufficient for themselves as documentation).
 
 <a name="user-content-require-jsdoc-options-checkconstructors"></a>
 <a name="require-jsdoc-options-checkconstructors"></a>
-##### <code>checkConstructors</code>
+### <code>checkConstructors</code>
 
 A value indicating whether `constructor`s should be checked. Defaults to
 `true`. When `true`, `exemptEmptyConstructors` may still avoid reporting when
@@ -90,7 +115,7 @@ no parameters or return values are found.
 
 <a name="user-content-require-jsdoc-options-checkgetters"></a>
 <a name="require-jsdoc-options-checkgetters"></a>
-##### <code>checkGetters</code>
+### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Besides setting as a
 boolean, this option can be set to the string `"no-setter"` to indicate that
@@ -100,7 +125,7 @@ if one only wishes documentation on one of the two accessors. Defaults to
 
 <a name="user-content-require-jsdoc-options-checksetters"></a>
 <a name="require-jsdoc-options-checksetters"></a>
-##### <code>checkSetters</code>
+### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Besides setting as a
 boolean, this option can be set to the string `"no-getter"` to indicate that
@@ -110,18 +135,22 @@ if one only wishes documentation on one of the two accessors. Defaults to
 
 <a name="user-content-require-jsdoc-options-enablefixer"></a>
 <a name="require-jsdoc-options-enablefixer"></a>
-##### <code>enableFixer</code>
+### <code>enableFixer</code>
 
 A boolean on whether to enable the fixer (which adds an empty jsdoc block).
 Defaults to `true`.
 
 <a name="user-content-require-jsdoc-options-minlinecount"></a>
 <a name="require-jsdoc-options-minlinecount"></a>
-##### <code>minLineCount</code>
+### <code>minLineCount</code>
 
 An integer to indicate a minimum number of lines expected for a node in order
 for it to require documentation. Defaults to `undefined`. This option will
 apply to any context; see `contexts` for line counts per context.
+
+<a name="user-content-require-jsdoc-context-and-settings"></a>
+<a name="require-jsdoc-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -130,6 +159,8 @@ apply to any context; see `contexts` for line counts per context.
 |Recommended|true|
 |Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`|
 
+<a name="user-content-require-jsdoc-failing-examples"></a>
+<a name="require-jsdoc-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -961,6 +992,10 @@ class A {
 // Message: Missing JSDoc comment.
 ````
 
+
+
+<a name="user-content-require-jsdoc-passing-examples"></a>
+<a name="require-jsdoc-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

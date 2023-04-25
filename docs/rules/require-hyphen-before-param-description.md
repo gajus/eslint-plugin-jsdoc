@@ -1,12 +1,25 @@
 <a name="user-content-require-hyphen-before-param-description"></a>
 <a name="require-hyphen-before-param-description"></a>
-### <code>require-hyphen-before-param-description</code>
+# <code>require-hyphen-before-param-description</code>
+
+* [Fixer](#user-content-require-hyphen-before-param-description-fixer)
+* [Options](#user-content-require-hyphen-before-param-description-options)
+* [Context and settings](#user-content-require-hyphen-before-param-description-context-and-settings)
+* [Failing examples](#user-content-require-hyphen-before-param-description-failing-examples)
+* [Passing examples](#user-content-require-hyphen-before-param-description-passing-examples)
+
 
 Requires (or disallows) a hyphen before the `@param` description.
 
+<a name="user-content-require-hyphen-before-param-description-fixer"></a>
+<a name="require-hyphen-before-param-description-fixer"></a>
+## Fixer
+
+(Todo)
+
 <a name="user-content-require-hyphen-before-param-description-options"></a>
 <a name="require-hyphen-before-param-description-options"></a>
-#### Options
+## Options
 
 This rule takes one optional string argument and an optional options object.
 
@@ -25,6 +38,10 @@ other tags besides the `@param` tag (or the `@arg` tag if so set):
   `@param` tag which follows the main string option setting and besides any
   other `tags` entries).
 
+<a name="user-content-require-hyphen-before-param-description-context-and-settings"></a>
+<a name="require-hyphen-before-param-description-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -33,6 +50,8 @@ other tags besides the `@param` tag (or the `@arg` tag if so set):
 |Recommended|false|
 |Options|a string matching `"always" or "never"` followed by an optional object with a `tags` property|
 
+<a name="user-content-require-hyphen-before-param-description-failing-examples"></a>
+<a name="require-hyphen-before-param-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -153,6 +172,10 @@ function quux () {
 // Message: There must be a hyphen before @param description.
 ````
 
+
+
+<a name="user-content-require-hyphen-before-param-description-passing-examples"></a>
+<a name="require-hyphen-before-param-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

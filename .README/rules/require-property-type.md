@@ -1,6 +1,10 @@
-### `require-property-type`
+# `require-property-type`
 
-Requires that each `@property` tag has a `type` value.
+{"gitdown": "contents", "rootId": "require-property-type"}
+
+Requires that each `@property` tag has a type value (within curly brackets).
+
+## Context and settings
 
 |||
 |---|---|
@@ -9,4 +13,10 @@ Requires that each `@property` tag has a `type` value.
 |Aliases|`prop`|
 |Recommended|true|
 
-<!-- assertions requirePropertyType -->
+## Failing examples
+
+<!-- assertions-failing requirePropertyType -->
+
+## Passing examples
+
+<!-- assertions-passing requirePropertyType -->

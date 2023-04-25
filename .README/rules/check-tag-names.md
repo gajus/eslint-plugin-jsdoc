@@ -1,4 +1,6 @@
-### `check-tag-names`
+# `check-tag-names`
+
+{"gitdown": "contents", "rootId": "check-tag-names"}
 
 Reports invalid block tag names.
 
@@ -190,9 +192,13 @@ tag to `false`:
 }
 ```
 
-#### Options
+## Fixer
 
-##### `definedTags`
+(Todo)
+
+## Options
+
+### `definedTags`
 
 Use an array of `definedTags` strings to configure additional, allowed tags.
 The format is as follows:
@@ -203,11 +209,11 @@ The format is as follows:
 }
 ```
 
-##### `enableFixer`
+### `enableFixer`
 
 Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#typed).
 
-##### `jsxTags`
+### `jsxTags`
 
 If this is set to `true`, all of the following tags used to control JSX output are allowed:
 
@@ -220,7 +226,7 @@ jsxRuntime
 
 For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).
 
-##### `typed`
+### `typed`
 
 If this is set to `true`, additionally checks for tag names that are redundant when using a type checker such as TypeScript.
 
@@ -275,6 +281,8 @@ static
 this
 ```
 
+## Context and settings
+
 |||
 |---|---|
 |Context|everywhere|
@@ -283,4 +291,10 @@ this
 |Options|`definedTags`, `enableFixer`, `jsxTags`, `typed`|
 |Settings|`tagNamePreference`, `mode`|
 
-<!-- assertions checkTagNames -->
+## Failing examples
+
+<!-- assertions-failing checkTagNames -->
+
+## Passing examples
+
+<!-- assertions-passing checkTagNames -->

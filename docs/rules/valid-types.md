@@ -1,9 +1,17 @@
 <a name="user-content-valid-types"></a>
 <a name="valid-types"></a>
-### <code>valid-types</code>
+# <code>valid-types</code>
 
-Requires all types to be valid JSDoc, Closure, or TypeScript compiler types
-without syntax errors. Note that what determines a valid type is handled by
+* [Options](#user-content-valid-types-options)
+* [Context and settings](#user-content-valid-types-context-and-settings)
+* [Failing examples](#user-content-valid-types-failing-examples)
+* [Passing examples](#user-content-valid-types-passing-examples)
+
+
+Requires all types/namepaths to be valid JSDoc, Closure compiler, or
+TypeScript types (configured by `settings.jsdoc.mode`).
+
+Note that what determines a valid type is handled by
 our type parsing engine, [jsdoc-type-pratt-parser](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser),
 using [`settings.jsdoc.mode`](#user-content-eslint-plugin-jsdoc-settings-mode) to
 determine whether to use jsdoc-type-pratt-parser's "permissive" parsing or
@@ -82,7 +90,7 @@ value). See the setting for more details.
 
 <a name="user-content-valid-types-options"></a>
 <a name="valid-types-options"></a>
-#### Options
+## Options
 
 - `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow
   empty name paths with namepath groups 2 and 4 (these might often be
@@ -91,6 +99,10 @@ value). See the setting for more details.
   in another manner elsewhere in the block); you can use
   `settings.jsdoc.structuredTags` with the `required` key set to "name" if you
   wish to require name paths on a tag-by-tag basis.
+
+<a name="user-content-valid-types-context-and-settings"></a>
+<a name="valid-types-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -102,6 +114,8 @@ value). See the setting for more details.
 |Options|`allowEmptyNamepaths`|
 |Settings|`mode`, `structuredTags`|
 
+<a name="user-content-valid-types-failing-examples"></a>
+<a name="valid-types-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -458,6 +472,10 @@ function quux () {}
 // Message: Invalid name: invalid default value syntax
 ````
 
+
+
+<a name="user-content-valid-types-passing-examples"></a>
+<a name="valid-types-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

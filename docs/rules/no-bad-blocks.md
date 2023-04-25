@@ -2,21 +2,29 @@
 <a name="no-bad-blocks"></a>
 ### <code>no-bad-blocks</code>
 
+
+
 This rule checks for multi-line-style comments which fail to meet the
 criteria of a jsdoc block, namely that it should begin with two and only two
 asterisks, but which appear to be intended as jsdoc blocks due to the presence
 of whitespace followed by whitespace or asterisks, and
 an at-sign (`@`) and some non-whitespace (as with a jsdoc block tag).
 
-<a name="user-content-no-bad-blocks-options"></a>
-<a name="no-bad-blocks-options"></a>
-#### Options
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
+## Fixer
+
+(TODO)
+
+<a name="user-content-options"></a>
+<a name="options"></a>
+## Options
 
 Takes an optional options object with the following.
 
-<a name="user-content-no-bad-blocks-options-ignore"></a>
-<a name="no-bad-blocks-options-ignore"></a>
-##### <code>ignore</code>
+<a name="user-content-options-ignore"></a>
+<a name="options-ignore"></a>
+### <code>ignore</code>
 
 An array of directives that will not be reported if present at the beginning of
 a multi-comment block and at-sign `/* @`.
@@ -24,13 +32,17 @@ a multi-comment block and at-sign `/* @`.
 Defaults to `['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck']`
 (some directives [used by TypeScript](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html#ts-check)).
 
-<a name="user-content-no-bad-blocks-options-preventallmultiasteriskblocks"></a>
-<a name="no-bad-blocks-options-preventallmultiasteriskblocks"></a>
-##### <code>preventAllMultiAsteriskBlocks</code>
+<a name="user-content-options-preventallmultiasteriskblocks"></a>
+<a name="options-preventallmultiasteriskblocks"></a>
+### <code>preventAllMultiAsteriskBlocks</code>
 
 A boolean (defaulting to `false`) which if `true` will prevent all
 JSDoc-like blocks with more than two initial asterisks even those without
 apparent tag content.
+
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -39,6 +51,8 @@ apparent tag content.
 |Recommended|false|
 |Options|`ignore`, `preventAllMultiAsteriskBlocks`|
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -95,6 +109,10 @@ function quux (foo) {
 // Message: Expected JSDoc-like comment to begin with two asterisks.
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

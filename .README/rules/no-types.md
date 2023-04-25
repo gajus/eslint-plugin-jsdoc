@@ -1,13 +1,19 @@
-### `no-types`
+# `no-types`
+
+{"gitdown": "contents", "rootId": "no-types"}
 
 This rule reports types being used on `@param` or `@returns`.
 
 The rule is intended to prevent the indication of types on tags where
 the type information would be redundant with TypeScript.
 
-#### Options
+## Fixer
 
-##### `contexts`
+(TODO)
+
+## Options
+
+### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -20,6 +26,8 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
@@ -28,4 +36,10 @@ section of our README for more on the expected format.
 |Recommended|false|
 |Options|`contexts`|
 
-<!-- assertions noTypes -->
+## Failing examples
+
+<!-- assertions-failing noTypes -->
+
+## Passing examples
+
+<!-- assertions-passing noTypes -->

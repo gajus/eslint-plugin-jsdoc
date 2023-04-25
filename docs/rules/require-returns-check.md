@@ -1,14 +1,20 @@
 <a name="user-content-require-returns"></a>
 <a name="require-returns"></a>
-### <code>require-returns</code>
+# <code>require-returns</code>
 
-Requires that returns are documented.
+* [Options](#user-content-require-returns-options)
+* [Context and settings](#user-content-require-returns-context-and-settings)
+* [Failing examples](#user-content-require-returns-failing-examples)
+* [Passing examples](#user-content-require-returns-passing-examples)
+
+
+Requires that return statements are documented.
 
 Will also report if multiple `@returns` tags are present.
 
 <a name="user-content-require-returns-options"></a>
 <a name="require-returns-options"></a>
-#### Options
+## Options
 
 - `checkConstructors` - A value indicating whether `constructor`s should
     be checked for `@returns` tags. Defaults to `false`.
@@ -45,6 +51,10 @@ Will also report if multiple `@returns` tags are present.
     (since we are not checking against the actual `return` values in these
     cases).
 
+<a name="user-content-require-returns-context-and-settings"></a>
+<a name="require-returns-context-and-settings"></a>
+## Context and settings
+
 |          |         |
 | -------- | ------- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
@@ -54,6 +64,8 @@ Will also report if multiple `@returns` tags are present.
 | Options  | `checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync` |
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
+<a name="user-content-require-returns-failing-examples"></a>
+<a name="require-returns-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -624,6 +636,10 @@ export default async function demo() {
 // Message: Missing JSDoc @returns declaration.
 ````
 
+
+
+<a name="user-content-require-returns-passing-examples"></a>
+<a name="require-returns-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

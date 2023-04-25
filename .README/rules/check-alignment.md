@@ -1,6 +1,14 @@
-### `check-alignment`
+# `check-alignment`
+
+{"gitdown": "contents", "rootId": "check-alignment"}
 
 Reports invalid alignment of JSDoc block asterisks.
+
+## Fixer
+
+Fixes alignment.
+
+## Context and settings
 
 |||
 |---|---|
@@ -8,4 +16,10 @@ Reports invalid alignment of JSDoc block asterisks.
 |Tags|N/A|
 |Recommended|true|
 
-<!-- assertions checkAlignment -->
+## Failing examples
+
+<!-- assertions-failing checkAlignment -->
+
+## Passing examples
+
+<!-- assertions-passing checkAlignment -->

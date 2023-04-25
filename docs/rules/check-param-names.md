@@ -1,13 +1,34 @@
 <a name="user-content-check-param-names"></a>
 <a name="check-param-names"></a>
-### <code>check-param-names</code>
+# <code>check-param-names</code>
+
+* [Fixer](#user-content-check-param-names-fixer)
+* [Destructuring](#user-content-check-param-names-destructuring)
+* [Options](#user-content-check-param-names-options)
+    * [`checkRestProperty`](#user-content-check-param-names-options-checkrestproperty)
+    * [`checkTypesPattern`](#user-content-check-param-names-options-checktypespattern)
+    * [`enableFixer`](#user-content-check-param-names-options-enablefixer)
+    * [`allowExtraTrailingParamDocs`](#user-content-check-param-names-options-allowextratrailingparamdocs)
+    * [`checkDestructured`](#user-content-check-param-names-options-checkdestructured)
+    * [`useDefaultObjectProperties`](#user-content-check-param-names-options-usedefaultobjectproperties)
+    * [`disableExtraPropertyReporting`](#user-content-check-param-names-options-disableextrapropertyreporting)
+* [Context and settings](#user-content-check-param-names-context-and-settings)
+* [Failing examples](#user-content-check-param-names-failing-examples)
+* [Passing examples](#user-content-check-param-names-passing-examples)
+
 
 Ensures that parameter names in JSDoc are matched by corresponding items in
 the function declaration.
 
+<a name="user-content-check-param-names-fixer"></a>
+<a name="check-param-names-fixer"></a>
+## Fixer
+
+(Todo)
+
 <a name="user-content-check-param-names-destructuring"></a>
 <a name="check-param-names-destructuring"></a>
-#### Destructuring
+## Destructuring
 
 Note that by default the rule will not report parameters present on the docs
 but non-existing on the function signature when an object rest property is part
@@ -34,23 +55,23 @@ may appear that there is an actual property named `extra`.
 
 <a name="user-content-check-param-names-options"></a>
 <a name="check-param-names-options"></a>
-#### Options
+## Options
 
 <a name="user-content-check-param-names-options-checkrestproperty"></a>
 <a name="check-param-names-options-checkrestproperty"></a>
-##### <code>checkRestProperty</code>
+### <code>checkRestProperty</code>
 
 See the "Destructuring" section. Defaults to `false`.
 
 <a name="user-content-check-param-names-options-checktypespattern"></a>
 <a name="check-param-names-options-checktypespattern"></a>
-##### <code>checkTypesPattern</code>
+### <code>checkTypesPattern</code>
 
 See `require-param` under the option of the same name.
 
 <a name="user-content-check-param-names-options-enablefixer"></a>
 <a name="check-param-names-options-enablefixer"></a>
-##### <code>enableFixer</code>
+### <code>enableFixer</code>
 
 Set to `true` to auto-remove `@param` duplicates (based on identical
 names).
@@ -61,7 +82,7 @@ be removed even if it has a different type or description).
 
 <a name="user-content-check-param-names-options-allowextratrailingparamdocs"></a>
 <a name="check-param-names-options-allowextratrailingparamdocs"></a>
-##### <code>allowExtraTrailingParamDocs</code>
+### <code>allowExtraTrailingParamDocs</code>
 
 If set to `true`, this option will allow extra `@param` definitions (e.g.,
 representing future expected or virtual params) to be present without needing
@@ -70,13 +91,13 @@ their presence within the function signature. Other inconsistencies between
 
 <a name="user-content-check-param-names-options-checkdestructured"></a>
 <a name="check-param-names-options-checkdestructured"></a>
-##### <code>checkDestructured</code>
+### <code>checkDestructured</code>
 
 Whether to check destructured properties. Defaults to `true`.
 
 <a name="user-content-check-param-names-options-usedefaultobjectproperties"></a>
 <a name="check-param-names-options-usedefaultobjectproperties"></a>
-##### <code>useDefaultObjectProperties</code>
+### <code>useDefaultObjectProperties</code>
 
 Set to `true` if you wish to avoid reporting of child property documentation
 where instead of destructuring, a whole plain object is supplied as default
@@ -85,7 +106,7 @@ are present and can therefore be documented. Defaults to `false`.
 
 <a name="user-content-check-param-names-options-disableextrapropertyreporting"></a>
 <a name="check-param-names-options-disableextrapropertyreporting"></a>
-##### <code>disableExtraPropertyReporting</code>
+### <code>disableExtraPropertyReporting</code>
 
 Whether to check for extra destructured properties. Defaults to `false`. Change
 to `true` if you want to be able to document properties which are not actually
@@ -95,6 +116,10 @@ item at the same level is destructured as destructuring will prevent other
 access and this option is only intended to permit documenting extra properties
 that are available and actually used in the function.
 
+<a name="user-content-check-param-names-context-and-settings"></a>
+<a name="check-param-names-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -102,6 +127,9 @@ that are available and actually used in the function.
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
+
+<a name="user-content-check-param-names-failing-examples"></a>
+<a name="check-param-names-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -589,6 +617,10 @@ declare function foo(bar: number) {}
 // Message: Expected @param names to be "bar". Got "barr".
 ````
 
+
+
+<a name="user-content-check-param-names-passing-examples"></a>
+<a name="check-param-names-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

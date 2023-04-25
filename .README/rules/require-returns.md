@@ -1,10 +1,12 @@
-### `require-returns`
+# `require-returns`
 
-Requires that returns are documented.
+{"gitdown": "contents", "rootId": "require-returns"}
+
+Requires that return statements are documented.
 
 Will also report if multiple `@returns` tags are present.
 
-#### Options
+## Options
 
 - `checkConstructors` - A value indicating whether `constructor`s should
     be checked for `@returns` tags. Defaults to `false`.
@@ -41,6 +43,8 @@ Will also report if multiple `@returns` tags are present.
     (since we are not checking against the actual `return` values in these
     cases).
 
+## Context and settings
+
 |          |         |
 | -------- | ------- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
@@ -50,4 +54,10 @@ Will also report if multiple `@returns` tags are present.
 | Options  | `checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync` |
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
-<!-- assertions requireReturns -->
+## Failing examples
+
+<!-- assertions-failing requireReturns -->
+
+## Passing examples
+
+<!-- assertions-passing requireReturns -->

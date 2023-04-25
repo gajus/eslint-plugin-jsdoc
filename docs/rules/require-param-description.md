@@ -1,12 +1,38 @@
 <a name="user-content-require-param"></a>
 <a name="require-param"></a>
-### <code>require-param</code>
+# <code>require-param</code>
+
+* [Fixer](#user-content-require-param-fixer)
+    * [Destructured object and array naming](#user-content-require-param-fixer-destructured-object-and-array-naming)
+    * [Missing root fixing](#user-content-require-param-fixer-missing-root-fixing)
+    * [Rest Element (`RestElement`) insertions](#user-content-require-param-fixer-rest-element-restelement-insertions)
+    * [Object Rest Property insertions](#user-content-require-param-fixer-object-rest-property-insertions)
+* [Options](#user-content-require-param-options)
+    * [`enableFixer`](#user-content-require-param-options-enablefixer)
+    * [`enableRootFixer`](#user-content-require-param-options-enablerootfixer)
+    * [`enableRestElementFixer`](#user-content-require-param-options-enablerestelementfixer)
+    * [`checkRestProperty`](#user-content-require-param-options-checkrestproperty)
+    * [`autoIncrementBase`](#user-content-require-param-options-autoincrementbase)
+    * [`unnamedRootBase`](#user-content-require-param-options-unnamedrootbase)
+    * [`exemptedBy`](#user-content-require-param-options-exemptedby)
+    * [`checkTypesPattern`](#user-content-require-param-options-checktypespattern)
+    * [`contexts`](#user-content-require-param-options-contexts)
+    * [`checkConstructors`](#user-content-require-param-options-checkconstructors)
+    * [`checkGetters`](#user-content-require-param-options-checkgetters)
+    * [`checkSetters`](#user-content-require-param-options-checksetters)
+    * [`checkDestructured`](#user-content-require-param-options-checkdestructured)
+    * [`checkDestructuredRoots`](#user-content-require-param-options-checkdestructuredroots)
+    * [`useDefaultObjectProperties`](#user-content-require-param-options-usedefaultobjectproperties)
+* [Context and settings](#user-content-require-param-context-and-settings)
+* [Failing examples](#user-content-require-param-failing-examples)
+* [Passing examples](#user-content-require-param-passing-examples)
+
 
 Requires that all function parameters are documented.
 
 <a name="user-content-require-param-fixer"></a>
 <a name="require-param-fixer"></a>
-#### Fixer
+## Fixer
 
 Adds `@param <name>` for each tag present in the function signature but
 missing in the jsdoc. Can be disabled by setting the `enableFixer`
@@ -14,7 +40,7 @@ option to `false`.
 
 <a name="user-content-require-param-fixer-destructured-object-and-array-naming"></a>
 <a name="require-param-fixer-destructured-object-and-array-naming"></a>
-##### Destructured object and array naming
+### Destructured object and array naming
 
 When the fixer is applied to destructured objects, only the input name is
 used.
@@ -67,7 +93,7 @@ function quux ([foo, bar]) {
 
 <a name="user-content-require-param-fixer-missing-root-fixing"></a>
 <a name="require-param-fixer-missing-root-fixing"></a>
-##### Missing root fixing
+### Missing root fixing
 
 Note that unless `enableRootFixer` (or `enableFixer`) is set to `false`,
 missing roots will be added and auto-incremented. The default behavior
@@ -103,7 +129,7 @@ And one can have the count begin at another number (e.g., `1`) by changing
 
 <a name="user-content-require-param-fixer-rest-element-restelement-insertions"></a>
 <a name="require-param-fixer-rest-element-restelement-insertions"></a>
-##### Rest Element (<code>RestElement</code>) insertions
+### Rest Element (<code>RestElement</code>) insertions
 
 The fixer will automatically report/insert
 [jsdoc repeatable parameters](https://jsdoc.app/tags-param.html#multiple-types-and-repeatable-parameters)
@@ -156,7 +182,7 @@ function baar ([a, ...extra]) {
 
 <a name="user-content-require-param-fixer-object-rest-property-insertions"></a>
 <a name="require-param-fixer-object-rest-property-insertions"></a>
-##### Object Rest Property insertions
+### Object Rest Property insertions
 
 If the `checkRestProperty` option is set to `true` (`false` by default),
 missing rest properties will be reported with documentation auto-inserted:
@@ -192,19 +218,19 @@ function signature, it may appear that there is an actual property named
 
 <a name="user-content-require-param-options"></a>
 <a name="require-param-options"></a>
-#### Options
+## Options
 
 An options object accepts the following optional properties:
 
 <a name="user-content-require-param-options-enablefixer"></a>
 <a name="require-param-options-enablefixer"></a>
-##### <code>enableFixer</code>
+### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.
 
 <a name="user-content-require-param-options-enablerootfixer"></a>
 <a name="require-param-options-enablerootfixer"></a>
-##### <code>enableRootFixer</code>
+### <code>enableRootFixer</code>
 
 Whether to enable the auto-adding of incrementing roots (see the "Fixer"
 section). Defaults to `true`. Has no effect if `enableFixer` is set to
@@ -212,14 +238,14 @@ section). Defaults to `true`. Has no effect if `enableFixer` is set to
 
 <a name="user-content-require-param-options-enablerestelementfixer"></a>
 <a name="require-param-options-enablerestelementfixer"></a>
-##### <code>enableRestElementFixer</code>
+### <code>enableRestElementFixer</code>
 
 Whether to enable the rest element fixer (see
 "Rest Element (`RestElement`) insertions"). Defaults to `true`.
 
 <a name="user-content-require-param-options-checkrestproperty"></a>
 <a name="require-param-options-checkrestproperty"></a>
-##### <code>checkRestProperty</code>
+### <code>checkRestProperty</code>
 
 If set to `true`, will report (and add fixer insertions) for missing rest
 properties. Defaults to `false`.
@@ -274,14 +300,14 @@ function quux ({num, ...extra}) {
 
 <a name="user-content-require-param-options-autoincrementbase"></a>
 <a name="require-param-options-autoincrementbase"></a>
-##### <code>autoIncrementBase</code>
+### <code>autoIncrementBase</code>
 
 Numeric to indicate the number at which to begin auto-incrementing roots.
 Defaults to `0`.
 
 <a name="user-content-require-param-options-unnamedrootbase"></a>
 <a name="require-param-options-unnamedrootbase"></a>
-##### <code>unnamedRootBase</code>
+### <code>unnamedRootBase</code>
 
 An array of root names to use in the fixer when roots are missing. Defaults
 to `['root']`. Note that only when all items in the array besides the last
@@ -308,7 +334,7 @@ function quux ({foo}, [bar], {baz}) {
 
 <a name="user-content-require-param-options-exemptedby"></a>
 <a name="require-param-options-exemptedby"></a>
-##### <code>exemptedBy</code>
+### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document block
 avoids the need for a `@param`. Defaults to an array with
@@ -318,7 +344,7 @@ exemption of the rule.
 
 <a name="user-content-require-param-options-checktypespattern"></a>
 <a name="require-param-options-checktypespattern"></a>
-##### <code>checkTypesPattern</code>
+### <code>checkTypesPattern</code>
 
 When one specifies a type, unless it is of a generic type, like `object`
 or `array`, it may be considered unnecessary to have that object's
@@ -354,7 +380,7 @@ need destructuring.
 
 <a name="user-content-require-param-options-contexts"></a>
 <a name="require-param-options-contexts"></a>
-##### <code>contexts</code>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -367,32 +393,32 @@ section of our README for more on the expected format.
 
 <a name="user-content-require-param-options-checkconstructors"></a>
 <a name="require-param-options-checkconstructors"></a>
-##### <code>checkConstructors</code>
+### <code>checkConstructors</code>
 
 A value indicating whether `constructor`s should be checked. Defaults to
 `true`.
 
 <a name="user-content-require-param-options-checkgetters"></a>
 <a name="require-param-options-checkgetters"></a>
-##### <code>checkGetters</code>
+### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Defaults to `false`.
 
 <a name="user-content-require-param-options-checksetters"></a>
 <a name="require-param-options-checksetters"></a>
-##### <code>checkSetters</code>
+### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Defaults to `false`.
 
 <a name="user-content-require-param-options-checkdestructured"></a>
 <a name="require-param-options-checkdestructured"></a>
-##### <code>checkDestructured</code>
+### <code>checkDestructured</code>
 
 Whether to require destructured properties. Defaults to `true`.
 
 <a name="user-content-require-param-options-checkdestructuredroots"></a>
 <a name="require-param-options-checkdestructuredroots"></a>
-##### <code>checkDestructuredRoots</code>
+### <code>checkDestructuredRoots</code>
 
 Whether to check the existence of a corresponding `@param` for root objects
 of destructured properties (e.g., that for `function ({a, b}) {}`, that there
@@ -406,10 +432,14 @@ documentation). Defaults to `true`.
 
 <a name="user-content-require-param-options-usedefaultobjectproperties"></a>
 <a name="require-param-options-usedefaultobjectproperties"></a>
-##### <code>useDefaultObjectProperties</code>
+### <code>useDefaultObjectProperties</code>
 
 Set to `true` if you wish to expect documentation of properties on objects
 supplied as default values. Defaults to `false`.
+
+<a name="user-content-require-param-context-and-settings"></a>
+<a name="require-param-context-and-settings"></a>
+## Context and settings
 
 |          |                      |
 | -------- | ----------------------------------------------------------------------------- |
@@ -420,6 +450,8 @@ supplied as default values. Defaults to `false`.
 | Options  | `autoIncrementBase`, `checkDestructured`, `checkDestructuredRoots`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`, `useDefaultObjectProperties`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
+<a name="user-content-require-param-failing-examples"></a>
+<a name="require-param-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -1113,6 +1145,10 @@ export function myPublicFunction(foo: number, bar: number, baz: number) {}
 // Message: Missing JSDoc @param "baz" declaration.
 ````
 
+
+
+<a name="user-content-require-param-passing-examples"></a>
+<a name="require-param-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

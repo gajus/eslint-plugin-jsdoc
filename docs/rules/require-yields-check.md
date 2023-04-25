@@ -1,6 +1,12 @@
 <a name="user-content-require-yields"></a>
 <a name="require-yields"></a>
-### <code>require-yields</code>
+# <code>require-yields</code>
+
+* [Options](#user-content-require-yields-options)
+* [Context and settings](#user-content-require-yields-context-and-settings)
+* [Failing examples](#user-content-require-yields-failing-examples)
+* [Passing examples](#user-content-require-yields-passing-examples)
+
 
 Requires that yields are documented.
 
@@ -11,7 +17,7 @@ option to expect a non-standard `@next` tag.
 
 <a name="user-content-require-yields-options"></a>
 <a name="require-yields-options"></a>
-#### Options
+## Options
 
 - `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
     document block avoids the need for a `@yields`. Defaults to an array
@@ -59,6 +65,10 @@ option to expect a non-standard `@next` tag.
     `any` if you want to catch `@generator` with `@callback` or such not
     attached to a function.
 
+<a name="user-content-require-yields-context-and-settings"></a>
+<a name="require-yields-context-and-settings"></a>
+## Context and settings
+
 |||
 |---|---|
 |Context|Generator functions (`FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled)|
@@ -68,6 +78,8 @@ option to expect a non-standard `@next` tag.
 | Options  | `contexts`,  `exemptedBy`, `withGeneratorTag`, `nextWithGeneratorTag`, `forceRequireYields`, `next` |
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
+<a name="user-content-require-yields-failing-examples"></a>
+<a name="require-yields-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -477,6 +489,10 @@ function * quux () {
 // Message: Missing JSDoc @yields declaration.
 ````
 
+
+
+<a name="user-content-require-yields-passing-examples"></a>
+<a name="require-yields-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

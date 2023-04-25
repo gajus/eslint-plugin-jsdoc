@@ -1,8 +1,17 @@
 <a name="user-content-require-property-name"></a>
 <a name="require-property-name"></a>
-### <code>require-property-name</code>
+# <code>require-property-name</code>
 
-Requires that all function `@property` tags have names.
+* [Context and settings](#user-content-require-property-name-context-and-settings)
+* [Failing examples](#user-content-require-property-name-failing-examples)
+* [Passing examples](#user-content-require-property-name-passing-examples)
+
+
+Requires that all `@property` tags have names.
+
+<a name="user-content-require-property-name-context-and-settings"></a>
+<a name="require-property-name-context-and-settings"></a>
+## Context and settings
 
 |||
 |---|---|
@@ -11,6 +20,8 @@ Requires that all function `@property` tags have names.
 |Aliases|`prop`|
 |Recommended|true|
 
+<a name="user-content-require-property-name-failing-examples"></a>
+<a name="require-property-name-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -36,6 +47,10 @@ The following patterns are considered problems:
 // Message: Unexpected tag `@property`
 ````
 
+
+
+<a name="user-content-require-property-name-passing-examples"></a>
+<a name="require-property-name-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:

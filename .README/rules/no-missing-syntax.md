@@ -1,4 +1,6 @@
-### `no-missing-syntax`
+# `no-missing-syntax`
+
+{"gitdown": "contents", "rootId": "no-missing-syntax"}
 
 This rule lets you report if certain always expected comment structures are
 missing.
@@ -34,9 +36,9 @@ which are not adequate to satisfy a condition, e.g.,
 not report if there were only a function declaration of the name "ignoreMe"
 (though it would report by function declarations of other names).
 
-#### Options
+## Options
 
-##### `contexts`
+### `contexts`
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -56,6 +58,8 @@ aliases `@func` or `@method`) (including those associated with an `@interface`).
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
+## Context and settings
+
 |||
 |---|---|
 |Context|None except those indicated by `contexts`|
@@ -63,4 +67,10 @@ section of our README for more on the expected format.
 |Recommended|false|
 |Options|`contexts`|
 
-<!-- assertions noMissingSyntax -->
+## Failing examples
+
+<!-- assertions-failing noMissingSyntax -->
+
+## Passing examples
+
+<!-- assertions-passing noMissingSyntax -->
