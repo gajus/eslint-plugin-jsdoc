@@ -37,7 +37,7 @@
     "cross-env": "^7.0.3",
     "decamelize": "^5.0.1",
     "eslint": "^8.38.0",
-    "eslint-config-canonical": "~33.0.1",
+    "eslint-config-canonical": "~41.0.3",
     "gitdown": "^3.1.5",
     "glob": "^8.1.0",
     "husky": "^8.0.3",
