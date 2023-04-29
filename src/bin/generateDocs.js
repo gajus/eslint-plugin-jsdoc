@@ -5,7 +5,9 @@ import fs from 'fs';
 import path from 'path';
 import decamelize from 'decamelize';
 import Gitdown from 'gitdown';
-import glob from 'glob';
+import {
+  glob,
+} from 'glob';
 
 const trimCode = (code) => {
   let lines = code.replace(/^\n/u, '').trimEnd().split('\n');
@@ -47,10 +49,10 @@ const formatCodeSnippet = (setup, ruleName) => {
   return paragraphs.join('\n');
 };
 
-const getAssertions = () => {
-  const assertionFiles = glob.sync(path.resolve(__dirname, '../../test/rules/assertions/*.js')).filter((file) => {
+const getAssertions = async () => {
+  const assertionFiles = (await glob(path.resolve(__dirname, '../../test/rules/assertions/*.js'))).filter((file) => {
     return !file.includes('flatConfig');
-  });
+  }).reverse();
 
   const assertionNames = assertionFiles.map((filePath) => {
     return path.basename(filePath, '.js');
@@ -116,7 +118,7 @@ const generateDocs = async () => {
   const {
     assertions,
     assertionNames,
-  } = getAssertions();
+  } = await getAssertions();
 
   const docContents = await Promise.all([
     ...assertionNames.map((assertionName) => {
