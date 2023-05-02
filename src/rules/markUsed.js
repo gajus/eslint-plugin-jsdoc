@@ -6,55 +6,60 @@ import iterateJsdoc from '../iterateJsdoc';
 /**
  * Extracts the type names from parsed type declaration.
  */
-const extractTypeNames = (parsed) => {
-  if (typeof parsed !== 'object' || parsed.type === 'JsdocTypeImport' || parsed.type === 'JsdocTypeSpecialNamePath') {
-    // We don't want this to fall through to the base-case
+const extractTypeNames = (parsed) => { // eslint-disable-line complexity
+  if (typeof parsed !== 'object') {
     return [];
-  } else if (parsed.type === 'JsdocTypeName') {
+  }
+
+  switch (parsed.type) {
+  case 'JsdocTypeName':
     return [
       parsed.value,
     ];
-  } else if (parsed.type === 'JsdocTypeGeneric') {
+  case 'JsdocTypeOptional':
+  case 'JsdocTypeNullable':
+  case 'JsdocTypeNotNullable':
+  case 'JsdocTypeTypeof':
+  case 'JsdocTypeKeyof':
+  case 'JsdocTypeParenthesis':
+  case 'JsdocTypeVariadic':
+    return extractTypeNames(parsed.element);
+  case 'JsdocTypeUnion':
+  case 'JsdocTypeObject':
+  case 'JsdocTypeTuple':
+  case 'JsdocTypeIntersection':
+    return parsed.elements.flatMap(extractTypeNames);
+  case 'JsdocTypeGeneric':
     return [
       ...extractTypeNames(parsed.left),
       ...parsed.elements.flatMap(extractTypeNames),
     ];
-  } else if (parsed.type === 'JsdocTypeFunction') {
+  case 'JsdocTypeFunction':
     return [
       ...parsed.parameters.flatMap(extractTypeNames),
       ...extractTypeNames(parsed.returnType),
     ];
-  } else if (parsed.type === 'JsdocTypeNamePath') {
+  case 'JsdocTypeNamePath':
     return extractTypeNames(parsed.left);
-  } else if (parsed.type === 'JsdocTypePredicate') {
+  case 'JsdocTypePredicate':
     // We purposefully don't consider the left (subject of the predicate) used
     return extractTypeNames(parsed.right);
-  } else if (parsed.type === 'JsdocTypeObjectField') {
+  case 'JsdocTypeObjectField':
     return [
       ...extractTypeNames(parsed.key),
       ...extractTypeNames(parsed.right),
     ];
-  } else if (parsed.type === 'JsdocTypeJsdocObjectField') {
+  case 'JsdocTypeJsdocObjectField':
     return [
       ...extractTypeNames(parsed.left),
       ...extractTypeNames(parsed.right),
     ];
-  } else if (
-    parsed.type === 'JsdocTypeKeyValue' ||
-    parsed.type === 'JsdocTypeIndexSignature' ||
-    parsed.type === 'JsdocTypeMappedType') {
+  case 'JsdocTypeKeyValue':
+  case 'JsdocTypeIndexSignature':
+  case 'JsdocTypeMappedType':
     return extractTypeNames(parsed.right);
-  } else {
-    const result = [];
-    if (parsed.element) {
-      result.push(...extractTypeNames(parsed.element));
-    }
-
-    if (parsed.elements) {
-      result.push(...parsed.elements.flatMap(extractTypeNames));
-    }
-
-    return result;
+  default:
+    return [];
   }
 };
 
