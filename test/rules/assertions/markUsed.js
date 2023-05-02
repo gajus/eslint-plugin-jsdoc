@@ -43,6 +43,7 @@ export default {
         /** @type {(!Foo|?Bar|...Baz|Qux[]|foo=|obj["level1"]|{Foo?: Foo}|function(this:Foo))|external:something} */
         let foo = null;
       `,
+      ignoreReadme: true,
       rules: {
         'no-unused-vars': 'error',
       },
@@ -53,6 +54,7 @@ export default {
         /** @type {typeof foo|import("some-package")|new(number, string): Foo|foo is Foo|{foo: Foo}} */
         let foo = null;
       `,
+      ignoreReadme: true,
       rules: {
         'no-unused-vars': 'error',
       },

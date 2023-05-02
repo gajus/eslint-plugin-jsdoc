@@ -55,17 +55,5 @@ class Foo {}
 /** @returns {Foo} */
 function foo() {}
 foo();
-
-class Foo {}
-class Bar {}
-class Baz {}
-class Qux {}
-/** @type {(!Foo|?Bar|...Baz|Qux[]|foo=|obj["level1"]|{Foo?: Foo}|function(this:Foo))|external:something} */
-let foo = null;
-
-class Foo {}
-/** @type {typeof foo|import("some-package")|new(number, string): Foo|foo is Foo|{foo: Foo}} */
-let foo = null;
-// Settings: {"jsdoc":{"mode":"typescript"}}
 ````
 
