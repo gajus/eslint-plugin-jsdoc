@@ -40,7 +40,7 @@ export default {
         class Bar {}
         class Baz {}
         class Qux {}
-        /** @type {(!Foo|?Bar|...Baz|Qux[]|foo=|obj["level1"]|{Foo?: Foo}|function(this:Foo))} */
+        /** @type {(!Foo|?Bar|...Baz|Qux[]|foo=|obj["level1"]|{Foo?: Foo}|function(this:Foo))|external:something} */
         let foo = null;
       `,
       rules: {

@@ -7,8 +7,8 @@ import iterateJsdoc from '../iterateJsdoc';
  * Extracts the type names from parsed type declaration.
  */
 const extractTypeNames = (parsed) => {
-  if (typeof parsed !== 'object') {
-    /* istanbul ignore next */
+  if (typeof parsed !== 'object' || parsed.type === 'JsdocTypeImport' || parsed.type === 'JsdocTypeSpecialNamePath') {
+    // We don't want this to fall through to the base-case
     return [];
   } else if (parsed.type === 'JsdocTypeName') {
     return [
@@ -26,9 +26,6 @@ const extractTypeNames = (parsed) => {
     ];
   } else if (parsed.type === 'JsdocTypeNamePath') {
     return extractTypeNames(parsed.left);
-  } else if (parsed.type === 'JsdocTypeImport') {
-    // We don't want this to fall through to the base-case
-    return [];
   } else if (parsed.type === 'JsdocTypePredicate') {
     // We purposefully don't consider the left (subject of the predicate) used
     return extractTypeNames(parsed.right);
