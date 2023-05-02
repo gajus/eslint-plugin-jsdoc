@@ -70,6 +70,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/empty-tags": 1, // Recommended
         "jsdoc/implements-on-classes": 1, // Recommended
         "jsdoc/informative-docs": 1,
+        "jsdoc/mark-used": 1,
         "jsdoc/match-description": 1,
         "jsdoc/multiline-blocks": 1, // Recommended
         "jsdoc/no-bad-blocks": 1,
@@ -224,6 +225,7 @@ Problems reported by rules which have a wrench :wrench: below can be fixed autom
 |:heavy_check_mark:|:wrench:|[empty-tags](./docs/rules/empty-tags.md#readme)|Checks tags that are expected to be empty (e.g., `@abstract` or `@async`), reporting if they have content|
 |:heavy_check_mark:||[implements-on-classes](./docs/rules/implements-on-classes.md#readme)|Prohibits use of `@implements` on non-constructor functions (to enforce the tag only being used on classes/constructors)|
 |||[informative-docs](./docs/rules/informative-docs.md#readme)|Reports on JSDoc texts that serve only to restart their attached name.|
+|||[mark-used](./docs/rules/mark-used.md#readme)|Marks all types referenced in `{@link}`d tags as used.|
 |||[match-description](./docs/rules/match-description.md#readme)|Defines customizable regular expression rules for your tag descriptions|
 ||:wrench:|[match-name](./docs/rules/match-name.md#readme)|Reports the name portion of a JSDoc tag if matching or not matching a given regular expression|
 |:heavy_check_mark:|:wrench:|[multiline-blocks](./docs/rules/multiline-blocks.md#readme)|Controls how and whether jsdoc blocks can be expressed as single or multiple line blocks|
