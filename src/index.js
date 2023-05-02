@@ -12,6 +12,7 @@ import checkValues from './rules/checkValues';
 import emptyTags from './rules/emptyTags';
 import implementsOnClasses from './rules/implementsOnClasses';
 import informativeDocs from './rules/informativeDocs';
+import markUsed from './rules/markUsed';
 import matchDescription from './rules/matchDescription';
 import matchName from './rules/matchName';
 import multilineBlocks from './rules/multilineBlocks';
@@ -68,6 +69,7 @@ const index = {
     'empty-tags': emptyTags,
     'implements-on-classes': implementsOnClasses,
     'informative-docs': informativeDocs,
+    'mark-used': markUsed,
     'match-description': matchDescription,
     'match-name': matchName,
     'multiline-blocks': multilineBlocks,
