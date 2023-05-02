@@ -13,6 +13,7 @@
   "empty-tags",
   "implements-on-classes",
   "informative-docs",
+  "mark-used",
   "match-description",
   "match-name",
   "multiline-blocks",
