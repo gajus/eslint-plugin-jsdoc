@@ -12,7 +12,6 @@ import checkValues from './rules/checkValues';
 import emptyTags from './rules/emptyTags';
 import implementsOnClasses from './rules/implementsOnClasses';
 import informativeDocs from './rules/informativeDocs';
-import markUsed from './rules/markUsed';
 import matchDescription from './rules/matchDescription';
 import matchName from './rules/matchName';
 import multilineBlocks from './rules/multilineBlocks';
@@ -50,6 +49,7 @@ import requireYieldsCheck from './rules/requireYieldsCheck';
 import sortTags from './rules/sortTags';
 import tagLines from './rules/tagLines';
 import textEscaping from './rules/textEscaping';
+import usedTypes from './rules/usedTypes';
 import validTypes from './rules/validTypes';
 
 const index = {
@@ -69,7 +69,6 @@ const index = {
     'empty-tags': emptyTags,
     'implements-on-classes': implementsOnClasses,
     'informative-docs': informativeDocs,
-    'mark-used': markUsed,
     'match-description': matchDescription,
     'match-name': matchName,
     'multiline-blocks': multilineBlocks,
@@ -107,6 +106,7 @@ const index = {
     'sort-tags': sortTags,
     'tag-lines': tagLines,
     'text-escaping': textEscaping,
+    'used-types': usedTypes,
     'valid-types': validTypes,
   },
 };

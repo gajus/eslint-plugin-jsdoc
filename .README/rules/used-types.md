@@ -1,6 +1,6 @@
-# `mark-used`
+# `used-types`
 
-{"gitdown": "contents", "rootId": "mark-used"}
+{"gitdown": "contents", "rootId": "used-types"}
 
 Marks all types referenced in `{@link}` tags as used.
 
@@ -20,8 +20,8 @@ Not applicable.
 
 ## Failing examples
 
-<!-- assertions-failing markUsed -->
+<!-- assertions-failing usedTypes -->
 
 ## Passing examples
 
-<!-- assertions-passing markUsed -->
+<!-- assertions-passing usedTypes -->
