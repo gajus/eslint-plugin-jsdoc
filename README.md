@@ -262,5 +262,5 @@ Problems reported by rules which have a wrench :wrench: below can be fixed autom
 |||[sort-tags](./docs/rules/sort-tags.md#readme)|Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups|
 |:heavy_check_mark:|:wrench:|[tag-lines](./docs/rules/tag-lines.md#readme)|Enforces lines (or no lines) between tags|
 ||:wrench:|[text-escaping](./docs/rules/text-escaping.md#readme)|This rule can auto-escape certain characters that are input within block and tag descriptions|
-|||[used-types](./docs/rules/used-types.md#readme)|Marks all types referenced in `{@link}`d tags as used.|
+|||[used-types](./docs/rules/used-types.md#readme)|Marks all types referenced from JSDoc tags as used.|
 |:heavy_check_mark:||[valid-types](./docs/rules/valid-types.md#readme)|Requires all types/namepaths to be valid JSDoc, Closure compiler, or TypeScript types (configurable in settings)|

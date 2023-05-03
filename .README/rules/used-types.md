@@ -2,7 +2,7 @@
 
 {"gitdown": "contents", "rootId": "used-types"}
 
-Marks all types referenced in `{@link}` tags as used.
+Marks all types referenced from JSDoc tags as used.
 
 ## Fixer
 

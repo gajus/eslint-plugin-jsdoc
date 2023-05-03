@@ -7,7 +7,7 @@
 * [Passing examples](#user-content-used-types-passing-examples)
 
 
-Marks all types referenced in `{@link}` tags as used.
+Marks all types referenced from JSDoc tags as used.
 
 <a name="user-content-used-types-fixer"></a>
 <a name="used-types-fixer"></a>

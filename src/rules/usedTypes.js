@@ -85,7 +85,7 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     docs: {
-      description: 'Marks all types referenced in {@link} tags as used',
+      description: 'Marks all types referenced from JSDoc tags as used.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-used-types',
     },
     fixable: 'code',
