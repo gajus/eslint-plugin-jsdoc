@@ -70,5 +70,5 @@ the error).
 ## Environment
 
 - Node version: <!-- $ node -v -->
-- ESLint version <!-- $ $(npm bin)/eslint -v -->
+- ESLint version <!-- $ npx eslint -v -->
 - `eslint-plugin-jsdoc` version:

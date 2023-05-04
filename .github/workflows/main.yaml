@@ -1,4 +1,12 @@
 jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
   release:
     runs-on: ubuntu-latest
     environment: release
@@ -12,8 +20,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "20"
-      - run: npm ci
-      - run: npm run build
+      - run: pnpm install
+      - run: pnpm build
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
