@@ -3,6 +3,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Lint
     steps:
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
       - name: setup repository
         uses: actions/checkout@v3
         with:
@@ -11,13 +14,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-      - run: npm ci
-      - run: npm run lint
+      - run: pnpm install
+      - run: pnpm lint
     timeout-minutes: 10
   test:
     runs-on: ubuntu-latest
     name: Test (Node.js ${{ matrix.node_js_version }})
     steps:
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
       - name: setup repository
         uses: actions/checkout@v3
         with:
@@ -26,8 +32,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '${{ matrix.node_js_version }}'
-      - run: npm ci
-      - run: npm run test
+      - run: pnpm install
+      - run: pnpm test
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -40,6 +46,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Build
     steps:
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
       - name: setup repository
         uses: actions/checkout@v3
         with:
@@ -48,8 +57,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-      - run: npm ci
-      - run: npm run build
+      - run: pnpm install
+      - run: pnpm build
     timeout-minutes: 10
 name: Lint, test and build
 on:
