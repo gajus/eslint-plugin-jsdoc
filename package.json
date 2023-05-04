@@ -111,7 +111,7 @@
     "check-readme": "babel-node ./src/bin/generateDocs.js --check",
     "create-readme": "babel-node ./src/bin/generateDocs.js",
     "create-rule": "babel-node ./src/bin/generateRule.js",
-    "install-offline": "npm install --prefer-offline --no-audit",
+    "install-offline": "pnpm install --prefer-offline --no-audit",
     "lint": "npm run lint-arg -- .",
     "lint-arg": "eslint --report-unused-disable-directives",
     "lint-fix": "npm run lint-arg -- --fix .",
