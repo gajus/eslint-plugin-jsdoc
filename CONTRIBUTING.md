@@ -1,34 +1,38 @@
 # CONTRIBUTING to eslint-plugin-jsdoc
 
+## Installing `pnpm`
+
+Development is conducted using `pnpm`. Install via `npm i -g pnpm`.
+
 ## Testing changes locally
 
 You might try a TDD approach and add tests within the `test` directory,
 to try different configs you may find it easier to try out changes in
 a separate local directory.
 
-You can run [`npm link`](https://docs.npmjs.com/cli/link) for this purpose,
+You can run [`pnpm link`](https://docs.npmjs.com/cli/link) for this purpose,
 pointing from your project to this project. For example, while in your project
 root and with `eslint-plugin-jsdoc` as a sibling, run:
 
 ```shell
-npm link ../eslint-plugin-jsdoc
+pnpm link ../eslint-plugin-jsdoc
 ```
 
 ## Building the project
 
-After running `npm install` to get the latest dependencies and devDependencies,
+After running `pnpm install` to get the latest dependencies and devDependencies,
 you can run the following command to update the `dist` files, with `dist/index.js`
 being the `main` entry point from `package.json`:
 
 ```shell
-npm run build
+pnpm build
 ```
 
 ## Coding standards
 
 The project follows ESLint rules from [`canonical`](https://www.npmjs.com/package/eslint-config-canonical)
 and testing follows its subconfig, `canonical/mocha`. You can run
-`npm run lint` to check the linting if your IDE is not already indicating
+`pnpm lint` to check the linting if your IDE is not already indicating
 items needing fixing.
 
 ## Documentation building
@@ -38,7 +42,7 @@ modify files within the `.README` directory. `.README/README.md` contains the
 main README skeleton and details on the project, its global `settings`, etc.,
 while the documentation for specific rules (that will be pulled into the
 README) ought to be modified within the relevant file within `.README/rules`.
-Once these files are modified, you can run `npm run create-readme` to have
+Once these files are modified, you can run `pnpm create-readme` to have
 these files integrated into the main `/README.md`. While you should include
 the built file in your PR, you will not want to make manual changes
 directly to this file, as they will be overwritten.
@@ -57,14 +61,14 @@ See ESLint's [RuleTester](https://eslint.org/docs/developer-guide/nodejs-api#rul
 for more on the allowable properties (e.g., `code`, `errors` (for invalid rules),
 `options`, `settings`, etc.).
 
-Note that besides `npm test` there is `npm run test-cov`, which shows more
+Note that besides `pnpm test` there is `pnpm test-cov`, which shows more
 detailed coverage information. Coverage should be maintained at 100%, and
 if there are a few guards in place for future use, the code block in question
 can be ignored by being preceded by `/* istanbul ignore next */` (including
 for warnings where the block is never passed over (i.e., the block is always
 entered)). If you want to test without coverage at all, you can use
-`npm run test-no-cov`. To only test rules rather than other files, you
-can use `npm run test-index`.
+`pnpm test-no-cov`. To only test rules rather than other files, you
+can use `npm run test-index` (`pnpm` doesn't work with this script currently).
 
 To test specific rules, you can supply a comma-separated list with the `--rule`
 flag passed to `test-index`, e.g., for `check-examples` and `require-example`:
@@ -77,7 +81,7 @@ accepts negative offsets from the end, e.g., `-1` for the last item). For
 example, to check the first and third invalid tests of `check-examples`
 along with the second valid test, you can run:
 
-`npm run --rule=check-examples --invalid=0,2 --valid=1 test-index`.
+`npm run test-index --rule=require-example --invalid=0,2 --valid=1`.
 
 ## Requirements for PRs
 
