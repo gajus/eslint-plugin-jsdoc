@@ -652,6 +652,58 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+       * This has an inline {@link http://example.com}
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Syntax is restricted: FunctionDeclaration with JsdocBlock:has(JsdocInlineTag)',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocInlineTag)',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @see This has an inline {@link http://example.com}
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Syntax is restricted: FunctionDeclaration with JsdocBlock:has(JsdocTag:has(JsdocInlineTag[format="plain"]))',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag:has(JsdocInlineTag[format="plain"]))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {

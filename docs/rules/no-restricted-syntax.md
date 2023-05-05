@@ -243,6 +243,24 @@ class Test {
 }
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"TSEmptyBodyFunctionExpression[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"methods with non-void return types must have a @returns tag"}]}]
 // Message: methods with non-void return types must have a @returns tag
+
+/**
+ * This has an inline {@link http://example.com}
+ */
+function quux () {
+
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocInlineTag)","context":"FunctionDeclaration"}]}]
+// Message: Syntax is restricted: FunctionDeclaration with JsdocBlock:has(JsdocInlineTag)
+
+/**
+ * @see This has an inline {@link http://example.com}
+ */
+function quux () {
+
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag:has(JsdocInlineTag[format=\"plain\"]))","context":"FunctionDeclaration"}]}]
+// Message: Syntax is restricted: FunctionDeclaration with JsdocBlock:has(JsdocTag:has(JsdocInlineTag[format="plain"]))
 ````
 
 
