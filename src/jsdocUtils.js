@@ -1274,6 +1274,7 @@ export default {
   parseClosureTemplateTag,
   pathDoesNotBeginWith,
   setTagStructure,
+  tagMightHaveEitherTypeOrNamePosition,
   tagMightHaveNamepath,
   tagMightHaveNamePosition,
   tagMightHaveTypePosition,

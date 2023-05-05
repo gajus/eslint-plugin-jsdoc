@@ -388,6 +388,10 @@ export default {
       `,
       errors: [
         {
+          line: 3,
+          message: 'The type \'SomeType\' is undefined.',
+        },
+        {
           line: 6,
           message: 'The type \'SomeType\' is undefined.',
         },
@@ -412,6 +416,10 @@ export default {
        */
       `,
       errors: [
+        {
+          line: 3,
+          message: 'The type \'SomeType\' is undefined.',
+        },
         {
           line: 6,
           message: 'The type \'SomeType\' is undefined.',

@@ -769,6 +769,7 @@ const getUtils = (
   for (const method of [
     'tagMightHaveNamePosition',
     'tagMightHaveTypePosition',
+    'tagMightHaveEitherTypeOrNamePosition',
   ]) {
     utils[method] = (tagName, otherModeMaps) => {
       const result = jsdocUtils[method](tagName);

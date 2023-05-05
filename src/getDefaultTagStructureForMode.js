@@ -470,11 +470,6 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', true,
         ],
-
-        // "type"
-        [
-          'typeAllowed', true,
-        ],
       ]),
     ],
 
@@ -490,11 +485,6 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', true,
         ],
-
-        // "type"
-        [
-          'typeAllowed', true,
-        ],
       ]),
     ],
 
@@ -509,11 +499,6 @@ const getDefaultTagStructureForMode = (mode) => {
         // "namepath"
         [
           'typeOrNameRequired', true,
-        ],
-
-        // "type"
-        [
-          'typeAllowed', true,
         ],
       ]),
     ],

@@ -189,11 +189,11 @@ export default iterateJsdoc(({
   const jsdocTagsWithPossibleType = utils.filterTags(({
     tag,
   }) => {
-    return utils.tagMightHaveTypePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
+    return utils.tagMightHaveEitherTypeOrNamePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
   });
 
   for (const tag of jsdocTagsWithPossibleType) {
-    const possibleType = tag.type || tag.namepathOrURL;
+    const possibleType = tag.type || tag.name || tag.namepathOrURL;
 
     let parsedType;
 
