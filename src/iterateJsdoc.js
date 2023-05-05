@@ -869,7 +869,7 @@ const getUtils = (
   };
 
   utils.filterTags = (filter) => {
-    return jsdocUtils.filterTags(jsdoc.tags, filter);
+    return jsdocUtils.filterTags(jsdocUtils.getAllTags(jsdoc), filter);
   };
 
   utils.getTagsByType = (tags) => {

@@ -35,8 +35,6 @@ const getDefaultTagStructureForMode = (mode) => {
   //   "namepath" (e.g., param can't define a namepath)
 
   // Once checking inline tags:
-  // Todo: Re: `typeOrNameRequired`, `@link` (or @linkcode/@linkplain) seems
-  //  to require a namepath OR URL and might be checked as such.
   // Todo: Should support a `tutorialID` type (for `@tutorial` block and
   //  inline)
 
@@ -457,6 +455,65 @@ const getDefaultTagStructureForMode = (mode) => {
         // "namepath"
         [
           'typeOrNameRequired', true,
+        ],
+      ]),
+    ],
+
+    [
+      'link', new Map([
+        // Signature seems to require a namepath OR URL and might be checked as such.
+        [
+          'nameContents', 'namepath-referencing',
+        ],
+
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+
+        // "type"
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
+
+    [
+      'linkcode', new Map([
+        // Synonym for "link"
+        // Signature seems to require a namepath OR URL and might be checked as such.
+        [
+          'nameContents', 'namepath-referencing',
+        ],
+
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+
+        // "type"
+        [
+          'typeAllowed', true,
+        ],
+      ]),
+    ],
+
+    [
+      'linkplain', new Map([
+        // Synonym for "link"
+        // Signature seems to require a namepath OR URL and might be checked as such.
+        [
+          'nameContents', 'namepath-referencing',
+        ],
+
+        // "namepath"
+        [
+          'typeOrNameRequired', true,
+        ],
+
+        // "type"
+        [
+          'typeAllowed', true,
         ],
       ]),
     ],

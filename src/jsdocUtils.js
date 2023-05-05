@@ -453,6 +453,22 @@ const hasTag = (jsdoc, targetTagName) => {
 };
 
 /**
+ * Get all tags, inline tags and inline tags in tags
+ *
+ * @param {object} jsdoc
+ * @returns {Array}
+ */
+const getAllTags = (jsdoc) => {
+  return [
+    ...jsdoc.tags,
+    ...jsdoc.inlineTags,
+    ...jsdoc.tags.flatMap((tag) => {
+      return tag.inlineTags;
+    }),
+  ];
+};
+
+/**
  * @param {object} jsdoc
  * @param {Array} targetTagNames
  * @returns {boolean}
@@ -1232,6 +1248,7 @@ export default {
   exemptSpeciaMethods,
   filterTags,
   flattenRoots,
+  getAllTags,
   getContextObject,
   getFunctionParameterNames,
   getIndent,

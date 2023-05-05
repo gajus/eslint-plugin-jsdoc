@@ -193,10 +193,12 @@ export default iterateJsdoc(({
   });
 
   for (const tag of jsdocTagsWithPossibleType) {
+    const possibleType = tag.type || tag.namepathOrURL;
+
     let parsedType;
 
     try {
-      parsedType = mode === 'permissive' ? tryParseType(tag.type) : parseType(tag.type, mode);
+      parsedType = mode === 'permissive' ? tryParseType(possibleType) : parseType(possibleType, mode);
     } catch {
       // On syntax error, will be handled by valid-types.
       continue;

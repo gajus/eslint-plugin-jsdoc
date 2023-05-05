@@ -1324,5 +1324,41 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+          class MyClass {}
+          class AnotherClass {}
+
+          /**
+           * A description mentioning {@link MyClass} and {@link AnotherClass | another class} and a URL via [this link]{@link https://www.example.com}.
+           */
+          function quux(foo) {
+            console.log(foo);
+          }
+
+          quux(0);
+      `,
+      rules: {
+        'no-unused-vars': 'error',
+      },
+    },
+    {
+      code: `
+          class MyClass {}
+          class AnotherClass {}
+
+          /**
+           * @see A tag mentioning {@link MyClass} and {@link AnotherClass | another class} and a URL via [this link]{@link https://www.example.com}.
+           */
+          function quux(foo) {
+            console.log(foo);
+          }
+
+          quux(0);
+      `,
+      rules: {
+        'no-unused-vars': 'error',
+      },
+    },
   ],
 };
