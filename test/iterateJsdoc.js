@@ -122,6 +122,7 @@ describe('iterateJsdoc', () => {
         `,
         }, '')).to.deep.equal({
           description: 'SomeDescription',
+          inlineTags: [],
           problems: [],
           source: [
             {
@@ -147,6 +148,7 @@ describe('iterateJsdoc', () => {
           tags: [
             {
               description: '          desc',
+              inlineTags: [],
               name: 'name',
               optional: false,
               problems: [],
