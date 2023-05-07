@@ -720,6 +720,7 @@ function quux (foo) {}
  * @template
  */
 function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
 // Message: Invalid JSDoc tag name "internal".
 
 /** 

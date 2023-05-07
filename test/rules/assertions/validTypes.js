@@ -251,6 +251,11 @@ export default {
           allowEmptyNamepaths: false,
         },
       ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
     },
     {
       code: `
@@ -887,6 +892,11 @@ export default {
         },
       ],
       ignoreReadme: true,
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
     },
     {
       code: `

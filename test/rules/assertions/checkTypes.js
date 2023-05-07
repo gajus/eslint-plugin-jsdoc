@@ -3073,6 +3073,11 @@ export default {
 
       foo()
       `,
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
     },
     {
       code: `
