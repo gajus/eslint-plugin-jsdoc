@@ -858,6 +858,11 @@ export default {
           message: 'Invalid JSDoc tag name "template".',
         },
       ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
     },
     {
       code: `${ONE_CLOSURE_TAGS_COMMENT}\nfunction quux (foo) {}`,

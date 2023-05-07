@@ -974,10 +974,7 @@ const getSettings = (context) => {
     exemptDestructuredRootsFromChecks: context.settings.jsdoc?.exemptDestructuredRootsFromChecks,
 
     // Many rules, e.g., `check-tag-names`
-    mode: context.settings.jsdoc?.mode ??
-      (context.parserPath?.includes('@typescript-eslint') ||
-      context.languageOptions?.parser?.meta?.name?.includes('typescript') ?
-        'typescript' : 'jsdoc'),
+    mode: context.settings.jsdoc?.mode ?? 'typescript',
 
     // Many rules
     contexts: context.settings.jsdoc?.contexts,

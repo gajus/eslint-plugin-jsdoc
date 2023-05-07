@@ -231,6 +231,7 @@ function quux() {
  * @this
  */
  class Bar {};
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
 // "jsdoc/valid-types": ["error"|"warn", {"allowEmptyNamepaths":false}]
 // Message: Tag @this must have either a type or namepath in "jsdoc" mode.
 

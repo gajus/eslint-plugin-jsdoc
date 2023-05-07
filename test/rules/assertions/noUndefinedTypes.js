@@ -276,6 +276,11 @@ export default {
           message: 'The type \'TEMPLATE_TYPE_B\' is undefined.',
         },
       ],
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
     },
     {
       code: `

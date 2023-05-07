@@ -1179,6 +1179,7 @@ function foo(spec) {
 }
 
 foo()
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
 
 /**
  * @param {object} root

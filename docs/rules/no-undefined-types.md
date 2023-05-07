@@ -201,6 +201,7 @@ class Foo {
   bar (baz) {
   }
 }
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
 // Message: The type 'TEMPLATE_TYPE_A' is undefined.
 
 /**
