@@ -64,6 +64,8 @@ export default iterateJsdoc(({
 
   const {
     definedTypes = [],
+    disableReporting = false,
+    markVariablesAsUsed = true,
   } = context.options[0] || {};
 
   let definedPreferredTypes = [];
@@ -209,8 +211,10 @@ export default iterateJsdoc(({
         if (!allDefinedTypes.has(value) &&
           (!Array.isArray(structuredTypes) || !structuredTypes.includes(value))
         ) {
-          report(`The type '${value}' is undefined.`, null, tag);
-        } else if (!extraTypes.includes(value)) {
+          if (!disableReporting) {
+            report(`The type '${value}' is undefined.`, null, tag);
+          }
+        } else if (markVariablesAsUsed && !extraTypes.includes(value)) {
           context.markVariableAsUsed(value);
         }
       }
@@ -232,6 +236,12 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
+          },
+          disableReporting: {
+            type: 'boolean',
+          },
+          markVariablesAsUsed: {
+            type: 'boolean',
           },
         },
         type: 'object',

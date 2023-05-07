@@ -65,9 +65,6 @@ export default {
           message: 'The type \'strnig\' is undefined.',
         },
       ],
-      rules: {
-        'no-undef': 'error',
-      },
     },
     {
       code: `
@@ -248,9 +245,6 @@ export default {
           message: 'The type \'strnig\' is undefined.',
         },
       ],
-      rules: {
-        'no-undef': 'error',
-      },
     },
     {
       code: `
@@ -585,7 +579,7 @@ export default {
          * @param {object<string, number>} foo
          * @param {Array<string>} baz
          */
-          function quux(foo, bar, baz) {
+        function quux(foo, bar, baz) {
 
         }
       `,
@@ -1281,6 +1275,53 @@ export default {
         jsdoc: {
           mode: 'typescript',
         },
+      },
+    },
+    {
+      code: `
+          // THIS SHOULD CAUSE ERRORS, BUT DUE TO ESLINT TESTER
+          //  LIMITATIONS, WE CAN'T TEST THE \`no-unused-vars\` RULE;
+          //  WE PUT IT HERE FOR COVERAGE
+
+          import {MyInterface} from 'xyz';
+          /**
+           * @type {MyInterface}
+           */
+          function quux(foo) {
+            console.log(foo);
+          }
+
+          quux(0);
+      `,
+      ignoreReadme: true,
+      options: [
+        {
+          markVariablesAsUsed: false,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+      import {MyType} from 'my-library';
+
+      /**
+       * @param {MyType} foo - Bar.
+       * @param {AnUndefinedType} bar
+       */
+      function quux(foo, bar) {
+
+      }
+      `,
+      options: [
+        {
+          disableReporting: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
       },
     },
   ],
