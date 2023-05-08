@@ -458,7 +458,7 @@ const hasTag = (jsdoc, targetTagName) => {
  * @param {object} jsdoc
  * @returns {Array}
  */
-const getAllTags = (jsdoc, includeInlineTags = false) => {
+const getAllTags = (jsdoc, includeInlineTags) => {
   return includeInlineTags ? [
     ...jsdoc.tags,
     ...jsdoc.inlineTags,

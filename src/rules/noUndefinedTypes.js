@@ -200,25 +200,28 @@ export default iterateJsdoc(({
     };
   };
 
+  const typeTags = utils.filterTags(({
+    tag,
+  }) => {
+    return utils.tagMightHaveTypePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
+  }).map(tagToParsedType('type'));
+
+  const namepathReferencingTags = utils.filterTags(({
+    tag,
+  }) => {
+    return utils.isNamepathReferencingTag(tag);
+  }).map(tagToParsedType('name'));
+
+  const namepathOrUrlReferencingTags = utils.filterTags(({
+    tag,
+  }) => {
+    return utils.isNamepathOrUrlReferencingTag(tag);
+  }, true).map(tagToParsedType('namepathOrURL'));
+
   const tagsWithTypes = [
-    // Tags with type
-    ...utils.filterTags(({
-      tag,
-    }) => {
-      return utils.tagMightHaveTypePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
-    }).map(tagToParsedType('type')),
-    // Tags with namepaths
-    ...utils.filterTags(({
-      tag,
-    }) => {
-      return utils.isNamepathReferencingTag(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
-    }).map(tagToParsedType('name')),
-    // Inline tags
-    ...utils.filterTags(({
-      tag,
-    }) => {
-      return utils.isNamepathOrUrlReferencingTag(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
-    }, true).map(tagToParsedType('namepathOrURL')),
+    ...typeTags,
+    ...namepathReferencingTags,
+    ...namepathOrUrlReferencingTags,
   ].filter((result) => {
     // Remove types which failed to parse
     return result;
