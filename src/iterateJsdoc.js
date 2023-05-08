@@ -769,7 +769,6 @@ const getUtils = (
   for (const method of [
     'tagMightHaveNamePosition',
     'tagMightHaveTypePosition',
-    'tagMightHaveEitherTypeOrNamePosition',
   ]) {
     utils[method] = (tagName, otherModeMaps) => {
       const result = jsdocUtils[method](tagName);
@@ -816,6 +815,8 @@ const getUtils = (
 
   for (const method of [
     'isNamepathDefiningTag',
+    'isNamepathReferencingTag',
+    'isNamepathOrUrlReferencingTag',
     'tagMightHaveNamepath',
   ]) {
     utils[method] = (tagName) => {
@@ -869,8 +870,9 @@ const getUtils = (
     });
   };
 
-  utils.filterTags = (filter) => {
-    return jsdocUtils.filterTags(jsdocUtils.getAllTags(jsdoc), filter);
+  utils.filterTags = (filter, includeInlineTags = false) => {
+    const tags = jsdocUtils.getAllTags(jsdoc, includeInlineTags);
+    return jsdocUtils.filterTags(tags, filter);
   };
 
   utils.getTagsByType = (tags) => {

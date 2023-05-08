@@ -458,14 +458,14 @@ const hasTag = (jsdoc, targetTagName) => {
  * @param {object} jsdoc
  * @returns {Array}
  */
-const getAllTags = (jsdoc) => {
-  return [
+const getAllTags = (jsdoc, includeInlineTags = false) => {
+  return includeInlineTags ? [
     ...jsdoc.tags,
     ...jsdoc.inlineTags,
     ...jsdoc.tags.flatMap((tag) => {
       return tag.inlineTags;
     }),
-  ];
+  ] : jsdoc.tags;
 };
 
 /**
@@ -616,6 +616,26 @@ const isNamepathDefiningTag = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
   return tagStruct.get('nameContents') === 'namepath-defining';
+};
+
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
+const isNamepathReferencingTag = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
+  return tagStruct.get('nameContents') === 'namepath-referencing';
+};
+
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
+const isNamepathOrUrlReferencingTag = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
+  return tagStruct.get('nameContents') === 'namepath-or-url-referencing';
 };
 
 /**
@@ -1267,6 +1287,8 @@ export default {
   isConstructor,
   isGetter,
   isNamepathDefiningTag,
+  isNamepathOrUrlReferencingTag,
+  isNamepathReferencingTag,
   isSetter,
   isValidTag,
   mayBeUndefinedTypeTag,

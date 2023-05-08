@@ -247,20 +247,12 @@ function quux () {}
 // Message: The type 'SomeType' is undefined.
 
 /**
- * @namepathDefiner SomeType
+ * @namepathReferencing SomeType
  */
 /**
  * @type {SomeType}
  */
-// Settings: {"jsdoc":{"structuredTags":{"namepathDefiner":{"name":"namepath-referencing"}}}}
-// Message: The type 'SomeType' is undefined.
-
-/**
- * @namepathDefiner SomeType
- */
-/**
- * @type {SomeType}
- */
+// Settings: {"jsdoc":{"structuredTags":{"namepathReferencing":{"name":"namepath-referencing"}}}}
 // Message: The type 'SomeType' is undefined.
 
 /**

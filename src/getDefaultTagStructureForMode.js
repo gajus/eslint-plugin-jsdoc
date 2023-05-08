@@ -11,7 +11,7 @@ const getDefaultTagStructureForMode = (mode) => {
   const isJsdocTypescriptOrPermissive = isJsdocOrTypescript || isPermissive;
 
   // Properties:
-  // `nameContents` - 'namepath-referencing'|'namepath-defining'|'text'|false
+  // `nameContents` - 'namepath-referencing'|'namepath-defining'|'namepath-or-url-referencing'|'text'|false
   // `typeAllowed` - boolean
   // `nameRequired` - boolean
   // `typeRequired` - boolean
@@ -463,13 +463,9 @@ const getDefaultTagStructureForMode = (mode) => {
       'link', new Map([
         // Signature seems to require a namepath OR URL and might be checked as such.
         [
-          'nameContents', 'namepath-referencing',
+          'nameContents', 'namepath-or-url-referencing',
         ],
 
-        // "namepath"
-        [
-          'typeOrNameRequired', true,
-        ],
       ]),
     ],
 
@@ -478,12 +474,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Synonym for "link"
         // Signature seems to require a namepath OR URL and might be checked as such.
         [
-          'nameContents', 'namepath-referencing',
-        ],
-
-        // "namepath"
-        [
-          'typeOrNameRequired', true,
+          'nameContents', 'namepath-or-url-referencing',
         ],
       ]),
     ],
@@ -493,12 +484,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Synonym for "link"
         // Signature seems to require a namepath OR URL and might be checked as such.
         [
-          'nameContents', 'namepath-referencing',
-        ],
-
-        // "namepath"
-        [
-          'typeOrNameRequired', true,
+          'nameContents', 'namepath-or-url-referencing',
         ],
       ]),
     ],
