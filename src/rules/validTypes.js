@@ -143,16 +143,33 @@ export default iterateJsdoc(({
     };
 
     const validTypeParsing = function (type) {
+      let parsedTypes;
       try {
         if (mode === 'permissive') {
-          tryParse(type);
+          parsedTypes = tryParse(type);
         } else {
-          parse(type, mode);
+          parsedTypes = parse(type, mode);
         }
       } catch {
         report(`Syntax error in type: ${type}`, null, tag);
 
         return false;
+      }
+
+      if (mode === 'closure' || mode === 'typescript') {
+        traverse(parsedTypes, (node) => {
+          const {
+            type: typ,
+          } = node;
+
+          if (
+            (typ === 'JsdocTypeObjectField' || typ === 'JsdocTypeKeyValue') &&
+            node.right.type === 'JsdocTypeNullable' &&
+            node.right.meta.position === 'suffix'
+          ) {
+            report(`Syntax error in type: ${node.right.type}`, null, tag);
+          }
+        });
       }
 
       return true;

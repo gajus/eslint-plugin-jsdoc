@@ -1062,6 +1062,46 @@ export default {
         },
       ],
     },
+    {
+      code: `
+            /**
+             * @type {{message: string?}}
+             */
+            function quux (items) {
+            }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: JsdocTypeNullable',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'closure',
+        },
+      },
+    },
+    {
+      code: `
+            /**
+             * @type {[message: string?]}
+             */
+            function quux (items) {
+            }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in type: JsdocTypeNullable',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
   ],
   valid: [
     {
