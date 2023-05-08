@@ -11,7 +11,7 @@ const getDefaultTagStructureForMode = (mode) => {
   const isJsdocTypescriptOrPermissive = isJsdocOrTypescript || isPermissive;
 
   // Properties:
-  // `nameContents` - 'namepath-referencing'|'namepath-defining'|'namepath-or-url-referencing'|'text'|false
+  // `namepathRole` - 'namepath-referencing'|'namepath-defining'|'namepath-or-url-referencing'|'text'|false
   // `typeAllowed` - boolean
   // `nameRequired` - boolean
   // `typeRequired` - boolean
@@ -23,7 +23,7 @@ const getDefaultTagStructureForMode = (mode) => {
   //  `property`/`prop` (no signature)
   //  `modifies` (undocumented)
 
-  // None of the `nameContents: 'namepath-defining'` show as having curly
+  // None of the `namepathRole: 'namepath-defining'` show as having curly
   //  brackets for their name/namepath
 
   // Among `namepath-defining` and `namepath-referencing`, these do not seem
@@ -43,7 +43,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'alias', new Map([
         // Signature seems to require a "namepath" (and no counter-examples)
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         // "namepath"
@@ -56,7 +56,7 @@ const getDefaultTagStructureForMode = (mode) => {
     [
       'arg', new Map([
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // See `param`
@@ -75,7 +75,7 @@ const getDefaultTagStructureForMode = (mode) => {
     [
       'argument', new Map([
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // See `param`
@@ -95,7 +95,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'augments', new Map([
         // Signature seems to require a "namepath" (and no counter-examples)
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         // Does not show curly brackets in either the signature or examples
@@ -115,7 +115,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // `borrows` has a different format, however, so needs special parsing;
         //   seems to require both, and as "namepath"'s
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         // "namepath"
@@ -131,7 +131,7 @@ const getDefaultTagStructureForMode = (mode) => {
         //   counter-examples); TypeScript does not enforce but seems
         //   problematic as not attached so presumably not useable without it
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // "namepath"
@@ -145,7 +145,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'class', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // Not in use, but should be this value if using to power `empty-tags`
@@ -163,7 +163,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'const', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         [
@@ -175,7 +175,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'constant', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         [
@@ -187,7 +187,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'constructor', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         [
@@ -200,7 +200,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'constructs', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         [
@@ -225,7 +225,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'emits', new Map([
         // Signature seems to require a "name" (of an event) and no counter-examples
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         [
@@ -258,7 +258,7 @@ const getDefaultTagStructureForMode = (mode) => {
         //  different from other "name"'s (including as described
         //  at https://jsdoc.app/about-namepaths.html )
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
       ]),
     ],
@@ -284,7 +284,7 @@ const getDefaultTagStructureForMode = (mode) => {
     [
       'exports', new Map([
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         [
@@ -301,7 +301,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'extends', new Map([
         // Signature seems to require a "namepath" (and no counter-examples)
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         // Does not show curly brackets in either the signature or examples
@@ -326,7 +326,7 @@ const getDefaultTagStructureForMode = (mode) => {
         //  different from other "name"'s (including as described
         //  at https://jsdoc.app/about-namepaths.html )
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // "name" (and a special syntax for the `external` name)
@@ -345,7 +345,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Signature seems to require a "name" (of an event) and no
         //  counter-examples
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         [
@@ -362,7 +362,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'function', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         [
@@ -378,7 +378,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'func', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
       ]),
     ],
@@ -389,7 +389,7 @@ const getDefaultTagStructureForMode = (mode) => {
         //  different from other "name"'s (including as described
         //  at https://jsdoc.app/about-namepaths.html )
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // See `external`
@@ -407,7 +407,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'interface', new Map([
         // Allows for "name" in signature, but indicates as optional
         [
-          'nameContents',
+          'namepathRole',
           isJsdocTypescriptOrPermissive ? 'namepath-defining' : false,
         ],
 
@@ -426,7 +426,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'internal', new Map([
         // https://www.typescriptlang.org/tsconfig/#stripInternal
         [
-          'nameContents', false,
+          'namepathRole', false,
         ],
         // Not in use, but should be this value if using to power `empty-tags`
         [
@@ -449,7 +449,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'lends', new Map([
         // Signature seems to require a "namepath" (and no counter-examples)
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         // "namepath"
@@ -463,7 +463,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'link', new Map([
         // Signature seems to require a namepath OR URL and might be checked as such.
         [
-          'nameContents', 'namepath-or-url-referencing',
+          'namepathRole', 'namepath-or-url-referencing',
         ],
 
       ]),
@@ -474,7 +474,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Synonym for "link"
         // Signature seems to require a namepath OR URL and might be checked as such.
         [
-          'nameContents', 'namepath-or-url-referencing',
+          'namepathRole', 'namepath-or-url-referencing',
         ],
       ]),
     ],
@@ -484,7 +484,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Synonym for "link"
         // Signature seems to require a namepath OR URL and might be checked as such.
         [
-          'nameContents', 'namepath-or-url-referencing',
+          'namepathRole', 'namepath-or-url-referencing',
         ],
       ]),
     ],
@@ -494,7 +494,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Signature seems to require a "name" (of an event) and no
         //  counter-examples
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         [
@@ -511,7 +511,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'member', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // Has example showing curly brackets but not in doc signature
@@ -526,7 +526,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Signature seems to require a "namepath" (and no counter-examples),
         //  though it allows an incomplete namepath ending with connecting symbol
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         // "namepath"
@@ -540,7 +540,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Signature seems to require a "namepath" (and no counter-examples),
         //  though it allows an incomplete namepath ending with connecting symbol
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         // "namepath"
@@ -554,7 +554,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'method', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
       ]),
     ],
@@ -563,7 +563,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Signature seems to require a "OtherObjectPath" with no
         //   counter-examples
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         // "OtherObjectPath"
@@ -577,7 +577,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'mixin', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         [
@@ -607,7 +607,7 @@ const getDefaultTagStructureForMode = (mode) => {
         //  this block impacts `no-undefined-types` and `valid-types` (search for
         //  "isNamepathDefiningTag|tagMightHaveNamepath|tagMightHaveEitherTypeOrNamePosition")
         [
-          'nameContents', isJsdoc ? 'namepath-defining' : 'text',
+          'namepathRole', isJsdoc ? 'namepath-defining' : 'text',
         ],
 
         // Shows the signature with curly brackets but not in the example
@@ -622,7 +622,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Seems to require a "namepath" in the signature (with no
         //   counter-examples)
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // "namepath"
@@ -641,7 +641,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'namespace', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // Shows the signature with curly brackets but not in the example
@@ -663,7 +663,7 @@ const getDefaultTagStructureForMode = (mode) => {
     [
       'param', new Map([
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // Though no signature provided requiring, per
@@ -695,7 +695,7 @@ const getDefaultTagStructureForMode = (mode) => {
     [
       'prop', new Map([
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // See `property`
@@ -714,7 +714,7 @@ const getDefaultTagStructureForMode = (mode) => {
     [
       'property', new Map([
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // No docs indicate required, but since parallel to `param`, we treat as
@@ -754,7 +754,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'requires', new Map([
         // <someModuleName>
         [
-          'nameContents', 'namepath-referencing',
+          'namepathRole', 'namepath-referencing',
         ],
 
         [
@@ -798,7 +798,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Signature allows for "namepath" or text, so user must configure to
         //  'namepath-referencing' to enforce checks
         [
-          'nameContents', 'text',
+          'namepathRole', 'text',
         ],
       ]),
     ],
@@ -815,7 +815,7 @@ const getDefaultTagStructureForMode = (mode) => {
     [
       'suppress', new Map([
         [
-          'nameContents', !isClosure,
+          'namepathRole', !isClosure,
         ],
         [
           'typeRequired', isClosure,
@@ -826,10 +826,10 @@ const getDefaultTagStructureForMode = (mode) => {
     [
       'template', new Map([
         [
-          'nameContents', isJsdoc ? 'text' : 'namepath-referencing',
+          'namepathRole', isJsdoc ? 'text' : 'namepath-referencing',
         ],
 
-        // Though defines `nameContents: 'namepath-defining'` in a sense, it is
+        // Though defines `namepathRole: 'namepath-defining'` in a sense, it is
         //   not parseable in the same way for template (e.g., allowing commas),
         //   so not adding
         [
@@ -843,7 +843,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Signature seems to require a "namepath" (and no counter-examples)
         // Not used with namepath in Closure/TypeScript, however
         [
-          'nameContents', isJsdoc ? 'namepath-referencing' : false,
+          'namepathRole', isJsdoc ? 'namepath-referencing' : false,
         ],
 
         [
@@ -894,7 +894,7 @@ const getDefaultTagStructureForMode = (mode) => {
         // Seems to require a "namepath" in the signature (with no
         //  counter-examples)
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // TypeScript may allow it to be dropped if followed by @property or @member;
@@ -924,7 +924,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'var', new Map([
         // Allows for "name"'s in signature, but indicated as optional
         [
-          'nameContents', 'namepath-defining',
+          'namepathRole', 'namepath-defining',
         ],
 
         // Has example showing curly brackets but not in doc signature

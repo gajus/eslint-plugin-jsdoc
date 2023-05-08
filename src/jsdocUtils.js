@@ -560,7 +560,7 @@ const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
   ] of Object.entries(structuredTags)) {
     const tagStruct = ensureMap(tagMap, tag);
 
-    tagStruct.set('nameContents', name);
+    tagStruct.set('namepathRole', name);
     tagStruct.set('typeAllowed', type);
 
     const requiredName = required.includes('name');
@@ -615,7 +615,7 @@ const getTagStructureForMode = (mode, structuredTags) => {
 const isNamepathDefiningTag = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  return tagStruct.get('nameContents') === 'namepath-defining';
+  return tagStruct.get('namepathRole') === 'namepath-defining';
 };
 
 /**
@@ -625,7 +625,7 @@ const isNamepathDefiningTag = (tag, tagMap = tagStructure) => {
  */
 const isNamepathReferencingTag = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
-  return tagStruct.get('nameContents') === 'namepath-referencing';
+  return tagStruct.get('namepathRole') === 'namepath-referencing';
 };
 
 /**
@@ -635,7 +635,7 @@ const isNamepathReferencingTag = (tag, tagMap = tagStructure) => {
  */
 const isNamepathOrUrlReferencingTag = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
-  return tagStruct.get('nameContents') === 'namepath-or-url-referencing';
+  return tagStruct.get('namepathRole') === 'namepath-or-url-referencing';
 };
 
 /**
@@ -678,7 +678,7 @@ const namepathTypes = new Set([
 const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  const ret = tagStruct.get('nameContents');
+  const ret = tagStruct.get('namepathRole');
 
   return ret === undefined ? true : Boolean(ret);
 };
@@ -691,7 +691,7 @@ const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
 const tagMightHaveNamepath = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  return namepathTypes.has(tagStruct.get('nameContents'));
+  return namepathTypes.has(tagStruct.get('namepathRole'));
 };
 
 /**
