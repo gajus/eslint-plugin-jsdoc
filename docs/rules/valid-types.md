@@ -471,6 +471,22 @@ function quux () {}
  */
 function quux () {}
 // Message: Invalid name: invalid default value syntax
+
+/**
+ * @type {{message: string?}}
+ */
+function quux (items) {
+}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Syntax error in type: JsdocTypeNullable
+
+/**
+ * @type {[message: string?]}
+ */
+function quux (items) {
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+// Message: Syntax error in type: JsdocTypeNullable
 ````
 
 
