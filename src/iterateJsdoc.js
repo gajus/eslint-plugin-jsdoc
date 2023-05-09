@@ -617,7 +617,6 @@ const getUtils = (
         postName = '';
       } else if (postType) {
         postType = '';
-      // eslint-disable-next-line no-inline-comments
       } else /* istanbul ignore else -- `comment-parser` prevents empty blocks currently per https://github.com/syavorsky/comment-parser/issues/128 */ if (postTag) {
         postTag = '';
       }
