@@ -42,7 +42,7 @@ modify files within the `.README` directory. `.README/README.md` contains the
 main README skeleton and details on the project, its global `settings`, etc.,
 while the documentation for specific rules (that will be pulled into the
 README) ought to be modified within the relevant file within `.README/rules`.
-Once these files are modified, you can run `pnpm create-readme` to have
+Once these files are modified, you can run `pnpm create-docs` to have
 these files integrated into the main `/README.md`. While you should include
 the built file in your PR, you will not want to make manual changes
 directly to this file, as they will be overwritten.

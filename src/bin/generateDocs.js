@@ -9,6 +9,10 @@ import {
   glob,
 } from 'glob';
 
+/**
+ * @param {string} code
+ * @returns {string}
+ */
 const trimCode = (code) => {
   let lines = code.replace(/^\n/u, '').trimEnd().split('\n');
 
@@ -29,6 +33,11 @@ const trimCode = (code) => {
   return lines.join('\n').replaceAll('\r', '\\r');
 };
 
+/**
+ * @param {import('eslint').RuleTester.InvalidTestCase|import('eslint').RuleTester.ValidTestCase} setup
+ * @param {string} ruleName
+ * @returns {string}
+ */
 const formatCodeSnippet = (setup, ruleName) => {
   const paragraphs = [];
 
@@ -42,8 +51,11 @@ const formatCodeSnippet = (setup, ruleName) => {
     paragraphs.push(`// "jsdoc/${ruleName}": ["error"|"warn", ${JSON.stringify(setup.options).slice(1)}`);
   }
 
-  if (setup.errors) {
-    paragraphs.push(`// Message: ${setup.errors[0].message}`);
+  if ('errors' in setup) {
+    paragraphs.push(`// Message: ${
+      /** @type {Array<import('eslint').RuleTester.TestCaseError>} */ (
+        setup.errors
+      )[0].message}`);
   }
 
   return paragraphs.join('\n');
@@ -58,9 +70,14 @@ const getAssertions = async () => {
     return path.basename(filePath, '.js');
   });
 
-  const assertionCodes = assertionFiles.map((filePath, idx) => {
-    // eslint-disable-next-line import/no-dynamic-require
-    const codes = require(filePath);
+  const assertionCodes = await Promise.all(assertionFiles.map(async (filePath, idx) => {
+    /**
+     * @type {{
+     *   invalid: (import('eslint').RuleTester.InvalidTestCase & {ignoreReadme?: true})[],
+     *   valid: (import('eslint').RuleTester.ValidTestCase & {ignoreReadme?: true})[]
+     * }}
+     */
+    const codes = await import(filePath);
 
     const ruleName = decamelize(assertionNames[idx], {
       separator: '-',
@@ -82,7 +99,7 @@ const getAssertions = async () => {
         return formatCodeSnippet(setup, ruleName);
       }),
     };
-  });
+  }));
 
   return {
     assertionNames,
@@ -145,7 +162,13 @@ const generateDocs = async () => {
   return docContents.map((docContent) => {
     return docContent.replace(
       /<!-- assertions-(passing|failing) ([a-z]+?) -->/gui,
-      (assertionsBlock, passingFailing, ruleName) => {
+      /**
+       * @param {string} _assertionsBlock
+       * @param {string} passingFailing
+       * @param {string} ruleName
+       * @returns {string}
+       */
+      (_assertionsBlock, passingFailing, ruleName) => {
         const ruleAssertions = assertions[ruleName];
 
         if (!ruleAssertions) {
@@ -164,10 +187,13 @@ const generateDocs = async () => {
   });
 };
 
+/**
+ * @returns {string[]}
+ */
 const getDocPaths = () => {
   const basePath = path.join(__dirname, '..', '..', '.README');
   const writeBasePath = path.join(__dirname, '..', '..', 'docs');
-  const docPaths = fs.readdirSync(basePath).flatMap((docFile) => {
+  const docPaths = /** @type {string[]} */ (fs.readdirSync(basePath).flatMap((docFile) => {
     if (extraFiles.includes(docFile)) {
       // Will get path separately below
       return null;
@@ -190,7 +216,7 @@ const getDocPaths = () => {
     return null;
   }).filter((file) => {
     return file;
-  });
+  }));
 
   return [
     ...docPaths,
@@ -232,7 +258,7 @@ const assertDocsAreUpToDate = async () => {
     const isUpToDate = fs.readFileSync(docPath, 'utf8') === docContent;
 
     if (!isUpToDate) {
-      throw new Error('Readme is not up to date, please run `npm run create-readme` to update it.');
+      throw new Error('Readme is not up to date, please run `npm run create-docs` to update it.');
     }
   }
 };
