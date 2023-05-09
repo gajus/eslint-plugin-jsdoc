@@ -37,6 +37,8 @@
     "unicorn/no-unsafe-regex": 0,
     "unicorn/prefer-array-some": 0,
     "unicorn/prevent-abbreviations": 0,
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "no-inline-comments": 0,
+    "no-extra-parens": 0
   }
 }

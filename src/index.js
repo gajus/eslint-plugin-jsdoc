@@ -52,7 +52,12 @@ import textEscaping from './rules/textEscaping';
 import validTypes from './rules/validTypes';
 
 const index = {
+  /* eslint-disable jsdoc/no-undefined-types -- Bug */
+  /**
+   * @type {Record<string, import('eslint').ESLint.ConfigData<import('eslint').Linter.RulesRecord>>}
+   */
   configs: {},
+  /* eslint-enable jsdoc/no-undefined-types -- Bug */
   rules: {
     'check-access': checkAccess,
     'check-alignment': checkAlignment,
@@ -109,6 +114,10 @@ const index = {
   },
 };
 
+/**
+ * @param {"warn"|"error"} warnOrError
+ * @returns {import('eslint').ESLint.ConfigData}
+ */
 const createRecommendedRuleset = (warnOrError) => {
   return {
     plugins: [
@@ -171,6 +180,10 @@ const createRecommendedRuleset = (warnOrError) => {
   };
 };
 
+/**
+ * @param {"warn"|"error"} warnOrError
+ * @returns {import('eslint').ESLint.ConfigData}
+ */
 const createRecommendedTypeScriptRuleset = (warnOrError) => {
   const ruleset = createRecommendedRuleset(warnOrError);
 

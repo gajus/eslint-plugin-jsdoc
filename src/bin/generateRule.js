@@ -18,7 +18,8 @@ import {
 import camelCase from 'camelcase';
 import open from 'open-editor';
 
-// Todo: Would ideally have prompts, e.g., to ask for whether type was problem/layout, etc.
+// Todo: Would ideally have prompts, e.g., to ask for whether
+//   type was problem/layout, etc.
 
 const [
   , , ruleName,
@@ -133,6 +134,15 @@ export default iterateJsdoc(({
     await fs.writeFile(ruleReadmePath, ruleReadmeTemplate);
   }
 
+  /**
+   * @param {object} cfg
+   * @param {string} cfg.path
+   * @param {RegExp} cfg.oldRegex
+   * @param {string} cfg.checkName
+   * @param {string} cfg.newLine
+   * @param {boolean} [cfg.oldIsCamel]
+   * @returns {Promise<void>}
+   */
   const replaceInOrder = async ({
     path,
     oldRegex,
@@ -140,11 +150,33 @@ export default iterateJsdoc(({
     newLine,
     oldIsCamel,
   }) => {
+    /**
+     * @typedef {number} Integer
+     */
+    /**
+     * @typedef {{
+     *   matchedLine: string,
+     *   offset: Integer,
+     *   oldRule: string,
+     * }} OffsetInfo
+     */
+    /**
+     * @type {OffsetInfo[]}
+     */
     const offsets = [];
 
     let readme = await fs.readFile(path, 'utf8');
     readme.replace(
       oldRegex,
+      /**
+       * @param {string} matchedLine
+       * @param {string} n1
+       * @param {Integer} offset
+       * @param {string} str
+       * @param {object} groups
+       * @param {string} groups.oldRule
+       * @returns {string}
+       */
       (matchedLine, n1, offset, str, {
         oldRule,
       }) => {
@@ -153,6 +185,8 @@ export default iterateJsdoc(({
           offset,
           oldRule,
         });
+
+        return matchedLine;
       },
     );
 
@@ -161,7 +195,6 @@ export default iterateJsdoc(({
     }, {
       oldRule: oldRuleB,
     }) => {
-      // eslint-disable-next-line no-extra-parens
       return oldRule < oldRuleB ? -1 : (oldRule > oldRuleB ? 1 : 0);
     });
 
@@ -183,7 +216,7 @@ export default iterateJsdoc(({
     }
 
     if (!item) {
-      item = offsets.pop();
+      item = /** @type {OffsetInfo} */ (offsets.pop());
       item.offset += item.matchedLine.length;
     }
 
@@ -200,12 +233,12 @@ export default iterateJsdoc(({
     }
   };
 
-  await replaceInOrder({
-    checkName: 'README',
-    newLine: `{"gitdown": "include", "file": "./rules/${ruleName}.md"}`,
-    oldRegex: /\n\{"gitdown": "include", "file": ".\/rules\/(?<oldRule>[^.]*).md"\}/gu,
-    path: './.README/README.md',
-  });
+  // await replaceInOrder({
+  //   checkName: 'README',
+  //   newLine: `{"gitdown": "include", "file": "./rules/${ruleName}.md"}`,
+  //   oldRegex: /\n\{"gitdown": "include", "file": ".\/rules\/(?<oldRule>[^.]*).md"\}/gu,
+  //   path: './.README/README.md',
+  // });
 
   await replaceInOrder({
     checkName: 'index import',
@@ -229,7 +262,7 @@ export default iterateJsdoc(({
     path: './src/index.js',
   });
 
-  await import('./generateReadme.js');
+  await import('./generateDocs.js');
 
   /*
   console.log('Paths to open for further editing\n');
