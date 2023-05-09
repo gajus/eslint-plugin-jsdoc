@@ -846,5 +846,9 @@ function quux() {
 
 }
 // Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @returns {Promise<{publicKey, privateKey}>} - The public and private key
+ */
 ````
 
