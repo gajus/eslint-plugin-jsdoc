@@ -1783,5 +1783,12 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * @returns {Promise<{publicKey, privateKey}>} - The public and private key
+       */
+      `,
+    },
   ],
 };

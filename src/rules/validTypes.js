@@ -164,8 +164,8 @@ export default iterateJsdoc(({
 
           if (
             (typ === 'JsdocTypeObjectField' || typ === 'JsdocTypeKeyValue') &&
-            node.right.type === 'JsdocTypeNullable' &&
-            node.right.meta.position === 'suffix'
+            node.right?.type === 'JsdocTypeNullable' &&
+            node.right?.meta?.position === 'suffix'
           ) {
             report(`Syntax error in type: ${node.right.type}`, null, tag);
           }
