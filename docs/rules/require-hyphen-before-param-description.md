@@ -170,6 +170,29 @@ function quux () {
 }
 // "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"returns":"never"}}]
 // Message: There must be a hyphen before @param description.
+
+/**
+ * Split a unit to metric prefix and basic unit.
+ *
+ * @param {string} unit - Unit to split.
+ * @param {string} [basicUnit] - Basic unit regardless of the metric prefix.
+ *     If omitted, basic unit will be inferred by trying to remove the metric
+ *     prefix in `unit`.
+ *
+ * @returns {{ prefix: string, basicUnit: string }} - Split result.
+ *     If `unit` does not have a metric prefix, `''` is returned for `prefix`.
+ *     If `unit` does not have a basic unit, `''` is returned for `basicUnit`.
+ */
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"*":"never","property":"always"}}]
+// Message: There must be no hyphen before @returns description.
+
+/**
+ * @returns {{
+ *   prefix: string, basicUnit: string
+ * }} - Split result.
+ */
+// "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"*":"never","property":"always"}}]
+// Message: There must be no hyphen before @returns description.
 ````
 
 

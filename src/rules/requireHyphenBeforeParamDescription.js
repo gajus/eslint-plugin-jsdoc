@@ -42,17 +42,36 @@ export default iterateJsdoc(({
         }, jsdocTag);
       }
     } else if (startsWithHyphen) {
-      report(`There must be no hyphen before @${targetTagName} description.`, (fixer) => {
-        const [
-          unwantedPart,
-        ] = /^\s*-\s*/u.exec(desc);
+      let lines = 0;
+      for (const {
+        tokens,
+      } of jsdocTag.source) {
+        if (tokens.description) {
+          break;
+        }
 
-        const replacement = sourceCode
-          .getText(jsdocNode)
-          .replace(desc, desc.slice(unwantedPart.length));
+        lines++;
+      }
 
-        return fixer.replaceText(jsdocNode, replacement);
-      }, jsdocTag);
+      utils.reportJSDoc(
+        `There must be no hyphen before @${targetTagName} description.`,
+        {
+          line: jsdocTag.source[0].number + lines,
+        },
+        () => {
+          for (const {
+            tokens,
+          } of jsdocTag.source) {
+            if (tokens.description) {
+              tokens.description = tokens.description.replace(
+                /^\s*-\s*/u, '',
+              );
+              break;
+            }
+          }
+        },
+        true,
+      );
     }
   };
 
