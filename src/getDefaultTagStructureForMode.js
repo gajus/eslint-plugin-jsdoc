@@ -43,7 +43,7 @@ const getDefaultTagStructureForMode = (mode) => {
       'alias', new Map([
         // Signature seems to require a "namepath" (and no counter-examples)
         [
-          'namepathRole', 'namepath-referencing',
+          'namepathRole', 'namepath-defining',
         ],
 
         // "namepath"
