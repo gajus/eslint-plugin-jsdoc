@@ -247,20 +247,12 @@ function quux () {}
 // Message: The type 'SomeType' is undefined.
 
 /**
- * @namepathDefiner SomeType
+ * @namepathReferencing SomeType
  */
 /**
  * @type {SomeType}
  */
-// Settings: {"jsdoc":{"structuredTags":{"namepathDefiner":{"name":"namepath-referencing"}}}}
-// Message: The type 'SomeType' is undefined.
-
-/**
- * @namepathDefiner SomeType
- */
-/**
- * @type {SomeType}
- */
+// Settings: {"jsdoc":{"structuredTags":{"namepathReferencing":{"name":"namepath-referencing"}}}}
 // Message: The type 'SomeType' is undefined.
 
 /**
@@ -745,5 +737,29 @@ function quux(foo, bar) {
 
 }
 // "jsdoc/no-undefined-types": ["error"|"warn", {"disableReporting":true}]
+
+class MyClass {}
+class AnotherClass {}
+
+/**
+ * A description mentioning {@link MyClass} and {@link AnotherClass | another class} and a URL via [this link]{@link https://www.example.com}.
+ */
+function quux(foo) {
+  console.log(foo);
+}
+
+quux(0);
+
+class MyClass {}
+class AnotherClass {}
+
+/**
+ * @see A tag mentioning {@link MyClass} and {@link AnotherClass | another class} and a URL via [this link]{@link https://www.example.com}.
+ */
+function quux(foo) {
+  console.log(foo);
+}
+
+quux(0);
 ````
 

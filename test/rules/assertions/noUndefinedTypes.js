@@ -380,13 +380,17 @@ export default {
     {
       code: `
       /**
-       * @namepathDefiner SomeType
+       * @namepathReferencing SomeType
        */
       /**
        * @type {SomeType}
        */
       `,
       errors: [
+        {
+          line: 3,
+          message: 'The type \'SomeType\' is undefined.',
+        },
         {
           line: 6,
           message: 'The type \'SomeType\' is undefined.',
@@ -395,7 +399,7 @@ export default {
       settings: {
         jsdoc: {
           structuredTags: {
-            namepathDefiner: {
+            namepathReferencing: {
               name: 'namepath-referencing',
             },
           },
@@ -403,9 +407,11 @@ export default {
       },
     },
     {
+      // An unknown tag without any namepath contents declared via settings,
+      // defaults to not having an impact on the type.
       code: `
       /**
-       * @namepathDefiner SomeType
+       * @namepathMentioning SomeType
        */
       /**
        * @type {SomeType}
@@ -417,6 +423,7 @@ export default {
           message: 'The type \'SomeType\' is undefined.',
         },
       ],
+      ignoreReadme: true,
     },
     {
       code: `
@@ -1322,6 +1329,42 @@ export default {
       ],
       parserOptions: {
         sourceType: 'module',
+      },
+    },
+    {
+      code: `
+          class MyClass {}
+          class AnotherClass {}
+
+          /**
+           * A description mentioning {@link MyClass} and {@link AnotherClass | another class} and a URL via [this link]{@link https://www.example.com}.
+           */
+          function quux(foo) {
+            console.log(foo);
+          }
+
+          quux(0);
+      `,
+      rules: {
+        'no-unused-vars': 'error',
+      },
+    },
+    {
+      code: `
+          class MyClass {}
+          class AnotherClass {}
+
+          /**
+           * @see A tag mentioning {@link MyClass} and {@link AnotherClass | another class} and a URL via [this link]{@link https://www.example.com}.
+           */
+          function quux(foo) {
+            console.log(foo);
+          }
+
+          quux(0);
+      `,
+      rules: {
+        'no-unused-vars': 'error',
       },
     },
   ],

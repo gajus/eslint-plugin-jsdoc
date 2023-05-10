@@ -186,22 +186,51 @@ export default iterateJsdoc(({
         ],
     ));
 
-  const jsdocTagsWithPossibleType = utils.filterTags(({
+  const tagToParsedType = (propertyName) => {
+    return (tag) => {
+      try {
+        const potentialType = tag[propertyName];
+        return {
+          parsedType: mode === 'permissive' ? tryParseType(potentialType) : parseType(potentialType, mode),
+          tag,
+        };
+      } catch {
+        return undefined;
+      }
+    };
+  };
+
+  const typeTags = utils.filterTags(({
     tag,
   }) => {
     return utils.tagMightHaveTypePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
+  }).map(tagToParsedType('type'));
+
+  const namepathReferencingTags = utils.filterTags(({
+    tag,
+  }) => {
+    return utils.isNamepathReferencingTag(tag);
+  }).map(tagToParsedType('name'));
+
+  const namepathOrUrlReferencingTags = utils.filterTags(({
+    tag,
+  }) => {
+    return utils.isNamepathOrUrlReferencingTag(tag);
+  }, true).map(tagToParsedType('namepathOrURL'));
+
+  const tagsWithTypes = [
+    ...typeTags,
+    ...namepathReferencingTags,
+    ...namepathOrUrlReferencingTags,
+  ].filter((result) => {
+    // Remove types which failed to parse
+    return result;
   });
 
-  for (const tag of jsdocTagsWithPossibleType) {
-    let parsedType;
-
-    try {
-      parsedType = mode === 'permissive' ? tryParseType(tag.type) : parseType(tag.type, mode);
-    } catch {
-      // On syntax error, will be handled by valid-types.
-      continue;
-    }
-
+  for (const {
+    tag,
+    parsedType,
+  } of tagsWithTypes) {
     traverse(parsedType, ({
       type,
       value,

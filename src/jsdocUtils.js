@@ -453,6 +453,22 @@ const hasTag = (jsdoc, targetTagName) => {
 };
 
 /**
+ * Get all tags, inline tags and inline tags in tags
+ *
+ * @param {object} jsdoc
+ * @returns {Array}
+ */
+const getAllTags = (jsdoc, includeInlineTags) => {
+  return includeInlineTags ? [
+    ...jsdoc.tags,
+    ...jsdoc.inlineTags,
+    ...jsdoc.tags.flatMap((tag) => {
+      return tag.inlineTags;
+    }),
+  ] : jsdoc.tags;
+};
+
+/**
  * @param {object} jsdoc
  * @param {Array} targetTagNames
  * @returns {boolean}
@@ -544,7 +560,7 @@ const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
   ] of Object.entries(structuredTags)) {
     const tagStruct = ensureMap(tagMap, tag);
 
-    tagStruct.set('nameContents', name);
+    tagStruct.set('namepathRole', name);
     tagStruct.set('typeAllowed', type);
 
     const requiredName = required.includes('name');
@@ -599,7 +615,27 @@ const getTagStructureForMode = (mode, structuredTags) => {
 const isNamepathDefiningTag = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  return tagStruct.get('nameContents') === 'namepath-defining';
+  return tagStruct.get('namepathRole') === 'namepath-defining';
+};
+
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
+const isNamepathReferencingTag = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
+  return tagStruct.get('namepathRole') === 'namepath-referencing';
+};
+
+/**
+ * @param tag
+ * @param {Map} tagMap
+ * @returns {boolean}
+ */
+const isNamepathOrUrlReferencingTag = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
+  return tagStruct.get('namepathRole') === 'namepath-or-url-referencing';
 };
 
 /**
@@ -642,7 +678,7 @@ const namepathTypes = new Set([
 const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  const ret = tagStruct.get('nameContents');
+  const ret = tagStruct.get('namepathRole');
 
   return ret === undefined ? true : Boolean(ret);
 };
@@ -655,7 +691,7 @@ const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
 const tagMightHaveNamepath = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  return namepathTypes.has(tagStruct.get('nameContents'));
+  return namepathTypes.has(tagStruct.get('namepathRole'));
 };
 
 /**
@@ -1232,6 +1268,7 @@ export default {
   exemptSpeciaMethods,
   filterTags,
   flattenRoots,
+  getAllTags,
   getContextObject,
   getFunctionParameterNames,
   getIndent,
@@ -1250,6 +1287,8 @@ export default {
   isConstructor,
   isGetter,
   isNamepathDefiningTag,
+  isNamepathOrUrlReferencingTag,
+  isNamepathReferencingTag,
   isSetter,
   isValidTag,
   mayBeUndefinedTypeTag,
@@ -1257,6 +1296,7 @@ export default {
   parseClosureTemplateTag,
   pathDoesNotBeginWith,
   setTagStructure,
+  tagMightHaveEitherTypeOrNamePosition,
   tagMightHaveNamepath,
   tagMightHaveNamePosition,
   tagMightHaveTypePosition,
