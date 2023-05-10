@@ -205,6 +205,7 @@ const getOptions = (context, settings) => {
   };
 };
 
+/** @type {import('eslint').Rule.RuleModule} */
 export default {
   create (context) {
     const sourceCode = context.getSourceCode();

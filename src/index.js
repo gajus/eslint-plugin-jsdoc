@@ -51,13 +51,11 @@ import tagLines from './rules/tagLines';
 import textEscaping from './rules/textEscaping';
 import validTypes from './rules/validTypes';
 
+/**
+ * @type {import('eslint').ESLint.Plugin}
+ */
 const index = {
-  /* eslint-disable jsdoc/no-undefined-types -- Bug */
-  /**
-   * @type {Record<string, import('eslint').ESLint.ConfigData<import('eslint').Linter.RulesRecord>>}
-   */
   configs: {},
-  /* eslint-enable jsdoc/no-undefined-types -- Bug */
   rules: {
     'check-access': checkAccess,
     'check-alignment': checkAlignment,
@@ -205,6 +203,11 @@ const createRecommendedTypeScriptRuleset = (warnOrError) => {
     },
   };
 };
+
+/* istanbul ignore if -- TS */
+if (!index.configs) {
+  throw new Error('TypeScript guard');
+}
 
 index.configs.recommended = createRecommendedRuleset('warn');
 index.configs['recommended-error'] = createRecommendedRuleset('error');

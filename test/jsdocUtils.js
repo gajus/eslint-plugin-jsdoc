@@ -71,7 +71,7 @@ describe('jsdocUtils', () => {
   describe('mayBeUndefinedTypeTag()', () => {
     context('Missing tag', () => {
       it('should return `false` with a missing tag', () => {
-        expect(jsdocUtils.mayBeUndefinedTypeTag(null)).to.equal(true);
+        expect(jsdocUtils.mayBeUndefinedTypeTag(null, 'permissive')).to.equal(true);
       });
     });
   });

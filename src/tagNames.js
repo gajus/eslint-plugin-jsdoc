@@ -1,3 +1,14 @@
+/* eslint-disable jsdoc/valid-types -- Old version */
+/**
+ * @typedef {{
+ *   [key: string]: string[]
+ * }} AliasedTags
+ */
+/* eslint-enable jsdoc/valid-types -- Old version */
+
+/**
+ * @type {AliasedTags}
+ */
 const jsdocTagsUndocumented = {
   // Undocumented but present; see
   // https://github.com/jsdoc/jsdoc/issues/1283#issuecomment-516816802
@@ -5,6 +16,9 @@ const jsdocTagsUndocumented = {
   modifies: [],
 };
 
+/**
+ * @type {AliasedTags}
+ */
 const jsdocTags = {
   ...jsdocTagsUndocumented,
   abstract: [
@@ -118,6 +132,9 @@ const jsdocTags = {
   ],
 };
 
+/**
+ * @type {AliasedTags}
+ */
 const typeScriptTags = {
   ...jsdocTags,
 
@@ -135,6 +152,9 @@ const typeScriptTags = {
   template: [],
 };
 
+/**
+ * @type {AliasedTags}
+ */
 const undocumentedClosureTags = {
   // These are in Closure source but not in jsdoc source nor in the Closure
   //  docs: https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/parsing/Annotation.java
@@ -165,6 +185,9 @@ const {
   ...typeScriptTagsInClosure
 } = typeScriptTags;
 
+/**
+ * @type {AliasedTags}
+ */
 const closureTags = {
   ...typeScriptTagsInClosure,
   ...undocumentedClosureTags,

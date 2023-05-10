@@ -2,8 +2,12 @@ import {
   jsdocTags,
   typeScriptTags,
   closureTags,
-} from '../../../src/tagNames';
+} from '../../../src/tagNames.js';
 
+/**
+ * @param {import('../../../src/tagNames.js').AliasedTags} tags
+ * @returns {string}
+ */
 const buildTagBlock = (tags) => {
   return '/** \n * @' + Object.keys(tags).map((tagName, idx) => {
     return (idx === 0 ? '' : '\n * @') + tagName;
@@ -11,8 +15,18 @@ const buildTagBlock = (tags) => {
     .join('') + '\n */';
 };
 
+/**
+ * @typedef {number} Integer
+ */
+
+/**
+ * @param {string} code
+ * @returns {Integer}
+ */
 const lineCount = (code) => {
-  return code.match(/\n/ug).length;
+  /* eslint-disable jsdoc/no-undefined-types -- TS */
+  return /** @type {RegExpMatchArray} */ (code.match(/\n/ug)).length;
+  /* eslint-enable jsdoc/no-undefined-types -- TS */
 };
 
 // We avoid testing all closure tags as too many

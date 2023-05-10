@@ -19,17 +19,39 @@ import {
  * @typedef {"jsdoc"|"typescript"|"closure"} ParserMode
  */
 
+/**
+ * @type {import('./getDefaultTagStructureForMode.js').TagStructure}
+ */
 let tagStructure;
 
+/**
+ * @param {ParserMode|"permissive"} mode
+ * @returns {void}
+ */
 const setTagStructure = (mode) => {
   tagStructure = getDefaultTagStructureForMode(mode);
 };
 
-// Given a nested array of property names, reduce them to a single array,
-// appending the name of the root element along the way if present.
+/**
+ * Given a nested array of property names, reduce them to a single array,
+ *   appending the name of the root element along the way if present.
+ *
+ * @param {} params
+ * @param {string} root
+ * @returns {{
+ *   hasPropertyRest: boolean,
+ *   hasRestElement: boolean,
+ *   names,
+ *   rests: boolean[],
+ * }}
+ */
 const flattenRoots = (params, root = '') => {
   let hasRestElement = false;
   let hasPropertyRest = false;
+
+  /**
+   * @type {boolean[]}
+   */
   const rests = [];
 
   const names = params.reduce((acc, cur) => {
@@ -122,7 +144,7 @@ const getPropertiesFromPropertySignature = (propSignature) => {
 
 /**
  * @param {object} functionNode
- * @param {boolean} checkDefaultObjects
+ * @param {boolean} [checkDefaultObjects]
  * @returns {Array}
  */
 const getFunctionParameterNames = (
@@ -484,7 +506,7 @@ const hasATag = (jsdoc, targetTagNames) => {
  *
  * @param {JsDocTag} tag
  *   the tag which should be checked.
- * @param {"jsdoc"|"closure"|"typescript"} mode
+ * @param {ParserMode|"permissive"} mode
  * @returns {boolean}
  *   true in case a defined type is undeclared; otherwise false.
  */
