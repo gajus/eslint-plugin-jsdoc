@@ -187,6 +187,11 @@ See [Advanced](./docs/advanced.md#readme).
 
 Problems reported by rules which have a wrench :wrench: below can be fixed automatically by running ESLint on the command line with `--fix` option.
 
+Note that a number of fixable rules have an `enableFixer` option which can
+be set to `false` to disable the fixer (or in the case of `check-param-names`,
+`check-property-names`, and `no-blank-blocks`, set to `true` to enable a
+non-default-recommended fixer).
+
 |recommended|fixable|rule|description|
 |-|-|-|-|
 |:heavy_check_mark:|| [check-access](./docs/rules/check-access.md#readme) | Enforces valid `@access` tags|
