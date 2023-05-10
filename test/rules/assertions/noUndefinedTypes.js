@@ -407,7 +407,7 @@ export default {
       },
     },
     {
-      // An unknown tag without an namepath contents declared via settings,
+      // An unknown tag without any namepath contents declared via settings,
       // defaults to not having an impact on the type.
       code: `
       /**
