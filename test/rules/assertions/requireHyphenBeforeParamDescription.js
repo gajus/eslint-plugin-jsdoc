@@ -371,7 +371,82 @@ export default {
           }
       `,
     },
-
+    {
+      code: `
+      /**
+       * Split a unit to metric prefix and basic unit.
+       *
+       * @param {string} unit - Unit to split.
+       * @param {string} [basicUnit] - Basic unit regardless of the metric prefix.
+       *     If omitted, basic unit will be inferred by trying to remove the metric
+       *     prefix in \`unit\`.
+       *
+       * @returns {{ prefix: string, basicUnit: string }} - Split result.
+       *     If \`unit\` does not have a metric prefix, \`''\` is returned for \`prefix\`.
+       *     If \`unit\` does not have a basic unit, \`''\` is returned for \`basicUnit\`.
+       */
+      `,
+      errors: [
+        {
+          line: 10,
+          message: 'There must be no hyphen before @returns description.',
+        },
+      ],
+      options: [
+        'always',
+        {
+          tags: {
+            '*': 'never',
+            property: 'always',
+          },
+        },
+      ],
+      output: `
+      /**
+       * Split a unit to metric prefix and basic unit.
+       *
+       * @param {string} unit - Unit to split.
+       * @param {string} [basicUnit] - Basic unit regardless of the metric prefix.
+       *     If omitted, basic unit will be inferred by trying to remove the metric
+       *     prefix in \`unit\`.
+       *
+       * @returns {{ prefix: string, basicUnit: string }} Split result.
+       *     If \`unit\` does not have a metric prefix, \`''\` is returned for \`prefix\`.
+       *     If \`unit\` does not have a basic unit, \`''\` is returned for \`basicUnit\`.
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * @returns {{
+       *   prefix: string, basicUnit: string
+       * }} - Split result.
+       */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'There must be no hyphen before @returns description.',
+        },
+      ],
+      options: [
+        'always',
+        {
+          tags: {
+            '*': 'never',
+            property: 'always',
+          },
+        },
+      ],
+      output: `
+      /**
+       * @returns {{
+       *   prefix: string, basicUnit: string
+       * }} Split result.
+       */
+      `,
+    },
   ],
   valid: [
     {
