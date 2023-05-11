@@ -1,3 +1,11 @@
+import {
+  readFileSync,
+} from 'fs';
+import {
+  // dirname,
+  join,
+} from 'path';
+// import {fileURLToPath} from 'url';
 import camelCase from 'camelcase';
 import {
   ESLint,
@@ -6,8 +14,9 @@ import {
 import pkg from 'eslint/use-at-your-own-risk';
 import defaultsDeep from 'lodash.defaultsdeep';
 import semver from 'semver';
-import config from '../../src';
-import ruleNames from './ruleNames.json';
+import config from '../../src/index.js';
+
+// const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const ruleTester = new RuleTester();
 const {
@@ -15,6 +24,12 @@ const {
 } = pkg;
 
 const main = async () => {
+  const ruleNames = JSON.parse(readFileSync(join(__dirname, './ruleNames.json'), 'utf8'));
+
+  if (!config.rules) {
+    throw new Error('TypeScript guard');
+  }
+
   for (const ruleName of process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : ruleNames) {
     if (semver.gte(ESLint.version, '8.0.0') && ruleName === 'check-examples') {
       // TODO: This rule cannot yet be supported for ESLint 8;
@@ -22,13 +37,22 @@ const main = async () => {
       continue;
     }
 
-    const rule = config.rules[ruleName];
+    const rule = /** @type {import('eslint').Rule.RuleModule} */ (
+      config.rules[ruleName]
+    );
 
     const parserOptions = {
       ecmaVersion: 6,
     };
 
     // Catch syntax errors
+
+    /**
+     * @type {{
+     *   invalid: import('eslint').RuleTester.InvalidTestCase[],
+     *   valid: import('eslint').RuleTester.ValidTestCase[]
+     * }}
+     */
     let assertions;
     try {
       assertions = (await import(`./assertions/${camelCase(ruleName)}`)).default;
@@ -38,7 +62,7 @@ const main = async () => {
       return;
     }
 
-    if (!('meta' in rule && 'schema' in rule.meta) && (
+    if (!(rule.meta && 'schema' in rule.meta) && (
       assertions.invalid.some((item) => {
         return item.options;
       }) ||
@@ -56,7 +80,9 @@ const main = async () => {
     assertions.invalid = assertions.invalid.map((assertion) => {
       Reflect.deleteProperty(assertion, 'ignoreReadme');
       assertion.parserOptions = defaultsDeep(assertion.parserOptions, parserOptions);
-      for (const error of assertion.errors) {
+      for (const error of /** @type {import('eslint').RuleTester.TestCaseError[]} */ (
+        assertion.errors
+      )) {
         if (!('line' in error)) {
           count++;
         }
@@ -83,10 +109,12 @@ const main = async () => {
 
     assertions.valid = assertions.valid.map((assertion) => {
       Reflect.deleteProperty(assertion, 'ignoreReadme');
+      // @ts-expect-error Bad valid format
       if (assertion.errors) {
         throw new Error(`Valid assertions for rule ${ruleName} should not have an \`errors\` array.`);
       }
 
+      // @ts-expect-error Bad valid format
       if (assertion.output) {
         throw new Error(`Valid assertions for rule ${ruleName} should not have an \`output\` property.`);
       }

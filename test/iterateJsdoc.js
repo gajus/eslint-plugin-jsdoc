@@ -12,6 +12,7 @@ describe('iterateJsdoc', () => {
     context('options', () => {
       it('throws with missing options', () => {
         expect(() => {
+          // @ts-expect-error Bad arguments
           iterateJsdoc(() => {});
         }).to.throw(TypeError);
       });
@@ -21,6 +22,7 @@ describe('iterateJsdoc', () => {
         context('Invalid iterator', () => {
           it('throws with missing function', () => {
             expect(() => {
+              // @ts-expect-error Bad argument
               iterateJsdoc(undefined, {
                 meta: {
                   type: 'suggestion',
@@ -30,6 +32,7 @@ describe('iterateJsdoc', () => {
           });
           it('throws with object missing `returns` method', () => {
             expect(() => {
+              // @ts-expect-error Bad argument
               iterateJsdoc({}, {
                 meta: {
                   type: 'suggestion',
@@ -41,6 +44,7 @@ describe('iterateJsdoc', () => {
         context('Invalid options', () => {
           it('throws with missing meta', () => {
             expect(() => {
+              // @ts-expect-error Bad argument
               iterateJsdoc(() => {}, {});
             }).to.throw(TypeError);
           });

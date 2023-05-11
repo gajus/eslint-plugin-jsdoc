@@ -1,3 +1,10 @@
+/**
+ * @typedef {Map<string, Map<string, (string|boolean)>>} TagStructure
+ */
+/**
+ * @param {"permissive"|"jsdoc"|"closure"|"typescript"} mode
+ * @returns {TagStructure}
+ */
 const getDefaultTagStructureForMode = (mode) => {
   const isJsdoc = mode === 'jsdoc';
   const isClosure = mode === 'closure';
@@ -34,13 +41,15 @@ const getDefaultTagStructureForMode = (mode) => {
   // Todo: Should support special processing for "name" as distinct from
   //   "namepath" (e.g., param can't define a namepath)
 
-  // Once checking inline tags:
   // Todo: Should support a `tutorialID` type (for `@tutorial` block and
   //  inline)
 
+  /**
+   * @type {TagStructure}
+   */
   return new Map([
     [
-      'alias', new Map([
+      'alias', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "namepath" (and no counter-examples)
         [
           'namepathRole', 'namepath-defining',
@@ -50,11 +59,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'arg', new Map([
+      'arg', new Map(/** @type {[string, string|boolean][]} */ ([
         [
           'namepathRole', 'namepath-defining',
         ],
@@ -69,11 +78,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'argument', new Map([
+      'argument', new Map(/** @type {[string, string|boolean][]} */ ([
         [
           'namepathRole', 'namepath-defining',
         ],
@@ -88,11 +97,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'augments', new Map([
+      'augments', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "namepath" (and no counter-examples)
         [
           'namepathRole', 'namepath-referencing',
@@ -107,11 +116,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'borrows', new Map([
+      'borrows', new Map(/** @type {[string, string|boolean][]} */ ([
         // `borrows` has a different format, however, so needs special parsing;
         //   seems to require both, and as "namepath"'s
         [
@@ -122,11 +131,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'callback', new Map([
+      'callback', new Map(/** @type {[string, string|boolean][]} */ ([
         // Seems to require a "namepath" in the signature (with no
         //   counter-examples); TypeScript does not enforce but seems
         //   problematic as not attached so presumably not useable without it
@@ -138,11 +147,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'nameRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'class', new Map([
+      'class', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
@@ -156,11 +165,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'const', new Map([
+      'const', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
@@ -169,10 +178,10 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
     [
-      'constant', new Map([
+      'constant', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
@@ -181,10 +190,10 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
     [
-      'constructor', new Map([
+      'constructor', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
@@ -193,11 +202,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'constructs', new Map([
+      'constructs', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
@@ -210,19 +219,19 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'define', new Map([
+      'define', new Map(/** @type {[string, string|boolean][]} */ ([
         [
           'typeRequired', isClosure,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'emits', new Map([
+      'emits', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "name" (of an event) and no counter-examples
         [
           'namepathRole', 'namepath-referencing',
@@ -235,20 +244,20 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'enum', new Map([
+      'enum', new Map(/** @type {[string, string|boolean][]} */ ([
         // Has example showing curly brackets but not in doc signature
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'event', new Map([
+      'event', new Map(/** @type {[string, string|boolean][]} */ ([
         // The doc signature of `event` seems to require a "name"
         [
           'nameRequired', true,
@@ -260,29 +269,29 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'namepathRole', 'namepath-defining',
         ],
-      ]),
+      ])),
     ],
 
     [
-      'exception', new Map([
+      'exception', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows curly brackets in the signature and in the examples
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     // Closure
     [
-      'export', new Map([
+      'export', new Map(/** @type {[string, string|boolean][]} */ ([
         [
           'typeAllowed', isClosureOrPermissive,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'exports', new Map([
+      'exports', new Map(/** @type {[string, string|boolean][]} */ ([
         [
           'namepathRole', 'namepath-defining',
         ],
@@ -294,11 +303,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', isClosureOrPermissive,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'extends', new Map([
+      'extends', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "namepath" (and no counter-examples)
         [
           'namepathRole', 'namepath-referencing',
@@ -317,11 +326,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', isTypescriptOrClosure || isPermissive,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'external', new Map([
+      'external', new Map(/** @type {[string, string|boolean][]} */ ([
         // Appears to require a "name" in its signature, albeit somewhat
         //  different from other "name"'s (including as described
         //  at https://jsdoc.app/about-namepaths.html )
@@ -337,11 +346,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'fires', new Map([
+      'fires', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "name" (of an event) and no
         //  counter-examples
         [
@@ -355,11 +364,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'function', new Map([
+      'function', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
@@ -372,19 +381,19 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
     [
-      'func', new Map([
+      'func', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
         ],
-      ]),
+      ])),
     ],
 
     [
-      'host', new Map([
+      'host', new Map(/** @type {[string, string|boolean][]} */ ([
         // Appears to require a "name" in its signature, albeit somewhat
         //  different from other "name"'s (including as described
         //  at https://jsdoc.app/about-namepaths.html )
@@ -400,11 +409,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'interface', new Map([
+      'interface', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name" in signature, but indicates as optional
         [
           'namepathRole',
@@ -419,11 +428,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'internal', new Map([
+      'internal', new Map(/** @type {[string, string|boolean][]} */ ([
         // https://www.typescriptlang.org/tsconfig/#stripInternal
         [
           'namepathRole', false,
@@ -432,21 +441,21 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'nameAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'implements', new Map([
+      'implements', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows curly brackets in the doc signature and examples
         // "typeExpression"
         [
           'typeRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'lends', new Map([
+      'lends', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "namepath" (and no counter-examples)
         [
           'namepathRole', 'namepath-referencing',
@@ -456,41 +465,41 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'link', new Map([
+      'link', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a namepath OR URL and might be checked as such.
         [
           'namepathRole', 'namepath-or-url-referencing',
         ],
 
-      ]),
+      ])),
     ],
 
     [
-      'linkcode', new Map([
+      'linkcode', new Map(/** @type {[string, string|boolean][]} */ ([
         // Synonym for "link"
         // Signature seems to require a namepath OR URL and might be checked as such.
         [
           'namepathRole', 'namepath-or-url-referencing',
         ],
-      ]),
+      ])),
     ],
 
     [
-      'linkplain', new Map([
+      'linkplain', new Map(/** @type {[string, string|boolean][]} */ ([
         // Synonym for "link"
         // Signature seems to require a namepath OR URL and might be checked as such.
         [
           'namepathRole', 'namepath-or-url-referencing',
         ],
-      ]),
+      ])),
     ],
 
     [
-      'listens', new Map([
+      'listens', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "name" (of an event) and no
         //  counter-examples
         [
@@ -504,11 +513,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'member', new Map([
+      'member', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
@@ -518,11 +527,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'memberof', new Map([
+      'memberof', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "namepath" (and no counter-examples),
         //  though it allows an incomplete namepath ending with connecting symbol
         [
@@ -533,10 +542,10 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', true,
         ],
-      ]),
+      ])),
     ],
     [
-      'memberof!', new Map([
+      'memberof!', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "namepath" (and no counter-examples),
         //  though it allows an incomplete namepath ending with connecting symbol
         [
@@ -547,19 +556,19 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'method', new Map([
+      'method', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
         ],
-      ]),
+      ])),
     ],
     [
-      'mixes', new Map([
+      'mixes', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "OtherObjectPath" with no
         //   counter-examples
         [
@@ -570,11 +579,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'mixin', new Map([
+      'mixin', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
@@ -587,22 +596,22 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'modifies', new Map([
+      'modifies', new Map(/** @type {[string, string|boolean][]} */ ([
         // Has no documentation, but test example has curly brackets, and
         //  "name" would be suggested rather than "namepath" based on example;
         //  not sure if name is required
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'module', new Map([
+      'module', new Map(/** @type {[string, string|boolean][]} */ ([
         // Optional "name" and no curly brackets
         //  this block impacts `no-undefined-types` and `valid-types` (search for
         //  "isNamepathDefiningTag|tagMightHaveNamepath|tagMightHaveEitherTypeOrNamePosition")
@@ -614,11 +623,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'name', new Map([
+      'name', new Map(/** @type {[string, string|boolean][]} */ ([
         // Seems to require a "namepath" in the signature (with no
         //   counter-examples)
         [
@@ -634,11 +643,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'namespace', new Map([
+      'namespace', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
@@ -648,20 +657,20 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
     [
-      'package', new Map([
+      'package', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows the signature with curly brackets but not in the example
         // "typeExpression"
         [
           'typeAllowed', isClosureOrPermissive,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'param', new Map([
+      'param', new Map(/** @type {[string, string|boolean][]} */ ([
         [
           'namepathRole', 'namepath-defining',
         ],
@@ -679,21 +688,21 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'private', new Map([
+      'private', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows the signature with curly brackets but not in the example
         // "typeExpression"
         [
           'typeAllowed', isClosureOrPermissive,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'prop', new Map([
+      'prop', new Map(/** @type {[string, string|boolean][]} */ ([
         [
           'namepathRole', 'namepath-defining',
         ],
@@ -708,11 +717,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'property', new Map([
+      'property', new Map(/** @type {[string, string|boolean][]} */ ([
         [
           'namepathRole', 'namepath-defining',
         ],
@@ -728,30 +737,30 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'protected', new Map([
+      'protected', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows the signature with curly brackets but not in the example
         // "typeExpression"
         [
           'typeAllowed', isClosureOrPermissive,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'public', new Map([
+      'public', new Map(/** @type {[string, string|boolean][]} */ ([
         // Does not show a signature nor show curly brackets in the example
         [
           'typeAllowed', isClosureOrPermissive,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'requires', new Map([
+      'requires', new Map(/** @type {[string, string|boolean][]} */ ([
         // <someModuleName>
         [
           'namepathRole', 'namepath-referencing',
@@ -764,67 +773,67 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'returns', new Map([
+      'returns', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows curly brackets in the signature and in the examples
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
     [
-      'return', new Map([
+      'return', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows curly brackets in the signature and in the examples
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'satisfies', new Map([
+      'satisfies', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows curly brackets in the doc signature and examples
         [
           'typeRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'see', new Map([
+      'see', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature allows for "namepath" or text, so user must configure to
         //  'namepath-referencing' to enforce checks
         [
           'namepathRole', 'text',
         ],
-      ]),
+      ])),
     ],
 
     [
-      'static', new Map([
+      'static', new Map(/** @type {[string, string|boolean][]} */ ([
         // Does not show a signature nor show curly brackets in the example
         [
           'typeAllowed', isClosureOrPermissive,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'suppress', new Map([
+      'suppress', new Map(/** @type {[string, string|boolean][]} */ ([
         [
           'namepathRole', !isClosure,
         ],
         [
           'typeRequired', isClosure,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'template', new Map([
+      'template', new Map(/** @type {[string, string|boolean][]} */ ([
         [
           'namepathRole', isJsdoc ? 'text' : 'namepath-referencing',
         ],
@@ -835,11 +844,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', isTypescriptOrClosure || isPermissive,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'this', new Map([
+      'this', new Map(/** @type {[string, string|boolean][]} */ ([
         // Signature seems to require a "namepath" (and no counter-examples)
         // Not used with namepath in Closure/TypeScript, however
         [
@@ -854,20 +863,20 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', isJsdoc,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'throws', new Map([
+      'throws', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows curly brackets in the signature and in the examples
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'tutorial', new Map([
+      'tutorial', new Map(/** @type {[string, string|boolean][]} */ ([
         // (a tutorial ID)
         [
           'nameRequired', true,
@@ -876,21 +885,21 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', false,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'type', new Map([
+      'type', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows curly brackets in the doc signature and examples
         // "typeName"
         [
           'typeRequired', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'typedef', new Map([
+      'typedef', new Map(/** @type {[string, string|boolean][]} */ ([
         // Seems to require a "namepath" in the signature (with no
         //  counter-examples)
         [
@@ -917,11 +926,11 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeOrNameRequired', !isTypescript,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'var', new Map([
+      'var', new Map(/** @type {[string, string|boolean][]} */ ([
         // Allows for "name"'s in signature, but indicated as optional
         [
           'namepathRole', 'namepath-defining',
@@ -931,24 +940,24 @@ const getDefaultTagStructureForMode = (mode) => {
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
 
     [
-      'yields', new Map([
+      'yields', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows curly brackets in the signature and in the examples
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
     [
-      'yield', new Map([
+      'yield', new Map(/** @type {[string, string|boolean][]} */ ([
         // Shows curly brackets in the signature and in the examples
         [
           'typeAllowed', true,
         ],
-      ]),
+      ])),
     ],
   ]);
 };

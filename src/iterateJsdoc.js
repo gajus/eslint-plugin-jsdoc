@@ -1390,6 +1390,7 @@ export {
 /**
  * @param {JsdocVisitor} iterator
  * @param {RuleConfig} ruleConfig
+ * @returns {import('eslint').Rule.RuleModule}
  */
 export default function iterateJsdoc (iterator, ruleConfig) {
   const metaType = ruleConfig?.meta?.type;
@@ -1415,10 +1416,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
     /**
      * The entrypoint for the JSDoc rule.
      *
-     * @param {*} context
+     * @param {import('eslint').Rule.RuleContext} context
      *   a reference to the context which hold all important information
      *   like settings and the sourcecode to check.
-     * @returns {object}
+     * @returns {import('eslint').Rule.RuleListener}
      *   a list with parser callback function.
      */
     create (context) {

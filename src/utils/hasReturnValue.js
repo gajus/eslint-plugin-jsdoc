@@ -1,9 +1,15 @@
 /* eslint-disable jsdoc/no-undefined-types */
+
+/**
+ * @typedef {import('estree').Node|
+ *   import('@typescript-eslint/types').TSESTree.TSTypeReference} ESTreeOrTypeScriptNode
+ */
+
 /**
  * Checks if a node is a promise but has no resolve value or an empty value.
  * An `undefined` resolve does not count.
  *
- * @param {object} node
+ * @param {ESTreeOrTypeScriptNode} node
  * @returns {boolean}
  */
 const isNewPromiseExpression = (node) => {
@@ -11,6 +17,10 @@ const isNewPromiseExpression = (node) => {
     node.callee.name === 'Promise';
 };
 
+/**
+ * @param {import('@typescript-eslint/types').TSESTree.TSTypeReference} node
+ * @returns {boolean}
+ */
 const isVoidPromise = (node) => {
   return node?.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
 };
@@ -22,10 +32,10 @@ const undefinedKeywords = new Set([
 /**
  * Checks if a node has a return statement. Void return does not count.
  *
- * @param {object} node
+ * @param {import('estree').Node|import('@typescript-eslint/types').TSESTree.Node} node
  * @param {boolean} throwOnNullReturn
  * @param {PromiseFilter} promFilter
- * @returns {boolean|Node}
+ * @returns {boolean|undefined}
  */
 // eslint-disable-next-line complexity
 const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
@@ -46,7 +56,7 @@ const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
   case 'FunctionExpression':
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
-    return node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node.body)) ||
+    return 'expression' in node && node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node.body)) ||
       hasReturnValue(node.body, throwOnNullReturn, promFilter);
   }
 
@@ -117,7 +127,7 @@ const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
  *
  * @param {object} node
  * @param {PromiseFilter} promFilter
- * @returns {boolean|Node}
+ * @returns {boolean|import('estree').Node}
  */
 // eslint-disable-next-line complexity
 const allBrancheshaveReturnValues = (node, promFilter) => {

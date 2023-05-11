@@ -13,7 +13,11 @@
     "target": "es6",
     "outDir": "dist"
   },
-  // Restore to `src/**/*.js` as ready
-  "include": ["src/bin/*.js", "src/bin/gitdown.d.ts"],
+  // Uncomment below as ready
+  "include": [
+    // "src/**/*.js",
+    // "test/**/*.js",
+    "src/bin/gitdown.d.ts"
+  ],
   "exclude": ["node_modules"]
 }
