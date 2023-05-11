@@ -437,7 +437,7 @@ function quux () {}
  */
 function quux () {}
 // Settings: {"jsdoc":{"mode":"closure"}}
-// Message: Syntax error in supresss type: blah
+// Message: Syntax error in suppress type: blah
 
 /**
  * @param {Object[]} employees

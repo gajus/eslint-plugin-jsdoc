@@ -43,6 +43,10 @@ const typescriptGlobals = [
   'Uncapitalize',
 ];
 
+/**
+ * @param {string} str
+ * @returns {undefined|string}
+ */
 const stripPseudoTypes = (str) => {
   return str && str.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
 };
@@ -58,16 +62,26 @@ export default iterateJsdoc(({
   const {
     scopeManager,
   } = sourceCode;
-  const {
-    globalScope,
-  } = scopeManager;
 
-  const {
-    definedTypes = [],
-    disableReporting = false,
-    markVariablesAsUsed = true,
-  } = context.options[0] || {};
+  // When is this ever `null`?
+  const globalScope = /** @type {import('eslint').Scope.Scope} */ (
+    scopeManager.globalScope
+  );
 
+  const
+    /**
+     * @type {{
+     *   definedTypes: string[],
+     *   disableReporting: boolean,
+     *   markVariablesAsUsed: boolean
+     * }}
+     */ {
+      definedTypes = [],
+      disableReporting = false,
+      markVariablesAsUsed = true,
+    } = context.options[0] || {};
+
+  /** @type {(string|undefined)[]} */
   let definedPreferredTypes = [];
   const {
     preferredTypes,
@@ -98,7 +112,7 @@ export default iterateJsdoc(({
       });
   }
 
-  const typedefDeclarations = context.getAllComments()
+  const typedefDeclarations = sourceCode.getAllComments()
     .filter((comment) => {
       return (/^\*\s/u).test(comment.value);
     })
@@ -125,6 +139,10 @@ export default iterateJsdoc(({
     currentNode = currentNode.parent;
   }
 
+  /**
+   * @param {import('eslint').Rule.Node} ancestorNode
+   * @returns {import('comment-parser').Spec[]}
+   */
   const getTemplateTags = function (ancestorNode) {
     const commentNode = getJSDocComment(sourceCode, ancestorNode, settings);
     if (!commentNode) {
@@ -144,7 +162,9 @@ export default iterateJsdoc(({
     ancestorNodes.flatMap((ancestorNode) => {
       return getTemplateTags(ancestorNode);
     }) :
-    utils.getPresentTags('template');
+    utils.getPresentTags([
+      'template',
+    ]);
 
   const closureGenericTypes = templateTags.flatMap((tag) => {
     return utils.parseClosureTemplateTag(tag);
@@ -176,7 +196,7 @@ export default iterateJsdoc(({
     .concat(extraTypes)
     .concat(typedefDeclarations)
     .concat(definedTypes)
-    .concat(definedPreferredTypes)
+    .concat(/** @type {string[]} */ (definedPreferredTypes))
     .concat(
       settings.mode === 'jsdoc' ?
         [] :
@@ -186,12 +206,29 @@ export default iterateJsdoc(({
         ],
     ));
 
+  /**
+   * @typedef {{
+   *   parsedType: import('jsdoc-type-pratt-parser').RootResult;
+   *   tag: import('comment-parser').Spec
+   * }} TypeAndTagInfo
+   */
+
+  /**
+   * @param {string} propertyName
+   * @returns {(tag: import('comment-parser').Spec & {
+   *   namepathOrURL?: string
+   * }) => undefined|TypeAndTagInfo}
+   */
   const tagToParsedType = (propertyName) => {
     return (tag) => {
       try {
-        const potentialType = tag[propertyName];
+        const potentialType = tag[
+          /** @type {"type"|"name"|"namepathOrURL"} */ (propertyName)
+        ];
         return {
-          parsedType: mode === 'permissive' ? tryParseType(potentialType) : parseType(potentialType, mode),
+          parsedType: mode === 'permissive' ?
+            tryParseType(/** @type {string} */ (potentialType)) :
+            parseType(/** @type {string} */ (potentialType), mode),
           tag,
         };
       } catch {
@@ -218,23 +255,25 @@ export default iterateJsdoc(({
     return utils.isNamepathOrUrlReferencingTag(tag);
   }, true).map(tagToParsedType('namepathOrURL'));
 
-  const tagsWithTypes = [
+  const tagsWithTypes = /** @type {TypeAndTagInfo[]} */ ([
     ...typeTags,
     ...namepathReferencingTags,
     ...namepathOrUrlReferencingTags,
   ].filter((result) => {
     // Remove types which failed to parse
     return result;
-  });
+  }));
 
   for (const {
     tag,
     parsedType,
   } of tagsWithTypes) {
-    traverse(parsedType, ({
-      type,
-      value,
-    }) => {
+    traverse(parsedType, (nde) => {
+      const {
+        type,
+        value,
+      } = /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde);
+
       if (type === 'JsdocTypeName') {
         const structuredTypes = structuredTags[tag.tag]?.type;
         if (!allDefinedTypes.has(value) &&

@@ -4,6 +4,11 @@ import iterateJsdoc from '../iterateJsdoc';
 //   initial letter: \\p{Upper}
 const matchDescriptionDefault = '^\n?([A-Z`\\d_][\\s\\S]*[.?!`]\\s*)?$';
 
+/**
+ * @param {string} value
+ * @param {string} userDefault
+ * @returns {string}
+ */
 const stringOrDefault = (value, userDefault) => {
   return typeof value === 'string' ?
     value :
@@ -23,6 +28,11 @@ export default iterateJsdoc(({
     tags,
   } = context.options[0] || {};
 
+  /**
+   * @param {string} desc
+   * @param {import('comment-parser').Spec} [tag]
+   * @returns {void}
+   */
   const validateDescription = (desc, tag) => {
     let mainDescriptionMatch = mainDescription;
     let errorMessage = message;
@@ -75,6 +85,10 @@ export default iterateJsdoc(({
     return;
   }
 
+  /**
+   * @param {string} tagName
+   * @returns {boolean}
+   */
   const hasOptionTag = (tagName) => {
     return Boolean(tags[tagName]);
   };
@@ -97,7 +111,9 @@ export default iterateJsdoc(({
   } = utils.getTagsByType(whitelistedTags);
 
   tagsWithNames.some((tag) => {
-    const desc = utils.getTagDescription(tag).replace(/^[- ]*/u, '')
+    const desc = /** @type {string} */ (
+      utils.getTagDescription(tag)
+    ).replace(/^[- ]*/u, '')
       .trim();
 
     return validateDescription(desc, tag);

@@ -42,6 +42,8 @@ export default iterateJsdoc(({
             return [
               // Keep the starting line
               {
+                number: 0,
+                source: '',
                 tokens: seedTokens({
                   ...info,
                   description: '',

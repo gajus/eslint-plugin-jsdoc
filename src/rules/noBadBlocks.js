@@ -43,13 +43,9 @@ export default iterateJsdoc(({
       }
     }
 
-    const [
-      {
-        tags = {},
-      } = {},
-    ] = commentParser(
+    const tags = (commentParser(
       `${commentText.slice(0, 2)}*${commentText.slice(sliceIndex)}`,
-    );
+    )[0] || {}).tags ?? [];
 
     return tags.length && !tags.some(({
       tag,

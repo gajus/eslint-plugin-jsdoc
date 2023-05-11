@@ -455,7 +455,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
  *
  * @param {object} node
  * @param {boolean} anyPromiseAsReturn
- * @param {boolean} allBranches
+ * @param {boolean} [allBranches]
  * @returns {boolean}
  */
 const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, allBranches) => {

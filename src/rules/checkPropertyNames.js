@@ -3,8 +3,8 @@ import iterateJsdoc from '../iterateJsdoc';
 /**
  * @param {string} targetTagName
  * @param {boolean} enableFixer
- * @param jsdoc
- * @param utils
+ * @param {import('comment-parser').Block} jsdoc
+ * @param {import('../iterateJsdoc.js').Utils} utils
  * @returns {boolean}
  */
 const validatePropertyNames = (
@@ -21,12 +21,13 @@ const validatePropertyNames = (
   return propertyTags.some(([
     , tag,
   ], index) => {
+    /** @type {import('../iterateJsdoc.js').Integer} */
     let tagsIndex;
     const dupeTagInfo = propertyTags.find(([
       tgsIndex,
       tg,
     ], idx) => {
-      tagsIndex = tgsIndex;
+      tagsIndex = Number(tgsIndex);
 
       return tg.name === tag.name && idx !== index;
     });
@@ -44,14 +45,19 @@ const validatePropertyNames = (
 
 /**
  * @param {string} targetTagName
- * @param {string[]} jsdocPropertyNames
- * @param jsdoc
+ * @param {{
+ *   idx: number;
+ *   name: string;
+ *   type: string;
+ * }[]} jsdocPropertyNames
+ * @param {import('comment-parser').Block} jsdoc
  * @param {Function} report
  */
 const validatePropertyNamesDeep = (
   targetTagName,
   jsdocPropertyNames, jsdoc, report,
 ) => {
+  /** @type {string} */
   let lastRealProperty;
 
   return jsdocPropertyNames.some(({
@@ -101,7 +107,7 @@ export default iterateJsdoc(({
     enableFixer = false,
   } = context.options[0] || {};
   const jsdocPropertyNamesDeep = utils.getJsdocTagsDeep('property');
-  if (!jsdocPropertyNamesDeep.length) {
+  if (!jsdocPropertyNamesDeep || !jsdocPropertyNamesDeep.length) {
     return;
   }
 

@@ -189,6 +189,12 @@ function quux () {
 function quux () {}
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Require names matching `/^opt_/i`."}]}]
 // Message: Require names matching `/^opt_/i`.
+
+/**
+ * @implements {Bar|Foo}
+ */
+// "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":[{"context":"FunctionDeclaration"}]}]
+// Message: Syntax is required: FunctionDeclaration
 ````
 
 

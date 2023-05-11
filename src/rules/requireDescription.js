@@ -1,5 +1,9 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+/**
+ * @param {string} description
+ * @returns {import('../iterateJsdoc.js').Integer}
+ */
 const checkDescription = (description) => {
   return description
     .trim()

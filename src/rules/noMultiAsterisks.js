@@ -68,12 +68,9 @@ export default iterateJsdoc(({
 
     const isSingleLineBlock = delimiter === '/**';
     const delim = isSingleLineBlock ? '*' : delimiter;
-    let endAsterisks;
-    if (allowWhitespace) {
-      endAsterisks = isSingleLineBlock ? endAsterisksSingleLineNoBlockWS : endAsterisksMultipleLineNoBlockWS;
-    } else {
-      endAsterisks = isSingleLineBlock ? endAsterisksSingleLineBlockWS : endAsterisksMultipleLineBlockWS;
-    }
+    const endAsterisks = allowWhitespace ?
+      (isSingleLineBlock ? endAsterisksSingleLineNoBlockWS : endAsterisksMultipleLineNoBlockWS) :
+      (isSingleLineBlock ? endAsterisksSingleLineBlockWS : endAsterisksMultipleLineBlockWS);
 
     const endingAsterisksAndSpaces = (
       allowWhitespace ? postDelimiter + description + delim : description + delim

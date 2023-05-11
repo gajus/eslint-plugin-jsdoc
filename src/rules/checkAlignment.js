@@ -1,5 +1,9 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+/**
+ * @param {string} string
+ * @returns {string}
+ */
 const trimStart = (string) => {
   return string.replace(/^\s+/u, '');
 };
@@ -21,6 +25,7 @@ export default iterateJsdoc(({
       return !trimStart(line).length;
     });
 
+  /** @type {import('eslint').Rule.ReportFixer} */
   const fix = (fixer) => {
     const replacement = sourceCode.getText(jsdocNode).split('\n')
       .map((line, index) => {

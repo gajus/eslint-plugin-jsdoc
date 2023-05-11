@@ -813,7 +813,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Syntax error in supresss type: blah',
+          message: 'Syntax error in suppress type: blah',
         },
       ],
       settings: {

@@ -8,6 +8,10 @@ const defaultTags = {
   },
 };
 
+/**
+ * @param {import('../iterateJsdoc.js').StateObject} state
+ * @returns {void}
+ */
 const setDefaults = (state) => {
   // First iteration
   if (!state.globalTags) {
@@ -74,13 +78,15 @@ export default iterateJsdoc(({
       const obj = utils.getPreferredTagNameObject({
         tagName,
       });
-      if (obj && obj.blocked) {
+      if (obj && typeof obj === 'object' && 'blocked' in obj) {
         utils.reportSettings(
           `\`settings.jsdoc.tagNamePreference\` cannot block @${obj.tagName} ` +
           'for the `require-file-overview` rule',
         );
       } else {
-        const targetTagName = obj && obj.replacement || obj;
+        const targetTagName = (
+          obj && typeof obj === 'object' && obj.replacement
+        ) || obj;
         if (mustExist && !state.hasTag[tagName]) {
           utils.reportSettings(`Missing @${targetTagName}`);
         }

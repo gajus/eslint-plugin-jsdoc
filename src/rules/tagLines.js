@@ -19,8 +19,15 @@ export default iterateJsdoc(({
   // eslint-disable-next-line complexity -- Temporary
   jsdoc.tags.some((tg, tagIdx) => {
     let lastTag;
+
+    /**
+     * @type {null|import('../iterateJsdoc.js').Integer}
+     */
     let lastEmpty = null;
 
+    /**
+     * @type {null|import('../iterateJsdoc.js').Integer}
+     */
     let reportIndex = null;
     let emptyLinesCount = 0;
     for (const [
@@ -80,7 +87,9 @@ export default iterateJsdoc(({
       if (lineDiff < 0) {
         const fixer = () => {
           utils.removeTag(tagIdx, {
-            tagSourceOffset: lastEmpty + lineDiff + 1,
+            tagSourceOffset: /** @type {import('../iterateJsdoc.js').Integer} */ (
+              lastEmpty
+            ) + lineDiff + 1,
           });
         };
 
@@ -93,7 +102,11 @@ export default iterateJsdoc(({
         );
       } else if (lineDiff > 0) {
         const fixer = () => {
-          utils.addLines(tagIdx, lastEmpty, endLines - emptyLinesCount);
+          utils.addLines(
+            tagIdx,
+            /** @type {import('../iterateJsdoc.js').Integer} */ (lastEmpty),
+            endLines - emptyLinesCount,
+          );
         };
 
         utils.reportJSDoc(
@@ -111,7 +124,9 @@ export default iterateJsdoc(({
     if (reportIndex !== null) {
       const fixer = () => {
         utils.removeTag(tagIdx, {
-          tagSourceOffset: reportIndex,
+          tagSourceOffset: /** @type {import('../iterateJsdoc.js').Integer} */ (
+            reportIndex
+          ),
         });
       };
 
@@ -130,6 +145,12 @@ export default iterateJsdoc(({
   });
 
   (applyToEndTag ? jsdoc.tags : jsdoc.tags.slice(0, -1)).some((tg, tagIdx) => {
+    /**
+     * @type {{
+     *   idx: import('../iterateJsdoc.js').Integer,
+     *   number: import('../iterateJsdoc.js').Integer
+     * }[]}
+     */
     const lines = [];
 
     let currentTag;
@@ -223,6 +244,8 @@ export default iterateJsdoc(({
           utils.setBlockDescription((info, seedTokens, descLines) => {
             return descLines.slice(0, -trailingDiff).map((desc) => {
               return {
+                number: 0,
+                source: '',
                 tokens: seedTokens({
                   ...info,
                   description: desc,
@@ -250,6 +273,8 @@ export default iterateJsdoc(({
               }),
             ].map((desc) => {
               return {
+                number: 0,
+                source: '',
                 tokens: seedTokens({
                   ...info,
                   description: desc,

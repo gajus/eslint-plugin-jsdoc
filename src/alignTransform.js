@@ -15,6 +15,16 @@ const {
   rewireSource,
 } = util;
 
+/**
+ * @typedef {{
+ *   name: import('./iterateJsdoc').Integer,
+ *   start: import('./iterateJsdoc').Integer,
+ *   tag: import('./iterateJsdoc').Integer,
+ *   type: import('./iterateJsdoc').Integer
+ * }} Width
+ */
+
+/** @type {Width} */
 const zeroWidth = {
   name: 0,
   start: 0,
@@ -22,6 +32,12 @@ const zeroWidth = {
   type: 0,
 };
 
+/**
+ * @param {string[]} tags
+ * @param {} index
+ * @param {import('comment-parser').Line[]} source
+ * @returns {boolean}
+ */
 const shouldAlign = (tags, index, source) => {
   const tag = source[index].tokens.tag.replace('@', '');
   const includesTag = tags.includes(tag);
@@ -49,6 +65,22 @@ const shouldAlign = (tags, index, source) => {
   return true;
 };
 
+/**
+ * @param {string[]} tags
+ * @returns {(
+ *   width: Width,
+ *   line: {
+ *     tokens: import('comment-parser').Tokens
+ *   },
+ *   index: import('./iterateJsdoc.js').Integer,
+ *   source: import('comment-parser').Line[]
+ * ) => {
+ *   name: import('./iterateJsdoc.js').Integer,
+ *   start: import('./iterateJsdoc.js').Integer,
+ *   tag: import('./iterateJsdoc.js').Integer,
+ *   type: import('./iterateJsdoc.js').Integer
+ * }}
+ */
 const getWidth = (tags) => {
   return (width, {
     tokens,
@@ -66,6 +98,10 @@ const getWidth = (tags) => {
   };
 };
 
+/**
+ * @param {} fields
+ * @returns {}
+ */
 const getTypelessInfo = (fields) => {
   const hasNoTypes = fields.tags.every(({
     type,
@@ -95,10 +131,23 @@ const getTypelessInfo = (fields) => {
   };
 };
 
+/**
+ * @param {import('./iterateJsdoc.js').Integer} len
+ * @returns {string}
+ */
 const space = (len) => {
   return ''.padStart(len, ' ');
 };
 
+/**
+ * @param {{
+ *   customSpacings: import('../src/rules/checkLineAlignment.js').CustomSpacings,
+ *   tags: string[],
+ *   indent: string,
+ *   preserveMainDescriptionPostDelimiter: boolean,
+ *   wrapIndent: string,
+ * }} cfg
+ */
 const alignTransform = ({
   customSpacings,
   tags,
@@ -109,6 +158,11 @@ const alignTransform = ({
   let intoTags = false;
   let width;
 
+  /**
+   * @param {} tokens
+   * @param {} typelessInfo
+   * @returns {}
+   */
   const alignTokens = (tokens, typelessInfo) => {
     const nothingAfter = {
       delim: false,
@@ -181,6 +235,14 @@ const alignTransform = ({
     return tokens;
   };
 
+  /**
+   * @param {} line
+   * @param {} index
+   * @param {} source
+   * @param {} typelessInfo
+   * @param {} indentTag
+   * @returns {}
+   */
   const update = (line, index, source, typelessInfo, indentTag) => {
     const tokens = {
       ...line.tokens,

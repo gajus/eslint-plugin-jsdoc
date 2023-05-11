@@ -389,6 +389,29 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       *
+       */
+      function quux () {}
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Missing @fileoverview',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            file: {
+              replacement: 'fileoverview',
+            },
+          },
+        },
+      },
+    },
   ],
   valid: [
     {

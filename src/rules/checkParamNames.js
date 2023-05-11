@@ -9,9 +9,9 @@ import iterateJsdoc from '../iterateJsdoc';
  * @param {boolean} disableExtraPropertyReporting
  * @param {boolean} enableFixer
  * @param {Array<string>} functionParameterNames
- * @param jsdoc
- * @param utils
- * @param report
+ * @param {import('comment-parser').Block} jsdoc
+ * @param {import('../iterateJsdoc.js').Utils} utils
+ * @param {import('../iterateJsdoc.js').Report} report
  * @returns {boolean}
  */
 const validateParameterNames = (

@@ -321,6 +321,28 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @implements {Bar|Foo}
+       */
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Syntax is required: FunctionDeclaration',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            {
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {

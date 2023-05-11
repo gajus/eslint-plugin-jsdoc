@@ -16,14 +16,24 @@ const firstLinePrefixLength = preTagSpaceLength;
 
 const hasCaptionRegex = /^\s*<caption>([\s\S]*?)<\/caption>/u;
 
+/**
+ * @param {string} str
+ * @returns {string}
+ */
 const escapeStringRegexp = (str) => {
   return str.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
 };
 
+/**
+ * @param {string} str
+ * @param {string} ch
+ * @returns {import('../iterateJsdoc').Integer}
+ */
 const countChars = (str, ch) => {
   return (str.match(new RegExp(escapeStringRegexp(ch), 'gu')) || []).length;
 };
 
+/** @type {import('eslint').Linter.RulesRecord} */
 const defaultMdRules = {
   // "always" newline rule at end unlikely in sample code
   'eol-last': 0,
@@ -60,6 +70,7 @@ const defaultMdRules = {
   'padded-blocks': 0,
 };
 
+/** @type {import('eslint').Linter.RulesRecord} */
 const defaultExpressionRules = {
   ...defaultMdRules,
   'chai-friendly/no-unused-expressions': 'off',
@@ -75,6 +86,13 @@ const defaultExpressionRules = {
   strict: 'off',
 };
 
+/**
+ * @param {string} text
+ * @returns {[
+ *   import('../iterateJsdoc.js').Integer,
+ *   import('../iterateJsdoc.js').Integer
+ * ]}
+ */
 const getLinesCols = (text) => {
   const matchLines = countChars(text, '\n');
 
@@ -98,6 +116,7 @@ export default iterateJsdoc(({
       'This rule cannot yet be supported for ESLint 8; you ' +
         'should either downgrade to ESLint 7 or disable this rule. The ' +
         'possibility for ESLint 8 support is being tracked at https://github.com/eslint/eslint/issues/14745',
+      null,
       {
         column: 1,
         line: 1,
@@ -111,7 +130,9 @@ export default iterateJsdoc(({
     globalState.set('checkExamples-matchingFileName', new Map());
   }
 
-  const matchingFileNameMap = globalState.get('checkExamples-matchingFileName');
+  const matchingFileNameMap = /** @type {Map<string, string>} */ (
+    globalState.get('checkExamples-matchingFileName')
+  );
 
   const options = context.options[0] || {};
   let {
@@ -137,6 +158,9 @@ export default iterateJsdoc(({
   } = options;
 
   // Make this configurable?
+  /**
+   * @type {never[]}
+   */
   const rulePaths = [];
 
   const mdRules = noDefaultExampleRules ? undefined : defaultMdRules;
@@ -151,6 +175,28 @@ export default iterateJsdoc(({
     rejectExampleCodeRegex = utils.getRegexFromString(rejectExampleCodeRegex);
   }
 
+  /**
+   * @param {{
+   *   filename: string,
+   *   defaultFileName: string|undefined,
+   *   source: string,
+   *   targetTagName: string,
+   *   rules?: import('eslint').Linter.RulesRecord|undefined,
+   *   lines?: import('../iterateJsdoc.js').Integer,
+   *   cols?: import('../iterateJsdoc.js').Integer,
+   *   skipInit?: boolean,
+   *   sources?: {
+   *     nonJSPrefacingCols: import('../iterateJsdoc.js').Integer,
+   *     nonJSPrefacingLines: import('../iterateJsdoc.js').Integer,
+   *     string: string,
+   *   }[],
+   *   tag?: import('comment-parser').Spec & {
+   *     line?: import('../iterateJsdoc.js').Integer,
+   *   }|{
+   *     line: import('../iterateJsdoc.js').Integer,
+   *   }
+   * }} cfg
+   */
   const checkSource = ({
     filename,
     defaultFileName,
@@ -174,6 +220,14 @@ export default iterateJsdoc(({
     }
 
     // Todo: Make fixable
+
+    /**
+     * @param {{
+     *   nonJSPrefacingCols: import('../iterateJsdoc').Integer,
+     *   nonJSPrefacingLines: import('../iterateJsdoc').Integer,
+     *   string: string
+     * }} cfg
+     */
     const checkRules = function ({
       nonJSPrefacingCols,
       nonJSPrefacingLines,
@@ -240,7 +294,11 @@ export default iterateJsdoc(({
       }
 
       // NOTE: `tag.line` can be 0 if of form `/** @tag ... */`
-      const codeStartLine = tag.line + nonJSPrefacingLines;
+      const codeStartLine = /**
+                             * @type {import('comment-parser').Spec & {
+                             *     line: import('../iterateJsdoc.js').Integer,
+                             * }}
+                             */ (tag).line + nonJSPrefacingLines;
       const codeStartCol = likelyNestedJSDocIndentSpace;
 
       for (const {
@@ -281,7 +339,7 @@ export default iterateJsdoc(({
    * @param {string} [ext] Since `eslint-plugin-markdown` v2, and
    *   ESLint 7, this is the default which other JS-fenced rules will used.
    *   Formerly "md" was the default.
-   * @returns {{defaultFileName: string, fileName: string}}
+   * @returns {{defaultFileName: string|undefined, filename: string}}
    */
   const getFilenameInfo = (filename, ext = 'md/*.js') => {
     let defaultFileName;
@@ -355,7 +413,7 @@ export default iterateJsdoc(({
   const matchingFilenameInfo = getFilenameInfo(matchingFileName);
 
   utils.forEachPreferredTag('example', (tag, targetTagName) => {
-    let source = utils.getTagDescription(tag);
+    let source = /** @type {string} */ (utils.getTagDescription(tag));
     const match = source.match(hasCaptionRegex);
 
     if (captionRequired && (!match || !match[1].trim())) {

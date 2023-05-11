@@ -6,7 +6,7 @@ import iterateJsdoc from '../iterateJsdoc';
  *
  * In either of these cases the yield value is optional or not defined.
  *
- * @param {*} utils a reference to the utils which are used to probe if a tag is present or not.
+ * @param {import('../iterateJsdoc.js').Utils} utils a reference to the utils which are used to probe if a tag is present or not.
  * @returns {boolean} true in case deep checking can be skipped; otherwise false.
  */
 const canSkip = (utils) => {
@@ -34,6 +34,12 @@ const canSkip = (utils) => {
     utils.avoidDocs();
 };
 
+/**
+ * @param {import('../iterateJsdoc.js').Utils} utils
+ * @param {import('../iterateJsdoc.js').Report} report
+ * @param {string} tagName
+ * @returns {[preferredTagName?: string, missingTag?: boolean]}
+ */
 const checkTagName = (utils, report, tagName) => {
   const preferredTagName = utils.getPreferredTagName({
     tagName,

@@ -1,12 +1,35 @@
 import esquery from 'esquery';
 import iterateJsdoc from '../iterateJsdoc';
 
+/**
+ * @typedef {{
+ *   comment: string,
+ *   context: string,
+ *   message: string,
+ *   minimum: import('../iterateJsdoc.js').Integer
+ * }} ContextObject
+ */
+
+/**
+ * @typedef {string|ContextObject} Context
+ */
+
+/**
+ * @param {import('../iterateJsdoc.js').StateObject} state
+ * @returns {void}
+ */
 const setDefaults = (state) => {
   if (!state.selectorMap) {
     state.selectorMap = {};
   }
 };
 
+/**
+ * @param {import('../iterateJsdoc.js').StateObject} state
+ * @param {string} selector
+ * @param {string} comment
+ * @returns {void}
+ */
 const incrementSelector = (state, selector, comment) => {
   if (!state.selectorMap[selector]) {
     state.selectorMap[selector] = {};
@@ -33,9 +56,10 @@ export default iterateJsdoc(({
     return;
   }
 
-  const {
-    contexts,
-  } = context.options[0];
+  /**
+   * @type {Context[]}
+   */
+  const contexts = context.options[0].contexts;
 
   const foundContext = contexts.find((cntxt) => {
     return typeof cntxt === 'string' ?
@@ -50,11 +74,11 @@ export default iterateJsdoc(({
 
   const contextStr = typeof foundContext === 'object' ?
     foundContext.context ?? 'any' :
-    foundContext;
+    String(foundContext);
 
   setDefaults(state);
 
-  incrementSelector(state, contextStr, comment);
+  incrementSelector(state, contextStr, String(comment));
 }, {
   contextSelected: true,
   exit ({
@@ -65,6 +89,10 @@ export default iterateJsdoc(({
     if (!context.options.length && !settings.contexts) {
       context.report({
         loc: {
+          end: {
+            column: 1,
+            line: 1,
+          },
           start: {
             column: 1,
             line: 1,
@@ -77,27 +105,37 @@ export default iterateJsdoc(({
     }
 
     setDefaults(state);
-    const {
-      contexts = settings?.contexts,
-    } = context.options[0] || {};
+
+    /**
+     * @type {Context[]}
+     */
+    const contexts = (context.options[0] ?? {}).contexts ?? settings?.contexts;
 
     // Report when MISSING
     contexts.some((cntxt) => {
       const contextStr = typeof cntxt === 'object' ? cntxt.context ?? 'any' : cntxt;
-      const comment = cntxt?.comment ?? '';
+      const comment = typeof cntxt === 'string' ? '' : cntxt?.comment;
 
-      const contextKey = contextStr === 'any' ? undefined : contextStr;
+      const contextKey = contextStr === 'any' ? 'undefined' : contextStr;
 
       if (
         (!state.selectorMap[contextKey] ||
         !state.selectorMap[contextKey][comment] ||
-        state.selectorMap[contextKey][comment] < (cntxt?.minimum ?? 1)) &&
+        state.selectorMap[contextKey][comment] < (
+          // @ts-expect-error comment would need an object, not string
+          cntxt?.minimum ?? 1
+        )) &&
         (contextStr !== 'any' || Object.values(state.selectorMap).every((cmmnt) => {
-          return !cmmnt[comment] || cmmnt[comment] < (cntxt?.minimum ?? 1);
+          return !cmmnt[comment] || cmmnt[comment] < (
+            // @ts-expect-error comment would need an object, not string
+            cntxt?.minimum ?? 1
+          );
         }))
       ) {
-        const message = cntxt?.message ?? 'Syntax is required: {{context}}' +
-          (comment ? ' with {{comment}}' : '');
+        const message = typeof cntxt === 'string' ?
+          'Syntax is required: {{context}}' :
+          cntxt?.message ?? ('Syntax is required: {{context}}' +
+            (comment ? ' with {{comment}}' : ''));
         context.report({
           data: {
             comment,
@@ -105,9 +143,11 @@ export default iterateJsdoc(({
           },
           loc: {
             end: {
+              column: 1,
               line: 1,
             },
             start: {
+              column: 1,
               line: 1,
             },
           },

@@ -30,7 +30,9 @@ export default iterateJsdoc(({
   } = options;
 
   utils.forEachPreferredTag('version', (jsdocParameter, targetTagName) => {
-    const version = utils.getTagDescription(jsdocParameter).trim();
+    const version = /** @type {string} */ (
+      utils.getTagDescription(jsdocParameter)
+    ).trim();
     if (!version) {
       report(
         `Missing JSDoc @${targetTagName} value.`,
@@ -47,7 +49,9 @@ export default iterateJsdoc(({
   });
 
   utils.forEachPreferredTag('kind', (jsdocParameter, targetTagName) => {
-    const kind = utils.getTagDescription(jsdocParameter).trim();
+    const kind = /** @type {string} */ (
+      utils.getTagDescription(jsdocParameter)
+    ).trim();
     if (!kind) {
       report(
         `Missing JSDoc @${targetTagName} value.`,
@@ -68,7 +72,9 @@ export default iterateJsdoc(({
 
   if (numericOnlyVariation) {
     utils.forEachPreferredTag('variation', (jsdocParameter, targetTagName) => {
-      const variation = utils.getTagDescription(jsdocParameter).trim();
+      const variation = /** @type {string} */ (
+        utils.getTagDescription(jsdocParameter)
+      ).trim();
       if (!variation) {
         report(
           `Missing JSDoc @${targetTagName} value.`,
@@ -89,7 +95,9 @@ export default iterateJsdoc(({
   }
 
   utils.forEachPreferredTag('since', (jsdocParameter, targetTagName) => {
-    const version = utils.getTagDescription(jsdocParameter).trim();
+    const version = /** @type {string} */ (
+      utils.getTagDescription(jsdocParameter)
+    ).trim();
     if (!version) {
       report(
         `Missing JSDoc @${targetTagName} value.`,
@@ -106,7 +114,9 @@ export default iterateJsdoc(({
   });
   utils.forEachPreferredTag('license', (jsdocParameter, targetTagName) => {
     const licenseRegex = utils.getRegexFromString(licensePattern, 'g');
-    const matches = utils.getTagDescription(jsdocParameter).matchAll(licenseRegex);
+    const matches = /** @type {string} */ (
+      utils.getTagDescription(jsdocParameter)
+    ).matchAll(licenseRegex);
     let positiveMatch = false;
     for (const match of matches) {
       const license = match[1] || match[0];
@@ -148,7 +158,9 @@ export default iterateJsdoc(({
   });
 
   utils.forEachPreferredTag('author', (jsdocParameter, targetTagName) => {
-    const author = utils.getTagDescription(jsdocParameter).trim();
+    const author = /** @type {string} */ (
+      utils.getTagDescription(jsdocParameter)
+    ).trim();
     if (!author) {
       report(
         `Missing JSDoc @${targetTagName} value.`,

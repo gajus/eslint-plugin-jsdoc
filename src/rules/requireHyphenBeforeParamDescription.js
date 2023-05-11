@@ -11,13 +11,27 @@ export default iterateJsdoc(({
   const [
     mainCircumstance,
     {
-      tags,
+      tags = null,
     } = {},
   ] = context.options;
 
+  /* eslint-disable jsdoc/valid-types -- Old version */
+  const tgs = /**
+               * @type {null|"any"|{[key: string]: "always"|"never"}}
+               */ (tags);
+  /* eslint-enable jsdoc/valid-types -- Old version */
+
+  /**
+   * @param {import('comment-parser').Spec & {
+   *   line: import('../iterateJsdoc.js').Integer
+   * }} jsdocTag
+   * @param {string} targetTagName
+   * @param {"always"|"never"} [circumstance]
+   * @returns {void}
+   */
   const checkHyphens = (jsdocTag, targetTagName, circumstance = mainCircumstance) => {
     const always = !circumstance || circumstance === 'always';
-    const desc = utils.getTagDescription(jsdocTag);
+    const desc = /** @type {string} */ (utils.getTagDescription(jsdocTag));
     if (!desc.trim()) {
       return;
     }
@@ -76,8 +90,8 @@ export default iterateJsdoc(({
   };
 
   utils.forEachPreferredTag('param', checkHyphens);
-  if (tags) {
-    const tagEntries = Object.entries(tags);
+  if (tgs) {
+    const tagEntries = Object.entries(tgs);
     for (const [
       tagName,
       circumstance,
@@ -98,7 +112,11 @@ export default iterateJsdoc(({
           }
 
           utils.forEachPreferredTag(tag, (jsdocTag, targetTagName) => {
-            checkHyphens(jsdocTag, targetTagName, circumstance);
+            checkHyphens(
+              jsdocTag,
+              targetTagName,
+              /** @type {"always"|"never"} */ (circumstance),
+            );
           });
         }
 
@@ -106,7 +124,11 @@ export default iterateJsdoc(({
       }
 
       utils.forEachPreferredTag(tagName, (jsdocTag, targetTagName) => {
-        checkHyphens(jsdocTag, targetTagName, circumstance);
+        checkHyphens(
+          jsdocTag,
+          targetTagName,
+          /** @type {"always"|"never"} */ (circumstance),
+        );
       });
     }
   }

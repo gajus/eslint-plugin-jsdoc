@@ -1,5 +1,8 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+/**
+ * @param {import('comment-parser').Line} line
+ */
 const removeType = ({
   tokens,
 }) => {
