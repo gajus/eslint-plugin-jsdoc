@@ -66,7 +66,7 @@ export default iterateJsdoc(({
     const report = makeReport(context, node);
 
     // eslint-disable-next-line no-loop-func
-    const fix = (fixer) => {
+    const fix = /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {
       const text = sourceCode.getText(node);
 
       return fixer.replaceText(

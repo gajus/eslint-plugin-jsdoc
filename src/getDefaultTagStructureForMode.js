@@ -2,7 +2,7 @@
  * @typedef {Map<string, Map<string, (string|boolean)>>} TagStructure
  */
 /**
- * @param {"permissive"|"jsdoc"|"closure"|"typescript"} mode
+ * @param {import('./jsdocUtils.js').ParserMode} mode
  * @returns {TagStructure}
  */
 const getDefaultTagStructureForMode = (mode) => {

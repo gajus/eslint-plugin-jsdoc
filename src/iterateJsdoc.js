@@ -9,6 +9,10 @@ import {
 } from 'comment-parser';
 import jsdocUtils from './jsdocUtils';
 
+/**
+ * @typedef {number} Integer
+ */
+
 const {
   rewireSpecs,
   seedTokens,
@@ -43,15 +47,31 @@ const {
 */
 
 const globalState = new Map();
-
+/**
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {{
+ *   tagNamePreference?: import('./jsdocUtils.js').TagNamePreference,
+ *   mode?: import('./jsdocUtils.js').ParserMode
+ * }} cfg
+ * @returns {Utils}
+ */
 const getBasicUtils = (context, {
   tagNamePreference,
   mode,
 }) => {
   const utils = {};
+
+  /**
+   * @param {string} message
+   * @returns {void}
+   */
   utils.reportSettings = (message) => {
     context.report({
       loc: {
+        end: {
+          column: 1,
+          line: 1,
+        },
         start: {
           column: 1,
           line: 1,
@@ -61,16 +81,30 @@ const getBasicUtils = (context, {
     });
   };
 
+  /**
+   * @param {import('comment-parser').Spec} tag
+   * @returns {string[]}
+   */
   utils.parseClosureTemplateTag = (tag) => {
     return jsdocUtils.parseClosureTemplateTag(tag);
   };
 
   utils.pathDoesNotBeginWith = jsdocUtils.pathDoesNotBeginWith;
 
+  /**
+   * @param {{
+   *   tagName: string
+   * }} cfg
+   */
   utils.getPreferredTagNameObject = ({
     tagName,
   }) => {
-    const ret = jsdocUtils.getPreferredTagName(context, mode, tagName, tagNamePreference);
+    const ret = jsdocUtils.getPreferredTagName(
+      context,
+      /** @type {import('./jsdocUtils.js').ParserMode} */ (mode),
+      tagName,
+      tagNamePreference,
+    );
     const isObject = ret && typeof ret === 'object';
     if (ret === false || isObject && !ret.replacement) {
       return {
@@ -85,6 +119,18 @@ const getBasicUtils = (context, {
   return utils;
 };
 
+/**
+ * @param {} node
+ * @param {import('comment-parser').Block} jsdoc
+ * @param {import('@es-joy/jsdoccomment').Token} jsdocNode
+ * @param {Settings} settings
+ * @param {} report
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {boolean} iteratingAll
+ * @param {} ruleConfig
+ * @param {string} indent
+ * @returns {}
+ */
 const getUtils = (
   node,
   jsdoc,
@@ -112,6 +158,9 @@ const getUtils = (
     mode,
   } = settings;
 
+  /**
+   * @returns {boolean}
+   */
   utils.isIteratingFunction = () => {
     return !iteratingAll || [
       'MethodDefinition',
@@ -121,23 +170,45 @@ const getUtils = (
     ].includes(node && node.type);
   };
 
+  /**
+   * @returns {boolean}
+   */
   utils.isVirtualFunction = () => {
     return iteratingAll && utils.hasATag([
       'callback', 'function', 'func', 'method',
     ]);
   };
 
+  /**
+   * @param {import('comment-parser').Block} tagBlock
+   * @param {boolean} [specRewire]
+   * @returns {string}
+   */
   utils.stringify = (tagBlock, specRewire) => {
     let block;
     if (specRewire) {
       block = rewireSpecs(tagBlock);
     }
 
-    return commentStringify(specRewire ? block : tagBlock);
+    return commentStringify(/** @type {import('comment-parser').Block} */ (
+      specRewire ? block : tagBlock));
   };
 
+  /* eslint-disable jsdoc/valid-types -- Old version */
+  /**
+   * @param {string} msg
+   * @param {import('comment-parser').Spec} tag
+   * @param {() => void} handler
+   * @param {boolean} [specRewire]
+   * @param {{
+   *   [key: string]: undefined|string
+   * }} [data]
+   */
   utils.reportJSDoc = (msg, tag, handler, specRewire, data) => {
-    report(msg, handler ? (fixer) => {
+    /* eslint-enable jsdoc/valid-types -- Old version */
+    report(msg, handler ? /** @type {import('eslint').Rule.ReportFixer} */ (
+      fixer,
+    ) => {
       handler();
       const replacement = utils.stringify(jsdoc, specRewire);
 
@@ -165,11 +236,24 @@ const getUtils = (
     } : null, tag, data);
   };
 
+  /**
+   * @param {string} str
+   * @param {string} requiredFlags
+   * @returns {RegExp}
+   */
   utils.getRegexFromString = (str, requiredFlags) => {
     return jsdocUtils.getRegexFromString(str, requiredFlags);
   };
 
+  /**
+   * @param {import('comment-parser').Spec} tg
+   * @param {boolean} returnArray
+   * @returns {string[]|string}
+   */
   utils.getTagDescription = (tg, returnArray) => {
+    /**
+     * @type {string[]}
+     */
     const descriptions = [];
     tg.source.some(({
       tokens: {
@@ -207,6 +291,12 @@ const getUtils = (
     return returnArray ? descriptions : descriptions.join('\n');
   };
 
+  /**
+   * @param {import('comment-parser').Spec} tg
+   * @param {RegExp} matcher
+   * @param {(description: string) => string} setter
+   * @returns {Integer}
+   */
   utils.setTagDescription = (tg, matcher, setter) => {
     let finalIdx = 0;
     tg.source.some(({
@@ -226,7 +316,15 @@ const getUtils = (
     return finalIdx;
   };
 
+  /**
+   * @returns {{
+   *   description: string,
+   *   descriptions: string[],
+   *   lastDescriptionLine: Integer
+   * }}
+   */
   utils.getDescription = () => {
+    /** @type {string[]} */
     const descriptions = [];
     let lastDescriptionLine = 0;
     let tagsBegun = false;
@@ -264,9 +362,32 @@ const getUtils = (
     };
   };
 
+  /* eslint-disable jsdoc/no-undefined-types -- Bug */
+  /**
+   * @param {(
+   *   info: undefined|{
+   *     delimiter: string,
+   *     postDelimiter: string,
+   *     start: string
+   *   },
+   *   seedTokens: (
+   *     tokens?: Partial<import('comment-parser').Tokens> | undefined
+   *   ) => import('comment-parser').Tokens,
+   *   descLines: string[]
+   * ) => import('comment-parser').Tokens[]} setter
+   * @returns {void}
+   */
   utils.setBlockDescription = (setter) => {
+    /* eslint-enable jsdoc/no-undefined-types -- Bug */
+    /** @type {string[]} */
     const descLines = [];
+    /**
+     * @type {undefined|Integer}
+     */
     let startIdx;
+    /**
+     * @type {undefined|Integer}
+     */
     let endIdx;
     let info;
 
@@ -305,11 +426,18 @@ const getUtils = (
     /* istanbul ignore else -- Won't be called if missing */
     if (descLines.length) {
       jsdoc.source.splice(
-        startIdx, endIdx - startIdx, ...setter(info, seedTokens, descLines),
+        /** @type {Integer} */ (startIdx),
+        /** @type {Integer} */ (endIdx) - /** @type {Integer} */ (startIdx),
+        ...setter(info, seedTokens, descLines),
       );
     }
   };
 
+  /**
+   * @param {RegExp} matcher
+   * @param {(description: string) => string} setter
+   * @returns {Integer}
+   */
   utils.setDescriptionLines = (matcher, setter) => {
     let finalIdx = 0;
     jsdoc.source.some(({
@@ -336,6 +464,11 @@ const getUtils = (
     return finalIdx;
   };
 
+  /**
+   * @param {import('comment-parser').Spec} tag
+   * @param {import('comment-parser').Tokens[]} tokens
+   * @returns {void}
+   */
   utils.changeTag = (tag, ...tokens) => {
     for (const [
       idx,
@@ -348,11 +481,21 @@ const getUtils = (
     }
   };
 
+  /* eslint-disable jsdoc/no-undefined-types -- TS */
+  /**
+   * @param {import('comment-parser').Spec & {
+   *   line: Integer
+   * }} tag
+   * @param {Partial<import('comment-parser').Tokens>} tokens
+   * @returns {void}
+   */
   utils.setTag = (tag, tokens) => {
+    /* eslint-enable jsdoc/no-undefined-types -- TS */
     tag.source = [
       {
-      // Or tag.source[0].number?
         number: tag.line,
+        // Or tag.source[0].number?
+        source: '',
         tokens: seedTokens({
           delimiter: '*',
           postDelimiter: ' ',
@@ -364,6 +507,14 @@ const getUtils = (
     ];
   };
 
+  /**
+   * @param {Integer} tagIndex
+   * @param {{
+   *   removeEmptyBlock?: boolean,
+   *   tagSourceOffset?: Integer
+   * }} cfg
+   * @returns {void}
+   */
   utils.removeTag = (tagIndex, {
     removeEmptyBlock = false,
     tagSourceOffset = 0,
@@ -371,6 +522,7 @@ const getUtils = (
     const {
       source: tagSource,
     } = jsdoc.tags[tagIndex];
+    /** @type {Integer|undefined} */
     let lastIndex;
     const firstNumber = jsdoc.source[0].number;
     tagSource.some(({
@@ -424,7 +576,14 @@ const getUtils = (
             'postName',
             'description',
           ]) {
-            tokens[item] = '';
+            tokens[
+              /**
+               * @type {"postDelimiter"|"tag"|"type"|"postType"|
+               *   "postTag"|"name"|"postName"|"description"}
+               */ (
+                item
+              )
+            ] = '';
           }
         } else {
           jsdoc.source.splice(spliceIdx, spliceCount - tagSourceOffset + (spliceIdx ? 0 : jsdoc.source.length));
@@ -443,14 +602,21 @@ const getUtils = (
       idx,
       src,
     ] of jsdoc.source.slice(lastIndex).entries()) {
-      src.number = firstNumber + lastIndex + idx;
+      src.number = firstNumber + /** @type {Integer} */ (lastIndex) + idx;
     }
 
-    // Todo: Once rewiring of tags may be fixed in comment-parser to reflect missing tags,
-    //         this step should be added here (so that, e.g., if accessing `jsdoc.tags`,
-    //         such as to add a new tag, the correct information will be available)
+    // Todo: Once rewiring of tags may be fixed in comment-parser to reflect
+    //         missing tags, this step should be added here (so that, e.g.,
+    //         if accessing `jsdoc.tags`, such as to add a new tag, the
+    //         correct information will be available)
   };
 
+  /**
+   * @param {string} targetTagName
+   * @param {Integer} number
+   * @param {import('comment-parser').Tokens|{}} tokens
+   * @returns {void}
+   */
   utils.addTag = (
     targetTagName,
     number = (jsdoc.tags[jsdoc.tags.length - 1]?.source[0]?.number ?? jsdoc.source.findIndex(({
@@ -478,6 +644,9 @@ const getUtils = (
     }
   };
 
+  /**
+   * @returns {Integer|undefined}
+   */
   utils.getFirstLine = () => {
     let firstLine;
     for (const {
@@ -497,6 +666,12 @@ const getUtils = (
 
   utils.seedTokens = seedTokens;
 
+  /**
+   * Sets tokens to empty string.
+   *
+   * @param {import('comment-parser').Tokens} tokens
+   * @returns {void}
+   */
   utils.emptyTokens = (tokens) => {
     for (const prop of [
       'start',
@@ -511,10 +686,22 @@ const getUtils = (
       'end',
       'lineEnd',
     ]) {
-      tokens[prop] = '';
+      tokens[
+        /**
+         * @type {"start"|"postDelimiter"|"tag"|"type"|"postType"|
+         *   "postTag"|"name"|"postName"|"description"|"end"|"lineEnd"}
+         */ (
+          prop
+        )
+      ] = '';
     }
   };
 
+  /**
+   * @param {Integer} sourceIndex
+   * @param {import('comment-parser').Tokens} tokens
+   * @returns {void}
+   */
   utils.addLine = (sourceIndex, tokens) => {
     const number = (jsdoc.source[sourceIndex - 1]?.number || 0) + 1;
     jsdoc.source.splice(sourceIndex, 0, {
@@ -530,10 +717,17 @@ const getUtils = (
     // rewireSource(jsdoc);
   };
 
+  /**
+   * @param {Integer} tagIndex
+   * @param {Integer} tagSourceOffset
+   * @param {Integer} numLines
+   * @returns {void}
+   */
   utils.addLines = (tagIndex, tagSourceOffset, numLines) => {
     const {
       source: tagSource,
     } = jsdoc.tags[tagIndex];
+    /** @type {Integer|undefined} */
     let lastIndex;
     const firstNumber = jsdoc.source[0].number;
     tagSource.some(({
@@ -586,6 +780,9 @@ const getUtils = (
     }
   };
 
+  /**
+   * @returns {void}
+   */
   utils.makeMultiline = () => {
     const {
       source: [
@@ -646,18 +843,32 @@ const getUtils = (
     });
   };
 
+  /**
+   * @param {} params
+   * @returns {}
+   */
   utils.flattenRoots = (params) => {
     return jsdocUtils.flattenRoots(params);
   };
 
+  /**
+   * @param {boolean} useDefaultObjectProperties
+   * @returns {}
+   */
   utils.getFunctionParameterNames = (useDefaultObjectProperties) => {
     return jsdocUtils.getFunctionParameterNames(node, useDefaultObjectProperties);
   };
 
+  /**
+   * @returns {Integer}
+   */
   utils.hasParams = () => {
     return jsdocUtils.hasParams(node);
   };
 
+  /**
+   * @returns {boolean}
+   */
   utils.isGenerator = () => {
     return node && (
       node.generator ||
@@ -669,10 +880,21 @@ const getUtils = (
     );
   };
 
+  /**
+   * @returns {boolean}
+   */
   utils.isConstructor = () => {
     return jsdocUtils.isConstructor(node);
   };
 
+  /**
+   * @param {string} tagName
+   * @returns {false|{
+   *   idx: Integer,
+   *   name: string,
+   *   type: string
+   * }[]}
+   */
   utils.getJsdocTagsDeep = (tagName) => {
     const name = utils.getPreferredTagName({
       tagName,
@@ -684,6 +906,14 @@ const getUtils = (
     return jsdocUtils.getJsdocTagsDeep(jsdoc, name);
   };
 
+  /**
+   * @param {{
+   *   tagName: string,
+   *   skipReportingBlockedTag?: boolean,
+   *   allowObjectReturn?: boolean,
+   *   defaultMessage?: string
+   * }} cfg
+   */
   utils.getPreferredTagName = ({
     tagName,
     skipReportingBlockedTag = false,
@@ -709,26 +939,50 @@ const getUtils = (
     return isObject && !allowObjectReturn ? ret.replacement : ret;
   };
 
+  /**
+   * @param {string} name
+   * @param {string[]} definedTags
+   * @returns {boolean}
+   */
   utils.isValidTag = (name, definedTags) => {
     return jsdocUtils.isValidTag(context, mode, name, definedTags);
   };
 
+  /**
+   * @param {string[]} names
+   * @returns {boolean}
+   */
   utils.hasATag = (names) => {
     return jsdocUtils.hasATag(jsdoc, names);
   };
 
+  /**
+   * @param {string} name
+   * @returns {boolean}
+   */
   utils.hasTag = (name) => {
     return jsdocUtils.hasTag(jsdoc, name);
   };
 
+  /**
+   * @param {string} name
+   * @returns {}
+   */
   utils.comparePaths = (name) => {
     return jsdocUtils.comparePaths(name);
   };
 
+  /**
+   * @param {string} name
+   * @returns {}
+   */
   utils.dropPathSegmentQuotes = (name) => {
     return jsdocUtils.dropPathSegmentQuotes(name);
   };
 
+  /**
+   * @returns {boolean}
+   */
   utils.avoidDocs = () => {
     if (
       ignoreReplacesDocs !== false &&
@@ -770,8 +1024,21 @@ const getUtils = (
     'tagMightHaveNamePosition',
     'tagMightHaveTypePosition',
   ]) {
-    utils[method] = (tagName, otherModeMaps) => {
-      const result = jsdocUtils[method](tagName);
+    /**
+     * @param {string} tagName
+     * @param {import('./getDefaultTagStructureForMode.js').
+     *   TagStructure[]} [otherModeMaps]
+     * @returns {boolean|{otherMode: true}}
+     */
+    utils[
+      /** @type {"tagMightHaveNamePosition"|"tagMightHaveTypePosition"} */ (
+        method
+      )
+    ] = (tagName, otherModeMaps) => {
+      const result = jsdocUtils[
+        /** @type {"tagMightHaveNamePosition"|"tagMightHaveTypePosition"} */
+        (method)
+      ](tagName);
       if (result) {
         return true;
       }
@@ -781,7 +1048,10 @@ const getUtils = (
       }
 
       const otherResult = otherModeMaps.some((otherModeMap) => {
-        return jsdocUtils[method](tagName, otherModeMap);
+        return jsdocUtils[
+          /** @type {"tagMightHaveNamePosition"|"tagMightHaveTypePosition"} */
+          (method)
+        ](tagName, otherModeMap);
       });
 
       return otherResult ? {
@@ -795,8 +1065,20 @@ const getUtils = (
     'tagMustHaveTypePosition',
     'tagMissingRequiredTypeOrNamepath',
   ]) {
-    utils[method] = (tagName, otherModeMaps) => {
-      const result = jsdocUtils[method](tagName);
+    /**
+     * @param {string} tagName
+     * @param {import('./getDefaultTagStructureForMode.js').
+     *   TagStructure[]} otherModeMaps
+     * @returns {}
+     */
+    utils[
+      /** @type {"tagMustHaveNamePosition"|"tagMustHaveTypePosition"|"tagMissingRequiredTypeOrNamepath"} */
+      (method)
+    ] = (tagName, otherModeMaps) => {
+      const result = jsdocUtils[
+        /** @type {"tagMustHaveNamePosition"|"tagMustHaveTypePosition"|"tagMissingRequiredTypeOrNamepath"} */
+        (method)
+      ](tagName);
       if (!result) {
         return false;
       }
@@ -804,7 +1086,10 @@ const getUtils = (
       // if (!otherModeMaps) { return true; }
 
       const otherResult = otherModeMaps.every((otherModeMap) => {
-        return jsdocUtils[method](tagName, otherModeMap);
+        return jsdocUtils[
+          /** @type {"tagMustHaveNamePosition"|"tagMustHaveTypePosition"|"tagMissingRequiredTypeOrNamepath"} */
+          (method)
+        ](tagName, otherModeMap);
       });
 
       return otherResult ? true : {
@@ -819,15 +1104,27 @@ const getUtils = (
     'isNamepathOrUrlReferencingTag',
     'tagMightHaveNamepath',
   ]) {
+    /**
+     * @param {string} tagName
+     * @returns {}
+     */
     utils[method] = (tagName) => {
       return jsdocUtils[method](tagName);
     };
   }
 
+  /**
+   * @param {import('./jsdocUtils.js').ParserMode} mde
+   * @returns {import('./getDefaultTagStructureForMode.js').TagStructure}
+   */
   utils.getTagStructureForMode = (mde) => {
     return jsdocUtils.getTagStructureForMode(mde, settings.structuredTags);
   };
 
+  /**
+   * @param {} tag
+   * @returns {}
+   */
   utils.mayBeUndefinedTypeTag = (tag) => {
     return jsdocUtils.mayBeUndefinedTypeTag(tag, settings.mode);
   };
@@ -836,6 +1133,9 @@ const getUtils = (
     return jsdocUtils.hasValueOrExecutorHasNonEmptyResolveValue(node, anyPromiseAsReturn, allBranches);
   };
 
+  /**
+   * @returns {boolean}
+   */
   utils.hasYieldValue = () => {
     if ([
       'ExportNamedDeclaration', 'ExportDefaultDeclaration',
@@ -846,14 +1146,23 @@ const getUtils = (
     return jsdocUtils.hasYieldValue(node);
   };
 
+  /**
+   * @returns {boolean}
+   */
   utils.hasYieldReturnValue = () => {
     return jsdocUtils.hasYieldValue(node, true);
   };
 
+  /**
+   * @returns {boolean}
+   */
   utils.hasThrowValue = () => {
     return jsdocUtils.hasThrowValue(node);
   };
 
+  /**
+   * @returns {boolean}
+   */
   utils.isAsync = () => {
     return node.async;
   };
@@ -875,10 +1184,18 @@ const getUtils = (
     return jsdocUtils.filterTags(tags, filter);
   };
 
+  /**
+   * @param {import('comment-parser').Spec[]} tags
+   * @returns {}
+   */
   utils.getTagsByType = (tags) => {
     return jsdocUtils.getTagsByType(context, mode, tags, tagNamePreference);
   };
 
+  /**
+   * @param {string} tagName
+   * @returns {boolean}
+   */
   utils.hasOptionTag = (tagName) => {
     const {
       tags,
@@ -947,6 +1264,20 @@ const getUtils = (
   return utils;
 };
 
+/* eslint-disable jsdoc/valid-types -- Old version */
+/**
+ * Settings from ESLint types.
+ *
+ * @typedef {{
+ *   [name: string]: any
+ * }} Settings
+ */
+/* eslint-enable jsdoc/valid-types -- Old version */
+
+/**
+ * @param {import('eslint').Rule.RuleContext} context
+ * @returns {Settings}
+ */
 const getSettings = (context) => {
   /* eslint-disable canonical/sort-keys */
   const settings = {
@@ -1006,11 +1337,22 @@ const getSettings = (context) => {
 /**
  * Create the report function
  *
- * @param {object} context
+ * @param {import('eslint').Rule.RuleContext} context
  * @param {object} commentNode
  */
 const makeReport = (context, commentNode) => {
-  const report = (message, fix = null, jsdocLoc = null, data = null) => {
+  /* eslint-disable jsdoc/valid-types -- Old version */
+  /**
+   * @param {string} message
+   * @param {import('eslint').Rule.ReportFixer|null} fix
+   * @param {} jsdocLoc
+   * @param {undefined|{
+   *   [key: string]: string
+   * }} data
+   * @returns {void}
+   */
+  const report = (message, fix = null, jsdocLoc = null, data = undefined) => {
+    /* eslint-enable jsdoc/valid-types -- Old version */
     let loc;
 
     if (jsdocLoc) {
@@ -1056,11 +1398,10 @@ const makeReport = (context, commentNode) => {
 /* eslint-disable jsdoc/no-undefined-types -- canonical still using an older version where not defined */
 /**
  * @typedef {ReturnType<typeof getUtils>} Utils
- * @typedef {ReturnType<typeof getSettings>} Settings
  * @typedef {(
  *   arg: {
- *     context: object,
- *     sourceCode: object,
+ *     context: import('eslint').Rule.RuleContext,
+ *     sourceCode: import('eslint').SourceCode,
  *     indent: string,
  *     jsdoc: object,
  *     jsdocNode: object,
@@ -1073,6 +1414,21 @@ const makeReport = (context, commentNode) => {
  */
 /* eslint-enable jsdoc/no-undefined-types -- canonical still using an older version where not defined */
 
+/**
+ * @param {} info
+ * @param {} indent
+ * @param {import('comment-parser').Block} jsdoc
+ * @param {} ruleConfig
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {} lines
+ * @param {import('@es-joy/jsdoccomment').Token} jsdocNode
+ * @param {} node
+ * @param {Settings} settings
+ * @param {import('eslint').SourceCode} sourceCode
+ * @param {} iterator
+ * @param {} state
+ * @param {boolean} iteratingAll
+ */
 const iterate = (
   info,
   indent, jsdoc,
@@ -1137,6 +1493,13 @@ const iterate = (
   });
 };
 
+/**
+ * @param {} lines
+ * @param {import('@es-joy/jsdoccomment').Token} jsdocNode
+ * @returns {[indent: string, jsdoc: import('comment-parser').Block & {
+ *   inlineTags: import('@es-joy/jsdoccomment').JsdocInlineTagNoType[]
+ * }]}
+ */
 const getIndentAndJSDoc = function (lines, jsdocNode) {
   const sourceLine = lines[jsdocNode.loc.start.line - 1];
   const indnt = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
@@ -1150,13 +1513,6 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
 /**
  *
  * @typedef {{node: Node, state: StateObject}} NonCommentArgs
- */
-
-/**
- * Our internal dynamic set of utilities.
- *
- * @todo Document
- * @typedef {any} Utils
  */
 
 /**
@@ -1182,6 +1538,7 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
  * @param {boolean} additiveCommentContexts If true, will have a separate
  *   iteration for each matching comment context. Otherwise, will iterate
  *   once if there is a single matching comment context.
+ * @returns {import('eslint').Rule.RuleModule}
  */
 const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContexts) => {
   const trackedJsdocs = new Set();
@@ -1347,6 +1704,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
  *
  * @param {JsdocVisitor} iterator
  * @param {RuleConfig} ruleConfig
+ * @returns {import('eslint').Rule.RuleModule}
  */
 const checkFile = (iterator, ruleConfig) => {
   return {
@@ -1412,6 +1770,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
     return iterateAllJsdocs(iterator, ruleConfig);
   }
 
+  /** @type {import('eslint').Rule.RuleModule} */
   return {
     /**
      * The entrypoint for the JSDoc rule.

@@ -79,7 +79,7 @@ const validateDescription = (
   return paragraphs.some((paragraph, parIdx) => {
     const sentences = extractSentences(paragraph, abbreviationsRegex);
 
-    const fix = (fixer) => {
+    const fix = /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {
       let text = sourceCode.getText(jsdocNode);
 
       if (!/[.:?!]$/u.test(paragraph)) {
