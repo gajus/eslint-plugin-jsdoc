@@ -157,7 +157,7 @@ const checkAlignment = ({
   if (comment !== formatted) {
     report(
       'Expected JSDoc block lines to be aligned.',
-      (fixer) => {
+      /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {
         return fixer.replaceText(jsdocNode, formatted);
       },
     );

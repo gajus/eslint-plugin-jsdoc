@@ -288,7 +288,7 @@ export default {
         }
       }
 
-      const fix = (fixer) => {
+      const fix = /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {
         // Default to one line break if the `minLines`/`maxLines` settings allow
         const lines = settings.minLines === 0 && settings.maxLines >= 1 ? 1 : settings.minLines;
         let baseNode = getReducedASTNode(node, sourceCode);
@@ -451,7 +451,7 @@ export default {
     docs: {
       category: 'Stylistic Issues',
       description: 'Require JSDoc comments',
-      recommended: 'true',
+      recommended: true,
       url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-jsdoc',
     },
 

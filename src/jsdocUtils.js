@@ -1,5 +1,3 @@
-/* eslint-disable jsdoc/no-undefined-types */
-
 import {
   tryParse,
 } from '@es-joy/jsdoccomment';
@@ -16,7 +14,14 @@ import {
 } from './utils/hasReturnValue';
 
 /**
- * @typedef {"jsdoc"|"typescript"|"closure"} ParserMode
+ * @typedef {number} Integer
+ */
+/**
+ * @typedef {import('./utils/hasReturnValue.js').ESTreeOrTypeScriptNode} ESTreeOrTypeScriptNode
+ */
+
+/**
+ * @typedef {"jsdoc"|"typescript"|"closure"|"permissive"} ParserMode
  */
 
 /**
@@ -25,7 +30,7 @@ import {
 let tagStructure;
 
 /**
- * @param {ParserMode|"permissive"} mode
+ * @param {ParserMode} mode
  * @returns {void}
  */
 const setTagStructure = (mode) => {
@@ -33,17 +38,21 @@ const setTagStructure = (mode) => {
 };
 
 /**
+ * @typedef {{
+ *   hasPropertyRest: boolean,
+ *   hasRestElement: boolean,
+ *   names: string[],
+ *   rests: boolean[],
+ * }} FlattendRootInfo
+ */
+
+/**
  * Given a nested array of property names, reduce them to a single array,
  *   appending the name of the root element along the way if present.
  *
  * @param {} params
  * @param {string} root
- * @returns {{
- *   hasPropertyRest: boolean,
- *   hasRestElement: boolean,
- *   names,
- *   rests: boolean[],
- * }}
+ * @returns {FlattendRootInfo}
  */
 const flattenRoots = (params, root = '') => {
   let hasRestElement = false;
@@ -119,7 +128,7 @@ const flattenRoots = (params, root = '') => {
 };
 
 /**
- * @param {object} propSignature
+ * @param {ESTreeOrTypeScriptNode} propSignature
  * @returns {undefined|Array|string}
  */
 const getPropertiesFromPropertySignature = (propSignature) => {
@@ -143,15 +152,28 @@ const getPropertiesFromPropertySignature = (propSignature) => {
 };
 
 /**
- * @param {object} functionNode
+ * @param {ESTreeOrTypeScriptNode} functionNode
  * @param {boolean} [checkDefaultObjects]
  * @returns {Array}
  */
 const getFunctionParameterNames = (
   functionNode, checkDefaultObjects,
 ) => {
-  // eslint-disable-next-line complexity
+  /* eslint-disable complexity -- Temporary */
+  /**
+   * @param {} param
+   * @param {boolean} [isProperty]
+   * @returns {undefined|{
+   *   isRestProperty: boolean|undefined,
+   *   name: string,
+   *   restElement: true
+   * }|[undefined|string, FlattendRootInfo|{
+   *   name: Integer,
+   *   restElement: boolean
+   * }[]]}
+   */
   const getParamName = (param, isProperty) => {
+    /* eslint-enable complexity -- Temporary */
     const hasLeftTypeAnnotation = 'left' in param && 'typeAnnotation' in param.left;
 
     if ('typeAnnotation' in param || hasLeftTypeAnnotation) {
@@ -203,16 +225,22 @@ const getFunctionParameterNames = (
       switch (param.value.type) {
       case 'ArrayPattern':
         return [
-          param.key.name, param.value.elements.map((prop, idx) => {
+          param.key.name,
+          /** @type {import('estree').ArrayPattern} */ (
+            param.value
+          ).elements.map((prop, idx) => {
             return {
               name: idx,
-              restElement: prop.type === 'RestElement',
+              restElement: prop?.type === 'RestElement',
             };
           }),
         ];
       case 'ObjectPattern':
         return [
-          param.key.name, param.value.properties.map((prop) => {
+          param.key.name,
+          /** @type {import('estree').ObjectPattern} */ (
+            param.value
+          ).properties.map((prop) => {
             return getParamName(prop, isProperty);
           }),
         ];
@@ -223,7 +251,9 @@ const getFunctionParameterNames = (
           // Default parameter
           if (checkDefaultObjects && param.value.right.type === 'ObjectExpression') {
             return [
-              param.key.name, param.value.right.properties.map((prop) => {
+              param.key.name, /** @type {import('estree').AssignmentPattern} */ (
+                param.value
+              ).right.properties.map((prop) => {
                 return getParamName(prop, isProperty);
               }),
             ];
@@ -232,16 +262,20 @@ const getFunctionParameterNames = (
           break;
         case 'ObjectPattern':
           return [
-            param.key.name, param.value.left.properties.map((prop) => {
+            param.key.name, /** @type {import('estree').ObjectPattern} */ (
+              param.value.left
+            ).properties.map((prop) => {
               return getParamName(prop, isProperty);
             }),
           ];
         case 'ArrayPattern':
           return [
-            param.key.name, param.value.left.elements.map((prop, idx) => {
+            param.key.name, /** @type {import('estree').ArrayPattern} */ (
+              param.value.left
+            ).elements.map((prop, idx) => {
               return {
                 name: idx,
-                restElement: prop.type === 'RestElement',
+                restElement: prop?.type === 'RestElement',
               };
             }),
           ];
@@ -270,7 +304,11 @@ const getFunctionParameterNames = (
     }
 
     if (param.type === 'ArrayPattern' || param.left?.type === 'ArrayPattern') {
-      const elements = param.elements || param.left?.elements;
+      const elements = /** @type {import('estree').ArrayPattern} */ (
+        param
+      ).elements || /** @type {import('estree').ArrayPattern} */ (
+        param.left
+      )?.elements;
       const roots = elements.map((prop, idx) => {
         return {
           name: `"${idx}"`,
@@ -310,7 +348,7 @@ const getFunctionParameterNames = (
 };
 
 /**
- * @param {Node} functionNode
+ * @param {ESTreeOrTypeScriptNode} functionNode
  * @returns {Integer}
  */
 const hasParams = (functionNode) => {
@@ -322,9 +360,13 @@ const hasParams = (functionNode) => {
  * Gets all names of the target type, including those that refer to a path, e.g.
  * "@param foo; @param foo.bar".
  *
- * @param {object} jsdoc
+ * @param {import('comment-parser').Block} jsdoc
  * @param {string} targetTagName
- * @returns {Array<object>}
+ * @returns {{
+ *   idx: Integer,
+ *   name: string,
+ *   type: string
+ * }[]}
  */
 const getJsdocTagsDeep = (jsdoc, targetTagName) => {
   const ret = [];
@@ -353,8 +395,9 @@ const getJsdocTagsDeep = (jsdoc, targetTagName) => {
 const modeWarnSettings = WarnSettings();
 
 /**
- * @param {string} mode
- * @param context
+ * @param {ParserMode} mode
+ * @param {import('eslint').Rule.RuleContext} context
+ * @returns {import('./tagNames.js').AliasedTags}
  */
 const getTagNamesForMode = (mode, context) => {
   switch (mode) {
@@ -384,11 +427,14 @@ const getTagNamesForMode = (mode, context) => {
 };
 
 /**
- * @param context
+ * @param {import('eslint').Rule.RuleContext} context
  * @param {ParserMode} mode
  * @param {string} name
- * @param {object} tagPreference
- * @returns {string|object}
+ * @param {TagNamePreference} tagPreference
+ * @returns {string|boolean|{
+ *   message: string;
+ *   replacement?: string|undefined;
+ * }}
  */
 const getPreferredTagName = (
   context,
@@ -421,7 +467,7 @@ const getPreferredTagName = (
       }),
   );
 
-  if (Object.prototype.hasOwnProperty.call(tagPreferenceFixed, name)) {
+  if (Object.hasOwn(tagPreferenceFixed, name)) {
     return tagPreferenceFixed[name];
   }
 
@@ -477,22 +523,34 @@ const hasTag = (jsdoc, targetTagName) => {
 /**
  * Get all tags, inline tags and inline tags in tags
  *
- * @param {object} jsdoc
- * @returns {Array}
+ * @param {import('comment-parser').Block & {
+ *   inlineTags: import('@es-joy/jsdoccomment').JsdocInlineTagNoType[]
+ * }} jsdoc
+ * @param {boolean} includeInlineTags
+ * @returns {(import('comment-parser').Spec|
+ *   import('@es-joy/jsdoccomment').JsdocInlineTagNoType)[]}
  */
 const getAllTags = (jsdoc, includeInlineTags) => {
   return includeInlineTags ? [
     ...jsdoc.tags,
     ...jsdoc.inlineTags,
     ...jsdoc.tags.flatMap((tag) => {
-      return tag.inlineTags;
+      return (
+        /**
+         * @type {import('comment-parser').Spec & {
+         *   inlineTags: import('@es-joy/jsdoccomment').JsdocInlineTagNoType[]
+         * }}
+         */ (
+          tag
+        ).inlineTags
+      );
     }),
   ] : jsdoc.tags;
 };
 
 /**
  * @param {object} jsdoc
- * @param {Array} targetTagNames
+ * @param {string[]} targetTagNames
  * @returns {boolean}
  */
 const hasATag = (jsdoc, targetTagNames) => {
@@ -504,9 +562,9 @@ const hasATag = (jsdoc, targetTagNames) => {
 /**
  * Checks if the JSDoc comment has an undefined type.
  *
- * @param {JsDocTag} tag
+ * @param {import('comment-parser').Spec} tag
  *   the tag which should be checked.
- * @param {ParserMode|"permissive"} mode
+ * @param {ParserMode} mode
  * @returns {boolean}
  *   true in case a defined type is undeclared; otherwise false.
  */
@@ -555,21 +613,34 @@ const mayBeUndefinedTypeTag = (tag, mode) => {
 };
 
 /**
- * @param map
- * @param tag
- * @returns {Map}
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} map
+ * @param {string} tag
+ * @returns {Map<string, string | boolean>}
  */
 const ensureMap = (map, tag) => {
   if (!map.has(tag)) {
     map.set(tag, new Map());
   }
 
-  return map.get(tag);
+  return /** @type {Map<string, string | boolean>} */ (map.get(tag));
 };
 
+/* eslint-disable jsdoc/valid-types -- Older non-TS version */
 /**
- * @param structuredTags
- * @param tagMap
+ * @typedef {{
+ *   [tag: string]: {
+ *     name: string|boolean,
+ *     type: string[]|boolean,
+ *     required: string[]
+ *   }
+ * }} StructuredTags
+ */
+/* eslint-enable jsdoc/valid-types -- Older non-TS version */
+
+/**
+ * @param {StructuredTags} structuredTags
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
+ * @returns {void}
  */
 const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
   for (const [
@@ -613,9 +684,9 @@ const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
 };
 
 /**
- * @param mode
- * @param structuredTags
- * @returns {Map}
+ * @param {ParserMode} mode
+ * @param {StructuredTags} structuredTags
+ * @returns {import('./getDefaultTagStructureForMode.js').TagStructure}
  */
 const getTagStructureForMode = (mode, structuredTags) => {
   const tagStruct = getDefaultTagStructureForMode(mode);
@@ -630,8 +701,8 @@ const getTagStructureForMode = (mode, structuredTags) => {
 };
 
 /**
- * @param tag
- * @param {Map} tagMap
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const isNamepathDefiningTag = (tag, tagMap = tagStructure) => {
@@ -641,8 +712,8 @@ const isNamepathDefiningTag = (tag, tagMap = tagStructure) => {
 };
 
 /**
- * @param tag
- * @param {Map} tagMap
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const isNamepathReferencingTag = (tag, tagMap = tagStructure) => {
@@ -651,8 +722,8 @@ const isNamepathReferencingTag = (tag, tagMap = tagStructure) => {
 };
 
 /**
- * @param tag
- * @param {Map} tagMap
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const isNamepathOrUrlReferencingTag = (tag, tagMap = tagStructure) => {
@@ -661,8 +732,8 @@ const isNamepathOrUrlReferencingTag = (tag, tagMap = tagStructure) => {
 };
 
 /**
- * @param tag
- * @param {Map} tagMap
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const tagMustHaveTypePosition = (tag, tagMap = tagStructure) => {
@@ -672,9 +743,9 @@ const tagMustHaveTypePosition = (tag, tagMap = tagStructure) => {
 };
 
 /**
- * @param tag
- * @param {Map} tagMap
- * @returns {boolean}
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
+ * @returns {boolean|string}
  */
 const tagMightHaveTypePosition = (tag, tagMap = tagStructure) => {
   if (tagMustHaveTypePosition(tag, tagMap)) {
@@ -693,8 +764,8 @@ const namepathTypes = new Set([
 ]);
 
 /**
- * @param tag
- * @param {Map} tagMap
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
@@ -706,8 +777,8 @@ const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
 };
 
 /**
- * @param tag
- * @param {Map} tagMap
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const tagMightHaveNamepath = (tag, tagMap = tagStructure) => {
@@ -717,8 +788,8 @@ const tagMightHaveNamepath = (tag, tagMap = tagStructure) => {
 };
 
 /**
- * @param tag
- * @param {Map} tagMap
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const tagMustHaveNamePosition = (tag, tagMap = tagStructure) => {
@@ -729,7 +800,7 @@ const tagMustHaveNamePosition = (tag, tagMap = tagStructure) => {
 
 /**
  * @param tag
- * @param {Map} tagMap
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const tagMightHaveEitherTypeOrNamePosition = (tag, tagMap) => {
@@ -737,8 +808,8 @@ const tagMightHaveEitherTypeOrNamePosition = (tag, tagMap) => {
 };
 
 /**
- * @param tag
- * @param {Map} tagMap
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const tagMustHaveEitherTypeOrNamePosition = (tag, tagMap) => {
@@ -749,7 +820,7 @@ const tagMustHaveEitherTypeOrNamePosition = (tag, tagMap) => {
 
 /**
  * @param tag
- * @param {Map} tagMap
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const tagMissingRequiredTypeOrNamepath = (tag, tagMap = tagStructure) => {
@@ -767,8 +838,14 @@ const tagMissingRequiredTypeOrNamepath = (tag, tagMap = tagStructure) => {
   return mustHaveEither && !hasEither && !mustHaveTypePosition;
 };
 
-// eslint-disable-next-line complexity
+/* eslint-disable complexity -- Temporary */
+/**
+ * @param {ESTreeOrTypeScriptNode} node
+ * @param {boolean} [checkYieldReturnValue]
+ * @returns {boolean}
+ */
 const hasNonFunctionYield = (node, checkYieldReturnValue) => {
+  /* eslint-enable complexity -- Temporary */
   if (!node) {
     return false;
   }
@@ -941,7 +1018,8 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
 /**
  * Checks if a node has a return statement. Void return does not count.
  *
- * @param {object} node
+ * @param {ESTreeOrTypeScriptNode} node
+ * @param {boolean} [checkYieldReturnValue]
  * @returns {boolean}
  */
 const hasYieldValue = (node, checkYieldReturnValue) => {
@@ -953,8 +1031,8 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
 /**
  * Checks if a node has a throws statement.
  *
- * @param {object} node
- * @param {boolean} innerFunction
+ * @param {ESTreeOrTypeScriptNode} node
+ * @param {boolean} [innerFunction]
  * @returns {boolean}
  */
 // eslint-disable-next-line complexity
@@ -1033,8 +1111,8 @@ const isInlineTag = (tag) => {
  *
  * @see {https://github.com/google/closure-compiler/wiki/Generic-Types}
  * @see {https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#template}
- * @param {JsDocTag} tag
- * @returns {Array<string>}
+ * @param {import('comment-parser').Spec} tag
+ * @returns {string[]}
  */
 const parseClosureTemplateTag = (tag) => {
   return tag.name
@@ -1053,7 +1131,7 @@ const parseClosureTemplateTag = (tag) => {
  *   contexts designated by the rule. Returns an array of
  *   ESTree AST types, indicating allowable contexts.
  *
- * @param {*} context
+ * @param {import('eslint').Rule.RuleContext} context
  * @param {DefaultContexts} defaultContexts
  * @param settings
  * @returns {string[]}
@@ -1134,8 +1212,30 @@ const tagsWithNamesAndDescriptions = new Set([
   'returns', 'return',
 ]);
 
+/* eslint-disable jsdoc/valid-types -- Old version */
+/**
+ * @typedef {{
+ *   [key: string]: false|
+ *     {message: string, replacement?: string}
+ * }} TagNamePreference
+ */
+/* eslint-enable jsdoc/valid-types -- Old version */
+
+/**
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {ParserMode} mode
+ * @param {import('comment-parser').Spec[]} tags
+ * @param {TagNamePreference} tagPreference
+ * @returns {{
+ *   tagsWithNames: import('comment-parser').Spec[],
+ *   tagsWithoutNames: import('comment-parser').Spec[]
+ * }}
+ */
 const getTagsByType = (context, mode, tags, tagPreference) => {
   const descName = getPreferredTagName(context, mode, 'description', tagPreference);
+  /**
+   * @type {import('comment-parser').Spec[]}
+   */
   const tagsWithoutNames = [];
   const tagsWithNames = filterTags(tags, (tag) => {
     const {
@@ -1155,23 +1255,43 @@ const getTagsByType = (context, mode, tags, tagPreference) => {
   };
 };
 
+/**
+ * @param {import('eslint').SourceCode} sourceCode
+ * @returns {string}
+ */
 const getIndent = (sourceCode) => {
   return (sourceCode.text.match(/^\n*([ \t]+)/u)?.[1] ?? '') + ' ';
 };
 
+/**
+ * @param {ESTreeOrTypeScriptNode} node
+ * @returns {boolean}
+ */
 const isConstructor = (node) => {
   return node?.type === 'MethodDefinition' && node.kind === 'constructor' ||
     node?.parent?.kind === 'constructor';
 };
 
+/**
+ * @param {ESTreeOrTypeScriptNode} node
+ * @returns {boolean}
+ */
 const isGetter = (node) => {
   return node && node.parent?.kind === 'get';
 };
 
+/**
+ * @param {ESTreeOrTypeScriptNode} node
+ * @returns {boolean}
+ */
 const isSetter = (node) => {
   return node && node.parent?.kind === 'set';
 };
 
+/**
+ * @param {ESTreeOrTypeScriptNode} node
+ * @returns {boolean}
+ */
 const hasAccessorPair = (node) => {
   const {
     type,
@@ -1194,6 +1314,13 @@ const hasAccessorPair = (node) => {
   });
 };
 
+/**
+ * @param {import('comment-parser').Block} jsdoc
+ * @param {ESTreeOrTypeScriptNode} node
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {} schema
+ * @returns {boolean}
+ */
 const exemptSpeciaMethods = (jsdoc, node, context, schema) => {
   const hasSchemaOption = (prop) => {
     const schemaProperties = schema[0].properties;

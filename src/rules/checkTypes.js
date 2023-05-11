@@ -375,7 +375,7 @@ export default iterateJsdoc(({
       const fixedType = stringify(typeAst);
 
       /**
-       * @param {any} fixer The ESLint fixer
+       * @param {import('eslint').Rule.ReportFixer} fixer The ESLint fixer
        * @returns {string}
        */
       const fix = (fixer) => {

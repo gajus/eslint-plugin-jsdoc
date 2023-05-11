@@ -41,6 +41,7 @@ export default iterateJsdoc(({
       settings.mode === 'closure' && emptyIfClosure.has(tagName) ||
       settings.mode !== 'closure' && emptyIfNotClosure.has(tagName);
   });
+
   for (const tag of emptyTags) {
     const content = tag.name || tag.description || tag.type;
     if (content.trim()) {
