@@ -29,8 +29,8 @@ const strictNativeTypes = [
  * @param {string} preferred The preferred type
  * @param {boolean} isGenericMatch
  * @param {string} typeNodeName
- * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} node
- * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} parentNode
+ * @param {import('jsdoc-type-pratt-parser').NonRootResult} node
+ * @param {import('jsdoc-type-pratt-parser').NonRootResult} parentNode
  * @returns {void}
  */
 const adjustNames = (type, preferred, isGenericMatch, typeNodeName, node, parentNode) => {
@@ -73,6 +73,10 @@ const adjustNames = (type, preferred, isGenericMatch, typeNodeName, node, parent
   }
 };
 
+/**
+ * @param {boolean} upperCase
+ * @returns {string}
+ */
 const getMessage = (upperCase) => {
   return 'Use object shorthand or index signatures instead of ' +
   '`' + (upperCase ? 'O' : 'o') + 'bject`, e.g., `{[key: string]: string}`';
@@ -267,8 +271,8 @@ export default iterateJsdoc(({
    * @param {string} nameInTag
    * @param {number} idx
    * @param {string} property
-   * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} node
-   * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} parentNode
+   * @param {import('jsdoc-type-pratt-parser').NonRootResult} node
+   * @param {import('jsdoc-type-pratt-parser').NonRootResult} parentNode
    * @param {string[]} invalidTypes
    * @returns {void}
    */

@@ -47,13 +47,29 @@ const setTagStructure = (mode) => {
  */
 
 /**
+ * @typedef {string|{
+ *   isRestProperty: boolean,
+ *   restElement: boolean,
+ *   name: string
+ * }|[string, {
+ *   hasPropertyRest: boolean,
+ *   hasRestElement: boolean,
+ *   names: string[],
+ *   rests: boolean[],
+ * }]|[string, string[]]} ParamInfo
+ */
+
+/**
  * Given a nested array of property names, reduce them to a single array,
  *   appending the name of the root element along the way if present.
  *
- * @param {} params
- * @param {string} root
+ * @callback FlattenRoots
+ * @param {ParamInfo[]} params
+ * @param {string} [root]
  * @returns {FlattendRootInfo}
  */
+
+/** @type {FlattenRoots} */
 const flattenRoots = (params, root = '') => {
   let hasRestElement = false;
   let hasPropertyRest = false;
@@ -63,61 +79,68 @@ const flattenRoots = (params, root = '') => {
    */
   const rests = [];
 
-  const names = params.reduce((acc, cur) => {
-    if (Array.isArray(cur)) {
-      let nms;
-      if (Array.isArray(cur[1])) {
-        nms = cur[1];
-      } else {
-        if (cur[1].hasRestElement) {
+  const names = params.reduce(
+    /**
+     * @param {string[]} acc
+     * @param {ParamInfo} cur
+     * @returns {string[]}
+     */
+    (acc, cur) => {
+      if (Array.isArray(cur)) {
+        let nms;
+        if (Array.isArray(cur[1])) {
+          nms = cur[1];
+        } else {
+          if (cur[1].hasRestElement) {
+            hasRestElement = true;
+          }
+
+          if (cur[1].hasPropertyRest) {
+            hasPropertyRest = true;
+          }
+
+          nms = cur[1].names;
+        }
+
+        const flattened = flattenRoots(nms, root ? `${root}.${cur[0]}` : cur[0]);
+        if (flattened.hasRestElement) {
           hasRestElement = true;
         }
 
-        if (cur[1].hasPropertyRest) {
+        if (flattened.hasPropertyRest) {
           hasPropertyRest = true;
         }
 
-        nms = cur[1].names;
+        const inner = [
+          root ? `${root}.${cur[0]}` : cur[0],
+          ...flattened.names,
+        ].filter(Boolean);
+        rests.push(false, ...flattened.rests);
+
+        return acc.concat(inner);
       }
 
-      const flattened = flattenRoots(nms, root ? `${root}.${cur[0]}` : cur[0]);
-      if (flattened.hasRestElement) {
-        hasRestElement = true;
-      }
+      if (typeof cur === 'object') {
+        if (cur.isRestProperty) {
+          hasPropertyRest = true;
+          rests.push(true);
+        } else {
+          rests.push(false);
+        }
 
-      if (flattened.hasPropertyRest) {
-        hasPropertyRest = true;
-      }
+        if (cur.restElement) {
+          hasRestElement = true;
+        }
 
-      const inner = [
-        root ? `${root}.${cur[0]}` : cur[0],
-        ...flattened.names,
-      ].filter(Boolean);
-      rests.push(false, ...flattened.rests);
-
-      return acc.concat(inner);
-    }
-
-    if (typeof cur === 'object') {
-      if (cur.isRestProperty) {
-        hasPropertyRest = true;
-        rests.push(true);
-      } else {
+        acc.push(root ? `${root}.${cur.name}` : cur.name);
+      } else if (typeof cur !== 'undefined') {
         rests.push(false);
+        acc.push(root ? `${root}.${cur}` : cur);
       }
 
-      if (cur.restElement) {
-        hasRestElement = true;
-      }
-
-      acc.push(root ? `${root}.${cur.name}` : cur.name);
-    } else if (typeof cur !== 'undefined') {
-      rests.push(false);
-      acc.push(root ? `${root}.${cur}` : cur);
-    }
-
-    return acc;
-  }, []);
+      return acc;
+    }, [],
+  );
 
   return {
     hasPropertyRest,
@@ -128,8 +151,11 @@ const flattenRoots = (params, root = '') => {
 };
 
 /**
- * @param {ESTreeOrTypeScriptNode} propSignature
- * @returns {undefined|Array|string}
+ * @param {import('@typescript-eslint/types').TSESTree.TSIndexSignature|
+ *  import('@typescript-eslint/types').TSESTree.TSConstructSignatureDeclaration|
+ *  import('@typescript-eslint/types').TSESTree.TSCallSignatureDeclaration|
+ *  import('@typescript-eslint/types').TSESTree.TSPropertySignature} propSignature
+ * @returns {undefined|string|[string, string[]]}
  */
 const getPropertiesFromPropertySignature = (propSignature) => {
   if (
@@ -142,42 +168,65 @@ const getPropertiesFromPropertySignature = (propSignature) => {
 
   if (propSignature.typeAnnotation && propSignature.typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
     return [
-      propSignature.key.name, propSignature.typeAnnotation.typeAnnotation.members.map((member) => {
-        return getPropertiesFromPropertySignature(member);
+      /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+        propSignature.key
+      ).name,
+      propSignature.typeAnnotation.typeAnnotation.members.map((member) => {
+        return /** @type {string} */ (
+          getPropertiesFromPropertySignature(
+            /** @type {import('@typescript-eslint/types').TSESTree.TSPropertySignature} */ (
+              member
+            ),
+          )
+        );
       }),
     ];
   }
 
-  return propSignature.key.name;
+  return /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+    propSignature.key
+  ).name;
 };
+
+/**
+ * @typedef {undefined|{
+ *   isRestProperty: boolean|undefined,
+ *   name: string,
+ *   restElement: true
+ * }|[undefined|string, FlattendRootInfo|{
+ *   name: Integer,
+ *   restElement: boolean
+ * }[]]} ParamNameInfo
+ */
 
 /**
  * @param {ESTreeOrTypeScriptNode} functionNode
  * @param {boolean} [checkDefaultObjects]
- * @returns {Array}
+ * @throws {Error}
+ * @returns {ParamNameInfo[]}
  */
 const getFunctionParameterNames = (
   functionNode, checkDefaultObjects,
 ) => {
   /* eslint-disable complexity -- Temporary */
   /**
-   * @param {} param
+   * @param {import('estree').Identifier|import('estree').AssignmentPattern|
+   *   import('estree').ObjectPattern|import('estree').Property|
+   *   import('estree').RestElement|import('estree').ArrayPattern|
+   *   import('@typescript-eslint/types').TSESTree.TSParameterProperty
+   * } param
    * @param {boolean} [isProperty]
-   * @returns {undefined|{
-   *   isRestProperty: boolean|undefined,
-   *   name: string,
-   *   restElement: true
-   * }|[undefined|string, FlattendRootInfo|{
-   *   name: Integer,
-   *   restElement: boolean
-   * }[]]}
+   * @returns {ParamNameInfo}
    */
   const getParamName = (param, isProperty) => {
     /* eslint-enable complexity -- Temporary */
     const hasLeftTypeAnnotation = 'left' in param && 'typeAnnotation' in param.left;
 
     if ('typeAnnotation' in param || hasLeftTypeAnnotation) {
-      const typeAnnotation = hasLeftTypeAnnotation ? param.left.typeAnnotation : param.typeAnnotation;
+      const typeAnnotation = hasLeftTypeAnnotation ?
+        /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+          param.left
+        ).typeAnnotation : param.typeAnnotation;
 
       if (typeAnnotation?.typeAnnotation?.type === 'TSTypeLiteral') {
         const propertyNames = typeAnnotation.typeAnnotation.members.map((member) => {
@@ -395,7 +444,7 @@ const getJsdocTagsDeep = (jsdoc, targetTagName) => {
 const modeWarnSettings = WarnSettings();
 
 /**
- * @param {ParserMode} mode
+ * @param {ParserMode|undefined} mode
  * @param {import('eslint').Rule.RuleContext} context
  * @returns {import('./tagNames.js').AliasedTags}
  */
@@ -428,7 +477,7 @@ const getTagNamesForMode = (mode, context) => {
 
 /**
  * @param {import('eslint').Rule.RuleContext} context
- * @param {ParserMode} mode
+ * @param {ParserMode|undefined} mode
  * @param {string} name
  * @param {TagNamePreference} tagPreference
  * @returns {string|boolean|{
@@ -486,10 +535,10 @@ const getPreferredTagName = (
 };
 
 /**
- * @param context
- * @param {ParserMode} mode
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {ParserMode|undefined} mode
  * @param {string} name
- * @param {Array} definedTags
+ * @param {string[]} definedTags
  * @returns {boolean}
  */
 const isValidTag = (
@@ -608,7 +657,7 @@ const hasATag = (jsdoc, targetTagNames) => {
 /**
  * Checks if the JSDoc comment has an undefined type.
  *
- * @param {import('comment-parser').Spec} tag
+ * @param {import('comment-parser').Spec|null|undefined} tag
  *   the tag which should be checked.
  * @param {ParserMode} mode
  * @returns {boolean}
@@ -856,18 +905,18 @@ const tagMightHaveEitherTypeOrNamePosition = (tag, tagMap) => {
 /**
  * @param {string} tag
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
- * @returns {boolean}
+ * @returns {boolean|undefined}
  */
 const tagMustHaveEitherTypeOrNamePosition = (tag, tagMap) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  return tagStruct.get('typeOrNameRequired');
+  return /** @type {boolean} */ (tagStruct.get('typeOrNameRequired'));
 };
 
 /**
- * @param tag
+ * @param {import('comment-parser').Spec} tag
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
- * @returns {boolean}
+ * @returns {boolean|undefined}
  */
 const tagMissingRequiredTypeOrNamepath = (tag, tagMap = tagStructure) => {
   const mustHaveTypePosition = tagMustHaveTypePosition(tag.tag, tagMap);
@@ -1179,7 +1228,7 @@ const parseClosureTemplateTag = (tag) => {
  *
  * @param {import('eslint').Rule.RuleContext} context
  * @param {DefaultContexts} defaultContexts
- * @param settings
+ * @param {import('./iterateJsdoc.js').Settings} settings
  * @returns {string[]}
  */
 const enforcedContexts = (context, defaultContexts, settings) => {
@@ -1195,8 +1244,8 @@ const enforcedContexts = (context, defaultContexts, settings) => {
 
 /**
  * @param {string[]} contexts
- * @param {Function} checkJsdoc
- * @param {Function} handler
+ * @param {import('./iterateJsdoc.js').CheckJsdoc} checkJsdoc
+ * @param {Function} [handler]
  */
 const getContextObject = (contexts, checkJsdoc, handler) => {
   const properties = {};
@@ -1244,6 +1293,11 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
   return properties;
 };
 
+/**
+ * @param {import('comment-parser').Spec[]} tags
+ * @param {(tag: import('comment-parser').Spec) => boolean} filter
+ * @returns {import('comment-parser').Spec[]}
+ */
 const filterTags = (tags, filter) => {
   return tags.filter((tag) => {
     return filter(tag);
@@ -1269,7 +1323,7 @@ const tagsWithNamesAndDescriptions = new Set([
 
 /**
  * @param {import('eslint').Rule.RuleContext} context
- * @param {ParserMode} mode
+ * @param {ParserMode|undefined} mode
  * @param {import('comment-parser').Spec[]} tags
  * @param {TagNamePreference} tagPreference
  * @returns {{
@@ -1335,7 +1389,7 @@ const isSetter = (node) => {
 };
 
 /**
- * @param {ESTreeOrTypeScriptNode} node
+ * @param {import('eslint').Rule.Node} node
  * @returns {boolean}
  */
 const hasAccessorPair = (node) => {
@@ -1362,12 +1416,16 @@ const hasAccessorPair = (node) => {
 
 /**
  * @param {import('comment-parser').Block} jsdoc
- * @param {ESTreeOrTypeScriptNode} node
+ * @param {import('eslint').Rule.Node} node
  * @param {import('eslint').Rule.RuleContext} context
- * @param {} schema
+ * @param {import('json-schema').JSONSchema4} schema
  * @returns {boolean}
  */
 const exemptSpeciaMethods = (jsdoc, node, context, schema) => {
+  /**
+   * @param {"checkGetters"|"checkSetters"|"checkConstructors"} prop
+   * @returns {boolean|"no-setter"|"no-getter"}
+   */
   const hasSchemaOption = (prop) => {
     const schemaProperties = schema[0].properties;
 
@@ -1420,10 +1478,13 @@ const comparePaths = (name) => {
 };
 
 /**
+ * @callback PathDoesNotBeginWith
  * @param {string} name
  * @param {string} otherPathName
  * @returns {boolean}
  */
+
+/** @type {PathDoesNotBeginWith} */
 const pathDoesNotBeginWith = (name, otherPathName) => {
   return !name.startsWith(otherPathName) &&
     !dropPathSegmentQuotes(name).startsWith(dropPathSegmentQuotes(otherPathName));
@@ -1431,7 +1492,7 @@ const pathDoesNotBeginWith = (name, otherPathName) => {
 
 /**
  * @param {string} regexString
- * @param {string} requiredFlags
+ * @param {string} [requiredFlags]
  * @returns {RegExp}
  */
 const getRegexFromString = (regexString, requiredFlags) => {

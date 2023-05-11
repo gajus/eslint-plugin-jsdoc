@@ -1,5 +1,10 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+/**
+ * @param {string} str
+ * @param {string[]} excludeTags
+ * @returns {string}
+ */
 const maskExcludedContent = (str, excludeTags) => {
   const regContent = new RegExp(`([ \\t]+\\*)[ \\t]@(?:${excludeTags.join('|')})(?=[ \\n])([\\w|\\W]*?\\n)(?=[ \\t]*\\*(?:[ \\t]*@\\w+\\s|\\/))`, 'gu');
 
@@ -8,6 +13,10 @@ const maskExcludedContent = (str, excludeTags) => {
   });
 };
 
+/**
+ * @param {string} str
+ * @returns {string}
+ */
 const maskCodeBlocks = (str) => {
   const regContent = /([ \t]+\*)[ \t]```[^\n]*?([\w|\W]*?\n)(?=[ \t]*\*(?:[ \t]*(?:```|@\w+\s)|\/))/gu;
 
@@ -23,7 +32,7 @@ export default iterateJsdoc(({
   context,
 }) => {
   const options = context.options[0] || {};
-  const {
+  const /** @type {{excludeTags: string[]}} */ {
     excludeTags = [
       'example',
     ],

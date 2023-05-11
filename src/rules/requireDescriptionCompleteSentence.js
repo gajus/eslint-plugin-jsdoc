@@ -9,10 +9,19 @@ const otherDescriptiveTags = new Set([
   'deprecated', 'throws', 'exception', 'yields', 'yield',
 ]);
 
+/**
+ * @param {string} text
+ * @returns {string[]}
+ */
 const extractParagraphs = (text) => {
   return text.split(/(?<![;:])\n\n/u);
 };
 
+/**
+ * @param {string} text
+ * @param {string|RegExp} abbreviationsRegex
+ * @returns {string[]}
+ */
 const extractSentences = (text, abbreviationsRegex) => {
   const txt = text
     // Remove all {} tags.
@@ -38,7 +47,12 @@ const extractSentences = (text, abbreviationsRegex) => {
     });
 };
 
+/**
+ * @param {string} text
+ * @returns {boolean}
+ */
 const isNewLinePrecededByAPeriod = (text) => {
+  /** @type {boolean} */
   let lastLineEndsSentence;
 
   const lines = text.split('\n');
@@ -54,18 +68,42 @@ const isNewLinePrecededByAPeriod = (text) => {
   });
 };
 
+/**
+ * @param {string} str
+ * @returns {boolean}
+ */
 const isCapitalized = (str) => {
   return str[0] === str[0].toUpperCase();
 };
 
+/**
+ * @param {string} str
+ * @returns {boolean}
+ */
 const isTable = (str) => {
-  return str.charAt() === '|';
+  return str.charAt(0) === '|';
 };
 
+/**
+ * @param {string} str
+ * @returns {string}
+ */
 const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
+/**
+ * @param {string} description
+ * @param {import('../iterateJsdoc.js').Report} reportOrig
+ * @param {import('eslint').Rule.Node} jsdocNode
+ * @param {string|RegExp} abbreviationsRegex
+ * @param {import('eslint').SourceCode} sourceCode
+ * @param {import('comment-parser').Spec|{
+ *   line: import('../iterateJsdoc.js').Integer
+ * }} tag
+ * @param {boolean} newlineBeforeCapsAssumesBadSentenceEnd
+ * @returns {boolean}
+ */
 const validateDescription = (
   description, reportOrig, jsdocNode, abbreviationsRegex,
   sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd,
@@ -84,8 +122,10 @@ const validateDescription = (
 
       if (!/[.:?!]$/u.test(paragraph)) {
         const line = paragraph.split('\n').filter(Boolean).pop();
-
-        text = text.replace(new RegExp(`${escapeStringRegexp(line)}$`, 'mu'), `${line}.`);
+        text = text.replace(new RegExp(`${escapeStringRegexp(
+          /** @type {string} */
+          (line),
+        )}$`, 'mu'), `${line}.`);
       }
 
       for (const sentence of sentences.filter((sentence_) => {
@@ -94,7 +134,7 @@ const validateDescription = (
       })) {
         const beginning = sentence.split('\n')[0];
 
-        if (tag.tag) {
+        if ('tag' in tag && tag.tag) {
           const reg = new RegExp(`(@${escapeStringRegexp(tag.tag)}.*)${escapeStringRegexp(beginning)}`, 'u');
 
           text = text.replace(reg, (_$0, $1) => {
@@ -108,11 +148,29 @@ const validateDescription = (
       return fixer.replaceText(jsdocNode, text);
     };
 
+    /**
+     * @param {string} msg
+     * @param {import('eslint').Rule.ReportFixer | null | undefined} fixer
+     * @param {{
+     *   line?: number | undefined;
+     *   column?: number | undefined;
+     * } | (import('comment-parser').Spec & {
+     *   line?: number | undefined;
+     *   column?: number | undefined;
+     * })} tagObj
+     * @returns {void}
+     */
     const report = (msg, fixer, tagObj) => {
       if ('line' in tagObj) {
-        tagObj.line += parIdx * 2;
+        /**
+         * @type {{
+         *   line: number;
+         * }}
+         */ (tagObj).line += parIdx * 2;
       } else {
-        tagObj.source[0].number += parIdx * 2;
+        /** @type {import('comment-parser').Spec} */ (
+          tagObj
+        ).source[0].number += parIdx * 2;
       }
 
       // Avoid errors if old column doesn't exist here
@@ -136,7 +194,6 @@ const validateDescription = (
 
     if (!/(?:[.?!|]|```)\s*$/u.test(paragraphNoAbbreviations)) {
       report('Sentences must end with a period.', fix, tag);
-
       return true;
     }
 
@@ -158,11 +215,10 @@ export default iterateJsdoc(({
   jsdocNode,
   utils,
 }) => {
-  const options = context.options[0] || {};
-  const {
+  const /** @type {{abbreviations: string[], newlineBeforeCapsAssumesBadSentenceEnd: boolean}} */ {
     abbreviations = [],
     newlineBeforeCapsAssumesBadSentenceEnd = false,
-  } = options;
+  } = context.options[0] || {};
 
   const abbreviationsRegex = abbreviations.length ?
     new RegExp('\\b' + abbreviations.map((abbreviation) => {
@@ -195,7 +251,10 @@ export default iterateJsdoc(({
     index,
     length,
   } of indices) {
-    description = description.slice(0, index) + description.slice(index + length);
+    description = description.slice(0, index) +
+      description.slice(/** @type {import('../iterateJsdoc.js').Integer} */ (
+        index
+      ) + length);
   }
 
   if (validateDescription(description, report, jsdocNode, abbreviationsRegex, sourceCode, {
@@ -226,7 +285,9 @@ export default iterateJsdoc(({
   });
 
   tagsWithNames.some((tag) => {
-    const desc = utils.getTagDescription(tag).replace(/^- /u, '').trimEnd();
+    const desc = /** @type {string} */ (
+      utils.getTagDescription(tag)
+    ).replace(/^- /u, '').trimEnd();
 
     return validateDescription(desc, report, jsdocNode, abbreviationsRegex, sourceCode, tag, newlineBeforeCapsAssumesBadSentenceEnd);
   });

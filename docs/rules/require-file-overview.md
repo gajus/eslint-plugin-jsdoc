@@ -229,6 +229,13 @@ function quux () {
  */
 // "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"file":{"initialCommentsOnly":true,"preventDuplicates":true}}}]
 // Message: Duplicate @file
+
+/**
+ *
+ */
+function quux () {}
+// Settings: {"jsdoc":{"tagNamePreference":{"file":{"replacement":"fileoverview"}}}}
+// Message: Missing @fileoverview
 ````
 
 

@@ -70,13 +70,21 @@ export default iterateJsdoc(({
   settings,
   jsdocNode,
 }) => {
-  const {
-    definedTags = [],
-    enableFixer = true,
-    jsxTags,
-    typed,
-  } = context.options[0] || {};
+  const
+    /**
+     * @type {{
+     *   definedTags: string[],
+     *   enableFixer: boolean,
+     *   jsxTags: boolean,
+     *   typed: boolean
+     }} */ {
+      definedTags = [],
+      enableFixer = true,
+      jsxTags,
+      typed,
+    } = context.options[0] || {};
 
+  /** @type {(string|undefined)[]} */
   let definedPreferredTags = [];
   const {
     tagNamePreference,
@@ -108,12 +116,24 @@ export default iterateJsdoc(({
       });
   }
 
+  /**
+   * @param {import('eslint').Rule.Node} subNode
+   * @returns {boolean}
+   */
   const isInAmbientContext = (subNode) => {
     return subNode.type === 'Program' ?
       context.getFilename().endsWith('.d.ts') :
-      Boolean(subNode.declare) || isInAmbientContext(subNode.parent);
+      Boolean(
+        /** @type {import('@typescript-eslint/types').TSESTree.VariableDeclaration} */ (
+          subNode
+        ).declare,
+      ) || isInAmbientContext(subNode.parent);
   };
 
+  /**
+   * @param {import('comment-parser').Spec} jsdocTag
+   * @returns {boolean}
+   */
   const tagIsRedundantWhenTyped = (jsdocTag) => {
     if (!typedTagsUnnecessaryOutsideDeclare.has(jsdocTag.tag)) {
       return false;
@@ -129,14 +149,23 @@ export default iterateJsdoc(({
       return false;
     }
 
-    if (isInAmbientContext(node)) {
+    if (isInAmbientContext(/** @type {import('eslint').Rule.Node} */ (node))) {
       return false;
     }
 
     return true;
   };
 
+  /* eslint-disable jsdoc/no-undefined-types -- TS */
+  /**
+   * @param {string} message
+   * @param {import('comment-parser').Spec} jsdocTag
+   * @param {import('../iterateJsdoc.js').Integer} tagIndex
+   * @param {Partial<import('comment-parser').Tokens>} [additionalTagChanges]
+   * @returns {void}
+   */
   const reportWithTagRemovalFixer = (message, jsdocTag, tagIndex, additionalTagChanges) => {
+    /* eslint-enable jsdoc/no-undefined-types -- TS */
     utils.reportJSDoc(message, jsdocTag, enableFixer ? () => {
       if (jsdocTag.description.trim()) {
         utils.changeTag(jsdocTag, {
@@ -152,22 +181,40 @@ export default iterateJsdoc(({
     } : null, true);
   };
 
+  /**
+   * @param {import('comment-parser').Spec} jsdocTag
+   * @param {import('../iterateJsdoc.js').Integer} tagIndex
+   * @returns {boolean}
+   */
   const checkTagForTypedValidity = (jsdocTag, tagIndex) => {
     if (typedTagsAlwaysUnnecessary.has(jsdocTag.tag)) {
-      reportWithTagRemovalFixer(`'@${jsdocTag.tag}' is redundant when using a type system.`, jsdocTag, tagIndex, {
-        postTag: '',
-        tag: '',
-      });
+      reportWithTagRemovalFixer(
+        `'@${jsdocTag.tag}' is redundant when using a type system.`,
+        jsdocTag,
+        tagIndex,
+        {
+          postTag: '',
+          tag: '',
+        },
+      );
       return true;
     }
 
     if (tagIsRedundantWhenTyped(jsdocTag)) {
-      reportWithTagRemovalFixer(`'@${jsdocTag.tag}' is redundant outside of ambient (\`declare\`/\`.d.ts\`) contexts when using a type system.`, jsdocTag, tagIndex);
+      reportWithTagRemovalFixer(
+        `'@${jsdocTag.tag}' is redundant outside of ambient (\`declare\`/\`.d.ts\`) contexts when using a type system.`,
+        jsdocTag,
+        tagIndex,
+      );
       return true;
     }
 
     if (typedTagsNeedingName.has(jsdocTag.tag) && !jsdocTag.name) {
-      reportWithTagRemovalFixer(`'@${jsdocTag.tag}' without a name is redundant when using a type system.`, jsdocTag, tagIndex);
+      reportWithTagRemovalFixer(
+        `'@${jsdocTag.tag}' without a name is redundant when using a type system.`,
+        jsdocTag,
+        tagIndex,
+      );
       return true;
     }
 
@@ -187,7 +234,7 @@ export default iterateJsdoc(({
 
     const validTags = [
       ...definedTags,
-      ...definedPreferredTags,
+      ...(/** @type {string[]} */ (definedPreferredTags)),
       ...definedNonPreferredTags,
       ...definedStructuredTags,
       ...typed ? typedTagsNeedingName : [],

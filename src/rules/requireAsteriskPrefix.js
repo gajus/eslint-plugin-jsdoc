@@ -20,6 +20,7 @@ export default iterateJsdoc(({
   const always = defaultRequireValue === 'always';
   const never = defaultRequireValue === 'never';
 
+  /** @type {string} */
   let currentTag;
   source.some(({
     number,
@@ -32,11 +33,18 @@ export default iterateJsdoc(({
       description,
     } = tokens;
 
+    /**
+     * @returns {void}
+     */
     const neverFix = () => {
       tokens.delimiter = '';
       tokens.postDelimiter = '';
     };
 
+    /**
+     * @param {string} checkValue
+     * @returns {boolean}
+     */
     const checkNever = (checkValue) => {
       if (delimiter && delimiter !== '/**' && (
         never && !tagMap.always?.includes(checkValue) ||
@@ -53,6 +61,9 @@ export default iterateJsdoc(({
       return false;
     };
 
+    /**
+     * @returns {void}
+     */
     const alwaysFix = () => {
       if (!tokens.start) {
         tokens.start = indent + ' ';
@@ -62,6 +73,10 @@ export default iterateJsdoc(({
       tokens.postDelimiter = tag || description ? ' ' : '';
     };
 
+    /**
+     * @param {string} checkValue
+     * @returns {boolean}
+     */
     const checkAlways = (checkValue) => {
       if (
         !delimiter && (

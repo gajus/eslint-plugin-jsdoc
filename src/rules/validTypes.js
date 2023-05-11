@@ -64,6 +64,10 @@ const suppressTypes = new Set([
   'with',
 ]);
 
+/**
+ * @param {string} path
+ * @returns {boolean}
+ */
 const tryParsePathIgnoreError = (path) => {
   try {
     tryParse(path);
@@ -92,6 +96,11 @@ export default iterateJsdoc(({
   } = settings;
 
   for (const tag of jsdoc.tags) {
+    /**
+     * @param {string} namepath
+     * @param {string} [tagName]
+     * @returns {boolean}
+     */
     const validNamepathParsing = function (namepath, tagName) {
       if (tryParsePathIgnoreError(namepath)) {
         return true;
@@ -123,7 +132,7 @@ export default iterateJsdoc(({
         }
 
         case 'borrows': {
-          const startChar = namepath.charAt();
+          const startChar = namepath.charAt(0);
           if ([
             '#', '.', '~',
           ].includes(startChar)) {
@@ -142,6 +151,10 @@ export default iterateJsdoc(({
       return true;
     };
 
+    /**
+     * @param {string} type
+     * @returns {boolean}
+     */
     const validTypeParsing = function (type) {
       let parsedTypes;
       try {
@@ -186,10 +199,14 @@ export default iterateJsdoc(({
     }
 
     if (tag.tag === 'borrows') {
-      const thisNamepath = utils.getTagDescription(tag).replace(asExpression, '')
+      const thisNamepath = /** @type {string} */ (
+        utils.getTagDescription(tag)
+      ).replace(asExpression, '')
         .trim();
 
-      if (!asExpression.test(utils.getTagDescription(tag)) || !thisNamepath) {
+      if (!asExpression.test(/** @type {string} */ (
+        utils.getTagDescription(tag)
+      )) || !thisNamepath) {
         report(`@borrows must have an "as" expression. Found "${utils.getTagDescription(tag)}"`, null, tag);
 
         continue;
@@ -215,19 +232,21 @@ export default iterateJsdoc(({
 
       if (parsedTypes) {
         traverse(parsedTypes, (node) => {
-          const {
-            value: type,
-          } = node;
+          let type;
+          if ('value' in node && typeof node.value === 'string') {
+            type = node.value;
+          }
+
           if (type !== undefined && !suppressTypes.has(type)) {
-            report(`Syntax error in supresss type: ${type}`, null, tag);
+            report(`Syntax error in suppress type: ${type}`, null, tag);
           }
         });
       }
     }
 
-    const otherModeMaps = [
+    const otherModeMaps = /** @type {import('../jsdocUtils.js').ParserMode[]} */ ([
       'jsdoc', 'typescript', 'closure', 'permissive',
-    ].filter(
+    ]).filter(
       (mde) => {
         return mde !== mode;
       },

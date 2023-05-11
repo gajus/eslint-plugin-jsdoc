@@ -5,6 +5,10 @@ import iterateJsdoc from '../iterateJsdoc';
 const htmlRegex = /(<|&(?!(?:amp|lt|gt|quot|apos);))(?=\S)/u;
 const markdownRegex = /(?<!\\)(`+)([^`]+)\1(?!`)/u;
 
+/**
+ * @param {string} desc
+ * @returns {string}
+ */
 const htmlReplacer = (desc) => {
   return desc.replace(new RegExp(htmlRegex, 'gu'), (_) => {
     if (_ === '<') {
@@ -15,6 +19,10 @@ const htmlReplacer = (desc) => {
   });
 };
 
+/**
+ * @param {string} desc
+ * @returns {string}
+ */
 const markdownReplacer = (desc) => {
   return desc.replace(new RegExp(markdownRegex, 'gu'), (_, backticks, encapsed) => {
     const bookend = '`'.repeat(backticks.length);
@@ -35,6 +43,10 @@ export default iterateJsdoc(({
   if (!escapeHTML && !escapeMarkdown) {
     context.report({
       loc: {
+        end: {
+          column: 1,
+          line: 1,
+        },
         start: {
           column: 1,
           line: 1,
@@ -61,7 +73,9 @@ export default iterateJsdoc(({
     }
 
     for (const tag of jsdoc.tags) {
-      if (utils.getTagDescription(tag, true).some((desc) => {
+      if (/** @type {string[]} */ (
+        utils.getTagDescription(tag, true)
+      ).some((desc) => {
         return htmlRegex.test(desc);
       })) {
         const line = utils.setTagDescription(tag, htmlRegex, htmlReplacer) +
@@ -86,7 +100,9 @@ export default iterateJsdoc(({
   }
 
   for (const tag of jsdoc.tags) {
-    if (utils.getTagDescription(tag, true).some((desc) => {
+    if (/** @type {string[]} */ (
+      utils.getTagDescription(tag, true)
+    ).some((desc) => {
       return markdownRegex.test(desc);
     })) {
       const line = utils.setTagDescription(

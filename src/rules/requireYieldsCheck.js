@@ -1,5 +1,10 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+/**
+ * @param {import('../iterateJsdoc.js').Utils} utils
+ * @param {import('../iterateJsdoc.js').Settings} settings
+ * @returns {boolean}
+ */
 const canSkip = (utils, settings) => {
   const voidingTags = [
     // An abstract function is by definition incomplete
@@ -30,6 +35,12 @@ const canSkip = (utils, settings) => {
     settings.mode === 'closure' && utils.classHasTag('record');
 };
 
+/**
+ * @param {import('../iterateJsdoc.js').Utils} utils
+ * @param {import('../iterateJsdoc.js').Report} report
+ * @param {string} tagName
+ * @returns {[]|[preferredTagName: string, tag: import('comment-parser').Spec]}
+ */
 const checkTagName = (utils, report, tagName) => {
   const preferredTagName = utils.getPreferredTagName({
     tagName,
@@ -78,7 +89,11 @@ export default iterateJsdoc(({
   );
   if (preferredYieldTagName) {
     const shouldReportYields = () => {
-      if (yieldTag.type.trim() === 'never') {
+      if (
+        /** @type {import('comment-parser').Spec} */ (
+          yieldTag
+        ).type.trim() === 'never'
+      ) {
         if (utils.hasYieldValue()) {
           report(`JSDoc @${preferredYieldTagName} declaration set with "never" but yield expression is present in function.`);
         }
@@ -90,7 +105,10 @@ export default iterateJsdoc(({
         return true;
       }
 
-      return !utils.mayBeUndefinedTypeTag(yieldTag) && !utils.hasYieldValue();
+      return !utils.mayBeUndefinedTypeTag(
+        /** @type {import('comment-parser').Spec} */
+        (yieldTag),
+      ) && !utils.hasYieldValue();
     };
 
     // In case a yield value is declared in JSDoc, we also expect one in the code.
@@ -108,7 +126,11 @@ export default iterateJsdoc(({
     );
     if (preferredNextTagName) {
       const shouldReportNext = () => {
-        if (nextTag.type.trim() === 'never') {
+        if (
+          /** @type {import('comment-parser').Spec} */ (
+            nextTag
+          ).type.trim() === 'never'
+        ) {
           if (utils.hasYieldReturnValue()) {
             report(`JSDoc @${preferredNextTagName} declaration set with "never" but yield expression with return value is present in function.`);
           }
@@ -120,7 +142,10 @@ export default iterateJsdoc(({
           return true;
         }
 
-        return !utils.mayBeUndefinedTypeTag(nextTag) && !utils.hasYieldReturnValue();
+        return !utils.mayBeUndefinedTypeTag(
+          /** @type {import('comment-parser').Spec} */
+          (nextTag),
+        ) && !utils.hasYieldReturnValue();
       };
 
       if (shouldReportNext()) {

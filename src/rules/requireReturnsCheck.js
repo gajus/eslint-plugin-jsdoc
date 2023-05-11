@@ -1,5 +1,10 @@
 import iterateJsdoc from '../iterateJsdoc';
 
+/**
+ * @param {import('../iterateJsdoc.js').Utils} utils
+ * @param {import('../iterateJsdoc.js').Settings} settings
+ * @returns {boolean}
+ */
 const canSkip = (utils, settings) => {
   const voidingTags = [
     // An abstract function is by definition incomplete

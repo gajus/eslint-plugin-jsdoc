@@ -7,6 +7,10 @@ import {
   default as iterateJsdoc,
 } from '../src/iterateJsdoc';
 
+/**
+ * @typedef {any} BadArgument
+ */
+
 describe('iterateJsdoc', () => {
   describe('constructor', () => {
     context('options', () => {
@@ -57,11 +61,11 @@ describe('iterateJsdoc', () => {
           });
           it('throws with bad type', () => {
             expect(() => {
-              iterateJsdoc(() => {}, {
+              iterateJsdoc(() => {}, /** @type {BadArgument} */ ({
                 meta: {
                   type: 'bad',
                 },
-              });
+              }));
             }).to.throw(TypeError);
           });
         });

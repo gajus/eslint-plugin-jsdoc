@@ -46,7 +46,14 @@ export default iterateJsdoc(({
     const content = tag.name || tag.description || tag.type;
     if (content.trim()) {
       const fix = () => {
-        utils.setTag(tag);
+        // By time of call in fixer, `tag` will have `line` added
+        utils.setTag(
+          /**
+           * @type {import('comment-parser').Spec & {
+           *   line: import('../iterateJsdoc.js').Integer
+           * }}
+           */ (tag),
+        );
       };
 
       utils.reportJSDoc(`@${tag.tag} should be empty.`, tag, fix, true);
