@@ -283,6 +283,24 @@ function foo () {
 const a = new Todo();
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 // Message: The type 'Omit' is undefined.
+
+/**
+ * Message with {@link NotKnown}
+ */
+// Message: The type 'NotKnown' is undefined.
+
+/**
+ * Message with
+ * a link that is {@link NotKnown}
+ */
+// Message: The type 'NotKnown' is undefined.
+
+/**
+ * @abc
+ * @someTag Message with
+ *   a link that is {@link NotKnown}
+ */
+// Message: The type 'NotKnown' is undefined.
 ````
 
 

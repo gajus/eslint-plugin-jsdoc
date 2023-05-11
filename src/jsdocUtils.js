@@ -533,8 +533,54 @@ const hasTag = (jsdoc, targetTagName) => {
 const getAllTags = (jsdoc, includeInlineTags) => {
   return includeInlineTags ? [
     ...jsdoc.tags,
-    ...jsdoc.inlineTags,
+    ...jsdoc.inlineTags.map((inlineTag) => {
+      // Tags don't have source or line numbers, so add before returning
+      let line = -1;
+      for (const {
+        tokens: {
+          description,
+        },
+      } of jsdoc.source) {
+        line++;
+        if (description && description.includes(`{@${inlineTag.tag}`)) {
+          break;
+        }
+      }
+
+      inlineTag.line = line;
+
+      return inlineTag;
+    }),
     ...jsdoc.tags.flatMap((tag) => {
+      let tagBegins = -1;
+      for (const {
+        tokens: {
+          tag: tg,
+        },
+      } of jsdoc.source) {
+        tagBegins++;
+        if (tg) {
+          break;
+        }
+      }
+
+      for (const inlineTag of tag.inlineTags) {
+        let line;
+        for (const {
+          number,
+          tokens: {
+            description,
+          },
+        } of tag.source) {
+          if (description && description.includes(`{@${inlineTag.tag}`)) {
+            line = number;
+            break;
+          }
+        }
+
+        inlineTag.line = tagBegins + line - 1;
+      }
+
       return (
         /**
          * @type {import('comment-parser').Spec & {

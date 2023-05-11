@@ -490,6 +490,48 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * Message with {@link NotKnown}
+       */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The type \'NotKnown\' is undefined.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * Message with
+       * a link that is {@link NotKnown}
+       */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'NotKnown\' is undefined.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @abc
+       * @someTag Message with
+       *   a link that is {@link NotKnown}
+       */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'The type \'NotKnown\' is undefined.',
+        },
+      ],
+    },
   ],
   valid: [
     {
