@@ -7,13 +7,24 @@ export default iterateJsdoc(({
   jsdoc,
   utils,
 }) => {
-  const {
-    linesBetween = 1,
-    tagSequence = defaultTagOrder,
-    alphabetizeExtras = false,
-    reportTagGroupSpacing = true,
-    reportIntraTagGroupSpacing = true,
-  } = context.options[0] || {};
+  const
+    /**
+     * @type {{
+     *   linesBetween: import('../iterateJsdoc.js').Integer,
+     *   tagSequence: {
+     *     tags: string[]
+     *   }[],
+     *   alphabetizeExtras: boolean,
+     *   reportTagGroupSpacing: boolean,
+     *   reportIntraTagGroupSpacing: boolean,
+     * }}
+     */ {
+      linesBetween = 1,
+      tagSequence = defaultTagOrder,
+      alphabetizeExtras = false,
+      reportTagGroupSpacing = true,
+      reportIntraTagGroupSpacing = true,
+    } = context.options[0] || {};
 
   const tagList = tagSequence.flatMap((obj) => {
     /* typeof obj === 'string' ? obj : */
@@ -27,14 +38,31 @@ export default iterateJsdoc(({
   for (const [
     idx,
     tag,
-  ] of jsdoc.tags.entries()) {
+  ] of
+    /**
+     * @type {(
+     *   import('comment-parser').Spec & {
+     *     originalIndex: import('../iterateJsdoc.js').Integer,
+     *     originalLine: import('../iterateJsdoc.js').Integer,
+     *   }
+     * )[]}
+     */ (jsdoc.tags).entries()) {
     tag.originalIndex = idx;
     ongoingCount += tag.source.length;
     tag.originalLine = ongoingCount;
   }
 
+  /** @type {import('../iterateJsdoc.js').Integer|undefined} */
   let firstChangedTagLine;
+  /** @type {import('../iterateJsdoc.js').Integer|undefined} */
   let firstChangedTagIndex;
+
+  /**
+   * @type {(import('comment-parser').Spec & {
+   *   originalIndex: import('../iterateJsdoc.js').Integer,
+   *   originalLine: import('../iterateJsdoc.js').Integer,
+   * })[]}
+   */
   const sortedTags = JSON.parse(JSON.stringify(jsdoc.tags));
   sortedTags.sort(({
     tag: tagNew,
@@ -94,9 +122,22 @@ export default iterateJsdoc(({
   if (firstChangedTagLine === undefined) {
     // Should be ordered by now
 
+    /**
+     * @type {import('comment-parser').Spec[]}
+     */
     const lastTagsOfGroup = [];
+
+    /**
+     * @type {[
+     *   import('comment-parser').Spec,
+     *   import('../iterateJsdoc.js').Integer
+     * ][]}
+     */
     const badLastTagsOfGroup = [];
 
+    /**
+     * @param {import('comment-parser').Spec} tag
+     */
     const countTagEmptyLines = (tag) => {
       return tag.source.reduce((acc, {
         tokens: {
@@ -109,7 +150,7 @@ export default iterateJsdoc(({
       }) => {
         const empty = !tg && !type && !name && !description;
         // Reset the count so long as there is content
-        return empty ? acc + (empty && !end) : 0;
+        return empty ? acc + Number(empty && !end) : 0;
       }, 0);
     };
 
@@ -118,7 +159,9 @@ export default iterateJsdoc(({
       tags,
     } of tagSequence) {
       let innerIdx;
+      /** @type {import('comment-parser').Spec} */
       let currentTag;
+      /** @type {import('comment-parser').Spec|undefined} */
       let lastTag;
       do {
         currentTag = jsdoc.tags[idx];
@@ -165,6 +208,10 @@ export default iterateJsdoc(({
     }
 
     if (reportTagGroupSpacing && badLastTagsOfGroup.length) {
+      /**
+       * @param {import('comment-parser').Spec} tg
+       * @returns {() => void}
+       */
       const fixer = (tg) => {
         return () => {
           // Due to https://github.com/syavorsky/comment-parser/issues/110 ,
@@ -186,6 +233,8 @@ export default iterateJsdoc(({
 
             const emptyLine = () => {
               return {
+                number: 0,
+                source: '',
                 tokens: utils.seedTokens({
                   delimiter: '*',
                   start: jsdoc.source[newIdx - 1].tokens.start,
@@ -256,12 +305,11 @@ export default iterateJsdoc(({
 
       for (const [
         tg,
-        ct,
       ] of badLastTagsOfGroup) {
         utils.reportJSDoc(
           'Tag groups do not have the expected whitespace',
           tg,
-          fixer(tg, ct),
+          fixer(tg),
         );
       }
 
@@ -285,7 +333,10 @@ export default iterateJsdoc(({
         // eslint-disable-next-line complexity -- Temporary
         const fixer = () => {
           let foundFirstTag = false;
+
+          /** @type {string|undefined} */
           let currentTag;
+
           for (const [
             currIdx,
             {
@@ -378,7 +429,10 @@ export default iterateJsdoc(({
   const fix = () => {
     const itemsToMoveRange = [
       ...Array.from({
-        length: jsdoc.tags.length - firstChangedTagIndex,
+        length: jsdoc.tags.length -
+        /** @type {import('../iterateJsdoc.js').Integer} */ (
+          firstChangedTagIndex
+        ),
       }).keys(),
     ];
 
@@ -394,14 +448,21 @@ export default iterateJsdoc(({
     // This offset includes not only the offset from where the first tag
     //   must begin, and the additional offset of where the first changed
     //   tag begins, but it must also account for prior descriptions
-    const initialOffset = firstLine + firstChangedTagIndex +
+    const initialOffset = /** @type {import('../iterateJsdoc.js').Integer} */ (
+      firstLine
+    ) + /** @type {import('../iterateJsdoc.js').Integer} */ (firstChangedTagIndex) +
 
       // May be the first tag, so don't try finding a prior one if so
       unchangedPriorTagDescriptions;
 
     // Use `firstChangedTagLine` for line number to begin reporting/splicing
     for (const idx of itemsToMoveRange) {
-      utils.removeTag(idx + firstChangedTagIndex);
+      utils.removeTag(
+        idx +
+        /** @type {import('../iterateJsdoc.js').Integer} */ (
+          firstChangedTagIndex
+        ),
+      );
     }
 
     const changedTags = sortedTags.slice(firstChangedTagIndex);
@@ -443,7 +504,9 @@ export default iterateJsdoc(({
     `Tags are not in the prescribed order: ${
       tagList.join(', ') || '(alphabetical)'
     }`,
-    jsdoc.tags[firstChangedTagIndex],
+    jsdoc.tags[/** @type {import('../iterateJsdoc.js').Integer} */ (
+      firstChangedTagIndex
+    )],
     fix,
     true,
   );

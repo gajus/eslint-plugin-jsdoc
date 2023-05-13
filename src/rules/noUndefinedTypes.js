@@ -8,7 +8,6 @@ import {
 import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc';
-import jsdocUtils from '../jsdocUtils';
 
 const extraTypes = [
   'null', 'undefined', 'void', 'string', 'boolean', 'object',
@@ -151,7 +150,7 @@ export default iterateJsdoc(({
 
     const jsdoc = parseComment(commentNode, '');
 
-    return jsdocUtils.filterTags(jsdoc.tags, (tag) => {
+    return jsdoc.tags.filter((tag) => {
       return tag.tag === 'template';
     });
   };
@@ -209,15 +208,22 @@ export default iterateJsdoc(({
   /**
    * @typedef {{
    *   parsedType: import('jsdoc-type-pratt-parser').RootResult;
-   *   tag: import('comment-parser').Spec
+   *   tag: import('comment-parser').Spec|import('@es-joy/jsdoccomment').JsdocInlineTagNoType & {
+   *     line?: import('../iterateJsdoc.js').Integer
+   *   }
    * }} TypeAndTagInfo
    */
 
   /**
    * @param {string} propertyName
-   * @returns {(tag: import('comment-parser').Spec & {
-   *   namepathOrURL?: string
-   * }) => undefined|TypeAndTagInfo}
+   * @returns {(tag: (import('@es-joy/jsdoccomment').JsdocInlineTagNoType & {
+   *     name?: string,
+   *     type?: string,
+   *     line?: import('../iterateJsdoc.js').Integer
+   *   })|import('comment-parser').Spec & {
+   *     namepathOrURL?: string
+   *   }
+   * ) => undefined|TypeAndTagInfo}
    */
   const tagToParsedType = (propertyName) => {
     return (tag) => {
@@ -249,11 +255,11 @@ export default iterateJsdoc(({
     return utils.isNamepathReferencingTag(tag);
   }).map(tagToParsedType('name'));
 
-  const namepathOrUrlReferencingTags = utils.filterTags(({
+  const namepathOrUrlReferencingTags = utils.filterAllTags(({
     tag,
   }) => {
     return utils.isNamepathOrUrlReferencingTag(tag);
-  }, true).map(tagToParsedType('namepathOrURL'));
+  }).map(tagToParsedType('namepathOrURL'));
 
   const tagsWithTypes = /** @type {TypeAndTagInfo[]} */ ([
     ...typeTags,

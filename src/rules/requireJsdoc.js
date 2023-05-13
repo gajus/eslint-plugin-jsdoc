@@ -9,6 +9,7 @@ import {
 } from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
 
+/** @type {import('json-schema').JSONSchema4} */
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
   properties: {
@@ -150,6 +151,13 @@ const OPTIONS_SCHEMA = {
   type: 'object',
 };
 
+/**
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {import('json-schema').JSONSchema4Object} baseObject
+ * @param {string} option
+ * @param {string} key
+ * @returns {boolean|undefined}
+ */
 const getOption = (context, baseObject, option, key) => {
   if (context.options[0] && option in context.options[0] &&
     // Todo: boolean shouldn't be returning property, but tests currently require
@@ -159,10 +167,34 @@ const getOption = (context, baseObject, option, key) => {
     return context.options[0][option][key];
   }
 
-  return baseObject.properties[key].default;
+  /* eslint-disable jsdoc/valid-types -- Old version */
+  return /** @type {{[key: string]: {default?: boolean|undefined}}} */ (
+    baseObject.properties
+  )[key].default;
+  /* eslint-enable jsdoc/valid-types -- Old version */
 };
 
+/* eslint-disable jsdoc/valid-types -- Old version */
+/**
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {import('../iterateJsdoc.js').Settings} settings
+ * @returns {{
+ *   contexts: (string|{
+ *     context: string,
+ *     inlineCommentBlock: boolean,
+ *     minLineCount: import('../iterateJsdoc.js').Integer
+ *   })[],
+ *   enableFixer: boolean,
+ *   exemptEmptyConstructors: boolean,
+ *   exemptEmptyFunctions: boolean,
+ *   fixerMessage: string,
+ *   minLineCount: undefined|import('../iterateJsdoc.js').Integer,
+ *   publicOnly: boolean|{[key: string]: boolean|undefined}
+ *   require: {[key: string]: boolean|undefined}
+ * }}
+ */
 const getOptions = (context, settings) => {
+  /* eslint-enable jsdoc/valid-types -- Old version */
   const {
     publicOnly,
     contexts = settings.contexts || [],
@@ -185,23 +217,65 @@ const getOptions = (context, settings) => {
         return false;
       }
 
+      /* eslint-disable jsdoc/valid-types -- Old version */
+      /** @type {{[key: string]: boolean|undefined}} */
       const properties = {};
-      for (const prop of Object.keys(baseObj.properties)) {
-        const opt = getOption(context, baseObj, 'publicOnly', prop);
+      /* eslint-enable jsdoc/valid-types -- Old version */
+      for (const prop of Object.keys(
+        /** @type {import('json-schema').JSONSchema4Object} */ (
+        /** @type {import('json-schema').JSONSchema4Object} */ (
+            baseObj
+          ).properties),
+      )) {
+        const opt = getOption(
+          context,
+          /** @type {import('json-schema').JSONSchema4Object} */ (baseObj),
+          'publicOnly',
+          prop,
+        );
+
         properties[prop] = opt;
       }
 
       return properties;
-    })(OPTIONS_SCHEMA.properties.publicOnly.oneOf[1]),
+    })(
+      /** @type {import('json-schema').JSONSchema4Object} */
+      (
+        /** @type {import('json-schema').JSONSchema4Object} */
+        (
+          /** @type {import('json-schema').JSONSchema4Object} */
+          (
+            OPTIONS_SCHEMA.properties
+          ).publicOnly
+        ).oneOf
+      )[1],
+    ),
     require: ((baseObj) => {
+      /* eslint-disable jsdoc/valid-types -- Old version */
+      /** @type {{[key: string]: boolean|undefined}} */
       const properties = {};
-      for (const prop of Object.keys(baseObj.properties)) {
-        const opt = getOption(context, baseObj, 'require', prop);
+      /* eslint-enable jsdoc/valid-types -- Old version */
+      for (const prop of Object.keys(
+        /** @type {import('json-schema').JSONSchema4Object} */ (
+        /** @type {import('json-schema').JSONSchema4Object} */ (
+            baseObj
+          ).properties),
+      )) {
+        const opt = getOption(
+          context,
+          /** @type {import('json-schema').JSONSchema4Object} */
+          (baseObj),
+          'require',
+          prop,
+        );
         properties[prop] = opt;
       }
 
       return properties;
-    })(OPTIONS_SCHEMA.properties.require),
+    })(
+      /** @type {import('json-schema').JSONSchema4Object} */
+      (OPTIONS_SCHEMA.properties).require,
+    ),
   };
 };
 
@@ -225,15 +299,26 @@ export default {
       minLineCount,
     } = getOptions(context, settings);
 
-    const checkJsDoc = (info, handler, node) => {
+    /**
+     * @type {import('../iterateJsdoc.js').CheckJsdoc}
+     */
+    const checkJsDoc = (info, _handler, node) => {
       if (
         // Optimize
-        minLineCount !== undefined || contexts.some(({
-          minLineCount: count,
-        }) => {
+        minLineCount !== undefined || contexts.some((ctxt) => {
+          if (typeof ctxt === 'string') {
+            return false;
+          }
+
+          const {
+            minLineCount: count,
+          } = ctxt;
           return count !== undefined;
         })
       ) {
+        /**
+         * @param {undefined|import('../iterateJsdoc.js').Integer} count
+         */
         const underMinLine = (count) => {
           return count !== undefined && count >
             (sourceCode.getText(node).match(/\n/gu)?.length ?? 0) + 1;
@@ -245,11 +330,23 @@ export default {
 
         const {
           minLineCount: contextMinLineCount,
-        } = contexts.find(({
-          context: ctxt,
-        }) => {
-          return ctxt === (info.selector || node.type);
-        }) || {};
+        } =
+          /**
+           * @type {{
+           *   context: string;
+           *   inlineCommentBlock: boolean;
+           *   minLineCount: number;
+           * }}
+           */ (contexts.find((ctxt) => {
+            if (typeof ctxt === 'string') {
+              return false;
+            }
+
+            const {
+              context: ctx,
+            } = ctxt;
+            return ctx === (info.selector || node.type);
+          })) || {};
         if (underMinLine(contextMinLineCount)) {
           return;
         }
@@ -265,8 +362,14 @@ export default {
       //  setters or getters) being reported
       if (jsdocUtils.exemptSpeciaMethods(
         {
+          description: '',
+          problems: [],
+          source: [],
           tags: [],
-        }, node, context, [
+        },
+        node,
+        context,
+        [
           OPTIONS_SCHEMA,
         ],
       )) {
@@ -356,6 +459,10 @@ export default {
       }
     };
 
+    /**
+     * @param {string} prop
+     * @returns {boolean}
+     */
     const hasOption = (prop) => {
       return requireOption[prop] || contexts.some((ctxt) => {
         return typeof ctxt === 'object' ? ctxt.context === prop : ctxt === prop;

@@ -6057,6 +6057,7 @@ function quux (foo) {
       options: [
         {
           contexts: [
+            'ClassDeclaration',
             {
               context: 'FunctionDeclaration',
               minLineCount: 4,
