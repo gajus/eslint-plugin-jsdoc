@@ -8,7 +8,7 @@ import iterateJsdoc from '../iterateJsdoc';
  * @param {RegExp} checkTypesRegex
  * @param {boolean} disableExtraPropertyReporting
  * @param {boolean} enableFixer
- * @param {Array<string>} functionParameterNames
+ * @param {import('../jsdocUtils.js').ParamNameInfo[]} functionParameterNames
  * @param {import('comment-parser').Block} jsdoc
  * @param {import('../iterateJsdoc.js').Utils} utils
  * @param {import('../iterateJsdoc.js').Report} report
@@ -42,12 +42,13 @@ const validateParameterNames = (
   return paramTags.some(([
     , tag,
   ], index) => {
+    /** @type {import('../iterateJsdoc.js').Integer} */
     let tagsIndex;
     const dupeTagInfo = paramTags.find(([
       tgsIndex,
       tg,
     ], idx) => {
-      tagsIndex = tgsIndex;
+      tagsIndex = Number(tgsIndex);
 
       return tg.name === tag.name && idx !== index;
     });
@@ -252,8 +253,11 @@ const validateParameterNames = (
 /**
  * @param {string} targetTagName
  * @param {boolean} _allowExtraTrailingParamDocs
- * @param {Array<string>} jsdocParameterNames
- * @param jsdoc
+ * @param {{
+ *   name: string,
+ *   idx: import('../iterateJsdoc.js').Integer
+ * }[]} jsdocParameterNames
+ * @param {import('comment-parser').Block} jsdoc
  * @param {Function} report
  * @returns {boolean}
  */
@@ -261,6 +265,7 @@ const validateParameterNamesDeep = (
   targetTagName, _allowExtraTrailingParamDocs,
   jsdocParameterNames, jsdoc, report,
 ) => {
+  /** @type {string} */
   let lastRealParameter;
 
   return jsdocParameterNames.some(({

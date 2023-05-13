@@ -13,10 +13,9 @@
     "target": "es6",
     "outDir": "dist"
   },
-  // Uncomment below as ready
   "include": [
-    // "src/**/*.js",
-    // "test/**/*.js",
+    "src/**/*.js",
+    "test/**/*.js",
     "src/bin/gitdown.d.ts"
   ],
   "exclude": ["node_modules"]

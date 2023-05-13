@@ -33,8 +33,8 @@ const undefinedKeywords = new Set([
  * Checks if a node has a return statement. Void return does not count.
  *
  * @param {import('estree').Node|import('@typescript-eslint/types').TSESTree.Node} node
- * @param {boolean} throwOnNullReturn
- * @param {PromiseFilter} promFilter
+ * @param {boolean} [throwOnNullReturn]
+ * @param {PromiseFilter} [promFilter]
  * @returns {boolean|undefined}
  */
 // eslint-disable-next-line complexity
@@ -125,9 +125,9 @@ const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
 /**
  * Checks if a node has a return statement. Void return does not count.
  *
- * @param {object} node
+ * @param {import('@typescript-eslint/types').TSESTree.Node} node
  * @param {PromiseFilter} promFilter
- * @returns {boolean|import('estree').Node}
+ * @returns {undefined|boolean|import('@typescript-eslint/types').TSESTree.Node}
  */
 // eslint-disable-next-line complexity
 const allBrancheshaveReturnValues = (node, promFilter) => {
@@ -243,7 +243,7 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
 
 /**
  * @callback PromiseFilter
- * @param {object} node
+ * @param {import('@typescript-eslint/types').TSESTree.Node} node
  * @returns {boolean}
  */
 
@@ -453,13 +453,18 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
  * Checks if a Promise executor has no resolve value or an empty value.
  * An `undefined` resolve does not count.
  *
- * @param {object} node
+ * @param {import('@typescript-eslint/types').TSESTree.Node} node
  * @param {boolean} anyPromiseAsReturn
  * @param {boolean} [allBranches]
  * @returns {boolean}
  */
 const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, allBranches) => {
   const hasReturnMethod = allBranches ?
+    /**
+     * @param {import('@typescript-eslint/types').TSESTree.Node} nde
+     * @param {PromiseFilter} promiseFilter
+     * @returns {boolean}
+     */
     (nde, promiseFilter) => {
       let hasReturn;
       try {
@@ -476,10 +481,15 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, all
 
       // `hasReturn` check needed since `throw` treated as valid return by
       //   `allBrancheshaveReturnValues`
-      return hasReturn && allBrancheshaveReturnValues(nde, promiseFilter);
+      return Boolean(hasReturn && allBrancheshaveReturnValues(nde, promiseFilter));
     } :
+    /**
+     * @param {import('@typescript-eslint/types').TSESTree.Node} nde
+     * @param {PromiseFilter} promiseFilter
+     * @returns {boolean}
+     */
     (nde, promiseFilter) => {
-      return hasReturnValue(nde, false, promiseFilter);
+      return Boolean(hasReturnValue(nde, false, promiseFilter));
     };
 
   return hasReturnMethod(node, (prom) => {

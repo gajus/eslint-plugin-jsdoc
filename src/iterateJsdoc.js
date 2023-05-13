@@ -17,9 +17,10 @@ import jsdocUtils from './jsdocUtils';
  * @callback CheckJsdoc
  * @param {{
  *   lastIndex?: Integer,
- *   selector: string
+ *   isFunctionContext?: boolean,
+ *   selector?: string
  * }} info
- * @param {(jsdoc: import('comment-parser').Block) => boolean|undefined} handler
+ * @param {null|((jsdoc: import('comment-parser').Block) => boolean|undefined)} handler
  * @param {import('eslint').Rule.Node} node
  * @returns {void}
  */
@@ -97,8 +98,8 @@ import jsdocUtils from './jsdocUtils';
  * @param {null|import('comment-parser').Spec|{line: Integer, column?: Integer}} tag
  * @param {(() => void)|null} handler
  * @param {boolean} [specRewire]
- * @param {{
- *   [key: string]: undefined|string
+ * @param {undefined|{
+ *   [key: string]: string
  * }} [data]
  */
 /* eslint-enable jsdoc/valid-types -- Old version */
@@ -218,12 +219,14 @@ import jsdocUtils from './jsdocUtils';
  * @returns {void}
  */
 
+/* eslint-disable jsdoc/no-undefined-types -- TS */
 /**
  * @callback AddLine
  * @param {Integer} sourceIndex
- * @param {import('comment-parser').Tokens} tokens
+ * @param {Partial<import('comment-parser').Tokens>} tokens
  * @returns {void}
  */
+/* eslint-enable jsdoc/no-undefined-types -- TS */
 
 /**
  * @callback AddLines
@@ -241,7 +244,7 @@ import jsdocUtils from './jsdocUtils';
 /**
  * @callback GetFunctionParameterNames
  * @param {boolean} [useDefaultObjectProperties]
- * @returns {}
+ * @returns {import('./jsdocUtils.js').ParamNameInfo[]}
  */
 
 /**
@@ -346,7 +349,7 @@ import jsdocUtils from './jsdocUtils';
 /**
  * @callback IsNamepathX
  * @param {string} tagName
- * @returns {}
+ * @returns {boolean}
  */
 
 /**
@@ -403,8 +406,15 @@ import jsdocUtils from './jsdocUtils';
 /**
  * @callback FilterTags
  * @param {(tag: import('comment-parser').Spec) => boolean} filter
- * @param {boolean} [includeInlineTags]
  * @returns {import('comment-parser').Spec[]}
+ */
+
+/**
+ * @callback FilterAllTags
+ * @param {(tag: (import('comment-parser').Spec|
+ *   import('@es-joy/jsdoccomment').JsdocInlineTagNoType)) => boolean} filter
+ * @returns {(import('comment-parser').Spec|
+ *   import('@es-joy/jsdoccomment').JsdocInlineTagNoType)[]}
  */
 
 /**
@@ -494,6 +504,7 @@ import jsdocUtils from './jsdocUtils';
  *   getTags: GetTags,
  *   getPresentTags: GetPresentTags,
  *   filterTags: FilterTags,
+ *   filterAllTags: FilterAllTags,
  *   getTagsByType: GetTagsByType,
  *   hasOptionTag: HasOptionTag,
  *   getClassNode: GetClassNode,
@@ -659,7 +670,7 @@ const getUtils = (
   ruleConfig,
   indent,
 ) => {
-  const ancestors = context.getAncestors();
+  const ancestors = /** @type {import('eslint').Rule.Node[]} */ (context.getAncestors());
   const sourceCode = context.getSourceCode();
 
   const utils = /** @type {Utils} */ (getBasicUtils(context, settings));
@@ -1213,11 +1224,12 @@ const getUtils = (
       // istanbul ignore next
       return false;
     });
+
     for (const [
       idx,
       src,
     ] of jsdoc.source.slice(lastIndex).entries()) {
-      src.number = firstNumber + lastIndex + idx;
+      src.number = firstNumber + /** @type {Integer} */ (lastIndex) + idx;
     }
   };
 
@@ -1299,13 +1311,22 @@ const getUtils = (
 
   /** @type {IsGenerator} */
   utils.isGenerator = () => {
-    return node && (
-      node.generator ||
+    return node && Boolean(
+      /**
+       * @type {import('estree').FunctionDeclaration|
+       *   import('estree').FunctionExpression}
+       */ (node).generator ||
       node.type === 'MethodDefinition' && node.value.generator ||
       [
         'ExportNamedDeclaration', 'ExportDefaultDeclaration',
       ].includes(node.type) &&
-        node.declaration.generator
+      /** @type {import('estree').FunctionDeclaration} */
+      (
+        /**
+         * @type {import('estree').ExportNamedDeclaration|
+         *   import('estree').ExportDefaultDeclaration}
+         */ (node).declaration
+      ).generator,
     );
   };
 
@@ -1397,7 +1418,12 @@ const getUtils = (
     }
 
     if (jsdocUtils.exemptSpeciaMethods(
-      jsdoc, node, context, ruleConfig.meta.schema,
+      jsdoc,
+      node,
+      context,
+      /** @type {import('json-schema').JSONSchema4|import('json-schema').JSONSchema4[]} */ (
+        ruleConfig.meta.schema
+      ),
     )) {
       return true;
     }
@@ -1536,7 +1562,12 @@ const getUtils = (
     if ([
       'ExportNamedDeclaration', 'ExportDefaultDeclaration',
     ].includes(node.type)) {
-      return jsdocUtils.hasYieldValue(node.declaration);
+      return jsdocUtils.hasYieldValue(
+        /** @type {import('estree').Declaration|import('estree').Expression} */ (
+          /** @type {import('estree').ExportNamedDeclaration|import('estree').ExportDefaultDeclaration} */
+          (node).declaration
+        ),
+      );
     }
 
     return jsdocUtils.hasYieldValue(node);
@@ -1572,9 +1603,18 @@ const getUtils = (
   };
 
   /** @type {FilterTags} */
-  utils.filterTags = (filter, includeInlineTags = false) => {
-    const tags = jsdocUtils.getAllTags(jsdoc, includeInlineTags);
-    return jsdocUtils.filterTags(tags, filter);
+  utils.filterTags = (filter) => {
+    return jsdoc.tags.filter((tag) => {
+      return filter(tag);
+    });
+  };
+
+  /** @type {FilterAllTags} */
+  utils.filterAllTags = (filter) => {
+    const tags = jsdocUtils.getAllTags(jsdoc);
+    return tags.filter((tag) => {
+      return filter(tag);
+    });
   };
 
   /** @type {GetTagsByType} */
@@ -1734,7 +1774,7 @@ const getSettings = (context) => {
  *
  * @callback MakeReport
  * @param {import('eslint').Rule.RuleContext} context
- * @param {object} commentNode
+ * @param {import('@es-joy/jsdoccomment').Token} commentNode
  * @returns {Report}
  */
 

@@ -47,7 +47,20 @@ const setTagStructure = (mode) => {
  */
 
 /**
- * @typedef {string|{
+ * @typedef {undefined|string|{
+ *   isRestProperty: boolean|undefined,
+ *   name: string,
+ *   restElement: true
+ * }|[undefined|string, FlattendRootInfo & {
+ *   annotationParamName?: string
+ * }|{
+ *   name: Integer,
+ *   restElement: boolean
+ * }[]]} ParamNameInfo
+ */
+
+/**
+ * @typedef {undefined|string|{
  *   isRestProperty: boolean,
  *   restElement: boolean,
  *   name: string
@@ -189,17 +202,6 @@ const getPropertiesFromPropertySignature = (propSignature) => {
 };
 
 /**
- * @typedef {undefined|{
- *   isRestProperty: boolean|undefined,
- *   name: string,
- *   restElement: true
- * }|[undefined|string, FlattendRootInfo|{
- *   name: Integer,
- *   restElement: boolean
- * }[]]} ParamNameInfo
- */
-
-/**
  * @param {ESTreeOrTypeScriptNode} functionNode
  * @param {boolean} [checkDefaultObjects]
  * @throws {Error}
@@ -213,7 +215,9 @@ const getFunctionParameterNames = (
    * @param {import('estree').Identifier|import('estree').AssignmentPattern|
    *   import('estree').ObjectPattern|import('estree').Property|
    *   import('estree').RestElement|import('estree').ArrayPattern|
-   *   import('@typescript-eslint/types').TSESTree.TSParameterProperty
+   *   import('@typescript-eslint/types').TSESTree.TSParameterProperty|
+   *   import('@typescript-eslint/types').TSESTree.Property|
+   *   import('@typescript-eslint/types').TSESTree.RestElement
    * } param
    * @param {boolean} [isProperty]
    * @returns {ParamNameInfo}
@@ -226,21 +230,34 @@ const getFunctionParameterNames = (
       const typeAnnotation = hasLeftTypeAnnotation ?
         /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
           param.left
-        ).typeAnnotation : param.typeAnnotation;
+        ).typeAnnotation :
+        /** @type {import('@typescript-eslint/types').TSESTree.Identifier|import('@typescript-eslint/types').TSESTree.ObjectPattern} */
+        (param).typeAnnotation;
 
       if (typeAnnotation?.typeAnnotation?.type === 'TSTypeLiteral') {
         const propertyNames = typeAnnotation.typeAnnotation.members.map((member) => {
-          return getPropertiesFromPropertySignature(member);
+          return getPropertiesFromPropertySignature(
+            /** @type {import('@typescript-eslint/types').TSESTree.TSPropertySignature} */
+            (member),
+          );
         });
+
         const flattened = {
           ...flattenRoots(propertyNames),
-          annotationParamName: param.name,
+          annotationParamName: 'name' in param ? param.name : undefined,
         };
         const hasLeftName = 'left' in param && 'name' in param.left;
 
         if ('name' in param || hasLeftName) {
           return [
-            hasLeftName ? param.left.name : param.name, flattened,
+            hasLeftName ?
+              /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+                param.left
+              ).name :
+              /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+                param
+              ).name,
+            flattened,
           ];
         }
 
@@ -258,8 +275,22 @@ const getFunctionParameterNames = (
       return param.left.name;
     }
 
-    if (param.type === 'ObjectPattern' || param.left?.type === 'ObjectPattern') {
-      const properties = param.properties || param.left?.properties;
+    if (
+      param.type === 'ObjectPattern' ||
+      ('left' in param &&
+      (
+        param
+      ).left.type === 'ObjectPattern')
+    ) {
+      const properties = /** @type {import('@typescript-eslint/types').TSESTree.ObjectPattern} */ (
+        param
+      ).properties ||
+        /** @type {import('estree').ObjectPattern} */
+        (
+          /** @type {import('@typescript-eslint/types').TSESTree.AssignmentPattern} */ (
+            param
+          ).left
+        )?.properties;
       const roots = properties.map((prop) => {
         return getParamName(prop, true);
       });
@@ -557,7 +588,7 @@ const isValidTag = (
 };
 
 /**
- * @param {object} jsdoc
+ * @param {import('comment-parser').Block} jsdoc
  * @param {string} targetTagName
  * @returns {boolean}
  */
@@ -575,12 +606,11 @@ const hasTag = (jsdoc, targetTagName) => {
  * @param {import('comment-parser').Block & {
  *   inlineTags: import('@es-joy/jsdoccomment').JsdocInlineTagNoType[]
  * }} jsdoc
- * @param {boolean} includeInlineTags
  * @returns {(import('comment-parser').Spec|
  *   import('@es-joy/jsdoccomment').JsdocInlineTagNoType)[]}
  */
-const getAllTags = (jsdoc, includeInlineTags) => {
-  return includeInlineTags ? [
+const getAllTags = (jsdoc) => {
+  return [
     ...jsdoc.tags,
     ...jsdoc.inlineTags.map((inlineTag) => {
       // Tags don't have source or line numbers, so add before returning
@@ -640,11 +670,11 @@ const getAllTags = (jsdoc, includeInlineTags) => {
         ).inlineTags
       );
     }),
-  ] : jsdoc.tags;
+  ];
 };
 
 /**
- * @param {object} jsdoc
+ * @param {import('comment-parser').Block} jsdoc
  * @param {string[]} targetTagNames
  * @returns {boolean}
  */
@@ -1293,17 +1323,6 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
   return properties;
 };
 
-/**
- * @param {import('comment-parser').Spec[]} tags
- * @param {(tag: import('comment-parser').Spec) => boolean} filter
- * @returns {import('comment-parser').Spec[]}
- */
-const filterTags = (tags, filter) => {
-  return tags.filter((tag) => {
-    return filter(tag);
-  });
-};
-
 const tagsWithNamesAndDescriptions = new Set([
   'param', 'arg', 'argument', 'property', 'prop',
   'template',
@@ -1337,7 +1356,7 @@ const getTagsByType = (context, mode, tags, tagPreference) => {
    * @type {import('comment-parser').Spec[]}
    */
   const tagsWithoutNames = [];
-  const tagsWithNames = filterTags(tags, (tag) => {
+  const tagsWithNames = tags.filter((tag) => {
     const {
       tag: tagName,
     } = tag;
@@ -1522,7 +1541,6 @@ export default {
   dropPathSegmentQuotes,
   enforcedContexts,
   exemptSpeciaMethods,
-  filterTags,
   flattenRoots,
   getAllTags,
   getContextObject,
