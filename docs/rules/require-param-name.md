@@ -1,46 +1,26 @@
-<a name="user-content-require-param-description"></a>
-<a name="require-param-description"></a>
-# <code>require-param-description</code>
+<a name="user-content-require-param-name"></a>
+<a name="require-param-name"></a>
+# <code>require-param-name</code>
 
-* [Options](#user-content-require-param-description-options)
-    * [`setDefaultDestructuredRootDescription`](#user-content-require-param-description-options-setdefaultdestructuredrootdescription)
-    * [`defaultDestructuredRootDescription`](#user-content-require-param-description-options-defaultdestructuredrootdescription)
-    * [`contexts`](#user-content-require-param-description-options-contexts)
-* [Context and settings](#user-content-require-param-description-context-and-settings)
-* [Failing examples](#user-content-require-param-description-failing-examples)
-* [Passing examples](#user-content-require-param-description-passing-examples)
+* [Options](#user-content-require-param-name-options)
+    * [`contexts`](#user-content-require-param-name-options-contexts)
+* [Context and settings](#user-content-require-param-name-context-and-settings)
+* [Failing examples](#user-content-require-param-name-failing-examples)
+* [Passing examples](#user-content-require-param-name-passing-examples)
 
 
-Requires that each `@param` tag has a `description` value.
+Requires that all `@param` tags have names.
 
-Will exempt destructured roots and their children if
-`settings.exemptDestructuredRootsFromChecks` is set to `true` (e.g.,
-`@param {object} props` will be exempted from requiring a description given
-`function someFunc ({child1, child2})`).
+> The `@param` tag requires you to specify the name of the parameter you are documenting. You can also include the parameter's type, enclosed in curly brackets, and a description of the parameter.
+>
+> [JSDoc](https://jsdoc.app/tags-param.html#overview)
 
-<a name="user-content-require-param-description-options"></a>
-<a name="require-param-description-options"></a>
+<a name="user-content-require-param-name-options"></a>
+<a name="require-param-name-options"></a>
 ## Options
 
-<a name="user-content-require-param-description-options-setdefaultdestructuredrootdescription"></a>
-<a name="require-param-description-options-setdefaultdestructuredrootdescription"></a>
-### <code>setDefaultDestructuredRootDescription</code>
-
-Whether to set a default destructured root description. For example, you may
-wish to avoid manually having to set the description for a `@param`
-corresponding to a destructured root object as it should always be the same
-type of object. Uses `defaultDestructuredRootDescription` for the description
-string. Defaults to `false`.
-
-<a name="user-content-require-param-description-options-defaultdestructuredrootdescription"></a>
-<a name="require-param-description-options-defaultdestructuredrootdescription"></a>
-### <code>defaultDestructuredRootDescription</code>
-
-The description string to set by default for destructured roots. Defaults to
-"The root object".
-
-<a name="user-content-require-param-description-options-contexts"></a>
-<a name="require-param-description-options-contexts"></a>
+<a name="user-content-require-param-name-options-contexts"></a>
+<a name="require-param-name-options-contexts"></a>
 ### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -54,8 +34,8 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
-<a name="user-content-require-param-description-context-and-settings"></a>
-<a name="require-param-description-context-and-settings"></a>
+<a name="user-content-require-param-name-context-and-settings"></a>
+<a name="require-param-name-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -64,55 +44,53 @@ section of our README for more on the expected format.
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
-|Options|`setDefaultDestructuredRootDescription`, `defaultDestructuredRootDescription`, `contexts`|
-|Settings|`exemptDestructuredRootsFromChecks`|
+|Options|`contexts`|
 
-<a name="user-content-require-param-description-failing-examples"></a>
-<a name="require-param-description-failing-examples"></a>
+<a name="user-content-require-param-name-failing-examples"></a>
+<a name="require-param-name-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
 
 ````js
 /**
- * @param foo
+ * @param
  */
 function quux (foo) {
 
 }
-// Message: Missing JSDoc @param "foo" description.
+// Message: There must be an identifier after @param type.
 
 /**
- * @param foo
+ * @param {string}
  */
 function quux (foo) {
 
 }
-// "jsdoc/require-param-description": ["error"|"warn", {"contexts":["any"]}]
-// Message: Missing JSDoc @param "foo" description.
+// Message: There must be an identifier after @param tag.
+
+/**
+ * @param {string}
+ */
+function quux (foo) {
+
+}
+// "jsdoc/require-param-name": ["error"|"warn", {"contexts":["any"]}]
+// Message: There must be an identifier after @param tag.
 
 /**
  * @function
- * @param foo
+ * @param {string}
  */
-// "jsdoc/require-param-description": ["error"|"warn", {"contexts":["any"]}]
-// Message: Missing JSDoc @param "foo" description.
+// "jsdoc/require-param-name": ["error"|"warn", {"contexts":["any"]}]
+// Message: There must be an identifier after @param tag.
 
 /**
  * @callback
- * @param foo
+ * @param {string}
  */
-// "jsdoc/require-param-description": ["error"|"warn", {"contexts":["any"]}]
-// Message: Missing JSDoc @param "foo" description.
-
-/**
- * @arg foo
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
-// Message: Missing JSDoc @arg "foo" description.
+// "jsdoc/require-param-name": ["error"|"warn", {"contexts":["any"]}]
+// Message: There must be an identifier after @param tag.
 
 /**
  * @param foo
@@ -122,117 +100,64 @@ function quux (foo) {
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"param":false}}}
 // Message: Unexpected tag `@param`
-
-/**
- * @param foo
- */
-function quux (foo) {
-
-}
-// "jsdoc/require-param-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag:not([name=props]))","context":"FunctionDeclaration"}]}]
-// Message: Missing JSDoc @param "foo" description.
-
-/**
- * @param {number} foo Foo description
- * @param {object} root
- * @param {boolean} baz Baz description
- */
-function quux (foo, {bar}, baz) {
-
-}
-// "jsdoc/require-param-description": ["error"|"warn", {"setDefaultDestructuredRootDescription":true}]
-// Message: Missing root description for @param.
-
-/**
- * @param {number} foo Foo description
- * @param {object} root
- * @param {boolean} baz Baz description
- */
-function quux (foo, {bar}, baz) {
-
-}
-// "jsdoc/require-param-description": ["error"|"warn", {"defaultDestructuredRootDescription":"Root description","setDefaultDestructuredRootDescription":true}]
-// Message: Missing root description for @param.
-
-/**
- * @param {number} foo Foo description
- * @param {object} root
- * @param {boolean} baz Baz description
- */
-function quux (foo, {bar}, baz) {
-
-}
-// "jsdoc/require-param-description": ["error"|"warn", {"setDefaultDestructuredRootDescription":false}]
-// Message: Missing JSDoc @param "root" description.
 ````
 
 
 
-<a name="user-content-require-param-description-passing-examples"></a>
-<a name="require-param-description-passing-examples"></a>
+<a name="user-content-require-param-name-passing-examples"></a>
+<a name="require-param-name-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
 
 ````js
 /**
- *
+ * @param foo
  */
 function quux (foo) {
 
 }
 
 /**
- * @param foo Foo.
+ * @param foo
  */
 function quux (foo) {
 
 }
+// "jsdoc/require-param-name": ["error"|"warn", {"contexts":["any"]}]
 
 /**
- * @param foo Foo.
+ * @param {string} foo
  */
 function quux (foo) {
 
 }
-// "jsdoc/require-param-description": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @function
- * @param foo
+ * @param
  */
 
 /**
  * @callback
- * @param foo
+ * @param
  */
 
 /**
- * @param props
+ * @param {Function} [processor=data => data] A function to run
  */
-function quux (props) {
-
+function processData(processor) {
+  return processor(data)
 }
-// "jsdoc/require-param-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag:not([name=props]))","context":"FunctionDeclaration"}]}]
 
-/**
- * @param {number} foo Foo description
- * @param {object} root
- * @param {boolean} baz Baz description
- */
-function quux (foo, {bar}, baz) {
-
+/** Example with multi-line param type.
+*
+* @param {function(
+*   number
+* )} cb Callback.
+*/
+function example(cb) {
+  cb(42);
 }
-// Settings: {"jsdoc":{"exemptDestructuredRootsFromChecks":true}}
-
-/**
- * @param {number} foo Foo description
- * @param {object} root
- * @param {object} root.bar
- */
-function quux (foo, {bar: {baz}}) {
-
-}
-// Settings: {"jsdoc":{"exemptDestructuredRootsFromChecks":true}}
 ````
 

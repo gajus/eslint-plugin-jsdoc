@@ -1,16 +1,16 @@
-<a name="user-content-require-property-name"></a>
-<a name="require-property-name"></a>
-# <code>require-property-name</code>
+<a name="user-content-require-property-type"></a>
+<a name="require-property-type"></a>
+# <code>require-property-type</code>
 
-* [Context and settings](#user-content-require-property-name-context-and-settings)
-* [Failing examples](#user-content-require-property-name-failing-examples)
-* [Passing examples](#user-content-require-property-name-passing-examples)
+* [Context and settings](#user-content-require-property-type-context-and-settings)
+* [Failing examples](#user-content-require-property-type-failing-examples)
+* [Passing examples](#user-content-require-property-type-passing-examples)
 
 
-Requires that all `@property` tags have names.
+Requires that each `@property` tag has a type value (within curly brackets).
 
-<a name="user-content-require-property-name-context-and-settings"></a>
-<a name="require-property-name-context-and-settings"></a>
+<a name="user-content-require-property-type-context-and-settings"></a>
+<a name="require-property-type-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -20,8 +20,8 @@ Requires that all `@property` tags have names.
 |Aliases|`prop`|
 |Recommended|true|
 
-<a name="user-content-require-property-name-failing-examples"></a>
-<a name="require-property-name-failing-examples"></a>
+<a name="user-content-require-property-type-failing-examples"></a>
+<a name="require-property-type-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -29,15 +29,16 @@ The following patterns are considered problems:
 ````js
 /**
  * @typedef {SomeType} SomeTypedef
- * @property
+ * @property foo
  */
-// Message: There must be an identifier after @property type.
+// Message: Missing JSDoc @property "foo" type.
 
 /**
  * @typedef {SomeType} SomeTypedef
- * @property {string}
+ * @prop foo
  */
-// Message: There must be an identifier after @property tag.
+// Settings: {"jsdoc":{"tagNamePreference":{"property":"prop"}}}
+// Message: Missing JSDoc @prop "foo" type.
 
 /**
  * @typedef {SomeType} SomeTypedef
@@ -49,8 +50,8 @@ The following patterns are considered problems:
 
 
 
-<a name="user-content-require-property-name-passing-examples"></a>
-<a name="require-property-name-passing-examples"></a>
+<a name="user-content-require-property-type-passing-examples"></a>
+<a name="require-property-type-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -58,22 +59,21 @@ The following patterns are not considered problems:
 ````js
 /**
  * @typedef {SomeType} SomeTypedef
- * @property foo
  */
 
 /**
  * @typedef {SomeType} SomeTypedef
- * @property {string} foo
+ * @property {number} foo
  */
 
 /**
  * @namespace {SomeType} SomeName
- * @property {string} foo
+ * @property {number} foo
  */
 
 /**
  * @class
- * @property {string} foo
+ * @property {number} foo
  */
 ````
 

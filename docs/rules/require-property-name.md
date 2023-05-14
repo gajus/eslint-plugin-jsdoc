@@ -1,16 +1,16 @@
-<a name="user-content-require-property-description"></a>
-<a name="require-property-description"></a>
-# <code>require-property-description</code>
+<a name="user-content-require-property-name"></a>
+<a name="require-property-name"></a>
+# <code>require-property-name</code>
 
-* [Context and settings](#user-content-require-property-description-context-and-settings)
-* [Failing examples](#user-content-require-property-description-failing-examples)
-* [Passing examples](#user-content-require-property-description-passing-examples)
+* [Context and settings](#user-content-require-property-name-context-and-settings)
+* [Failing examples](#user-content-require-property-name-failing-examples)
+* [Passing examples](#user-content-require-property-name-passing-examples)
 
 
-Requires that each `@property` tag has a `description` value.
+Requires that all `@property` tags have names.
 
-<a name="user-content-require-property-description-context-and-settings"></a>
-<a name="require-property-description-context-and-settings"></a>
+<a name="user-content-require-property-name-context-and-settings"></a>
+<a name="require-property-name-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -20,8 +20,8 @@ Requires that each `@property` tag has a `description` value.
 |Aliases|`prop`|
 |Recommended|true|
 
-<a name="user-content-require-property-description-failing-examples"></a>
-<a name="require-property-description-failing-examples"></a>
+<a name="user-content-require-property-name-failing-examples"></a>
+<a name="require-property-name-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -29,16 +29,15 @@ The following patterns are considered problems:
 ````js
 /**
  * @typedef {SomeType} SomeTypedef
- * @property foo
+ * @property
  */
-// Message: Missing JSDoc @property "foo" description.
+// Message: There must be an identifier after @property type.
 
 /**
  * @typedef {SomeType} SomeTypedef
- * @prop foo
+ * @property {string}
  */
-// Settings: {"jsdoc":{"tagNamePreference":{"property":"prop"}}}
-// Message: Missing JSDoc @prop "foo" description.
+// Message: There must be an identifier after @property tag.
 
 /**
  * @typedef {SomeType} SomeTypedef
@@ -50,8 +49,8 @@ The following patterns are considered problems:
 
 
 
-<a name="user-content-require-property-description-passing-examples"></a>
-<a name="require-property-description-passing-examples"></a>
+<a name="user-content-require-property-name-passing-examples"></a>
+<a name="require-property-name-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -59,30 +58,22 @@ The following patterns are not considered problems:
 ````js
 /**
  * @typedef {SomeType} SomeTypedef
+ * @property foo
  */
 
 /**
  * @typedef {SomeType} SomeTypedef
- * @property foo Foo.
+ * @property {string} foo
  */
 
 /**
  * @namespace {SomeType} SomeName
- * @property foo Foo.
+ * @property {string} foo
  */
 
 /**
  * @class
- * @property foo Foo.
- */
-
-/**
- * Typedef with multi-line property type.
- *
- * @typedef {object} MyType
- * @property {function(
- *   number
- * )} numberEater Method which takes a number.
+ * @property {string} foo
  */
 ````
 

@@ -210,6 +210,10 @@ const getDocPaths = () => {
     if (stat.isDirectory()) {
       return fs.readdirSync(innerBasePath).map((innerDocFile) => {
         return path.join(writeInnerBasePath, innerDocFile);
+      }).sort((a, b) => {
+        const newA = a.replace(/\.md/u, '');
+        const newB = b.replace(/\.md/u, '');
+        return newA < newB ? -1 : (newB > newA ? 1 : 0);
       });
     }
 
