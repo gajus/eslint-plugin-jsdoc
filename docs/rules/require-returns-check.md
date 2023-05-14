@@ -1,213 +1,121 @@
-<a name="user-content-require-returns"></a>
-<a name="require-returns"></a>
-# <code>require-returns</code>
+<a name="user-content-require-returns-check"></a>
+<a name="require-returns-check"></a>
+# <code>require-returns-check</code>
 
-* [Options](#user-content-require-returns-options)
-* [Context and settings](#user-content-require-returns-context-and-settings)
-* [Failing examples](#user-content-require-returns-failing-examples)
-* [Passing examples](#user-content-require-returns-passing-examples)
+* [Options](#user-content-require-returns-check-options)
+* [Context and settings](#user-content-require-returns-check-context-and-settings)
+* [Failing examples](#user-content-require-returns-check-failing-examples)
+* [Passing examples](#user-content-require-returns-check-passing-examples)
 
 
-Requires that return statements are documented.
+Requires a return statement (or non-`undefined` Promise resolve value)
+be present in a
+function body if a `@returns` tag (without a `void` or `undefined` type)
+is specified in the function's JSDoc comment block.
+
+Will also report `@returns {void}` and `@returns {undefined}` if `exemptAsync`
+is set to `false` and a non-`undefined` value is returned or a resolved value
+is found. Also reports if `@returns {never}` is discovered with a return value.
 
 Will also report if multiple `@returns` tags are present.
 
-<a name="user-content-require-returns-options"></a>
-<a name="require-returns-options"></a>
+<a name="user-content-require-returns-check-options"></a>
+<a name="require-returns-check-options"></a>
 ## Options
 
-- `checkConstructors` - A value indicating whether `constructor`s should
-    be checked for `@returns` tags. Defaults to `false`.
-- `checkGetters` - Boolean to determine whether getter methods should
-    be checked for `@returns` tags. Defaults to `true`.
-- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
-    document block avoids the need for a `@returns`. Defaults to an array
-    with `inheritdoc`. If you set this array, it will overwrite the default,
-    so be sure to add back `inheritdoc` if you wish its presence to cause
-    exemption of the rule.
-- `forceRequireReturn` - Set to `true` to always insist on
-    `@returns` documentation regardless of implicit or explicit `return`'s
-    in the function. May be desired to flag that a project is aware of an
-    `undefined`/`void` return. Defaults to `false`.
-- `forceReturnsWithAsync` - By default `async` functions that do not explicitly
-    return a value pass this rule as an `async` function will always return a
-    `Promise`, even if the `Promise` resolves to void. You can force all
-    `async` functions (including ones with an explicit `Promise` but no
-    detected non-`undefined` `resolve` value) to require `@return`
-    documentation by setting `forceReturnsWithAsync` to `true` on the options
-    object. This may be useful for flagging that there has been consideration
-    of return type. Defaults to `false`.
-- `contexts` - Set this to an array of strings representing the AST context
-    (or an object with `context` and `comment` properties) where you wish
-    the rule to be applied.
-    Overrides the default contexts (see below). Set to `"any"` if you want
-    the rule to apply to any jsdoc block throughout your files (as is necessary
-    for finding function blocks not attached to a function declaration or
-    expression, i.e., `@callback` or `@function` (or its aliases `@func` or
-    `@method`) (including those associated with an `@interface`). This
-    rule will only apply on non-default contexts when there is such a tag
-    present and the `forceRequireReturn` option is set or if the
-    `forceReturnsWithAsync` option is set with a present `@async` tag
-    (since we are not checking against the actual `return` values in these
-    cases).
+- `exemptGenerators`- Because a generator might be labeled as having a
+  `IterableIterator` `@returns` value (along with an iterator type
+  corresponding to the type of any `yield` statements), projects might wish to
+  leverage `@returns` in generators even without a` return` statement. This
+  option is therefore `true` by default in `typescript` mode (in "jsdoc" mode,
+  one might be more likely to take advantage of `@yields`). Set it to `false`
+  if you wish for a missing `return` to be flagged regardless.
+- `exemptAsync` - By default, functions which return a `Promise` that are not
+    detected as resolving with a non-`undefined` value and `async` functions
+    (even ones that do not explicitly return a value, as these are returning a
+    `Promise` implicitly) will be exempted from reporting by this rule.
+    If you wish to insist that only `Promise`'s which resolve to
+    non-`undefined` values or `async` functions with explicit `return`'s will
+    be exempted from reporting (i.e., that `async` functions can be reported
+    if they lack an explicit (non-`undefined`) `return` when a `@returns` is
+    present), you can set `exemptAsync` to `false` on the options object.
+- `reportMissingReturnForUndefinedTypes` - If `true` and no return or
+    resolve value is found, this setting will even insist that reporting occur
+    with `void` or `undefined` (including as an indicated `Promise` type).
+    Unlike `require-returns`, with this option in the rule, one can
+     *discourage* the labeling of `undefined` types. Defaults to `false`.
 
-<a name="user-content-require-returns-context-and-settings"></a>
-<a name="require-returns-context-and-settings"></a>
+<a name="user-content-require-returns-check-context-and-settings"></a>
+<a name="require-returns-check-context-and-settings"></a>
 ## Context and settings
 
-|          |         |
-| -------- | ------- |
-| Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
-| Tags     | `returns` |
-| Aliases  | `return` |
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|`returns`|
+|Aliases|`return`|
+|Options|`exemptAsync`, `reportMissingReturnForUndefinedTypes`|
 |Recommended|true|
-| Options  | `checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync` |
-| Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
-<a name="user-content-require-returns-failing-examples"></a>
-<a name="require-returns-failing-examples"></a>
+<a name="user-content-require-returns-check-failing-examples"></a>
+<a name="require-returns-check-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
 
 ````js
 /**
- *
+ * @returns
  */
 function quux (foo) {
 
-  return foo;
 }
-// Message: Missing JSDoc @returns declaration.
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- *
- */
-const foo = () => ({
-  bar: 'baz'
-})
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-const foo = bar=>({ bar })
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-const foo = bar => bar.baz()
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
+ * @return
  */
 function quux (foo) {
 
-  return foo;
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
-// Message: Missing JSDoc @return declaration.
+// Message: JSDoc @return declaration present but return expression not available in function.
 
 /**
- *
+ * @returns
  */
-async function quux() {
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
+const quux = () => {}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- *
- */
-const quux = async function () {}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-const quux = async () => {}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-async function quux () {}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
+ * @returns {undefined} Foo.
+ * @returns {String} Foo.
  */
 function quux () {
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-}
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- * @function
- */
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- * @callback
- */
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
-
-const language = {
-  /**
-   * @param {string} name
-   */
-  get name() {
-    return this._name;
-  }
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-async function quux () {
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- * @function
- * @async
- */
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceReturnsWithAsync":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- * @callback
- * @async
- */
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceReturnsWithAsync":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- * @returns {undefined}
- * @returns {void}
- */
-function quux (foo) {
 
   return foo;
 }
 // Message: Found more than one @returns declaration.
+
+const language = {
+  /**
+   * @param {string} name
+   * @returns {string}
+   */
+  get name() {
+    this._name = name;
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+class Foo {
+  /**
+   * @returns {string}
+   */
+  bar () {
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
  * @returns
@@ -219,427 +127,280 @@ function quux () {
 // Message: Unexpected tag `@returns`
 
 /**
- * @param foo
+ * @returns {string}
  */
-function quux (foo) {
-  return 'bar';
-}
-// "jsdoc/require-returns": ["error"|"warn", {"exemptedBy":["notPresent"]}]
-// Message: Missing JSDoc @returns declaration.
+function f () {
+  function g() {
+    return 'foo'
+  }
 
-/**
- * @param {array} a
- */
-async function foo(a) {
-  return;
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- * @param {array} a
- */
-async function foo(a) {
-  return Promise.all(a);
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
-// Message: Missing JSDoc @returns declaration.
-
-class foo {
-  /** gets bar */
-  get bar() {
-    return 0;
+  () => {
+    return 5
   }
 }
-// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":true}]
-// Message: Missing JSDoc @returns declaration.
-
-class TestClass {
-  /**
-   *
-   */
-  constructor() {
-    return new Map();
-  }
-}
-// "jsdoc/require-returns": ["error"|"warn", {"checkConstructors":true}]
-// Message: Missing JSDoc @returns declaration.
-
-class TestClass {
-  /**
-   *
-   */
-  get Test() {
-    return 0;
-  }
-}
-// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":true}]
-// Message: Missing JSDoc @returns declaration.
-
-class quux {
-  /**
-   *
-   */
-  quux () {
-  }
-}
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- *
+ * @returns {Promise<void>}
  */
-function quux (foo) {
-
-  return new Promise(function (resolve, reject) {
-    resolve(foo);
-  });
-}
-// Message: Missing JSDoc @returns declaration.
+async function quux() {}
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- *
+ * @returns {IterableIterator<any>}
  */
-function quux (foo) {
+function * quux() {}
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
-  return new Promise(function (resolve, reject) {
+/**
+ * @returns {IterableIterator<any>}
+ */
+function * quux() {}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptGenerators":false}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {Promise<void>}
+ */
+function quux() {
+  return new Promise((resolve, reject) => {})
+}
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {Promise<void>}
+ */
+function quux() {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(true);
-    });
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux (foo) {
-
-  return new Promise(function (resolve, reject) {
-    foo(resolve);
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise((resolve, reject) => {
-    while(true) {
-      resolve(true);
-    }
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise((resolve, reject) => {
-    do {
-      resolve(true);
-    }
-    while(true)
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise((resolve, reject) => {
-    if (true) {
-      resolve(true);
-    }
-    return;
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise((resolve, reject) => {
-    if (true) {
-      resolve(true);
-    }
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  var a = {};
-  return new Promise((resolve, reject) => {
-    with (a) {
-      resolve(true);
-    }
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  var a = {};
-  return new Promise((resolve, reject) => {
-    try {
-      resolve(true);
-    } catch (err) {}
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  var a = {};
-  return new Promise((resolve, reject) => {
-    try {
-    } catch (err) {
-      resolve(true);
-    }
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  var a = {};
-  return new Promise((resolve, reject) => {
-    try {
-    } catch (err) {
-    } finally {
-      resolve(true);
-    }
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  var a = {};
-  return new Promise((resolve, reject) => {
-    switch (a) {
-    case 'abc':
-      resolve(true);
-    }
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise((resolve, reject) => {
-    if (true) {
       resolve();
-    } else {
-      resolve(true);
-    }
-  });
+    });
+  })
 }
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise((resolve, reject) => {
-    for (let i = 0; i < 5 ; i++) {
-      resolve(true);
-    }
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise((resolve, reject) => {
-    for (const i of obj) {
-      resolve(true);
-    }
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise((resolve, reject) => {
-    for (const i in obj) {
-      resolve(true);
-    }
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise((resolve, reject) => {
-    if (true) {
-      return;
-    } else {
-      resolve(true);
-    }
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise((resolve, reject) => {
-    function a () {
-      resolve(true);
-    }
-    a();
-  });
-}
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-function quux () {
-  return new Promise();
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-async function quux () {
-  return new Promise();
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
-// Message: Missing JSDoc @returns declaration.
-
-/**
- *
- */
-async function quux () {
-  return new Promise((resolve, reject) => {});
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
-// Message: Missing JSDoc @returns declaration.
-
-export class A {
-  /**
-   * Description.
-   */
-  public f(): string {
-    return "";
-  }
-}
-
-export interface B {
-  /**
-   * Description.
-   */
-  f(): string;
-
-  /**
-   * Description.
-   */
-  g: () => string;
-
-  /**
-   * Description.
-   */
-  h(): void;
-
-  /**
-   * Description.
-   */
-  i: () => void;
-}
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
  * Description.
+ * @returns {string}
  */
-export function f(): string {
-  return "";
+async function foo() {
+  return new Promise(resolve => resolve());
 }
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":[":not(BlockStatement) > FunctionDeclaration","MethodDefinition","TSMethodSignature","TSPropertySignature > TSTypeAnnotation > TSFunctionType"]}]
-// Message: Missing JSDoc @returns declaration.
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- * @param ms time in millis
+ * Description.
+ * @returns {void}
  */
-export const sleep = (ms: number) =>
-  new Promise<string>((res) => setTimeout(res, ms));
-// Message: Missing JSDoc @returns declaration.
+async function foo() {
+  return new Promise(resolve => resolve());
+}
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false,"reportMissingReturnForUndefinedTypes":true}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- * @param ms time in millis
+ * @returns { void } Foo.
  */
-export const sleep = (ms: number) => {
-  return new Promise<string>((res) => setTimeout(res, ms));
-};
-// Message: Missing JSDoc @returns declaration.
+function quux () {}
+// "jsdoc/require-returns-check": ["error"|"warn", {"reportMissingReturnForUndefinedTypes":true}]
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {never} Foo.
+ */
+function quux () {
+  return undefined;
+}
+// Message: JSDoc @returns declaration set with "never" but return expression is present in function.
+
+/**
+ * @returns {never}
+ */
+function quux (foo) {
+  return foo;
+}
+// Message: JSDoc @returns declaration set with "never" but return expression is present in function.
 
 /**
  * Reads a test fixture.
- */
-export function readFixture(path: string): Promise<Buffer>;
-// Message: Missing JSDoc @returns declaration.
-
-/**
- * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns The file contents as buffer.
  */
 export function readFixture(path: string): void;
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
  * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns The file contents as buffer.
  */
 export function readFixture(path: string);
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-// Message: Missing JSDoc @returns declaration.
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- * @param {array} a
+ * @returns {SomeType}
  */
-async function foo(a) {
-  return Promise.all(a);
-}
-// Message: Missing JSDoc @returns declaration.
+function quux (path) {
+  if (true) {
+    return;
+  }
+  return 15;
+};
+// Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- * Description.
+ * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns The file contents as buffer.
  */
-export default async function demo() {
-  return true;
+export function readFixture(path: string): void {
+  return;
+};
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    return true;
+  }
 }
-// Message: Missing JSDoc @returns declaration.
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+  } else {
+    return;
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {true}
+ */
+function quux (someVar) {
+  switch (someVar) {
+  case 1:
+    return true;
+  case 2:
+    return;
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {boolean}
+ */
+const quux = (someVar) => {
+  if (someVar) {
+    return true;
+  }
+};
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+    return true;
+  } catch (error) {
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+    return true;
+  } catch (error) {
+    return true;
+  } finally {
+    return;
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    throw new Error('abc');
+  }
+
+  throw new Error('def');
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {SomeType} Baz.
+ */
+function foo() {
+    switch (true) {
+        default:
+            switch (false) {
+                default: return;
+            }
+            return "baz";
+    }
+};
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {SomeType} Baz.
+ */
+function foo() {
+    switch (true) {
+        default:
+            switch (false) {
+                default: return;
+            }
+            return "baz";
+    }
+};
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {number}
+ */
+function foo() {
+  let n = 1;
+  while (n > 0.5) {
+    n = Math.random();
+    if (n < 0.2) {
+      return n;
+    }
+  }
+}
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 
 
-<a name="user-content-require-returns-passing-examples"></a>
-<a name="require-returns-passing-examples"></a>
+<a name="user-content-require-returns-check-passing-examples"></a>
+<a name="require-returns-check-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -654,491 +415,391 @@ function quux () {
 }
 
 /**
- * @returns Foo.
+ * @returns {string} Foo.
  */
 function quux () {
 
   return foo;
 }
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"]}]
 
 /**
- *
+ * @returns {string} Foo.
  */
 function quux () {
-}
-
-/**
- *
- */
-function quux (bar) {
-  bar.filter(baz => {
-    return baz.corge();
-  })
-}
-
-/**
- * @returns Array
- */
-function quux (bar) {
-  return bar.filter(baz => {
-    return baz.corge();
-  })
-}
-
-/**
- * @returns Array
- */
-const quux = (bar) => bar.filter(({ corge }) => corge())
-
-/**
- * @inheritdoc
- */
-function quux (foo) {
-}
-
-/**
- * @override
- */
-function quux (foo) {
-}
-
-/**
- * @constructor
- */
-function quux (foo) {
-  return true;
-}
-
-/**
- * @implements
- */
-function quux (foo) {
-  return true;
-}
-
-/**
- * @override
- */
-function quux (foo) {
 
   return foo;
 }
 
 /**
- * @class
- */
-function quux (foo) {
-  return true;
-}
-
-/**
- * @constructor
- */
-function quux (foo) {
-
-}
-
-/**
- * @returns {object}
- */
-function quux () {
-
-  return {a: foo};
-}
-
-/**
- * @returns {object}
- */
-const quux = () => ({a: foo});
-
-/**
- * @returns {object}
- */
-const quux = () => {
-  return {a: foo}
-};
-
-/**
- * @returns {void}
- */
-function quux () {
-}
-
-/**
- * @returns {void}
- */
-const quux = () => {
-
-}
-
-/**
- * @returns {undefined}
- */
-function quux () {
-}
-
-/**
- * @returns {undefined}
- */
-const quux = () => {
-
-}
-
-/**
  *
  */
 function quux () {
 }
 
 /**
- *
+ * @returns {SomeType} Foo.
  */
-const quux = () => {
-
-}
-
-class Foo {
-  /**
-   *
-   */
-  constructor () {
-  }
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-
-const language = {
-  /**
-   * @param {string} name
-   */
-  set name(name) {
-    this._name = name;
-  }
-}
+const quux = () => foo;
 
 /**
- * @returns {void}
+ * @returns {undefined} Foo.
  */
-function quux () {
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
+function quux () {}
 
 /**
- * @returns {void}
+ * @returns { void } Foo.
  */
-function quux () {
-  return undefined;
-}
+function quux () {}
 
 /**
- * @returns {void}
+ * @returns {Promise<void>}
  */
-function quux () {
-  return undefined;
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
+async function quux() {}
 
 /**
- * @returns {void}
- */
-function quux () {
-  return;
-}
-
-/**
- * @returns {void}
- */
-function quux () {
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-
-/**
- * @returns {void}
- */
-function quux () {
-  return;
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-
-/** @type {RequestHandler} */
-function quux (req, res , next) {
-  return;
-}
-
-/**
- * @returns {Promise}
- */
-async function quux () {
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-
-/**
- * @returns {Promise}
- */
-async function quux () {
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
-
-/**
- *
- */
-async function quux () {}
-
-/**
- *
+ * @returns {Promise<void>}
  */
 const quux = async function () {}
 
 /**
- *
+ * @returns {Promise<void>}
  */
 const quux = async () => {}
 
-/** foo class */
-class foo {
-  /** foo constructor */
-  constructor () {
-    // =>
-    this.bar = true;
+/**
+ * @returns Foo.
+ * @abstract
+ */
+function quux () {
+  throw new Error('must be implemented by subclass!');
+}
+
+/**
+ * @returns Foo.
+ * @virtual
+ */
+function quux () {
+  throw new Error('must be implemented by subclass!');
+}
+
+/**
+ * @returns Foo.
+ * @constructor
+ */
+function quux () {
+}
+
+/**
+ * @interface
+ */
+class Foo {
+  /**
+   * @returns {string}
+   */
+  bar () {
   }
 }
 
-export default foo;
+/**
+ * @record
+ */
+class Foo {
+  /**
+   * @returns {string}
+   */
+  bar () {
+  }
+}
+// Settings: {"jsdoc":{"mode":"closure"}}
 
 /**
- *
+ * @returns {undefined} Foo.
  */
 function quux () {
 }
-// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
 
 /**
- * @type {MyCallback}
+ * @returns {void} Foo.
  */
 function quux () {
-
 }
-// "jsdoc/require-returns": ["error"|"warn", {"exemptedBy":["type"]}]
 
 /**
- * @param {array} a
+ * @returns {void} Foo.
  */
-async function foo(a) {
+function quux () {
+  return undefined;
+}
+
+/**
+ * @returns {never} Foo.
+ */
+function quux () {
+}
+
+/**
+ * @returns {void} Foo.
+ */
+function quux () {
   return;
 }
 
 /**
  *
  */
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"]}]
-
-/**
- * @async
- */
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"]}]
-
-/**
- * @function
- */
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-
-/**
- * @callback
- */
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
-
-/**
- * @function
- * @async
- */
-// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
-
-/**
- * @callback
- * @async
- */
-// "jsdoc/require-returns": ["error"|"warn", {"forceReturnsWithAsync":true}]
-
-/**
- * @function
- */
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceReturnsWithAsync":true}]
-
-/**
- * @callback
- */
-// "jsdoc/require-returns": ["error"|"warn", {"contexts":["any"],"forceReturnsWithAsync":true}]
-
-class foo {
-  get bar() {
-    return 0;
-  }
-}
-// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":false}]
-
-class foo {
-  /** @returns zero */
-  get bar() {
-    return 0;
-  }
-}
-// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":true}]
-
-class foo {
-  /** @returns zero */
-  get bar() {
-    return 0;
-  }
-}
-// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":false}]
-
-class TestClass {
-  /**
-   *
-   */
-  constructor() { }
-}
-
-class TestClass {
-  /**
-   * @returns A map.
-   */
-  constructor() {
-    return new Map();
-  }
-}
-
-class TestClass {
-  /**
-   *
-   */
-  constructor() { }
-}
-// "jsdoc/require-returns": ["error"|"warn", {"checkConstructors":false}]
-
-class TestClass {
-  /**
-   *
-   */
-  get Test() { }
-}
-
-class TestClass {
-  /**
-   * @returns A number.
-   */
-  get Test() {
-    return 0;
-  }
-}
-
-class TestClass {
-  /**
-   *
-   */
-  get Test() {
-    return 0;
-  }
-}
-// "jsdoc/require-returns": ["error"|"warn", {"checkGetters":false}]
-
-/**
- *
- */
-function quux (foo) {
-
-  return new Promise(function (resolve, reject) {
-    resolve();
-  });
-}
-
-/**
- *
- */
-function quux (foo) {
-
-  return new Promise(function (resolve, reject) {
-    setTimeout(() => {
-      resolve();
-    });
-  });
-}
-
-/**
- *
- */
-function quux (foo) {
-
-  return new Promise(function (resolve, reject) {
-    foo();
-  });
-}
-
-/**
- *
- */
-function quux (foo) {
-
-  return new Promise(function (resolve, reject) {
-    abc((resolve) => {
-      resolve(true);
-    });
-  });
-}
-
-/**
- *
- */
-function quux (foo) {
-
-  return new Promise(function (resolve, reject) {
-    abc(function (resolve) {
-      resolve(true);
-    });
-  });
+function quux () {
+  return undefined;
 }
 
 /**
  *
  */
 function quux () {
+  return;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+    return true;
+  } catch (err) {
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+  } finally {
+    return true;
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+    return true;
+  } catch (err) {
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+    something();
+  } catch (err) {
+    return true;
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  switch (true) {
+  case 'abc':
+    return true;
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  switch (true) {
+  case 'abc':
+    return true;
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  for (const i of abc) {
+    return true;
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  for (const a in b) {
+    return true;
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  for (const a of b) {
+    return true;
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  loop: for (const a of b) {
+    return true;
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  for (let i=0; i<n; i+=1) {
+    return true;
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  while(true) {
+    return true
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  do {
+    return true
+  }
+  while(true)
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    return true;
+  }
+  return true;
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  var a = {};
+  with (a) {
+    return true;
+  }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    return true;
+  } else {
+    return true;
+  }
+  return true;
+}
+
+/**
+ * @returns {Promise<number>}
+ */
+async function quux() {
+  return 5;
+}
+
+/**
+ * @returns {Promise<number>}
+ */
+async function quux() {
+  return 5;
+}
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
+
+/**
+ * @returns {Promise<void>}
+ */
+function quux() {
   return new Promise((resolve, reject) => {
-    if (true) {
-      resolve();
-    }
-  });
-  return;
+    setTimeout(() => {
+      resolve(true);
+    });
+  })
 }
-
-/**
- *
- */
-function quux () {
-  return new Promise();
-}
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
 
 /**
  * Description.
+ * @returns {void}
  */
 async function foo() {
   return new Promise(resolve => resolve());
 }
+// "jsdoc/require-returns-check": ["error"|"warn", {"reportMissingReturnForUndefinedTypes":true}]
 
 /**
- * @param ms time in millis
+ * @returns { void } Foo.
  */
-export const sleep = (ms: number) =>
-  new Promise<void>((res) => setTimeout(res, ms));
+function quux () {
+  return undefined;
+}
+// "jsdoc/require-returns-check": ["error"|"warn", {"reportMissingReturnForUndefinedTypes":true}]
 
 /**
- * @param ms time in millis
+ * @returns { string } Foo.
  */
-export const sleep = (ms: number) => {
-  return new Promise<void>((res) => setTimeout(res, ms));
-};
+function quux () {
+  return 'abc';
+}
+// "jsdoc/require-returns-check": ["error"|"warn", {"reportMissingReturnForUndefinedTypes":true}]
+
+/**
+ * @returns {IterableIterator<any>}
+ */
+function * quux() {}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @returns {IterableIterator<any>}
+ */
+function * quux() {}
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptGenerators":true}]
+
+/**
+ * @param {unknown} val
+ * @returns { asserts val is number }
+ */
+function assertNumber(val) {
+  assert(typeof val === 'number');
+}
 
 /**
  * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
  *
  * @returns The file contents as buffer.
  */
@@ -1147,18 +808,246 @@ export function readFixture(path: string): Promise<Buffer>;
 /**
  * Reads a test fixture.
  *
- * @returns {void}.
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns {SomeType} The file contents as buffer.
  */
-export function readFixture(path: string): void;
+export function readFixture(path: string): Promise<Buffer>;
 
 /**
  * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns The file contents as buffer.
  */
-export function readFixture(path: string): void;
+export function readFixture(path: string): Promise<Buffer> {
+  return new Promise(() => {});
+}
 
 /**
  * Reads a test fixture.
+ *
+ * @param path The path to resolve relative to the fixture base. It will be normalized for the
+ * operating system.
+ *
+ * @returns {void} The file contents as buffer.
  */
 export function readFixture(path: string);
+
+/**
+ * @returns {SomeType}
+ */
+function quux (path) {
+  if (true) {
+    return 5;
+  }
+  return 15;
+};
+
+/**
+ * @returns {SomeType} Foo.
+ */
+const quux = () => new Promise((resolve) => {
+  resolve(3);
+});
+
+/**
+ * @returns {SomeType} Foo.
+ */
+const quux = function () {
+  return new Promise((resolve) => {
+    resolve(3);
+  });
+};
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  if (true) {
+    return true;
+  }
+
+  throw new Error('Fail');
+}
+
+/**
+ * @returns Baz.
+ */
+function foo() {
+    switch (true) {
+        default:
+            switch (false) {
+                default: break;
+            }
+            return "baz";
+    }
+};
+
+/**
+ * Return a V1 style query identifier.
+ *
+ * @param {string} id - The query identifier.
+ * @returns {string} V1 style query identifier.
+ */
+function v1QueryId(id) {
+    switch (id) {
+        case 'addq':
+        case 'aliq':
+        case 'locq':
+            return id.substring(3);
+        case 'lost':
+            return id.substring(4);
+        default:
+            return id;
+    }
+}
+
+/**
+ * Parses the required header fields for the given SIP message.
+ *
+ * @param {string} logPrefix - The log prefix.
+ * @param {string} sipMessage - The SIP message.
+ * @param {string[]} headers - The header fields to be parsed.
+ * @returns {object} Object with parsed header fields.
+ */
+function parseSipHeaders(logPrefix, sipMessage, headers) {
+    try {
+        return esappSip.parseHeaders(sipMessage, headers);
+    } catch (err) {
+        logger.error(logPrefix, 'Failed to parse');
+        return {};
+    }
+}
+
+/**
+ * @returns {true}
+ */
+function quux () {
+  try {
+  } catch (error) {
+  } finally {
+    return true;
+  }
+}
+
+/** Returns true.
+ *
+ * @returns {boolean} true
+ */
+function getTrue() {
+  try {
+    return true;
+  } finally {
+    console.log('returning...');
+  }
+}
+
+/**
+ * Maybe return a boolean.
+ * @returns {boolean|void} true, or undefined.
+ */
+function maybeTrue() {
+  if (Math.random() > 0.5) {
+    return true;
+  }
+}
+
+/**
+ * @param {AST} astNode
+ * @returns {AST}
+ */
+const getTSFunctionComment = function (astNode) {
+  switch (greatGrandparent.type) {
+  case 'VariableDeclarator':
+    if (greatGreatGrandparent.type === 'VariableDeclaration') {
+      return greatGreatGrandparent;
+    }
+
+  default:
+    return astNode;
+  }
+};
+
+const f =
+  /**
+   * Description.
+   *
+   * @returns Result.
+   */
+  () => {
+    return function () {};
+  };
+
+/**
+ * Description.
+ *
+ * @returns Result.
+ */
+export function f(): string {
+  return "";
+
+  interface I {}
+}
+
+/**
+ * @param {boolean} bar A fun variable.
+ * @returns {*} Anything at all!
+ */
+function foo( bar ) {
+  if ( bar ) {
+    return functionWithUnknownReturnType();
+  }
+}
+
+/**
+ * @returns Baz.
+ */
+function foo() {
+    switch (true) {
+        default:
+            switch (false) {
+                default: return;
+            }
+            return "baz";
+    }
+};
+
+/**
+ * @returns Baz.
+ */
+function foo() {
+    switch (true) {
+        default:
+            switch (false) {
+                default: return;
+            }
+            return "baz";
+    }
+};
+
+/**
+ * @returns
+ */
+const quux = (someVar) => {
+  if (someVar) {
+    return true;
+  }
+};
+
+/**
+ * @returns {number}
+ */
+function foo() {
+  while (true) {
+    const n = Math.random();
+    if (n < 0.5) {
+      return n;
+    }
+  }
+}
 ````
 

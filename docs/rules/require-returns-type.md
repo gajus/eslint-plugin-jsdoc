@@ -1,24 +1,22 @@
-<a name="user-content-require-returns-description"></a>
-<a name="require-returns-description"></a>
-# <code>require-returns-description</code>
+<a name="user-content-require-returns-type"></a>
+<a name="require-returns-type"></a>
+# <code>require-returns-type</code>
 
-* [Options](#user-content-require-returns-description-options)
-    * [`contexts`](#user-content-require-returns-description-options-contexts)
-* [Context and settings](#user-content-require-returns-description-context-and-settings)
-* [Failing examples](#user-content-require-returns-description-failing-examples)
-* [Passing examples](#user-content-require-returns-description-passing-examples)
+* [Options](#user-content-require-returns-type-options)
+    * [`contexts`](#user-content-require-returns-type-options-contexts)
+* [Context and settings](#user-content-require-returns-type-context-and-settings)
+* [Failing examples](#user-content-require-returns-type-failing-examples)
+* [Passing examples](#user-content-require-returns-type-passing-examples)
 
 
-Requires that the `@returns` tag has a `description` value. The error
-will not be reported if the return value is `void` or `undefined`
-or if it is `Promise<void>` or `Promise<undefined>`.
+Requires that `@returns` tag has a `type` value (in curly brackets).
 
-<a name="user-content-require-returns-description-options"></a>
-<a name="require-returns-description-options"></a>
+<a name="user-content-require-returns-type-options"></a>
+<a name="require-returns-type-options"></a>
 ## Options
 
-<a name="user-content-require-returns-description-options-contexts"></a>
-<a name="require-returns-description-options-contexts"></a>
+<a name="user-content-require-returns-type-options-contexts"></a>
+<a name="require-returns-type-options-contexts"></a>
 ### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
@@ -32,8 +30,8 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our README for more on the expected format.
 
-<a name="user-content-require-returns-description-context-and-settings"></a>
-<a name="require-returns-description-context-and-settings"></a>
+<a name="user-content-require-returns-type-context-and-settings"></a>
+<a name="require-returns-type-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -44,8 +42,8 @@ section of our README for more on the expected format.
 |Recommended|true|
 |Options|`contexts`|
 
-<a name="user-content-require-returns-description-failing-examples"></a>
-<a name="require-returns-description-failing-examples"></a>
+<a name="user-content-require-returns-type-failing-examples"></a>
+<a name="require-returns-type-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -54,50 +52,50 @@ The following patterns are considered problems:
 /**
  * @returns
  */
-function quux (foo) {
+function quux () {
 
 }
-// Message: Missing JSDoc @returns description.
+// Message: Missing JSDoc @returns type.
 
 /**
- * @returns {string}
+ * @returns Foo.
  */
-function quux (foo) {
+function quux () {
 
 }
-// Message: Missing JSDoc @returns description.
+// Message: Missing JSDoc @returns type.
 
 /**
- * @returns {string}
+ * @returns Foo.
  */
-function quux (foo) {
+function quux () {
 
 }
-// "jsdoc/require-returns-description": ["error"|"warn", {"contexts":["any"]}]
-// Message: Missing JSDoc @returns description.
+// "jsdoc/require-returns-type": ["error"|"warn", {"contexts":["any"]}]
+// Message: Missing JSDoc @returns type.
 
 /**
  * @function
- * @returns {string}
+ * @returns Foo.
  */
-// "jsdoc/require-returns-description": ["error"|"warn", {"contexts":["any"]}]
-// Message: Missing JSDoc @returns description.
+// "jsdoc/require-returns-type": ["error"|"warn", {"contexts":["any"]}]
+// Message: Missing JSDoc @returns type.
 
 /**
  * @callback
- * @returns {string}
+ * @returns Foo.
  */
-// "jsdoc/require-returns-description": ["error"|"warn", {"contexts":["any"]}]
-// Message: Missing JSDoc @returns description.
+// "jsdoc/require-returns-type": ["error"|"warn", {"contexts":["any"]}]
+// Message: Missing JSDoc @returns type.
 
 /**
- * @return
+ * @return Foo.
  */
-function quux (foo) {
+function quux () {
 
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
-// Message: Missing JSDoc @return description.
+// Message: Missing JSDoc @return type.
 
 /**
  * @returns
@@ -111,71 +109,36 @@ function quux () {
 
 
 
-<a name="user-content-require-returns-description-passing-examples"></a>
-<a name="require-returns-description-passing-examples"></a>
+<a name="user-content-require-returns-type-passing-examples"></a>
+<a name="require-returns-type-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
 
 ````js
 /**
- *
+ * @returns {number}
  */
 function quux () {
 
 }
 
 /**
- * @returns Foo.
+ * @returns {number}
  */
 function quux () {
 
 }
-
-/**
- * @returns Foo.
- */
-function quux () {
-
-}
-// "jsdoc/require-returns-description": ["error"|"warn", {"contexts":["any"]}]
-
-/**
- * @returns {undefined}
- */
-function quux () {
-
-}
-
-/**
- * @returns {void}
- */
-function quux () {
-
-}
-
-/**
- * @returns {Promise<void>}
- */
-function quux () {
-
-}
-
-/**
- * @returns {Promise<undefined>}
- */
-function quux () {
-
-}
+// "jsdoc/require-returns-type": ["error"|"warn", {"contexts":["any"]}]
 
 /**
  * @function
- * @returns
+ * @returns Foo.
  */
 
 /**
  * @callback
- * @returns
+ * @returns Foo.
  */
 ````
 

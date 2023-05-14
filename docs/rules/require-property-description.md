@@ -1,128 +1,88 @@
-<a name="user-content-require-property"></a>
-<a name="require-property"></a>
-# <code>require-property</code>
+<a name="user-content-require-property-description"></a>
+<a name="require-property-description"></a>
+# <code>require-property-description</code>
 
-* [Fixer](#user-content-require-property-fixer)
-* [Context and settings](#user-content-require-property-context-and-settings)
-* [Failing examples](#user-content-require-property-failing-examples)
-* [Passing examples](#user-content-require-property-passing-examples)
+* [Context and settings](#user-content-require-property-description-context-and-settings)
+* [Failing examples](#user-content-require-property-description-failing-examples)
+* [Passing examples](#user-content-require-property-description-passing-examples)
 
 
-Requires that all `@typedef` and `@namespace` tags have `@property`
-tags when their type is a plain `object`, `Object`, or `PlainObject`.
+Requires that each `@property` tag has a `description` value.
 
-Note that any other type, including a subtype of object such as
-`object<string, string>`, will not be reported.
-
-<a name="user-content-require-property-fixer"></a>
-<a name="require-property-fixer"></a>
-## Fixer
-
-The fixer for `require-property` will add an empty `@property`.
-
-<a name="user-content-require-property-context-and-settings"></a>
-<a name="require-property-context-and-settings"></a>
+<a name="user-content-require-property-description-context-and-settings"></a>
+<a name="require-property-description-context-and-settings"></a>
 ## Context and settings
 
 |||
 |---|---|
-|Context|Everywhere|
-|Tags|`typedef`, `namespace`|
+|Context|everywhere|
+|Tags|`property`|
+|Aliases|`prop`|
 |Recommended|true|
 
-<a name="user-content-require-property-failing-examples"></a>
-<a name="require-property-failing-examples"></a>
+<a name="user-content-require-property-description-failing-examples"></a>
+<a name="require-property-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
 
 ````js
 /**
- * @typedef {object} SomeTypedef
+ * @typedef {SomeType} SomeTypedef
+ * @property foo
  */
-// Message: Missing JSDoc @property.
-
-class Test {
-    /**
-     * @typedef {object} SomeTypedef
-     */
-    quux () {}
-}
-// Message: Missing JSDoc @property.
+// Message: Missing JSDoc @property "foo" description.
 
 /**
- * @typedef {PlainObject} SomeTypedef
+ * @typedef {SomeType} SomeTypedef
+ * @prop foo
  */
 // Settings: {"jsdoc":{"tagNamePreference":{"property":"prop"}}}
-// Message: Missing JSDoc @prop.
+// Message: Missing JSDoc @prop "foo" description.
 
 /**
- * @namespace {Object} SomeName
+ * @typedef {SomeType} SomeTypedef
+ * @property foo
  */
-// Message: Missing JSDoc @property.
+// Settings: {"jsdoc":{"tagNamePreference":{"property":false}}}
+// Message: Unexpected tag `@property`
 ````
 
 
 
-<a name="user-content-require-property-passing-examples"></a>
-<a name="require-property-passing-examples"></a>
+<a name="user-content-require-property-description-passing-examples"></a>
+<a name="require-property-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
 
 ````js
 /**
+ * @typedef {SomeType} SomeTypedef
+ */
+
+/**
+ * @typedef {SomeType} SomeTypedef
+ * @property foo Foo.
+ */
+
+/**
+ * @namespace {SomeType} SomeName
+ * @property foo Foo.
+ */
+
+/**
+ * @class
+ * @property foo Foo.
+ */
+
+/**
+ * Typedef with multi-line property type.
  *
+ * @typedef {object} MyType
+ * @property {function(
+ *   number
+ * )} numberEater Method which takes a number.
  */
-
-/**
- * @property
- */
-
-/**
- * @typedef {Object} SomeTypedef
- * @property {SomeType} propName Prop description
- */
-
-/**
- * @typedef {object} SomeTypedef
- * @prop {SomeType} propName Prop description
- */
-// Settings: {"jsdoc":{"tagNamePreference":{"property":"prop"}}}
-
-/**
- * @typedef {object} SomeTypedef
- * @property
- * // arbitrary property content
- */
-
-/**
- * @typedef {object<string, string>} SomeTypedef
- */
-
-/**
- * @typedef {string} SomeTypedef
- */
-
-/**
- * @namespace {object} SomeName
- * @property {SomeType} propName Prop description
- */
-
-/**
- * @namespace {object} SomeName
- * @property
- * // arbitrary property content
- */
-
-/**
- * @typedef {object} SomeTypedef
- * @property someProp
- * @property anotherProp This with a description
- * @property {anotherType} yetAnotherProp This with a type and desc.
- */
-function quux () {
-
-}
 ````
 
