@@ -33,6 +33,7 @@ const canSkip = (utils, settings) => {
     settings.mode === 'closure' && utils.classHasTag('record');
 };
 
+// eslint-disable-next-line complexity -- Temporary
 export default iterateJsdoc(({
   context,
   node,
@@ -54,9 +55,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const tagName = utils.getPreferredTagName({
+  const tagName = /** @type {string} */ (utils.getPreferredTagName({
     tagName: 'returns',
-  });
+  }));
   if (!tagName) {
     return;
   }
@@ -106,7 +107,7 @@ export default iterateJsdoc(({
       exemptAsync,
       true,
     )) &&
-    (!exemptGenerators || !node.generator)
+    (!exemptGenerators || !('generator' in /** @type {import('../iterateJsdoc.js').Node} */ (node)) || !node.generator)
   ) {
     report(`JSDoc @${tagName} declaration present but return expression not available in function.`);
   }

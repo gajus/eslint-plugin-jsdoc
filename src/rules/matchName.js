@@ -26,7 +26,7 @@ export default iterateJsdoc(({
     tags = [
       '*',
     ],
-  } = match[lastIndex];
+  } = match[/** @type {import('../iterateJsdoc.js').Integer} */ (lastIndex)];
 
   const allowNameRegex = allowName && utils.getRegexFromString(allowName);
   const disallowNameRegex = disallowName && utils.getRegexFromString(disallowName);
@@ -62,7 +62,7 @@ export default iterateJsdoc(({
 
     let {
       message,
-    } = match[lastIndex];
+    } = match[/** @type {import('../iterateJsdoc.js').Integer} */ (lastIndex)];
     if (!message) {
       if (hasRegex) {
         message = disallowed ?

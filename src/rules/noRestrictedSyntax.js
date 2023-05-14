@@ -27,12 +27,27 @@ export default iterateJsdoc(({
      */
     (cntxt) => {
       return typeof cntxt === 'string' ?
-        esquery.matches(node, esquery.parse(cntxt), null, {
-          visitorKeys: sourceCode.visitorKeys,
-        }) :
-        (!cntxt.context || cntxt.context === 'any' || esquery.matches(node, esquery.parse(cntxt.context), null, {
-          visitorKeys: sourceCode.visitorKeys,
-        })) &&
+        esquery.matches(
+          node,
+          esquery.parse(cntxt),
+          null,
+          // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/65460
+          // @ts-expect-error
+          {
+            visitorKeys: sourceCode.visitorKeys,
+          },
+        ) :
+        (!cntxt.context || cntxt.context === 'any' ||
+          esquery.matches(
+            node,
+            esquery.parse(cntxt.context),
+            null,
+            // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/65460
+            // @ts-expect-error
+            {
+              visitorKeys: sourceCode.visitorKeys,
+            },
+          )) &&
           comment === cntxt.comment;
     },
   );
@@ -50,8 +65,10 @@ export default iterateJsdoc(({
     'Syntax is restricted: {{context}}' +
       (comment ? ' with {{comment}}' : '');
 
-  report(message, null, null, {
+  report(message, null, null, comment ? {
     comment,
+    context: contextStr,
+  } : {
     context: contextStr,
   });
 }, {

@@ -38,9 +38,11 @@ export default iterateJsdoc(({
     return;
   }
 
-  const isBlocked = typeof targetTagName === 'object' && targetTagName.blocked;
+  const isBlocked = typeof targetTagName === 'object' && 'blocked' in targetTagName && targetTagName.blocked;
   if (isBlocked) {
-    targetTagName = targetTagName.tagName;
+    targetTagName = /** @type {{blocked: true; tagName: string;}} */ (
+      targetTagName
+    ).tagName;
   }
 
   if (descriptionStyle !== 'tag') {

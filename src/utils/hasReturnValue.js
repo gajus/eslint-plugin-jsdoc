@@ -1,16 +1,14 @@
-/* eslint-disable jsdoc/no-undefined-types */
-
 /**
  * @typedef {import('estree').Node|
- *   import('@typescript-eslint/types').TSESTree.TSTypeReference} ESTreeOrTypeScriptNode
+ *   import('@typescript-eslint/types').TSESTree.Node} ESTreeOrTypeScriptNode
  */
 
 /**
  * Checks if a node is a promise but has no resolve value or an empty value.
  * An `undefined` resolve does not count.
  *
- * @param {ESTreeOrTypeScriptNode} node
- * @returns {boolean}
+ * @param {ESTreeOrTypeScriptNode|undefined|null} node
+ * @returns {boolean|undefined|null}
  */
 const isNewPromiseExpression = (node) => {
   return node && node.type === 'NewExpression' && node.callee.type === 'Identifier' &&
@@ -18,11 +16,13 @@ const isNewPromiseExpression = (node) => {
 };
 
 /**
- * @param {import('@typescript-eslint/types').TSESTree.TSTypeReference} node
+ * @param {ESTreeOrTypeScriptNode|null|undefined} node
  * @returns {boolean}
  */
 const isVoidPromise = (node) => {
-  return node?.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
+  return /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */ (
+    node
+  )?.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
 };
 
 const undefinedKeywords = new Set([
@@ -32,7 +32,7 @@ const undefinedKeywords = new Set([
 /**
  * Checks if a node has a return statement. Void return does not count.
  *
- * @param {import('estree').Node|import('@typescript-eslint/types').TSESTree.Node} node
+ * @param {ESTreeOrTypeScriptNode|undefined|null} node
  * @param {boolean} [throwOnNullReturn]
  * @param {PromiseFilter} [promFilter]
  * @returns {boolean|undefined}
@@ -56,7 +56,9 @@ const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
   case 'FunctionExpression':
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
-    return 'expression' in node && node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node.body)) ||
+    return 'expression' in node && node.expression && (!isNewPromiseExpression(
+      node.body,
+    ) || !isVoidPromise(node.body)) ||
       hasReturnValue(node.body, throwOnNullReturn, promFilter);
   }
 
@@ -125,9 +127,9 @@ const hasReturnValue = (node, throwOnNullReturn, promFilter) => {
 /**
  * Checks if a node has a return statement. Void return does not count.
  *
- * @param {import('@typescript-eslint/types').TSESTree.Node} node
+ * @param {ESTreeOrTypeScriptNode|null|undefined} node
  * @param {PromiseFilter} promFilter
- * @returns {undefined|boolean|import('@typescript-eslint/types').TSESTree.Node}
+ * @returns {undefined|boolean|ESTreeOrTypeScriptNode}
  */
 // eslint-disable-next-line complexity
 const allBrancheshaveReturnValues = (node, promFilter) => {
@@ -148,10 +150,12 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
   case 'FunctionExpression':
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
-    return node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node.body)) ||
-      allBrancheshaveReturnValues(node.body, promFilter) || node.body.body.some((nde) => {
-      return nde.type === 'ReturnStatement';
-    });
+    return 'expression' in node && node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node.body)) ||
+      allBrancheshaveReturnValues(node.body, promFilter) ||
+      /** @type {import('@typescript-eslint/types').TSESTree.BlockStatement} */
+      (node.body).body.some((nde) => {
+        return nde.type === 'ReturnStatement';
+      });
   }
 
   case 'BlockStatement': {
@@ -161,7 +165,12 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
 
   case 'WhileStatement':
   case 'DoWhileStatement':
-    if (node.test.value === true) {
+    if (
+      /**
+       * @type {import('@typescript-eslint/types').TSESTree.Literal}
+       */
+      (node.test).value === true
+    ) {
       // If this is an infinite loop, we assume only one branch
       //   is needed to provide a return
       return hasReturnValue(node.body, false, promFilter);
@@ -177,7 +186,8 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
   }
 
   case 'IfStatement': {
-    return allBrancheshaveReturnValues(node.consequent, promFilter) && allBrancheshaveReturnValues(node.alternate, promFilter);
+    return allBrancheshaveReturnValues(node.consequent, promFilter) &&
+      allBrancheshaveReturnValues(node.alternate, promFilter);
   }
 
   case 'TryStatement': {
@@ -192,7 +202,7 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
               hasReturnValue(node.finalizer, true, promFilter);
             } catch (error) {
               // istanbul ignore else
-              if (error.message === 'Null return') {
+              if (/** @type {Error} */ (error).message === 'Null return') {
                 return false;
               }
 
@@ -206,7 +216,7 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
   }
 
   case 'SwitchStatement': {
-    return node.cases.every(
+    return /** @type {import('@typescript-eslint/types').TSESTree.SwitchStatement} */ (node).cases.every(
       (someCase) => {
         return !someCase.consequent.some((consNode) => {
           return consNode.type === 'BreakStatement' ||
@@ -243,7 +253,7 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
 
 /**
  * @callback PromiseFilter
- * @param {import('@typescript-eslint/types').TSESTree.Node} node
+ * @param {ESTreeOrTypeScriptNode|undefined} node
  * @returns {boolean}
  */
 
@@ -256,7 +266,7 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
  * unlikely, we avoid the performance cost of checking everywhere for
  * (re)declarations or assignments.
  *
- * @param {AST} node
+ * @param {import('@typescript-eslint/types').TSESTree.Node|null|undefined} node
  * @param {string} resolverName
  * @returns {boolean}
  */
@@ -268,10 +278,13 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
 
   // Arrow function without block
   switch (node.type) {
+  // @ts-expect-error Babel?
   // istanbul ignore next -- In Babel?
   case 'OptionalCallExpression':
   case 'CallExpression':
-    return node.callee.name === resolverName && (
+    return /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+      node.callee
+    ).name === resolverName && (
 
       // Implicit or explicit undefined
       node.arguments.length > 1 || node.arguments[0] !== undefined
@@ -296,7 +309,9 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
     // Shadowing
-    if (node.params[0]?.name === resolverName) {
+    if (/** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+      node.params[0]
+    )?.name === resolverName) {
       return false;
     }
 
@@ -364,6 +379,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
     return node.properties.some((property) => {
       return hasNonEmptyResolverCall(property, resolverName);
     });
+  // @ts-expect-error Babel?
   // istanbul ignore next -- In Babel?
   case 'ClassMethod':
   case 'MethodDefinition':
@@ -373,21 +389,26 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
       node.computed && hasNonEmptyResolverCall(node.key, resolverName) ||
       hasNonEmptyResolverCall(node.value, resolverName);
 
+  // @ts-expect-error Babel?
   // istanbul ignore next -- In Babel?
   case 'ObjectProperty':
   /* eslint-disable no-fallthrough */
   // istanbul ignore next -- In Babel?
   case 'PropertyDefinition':
+  // @ts-expect-error Babel?
   // istanbul ignore next -- In Babel?
   case 'ClassProperty':
   case 'Property':
   /* eslint-enable no-fallthrough */
     return node.computed && hasNonEmptyResolverCall(node.key, resolverName) ||
       hasNonEmptyResolverCall(node.value, resolverName);
+  // @ts-expect-error Babel?
   // istanbul ignore next -- In Babel?
   case 'ObjectMethod':
+    // @ts-expect-error
     // istanbul ignore next -- In Babel?
     return node.computed && hasNonEmptyResolverCall(node.key, resolverName) ||
+      // @ts-expect-error
       node.arguments.some((nde) => {
         return hasNonEmptyResolverCall(nde, resolverName);
       });
@@ -416,6 +437,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'TaggedTemplateExpression':
     return hasNonEmptyResolverCall(node.quasi, resolverName);
 
+  // @ts-expect-error Babel?
   // ?.
   // istanbul ignore next -- In Babel?
   case 'OptionalMemberExpression':
@@ -423,6 +445,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
     return hasNonEmptyResolverCall(node.object, resolverName) ||
       hasNonEmptyResolverCall(node.property, resolverName);
 
+  // @ts-expect-error Babel?
   // istanbul ignore next -- In Babel?
   case 'Import':
   case 'ImportExpression':
@@ -453,7 +476,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
  * Checks if a Promise executor has no resolve value or an empty value.
  * An `undefined` resolve does not count.
  *
- * @param {import('@typescript-eslint/types').TSESTree.Node} node
+ * @param {ESTreeOrTypeScriptNode} node
  * @param {boolean} anyPromiseAsReturn
  * @param {boolean} [allBranches]
  * @returns {boolean}
@@ -461,7 +484,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
 const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, allBranches) => {
   const hasReturnMethod = allBranches ?
     /**
-     * @param {import('@typescript-eslint/types').TSESTree.Node} nde
+     * @param {ESTreeOrTypeScriptNode} nde
      * @param {PromiseFilter} promiseFilter
      * @returns {boolean}
      */
@@ -471,7 +494,7 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, all
         hasReturn = hasReturnValue(nde, true, promiseFilter);
       } catch (error) {
         // istanbul ignore else
-        if (error.message === 'Null return') {
+        if (/** @type {Error} */ (error).message === 'Null return') {
           return false;
         }
 
@@ -484,7 +507,7 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, all
       return Boolean(hasReturn && allBrancheshaveReturnValues(nde, promiseFilter));
     } :
     /**
-     * @param {import('@typescript-eslint/types').TSESTree.Node} nde
+     * @param {ESTreeOrTypeScriptNode} nde
      * @param {PromiseFilter} promiseFilter
      * @returns {boolean}
      */
@@ -501,22 +524,28 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, all
       return false;
     }
 
-    const [
-      {
-        params,
-        body,
-      } = {},
-    ] = prom.arguments;
+    const {
+      params,
+      body,
+    } =
+    /**
+     * @type {import('@typescript-eslint/types').TSESTree.FunctionExpression|
+     * import('@typescript-eslint/types').TSESTree.ArrowFunctionExpression}
+     */ (
+      /** @type {import('@typescript-eslint/types').TSESTree.NewExpression} */ (
+          prom
+        ).arguments[0]
+      ) || {};
 
     if (!params?.length) {
       return false;
     }
 
-    const [
-      {
-        name: resolverName,
-      },
-    ] = params;
+    const {
+      name: resolverName,
+    } = /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+      params[0]
+    );
 
     return hasNonEmptyResolverCall(body, resolverName);
   });

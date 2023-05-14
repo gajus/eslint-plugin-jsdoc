@@ -14,9 +14,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const targetTagName = utils.getPreferredTagName({
+  const targetTagName = /** @type {string} */ (utils.getPreferredTagName({
     tagName: 'property',
-  });
+  }));
 
   if (utils.hasATag([
     targetTagName,

@@ -19,18 +19,21 @@ const rootNamer = (desiredRoots, currentIndex) => {
   }
 
   return [
-    name, incremented, () => {
+    name,
+    incremented,
+    () => {
       return rootNamer(desiredRoots, idx);
     },
   ];
 };
 
-// eslint-disable-next-line complexity
+/* eslint-disable complexity -- Temporary */
 export default iterateJsdoc(({
   jsdoc,
   utils,
   context,
 }) => {
+  /* eslint-enable complexity -- Temporary */
   if (utils.avoidDocs()) {
     return;
   }
@@ -55,9 +58,9 @@ export default iterateJsdoc(({
     useDefaultObjectProperties = false,
   } = context.options[0] || {};
 
-  const preferredTagName = utils.getPreferredTagName({
+  const preferredTagName = /** @type {string} */ (utils.getPreferredTagName({
     tagName: 'param',
-  });
+  }));
   if (!preferredTagName) {
     return;
   }
@@ -88,10 +91,21 @@ export default iterateJsdoc(({
     return utils.dropPathSegmentQuotes(String(cur)) in paramIndex;
   };
 
+  /**
+   *
+   * @param {} cur
+   * @returns {}
+   */
   const getParamIndex = (cur) => {
     return paramIndex[utils.dropPathSegmentQuotes(String(cur))];
   };
 
+  /**
+   *
+   * @param {} cur
+   * @param {} idx
+   * @returns {void}
+   */
   const setParamIndex = (cur, idx) => {
     paramIndex[utils.dropPathSegmentQuotes(String(cur))] = idx;
   };
@@ -103,6 +117,12 @@ export default iterateJsdoc(({
     setParamIndex(cur, idx);
   }
 
+  /**
+   *
+   * @param {} jsdocTags
+   * @param {} indexAtFunctionParams
+   * @returns {import('../iterateJsdoc.js').Integer}
+   */
   const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
     const remainingRoots = functionParameterNames.slice(indexAtFunctionParams || 0);
     const foundIndex = jsdocTags.findIndex(({
@@ -310,6 +330,16 @@ export default iterateJsdoc(({
     }
   }
 
+  /**
+   *
+   * @param {{
+   *   functionParameterIdx: import('../iterateJsdoc.js').Integer,
+   *   functionParameterName: string,
+   *   remove: true,
+   *   inc: boolean,
+   *   type: string
+   * }} cfg
+   */
   const fix = ({
     functionParameterIdx,
     functionParameterName,
@@ -321,6 +351,13 @@ export default iterateJsdoc(({
       return;
     }
 
+    /**
+     *
+     * @param {} tagIndex
+     * @param {} sourceIndex
+     * @param {} spliceCount
+     * @returns {}
+     */
     const createTokens = (tagIndex, sourceIndex, spliceCount) => {
       // console.log(sourceIndex, tagIndex, jsdoc.tags, jsdoc.source);
       const tokens = {
@@ -376,6 +413,9 @@ export default iterateJsdoc(({
     }
   };
 
+  /**
+   * @returns {void}
+   */
   const fixer = () => {
     for (const missingTag of missingTags) {
       fix(missingTag);

@@ -30,34 +30,37 @@ const strictNativeTypes = [
  * @param {boolean} isGenericMatch
  * @param {string} typeNodeName
  * @param {import('jsdoc-type-pratt-parser').NonRootResult} node
- * @param {import('jsdoc-type-pratt-parser').NonRootResult} parentNode
+ * @param {import('jsdoc-type-pratt-parser').NonRootResult|undefined} parentNode
  * @returns {void}
  */
 const adjustNames = (type, preferred, isGenericMatch, typeNodeName, node, parentNode) => {
   let ret = preferred;
   if (isGenericMatch) {
+    const parentMeta = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (
+      parentNode
+    ).meta;
     if (preferred === '[]') {
-      parentNode.meta.brackets = 'square';
-      parentNode.meta.dot = false;
+      parentMeta.brackets = 'square';
+      parentMeta.dot = false;
       ret = 'Array';
     } else {
       const dotBracketEnd = preferred.match(/\.(?:<>)?$/u);
       if (dotBracketEnd) {
-        parentNode.meta.brackets = 'angle';
-        parentNode.meta.dot = true;
+        parentMeta.brackets = 'angle';
+        parentMeta.dot = true;
         ret = preferred.slice(0, -dotBracketEnd[0].length);
       } else {
         const bracketEnd = preferred.endsWith('<>');
         if (bracketEnd) {
-          parentNode.meta.brackets = 'angle';
-          parentNode.meta.dot = false;
+          parentMeta.brackets = 'angle';
+          parentMeta.dot = false;
           ret = preferred.slice(0, -2);
         } else if (
-          parentNode.meta?.brackets === 'square' &&
+          parentMeta?.brackets === 'square' &&
           (typeNodeName === '[]' || typeNodeName === 'Array')
         ) {
-          parentNode.meta.brackets = 'angle';
-          parentNode.meta.dot = false;
+          parentMeta.brackets = 'angle';
+          parentMeta.dot = false;
         }
       }
     }
@@ -65,16 +68,20 @@ const adjustNames = (type, preferred, isGenericMatch, typeNodeName, node, parent
     node.type = 'JsdocTypeName';
   }
 
-  node.value = ret.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
+  /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (
+    node
+  ).value = ret.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
 
   // For bare pseudo-types like `<>`
   if (!ret) {
-    node.value = typeNodeName;
+    /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (
+      node
+    ).value = typeNodeName;
   }
 };
 
 /**
- * @param {boolean} upperCase
+ * @param {boolean} [upperCase]
  * @returns {string}
  */
 const getMessage = (upperCase) => {
@@ -91,14 +98,23 @@ export default iterateJsdoc(({
   context,
 }) => {
   const jsdocTagsWithPossibleType = utils.filterTags((tag) => {
-    return utils.tagMightHaveTypePosition(tag.tag);
+    return Boolean(utils.tagMightHaveTypePosition(tag.tag));
   });
 
-  const {
-    preferredTypes: preferredTypesOriginal,
-    structuredTags,
-    mode,
-  } = settings;
+  const
+    /**
+     * @type {{
+     *   preferredTypes: import('../iterateJsdoc.js').PreferredTypes,
+     *   structuredTags: import('../iterateJsdoc.js').StructuredTags,
+     *   mode: import('../jsdocUtils.js').ParserMode
+     * }}
+     */
+    {
+      preferredTypes: preferredTypesOriginal,
+      structuredTags,
+      mode,
+    } = settings;
+  /* eslint-enable jsdoc/valid-types -- Old version */
 
   const injectObjectPreferredTypes = !('Object' in preferredTypesOriginal ||
     'object' in preferredTypesOriginal ||
@@ -106,16 +122,29 @@ export default iterateJsdoc(({
     'Object.<>' in preferredTypesOriginal ||
     'object<>' in preferredTypesOriginal);
 
+  /**
+   * @type {{
+   *   message: string,
+   *   replacement: false
+   * }}
+   */
   const info = {
     message: getMessage(),
     replacement: false,
   };
 
+  /**
+   * @type {{
+   *   message: string,
+   *   replacement: false
+   * }}
+   */
   const infoUC = {
     message: getMessage(true),
     replacement: false,
   };
 
+  /** @type {import('../iterateJsdoc.js').PreferredTypes} */
   const typeToInject = mode === 'typescript' ?
     {
       Object: 'object',
@@ -131,6 +160,7 @@ export default iterateJsdoc(({
       'object<>': 'Object<>',
     };
 
+  /** @type {import('../iterateJsdoc.js').PreferredTypes} */
   const preferredTypes = {
     ...injectObjectPreferredTypes ?
       typeToInject :
@@ -138,11 +168,21 @@ export default iterateJsdoc(({
     ...preferredTypesOriginal,
   };
 
-  const {
-    noDefaults,
-    unifyParentAndChildTypeChecks,
-    exemptTagContexts = [],
-  } = context.options[0] || {};
+  const
+    /**
+     * @type {{
+     *   noDefaults: boolean,
+     *   unifyParentAndChildTypeChecks: boolean,
+     *   exemptTagContexts: ({
+     *     tag: string,
+     *     types: true|string[]
+     *   })[]
+     * }}
+     */ {
+      noDefaults,
+      unifyParentAndChildTypeChecks,
+      exemptTagContexts = [],
+    } = context.options[0] || {};
 
   /**
    * Gets information about the preferred type: whether there is a matching
@@ -150,8 +190,8 @@ export default iterateJsdoc(({
    *
    * @param {string} _type Not currently in use
    * @param {string} typeNodeName
-   * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} parentNode
-   * @param {string} property
+   * @param {import('jsdoc-type-pratt-parser').NonRootResult|undefined} parentNode
+   * @param {string|undefined} property
    * @returns {[hasMatchingPreferredType: boolean, typeName: string, isGenericMatch: boolean]}
    */
   const getPreferredTypeInfo = (_type, typeNodeName, parentNode, property) => {
@@ -161,8 +201,12 @@ export default iterateJsdoc(({
 
     const isNameOfGeneric = parentNode !== undefined && parentNode.type === 'JsdocTypeGeneric' && property === 'left';
     if (unifyParentAndChildTypeChecks || isNameOfGeneric) {
-      const brackets = parentNode?.meta?.brackets;
-      const dot = parentNode?.meta?.dot;
+      const brackets = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (
+        parentNode
+      )?.meta?.brackets;
+      const dot = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (
+        parentNode
+      )?.meta?.dot;
 
       if (brackets === 'angle') {
         const checkPostFixes = dot ? [
@@ -181,7 +225,12 @@ export default iterateJsdoc(({
         });
       }
 
-      if (!isGenericMatch && property && parentNode.type === 'JsdocTypeGeneric') {
+      if (
+        !isGenericMatch && property &&
+        /** @type {import('jsdoc-type-pratt-parser').NonRootResult} */ (
+          parentNode
+        ).type === 'JsdocTypeGeneric'
+      ) {
         const checkPostFixes = dot ? [
           '.', '.<>',
         ] : [
@@ -203,7 +252,7 @@ export default iterateJsdoc(({
     const directNameMatch = preferredTypes?.[typeNodeName] !== undefined &&
       !Object.values(preferredTypes).includes(typeNodeName);
     const unifiedSyntaxParentMatch = property && directNameMatch && unifyParentAndChildTypeChecks;
-    isGenericMatch = isGenericMatch || unifiedSyntaxParentMatch;
+    isGenericMatch = isGenericMatch || Boolean(unifiedSyntaxParentMatch);
 
     hasMatchingPreferredType = isGenericMatch ||
       directNameMatch && !property;
@@ -218,10 +267,10 @@ export default iterateJsdoc(({
    * the the relevant strict type returned as the new preferred type).
    *
    * @param {string} typeNodeName
-   * @param {string} preferred
-   * @param {import('jsdoc-type-pratt-parser/dist/src/index.d.ts').NonTerminalResult} parentNode
-   * @param {string[]} invalidTypes
-   * @returns {string} The `preferred` type string, optionally changed
+   * @param {string|undefined} preferred
+   * @param {import('jsdoc-type-pratt-parser').NonRootResult|undefined} parentNode
+   * @param {(string|false|undefined)[][]} invalidTypes
+   * @returns {string|undefined} The `preferred` type string, optionally changed
    */
   const checkNativeTypes = (typeNodeName, preferred, parentNode, invalidTypes) => {
     let changedPreferred = preferred;
@@ -236,9 +285,22 @@ export default iterateJsdoc(({
           //   parent object without a parent match (and not
           //   `unifyParentAndChildTypeChecks`) and we don't want
           //   `object<>` given TypeScript issue https://github.com/microsoft/TypeScript/issues/20555
-          parentNode?.elements?.length && (
-            parentNode?.left?.type === 'JsdocTypeName' &&
-            parentNode?.left?.value === 'Object'
+          /**
+           * @type {import('jsdoc-type-pratt-parser').GenericResult}
+           */
+          (
+            parentNode
+          )?.elements?.length && (
+          /**
+           * @type {import('jsdoc-type-pratt-parser').GenericResult}
+           */
+            (
+              parentNode
+            )?.left?.type === 'JsdocTypeName' &&
+            /**
+             * @type {import('jsdoc-type-pratt-parser').GenericResult}
+             */
+            (parentNode)?.left?.value === 'Object'
           )
         )
       ) {
@@ -270,10 +332,10 @@ export default iterateJsdoc(({
    * @param {string} tagName
    * @param {string} nameInTag
    * @param {number} idx
-   * @param {string} property
+   * @param {string|undefined} property
    * @param {import('jsdoc-type-pratt-parser').NonRootResult} node
-   * @param {import('jsdoc-type-pratt-parser').NonRootResult} parentNode
-   * @param {string[]} invalidTypes
+   * @param {import('jsdoc-type-pratt-parser').NonRootResult|undefined} parentNode
+   * @param {(string|false|undefined)[][]} invalidTypes
    * @returns {void}
    */
   const getInvalidTypes = (type, value, tagName, nameInTag, idx, property, node, parentNode, invalidTypes) => {
@@ -347,6 +409,7 @@ export default iterateJsdoc(({
     idx,
     jsdocTag,
   ] of jsdocTagsWithPossibleType.entries()) {
+    /** @type {(string|false|undefined)[][]} */
     const invalidTypes = [];
     let typeAst;
 
@@ -365,7 +428,10 @@ export default iterateJsdoc(({
       const {
         type,
         value,
-      } = node;
+      } =
+        /**
+         * @type {import('jsdoc-type-pratt-parser').NameResult}
+         */ (node);
       if (![
         'JsdocTypeName', 'JsdocTypeAny',
       ].includes(type)) {
@@ -379,8 +445,7 @@ export default iterateJsdoc(({
       const fixedType = stringify(typeAst);
 
       /**
-       * @param {import('eslint').Rule.ReportFixer} fixer The ESLint fixer
-       * @returns {string}
+       * @type {import('eslint').Rule.ReportFixer}
        */
       const fix = (fixer) => {
         return fixer.replaceText(
@@ -418,7 +483,7 @@ export default iterateJsdoc(({
           msg ? {
             tagName,
             tagValue,
-          } : null,
+          } : undefined,
         );
       }
     }

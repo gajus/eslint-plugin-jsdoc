@@ -1031,6 +1031,31 @@ export default {
       output: `
       `,
     },
+    {
+      code: `
+          /**
+           * @todo
+           */
+          function quux () {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Please don\'t use todo',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            todo: {
+              message: 'Please don\'t use todo',
+            },
+          },
+        },
+      },
+    },
   ],
   valid: [
     {

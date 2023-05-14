@@ -35,11 +35,11 @@ export default iterateJsdoc(({
   setDefaults(state);
 
   for (const tagName of Object.keys(tags)) {
-    const targetTagName = utils.getPreferredTagName({
+    const targetTagName = /** @type {string} */ (utils.getPreferredTagName({
       tagName,
-    });
+    }));
 
-    const hasTag = targetTagName && utils.hasTag(targetTagName);
+    const hasTag = Boolean(targetTagName && utils.hasTag(targetTagName));
 
     state.hasTag[tagName] = hasTag || state.hasTag[tagName];
 

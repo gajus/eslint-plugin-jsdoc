@@ -255,7 +255,9 @@ export default iterateJsdoc(({
         ({
           message,
           replacement: preferredTagName,
-        } = preferredTagName);
+        } = /** @type {{message: string; replacement?: string | undefined;}} */ (
+          preferredTagName
+        ));
       }
 
       if (!message) {

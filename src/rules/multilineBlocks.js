@@ -33,6 +33,10 @@ export default iterateJsdoc(({
   } = tokens;
   const sourceLength = jsdoc.source.length;
 
+  /**
+   * @param {string} tagName
+   * @returns {boolean}
+   */
   const isInvalidSingleLine = (tagName) => {
     return noSingleLineBlocks &&
       (!tagName ||
@@ -118,7 +122,15 @@ export default iterateJsdoc(({
           'postName',
           'description',
         ]) {
-          finalLineTokens[prop] = '';
+          finalLineTokens[
+            /**
+             * @type {"delimiter"|"postDelimiter"|"tag"|"type"|
+             *   "lineEnd"|"postType"|"postTag"|"name"|
+             *   "postName"|"description"}
+             */ (
+              prop
+            )
+          ] = '';
         }
 
         utils.addLine(jsdoc.source.length - 1, {

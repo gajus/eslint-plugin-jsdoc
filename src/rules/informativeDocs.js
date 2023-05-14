@@ -13,7 +13,12 @@ const defaultUselessWords = [
   'a', 'an', 'i', 'in', 'of', 's', 'the',
 ];
 
-// eslint-disable-next-line complexity
+/* eslint-disable complexity -- Temporary */
+
+/**
+ * @param {import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Node|null|undefined} node
+ * @returns {string[]}
+ */
 const getNamesFromNode = (node) => {
   switch (node?.type) {
   case 'AccessorProperty':
@@ -23,8 +28,15 @@ const getNamesFromNode = (node) => {
   case 'TSAbstractMethodDefinition':
   case 'TSAbstractPropertyDefinition':
     return [
-      ...getNamesFromNode(node.parent.parent),
-      ...getNamesFromNode(node.key),
+      ...getNamesFromNode(
+        /** @type {import('@typescript-eslint/types').TSESTree.Node} */ (
+          node.parent
+        ).parent,
+      ),
+      ...getNamesFromNode(
+        /** @type {import('@typescript-eslint/types').TSESTree.Node} */
+        (node.key),
+      ),
     ];
   case 'ClassDeclaration':
   case 'ClassExpression':
@@ -37,24 +49,40 @@ const getNamesFromNode = (node) => {
   case 'TSEnumMember':
   case 'TSInterfaceDeclaration':
   case 'TSTypeAliasDeclaration':
-    return getNamesFromNode(node.id);
+    return getNamesFromNode(
+      /** @type {import('@typescript-eslint/types').TSESTree.ClassDeclaration} */
+      (node).id,
+    );
   case 'Identifier':
     return [
       node.name,
     ];
   case 'Property':
-    return getNamesFromNode(node.key);
+    return getNamesFromNode(
+      /** @type {import('@typescript-eslint/types').TSESTree.Node} */
+      (node.key),
+    );
   case 'VariableDeclaration':
-    return getNamesFromNode(node.declarations[0]);
+    return getNamesFromNode(
+      /** @type {import('@typescript-eslint/types').TSESTree.Node} */
+      (node.declarations[0]),
+    );
   case 'VariableDeclarator':
     return [
-      ...getNamesFromNode(node.id),
-      ...getNamesFromNode(node.init),
+      ...getNamesFromNode(
+        /** @type {import('@typescript-eslint/types').TSESTree.Node} */
+        (node.id),
+      ),
+      ...getNamesFromNode(
+        /** @type {import('@typescript-eslint/types').TSESTree.Node} */
+        (node.init),
+      ),
     ].filter(Boolean);
   default:
     return [];
   }
 };
+/* eslint-enable complexity -- Temporary */
 
 export default iterateJsdoc(({
   context,
@@ -69,6 +97,11 @@ export default iterateJsdoc(({
   } = context.options[0] || {};
   const nodeNames = getNamesFromNode(node);
 
+  /**
+   * @param {string} text
+   * @param {string} extraName
+   * @returns {boolean}
+   */
   const descriptionIsRedundant = (text, extraName = '') => {
     const textTrimmed = text.trim();
     return Boolean(textTrimmed) && !areDocsInformative(textTrimmed, [
@@ -93,7 +126,9 @@ export default iterateJsdoc(({
       );
     }
 
-    descriptionReported ||= tag.description === description && tag.line === lastDescriptionLine;
+    descriptionReported ||= tag.description === description &&
+      /** @type {import('comment-parser').Spec & {line: import('../iterateJsdoc.js').Integer}} */
+      (tag).line === lastDescriptionLine;
   }
 
   if (!descriptionReported && descriptionIsRedundant(description)) {

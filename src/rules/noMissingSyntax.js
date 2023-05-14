@@ -63,10 +63,20 @@ export default iterateJsdoc(({
 
   const foundContext = contexts.find((cntxt) => {
     return typeof cntxt === 'string' ?
-      esquery.matches(node, esquery.parse(cntxt), null, {
-        visitorKeys: sourceCode.visitorKeys,
-      }) :
-      (!cntxt.context || cntxt.context === 'any' || esquery.matches(node, esquery.parse(cntxt.context), null, {
+      esquery.matches(
+        node,
+        esquery.parse(cntxt),
+        null,
+        // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/65460
+        // @ts-expect-error
+        {
+          visitorKeys: sourceCode.visitorKeys,
+        },
+      ) :
+      (!cntxt.context || cntxt.context === 'any' ||
+      // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/65460
+      // @ts-expect-error
+      esquery.matches(node, esquery.parse(cntxt.context), null, {
         visitorKeys: sourceCode.visitorKeys,
       })) &&
         comment === cntxt.comment;

@@ -202,7 +202,7 @@ const getPropertiesFromPropertySignature = (propSignature) => {
 };
 
 /**
- * @param {ESTreeOrTypeScriptNode} functionNode
+ * @param {ESTreeOrTypeScriptNode|null} functionNode
  * @param {boolean} [checkDefaultObjects]
  * @throws {Error}
  * @returns {ParamNameInfo[]}
@@ -511,7 +511,7 @@ const getTagNamesForMode = (mode, context) => {
  * @param {ParserMode|undefined} mode
  * @param {string} name
  * @param {TagNamePreference} tagPreference
- * @returns {string|boolean|{
+ * @returns {string|false|{
  *   message: string;
  *   replacement?: string|undefined;
  * }}
@@ -588,7 +588,9 @@ const isValidTag = (
 };
 
 /**
- * @param {import('comment-parser').Block} jsdoc
+ * @param {import('comment-parser').Block & {
+ *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
+ * }} jsdoc
  * @param {string} targetTagName
  * @returns {boolean}
  */
@@ -740,7 +742,7 @@ const mayBeUndefinedTypeTag = (tag, mode) => {
 /**
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} map
  * @param {string} tag
- * @returns {Map<string, string | boolean>}
+ * @returns {Map<string, string|string[]|boolean|undefined>}
  */
 const ensureMap = (map, tag) => {
   if (!map.has(tag)) {
@@ -750,20 +752,8 @@ const ensureMap = (map, tag) => {
   return /** @type {Map<string, string | boolean>} */ (map.get(tag));
 };
 
-/* eslint-disable jsdoc/valid-types -- Older non-TS version */
 /**
- * @typedef {{
- *   [tag: string]: {
- *     name: string|boolean,
- *     type: string[]|boolean,
- *     required: string[]
- *   }
- * }} StructuredTags
- */
-/* eslint-enable jsdoc/valid-types -- Older non-TS version */
-
-/**
- * @param {StructuredTags} structuredTags
+ * @param {import('./iterateJsdoc.js').StructuredTags} structuredTags
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {void}
  */
@@ -810,7 +800,7 @@ const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
 
 /**
  * @param {ParserMode} mode
- * @param {StructuredTags} structuredTags
+ * @param {import('./iterateJsdoc.js').StructuredTags} structuredTags
  * @returns {import('./getDefaultTagStructureForMode.js').TagStructure}
  */
 const getTagStructureForMode = (mode, structuredTags) => {
@@ -859,12 +849,12 @@ const isNamepathOrUrlReferencingTag = (tag, tagMap = tagStructure) => {
 /**
  * @param {string} tag
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
- * @returns {boolean}
+ * @returns {boolean|undefined}
  */
 const tagMustHaveTypePosition = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  return tagStruct.get('typeRequired');
+  return /** @type {boolean|undefined} */ (tagStruct.get('typeRequired'));
 };
 
 /**
@@ -915,21 +905,21 @@ const tagMightHaveNamepath = (tag, tagMap = tagStructure) => {
 /**
  * @param {string} tag
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
- * @returns {boolean}
+ * @returns {boolean|undefined}
  */
 const tagMustHaveNamePosition = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  return tagStruct.get('nameRequired');
+  return /** @type {boolean|undefined} */ (tagStruct.get('nameRequired'));
 };
 
 /**
- * @param tag
+ * @param {string} tag
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
 const tagMightHaveEitherTypeOrNamePosition = (tag, tagMap) => {
-  return tagMightHaveTypePosition(tag, tagMap) || tagMightHaveNamepath(tag, tagMap);
+  return Boolean(tagMightHaveTypePosition(tag, tagMap)) || tagMightHaveNamepath(tag, tagMap);
 };
 
 /**
@@ -988,6 +978,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
     });
   }
 
+  // @ts-expect-error In Babel?
   // istanbul ignore next -- In Babel?
   case 'OptionalCallExpression':
   case 'CallExpression':
@@ -1074,14 +1065,17 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
   // istanbul ignore next -- In Babel?
   case 'PropertyDefinition':
   /* eslint-disable no-fallthrough */
+  // @ts-expect-error In Babel?
   // istanbul ignore next -- In Babel?
   case 'ObjectProperty':
+  // @ts-expect-error In Babel?
   // istanbul ignore next -- In Babel?
   case 'ClassProperty':
   case 'Property':
   /* eslint-enable no-fallthrough */
     return node.computed && hasNonFunctionYield(node.key, checkYieldReturnValue) ||
       hasNonFunctionYield(node.value, checkYieldReturnValue);
+  // @ts-expect-error In Babel?
   // istanbul ignore next -- In Babel?
   case 'ObjectMethod':
     // istanbul ignore next -- In Babel?
@@ -1097,6 +1091,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
   case 'TaggedTemplateExpression':
     return hasNonFunctionYield(node.quasi, checkYieldReturnValue);
 
+  // @ts-expect-error In Babel?
   // ?.
   // istanbul ignore next -- In Babel?
   case 'OptionalMemberExpression':
@@ -1104,6 +1099,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
     return hasNonFunctionYield(node.object, checkYieldReturnValue) ||
       hasNonFunctionYield(node.property, checkYieldReturnValue);
 
+  // @ts-expect-error In Babel?
   // istanbul ignore next -- In Babel?
   case 'Import':
   case 'ImportExpression':
@@ -1156,7 +1152,7 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
 /**
  * Checks if a node has a throws statement.
  *
- * @param {ESTreeOrTypeScriptNode} node
+ * @param {ESTreeOrTypeScriptNode|null|undefined} node
  * @param {boolean} [innerFunction]
  * @returns {boolean}
  */
@@ -1257,8 +1253,10 @@ const parseClosureTemplateTag = (tag) => {
  *   ESTree AST types, indicating allowable contexts.
  *
  * @param {import('eslint').Rule.RuleContext} context
- * @param {DefaultContexts} defaultContexts
- * @param {import('./iterateJsdoc.js').Settings} settings
+ * @param {DefaultContexts|undefined} defaultContexts
+ * @param {{
+ *   contexts?: import('./iterateJsdoc.js').Context[]
+ * }} settings
  * @returns {string[]}
  */
 const enforcedContexts = (context, defaultContexts, settings) => {
@@ -1273,11 +1271,13 @@ const enforcedContexts = (context, defaultContexts, settings) => {
 };
 
 /**
- * @param {string[]} contexts
+ * @param {import('./iterateJsdoc.js').Context[]} contexts
  * @param {import('./iterateJsdoc.js').CheckJsdoc} checkJsdoc
  * @param {Function} [handler]
+ * @returns {import('eslint').Rule.RuleListener}
  */
 const getContextObject = (contexts, checkJsdoc, handler) => {
+  /** @type {import('eslint').Rule.RuleListener} */
   const properties = {};
 
   for (const [
@@ -1375,7 +1375,9 @@ const getTagsByType = (context, mode, tags, tagPreference) => {
 };
 
 /**
- * @param {import('eslint').SourceCode} sourceCode
+ * @param {import('eslint').SourceCode|{
+ *   text: string
+ * }} sourceCode
  * @returns {string}
  */
 const getIndent = (sourceCode) => {
@@ -1383,28 +1385,42 @@ const getIndent = (sourceCode) => {
 };
 
 /**
- * @param {ESTreeOrTypeScriptNode} node
+ * @param {import('eslint').Rule.Node|null} node
  * @returns {boolean}
  */
 const isConstructor = (node) => {
   return node?.type === 'MethodDefinition' && node.kind === 'constructor' ||
-    node?.parent?.kind === 'constructor';
+  /** @type {import('@typescript-eslint/types').TSESTree.MethodDefinition} */ (
+    node?.parent
+  )?.kind === 'constructor';
 };
 
 /**
- * @param {ESTreeOrTypeScriptNode} node
+ * @param {import('eslint').Rule.Node|null} node
  * @returns {boolean}
  */
 const isGetter = (node) => {
-  return node && node.parent?.kind === 'get';
+  return node !== null &&
+  /**
+   * @type {import('@typescript-eslint/types').TSESTree.MethodDefinition|
+   *   import('@typescript-eslint/types').TSESTree.Property}
+   */ (
+    node.parent
+  )?.kind === 'get';
 };
 
 /**
- * @param {ESTreeOrTypeScriptNode} node
+ * @param {import('eslint').Rule.Node|null} node
  * @returns {boolean}
  */
 const isSetter = (node) => {
-  return node && node.parent?.kind === 'set';
+  return node !== null &&
+  /**
+   * @type {import('@typescript-eslint/types').TSESTree.MethodDefinition|
+   *   import('@typescript-eslint/types').TSESTree.Property}
+   */(
+    node.parent
+  )?.kind === 'set';
 };
 
 /**
@@ -1415,27 +1431,51 @@ const hasAccessorPair = (node) => {
   const {
     type,
     kind: sourceKind,
-    key: {
-      name: sourceName,
-    },
-  } = node;
+    key,
+  } =
+    /**
+     * @type {import('@typescript-eslint/types').TSESTree.MethodDefinition|
+     *   import('@typescript-eslint/types').TSESTree.Property}
+     */ (node);
+
+  const sourceName =
+    /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+      key
+    ).name;
+
   const oppositeKind = sourceKind === 'get' ? 'set' : 'get';
 
-  const children = type === 'MethodDefinition' ? 'body' : 'properties';
+  const sibling = type === 'MethodDefinition' ?
+    /** @type {import('@typescript-eslint/types').TSESTree.ClassBody} */ (
+      node.parent
+    ).body :
+    /** @type {import('@typescript-eslint/types').TSESTree.ObjectExpression} */ (
+      node.parent
+    ).properties;
 
-  return node.parent[children].some(({
-    kind,
-    key: {
-      name,
-    },
-  }) => {
-    return kind === oppositeKind && name === sourceName;
-  });
+  return (
+    sibling.some((child) => {
+      const {
+        kind,
+        key: ky,
+      } = /**
+           * @type {import('@typescript-eslint/types').TSESTree.MethodDefinition|
+           *   import('@typescript-eslint/types').TSESTree.Property}
+           */ (child);
+
+      const name =
+        /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+          ky
+        ).name;
+
+      return kind === oppositeKind && name === sourceName;
+    })
+  );
 };
 
 /**
  * @param {import('comment-parser').Block} jsdoc
- * @param {import('eslint').Rule.Node} node
+ * @param {import('eslint').Rule.Node|null} node
  * @param {import('eslint').Rule.RuleContext} context
  * @param {import('json-schema').JSONSchema4} schema
  * @returns {boolean}
@@ -1464,11 +1504,11 @@ const exemptSpeciaMethods = (jsdoc, node, context, schema) => {
       ])) ||
   isGetter(node) && (
     !checkGetters ||
-    checkGetters === 'no-setter' && hasAccessorPair(node.parent)
+    checkGetters === 'no-setter' && hasAccessorPair(/** @type {import('./iterateJsdoc.js').Node} */ (node).parent)
   ) ||
   isSetter(node) && (
     !checkSetters ||
-    checkSetters === 'no-getter' && hasAccessorPair(node.parent)
+    checkSetters === 'no-getter' && hasAccessorPair(/** @type {import('./iterateJsdoc.js').Node} */ (node).parent)
   );
 };
 

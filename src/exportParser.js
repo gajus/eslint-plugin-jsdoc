@@ -5,12 +5,21 @@ import debugModule from 'debug';
 
 const debug = debugModule('requireExportJsdoc');
 
+/**
+ * @returns {{
+ *   props: object
+ * }}
+ */
 const createNode = function () {
   return {
     props: {},
   };
 };
 
+/**
+ * @param {} symbol
+ * @returns {null}
+ */
 const getSymbolValue = function (symbol) {
   /* istanbul ignore next */
   if (!symbol) {
@@ -27,6 +36,14 @@ const getSymbolValue = function (symbol) {
   return null;
 };
 
+/**
+ *
+ * @param {} node
+ * @param {} globals
+ * @param {} scope
+ * @param {} opts
+ * @returns {}
+ */
 const getIdentifier = function (node, globals, scope, opts) {
   if (opts.simpleIdentifier) {
     // Type is Identier for noncomputed properties
@@ -58,8 +75,18 @@ const getIdentifier = function (node, globals, scope, opts) {
 
 let createSymbol = null;
 
-// eslint-disable-next-line complexity
+/* eslint-disable complexity -- Temporary */
+
+/**
+ *
+ * @param {} node
+ * @param {} globals
+ * @param {} scope
+ * @param {} opt
+ * @returns {}
+ */
 const getSymbol = function (node, globals, scope, opt) {
+  /* eslint-enable complexity -- Temporary */
   const opts = opt || {};
   /* istanbul ignore next */
   // eslint-disable-next-line default-case
@@ -169,6 +196,15 @@ const getSymbol = function (node, globals, scope, opt) {
   return null;
 };
 
+/**
+ *
+ * @param {} block
+ * @param {} name
+ * @param {} value
+ * @param {} globals
+ * @param {} isGlobal
+ * @returns {void}
+ */
 const createBlockSymbol = function (block, name, value, globals, isGlobal) {
   block.props[name] = value;
   if (isGlobal && globals.props.window && globals.props.window.special) {
@@ -176,6 +212,15 @@ const createBlockSymbol = function (block, name, value, globals, isGlobal) {
   }
 };
 
+/**
+ *
+ * @param {} node
+ * @param {} globals
+ * @param {} value
+ * @param {} scope
+ * @param {} isGlobal
+ * @returns {null}
+ */
 createSymbol = function (node, globals, value, scope, isGlobal) {
   const block = scope || globals;
   let symbol;
@@ -241,7 +286,14 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
   return null;
 };
 
-// Creates variables from variable definitions
+/**
+ * Creates variables from variable definitions
+ *
+ * @param {} node
+ * @param {} globals
+ * @param {} opts
+ * @returns {}
+ */
 const initVariables = function (node, globals, opts) {
   // eslint-disable-next-line default-case
   switch (node.type) {
@@ -281,9 +333,19 @@ const initVariables = function (node, globals, opts) {
   }
 };
 
-// Populates variable maps using AST
-// eslint-disable-next-line complexity
+/* eslint-disable complexity -- Temporary */
+
+/**
+ * Populates variable maps using AST
+ *
+ * @param {} node
+ * @param {} globals
+ * @param {} opt
+ * @param {} isExport
+ * @returns {boolean}
+ */
 const mapVariables = function (node, globals, opt, isExport) {
+  /* eslint-enable complexity -- Temporary */
   /* istanbul ignore next */
   const opts = opt || {};
   /* istanbul ignore next */
@@ -386,6 +448,13 @@ const mapVariables = function (node, globals, opt, isExport) {
   return true;
 };
 
+/**
+ *
+ * @param {} node
+ * @param {} block
+ * @param {} cache
+ * @returns {boolean}
+ */
 const findNode = function (node, block, cache) {
   let blockCache = cache || [];
   /* istanbul ignore next */
@@ -428,6 +497,11 @@ const exportTypes = new Set([
 const ignorableNestedTypes = new Set([
   'FunctionDeclaration', 'ArrowFunctionExpression', 'FunctionExpression',
 ]);
+
+/**
+ * @param {} nde
+ * @returns {}
+ */
 const getExportAncestor = function (nde) {
   let node = nde;
   let idx = 0;
@@ -469,6 +543,10 @@ const canExportChildrenType = new Set([
   'Program',
 ]);
 
+/**
+ * @param {} nde
+ * @returns {}
+ */
 const isExportByAncestor = function (nde) {
   if (!canBeExportedByAncestorType.has(nde.type)) {
     return false;
@@ -490,6 +568,13 @@ const isExportByAncestor = function (nde) {
   return false;
 };
 
+/**
+ *
+ * @param {} block
+ * @param {} node
+ * @param {} cache
+ * @returns {boolean}
+ */
 const findExportedNode = function (block, node, cache) {
   /* istanbul ignore next */
   if (block === null) {
@@ -513,6 +598,13 @@ const findExportedNode = function (block, node, cache) {
   return false;
 };
 
+/**
+ *
+ * @param {} node
+ * @param {} globals
+ * @param {} opt
+ * @returns {boolean}
+ */
 const isNodeExported = function (node, globals, opt) {
   const moduleExports = globals.props.module?.props?.exports;
   if (
@@ -532,6 +624,13 @@ const isNodeExported = function (node, globals, opt) {
   return false;
 };
 
+/**
+ *
+ * @param {} node
+ * @param {} globalVars
+ * @param {} opts
+ * @returns {boolean}
+ */
 const parseRecursive = function (node, globalVars, opts) {
   // Iterate from top using recursion - stop at first processed node from top
   if (node.parent && parseRecursive(node.parent, globalVars, opts)) {
@@ -541,6 +640,17 @@ const parseRecursive = function (node, globalVars, opts) {
   return mapVariables(node, globalVars, opts);
 };
 
+/**
+ *
+ * @param {} ast
+ * @param {} node
+ * @param {} opt
+ * @returns {{
+ *   globalVars: {
+ *     props: {};
+ *   };
+ * }}
+ */
 const parse = function (ast, node, opt) {
   /* istanbul ignore next */
   const opts = opt || {
@@ -574,6 +684,14 @@ const parse = function (ast, node, opt) {
   };
 };
 
+/**
+ *
+ * @param {} node
+ * @param {} sourceCode
+ * @param {} opt
+ * @param {} settings
+ * @returns {boolean}
+ */
 const isUncommentedExport = function (node, sourceCode, opt, settings) {
   // console.log({node});
   // Optimize with ancestor check for esm
