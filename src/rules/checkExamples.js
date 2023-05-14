@@ -1,6 +1,7 @@
 // Todo: When replace `CLIEngine` with `ESLint` when feature set complete per https://github.com/eslint/eslint/issues/14745
 // https://github.com/eslint/eslint/blob/master/docs/user-guide/migrating-to-7.0.0.md#-the-cliengine-class-has-been-deprecated
 import {
+  // @ts-expect-error - For older ESLint
   CLIEngine,
   ESLint,
 } from 'eslint';
@@ -403,9 +404,9 @@ export default iterateJsdoc(({
     });
   }
 
-  const tagName = utils.getPreferredTagName({
+  const tagName = /** @type {string} */ (utils.getPreferredTagName({
     tagName: 'example',
-  });
+  }));
   if (!utils.hasTag(tagName)) {
     return;
   }

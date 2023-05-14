@@ -51,9 +51,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const tagName = utils.getPreferredTagName({
+  const tagName = /** @type {string} */ (utils.getPreferredTagName({
     tagName: 'returns',
-  });
+  }));
   if (!tagName) {
     return;
   }

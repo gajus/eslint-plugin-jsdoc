@@ -320,7 +320,7 @@ values are objects with the following optional properties:
         is required (not just that if present, it is a valid type). You
         might use this with `@throws` or `@typedef` which might otherwise
         normally have their types optional. See the type groups 3-5 above.
-    - `"typeOrName"` - Must have either type (e.g., `@throws {aType}`) or
+    - `"typeOrNameRequired"` - Must have either type (e.g., `@throws {aType}`) or
         name (`@throws Some text`); does not require that both exist but
         disallows just an empty tag.
 

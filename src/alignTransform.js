@@ -7,9 +7,16 @@
 import {
 
   // `comment-parser/primitives` export
-  Markers,
   util,
 } from 'comment-parser';
+
+/**
+ * @typedef {{
+ *   hasNoTypes: boolean,
+ *   maxNamedTagLength: import('./iterateJsdoc.js').Integer,
+ *   maxUnnamedTagLength: import('./iterateJsdoc.js').Integer
+ * }} TypelessInfo
+ */
 
 const {
   rewireSource,
@@ -34,7 +41,7 @@ const zeroWidth = {
 
 /**
  * @param {string[]} tags
- * @param {} index
+ * @param {import('./iterateJsdoc').Integer} index
  * @param {import('comment-parser').Line[]} source
  * @returns {boolean}
  */
@@ -74,12 +81,7 @@ const shouldAlign = (tags, index, source) => {
  *   },
  *   index: import('./iterateJsdoc.js').Integer,
  *   source: import('comment-parser').Line[]
- * ) => {
- *   name: import('./iterateJsdoc.js').Integer,
- *   start: import('./iterateJsdoc.js').Integer,
- *   tag: import('./iterateJsdoc.js').Integer,
- *   type: import('./iterateJsdoc.js').Integer
- * }}
+ * ) => Width}
  */
 const getWidth = (tags) => {
   return (width, {
@@ -91,7 +93,7 @@ const getWidth = (tags) => {
 
     return {
       name: Math.max(width.name, tokens.name.length),
-      start: tokens.delimiter === Markers.start ? tokens.start.length : width.start,
+      start: tokens.delimiter === '/**' ? tokens.start.length : width.start,
       tag: Math.max(width.tag, tokens.tag.length),
       type: Math.max(width.type, tokens.type.length),
     };
@@ -99,8 +101,12 @@ const getWidth = (tags) => {
 };
 
 /**
- * @param {} fields
- * @returns {}
+ * @param {{
+ *   description: string;
+ *   tags: import('comment-parser').Spec[];
+ *   problems: import('comment-parser').Problem[];
+ * }} fields
+ * @returns {TypelessInfo}
  */
 const getTypelessInfo = (fields) => {
   const hasNoTypes = fields.tags.every(({
@@ -147,6 +153,9 @@ const space = (len) => {
  *   preserveMainDescriptionPostDelimiter: boolean,
  *   wrapIndent: string,
  * }} cfg
+ * @returns {(
+ *   block: import('comment-parser').Block
+ * ) => import('comment-parser').Block}
  */
 const alignTransform = ({
   customSpacings,
@@ -156,12 +165,13 @@ const alignTransform = ({
   wrapIndent,
 }) => {
   let intoTags = false;
+  /** @type {Width} */
   let width;
 
   /**
-   * @param {} tokens
-   * @param {} typelessInfo
-   * @returns {}
+   * @param {import('comment-parser').Tokens} tokens
+   * @param {TypelessInfo} typelessInfo
+   * @returns {import('comment-parser').Tokens}
    */
   const alignTokens = (tokens, typelessInfo) => {
     const nothingAfter = {
@@ -236,14 +246,15 @@ const alignTransform = ({
   };
 
   /**
-   * @param {} line
-   * @param {} index
-   * @param {} source
-   * @param {} typelessInfo
-   * @param {} indentTag
-   * @returns {}
+   * @param {import('comment-parser').Line} line
+   * @param {import('./iterateJsdoc.js').Integer} index
+   * @param {import('comment-parser').Line[]} source
+   * @param {TypelessInfo} typelessInfo
+   * @param {string|false} indentTag
+   * @returns {import('comment-parser').Line}
    */
   const update = (line, index, source, typelessInfo, indentTag) => {
+    /** @type {import('comment-parser').Tokens} */
     const tokens = {
       ...line.tokens,
     };
@@ -259,7 +270,7 @@ const alignTransform = ({
       tokens.description === '';
 
     // dangling '*/'
-    if (tokens.end === Markers.end && isEmpty) {
+    if (tokens.end === '*/' && isEmpty) {
       tokens.start = indent + ' ';
 
       return {
@@ -269,10 +280,10 @@ const alignTransform = ({
     }
 
     switch (tokens.delimiter) {
-    case Markers.start:
+    case '/**':
       tokens.start = indent;
       break;
-    case Markers.delim:
+    case '*':
       tokens.start = indent + ' ';
       break;
     default:

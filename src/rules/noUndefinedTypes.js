@@ -43,8 +43,8 @@ const typescriptGlobals = [
 ];
 
 /**
- * @param {string} str
- * @returns {undefined|string}
+ * @param {string|false|undefined} [str]
+ * @returns {undefined|string|false}
  */
 const stripPseudoTypes = (str) => {
   return str && str.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
@@ -88,7 +88,7 @@ export default iterateJsdoc(({
     mode,
   } = settings;
   if (Object.keys(preferredTypes).length) {
-    definedPreferredTypes = Object.values(preferredTypes).map((preferredType) => {
+    definedPreferredTypes = /** @type {string[]} */ (Object.values(preferredTypes).map((preferredType) => {
       if (typeof preferredType === 'string') {
         // May become an empty string but will be filtered out below
         return stripPseudoTypes(preferredType);
@@ -108,7 +108,7 @@ export default iterateJsdoc(({
     })
       .filter((preferredType) => {
         return preferredType;
-      });
+      }));
   }
 
   const typedefDeclarations = sourceCode.getAllComments()

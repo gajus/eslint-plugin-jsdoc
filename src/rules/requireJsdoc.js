@@ -160,7 +160,8 @@ const OPTIONS_SCHEMA = {
  */
 const getOption = (context, baseObject, option, key) => {
   if (context.options[0] && option in context.options[0] &&
-    // Todo: boolean shouldn't be returning property, but tests currently require
+    // Todo: boolean shouldn't be returning property, but
+    //   tests currently require
     (typeof context.options[0][option] === 'boolean' ||
     key in context.options[0][option])
   ) {
@@ -288,16 +289,28 @@ export default {
       return {};
     }
 
+    const opts = getOptions(context, settings);
+
     const {
       require: requireOption,
       contexts,
-      publicOnly,
       exemptEmptyFunctions,
       exemptEmptyConstructors,
       enableFixer,
       fixerMessage,
       minLineCount,
-    } = getOptions(context, settings);
+    } = opts;
+
+    const publicOnly =
+    /* eslint-disable jsdoc/valid-types -- Old version */
+      /**
+       * @type {{
+       *   [key: string]: boolean | undefined;
+       * }}
+       */ (
+        opts.publicOnly
+      );
+      /* eslint-enable jsdoc/valid-types -- Old version */
 
     /**
      * @type {import('../iterateJsdoc.js').CheckJsdoc}
@@ -394,6 +407,7 @@ export default {
       const fix = /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {
         // Default to one line break if the `minLines`/`maxLines` settings allow
         const lines = settings.minLines === 0 && settings.maxLines >= 1 ? 1 : settings.minLines;
+        /** @type {import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Decorator} */
         let baseNode = getReducedASTNode(node, sourceCode);
 
         const decorator = getDecorator(baseNode);
@@ -403,36 +417,55 @@ export default {
 
         const indent = jsdocUtils.getIndent({
           text: sourceCode.getText(
-            baseNode,
-            baseNode.loc.start.column,
+            /** @type {import('eslint').Rule.Node} */ (baseNode),
+            /** @type {import('eslint').AST.SourceLocation} */
+            (
+              /** @type {import('eslint').Rule.Node} */ (baseNode).loc
+            ).start.column,
           ),
         });
 
         const {
           inlineCommentBlock,
-        } = contexts.find(({
-          context: ctxt,
-        }) => {
-          return ctxt === node.type;
-        }) || {};
+        } =
+          /**
+           * @type {{
+           *     context: string,
+           *     inlineCommentBlock: boolean,
+           *     minLineCount: import('../iterateJsdoc.js').Integer
+           *   }}
+           */ (contexts.find((contxt) => {
+            if (typeof contxt === 'string') {
+              return false;
+            }
+
+            const {
+              context: ctxt,
+            } = contxt;
+            return ctxt === node.type;
+          })) || {};
         const insertion = (inlineCommentBlock ?
           `/** ${fixerMessage}` :
           `/**\n${indent}*${fixerMessage}\n${indent}`) +
             `*/${'\n'.repeat(lines)}${indent.slice(0, -1)}`;
 
-        return fixer.insertTextBefore(baseNode, insertion);
+        return fixer.insertTextBefore(
+          /** @type {import('eslint').Rule.Node} */
+          (baseNode),
+          insertion,
+        );
       };
 
       const report = () => {
         const {
           start,
-        } = node.loc;
+        } = /** @type {import('eslint').AST.SourceLocation} */ (node.loc);
         const loc = {
           end: {
             column: 0,
             line: start.line + 1,
           },
-          start: node.loc.start,
+          start,
         };
         context.report({
           fix: enableFixer ? fix : null,
@@ -458,6 +491,7 @@ export default {
         report();
       }
     };
+    /* eslint-enable complexity -- Temporary */
 
     /**
      * @param {string} prop
@@ -485,7 +519,14 @@ export default {
           ].includes(node.parent.type) ||
           [
             'Property', 'ObjectProperty', 'ClassProperty', 'PropertyDefinition',
-          ].includes(node.parent.type) && node === node.parent.value
+          ].includes(node.parent.type) &&
+            node ===
+              /**
+               * @type {import('@typescript-eslint/types').TSESTree.Property|
+               *   import('@typescript-eslint/types').TSESTree.PropertyDefinition
+               * }
+               */
+              (node.parent).value
         ) {
           checkJsDoc({
             isFunctionContext: true,
@@ -534,7 +575,14 @@ export default {
           ].includes(node.parent.type) ||
           [
             'Property', 'ObjectProperty', 'ClassProperty', 'PropertyDefinition',
-          ].includes(node.parent.type) && node === node.parent.value
+          ].includes(node.parent.type) &&
+            node ===
+              /**
+               * @type {import('@typescript-eslint/types').TSESTree.Property|
+               *   import('@typescript-eslint/types').TSESTree.PropertyDefinition
+               * }
+               */
+              (node.parent).value
         ) {
           checkJsDoc({
             isFunctionContext: true,
@@ -550,7 +598,7 @@ export default {
         checkJsDoc({
           isFunctionContext: true,
           selector: 'MethodDefinition',
-        }, null, node.value);
+        }, null, /** @type {import('eslint').Rule.Node} */ (node.value));
       },
     };
   },

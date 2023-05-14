@@ -14,6 +14,22 @@ import jsdocUtils from './jsdocUtils';
  */
 
 /**
+ * @typedef {{
+ *   disallowName?: string,
+ *   allowName?: string,
+ *   context?: string,
+ *   comment?: string,
+ *   tags?: string[],
+ *   replacement?: string,
+ *   minimum?: Integer,
+ *   message?: string
+ * }} ContextObject
+ */
+/**
+ * @typedef {string|ContextObject} Context
+ */
+
+/**
  * @callback CheckJsdoc
  * @param {{
  *   lastIndex?: Integer,
@@ -55,7 +71,7 @@ import jsdocUtils from './jsdocUtils';
  * @param {{
  *   tagName: string
  * }} cfg
- * @returns {string|boolean|{
+ * @returns {string|false|{
  *   message: string;
  *   replacement?: string|undefined
  * }|{
@@ -95,8 +111,8 @@ import jsdocUtils from './jsdocUtils';
 /**
  * @callback ReportJSDoc
  * @param {string} msg
- * @param {null|import('comment-parser').Spec|{line: Integer, column?: Integer}} tag
- * @param {(() => void)|null} handler
+ * @param {null|import('comment-parser').Spec|{line: Integer, column?: Integer}} [tag]
+ * @param {(() => void)|null} [handler]
  * @param {boolean} [specRewire]
  * @param {undefined|{
  *   [key: string]: string
@@ -280,6 +296,13 @@ import jsdocUtils from './jsdocUtils';
  *   allowObjectReturn?: boolean,
  *   defaultMessage?: string
  * }} cfg
+ * @returns {string|undefined|false|{
+ *   message: string;
+ *   replacement?: string|undefined;
+ * }|{
+ *   blocked: true,
+ *   tagName: string
+ * }}
  */
 
 /**
@@ -440,8 +463,8 @@ import jsdocUtils from './jsdocUtils';
 /**
  * @callback GetClassJsdoc
  * @returns {null|import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]}
- * }
+ *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
+ * }}
  */
 
 /**
@@ -646,15 +669,15 @@ const getBasicUtils = (context, {
 /* eslint-enable jsdoc/valid-types -- Old version of pratt */
 
 /**
- * @param {Node} node
+ * @param {Node|null} node
  * @param {import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').JsdocInlineTagNoType[]
+ *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
  * }} jsdoc
  * @param {import('eslint').AST.Token} jsdocNode
  * @param {Settings} settings
  * @param {Report} report
  * @param {import('eslint').Rule.RuleContext} context
- * @param {boolean} iteratingAll
+ * @param {boolean|undefined} iteratingAll
  * @param {RuleConfig} ruleConfig
  * @param {string} indent
  * @returns {Utils}
@@ -693,12 +716,12 @@ const getUtils = (
       'ArrowFunctionExpression',
       'FunctionDeclaration',
       'FunctionExpression',
-    ].includes(node && node.type);
+    ].includes(String(node && node.type));
   };
 
   /** @type {IsVirtualFunction} */
   utils.isVirtualFunction = () => {
-    return iteratingAll && utils.hasATag([
+    return Boolean(iteratingAll) && utils.hasATag([
       'callback', 'function', 'func', 'method',
     ]);
   };
@@ -1306,12 +1329,12 @@ const getUtils = (
 
   /** @type {HasParams} */
   utils.hasParams = () => {
-    return jsdocUtils.hasParams(node);
+    return jsdocUtils.hasParams(/** @type {Node} */ (node));
   };
 
   /** @type {IsGenerator} */
   utils.isGenerator = () => {
-    return node && Boolean(
+    return node !== null && Boolean(
       /**
        * @type {import('estree').FunctionDeclaration|
        *   import('estree').FunctionExpression}
@@ -1332,14 +1355,14 @@ const getUtils = (
 
   /** @type {IsConstructor} */
   utils.isConstructor = () => {
-    return jsdocUtils.isConstructor(node);
+    return jsdocUtils.isConstructor(/** @type {Node} */ (node));
   };
 
   /** @type {GetJsdocTagsDeep} */
   utils.getJsdocTagsDeep = (tagName) => {
-    const name = utils.getPreferredTagName({
+    const name = /** @type {string|false} */ (utils.getPreferredTagName({
       tagName,
-    });
+    }));
     if (!name) {
       return false;
     }
@@ -1554,14 +1577,16 @@ const getUtils = (
 
   /** @type {HasValueOrExecutorHasNonEmptyResolveValue} */
   utils.hasValueOrExecutorHasNonEmptyResolveValue = (anyPromiseAsReturn, allBranches) => {
-    return jsdocUtils.hasValueOrExecutorHasNonEmptyResolveValue(node, anyPromiseAsReturn, allBranches);
+    return jsdocUtils.hasValueOrExecutorHasNonEmptyResolveValue(
+      /** @type {Node} */ (node), anyPromiseAsReturn, allBranches,
+    );
   };
 
   /** @type {HasYieldValue} */
   utils.hasYieldValue = () => {
     if ([
       'ExportNamedDeclaration', 'ExportDefaultDeclaration',
-    ].includes(node.type)) {
+    ].includes(/** @type {Node} */ (node).type)) {
       return jsdocUtils.hasYieldValue(
         /** @type {import('estree').Declaration|import('estree').Expression} */ (
           /** @type {import('estree').ExportNamedDeclaration|import('estree').ExportDefaultDeclaration} */
@@ -1570,12 +1595,12 @@ const getUtils = (
       );
     }
 
-    return jsdocUtils.hasYieldValue(node);
+    return jsdocUtils.hasYieldValue(/** @type {Node} */ (node));
   };
 
   /** @type {HasYieldReturnValue} */
   utils.hasYieldReturnValue = () => {
-    return jsdocUtils.hasYieldValue(node, true);
+    return jsdocUtils.hasYieldValue(/** @type {Node} */ (node), true);
   };
 
   /** @type {HasThrowValue} */
@@ -1585,7 +1610,7 @@ const getUtils = (
 
   /** @type {IsAsync} */
   utils.isAsync = () => {
-    return 'async' in node && node.async;
+    return 'async' in /** @type {Node} */ (node) && node.async;
   };
 
   /** @type {GetTags} */
@@ -1666,15 +1691,17 @@ const getUtils = (
   utils.classHasTag = (tagName) => {
     const classJsdoc = utils.getClassJsdoc();
 
-    return Boolean(classJsdoc) && jsdocUtils.hasTag(classJsdoc, tagName);
+    return classJsdoc !== null && jsdocUtils.hasTag(classJsdoc, tagName);
   };
 
   /** @type {ForEachPreferredTag} */
   utils.forEachPreferredTag = (tagName, arrayHandler, skipReportingBlockedTag = false) => {
-    const targetTagName = utils.getPreferredTagName({
-      skipReportingBlockedTag,
-      tagName,
-    });
+    const targetTagName = /** @type {string|false} */ (
+      utils.getPreferredTagName({
+        skipReportingBlockedTag,
+        tagName,
+      })
+    );
     if (!targetTagName ||
       skipReportingBlockedTag && targetTagName && typeof targetTagName === 'object'
     ) {
@@ -1688,7 +1715,15 @@ const getUtils = (
     });
 
     for (const matchingJsdocTag of matchingJsdocTags) {
-      arrayHandler(matchingJsdocTag, targetTagName);
+      arrayHandler(
+        /**
+         * @type {import('comment-parser').Spec & {
+         *   line: Integer
+         * }}
+         */ (
+          matchingJsdocTag
+        ), targetTagName,
+      );
     }
   };
 
@@ -1697,6 +1732,24 @@ const getUtils = (
 
 /* eslint-disable jsdoc/valid-types -- Old version */
 /**
+ * @typedef {{
+ *   [key: string]: false|string|{
+ *     message: string,
+ *     replacement?: false|string
+ *     skipRootChecking?: boolean
+ *   }
+ * }} PreferredTypes
+ */
+/**
+ * @typedef {{
+ *   [key: string]: {
+ *     name?: "text"|"namepath-defining"|"namepath-referencing"|false,
+ *     type?: boolean|string[],
+ *     required?: ("name"|"type"|"typeOrNameRequired")[]
+ *   }
+ * }} StructuredTags
+ */
+/**
  * Settings from ESLint types.
  *
  * @typedef {{
@@ -1704,7 +1757,10 @@ const getUtils = (
  *   minLines: Integer,
  *   tagNamePreference: import('./jsdocUtils.js').TagNamePreference,
  *   mode: import('./jsdocUtils.js').ParserMode,
- *   [name: string]: any
+ *   preferredTypes: PreferredTypes,
+ *   structuredTags: StructuredTags,
+ *   [name: string]: any,
+ *   contexts?: Context[]
  * }} Settings
  */
 /* eslint-enable jsdoc/valid-types -- Old version */
@@ -1755,6 +1811,10 @@ const getSettings = (context) => {
   } catch (error) {
     context.report({
       loc: {
+        end: {
+          column: 1,
+          line: 1,
+        },
         start: {
           column: 1,
           line: 1,
@@ -1774,7 +1834,7 @@ const getSettings = (context) => {
  *
  * @callback MakeReport
  * @param {import('eslint').Rule.RuleContext} context
- * @param {import('@es-joy/jsdoccomment').Token} commentNode
+ * @param {import('estree').Node} commentNode
  * @returns {Report}
  */
 
@@ -1792,7 +1852,10 @@ const makeReport = (context, commentNode) => {
         ).source[0].number;
       }
 
-      const lineNumber = commentNode.loc.start.line + jsdocLoc.line;
+      const lineNumber = /** @type {import('eslint').AST.SourceLocation} */ (
+        commentNode.loc
+      ).start.line +
+      /** @type {Integer} */ (jsdocLoc.line);
 
       loc = {
         end: {
@@ -1807,8 +1870,10 @@ const makeReport = (context, commentNode) => {
 
       // Todo: Remove ignore once `check-examples` can be restored for ESLint 8+
       // istanbul ignore if
-      if ('column' in jsdocLoc) {
-        const colNumber = commentNode.loc.start.column + jsdocLoc.column;
+      if ('column' in jsdocLoc && typeof jsdocLoc.column === 'number') {
+        const colNumber = /** @type {import('eslint').AST.SourceLocation} */ (
+          commentNode.loc
+        ).start.column + jsdocLoc.column;
 
         loc.end.column = colNumber;
         loc.start.column = colNumber;
@@ -1833,10 +1898,35 @@ const makeReport = (context, commentNode) => {
  *   arg: {
  *     context: import('eslint').Rule.RuleContext,
  *     sourceCode: import('eslint').SourceCode,
+ *     indent?: string,
+ *     info?: {
+ *       comment?: string|undefined,
+ *       lastIndex?: Integer|undefined
+ *     },
+ *     state?: StateObject,
+ *     globalState?: Map<string, Map<string, string>>,
+ *     jsdoc?: import('comment-parser').Block,
+ *     jsdocNode?: import('eslint').Rule.Node & {
+ *       range: [number, number]
+ *     },
+ *     node?: Node,
+ *     allComments?: import('estree').Node[]
+ *     report?: Report,
+ *     makeReport?: MakeReport,
+ *     settings: Settings,
+ *     utils: BasicUtils,
+ *   }
+ * ) => any } JsdocVisitorBasic
+ */
+/**
+ * @typedef {(
+ *   arg: {
+ *     context: import('eslint').Rule.RuleContext,
+ *     sourceCode: import('eslint').SourceCode,
  *     indent: string,
  *     info: {
- *       comment: string|undefined,
- *       lastIndex: Integer
+ *       comment?: string|undefined,
+ *       lastIndex?: Integer|undefined
  *     },
  *     state: StateObject,
  *     globalState: Map<string, Map<string, string>>,
@@ -1844,10 +1934,10 @@ const makeReport = (context, commentNode) => {
  *     jsdocNode: import('eslint').Rule.Node & {
  *       range: [number, number]
  *     },
- *     node: Node | null,
- *     allComments: import('estree').Node[]
+ *     node: Node|null,
+ *     allComments?: import('estree').Node[]
  *     report: Report,
- *     makeReport: MakeReport,
+ *     makeReport?: MakeReport,
  *     settings: Settings,
  *     utils: Utils,
  *   }
@@ -1857,19 +1947,27 @@ const makeReport = (context, commentNode) => {
 /* eslint-enable jsdoc/no-undefined-types -- canonical still using an older version where not defined */
 
 /**
- * @param {} info
- * @param {} indent
- * @param {import('comment-parser').Block} jsdoc
+ * @param {{
+ *   comment?: string,
+ *   lastIndex?: Integer,
+ *   selector?: string,
+ *   isFunctionContext?: boolean,
+ * }} info
+ * @param {string} indent
+ * @param {import('comment-parser').Block & {
+ *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
+ * }} jsdoc
  * @param {RuleConfig} ruleConfig
  * @param {import('eslint').Rule.RuleContext} context
- * @param {} lines
+ * @param {string[]} lines
  * @param {import('@es-joy/jsdoccomment').Token} jsdocNode
- * @param {Node} node
+ * @param {Node|null} node
  * @param {Settings} settings
  * @param {import('eslint').SourceCode} sourceCode
- * @param {} iterator
+ * @param {JsdocVisitor} iterator
  * @param {StateObject} state
  * @param {boolean} [iteratingAll]
+ * @returns {void}
  */
 const iterate = (
   info,
@@ -1877,12 +1975,18 @@ const iterate = (
   ruleConfig, context, lines, jsdocNode, node, settings,
   sourceCode, iterator, state, iteratingAll,
 ) => {
-  const report = makeReport(context, jsdocNode);
+  const jsdocNde = /** @type {unknown} */ (jsdocNode);
+  const report = makeReport(
+    context,
+    /** @type {import('estree').Node} */
+    (jsdocNde),
+  );
 
   const utils = getUtils(
     node,
     jsdoc,
-    jsdocNode,
+    /** @type {import('eslint').AST.Token} */
+    (jsdocNode),
     settings,
     report,
     context,
@@ -1923,9 +2027,11 @@ const iterate = (
     globalState,
     indent,
     info,
-    iteratingAll,
     jsdoc,
-    jsdocNode,
+    jsdocNode: /**
+                * @type {import('eslint').Rule.Node & {
+                *  range: [number, number];}}
+                */ (jsdocNde),
     node,
     report,
     settings,
@@ -1936,15 +2042,22 @@ const iterate = (
 };
 
 /**
- * @param {} lines
- * @param {import('@es-joy/jsdoccomment').Token} jsdocNode
+ * @param {string[]} lines
+ * @param {import('estree').Comment} jsdocNode
  * @returns {[indent: string, jsdoc: import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').JsdocInlineTagNoType[]
+ *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
  * }]}
  */
 const getIndentAndJSDoc = function (lines, jsdocNode) {
-  const sourceLine = lines[jsdocNode.loc.start.line - 1];
-  const indnt = sourceLine.charAt(0).repeat(jsdocNode.loc.start.column);
+  const sourceLine = lines[
+    /** @type {import('estree').SourceLocation} */
+    (jsdocNode.loc).start.line - 1
+  ];
+  const indnt = sourceLine.charAt(0).repeat(
+    /** @type {import('estree').SourceLocation} */
+    (jsdocNode.loc).start.column,
+  );
+
   const jsdc = parseComment(jsdocNode, '');
 
   return [
@@ -1970,12 +2083,14 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
  * @property {true} [checkInternal] Whether to check `@internal` blocks (normally exempted)
  * @property {true} [checkFile] Whether to iterates over all JSDoc blocks regardless of attachment
  * @property {true} [nonGlobalSettings] Whether to avoid relying on settings for global contexts
+ * @property {true} [noTracking] Whether to disable the tracking of visited comment nodes (as
+ *   non-tracked may conduct further actions)
  * @property {true} [matchContext] Whether the rule expects contexts to be based on a match option
  * @property {(args: {
  *   context: import('eslint').Rule.RuleContext,
  *   state: StateObject,
  *   settings: Settings,
- *   utils: Utils
+ *   utils: BasicUtils
  * }) => void} [exit] Handler to be executed upon exiting iteration of program AST
  * @property {(nca: NonCommentArgs) => void} [nonComment] Handler to be executed if rule wishes
  *   to be supplied nodes without comments
@@ -1987,7 +2102,7 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
  *
  * @param {JsdocVisitor} iterator
  * @param {RuleConfig} ruleConfig The rule's configuration
- * @param {} [contexts] The `contexts` containing relevant `comment` info.
+ * @param {ContextObject[]|null} [contexts] The `contexts` containing relevant `comment` info.
  * @param {boolean} [additiveCommentContexts] If true, will have a separate
  *   iteration for each matching comment context. Otherwise, will iterate
  *   once if there is a single matching comment context.
@@ -1996,16 +2111,16 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
 const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContexts) => {
   const trackedJsdocs = new Set();
 
-  /** @type {import('@es-joy/jsdoccomment')} */
+  /** @type {import('@es-joy/jsdoccomment').CommentHandler} */
   let handler;
 
-  /** @type {Settings} */
+  /** @type {Settings|false} */
   let settings;
 
   /**
    * @param {import('eslint').Rule.RuleContext} context
-   * @param {Node} node
-   * @param {import('eslint').Rule.Node[]} jsdocNodes
+   * @param {Node|null} node
+   * @param {import('estree').Comment[]} jsdocNodes
    * @param {StateObject} state
    * @param {boolean} [lastCall]
    * @returns {void}
@@ -2016,9 +2131,13 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
       lines,
     } = sourceCode;
 
-    const utils = getBasicUtils(context, settings);
+    const utils = getBasicUtils(context, /** @type {Settings} */ (settings));
     for (const jsdocNode of jsdocNodes) {
-      if (!(/^\/\*\*\s/u).test(sourceCode.getText(jsdocNode))) {
+      const jsdocNde = /** @type {unknown} */ (jsdocNode);
+      if (!(/^\/\*\*\s/u).test(sourceCode.getText(
+        /** @type {import('estree').Node} */
+        (jsdocNde),
+      ))) {
         continue;
       }
 
@@ -2035,7 +2154,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
           {
             comment,
           },
-        ] of contexts.entries()) {
+        ] of /** @type {ContextObject[]} */ (contexts).entries()) {
           if (comment && handler(comment, jsdoc) === false) {
             continue;
           }
@@ -2052,8 +2171,10 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
             context,
             lines,
             jsdocNode,
-            node,
-            settings,
+            /** @type {Node} */
+            (node),
+            /** @type {Settings} */
+            (settings),
             sourceCode,
             iterator,
             state,
@@ -2094,7 +2215,8 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
         lines,
         jsdocNode,
         node,
-        settings,
+        /** @type {Settings} */
+        (settings),
         sourceCode,
         iterator,
         state,
@@ -2102,10 +2224,12 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
       );
     }
 
+    const settngs = /** @type {Settings} */ (settings);
+
     if (lastCall && ruleConfig.exit) {
       ruleConfig.exit({
         context,
-        settings,
+        settings: settngs,
         state,
         utils,
       });
@@ -2113,6 +2237,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
   };
 
   return {
+    // @ts-expect-error ESLint accepts
     create (context) {
       const sourceCode = context.getSourceCode();
       settings = getSettings(context);
@@ -2127,17 +2252,26 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
       const state = {};
 
       return {
+        /**
+         * @param {import('eslint').Rule.Node & {
+         *   range: [Integer, Integer];
+         * }} node
+         * @returns {void}
+         */
         '*:not(Program)' (node) {
-          const commentNode = getJSDocComment(sourceCode, node, settings);
+          const commentNode = getJSDocComment(
+            sourceCode, node, /** @type {Settings} */ (settings),
+          );
           if (!ruleConfig.noTracking && trackedJsdocs.has(commentNode)) {
             return;
           }
 
           if (!commentNode) {
             if (ruleConfig.nonComment) {
+              const ste = /** @type {StateObject} */ (state);
               ruleConfig.nonComment({
                 node,
-                state,
+                state: ste,
               });
             }
 
@@ -2146,8 +2280,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
 
           trackedJsdocs.add(commentNode);
           callIterator(context, node, [
-            commentNode,
-          ], state);
+            /** @type {import('estree').Comment} */
+            (commentNode),
+          ], /** @type {StateObject} */ (state));
         },
         'Program:exit' () {
           const allComments = sourceCode.getAllComments();
@@ -2155,7 +2290,14 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
             return !trackedJsdocs.has(node);
           });
 
-          callIterator(context, null, untrackedJSdoc, state, true);
+          callIterator(
+            context,
+            null,
+            untrackedJSdoc,
+            /** @type {StateObject} */
+            (state),
+            true,
+          );
         },
       };
     },
@@ -2167,7 +2309,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
  * Create an eslint rule that iterates over all JSDocs, regardless of whether
  * they are attached to a function-like node.
  *
- * @param {JsdocVisitor} iterator
+ * @param {JsdocVisitorBasic} iterator
  * @param {RuleConfig} ruleConfig
  * @returns {import('eslint').Rule.RuleModule}
  */
@@ -2182,16 +2324,12 @@ const checkFile = (iterator, ruleConfig) => {
 
       return {
         'Program:exit' () {
-          const allComments = sourceCode.getAllComments();
-          const {
-            lines,
-          } = sourceCode;
+          const allComms = /** @type {unknown} */ (sourceCode.getAllComments());
           const utils = getBasicUtils(context, settings);
 
           iterator({
-            allComments,
+            allComments: /** @type {import('estree').Node[]} */ (allComms),
             context,
-            lines,
             makeReport,
             settings,
             sourceCode,
@@ -2228,7 +2366,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   }
 
   if (ruleConfig.checkFile) {
-    return checkFile(iterator, ruleConfig);
+    return checkFile(
+      /** @type {JsdocVisitorBasic} */ (iterator),
+      ruleConfig,
+    );
   }
 
   if (ruleConfig.iterateAllJsdocs) {
@@ -2244,7 +2385,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
      *   a reference to the context which hold all important information
      *   like settings and the sourcecode to check.
      * @returns {import('eslint').Rule.RuleListener}
-     *   a list with parser callback function.
+     *   a listener with parser callback function.
      */
     create (context) {
       const settings = getSettings(context);
@@ -2252,11 +2393,8 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         return {};
       }
 
-      /* eslint-disable jsdoc/valid-types -- Old version */
       /**
-       * @type {(string|{
-       *   [key: string]: string
-       * })[]}
+       * @type {Context[]|undefined}
        */
       let contexts;
       /* eslint-enable jsdoc/valid-types -- Old version */
@@ -2288,7 +2426,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         });
         if (hasPlainAny || hasObjectAny) {
           return iterateAllJsdocs(
-            iterator, ruleConfig, hasObjectAny ? contexts : null, ruleConfig.matchContext,
+            iterator,
+            ruleConfig,
+            hasObjectAny ? /** @type {ContextObject[]} */ (contexts) : null,
+            ruleConfig.matchContext,
           ).create(context);
         }
       }
@@ -2298,7 +2439,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         lines,
       } = sourceCode;
 
+      /* eslint-disable jsdoc/no-undefined-types -- TS */
+      /** @type {Partial<StateObject>} */
       const state = {};
+      /* eslint-enable jsdoc/no-undefined-types -- TS */
 
       /** @type {CheckJsdoc} */
       const checkJsdoc = (info, handler, node) => {
@@ -2311,7 +2455,9 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           indent,
           jsdoc,
         ] = getIndentAndJSDoc(
-          lines, jsdocNode,
+          lines,
+          /** @type {import('estree').Comment} */
+          (jsdocNode),
         );
 
         if (
@@ -2324,10 +2470,23 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         }
 
         iterate(
-          info, indent, jsdoc, ruleConfig, context, lines, jsdocNode, node, settings, sourceCode, iterator, state,
+          info,
+          indent,
+          jsdoc,
+          ruleConfig,
+          context,
+          lines,
+          jsdocNode,
+          node,
+          settings,
+          sourceCode,
+          iterator,
+          /** @type {StateObject} */
+          (state),
         );
       };
 
+      /** @type {import('eslint').Rule.RuleListener} */
       let contextObject = {};
 
       if (contexts && (
@@ -2351,13 +2510,17 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         }
       }
 
-      if (ruleConfig.exit) {
+      if (typeof ruleConfig.exit === 'function') {
         contextObject['Program:exit'] = () => {
-          ruleConfig.exit({
+          const ste = /** @type {StateObject} */ (state);
+          /* eslint-disable jsdoc/no-undefined-types -- Bug */
+          // @ts-expect-error `utils` not needed at this point
+          /** @type {Required<RuleConfig>} */ (ruleConfig).exit({
             context,
             settings,
-            state,
+            state: ste,
           });
+          /* eslint-enable jsdoc/no-undefined-types -- Bug */
         };
       }
 

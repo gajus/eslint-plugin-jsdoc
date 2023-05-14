@@ -27,7 +27,9 @@ export default iterateJsdoc(({
   ] = context.options;
 
   let extraAsterisks = false;
-  const nonJsdocNodes = allComments.filter((comment) => {
+  const nonJsdocNodes = /** @type {import('estree').Node[]} */ (
+    allComments
+  ).filter((comment) => {
     const commentText = sourceCode.getText(comment);
     let sliceIndex = 2;
     if (!commentRegexp.test(commentText)) {
@@ -59,7 +61,9 @@ export default iterateJsdoc(({
   }
 
   for (const node of nonJsdocNodes) {
-    const report = makeReport(context, node);
+    const report = /** @type {import('../iterateJsdoc.js').MakeReport} */ (
+      makeReport
+    )(context, node);
 
     // eslint-disable-next-line no-loop-func
     const fix = /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {

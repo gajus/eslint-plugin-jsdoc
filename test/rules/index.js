@@ -20,6 +20,8 @@ import config from '../../src/index.js';
 
 const ruleTester = new RuleTester();
 const {
+  // Todo: Could submit this to @types/eslint
+  // @ts-expect-error
   FlatRuleTester,
 } = pkg;
 

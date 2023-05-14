@@ -41,9 +41,9 @@ const canSkip = (utils) => {
  * @returns {[preferredTagName?: string, missingTag?: boolean]}
  */
 const checkTagName = (utils, report, tagName) => {
-  const preferredTagName = utils.getPreferredTagName({
+  const preferredTagName = /** @type {string} */ (utils.getPreferredTagName({
     tagName,
-  });
+  }));
   if (!preferredTagName) {
     return [];
   }

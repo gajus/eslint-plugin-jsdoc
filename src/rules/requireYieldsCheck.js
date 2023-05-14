@@ -42,9 +42,9 @@ const canSkip = (utils, settings) => {
  * @returns {[]|[preferredTagName: string, tag: import('comment-parser').Spec]}
  */
 const checkTagName = (utils, report, tagName) => {
-  const preferredTagName = utils.getPreferredTagName({
+  const preferredTagName = /** @type {string} */ (utils.getPreferredTagName({
     tagName,
-  });
+  }));
   if (!preferredTagName) {
     return [];
   }
