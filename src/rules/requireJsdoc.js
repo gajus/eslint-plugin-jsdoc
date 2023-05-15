@@ -9,6 +9,15 @@ import {
 } from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
 
+/**
+ * @typedef {{
+ *   ancestorsOnly: boolean,
+ *   esm: boolean,
+ *   initModuleExports: boolean,
+ *   initWindow: boolean
+ * }} RequireJsdocOpts
+ */
+
 /** @type {import('json-schema').JSONSchema4} */
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
@@ -476,6 +485,7 @@ export default {
       };
 
       if (publicOnly) {
+        /** @type {RequireJsdocOpts} */
         const opt = {
           ancestorsOnly: Boolean(publicOnly?.ancestorsOnly ?? false),
           esm: Boolean(publicOnly?.esm ?? true),

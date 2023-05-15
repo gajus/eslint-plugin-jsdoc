@@ -217,7 +217,10 @@ const getFunctionParameterNames = (
    *   import('estree').RestElement|import('estree').ArrayPattern|
    *   import('@typescript-eslint/types').TSESTree.TSParameterProperty|
    *   import('@typescript-eslint/types').TSESTree.Property|
-   *   import('@typescript-eslint/types').TSESTree.RestElement
+   *   import('@typescript-eslint/types').TSESTree.RestElement|
+   *   import('@typescript-eslint/types').TSESTree.Identifier|
+   *   import('@typescript-eslint/types').TSESTree.ObjectPattern|
+   *   import('@typescript-eslint/types').TSESTree.BindingName
    * } param
    * @param {boolean} [isProperty]
    * @returns {ParamNameInfo}
@@ -412,7 +415,14 @@ const getFunctionParameterNames = (
     }
 
     if (param.type === 'TSParameterProperty') {
-      return getParamName(param.parameter, true);
+      return getParamName(
+        /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+          /** @type {import('@typescript-eslint/types').TSESTree.TSParameterProperty} */ (
+            param
+          ).parameter
+        ),
+        true,
+      );
     }
 
     throw new Error(`Unsupported function signature format: \`${param.type}\`.`);
@@ -676,7 +686,9 @@ const getAllTags = (jsdoc) => {
 };
 
 /**
- * @param {import('comment-parser').Block} jsdoc
+ * @param {import('comment-parser').Block & {
+ *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
+ * }} jsdoc
  * @param {string[]} targetTagNames
  * @returns {boolean}
  */
@@ -869,7 +881,7 @@ const tagMightHaveTypePosition = (tag, tagMap = tagStructure) => {
 
   const tagStruct = ensureMap(tagMap, tag);
 
-  const ret = tagStruct.get('typeAllowed');
+  const ret = /** @type {boolean|undefined} */ (tagStruct.get('typeAllowed'));
 
   return ret === undefined ? true : ret;
 };
@@ -899,7 +911,10 @@ const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
 const tagMightHaveNamepath = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  return namepathTypes.has(tagStruct.get('namepathRole'));
+  const nampathRole = tagStruct.get('namepathRole');
+
+  return nampathRole !== false &&
+    namepathTypes.has(/** @type {string} */ (nampathRole));
 };
 
 /**
@@ -955,7 +970,7 @@ const tagMissingRequiredTypeOrNamepath = (tag, tagMap = tagStructure) => {
 
 /* eslint-disable complexity -- Temporary */
 /**
- * @param {ESTreeOrTypeScriptNode} node
+ * @param {ESTreeOrTypeScriptNode|null|undefined} node
  * @param {boolean} [checkYieldReturnValue]
  * @returns {boolean}
  */
@@ -1009,8 +1024,14 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
 
   case 'TryStatement': {
     return hasNonFunctionYield(node.block, checkYieldReturnValue) ||
-      hasNonFunctionYield(node.handler && node.handler.body, checkYieldReturnValue) ||
-      hasNonFunctionYield(node.finalizer, checkYieldReturnValue);
+      hasNonFunctionYield(
+        node.handler && node.handler.body, checkYieldReturnValue,
+      ) ||
+      hasNonFunctionYield(
+        /** @type {import('@typescript-eslint/types').TSESTree.BlockStatement} */
+        (node.finalizer),
+        checkYieldReturnValue,
+      );
   }
 
   case 'SwitchStatement': {
@@ -1078,8 +1099,10 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
   // @ts-expect-error In Babel?
   // istanbul ignore next -- In Babel?
   case 'ObjectMethod':
+    // @ts-expect-error In Babel?
     // istanbul ignore next -- In Babel?
     return node.computed && hasNonFunctionYield(node.key, checkYieldReturnValue) ||
+      // @ts-expect-error In Babel?
       node.arguments.some((nde) => {
         return hasNonFunctionYield(nde, checkYieldReturnValue);
       });
@@ -1115,7 +1138,11 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
 
   case 'YieldExpression': {
     if (checkYieldReturnValue) {
-      if (node.parent.type === 'VariableDeclarator') {
+      if (
+        /** @type {import('eslint').Rule.Node} */ (
+          node
+        ).parent.type === 'VariableDeclarator'
+      ) {
         return true;
       }
 
@@ -1144,8 +1171,16 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
  * @returns {boolean}
  */
 const hasYieldValue = (node, checkYieldReturnValue) => {
-  return node.generator && (
-    node.expression || hasNonFunctionYield(node.body, checkYieldReturnValue)
+  return /** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */ (
+    node
+  ).generator && (
+    /** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */ (
+      node
+    ).expression || hasNonFunctionYield(
+      /** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */
+      (node).body,
+      checkYieldReturnValue,
+    )
   );
 };
 
@@ -1273,7 +1308,7 @@ const enforcedContexts = (context, defaultContexts, settings) => {
 /**
  * @param {import('./iterateJsdoc.js').Context[]} contexts
  * @param {import('./iterateJsdoc.js').CheckJsdoc} checkJsdoc
- * @param {Function} [handler]
+ * @param {import('@es-joy/jsdoccomment').CommentHandler} [handler]
  * @returns {import('eslint').Rule.RuleListener}
  */
 const getContextObject = (contexts, checkJsdoc, handler) => {
@@ -1284,7 +1319,10 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
     idx,
     prop,
   ] of contexts.entries()) {
+    /** @type {string} */
     let property;
+
+    /** @type {(node: import('eslint').Rule.Node) => void} */
     let value;
 
     if (typeof prop === 'object') {
@@ -1293,15 +1331,24 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
         selector: prop.context,
       };
       if (prop.comment) {
-        property = prop.context;
+        property = /** @type {string} */ (prop.context);
         value = checkJsdoc.bind(
-          null, {
+          null,
+          {
             ...selInfo,
             comment: prop.comment,
-          }, handler.bind(null, prop.comment),
+          },
+          /**
+           * @type {(jsdoc: import('comment-parser').Block & {
+           *   inlineTags?: import('@es-joy/jsdoccomment').InlineTag[]
+           * }) => boolean}
+           */
+          (/** @type {import('@es-joy/jsdoccomment').CommentHandler} */ (
+            handler
+          ).bind(null, prop.comment)),
         );
       } else {
-        property = prop.context;
+        property = /** @type {string} */ (prop.context);
         value = checkJsdoc.bind(null, selInfo, null);
       }
     } else {
@@ -1313,11 +1360,18 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
       value = checkJsdoc.bind(null, selInfo, null);
     }
 
-    const old = properties[property];
-    properties[property] = old ? function (...args) {
-      old(...args);
-      value(...args);
-    } : value;
+    const old = /**
+                 * @type {((node: import('eslint').Rule.Node) => void)}
+                 */ (properties[property]);
+    properties[property] = old ?
+      /**
+       * @type {((node: import('eslint').Rule.Node) => void)}
+       */
+      function (node) {
+        old(node);
+        value(node);
+      } :
+      value;
   }
 
   return properties;
@@ -1474,7 +1528,9 @@ const hasAccessorPair = (node) => {
 };
 
 /**
- * @param {import('comment-parser').Block} jsdoc
+ * @param {import('comment-parser').Block & {
+ *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
+ * }} jsdoc
  * @param {import('eslint').Rule.Node|null} node
  * @param {import('eslint').Rule.RuleContext} context
  * @param {import('json-schema').JSONSchema4} schema

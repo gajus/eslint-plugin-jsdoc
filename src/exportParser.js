@@ -6,9 +6,29 @@ import debugModule from 'debug';
 const debug = debugModule('requireExportJsdoc');
 
 /**
- * @returns {{
- *   props: object
- * }}
+ * @typedef {{
+ *   value: string
+ * }} ValueObject
+ */
+
+/* eslint-disable jsdoc/valid-types -- Old version */
+/**
+ * @typedef {{
+ *   type?: string,
+ *   value?: ValueObject|import('eslint').Rule.Node,
+ *   props: {
+ *     [key: string]: CreatedNode|null,
+ *   },
+ *   special?: true,
+ *   globalVars?: CreatedNode,
+ *   exported?: boolean,
+ *   ANONYMOUS_DEFAULT?: import('eslint').Rule.Node
+ * }} CreatedNode
+ */
+/* eslint-enable jsdoc/valid-types -- Old version */
+
+/**
+ * @returns {CreatedNode}
  */
 const createNode = function () {
   return {
@@ -17,19 +37,18 @@ const createNode = function () {
 };
 
 /**
- * @param {} symbol
- * @returns {null}
+ * @param {CreatedNode|null} symbol
+ * @returns {string|null}
  */
 const getSymbolValue = function (symbol) {
-  /* istanbul ignore next */
+  /* istanbul ignore if */
   if (!symbol) {
-    /* istanbul ignore next */
     return null;
   }
 
-  /* istanbul ignore next */
+  /* istanbul ignore else */
   if (symbol.type === 'literal') {
-    return symbol.value.value;
+    return /** @type {ValueObject} */ (symbol.value).value;
   }
 
   /* istanbul ignore next */
@@ -38,11 +57,11 @@ const getSymbolValue = function (symbol) {
 
 /**
  *
- * @param {} node
- * @param {} globals
- * @param {} scope
- * @param {} opts
- * @returns {}
+ * @param {import('estree').Identifier} node
+ * @param {CreatedNode} globals
+ * @param {CreatedNode} scope
+ * @param {SymbolOptions} opts
+ * @returns {CreatedNode|null}
  */
 const getIdentifier = function (node, globals, scope, opts) {
   if (opts.simpleIdentifier) {
@@ -73,17 +92,34 @@ const getIdentifier = function (node, globals, scope, opts) {
   return null;
 };
 
-let createSymbol = null;
+/**
+ * @callback CreateSymbol
+ * @param {import('eslint').Rule.Node|null} node
+ * @param {CreatedNode} globals
+ * @param {import('eslint').Rule.Node|null} value
+ * @param {CreatedNode} [scope]
+ * @param {boolean|SymbolOptions} [isGlobal]
+ * @returns {CreatedNode|null}
+ */
+
+/** @type {CreateSymbol} */
+let createSymbol; // eslint-disable-line prefer-const
 
 /* eslint-disable complexity -- Temporary */
 
 /**
+ * @typedef {{
+ *   simpleIdentifier?: boolean
+ * }} SymbolOptions
+ */
+
+/**
  *
- * @param {} node
- * @param {} globals
- * @param {} scope
- * @param {} opt
- * @returns {}
+ * @param {import('eslint').Rule.Node} node
+ * @param {CreatedNode} globals
+ * @param {CreatedNode} scope
+ * @param {SymbolOptions} [opt]
+ * @returns {CreatedNode|null}
  */
 const getSymbol = function (node, globals, scope, opt) {
   /* eslint-enable complexity -- Temporary */
@@ -96,13 +132,25 @@ const getSymbol = function (node, globals, scope, opt) {
   }
 
   case 'MemberExpression': {
-    const obj = getSymbol(node.object, globals, scope, opts);
-    const propertySymbol = getSymbol(node.property, globals, scope, {
-      simpleIdentifier: !node.computed,
-    });
+    const obj = getSymbol(
+      /** @type {import('eslint').Rule.Node} */
+      (node.object),
+      globals,
+      scope,
+      opts,
+    );
+    const propertySymbol = getSymbol(
+      /** @type {import('eslint').Rule.Node} */
+      (node.property),
+      globals,
+      scope,
+      {
+        simpleIdentifier: !node.computed,
+      },
+    );
     const propertyValue = getSymbolValue(propertySymbol);
 
-    /* istanbul ignore next */
+    /* istanbul ignore else */
     if (obj && propertyValue && obj.props[propertyValue]) {
       const block = obj.props[propertyValue];
 
@@ -117,17 +165,28 @@ const getSymbol = function (node, globals, scope, opt) {
     }
     */
     /* istanbul ignore next */
-    debug(`MemberExpression: Missing property ${node.property.name}`);
+    debug(`MemberExpression: Missing property ${
+      /** @type {import('estree').PrivateIdentifier} */ (node.property).name
+    }`);
 
     /* istanbul ignore next */
     return null;
   }
 
   case 'ClassExpression': {
-    return getSymbol(node.body, globals, scope, opts);
+    return getSymbol(
+      /** @type {import('eslint').Rule.Node} */
+      (node.body),
+      globals,
+      scope,
+      opts,
+    );
   }
 
+  // @ts-expect-error TS OK
   case 'TSTypeAliasDeclaration':
+  // @ts-expect-error TS OK
+  // Fallthrough
   case 'TSEnumDeclaration': case 'TSInterfaceDeclaration':
   case 'ClassDeclaration':
   case 'FunctionExpression': case 'FunctionDeclaration':
@@ -142,15 +201,45 @@ const getSymbol = function (node, globals, scope, opt) {
   }
 
   case 'AssignmentExpression': {
-    return createSymbol(node.left, globals, node.right, scope, opts);
+    return createSymbol(
+      /** @type {import('eslint').Rule.Node} */
+      (node.left),
+      globals,
+      /** @type {import('eslint').Rule.Node} */
+      (node.right),
+      scope,
+      opts,
+    );
   }
 
   case 'ClassBody': {
     const val = createNode();
     for (const method of node.body) {
-      val.props[method.key.name] = createNode();
-      val.props[method.key.name].type = 'object';
-      val.props[method.key.name].value = method.value;
+      val.props[
+        /** @type {import('estree').Identifier} */ (
+          /** @type {import('estree').MethodDefinition} */ (
+            method
+          ).key
+        ).name
+      ] = createNode();
+      /* eslint-disable jsdoc/valid-types -- Old version */
+      /** @type {{[key: string]: CreatedNode}} */ (val.props)[
+        /** @type {import('estree').Identifier} */ (
+          /** @type {import('estree').MethodDefinition} */ (
+            method
+          ).key
+        ).name
+      ].type = 'object';
+      /** @type {{[key: string]: CreatedNode}} */ (val.props)[
+        /** @type {import('estree').Identifier} */ (
+          /** @type {import('estree').MethodDefinition} */ (
+            method
+          ).key
+        ).name
+      ].value = /** @type {import('eslint').Rule.Node} */ (
+        /** @type {import('estree').MethodDefinition} */ (method).value
+      );
+      /* eslint-enable jsdoc/valid-types -- Old version */
     }
 
     val.type = 'object';
@@ -173,10 +262,23 @@ const getSymbol = function (node, globals, scope, opt) {
         continue;
       }
 
-      const propVal = getSymbol(prop.value, globals, scope, opts);
-      /* istanbul ignore next */
+      const propVal = getSymbol(
+        /** @type {import('eslint').Rule.Node} */ (
+          /** @type {import('estree').Property} */
+          (prop).value
+        ),
+        globals,
+        scope,
+        opts,
+      );
+      /* istanbul ignore if */
       if (propVal) {
-        val.props[prop.key.name] = propVal;
+        val.props[
+          /** @type {import('estree').PrivateIdentifier} */
+          (
+            /** @type {import('estree').Property} */ (prop).key
+          ).name
+        ] = propVal;
       }
     }
 
@@ -198,11 +300,11 @@ const getSymbol = function (node, globals, scope, opt) {
 
 /**
  *
- * @param {} block
- * @param {} name
- * @param {} value
- * @param {} globals
- * @param {} isGlobal
+ * @param {CreatedNode} block
+ * @param {string} name
+ * @param {CreatedNode|null} value
+ * @param {CreatedNode} globals
+ * @param {boolean|SymbolOptions|undefined} isGlobal
  * @returns {void}
  */
 const createBlockSymbol = function (block, name, value, globals, isGlobal) {
@@ -212,30 +314,34 @@ const createBlockSymbol = function (block, name, value, globals, isGlobal) {
   }
 };
 
-/**
- *
- * @param {} node
- * @param {} globals
- * @param {} value
- * @param {} scope
- * @param {} isGlobal
- * @returns {null}
- */
 createSymbol = function (node, globals, value, scope, isGlobal) {
   const block = scope || globals;
+  /* istanbul ignore if */
+  if (!node) {
+    return null;
+  }
+
   let symbol;
   // eslint-disable-next-line default-case
   switch (node.type) {
   case 'FunctionDeclaration':
   /* istanbul ignore next */
+  // @ts-expect-error TS OK
   // Fall through
   case 'TSEnumDeclaration': case 'TSInterfaceDeclaration':
   /* istanbul ignore next */
+  // @ts-expect-error TS OK
   // Fall through
   case 'TSTypeAliasDeclaration': case 'ClassDeclaration': {
-    /* istanbul ignore next */
-    if (node.id && node.id.type === 'Identifier') {
-      return createSymbol(node.id, globals, node, globals);
+    const nde = /** @type {import('estree').ClassDeclaration} */ (node);
+    /* istanbul ignore else */
+    if (nde.id && nde.id.type === 'Identifier') {
+      return createSymbol(
+        /** @type {import('eslint').Rule.Node} */ (nde.id),
+        globals,
+        node,
+        globals,
+      );
     }
 
     /* istanbul ignore next */
@@ -243,21 +349,22 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
   }
 
   case 'Identifier': {
+    const nde = /** @type {import('estree').Identifier} */ (node);
     if (value) {
       const valueSymbol = getSymbol(value, globals, block);
-      /* istanbul ignore next */
+      /* istanbul ignore else */
       if (valueSymbol) {
-        createBlockSymbol(block, node.name, valueSymbol, globals, isGlobal);
+        createBlockSymbol(block, nde.name, valueSymbol, globals, isGlobal);
 
-        return block.props[node.name];
+        return block.props[nde.name];
       }
 
       /* istanbul ignore next */
-      debug('Identifier: Missing value symbol for %s', node.name);
+      debug('Identifier: Missing value symbol for %s', nde.name);
     } else {
-      createBlockSymbol(block, node.name, createNode(), globals, isGlobal);
+      createBlockSymbol(block, nde.name, createNode(), globals, isGlobal);
 
-      return block.props[node.name];
+      return block.props[nde.name];
     }
 
     /* istanbul ignore next */
@@ -265,20 +372,34 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
   }
 
   case 'MemberExpression': {
-    symbol = getSymbol(node.object, globals, block);
+    const nde = /** @type {import('estree').MemberExpression} */ (node);
+    symbol = getSymbol(
+      /** @type {import('eslint').Rule.Node} */ (nde.object), globals, block,
+    );
 
-    const propertySymbol = getSymbol(node.property, globals, block, {
-      simpleIdentifier: !node.computed,
-    });
+    const propertySymbol = getSymbol(
+      /** @type {import('eslint').Rule.Node} */ (nde.property),
+      globals,
+      block,
+      {
+        simpleIdentifier: !nde.computed,
+      },
+    );
     const propertyValue = getSymbolValue(propertySymbol);
     if (symbol && propertyValue) {
-      createBlockSymbol(symbol, propertyValue, getSymbol(value, globals, block), globals, isGlobal);
-
+      createBlockSymbol(symbol, propertyValue, getSymbol(
+        /** @type {import('eslint').Rule.Node} */
+        (value), globals, block,
+      ), globals, isGlobal);
       return symbol.props[propertyValue];
     }
 
-    /* istanbul ignore next */
-    debug('MemberExpression: Missing symbol: %s', node.property.name);
+    debug(
+      'MemberExpression: Missing symbol: %s',
+      /** @type {import('estree').Identifier} */ (
+        nde.property
+      ).name,
+    );
     break;
   }
   }
@@ -289,34 +410,53 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
 /**
  * Creates variables from variable definitions
  *
- * @param {} node
- * @param {} globals
- * @param {} opts
- * @returns {}
+ * @param {import('eslint').Rule.Node} node
+ * @param {CreatedNode} globals
+ * @param {import('./rules/requireJsdoc.js').RequireJsdocOpts} opts
+ * @returns {void}
  */
 const initVariables = function (node, globals, opts) {
   // eslint-disable-next-line default-case
   switch (node.type) {
   case 'Program': {
     for (const childNode of node.body) {
-      initVariables(childNode, globals, opts);
+      initVariables(
+        /** @type {import('eslint').Rule.Node} */
+        (childNode),
+        globals,
+        opts,
+      );
     }
 
     break;
   }
 
   case 'ExpressionStatement': {
-    initVariables(node.expression, globals, opts);
+    initVariables(
+      /** @type {import('eslint').Rule.Node} */
+      (node.expression),
+      globals,
+      opts,
+    );
     break;
   }
 
   case 'VariableDeclaration': {
     for (const declaration of node.declarations) {
       // let and const
-      const symbol = createSymbol(declaration.id, globals, null, globals);
+      const symbol = createSymbol(
+        /** @type {import('eslint').Rule.Node} */
+        (declaration.id),
+        globals,
+        null,
+        globals,
+      );
       if (opts.initWindow && node.kind === 'var' && globals.props.window) {
         // If var, also add to window
-        globals.props.window.props[declaration.id.name] = symbol;
+        globals.props.window.props[
+          /** @type {import('estree').Identifier} */
+          (declaration.id).name
+        ] = symbol;
       }
     }
 
@@ -325,7 +465,12 @@ const initVariables = function (node, globals, opts) {
 
   case 'ExportNamedDeclaration': {
     if (node.declaration) {
-      initVariables(node.declaration, globals, opts);
+      initVariables(
+        /** @type {import('eslint').Rule.Node} */
+        (node.declaration),
+        globals,
+        opts,
+      );
     }
 
     break;
@@ -338,10 +483,10 @@ const initVariables = function (node, globals, opts) {
 /**
  * Populates variable maps using AST
  *
- * @param {} node
- * @param {} globals
- * @param {} opt
- * @param {} isExport
+ * @param {import('eslint').Rule.Node} node
+ * @param {CreatedNode} globals
+ * @param {import('./rules/requireJsdoc.js').RequireJsdocOpts} opt
+ * @param {true} [isExport]
  * @returns {boolean}
  */
 const mapVariables = function (node, globals, opt, isExport) {
@@ -356,26 +501,50 @@ const mapVariables = function (node, globals, opt, isExport) {
     }
 
     for (const childNode of node.body) {
-      mapVariables(childNode, globals, opts);
+      mapVariables(
+        /** @type {import('eslint').Rule.Node} */
+        (childNode),
+        globals,
+        opts,
+      );
     }
 
     break;
   }
 
   case 'ExpressionStatement': {
-    mapVariables(node.expression, globals, opts);
+    mapVariables(
+      /** @type {import('eslint').Rule.Node} */
+      (node.expression),
+      globals,
+      opts,
+    );
     break;
   }
 
   case 'AssignmentExpression': {
-    createSymbol(node.left, globals, node.right);
+    createSymbol(
+      /** @type {import('eslint').Rule.Node} */
+      (node.left),
+      globals,
+      /** @type {import('eslint').Rule.Node} */
+      (node.right),
+    );
     break;
   }
 
   case 'VariableDeclaration': {
     for (const declaration of node.declarations) {
-      const isGlobal = opts.initWindow && node.kind === 'var' && globals.props.window;
-      const symbol = createSymbol(declaration.id, globals, declaration.init, globals, isGlobal);
+      const isGlobal = Boolean(opts.initWindow && node.kind === 'var' && globals.props.window);
+      const symbol = createSymbol(
+        /** @type {import('eslint').Rule.Node} */
+        (declaration.id),
+        globals,
+        /** @type {import('eslint').Rule.Node} */
+        (declaration.init),
+        globals,
+        isGlobal,
+      );
       if (symbol && isExport) {
         symbol.exported = true;
       }
@@ -385,20 +554,36 @@ const mapVariables = function (node, globals, opt, isExport) {
   }
 
   case 'FunctionDeclaration': {
-    /* istanbul ignore next */
-    if (node.id.type === 'Identifier') {
-      createSymbol(node.id, globals, node, globals, true);
+    /* istanbul ignore if */
+    if (/** @type {import('estree').Identifier} */ (node.id).type === 'Identifier') {
+      createSymbol(
+        /** @type {import('eslint').Rule.Node} */
+        (node.id),
+        globals,
+        node,
+        globals,
+        true,
+      );
     }
 
     break;
   }
 
   case 'ExportDefaultDeclaration': {
-    const symbol = createSymbol(node.declaration, globals, node.declaration);
+    const symbol = createSymbol(
+      /** @type {import('eslint').Rule.Node} */
+      (node.declaration),
+      globals,
+      /** @type {import('eslint').Rule.Node} */
+      (node.declaration),
+    );
     if (symbol) {
       symbol.exported = true;
-    } else if (!node.id) {
-      globals.ANONYMOUS_DEFAULT = node.declaration;
+    } else {
+      // if (!node.id) {
+      globals.ANONYMOUS_DEFAULT = /** @type {import('eslint').Rule.Node} */ (
+        node.declaration
+      );
     }
 
     break;
@@ -407,10 +592,22 @@ const mapVariables = function (node, globals, opt, isExport) {
   case 'ExportNamedDeclaration': {
     if (node.declaration) {
       if (node.declaration.type === 'VariableDeclaration') {
-        mapVariables(node.declaration, globals, opts, true);
+        mapVariables(
+          /** @type {import('eslint').Rule.Node} */
+          (node.declaration),
+          globals,
+          opts,
+          true,
+        );
       } else {
-        const symbol = createSymbol(node.declaration, globals, node.declaration);
-        /* istanbul ignore next */
+        const symbol = createSymbol(
+          /** @type {import('eslint').Rule.Node} */
+          (node.declaration),
+          globals,
+          /** @type {import('eslint').Rule.Node} */
+          (node.declaration),
+        );
+        /* istanbul ignore if */
         if (symbol) {
           symbol.exported = true;
         }
@@ -418,15 +615,25 @@ const mapVariables = function (node, globals, opt, isExport) {
     }
 
     for (const specifier of node.specifiers) {
-      mapVariables(specifier, globals, opts);
+      mapVariables(
+        /** @type {import('eslint').Rule.Node} */
+        (specifier),
+        globals,
+        opts,
+      );
     }
 
     break;
   }
 
   case 'ExportSpecifier': {
-    const symbol = getSymbol(node.local, globals, globals);
-    /* istanbul ignore next */
+    const symbol = getSymbol(
+      /** @type {import('eslint').Rule.Node} */
+      (node.local),
+      globals,
+      globals,
+    );
+    /* istanbul ignore if */
     if (symbol) {
       symbol.exported = true;
     }
@@ -435,7 +642,12 @@ const mapVariables = function (node, globals, opt, isExport) {
   }
 
   case 'ClassDeclaration': {
-    createSymbol(node.id, globals, node.body, globals);
+    createSymbol(
+      /** @type {import('eslint').Rule.Node|null} */ (node.id),
+      globals,
+      /** @type {import('eslint').Rule.Node} */ (node.body),
+      globals,
+    );
     break;
   }
 
@@ -450,14 +662,15 @@ const mapVariables = function (node, globals, opt, isExport) {
 
 /**
  *
- * @param {} node
- * @param {} block
- * @param {} cache
+ * @param {import('eslint').Rule.Node} node
+ * @param {CreatedNode|ValueObject|string|undefined|
+ *   import('eslint').Rule.Node} block
+ * @param {(CreatedNode|ValueObject|string|
+ *   import('eslint').Rule.Node)[]} [cache]
  * @returns {boolean}
  */
 const findNode = function (node, block, cache) {
   let blockCache = cache || [];
-  /* istanbul ignore next */
   if (!block || blockCache.includes(block)) {
     return false;
   }
@@ -466,15 +679,19 @@ const findNode = function (node, block, cache) {
   blockCache.push(block);
 
   if (
+    typeof block === 'object' &&
+    'type' in block &&
     (block.type === 'object' || block.type === 'MethodDefinition') &&
     block.value === node
   ) {
     return true;
   }
 
-  const {
-    props = block.body,
-  } = block;
+  if (typeof block !== 'object') {
+    return false;
+  }
+
+  const props = ('props' in block && block.props) || ('body' in block && block.body);
   for (const propval of Object.values(props || {})) {
     if (Array.isArray(propval)) {
       /* istanbul ignore if */
@@ -499,8 +716,8 @@ const ignorableNestedTypes = new Set([
 ]);
 
 /**
- * @param {} nde
- * @returns {}
+ * @param {import('eslint').Rule.Node} nde
+ * @returns {import('eslint').Rule.Node|false}
  */
 const getExportAncestor = function (nde) {
   let node = nde;
@@ -544,8 +761,8 @@ const canExportChildrenType = new Set([
 ]);
 
 /**
- * @param {} nde
- * @returns {}
+ * @param {import('eslint').Rule.Node} nde
+ * @returns {false|import('eslint').Rule.Node}
  */
 const isExportByAncestor = function (nde) {
   if (!canBeExportedByAncestorType.has(nde.type)) {
@@ -570,13 +787,13 @@ const isExportByAncestor = function (nde) {
 
 /**
  *
- * @param {} block
- * @param {} node
- * @param {} cache
+ * @param {CreatedNode} block
+ * @param {import('eslint').Rule.Node} node
+ * @param {CreatedNode[]} [cache] Currently unused
  * @returns {boolean}
  */
 const findExportedNode = function (block, node, cache) {
-  /* istanbul ignore next */
+  /* istanbul ignore if */
   if (block === null) {
     return false;
   }
@@ -586,8 +803,9 @@ const findExportedNode = function (block, node, cache) {
     props,
   } = block;
   for (const propval of Object.values(props)) {
-    blockCache.push(propval);
-    if (propval.exported && (node === propval.value || findNode(node, propval.value))) {
+    const pval = /** @type {CreatedNode} */ (propval);
+    blockCache.push(pval);
+    if (pval.exported && (node === pval.value || findNode(node, pval.value))) {
       return true;
     }
 
@@ -600,9 +818,9 @@ const findExportedNode = function (block, node, cache) {
 
 /**
  *
- * @param {} node
- * @param {} globals
- * @param {} opt
+ * @param {import('eslint').Rule.Node} node
+ * @param {CreatedNode} globals
+ * @param {import('./rules/requireJsdoc.js').RequireJsdocOpts} opt
  * @returns {boolean}
  */
 const isNodeExported = function (node, globals, opt) {
@@ -626,9 +844,9 @@ const isNodeExported = function (node, globals, opt) {
 
 /**
  *
- * @param {} node
- * @param {} globalVars
- * @param {} opts
+ * @param {import('eslint').Rule.Node} node
+ * @param {CreatedNode} globalVars
+ * @param {import('./rules/requireJsdoc.js').RequireJsdocOpts} opts
  * @returns {boolean}
  */
 const parseRecursive = function (node, globalVars, opts) {
@@ -642,14 +860,10 @@ const parseRecursive = function (node, globalVars, opts) {
 
 /**
  *
- * @param {} ast
- * @param {} node
- * @param {} opt
- * @returns {{
- *   globalVars: {
- *     props: {};
- *   };
- * }}
+ * @param {import('eslint').Rule.Node} ast
+ * @param {import('eslint').Rule.Node} node
+ * @param {import('./rules/requireJsdoc.js').RequireJsdocOpts} opt
+ * @returns {CreatedNode}
  */
 const parse = function (ast, node, opt) {
   /* istanbul ignore next */
@@ -681,15 +895,16 @@ const parse = function (ast, node, opt) {
 
   return {
     globalVars,
+    props: {},
   };
 };
 
 /**
  *
- * @param {} node
- * @param {} sourceCode
- * @param {} opt
- * @param {} settings
+ * @param {import('eslint').Rule.Node} node
+ * @param {import('eslint').SourceCode} sourceCode
+ * @param {import('./rules/requireJsdoc.js').RequireJsdocOpts} opt
+ * @param {import('./iterateJsdoc.js').Settings} settings
  * @returns {boolean}
  */
 const isUncommentedExport = function (node, sourceCode, opt, settings) {
@@ -714,9 +929,18 @@ const isUncommentedExport = function (node, sourceCode, opt, settings) {
     }
   }
 
-  const parseResult = parse(sourceCode.ast, node, opt);
+  const ast = /** @type {unknown} */ (sourceCode.ast);
 
-  return isNodeExported(node, parseResult.globalVars, opt);
+  const parseResult = parse(
+    /** @type {import('eslint').Rule.Node} */
+    (ast),
+    node,
+    opt,
+  );
+
+  return isNodeExported(
+    node, /** @type {CreatedNode} */ (parseResult.globalVars), opt,
+  );
 };
 
 export default {
