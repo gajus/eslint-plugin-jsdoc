@@ -1,17 +1,17 @@
-import {
-  tryParse,
-} from '@es-joy/jsdoccomment';
-import WarnSettings from './WarnSettings';
 import getDefaultTagStructureForMode from './getDefaultTagStructureForMode';
 import {
-  jsdocTags,
   closureTags,
+  jsdocTags,
   typeScriptTags,
 } from './tagNames';
 import {
   hasReturnValue,
   hasValueOrExecutorHasNonEmptyResolveValue,
 } from './utils/hasReturnValue';
+import WarnSettings from './WarnSettings';
+import {
+  tryParse,
+} from '@es-joy/jsdoccomment';
 
 /**
  * @typedef {number} Integer
@@ -74,8 +74,7 @@ const setTagStructure = (mode) => {
 
 /**
  * Given a nested array of property names, reduce them to a single array,
- *   appending the name of the root element along the way if present.
- *
+ * appending the name of the root element along the way if present.
  * @callback FlattenRoots
  * @param {ParamInfo[]} params
  * @param {string} [root]
@@ -443,13 +442,14 @@ const getFunctionParameterNames = (
  */
 const hasParams = (functionNode) => {
   // Should also check `functionNode.value.params` if supporting `MethodDefinition`
-  return functionNode.params.length;
+  return /** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */ (
+    functionNode
+  ).params.length;
 };
 
 /**
  * Gets all names of the target type, including those that refer to a path, e.g.
  * "@param foo; @param foo.bar".
- *
  * @param {import('comment-parser').Block} jsdoc
  * @param {string} targetTagName
  * @returns {{
@@ -501,6 +501,10 @@ const getTagNamesForMode = (mode, context) => {
     if (!modeWarnSettings.hasBeenWarned(context, 'mode')) {
       context.report({
         loc: {
+          end: {
+            column: 1,
+            line: 1,
+          },
           start: {
             column: 1,
             line: 1,
@@ -598,9 +602,7 @@ const isValidTag = (
 };
 
 /**
- * @param {import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
- * }} jsdoc
+ * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
  * @param {string} targetTagName
  * @returns {boolean}
  */
@@ -614,10 +616,7 @@ const hasTag = (jsdoc, targetTagName) => {
 
 /**
  * Get all tags, inline tags and inline tags in tags
- *
- * @param {import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').JsdocInlineTagNoType[]
- * }} jsdoc
+ * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
  * @returns {(import('comment-parser').Spec|
  *   import('@es-joy/jsdoccomment').JsdocInlineTagNoType)[]}
  */
@@ -656,7 +655,8 @@ const getAllTags = (jsdoc) => {
       }
 
       for (const inlineTag of tag.inlineTags) {
-        let line;
+        /** @type {import('./iterateJsdoc.js').Integer} */
+        let line = 0;
         for (const {
           number,
           tokens: {
@@ -686,9 +686,7 @@ const getAllTags = (jsdoc) => {
 };
 
 /**
- * @param {import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
- * }} jsdoc
+ * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
  * @param {string[]} targetTagNames
  * @returns {boolean}
  */
@@ -700,7 +698,6 @@ const hasATag = (jsdoc, targetTagNames) => {
 
 /**
  * Checks if the JSDoc comment has an undefined type.
- *
  * @param {import('comment-parser').Spec|null|undefined} tag
  *   the tag which should be checked.
  * @param {ParserMode} mode
@@ -1165,7 +1162,6 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
 
 /**
  * Checks if a node has a return statement. Void return does not count.
- *
  * @param {ESTreeOrTypeScriptNode} node
  * @param {boolean} [checkYieldReturnValue]
  * @returns {boolean}
@@ -1186,7 +1182,6 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
 
 /**
  * Checks if a node has a throws statement.
- *
  * @param {ESTreeOrTypeScriptNode|null|undefined} node
  * @param {boolean} [innerFunction]
  * @returns {boolean}
@@ -1264,9 +1259,8 @@ const isInlineTag = (tag) => {
 
 /**
  * Parses GCC Generic/Template types
- *
- * @see {https://github.com/google/closure-compiler/wiki/Generic-Types}
- * @see {https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#template}
+ * @see {@link https://github.com/google/closure-compiler/wiki/Generic-Types}
+ * @see {@link https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#template}
  * @param {import('comment-parser').Spec} tag
  * @returns {string[]}
  */
@@ -1284,9 +1278,8 @@ const parseClosureTemplateTag = (tag) => {
 
 /**
  * Checks user option for `contexts` array, defaulting to
- *   contexts designated by the rule. Returns an array of
- *   ESTree AST types, indicating allowable contexts.
- *
+ * contexts designated by the rule. Returns an array of
+ * ESTree AST types, indicating allowable contexts.
  * @param {import('eslint').Rule.RuleContext} context
  * @param {DefaultContexts|undefined} defaultContexts
  * @param {{
@@ -1339,9 +1332,7 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
             comment: prop.comment,
           },
           /**
-           * @type {(jsdoc: import('comment-parser').Block & {
-           *   inlineTags?: import('@es-joy/jsdoccomment').InlineTag[]
-           * }) => boolean}
+           * @type {(jsdoc: import('@es-joy/jsdoccomment').JsdocBlockWithInline) => boolean}
            */
           (/** @type {import('@es-joy/jsdoccomment').CommentHandler} */ (
             handler
@@ -1385,10 +1376,9 @@ const tagsWithNamesAndDescriptions = new Set([
   'returns', 'return',
 ]);
 
-/* eslint-disable jsdoc/valid-types -- Old version */
 /**
  * @typedef {{
- *   [key: string]: false|
+ *   [key: string]: false|string|
  *     {message: string, replacement?: string}
  * }} TagNamePreference
  */
@@ -1528,9 +1518,7 @@ const hasAccessorPair = (node) => {
 };
 
 /**
- * @param {import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
- * }} jsdoc
+ * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
  * @param {import('eslint').Rule.Node|null} node
  * @param {import('eslint').Rule.RuleContext} context
  * @param {import('json-schema').JSONSchema4} schema
@@ -1573,12 +1561,11 @@ const exemptSpeciaMethods = (jsdoc, node, context, schema) => {
  * identifier or numeric literal) or single or double quoted, in either
  * the `@param` or in source, we need to strip the quotes to give a fair
  * comparison.
- *
  * @param {string} str
  * @returns {string}
  */
 const dropPathSegmentQuotes = (str) => {
-  return str.replace(/\.(['"])(.*)\1/gu, '.$2');
+  return str.replaceAll(/\.(['"])(.*)\1/gu, '.$2');
 };
 
 /**

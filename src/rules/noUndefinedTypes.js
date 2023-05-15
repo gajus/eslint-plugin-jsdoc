@@ -1,13 +1,12 @@
-import {
-  getJSDocComment,
-
-  traverse,
-  parse as parseType,
-  tryParse as tryParseType,
-} from '@es-joy/jsdoccomment';
 import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc';
+import {
+  getJSDocComment,
+  parse as parseType,
+  traverse,
+  tryParse as tryParseType,
+} from '@es-joy/jsdoccomment';
 
 const extraTypes = [
   'null', 'undefined', 'void', 'string', 'boolean', 'object',
@@ -106,9 +105,7 @@ export default iterateJsdoc(({
 
       return stripPseudoTypes(preferredType.replacement);
     })
-      .filter((preferredType) => {
-        return preferredType;
-      }));
+      .filter(Boolean));
   }
 
   const typedefDeclarations = sourceCode.getAllComments()
@@ -265,10 +262,8 @@ export default iterateJsdoc(({
     ...typeTags,
     ...namepathReferencingTags,
     ...namepathOrUrlReferencingTags,
-  ].filter((result) => {
     // Remove types which failed to parse
-    return result;
-  }));
+  ].filter(Boolean));
 
   for (const {
     tag,

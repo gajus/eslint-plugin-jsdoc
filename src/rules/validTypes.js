@@ -1,9 +1,9 @@
+import iterateJsdoc from '../iterateJsdoc';
 import {
-  tryParse,
   parse,
   traverse,
+  tryParse,
 } from '@es-joy/jsdoccomment';
-import iterateJsdoc from '../iterateJsdoc';
 
 const asExpression = /as\s+/u;
 

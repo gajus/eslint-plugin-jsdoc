@@ -1,16 +1,20 @@
+import jsdocUtils from './jsdocUtils';
 import {
-  getJSDocComment,
   commentHandler,
+  getJSDocComment,
   parseComment,
 } from '@es-joy/jsdoccomment';
 import {
   stringify as commentStringify,
   util,
 } from 'comment-parser';
-import jsdocUtils from './jsdocUtils';
 
 /**
  * @typedef {number} Integer
+ */
+
+/**
+ * @typedef {import('@es-joy/jsdoccomment').JsdocBlockWithInline} JsdocBlockWithInline
  */
 
 /**
@@ -37,7 +41,7 @@ import jsdocUtils from './jsdocUtils';
  *   selector?: string,
  *   comment?: string
  * }} info
- * @param {null|((jsdoc: import('comment-parser').Block) => boolean|undefined)} handler
+ * @param {null|((jsdoc: import('@es-joy/jsdoccomment').JsdocBlockWithInline) => boolean|undefined)} handler
  * @param {import('eslint').Rule.Node} node
  * @returns {void}
  */
@@ -46,9 +50,7 @@ import jsdocUtils from './jsdocUtils';
  * @callback ForEachPreferredTag
  * @param {string} tagName
  * @param {(
- *   matchingJsdocTag: import('comment-parser').Spec & {
- *     line: Integer
- *   },
+ *   matchingJsdocTag: import('@es-joy/jsdoccomment').JsdocTagWithInline,
  *   targetTagName: string
  * ) => void} arrayHandler
  * @param {boolean} [skipReportingBlockedTag]
@@ -108,7 +110,6 @@ import jsdocUtils from './jsdocUtils';
  * @returns {string}
  */
 
-/* eslint-disable jsdoc/valid-types -- Old version */
 /**
  * @callback ReportJSDoc
  * @param {string} msg
@@ -152,7 +153,6 @@ import jsdocUtils from './jsdocUtils';
  * }}
  */
 
-/* eslint-disable jsdoc/no-undefined-types -- Bug */
 /**
  * @callback SetBlockDescription
  * @param {(
@@ -177,7 +177,6 @@ import jsdocUtils from './jsdocUtils';
  * @returns {Integer}
  */
 
-/* eslint-disable jsdoc/no-undefined-types -- TS */
 /**
  * @callback ChangeTag
  * @param {import('comment-parser').Spec} tag
@@ -186,7 +185,6 @@ import jsdocUtils from './jsdocUtils';
  */
 /* eslint-enable jsdoc/no-undefined-types -- TS */
 
-/* eslint-disable jsdoc/no-undefined-types -- TS */
 /**
  * @callback SetTag
  * @param {import('comment-parser').Spec & {
@@ -220,7 +218,6 @@ import jsdocUtils from './jsdocUtils';
  * @returns {Integer|undefined}
  */
 
-/* eslint-disable jsdoc/no-undefined-types -- TS */
 /**
  * @typedef {(
  *   tokens?: Partial<import('comment-parser').Tokens> | undefined
@@ -230,13 +227,11 @@ import jsdocUtils from './jsdocUtils';
 
 /**
  * Sets tokens to empty string.
- *
  * @callback EmptyTokens
  * @param {import('comment-parser').Tokens} tokens
  * @returns {void}
  */
 
-/* eslint-disable jsdoc/no-undefined-types -- TS */
 /**
  * @callback AddLine
  * @param {Integer} sourceIndex
@@ -424,13 +419,13 @@ import jsdocUtils from './jsdocUtils';
 /**
  * @callback GetPresentTags
  * @param {string[]} tagList
- * @returns {import('comment-parser').Spec[]}
+ * @returns {import('@es-joy/jsdoccomment').JsdocTagWithInline[]}
  */
 
 /**
  * @callback FilterTags
- * @param {(tag: import('comment-parser').Spec) => boolean} filter
- * @returns {import('comment-parser').Spec[]}
+ * @param {(tag: import('@es-joy/jsdoccomment').JsdocTagWithInline) => boolean} filter
+ * @returns {import('@es-joy/jsdoccomment').JsdocTagWithInline[]}
  */
 
 /**
@@ -463,9 +458,7 @@ import jsdocUtils from './jsdocUtils';
 
 /**
  * @callback GetClassJsdoc
- * @returns {null|import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
- * }}
+ * @returns {null|JsdocBlockWithInline}
  */
 
 /**
@@ -546,14 +539,11 @@ const {
 
 /**
  * Should use ESLint rule's typing.
- *
  * @typedef {import('eslint').Rule.RuleMetaData} EslintRuleMeta
  */
 
-/* eslint-disable jsdoc/valid-types -- Old version */
 /**
  * A plain object for tracking state as needed by rules across iterations.
- *
  * @typedef {{
  *   globalTags: {},
  *   hasDuplicates: {
@@ -577,7 +567,6 @@ const {
 
 /**
  * The Node AST as supplied by the parser.
- *
  * @typedef {import('eslint').Rule.Node} Node
  */
 
@@ -653,7 +642,6 @@ const getBasicUtils = (context, {
   return utils;
 };
 
-/* eslint-disable jsdoc/valid-types -- Old version of pratt */
 /**
  * @callback Report
  * @param {string} message
@@ -671,9 +659,7 @@ const getBasicUtils = (context, {
 
 /**
  * @param {Node|null} node
- * @param {import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
- * }} jsdoc
+ * @param {JsdocBlockWithInline} jsdoc
  * @param {import('eslint').AST.Token} jsdocNode
  * @param {Settings} settings
  * @param {Report} report
@@ -1718,9 +1704,7 @@ const getUtils = (
     for (const matchingJsdocTag of matchingJsdocTags) {
       arrayHandler(
         /**
-         * @type {import('comment-parser').Spec & {
-         *   line: Integer
-         * }}
+         * @type {import('@es-joy/jsdoccomment').JsdocTagWithInline}
          */ (
           matchingJsdocTag
         ), targetTagName,
@@ -1731,7 +1715,6 @@ const getUtils = (
   return utils;
 };
 
-/* eslint-disable jsdoc/valid-types -- Old version */
 /**
  * @typedef {{
  *   [key: string]: false|string|{
@@ -1752,7 +1735,6 @@ const getUtils = (
  */
 /**
  * Settings from ESLint types.
- *
  * @typedef {{
  *   maxLines: Integer,
  *   minLines: Integer,
@@ -1832,7 +1814,6 @@ const getSettings = (context) => {
 
 /**
  * Create the report function
- *
  * @callback MakeReport
  * @param {import('eslint').Rule.RuleContext} context
  * @param {import('estree').Node} commentNode
@@ -1893,7 +1874,6 @@ const makeReport = (context, commentNode) => {
   return report;
 };
 
-/* eslint-disable jsdoc/valid-types -- Old version */
 /**
  * @typedef {(
  *   arg: {
@@ -1906,7 +1886,7 @@ const makeReport = (context, commentNode) => {
  *     },
  *     state?: StateObject,
  *     globalState?: Map<string, Map<string, string>>,
- *     jsdoc?: import('comment-parser').Block,
+ *     jsdoc?: JsdocBlockWithInline,
  *     jsdocNode?: import('eslint').Rule.Node & {
  *       range: [number, number]
  *     },
@@ -1931,7 +1911,7 @@ const makeReport = (context, commentNode) => {
  *     },
  *     state: StateObject,
  *     globalState: Map<string, Map<string, string>>,
- *     jsdoc: import('comment-parser').Block,
+ *     jsdoc: JsdocBlockWithInline,
  *     jsdocNode: import('eslint').Rule.Node & {
  *       range: [number, number]
  *     },
@@ -1955,9 +1935,7 @@ const makeReport = (context, commentNode) => {
  *   isFunctionContext?: boolean,
  * }} info
  * @param {string} indent
- * @param {import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
- * }} jsdoc
+ * @param {JsdocBlockWithInline} jsdoc
  * @param {RuleConfig} ruleConfig
  * @param {import('eslint').Rule.RuleContext} context
  * @param {string[]} lines
@@ -2045,9 +2023,7 @@ const iterate = (
 /**
  * @param {string[]} lines
  * @param {import('estree').Comment} jsdocNode
- * @returns {[indent: string, jsdoc: import('comment-parser').Block & {
- *   inlineTags: import('@es-joy/jsdoccomment').InlineTag[]
- * }]}
+ * @returns {[indent: string, jsdoc: JsdocBlockWithInline]}
  */
 const getIndentAndJSDoc = function (lines, jsdocNode) {
   const sourceLine = lines[
@@ -2100,7 +2076,6 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
 /**
  * Create an eslint rule that iterates over all JSDocs, regardless of whether
  * they are attached to a function-like node.
- *
  * @param {JsdocVisitor} iterator
  * @param {RuleConfig} ruleConfig The rule's configuration
  * @param {ContextObject[]|null} [contexts] The `contexts` containing relevant `comment` info.
@@ -2309,7 +2284,6 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
 /**
  * Create an eslint rule that iterates over all JSDocs, regardless of whether
  * they are attached to a function-like node.
- *
  * @param {JsdocVisitorBasic} iterator
  * @param {RuleConfig} ruleConfig
  * @returns {import('eslint').Rule.RuleModule}
@@ -2381,7 +2355,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   return {
     /**
      * The entrypoint for the JSDoc rule.
-     *
      * @param {import('eslint').Rule.RuleContext} context
      *   a reference to the context which hold all important information
      *   like settings and the sourcecode to check.
@@ -2440,7 +2413,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         lines,
       } = sourceCode;
 
-      /* eslint-disable jsdoc/no-undefined-types -- TS */
       /** @type {Partial<StateObject>} */
       const state = {};
       /* eslint-enable jsdoc/no-undefined-types -- TS */
@@ -2514,7 +2486,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
       if (typeof ruleConfig.exit === 'function') {
         contextObject['Program:exit'] = () => {
           const ste = /** @type {StateObject} */ (state);
-          /* eslint-disable jsdoc/no-undefined-types -- Bug */
+
           // @ts-expect-error `utils` not needed at this point
           /** @type {Required<RuleConfig>} */ (ruleConfig).exit({
             context,

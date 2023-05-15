@@ -1,8 +1,8 @@
+import alignTransform from '../alignTransform';
+import iterateJsdoc from '../iterateJsdoc';
 import {
   transforms,
 } from 'comment-parser';
-import alignTransform from '../alignTransform';
-import iterateJsdoc from '../iterateJsdoc';
 
 const {
   flow: commentFlow,

@@ -1,10 +1,8 @@
-/* eslint-disable jsdoc/valid-types -- Old version */
 /**
  * @typedef {{
  *   [key: string]: string[]
  * }} AliasedTags
  */
-/* eslint-enable jsdoc/valid-types -- Old version */
 
 /**
  * @type {AliasedTags}
@@ -230,7 +228,7 @@ const closureTags = {
 };
 
 export {
-  jsdocTags,
   closureTags,
+  jsdocTags,
   typeScriptTags,
 };

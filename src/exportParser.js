@@ -11,7 +11,6 @@ const debug = debugModule('requireExportJsdoc');
  * }} ValueObject
  */
 
-/* eslint-disable jsdoc/valid-types -- Old version */
 /**
  * @typedef {{
  *   type?: string,
@@ -25,7 +24,6 @@ const debug = debugModule('requireExportJsdoc');
  *   ANONYMOUS_DEFAULT?: import('eslint').Rule.Node
  * }} CreatedNode
  */
-/* eslint-enable jsdoc/valid-types -- Old version */
 
 /**
  * @returns {CreatedNode}
@@ -222,7 +220,6 @@ const getSymbol = function (node, globals, scope, opt) {
           ).key
         ).name
       ] = createNode();
-      /* eslint-disable jsdoc/valid-types -- Old version */
       /** @type {{[key: string]: CreatedNode}} */ (val.props)[
         /** @type {import('estree').Identifier} */ (
           /** @type {import('estree').MethodDefinition} */ (
@@ -239,7 +236,6 @@ const getSymbol = function (node, globals, scope, opt) {
       ].value = /** @type {import('eslint').Rule.Node} */ (
         /** @type {import('estree').MethodDefinition} */ (method).value
       );
-      /* eslint-enable jsdoc/valid-types -- Old version */
     }
 
     val.type = 'object';
@@ -409,7 +405,6 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
 
 /**
  * Creates variables from variable definitions
- *
  * @param {import('eslint').Rule.Node} node
  * @param {CreatedNode} globals
  * @param {import('./rules/requireJsdoc.js').RequireJsdocOpts} opts
@@ -482,7 +477,6 @@ const initVariables = function (node, globals, opts) {
 
 /**
  * Populates variable maps using AST
- *
  * @param {import('eslint').Rule.Node} node
  * @param {CreatedNode} globals
  * @param {import('./rules/requireJsdoc.js').RequireJsdocOpts} opt

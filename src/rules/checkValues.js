@@ -1,6 +1,6 @@
+import iterateJsdoc from '../iterateJsdoc';
 import semver from 'semver';
 import spdxExpressionParse from 'spdx-expression-parse';
-import iterateJsdoc from '../iterateJsdoc';
 
 const allowedKinds = new Set([
   'class',

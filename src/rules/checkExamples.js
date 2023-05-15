@@ -1,12 +1,12 @@
 // Todo: When replace `CLIEngine` with `ESLint` when feature set complete per https://github.com/eslint/eslint/issues/14745
 // https://github.com/eslint/eslint/blob/master/docs/user-guide/migrating-to-7.0.0.md#-the-cliengine-class-has-been-deprecated
+import iterateJsdoc from '../iterateJsdoc';
 import {
   // @ts-expect-error - For older ESLint
   CLIEngine,
   ESLint,
 } from 'eslint';
 import semver from 'semver';
-import iterateJsdoc from '../iterateJsdoc';
 
 const zeroBasedLineIndexAdjust = -1;
 const likelyNestedJSDocIndentSpace = 1;
@@ -22,7 +22,7 @@ const hasCaptionRegex = /^\s*<caption>([\s\S]*?)<\/caption>/u;
  * @returns {string}
  */
 const escapeStringRegexp = (str) => {
-  return str.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+  return str.replaceAll(/[.*+?^${}()|[\]\\]/gu, '\\$&');
 };
 
 /**
@@ -246,7 +246,7 @@ export default iterateJsdoc(({
       const cliConfigStr = JSON.stringify(cliConfig);
 
       const src = paddedIndent ?
-        string.replace(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gu'), '\n') :
+        string.replaceAll(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gu'), '\n') :
         string;
 
       // Programmatic ESLint API: https://eslint.org/docs/developer-guide/nodejs-api

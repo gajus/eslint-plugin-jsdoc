@@ -1,7 +1,7 @@
+import jsdocUtils from '../src/jsdocUtils';
 import {
   expect,
 } from 'chai';
-import jsdocUtils from '../src/jsdocUtils';
 
 /**
  * @typedef {any} BadArgument

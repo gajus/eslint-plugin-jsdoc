@@ -1,5 +1,5 @@
-import esquery from 'esquery';
 import iterateJsdoc from '../iterateJsdoc';
+import esquery from 'esquery';
 
 /**
  * @typedef {{

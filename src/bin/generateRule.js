@@ -8,15 +8,15 @@
  * ```
  */
 
+import camelCase from 'camelcase';
 import {
   existsSync,
 } from 'fs';
 import fs from 'fs/promises';
+import open from 'open-editor';
 import {
   resolve,
 } from 'path';
-import camelCase from 'camelcase';
-import open from 'open-editor';
 
 // Todo: Would ideally have prompts, e.g., to ask for whether
 //   type was problem/layout, etc.
@@ -42,8 +42,9 @@ const recommended = options.includes('--recommended');
   }
 
   const ruleNamesPath = './test/rules/ruleNames.json';
+  // @ts-expect-error Older types?
   const ruleNames = JSON.parse(await fs.readFile(
-    ruleNamesPath, 'utf8',
+    ruleNamesPath,
   ));
   if (!ruleNames.includes(ruleName)) {
     ruleNames.push(ruleName);
