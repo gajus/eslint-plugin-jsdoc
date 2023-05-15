@@ -1122,5 +1122,11 @@ interface WebTwain {
  * @satisfies
  */
 // Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @module
+ * A comment related to the module
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 ````
 
