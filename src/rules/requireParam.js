@@ -1,12 +1,16 @@
 import iterateJsdoc from '../iterateJsdoc';
 
 /**
- * @template T
+ * @typedef {[string, boolean, () => RootNamerReturn]} RootNamerReturn
+ */
+
+/**
  * @param {string[]} desiredRoots
  * @param {number} currentIndex
- * @returns {[string, boolean, () => T]}
+ * @returns {RootNamerReturn}
  */
 const rootNamer = (desiredRoots, currentIndex) => {
+  /** @type {string} */
   let name;
   let idx = currentIndex;
   const incremented = desiredRoots.length <= 1;
@@ -15,7 +19,7 @@ const rootNamer = (desiredRoots, currentIndex) => {
     const suffix = idx++;
     name = `${base}${suffix}`;
   } else {
-    name = desiredRoots.shift();
+    name = /** @type {string} */ (desiredRoots.shift());
   }
 
   return [
@@ -70,7 +74,14 @@ export default iterateJsdoc(({
     return;
   }
 
-  const jsdocParameterNames = utils.getJsdocTagsDeep(preferredTagName);
+  const jsdocParameterNames =
+    /**
+     * @type {{
+     *   idx: import('../iterateJsdoc.js').Integer;
+     *   name: string;
+     *   type: string;
+     * }[]}
+     */ (utils.getJsdocTagsDeep(preferredTagName));
 
   const shallowJsdocParameterNames = jsdocParameterNames.filter((tag) => {
     return !tag.name.includes('.');
@@ -83,18 +94,37 @@ export default iterateJsdoc(({
 
   const checkTypesRegex = utils.getRegexFromString(checkTypesPattern);
 
+  /**
+   * @type {{
+   *   functionParameterIdx: import('../iterateJsdoc.js').Integer,
+   *   functionParameterName: string,
+   *   inc: boolean|undefined,
+   *   remove?: true,
+   *   type?: string|undefined
+   * }[]}
+   */
   const missingTags = [];
   const flattenedRoots = utils.flattenRoots(functionParameterNames).names;
 
+  /**
+   * @type {{
+   *   [key: string]: import('../iterateJsdoc.js').Integer
+   * }}
+   */
   const paramIndex = {};
+
+  /**
+   * @param {string} cur
+   * @returns {boolean}
+   */
   const hasParamIndex = (cur) => {
     return utils.dropPathSegmentQuotes(String(cur)) in paramIndex;
   };
 
   /**
    *
-   * @param {} cur
-   * @returns {}
+   * @param {string|number|undefined} cur
+   * @returns {import('../iterateJsdoc.js').Integer}
    */
   const getParamIndex = (cur) => {
     return paramIndex[utils.dropPathSegmentQuotes(String(cur))];
@@ -102,8 +132,8 @@ export default iterateJsdoc(({
 
   /**
    *
-   * @param {} cur
-   * @param {} idx
+   * @param {string} cur
+   * @param {import('../iterateJsdoc.js').Integer} idx
    * @returns {void}
    */
   const setParamIndex = (cur, idx) => {
@@ -119,8 +149,10 @@ export default iterateJsdoc(({
 
   /**
    *
-   * @param {} jsdocTags
-   * @param {} indexAtFunctionParams
+   * @param {(import('@es-joy/jsdoccomment').JsdocTagWithInline & {
+   *   newAdd?: boolean
+   * })[]} jsdocTags
+   * @param {import('../iterateJsdoc.js').Integer} indexAtFunctionParams
    * @returns {import('../iterateJsdoc.js').Integer}
    */
   const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
@@ -131,7 +163,13 @@ export default iterateJsdoc(({
     }) => {
       return !newAdd && remainingRoots.some((remainingRoot) => {
         if (Array.isArray(remainingRoot)) {
-          return remainingRoot[1].names.includes(name);
+          return (
+            /**
+             * @type {import('../jsdocUtils.js').FlattendRootInfo & {
+             *   annotationParamName?: string|undefined;
+             * }}
+             */ (remainingRoot[1]).names.includes(name)
+          );
         }
 
         if (typeof remainingRoot === 'object') {
@@ -185,6 +223,7 @@ export default iterateJsdoc(({
       const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx] ||
         jsdocParameterNames[functionParameterIdx];
 
+      /** @type {string} */
       let rootName;
       if (functionParameterName[0]) {
         rootName = functionParameterName[0];
@@ -208,7 +247,11 @@ export default iterateJsdoc(({
         hasPropertyRest,
         rests,
         names,
-      } = functionParameterName[1];
+      } = /**
+           * @type {import('../jsdocUtils.js').FlattendRootInfo & {
+           *   annotationParamName?: string | undefined;
+           * }}
+           */ (functionParameterName[1]);
       const notCheckingNames = [];
       if (!enableRestElementFixer && hasRestElement) {
         continue;
@@ -303,6 +346,7 @@ export default iterateJsdoc(({
       continue;
     }
 
+    /** @type {string} */
     let funcParamName;
     let type;
     if (typeof functionParameterName === 'object') {
@@ -310,10 +354,10 @@ export default iterateJsdoc(({
         continue;
       }
 
-      funcParamName = functionParameterName.name;
+      funcParamName = /** @type {string} */ (functionParameterName.name);
       type = '{...any}';
     } else {
-      funcParamName = functionParameterName;
+      funcParamName = /** @type {string} */ (functionParameterName);
     }
 
     if (jsdocParameterNames && !jsdocParameterNames.find(({
@@ -335,9 +379,9 @@ export default iterateJsdoc(({
    * @param {{
    *   functionParameterIdx: import('../iterateJsdoc.js').Integer,
    *   functionParameterName: string,
-   *   remove: true,
-   *   inc: boolean,
-   *   type: string
+   *   remove?: true,
+   *   inc?: boolean,
+   *   type?: string
    * }} cfg
    */
   const fix = ({
@@ -353,15 +397,16 @@ export default iterateJsdoc(({
 
     /**
      *
-     * @param {} tagIndex
-     * @param {} sourceIndex
-     * @param {} spliceCount
-     * @returns {}
+     * @param {import('../iterateJsdoc.js').Integer} tagIndex
+     * @param {import('../iterateJsdoc.js').Integer} sourceIndex
+     * @param {import('../iterateJsdoc.js').Integer} spliceCount
+     * @returns {void}
      */
     const createTokens = (tagIndex, sourceIndex, spliceCount) => {
       // console.log(sourceIndex, tagIndex, jsdoc.tags, jsdoc.source);
       const tokens = {
         number: sourceIndex + 1,
+        source: '',
         tokens: {
           delimiter: '*',
           description: '',
@@ -378,9 +423,18 @@ export default iterateJsdoc(({
           type: type ?? '',
         },
       };
-      jsdoc.tags.splice(tagIndex, spliceCount, {
+
+      /**
+       * @type {(import('@es-joy/jsdoccomment').JsdocTagWithInline & {
+       *   newAdd?: true
+       * })[]}
+       */ (jsdoc.tags).splice(tagIndex, spliceCount, {
+        description: '',
+        inlineTags: [],
         name: functionParameterName,
         newAdd: true,
+        optional: false,
+        problems: [],
         source: [
           tokens,
         ],

@@ -38,6 +38,25 @@ const setTagStructure = (mode) => {
 };
 
 /**
+ * @typedef {undefined|string|{
+ *   name: Integer,
+ *   restElement: boolean
+ * }|{
+ *   isRestProperty: boolean|undefined,
+ *   name: string,
+ *   restElement: boolean
+ * }|{
+ *   name: string,
+ *   restElement: boolean
+ * }} ParamCommon
+ */
+/**
+ * @typedef {ParamCommon|[string|undefined, (FlattendRootInfo & {
+ *   annotationParamName?: string,
+ * })]|NestedParamInfo} ParamNameInfo
+ */
+
+/**
  * @typedef {{
  *   hasPropertyRest: boolean,
  *   hasRestElement: boolean,
@@ -45,31 +64,15 @@ const setTagStructure = (mode) => {
  *   rests: boolean[],
  * }} FlattendRootInfo
  */
-
 /**
- * @typedef {undefined|string|{
- *   isRestProperty: boolean|undefined,
- *   name: string,
- *   restElement: true
- * }|[undefined|string, FlattendRootInfo & {
- *   annotationParamName?: string
- * }|{
- *   name: Integer,
- *   restElement: boolean
- * }[]]} ParamNameInfo
+ * @typedef {[string, (string[]|ParamInfo[])]} NestedParamInfo
  */
-
 /**
- * @typedef {undefined|string|{
- *   isRestProperty: boolean,
- *   restElement: boolean,
- *   name: string
- * }|[string, {
- *   hasPropertyRest: boolean,
- *   hasRestElement: boolean,
- *   names: string[],
- *   rests: boolean[],
- * }]|[string, string[]]} ParamInfo
+ * @typedef {ParamCommon|
+ * [string|undefined, (FlattendRootInfo & {
+ *   annotationParamName?: string
+ * })]|
+ * NestedParamInfo} ParamInfo
  */
 
 /**
@@ -123,28 +126,28 @@ const flattenRoots = (params, root = '') => {
           hasPropertyRest = true;
         }
 
-        const inner = [
+        const inner = /** @type {string[]} */ ([
           root ? `${root}.${cur[0]}` : cur[0],
           ...flattened.names,
-        ].filter(Boolean);
+        ].filter(Boolean));
         rests.push(false, ...flattened.rests);
 
         return acc.concat(inner);
       }
 
       if (typeof cur === 'object') {
-        if (cur.isRestProperty) {
+        if ('isRestProperty' in cur && cur.isRestProperty) {
           hasPropertyRest = true;
           rests.push(true);
         } else {
           rests.push(false);
         }
 
-        if (cur.restElement) {
+        if ('restElement' in cur && cur.restElement) {
           hasRestElement = true;
         }
 
-        acc.push(root ? `${root}.${cur.name}` : cur.name);
+        acc.push(root ? `${root}.${String(cur.name)}` : String(cur.name));
       } else if (typeof cur !== 'undefined') {
         rests.push(false);
         acc.push(root ? `${root}.${cur}` : cur);
@@ -219,10 +222,11 @@ const getFunctionParameterNames = (
    *   import('@typescript-eslint/types').TSESTree.RestElement|
    *   import('@typescript-eslint/types').TSESTree.Identifier|
    *   import('@typescript-eslint/types').TSESTree.ObjectPattern|
-   *   import('@typescript-eslint/types').TSESTree.BindingName
+   *   import('@typescript-eslint/types').TSESTree.BindingName|
+   *   import('@typescript-eslint/types').TSESTree.Parameter
    * } param
    * @param {boolean} [isProperty]
-   * @returns {ParamNameInfo}
+   * @returns {ParamNameInfo|[string, ParamNameInfo[]]}
    */
   const getParamName = (param, isProperty) => {
     /* eslint-enable complexity -- Temporary */
@@ -305,9 +309,10 @@ const getFunctionParameterNames = (
     if (param.type === 'Property') {
       // eslint-disable-next-line default-case
       switch (param.value.type) {
-      case 'ArrayPattern':
+      case 'ArrayPattern': {
         return [
-          param.key.name,
+          /** @type {import('estree').Identifier} */
+          (param.key).name,
           /** @type {import('estree').ArrayPattern} */ (
             param.value
           ).elements.map((prop, idx) => {
@@ -317,15 +322,19 @@ const getFunctionParameterNames = (
             };
           }),
         ];
-      case 'ObjectPattern':
+      }
+
+      case 'ObjectPattern': {
         return [
-          param.key.name,
+          /** @type {import('estree').Identifier} */ (param.key).name,
           /** @type {import('estree').ObjectPattern} */ (
             param.value
           ).properties.map((prop) => {
-            return getParamName(prop, isProperty);
+            return /** @type {string|[string, string[]]} */ (getParamName(prop, isProperty));
           }),
         ];
+      }
+
       case 'AssignmentPattern': {
         // eslint-disable-next-line default-case
         switch (param.value.left.type) {
@@ -333,10 +342,17 @@ const getFunctionParameterNames = (
           // Default parameter
           if (checkDefaultObjects && param.value.right.type === 'ObjectExpression') {
             return [
-              param.key.name, /** @type {import('estree').AssignmentPattern} */ (
+              /** @type {import('estree').Identifier} */ (
+                param.key
+              ).name,
+              /** @type {import('estree').AssignmentPattern} */ (
                 param.value
               ).right.properties.map((prop) => {
-                return getParamName(prop, isProperty);
+                return /** @type {string} */ (getParamName(
+                  /** @type {import('estree').Property} */
+                  (prop),
+                  isProperty,
+                ));
               }),
             ];
           }
@@ -344,7 +360,9 @@ const getFunctionParameterNames = (
           break;
         case 'ObjectPattern':
           return [
-            param.key.name, /** @type {import('estree').ObjectPattern} */ (
+            /** @type {import('estree').Identifier} */
+            (param.key).name,
+            /** @type {import('estree').ObjectPattern} */ (
               param.value.left
             ).properties.map((prop) => {
               return getParamName(prop, isProperty);
@@ -352,7 +370,9 @@ const getFunctionParameterNames = (
           ];
         case 'ArrayPattern':
           return [
-            param.key.name, /** @type {import('estree').ArrayPattern} */ (
+            /** @type {import('estree').Identifier} */
+            (param.key).name,
+            /** @type {import('estree').ArrayPattern} */ (
               param.value.left
             ).elements.map((prop, idx) => {
               return {
@@ -371,9 +391,9 @@ const getFunctionParameterNames = (
 
       // The key of an object could also be a string or number
       case 'Literal':
-        return param.key.raw ||
+        return /** @type {string} */ (param.key.raw ||
           // istanbul ignore next -- `raw` may not be present in all parsers
-          param.key.value;
+          param.key.value);
 
       // case 'MemberExpression':
       default:
@@ -385,11 +405,18 @@ const getFunctionParameterNames = (
       }
     }
 
-    if (param.type === 'ArrayPattern' || param.left?.type === 'ArrayPattern') {
+    if (
+      param.type === 'ArrayPattern' ||
+      /** @type {import('estree').AssignmentPattern} */ (
+        param
+      ).left?.type === 'ArrayPattern'
+    ) {
       const elements = /** @type {import('estree').ArrayPattern} */ (
         param
       ).elements || /** @type {import('estree').ArrayPattern} */ (
-        param.left
+        /** @type {import('estree').AssignmentPattern} */ (
+          param
+        ).left
       )?.elements;
       const roots = elements.map((prop, idx) => {
         return {
@@ -408,7 +435,10 @@ const getFunctionParameterNames = (
     ].includes(param.type)) {
       return {
         isRestProperty: isProperty,
-        name: param.argument.name,
+        name: /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+          /** @type {import('@typescript-eslint/types').TSESTree.RestElement} */ (
+            param
+          ).argument).name,
         restElement: true,
       };
     }
@@ -431,7 +461,11 @@ const getFunctionParameterNames = (
     return [];
   }
 
-  return (functionNode.params || functionNode.value?.params || []).map((param) => {
+  return (/** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */ (
+    functionNode
+  ).params || /** @type {import('@typescript-eslint/types').TSESTree.MethodDefinition} */ (
+    functionNode
+  ).value?.params || []).map((param) => {
     return getParamName(param);
   });
 };
@@ -1570,7 +1604,7 @@ const dropPathSegmentQuotes = (str) => {
 
 /**
  * @param {string} name
- * @returns {(otherPathName: string) => void}
+ * @returns {(otherPathName: string) => boolean}
  */
 const comparePaths = (name) => {
   return (otherPathName) => {

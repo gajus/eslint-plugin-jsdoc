@@ -323,7 +323,7 @@ import {
 /**
  * @callback ComparePaths
  * @param {string} name
- * @returns {(otherPathName: string) => void}
+ * @returns {(otherPathName: string) => boolean}
  */
 
 /**
