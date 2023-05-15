@@ -143,6 +143,10 @@ export default iterateJsdoc(({
       return false;
     }
 
+    if (node === null) {
+      return false;
+    }
+
     if (context.getFilename().endsWith('.d.ts') && [
       'Program', null, undefined,
     ].includes(node?.parent?.type)) {

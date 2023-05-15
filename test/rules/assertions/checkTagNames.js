@@ -1455,5 +1455,18 @@ export default {
         },
       },
     },
+    {
+      code: `
+        /**
+         * @module
+         * A comment related to the module
+         */
+      `,
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
   ],
 };
