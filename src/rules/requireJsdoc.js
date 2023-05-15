@@ -385,6 +385,7 @@ export default {
       if (jsdocUtils.exemptSpeciaMethods(
         {
           description: '',
+          inlineTags: [],
           problems: [],
           source: [],
           tags: [],
