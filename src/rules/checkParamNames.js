@@ -103,7 +103,11 @@ const validateParameterNames = (
           rests,
           annotationParamName,
         },
-      ] = functionParameterName;
+      ] =
+        /**
+         * @type {[string | undefined, import('../jsdocUtils.js').FlattendRootInfo & {
+         *   annotationParamName?: string | undefined;
+          }]} */ (functionParameterName);
       if (annotationParamName !== undefined) {
         const name = tag.name.trim();
         if (name !== annotationParamName) {
@@ -127,6 +131,8 @@ const validateParameterNames = (
       });
 
       const missingProperties = [];
+
+      /** @type {string[]} */
       const notCheckingNames = [];
 
       for (const [
@@ -173,6 +179,7 @@ const validateParameterNames = (
       }
 
       if (!hasPropertyRest || checkRestProperty) {
+        /** @type {[string, import('comment-parser').Spec][]} */
         const extraProperties = [];
         for (const [
           idx,
@@ -228,7 +235,10 @@ const validateParameterNames = (
         return name.trim();
       });
       const expectedNames = functionParameterNames.map((item, idx) => {
-        if (item?.[1]?.names) {
+        if (/**
+             * @type {[string|undefined, (import('../jsdocUtils.js').FlattendRootInfo & {
+             *   annotationParamName?: string,
+              })]} */ (item)?.[1]?.names) {
           return actualNames[idx];
         }
 
@@ -324,14 +334,14 @@ export default iterateJsdoc(({
   const checkTypesRegex = utils.getRegexFromString(checkTypesPattern);
 
   const jsdocParameterNamesDeep = utils.getJsdocTagsDeep('param');
-  if (!jsdocParameterNamesDeep.length) {
+  if (!jsdocParameterNamesDeep || !jsdocParameterNamesDeep.length) {
     return;
   }
 
   const functionParameterNames = utils.getFunctionParameterNames(useDefaultObjectProperties);
-  const targetTagName = utils.getPreferredTagName({
+  const targetTagName = /** @type {string} */ (utils.getPreferredTagName({
     tagName: 'param',
-  });
+  }));
   const isError = validateParameterNames(
     targetTagName,
     allowExtraTrailingParamDocs,
