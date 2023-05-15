@@ -1,5 +1,5 @@
-import escapeStringRegexp from 'escape-string-regexp';
 import iterateJsdoc from '../iterateJsdoc';
+import escapeStringRegexp from 'escape-string-regexp';
 
 const otherDescriptiveTags = new Set([
   // 'copyright' and 'see' might be good addition, but as the former may be
@@ -25,7 +25,7 @@ const extractParagraphs = (text) => {
 const extractSentences = (text, abbreviationsRegex) => {
   const txt = text
     // Remove all {} tags.
-    .replace(/\{[\s\S]*?\}\s*/gu, '')
+    .replaceAll(/\{[\s\S]*?\}\s*/gu, '')
 
     // Remove custom abbreviations
     .replace(abbreviationsRegex, '');
@@ -222,7 +222,7 @@ export default iterateJsdoc(({
 
   const abbreviationsRegex = abbreviations.length ?
     new RegExp('\\b' + abbreviations.map((abbreviation) => {
-      return escapeStringRegexp(abbreviation.replace(/\.$/ug, '') + '.');
+      return escapeStringRegexp(abbreviation.replaceAll(/\.$/ug, '') + '.');
     }).join('|') + '(?:$|\\s)', 'gu') :
     '';
 

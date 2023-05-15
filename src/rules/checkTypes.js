@@ -1,10 +1,10 @@
+import iterateJsdoc from '../iterateJsdoc';
 import {
   parse,
   stringify,
   traverse,
   tryParse,
 } from '@es-joy/jsdoccomment';
-import iterateJsdoc from '../iterateJsdoc';
 
 const strictNativeTypes = [
   'undefined',
@@ -24,7 +24,6 @@ const strictNativeTypes = [
 /**
  * Adjusts the parent type node `meta` for generic matches (or type node
  * `type` for `JsdocTypeAny`) and sets the type node `value`.
- *
  * @param {string} type The actual type
  * @param {string} preferred The preferred type
  * @param {boolean} isGenericMatch
@@ -187,7 +186,6 @@ export default iterateJsdoc(({
   /**
    * Gets information about the preferred type: whether there is a matching
    * preferred type, what the type is, and whether it is a match to a generic.
-   *
    * @param {string} _type Not currently in use
    * @param {string} typeNodeName
    * @param {import('jsdoc-type-pratt-parser').NonRootResult|undefined} parentNode
@@ -265,7 +263,6 @@ export default iterateJsdoc(({
   /**
    * Iterates strict types to see if any should be added to `invalidTypes` (and
    * the the relevant strict type returned as the new preferred type).
-   *
    * @param {string} typeNodeName
    * @param {string|undefined} preferred
    * @param {import('jsdoc-type-pratt-parser').NonRootResult|undefined} parentNode
@@ -326,7 +323,6 @@ export default iterateJsdoc(({
 
   /**
    * Collect invalid type info.
-   *
    * @param {string} type
    * @param {string} value
    * @param {string} tagName

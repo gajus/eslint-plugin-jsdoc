@@ -5,7 +5,6 @@ import iterateJsdoc from '../iterateJsdoc';
  * or the method is either a constructor or an abstract method.
  *
  * In either of these cases the return value is optional or not defined.
- *
  * @param {import('../iterateJsdoc.js').Utils} utils
  *   a reference to the utils which are used to probe if a tag is present or not.
  * @returns {boolean}

@@ -1,13 +1,13 @@
 /**
  * This script is used to inline assertions into the README.md documents.
  */
-import fs from 'fs';
-import path from 'path';
 import decamelize from 'decamelize';
+import fs from 'fs';
 import Gitdown from 'gitdown';
 import {
   glob,
 } from 'glob';
+import path from 'path';
 
 /**
  * @param {string} code
@@ -160,7 +160,7 @@ const generateDocs = async () => {
   }));
 
   return docContents.map((docContent) => {
-    return docContent.replace(
+    return docContent.replaceAll(
       /<!-- assertions-(passing|failing) ([a-z]+?) -->/gui,
       /**
        * @param {string} _assertionsBlock
@@ -183,7 +183,7 @@ const generateDocs = async () => {
       },
     // Allow relative paths in source for #902 but generate compiled file in
     //   manner compatible with GitHub and npmjs.com
-    ).replace(/\(\.\.\/#/gu, '(#user-content-eslint-plugin-jsdoc-');
+    ).replaceAll('(../#', '(#user-content-eslint-plugin-jsdoc-');
   });
 };
 
@@ -218,9 +218,7 @@ const getDocPaths = () => {
     }
 
     return null;
-  }).filter((file) => {
-    return file;
-  }));
+  }).filter(Boolean));
 
   return [
     ...docPaths,

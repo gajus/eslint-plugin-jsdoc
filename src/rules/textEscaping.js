@@ -10,7 +10,7 @@ const markdownRegex = /(?<!\\)(`+)([^`]+)\1(?!`)/u;
  * @returns {string}
  */
 const htmlReplacer = (desc) => {
-  return desc.replace(new RegExp(htmlRegex, 'gu'), (_) => {
+  return desc.replaceAll(new RegExp(htmlRegex, 'gu'), (_) => {
     if (_ === '<') {
       return '&lt;';
     }
@@ -24,7 +24,7 @@ const htmlReplacer = (desc) => {
  * @returns {string}
  */
 const markdownReplacer = (desc) => {
-  return desc.replace(new RegExp(markdownRegex, 'gu'), (_, backticks, encapsed) => {
+  return desc.replaceAll(new RegExp(markdownRegex, 'gu'), (_, backticks, encapsed) => {
     const bookend = '`'.repeat(backticks.length);
     return `\\${bookend}${encapsed}${bookend}`;
   });

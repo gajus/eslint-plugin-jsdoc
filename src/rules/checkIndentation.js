@@ -20,7 +20,7 @@ const maskExcludedContent = (str, excludeTags) => {
 const maskCodeBlocks = (str) => {
   const regContent = /([ \t]+\*)[ \t]```[^\n]*?([\w|\W]*?\n)(?=[ \t]*\*(?:[ \t]*(?:```|@\w+\s)|\/))/gu;
 
-  return str.replace(regContent, (_match, margin, code) => {
+  return str.replaceAll(regContent, (_match, margin, code) => {
     return (margin + '\n').repeat(code.match(/\n/gu).length);
   });
 };

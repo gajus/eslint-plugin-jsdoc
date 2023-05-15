@@ -5,7 +5,6 @@
  */
 
 import {
-
   // `comment-parser/primitives` export
   util,
 } from 'comment-parser';

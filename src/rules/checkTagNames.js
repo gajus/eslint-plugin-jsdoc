@@ -1,5 +1,5 @@
-import escapeStringRegexp from 'escape-string-regexp';
 import iterateJsdoc from '../iterateJsdoc';
+import escapeStringRegexp from 'escape-string-regexp';
 
 // https://babeljs.io/docs/en/babel-plugin-transform-react-jsx/
 const jsxTagNames = new Set([
@@ -111,9 +111,7 @@ export default iterateJsdoc(({
 
       return preferredTag.replacement;
     })
-      .filter((preferredType) => {
-        return preferredType;
-      });
+      .filter(Boolean);
   }
 
   /**
@@ -160,7 +158,6 @@ export default iterateJsdoc(({
     return true;
   };
 
-  /* eslint-disable jsdoc/no-undefined-types -- TS */
   /**
    * @param {string} message
    * @param {import('comment-parser').Spec} jsdocTag
@@ -169,7 +166,6 @@ export default iterateJsdoc(({
    * @returns {void}
    */
   const reportWithTagRemovalFixer = (message, jsdocTag, tagIndex, additionalTagChanges) => {
-    /* eslint-enable jsdoc/no-undefined-types -- TS */
     utils.reportJSDoc(message, jsdocTag, enableFixer ? () => {
       if (jsdocTag.description.trim()) {
         utils.changeTag(jsdocTag, {

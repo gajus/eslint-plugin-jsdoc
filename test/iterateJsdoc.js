@@ -1,11 +1,11 @@
 import {
-  expect,
-} from 'chai';
-import {
-  parseComment,
   // eslint-disable-next-line import/no-named-default
   default as iterateJsdoc,
+  parseComment,
 } from '../src/iterateJsdoc';
+import {
+  expect,
+} from 'chai';
 
 /**
  * @typedef {any} BadArgument

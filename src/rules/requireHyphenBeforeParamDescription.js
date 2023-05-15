@@ -15,16 +15,13 @@ export default iterateJsdoc(({
     } = {},
   ] = context.options;
 
-  /* eslint-disable jsdoc/valid-types -- Old version */
   const tgs = /**
                * @type {null|"any"|{[key: string]: "always"|"never"}}
                */ (tags);
   /* eslint-enable jsdoc/valid-types -- Old version */
 
   /**
-   * @param {import('comment-parser').Spec & {
-   *   line: import('../iterateJsdoc.js').Integer
-   * }} jsdocTag
+   * @param {import('@es-joy/jsdoccomment').JsdocTagWithInline} jsdocTag
    * @param {string} targetTagName
    * @param {"always"|"never"} [circumstance]
    * @returns {void}
@@ -40,7 +37,9 @@ export default iterateJsdoc(({
     if (always) {
       if (!startsWithHyphen) {
         report(`There must be a hyphen before @${targetTagName} description.`, (fixer) => {
-          const lineIndex = jsdocTag.line;
+          const lineIndex = /** @type {import('../iterateJsdoc.js').Integer} */ (
+            jsdocTag.line
+          );
           const sourceLines = sourceCode.getText(jsdocNode).split('\n');
 
           // Get start index of description, accounting for multi-line descriptions

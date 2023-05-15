@@ -1,10 +1,4 @@
-import {
-  readFileSync,
-} from 'fs';
-import {
-  // dirname,
-  join,
-} from 'path';
+import config from '../../src';
 // import {fileURLToPath} from 'url';
 import camelCase from 'camelcase';
 import {
@@ -12,9 +6,15 @@ import {
   RuleTester,
 } from 'eslint';
 import pkg from 'eslint/use-at-your-own-risk';
+import {
+  readFileSync,
+} from 'fs';
 import defaultsDeep from 'lodash.defaultsdeep';
+import {
+  // dirname,
+  join,
+} from 'path';
 import semver from 'semver';
-import config from '../../src/index.js';
 
 // const __dirname = dirname(fileURLToPath(import.meta.url));
 

@@ -3,7 +3,7 @@
     "node": true,
     "browser": false
   },
-  "extends": "canonical",
+  "extends": ["canonical", "canonical/jsdoc"],
   "overrides": [
     {
       "files": ".ncurc.js",

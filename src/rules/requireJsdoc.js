@@ -1,13 +1,13 @@
-import {
-  getJSDocComment,
-  getReducedASTNode,
-  getDecorator,
-} from '@es-joy/jsdoccomment';
 import exportParser from '../exportParser';
 import {
   getSettings,
 } from '../iterateJsdoc';
 import jsdocUtils from '../jsdocUtils';
+import {
+  getDecorator,
+  getJSDocComment,
+  getReducedASTNode,
+} from '@es-joy/jsdoccomment';
 
 /**
  * @typedef {{
@@ -177,14 +177,12 @@ const getOption = (context, baseObject, option, key) => {
     return context.options[0][option][key];
   }
 
-  /* eslint-disable jsdoc/valid-types -- Old version */
   return /** @type {{[key: string]: {default?: boolean|undefined}}} */ (
     baseObject.properties
   )[key].default;
   /* eslint-enable jsdoc/valid-types -- Old version */
 };
 
-/* eslint-disable jsdoc/valid-types -- Old version */
 /**
  * @param {import('eslint').Rule.RuleContext} context
  * @param {import('../iterateJsdoc.js').Settings} settings
@@ -227,7 +225,6 @@ const getOptions = (context, settings) => {
         return false;
       }
 
-      /* eslint-disable jsdoc/valid-types -- Old version */
       /** @type {{[key: string]: boolean|undefined}} */
       const properties = {};
       /* eslint-enable jsdoc/valid-types -- Old version */
@@ -261,7 +258,6 @@ const getOptions = (context, settings) => {
       )[1],
     ),
     require: ((baseObj) => {
-      /* eslint-disable jsdoc/valid-types -- Old version */
       /** @type {{[key: string]: boolean|undefined}} */
       const properties = {};
       /* eslint-enable jsdoc/valid-types -- Old version */
@@ -311,7 +307,7 @@ export default {
     } = opts;
 
     const publicOnly =
-    /* eslint-disable jsdoc/valid-types -- Old version */
+
       /**
        * @type {{
        *   [key: string]: boolean | undefined;

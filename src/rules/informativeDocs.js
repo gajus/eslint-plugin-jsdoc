@@ -1,7 +1,7 @@
+import iterateJsdoc from '../iterateJsdoc';
 import {
   areDocsInformative,
 } from 'are-docs-informative';
-import iterateJsdoc from '../iterateJsdoc';
 
 const defaultAliases = {
   a: [

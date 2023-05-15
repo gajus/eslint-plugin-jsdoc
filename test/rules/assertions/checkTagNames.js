@@ -1,7 +1,7 @@
 import {
+  closureTags,
   jsdocTags,
   typeScriptTags,
-  closureTags,
 } from '../../../src/tagNames.js';
 
 /**
