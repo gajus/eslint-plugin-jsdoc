@@ -532,6 +532,28 @@ export default {
         },
       ],
     },
+    {
+      code: `
+      /**
+       * This is a {@namepathOrURLReferencer SomeType}.
+       */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The type \'SomeType\' is undefined.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            namepathOrURLReferencer: {
+              name: 'namepath-or-url-referencing',
+            },
+          },
+        },
+      },
+    },
   ],
   valid: [
     {

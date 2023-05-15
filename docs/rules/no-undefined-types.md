@@ -301,6 +301,12 @@ const a = new Todo();
  *   a link that is {@link NotKnown}
  */
 // Message: The type 'NotKnown' is undefined.
+
+/**
+ * This is a {@namepathOrURLReferencer SomeType}.
+ */
+// Settings: {"jsdoc":{"structuredTags":{"namepathOrURLReferencer":{"name":"namepath-or-url-referencing"}}}}
+// Message: The type 'SomeType' is undefined.
 ````
 
 

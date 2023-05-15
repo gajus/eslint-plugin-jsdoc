@@ -327,6 +327,8 @@ values are objects with the following optional properties:
       checked to ensure it is a valid namepath. You might use this to ensure
       that tags which normally allow free text, e.g., `@see` will instead
       require a namepath.
+    - `"namepath-or-url-referencing"` - For inline tags which may point to
+      a namepath or URL.
     - `false` - This will disallow any text in the name position.
   - `type`:
       - `true` - Allows valid types within brackets. This is the default.
