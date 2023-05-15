@@ -34,7 +34,8 @@ import jsdocUtils from './jsdocUtils';
  * @param {{
  *   lastIndex?: Integer,
  *   isFunctionContext?: boolean,
- *   selector?: string
+ *   selector?: string,
+ *   comment?: string
  * }} info
  * @param {null|((jsdoc: import('comment-parser').Block) => boolean|undefined)} handler
  * @param {import('eslint').Rule.Node} node
