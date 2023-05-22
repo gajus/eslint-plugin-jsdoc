@@ -28,22 +28,18 @@ export default iterateJsdoc(({
     (cntxt) => {
       return typeof cntxt === 'string' ?
         esquery.matches(
-          node,
+          /** @type {import('../iterateJsdoc.js').Node} */ (node),
           esquery.parse(cntxt),
-          null,
-          // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/65460
-          // @ts-expect-error
+          undefined,
           {
             visitorKeys: sourceCode.visitorKeys,
           },
         ) :
         (!cntxt.context || cntxt.context === 'any' ||
           esquery.matches(
-            node,
+            /** @type {import('../iterateJsdoc.js').Node} */ (node),
             esquery.parse(cntxt.context),
-            null,
-            // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/65460
-            // @ts-expect-error
+            undefined,
             {
               visitorKeys: sourceCode.visitorKeys,
             },
