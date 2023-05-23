@@ -1812,5 +1812,9 @@ function foo(this: T, bar: number): number {
   console.log(this.name);
   return bar;
 }
+
+/** {@link someOtherval} */
+function a (b) {}
+// "jsdoc/require-param": ["error"|"warn", {"contexts":[{"comment":"*:not(JsdocBlock:has(JsdocInlineTag[tag=link]))","context":"FunctionDeclaration"}]}]
 ````
 
