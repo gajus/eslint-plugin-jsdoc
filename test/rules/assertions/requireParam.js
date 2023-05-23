@@ -3525,5 +3525,21 @@ export default {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+        /** {@link someOtherval} */
+        function a (b) {}
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: '*:not(JsdocBlock:has(JsdocInlineTag[tag=link]))',
+              context: 'FunctionDeclaration',
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
