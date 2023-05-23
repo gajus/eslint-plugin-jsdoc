@@ -991,5 +991,12 @@ function quux () {
  */
 function quux () {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"   "}]
+
+/**
+ * Returns cached value of negative scale of the world transform.
+ *
+ * @returns {number} -1 if world transform has negative scale, 1 otherwise.
+ */
+// "jsdoc/check-line-alignment": ["error"|"warn", "never"]
 ````
 
