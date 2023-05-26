@@ -196,6 +196,7 @@ const createRecommendedTypeScriptRuleset = (warnOrError) => {
           },
         ],
         'jsdoc/no-types': warnOrError,
+        'jsdoc/no-undefined-types': 'off',
         'jsdoc/require-param-type': 'off',
         'jsdoc/require-property-type': 'off',
         'jsdoc/require-returns-type': 'off',
