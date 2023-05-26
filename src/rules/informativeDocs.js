@@ -140,7 +140,7 @@ export default iterateJsdoc(({
     docs: {
       description:
         'This rule reports doc comments that only restate their attached name.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#informative-docs',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/informative-docs.md#repos-sticky-header',
     },
     schema: [
       {
