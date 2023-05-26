@@ -494,7 +494,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires that all function parameters are documented.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-param',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-param.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

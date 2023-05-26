@@ -278,7 +278,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Controls how and whether jsdoc blocks can be expressed as single or multiple line blocks.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-multiline-blocks',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/multiline-blocks.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

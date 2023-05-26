@@ -35,7 +35,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Removes empty blocks with nothing but possibly line breaks',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-blank-blocks',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-blank-blocks.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

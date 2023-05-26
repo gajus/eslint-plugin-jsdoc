@@ -333,7 +333,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires all types to be valid JSDoc or Closure compiler types without syntax errors.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-valid-types',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/valid-types.md#repos-sticky-header',
     },
     schema: [
       {

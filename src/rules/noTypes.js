@@ -35,7 +35,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'This rule reports types being used on `@param` or `@returns`.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-types',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-types.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

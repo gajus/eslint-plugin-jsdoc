@@ -18,7 +18,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires that each `@property` tag has a `description` value.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-property-description',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-property-description.md#repos-sticky-header',
     },
     type: 'suggestion',
   },

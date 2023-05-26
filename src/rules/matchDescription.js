@@ -129,7 +129,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Enforces a regular expression pattern on descriptions.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-match-description',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/match-description.md#repos-sticky-header',
     },
     schema: [
       {

@@ -98,7 +98,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports the name portion of a JSDoc tag if matching or not matching a given regular expression.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-match-name',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/match-name.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

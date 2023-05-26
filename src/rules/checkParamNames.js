@@ -367,7 +367,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Ensures that parameter names in JSDoc match those in the function declaration.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-param-names',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-param-names.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

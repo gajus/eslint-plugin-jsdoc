@@ -72,7 +72,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports when certain comment structures are present.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-restricted-syntax',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-restricted-syntax.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

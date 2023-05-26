@@ -489,7 +489,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports invalid types.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-types',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-types.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

@@ -309,7 +309,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports invalid alignment of JSDoc block lines.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-line-alignment',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-line-alignment.md#repos-sticky-header',
     },
     fixable: 'whitespace',
     schema: [

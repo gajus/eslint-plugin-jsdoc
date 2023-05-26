@@ -516,7 +516,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-examples',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-examples.md#repos-sticky-header',
     },
     schema: [
       {

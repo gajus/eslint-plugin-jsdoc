@@ -292,7 +292,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Enforces lines (or no lines) between tags.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-tag-lines',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/tag-lines.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

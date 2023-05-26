@@ -153,7 +153,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires yields are documented.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-yields',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-yields.md#repos-sticky-header',
     },
     schema: [
       {
