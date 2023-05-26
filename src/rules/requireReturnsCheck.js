@@ -115,7 +115,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires a return statement in function body if a `@returns` tag is specified in jsdoc comment.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns-check',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-returns-check.md#repos-sticky-header',
     },
     schema: [
       {

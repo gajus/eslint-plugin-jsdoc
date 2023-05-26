@@ -614,7 +614,7 @@ export default {
       category: 'Stylistic Issues',
       description: 'Require JSDoc comments',
       recommended: true,
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-jsdoc',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-jsdoc.md#repos-sticky-header',
     },
 
     fixable: 'code',

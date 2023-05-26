@@ -68,7 +68,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires that throw statements are documented.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-throws',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-throws.md#repos-sticky-header',
     },
     schema: [
       {

@@ -102,7 +102,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires that returns are documented.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-returns',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-returns.md#repos-sticky-header',
     },
     schema: [
       {

@@ -515,7 +515,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Sorts tags by a specified sequence according to tag name.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-sort-tags',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/sort-tags.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

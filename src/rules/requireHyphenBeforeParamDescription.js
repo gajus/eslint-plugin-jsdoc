@@ -136,7 +136,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires a hyphen before the `@param` description.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-hyphen-before-param-description',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-hyphen-before-param-description.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

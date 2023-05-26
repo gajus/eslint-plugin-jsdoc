@@ -123,7 +123,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: '',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-text-escaping',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/text-escaping.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

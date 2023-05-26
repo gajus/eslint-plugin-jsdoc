@@ -66,7 +66,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Expects specific tags to be empty of any content.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-empty-tags',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/empty-tags.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

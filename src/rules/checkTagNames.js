@@ -283,7 +283,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports invalid block tag names.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-check-tag-names',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-tag-names.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

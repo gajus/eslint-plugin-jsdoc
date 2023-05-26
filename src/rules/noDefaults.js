@@ -44,7 +44,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'This rule reports defaults being used on the relevant portion of `@param` or `@default`.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-defaults',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-defaults.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

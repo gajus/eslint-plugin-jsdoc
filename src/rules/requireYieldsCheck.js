@@ -157,7 +157,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Requires a yield statement in function body if a `@yields` tag is specified in jsdoc comment.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-require-yields-check',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-yields-check.md#repos-sticky-header',
     },
     schema: [
       {

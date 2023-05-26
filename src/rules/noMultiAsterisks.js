@@ -109,7 +109,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: '',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-multi-asterisks',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-multi-asterisks.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [

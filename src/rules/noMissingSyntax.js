@@ -174,7 +174,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Reports when certain comment structures are always expected.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc#eslint-plugin-jsdoc-rules-no-missing-syntax',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-missing-syntax.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [
