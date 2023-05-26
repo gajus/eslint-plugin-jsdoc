@@ -118,21 +118,7 @@ as failing errors, you may use the "recommended-error" config:
 ```
 
 If you plan to use TypeScript syntax (and not just "typescript"
-`mode` to indicate the JSDoc flavor is TypeScript), you can configure
-the following:
-
-```javascript
-{
-    "rules": {
-      "jsdoc/no-types": 1,
-      "jsdoc/require-param-type": 0,
-      "jsdoc/require-property-type": 0,
-      "jsdoc/require-returns-type": 0,
-    }
-}
-```
-
-...or just use:
+`mode` to indicate the JSDoc flavor is TypeScript), you can use:
 
 ```json
 {
@@ -145,6 +131,26 @@ the following:
 ```json
 {
   "extends": ["plugin:jsdoc/recommended-typescript-error"]
+}
+```
+
+If you are not using TypeScript syntax (your source files are still `.js` files)
+but you are using the TypeScript flavor within JSDoc (i.e., the default
+"typescript" `mode` in `eslint-plugin-jsdoc`) and you are perhaps using
+`allowJs` and `checkJs` options of TypeScript's `tsconfig.json`), you may
+use:
+
+```json
+{
+  "extends": ["plugin:jsdoc/recommended-typescript-flavor"]
+}
+```
+
+...or to report with failing errors instead of mere warnings:
+
+```json
+{
+  "extends": ["plugin:jsdoc/recommended-typescript-flavor-error"]
 }
 ```
 

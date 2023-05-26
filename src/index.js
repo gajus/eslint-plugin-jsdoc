@@ -205,6 +205,24 @@ const createRecommendedTypeScriptRuleset = (warnOrError) => {
   };
 };
 
+/**
+ * @param {"warn"|"error"} warnOrError
+ * @returns {import('eslint').ESLint.ConfigData}
+ */
+const createRecommendedTypeScriptFlavorRuleset = (warnOrError) => {
+  const ruleset = createRecommendedRuleset(warnOrError);
+
+  return {
+    ...ruleset,
+    rules: {
+      ...ruleset.rules,
+      /* eslint-disable indent -- Extra indent to avoid use by auto-rule-editing */
+        'jsdoc/no-undefined-types': 'off',
+      /* eslint-enable indent */
+    },
+  };
+};
+
 /* istanbul ignore if -- TS */
 if (!index.configs) {
   throw new Error('TypeScript guard');
@@ -214,5 +232,7 @@ index.configs.recommended = createRecommendedRuleset('warn');
 index.configs['recommended-error'] = createRecommendedRuleset('error');
 index.configs['recommended-typescript'] = createRecommendedTypeScriptRuleset('warn');
 index.configs['recommended-typescript-error'] = createRecommendedTypeScriptRuleset('error');
+index.configs['recommended-typescript-flavor'] = createRecommendedTypeScriptFlavorRuleset('warn');
+index.configs['recommended-typescript-flavor-error'] = createRecommendedTypeScriptFlavorRuleset('error');
 
 export default index;
