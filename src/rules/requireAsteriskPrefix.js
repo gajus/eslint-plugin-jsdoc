@@ -141,6 +141,11 @@ export default iterateJsdoc(({
 }, {
   iterateAllJsdocs: true,
   meta: {
+    docs: {
+      description:
+        'Requires that each JSDoc line starts with an `*`.',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-asterisk-prefix.md#repos-sticky-header',
+    },
     fixable: 'code',
     schema: [
       {
