@@ -161,7 +161,7 @@ section of our README for more on the expected format.
 |Aliases|`@desc`|
 |Recommended|false|
 |Settings||
-|Options|`contexts`, `tags` (accepts tags with names and optional type such as 'param', 'arg', 'argument', 'property', and 'prop', and accepts arbitrary list of other tags with an optional type (but without names), e.g., 'returns', 'return'), `mainDescription`, `matchDescription`|
+|Options|`contexts`, `mainDescription`, `matchDescription`, `message`, `tags`|
 
 ## Failing examples
 

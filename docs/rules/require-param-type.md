@@ -63,7 +63,7 @@ section of our README for more on the expected format.
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
-|Options|`setDefaultDestructuredRootType`, `defaultDestructuredRootType`, `contexts`|
+|Options|`contexts`, `defaultDestructuredRootType`, `setDefaultDestructuredRootType`|
 |Settings|`exemptDestructuredRootsFromChecks`|
 
 <a name="user-content-require-param-type-failing-examples"></a>

@@ -66,7 +66,7 @@ Defaults to `true`.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`example`|
 |Recommended|false|
-|Options|`exemptedBy`, `exemptNoArguments`, `contexts`, `checkConstructors`, `checkGetters`, `checkSetters`, `enableFixer`|
+|Options|`checkConstructors`, `checkGetters`, `checkSetters`, `contexts`, `enableFixer`, `exemptedBy`, `exemptNoArguments`|
 |Settings|`ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 # Failing examples

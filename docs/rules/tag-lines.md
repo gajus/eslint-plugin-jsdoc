@@ -94,7 +94,7 @@ following keys:
 |Tags|Any|
 |Recommended|true|
 |Settings|N/A|
-|Options|(a string matching `"always"`, `"never"`, or `"any"` and optional object with `count`, `applyToEndTag`, `startLines`, `endLines`)|
+|Options|string ("always", "any", "never") followed by object with `applyToEndTag`, `count`, `endLines`, `startLines`, `tags`|
 
 <a name="user-content-tag-lines-failing-examples"></a>
 <a name="tag-lines-failing-examples"></a>

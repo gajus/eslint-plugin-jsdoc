@@ -65,7 +65,7 @@ option to expect a non-standard `@next` tag.
 |Tags|`yields`|
 |Aliases|`yield`|
 |Recommended|true|
-| Options  | `contexts`,  `exemptedBy`, `withGeneratorTag`, `nextWithGeneratorTag`, `forceRequireYields`, `next` |
+| Options  |`contexts`, `exemptedBy`, `forceRequireNext`, `forceRequireYields`, `next`, `nextWithGeneratorTag`, `withGeneratorTag`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 ## Failing examples

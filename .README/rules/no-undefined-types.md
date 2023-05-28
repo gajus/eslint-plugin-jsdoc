@@ -69,7 +69,7 @@ An option object may have the following keys:
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Recommended|true|
-|Options|`definedTypes`, `markVariablesAsUsed`, `disableReporting`|
+|Options|`definedTypes`, `disableReporting`, `markVariablesAsUsed`|
 |Settings|`preferredTypes`, `mode`, `structuredTags`|
 
 

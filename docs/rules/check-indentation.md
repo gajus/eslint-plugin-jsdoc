@@ -64,7 +64,7 @@ report a padding issue:
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|false|
-|Options| `excludeTags` |
+|Options|`excludeTags`|
 
 <a name="user-content-check-indentation-failing-examples"></a>
 <a name="check-indentation-failing-examples"></a>

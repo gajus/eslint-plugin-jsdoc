@@ -54,7 +54,7 @@ Will also report if multiple `@returns` tags are present.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 |Aliases|`return`|
-|Options|`exemptAsync`, `reportMissingReturnForUndefinedTypes`|
+|Options|`exemptAsync`, `exemptGenerators`, `reportMissingReturnForUndefinedTypes`|
 |Recommended|true|
 
 <a name="user-content-require-returns-check-failing-examples"></a>

@@ -51,6 +51,9 @@ devDependencies:
   '@babel/register':
     specifier: ^7.21.0
     version: 7.21.0(@babel/core@7.21.8)
+  '@es-joy/escodegen':
+    specifier: ^3.5.1
+    version: 3.5.1
   '@es-joy/jsdoc-eslint-parser':
     specifier: ^0.19.0
     version: 0.19.0
@@ -123,6 +126,9 @@ devDependencies:
   eslint-config-canonical:
     specifier: ~41.0.4
     version: 41.0.4(@babel/plugin-syntax-flow@7.21.4)(@babel/plugin-transform-react-jsx@7.21.5)(@types/node@20.2.3)(eslint@8.41.0)(graphql@16.6.0)(typescript@5.0.4)
+  espree:
+    specifier: ^9.5.2
+    version: 9.5.2
   gitdown:
     specifier: ^3.1.5
     version: 3.1.5
@@ -1464,6 +1470,24 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@es-joy/escodegen@3.5.1:
+    resolution: {integrity: sha512-+ZFIB5hRBEwmbVc6LLb9zIgR5aNkluUHsqg2VfDLYf3aeDmF8uA7q614zKhwc7n0nh9Qh9XnYfzYgJNoyWSveg==}
+    engines: {node: '>=6.0'}
+    hasBin: true
+    dependencies:
+      '@es-joy/estraverse': 6.0.0
+      esprima: 4.0.1
+      esutils: 2.0.3
+      optionator: 0.9.1
+    optionalDependencies:
+      source-map: 0.7.4
+    dev: true
+
+  /@es-joy/estraverse@6.0.0:
+    resolution: {integrity: sha512-lk61BuRPDm3KCm2x8Y629+szoRuChn83kG8ll+CniQM07u5dRVzQRkBFnn/hCdL+Urdsj4/6qeOJWr+QRRkKgw==}
+    engines: {node: '>=4.0'}
+    dev: true
 
   /@es-joy/jsdoc-eslint-parser@0.19.0:
     resolution: {integrity: sha512-PvggHK8390M0S/KyS2hUriNu83TLpOv2fjtuKdqE7+SeIKh7o6BgbCVjh0nxbMKVWToG2rGAaMGbOQIhxcq3ew==}
@@ -8906,6 +8930,13 @@ packages:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /source-map@0.7.4:
+    resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==}
+    engines: {node: '>= 8'}
+    requiresBuild: true
+    dev: true
+    optional: true
 
   /spawn-error-forwarder@1.0.0:
     resolution: {integrity: sha512-gRjMgK5uFjbCvdibeGJuy3I5OYz6VLoVdsOJdA6wV0WlfQVLFueoqMxwwYD9RODdgb6oUIvlRlsyFSiQkMKu0g==}

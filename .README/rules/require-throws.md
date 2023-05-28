@@ -39,7 +39,7 @@ on why TypeScript doesn't offer such a feature.
 | Tags     | `throws` |
 | Aliases  | `exception` |
 |Recommended|true|
-| Options  | `contexts`, `exemptedBy` |
+| Options  |`contexts`, `exemptedBy`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 ## Failing examples

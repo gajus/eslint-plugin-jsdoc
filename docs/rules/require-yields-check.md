@@ -54,7 +54,7 @@ Will also report if multiple `@yields` tags are present.
 |Tags|`yields`|
 |Aliases|`yield`|
 |Recommended|true|
-|Options|`checkGeneratorsOnly`|
+|Options|`checkGeneratorsOnly`, `contexts`, `exemptedBy`, `next`|
 
 <a name="user-content-require-yields-check-failing-examples"></a>
 <a name="require-yields-check-failing-examples"></a>

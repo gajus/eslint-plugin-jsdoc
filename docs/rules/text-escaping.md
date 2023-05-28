@@ -52,7 +52,7 @@ This option escapes the first backtick (`` ` ``) in a paired sequence.
 |Tags|``|
 |Recommended|false|
 |Settings||
-|Options||
+|Options|`escapeHTML`, `escapeMarkdown`|
 
 <a name="user-content-text-escaping-failing-examples"></a>
 <a name="text-escaping-failing-examples"></a>

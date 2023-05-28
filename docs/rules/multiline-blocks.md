@@ -120,7 +120,7 @@ cannot be reliably added after the tag either).
 |Tags|Any (though `singleLineTags` and `multilineTags` control the application)|
 |Recommended|true|
 |Settings||
-|Options|`noZeroLineText`, `noSingleLineBlocks`, `singleLineTags`, `noMultilineBlocks`, `minimumLengthForMultiline`, `multilineTags`, `allowMultipleTags`, `noFinalLineText`|
+|Options|`allowMultipleTags`, `minimumLengthForMultiline`, `multilineTags`, `noFinalLineText`, `noMultilineBlocks`, `noSingleLineBlocks`, `noZeroLineText`, `singleLineTags`|
 
 <a name="user-content-failing-examples"></a>
 <a name="failing-examples"></a>

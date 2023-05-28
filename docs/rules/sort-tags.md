@@ -272,7 +272,7 @@ such tags. Do not use with `true` if you are using `tag-lines` and `always`.
 |Tags|any|
 |Recommended|false|
 |Settings||
-|Options|`tagSequence`, `alphabetizeExtras`, `linesBetween`, `reportTagGroupSpacing`, `reportIntraTagGroupSpacing`|
+|Options|`alphabetizeExtras`, `linesBetween`, `reportIntraTagGroupSpacing`, `reportTagGroupSpacing`, `tagSequence`|
 
 <a name="user-content-sort-tags-failing-examples"></a>
 <a name="sort-tags-failing-examples"></a>

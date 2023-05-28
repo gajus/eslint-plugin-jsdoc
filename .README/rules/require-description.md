@@ -42,7 +42,7 @@ An options object may have any of the following properties:
 | Tags     | `description` or jsdoc block |
 | Aliases  | `desc` |
 | Recommended | false |
-| Options  | `contexts`, `exemptedBy`, `descriptionStyle`, `checkConstructors`, `checkGetters`, `checkSetters` |
+| Options  |`checkConstructors`, `checkGetters`, `checkSetters`, `contexts`, `descriptionStyle`, `exemptedBy`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 ## Failing examples

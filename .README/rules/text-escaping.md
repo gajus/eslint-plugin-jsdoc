@@ -33,7 +33,7 @@ This option escapes the first backtick (`` ` ``) in a paired sequence.
 |Tags|``|
 |Recommended|false|
 |Settings||
-|Options||
+|Options|`escapeHTML`, `escapeMarkdown`|
 
 ## Failing examples
 
