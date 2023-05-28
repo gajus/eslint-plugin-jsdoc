@@ -241,12 +241,12 @@ non-default-recommended fixer).
 ||:wrench:|[no-bad-blocks](./docs/rules/no-bad-blocks.md#readme)|This rule checks for multi-line-style comments which fail to meet the criteria of a jsdoc block|
 ||:wrench:|[no-blank-block-descriptions](./docs/rules/no-blank-block-descriptions.md#readme)|If tags are present, this rule will prevent empty lines in the block description. If no tags are present, this rule will prevent extra empty lines in the block description.|
 ||:wrench:|[no-blank-blocks](./docs/rules/no-blank-blocks.md#readme)|Reports and optionally removes blocks with whitespace only|
-||:wrench:|[no-defaults](./docs/rules/no-defaults.md#readme)|This rule reports defaults being used on the relevant portion of `@param` or `@default`|
+|:heavy_check_mark:|:wrench:|[no-defaults](./docs/rules/no-defaults.md#readme)|This rule reports defaults being used on the relevant portion of `@param` or `@default`|
 |||[no-missing-syntax](./docs/rules/no-missing-syntax.md#readme)|This rule lets you report if certain always expected comment structures are missing.|
 |:heavy_check_mark:|:wrench:|[no-multi-asterisks](./docs/rules/no-multi-asterisks.md#readme)|Prevents use of multiple asterisks at the beginning of lines|
 |||[no-restricted-syntax](./docs/rules/no-restricted-syntax.md#readme)|Reports when certain comment structures are present|
-||:wrench:|[no-types](./docs/rules/no-types.md#readme)|Prohibits types on `@param` or `@returns` (redundant with TypeScript)|
-|:heavy_check_mark:||[no-undefined-types](./docs/rules/no-undefined-types.md#readme)|Besides some expected built-in types, prohibits any types not specified as globals or within `@typedef` |
+|On in TS|:wrench:|[no-types](./docs/rules/no-types.md#readme)|Prohibits types on `@param` or `@returns` (redundant with TypeScript)|
+|:heavy_check_mark: (off in TS and TS flavor)||[no-undefined-types](./docs/rules/no-undefined-types.md#readme)|Besides some expected built-in types, prohibits any types not specified as globals or within `@typedef` |
 ||:wrench:|[require-asterisk-prefix](./docs/rules/require-asterisk-prefix.md#readme)|Requires that each JSDoc line starts with an `*`|
 |||[require-description](./docs/rules/require-description.md#readme)|Requires that all functions (and potentially other contexts) have a description.|
 ||:wrench:|[require-description-complete-sentence](./docs/rules/require-description-complete-sentence.md#readme)|Requires that block description, explicit `@description`, and `@param`/`@returns` tag descriptions are written in complete sentences|
@@ -257,15 +257,15 @@ non-default-recommended fixer).
 |:heavy_check_mark:|:wrench:|[require-param](./docs/rules/require-param.md#readme)|Requires that all function parameters are documented with a `@param` tag.|
 |:heavy_check_mark:||[require-param-description](./docs/rules/require-param-description.md#readme)|Requires that each `@param` tag has a `description` value.|
 |:heavy_check_mark:||[require-param-name](./docs/rules/require-param-name.md#readme)|Requires that all `@param` tags have names.|
-|:heavy_check_mark:||[require-param-type](./docs/rules/require-param-type.md#readme)|Requires that each `@param` tag has a type value (within curly brackets).|
+|:heavy_check_mark: (off in TS)||[require-param-type](./docs/rules/require-param-type.md#readme)|Requires that each `@param` tag has a type value (within curly brackets).|
 |:heavy_check_mark:|:wrench:|[require-property](./docs/rules/require-property.md#readme)|Requires that all `@typedef` and `@namespace` tags have `@property` tags when their type is a plain `object`, `Object`, or `PlainObject`.|
 |:heavy_check_mark:||[require-property-description](./docs/rules/require-property-description.md#readme)|Requires that each `@property` tag has a `description` value.|
 |:heavy_check_mark:||[require-property-name](./docs/rules/require-property-name.md#readme)|Requires that all `@property` tags have names.|
-|:heavy_check_mark:||[require-property-type](./docs/rules/require-property-type.md#readme)|Requires that each `@property` tag has a type value (within curly brackets).|
+|:heavy_check_mark: (off in TS)||[require-property-type](./docs/rules/require-property-type.md#readme)|Requires that each `@property` tag has a type value (within curly brackets).|
 |:heavy_check_mark:||[require-returns](./docs/rules/require-returns.md#readme)|Requires that return statements are documented.|
 |:heavy_check_mark:||[require-returns-check](./docs/rules/require-returns-check.md#readme)|Requires a return statement be present in a function body if a `@returns` tag is specified in the jsdoc comment block (and reports if multiple `@returns` tags are present).|
 |:heavy_check_mark:||[require-returns-description](./docs/rules/require-returns-description.md#readme)|Requires that the `@returns` tag has a `description` value (not including `void`/`undefined` type returns).|
-|:heavy_check_mark:||[require-returns-type](./docs/rules/require-returns-type.md#readme)|Requires that `@returns` tag has a type value (in curly brackets).|
+|:heavy_check_mark: (off in TS)||[require-returns-type](./docs/rules/require-returns-type.md#readme)|Requires that `@returns` tag has a type value (in curly brackets).|
 |||[require-throws](./docs/rules/require-throws.md#readme)|Requires that throw statements are documented|
 |:heavy_check_mark:||[require-yields](./docs/rules/require-yields.md#readme)|Requires that yields are documented|
 |:heavy_check_mark:||[require-yields-check](./docs/rules/require-yields-check.md#readme)|Ensures that if a `@yields` is present that a `yield` (or `yield` with a value) is present in the function body (or that if a `@next` is present that there is a `yield` with a return value present)|
