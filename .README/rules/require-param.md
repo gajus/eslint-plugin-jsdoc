@@ -377,7 +377,7 @@ supplied as default values. Defaults to `false`.
 | Tags     | `param` |
 | Aliases  | `arg`, `argument` |
 |Recommended | true|
-| Options  | `autoIncrementBase`, `checkDestructured`, `checkDestructuredRoots`, `contexts`, `enableFixer`, `enableRootFixer`, `enableRestElementFixer`, `checkRestProperty`, `exemptedBy`, `checkConstructors`, `checkGetters`, `checkSetters`, `checkTypesPattern`, `unnamedRootBase`, `useDefaultObjectProperties`|
+| Options  |`autoIncrementBase`, `checkConstructors`, `checkDestructured`, `checkDestructuredRoots`, `checkGetters`, `checkRestProperty`, `checkSetters`, `checkTypesPattern`, `contexts`, `enableFixer`, `enableRestElementFixer`, `enableRootFixer`, `exemptedBy`, `unnamedRootBase`, `useDefaultObjectProperties`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 ## Failing examples

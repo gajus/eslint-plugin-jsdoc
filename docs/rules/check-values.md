@@ -78,7 +78,7 @@ Whether to enable validation that `@variation` must be a number. Defaults to
 |Context|everywhere|
 |Tags|`@version`, `@since`, `@kind`, `@license`, `@author`, `@variation`|
 |Recommended|true|
-|Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`|
+|Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`, `numericOnlyVariation`|
 |Settings|`tagNamePreference`|
 
 <a name="user-content-check-values-failing-examples"></a>

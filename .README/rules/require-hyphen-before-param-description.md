@@ -35,7 +35,7 @@ other tags besides the `@param` tag (or the `@arg` tag if so set):
 |Tags|`param` and optionally other tags within `tags`|
 |Aliases|`arg`, `argument`; potentially `prop` or other aliases|
 |Recommended|false|
-|Options|a string matching `"always" or "never"` followed by an optional object with a `tags` property|
+|Options|string ("always", "never") followed by object with `tags`|
 
 ## Failing examples
 

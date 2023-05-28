@@ -1,5 +1,6 @@
 coverage
 src
+bin
 test
 .*
 *.log

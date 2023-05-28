@@ -181,7 +181,7 @@ expression-oriented rules will be used by default as well:
 |Context|everywhere|
 |Tags|`example`|
 |Recommended|false|
-|Options| *See above* |
+|Options|`allowInlineConfig`, `baseConfig`, `captionRequired`, `checkDefaults`, `checkEslintrc`, `checkParams`, `checkProperties`, `configFile`, `exampleCodeRegex`, `matchingFileName`, `matchingFileNameDefaults`, `matchingFileNameParams`, `matchingFileNameProperties`, `noDefaultExampleRules`, `paddedIndent`, `rejectExampleCodeRegex`, `reportUnusedDisableDirectives`|
 
 ## Failing examples
 

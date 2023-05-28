@@ -51,7 +51,7 @@ Will also report if multiple `@returns` tags are present.
 | Tags     | `returns` |
 | Aliases  | `return` |
 |Recommended|true|
-| Options  | `checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync` |
+| Options  |`checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 ## Failing examples

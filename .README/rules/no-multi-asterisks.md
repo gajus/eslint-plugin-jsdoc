@@ -54,7 +54,7 @@ Prevent the likes of this:
 |Tags|(any)|
 |Recommended|true|
 |Settings||
-|Options|`preventAtEnd`, `preventAtMiddleLines`|
+|Options|`allowWhitespace`, `preventAtEnd`, `preventAtMiddleLines`|
 
 ## Failing examples
 

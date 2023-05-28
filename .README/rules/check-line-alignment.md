@@ -54,7 +54,7 @@ Default to the empty string (no indent).
 |||
 |---|---|
 |Context|everywhere|
-|Options|(a string matching `"always"`, `"never"`, or `"any"` and optional object with `tags`, `customSpacings`, `preserveMainDescriptionPostDelimiter`, and `wrapIndent`)|
+|Options|string ("always", "never", "any") followed by object with `customSpacings`, `preserveMainDescriptionPostDelimiter`, `tags`, `wrapIndent`|
 |Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|

@@ -123,7 +123,7 @@ that are available and actually used in the function.
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `useDefaultObjectProperties`, `disableExtraPropertyReporting`|
+|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `disableExtraPropertyReporting`, `enableFixer`, `useDefaultObjectProperties`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|

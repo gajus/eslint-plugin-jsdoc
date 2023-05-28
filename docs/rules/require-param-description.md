@@ -64,7 +64,7 @@ section of our README for more on the expected format.
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
-|Options|`setDefaultDestructuredRootDescription`, `defaultDestructuredRootDescription`, `contexts`|
+|Options|`contexts`, `defaultDestructuredRootDescription`, `setDefaultDestructuredRootDescription`|
 |Settings|`exemptDestructuredRootsFromChecks`|
 
 <a name="user-content-require-param-description-failing-examples"></a>

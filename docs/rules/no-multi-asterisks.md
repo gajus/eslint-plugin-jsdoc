@@ -68,7 +68,7 @@ Prevent the likes of this:
 |Tags|(any)|
 |Recommended|true|
 |Settings||
-|Options|`preventAtEnd`, `preventAtMiddleLines`|
+|Options|`allowWhitespace`, `preventAtEnd`, `preventAtMiddleLines`|
 
 <a name="user-content-failing-examples"></a>
 <a name="failing-examples"></a>
