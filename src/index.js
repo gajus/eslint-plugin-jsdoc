@@ -142,7 +142,7 @@ const createRecommendedRuleset = (warnOrError) => {
       'jsdoc/no-bad-blocks': 'off',
       'jsdoc/no-blank-block-descriptions': 'off',
       'jsdoc/no-blank-blocks': 'off',
-      'jsdoc/no-defaults': 'off',
+      'jsdoc/no-defaults': warnOrError,
       'jsdoc/no-missing-syntax': 'off',
       'jsdoc/no-multi-asterisks': warnOrError,
       'jsdoc/no-restricted-syntax': 'off',
