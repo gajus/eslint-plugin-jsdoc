@@ -35,11 +35,15 @@ const canSkip = (utils) => {
 };
 
 export default iterateJsdoc(({
+  info: {
+    comment,
+  },
   report,
   utils,
   context,
 }) => {
   const {
+    contexts,
     forceRequireReturn = false,
     forceReturnsWithAsync = false,
   } = context.options[0] || {};
@@ -48,6 +52,17 @@ export default iterateJsdoc(({
   // in case the @returns comment is optional or undefined.
   if (canSkip(utils)) {
     return;
+  }
+
+  /** @type {boolean|undefined} */
+  let forceRequireReturnContext;
+  if (contexts) {
+    const {
+      foundContext,
+    } = utils.findContext(contexts, comment);
+    if (typeof foundContext === 'object') {
+      forceRequireReturnContext = foundContext.forceRequireReturn;
+    }
   }
 
   const tagName = /** @type {string} */ (utils.getPreferredTagName({
@@ -76,7 +91,7 @@ export default iterateJsdoc(({
       return false;
     }
 
-    if (forceRequireReturn && (
+    if ((forceRequireReturn || forceRequireReturnContext) && (
       iteratingFunction || utils.isVirtualFunction()
     )) {
       return true;
@@ -130,6 +145,9 @@ export default iterateJsdoc(({
                     },
                     context: {
                       type: 'string',
+                    },
+                    forceRequireReturn: {
+                      type: 'boolean',
                     },
                   },
                   type: 'object',

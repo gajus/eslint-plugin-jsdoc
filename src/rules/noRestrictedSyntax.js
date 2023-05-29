@@ -1,14 +1,12 @@
 import iterateJsdoc from '../iterateJsdoc';
-import esquery from 'esquery';
 
 export default iterateJsdoc(({
-  node,
   context,
   info: {
     comment,
   },
-  sourceCode,
   report,
+  utils,
 }) => {
   if (!context.options.length) {
     report('Rule `no-restricted-syntax` is missing a `contexts` option.');
@@ -20,33 +18,10 @@ export default iterateJsdoc(({
     contexts,
   } = context.options[0];
 
-  const foundContext = contexts.find(
-    /**
-     * @param {string|{context: string, comment: string}} cntxt
-     * @returns {boolean}
-     */
-    (cntxt) => {
-      return typeof cntxt === 'string' ?
-        esquery.matches(
-          /** @type {import('../iterateJsdoc.js').Node} */ (node),
-          esquery.parse(cntxt),
-          undefined,
-          {
-            visitorKeys: sourceCode.visitorKeys,
-          },
-        ) :
-        (!cntxt.context || cntxt.context === 'any' ||
-          esquery.matches(
-            /** @type {import('../iterateJsdoc.js').Node} */ (node),
-            esquery.parse(cntxt.context),
-            undefined,
-            {
-              visitorKeys: sourceCode.visitorKeys,
-            },
-          )) &&
-          comment === cntxt.comment;
-    },
-  );
+  const {
+    foundContext,
+    contextStr,
+  } = utils.findContext(contexts, comment);
 
   // We are not on the *particular* matching context/comment, so don't assume
   //   we need reporting
@@ -54,10 +29,9 @@ export default iterateJsdoc(({
     return;
   }
 
-  const contextStr = typeof foundContext === 'object' ?
-    foundContext.context ?? 'any' :
-    foundContext;
-  const message = foundContext?.message ??
+  const message = /** @type {import('../iterateJsdoc.js').ContextObject} */ (
+    foundContext
+  )?.message ??
     'Syntax is restricted: {{context}}' +
       (comment ? ' with {{comment}}' : '');
 

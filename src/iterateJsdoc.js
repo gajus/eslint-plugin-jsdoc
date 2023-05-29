@@ -8,6 +8,7 @@ import {
   stringify as commentStringify,
   util,
 } from 'comment-parser';
+import esquery from 'esquery';
 
 /**
  * @typedef {number} Integer
@@ -26,7 +27,8 @@ import {
  *   tags?: string[],
  *   replacement?: string,
  *   minimum?: Integer,
- *   message?: string
+ *   message?: string,
+ *   forceRequireReturn?: boolean
  * }} ContextObject
  */
 /**
@@ -468,6 +470,16 @@ import {
  */
 
 /**
+ * @callback FindContext
+ * @param {Context[]} contexts
+ * @param {string|undefined} comment
+ * @returns {{
+ *   foundContext: Context|undefined,
+ *   contextStr: string
+ * }}
+ */
+
+/**
  * @typedef {BasicUtils & {
  *   isIteratingFunction: IsIteratingFunction,
  *   isVirtualFunction: IsVirtualFunction,
@@ -526,7 +538,8 @@ import {
  *   hasOptionTag: HasOptionTag,
  *   getClassNode: GetClassNode,
  *   getClassJsdoc: GetClassJsdoc,
- *   classHasTag: ClassHasTag
+ *   classHasTag: ClassHasTag,
+ *   findContext: FindContext
  * }} Utils
  */
 
@@ -1712,6 +1725,39 @@ const getUtils = (
     }
   };
 
+  /** @type {FindContext} */
+  utils.findContext = (contexts, comment) => {
+    const foundContext = contexts.find((cntxt) => {
+      return typeof cntxt === 'string' ?
+        esquery.matches(
+          /** @type {Node} */ (node),
+          esquery.parse(cntxt),
+          undefined,
+          {
+            visitorKeys: sourceCode.visitorKeys,
+          },
+        ) :
+        (!cntxt.context || cntxt.context === 'any' ||
+        esquery.matches(
+          /** @type {Node} */ (node),
+          esquery.parse(cntxt.context),
+          undefined,
+          {
+            visitorKeys: sourceCode.visitorKeys,
+          },
+        )) && comment === cntxt.comment;
+    });
+
+    const contextStr = typeof foundContext === 'object' ?
+      foundContext.context ?? 'any' :
+      String(foundContext);
+
+    return {
+      contextStr,
+      foundContext,
+    };
+  };
+
   return utils;
 };
 
@@ -1938,7 +1984,6 @@ const makeReport = (context, commentNode) => {
  * @param {JsdocBlockWithInline} jsdoc
  * @param {RuleConfig} ruleConfig
  * @param {import('eslint').Rule.RuleContext} context
- * @param {string[]} lines
  * @param {import('@es-joy/jsdoccomment').Token} jsdocNode
  * @param {Node|null} node
  * @param {Settings} settings
@@ -1951,7 +1996,7 @@ const makeReport = (context, commentNode) => {
 const iterate = (
   info,
   indent, jsdoc,
-  ruleConfig, context, lines, jsdocNode, node, settings,
+  ruleConfig, context, jsdocNode, node, settings,
   sourceCode, iterator, state, iteratingAll,
 ) => {
   const jsdocNde = /** @type {unknown} */ (jsdocNode);
@@ -2145,7 +2190,6 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
             jsdoc,
             ruleConfig,
             context,
-            lines,
             jsdocNode,
             /** @type {Node} */
             (node),
@@ -2188,7 +2232,6 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
         jsdoc,
         ruleConfig,
         context,
-        lines,
         jsdocNode,
         node,
         /** @type {Settings} */
@@ -2448,7 +2491,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
           jsdoc,
           ruleConfig,
           context,
-          lines,
           jsdocNode,
           node,
           settings,
