@@ -1,5 +1,4 @@
 import iterateJsdoc from '../iterateJsdoc';
-import esquery from 'esquery';
 
 /**
  * @typedef {{
@@ -44,12 +43,11 @@ const incrementSelector = (state, selector, comment) => {
 
 export default iterateJsdoc(({
   context,
-  node,
   info: {
     comment,
   },
-  sourceCode,
   state,
+  utils,
 }) => {
   if (!context.options[0]) {
     // Handle error later
@@ -61,30 +59,9 @@ export default iterateJsdoc(({
    */
   const contexts = context.options[0].contexts;
 
-  const foundContext = contexts.find((cntxt) => {
-    return typeof cntxt === 'string' ?
-      esquery.matches(
-        /** @type {import('../iterateJsdoc.js').Node} */ (node),
-        esquery.parse(cntxt),
-        undefined,
-        {
-          visitorKeys: sourceCode.visitorKeys,
-        },
-      ) :
-      (!cntxt.context || cntxt.context === 'any' ||
-      esquery.matches(
-        /** @type {import('../iterateJsdoc.js').Node} */ (node),
-        esquery.parse(cntxt.context),
-        undefined,
-        {
-          visitorKeys: sourceCode.visitorKeys,
-        },
-      )) && comment === cntxt.comment;
-  });
-
-  const contextStr = typeof foundContext === 'object' ?
-    foundContext.context ?? 'any' :
-    String(foundContext);
+  const {
+    contextStr,
+  } = utils.findContext(contexts, comment);
 
   setDefaults(state);
 

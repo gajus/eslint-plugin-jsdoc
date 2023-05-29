@@ -1765,6 +1765,39 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+        /**
+         *
+         */
+        function quux () {}
+
+        class Test {
+          /**
+           *
+           */
+          abstract Test(): string;
+        }
+      `,
+      errors: [
+        {
+          line: 8,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'FunctionDeclaration',
+            {
+              context: 'TSEmptyBodyFunctionExpression',
+              forceRequireReturn: true,
+            },
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
@@ -2660,6 +2693,33 @@ export default {
        */
       export function readFixture(path: string);
       `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        function quux () {}
+
+        class Test {
+          /**
+           * @returns {string} The test value
+           */
+          abstract Test(): string;
+        }
+      `,
+      options: [
+        {
+          contexts: [
+            'FunctionDeclaration',
+            {
+              context: 'TSEmptyBodyFunctionExpression',
+              forceRequireReturn: true,
+            },
+          ],
+        },
+      ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
   ],
