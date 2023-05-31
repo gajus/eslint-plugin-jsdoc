@@ -1,6 +1,3 @@
-// Change `process.cwd()` when testing `checkEslintrc: true`
-process.chdir('test/rules/data');
-
 export default {
   invalid: [
     {
