@@ -25,6 +25,7 @@ const {
   FlatRuleTester,
 } = pkg;
 
+// eslint-disable-next-line complexity -- Temporary
 const main = async () => {
   const ruleNames = JSON.parse(readFileSync(join(__dirname, './ruleNames.json'), 'utf8'));
 
@@ -148,7 +149,17 @@ const main = async () => {
       }
     }
 
+    const cwd = process.cwd();
+    if (ruleName === 'check-examples') {
+      // Change `process.cwd()` when testing `checkEslintrc: true`
+      process.chdir('test/rules/data');
+    }
+
     ruleTester.run(ruleName, rule, assertions);
+
+    if (ruleName === 'check-examples') {
+      process.chdir(cwd);
+    }
   }
 
   if (!process.env.npm_config_rule) {

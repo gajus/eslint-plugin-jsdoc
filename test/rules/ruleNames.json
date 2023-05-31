@@ -12,6 +12,7 @@
   "check-values",
   "empty-tags",
   "implements-on-classes",
+  "imports-as-dependencies",
   "informative-docs",
   "match-description",
   "match-name",
