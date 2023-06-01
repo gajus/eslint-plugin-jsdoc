@@ -25,7 +25,8 @@ export default iterateJsdoc(({
     mainDescription,
     matchDescription,
     message,
-    tags,
+    nonemptyTags = true,
+    tags = {},
   } = context.options[0] || {};
 
   /**
@@ -81,7 +82,52 @@ export default iterateJsdoc(({
     validateDescription(description);
   }
 
-  if (!tags || !Object.keys(tags).length) {
+  /**
+   * @param {string} tagName
+   * @returns {boolean}
+   */
+  const hasNoTag = (tagName) => {
+    return !tags[tagName];
+  };
+
+  for (const tag of [
+    'description',
+    'summary',
+    'file',
+    'classdesc',
+  ]) {
+    utils.forEachPreferredTag(tag, (matchingJsdocTag, targetTagName) => {
+      const desc = (matchingJsdocTag.name + ' ' + utils.getTagDescription(matchingJsdocTag)).trim();
+      if (hasNoTag(targetTagName)) {
+        validateDescription(desc, matchingJsdocTag);
+      }
+    }, true);
+  }
+
+  if (nonemptyTags) {
+    for (const tag of [
+      'copyright',
+      'example',
+      'see',
+      'throws',
+      'todo',
+      'yields',
+    ]) {
+      utils.forEachPreferredTag(tag, (matchingJsdocTag, targetTagName) => {
+        const desc = (matchingJsdocTag.name + ' ' + utils.getTagDescription(matchingJsdocTag)).trim();
+
+        if (hasNoTag(targetTagName) && !(/.+/u).test(desc)) {
+          report(
+            'JSDoc description must not be empty.',
+            null,
+            matchingJsdocTag,
+          );
+        }
+      });
+    }
+  }
+
+  if (!Object.keys(tags).length) {
     return;
   }
 
@@ -92,13 +138,6 @@ export default iterateJsdoc(({
   const hasOptionTag = (tagName) => {
     return Boolean(tags[tagName]);
   };
-
-  utils.forEachPreferredTag('description', (matchingJsdocTag, targetTagName) => {
-    const desc = (matchingJsdocTag.name + ' ' + utils.getTagDescription(matchingJsdocTag)).trim();
-    if (hasOptionTag(targetTagName)) {
-      validateDescription(desc, matchingJsdocTag);
-    }
-  }, true);
 
   const whitelistedTags = utils.filterTags(({
     tag: tagName,
@@ -194,6 +233,9 @@ export default iterateJsdoc(({
           },
           message: {
             type: 'string',
+          },
+          nonemptyTags: {
+            type: 'boolean',
           },
           tags: {
             patternProperties: {

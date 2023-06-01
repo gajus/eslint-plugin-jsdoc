@@ -10,8 +10,14 @@ by our supported Node versions):
 
 ``^\n?([A-Z`\\d_][\\s\\S]*[.?!`]\\s*)?$``
 
-Applies to the jsdoc block description and `@description` (or `@desc`)
-by default but the `tags` option (see below) may be used to match other tags.
+Applies by default to the jsdoc block description and to the following tags:
+
+- `@description`/`@desc`
+- `@summary`
+- `@file`/`@fileoverview`/`@overview`
+- `@classdesc`
+
+In addition, the `tags` option (see below) may be used to match other tags.
 
 The default (and all regex options) defaults to using (only) the `u` flag, so
 to add your own flags, encapsulate your expression as a string, but like a
@@ -53,6 +59,21 @@ You may provide a custom default message by using the following format:
 
 This can be overridden per tag or for the main block description by setting
 `message` within `tags` or `mainDescription`, respectively.
+
+### `nonemptyTags`
+
+If not set to `false`, will enforce that the following tags have at least
+some content:
+
+- `@copyright`
+- `@example`
+- `@see`
+- `@todo`
+- `@throws`/`@exception`
+- `@yields`/`@yield`
+
+If you supply your own tag description for any of the above tags in `tags`,
+your description will take precedence.
 
 ### `tags`
 
@@ -161,7 +182,7 @@ section of our README for more on the expected format.
 |Aliases|`@desc`|
 |Recommended|false|
 |Settings||
-|Options|`contexts`, `mainDescription`, `matchDescription`, `message`, `tags`|
+|Options|`contexts`, `mainDescription`, `matchDescription`, `message`, `nonemptyTags`, `tags`|
 
 ## Failing examples
 

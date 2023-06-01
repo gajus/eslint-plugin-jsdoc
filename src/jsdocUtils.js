@@ -1422,14 +1422,12 @@ const tagsWithNamesAndDescriptions = new Set([
  * @param {import('eslint').Rule.RuleContext} context
  * @param {ParserMode|undefined} mode
  * @param {import('comment-parser').Spec[]} tags
- * @param {TagNamePreference} tagPreference
  * @returns {{
  *   tagsWithNames: import('comment-parser').Spec[],
  *   tagsWithoutNames: import('comment-parser').Spec[]
  * }}
  */
-const getTagsByType = (context, mode, tags, tagPreference) => {
-  const descName = getPreferredTagName(context, mode, 'description', tagPreference);
+const getTagsByType = (context, mode, tags) => {
   /**
    * @type {import('comment-parser').Spec[]}
    */
@@ -1439,7 +1437,7 @@ const getTagsByType = (context, mode, tags, tagPreference) => {
       tag: tagName,
     } = tag;
     const tagWithName = tagsWithNamesAndDescriptions.has(tagName);
-    if (!tagWithName && tagName !== descName) {
+    if (!tagWithName) {
       tagsWithoutNames.push(tag);
     }
 
