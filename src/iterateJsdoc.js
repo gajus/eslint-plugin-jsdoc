@@ -1644,7 +1644,7 @@ const getUtils = (
 
   /** @type {GetTagsByType} */
   utils.getTagsByType = (tags) => {
-    return jsdocUtils.getTagsByType(context, mode, tags, tagNamePreference);
+    return jsdocUtils.getTagsByType(context, mode, tags);
   };
 
   /** @type {HasOptionTag} */

@@ -344,13 +344,6 @@ export default {
           message: 'JSDoc description does not satisfy the regex pattern.',
         },
       ],
-      options: [
-        {
-          tags: {
-            summary: true,
-          },
-        },
-      ],
     },
     {
       code: `
@@ -417,13 +410,6 @@ export default {
         {
           line: 5,
           message: 'JSDoc description does not satisfy the regex pattern.',
-        },
-      ],
-      options: [
-        {
-          tags: {
-            description: true,
-          },
         },
       ],
     },
@@ -1001,6 +987,21 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+          /**
+           * @copyright
+           */
+          function quux () {
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'JSDoc description must not be empty.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1192,13 +1193,6 @@ export default {
 
           }
       `,
-      options: [
-        {
-          tags: {
-            description: true,
-          },
-        },
-      ],
     },
     {
       code: `
@@ -1211,13 +1205,6 @@ export default {
 
           }
       `,
-      options: [
-        {
-          tags: {
-            description: true,
-          },
-        },
-      ],
     },
     {
       code: `
@@ -1226,13 +1213,6 @@ export default {
 
           }
       `,
-      options: [
-        {
-          tags: {
-            description: true,
-          },
-        },
-      ],
     },
     {
       code: `
@@ -1244,13 +1224,6 @@ export default {
 
           }
       `,
-      options: [
-        {
-          tags: {
-            description: true,
-          },
-        },
-      ],
     },
     {
       code: `
@@ -1456,7 +1429,7 @@ export default {
     {
       code: `
           /**
-           * @description foo.
+           * @deprecated foo.
            */
           function quux () {
 
@@ -1481,13 +1454,6 @@ export default {
 
           }
       `,
-      options: [
-        {
-          tags: {
-            summary: true,
-          },
-        },
-      ],
     },
     {
       code: `
@@ -1696,6 +1662,20 @@ export default {
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+          /**
+           * @copyright
+           */
+          function quux () {
+          }
+      `,
+      options: [
+        {
+          nonemptyTags: false,
+        },
+      ],
     },
   ],
 };

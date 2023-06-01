@@ -5,6 +5,7 @@
 * [Options](#user-content-match-description-options)
     * [`matchDescription`](#user-content-match-description-options-matchdescription)
     * [`message`](#user-content-match-description-options-message)
+    * [`nonemptyTags`](#user-content-match-description-options-nonemptytags)
     * [`tags`](#user-content-match-description-options-tags)
     * [`mainDescription`](#user-content-match-description-options-maindescription)
     * [`contexts`](#user-content-match-description-options-contexts)
@@ -21,8 +22,14 @@ by our supported Node versions):
 
 ``^\n?([A-Z`\\d_][\\s\\S]*[.?!`]\\s*)?$``
 
-Applies to the jsdoc block description and `@description` (or `@desc`)
-by default but the `tags` option (see below) may be used to match other tags.
+Applies by default to the jsdoc block description and to the following tags:
+
+- `@description`/`@desc`
+- `@summary`
+- `@file`/`@fileoverview`/`@overview`
+- `@classdesc`
+
+In addition, the `tags` option (see below) may be used to match other tags.
 
 The default (and all regex options) defaults to using (only) the `u` flag, so
 to add your own flags, encapsulate your expression as a string, but like a
@@ -70,6 +77,23 @@ You may provide a custom default message by using the following format:
 
 This can be overridden per tag or for the main block description by setting
 `message` within `tags` or `mainDescription`, respectively.
+
+<a name="user-content-match-description-options-nonemptytags"></a>
+<a name="match-description-options-nonemptytags"></a>
+### <code>nonemptyTags</code>
+
+If not set to `false`, will enforce that the following tags have at least
+some content:
+
+- `@copyright`
+- `@example`
+- `@see`
+- `@todo`
+- `@throws`/`@exception`
+- `@yields`/`@yield`
+
+If you supply your own tag description for any of the above tags in `tags`,
+your description will take precedence.
 
 <a name="user-content-match-description-options-tags"></a>
 <a name="match-description-options-tags"></a>
@@ -186,7 +210,7 @@ section of our README for more on the expected format.
 |Aliases|`@desc`|
 |Recommended|false|
 |Settings||
-|Options|`contexts`, `mainDescription`, `matchDescription`, `message`, `tags`|
+|Options|`contexts`, `mainDescription`, `matchDescription`, `message`, `nonemptyTags`, `tags`|
 
 <a name="user-content-match-description-failing-examples"></a>
 <a name="match-description-failing-examples"></a>
@@ -335,7 +359,6 @@ function quux (foo) {
 function quux () {
 
 }
-// "jsdoc/match-description": ["error"|"warn", {"tags":{"summary":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -368,7 +391,6 @@ function quux () {
 function quux (foo) {
 
 }
-// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
 // Message: JSDoc description does not satisfy the regex pattern.
 
 /**
@@ -602,6 +624,13 @@ function quux () {
 function foo(): string;
 // "jsdoc/match-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[endLine=0]"}],"matchDescription":"^\\S[\\s\\S]*\\S$"}]
 // Message: JSDoc description does not satisfy the regex pattern.
+
+/**
+ * @copyright
+ */
+function quux () {
+}
+// Message: JSDoc description must not be empty.
 ````
 
 
@@ -722,7 +751,6 @@ function quux () {
 function quux () {
 
 }
-// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
 
 /**
  * @description Foo
@@ -732,13 +760,11 @@ function quux () {
 function quux () {
 
 }
-// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
 
 /** @description Foo bar. */
 function quux () {
 
 }
-// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
 
 /**
  * @description Foo
@@ -747,7 +773,6 @@ function quux () {
 function quux () {
 
 }
-// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":true}}]
 
 /**
  * Foo. {@see Math.sin}.
@@ -872,7 +897,7 @@ const q = {
 // "jsdoc/match-description": ["error"|"warn", {"contexts":[]}]
 
 /**
- * @description foo.
+ * @deprecated foo.
  */
 function quux () {
 
@@ -887,7 +912,6 @@ function quux () {
 function quux () {
 
 }
-// "jsdoc/match-description": ["error"|"warn", {"tags":{"summary":true}}]
 
 /**
  * Foo.
@@ -975,5 +999,12 @@ function foo(): string;
  */
 function foo(): void;
 // "jsdoc/match-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[endLine!=0]:not(:has(JsdocTag))"}],"matchDescription":"^\\S[\\s\\S]*\\S$"}]
+
+/**
+ * @copyright
+ */
+function quux () {
+}
+// "jsdoc/match-description": ["error"|"warn", {"nonemptyTags":false}]
 ````
 
