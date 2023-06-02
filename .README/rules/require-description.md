@@ -2,7 +2,8 @@
 
 {"gitdown": "contents", "rootId": "require-description"}
 
-Requires that all functions have a description.
+Requires that all functions (or optionally other structures) with a JSDoc block
+have a description.
 
 * All functions must have an implicit description (e.g., text above tags) or
   have the option `descriptionStyle` set to `tag` (requiring `@description`
