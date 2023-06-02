@@ -1042,5 +1042,24 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+        /**
+         * @private
+         */
+        function quux () {}
+      `,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:not(JsdocBlock:has(JsdocTag[tag=/private|protected|public/]))',
+              context: 'any',
+              message: 'Access modifier tags must be present',
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
