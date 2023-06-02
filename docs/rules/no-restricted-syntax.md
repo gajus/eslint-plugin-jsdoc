@@ -373,5 +373,11 @@ class Test {
   abstract Test(): void;
 }
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"TSEmptyBodyFunctionExpression[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"methods with non-void return types must have a @returns tag"}]}]
+
+/**
+ * @private
+ */
+function quux () {}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(JsdocBlock:has(JsdocTag[tag=/private|protected|public/]))","context":"any","message":"Access modifier tags must be present"}]}]
 ````
 
