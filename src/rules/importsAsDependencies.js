@@ -37,6 +37,8 @@ try {
   /* eslint-enable no-console -- Inform user */
 }
 
+const moduleCheck = new Map();
+
 export default iterateJsdoc(({
   jsdoc,
   settings,
@@ -60,13 +62,34 @@ export default iterateJsdoc(({
     }
 
     traverse(typeAst, (nde) => {
-      if (nde.type === 'JsdocTypeImport' && !deps.has(nde.element.value.replace(
-        /^(@[^/]+\/[^/]+|[^/]+).*$/u, '$1',
-      ))) {
-        utils.reportJSDoc(
-          'import points to package which is not found in dependencies',
-          tag,
+      if (nde.type === 'JsdocTypeImport') {
+        let mod = nde.element.value.replace(
+          /^(@[^/]+\/[^/]+|[^/]+).*$/u, '$1',
         );
+        if (!moduleCheck.has(mod)) {
+          let pkg;
+          try {
+            pkg = JSON.parse(
+              // @ts-expect-error It's ok
+              readFileSync(join(process.cwd(), 'node_modules', mod, './package.json')),
+            );
+          } catch {
+            // Ignore
+          }
+
+          if (!pkg || !pkg.types) {
+            mod = `@types/${mod}`;
+          }
+
+          moduleCheck.set(mod, !deps.has(mod));
+        }
+
+        if (moduleCheck.get(mod)) {
+          utils.reportJSDoc(
+            'import points to package which is not found in dependencies',
+            tag,
+          );
+        }
       }
     });
   }

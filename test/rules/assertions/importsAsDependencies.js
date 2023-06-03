@@ -87,5 +87,20 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @type {null|import('esquery').ESQueryOptions}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {null|import('@es-joy/jsdoccomment').InlineTag|
+         *   import('@es-joy/jsdoccomment').JsdocBlock}
+         */
+      `,
+    },
   ],
 };
