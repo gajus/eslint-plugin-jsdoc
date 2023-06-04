@@ -66,6 +66,10 @@ export default iterateJsdoc(({
         let mod = nde.element.value.replace(
           /^(@[^/]+\/[^/]+|[^/]+).*$/u, '$1',
         );
+        if (mod === 'typescript') {
+          return;
+        }
+
         if (!moduleCheck.has(mod)) {
           let pkg;
           try {
