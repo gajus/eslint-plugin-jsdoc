@@ -102,5 +102,12 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @type {null|import('typescript').Program}
+         */
+      `,
+    },
   ],
 };
