@@ -127,7 +127,13 @@ export default iterateJsdoc(({
 |Settings||
 |Options||
 
-<!-- assertions ${camelCasedRuleName} -->
+## Failing examples
+
+<!-- assertions-failing ${camelCasedRuleName} -->
+
+## Passing examples
+
+<!-- assertions-passing ${camelCasedRuleName} -->
 `;
 
   const ruleReadmePath = `./.README/rules/${ruleName}.md`;

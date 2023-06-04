@@ -67,6 +67,10 @@ export default iterateJsdoc(({
           /^(@[^/]+\/[^/]+|[^/]+).*$/u, '$1',
         );
 
+        if ((/^[./]/u).test(mod)) {
+          return;
+        }
+
         if (!moduleCheck.has(mod)) {
           let pkg;
           try {

@@ -11,4 +11,10 @@ which is not listed in `dependencies` or `devDependencies`.
 |Settings||
 |Options||
 
-<!-- assertions importsAsDependencies -->
+## Failing examples
+
+<!-- assertions-failing importsAsDependencies -->
+
+## Passing examples
+
+<!-- assertions-passing importsAsDependencies -->
