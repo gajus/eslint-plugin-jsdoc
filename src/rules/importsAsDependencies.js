@@ -66,9 +66,6 @@ export default iterateJsdoc(({
         let mod = nde.element.value.replace(
           /^(@[^/]+\/[^/]+|[^/]+).*$/u, '$1',
         );
-        if (mod === 'typescript') {
-          return;
-        }
 
         if (!moduleCheck.has(mod)) {
           let pkg;
@@ -81,7 +78,7 @@ export default iterateJsdoc(({
             // Ignore
           }
 
-          if (!pkg || !pkg.types) {
+          if (!pkg || (!pkg.types && !pkg.typings)) {
             mod = `@types/${mod}`;
           }
 
