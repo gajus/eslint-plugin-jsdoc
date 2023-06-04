@@ -109,5 +109,12 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @type {null|import('./relativePath.js').Program}
+         */
+      `,
+    },
   ],
 };
