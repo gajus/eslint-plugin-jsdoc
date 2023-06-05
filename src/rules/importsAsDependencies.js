@@ -20,26 +20,29 @@ let deps;
 const setDeps = function () {
   try {
     const pkg = JSON.parse(
-      // @ts-expect-error It's ok
+    // @ts-expect-error It's ok
       readFileSync(join(process.cwd(), './package.json')),
     );
     deps = new Set([
       ...(pkg.dependencies ?
         Object.keys(pkg.dependencies) :
-        // istanbul ignore next
+      // istanbul ignore next
         []),
       ...(pkg.devDependencies ?
         Object.keys(pkg.devDependencies) :
-        // istanbul ignore next
+      // istanbul ignore next
+        []),
+      ...(pkg.peerDependencies ?
+        Object.keys(pkg.peerDependencies) :
+      // istanbul ignore next
         []),
     ]);
-  } catch (error) {
-    // istanbul ignore next -- our package.json exists
+  } catch (error) { // istanbul ignore next -- our package.json exists
     deps = null;
     /* eslint-disable no-console -- Inform user */
     // istanbul ignore next -- our package.json exists
     console.log(error);
-    /* eslint-enable no-console -- Inform user */
+  /* eslint-enable no-console -- Inform user */
   }
 };
 
