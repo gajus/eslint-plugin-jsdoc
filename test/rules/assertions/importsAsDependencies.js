@@ -116,5 +116,26 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @type {null|import('fs').PathLike}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {null|import('fs/promises').FileHandle}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {null|import('node:fs').PathLike}
+         */
+      `,
+    },
   ],
 };

@@ -83,5 +83,17 @@ The following patterns are not considered problems:
 /**
  * @type {null|import('./relativePath.js').Program}
  */
+
+/**
+ * @type {null|import('fs').PathLike}
+ */
+
+/**
+ * @type {null|import('fs/promises').FileHandle}
+ */
+
+/**
+ * @type {null|import('node:fs').PathLike}
+ */
 ````
 
