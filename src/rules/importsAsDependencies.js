@@ -7,6 +7,7 @@ import {
 import {
   readFileSync,
 } from 'fs';
+import isBuiltinModule from 'is-builtin-module';
 import {
   join,
 } from 'path';
@@ -71,7 +72,11 @@ export default iterateJsdoc(({
           return;
         }
 
-        if (!moduleCheck.has(mod)) {
+        if (isBuiltinModule(mod)) {
+          // mod = '@types/node';
+          // moduleCheck.set(mod, !deps.has(mod));
+          return;
+        } else if (!moduleCheck.has(mod)) {
           let pkg;
           try {
             pkg = JSON.parse(
