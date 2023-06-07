@@ -13,30 +13,35 @@ import {
 } from 'path';
 
 /**
- * @type {Set<string>}
+ * @type {Set<string>|null}
  */
 let deps;
-try {
-  const pkg = JSON.parse(
-    // @ts-expect-error It's ok
-    readFileSync(join(process.cwd(), './package.json')),
-  );
-  deps = new Set([
-    ...(pkg.dependencies ?
-      Object.keys(pkg.dependencies) :
-      // istanbul ignore next
-      []),
-    ...(pkg.devDependencies ?
-      Object.keys(pkg.devDependencies) :
-      // istanbul ignore next
-      []),
-  ]);
-} catch (error) {
-  /* eslint-disable no-console -- Inform user */
-  // istanbul ignore next
-  console.log(error);
-  /* eslint-enable no-console -- Inform user */
-}
+
+const setDeps = function () {
+  try {
+    const pkg = JSON.parse(
+      // @ts-expect-error It's ok
+      readFileSync(join(process.cwd(), './package.json')),
+    );
+    deps = new Set([
+      ...(pkg.dependencies ?
+        Object.keys(pkg.dependencies) :
+        // istanbul ignore next
+        []),
+      ...(pkg.devDependencies ?
+        Object.keys(pkg.devDependencies) :
+        // istanbul ignore next
+        []),
+    ]);
+  } catch (error) {
+    // istanbul ignore next -- our package.json exists
+    deps = null;
+    /* eslint-disable no-console -- Inform user */
+    // istanbul ignore next -- our package.json exists
+    console.log(error);
+    /* eslint-enable no-console -- Inform user */
+  }
+};
 
 const moduleCheck = new Map();
 
@@ -46,7 +51,12 @@ export default iterateJsdoc(({
   utils,
 }) => {
   // istanbul ignore if
-  if (!deps) {
+  if (deps === undefined) {
+    setDeps();
+  }
+
+  // istanbul ignore if -- our package.json exists
+  if (deps === null) {
     return;
   }
 
@@ -62,7 +72,13 @@ export default iterateJsdoc(({
       continue;
     }
 
+    // eslint-disable-next-line no-loop-func -- Safe
     traverse(typeAst, (nde) => {
+      // istanbul ignore if -- TS guard
+      if (deps === null) {
+        return;
+      }
+
       if (nde.type === 'JsdocTypeImport') {
         let mod = nde.element.value.replace(
           /^(@[^/]+\/[^/]+|[^/]+).*$/u, '$1',
