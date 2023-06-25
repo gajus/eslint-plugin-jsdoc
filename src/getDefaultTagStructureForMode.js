@@ -838,6 +838,10 @@ const getDefaultTagStructureForMode = (mode) => {
           'namepathRole', isJsdoc ? 'text' : 'namepath-referencing',
         ],
 
+        [
+          'nameRequired', !isJsdoc,
+        ],
+
         // Though defines `namepathRole: 'namepath-defining'` in a sense, it is
         //   not parseable in the same way for template (e.g., allowing commas),
         //   so not adding
