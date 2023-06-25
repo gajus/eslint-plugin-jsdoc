@@ -357,6 +357,31 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @template
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Only allowing names not matching `/^$/u` but found "".',
+        },
+      ],
+      options: [
+        {
+          match: [
+            {
+              disallowName: '/^$/',
+              tags: [
+                'template',
+              ],
+            },
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {
