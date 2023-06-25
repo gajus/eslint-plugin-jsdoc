@@ -178,6 +178,12 @@ function quux () {}
  */
 // "jsdoc/match-name": ["error"|"warn", {"match":[{"disallowName":"/^opt_/i","replacement":""}]}]
 // Message: Only allowing names not matching `/^opt_/i` but found "opt_a".
+
+/**
+ * @template
+ */
+// "jsdoc/match-name": ["error"|"warn", {"match":[{"disallowName":"/^$/","tags":["template"]}]}]
+// Message: Only allowing names not matching `/^$/u` but found "".
 ````
 
 
