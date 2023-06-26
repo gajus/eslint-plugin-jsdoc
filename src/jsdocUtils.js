@@ -483,7 +483,7 @@ const hasParams = (functionNode) => {
 
 /**
  * Gets all names of the target type, including those that refer to a path, e.g.
- * "@param foo; @param foo.bar".
+ * `foo` or `foo.bar`.
  * @param {import('comment-parser').Block} jsdoc
  * @param {string} targetTagName
  * @returns {{

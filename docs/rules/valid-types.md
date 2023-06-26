@@ -487,6 +487,21 @@ function quux (items) {
 }
 // Settings: {"jsdoc":{"mode":"typescript"}}
 // Message: Syntax error in type: JsdocTypeNullable
+
+/**
+ * An inline {@link} tag without content.
+ */
+// Message: Inline tag "link" missing content
+
+/**
+ * An inline {@tutorial} tag without content.
+ */
+// Message: Inline tag "tutorial" missing content
+
+/**
+ * @param {SomeType} aName An inline {@link} tag without content.
+ */
+// Message: Inline tag "link" missing content
 ````
 
 
@@ -849,6 +864,18 @@ function quux() {
 
 /**
  * @returns {Promise<{publicKey, privateKey}>} - The public and private key
+ */
+
+/**
+ * Some other {@inline} tag.
+ */
+
+/**
+ * @param {SomeType} aName An inline {@link text} tag with content.
+ */
+
+/**
+ * An inline {@link text} tag with content.
  */
 ````
 

@@ -1102,6 +1102,45 @@ export default {
         },
       },
     },
+    {
+      code: `
+      /**
+       * An inline {@link} tag without content.
+       */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline tag "link" missing content',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * An inline {@tutorial} tag without content.
+       */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline tag "tutorial" missing content',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @param {SomeType} aName An inline {@link} tag without content.
+       */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inline tag "link" missing content',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1787,6 +1826,27 @@ export default {
       code: `
       /**
        * @returns {Promise<{publicKey, privateKey}>} - The public and private key
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * Some other {@inline} tag.
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * @param {SomeType} aName An inline {@link text} tag with content.
+       */
+      `,
+    },
+    {
+      code: `
+      /**
+       * An inline {@link text} tag with content.
        */
       `,
     },
