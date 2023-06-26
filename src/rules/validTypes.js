@@ -5,6 +5,11 @@ import {
   tryParse,
 } from '@es-joy/jsdoccomment';
 
+const inlineTags = new Set([
+  'link', 'linkcode', 'linkplain',
+  'tutorial',
+]);
+
 const asExpression = /as\s+/u;
 
 const suppressTypes = new Set([
@@ -326,6 +331,18 @@ export default iterateJsdoc(({
       } else {
         validNamepathParsing(tag.name, tag.tag);
       }
+    }
+
+    for (const inlineTag of tag.inlineTags) {
+      if (inlineTags.has(inlineTag.tag) && !inlineTag.text && !inlineTag.namepathOrURL) {
+        report(`Inline tag "${inlineTag.tag}" missing content`, null, tag);
+      }
+    }
+  }
+
+  for (const inlineTag of jsdoc.inlineTags) {
+    if (inlineTags.has(inlineTag.tag) && !inlineTag.text && !inlineTag.namepathOrURL) {
+      report(`Inline tag "${inlineTag.tag}" missing content`);
     }
   }
 }, {
