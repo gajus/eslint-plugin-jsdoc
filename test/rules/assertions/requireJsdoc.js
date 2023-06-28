@@ -2323,7 +2323,7 @@ function quux (foo) {
       options: [
         {
           contexts: [
-            'MethodDefinition:not([accessibility="private"]) > FunctionExpression',
+            'MethodDefinition > FunctionExpression',
           ],
           publicOnly: true,
           require: {
@@ -5629,7 +5629,7 @@ function quux (foo) {
       options: [
         {
           contexts: [
-            'MethodDefinition:not([accessibility="private"]) > FunctionExpression',
+            'MethodDefinition > FunctionExpression',
           ],
           publicOnly: true,
           require: {
@@ -6141,6 +6141,32 @@ function quux (foo) {
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+    export default class Test {
+      private abc(a) {
+        this.a = a;
+      }
+    }
+    `,
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: false,
+            ClassDeclaration: false,
+            ClassExpression: false,
+            FunctionDeclaration: false,
+            FunctionExpression: false,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        sourceType: 'module',
+      },
     },
   ],
 };

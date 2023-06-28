@@ -893,6 +893,21 @@ const parse = function (ast, node, opt) {
   };
 };
 
+const accessibilityNodes = new Set([
+  'PropertyDefinition',
+  'MethodDefinition',
+]);
+
+/**
+ *
+ * @param {import('eslint').Rule.Node} node
+ * @returns {boolean}
+ */
+const hasAccessibility = (node) => {
+  return accessibilityNodes.has(node.type) && 'accessibility' in node &&
+    node.accessibility !== 'public';
+};
+
 /**
  *
  * @param {import('eslint').Rule.Node} node
@@ -905,10 +920,8 @@ const isUncommentedExport = function (node, sourceCode, opt, settings) {
   // console.log({node});
   // Optimize with ancestor check for esm
   if (opt.esm) {
-    if (
-      node.type === 'PropertyDefinition' && 'accessibility' in node &&
-      node.accessibility !== 'public'
-    ) {
+    if (hasAccessibility(node) ||
+      node.parent && hasAccessibility(node.parent)) {
       return false;
     }
 
