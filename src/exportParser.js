@@ -905,6 +905,13 @@ const isUncommentedExport = function (node, sourceCode, opt, settings) {
   // console.log({node});
   // Optimize with ancestor check for esm
   if (opt.esm) {
+    if (
+      node.type === 'PropertyDefinition' && 'accessibility' in node &&
+      node.accessibility !== 'public'
+    ) {
+      return false;
+    }
+
     const exportNode = getExportAncestor(node);
 
     // Is export node comment
