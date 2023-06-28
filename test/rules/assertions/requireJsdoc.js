@@ -4081,6 +4081,50 @@ function quux (foo) {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+        export class MyClass {
+
+          public myPublicProperty: number = 1;
+              /* ^ Missing JSDoc comment. eslint(jsdoc/require-jsdoc) - expected ✅ */
+
+          private myPrivateProp: number = -1;
+              /* ^ Missing JSDoc comment. eslint(jsdoc/require-jsdoc) - unexpected ❌ */
+
+          // ...
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'PropertyDefinition',
+          ],
+          publicOnly: true,
+        },
+      ],
+      output: `
+        export class MyClass {
+
+          /**
+           *
+           */
+          public myPublicProperty: number = 1;
+              /* ^ Missing JSDoc comment. eslint(jsdoc/require-jsdoc) - expected ✅ */
+
+          private myPrivateProp: number = -1;
+              /* ^ Missing JSDoc comment. eslint(jsdoc/require-jsdoc) - unexpected ❌ */
+
+          // ...
+        }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
