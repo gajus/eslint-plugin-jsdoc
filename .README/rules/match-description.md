@@ -69,8 +69,6 @@ some content:
 - `@example`
 - `@see`
 - `@todo`
-- `@throws`/`@exception`
-- `@yields`/`@yield`
 
 If you supply your own tag description for any of the above tags in `tags`,
 your description will take precedence.

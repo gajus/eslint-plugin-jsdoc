@@ -109,9 +109,7 @@ export default iterateJsdoc(({
       'copyright',
       'example',
       'see',
-      'throws',
       'todo',
-      'yields',
     ]) {
       utils.forEachPreferredTag(tag, (matchingJsdocTag, targetTagName) => {
         const desc = (matchingJsdocTag.name + ' ' + utils.getTagDescription(matchingJsdocTag)).trim();
