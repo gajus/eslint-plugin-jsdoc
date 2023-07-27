@@ -54,7 +54,7 @@ const recommended = options.includes('--recommended');
   await fs.writeFile(ruleNamesPath, JSON.stringify(ruleNames, null, 2) + '\n');
   console.log('ruleNames', ruleNames);
 
-  const ruleTemplate = `import iterateJsdoc from '../iterateJsdoc';
+  const ruleTemplate = `import iterateJsdoc from '../iterateJsdoc.js';
 
 export default iterateJsdoc(({
   context,
@@ -249,9 +249,9 @@ export default iterateJsdoc(({
 
   await replaceInOrder({
     checkName: 'index import',
-    newLine: `import ${camelCasedRuleName} from './rules/${camelCasedRuleName}';`,
+    newLine: `import ${camelCasedRuleName} from './rules/${camelCasedRuleName}.js';`,
     oldIsCamel: true,
-    oldRegex: /\nimport (?<oldRule>[^ ]*) from '.\/rules\/\1';/gu,
+    oldRegex: /\nimport (?<oldRule>[^ ]*) from '.\/rules\/\1\.js';/gu,
     path: './src/index.js',
   });
 

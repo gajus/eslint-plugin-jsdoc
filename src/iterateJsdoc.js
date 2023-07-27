@@ -1,4 +1,4 @@
-import jsdocUtils from './jsdocUtils';
+import jsdocUtils from './jsdocUtils.js';
 import {
   commentHandler,
   getJSDocComment,

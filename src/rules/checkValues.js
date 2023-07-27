@@ -1,4 +1,4 @@
-import iterateJsdoc from '../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc.js';
 import semver from 'semver';
 import spdxExpressionParse from 'spdx-expression-parse';
 

@@ -1,4 +1,4 @@
-import iterateJsdoc from '../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc.js';
 
 const defaultEmptyTags = new Set([
   'abstract', 'async', 'generator', 'global', 'hideconstructor',

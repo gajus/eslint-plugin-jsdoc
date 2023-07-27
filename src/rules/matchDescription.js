@@ -1,4 +1,4 @@
-import iterateJsdoc from '../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc.js';
 
 // If supporting Node >= 10, we could loosen the default to this for the
 //   initial letter: \\p{Upper}

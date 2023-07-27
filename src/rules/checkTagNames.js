@@ -1,4 +1,4 @@
-import iterateJsdoc from '../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc.js';
 import escapeStringRegexp from 'escape-string-regexp';
 
 // https://babeljs.io/docs/en/babel-plugin-transform-react-jsx/

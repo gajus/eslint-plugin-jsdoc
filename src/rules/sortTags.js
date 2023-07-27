@@ -1,5 +1,5 @@
-import defaultTagOrder from '../defaultTagOrder';
-import iterateJsdoc from '../iterateJsdoc';
+import defaultTagOrder from '../defaultTagOrder.js';
+import iterateJsdoc from '../iterateJsdoc.js';
 
 // eslint-disable-next-line complexity -- Temporary
 export default iterateJsdoc(({

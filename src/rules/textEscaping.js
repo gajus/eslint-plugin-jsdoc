@@ -1,4 +1,4 @@
-import iterateJsdoc from '../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc.js';
 
 // We could disallow raw gt, quot, and apos, but allow for parity; but we do
 //  not allow hex or decimal character references

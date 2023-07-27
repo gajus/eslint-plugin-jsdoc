@@ -1,14 +1,14 @@
-import getDefaultTagStructureForMode from './getDefaultTagStructureForMode';
+import getDefaultTagStructureForMode from './getDefaultTagStructureForMode.js';
 import {
   closureTags,
   jsdocTags,
   typeScriptTags,
-} from './tagNames';
+} from './tagNames.js';
 import {
   hasReturnValue,
   hasValueOrExecutorHasNonEmptyResolveValue,
-} from './utils/hasReturnValue';
-import WarnSettings from './WarnSettings';
+} from './utils/hasReturnValue.js';
+import WarnSettings from './WarnSettings.js';
 import {
   tryParse,
 } from '@es-joy/jsdoccomment';

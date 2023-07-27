@@ -1,5 +1,5 @@
-import alignTransform from '../alignTransform';
-import iterateJsdoc from '../iterateJsdoc';
+import alignTransform from '../alignTransform.js';
+import iterateJsdoc from '../iterateJsdoc.js';
 import {
   transforms,
 } from 'comment-parser';

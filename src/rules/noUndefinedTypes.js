@@ -1,6 +1,6 @@
 import iterateJsdoc, {
   parseComment,
-} from '../iterateJsdoc';
+} from '../iterateJsdoc.js';
 import {
   getJSDocComment,
   parse as parseType,

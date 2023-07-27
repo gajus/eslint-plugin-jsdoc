@@ -1,4 +1,4 @@
-import iterateJsdoc from '../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc.js';
 
 const anyWhitespaceLines = /^\s*$/u;
 const atLeastTwoLinesWhitespace = /^[ \t]*\n[ \t]*\n\s*$/u;
