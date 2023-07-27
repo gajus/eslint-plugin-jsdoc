@@ -915,7 +915,7 @@ interface TestInterface {
 /**
  * An interface property.
  */
-public Test: (id: number) => string;
+Test: (id: number) => string;
 }
 // "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.
@@ -924,7 +924,7 @@ interface TestInterface {
   /**
    * An interface method.
    */
-  public TestMethod(): (id: number) => string;
+  TestMethod(): (id: number) => string;
 }
 // "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "id" declaration.

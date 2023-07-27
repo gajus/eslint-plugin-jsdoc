@@ -905,7 +905,7 @@ const accessibilityNodes = new Set([
  */
 const hasAccessibility = (node) => {
   return accessibilityNodes.has(node.type) && 'accessibility' in node &&
-    node.accessibility !== 'public';
+    node.accessibility !== 'public' && node.accessibility !== undefined;
 };
 
 /**

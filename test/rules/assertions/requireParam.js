@@ -1624,7 +1624,7 @@ export default {
         /**
          * An interface property.
          */
-        public Test: (id: number) => string;
+        Test: (id: number) => string;
         }
       `,
       errors: [
@@ -1646,7 +1646,7 @@ export default {
          * An interface property.
          * @param id
          */
-        public Test: (id: number) => string;
+        Test: (id: number) => string;
         }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
@@ -1657,7 +1657,7 @@ export default {
           /**
            * An interface method.
            */
-          public TestMethod(): (id: number) => string;
+          TestMethod(): (id: number) => string;
         }
       `,
       errors: [
@@ -1679,7 +1679,7 @@ export default {
            * An interface method.
            * @param id
            */
-          public TestMethod(): (id: number) => string;
+          TestMethod(): (id: number) => string;
         }
       `,
       parser: require.resolve('@typescript-eslint/parser'),
