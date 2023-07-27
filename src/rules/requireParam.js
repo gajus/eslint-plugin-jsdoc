@@ -1,4 +1,4 @@
-import iterateJsdoc from '../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc.js';
 
 /**
  * @typedef {[string, boolean, () => RootNamerReturn]} RootNamerReturn

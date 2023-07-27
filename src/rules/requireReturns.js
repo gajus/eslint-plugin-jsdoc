@@ -1,4 +1,4 @@
-import iterateJsdoc from '../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc.js';
 
 /**
  * We can skip checking for a return value, in case the documentation is inherited

@@ -1,4 +1,4 @@
-import iterateJsdoc from '../iterateJsdoc';
+import iterateJsdoc from '../iterateJsdoc.js';
 
 const middleAsterisksBlockWS = /^([\t ]|\*(?!\*))+/u;
 const middleAsterisksNoBlockWS = /^\*+/u;

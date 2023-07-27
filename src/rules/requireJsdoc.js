@@ -1,8 +1,8 @@
-import exportParser from '../exportParser';
+import exportParser from '../exportParser.js';
 import {
   getSettings,
-} from '../iterateJsdoc';
-import jsdocUtils from '../jsdocUtils';
+} from '../iterateJsdoc.js';
+import jsdocUtils from '../jsdocUtils.js';
 import {
   getDecorator,
   getJSDocComment,
