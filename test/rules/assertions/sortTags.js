@@ -1,4 +1,4 @@
-import defaultTagOrder from '../../../src/defaultTagOrder';
+import defaultTagOrder from '../../../src/defaultTagOrder.js';
 
 const tagList = defaultTagOrder.flatMap((obj) => {
   return obj.tags;

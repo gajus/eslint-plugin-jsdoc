@@ -5,7 +5,8 @@
     "module": "NodeNext",
     "allowJs": true,
     "checkJs": true,
-    "noEmit": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
     "declaration": true,
     "declarationMap": true,
     "strict": true,
@@ -13,9 +14,7 @@
     "outDir": "dist"
   },
   "include": [
-    "src/**/*.js",
-    "test/**/*.js",
-    "src/bin/gitdown.d.ts"
+    "src/**/*.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/bin/*.js"]
 }

@@ -1,4 +1,4 @@
-import jsdocUtils from '../src/jsdocUtils';
+import jsdocUtils from '../src/jsdocUtils.js';
 import {
   expect,
 } from 'chai';
