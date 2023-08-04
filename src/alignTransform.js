@@ -23,10 +23,10 @@ const {
 
 /**
  * @typedef {{
- *   name: import('./iterateJsdoc').Integer,
- *   start: import('./iterateJsdoc').Integer,
- *   tag: import('./iterateJsdoc').Integer,
- *   type: import('./iterateJsdoc').Integer
+ *   name: import('./iterateJsdoc.js').Integer,
+ *   start: import('./iterateJsdoc.js').Integer,
+ *   tag: import('./iterateJsdoc.js').Integer,
+ *   type: import('./iterateJsdoc.js').Integer
  * }} Width
  */
 
@@ -40,7 +40,7 @@ const zeroWidth = {
 
 /**
  * @param {string[]} tags
- * @param {import('./iterateJsdoc').Integer} index
+ * @param {import('./iterateJsdoc.js').Integer} index
  * @param {import('comment-parser').Line[]} source
  * @returns {boolean}
  */

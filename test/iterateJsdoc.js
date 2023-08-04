@@ -2,7 +2,7 @@ import {
   // eslint-disable-next-line import/no-named-default
   default as iterateJsdoc,
   parseComment,
-} from '../src/iterateJsdoc';
+} from '../src/iterateJsdoc.js';
 import {
   expect,
 } from 'chai';

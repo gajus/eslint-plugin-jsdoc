@@ -6,7 +6,7 @@ which is not listed in `dependencies` or `devDependencies`.
 |||
 |---|---|
 |Context|everywhere|
-|Tags|``|
+|Tags|(Any)|
 |Recommended|false|
 |Settings||
 |Options||

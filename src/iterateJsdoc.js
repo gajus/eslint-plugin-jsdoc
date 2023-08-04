@@ -2097,7 +2097,7 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
 /**
  * @typedef {object} RuleConfig
  * @property {EslintRuleMeta} meta ESLint rule meta
- * @property {import('./jsdocUtils').DefaultContexts} [contextDefaults] Any default contexts
+ * @property {import('./jsdocUtils.js').DefaultContexts} [contextDefaults] Any default contexts
  * @property {true} [contextSelected] Whether to force a `contexts` check
  * @property {true} [iterateAllJsdocs] Whether to iterate all JSDoc blocks by default
  *   regardless of context

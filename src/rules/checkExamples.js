@@ -1,12 +1,15 @@
 // Todo: When replace `CLIEngine` with `ESLint` when feature set complete per https://github.com/eslint/eslint/issues/14745
 // https://github.com/eslint/eslint/blob/master/docs/user-guide/migrating-to-7.0.0.md#-the-cliengine-class-has-been-deprecated
 import iterateJsdoc from '../iterateJsdoc.js';
-import {
-  // @ts-expect-error - For older ESLint
-  CLIEngine,
+import eslint, {
   ESLint,
 } from 'eslint';
 import semver from 'semver';
+
+const {
+  // @ts-expect-error Older ESLint
+  CLIEngine,
+} = eslint;
 
 const zeroBasedLineIndexAdjust = -1;
 const likelyNestedJSDocIndentSpace = 1;
@@ -28,7 +31,7 @@ const escapeStringRegexp = (str) => {
 /**
  * @param {string} str
  * @param {string} ch
- * @returns {import('../iterateJsdoc').Integer}
+ * @returns {import('../iterateJsdoc.js').Integer}
  */
 const countChars = (str, ch) => {
   return (str.match(new RegExp(escapeStringRegexp(ch), 'gu')) || []).length;
@@ -224,8 +227,8 @@ export default iterateJsdoc(({
 
     /**
      * @param {{
-     *   nonJSPrefacingCols: import('../iterateJsdoc').Integer,
-     *   nonJSPrefacingLines: import('../iterateJsdoc').Integer,
+     *   nonJSPrefacingCols: import('../iterateJsdoc.js').Integer,
+     *   nonJSPrefacingLines: import('../iterateJsdoc.js').Integer,
      *   string: string
      * }} cfg
      */

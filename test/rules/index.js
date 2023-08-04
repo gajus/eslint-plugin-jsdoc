@@ -1,4 +1,4 @@
-import config from '../../src';
+import config from '../../src/index.js';
 // import {fileURLToPath} from 'url';
 import camelCase from 'camelcase';
 import {
