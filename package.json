@@ -67,6 +67,10 @@
   "engines": {
     "node": ">=16"
   },
+  "files": [
+    "dist",
+    "docs"
+  ],
   "keywords": [
     "eslint",
     "plugin",
