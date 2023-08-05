@@ -166,10 +166,10 @@ const flattenRoots = (params, root = '') => {
 };
 
 /**
- * @param {import('@typescript-eslint/types').TSESTree.TSIndexSignature|
- *  import('@typescript-eslint/types').TSESTree.TSConstructSignatureDeclaration|
- *  import('@typescript-eslint/types').TSESTree.TSCallSignatureDeclaration|
- *  import('@typescript-eslint/types').TSESTree.TSPropertySignature} propSignature
+ * @param {import('@typescript-eslint/types/dist').TSESTree.TSIndexSignature|
+ *  import('@typescript-eslint/types/dist').TSESTree.TSConstructSignatureDeclaration|
+ *  import('@typescript-eslint/types/dist').TSESTree.TSCallSignatureDeclaration|
+ *  import('@typescript-eslint/types/dist').TSESTree.TSPropertySignature} propSignature
  * @returns {undefined|string|[string, string[]]}
  */
 const getPropertiesFromPropertySignature = (propSignature) => {
@@ -183,13 +183,13 @@ const getPropertiesFromPropertySignature = (propSignature) => {
 
   if (propSignature.typeAnnotation && propSignature.typeAnnotation.typeAnnotation.type === 'TSTypeLiteral') {
     return [
-      /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+      /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
         propSignature.key
       ).name,
       propSignature.typeAnnotation.typeAnnotation.members.map((member) => {
         return /** @type {string} */ (
           getPropertiesFromPropertySignature(
-            /** @type {import('@typescript-eslint/types').TSESTree.TSPropertySignature} */ (
+            /** @type {import('@typescript-eslint/types/dist').TSESTree.TSPropertySignature} */ (
               member
             ),
           )
@@ -198,7 +198,7 @@ const getPropertiesFromPropertySignature = (propSignature) => {
     ];
   }
 
-  return /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+  return /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
     propSignature.key
   ).name;
 };
@@ -217,13 +217,13 @@ const getFunctionParameterNames = (
    * @param {import('estree').Identifier|import('estree').AssignmentPattern|
    *   import('estree').ObjectPattern|import('estree').Property|
    *   import('estree').RestElement|import('estree').ArrayPattern|
-   *   import('@typescript-eslint/types').TSESTree.TSParameterProperty|
-   *   import('@typescript-eslint/types').TSESTree.Property|
-   *   import('@typescript-eslint/types').TSESTree.RestElement|
-   *   import('@typescript-eslint/types').TSESTree.Identifier|
-   *   import('@typescript-eslint/types').TSESTree.ObjectPattern|
-   *   import('@typescript-eslint/types').TSESTree.BindingName|
-   *   import('@typescript-eslint/types').TSESTree.Parameter
+   *   import('@typescript-eslint/types/dist').TSESTree.TSParameterProperty|
+   *   import('@typescript-eslint/types/dist').TSESTree.Property|
+   *   import('@typescript-eslint/types/dist').TSESTree.RestElement|
+   *   import('@typescript-eslint/types/dist').TSESTree.Identifier|
+   *   import('@typescript-eslint/types/dist').TSESTree.ObjectPattern|
+   *   import('@typescript-eslint/types/dist').TSESTree.BindingName|
+   *   import('@typescript-eslint/types/dist').TSESTree.Parameter
    * } param
    * @param {boolean} [isProperty]
    * @returns {ParamNameInfo|[string, ParamNameInfo[]]}
@@ -234,16 +234,16 @@ const getFunctionParameterNames = (
 
     if ('typeAnnotation' in param || hasLeftTypeAnnotation) {
       const typeAnnotation = hasLeftTypeAnnotation ?
-        /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+        /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
           param.left
         ).typeAnnotation :
-        /** @type {import('@typescript-eslint/types').TSESTree.Identifier|import('@typescript-eslint/types').TSESTree.ObjectPattern} */
+        /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier|import('@typescript-eslint/types/dist').TSESTree.ObjectPattern} */
         (param).typeAnnotation;
 
       if (typeAnnotation?.typeAnnotation?.type === 'TSTypeLiteral') {
         const propertyNames = typeAnnotation.typeAnnotation.members.map((member) => {
           return getPropertiesFromPropertySignature(
-            /** @type {import('@typescript-eslint/types').TSESTree.TSPropertySignature} */
+            /** @type {import('@typescript-eslint/types/dist').TSESTree.TSPropertySignature} */
             (member),
           );
         });
@@ -257,10 +257,10 @@ const getFunctionParameterNames = (
         if ('name' in param || hasLeftName) {
           return [
             hasLeftName ?
-              /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+              /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
                 param.left
               ).name :
-              /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+              /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
                 param
               ).name,
             flattened,
@@ -288,12 +288,12 @@ const getFunctionParameterNames = (
         param
       ).left.type === 'ObjectPattern')
     ) {
-      const properties = /** @type {import('@typescript-eslint/types').TSESTree.ObjectPattern} */ (
+      const properties = /** @type {import('@typescript-eslint/types/dist').TSESTree.ObjectPattern} */ (
         param
       ).properties ||
         /** @type {import('estree').ObjectPattern} */
         (
-          /** @type {import('@typescript-eslint/types').TSESTree.AssignmentPattern} */ (
+          /** @type {import('@typescript-eslint/types/dist').TSESTree.AssignmentPattern} */ (
             param
           ).left
         )?.properties;
@@ -435,8 +435,8 @@ const getFunctionParameterNames = (
     ].includes(param.type)) {
       return {
         isRestProperty: isProperty,
-        name: /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
-          /** @type {import('@typescript-eslint/types').TSESTree.RestElement} */ (
+        name: /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
+          /** @type {import('@typescript-eslint/types/dist').TSESTree.RestElement} */ (
             param
           ).argument).name,
         restElement: true,
@@ -445,8 +445,8 @@ const getFunctionParameterNames = (
 
     if (param.type === 'TSParameterProperty') {
       return getParamName(
-        /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
-          /** @type {import('@typescript-eslint/types').TSESTree.TSParameterProperty} */ (
+        /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
+          /** @type {import('@typescript-eslint/types/dist').TSESTree.TSParameterProperty} */ (
             param
           ).parameter
         ),
@@ -461,9 +461,9 @@ const getFunctionParameterNames = (
     return [];
   }
 
-  return (/** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */ (
+  return (/** @type {import('@typescript-eslint/types/dist').TSESTree.FunctionDeclaration} */ (
     functionNode
-  ).params || /** @type {import('@typescript-eslint/types').TSESTree.MethodDefinition} */ (
+  ).params || /** @type {import('@typescript-eslint/types/dist').TSESTree.MethodDefinition} */ (
     functionNode
   ).value?.params || []).map((param) => {
     return getParamName(param);
@@ -476,7 +476,7 @@ const getFunctionParameterNames = (
  */
 const hasParams = (functionNode) => {
   // Should also check `functionNode.value.params` if supporting `MethodDefinition`
-  return /** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */ (
+  return /** @type {import('@typescript-eslint/types/dist').TSESTree.FunctionDeclaration} */ (
     functionNode
   ).params.length;
 };
@@ -1059,7 +1059,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
         node.handler && node.handler.body, checkYieldReturnValue,
       ) ||
       hasNonFunctionYield(
-        /** @type {import('@typescript-eslint/types').TSESTree.BlockStatement} */
+        /** @type {import('@typescript-eslint/types/dist').TSESTree.BlockStatement} */
         (node.finalizer),
         checkYieldReturnValue,
       );
@@ -1201,13 +1201,13 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
  * @returns {boolean}
  */
 const hasYieldValue = (node, checkYieldReturnValue) => {
-  return /** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */ (
+  return /** @type {import('@typescript-eslint/types/dist').TSESTree.FunctionDeclaration} */ (
     node
   ).generator && (
-    /** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */ (
+    /** @type {import('@typescript-eslint/types/dist').TSESTree.FunctionDeclaration} */ (
       node
     ).expression || hasNonFunctionYield(
-      /** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */
+      /** @type {import('@typescript-eslint/types/dist').TSESTree.FunctionDeclaration} */
       (node).body,
       checkYieldReturnValue,
     )
@@ -1466,7 +1466,7 @@ const getIndent = (sourceCode) => {
  */
 const isConstructor = (node) => {
   return node?.type === 'MethodDefinition' && node.kind === 'constructor' ||
-  /** @type {import('@typescript-eslint/types').TSESTree.MethodDefinition} */ (
+  /** @type {import('@typescript-eslint/types/dist').TSESTree.MethodDefinition} */ (
     node?.parent
   )?.kind === 'constructor';
 };
@@ -1478,8 +1478,8 @@ const isConstructor = (node) => {
 const isGetter = (node) => {
   return node !== null &&
   /**
-   * @type {import('@typescript-eslint/types').TSESTree.MethodDefinition|
-   *   import('@typescript-eslint/types').TSESTree.Property}
+   * @type {import('@typescript-eslint/types/dist').TSESTree.MethodDefinition|
+   *   import('@typescript-eslint/types/dist').TSESTree.Property}
    */ (
     node.parent
   )?.kind === 'get';
@@ -1492,8 +1492,8 @@ const isGetter = (node) => {
 const isSetter = (node) => {
   return node !== null &&
   /**
-   * @type {import('@typescript-eslint/types').TSESTree.MethodDefinition|
-   *   import('@typescript-eslint/types').TSESTree.Property}
+   * @type {import('@typescript-eslint/types/dist').TSESTree.MethodDefinition|
+   *   import('@typescript-eslint/types/dist').TSESTree.Property}
    */(
     node.parent
   )?.kind === 'set';
@@ -1510,22 +1510,22 @@ const hasAccessorPair = (node) => {
     key,
   } =
     /**
-     * @type {import('@typescript-eslint/types').TSESTree.MethodDefinition|
-     *   import('@typescript-eslint/types').TSESTree.Property}
+     * @type {import('@typescript-eslint/types/dist').TSESTree.MethodDefinition|
+     *   import('@typescript-eslint/types/dist').TSESTree.Property}
      */ (node);
 
   const sourceName =
-    /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+    /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
       key
     ).name;
 
   const oppositeKind = sourceKind === 'get' ? 'set' : 'get';
 
   const sibling = type === 'MethodDefinition' ?
-    /** @type {import('@typescript-eslint/types').TSESTree.ClassBody} */ (
+    /** @type {import('@typescript-eslint/types/dist').TSESTree.ClassBody} */ (
       node.parent
     ).body :
-    /** @type {import('@typescript-eslint/types').TSESTree.ObjectExpression} */ (
+    /** @type {import('@typescript-eslint/types/dist').TSESTree.ObjectExpression} */ (
       node.parent
     ).properties;
 
@@ -1535,12 +1535,12 @@ const hasAccessorPair = (node) => {
         kind,
         key: ky,
       } = /**
-           * @type {import('@typescript-eslint/types').TSESTree.MethodDefinition|
-           *   import('@typescript-eslint/types').TSESTree.Property}
+           * @type {import('@typescript-eslint/types/dist').TSESTree.MethodDefinition|
+           *   import('@typescript-eslint/types/dist').TSESTree.Property}
            */ (child);
 
       const name =
-        /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+        /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
           ky
         ).name;
 

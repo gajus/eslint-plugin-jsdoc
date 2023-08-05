@@ -413,7 +413,7 @@ export default {
       const fix = /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {
         // Default to one line break if the `minLines`/`maxLines` settings allow
         const lines = settings.minLines === 0 && settings.maxLines >= 1 ? 1 : settings.minLines;
-        /** @type {import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Decorator} */
+        /** @type {import('eslint').Rule.Node|import('@typescript-eslint/types/dist').TSESTree.Decorator} */
         let baseNode = getReducedASTNode(node, sourceCode);
 
         const decorator = getDecorator(baseNode);
@@ -529,8 +529,8 @@ export default {
           ].includes(node.parent.type) &&
             node ===
               /**
-               * @type {import('@typescript-eslint/types').TSESTree.Property|
-               *   import('@typescript-eslint/types').TSESTree.PropertyDefinition
+               * @type {import('@typescript-eslint/types/dist').TSESTree.Property|
+               *   import('@typescript-eslint/types/dist').TSESTree.PropertyDefinition
                * }
                */
               (node.parent).value
@@ -585,8 +585,8 @@ export default {
           ].includes(node.parent.type) &&
             node ===
               /**
-               * @type {import('@typescript-eslint/types').TSESTree.Property|
-               *   import('@typescript-eslint/types').TSESTree.PropertyDefinition
+               * @type {import('@typescript-eslint/types/dist').TSESTree.Property|
+               *   import('@typescript-eslint/types/dist').TSESTree.PropertyDefinition
                * }
                */
               (node.parent).value

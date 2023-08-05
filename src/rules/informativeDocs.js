@@ -16,7 +16,7 @@ const defaultUselessWords = [
 /* eslint-disable complexity -- Temporary */
 
 /**
- * @param {import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Node|null|undefined} node
+ * @param {import('eslint').Rule.Node|import('@typescript-eslint/types/dist').TSESTree.Node|null|undefined} node
  * @returns {string[]}
  */
 const getNamesFromNode = (node) => {
@@ -29,12 +29,12 @@ const getNamesFromNode = (node) => {
   case 'TSAbstractPropertyDefinition':
     return [
       ...getNamesFromNode(
-        /** @type {import('@typescript-eslint/types').TSESTree.Node} */ (
+        /** @type {import('@typescript-eslint/types/dist').TSESTree.Node} */ (
           node.parent
         ).parent,
       ),
       ...getNamesFromNode(
-        /** @type {import('@typescript-eslint/types').TSESTree.Node} */
+        /** @type {import('@typescript-eslint/types/dist').TSESTree.Node} */
         (node.key),
       ),
     ];
@@ -50,7 +50,7 @@ const getNamesFromNode = (node) => {
   case 'TSInterfaceDeclaration':
   case 'TSTypeAliasDeclaration':
     return getNamesFromNode(
-      /** @type {import('@typescript-eslint/types').TSESTree.ClassDeclaration} */
+      /** @type {import('@typescript-eslint/types/dist').TSESTree.ClassDeclaration} */
       (node).id,
     );
   case 'Identifier':
@@ -59,22 +59,22 @@ const getNamesFromNode = (node) => {
     ];
   case 'Property':
     return getNamesFromNode(
-      /** @type {import('@typescript-eslint/types').TSESTree.Node} */
+      /** @type {import('@typescript-eslint/types/dist').TSESTree.Node} */
       (node.key),
     );
   case 'VariableDeclaration':
     return getNamesFromNode(
-      /** @type {import('@typescript-eslint/types').TSESTree.Node} */
+      /** @type {import('@typescript-eslint/types/dist').TSESTree.Node} */
       (node.declarations[0]),
     );
   case 'VariableDeclarator':
     return [
       ...getNamesFromNode(
-        /** @type {import('@typescript-eslint/types').TSESTree.Node} */
+        /** @type {import('@typescript-eslint/types/dist').TSESTree.Node} */
         (node.id),
       ),
       ...getNamesFromNode(
-        /** @type {import('@typescript-eslint/types').TSESTree.Node} */
+        /** @type {import('@typescript-eslint/types/dist').TSESTree.Node} */
         (node.init),
       ),
     ].filter(Boolean);

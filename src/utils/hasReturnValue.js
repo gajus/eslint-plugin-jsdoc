@@ -1,6 +1,6 @@
 /**
  * @typedef {import('estree').Node|
- *   import('@typescript-eslint/types').TSESTree.Node} ESTreeOrTypeScriptNode
+ *   import('@typescript-eslint/types/dist').TSESTree.Node} ESTreeOrTypeScriptNode
  */
 
 /**
@@ -19,7 +19,7 @@ const isNewPromiseExpression = (node) => {
  * @returns {boolean}
  */
 const isVoidPromise = (node) => {
-  return /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */ (
+  return /** @type {import('@typescript-eslint/types/dist').TSESTree.TSTypeReference} */ (
     node
   )?.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
 };
@@ -149,7 +149,7 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
   case 'ArrowFunctionExpression': {
     return 'expression' in node && node.expression && (!isNewPromiseExpression(node.body) || !isVoidPromise(node.body)) ||
       allBrancheshaveReturnValues(node.body, promFilter) ||
-      /** @type {import('@typescript-eslint/types').TSESTree.BlockStatement} */
+      /** @type {import('@typescript-eslint/types/dist').TSESTree.BlockStatement} */
       (node.body).body.some((nde) => {
         return nde.type === 'ReturnStatement';
       });
@@ -164,7 +164,7 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
   case 'DoWhileStatement':
     if (
       /**
-       * @type {import('@typescript-eslint/types').TSESTree.Literal}
+       * @type {import('@typescript-eslint/types/dist').TSESTree.Literal}
        */
       (node.test).value === true
     ) {
@@ -213,7 +213,7 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
   }
 
   case 'SwitchStatement': {
-    return /** @type {import('@typescript-eslint/types').TSESTree.SwitchStatement} */ (node).cases.every(
+    return /** @type {import('@typescript-eslint/types/dist').TSESTree.SwitchStatement} */ (node).cases.every(
       (someCase) => {
         return !someCase.consequent.some((consNode) => {
           return consNode.type === 'BreakStatement' ||
@@ -262,7 +262,7 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
  * This could check for redeclaration of the resolver, but as such is
  * unlikely, we avoid the performance cost of checking everywhere for
  * (re)declarations or assignments.
- * @param {import('@typescript-eslint/types').TSESTree.Node|null|undefined} node
+ * @param {import('@typescript-eslint/types/dist').TSESTree.Node|null|undefined} node
  * @param {string} resolverName
  * @returns {boolean}
  */
@@ -278,7 +278,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   // istanbul ignore next -- In Babel?
   case 'OptionalCallExpression':
   case 'CallExpression':
-    return /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+    return /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
       node.callee
     ).name === resolverName && (
 
@@ -305,7 +305,7 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'FunctionDeclaration':
   case 'ArrowFunctionExpression': {
     // Shadowing
-    if (/** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+    if (/** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
       node.params[0]
     )?.name === resolverName) {
       return false;
@@ -524,10 +524,10 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, all
       body,
     } =
     /**
-     * @type {import('@typescript-eslint/types').TSESTree.FunctionExpression|
-     * import('@typescript-eslint/types').TSESTree.ArrowFunctionExpression}
+     * @type {import('@typescript-eslint/types/dist').TSESTree.FunctionExpression|
+     * import('@typescript-eslint/types/dist').TSESTree.ArrowFunctionExpression}
      */ (
-      /** @type {import('@typescript-eslint/types').TSESTree.NewExpression} */ (
+      /** @type {import('@typescript-eslint/types/dist').TSESTree.NewExpression} */ (
           prom
         ).arguments[0]
       ) || {};
@@ -538,7 +538,7 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, all
 
     const {
       name: resolverName,
-    } = /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+    } = /** @type {import('@typescript-eslint/types/dist').TSESTree.Identifier} */ (
       params[0]
     );
 

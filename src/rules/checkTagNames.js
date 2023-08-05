@@ -122,7 +122,7 @@ export default iterateJsdoc(({
     return subNode.type === 'Program' ?
       context.getFilename().endsWith('.d.ts') :
       Boolean(
-        /** @type {import('@typescript-eslint/types').TSESTree.VariableDeclaration} */ (
+        /** @type {import('@typescript-eslint/types/dist').TSESTree.VariableDeclaration} */ (
           subNode
         ).declare,
       ) || isInAmbientContext(subNode.parent);
