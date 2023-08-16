@@ -1,4 +1,3 @@
-// @ts-expect-error Our package is not ESM
 import * as tsParser from '@typescript-eslint/parser';
 
 export default {
