@@ -1003,6 +1003,10 @@ export class MyClass {
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["PropertyDefinition"],"publicOnly":true}]
 // Message: Missing JSDoc comment.
+
+export const Comp = observer(() => <>Hello</>);
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["CallExpression[callee.name=\"observer\"]"],"enableFixer":false,"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
+// Message: Missing JSDoc comment.
 ````
 
 
