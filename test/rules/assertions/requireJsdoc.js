@@ -4125,6 +4125,40 @@ function quux (foo) {
       `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+        export const Comp = observer(() => <>Hello</>);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'CallExpression[callee.name="observer"]',
+          ],
+          enableFixer: false,
+          publicOnly: true,
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionDeclaration: true,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
   ],
   valid: [
     {
