@@ -5,3 +5,4 @@ test
 .*
 *.log
 CONTRIBUTING.md
+tsconfig*.json
