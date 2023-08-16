@@ -6,3 +6,6 @@ test
 *.log
 CONTRIBUTING.md
 tsconfig*.json
+*.d.ts
+*.d.ts.map
+docs
