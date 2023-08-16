@@ -58,7 +58,7 @@ const main = async () => {
      */
     let assertions;
     try {
-      assertions = (await import(`./assertions/${camelCase(ruleName)}`)).default;
+      assertions = (await import(`./assertions/${camelCase(ruleName)}.js`)).default;
     } catch (error) {
       // eslint-disable-next-line no-console -- Reporting back to tester
       console.error(error);
@@ -84,7 +84,7 @@ const main = async () => {
       Reflect.deleteProperty(assertion, 'ignoreReadme');
       assertion.parserOptions = defaultsDeep(assertion.parserOptions, parserOptions);
       for (const error of /** @type {import('eslint').RuleTester.TestCaseError[]} */ (
-        assertion.errors
+        assertion.errors || []
       )) {
         if (!('line' in error)) {
           count++;
