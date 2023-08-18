@@ -27,6 +27,31 @@ npm install --save-dev eslint-plugin-jsdoc
 
 ## Configuration
 
+### Flat config
+
+```js
+import jsdoc from 'eslint-plugin-jsdoc';
+
+const config = [
+  // configuration included in plugin
+  jsdoc.configs['flat/recommended'],
+  // other configuration objects...
+  {
+    files: ['**/*.js'],
+    plugins: {
+      jsdoc,
+    },
+    rules: {
+      'jsdoc/require-description': 'warn'
+    }
+  }
+];
+
+export default config;
+```
+
+### `eslintrc`
+
 Add `plugins` section to [.eslintrc.*](https://eslint.org/docs/user-guide/configuring#configuration-file-formats)
 and specify `eslint-plugin-jsdoc` as a plugin.
 

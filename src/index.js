@@ -54,7 +54,7 @@ import validTypes from './rules/validTypes.js';
 
 /**
  * @type {import('eslint').ESLint.Plugin & {
- *   configs: Record<string, import('eslint').ESLint.ConfigData>
+ *   configs: Record<string, import('eslint').ESLint.ConfigData|{}>
  * }}
  */
 const index = {
@@ -118,11 +118,14 @@ const index = {
 
 /**
  * @param {"warn"|"error"} warnOrError
- * @returns {import('eslint').ESLint.ConfigData}
+ * @param {boolean} [flat]
+ * @returns {import('eslint').ESLint.ConfigData | {plugins: {}, rules: {}}}
  */
-const createRecommendedRuleset = (warnOrError) => {
+const createRecommendedRuleset = (warnOrError, flat) => {
   return {
-    plugins: [
+    plugins: flat ? {
+      jsdoc: index,
+    } : [
       'jsdoc',
     ],
     rules: {
@@ -185,10 +188,11 @@ const createRecommendedRuleset = (warnOrError) => {
 
 /**
  * @param {"warn"|"error"} warnOrError
- * @returns {import('eslint').ESLint.ConfigData}
+ * @param {boolean} [flat]
+ * @returns {import('eslint').ESLint.ConfigData|{}}
  */
-const createRecommendedTypeScriptRuleset = (warnOrError) => {
-  const ruleset = createRecommendedRuleset(warnOrError);
+const createRecommendedTypeScriptRuleset = (warnOrError, flat) => {
+  const ruleset = createRecommendedRuleset(warnOrError, flat);
 
   return {
     ...ruleset,
@@ -212,10 +216,11 @@ const createRecommendedTypeScriptRuleset = (warnOrError) => {
 
 /**
  * @param {"warn"|"error"} warnOrError
- * @returns {import('eslint').ESLint.ConfigData}
+ * @param {boolean} [flat]
+ * @returns {import('eslint').ESLint.ConfigData|{}}
  */
-const createRecommendedTypeScriptFlavorRuleset = (warnOrError) => {
-  const ruleset = createRecommendedRuleset(warnOrError);
+const createRecommendedTypeScriptFlavorRuleset = (warnOrError, flat) => {
+  const ruleset = createRecommendedRuleset(warnOrError, flat);
 
   return {
     ...ruleset,
@@ -239,5 +244,12 @@ index.configs['recommended-typescript'] = createRecommendedTypeScriptRuleset('wa
 index.configs['recommended-typescript-error'] = createRecommendedTypeScriptRuleset('error');
 index.configs['recommended-typescript-flavor'] = createRecommendedTypeScriptFlavorRuleset('warn');
 index.configs['recommended-typescript-flavor-error'] = createRecommendedTypeScriptFlavorRuleset('error');
+
+index.configs['flat/recommended'] = createRecommendedRuleset('warn', true);
+index.configs['flat/recommended-error'] = createRecommendedRuleset('error', true);
+index.configs['flat/recommended-typescript'] = createRecommendedTypeScriptRuleset('warn', true);
+index.configs['flat/recommended-typescript-error'] = createRecommendedTypeScriptRuleset('error', true);
+index.configs['flat/recommended-typescript-flavor'] = createRecommendedTypeScriptFlavorRuleset('warn', true);
+index.configs['flat/recommended-typescript-flavor-error'] = createRecommendedTypeScriptFlavorRuleset('error', true);
 
 export default index;

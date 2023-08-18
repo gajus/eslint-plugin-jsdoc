@@ -12,6 +12,8 @@ JSDoc linting rules for ESLint.
 * [eslint-plugin-jsdoc](#user-content-eslint-plugin-jsdoc)
     * [Installation](#user-content-eslint-plugin-jsdoc-installation)
     * [Configuration](#user-content-eslint-plugin-jsdoc-configuration)
+        * [Flat config](#user-content-eslint-plugin-jsdoc-configuration-flat-config)
+        * [`eslintrc`](#user-content-eslint-plugin-jsdoc-configuration-eslintrc)
     * [Options](#user-content-eslint-plugin-jsdoc-options)
     * [Settings](#user-content-eslint-plugin-jsdoc-settings)
     * [Advanced](#user-content-eslint-plugin-jsdoc-advanced)
@@ -39,6 +41,35 @@ npm install --save-dev eslint-plugin-jsdoc
 <a name="user-content-eslint-plugin-jsdoc-configuration"></a>
 <a name="eslint-plugin-jsdoc-configuration"></a>
 ## Configuration
+
+<a name="user-content-eslint-plugin-jsdoc-configuration-flat-config"></a>
+<a name="eslint-plugin-jsdoc-configuration-flat-config"></a>
+### Flat config
+
+```js
+import jsdoc from 'eslint-plugin-jsdoc';
+
+const config = [
+  // configuration included in plugin
+  jsdoc.configs['flat/recommended'],
+  // other configuration objects...
+  {
+    files: ['**/*.js'],
+    plugins: {
+      jsdoc,
+    },
+    rules: {
+      'jsdoc/require-description': 'warn'
+    }
+  }
+];
+
+export default config;
+```
+
+<a name="user-content-eslint-plugin-jsdoc-configuration-eslintrc"></a>
+<a name="eslint-plugin-jsdoc-configuration-eslintrc"></a>
+### <code>eslintrc</code>
 
 Add `plugins` section to [.eslintrc.*](https://eslint.org/docs/user-guide/configuring#configuration-file-formats)
 and specify `eslint-plugin-jsdoc` as a plugin.
