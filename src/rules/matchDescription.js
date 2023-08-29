@@ -43,7 +43,7 @@ export default iterateJsdoc(({
     }
 
     if (mainDescriptionMatch === false && (
-      !tag || !Object.hasOwn(tags, tag.tag))
+      !tag || !Object.prototype.hasOwnProperty.call(tags, tag.tag))
     ) {
       return;
     }
