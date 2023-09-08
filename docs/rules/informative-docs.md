@@ -76,7 +76,7 @@ The default `uselessWords` option is:
 |Tags|any|
 |Recommended|false|
 |Settings||
-|Options|`aliases`, `uselessWords`|
+|Options|`aliases`, `excludedTags`, `uselessWords`|
 
 <a name="user-content-informative-docs-failing-examples"></a>
 <a name="informative-docs-failing-examples"></a>
@@ -249,6 +249,11 @@ function takesOne(param) {}
  */
 function takesOne(param) {}
 // Message: This description only repeats the name it describes.
+
+/** A smiley/winkey. */
+let emoji;
+// "jsdoc/informative-docs": ["error"|"warn", {"aliases":{"emoji":["smiley","winkey"]}}]
+// Message: This description only repeats the name it describes.
 ````
 
 
@@ -391,10 +396,21 @@ function takesOne(param) {}
 function takesOne(param) {}
 
 /**
- * @class 
+ * @class
  *
  * @param {number} value - Some useful text
- */      
+ */
 function MyAmazingThing(value) {}
+
+/**
+ * My option.
+ * @default {}
+ */
+// "jsdoc/informative-docs": ["error"|"warn", {"excludedTags":["default"]}]
+
+/**
+ * The
+ */
+// "jsdoc/informative-docs": ["error"|"warn", {"uselessWords":["an"]}]
 ````
 

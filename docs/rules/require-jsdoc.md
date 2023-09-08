@@ -1857,5 +1857,27 @@ export default class Test {
   }
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ArrowFunctionExpression":false,"ClassDeclaration":false,"ClassExpression":false,"FunctionDeclaration":false,"FunctionExpression":false,"MethodDefinition":true}}]
+
+export default {
+  created() {
+    this.getData();
+  },
+
+  beforeUpdate() {},
+
+  watch: {
+    someValue(val) {}
+  },
+
+  computed: {
+    loaded() {},
+    selection() {}
+  },
+
+  methods: {
+    getData(id) {}
+  }
+};
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ExportDefaultDeclaration > ObjectExpression > Property[key.name!=/^(created|beforeUpdate)$/] > FunctionExpression","ExportDefaultDeclaration > ObjectExpression > Property[key.name!=/^(watch|computed|methods)$/] > ObjectExpression > Property > FunctionExpression"]}]
 ````
 

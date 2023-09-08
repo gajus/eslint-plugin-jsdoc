@@ -476,6 +476,27 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /** A smiley/winkey. */
+        let emoji;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'This description only repeats the name it describes.',
+        },
+      ],
+      options: [
+        {
+          aliases: {
+            emoji: [
+              'smiley', 'winkey',
+            ],
+          },
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -752,12 +773,41 @@ export default {
     {
       code: `
         /**
-         * @class 
+         * @class
          *
          * @param {number} value - Some useful text
-         */      
+         */
         function MyAmazingThing(value) {}
       `,
+    },
+    {
+      code: `
+        /**
+         * My option.
+         * @default {}
+         */
+      `,
+      options: [
+        {
+          excludedTags: [
+            'default',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * The
+         */
+      `,
+      options: [
+        {
+          uselessWords: [
+            'an',
+          ],
+        },
+      ],
     },
   ],
 };

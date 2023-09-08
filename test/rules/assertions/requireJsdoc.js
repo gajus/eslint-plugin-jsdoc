@@ -6202,5 +6202,38 @@ function quux (foo) {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+      export default {
+        created() {
+          this.getData();
+        },
+
+        beforeUpdate() {},
+
+        watch: {
+          someValue(val) {}
+        },
+
+        computed: {
+          loaded() {},
+          selection() {}
+        },
+
+        methods: {
+          getData(id) {}
+        }
+      };
+      `,
+      options: [
+        {
+          contexts: [
+            'ExportDefaultDeclaration > ObjectExpression > Property[key.name!=/^(created|beforeUpdate)$/] > FunctionExpression',
+            'ExportDefaultDeclaration > ObjectExpression > Property[key.name!=/^(watch|computed|methods)$/] > ObjectExpression > Property > FunctionExpression',
+          ],
+        },
+      ],
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
 };

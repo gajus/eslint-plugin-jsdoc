@@ -91,8 +91,9 @@ export default iterateJsdoc(({
   report,
   utils,
 }) => {
-  const {
+  const /** @type {{aliases: {[key: string]: string[]}, excludedTags: string[], uselessWords: string[]}} */ {
     aliases = defaultAliases,
+    excludedTags = [],
     uselessWords = defaultUselessWords,
   } = context.options[0] || {};
   const nodeNames = getNamesFromNode(node);
@@ -119,6 +120,10 @@ export default iterateJsdoc(({
   let descriptionReported = false;
 
   for (const tag of jsdoc.tags) {
+    if (excludedTags.includes(tag.tag)) {
+      continue;
+    }
+
     if (descriptionIsRedundant(tag.description, tag.name)) {
       utils.reportJSDoc(
         'This tag description only repeats the name it describes.',
@@ -147,6 +152,16 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           aliases: {
+            patternProperties: {
+              '.*': {
+                items: {
+                  type: 'string',
+                },
+                type: 'array',
+              },
+            },
+          },
+          excludedTags: {
             items: {
               type: 'string',
             },
