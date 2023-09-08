@@ -60,7 +60,7 @@ The default `uselessWords` option is:
 |Tags|any|
 |Recommended|false|
 |Settings||
-|Options|`aliases`, `uselessWords`|
+|Options|`aliases`, `excludedTags`, `uselessWords`|
 
 ## Failing examples
 
