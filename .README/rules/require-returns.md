@@ -42,6 +42,8 @@ Will also report if multiple `@returns` tags are present.
     `forceReturnsWithAsync` option is set with a present `@async` tag
     (since we are not checking against the actual `return` values in these
     cases).
+- `enableFixer` - Whether to enable the fixer to add a blank `@returns`.
+    Defaults to `false`.
 
 ## Context and settings
 
@@ -51,7 +53,7 @@ Will also report if multiple `@returns` tags are present.
 | Tags     | `returns` |
 | Aliases  | `return` |
 |Recommended|true|
-| Options  |`checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
+| Options  |`checkConstructors`, `checkGetters`, `contexts`, `enableFixer`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 ## Failing examples

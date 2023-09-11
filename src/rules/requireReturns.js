@@ -44,6 +44,7 @@ export default iterateJsdoc(({
 }) => {
   const {
     contexts,
+    enableFixer = false,
     forceRequireReturn = false,
     forceReturnsWithAsync = false,
   } = context.options[0] || {};
@@ -110,7 +111,9 @@ export default iterateJsdoc(({
   };
 
   if (shouldReport()) {
-    report(`Missing JSDoc @${tagName} declaration.`);
+    utils.reportJSDoc(`Missing JSDoc @${tagName} declaration.`, null, enableFixer ? () => {
+      utils.addTag(tagName);
+    } : null);
   }
 }, {
   contextDefaults: true,
@@ -119,6 +122,7 @@ export default iterateJsdoc(({
       description: 'Requires that returns are documented.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-returns.md#repos-sticky-header',
     },
+    fixable: 'code',
     schema: [
       {
         additionalProperties: false,
@@ -155,6 +159,9 @@ export default iterateJsdoc(({
               ],
             },
             type: 'array',
+          },
+          enableFixer: {
+            type: 'boolean',
           },
           exemptedBy: {
             items: {
