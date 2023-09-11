@@ -50,6 +50,8 @@ Will also report if multiple `@returns` tags are present.
     `forceReturnsWithAsync` option is set with a present `@async` tag
     (since we are not checking against the actual `return` values in these
     cases).
+- `enableFixer` - Whether to enable the fixer to add a blank `@returns`.
+    Defaults to `false`.
 
 <a name="user-content-require-returns-context-and-settings"></a>
 <a name="require-returns-context-and-settings"></a>
@@ -61,7 +63,7 @@ Will also report if multiple `@returns` tags are present.
 | Tags     | `returns` |
 | Aliases  | `return` |
 |Recommended|true|
-| Options  |`checkConstructors`, `checkGetters`, `contexts`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
+| Options  |`checkConstructors`, `checkGetters`, `contexts`, `enableFixer`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 <a name="user-content-require-returns-failing-examples"></a>
@@ -78,6 +80,16 @@ function quux (foo) {
 
   return foo;
 }
+// Message: Missing JSDoc @returns declaration.
+
+/**
+ *
+ */
+function quux (foo) {
+
+  return foo;
+}
+// "jsdoc/require-returns": ["error"|"warn", {"enableFixer":true}]
 // Message: Missing JSDoc @returns declaration.
 
 /**

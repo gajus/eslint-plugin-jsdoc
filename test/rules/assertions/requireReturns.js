@@ -19,6 +19,38 @@ export default {
     },
     {
       code: `
+        /**
+         *
+         */
+        function quux (foo) {
+
+          return foo;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+        /**
+         *
+         * @returns
+         */
+        function quux (foo) {
+
+          return foo;
+        }
+      `,
+    },
+    {
+      code: `
           /**
            *
            */
