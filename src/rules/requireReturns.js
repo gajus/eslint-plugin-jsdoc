@@ -1,3 +1,4 @@
+import exportParser from '../exportParser.js';
 import iterateJsdoc from '../iterateJsdoc.js';
 
 /**
@@ -38,7 +39,9 @@ export default iterateJsdoc(({
   info: {
     comment,
   },
+  node,
   report,
+  settings,
   utils,
   context,
 }) => {
@@ -47,6 +50,7 @@ export default iterateJsdoc(({
     enableFixer = false,
     forceRequireReturn = false,
     forceReturnsWithAsync = false,
+    publicOnly = false,
   } = context.options[0] || {};
 
   // A preflight check. We do not need to run a deep check
@@ -90,6 +94,26 @@ export default iterateJsdoc(({
   const shouldReport = () => {
     if (!missingReturnTag) {
       return false;
+    }
+
+    if (publicOnly) {
+      /** @type {import('./requireJsdoc.js').RequireJsdocOpts} */
+      const opt = {
+        ancestorsOnly: Boolean(publicOnly?.ancestorsOnly ?? false),
+        esm: Boolean(publicOnly?.esm ?? true),
+        initModuleExports: Boolean(publicOnly?.cjs ?? true),
+        initWindow: Boolean(publicOnly?.window ?? false),
+      };
+      const {
+        sourceCode,
+      } = context;
+      const exported = exportParser.isUncommentedExport(
+        /** @type {import('eslint').Rule.Node} */ (node), sourceCode, opt, settings,
+      );
+
+      if (!exported) {
+        return false;
+      }
     }
 
     if ((forceRequireReturn || forceRequireReturnContext) && (
@@ -176,6 +200,33 @@ export default iterateJsdoc(({
           forceReturnsWithAsync: {
             default: false,
             type: 'boolean',
+          },
+          publicOnly: {
+            oneOf: [
+              {
+                default: false,
+                type: 'boolean',
+              },
+              {
+                additionalProperties: false,
+                default: {},
+                properties: {
+                  ancestorsOnly: {
+                    type: 'boolean',
+                  },
+                  cjs: {
+                    type: 'boolean',
+                  },
+                  esm: {
+                    type: 'boolean',
+                  },
+                  window: {
+                    type: 'boolean',
+                  },
+                },
+                type: 'object',
+              },
+            ],
           },
         },
         type: 'object',
