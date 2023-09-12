@@ -694,7 +694,9 @@ const getUtils = (
   indent,
 ) => {
   const ancestors = /** @type {import('eslint').Rule.Node[]} */ (context.getAncestors());
-  const sourceCode = context.getSourceCode();
+  const {
+    sourceCode,
+  } = context;
 
   const utils = /** @type {Utils} */ (getBasicUtils(context, settings));
 
@@ -2147,7 +2149,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
    * @returns {void}
    */
   const callIterator = (context, node, jsdocNodes, state, lastCall) => {
-    const sourceCode = context.getSourceCode();
+    const {
+      sourceCode,
+    } = context;
     const {
       lines,
     } = sourceCode;
@@ -2258,7 +2262,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
   return {
     // @ts-expect-error ESLint accepts
     create (context) {
-      const sourceCode = context.getSourceCode();
+      const {
+        sourceCode,
+      } = context;
       settings = getSettings(context);
       if (!settings) {
         return {};
@@ -2334,7 +2340,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
 const checkFile = (iterator, ruleConfig) => {
   return {
     create (context) {
-      const sourceCode = context.getSourceCode();
+      const {
+        sourceCode,
+      } = context;
       const settings = getSettings(context);
       if (!settings) {
         return {};
@@ -2451,7 +2459,9 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         }
       }
 
-      const sourceCode = context.getSourceCode();
+      const {
+        sourceCode,
+      } = context;
       const {
         lines,
       } = sourceCode;

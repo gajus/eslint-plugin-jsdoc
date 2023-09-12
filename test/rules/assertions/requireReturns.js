@@ -1830,6 +1830,137 @@ export default {
       ],
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+        /**
+         *
+         */
+        module.exports = function quux (foo) {
+
+          return foo;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        const a = function quux (foo) {
+
+          return foo;
+        };
+
+        export default a;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        export default function quux (foo) {
+
+          return foo;
+        };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+            esm: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        exports.quux = function quux (foo) {
+
+          return foo;
+        };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: {
+            cjs: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        window.quux = function quux (foo) {
+
+          return foo;
+        };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @returns declaration.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: {
+            window: true,
+          },
+        },
+      ],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [
     {
@@ -2753,6 +2884,22 @@ export default {
         },
       ],
       parser: require.resolve('@typescript-eslint/parser'),
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        function quux (foo) {
+
+          return foo;
+        }
+      `,
+      options: [
+        {
+          publicOnly: true,
+        },
+      ],
     },
   ],
 };

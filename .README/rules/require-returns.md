@@ -44,6 +44,7 @@ Will also report if multiple `@returns` tags are present.
     cases).
 - `enableFixer` - Whether to enable the fixer to add a blank `@returns`.
     Defaults to `false`.
+- `publicOnly` - See docs for `require-jsdoc`.
 
 ## Context and settings
 
@@ -53,7 +54,7 @@ Will also report if multiple `@returns` tags are present.
 | Tags     | `returns` |
 | Aliases  | `return` |
 |Recommended|true|
-| Options  |`checkConstructors`, `checkGetters`, `contexts`, `enableFixer`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`|
+| Options  |`checkConstructors`, `checkGetters`, `contexts`, `enableFixer`, `exemptedBy`, `forceRequireReturn`, `forceReturnsWithAsync`, `publicOnly`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
 ## Failing examples
