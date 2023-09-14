@@ -318,16 +318,12 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Sentences should start with an uppercase character.',
-        },
-        {
-          line: 3,
           message: 'Sentences must end with a period.',
         },
       ],
       output: `
           /**
-           * {@see Foo.bar} Buz.
+           * {@see Foo.bar} buz.
            */
           function quux (foo) {
 
@@ -1574,6 +1570,11 @@ export default {
           function quux () {
 
           }
+      `,
+    },
+    {
+      code: `
+      /** @param options {@link RequestOptions} specifying path parameters and query parameters. */
       `,
     },
   ],
