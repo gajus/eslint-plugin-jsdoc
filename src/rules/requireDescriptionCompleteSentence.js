@@ -25,7 +25,7 @@ const extractParagraphs = (text) => {
 const extractSentences = (text, abbreviationsRegex) => {
   const txt = text
     // Remove all {} tags.
-    .replaceAll(/\{[\s\S]*?\}\s*/gu, '')
+    .replaceAll(/(?<!^)\{[\s\S]*?\}\s*/gu, '')
 
     // Remove custom abbreviations
     .replace(abbreviationsRegex, '');

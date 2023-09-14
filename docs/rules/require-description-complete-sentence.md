@@ -211,7 +211,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: Sentences should start with an uppercase character.
+// Message: Sentences must end with a period.
 
 /**
  * Foo.
@@ -816,5 +816,7 @@ function quux () {}
 function quux () {
 
 }
+
+/** @param options {@link RequestOptions} specifying path parameters and query parameters. */
 ````
 
