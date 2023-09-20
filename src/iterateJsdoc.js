@@ -694,8 +694,10 @@ const getUtils = (
   indent,
 ) => {
   const ancestors = /** @type {import('eslint').Rule.Node[]} */ (context.getAncestors());
+
+  // istanbul ignore next -- Fallback to deprecated method
   const {
-    sourceCode,
+    sourceCode = context.getSourceCode(),
   } = context;
 
   const utils = /** @type {Utils} */ (getBasicUtils(context, settings));
@@ -2149,8 +2151,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
    * @returns {void}
    */
   const callIterator = (context, node, jsdocNodes, state, lastCall) => {
+    // istanbul ignore next -- Fallback to deprecated method
     const {
-      sourceCode,
+      sourceCode = context.getSourceCode(),
     } = context;
     const {
       lines,
@@ -2262,8 +2265,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
   return {
     // @ts-expect-error ESLint accepts
     create (context) {
+      // istanbul ignore next -- Fallback to deprecated method
       const {
-        sourceCode,
+        sourceCode = context.getSourceCode(),
       } = context;
       settings = getSettings(context);
       if (!settings) {
@@ -2340,8 +2344,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
 const checkFile = (iterator, ruleConfig) => {
   return {
     create (context) {
+      // istanbul ignore next -- Fallback to deprecated method
       const {
-        sourceCode,
+        sourceCode = context.getSourceCode(),
       } = context;
       const settings = getSettings(context);
       if (!settings) {
@@ -2459,8 +2464,9 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         }
       }
 
+      // istanbul ignore next -- Fallback to deprecated method
       const {
-        sourceCode,
+        sourceCode = context.getSourceCode(),
       } = context;
       const {
         lines,

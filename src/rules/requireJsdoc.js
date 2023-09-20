@@ -288,8 +288,9 @@ const getOptions = (context, settings) => {
 /** @type {import('eslint').Rule.RuleModule} */
 export default {
   create (context) {
+    // istanbul ignore next -- Fallback to deprecated method
     const {
-      sourceCode,
+      sourceCode = context.getSourceCode(),
     } = context;
     const settings = getSettings(context);
     if (!settings) {
