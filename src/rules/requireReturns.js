@@ -104,8 +104,9 @@ export default iterateJsdoc(({
         initModuleExports: Boolean(publicOnly?.cjs ?? true),
         initWindow: Boolean(publicOnly?.window ?? false),
       };
+      // istanbul ignore next -- Fallback to deprecated method
       const {
-        sourceCode,
+        sourceCode = context.getSourceCode(),
       } = context;
       const exported = exportParser.isUncommentedExport(
         /** @type {import('eslint').Rule.Node} */ (node), sourceCode, opt, settings,
