@@ -677,6 +677,7 @@ const getBasicUtils = (context, {
  * @param {Settings} settings
  * @param {Report} report
  * @param {import('eslint').Rule.RuleContext} context
+ * @param {import('eslint').SourceCode} sc
  * @param {boolean|undefined} iteratingAll
  * @param {RuleConfig} ruleConfig
  * @param {string} indent
@@ -689,11 +690,21 @@ const getUtils = (
   settings,
   report,
   context,
+  sc,
   iteratingAll,
   ruleConfig,
   indent,
 ) => {
-  const ancestors = /** @type {import('eslint').Rule.Node[]} */ (context.getAncestors());
+  /* istanbul ignore next */
+  const ancestors = /** @type {import('eslint').Rule.Node[]} */ (node ?
+    (sc.getAncestors ?
+      (
+        sc.getAncestors(node)
+      ) :
+      (
+        context.getAncestors()
+      )) :
+    []);
 
   // istanbul ignore next -- Fallback to deprecated method
   const {
@@ -2018,6 +2029,7 @@ const iterate = (
     settings,
     report,
     context,
+    sourceCode,
     iteratingAll,
     ruleConfig,
     indent,
