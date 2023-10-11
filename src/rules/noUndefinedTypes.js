@@ -285,7 +285,12 @@ export default iterateJsdoc(({
             report(`The type '${value}' is undefined.`, null, tag);
           }
         } else if (markVariablesAsUsed && !extraTypes.includes(value)) {
-          context.markVariableAsUsed(value);
+          /* istanbul ignore else */
+          if (sourceCode.markVariableAsUsed) {
+            sourceCode.markVariableAsUsed(value);
+          } else {
+            context.markVariableAsUsed(value);
+          }
         }
       }
     });
