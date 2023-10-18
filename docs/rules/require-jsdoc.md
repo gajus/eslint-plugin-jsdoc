@@ -14,6 +14,7 @@
     * [`checkSetters`](#user-content-require-jsdoc-options-checksetters)
     * [`enableFixer`](#user-content-require-jsdoc-options-enablefixer)
     * [`minLineCount`](#user-content-require-jsdoc-options-minlinecount)
+    * [`fixerMessage`](#user-content-require-jsdoc-options-fixermessage)
 * [Context and settings](#user-content-require-jsdoc-context-and-settings)
 * [Failing examples](#user-content-require-jsdoc-failing-examples)
 * [Passing examples](#user-content-require-jsdoc-passing-examples)
@@ -28,7 +29,8 @@ functions.
 
 Adds an empty JSDoc block unless `enableFixer` is set to `false`. See
 the `contexts` option for how `inlineCommentBlock` can control the style
-of the generated JSDoc block.
+of the generated JSDoc block and `fixerMessage` for an optional message
+to insert.
 
 <a name="user-content-require-jsdoc-options"></a>
 <a name="require-jsdoc-options"></a>
@@ -148,6 +150,13 @@ An integer to indicate a minimum number of lines expected for a node in order
 for it to require documentation. Defaults to `undefined`. This option will
 apply to any context; see `contexts` for line counts per context.
 
+<a name="user-content-require-jsdoc-options-fixermessage"></a>
+<a name="require-jsdoc-options-fixermessage"></a>
+### <code>fixerMessage</code>
+
+An optional message to add to the inserted JSDoc block. Defaults to the
+empty string.
+
 <a name="user-content-require-jsdoc-context-and-settings"></a>
 <a name="require-jsdoc-context-and-settings"></a>
 ## Context and settings
@@ -157,7 +166,7 @@ apply to any context; see `contexts` for line counts per context.
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
 |Recommended|true|
-|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`, `fixerMessage`|
 
 <a name="user-content-require-jsdoc-failing-examples"></a>
 <a name="require-jsdoc-failing-examples"></a>

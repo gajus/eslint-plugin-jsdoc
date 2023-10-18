@@ -9,7 +9,8 @@ functions.
 
 Adds an empty JSDoc block unless `enableFixer` is set to `false`. See
 the `contexts` option for how `inlineCommentBlock` can control the style
-of the generated JSDoc block.
+of the generated JSDoc block and `fixerMessage` for an optional message
+to insert.
 
 ## Options
 
@@ -107,6 +108,11 @@ An integer to indicate a minimum number of lines expected for a node in order
 for it to require documentation. Defaults to `undefined`. This option will
 apply to any context; see `contexts` for line counts per context.
 
+### `fixerMessage`
+
+An optional message to add to the inserted JSDoc block. Defaults to the
+empty string.
+
 ## Context and settings
 
 |||
@@ -114,7 +120,7 @@ apply to any context; see `contexts` for line counts per context.
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
 |Recommended|true|
-|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`, `fixerMessage`|
 
 ## Failing examples
 
