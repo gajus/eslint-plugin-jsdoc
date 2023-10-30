@@ -1143,6 +1143,22 @@ function foo(a, b, c) {}
 export function myPublicFunction(foo: number, bar: number, baz: number) {}
 // "jsdoc/require-param": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"param\"])","context":"FunctionDeclaration"}]}]
 // Message: Missing JSDoc @param "baz" declaration.
+
+/**
+ * [A description]
+ */
+class A {
+  /**
+   * openConfirmModal
+   * @memberof CreateEditTestWizardComponent
+   */
+  public openConfirmModal(btnState: string) {
+    this.modalBtnState = btnState;
+    this.openModal();
+  }
+}
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["MethodDefinition"]}]
+// Message: Missing JSDoc @param "btnState" declaration.
 ````
 
 
