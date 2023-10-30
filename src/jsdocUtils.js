@@ -307,7 +307,6 @@ const getFunctionParameterNames = (
     }
 
     if (param.type === 'Property') {
-      // eslint-disable-next-line default-case
       switch (param.value.type) {
       case 'ArrayPattern': {
         return [
@@ -336,7 +335,6 @@ const getFunctionParameterNames = (
       }
 
       case 'AssignmentPattern': {
-        // eslint-disable-next-line default-case
         switch (param.value.left.type) {
         case 'Identifier':
           // Default parameter
@@ -1416,7 +1414,6 @@ const tagsWithNamesAndDescriptions = new Set([
  *     {message: string, replacement?: string}
  * }} TagNamePreference
  */
-/* eslint-enable jsdoc/valid-types -- Old version */
 
 /**
  * @param {import('eslint').Rule.RuleContext} context

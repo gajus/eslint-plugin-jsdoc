@@ -114,7 +114,6 @@ export default iterateJsdoc(({
       let handled = false;
 
       if (tagName) {
-        // eslint-disable-next-line default-case
         switch (tagName) {
         case 'requires':
         case 'module': {

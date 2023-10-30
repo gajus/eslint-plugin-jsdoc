@@ -18,7 +18,6 @@ export default iterateJsdoc(({
   const tgs = /**
                * @type {null|"any"|{[key: string]: "always"|"never"}}
                */ (tags);
-  /* eslint-enable jsdoc/valid-types -- Old version */
 
   /**
    * @param {import('@es-joy/jsdoccomment').JsdocTagWithInline} jsdocTag
