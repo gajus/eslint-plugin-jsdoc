@@ -180,7 +180,6 @@ const getOption = (context, baseObject, option, key) => {
   return /** @type {{[key: string]: {default?: boolean|undefined}}} */ (
     baseObject.properties
   )[key].default;
-  /* eslint-enable jsdoc/valid-types -- Old version */
 };
 
 /**
@@ -202,7 +201,6 @@ const getOption = (context, baseObject, option, key) => {
  * }}
  */
 const getOptions = (context, settings) => {
-  /* eslint-enable jsdoc/valid-types -- Old version */
   const {
     publicOnly,
     contexts = settings.contexts || [],
@@ -227,7 +225,6 @@ const getOptions = (context, settings) => {
 
       /** @type {{[key: string]: boolean|undefined}} */
       const properties = {};
-      /* eslint-enable jsdoc/valid-types -- Old version */
       for (const prop of Object.keys(
         /** @type {import('json-schema').JSONSchema4Object} */ (
         /** @type {import('json-schema').JSONSchema4Object} */ (
@@ -260,7 +257,6 @@ const getOptions = (context, settings) => {
     require: ((baseObj) => {
       /** @type {{[key: string]: boolean|undefined}} */
       const properties = {};
-      /* eslint-enable jsdoc/valid-types -- Old version */
       for (const prop of Object.keys(
         /** @type {import('json-schema').JSONSchema4Object} */ (
         /** @type {import('json-schema').JSONSchema4Object} */ (
@@ -318,7 +314,6 @@ export default {
        */ (
         opts.publicOnly
       );
-      /* eslint-enable jsdoc/valid-types -- Old version */
 
     /**
      * @type {import('../iterateJsdoc.js').CheckJsdoc}
@@ -501,7 +496,6 @@ export default {
         report();
       }
     };
-    /* eslint-enable complexity -- Temporary */
 
     /**
      * @param {string} prop

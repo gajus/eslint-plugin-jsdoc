@@ -123,7 +123,6 @@ const getSymbol = function (node, globals, scope, opt) {
   /* eslint-enable complexity -- Temporary */
   const opts = opt || {};
   /* istanbul ignore next */
-  // eslint-disable-next-line default-case
   switch (node.type) {
   case 'Identifier': {
     return getIdentifier(node, globals, scope, opts);
@@ -318,7 +317,6 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
   }
 
   let symbol;
-  // eslint-disable-next-line default-case
   switch (node.type) {
   case 'FunctionDeclaration':
   /* istanbul ignore next */
@@ -411,7 +409,6 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
  * @returns {void}
  */
 const initVariables = function (node, globals, opts) {
-  // eslint-disable-next-line default-case
   switch (node.type) {
   case 'Program': {
     for (const childNode of node.body) {

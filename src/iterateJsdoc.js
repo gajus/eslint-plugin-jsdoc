@@ -122,7 +122,6 @@ import esquery from 'esquery';
  *   [key: string]: string
  * }} [data]
  */
-/* eslint-enable jsdoc/valid-types -- Old version */
 
 /**
  * @callback GetRegexFromString
@@ -170,7 +169,6 @@ import esquery from 'esquery';
  * ) => import('comment-parser').Line[]} setter
  * @returns {void}
  */
-/* eslint-enable jsdoc/no-undefined-types -- Bug */
 
 /**
  * @callback SetDescriptionLines
@@ -185,7 +183,6 @@ import esquery from 'esquery';
  * @param {...Partial<import('comment-parser').Tokens>} tokens
  * @returns {void}
  */
-/* eslint-enable jsdoc/no-undefined-types -- TS */
 
 /**
  * @callback SetTag
@@ -195,7 +192,6 @@ import esquery from 'esquery';
  * @param {Partial<import('comment-parser').Tokens>} [tokens]
  * @returns {void}
  */
-/* eslint-enable jsdoc/no-undefined-types -- TS */
 
 /**
  * @callback RemoveTag
@@ -225,7 +221,6 @@ import esquery from 'esquery';
  *   tokens?: Partial<import('comment-parser').Tokens> | undefined
  * ) => import('comment-parser').Tokens} SeedTokens
  */
-/* eslint-enable jsdoc/no-undefined-types -- TS */
 
 /**
  * Sets tokens to empty string.
@@ -240,7 +235,6 @@ import esquery from 'esquery';
  * @param {Partial<import('comment-parser').Tokens>} tokens
  * @returns {void}
  */
-/* eslint-enable jsdoc/no-undefined-types -- TS */
 
 /**
  * @callback AddLines
@@ -576,7 +570,6 @@ const {
  *   }
  * }} StateObject
  */
-/* eslint-enable jsdoc/valid-types -- Old version */
 
 /**
  * The Node AST as supplied by the parser.
@@ -668,7 +661,6 @@ const getBasicUtils = (context, {
  * }} [data]
  * @returns {void}
  */
-/* eslint-enable jsdoc/valid-types -- Old version of pratt */
 
 /**
  * @param {Node|null} node
@@ -1807,7 +1799,6 @@ const getUtils = (
  *   contexts?: Context[]
  * }} Settings
  */
-/* eslint-enable jsdoc/valid-types -- Old version */
 
 /**
  * @param {import('eslint').Rule.RuleContext} context
@@ -1885,7 +1876,6 @@ const getSettings = (context) => {
 const makeReport = (context, commentNode) => {
   /** @type {Report} */
   const report = (message, fix = null, jsdocLoc = null, data = undefined) => {
-    /* eslint-enable jsdoc/valid-types -- Old version */
     let loc;
 
     if (jsdocLoc) {
@@ -1985,8 +1975,6 @@ const makeReport = (context, commentNode) => {
  *   }
  * ) => any } JsdocVisitor
  */
-/* eslint-enable jsdoc/valid-types -- Old version */
-/* eslint-enable jsdoc/no-undefined-types -- canonical still using an older version where not defined */
 
 /**
  * @param {{
@@ -2439,7 +2427,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
        * @type {Context[]|undefined}
        */
       let contexts;
-      /* eslint-enable jsdoc/valid-types -- Old version */
       if (ruleConfig.contextDefaults || ruleConfig.contextSelected || ruleConfig.matchContext) {
         contexts = ruleConfig.matchContext && context.options[0]?.match ?
           context.options[0].match :
@@ -2486,7 +2473,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
 
       /** @type {Partial<StateObject>} */
       const state = {};
-      /* eslint-enable jsdoc/no-undefined-types -- TS */
 
       /** @type {CheckJsdoc} */
       const checkJsdoc = (info, handler, node) => {
@@ -2563,7 +2549,6 @@ export default function iterateJsdoc (iterator, ruleConfig) {
             settings,
             state: ste,
           });
-          /* eslint-enable jsdoc/no-undefined-types -- Bug */
         };
       }
 

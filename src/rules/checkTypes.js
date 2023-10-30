@@ -113,7 +113,6 @@ export default iterateJsdoc(({
       structuredTags,
       mode,
     } = settings;
-  /* eslint-enable jsdoc/valid-types -- Old version */
 
   const injectObjectPreferredTypes = !('Object' in preferredTypesOriginal ||
     'object' in preferredTypesOriginal ||
