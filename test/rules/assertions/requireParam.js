@@ -2451,6 +2451,52 @@ export default {
        `,
       parser: require.resolve('@typescript-eslint/parser'),
     },
+    {
+      code: `
+      /**
+       * [A description]
+       */
+      class A {
+        /**
+         * openConfirmModal
+         * @memberof CreateEditTestWizardComponent
+         */
+        public openConfirmModal(btnState: string) {
+          this.modalBtnState = btnState;
+          this.openModal();
+        }
+      }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "btnState" declaration.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'MethodDefinition',
+          ],
+        },
+      ],
+      output: `
+      /**
+       * [A description]
+       */
+      class A {
+        /**
+         * openConfirmModal
+         * @param btnState
+         * @memberof CreateEditTestWizardComponent
+         */
+        public openConfirmModal(btnState: string) {
+          this.modalBtnState = btnState;
+          this.openModal();
+        }
+      }
+      `,
+      parser: require.resolve('@typescript-eslint/parser'),
+    },
   ],
   valid: [
     {
