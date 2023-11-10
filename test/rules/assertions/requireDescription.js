@@ -735,6 +735,59 @@ export default {
         },
       },
     },
+    {
+      code: `
+        app.use(
+          /** @type {express.ErrorRequestHandler} */
+          (err, req, res, next) => {
+            // foo
+          }
+        );
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+    },
+    {
+      code: `
+        app.use(
+          /** @type {express.ErrorRequestHandler} */
+          (
+            (err, req, res, next) => {
+              // foo
+            }
+          )
+        );
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+    },
+    {
+      code: `
+        /** @type {TreeViewItemData[]} */
+        this.treeViewSelection = [];
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc block description.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'AssignmentExpression',
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {

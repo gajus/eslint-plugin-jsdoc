@@ -345,6 +345,29 @@ class quux {
 // Settings: {"jsdoc":{"implementsReplacesDocs":false}}
 // "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"implements\"])","context":"any"}],"descriptionStyle":"tag"}]
 // Message: Missing JSDoc @description declaration.
+
+app.use(
+  /** @type {express.ErrorRequestHandler} */
+  (err, req, res, next) => {
+    // foo
+  }
+);
+// Message: Missing JSDoc block description.
+
+app.use(
+  /** @type {express.ErrorRequestHandler} */
+  (
+    (err, req, res, next) => {
+      // foo
+    }
+  )
+);
+// Message: Missing JSDoc block description.
+
+/** @type {TreeViewItemData[]} */
+this.treeViewSelection = [];
+// "jsdoc/require-description": ["error"|"warn", {"contexts":["AssignmentExpression"]}]
+// Message: Missing JSDoc block description.
 ````
 
 
