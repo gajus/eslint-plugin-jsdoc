@@ -1805,7 +1805,7 @@ const getUtils = (
  * @returns {Settings|false}
  */
 const getSettings = (context) => {
-  /* eslint-disable canonical/sort-keys */
+  /* dslint-disable canonical/sort-keys */
   const settings = {
     // All rules
     ignorePrivate: Boolean(context.settings.jsdoc?.ignorePrivate),
@@ -1838,7 +1838,7 @@ const getSettings = (context) => {
     // Many rules
     contexts: context.settings.jsdoc?.contexts,
   };
-  /* eslint-enable canonical/sort-keys */
+  /* dslint-enable canonical/sort-keys */
 
   jsdocUtils.setTagStructure(settings.mode);
   try {
@@ -2375,7 +2375,7 @@ const checkFile = (iterator, ruleConfig) => {
 
 export {
   getSettings,
-  // eslint-disable-next-line unicorn/prefer-export-from -- Avoid experimental parser
+  // dslint-disable-next-line unicorn/prefer-export-from -- Avoid experimental parser
   parseComment,
 };
 

@@ -54,7 +54,7 @@ Tests are expected. Each rule file should be in CamelCase (despite the rule name
 
 Each rule file should be an ESM default export of an object that has `valid` and `invalid` array properties containing the tests. Tests of each type should be provided.
 
-`parserOptions` will be `ecmaVersion: 6` by default, but tests can override `parserOptions`
+`languageOptions` will be `ecmaVersion: 6` by default, but tests can override `languageOptions`
 with their own.
 
 See ESLint's [RuleTester](https://eslint.org/docs/developer-guide/nodejs-api#ruletester)

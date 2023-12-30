@@ -1,8 +1,5 @@
-// After `importMeta` no longer experimental, we can use this ESM
-//   approach over `__dirname`?
-// import {fileURLToPath} from 'url';
-// import {join, dirname} from 'path';
-// join(dirname(fileURLToPath(import.meta.url)), '@babel/eslint-parser')
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+import * as babelEslintParser from '@babel/eslint-parser';
 
 export default {
   invalid: [
@@ -293,6 +290,9 @@ export default {
           message: 'Duplicate @param "foo"',
         },
       ],
+      languageOptions: {
+        sourceType: 'script',
+      },
       options: [
         {
           enableFixer: true,
@@ -544,8 +544,8 @@ export default {
           message: 'Expected @param names to be "property". Got "prop".',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -565,8 +565,8 @@ export default {
           message: 'Missing @param "prop.bar"',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -603,8 +603,8 @@ export default {
           message: '@param "prop.bar" does not exist on prop',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -625,8 +625,8 @@ export default {
           message: '@param "options.bar" does not exist on options',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -710,7 +710,7 @@ export default {
           checkRestProperty: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -737,7 +737,7 @@ export default {
           checkRestProperty: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -830,7 +830,9 @@ export default {
           checkRestProperty: true,
         },
       ],
-      parser: require.resolve('@babel/eslint-parser'),
+      languageOptions: {
+        parser: babelEslintParser
+      },
     },
     {
       code: `
@@ -860,7 +862,9 @@ export default {
           message: '@param "options.four" does not exist on options',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -993,7 +997,7 @@ export default {
           useDefaultObjectProperties: false,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1175,7 +1179,9 @@ export default {
           message: 'Expected @param names to be "bar". Got "barr".',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
   ],
   valid: [
@@ -1326,8 +1332,8 @@ export default {
           constructor(private property: string) {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -1342,8 +1348,8 @@ export default {
           constructor(options: { foo: string, bar: string }) {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -1358,8 +1364,8 @@ export default {
           constructor({ foo, bar }: { foo: string, bar: string }) {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -1374,8 +1380,8 @@ export default {
           constructor({ foo, bar }: { foo: string, bar: string }) {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -1451,7 +1457,7 @@ export default {
       function quux ({foo, ...extra}) {
       }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -1516,7 +1522,9 @@ export default {
         }
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1531,7 +1539,9 @@ export default {
         input;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1546,7 +1556,9 @@ export default {
         }
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1577,8 +1589,8 @@ export default {
         }
       }
 `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -1636,7 +1648,7 @@ export default {
       }) {
       }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1677,7 +1689,7 @@ export default {
           useDefaultObjectProperties: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1714,7 +1726,9 @@ export default {
           }
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1733,7 +1747,9 @@ export default {
        */
       function foo(this: void, arg1: number): void;
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1744,7 +1760,9 @@ export default {
         function foo(this: void, arg1: number): void;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1759,7 +1777,9 @@ export default {
        }
       `,
       ignoreReadme: true,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1775,7 +1795,9 @@ export default {
        }
       `,
       ignoreReadme: true,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1793,7 +1815,9 @@ export default {
         ): Color;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1807,7 +1831,9 @@ export default {
           return bar;
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
   ],
 };

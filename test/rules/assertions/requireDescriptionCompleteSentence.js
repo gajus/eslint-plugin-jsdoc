@@ -1472,7 +1472,7 @@ export default {
         foo()
       }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },

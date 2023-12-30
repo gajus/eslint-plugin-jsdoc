@@ -1179,7 +1179,7 @@ export default {
 
       export default {};
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },

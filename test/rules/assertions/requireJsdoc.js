@@ -1,6 +1,6 @@
-/**
- * @see https://github.com/eslint/eslint/blob/master/tests/lib/rules/require-jsdoc.js
- */
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+import * as babelEslintParser from '@babel/eslint-parser';
+import globals from 'globals';
 
 export default {
   invalid: [
@@ -48,7 +48,9 @@ export default {
             catchJerry(): boolean;
           }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -94,7 +96,9 @@ export default {
             jerry: number;
           }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -131,7 +135,9 @@ export default {
             bar(): string;
           }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -169,7 +175,9 @@ export default {
             bar: string;
           }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -217,7 +225,9 @@ export default {
         meow(): void;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -388,7 +398,7 @@ function quux (foo) {
 
           };
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -423,7 +433,7 @@ function quux (foo) {
           }
           export var test2 = test;
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -456,7 +466,7 @@ function quux (foo) {
 
           };
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -489,7 +499,7 @@ function quux (foo) {
 
           };
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -519,7 +529,7 @@ function quux (foo) {
 
           };
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
       settings: {
@@ -561,7 +571,7 @@ function quux (foo) {
 
           };
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -594,7 +604,7 @@ function quux (foo) {
 
           };
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -627,7 +637,7 @@ function quux (foo) {
          */
         export default function () {}
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -660,7 +670,7 @@ function quux (foo) {
          */
         export default () => {}
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -693,7 +703,7 @@ function quux (foo) {
        */
       export default (function () {})
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -726,7 +736,7 @@ function quux (foo) {
          */
         export default class {}
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -859,7 +869,7 @@ function quux (foo) {
                  this.a = xs;
             }
          }`,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -902,7 +912,7 @@ function quux (foo) {
                 this.a = xs;
             }
         }`,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -945,7 +955,7 @@ function quux (foo) {
                 this.a = xs;
             }
         }`,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -988,7 +998,7 @@ function quux (foo) {
                 this.a = xs;
             }
         }`,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1031,7 +1041,7 @@ function quux (foo) {
                 this.a = xs;
             }
         }`,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1059,7 +1069,7 @@ function quux (foo) {
        */
       var myFunction = () => {}
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -1087,7 +1097,7 @@ function quux (foo) {
        */
       var myFunction = () => () => {}
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -1140,7 +1150,7 @@ function quux (foo) {
        */
       bar() {}}
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -1225,8 +1235,8 @@ function quux (foo) {
 
           }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -1258,8 +1268,8 @@ function quux (foo) {
 
           }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -1295,8 +1305,8 @@ function quux (foo) {
             }
           }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -1334,8 +1344,8 @@ function quux (foo) {
             }
           }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -1375,8 +1385,8 @@ function quux (foo) {
             }
           }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -1414,8 +1424,8 @@ function quux (foo) {
 
           }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -1452,8 +1462,8 @@ function quux (foo) {
 
           test.prototype.method = function() {}
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -1493,8 +1503,8 @@ function quux (foo) {
             test: test
           }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -1532,8 +1542,8 @@ function quux (foo) {
             test: test
           }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -1571,8 +1581,8 @@ function quux (foo) {
         }
         module.exports = Test;
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -1630,7 +1640,7 @@ function quux (foo) {
 
           }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1665,7 +1675,7 @@ function quux (foo) {
 
           }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1700,7 +1710,7 @@ function quux (foo) {
           }
           export default quux;
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1733,7 +1743,7 @@ function quux (foo) {
 
           }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1768,7 +1778,7 @@ function quux (foo) {
 
           }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1804,7 +1814,7 @@ function quux (foo) {
           var test2 = 2;
           export { test, test2 }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1839,7 +1849,7 @@ function quux (foo) {
           }
           export { test as test2 }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1872,7 +1882,7 @@ function quux (foo) {
 
          }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1907,7 +1917,7 @@ function quux (foo) {
 
          }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1942,7 +1952,7 @@ function quux (foo) {
 
           }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1977,7 +1987,7 @@ function quux (foo) {
 
           }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -2009,7 +2019,7 @@ function quux (foo) {
 
           }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -2019,8 +2029,8 @@ function quux (foo) {
 
         }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -2056,8 +2066,8 @@ function quux (foo) {
 
         }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -2086,7 +2096,7 @@ function quux (foo) {
 
         }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
         sourceType: 'module',
       },
@@ -2097,8 +2107,8 @@ function quux (foo) {
 
         }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
       errors: [
         {
@@ -2127,7 +2137,7 @@ function quux (foo) {
 
         }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
         sourceType: 'module',
       },
@@ -2204,7 +2214,9 @@ function quux (foo) {
         meow(): void;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -2234,31 +2246,33 @@ function quux (foo) {
         someProperty: boolean; // Flow type annotation.
       }
       `,
-      parser: require.resolve('@babel/eslint-parser'),
-      parserOptions: {
-        babelOptions: {
-          env: {
-            test: {
-              plugins: [
-                'istanbul',
-              ],
-            },
-          },
-          plugins: [
-            '@babel/plugin-transform-flow-strip-types',
-            '@babel/plugin-syntax-class-properties',
-            'add-module-exports',
-          ],
-          presets: [
-            [
-              '@babel/preset-env',
-              {
-                targets: {
-                  node: 12,
-                },
+      languageOptions: {
+        parser: babelEslintParser,
+        parserOptions: {
+          babelOptions: {
+            env: {
+              test: {
+                plugins: [
+                  'istanbul',
+                ],
               },
+            },
+            plugins: [
+              '@babel/plugin-transform-flow-strip-types',
+              '@babel/plugin-syntax-class-properties',
+              'add-module-exports',
             ],
-          ],
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    node: 12,
+                  },
+                },
+              ],
+            ],
+          },
         },
       },
     },
@@ -2299,7 +2313,7 @@ function quux (foo) {
         }
       }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -2349,8 +2363,8 @@ function quux (foo) {
         }
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -2423,8 +2437,8 @@ function quux (foo) {
           }
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -2514,8 +2528,8 @@ function quux (foo) {
        */
       export const loginSuccessAction = (): BaseActionPayload => ({ type: LOGIN_SUCCESSFUL });
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -2569,7 +2583,9 @@ function quux (foo) {
         helpers?: { [key in string]: AnyFunction };
       };
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -2709,7 +2725,9 @@ function quux (foo) {
         return arg;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -2765,7 +2783,9 @@ function quux (foo) {
         return arg;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -2863,8 +2883,8 @@ function quux (foo) {
         tail: boolean;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -2893,8 +2913,8 @@ function quux (foo) {
       @Entity('users')
       export class User {}
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -3111,7 +3131,9 @@ function quux (foo) {
         anotherFunc() {}
       }
       `,
-      parser: require.resolve('@babel/eslint-parser'),
+      languageOptions: {
+        parser: babelEslintParser,
+      }
     },
     {
       code: `
@@ -3141,8 +3163,8 @@ function quux (foo) {
         A, B
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -3176,8 +3198,8 @@ function quux (foo) {
         aVar: string;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -3205,8 +3227,8 @@ function quux (foo) {
        */
       export type testType = string | number;
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -3256,8 +3278,8 @@ function quux (foo) {
           quux(): void;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -3300,7 +3322,9 @@ function quux (foo) {
         public value = new EventEmitter();
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -3560,8 +3584,8 @@ function quux (foo) {
         public disabled = false;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -3594,7 +3618,7 @@ function quux (foo) {
          */
         export default (arg) => arg;
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -3639,7 +3663,7 @@ function quux (foo) {
           inner();
       }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -3684,7 +3708,7 @@ function quux (foo) {
           inner();
       };
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -3722,8 +3746,8 @@ function quux (foo) {
         public disabled = false;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -3762,7 +3786,9 @@ function quux (foo) {
               public foo?: number;
           }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -3804,7 +3830,9 @@ function quux (foo) {
           two: number;
         };
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -3852,7 +3880,9 @@ function quux (foo) {
           two: number;
         };
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -4079,7 +4109,9 @@ function quux (foo) {
           }
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -4123,7 +4155,9 @@ function quux (foo) {
           // ...
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -4152,11 +4186,13 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
+      languageOptions: {
+        parser: typescriptEslintParser,
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
+        }
       },
     },
   ],
@@ -4179,7 +4215,9 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     }, {
       code: `
       /** This is comment */
@@ -4199,7 +4237,9 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     }, {
       code: `
         /** This is comment */
@@ -4223,7 +4263,9 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     }, {
       code: `
         /** This is comment */
@@ -4246,7 +4288,9 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     }, {
       code: `
         /** This is comment */
@@ -4268,7 +4312,9 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     }, {
       code: `
         /**
@@ -4365,6 +4411,9 @@ function quux (foo) {
       var object = { name: 'key'};
       Object.keys(object).forEach(function() {})
     `,
+      languageOptions: {
+        sourceType: 'script',
+      },
     },
     {
       code: `
@@ -4477,7 +4526,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -4503,7 +4552,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -4529,7 +4578,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
         sourceType: 'module',
       },
@@ -4556,7 +4605,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
         sourceType: 'module',
       },
@@ -4576,7 +4625,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -4593,7 +4642,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -4610,7 +4659,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -4627,7 +4676,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -4644,7 +4693,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -4657,7 +4706,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -4688,7 +4737,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -4715,7 +4764,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
       },
     },
@@ -4753,9 +4802,9 @@ function quux (foo) {
       module.exports = {
         prop: { prop2: test.method }
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -4778,9 +4827,9 @@ function quux (foo) {
      module.exports = {
        prop: { prop2: test }
      }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -4803,9 +4852,9 @@ function quux (foo) {
       module.exports = {
         prop: { prop2: test }
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -4832,9 +4881,9 @@ function quux (foo) {
       exports.someMethod = {
         prop: { prop2: test }
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -4861,9 +4910,9 @@ function quux (foo) {
       module.exports = {
       prop: { prop2: test }
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -4882,9 +4931,9 @@ function quux (foo) {
       module.exports = {
         prop: { prop2: test }
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -4909,9 +4958,9 @@ function quux (foo) {
       module.exports = {
       prop: window
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -4938,9 +4987,9 @@ function quux (foo) {
       module.exports = {
       prop: { prop2: test }
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -4962,9 +5011,9 @@ function quux (foo) {
       module.exports = {
       prop: { prop2: test }
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -4994,9 +5043,9 @@ function quux (foo) {
       module.exports = {
       prop: { prop2: test }
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -5018,9 +5067,9 @@ function quux (foo) {
       }
     }
     module.exports = Test;
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -5048,7 +5097,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5071,7 +5120,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5093,7 +5142,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5114,7 +5163,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5135,7 +5184,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5158,7 +5207,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5181,7 +5230,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5203,7 +5252,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5226,7 +5275,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5249,7 +5298,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5269,7 +5318,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -5311,9 +5360,9 @@ function quux (foo) {
       export function someMethod() {
 
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -5327,7 +5376,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
         sourceType: 'module',
       },
@@ -5336,9 +5385,9 @@ function quux (foo) {
       export function someMethod() {
 
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -5352,7 +5401,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 6,
         sourceType: 'module',
       },
@@ -5361,9 +5410,9 @@ function quux (foo) {
       exports.someMethod = function() {
 
       }
-    `,
-      env: {
-        node: true,
+      `,
+      languageOptions: {
+        globals: globals.node,
       },
       options: [
         {
@@ -5406,7 +5455,7 @@ function quux (foo) {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     }, {
@@ -5428,8 +5477,8 @@ function quux (foo) {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -5452,8 +5501,8 @@ function quux (foo) {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     }, {
@@ -5475,8 +5524,8 @@ function quux (foo) {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -5499,8 +5548,8 @@ function quux (foo) {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     }, {
@@ -5522,8 +5571,8 @@ function quux (foo) {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -5546,8 +5595,8 @@ function quux (foo) {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -5571,12 +5620,14 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@babel/eslint-parser'),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
+      languageOptions: {
         ecmaVersion: 2_017,
+        parser: babelEslintParser,
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
+        },
         sourceType: 'module',
       },
     },
@@ -5598,8 +5649,8 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -5621,8 +5672,8 @@ function quux (foo) {
           publicOnly: true,
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -5650,7 +5701,9 @@ function quux (foo) {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -5676,8 +5729,8 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -5711,8 +5764,8 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -5737,8 +5790,8 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -5763,8 +5816,8 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -5954,7 +6007,9 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -5974,7 +6029,9 @@ function quux (foo) {
           publicOnly: true,
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -6019,7 +6076,9 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -6040,8 +6099,8 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -6174,7 +6233,9 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
     {
       code: `
@@ -6197,8 +6258,8 @@ function quux (foo) {
           },
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -6233,7 +6294,9 @@ function quux (foo) {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser,
+      }
     },
   ],
 };

@@ -290,7 +290,7 @@ export default {
           message: 'JSDoc @yields declaration present but yield expression not available in function.',
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -307,7 +307,7 @@ export default {
           message: 'JSDoc @yields declaration present but yield expression not available in function.',
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -724,6 +724,9 @@ export default {
             }
           }
       `,
+      languageOptions: {
+        sourceType: 'script'
+      }
     },
     {
       code: `

@@ -1,3 +1,7 @@
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+import * as babelEslintParser from '@babel/eslint-parser';
+import globals from 'globals';
+
 export default {
   invalid: [
     {
@@ -575,8 +579,10 @@ export default {
 
           }
       `,
-      env: {
-        es6: true,
+      languageOptions: {
+        globals: {
+          Promise: 'readonly',
+        },
       },
     },
     {
@@ -607,7 +613,7 @@ export default {
 
         }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -622,8 +628,8 @@ export default {
 
         }
       `,
-      env: {
-        node: true,
+      languageOptions: {
+        globals: globals.node,
       },
     },
     {
@@ -637,8 +643,8 @@ export default {
 
         }
       `,
-      env: {
-        node: false,
+      languageOptions: {
+        globals: globals.node,
       },
     },
     {
@@ -654,7 +660,7 @@ export default {
 
         }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -670,8 +676,10 @@ export default {
 
         }
       `,
-      globals: {
-        HisType: true,
+      languageOptions: {
+        globals: {
+          HisType: true,
+        },
       },
     },
     {
@@ -1019,8 +1027,10 @@ export default {
       }
     };
 `,
-      env: {
-        es6: true,
+      languageOptions: {
+        globals: {
+          Promise: 'readonly',
+        },
       },
     },
     {
@@ -1035,8 +1045,10 @@ export default {
         return Promise.resolve(value);
       };
       `,
-      env: {
-        es6: true,
+      languageOptions: {
+        globals: {
+          Promise: 'readonly',
+        },
       },
       settings: {
         jsdoc: {
@@ -1053,8 +1065,10 @@ export default {
        * @typedef {ValueType} ValueFunc
        */
       `,
-      env: {
-        es6: true,
+      languageOptions: {
+        globals: {
+          Promise: 'readonly',
+        },
       },
       settings: {
         jsdoc: {
@@ -1130,7 +1144,9 @@ export default {
         }
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1179,9 +1195,11 @@ export default {
               .once('end', () => resolve(data));
           });
         };
-        `,
-      env: {
-        es6: true,
+      `,
+      languageOptions: {
+        globals: {
+          Promise: 'readonly',
+        },
       },
       ignoreReadme: true,
     },
@@ -1295,7 +1313,9 @@ export default {
         }
       }
       `,
-      parser: require.resolve('@babel/eslint-parser'),
+      languageOptions: {
+        parser: babelEslintParser
+      },
       settings: {
         jsdoc: {
           mode: 'typescript',
@@ -1370,7 +1390,7 @@ export default {
           markVariablesAsUsed: false,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1391,7 +1411,7 @@ export default {
           disableReporting: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },

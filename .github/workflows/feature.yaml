@@ -15,6 +15,7 @@ jobs:
         with:
           node-version: '20'
       - run: pnpm install
+      - run: pnpm build
       - run: pnpm lint
     timeout-minutes: 10
   test:
@@ -39,7 +40,6 @@ jobs:
       fail-fast: false
       matrix:
         node_js_version:
-          - '16'
           - '18'
           - '20'
   build:

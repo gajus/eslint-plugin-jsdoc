@@ -15,10 +15,7 @@ export default {
         `,
         languageOptions: {
           parser: tsParser,
-          parserOptions: {
-            ecmaVersion: 2_020,
-            sourceType: 'module',
-          },
+          sourceType: 'module',
         },
         // Need manual setting here until fixing:
         // https://github.com/eslint/eslint/pull/16944

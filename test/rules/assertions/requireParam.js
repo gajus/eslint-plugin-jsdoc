@@ -1,8 +1,5 @@
-// After `importMeta` no longer experimental, we can use this ESM
-//   approach over `__dirname`?
-// import {fileURLToPath} from 'url';
-// import {join, dirname} from 'path';
-// join(dirname(fileURLToPath(import.meta.url)), '@babel/eslint-parser')
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+import * as babelEslintParser from '@babel/eslint-parser';
 
 export default {
   invalid: [
@@ -1040,8 +1037,8 @@ export default {
           constructor(private property: string, private foo: number) {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -1334,7 +1331,9 @@ export default {
       TestMethod(id: number): void;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1375,7 +1374,9 @@ export default {
       abstract TestFunction(id);
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1416,7 +1417,9 @@ export default {
       TestMethod(id);
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1445,7 +1448,9 @@ export default {
        */
       declare let TestFunction: (id) => void;
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1474,7 +1479,9 @@ export default {
          */
         let TestFunction: (id) => void;
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1511,7 +1518,9 @@ export default {
           return processor(10);
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1546,7 +1555,9 @@ export default {
           return processor(10);
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1579,7 +1590,9 @@ export default {
           public Test: (id: number) => string;
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1616,7 +1629,9 @@ export default {
           }
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1649,7 +1664,9 @@ export default {
         Test: (id: number) => string;
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1682,7 +1699,9 @@ export default {
           TestMethod(): (id: number) => string;
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1711,7 +1730,9 @@ export default {
          */
         function test(): (id: number) => string;
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1746,7 +1767,9 @@ export default {
           return (id) => \`\${id}\`;
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1837,7 +1860,9 @@ export default {
         ) {}
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1903,7 +1928,9 @@ export default {
         ) {}
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1933,7 +1960,7 @@ export default {
       function quux ({num, ...extra}) {
       }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -1967,7 +1994,7 @@ export default {
       function quux ({opts: {num, ...extra}}) {
       }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -1996,7 +2023,7 @@ export default {
         //
       }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_015,
       },
     },
@@ -2024,7 +2051,7 @@ export default {
         //
       }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_015,
       },
     },
@@ -2145,7 +2172,9 @@ export default {
         }
       };
       `,
-      parser: require.resolve('@babel/eslint-parser'),
+      languageOptions: {
+        parser: babelEslintParser,
+      }
     },
     /* eslint-disable no-tabs */
     {
@@ -2345,7 +2374,7 @@ export default {
       export function testFn1 ({ prop = { a: 1, b: 2 } }) {
       }
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -2406,7 +2435,9 @@ export default {
          */
         export function myPublicFunction(foo: number, bar: number, baz: number) {}
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -2421,7 +2452,7 @@ export default {
          firstFloor = true,
          verbose = false,
        ): void {}
-       `,
+      `,
       errors: [
         {
           message: 'Missing JSDoc @param "verbose" declaration.',
@@ -2448,8 +2479,10 @@ export default {
          firstFloor = true,
          verbose = false,
        ): void {}
-       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -2495,7 +2528,9 @@ export default {
         }
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
   ],
   valid: [
@@ -3062,7 +3097,9 @@ export default {
           /** @const {boolean} test */
           const test = something?.find(_ => _)
       `,
-      parser: require.resolve('@babel/eslint-parser'),
+      languageOptions: {
+        parser: babelEslintParser,
+      }
     },
     {
       code: `
@@ -3111,8 +3148,8 @@ export default {
           constructor(private property: string) {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -3160,7 +3197,9 @@ export default {
         }
     }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -3198,7 +3237,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -3253,7 +3294,9 @@ export default {
         }
     }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -3276,7 +3319,7 @@ export default {
       function quux ({num, ...extra}) {
       }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -3295,7 +3338,7 @@ export default {
           enableRestElementFixer: false,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_015,
       },
     },
@@ -3313,7 +3356,7 @@ export default {
           enableRestElementFixer: false,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_015,
       },
     },
@@ -3356,7 +3399,9 @@ export default {
         }
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -3484,7 +3529,7 @@ export default {
           useDefaultObjectProperties: false,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -3510,7 +3555,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -3542,7 +3589,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -3556,7 +3605,9 @@ export default {
         return bar;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -3569,7 +3620,9 @@ export default {
         return bar;
       }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
