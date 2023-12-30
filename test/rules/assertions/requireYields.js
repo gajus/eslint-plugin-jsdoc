@@ -238,7 +238,7 @@ export default {
           forceRequireYields: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -262,7 +262,7 @@ export default {
           forceRequireYields: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -286,7 +286,7 @@ export default {
           forceRequireYields: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -310,7 +310,7 @@ export default {
           forceRequireYields: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -466,7 +466,7 @@ export default {
           forceRequireYields: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -490,7 +490,7 @@ export default {
           forceRequireYields: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -535,7 +535,7 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -559,7 +559,7 @@ export default {
           withGeneratorTag: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -584,7 +584,7 @@ export default {
           nextWithGeneratorTag: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -911,6 +911,9 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
+      languageOptions: {
+        sourceType: 'script'
+      }
     },
     {
       code: `
@@ -1216,7 +1219,7 @@ export default {
         },
       ],
       ignoreReadme: true,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_020,
       },
     },
@@ -1270,7 +1273,7 @@ export default {
         },
       ],
       ignoreReadme: true,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_020,
       },
     },
@@ -1297,7 +1300,7 @@ export default {
           ],
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1326,7 +1329,7 @@ export default {
           ],
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1623,7 +1626,7 @@ export default {
           forceRequireYields: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -1634,7 +1637,7 @@ export default {
            */
           async function * quux () {}
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -1645,7 +1648,7 @@ export default {
            */
           const quux = async function * () {}
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },
@@ -1675,7 +1678,7 @@ export default {
         yield;
       }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_018,
       },
     },

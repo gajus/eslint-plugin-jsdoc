@@ -1,3 +1,5 @@
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+
 export default {
   invalid: [
     {
@@ -23,7 +25,9 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -150,8 +154,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -168,8 +172,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -186,8 +190,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -204,8 +208,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -222,8 +226,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -240,8 +244,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -258,8 +262,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -276,8 +280,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -292,8 +296,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -311,8 +315,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -327,8 +331,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -343,8 +347,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -361,8 +365,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -377,8 +381,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -393,8 +397,8 @@ export default {
           message: 'This description only repeats the name it describes.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -516,7 +520,9 @@ export default {
         /** Informative info user id. */
         let userId: string;
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -584,8 +590,8 @@ export default {
           def;
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -596,8 +602,8 @@ export default {
           accessor def;
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -608,8 +614,8 @@ export default {
           def() {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -620,8 +626,8 @@ export default {
           abstract accessor def;
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -632,8 +638,8 @@ export default {
           abstract def();
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -644,8 +650,8 @@ export default {
           abstract def;
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -654,8 +660,8 @@ export default {
         /** abc */
         namespace Def {}
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -667,8 +673,8 @@ export default {
           def() {}
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -677,8 +683,8 @@ export default {
         /** abc */
         declare function def();
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -687,8 +693,8 @@ export default {
         /** abc */
         enum Def {}
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -699,8 +705,8 @@ export default {
           ghi,
         }
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -709,8 +715,8 @@ export default {
         /** abc */
         interface Def {}
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -719,8 +725,8 @@ export default {
         /** abc */
         type Def = {};
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },
@@ -729,8 +735,8 @@ export default {
         /** abc */
         type Def = {};
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         ecmaVersion: 2_022,
       },
     },

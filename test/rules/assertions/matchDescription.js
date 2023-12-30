@@ -1,3 +1,5 @@
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+
 export default {
   invalid: [
     {
@@ -796,7 +798,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -820,7 +824,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -985,7 +991,9 @@ export default {
           matchDescription: '^\\S[\\s\\S]*\\S$',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1361,7 +1369,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1379,7 +1389,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1640,7 +1652,9 @@ export default {
           matchDescription: '^\\S[\\s\\S]*\\S$',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1661,7 +1675,9 @@ export default {
           matchDescription: '^\\S[\\s\\S]*\\S$',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `

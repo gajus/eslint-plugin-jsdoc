@@ -1,3 +1,5 @@
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+
 export default {
   invalid: [
     {
@@ -1480,7 +1482,9 @@ export default {
        */
       function foo(bar) {}
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1659,7 +1663,9 @@ export default {
        */
       type ComplicatedType<T, U, V, W, X> = never
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1683,8 +1689,8 @@ export default {
       }
       `,
       ignoreReadme: true,
-      parser: require.resolve('@typescript-eslint/parser'),
-      parserOptions: {
+      languageOptions: {
+        parser: typescriptEslintParser,
         sourceType: 'module',
       },
     },
@@ -1773,7 +1779,7 @@ export default {
         }
       `,
       ignoreReadme: true,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_017,
       },
     },

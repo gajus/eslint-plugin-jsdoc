@@ -179,6 +179,7 @@ export default iterateJsdoc(({
 
     // If the file is a module, concat the variables from the module scope.
     .concat(
+      /* istanbul ignore next */
       cjsOrESMScope ?
         globalScope.childScopes.flatMap(({
           variables,

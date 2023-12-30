@@ -192,6 +192,9 @@ export default {
           message: 'Missing JSDoc @throws declaration.',
         },
       ],
+      languageOptions: {
+        sourceType: 'script'
+      },
     },
     {
       code: `
@@ -454,7 +457,7 @@ export default {
         throw Error("bar");
       }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },

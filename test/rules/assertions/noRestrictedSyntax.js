@@ -1,3 +1,6 @@
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+import * as jsdocEslintParser from '@es-joy/jsdoc-eslint-parser/typescript.js';
+
 export default {
   invalid: [
     {
@@ -343,7 +346,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -393,7 +398,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@es-joy/jsdoc-eslint-parser/typescript.js'),
+      languageOptions: {
+        parser: jsdocEslintParser,
+      }
     },
     {
       code: `
@@ -570,7 +577,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -596,7 +605,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -622,7 +633,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -650,7 +663,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -826,7 +841,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -861,7 +878,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -978,7 +997,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -998,7 +1019,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1018,7 +1041,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1040,7 +1065,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `

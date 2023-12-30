@@ -44,7 +44,7 @@ const main = async () => {
       config.rules[ruleName]
     );
 
-    const parserOptions = {
+    const languageOptions = {
       ecmaVersion: 6,
     };
 
@@ -82,7 +82,7 @@ const main = async () => {
     let count = 0;
     assertions.invalid = assertions.invalid.map((assertion) => {
       Reflect.deleteProperty(assertion, 'ignoreReadme');
-      assertion.parserOptions = defaultsDeep(assertion.parserOptions, parserOptions);
+      assertion.languageOptions = defaultsDeep(assertion.languageOptions, languageOptions);
       for (const error of /** @type {import('eslint').RuleTester.TestCaseError[]} */ (
         assertion.errors || []
       )) {
@@ -122,7 +122,7 @@ const main = async () => {
         throw new Error(`Valid assertions for rule ${ruleName} should not have an \`output\` property.`);
       }
 
-      assertion.parserOptions = defaultsDeep(assertion.parserOptions, parserOptions);
+      assertion.languageOptions = defaultsDeep(assertion.languageOptions, languageOptions);
 
       return assertion;
     });

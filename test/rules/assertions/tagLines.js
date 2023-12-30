@@ -1,3 +1,5 @@
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+
 export default {
   invalid: [
     {
@@ -1155,7 +1157,9 @@ export default {
           startLines: 1,
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
   ],
 };

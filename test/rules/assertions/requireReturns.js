@@ -1,3 +1,5 @@
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+
 export default {
   invalid: [
     {
@@ -155,7 +157,7 @@ export default {
           forceRequireReturn: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -177,7 +179,7 @@ export default {
           forceRequireReturn: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -199,7 +201,7 @@ export default {
           forceRequireReturn: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -221,7 +223,7 @@ export default {
           forceRequireReturn: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -347,7 +349,7 @@ export default {
           forceReturnsWithAsync: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -479,7 +481,7 @@ export default {
           forceReturnsWithAsync: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -503,7 +505,7 @@ export default {
           forceReturnsWithAsync: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -527,7 +529,7 @@ export default {
           checkGetters: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -805,6 +807,9 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        sourceType: 'script'
+      }
     },
     {
       code: `
@@ -1175,7 +1180,7 @@ export default {
         },
       ],
       ignoreReadme: true,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -1337,7 +1342,7 @@ export default {
         },
       ],
       ignoreReadme: true,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_020,
       },
     },
@@ -1397,7 +1402,7 @@ export default {
         },
       ],
       ignoreReadme: true,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 2_020,
       },
     },
@@ -1429,7 +1434,9 @@ export default {
         },
       ],
       ignoreReadme: true,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1457,7 +1464,9 @@ export default {
         },
       ],
       ignoreReadme: true,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1527,7 +1536,7 @@ export default {
         },
       ],
       ignoreReadme: true,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1572,7 +1581,7 @@ export default {
           forceReturnsWithAsync: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -1596,7 +1605,7 @@ export default {
           forceReturnsWithAsync: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -1668,7 +1677,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1684,7 +1695,9 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1701,7 +1714,9 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1716,7 +1731,9 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1736,7 +1753,9 @@ export default {
           forceRequireReturn: true,
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1756,7 +1775,9 @@ export default {
           forceRequireReturn: true,
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1773,7 +1794,7 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -1792,7 +1813,7 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
         sourceType: 'module',
       },
@@ -1828,7 +1849,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -1875,7 +1898,7 @@ export default {
           publicOnly: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1903,7 +1926,7 @@ export default {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1930,7 +1953,7 @@ export default {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -1957,7 +1980,7 @@ export default {
           },
         },
       ],
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -2315,7 +2338,7 @@ export default {
           forceRequireReturn: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -2332,7 +2355,7 @@ export default {
           forceReturnsWithAsync: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -2343,7 +2366,7 @@ export default {
            */
           async function quux () {}
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -2354,7 +2377,7 @@ export default {
            */
           const quux = async function () {}
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -2365,7 +2388,7 @@ export default {
            */
           const quux = async () => {}
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -2382,7 +2405,7 @@ export default {
 
       export default foo;
       `,
-      parserOptions: {
+      languageOptions: {
         sourceType: 'module',
       },
     },
@@ -2426,7 +2449,7 @@ export default {
         return;
       }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -2551,7 +2574,7 @@ export default {
           checkGetters: false,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -2569,7 +2592,7 @@ export default {
           checkGetters: true,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -2587,7 +2610,7 @@ export default {
           checkGetters: false,
         },
       ],
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -2772,7 +2795,7 @@ export default {
           return new Promise(resolve => resolve());
         }
       `,
-      parserOptions: {
+      languageOptions: {
         ecmaVersion: 8,
       },
     },
@@ -2795,7 +2818,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -2805,7 +2830,9 @@ export default {
         export const sleep = (ms: number) =>
           new Promise<void>((res) => setTimeout(res, ms));
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -2816,7 +2843,9 @@ export default {
           return new Promise<void>((res) => setTimeout(res, ms));
         };
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -2827,7 +2856,9 @@ export default {
        */
       export function readFixture(path: string): Promise<Buffer>;
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -2838,7 +2869,9 @@ export default {
        */
       export function readFixture(path: string): void;
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -2847,7 +2880,9 @@ export default {
        */
       export function readFixture(path: string): void;
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -2856,7 +2891,9 @@ export default {
        */
       export function readFixture(path: string);
       `,
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
@@ -2883,7 +2920,9 @@ export default {
           ],
         },
       ],
-      parser: require.resolve('@typescript-eslint/parser'),
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
     {
       code: `
