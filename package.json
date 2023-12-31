@@ -133,7 +133,7 @@
     "create-options": "node ./src/bin/generateOptions.mjs",
     "install-offline": "pnpm install --prefer-offline --no-audit",
     "lint": "npm run lint-arg -- .",
-    "lint-arg": "eslint --report-unused-disable-directives=false",
+    "lint-arg": "eslint --report-unused-disable-directives-severity=off",
     "lint-fix": "npm run lint-arg -- --fix .",
     "prepare": "husky install",
     "test-no-cov": "cross-env BABEL_ENV=test mocha",

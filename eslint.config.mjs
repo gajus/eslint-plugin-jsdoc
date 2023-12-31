@@ -4,9 +4,6 @@ import jsdoc from './dist/index.js';
 // import canonicalJsdoc from 'eslint-config-canonical/jsdoc.js';
 
 const common = {
-  linterOptions: {
-    reportUnusedDisableDirectives: 0
-  },
   plugins: {
     jsdoc
   }
@@ -15,6 +12,10 @@ const common = {
 export default [
   // canonical,
   // canonicalJsdoc,
+  {
+    // Must be by itself
+    ignores: ['dist/**/*.js', '.ignore/**/*.js'],
+  },
   {
     ...common,
     files: ['.ncurc.js'],
@@ -44,7 +45,6 @@ export default [
   },
   {
     ...common,
-    ignores: ['dist/**/*.js', '.ignore/**/*.js'],
     languageOptions: {
       globals: globals.node
     },
