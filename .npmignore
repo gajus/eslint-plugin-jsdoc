@@ -8,4 +8,6 @@ CONTRIBUTING.md
 tsconfig*.json
 *.d.ts
 *.d.ts.map
+!dist/index.d.ts
+!dist/index.d.ts.map
 docs
