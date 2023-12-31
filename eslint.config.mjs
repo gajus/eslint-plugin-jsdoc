@@ -4,6 +4,9 @@ import jsdoc from './dist/index.js';
 // import canonicalJsdoc from 'eslint-config-canonical/jsdoc.js';
 
 const common = {
+  linterOptions: {
+    reportUnusedDisableDirectives: 'off'
+  },
   plugins: {
     jsdoc
   }
