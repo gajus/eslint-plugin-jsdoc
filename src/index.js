@@ -54,10 +54,20 @@ import validTypes from './rules/validTypes.js';
 
 /**
  * @type {import('eslint').ESLint.Plugin & {
- *   configs: Record<string, import('eslint').ESLint.ConfigData|{}>
+ *   configs: Record<
+ *     "recommended"|"recommended-error"|"recommended-typescript"|
+ *       "recommended-typescript-error"|"recommended-typescript-flavor"|
+ *       "recommended-typescript-flavor-error"|"flat/recommended"|
+ *       "flat/recommended-error"|"flat/recommended-typescript"|
+ *       "flat/recommended-typescript-error"|
+ *       "flat/recommended-typescript-flavor"|
+ *       "flat/recommended-typescript-flavor-error",
+ *     import('eslint').ESLint.ConfigData|{}
+ *   >
  * }}
  */
 const index = {
+  // @ts-expect-error Ok
   configs: {},
   rules: {
     'check-access': checkAccess,
