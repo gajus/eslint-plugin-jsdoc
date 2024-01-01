@@ -62,7 +62,7 @@ import validTypes from './rules/validTypes.js';
  *       "flat/recommended-typescript-error"|
  *       "flat/recommended-typescript-flavor"|
  *       "flat/recommended-typescript-flavor-error",
- *     import('eslint').ESLint.ConfigData|{}
+ *     import('eslint').Linter.FlatConfig
  *   >
  * }}
  */
@@ -129,10 +129,11 @@ const index = {
 /**
  * @param {"warn"|"error"} warnOrError
  * @param {boolean} [flat]
- * @returns {import('eslint').ESLint.ConfigData | {plugins: {}, rules: {}}}
+ * @returns {import('eslint').Linter.FlatConfig}
  */
 const createRecommendedRuleset = (warnOrError, flat) => {
   return {
+    // @ts-expect-error Ok
     plugins: flat ? {
       jsdoc: index,
     } : [
@@ -199,7 +200,7 @@ const createRecommendedRuleset = (warnOrError, flat) => {
 /**
  * @param {"warn"|"error"} warnOrError
  * @param {boolean} [flat]
- * @returns {import('eslint').ESLint.ConfigData|{}}
+ * @returns {import('eslint').Linter.FlatConfig}
  */
 const createRecommendedTypeScriptRuleset = (warnOrError, flat) => {
   const ruleset = createRecommendedRuleset(warnOrError, flat);
@@ -227,7 +228,7 @@ const createRecommendedTypeScriptRuleset = (warnOrError, flat) => {
 /**
  * @param {"warn"|"error"} warnOrError
  * @param {boolean} [flat]
- * @returns {import('eslint').ESLint.ConfigData|{}}
+ * @returns {import('eslint').Linter.FlatConfig}
  */
 const createRecommendedTypeScriptFlavorRuleset = (warnOrError, flat) => {
   const ruleset = createRecommendedRuleset(warnOrError, flat);
