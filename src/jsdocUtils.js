@@ -389,8 +389,8 @@ const getFunctionParameterNames = (
 
       // The key of an object could also be a string or number
       case 'Literal':
+        /* c8 ignore next 2 -- `raw` may not be present in all parsers */
         return /** @type {string} */ (param.key.raw ||
-          // istanbul ignore next -- `raw` may not be present in all parsers
           param.key.value);
 
       // case 'MemberExpression':
@@ -849,6 +849,7 @@ const getTagStructureForMode = (mode, structuredTags) => {
 
   try {
     overrideTagStructure(structuredTags, tagStruct);
+  /* c8 ignore next 3 */
   } catch {
     //
   }
@@ -1022,8 +1023,8 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
     });
   }
 
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error In Babel?
-  // istanbul ignore next -- In Babel?
   case 'OptionalCallExpression':
   case 'CallExpression':
     return node.arguments.some((element) => {
@@ -1112,24 +1113,24 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
       return hasNonFunctionYield(property, checkYieldReturnValue);
     });
 
-  // istanbul ignore next -- In Babel?
+  /* c8 ignore next -- In Babel? */
   case 'PropertyDefinition':
   /* eslint-disable no-fallthrough */
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error In Babel?
-  // istanbul ignore next -- In Babel?
   case 'ObjectProperty':
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error In Babel?
-  // istanbul ignore next -- In Babel?
   case 'ClassProperty':
   case 'Property':
   /* eslint-enable no-fallthrough */
     return node.computed && hasNonFunctionYield(node.key, checkYieldReturnValue) ||
       hasNonFunctionYield(node.value, checkYieldReturnValue);
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error In Babel?
-  // istanbul ignore next -- In Babel?
   case 'ObjectMethod':
+    /* c8 ignore next 6 -- In Babel? */
     // @ts-expect-error In Babel?
-    // istanbul ignore next -- In Babel?
     return node.computed && hasNonFunctionYield(node.key, checkYieldReturnValue) ||
       // @ts-expect-error In Babel?
       node.arguments.some((nde) => {
@@ -1143,16 +1144,16 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
   case 'TaggedTemplateExpression':
     return hasNonFunctionYield(node.quasi, checkYieldReturnValue);
 
-  // @ts-expect-error In Babel?
   // ?.
-  // istanbul ignore next -- In Babel?
+  /* c8 ignore next 2 -- In Babel? */
+  // @ts-expect-error In Babel?
   case 'OptionalMemberExpression':
   case 'MemberExpression':
     return hasNonFunctionYield(node.object, checkYieldReturnValue) ||
       hasNonFunctionYield(node.property, checkYieldReturnValue);
 
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error In Babel?
-  // istanbul ignore next -- In Babel?
   case 'Import':
   case 'ImportExpression':
     return hasNonFunctionYield(node.source, checkYieldReturnValue);

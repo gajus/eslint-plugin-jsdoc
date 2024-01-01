@@ -687,18 +687,18 @@ const getUtils = (
   ruleConfig,
   indent,
 ) => {
-  /* istanbul ignore next */
   const ancestors = /** @type {import('eslint').Rule.Node[]} */ (node ?
     (sc.getAncestors ?
       (
         sc.getAncestors(node)
+      /* c8 ignore next 4 */
       ) :
       (
         context.getAncestors()
       )) :
     []);
 
-  // istanbul ignore next -- Fallback to deprecated method
+  /* c8 ignore next -- Fallback to deprecated method */
   const {
     sourceCode = context.getSourceCode(),
   } = context;
@@ -937,7 +937,7 @@ const getUtils = (
       return false;
     });
 
-    /* istanbul ignore else -- Won't be called if missing */
+    /* c8 ignore else -- Won't be called if missing */
     if (descLines.length) {
       jsdoc.source.splice(
         /** @type {Integer} */ (startIdx),
@@ -968,7 +968,7 @@ const getUtils = (
         end,
       },
     }, idx) => {
-      // istanbul ignore if -- Already checked
+      /* c8 ignore next 3 -- Already checked */
       if (idx && (tag || end)) {
         return true;
       }
@@ -1035,7 +1035,7 @@ const getUtils = (
       }) => {
         return number === srcNumber;
       });
-      // istanbul ignore else
+      // c8 ignore else
       if (sourceIndex > -1) {
         let spliceCount = 1;
         tagSource.slice(tagIdx + 1).some(({
@@ -1060,7 +1060,6 @@ const getUtils = (
           end,
         } = jsdoc.source[spliceIdx].tokens;
 
-        /* istanbul ignore if -- Currently want to clear entirely if removing tags */
         if (
           spliceIdx === 0 && jsdoc.tags.length >= 2 ||
           !removeEmptyBlock && (end || delimiter === '/**')
@@ -1096,8 +1095,7 @@ const getUtils = (
 
         return true;
       }
-
-      // istanbul ignore next
+      /* c8 ignore next */
       return false;
     });
     for (const [
@@ -1240,7 +1238,7 @@ const getUtils = (
       }) => {
         return number === srcNumber && !end;
       });
-      // istanbul ignore else
+      // c8 ignore else
       if (sourceIndex > -1) {
         const lines = makeLines();
         jsdoc.source.splice(sourceIndex + tagSourceOffset, 0, ...lines);
@@ -1250,8 +1248,7 @@ const getUtils = (
 
         return true;
       }
-
-      // istanbul ignore next
+      /* c8 ignore next */
       return false;
     });
 
@@ -1295,7 +1292,7 @@ const getUtils = (
         postName = '';
       } else if (postType) {
         postType = '';
-      } else /* istanbul ignore else -- `comment-parser` prevents empty blocks currently per https://github.com/syavorsky/comment-parser/issues/128 */ if (postTag) {
+      } else /* c8 ignore else -- `comment-parser` prevents empty blocks currently per https://github.com/syavorsky/comment-parser/issues/128 */ if (postTag) {
         postTag = '';
       }
     }
@@ -1902,7 +1899,6 @@ const makeReport = (context, commentNode) => {
       };
 
       // Todo: Remove ignore once `check-examples` can be restored for ESLint 8+
-      // istanbul ignore if
       if ('column' in jsdocLoc && typeof jsdocLoc.column === 'number') {
         const colNumber = /** @type {import('eslint').AST.SourceLocation} */ (
           commentNode.loc
@@ -2151,7 +2147,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
    * @returns {void}
    */
   const callIterator = (context, node, jsdocNodes, state, lastCall) => {
-    // istanbul ignore next -- Fallback to deprecated method
+    /* c8 ignore next -- Fallback to deprecated method */
     const {
       sourceCode = context.getSourceCode(),
     } = context;
@@ -2265,7 +2261,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
   return {
     // @ts-expect-error ESLint accepts
     create (context) {
-      // istanbul ignore next -- Fallback to deprecated method
+      /* c8 ignore next -- Fallback to deprecated method */
       const {
         sourceCode = context.getSourceCode(),
       } = context;
@@ -2344,7 +2340,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
 const checkFile = (iterator, ruleConfig) => {
   return {
     create (context) {
-      // istanbul ignore next -- Fallback to deprecated method
+      /* c8 ignore next -- Fallback to deprecated method */
       const {
         sourceCode = context.getSourceCode(),
       } = context;
@@ -2463,7 +2459,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         }
       }
 
-      // istanbul ignore next -- Fallback to deprecated method
+      /* c8 ignore next -- Fallback to deprecated method */
       const {
         sourceCode = context.getSourceCode(),
       } = context;

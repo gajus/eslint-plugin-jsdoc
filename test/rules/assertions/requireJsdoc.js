@@ -2068,6 +2068,8 @@ function quux (foo) {
       `,
       languageOptions: {
         globals: globals.node,
+        ecmaVersion: 6,
+        sourceType: 'module',
       },
       errors: [
         {
@@ -2096,10 +2098,6 @@ function quux (foo) {
 
         }
       `,
-      languageOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -2109,6 +2107,8 @@ function quux (foo) {
       `,
       languageOptions: {
         globals: globals.node,
+        ecmaVersion: 6,
+        sourceType: 'module',
       },
       errors: [
         {
@@ -2137,10 +2137,6 @@ function quux (foo) {
 
         }
       `,
-      languageOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -5363,6 +5359,8 @@ function quux (foo) {
       `,
       languageOptions: {
         globals: globals.node,
+        ecmaVersion: 6,
+        sourceType: 'module',
       },
       options: [
         {
@@ -5376,10 +5374,6 @@ function quux (foo) {
           },
         },
       ],
-      languageOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module',
-      },
     }, {
       code: `
       export function someMethod() {
@@ -5388,6 +5382,8 @@ function quux (foo) {
       `,
       languageOptions: {
         globals: globals.node,
+        ecmaVersion: 6,
+        sourceType: 'module',
       },
       options: [
         {
@@ -5401,10 +5397,6 @@ function quux (foo) {
           },
         },
       ],
-      languageOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module',
-      },
     }, {
       code: `
       exports.someMethod = function() {

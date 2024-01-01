@@ -25,19 +25,20 @@ const setDeps = function () {
     );
     deps = new Set([
       ...(pkg.dependencies ?
+        /* c8 ignore next 2 */
         Object.keys(pkg.dependencies) :
-        // istanbul ignore next
         []),
       ...(pkg.devDependencies ?
+        /* c8 ignore next 2 */
         Object.keys(pkg.devDependencies) :
-        // istanbul ignore next
         []),
     ]);
+  /* c8 ignore next -- our package.json exists */
   } catch (error) {
-    // istanbul ignore next -- our package.json exists
+    /* c8 ignore next -- our package.json exists */
     deps = null;
+    /* c8 ignore next 4 -- our package.json exists */
     /* eslint-disable no-console -- Inform user */
-    // istanbul ignore next -- our package.json exists
     console.log(error);
     /* eslint-enable no-console -- Inform user */
   }
@@ -50,12 +51,11 @@ export default iterateJsdoc(({
   settings,
   utils,
 }) => {
-  // istanbul ignore if
   if (deps === undefined) {
     setDeps();
   }
 
-  // istanbul ignore if -- our package.json exists
+  /* c8 ignore next 3 -- our package.json exists */
   if (deps === null) {
     return;
   }
@@ -74,7 +74,7 @@ export default iterateJsdoc(({
 
     // eslint-disable-next-line no-loop-func -- Safe
     traverse(typeAst, (nde) => {
-      // istanbul ignore if -- TS guard
+      /* c8 ignore next 3 -- TS guard */
       if (deps === null) {
         return;
       }

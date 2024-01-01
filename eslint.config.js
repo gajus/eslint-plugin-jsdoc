@@ -1,5 +1,5 @@
 import globals from 'globals';
-import jsdoc from './dist/index.js';
+import jsdoc from './src/index.js';
 // import canonical from 'eslint-config-canonical';
 // import canonicalJsdoc from 'eslint-config-canonical/jsdoc.js';
 
@@ -21,34 +21,9 @@ export default [
   },
   {
     ...common,
-    files: ['.ncurc.js'],
     languageOptions: {
-      parserOptions: {
-        ecmaFeatures: {
-          impliedStrict: false
-        },
-      },
-      sourceType: 'script'
-    },
-    rules: {
-      'import/no-commonjs': 0,
-      strict: [
-        'error',
-        'global'
-      ]
-    }
-  },
-  {
-    ...common,
-    files: ['test/**/*.js'],
-    rules: {
-      'no-restricted-syntax': 0,
-      'unicorn/prevent-abbreviations': 0
-    }
-  },
-  {
-    ...common,
-    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: globals.node
     },
     settings: {
@@ -71,5 +46,36 @@ export default [
       'no-inline-comments': 0,
       'no-extra-parens': 0
     }
-  }
+  },
+  {
+    ...common,
+    files: ['.ncurc.cjs'],
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          impliedStrict: false
+        },
+      },
+      sourceType: 'script'
+    },
+    rules: {
+      'import/no-commonjs': 0,
+      strict: [
+        'error',
+        'global'
+      ]
+    }
+  },
+  {
+    ...common,
+    files: ['test/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module'
+    },
+    rules: {
+      'no-restricted-syntax': 0,
+      'unicorn/prevent-abbreviations': 0
+    }
+  },
 ];

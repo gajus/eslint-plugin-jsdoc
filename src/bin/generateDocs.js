@@ -1,13 +1,16 @@
 /**
  * This script is used to inline assertions into the README.md documents.
  */
-import decamelize from 'decamelize';
+import path, {dirname} from 'path';
+import {fileURLToPath} from 'url';
 import fs from 'fs';
+import decamelize from 'decamelize';
 import Gitdown from 'gitdown';
 import {
   glob,
 } from 'glob';
-import path from 'path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
  * @param {string} code
@@ -77,7 +80,7 @@ const getAssertions = async () => {
      *   valid: (import('eslint').RuleTester.ValidTestCase & {ignoreReadme?: true})[]
      * }}
      */
-    const codes = await import(filePath);
+    const codes = (await import(filePath)).default;
 
     const ruleName = decamelize(assertionNames[idx], {
       separator: '-',

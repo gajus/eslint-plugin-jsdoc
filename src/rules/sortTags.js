@@ -246,7 +246,7 @@ export default iterateJsdoc(({
             while (true) {
               const nextTokens = jsdoc.source[++newIdx]?.tokens;
 
-              /* istanbul ignore if -- Guard */
+              /* c8 ignore next 3 -- Guard */
               if (!nextTokens) {
                 return;
               }

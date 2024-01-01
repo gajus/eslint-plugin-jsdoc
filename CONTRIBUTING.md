@@ -64,7 +64,7 @@ for more on the allowable properties (e.g., `code`, `errors` (for invalid rules)
 Note that besides `pnpm test` there is `pnpm test-cov`, which shows more
 detailed coverage information. Coverage should be maintained at 100%, and
 if there are a few guards in place for future use, the code block in question
-can be ignored by being preceded by `/* istanbul ignore next */` (including
+can be ignored by being preceded by `/* c8 ignore next */` (including
 for warnings where the block is never passed over (i.e., the block is always
 entered)). If you want to test without coverage at all, you can use
 `pnpm test-no-cov`. To only test rules rather than other files, you
