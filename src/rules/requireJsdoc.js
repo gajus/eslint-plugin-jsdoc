@@ -284,7 +284,7 @@ const getOptions = (context, settings) => {
 /** @type {import('eslint').Rule.RuleModule} */
 export default {
   create (context) {
-    // istanbul ignore next -- Fallback to deprecated method
+    /* c8 ignore next -- Fallback to deprecated method */
     const {
       sourceCode = context.getSourceCode(),
     } = context;

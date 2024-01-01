@@ -179,7 +179,6 @@ export default iterateJsdoc(({
 
     // If the file is a module, concat the variables from the module scope.
     .concat(
-      /* istanbul ignore next */
       cjsOrESMScope ?
         globalScope.childScopes.flatMap(({
           variables,
@@ -189,6 +188,7 @@ export default iterateJsdoc(({
           name,
         }) => {
           return name;
+        /* c8 ignore next */
         }) : [],
     )
     .concat(extraTypes)
@@ -286,9 +286,9 @@ export default iterateJsdoc(({
             report(`The type '${value}' is undefined.`, null, tag);
           }
         } else if (markVariablesAsUsed && !extraTypes.includes(value)) {
-          /* istanbul ignore else */
           if (sourceCode.markVariableAsUsed) {
             sourceCode.markVariableAsUsed(value);
+          /* c8 ignore next 3 */
           } else {
             context.markVariableAsUsed(value);
           }

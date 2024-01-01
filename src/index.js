@@ -244,7 +244,7 @@ const createRecommendedTypeScriptFlavorRuleset = (warnOrError, flat) => {
   };
 };
 
-/* istanbul ignore if -- TS */
+/* c8 ignore next 3 -- TS */
 if (!index.configs) {
   throw new Error('TypeScript guard');
 }

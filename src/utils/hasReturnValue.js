@@ -198,12 +198,10 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
             try {
               hasReturnValue(node.finalizer, true, promFilter);
             } catch (error) {
-              // istanbul ignore else
               if (/** @type {Error} */ (error).message === 'Null return') {
                 return false;
               }
-
-              // istanbul ignore next
+              /* c8 ignore next 2 */
               throw error;
             }
 
@@ -274,8 +272,8 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
 
   // Arrow function without block
   switch (node.type) {
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error Babel?
-  // istanbul ignore next -- In Babel?
   case 'OptionalCallExpression':
   case 'CallExpression':
     return /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
@@ -375,8 +373,8 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
     return node.properties.some((property) => {
       return hasNonEmptyResolverCall(property, resolverName);
     });
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error Babel?
-  // istanbul ignore next -- In Babel?
   case 'ClassMethod':
   case 'MethodDefinition':
     return node.decorators && node.decorators.some((decorator) => {
@@ -385,24 +383,24 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
       node.computed && hasNonEmptyResolverCall(node.key, resolverName) ||
       hasNonEmptyResolverCall(node.value, resolverName);
 
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error Babel?
-  // istanbul ignore next -- In Babel?
   case 'ObjectProperty':
   /* eslint-disable no-fallthrough */
-  // istanbul ignore next -- In Babel?
+  /* c8 ignore next -- In Babel? */
   case 'PropertyDefinition':
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error Babel?
-  // istanbul ignore next -- In Babel?
   case 'ClassProperty':
   case 'Property':
   /* eslint-enable no-fallthrough */
     return node.computed && hasNonEmptyResolverCall(node.key, resolverName) ||
       hasNonEmptyResolverCall(node.value, resolverName);
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error Babel?
-  // istanbul ignore next -- In Babel?
   case 'ObjectMethod':
+    /* c8 ignore next 6 -- In Babel? */
     // @ts-expect-error
-    // istanbul ignore next -- In Babel?
     return node.computed && hasNonEmptyResolverCall(node.key, resolverName) ||
       // @ts-expect-error
       node.arguments.some((nde) => {
@@ -433,16 +431,16 @@ const hasNonEmptyResolverCall = (node, resolverName) => {
   case 'TaggedTemplateExpression':
     return hasNonEmptyResolverCall(node.quasi, resolverName);
 
-  // @ts-expect-error Babel?
   // ?.
-  // istanbul ignore next -- In Babel?
+  /* c8 ignore next 2 -- In Babel? */
+  // @ts-expect-error Babel?
   case 'OptionalMemberExpression':
   case 'MemberExpression':
     return hasNonEmptyResolverCall(node.object, resolverName) ||
       hasNonEmptyResolverCall(node.property, resolverName);
 
+  /* c8 ignore next 2 -- In Babel? */
   // @ts-expect-error Babel?
-  // istanbul ignore next -- In Babel?
   case 'Import':
   case 'ImportExpression':
     return hasNonEmptyResolverCall(node.source, resolverName);
@@ -488,12 +486,11 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, all
       try {
         hasReturn = hasReturnValue(nde, true, promiseFilter);
       } catch (error) {
-        // istanbul ignore else
+        // c8 ignore else
         if (/** @type {Error} */ (error).message === 'Null return') {
           return false;
         }
-
-        // istanbul ignore next
+        /* c8 ignore next 2 */
         throw error;
       }
 

@@ -24,7 +24,6 @@
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@babel/plugin-transform-flow-strip-types": "^7.23.3",
     "@babel/preset-env": "^7.23.7",
-    "@babel/register": "^7.23.7",
     "@es-joy/escodegen": "^3.5.1",
     "@es-joy/jsdoc-eslint-parser": "^0.21.1",
     "@hkdobrev/run-if-changed": "^0.3.1",
@@ -42,9 +41,10 @@
     "@types/node": "^20.10.6",
     "@types/semver": "^7.5.6",
     "@types/spdx-expression-parse": "^3.0.5",
-    "@typescript-eslint/parser": "^6.16.0",
+    "@typescript-eslint/parser": "^6.17.0",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-istanbul": "^6.1.1",
+    "c8": "^8.0.1",
     "camelcase": "^6.3.0",
     "chai": "^4.3.10",
     "cross-env": "^7.0.3",
@@ -61,14 +61,14 @@
     "lint-staged": "^15.2.0",
     "lodash.defaultsdeep": "^4.6.1",
     "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
     "open-editor": "^3.0.0",
+    "replace": "^1.2.2",
     "rimraf": "^5.0.5",
     "semantic-release": "^22.0.12",
     "typescript": "5.3.3"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "keywords": [
     "eslint",
@@ -83,18 +83,21 @@
     ],
     "*.js": "npm run lint-arg -- --fix"
   },
+  "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./src/index.js",
+    "require": "./dist/index.cjs"
+  },
   "name": "eslint-plugin-jsdoc",
   "mocha": {
-    "require": [
-      "@babel/register"
-    ],
     "reporter": "dot",
     "recursive": true,
     "timeout": 12000
   },
-  "nyc": {
+  "c8": {
     "branches": 100,
     "check-coverage": true,
     "exclude": [
@@ -107,9 +110,6 @@
     "instrument": false,
     "lines": 100,
     "reporter": "text-summary",
-    "require": [
-      "@babel/register"
-    ],
     "sourceMap": false,
     "statements": 100
   },
@@ -126,7 +126,7 @@
   "scripts": {
     "tsc": "tsc",
     "tsc-build": "tsc -p tsconfig-prod.json",
-    "build": "rimraf ./dist && cross-env NODE_ENV=production babel ./src --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && pnpm tsc-build",
+    "build": "rimraf ./dist && cross-env NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build",
     "check-docs": "babel-node ./src/bin/generateDocs.js --check",
     "create-docs": "npm run create-options && babel-node ./src/bin/generateDocs.js",
     "create-rule": "babel-node ./src/bin/generateRule.js",
@@ -137,8 +137,8 @@
     "lint-fix": "npm run lint-arg -- --fix .",
     "prepare": "husky install",
     "test-no-cov": "cross-env BABEL_ENV=test mocha",
-    "test": "nyc npm run test-no-cov",
-    "test-cov": "cross-env TIMING=1 nyc --reporter text npm run test-no-cov",
+    "test": "c8 npm run test-no-cov",
+    "test-cov": "cross-env TIMING=1 c8 --reporter text npm run test-no-cov",
     "test-index": "npm run test-no-cov -- test/rules/index.js"
   },
   "version": "1.0.0"

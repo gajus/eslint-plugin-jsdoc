@@ -5,13 +5,11 @@ node_modules
 .*
 !.babelrc.json
 !.editorconfig
-!.eslintignore
-!.eslintrc.json
 !.gitattributes
 !.github
 !.gitignore
 !.husky
-!.ncurc.js
+!.ncurc.cjs
 !.npmignore
 !.README
 !.releaserc

@@ -21,7 +21,7 @@ const WarnSettings = function () {
      * @returns {void}
      */
     markSettingAsWarned (context, setting) {
-      // istanbul ignore else
+      // c8 ignore else
       if (!warnedSettings.has(context)) {
         warnedSettings.set(context, new Set());
       }

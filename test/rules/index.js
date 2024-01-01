@@ -1,29 +1,23 @@
 import config from '../../src/index.js';
-// import {fileURLToPath} from 'url';
+import {fileURLToPath} from 'url';
 import camelCase from 'camelcase';
 import {
   ESLint,
   RuleTester,
 } from 'eslint';
-import pkg from 'eslint/use-at-your-own-risk';
 import {
   readFileSync,
 } from 'fs';
 import defaultsDeep from 'lodash.defaultsdeep';
 import {
-  // dirname,
+  dirname,
   join,
 } from 'path';
 import semver from 'semver';
 
-// const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const ruleTester = new RuleTester();
-const {
-  // Todo: Could submit this to @types/eslint
-  // @ts-expect-error
-  FlatRuleTester,
-} = pkg;
 
 // eslint-disable-next-line complexity -- Temporary
 const main = async () => {
@@ -161,27 +155,6 @@ const main = async () => {
       process.chdir(cwd);
     }
   }
-
-  if (!process.env.npm_config_rule) {
-    // Catch syntax errors
-    let flatRuleNames;
-    try {
-      flatRuleNames = (await import('./assertions/flatConfig.js')).default;
-    } catch (error) {
-      // eslint-disable-next-line no-console -- Reporting back to tester
-      console.error(error);
-      return;
-    }
-
-    const fakeRuleTester = new FlatRuleTester();
-    for (const [
-      ruleName,
-      assertions,
-    ] of Object.entries(flatRuleNames)) {
-      const rule = config.rules[ruleName];
-      fakeRuleTester.run(ruleName, rule, assertions);
-    }
-  }
 };
 
-main();
+await main();

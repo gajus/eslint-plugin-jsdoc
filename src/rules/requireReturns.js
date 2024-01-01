@@ -104,7 +104,7 @@ export default iterateJsdoc(({
         initModuleExports: Boolean(publicOnly?.cjs ?? true),
         initWindow: Boolean(publicOnly?.window ?? false),
       };
-      // istanbul ignore next -- Fallback to deprecated method
+      /* c8 ignore next -- Fallback to deprecated method */
       const {
         sourceCode = context.getSourceCode(),
       } = context;
