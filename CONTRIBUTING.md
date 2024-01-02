@@ -21,7 +21,7 @@ pnpm link ../eslint-plugin-jsdoc
 ## Building the project
 
 After running `pnpm install` to get the latest dependencies and devDependencies,
-you can run the following command to update the `dist` files, with `dist/index.js`
+you can run the following command to update the `dist` files, with `dist/index.cjs`
 being the `main` entry point from `package.json`:
 
 ```shell
