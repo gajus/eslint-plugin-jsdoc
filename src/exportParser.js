@@ -741,6 +741,8 @@ const canExportChildrenType = new Set([
   'TSInterfaceDeclaration',
   'TSTypeLiteral',
   'TSTypeAliasDeclaration',
+  'TSTypeParameterInstantiation',
+  'TSTypeReference',
   'ClassDeclaration',
   'ClassBody',
   'ClassDefinition',
