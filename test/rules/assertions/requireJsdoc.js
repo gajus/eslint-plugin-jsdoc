@@ -4191,6 +4191,58 @@ function quux (foo) {
         }
       },
     },
+    {
+      code: `
+        /**
+         * Command options for the login command
+         */
+        export type LoginOptions = CmdOptions<{
+          username?: string;
+          password?: string;
+        }>;
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Missing JSDoc comment.',
+        },
+        {
+          line: 7,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          publicOnly: {
+            ancestorsOnly: true,
+          },
+          contexts: [
+            'TSTypeAliasDeclaration',
+            'TSInterfaceDeclaration',
+            'TSMethodSignature',
+            'TSPropertySignature',
+          ],
+        },
+      ],
+      output: `
+        /**
+         * Command options for the login command
+         */
+        export type LoginOptions = CmdOptions<{
+          /**
+           *
+           */
+          username?: string;
+          /**
+           *
+           */
+          password?: string;
+        }>;
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
   ],
   valid: [
     {
