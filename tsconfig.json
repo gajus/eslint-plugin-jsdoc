@@ -16,7 +16,8 @@
   "include": [
     "src/**/*.js",
     "test/**/*.js",
-    "src/bin/gitdown.d.ts"
+    "typings/gitdown.d.ts",
+    "typings/babel__eslint-parser.d.ts"
   ],
   "exclude": ["node_modules"]
 }
