@@ -1016,6 +1016,16 @@ export class MyClass {
 export const Comp = observer(() => <>Hello</>);
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["CallExpression[callee.name=\"observer\"]"],"enableFixer":false,"publicOnly":true,"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
+
+/**
+ * Command options for the login command
+ */
+export type LoginOptions = CmdOptions<{
+  username?: string;
+  password?: string;
+}>;
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"contexts":["TSTypeAliasDeclaration","TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"]}]
+// Message: Missing JSDoc comment.
 ````
 
 

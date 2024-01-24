@@ -214,14 +214,16 @@ export default iterateJsdoc(({
     ...unnamedRootBase,
   ], autoIncrementBase);
 
+  const thisOffset = functionParameterNames[0] === 'this' ? 1 : 0;
+
   for (const [
     functionParameterIdx,
     functionParameterName,
   ] of functionParameterNames.entries()) {
     let inc;
     if (Array.isArray(functionParameterName)) {
-      const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx] ||
-        jsdocParameterNames[functionParameterIdx];
+      const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx - thisOffset] ||
+        jsdocParameterNames[functionParameterIdx - thisOffset];
 
       /** @type {string} */
       let rootName;

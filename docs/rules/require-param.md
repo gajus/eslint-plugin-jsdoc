@@ -1832,5 +1832,16 @@ function foo(this: T, bar: number): number {
 /** {@link someOtherval} */
 function a (b) {}
 // "jsdoc/require-param": ["error"|"warn", {"contexts":[{"comment":"*:not(JsdocBlock:has(JsdocInlineTag[tag=link]))","context":"FunctionDeclaration"}]}]
+
+/**
+ * Returns the sum of two numbers
+ * @param options Object to destructure
+ * @param options.a First value
+ * @param options.b Second value
+ * @returns Sum of a and b
+ */
+function sumDestructure(this: unknown, { a, b }: { a: number, b: number }) {
+  return a + b;
+}
 ````
 
