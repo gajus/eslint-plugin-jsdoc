@@ -3640,5 +3640,22 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * Returns the sum of two numbers
+         * @param options Object to destructure
+         * @param options.a First value
+         * @param options.b Second value
+         * @returns Sum of a and b
+         */
+        function sumDestructure(this: unknown, { a, b }: { a: number, b: number }) {
+          return a + b;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
   ],
 };
