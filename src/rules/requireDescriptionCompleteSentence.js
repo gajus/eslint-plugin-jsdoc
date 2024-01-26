@@ -14,7 +14,7 @@ const otherDescriptiveTags = new Set([
  * @returns {string[]}
  */
 const extractParagraphs = (text) => {
-  return text.split(/(?<![;:])\n\n/u);
+  return text.split(/(?<![;:])\n\n+/u);
 };
 
 /**
