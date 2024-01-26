@@ -1577,5 +1577,19 @@ export default {
       /** @param options {@link RequestOptions} specifying path parameters and query parameters. */
       `,
     },
+    {
+      code: `
+        /**
+         * A single line for testing.
+         *
+         * \`\`\`js
+         * const aCodeExample = true;
+         * \`\`\`
+         *
+         * @param parameter
+         */
+        const code = (parameter) => 123;
+      `,
+    },
   ],
 };

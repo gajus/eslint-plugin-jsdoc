@@ -818,5 +818,16 @@ function quux () {
 }
 
 /** @param options {@link RequestOptions} specifying path parameters and query parameters. */
+
+/**
+ * A single line for testing.
+ *
+ * ```js
+ * const aCodeExample = true;
+ * ```
+ *
+ * @param parameter
+ */
+const code = (parameter) => 123;
 ````
 
