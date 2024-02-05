@@ -10,7 +10,7 @@
 * [Passing examples](#user-content-informative-docs-passing-examples)
 
 
-Reports on JSDoc texts that serve only to restart their attached name.
+Reports on JSDoc texts that serve only to restate their attached name.
 
 Devs sometimes write JSDoc descriptions that add no additional information just to fill out the doc:
 
