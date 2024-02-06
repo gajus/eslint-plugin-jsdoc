@@ -501,6 +501,23 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * package name from path
+         */
+        export function packageNameFromPath(path) {
+          const base = basename(path);
+          return /^v\d+(\.\d+)?$/.exec(base) || /^ts\d\.\d/.exec(base) ? basename(dirname(path)) : base;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'This description only repeats the name it describes.',
+        },
+      ],
+    }
   ],
   valid: [
     {
