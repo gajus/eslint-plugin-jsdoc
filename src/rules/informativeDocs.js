@@ -38,6 +38,12 @@ const getNamesFromNode = (node) => {
         (node.key),
       ),
     ];
+
+  case 'ExportNamedDeclaration':
+    return getNamesFromNode(
+      /** @type {import('@typescript-eslint/types').TSESTree.ExportNamedDeclaration} */
+      (node).declaration
+    );
   case 'ClassDeclaration':
   case 'ClassExpression':
   case 'FunctionDeclaration':
