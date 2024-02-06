@@ -263,6 +263,15 @@ export function packageNameFromPath(path) {
   return /^vd+(.d+)?$/.exec(base) || /^tsd.d/.exec(base) ? basename(dirname(path)) : base;
 }
 // Message: This description only repeats the name it describes.
+
+/**
+ * package name from path
+ */
+export default function packageNameFromPath(path) {
+  const base = basename(path);
+  return /^vd+(.d+)?$/.exec(base) || /^tsd.d/.exec(base) ? basename(dirname(path)) : base;
+}
+// Message: This description only repeats the name it describes.
 ````
 
 
