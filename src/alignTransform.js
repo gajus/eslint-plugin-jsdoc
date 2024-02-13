@@ -151,6 +151,7 @@ const space = (len) => {
  *   indent: string,
  *   preserveMainDescriptionPostDelimiter: boolean,
  *   wrapIndent: string,
+ *   disableWrapIndent: boolean,
  * }} cfg
  * @returns {(
  *   block: import('comment-parser').Block
@@ -162,6 +163,7 @@ const alignTransform = ({
   indent,
   preserveMainDescriptionPostDelimiter,
   wrapIndent,
+  disableWrapIndent,
 }) => {
   let intoTags = false;
   /** @type {Width} */
@@ -314,7 +316,7 @@ const alignTransform = ({
     // Not align.
     if (shouldAlign(tags, index, source)) {
       alignTokens(tokens, typelessInfo);
-      if (indentTag) {
+      if (!disableWrapIndent && indentTag) {
         tokens.postDelimiter += wrapIndent;
       }
     }
@@ -340,10 +342,10 @@ const alignTransform = ({
     return rewireSource({
       ...fields,
       source: source.map((line, index) => {
-        const indentTag = tagIndentMode && !line.tokens.tag && line.tokens.description;
+        const indentTag = !disableWrapIndent && tagIndentMode && !line.tokens.tag && line.tokens.description;
         const ret = update(line, index, source, typelessInfo, indentTag);
 
-        if (line.tokens.tag) {
+        if (!disableWrapIndent && line.tokens.tag) {
           tagIndentMode = true;
         }
 

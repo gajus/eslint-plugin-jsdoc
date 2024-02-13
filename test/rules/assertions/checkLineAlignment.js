@@ -2182,5 +2182,40 @@ export default {
         'never',
       ],
     },
+    {
+      code: `
+        /**
+         * @param {string} lorem Description
+         *   with multiple lines preserving existing indentation when wrapIndent is disabled.
+         */
+        function quux () {
+        }
+      `,
+      options: [
+        'any',
+        {
+          disableWrapIndent: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Function description with disableWrapIndent true, but wrapIndent defined.
+         * Preserves existing indentation regardless of wrapIndent value.
+         *
+         * @param {string} lorem Description
+         *   with multiple lines.
+         */
+        const fn = ( lorem ) => {}
+      `,
+      options: [
+        'any',
+        {
+          disableWrapIndent: true,
+          wrapIndent: '  ',
+        },
+      ],
+    },
   ],
 };

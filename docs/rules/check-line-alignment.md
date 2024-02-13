@@ -8,6 +8,7 @@
     * [`customSpacings`](#user-content-check-line-alignment-options-customspacings)
     * [`preserveMainDescriptionPostDelimiter`](#user-content-check-line-alignment-options-preservemaindescriptionpostdelimiter)
     * [`wrapIndent`](#user-content-check-line-alignment-options-wrapindent)
+    * [`disableWrapIndent`](#user-content-check-line-alignment-options-disablewrapindent)
 * [Context and settings](#user-content-check-line-alignment-context-and-settings)
 * [Failing examples](#user-content-check-line-alignment-failing-examples)
 * [Passing examples](#user-content-check-line-alignment-passing-examples)
@@ -72,6 +73,12 @@ main description. If `false` or unset, will be set to a single space.
 The indent that will be applied for tag text after the first line.
 Default to the empty string (no indent).
 
+<a name="user-content-check-line-alignment-options-disablewrapindent"></a>
+<a name="check-line-alignment-options-disablewrapindent"></a>
+### <code>disableWrapIndent</code>
+
+Disables `wrapIndent`; existing wrap indentation is preserved without changes.
+
 <a name="user-content-check-line-alignment-context-and-settings"></a>
 <a name="check-line-alignment-context-and-settings"></a>
 ## Context and settings
@@ -79,7 +86,7 @@ Default to the empty string (no indent).
 |||
 |---|---|
 |Context|everywhere|
-|Options|string ("always", "never", "any") followed by object with `customSpacings`, `preserveMainDescriptionPostDelimiter`, `tags`, `wrapIndent`|
+|Options|string ("always", "never", "any") followed by object with `customSpacings`, `preserveMainDescriptionPostDelimiter`, `tags`, `wrapIndent`, `disableWrapIndent`|
 |Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|
@@ -998,5 +1005,23 @@ function quux () {}
  * @returns {number} -1 if world transform has negative scale, 1 otherwise.
  */
 // "jsdoc/check-line-alignment": ["error"|"warn", "never"]
+
+/**
+ * @param {string} lorem Description
+ *   with multiple lines preserving existing indentation when wrapIndent is disabled.
+ */
+function quux () {
+}
+// "jsdoc/check-line-alignment": ["error"|"warn", "any",{"disableWrapIndent":true}]
+
+/**
+ * Function description with disableWrapIndent true, but wrapIndent defined.
+ * Preserves existing indentation regardless of wrapIndent value.
+ *
+ * @param {string} lorem Description
+ *   with multiple lines.
+ */
+const fn = ( lorem ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "any",{"disableWrapIndent":true,"wrapIndent":"  "}]
 ````
 
