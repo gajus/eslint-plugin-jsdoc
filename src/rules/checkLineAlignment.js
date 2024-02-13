@@ -169,6 +169,7 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
  * @param {string[]} cfg.tags
  * @param {import('../iterateJsdoc.js').Utils} cfg.utils
  * @param {string} cfg.wrapIndent
+ * @param {boolean} cfg.disableWrapIndent
  * @returns {void}
  */
 const checkAlignment = ({
@@ -181,6 +182,7 @@ const checkAlignment = ({
   tags,
   utils,
   wrapIndent,
+  disableWrapIndent,
 }) => {
   const transform = commentFlow(
     alignTransform({
@@ -189,6 +191,7 @@ const checkAlignment = ({
       preserveMainDescriptionPostDelimiter,
       tags,
       wrapIndent,
+      disableWrapIndent,
     }),
   );
   const transformedJsdoc = transform(jsdoc);
@@ -228,6 +231,7 @@ export default iterateJsdoc(({
     preserveMainDescriptionPostDelimiter,
     customSpacings,
     wrapIndent = '',
+    disableWrapIndent = false,
   } = context.options[1] || {};
 
   if (context.options[0] === 'always') {
@@ -253,6 +257,7 @@ export default iterateJsdoc(({
       tags: applicableTags,
       utils,
       wrapIndent,
+      disableWrapIndent,
     });
 
     return;
@@ -293,7 +298,7 @@ export default iterateJsdoc(({
         }
 
         // Don't include a single separating space/tab
-        if (tokens.postDelimiter.slice(1) !== wrapIndent) {
+        if (!disableWrapIndent && tokens.postDelimiter.slice(1) !== wrapIndent) {
           utils.reportJSDoc('Expected wrap indent', {
             line: tag.source[0].number + idx,
           }, () => {
@@ -354,6 +359,9 @@ export default iterateJsdoc(({
           },
           wrapIndent: {
             type: 'string',
+          },
+          disableWrapIndent: {
+            type: 'boolean',
           },
         },
         type: 'object',

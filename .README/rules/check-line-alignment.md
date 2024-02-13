@@ -49,12 +49,16 @@ main description. If `false` or unset, will be set to a single space.
 The indent that will be applied for tag text after the first line.
 Default to the empty string (no indent).
 
+### `disableWrapIndent`
+
+Disables `wrapIndent`; existing wrap indentation is preserved without changes.
+
 ## Context and settings
 
 |||
 |---|---|
 |Context|everywhere|
-|Options|string ("always", "never", "any") followed by object with `customSpacings`, `preserveMainDescriptionPostDelimiter`, `tags`, `wrapIndent`|
+|Options|string ("always", "never", "any") followed by object with `customSpacings`, `preserveMainDescriptionPostDelimiter`, `tags`, `wrapIndent`, `disableWrapIndent`|
 |Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|
