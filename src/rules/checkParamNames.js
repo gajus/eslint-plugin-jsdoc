@@ -227,7 +227,7 @@ const validateParameterNames = (
       funcParamName = functionParameterName;
     }
 
-    if (funcParamName !== tag.name.trim() && !disableMissingParamChecks) {
+    if (funcParamName !== tag.name.trim()) {
       // Todo: Improve for array or object child items
       const actualNames = paramTagsNonNested.map(([
         , {
@@ -247,10 +247,20 @@ const validateParameterNames = (
         return item;
       }).filter((item) => {
         return item !== 'this';
-      }).join(', ');
+      });
+
+      // When disableMissingParamChecks is true tag names can be omitted.
+      // Report when the tag names do not match the expected names or they are used out of order.
+      if (disableMissingParamChecks) {
+        const usedExpectedNames = expectedNames.map(a => a?.toString()).filter(expectedName => !!expectedName && actualNames.includes(expectedName));
+        const usedInOrder = actualNames.every((actualName, idx) => actualName === usedExpectedNames[idx]);
+        if (usedInOrder) {
+          return false;
+        }
+      }
 
       report(
-        `Expected @${targetTagName} names to be "${expectedNames}". Got "${actualNames.join(', ')}".`,
+        `Expected @${targetTagName} names to be "${expectedNames.join(', ')}". Got "${actualNames.join(', ')}".`,
         null,
         tag,
       );

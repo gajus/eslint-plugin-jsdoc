@@ -1203,6 +1203,47 @@ export default {
           message: 'Expected @param names to be "bar, foo". Got "foo".',
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * @param foo
+         */
+        function quux (bar, baz) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "bar, baz". Got "foo".',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param bar
+         * @param foo
+         */
+        function quux (foo, bar) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "foo, bar". Got "bar, foo".',
+        },
+      ],
     }
   ],
   valid: [
