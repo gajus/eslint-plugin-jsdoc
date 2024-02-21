@@ -1244,7 +1244,28 @@ export default {
           message: 'Expected @param names to be "foo, bar". Got "bar, foo".',
         },
       ],
-    }
+    },
+    {
+      code: `
+        /**
+         * @param foo
+         * @param bar
+         */
+        function quux (foo) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+      errors: [
+        {
+          line: 4,
+          message: '@param "bar" does not match an existing function parameter.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1900,10 +1921,9 @@ export default {
     {
       code: `
         /**
-         * @param foo
-         * @param foo.bar
+         * Documentation
          */
-        function quux (bar, foo) {
+        function quux (foo, bar) {
         }
       `,
       options: [
@@ -1911,6 +1931,21 @@ export default {
           disableMissingParamChecks: true,
         },
       ],
-    }
+    },
+    {
+      code: `
+        /**
+         * @param bar
+         * @param bar.baz
+         */
+        function quux (foo, bar) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+    },
   ],
 };
