@@ -292,7 +292,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "options.foo" declaration.',
         },
       ],
@@ -1784,7 +1783,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "options.foo" declaration.',
         },
       ],
@@ -1830,7 +1828,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'Missing JSDoc @param "options.permissions" declaration.',
         },
       ],
@@ -1946,7 +1943,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "cfg.extra" declaration.',
         },
       ],
@@ -1980,7 +1976,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "cfg.opts.extra" declaration.',
         },
       ],
@@ -2015,7 +2010,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "cfg."1"" declaration.',
         },
       ],
@@ -2073,19 +2067,15 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "bbox.x" declaration.',
         },
         {
-          line: 2,
           message: 'Missing JSDoc @param "bbox.y" declaration.',
         },
         {
-          line: 2,
           message: 'Missing JSDoc @param "bbox.width" declaration.',
         },
         {
-          line: 2,
           message: 'Missing JSDoc @param "bbox.height" declaration.',
         },
       ],
@@ -2120,19 +2110,15 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "bbox.x" declaration.',
         },
         {
-          line: 2,
           message: 'Missing JSDoc @param "bbox.y" declaration.',
         },
         {
-          line: 2,
           message: 'Missing JSDoc @param "bbox.width" declaration.',
         },
         {
-          line: 2,
           message: 'Missing JSDoc @param "bbox.height" declaration.',
         },
       ],
@@ -2163,11 +2149,9 @@ export default {
       `,
       errors: [
         {
-          line: 3,
           message: 'Missing JSDoc @param "fetchOptions.url" declaration.',
         },
         {
-          line: 3,
           message: 'Missing JSDoc @param "fetchOptions.options" declaration.',
         },
       ],
@@ -2234,7 +2218,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "options.foo.bar" declaration.',
         },
       ],
@@ -2259,7 +2242,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "options.foo.bar" declaration.',
         },
       ],
@@ -2289,11 +2271,9 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "options.foo" declaration.',
         },
         {
-          line: 2,
           message: 'Missing JSDoc @param "options.foo.bar" declaration.',
         },
       ],
@@ -2319,7 +2299,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "options.foo.bar" declaration.',
         },
       ],
@@ -2345,7 +2324,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "options.foo.bar.baz" declaration.',
         },
       ],
@@ -2373,11 +2351,9 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "props.prop.a" declaration.',
         },
         {
-          line: 2,
           message: 'Missing JSDoc @param "props.prop.b" declaration.',
         },
       ],
@@ -2409,15 +2385,12 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "a" declaration.',
         },
         {
-          line: 2,
           message: 'Missing JSDoc @param "b" declaration.',
         },
         {
-          line: 2,
           message: 'Missing JSDoc @param "c" declaration.',
         },
       ],
@@ -2441,7 +2414,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "baz" declaration.',
         },
       ],
@@ -2483,7 +2455,6 @@ export default {
       `,
       errors: [
         {
-          line: 2,
           message: 'Missing JSDoc @param "verbose" declaration.',
         },
       ],
@@ -2531,7 +2502,6 @@ export default {
       `,
       errors: [
         {
-          line: 6,
           message: 'Missing JSDoc @param "btnState" declaration.',
         },
       ],
