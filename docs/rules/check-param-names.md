@@ -116,6 +116,12 @@ item at the same level is destructured as destructuring will prevent other
 access and this option is only intended to permit documenting extra properties
 that are available and actually used in the function.
 
+<a name="user-content-check-param-names-options-disableMissingParamChecks"></a>
+<a name="check-param-names-options-disableMissingParamChecks"></a>
+### <code>disableMissingParamChecks</code>
+
+Whether to check for missing `@param` definitions. Defaults to `false`. Change to `true` if you want to be able to omit properties.
+
 <a name="user-content-check-param-names-context-and-settings"></a>
 <a name="check-param-names-context-and-settings"></a>
 ## Context and settings
@@ -123,7 +129,7 @@ that are available and actually used in the function.
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `disableExtraPropertyReporting`, `enableFixer`, `useDefaultObjectProperties`|
+|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `disableExtraPropertyReporting`, `disableMissingParamChecks`, `enableFixer`, `useDefaultObjectProperties`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|

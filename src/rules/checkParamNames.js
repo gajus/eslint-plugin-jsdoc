@@ -7,6 +7,7 @@ import iterateJsdoc from '../iterateJsdoc.js';
  * @param {boolean} checkRestProperty
  * @param {RegExp} checkTypesRegex
  * @param {boolean} disableExtraPropertyReporting
+ * @param {boolean} disableMissingParamChecks
  * @param {boolean} enableFixer
  * @param {import('../jsdocUtils.js').ParamNameInfo[]} functionParameterNames
  * @param {import('comment-parser').Block} jsdoc
@@ -21,6 +22,7 @@ const validateParameterNames = (
   checkRestProperty,
   checkTypesRegex,
   disableExtraPropertyReporting,
+  disableMissingParamChecks,
   enableFixer,
   functionParameterNames, jsdoc, utils, report,
 ) => {
@@ -225,7 +227,7 @@ const validateParameterNames = (
       funcParamName = functionParameterName;
     }
 
-    if (funcParamName !== tag.name.trim()) {
+    if (funcParamName !== tag.name.trim() && !disableMissingParamChecks) {
       // Todo: Improve for array or object child items
       const actualNames = paramTagsNonNested.map(([
         , {
@@ -329,6 +331,7 @@ export default iterateJsdoc(({
     enableFixer = false,
     useDefaultObjectProperties = false,
     disableExtraPropertyReporting = false,
+    disableMissingParamChecks = false,
   } = context.options[0] || {};
 
   const checkTypesRegex = utils.getRegexFromString(checkTypesPattern);
@@ -349,6 +352,7 @@ export default iterateJsdoc(({
     checkRestProperty,
     checkTypesRegex,
     disableExtraPropertyReporting,
+    disableMissingParamChecks,
     enableFixer,
     functionParameterNames,
     jsdoc,
@@ -387,6 +391,9 @@ export default iterateJsdoc(({
             type: 'string',
           },
           disableExtraPropertyReporting: {
+            type: 'boolean',
+          },
+          disableMissingParamChecks: {
             type: 'boolean',
           },
           enableFixer: {

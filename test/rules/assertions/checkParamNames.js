@@ -1183,6 +1183,27 @@ export default {
         parser: typescriptEslintParser
       },
     },
+    {
+      code: `
+        /**
+         * @param foo
+         * @param foo.bar
+         */
+        function quux (bar, foo) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: false,
+        },
+      ],
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "bar, foo". Got "foo".',
+        },
+      ],
+    }
   ],
   valid: [
     {
@@ -1835,5 +1856,20 @@ export default {
         parser: typescriptEslintParser
       },
     },
+    {
+      code: `
+        /**
+         * @param foo
+         * @param foo.bar
+         */
+        function quux (bar, foo) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+    }
   ],
 };
