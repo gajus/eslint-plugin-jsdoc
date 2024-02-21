@@ -1947,5 +1947,19 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @param foo
+         */
+        function quux (foo, bar) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+    },
   ],
 };
