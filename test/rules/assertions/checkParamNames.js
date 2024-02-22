@@ -1183,6 +1183,89 @@ export default {
         parser: typescriptEslintParser
       },
     },
+    {
+      code: `
+        /**
+         * @param foo
+         * @param foo.bar
+         */
+        function quux (bar, foo) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: false,
+        },
+      ],
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "bar, foo". Got "foo".',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param foo
+         */
+        function quux (bar, baz) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "bar, baz". Got "foo".',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param bar
+         * @param foo
+         */
+        function quux (foo, bar) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "foo, bar". Got "bar, foo".',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param foo
+         * @param bar
+         */
+        function quux (foo) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+      errors: [
+        {
+          line: 4,
+          message: '@param "bar" does not match an existing function parameter.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1834,6 +1917,49 @@ export default {
       languageOptions: {
         parser: typescriptEslintParser
       },
+    },
+    {
+      code: `
+        /**
+         * Documentation
+         */
+        function quux (foo, bar) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param bar
+         * @param bar.baz
+         */
+        function quux (foo, bar) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param foo
+         */
+        function quux (foo, bar) {
+        }
+      `,
+      options: [
+        {
+          disableMissingParamChecks: true,
+        },
+      ],
     },
   ],
 };

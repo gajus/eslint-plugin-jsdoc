@@ -7,6 +7,7 @@ import iterateJsdoc from '../iterateJsdoc.js';
  * @param {boolean} checkRestProperty
  * @param {RegExp} checkTypesRegex
  * @param {boolean} disableExtraPropertyReporting
+ * @param {boolean} disableMissingParamChecks
  * @param {boolean} enableFixer
  * @param {import('../jsdocUtils.js').ParamNameInfo[]} functionParameterNames
  * @param {import('comment-parser').Block} jsdoc
@@ -21,6 +22,7 @@ const validateParameterNames = (
   checkRestProperty,
   checkTypesRegex,
   disableExtraPropertyReporting,
+  disableMissingParamChecks,
   enableFixer,
   functionParameterNames, jsdoc, utils, report,
 ) => {
@@ -245,10 +247,20 @@ const validateParameterNames = (
         return item;
       }).filter((item) => {
         return item !== 'this';
-      }).join(', ');
+      });
+
+      // When disableMissingParamChecks is true tag names can be omitted.
+      // Report when the tag names do not match the expected names or they are used out of order.
+      if (disableMissingParamChecks) {
+        const usedExpectedNames = expectedNames.map(a => a?.toString()).filter(expectedName => expectedName && actualNames.includes(expectedName));
+        const usedInOrder = actualNames.every((actualName, idx) => actualName === usedExpectedNames[idx]);
+        if (usedInOrder) {
+          return false;
+        }
+      }
 
       report(
-        `Expected @${targetTagName} names to be "${expectedNames}". Got "${actualNames.join(', ')}".`,
+        `Expected @${targetTagName} names to be "${expectedNames.join(', ')}". Got "${actualNames.join(', ')}".`,
         null,
         tag,
       );
@@ -329,6 +341,7 @@ export default iterateJsdoc(({
     enableFixer = false,
     useDefaultObjectProperties = false,
     disableExtraPropertyReporting = false,
+    disableMissingParamChecks = false,
   } = context.options[0] || {};
 
   const checkTypesRegex = utils.getRegexFromString(checkTypesPattern);
@@ -349,6 +362,7 @@ export default iterateJsdoc(({
     checkRestProperty,
     checkTypesRegex,
     disableExtraPropertyReporting,
+    disableMissingParamChecks,
     enableFixer,
     functionParameterNames,
     jsdoc,
@@ -387,6 +401,9 @@ export default iterateJsdoc(({
             type: 'string',
           },
           disableExtraPropertyReporting: {
+            type: 'boolean',
+          },
+          disableMissingParamChecks: {
             type: 'boolean',
           },
           enableFixer: {
