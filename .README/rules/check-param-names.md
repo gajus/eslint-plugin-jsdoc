@@ -83,7 +83,7 @@ that are available and actually used in the function.
 
 ### `disableMissingParamChecks`
 
-Whether to check for missing `@param` definitions. Defaults to `false`. Change to `true` if you want to be able to omit properties.
+Whether to avoid checks for missing `@param` definitions. Defaults to `false`. Change to `true` if you want to be able to omit properties.
 
 ## Context and settings
 
