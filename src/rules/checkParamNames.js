@@ -252,7 +252,7 @@ const validateParameterNames = (
       // When disableMissingParamChecks is true tag names can be omitted.
       // Report when the tag names do not match the expected names or they are used out of order.
       if (disableMissingParamChecks) {
-        const usedExpectedNames = expectedNames.map(a => a?.toString()).filter(expectedName => Boolean(expectedName) && actualNames.includes(expectedName));
+        const usedExpectedNames = expectedNames.map(a => a?.toString()).filter(expectedName => expectedName && actualNames.includes(expectedName));
         const usedInOrder = actualNames.every((actualName, idx) => actualName === usedExpectedNames[idx]);
         if (usedInOrder) {
           return false;
