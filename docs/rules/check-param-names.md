@@ -12,6 +12,7 @@
     * [`checkDestructured`](#user-content-check-param-names-options-checkdestructured)
     * [`useDefaultObjectProperties`](#user-content-check-param-names-options-usedefaultobjectproperties)
     * [`disableExtraPropertyReporting`](#user-content-check-param-names-options-disableextrapropertyreporting)
+    * [`disableMissingParamChecks`](#user-content-check-param-names-options-disablemissingparamchecks)
 * [Context and settings](#user-content-check-param-names-context-and-settings)
 * [Failing examples](#user-content-check-param-names-failing-examples)
 * [Passing examples](#user-content-check-param-names-passing-examples)
@@ -116,11 +117,11 @@ item at the same level is destructured as destructuring will prevent other
 access and this option is only intended to permit documenting extra properties
 that are available and actually used in the function.
 
-<a name="user-content-check-param-names-options-disableMissingParamChecks"></a>
-<a name="check-param-names-options-disableMissingParamChecks"></a>
+<a name="user-content-check-param-names-options-disablemissingparamchecks"></a>
+<a name="check-param-names-options-disablemissingparamchecks"></a>
 ### <code>disableMissingParamChecks</code>
 
-Whether to check for missing `@param` definitions. Defaults to `false`. Change to `true` if you want to be able to omit properties.
+Whether to avoid checks for missing `@param` definitions. Defaults to `false`. Change to `true` if you want to be able to omit properties.
 
 <a name="user-content-check-param-names-context-and-settings"></a>
 <a name="check-param-names-context-and-settings"></a>
@@ -621,6 +622,41 @@ function quux (foo) {
  */
 declare function foo(bar: number) {}
 // Message: Expected @param names to be "bar". Got "barr".
+
+/**
+ * @param foo
+ * @param foo.bar
+ */
+function quux (bar, foo) {
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"disableMissingParamChecks":false}]
+// Message: Expected @param names to be "bar, foo". Got "foo".
+
+/**
+ * @param foo
+ */
+function quux (bar, baz) {
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"disableMissingParamChecks":true}]
+// Message: Expected @param names to be "bar, baz". Got "foo".
+
+/**
+ * @param bar
+ * @param foo
+ */
+function quux (foo, bar) {
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"disableMissingParamChecks":true}]
+// Message: Expected @param names to be "foo, bar". Got "bar, foo".
+
+/**
+ * @param foo
+ * @param bar
+ */
+function quux (foo) {
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"disableMissingParamChecks":true}]
+// Message: @param "bar" does not match an existing function parameter.
 ````
 
 
@@ -1037,5 +1073,27 @@ function foo(this: T, bar: number): number {
   console.log(this.name);
   return bar;
 }
+
+/**
+ * Documentation
+ */
+function quux (foo, bar) {
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"disableMissingParamChecks":true}]
+
+/**
+ * @param bar
+ * @param bar.baz
+ */
+function quux (foo, bar) {
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"disableMissingParamChecks":true}]
+
+/**
+ * @param foo
+ */
+function quux (foo, bar) {
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"disableMissingParamChecks":true}]
 ````
 
