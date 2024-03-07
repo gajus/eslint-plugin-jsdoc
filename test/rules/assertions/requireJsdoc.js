@@ -6342,5 +6342,26 @@ function quux (foo) {
         parser: typescriptEslintParser,
       }
     },
+    {
+      code: `
+        export class MyClass {
+          #myPrivateMethod(): void { }
+
+          #myPrivateProp = 5;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          publicOnly: true,
+          contexts: ['PropertyDefinition'],
+          require: {
+            MethodDefinition: true,
+          },
+        },
+      ],
+    },
   ],
 };

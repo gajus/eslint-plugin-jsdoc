@@ -1898,5 +1898,12 @@ export default {
   }
 };
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["ExportDefaultDeclaration > ObjectExpression > Property[key.name!=/^(created|beforeUpdate)$/] > FunctionExpression","ExportDefaultDeclaration > ObjectExpression > Property[key.name!=/^(watch|computed|methods)$/] > ObjectExpression > Property > FunctionExpression"]}]
+
+export class MyClass {
+  #myPrivateMethod(): void { }
+
+  #myPrivateProp = 5;
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"contexts":["PropertyDefinition"],"require":{"MethodDefinition":true}}]
 ````
 
