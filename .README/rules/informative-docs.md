@@ -35,6 +35,20 @@ The default `aliases` option is:
 }
 ```
 
+### `excludedTags`
+
+Tags that should not be checked for valid contents.
+
+For example, with `{ excludedTags: ["category"] }`, the following comment would not be considered uninformative:
+
+```js
+/** @category Types */
+function computeTypes(node) {
+  // ...
+}
+
+No tags are excluded by default.
+
 ### `uselessWords`
 
 Words that are ignored when searching for one that adds meaning.
