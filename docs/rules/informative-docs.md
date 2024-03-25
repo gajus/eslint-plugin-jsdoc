@@ -47,6 +47,22 @@ The default `aliases` option is:
 }
 ```
 
+<a name="user-content-informative-docs-options-excludedtags"></a>
+<a name="informative-docs-options-excludedtags"></a>
+### <code>excludedTags</code>
+
+Tags that should not be checked for valid contents.
+
+For example, with `{ excludedTags: ["category"] }`, the following comment would not be considered uninformative:
+
+```js
+/** @category Types */
+function computeTypes(node) {
+  // ...
+}
+
+No tags are excluded by default.
+
 <a name="user-content-informative-docs-options-uselesswords"></a>
 <a name="informative-docs-options-uselesswords"></a>
 ### <code>uselessWords</code>
