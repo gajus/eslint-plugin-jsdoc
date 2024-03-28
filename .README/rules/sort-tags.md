@@ -63,6 +63,7 @@ a fixed order that doesn't change into the future, supply your own
   'file',
   'fileoverview',
   'overview',
+  'import',
 
   // Identifying (name, type)
   'typedef',

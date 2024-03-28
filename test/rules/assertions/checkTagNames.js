@@ -857,6 +857,10 @@ export default {
       code: `${ALL_TYPESCRIPT_TAGS_COMMENT}\nfunction quux (foo) {}`,
       errors: [
         {
+          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 4,
+          message: 'Invalid JSDoc tag name "import".',
+        },
+        {
           line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 3,
           message: 'Invalid JSDoc tag name "internal".',
         },
