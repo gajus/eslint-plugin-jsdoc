@@ -714,6 +714,7 @@ function quux (foo) {}
  * @variation
  * @version
  * @yields
+ * @import
  * @internal
  * @overload
  * @satisfies
@@ -1028,6 +1029,7 @@ function quux (foo) {}
  * @variation
  * @version
  * @yields
+ * @import
  * @internal
  * @overload
  * @satisfies

@@ -4,6 +4,7 @@
 
 * [Options](#user-content-informative-docs-options)
     * [`aliases`](#user-content-informative-docs-options-aliases)
+    * [`excludedTags`](#user-content-informative-docs-options-excludedtags)
     * [`uselessWords`](#user-content-informative-docs-options-uselesswords)
 * [Context and settings](#user-content-informative-docs-context-and-settings)
 * [Failing examples](#user-content-informative-docs-failing-examples)
@@ -60,6 +61,7 @@ For example, with `{ excludedTags: ["category"] }`, the following comment would 
 function computeTypes(node) {
   // ...
 }
+```
 
 No tags are excluded by default.
 

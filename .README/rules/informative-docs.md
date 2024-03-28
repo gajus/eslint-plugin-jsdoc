@@ -46,6 +46,7 @@ For example, with `{ excludedTags: ["category"] }`, the following comment would 
 function computeTypes(node) {
   // ...
 }
+```
 
 No tags are excluded by default.
 
