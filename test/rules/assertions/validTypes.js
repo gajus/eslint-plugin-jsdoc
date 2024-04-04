@@ -1856,5 +1856,18 @@ export default {
        */
       `,
     },
+    {
+      code: `
+          /**
+           * @param typeof
+           * @param readonly
+           * @param import
+           * @param is
+           */
+          function quux() {
+
+          }
+      `
+    },
   ],
 };

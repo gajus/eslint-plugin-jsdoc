@@ -877,5 +877,15 @@ function quux() {
 /**
  * An inline {@link text} tag with content.
  */
+
+/**
+ * @param typeof
+ * @param readonly
+ * @param import
+ * @param is
+ */
+function quux() {
+
+}
 ````
 
