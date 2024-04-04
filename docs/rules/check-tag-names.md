@@ -722,7 +722,7 @@ function quux (foo) {}
  */
 function quux (foo) {}
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
-// Message: Invalid JSDoc tag name "internal".
+// Message: Invalid JSDoc tag name "import".
 
 /** 
  * @externs
