@@ -353,15 +353,6 @@ function qux(baz) {
 // Message: Invalid JSDoc @param "baz" type "*"; prefer: "aaa".
 
 /**
- * @param {abc} foo
- * @param {Number} bar
- */
-function qux(foo, bar) {
-}
-// Settings: {"jsdoc":{"preferredTypes":{"abc":"Abc","string":"Str"}}}
-// Message: Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".
-
-/**
  * @param {Array} foo
  */
 function quux (foo) {

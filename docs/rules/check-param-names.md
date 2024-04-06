@@ -864,17 +864,9 @@ function quux (foo, bar, ...extra) {
 }
 
 /**
-* Converts an SVGRect into an object.
-* @param {SVGRect} bbox - a SVGRect
-*/
-const bboxToObj = function ({x, y, width, height}) {
-  return {x, y, width, height};
-};
-
-/**
-* Converts an SVGRect into an object.
-* @param {SVGRect} bbox - a SVGRect
-*/
+ * Converts an SVGRect into an object.
+ * @param {SVGRect} bbox - a SVGRect
+ */
 const bboxToObj = function ({x, y, width, height}) {
   return {x, y, width, height};
 };

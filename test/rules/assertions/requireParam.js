@@ -179,14 +179,7 @@ export default {
           enableFixer: false,
         },
       ],
-      output: `
-          /**
-           *
-           */
-          function quux ({foo}) {
-
-          }
-      `,
+      output: null,
     },
     {
       code: `
@@ -657,31 +650,6 @@ export default {
           },
         },
       },
-    },
-    {
-      code: `
-          /**
-           * @param foo
-           */
-          function quux (foo, bar) {
-
-          }
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Missing JSDoc @param "bar" declaration.',
-        },
-      ],
-      output: `
-          /**
-           * @param foo
-           * @param bar
-           */
-          function quux (foo, bar) {
-
-          }
-      `,
     },
     {
       code: `
@@ -1884,14 +1852,7 @@ export default {
           enableFixer: false,
         },
       ],
-      output: `
-          /**
-           *
-           */
-          function quux (foo) {
-
-          }
-      `,
+      output: null,
     },
     {
       code: `
@@ -2819,36 +2780,6 @@ export default {
     {
       code: `
           /**
-           * @augments
-           */
-          function quux (foo) {
-
-          }
-      `,
-      settings: {
-        jsdoc: {
-          augmentsExtendsReplacesDocs: true,
-        },
-      },
-    },
-    {
-      code: `
-          /**
-           * @extends
-           */
-          function quux (foo) {
-
-          }
-      `,
-      settings: {
-        jsdoc: {
-          augmentsExtendsReplacesDocs: true,
-        },
-      },
-    },
-    {
-      code: `
-          /**
            * @override
            */
           class A {
@@ -3005,46 +2936,6 @@ export default {
             }
           }
       `,
-    },
-    {
-      code: `
-          /**
-           * @augments
-           */
-          class A {
-            /**
-             *
-             */
-            quux (foo) {
-
-            }
-          }
-      `,
-      settings: {
-        jsdoc: {
-          augmentsExtendsReplacesDocs: true,
-        },
-      },
-    },
-    {
-      code: `
-          /**
-           * @extends
-           */
-          class A {
-            /**
-             *
-             */
-            quux (foo) {
-
-            }
-          }
-      `,
-      settings: {
-        jsdoc: {
-          augmentsExtendsReplacesDocs: true,
-        },
-      },
     },
     {
       code: `

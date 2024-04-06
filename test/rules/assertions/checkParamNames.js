@@ -356,16 +356,7 @@ export default {
           message: 'Duplicate @param "cfg.foo"',
         },
       ],
-      output: `
-          /**
-           * @param cfg
-           * @param cfg.foo
-           * @param cfg.foo
-           */
-          function quux ({foo}) {
-
-          }
-      `,
+      output: null,
     },
     {
       code: `
@@ -1558,20 +1549,9 @@ export default {
     {
       code: `
       /**
-      * Converts an SVGRect into an object.
-      * @param {SVGRect} bbox - a SVGRect
-      */
-      const bboxToObj = function ({x, y, width, height}) {
-        return {x, y, width, height};
-      };
-      `,
-    },
-    {
-      code: `
-      /**
-      * Converts an SVGRect into an object.
-      * @param {SVGRect} bbox - a SVGRect
-      */
+       * Converts an SVGRect into an object.
+       * @param {SVGRect} bbox - a SVGRect
+       */
       const bboxToObj = function ({x, y, width, height}) {
         return {x, y, width, height};
       };

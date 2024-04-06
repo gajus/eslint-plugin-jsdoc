@@ -131,16 +131,6 @@ const fn = ( lorem, sit ) => {}
 /**
  * Function description.
  *
- * @param {string} lorem Description.
- * @param {int} sit Description multi words.
- */
-const fn = ( lorem, sit ) => {}
-// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
-// Message: Expected JSDoc block lines to be aligned.
-
-/**
- * Function description.
- *
  * @param  {string} lorem Description.
  *  @param {int}    sit   Description multi words.
  */

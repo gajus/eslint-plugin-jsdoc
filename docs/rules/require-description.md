@@ -134,24 +134,6 @@ class quux {
 // Message: Missing JSDoc @description declaration.
 
 /**
- *
- */
-class quux {
-
-}
-// "jsdoc/require-description": ["error"|"warn", {"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
-// Message: Missing JSDoc @description declaration.
-
-/**
- *
- */
-class quux {
-
-}
-// "jsdoc/require-description": ["error"|"warn", {"contexts":["ClassDeclaration"],"descriptionStyle":"tag"}]
-// Message: Missing JSDoc @description declaration.
-
-/**
  * @description
  */
 function quux () {

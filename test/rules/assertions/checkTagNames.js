@@ -657,40 +657,6 @@ export default {
       `,
       errors: [
         {
-          line: 3,
-          message: 'Please use x-todo instead of todo',
-        },
-      ],
-      output: `
-          /**
-           * @x-todo
-           */
-          function quux () {
-
-          }
-      `,
-      settings: {
-        jsdoc: {
-          tagNamePreference: {
-            todo: {
-              message: 'Please use x-todo instead of todo',
-              replacement: 'x-todo',
-            },
-          },
-        },
-      },
-    },
-    {
-      code: `
-          /**
-           * @todo
-           */
-          function quux () {
-
-          }
-      `,
-      errors: [
-        {
           line: 1,
           message: 'Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.',
         },

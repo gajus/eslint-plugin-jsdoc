@@ -97,36 +97,6 @@ export default {
         /**
          * Function description.
          *
-         * @param {string} lorem Description.
-         * @param {int} sit Description multi words.
-         */
-        const fn = ( lorem, sit ) => {}
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
-        },
-      ],
-      options: [
-        'always',
-      ],
-      output: `
-        /**
-         * Function description.
-         *
-         * @param {string} lorem Description.
-         * @param {int}    sit   Description multi words.
-         */
-        const fn = ( lorem, sit ) => {}
-      `,
-    },
-    {
-      code: `
-        /**
-         * Function description.
-         *
          * @param  {string} lorem Description.
          *  @param {int}    sit   Description multi words.
          */

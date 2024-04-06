@@ -361,15 +361,6 @@ const MyType = require('my-library').MyType;
 
 }
 
-const MyType = require('my-library').MyType;
-
-/**
- * @param {MyType} foo - Bar.
- */
-  function quux(foo) {
-
-}
-
 import {MyType} from 'my-library';
 
 /**

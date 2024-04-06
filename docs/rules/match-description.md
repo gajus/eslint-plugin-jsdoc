@@ -244,12 +244,6 @@ const q = class {
 /**
  * foo.
  */
-// "jsdoc/match-description": ["error"|"warn", {"contexts":["any"]}]
-// Message: JSDoc description does not satisfy the regex pattern.
-
-/**
- * foo.
- */
 const q = {
 
 };

@@ -448,17 +448,6 @@ function * quux () {
  */
 function * quux () {
   if (true) {
-    yield;
-  }
-  yield true;
-}
-// Message: Missing JSDoc @yields declaration.
-
-/**
- *
- */
-function * quux () {
-  if (true) {
     yield true;
   }
 }
@@ -587,12 +576,6 @@ function * quux (foo) {
 }
 
 /**
- * @constructor
- */
-function * quux (foo) {
-}
-
-/**
  * @yields {object}
  */
 function * quux () {
@@ -608,12 +591,6 @@ function * quux () {
 
 /**
  * @yields {undefined}
- */
-function * quux () {
-}
-
-/**
- *
  */
 function * quux () {
 }

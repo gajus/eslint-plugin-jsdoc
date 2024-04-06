@@ -634,21 +634,6 @@ export default {
     },
     {
       code: `
-        const MyType = require('my-library').MyType;
-
-        /**
-         * @param {MyType} foo - Bar.
-         */
-          function quux(foo) {
-
-        }
-      `,
-      languageOptions: {
-        globals: globals.node,
-      },
-    },
-    {
-      code: `
         import {MyType} from 'my-library';
 
         /**

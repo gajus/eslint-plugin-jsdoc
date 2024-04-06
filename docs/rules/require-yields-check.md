@@ -239,14 +239,6 @@ function * quux () {
 }
 
 /**
- * @yields {string} Foo.
- */
-function * quux () {
-
-  yield foo;
-}
-
-/**
  *
  */
 function * quux () {

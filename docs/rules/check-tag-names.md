@@ -518,15 +518,6 @@ function quux () {
 function quux () {
 
 }
-// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use x-todo instead of todo","replacement":"x-todo"}}}}
-// Message: Please use x-todo instead of todo
-
-/**
- * @todo
- */
-function quux () {
-
-}
 // Settings: {"jsdoc":{"tagNamePreference":{"todo":55}}}
 // Message: Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.
 

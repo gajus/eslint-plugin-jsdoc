@@ -369,20 +369,6 @@ function foo() {
 // Message: JSDoc @returns declaration present but return expression not available in function.
 
 /**
- * @returns {SomeType} Baz.
- */
-function foo() {
-    switch (true) {
-        default:
-            switch (false) {
-                default: return;
-            }
-            return "baz";
-    }
-};
-// Message: JSDoc @returns declaration present but return expression not available in function.
-
-/**
  * @returns {number}
  */
 function foo() {
@@ -408,14 +394,6 @@ The following patterns are not considered problems:
 ````js
 /**
  * @returns Foo.
- */
-function quux () {
-
-  return foo;
-}
-
-/**
- * @returns {string} Foo.
  */
 function quux () {
 
@@ -585,30 +563,8 @@ function quux () {
  */
 function quux () {
   try {
-    return true;
-  } catch (err) {
-  }
-  return true;
-}
-
-/**
- * @returns {true}
- */
-function quux () {
-  try {
     something();
   } catch (err) {
-    return true;
-  }
-  return true;
-}
-
-/**
- * @returns {true}
- */
-function quux () {
-  switch (true) {
-  case 'abc':
     return true;
   }
   return true;
@@ -1002,19 +958,6 @@ function foo( bar ) {
     return functionWithUnknownReturnType();
   }
 }
-
-/**
- * @returns Baz.
- */
-function foo() {
-    switch (true) {
-        default:
-            switch (false) {
-                default: return;
-            }
-            return "baz";
-    }
-};
 
 /**
  * @returns Baz.

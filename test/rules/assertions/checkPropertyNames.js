@@ -113,13 +113,7 @@ export default {
           message: 'Duplicate @property "foo"',
         },
       ],
-      output: `
-          /**
-           * @typedef (SomeType) SomeTypedef
-           * @property foo
-           * @property foo
-           */
-      `,
+      output: null,
     },
     {
       code: `

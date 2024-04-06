@@ -867,12 +867,6 @@ const quux = () => {
 /**
  *
  */
-function quux () {
-}
-
-/**
- *
- */
 const quux = () => {
 
 }
@@ -923,13 +917,6 @@ function quux () {
 function quux () {
   return;
 }
-
-/**
- * @returns {void}
- */
-function quux () {
-}
-// "jsdoc/require-returns": ["error"|"warn", {"forceRequireReturn":true}]
 
 /**
  * @returns {void}
