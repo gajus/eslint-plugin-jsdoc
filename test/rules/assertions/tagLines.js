@@ -237,38 +237,6 @@ export default {
        * Some description
        * @param {string} a
        * @param {number} b
-       */
-      `,
-      errors: [
-        {
-          line: 4,
-          message: 'Expected 1 line between tags but found 0',
-        },
-      ],
-      options: [
-        'never', {
-          tags: {
-            param: {
-              lines: 'always',
-            },
-          },
-        },
-      ],
-      output: `
-      /**
-       * Some description
-       * @param {string} a
-       *
-       * @param {number} b
-       */
-      `,
-    },
-    {
-      code: `
-      /**
-       * Some description
-       * @param {string} a
-       * @param {number} b
        *
        */
       `,

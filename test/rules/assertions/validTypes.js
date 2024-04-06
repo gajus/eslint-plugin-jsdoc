@@ -1021,22 +1021,6 @@ export default {
     {
       code: `
       /**
-       * @param {Object[]} employees
-       * @param {string} [] - The name of an employee.
-       */
-      function quux () {}
-
-      `,
-      errors: [
-        {
-          line: 4,
-          message: 'Invalid name: empty name',
-        },
-      ],
-    },
-    {
-      code: `
-      /**
        * @param {string} [name=] - The name of an employee.
        */
       function quux () {}

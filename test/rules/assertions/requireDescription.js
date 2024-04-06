@@ -183,54 +183,6 @@ export default {
     {
       code: `
           /**
-           *
-           */
-          class quux {
-
-          }
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Missing JSDoc @description declaration.',
-        },
-      ],
-      options: [
-        {
-          contexts: [
-            'ClassDeclaration',
-          ],
-          descriptionStyle: 'tag',
-        },
-      ],
-    },
-    {
-      code: `
-          /**
-           *
-           */
-          class quux {
-
-          }
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Missing JSDoc @description declaration.',
-        },
-      ],
-      options: [
-        {
-          contexts: [
-            'ClassDeclaration',
-          ],
-          descriptionStyle: 'tag',
-        },
-      ],
-    },
-    {
-      code: `
-          /**
            * @description
            */
           function quux () {

@@ -863,25 +863,6 @@ export default {
            */
           function * quux () {
             if (true) {
-              yield;
-            }
-            yield true;
-          }
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Missing JSDoc @yields declaration.',
-        },
-      ],
-    },
-    {
-      code: `
-          /**
-           *
-           */
-          function * quux () {
-            if (true) {
               yield true;
             }
           }
@@ -1192,23 +1173,6 @@ export default {
            *
            */
           function * quux () {
-            a.b[yield true].c;
-          }
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Missing JSDoc @yields declaration.',
-        },
-      ],
-      ignoreReadme: true,
-    },
-    {
-      code: `
-          /**
-           *
-           */
-          function * quux () {
             abc?.[yield true].d?.e(yield true);
           }
       `,
@@ -1468,15 +1432,6 @@ export default {
     {
       code: `
           /**
-           * @constructor
-           */
-          function * quux (foo) {
-          }
-      `,
-    },
-    {
-      code: `
-          /**
            * @yields {object}
            */
           function * quux () {
@@ -1498,15 +1453,6 @@ export default {
       code: `
           /**
            * @yields {undefined}
-           */
-          function * quux () {
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           *
            */
           function * quux () {
           }

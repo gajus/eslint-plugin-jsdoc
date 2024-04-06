@@ -376,14 +376,7 @@ function quux () {
           enableFixer: false,
         },
       ],
-      output: `
-          /**
-           *
-           */
-          function quux (someParam) {
-
-          }
-      `,
+      output: null,
     },
   ],
   valid: [

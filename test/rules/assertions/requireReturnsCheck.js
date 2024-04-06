@@ -642,28 +642,6 @@ export default {
     },
     {
       code: `
-      /**
-       * @returns {SomeType} Baz.
-       */
-      function foo() {
-          switch (true) {
-              default:
-                  switch (false) {
-                      default: return;
-                  }
-                  return "baz";
-          }
-      };
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'JSDoc @returns declaration present but return expression not available in function.',
-        },
-      ],
-    },
-    {
-      code: `
         /**
          * @returns {number}
          */
@@ -691,17 +669,6 @@ export default {
       code: `
           /**
            * @returns Foo.
-           */
-          function quux () {
-
-            return foo;
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @returns {string} Foo.
            */
           function quux () {
 
@@ -953,36 +920,8 @@ export default {
            */
           function quux () {
             try {
-              return true;
-            } catch (err) {
-            }
-            return true;
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @returns {true}
-           */
-          function quux () {
-            try {
               something();
             } catch (err) {
-              return true;
-            }
-            return true;
-          }
-      `,
-    },
-    {
-      code: `
-          /**
-           * @returns {true}
-           */
-          function quux () {
-            switch (true) {
-            case 'abc':
               return true;
             }
             return true;
@@ -1574,22 +1513,6 @@ export default {
           return functionWithUnknownReturnType();
         }
       }
-      `,
-    },
-    {
-      code: `
-      /**
-       * @returns Baz.
-       */
-      function foo() {
-          switch (true) {
-              default:
-                  switch (false) {
-                      default: return;
-                  }
-                  return "baz";
-          }
-      };
       `,
     },
     {

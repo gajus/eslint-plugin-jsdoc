@@ -537,13 +537,7 @@ export default {
           message: 'Invalid JSDoc @param "baz" type "*".',
         },
       ],
-      output: `
-          /**
-           * @param {*} baz
-           */
-          function qux(baz) {
-          }
-      `,
+      output: null,
       settings: {
         jsdoc: {
           preferredTypes: {
@@ -579,42 +573,6 @@ export default {
         jsdoc: {
           preferredTypes: {
             '*': 'aaa',
-            abc: 'Abc',
-            string: 'Str',
-          },
-        },
-      },
-    },
-    {
-      code: `
-          /**
-           * @param {abc} foo
-           * @param {Number} bar
-           */
-          function qux(foo, bar) {
-          }
-      `,
-      errors: [
-        {
-          line: 3,
-          message: 'Invalid JSDoc @param "foo" type "abc"; prefer: "Abc".',
-        },
-        {
-          line: 4,
-          message: 'Invalid JSDoc @param "bar" type "Number"; prefer: "number".',
-        },
-      ],
-      output: `
-          /**
-           * @param {Abc} foo
-           * @param {Number} bar
-           */
-          function qux(foo, bar) {
-          }
-      `,
-      settings: {
-        jsdoc: {
-          preferredTypes: {
             abc: 'Abc',
             string: 'Str',
           },

@@ -375,17 +375,6 @@ export default {
     {
       code: `
           /**
-           * @yields {string} Foo.
-           */
-          function * quux () {
-
-            yield foo;
-          }
-      `,
-    },
-    {
-      code: `
-          /**
            *
            */
           function * quux () {

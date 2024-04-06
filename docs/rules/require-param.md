@@ -628,14 +628,6 @@ function quux (foo) {
 // Message: Missing JSDoc @arg "foo" declaration.
 
 /**
- * @param foo
- */
-function quux (foo, bar) {
-
-}
-// Message: Missing JSDoc @param "bar" declaration.
-
-/**
  * @override
  */
 function quux (foo) {
@@ -1352,22 +1344,6 @@ function quux (foo) {
 }
 
 /**
- * @augments
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
-
-/**
- * @extends
- */
-function quux (foo) {
-
-}
-// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
-
-/**
  * @override
  */
 class A {
@@ -1479,32 +1455,6 @@ class A {
 
   }
 }
-
-/**
- * @augments
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
-
-/**
- * @extends
- */
-class A {
-  /**
-   *
-   */
-  quux (foo) {
-
-  }
-}
-// Settings: {"jsdoc":{"augmentsExtendsReplacesDocs":true}}
 
 /**
  * @internal

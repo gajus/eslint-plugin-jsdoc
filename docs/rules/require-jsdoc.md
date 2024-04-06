@@ -600,12 +600,6 @@ export function someMethod() {
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
 // Message: Missing JSDoc comment.
 
-export function someMethod() {
-
-}
-// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":false,"esm":true,"window":false},"require":{"FunctionDeclaration":true}}]
-// Message: Missing JSDoc comment.
-
 const myObject = {
   myProp: true
 };
@@ -1560,11 +1554,6 @@ let test = class {
 
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ClassExpression":true}}]
-
-export function someMethod() {
-
-}
-// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"cjs":true,"esm":false,"window":false},"require":{"FunctionDeclaration":true}}]
 
 export function someMethod() {
 

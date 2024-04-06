@@ -363,11 +363,7 @@ function quux (foo) {
           enableFixer: false,
         },
       ],
-      output: `
-       function myFunction() {
-
-       }
-       `,
+      output: null,
     },
     {
       code: `
@@ -2101,45 +2097,6 @@ function quux (foo) {
     },
     {
       code: `
-        export function someMethod() {
-
-        }
-      `,
-      languageOptions: {
-        globals: globals.node,
-        ecmaVersion: 6,
-        sourceType: 'module',
-      },
-      errors: [
-        {
-          line: 2,
-          message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
-        },
-      ],
-      options: [
-        {
-          publicOnly: {
-            cjs: false,
-            esm: true,
-            window: false,
-          },
-          require: {
-            FunctionDeclaration: true,
-          },
-        },
-      ],
-      output: `
-        /**
-         *
-         */
-        export function someMethod() {
-
-        }
-      `,
-    },
-    {
-      code: `
           const myObject = {
             myProp: true
           };
@@ -3546,11 +3503,7 @@ function quux (foo) {
           fixerMessage: ' TODO: add comment',
         },
       ],
-      output: `
-      function comment () {
-        return "comment";
-      }
-      `,
+      output: null,
     },
     {
       code: `
@@ -5404,29 +5357,6 @@ function quux (foo) {
       ],
     },
     {
-      code: `
-      export function someMethod() {
-
-      }
-      `,
-      languageOptions: {
-        globals: globals.node,
-        ecmaVersion: 6,
-        sourceType: 'module',
-      },
-      options: [
-        {
-          publicOnly: {
-            cjs: true,
-            esm: false,
-            window: false,
-          },
-          require: {
-            FunctionDeclaration: true,
-          },
-        },
-      ],
-    }, {
       code: `
       export function someMethod() {
 

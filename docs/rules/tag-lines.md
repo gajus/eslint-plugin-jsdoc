@@ -177,14 +177,6 @@ The following patterns are considered problems:
  * Some description
  * @param {string} a
  * @param {number} b
- */
-// "jsdoc/tag-lines": ["error"|"warn", "never",{"tags":{"param":{"lines":"always"}}}]
-// Message: Expected 1 line between tags but found 0
-
-/**
- * Some description
- * @param {string} a
- * @param {number} b
  *
  */
 // "jsdoc/tag-lines": ["error"|"warn", "always",{"tags":{"param":{"lines":"never"}}}]
