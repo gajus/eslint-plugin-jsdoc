@@ -880,5 +880,9 @@ function quux() {
 function quux() {
 
 }
+
+/**
+ * @import { TestOne, TestTwo } from "./types"
+ */
 ````
 
