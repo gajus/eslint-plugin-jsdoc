@@ -1853,5 +1853,12 @@ export default {
           }
       `
     },
+    {
+      code: `
+        /**
+         * @import { TestOne, TestTwo } from "./types"
+         */
+      `,
+    }
   ],
 };
