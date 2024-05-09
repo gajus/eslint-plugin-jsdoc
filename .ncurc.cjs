@@ -7,6 +7,7 @@ module.exports = {
     'chai',
     'decamelize',
     'escape-string-regexp',
+    'is-builtin-module',
     'open-editor',
   ],
 };
