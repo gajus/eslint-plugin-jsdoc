@@ -20,7 +20,7 @@ const isNewPromiseExpression = (node) => {
  */
 const isVoidPromise = (node) => {
   if ( ! node ) {
-    retun false;
+    return false;
   }
   
   const typeArguments = node.typeArguments || node.typeParameters;
