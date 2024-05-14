@@ -22,10 +22,11 @@ const isVoidPromise = (node) => {
   if ( ! node ) {
     return false;
   }
-  
+
+  /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */
   const typeArguments = node.typeArguments || node.typeParameters;
-  return /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */
-    typeArguments?.params?.[0]?.type === 'TSVoidKeyword';
+  
+  return typeArguments?.params?.[0]?.type === 'TSVoidKeyword';
 };
 
 const undefinedKeywords = new Set([
