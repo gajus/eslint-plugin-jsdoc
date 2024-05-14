@@ -19,6 +19,10 @@ const isNewPromiseExpression = (node) => {
  * @returns {boolean}
  */
 const isVoidPromise = (node) => {
+  if ( ! node ) {
+    retun false;
+  }
+  
   const typeArguments = node.typeArguments || node.typeParameters;
   return /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */
     typeArguments?.params?.[0]?.type === 'TSVoidKeyword';
