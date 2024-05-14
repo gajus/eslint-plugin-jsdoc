@@ -19,9 +19,9 @@ const isNewPromiseExpression = (node) => {
  * @returns {boolean}
  */
 const isVoidPromise = (node) => {
-  const arguments = node.typeArguments || node.typeParameters;
+  const typeArguments = node.typeArguments || node.typeParameters;
   return /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */
-    arguments?.params?.[0]?.type === 'TSVoidKeyword';
+    typeArguments?.params?.[0]?.type === 'TSVoidKeyword';
 };
 
 const undefinedKeywords = new Set([
