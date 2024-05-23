@@ -1884,5 +1884,18 @@ export default {
           }
       `,
     },
+    {
+      code: `
+          /**
+           *
+           */
+          export { foo } from "bar"
+      `,
+      options: [
+        {
+          contexts: ['ExportNamedDeclaration']
+        }
+      ]
+    }
   ],
 };
