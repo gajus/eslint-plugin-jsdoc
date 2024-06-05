@@ -1591,5 +1591,21 @@ export default {
         const code = (parameter) => 123;
       `,
     },
+    {
+      code: `
+        /**
+         * ### Overview
+         * My class is doing.
+         *
+         * ### Example
+         * \`\`\`javascript
+         *  const toto = 'toto';
+         * \`\`\`
+         */
+        export class ClassExemple {
+        }
+
+      `,
+    },
   ],
 };

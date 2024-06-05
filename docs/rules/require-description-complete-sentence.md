@@ -829,5 +829,17 @@ function quux () {
  * @param parameter
  */
 const code = (parameter) => 123;
+
+/**
+ * ### Overview
+ * My class is doing.
+ *
+ * ### Example
+ * ```javascript
+ *  const toto = 'toto';
+ * ```
+ */
+export class ClassExemple {
+}
 ````
 
