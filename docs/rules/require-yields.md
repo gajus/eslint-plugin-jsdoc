@@ -796,5 +796,11 @@ function * quux (foo) {
     yield foo;
   }
 }
+
+/**
+ *
+ */
+export { foo } from "bar"
+// "jsdoc/require-yields": ["error"|"warn", {"contexts":["ExportNamedDeclaration"]}]
 ````
 

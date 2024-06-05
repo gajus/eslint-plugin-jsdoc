@@ -192,7 +192,10 @@ const validateDescription = (
 
     const paragraphNoAbbreviations = paragraph.replace(abbreviationsRegex, '');
 
-    if (!/(?:[.?!|]|```)\s*$/u.test(paragraphNoAbbreviations)) {
+    if (
+      !/(?:[.?!|]|```)\s*$/u.test(paragraphNoAbbreviations) &&
+      !paragraphNoAbbreviations.startsWith('#')
+    ) {
       report('Sentences must end with a period.', fix, tag);
       return true;
     }

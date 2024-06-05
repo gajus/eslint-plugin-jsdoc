@@ -245,5 +245,12 @@ class A {
  * @param {Foo|Bar} opt_b
  */
 // "jsdoc/match-name": ["error"|"warn", {"match":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"param\"]:has(JsdocTypeUnion:has(JsdocTypeName[value=\"Bar\"]:nth-child(1))))","disallowName":"/^opt_/i"}]}]
+
+/**
+ * @template {string} [T=typeof FOO]
+ * @typedef {object} Test
+ * @property {T} test
+ */
+// "jsdoc/match-name": ["error"|"warn", {"match":[{"allowName":"/^[A-Z]{1}$/","message":"The name should be a single capital letter.","tags":["template"]}]}]
 ````
 
