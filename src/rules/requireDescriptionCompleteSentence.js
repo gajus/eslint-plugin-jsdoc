@@ -112,7 +112,9 @@ const validateDescription = (
     return false;
   }
 
-  const paragraphs = extractParagraphs(description).filter(Boolean);
+  const descriptionNoHeadings = description.replaceAll(/^\s*#[^\n]*(\n|$)/gm, '');
+
+  const paragraphs = extractParagraphs(descriptionNoHeadings).filter(Boolean);
 
   return paragraphs.some((paragraph, parIdx) => {
     const sentences = extractSentences(paragraph, abbreviationsRegex);
@@ -192,10 +194,7 @@ const validateDescription = (
 
     const paragraphNoAbbreviations = paragraph.replace(abbreviationsRegex, '');
 
-    if (
-      !/(?:[.?!|]|```)\s*$/u.test(paragraphNoAbbreviations) &&
-      !paragraphNoAbbreviations.startsWith('#')
-    ) {
+    if (!/(?:[.?!|]|```)\s*$/u.test(paragraphNoAbbreviations)) {
       report('Sentences must end with a period.', fix, tag);
       return true;
     }
