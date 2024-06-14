@@ -133,7 +133,7 @@ const index = {
  */
 const createRecommendedRuleset = (warnOrError, flatName) => {
   return {
-    ...(flatName ? {name: flatName} : {}),
+    ...(flatName ? {name: 'jsdoc/' + flatName} : {}),
     // @ts-expect-error Ok
     plugins:
       flatName ? {
