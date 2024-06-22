@@ -1436,5 +1436,12 @@ export default {
         'no-unused-vars': 'error',
       },
     },
+    {
+      code: `
+        /**
+         * @import { Linter } from "eslint"
+         */
+      `,
+    },
   ],
 };

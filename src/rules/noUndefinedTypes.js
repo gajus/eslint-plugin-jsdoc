@@ -245,7 +245,7 @@ export default iterateJsdoc(({
   const typeTags = utils.filterTags(({
     tag,
   }) => {
-    return utils.tagMightHaveTypePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
+    return tag !== 'import' && utils.tagMightHaveTypePosition(tag) && (tag !== 'suppress' || settings.mode !== 'closure');
   }).map(tagToParsedType('type'));
 
   const namepathReferencingTags = utils.filterTags(({

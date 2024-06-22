@@ -776,5 +776,9 @@ function quux(foo) {
 }
 
 quux(0);
+
+/**
+ * @import { Linter } from "eslint"
+ */
 ````
 
