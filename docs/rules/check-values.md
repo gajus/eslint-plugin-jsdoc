@@ -28,6 +28,7 @@ This rule checks the values for a handful of tags:
 6. `@kind` - Insists that it be one of the allowed values: 'class',
     'constant', 'event', 'external', 'file', 'function', 'member', 'mixin',
     'module', 'namespace', 'typedef',
+7. `@import` - For TypeScript `mode` only. Enforces valid ES import syntax.
 
 <a name="user-content-check-values-options"></a>
 <a name="check-values-options"></a>
@@ -251,6 +252,14 @@ function quux (foo) {
 }
 // "jsdoc/check-values": ["error"|"warn", {"licensePattern":"^([^\n]+)\nCopyright"}]
 // Message: Invalid JSDoc @license: "Oops"; expected SPDX expression: https://spdx.org/licenses/.
+
+/**
+ * @import BadImportIgnoredByThisRule
+ */
+/**
+ * @import {AnotherBadImportIgnoredByThisRule} from
+ */
+// Message: Bad @import tag
 ````
 
 
@@ -405,5 +414,21 @@ function quux (foo) {
 
 }
 // "jsdoc/check-values": ["error"|"warn", {"licensePattern":"^([^\n]+)\nCopyright"}]
+
+/**
+ * @import LinterDef, { Sth as Something, Another as Another2 } from "eslint"
+ */
+/**
+ * @import { Linter } from "eslint"
+ */
+/**
+ * @import LinterDefault from "eslint"
+ */
+/**
+ * @import {Linter as Lintee} from "eslint"
+ */
+/**
+ * @import * as Linters from "eslint"
+ */
 ````
 

@@ -18,6 +18,7 @@ This rule checks the values for a handful of tags:
 6. `@kind` - Insists that it be one of the allowed values: 'class',
     'constant', 'event', 'external', 'file', 'function', 'member', 'mixin',
     'module', 'namespace', 'typedef',
+7. `@import` - For TypeScript `mode` only. Enforces valid ES import syntax.
 
 ## Options
 
