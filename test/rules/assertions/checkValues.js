@@ -353,6 +353,26 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @import BadImportIgnoredByThisRule
+         */
+        /**
+         * @import {AnotherBadImportIgnoredByThisRule} from
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Bad @import tag',
+        },
+        {
+          line: 6,
+          message: 'Bad @import tag',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -591,6 +611,25 @@ export default {
           licensePattern: '^([^\n]+)\nCopyright',
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * @import LinterDef, { Sth as Something, Another as Another2 } from "eslint"
+         */
+        /**
+         * @import { Linter } from "eslint"
+         */
+        /**
+         * @import LinterDefault from "eslint"
+         */
+        /**
+         * @import {Linter as Lintee} from "eslint"
+         */
+        /**
+         * @import * as Linters from "eslint"
+         */
+      `,
     },
   ],
 };

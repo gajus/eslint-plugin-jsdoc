@@ -1,6 +1,7 @@
-import iterateJsdoc from '../iterateJsdoc.js';
+import { parseImportsSync } from 'parse-imports';
 import semver from 'semver';
 import spdxExpressionParse from 'spdx-expression-parse';
+import iterateJsdoc from '../iterateJsdoc.js';
 
 const allowedKinds = new Set([
   'class',
@@ -20,6 +21,7 @@ export default iterateJsdoc(({
   utils,
   report,
   context,
+  settings,
 }) => {
   const options = context.options[0] || {};
   const {
@@ -156,6 +158,30 @@ export default iterateJsdoc(({
       }
     }
   });
+
+  if (settings.mode === 'typescript') {
+    utils.forEachPreferredTag('import', (tag) => {
+      const {
+        type, name, description
+      } = tag;
+      const typePart = type ? `{${type}} `: '';
+      const imprt = 'import ' + (description
+        ? `${typePart}${name} ${description}`
+        : `${typePart}${name}`);
+
+      try {
+        // Should technically await non-sync, but ESLint doesn't support async rules;
+        //  thankfully, the Wasm load time is safely fast
+        parseImportsSync(imprt);
+      } catch (err) {
+        report(
+          `Bad @import tag`,
+          null,
+          tag,
+        );
+      }
+    });
+  }
 
   utils.forEachPreferredTag('author', (jsdocParameter, targetTagName) => {
     const author = /** @type {string} */ (
