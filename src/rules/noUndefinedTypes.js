@@ -1,4 +1,7 @@
-import { parseImportsSync } from 'parse-imports';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+import { createSyncFn } from 'synckit';
 import {
   getJSDocComment,
   parse as parseType,
@@ -8,6 +11,9 @@ import {
 import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const pathName = join(__dirname, '../import-worker.mjs');
 
 const extraTypes = [
   'null', 'undefined', 'void', 'string', 'boolean', 'object',
@@ -146,16 +152,13 @@ export default iterateJsdoc(({
       ? `${typePart}${name} ${description}`
       : `${typePart}${name}`);
 
-    let imports;
-    try {
-      // Should technically await non-sync, but ESLint doesn't support async rules;
-      //  thankfully, the Wasm load time is safely fast
-      imports = parseImportsSync(imprt);
-    } catch (err) {
+    const getImports = createSyncFn(pathName);
+    const imports = /** @type {import('parse-imports').Import[]} */ (getImports(imprt));
+    if (!imports) {
       return null;
     }
 
-    return [...imports].flatMap(({importClause}) => {
+    return imports.flatMap(({importClause}) => {
       /* c8 ignore next */
       const {default: dflt, named, namespace} = importClause || {};
       const types = [];

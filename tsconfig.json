@@ -17,7 +17,8 @@
     "src/**/*.js",
     "test/**/*.js",
     "typings/gitdown.d.ts",
-    "typings/babel__eslint-parser.d.ts"
+    "typings/babel__eslint-parser.d.ts",
+    "src/import-worker.mjs"
   ],
   "exclude": ["node_modules"]
 }

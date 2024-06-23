@@ -27,14 +27,17 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0
       parse-imports:
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.1.0
+        version: 2.1.0
       semver:
         specifier: ^7.6.2
         version: 7.6.2
       spdx-expression-parse:
         specifier: ^4.0.0
         version: 4.0.0
+      synckit:
+        specifier: ^0.9.0
+        version: 0.9.0
     devDependencies:
       '@babel/cli':
         specifier: ^7.24.6
@@ -117,6 +120,9 @@ importers:
       babel-plugin-istanbul:
         specifier: ^6.1.1
         version: 6.1.1
+      babel-plugin-transform-import-meta:
+        specifier: ^2.2.1
+        version: 2.2.1(@babel/core@7.24.6)
       c8:
         specifier: ^9.1.0
         version: 9.1.0
@@ -892,10 +898,6 @@ packages:
 
   '@babel/runtime@7.23.6':
     resolution: {integrity: sha512-zHd0eUrf5GZoOWVCXp6koAKQTfZV07eit6bGPmJgnZdnSAvvZee6zniW2XMF7Cmc4ISOOnPy3QaSiIJGJkVEDQ==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/template@7.24.0':
-    resolution: {integrity: sha512-Bkf2q8lMB0AFpX0NFEqSbx1OkTHf0f+0j82mkw+ZpzBnkk7e9Ql0891vlfgi+kHwOk8tQjiQHpqh4LaSa0fKEA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.24.6':
@@ -1775,6 +1777,11 @@ packages:
     resolution: {integrity: sha512-JfTApdE++cgcTWjsiCQlLyFBMbTUft9ja17saCc93lgV33h4tuCVj7tlvu//qpLwaG+3yEz7/KhahGrUMkVq9g==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
+
+  babel-plugin-transform-import-meta@2.2.1:
+    resolution: {integrity: sha512-AxNh27Pcg8Kt112RGa3Vod2QS2YXKKJ6+nSvRtv7qQTJAdx0MZa4UHZ4lnxHUWA2MNbLuZQv5FVab4P1CoLOWw==}
+    peerDependencies:
+      '@babel/core': ^7.10.0
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -4418,8 +4425,8 @@ packages:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
 
-  parse-imports@2.0.0:
-    resolution: {integrity: sha512-3Dh6W2SPvs4k8neQG6fluUnVgt/WLDheepyD+FP1GlmOijKRBqr7Vhij0Cko6wyAp3tm/OHDDAniwFS0VCA0qQ==}
+  parse-imports@2.1.0:
+    resolution: {integrity: sha512-JQWgmK2o4w8leUkZeZPatWdAny6vXGU/3siIUvMF6J2rDCud9aTt8h/px9oZJ6U3EcfhngBJ635uPFI0q0VAeA==}
     engines: {node: '>= 18'}
 
   parse-json@4.0.0:
@@ -5230,6 +5237,10 @@ packages:
     resolution: {integrity: sha512-HwOKAP7Wc5aRGYdKH+dw0PRRpbO841v2DENBtjnR5HFWoiNByAl7vrx3p0G/rCyYXQsrxqtX48TImFtPcIHSpQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
+  synckit@0.9.0:
+    resolution: {integrity: sha512-7RnqIMq572L8PeEzKeBINYEJDDxpcH8JEgLwUqBd3TkofhFRbkq4QLR0u+36avGAhCRbk2nnmjcW9SE531hPDg==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
@@ -5897,7 +5908,7 @@ snapshots:
 
   '@babel/helper-function-name@7.23.0':
     dependencies:
-      '@babel/template': 7.24.0
+      '@babel/template': 7.24.6
       '@babel/types': 7.24.5
 
   '@babel/helper-function-name@7.24.6':
@@ -6580,12 +6591,6 @@ snapshots:
   '@babel/runtime@7.23.6':
     dependencies:
       regenerator-runtime: 0.14.1
-
-  '@babel/template@7.24.0':
-    dependencies:
-      '@babel/code-frame': 7.24.2
-      '@babel/parser': 7.24.5
-      '@babel/types': 7.24.5
 
   '@babel/template@7.24.6':
     dependencies:
@@ -7829,6 +7834,12 @@ snapshots:
       '@babel/helper-define-polyfill-provider': 0.6.1(@babel/core@7.24.6)
     transitivePeerDependencies:
       - supports-color
+
+  babel-plugin-transform-import-meta@2.2.1(@babel/core@7.24.6):
+    dependencies:
+      '@babel/core': 7.24.6
+      '@babel/template': 7.24.6
+      tslib: 2.6.2
 
   balanced-match@1.0.2: {}
 
@@ -10893,7 +10904,7 @@ snapshots:
     dependencies:
       callsites: 3.1.0
 
-  parse-imports@2.0.0:
+  parse-imports@2.1.0:
     dependencies:
       es-module-lexer: 1.5.3
       slashes: 3.0.12
@@ -11768,6 +11779,11 @@ snapshots:
       tslib: 2.6.2
 
   synckit@0.8.8:
+    dependencies:
+      '@pkgr/core': 0.1.0
+      tslib: 2.6.2
+
+  synckit@0.9.0:
     dependencies:
       '@pkgr/core': 0.1.0
       tslib: 2.6.2
