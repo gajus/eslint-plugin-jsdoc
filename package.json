@@ -11,6 +11,7 @@
     "debug": "^4.3.4",
     "escape-string-regexp": "^4.0.0",
     "esquery": "^1.5.0",
+    "parse-imports": "^2.0.0",
     "semver": "^7.6.2",
     "spdx-expression-parse": "^4.0.0"
   },
