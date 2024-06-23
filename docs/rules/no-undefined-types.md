@@ -23,7 +23,7 @@ the tag types in the table below:
 `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`),
 `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`,
 `@template` (for "closure" or "typescript" `settings.jsdoc.mode` only),
-`@typedef`.
+`@import` (for TypeScript), `@typedef`.
 
 The following tags will also be checked but only when the mode is `closure`:
 
@@ -307,6 +307,36 @@ const a = new Todo();
  */
 // Settings: {"jsdoc":{"structuredTags":{"namepathOrURLReferencer":{"name":"namepath-or-url-referencing"}}}}
 // Message: The type 'SomeType' is undefined.
+
+/**
+ * @import BadImportIgnoredByThisRule
+ */
+/**
+ * @import LinterDef, { Sth as Something, Another as Another2 } from "eslint"
+ */
+/**
+ * @import { Linter } from "eslint"
+ */
+/**
+ * @import LinterDefault from "eslint"
+ */
+/**
+ * @import {Linter as Lintee} from "eslint"
+ */
+/**
+ * @import * as Linters from "eslint"
+ */
+
+/**
+ * @type {BadImportIgnoredByThisRule}
+ */
+/**
+ * @type {Sth}
+ */
+/**
+ * @type {Another}
+ */
+// Message: The type 'BadImportIgnoredByThisRule' is undefined.
 ````
 
 
@@ -778,7 +808,44 @@ function quux(foo) {
 quux(0);
 
 /**
+ * @import BadImportIgnoredByThisRule
+ */
+/**
+ * @import LinterDef, { Sth as Something, Another as Another2 } from "eslint"
+ */
+/**
  * @import { Linter } from "eslint"
+ */
+/**
+ * @import LinterDefault from "eslint"
+ */
+/**
+ * @import {Linter as Lintee} from "eslint"
+ */
+/**
+ * @import * as Linters from "eslint"
+ */
+
+/**
+ * @type {LinterDef}
+ */
+/**
+ * @type {Something}
+ */
+/**
+ * @type {Another2}
+ */
+/**
+ * @type {Linter}
+ */
+/**
+ * @type {LinterDefault}
+ */
+/**
+ * @type {Lintee}
+ */
+/**
+ * @type {Linters}
  */
 ````
 

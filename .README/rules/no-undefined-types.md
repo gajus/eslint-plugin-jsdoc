@@ -17,7 +17,7 @@ the tag types in the table below:
 `@event`, `@external` (or `@host`), `@function` (or `@func` or `@method`),
 `@interface`, `@member` (or `@var`), `@mixin`, `@name`, `@namespace`,
 `@template` (for "closure" or "typescript" `settings.jsdoc.mode` only),
-`@typedef`.
+`@import` (for TypeScript), `@typedef`.
 
 The following tags will also be checked but only when the mode is `closure`:
 
