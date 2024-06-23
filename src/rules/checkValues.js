@@ -1,7 +1,13 @@
-import { parseImportsSync } from 'parse-imports';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import { createSyncFn } from 'synckit';
 import semver from 'semver';
 import spdxExpressionParse from 'spdx-expression-parse';
 import iterateJsdoc from '../iterateJsdoc.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const pathName = join(__dirname, '../import-worker.mjs');
 
 const allowedKinds = new Set([
   'class',
@@ -169,11 +175,8 @@ export default iterateJsdoc(({
         ? `${typePart}${name} ${description}`
         : `${typePart}${name}`);
 
-      try {
-        // Should technically await non-sync, but ESLint doesn't support async rules;
-        //  thankfully, the Wasm load time is safely fast
-        parseImportsSync(imprt);
-      } catch (err) {
+      const getImports = createSyncFn(pathName);
+      if (!getImports(imprt)) {
         report(
           `Bad @import tag`,
           null,

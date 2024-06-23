@@ -1,6 +1,7 @@
 {
   "plugins": [
-    "add-module-exports"
+    "add-module-exports",
+    "babel-plugin-transform-import-meta"
   ],
   "presets": [
     [
