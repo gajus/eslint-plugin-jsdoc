@@ -1,13 +1,12 @@
-import { parseImportsSync } from 'parse-imports';
+import iterateJsdoc, {
+  parseComment,
+} from '../iterateJsdoc.js';
 import {
   getJSDocComment,
   parse as parseType,
   traverse,
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
-import iterateJsdoc, {
-  parseComment,
-} from '../iterateJsdoc.js';
 
 const extraTypes = [
   'null', 'undefined', 'void', 'string', 'boolean', 'object',
@@ -110,15 +109,13 @@ export default iterateJsdoc(({
       .filter(Boolean));
   }
 
-  const comments = sourceCode.getAllComments()
+  const typedefDeclarations = sourceCode.getAllComments()
     .filter((comment) => {
       return (/^\*\s/u).test(comment.value);
     })
     .map((commentNode) => {
       return parseComment(commentNode, '');
-    });
-
-  const typedefDeclarations = comments
+    })
     .flatMap((doc) => {
       return doc.tags.filter(({
         tag,
@@ -129,51 +126,6 @@ export default iterateJsdoc(({
     .map((tag) => {
       return tag.name;
     });
-
-
-  const importTags = /** @type {string[]} */ (comments.flatMap((doc) => {
-    return doc.tags.filter(({
-      tag,
-    }) => {
-      return tag === 'import';
-    });
-  }).flatMap((tag) => {
-    const {
-      type, name, description
-    } = tag;
-    const typePart = type ? `{${type}} `: '';
-    const imprt = 'import ' + (description
-      ? `${typePart}${name} ${description}`
-      : `${typePart}${name}`);
-
-    let imports;
-    try {
-      // Should technically await non-sync, but ESLint doesn't support sync rules;
-      //  thankfully, the Wasm load time is safely fast
-      imports = parseImportsSync(imprt);
-    } catch (err) {
-      return null;
-    }
-
-    return [...imports].flatMap(({importClause}) => {
-      /* c8 ignore next */
-      const {default: dflt, named, namespace} = importClause || {};
-      const types = [];
-      if (dflt) {
-        types.push(dflt);
-      }
-      if (namespace) {
-        types.push(namespace);
-      }
-      if (named) {
-        for (const {binding} of named) {
-          types.push(binding);
-        }
-      }
-
-      return types;
-    });
-  }).filter(Boolean));
 
   const ancestorNodes = [];
 
@@ -241,7 +193,6 @@ export default iterateJsdoc(({
     )
     .concat(extraTypes)
     .concat(typedefDeclarations)
-    .concat(importTags)
     .concat(definedTypes)
     .concat(/** @type {string[]} */ (definedPreferredTypes))
     .concat(
