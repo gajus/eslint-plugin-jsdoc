@@ -129,6 +129,14 @@ function quux () {
 
 }
 // Message: Types are not permitted on @returns.
+
+export interface B {
+  /**
+   * @param {string} paramA
+   */
+  methodB(paramB: string): void
+}
+// Message: Types are not permitted on @param.
 ````
 
 
