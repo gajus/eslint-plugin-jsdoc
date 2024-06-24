@@ -1,3 +1,5 @@
+import * as typescriptEslintParser from '@typescript-eslint/parser';
+
 export default {
   invalid: [
     {
@@ -226,6 +228,33 @@ export default {
           }
       `,
     },
+    {
+      code: `
+        export interface B {
+          /**
+           * @param {string} paramA
+           */
+          methodB(paramB: string): void
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Types are not permitted on @param.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+      output: `
+        export interface B {
+          /**
+           * @param paramA
+           */
+          methodB(paramB: string): void
+        }
+      `,
+    }
   ],
   valid: [
     {
