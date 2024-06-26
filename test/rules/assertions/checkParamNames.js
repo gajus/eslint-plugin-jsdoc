@@ -1257,6 +1257,26 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        export interface B {
+            /**
+             * @param paramA Something something
+             */
+            methodB(paramB: string): void
+        };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected @param names to be "paramB". Got "paramA".',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+    }
   ],
   valid: [
     {
