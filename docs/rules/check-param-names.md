@@ -657,6 +657,14 @@ function quux (foo) {
 }
 // "jsdoc/check-param-names": ["error"|"warn", {"disableMissingParamChecks":true}]
 // Message: @param "bar" does not match an existing function parameter.
+
+export interface B {
+    /**
+     * @param paramA Something something
+     */
+    methodB(paramB: string): void
+};
+// Message: Expected @param names to be "paramB". Got "paramA".
 ````
 
 
