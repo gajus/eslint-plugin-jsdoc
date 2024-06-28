@@ -1,4 +1,4 @@
-import * as typescriptEslintParser from '@typescript-eslint/parser';
+import {parser as typescriptEslintParser} from 'typescript-eslint';
 import * as babelEslintParser from '@babel/eslint-parser';
 import globals from 'globals';
 

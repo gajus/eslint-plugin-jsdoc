@@ -42,7 +42,7 @@
     "@types/node": "^20.12.12",
     "@types/semver": "^7.5.8",
     "@types/spdx-expression-parse": "^3.0.5",
-    "@typescript-eslint/parser": "^7.11.0",
+    "@typescript-eslint/types": "^7.14.1",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-istanbul": "^6.1.1",
     "babel-plugin-transform-import-meta": "^2.2.1",
@@ -67,7 +67,8 @@
     "replace": "^1.2.2",
     "rimraf": "^5.0.7",
     "semantic-release": "^23.1.1",
-    "typescript": "5.3.x"
+    "typescript": "5.3.x",
+    "typescript-eslint": "^8.0.0-alpha.34"
   },
   "engines": {
     "node": ">=18"

@@ -620,7 +620,7 @@ function quux (foo) {
 /**
  * @param barr This is the description of bar. Oops, we misspelled "bar" as "barr".
  */
-declare function foo(bar: number) {}
+declare function foo(bar: number)
 // Message: Expected @param names to be "bar". Got "barr".
 
 /**
