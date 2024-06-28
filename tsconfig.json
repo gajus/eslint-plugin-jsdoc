@@ -10,7 +10,7 @@
     "declarationMap": true,
     "strict": true,
     "skipLibCheck": true,
-    "target": "es2017",
+    "target": "es2018",
     "outDir": "dist"
   },
   "include": [
