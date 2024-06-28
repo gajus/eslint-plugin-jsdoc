@@ -1,4 +1,4 @@
-import * as typescriptEslintParser from '@typescript-eslint/parser';
+import {parser as typescriptEslintParser} from 'typescript-eslint';
 import * as babelEslintParser from '@babel/eslint-parser';
 
 export default {
@@ -1162,7 +1162,7 @@ export default {
       /**
        * @param barr This is the description of bar. Oops, we misspelled "bar" as "barr".
        */
-      declare function foo(bar: number) {}
+      declare function foo(bar: number)
       `,
       errors: [
         {

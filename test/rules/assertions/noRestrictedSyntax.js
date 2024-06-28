@@ -1,4 +1,4 @@
-import * as typescriptEslintParser from '@typescript-eslint/parser';
+import {parser as typescriptEslintParser} from 'typescript-eslint';
 import * as jsdocEslintParser from '@es-joy/jsdoc-eslint-parser/typescript.js';
 
 export default {

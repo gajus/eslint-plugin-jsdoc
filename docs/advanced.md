@@ -68,7 +68,7 @@ you are using with ESLint (e.g., `espree` is the default parser for ESLint,
 and this follows [EStree AST](https://github.com/estree/estree) but
 to support the the latest experimental features of JavaScript, one may use
 `@babel/eslint-parser` or to be able to have one's rules (including JSDoc rules)
-apply to TypeScript, one may use `@typescript-eslint/parser`, etc.
+apply to TypeScript, one may use `typescript-eslint`, etc.
 
 So you can look up a particular parser to see its rules, e.g., browse through
 the [ESTree docs](https://github.com/estree/estree) as used by Espree or see
