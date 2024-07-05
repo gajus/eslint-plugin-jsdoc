@@ -9,6 +9,7 @@ import checkSyntax from './rules/checkSyntax.js';
 import checkTagNames from './rules/checkTagNames.js';
 import checkTypes from './rules/checkTypes.js';
 import checkValues from './rules/checkValues.js';
+import convertToJsdocComments from './rules/convertToJsdocComments.js';
 import emptyTags from './rules/emptyTags.js';
 import implementsOnClasses from './rules/implementsOnClasses.js';
 import importsAsDependencies from './rules/importsAsDependencies.js';
@@ -81,6 +82,7 @@ const index = {
     'check-tag-names': checkTagNames,
     'check-types': checkTypes,
     'check-values': checkValues,
+    'convert-to-jsdoc-comments': convertToJsdocComments,
     'empty-tags': emptyTags,
     'implements-on-classes': implementsOnClasses,
     'imports-as-dependencies': importsAsDependencies,
@@ -153,6 +155,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/check-tag-names': warnOrError,
       'jsdoc/check-types': warnOrError,
       'jsdoc/check-values': warnOrError,
+      'jsdoc/convert-to-jsdoc-comments': 'off',
       'jsdoc/empty-tags': warnOrError,
       'jsdoc/implements-on-classes': warnOrError,
       'jsdoc/imports-as-dependencies': 'off',

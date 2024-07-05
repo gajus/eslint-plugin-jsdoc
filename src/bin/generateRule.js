@@ -121,7 +121,7 @@ export default iterateJsdoc(({
     await fs.writeFile(ruleTestPath, ruleTestTemplate);
   }
 
-  const ruleReadmeTemplate = `### \`${ruleName}\`
+  const ruleReadmeTemplate = `# \`${ruleName}\`
 
 |||
 |---|---|
