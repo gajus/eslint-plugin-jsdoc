@@ -436,7 +436,10 @@ const getFunctionParameterNames = (
         name: /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
           /** @type {import('@typescript-eslint/types').TSESTree.RestElement} */ (
             param
-          ).argument).name,
+          // @ts-expect-error Ok
+          ).argument).name ?? param?.argument?.elements?.map(({name}) => {
+            return name;
+          }),
         restElement: true,
       };
     }

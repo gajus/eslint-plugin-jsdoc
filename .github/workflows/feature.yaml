@@ -3,7 +3,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Lint
     steps:
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
           version: latest
       - name: setup repository
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Test (Node.js ${{ matrix.node_js_version }})
     steps:
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
           version: latest
       - name: setup repository
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build
     steps:
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
           version: latest
       - name: setup repository
