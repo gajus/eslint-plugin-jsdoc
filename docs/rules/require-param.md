@@ -1151,6 +1151,17 @@ class A {
 }
 // "jsdoc/require-param": ["error"|"warn", {"contexts":["MethodDefinition"]}]
 // Message: Missing JSDoc @param "btnState" declaration.
+
+class A {
+  /**
+   * @param root0
+   * @param root0.foo
+   */
+  quux({ foo }, { bar }) {
+    console.log(foo, bar);
+  }
+}
+// Message: Missing JSDoc @param "root1" declaration.
 ````
 
 

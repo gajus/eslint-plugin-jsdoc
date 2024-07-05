@@ -665,6 +665,22 @@ export interface B {
     methodB(paramB: string): void
 };
 // Message: Expected @param names to be "paramB". Got "paramA".
+
+interface A {
+  /**
+   * @param params Values for the placeholders
+   */
+  getText(key: string, ...params: string[]): string
+}
+// Message: Expected @param names to be "key, ...params". Got "params".
+
+/**
+ * @param arg Arg
+ */
+export function fn(...[type, arg]: FnArgs): void {
+  // ...
+}
+// Message: Expected @param name to be "type". Got "arg".
 ````
 
 
@@ -1095,5 +1111,13 @@ function quux (foo, bar) {
 function quux (foo, bar) {
 }
 // "jsdoc/check-param-names": ["error"|"warn", {"disableMissingParamChecks":true}]
+
+/**
+ * @param type Type
+ * @param arg Arg
+ */
+export function fn(...[type, arg]: FnArgs): void {
+  // ...
+}
 ````
 

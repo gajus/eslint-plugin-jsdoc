@@ -2493,6 +2493,40 @@ export default {
         parser: typescriptEslintParser
       },
     },
+    {
+      code: `
+        class A {
+          /**
+           * @param root0
+           * @param root0.foo
+           */
+          quux({ foo }, { bar }) {
+            console.log(foo, bar);
+          }
+        }
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "root1" declaration.',
+        },
+        {
+          message: 'Missing JSDoc @param "root1.bar" declaration.',
+        }
+      ],
+      output: `
+        class A {
+          /**
+           * @param root0
+           * @param root0.foo
+           * @param root1
+           * @param root1.bar
+           */
+          quux({ foo }, { bar }) {
+            console.log(foo, bar);
+          }
+        }
+      `,
+    },
   ],
   valid: [
     {
