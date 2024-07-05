@@ -10,6 +10,7 @@
   "check-tag-names",
   "check-types",
   "check-values",
+  "convert-to-jsdoc-comments",
   "empty-tags",
   "implements-on-classes",
   "imports-as-dependencies",
