@@ -1276,7 +1276,46 @@ export default {
         parser: typescriptEslintParser,
         sourceType: 'module',
       },
-    }
+    },
+    {
+      code: `
+        interface A {
+          /**
+           * @param params Values for the placeholders
+           */
+          getText(key: string, ...params: string[]): string
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected @param names to be "key, ...params". Got "params".',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /**
+         * @param arg Arg
+         */
+        export function fn(...[type, arg]: FnArgs): void {
+          // ...
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param name to be "type". Got "arg".',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [
     {
@@ -1960,6 +1999,21 @@ export default {
           disableMissingParamChecks: true,
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * @param type Type
+         * @param arg Arg
+         */
+        export function fn(...[type, arg]: FnArgs): void {
+          // ...
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
     },
   ],
 };
