@@ -1321,7 +1321,7 @@ const parseClosureTemplateTag = (tag) => {
  * @param {{
  *   contexts?: import('./iterateJsdoc.js').Context[]
  * }} settings
- * @returns {string[]}
+ * @returns {(string|import('./iterateJsdoc.js').ContextObject)[]}
  */
 const enforcedContexts = (context, defaultContexts, settings) => {
   const contexts = context.options[0]?.contexts || settings.contexts || (defaultContexts === true ? [
