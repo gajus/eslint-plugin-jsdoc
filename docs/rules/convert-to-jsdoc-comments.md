@@ -4,6 +4,9 @@
 
 Converts single line or non-JSDoc, multiline comments into JSDoc comments.
 
+Note that this rule is experimental. As usual with fixers, please confirm
+the results before committing.
+
 <a name="user-content-convert-to-jsdoc-comments-options"></a>
 <a name="convert-to-jsdoc-comments-options"></a>
 ## Options
@@ -57,13 +60,39 @@ Defaults to `['@ts-', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-']`.
 
 Supplying your own value overrides the defaults.
 
+<a name="user-content-convert-to-jsdoc-comments-options-contexts"></a>
+<a name="convert-to-jsdoc-comments-options-contexts"></a>
+### <code>contexts</code>
+
+The contexts which will be checked for preceding content.
+
+Defaults to `ArrowFunctionExpression`, `FunctionDeclaration`,
+`FunctionExpression`, `TSDeclareFunction`.
+
+<a name="user-content-convert-to-jsdoc-comments-options-contextsafter"></a>
+<a name="convert-to-jsdoc-comments-options-contextsafter"></a>
+### <code>contextsAfter</code>
+
+The contexts which will be checked for content on the same line after.
+
+Defaults to an empty array.
+
+<a name="user-content-convert-to-jsdoc-comments-options-contextsbeforeandafter"></a>
+<a name="convert-to-jsdoc-comments-options-contextsbeforeandafter"></a>
+### <code>contextsBeforeAndAfter</code>
+
+The contexts which will be checked for content before and on the same
+line after.
+
+Defaults to `VariableDeclarator`, `TSPropertySignature`, `PropertyDefinition`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|(N/A)|
 |Recommended|false|
 |Settings|`minLines`, `maxLines`|
-|Options|`enableFixer`, `enforceJsdocLineStyle`, `lineOrBlockStyle`|
+|Options|`enableFixer`, `enforceJsdocLineStyle`, `lineOrBlockStyle`, `allowedPrefixes`, `contexts`, `contextsAfter`, `contextsBeforeAndAfter`|
 
 <a name="user-content-convert-to-jsdoc-comments-failing-examples"></a>
 <a name="convert-to-jsdoc-comments-failing-examples"></a>
@@ -134,6 +163,44 @@ export class User {
 // Settings: {"jsdoc":{"minLines":0,"maxLines":0}}
 // "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
 // Message: Block comments should be JSDoc-style.
+
+var a = []; // Test comment
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":[],"contextsAfter":["VariableDeclarator"]}]
+// Message: Line comments should be JSDoc-style.
+
+var a = []; // Test comment
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":[],"contextsAfter":[{"context":"VariableDeclarator","inlineCommentBlock":true}]}]
+// Message: Line comments should be JSDoc-style.
+
+var a = []; // Test comment
+// Settings: {"jsdoc":{"minLines":0,"maxLines":0}}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":[],"contextsAfter":[{"context":"VariableDeclarator","inlineCommentBlock":true}]}]
+// Message: Line comments should be JSDoc-style.
+
+// Test comment
+var a = [];
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["VariableDeclaration"]}]
+// Message: Line comments should be JSDoc-style.
+
+var a = []; // Test comment
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["VariableDeclaration"]}]
+// Message: Line comments should be JSDoc-style.
+
+interface B {
+  g: () => string; // Test comment
+}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["TSPropertySignature"]}]
+// Message: Line comments should be JSDoc-style.
+
+class TestClass {
+  public Test: (id: number) => string; // Test comment
+}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["PropertyDefinition"]}]
+// Message: Line comments should be JSDoc-style.
+
+var a = []; // Test comment
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["VariableDeclarator"]}]
+// Message: Line comments should be JSDoc-style.
 ````
 
 
@@ -175,5 +242,9 @@ function quux () {}
 // @custom-something
 function quux () {}
 // "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"allowedPrefixes":["@custom-"]}]
+
+// Test comment
+var a = [];
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":[],"contextsAfter":["VariableDeclarator"]}]
 ````
 

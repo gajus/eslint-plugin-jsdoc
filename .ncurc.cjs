@@ -8,5 +8,10 @@ module.exports = {
     'decamelize',
     'escape-string-regexp',
     'open-editor',
+
+    // todo[engine:node@>=20]: Can reenable
+    'glob',
+    // todo[engine:node@>=20]: Can reenable
+    'rimraf'
   ],
 };

@@ -2,6 +2,9 @@
 
 Converts single line or non-JSDoc, multiline comments into JSDoc comments.
 
+Note that this rule is experimental. As usual with fixers, please confirm
+the results before committing.
+
 ## Options
 
 ### `enableFixer`
@@ -45,13 +48,33 @@ Defaults to `['@ts-', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-']`.
 
 Supplying your own value overrides the defaults.
 
+### `contexts`
+
+The contexts which will be checked for preceding content.
+
+Defaults to `ArrowFunctionExpression`, `FunctionDeclaration`,
+`FunctionExpression`, `TSDeclareFunction`.
+
+### `contextsAfter`
+
+The contexts which will be checked for content on the same line after.
+
+Defaults to an empty array.
+
+### `contextsBeforeAndAfter`
+
+The contexts which will be checked for content before and on the same
+line after.
+
+Defaults to `VariableDeclarator`, `TSPropertySignature`, `PropertyDefinition`.
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|(N/A)|
 |Recommended|false|
 |Settings|`minLines`, `maxLines`|
-|Options|`enableFixer`, `enforceJsdocLineStyle`, `lineOrBlockStyle`|
+|Options|`enableFixer`, `enforceJsdocLineStyle`, `lineOrBlockStyle`, `allowedPrefixes`, `contexts`, `contextsAfter`, `contextsBeforeAndAfter`|
 
 ## Failing examples
 

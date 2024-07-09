@@ -278,6 +278,213 @@ export default {
         /** A single line comment */ function quux () {}
       `
     },
+    {
+      code: `
+        var a = []; // Test comment
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      options: [
+        {
+          contextsBeforeAndAfter: [],
+          contextsAfter: ['VariableDeclarator']
+        }
+      ],
+      output: `
+        /**
+         * Test comment
+         */
+        var a = []; ` + `
+      `,
+    },
+    {
+      code: `
+        var a = []; // Test comment
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      options: [
+        {
+          contextsBeforeAndAfter: [],
+          contextsAfter: [
+            {
+              context: 'VariableDeclarator',
+              inlineCommentBlock: true
+            }
+          ]
+        }
+      ],
+      output: `
+        /** Test comment */
+        var a = []; ` + `
+      `,
+    },
+    {
+      code: `
+        var a = []; // Test comment
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      options: [
+        {
+          contextsBeforeAndAfter: [],
+          contextsAfter: [
+            {
+              context: 'VariableDeclarator',
+              inlineCommentBlock: true
+            }
+          ]
+        }
+      ],
+      output: `
+        /** Test comment */ var a = []; ` + `
+      `,
+      settings: {
+        jsdoc: {
+          minLines: 0,
+          maxLines: 0,
+        },
+      },
+    },
+    {
+      code: `
+        // Test comment
+        var a = [];
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      options: [
+        {
+          contextsBeforeAndAfter: ['VariableDeclaration']
+        }
+      ],
+      output: `
+        /**
+         * Test comment
+         */
+        var a = [];
+      `
+    },
+    {
+      code: `
+        var a = []; // Test comment
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      options: [
+        {
+          contextsBeforeAndAfter: ['VariableDeclaration']
+        }
+      ],
+      output: `
+        /**
+         * Test comment
+         */
+        var a = []; ` + `
+      `,
+    },
+    {
+      code: `
+        interface B {
+          g: () => string; // Test comment
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      options: [
+        {
+          contextsBeforeAndAfter: ['TSPropertySignature']
+        }
+      ],
+      output: `
+        interface B {
+          /**
+           * Test comment
+           */
+          g: () => string; ` + `
+        }
+      `,
+    },
+    {
+      code: `
+        class TestClass {
+          public Test: (id: number) => string; // Test comment
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      options: [
+        {
+          contextsBeforeAndAfter: ['PropertyDefinition']
+        }
+      ],
+      output: `
+        class TestClass {
+          /**
+           * Test comment
+           */
+          public Test: (id: number) => string; ` + `
+        }
+      `,
+    },
+    {
+      code: `
+        var a = []; // Test comment
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      options: [
+        {
+          contextsBeforeAndAfter: ['VariableDeclarator'],
+        }
+      ],
+      output: `
+        /**
+         * Test comment
+         */
+        var a = []; ` + `
+      `,
+    },
   ],
   valid: [
     {
@@ -350,7 +557,7 @@ export default {
     },
     {
       code: `
-        // @ts-expect-error
+        // ` + `@ts-expect-error
         function quux () {}
       `,
     },
@@ -362,6 +569,18 @@ export default {
       options: [
         {
           allowedPrefixes: ['@custom-']
+        }
+      ],
+    },
+    {
+      code: `
+        // Test comment
+        var a = [];
+      `,
+      options: [
+        {
+          contextsBeforeAndAfter: [],
+          contextsAfter: ['VariableDeclarator']
         }
       ],
     },
