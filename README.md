@@ -263,6 +263,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:|:wrench:|[check-tag-names](./docs/rules/check-tag-names.md#readme)|Reports invalid jsdoc (block) tag names|
 |:heavy_check_mark:|:wrench:|[check-types](./docs/rules/check-types.md#readme)|Reports types deemed invalid (customizable and with defaults, for preventing and/or recommending replacements)|
 |:heavy_check_mark:||[check-values](./docs/rules/check-values.md#readme)|Checks for expected content within some miscellaneous tags (`@version`, `@since`, `@license`, `@author`)|
+| || [convert-to-jsdoc-comments](./docs/rules/convert-to-jsdoc-comments.md#readme) | Converts line and block comments preceding or following specified nodes into JSDoc comments|
 |:heavy_check_mark:|:wrench:|[empty-tags](./docs/rules/empty-tags.md#readme)|Checks tags that are expected to be empty (e.g., `@abstract` or `@async`), reporting if they have content|
 |:heavy_check_mark:||[implements-on-classes](./docs/rules/implements-on-classes.md#readme)|Prohibits use of `@implements` on non-constructor functions (to enforce the tag only being used on classes/constructors)|
 |||[informative-docs](./docs/rules/informative-docs.md#readme)|Reports on JSDoc texts that serve only to restate their attached name.|
@@ -297,6 +298,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:||[require-returns-check](./docs/rules/require-returns-check.md#readme)|Requires a return statement be present in a function body if a `@returns` tag is specified in the jsdoc comment block (and reports if multiple `@returns` tags are present).|
 |:heavy_check_mark:||[require-returns-description](./docs/rules/require-returns-description.md#readme)|Requires that the `@returns` tag has a `description` value (not including `void`/`undefined` type returns).|
 |:heavy_check_mark: (off in TS)||[require-returns-type](./docs/rules/require-returns-type.md#readme)|Requires that `@returns` tag has a type value (in curly brackets).|
+| || [require-template](./docs/rules/require-template.md#readme) | Requires `@template` tags be present when type parameters are used.|
 |||[require-throws](./docs/rules/require-throws.md#readme)|Requires that throw statements are documented|
 |:heavy_check_mark:||[require-yields](./docs/rules/require-yields.md#readme)|Requires that yields are documented|
 |:heavy_check_mark:||[require-yields-check](./docs/rules/require-yields-check.md#readme)|Ensures that if a `@yields` is present that a `yield` (or `yield` with a value) is present in the function body (or that if a `@next` is present that there is a `yield` with a return value present)|

@@ -45,6 +45,7 @@ import requireReturns from './rules/requireReturns.js';
 import requireReturnsCheck from './rules/requireReturnsCheck.js';
 import requireReturnsDescription from './rules/requireReturnsDescription.js';
 import requireReturnsType from './rules/requireReturnsType.js';
+import requireTemplate from './rules/requireTemplate.js';
 import requireThrows from './rules/requireThrows.js';
 import requireYields from './rules/requireYields.js';
 import requireYieldsCheck from './rules/requireYieldsCheck.js';
@@ -118,6 +119,7 @@ const index = {
     'require-returns-check': requireReturnsCheck,
     'require-returns-description': requireReturnsDescription,
     'require-returns-type': requireReturnsType,
+    'require-template': requireTemplate,
     'require-throws': requireThrows,
     'require-yields': requireYields,
     'require-yields-check': requireYieldsCheck,
@@ -191,6 +193,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/require-returns-check': warnOrError,
       'jsdoc/require-returns-description': warnOrError,
       'jsdoc/require-returns-type': warnOrError,
+      'jsdoc/require-template': 'off',
       'jsdoc/require-throws': 'off',
       'jsdoc/require-yields': warnOrError,
       'jsdoc/require-yields-check': warnOrError,
