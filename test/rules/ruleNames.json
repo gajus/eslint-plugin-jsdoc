@@ -8,6 +8,7 @@
   "check-property-names",
   "check-syntax",
   "check-tag-names",
+  "check-template-names",
   "check-types",
   "check-values",
   "convert-to-jsdoc-comments",
