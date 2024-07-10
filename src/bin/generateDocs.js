@@ -149,8 +149,8 @@ const generateDocs = async () => {
       );
     }),
     ...otherPaths,
-  ].map((docPath) => {
-    const gitdown = Gitdown.readFile(docPath);
+  ].map(async (docPath) => {
+    const gitdown = await Gitdown.readFile(docPath);
 
     gitdown.setConfig({
       gitinfo: {

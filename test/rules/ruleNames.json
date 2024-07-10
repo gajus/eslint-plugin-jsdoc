@@ -46,6 +46,7 @@
   "require-returns-check",
   "require-returns-description",
   "require-returns-type",
+  "require-template",
   "require-throws",
   "require-yields",
   "require-yields-check",

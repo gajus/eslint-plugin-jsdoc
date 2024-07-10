@@ -42,6 +42,7 @@ jobs:
         node_js_version:
           - '18'
           - '20'
+          - '22'
   build:
     runs-on: ubuntu-latest
     name: Build
