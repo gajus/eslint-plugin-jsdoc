@@ -2,12 +2,8 @@
 
 module.exports = {
   reject: [
-    // Todo: When package converted to ESM
-    'camelcase',
-    'chai',
-    'decamelize',
+    // Todo: When package converted to ESM only
     'escape-string-regexp',
-    'open-editor',
 
     // todo[engine:node@>=20]: Can reenable
     'glob',
