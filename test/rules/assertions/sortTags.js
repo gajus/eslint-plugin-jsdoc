@@ -229,6 +229,28 @@ export default {
     {
       code: `
         /**
+         * @typedef Foo<T>
+         * @template {Object} T
+         * @prop {T} bar
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Tags are not in the prescribed order: ' + tagList.join(', '),
+        },
+      ],
+      output: `
+        /**
+         * @template {Object} T
+         * @typedef Foo<T>
+         * @prop {T} bar
+         */
+      `,
+    },
+    {
+      code: `
+        /**
          * @def
          * @xyz
          * @abc
