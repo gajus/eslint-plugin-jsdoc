@@ -93,6 +93,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-indentation": 1,
         "jsdoc/check-line-alignment": 1,
         "jsdoc/check-param-names": 1, // Recommended
+        "jsdoc/check-template-names": 1,
         "jsdoc/check-property-names": 1, // Recommended
         "jsdoc/check-syntax": 1,
         "jsdoc/check-tag-names": 1, // Recommended
@@ -130,6 +131,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-returns-check": 1, // Recommended
         "jsdoc/require-returns-description": 1, // Recommended
         "jsdoc/require-returns-type": 1, // Recommended
+        "jsdoc/require-template": 1,
         "jsdoc/require-throws": 1,
         "jsdoc/require-yields": 1, // Recommended
         "jsdoc/require-yields-check": 1, // Recommended
@@ -261,6 +263,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:|:wrench:|[check-property-names](./docs/rules/check-property-names.md#readme)|Checks for dupe `@property` names, that nested property names have roots|
 |||[check-syntax](./docs/rules/check-syntax.md#readme)|Reports use against current mode (currently only prohibits Closure-specific syntax)|
 |:heavy_check_mark:|:wrench:|[check-tag-names](./docs/rules/check-tag-names.md#readme)|Reports invalid jsdoc (block) tag names|
+| || [check-template-names](./docs/rules/check-template-names.md#readme)|Checks that any `@template` names are actually used in the connected `@typedef` or type alias.
 |:heavy_check_mark:|:wrench:|[check-types](./docs/rules/check-types.md#readme)|Reports types deemed invalid (customizable and with defaults, for preventing and/or recommending replacements)|
 |:heavy_check_mark:||[check-values](./docs/rules/check-values.md#readme)|Checks for expected content within some miscellaneous tags (`@version`, `@since`, `@license`, `@author`)|
 | || [convert-to-jsdoc-comments](./docs/rules/convert-to-jsdoc-comments.md#readme) | Converts line and block comments preceding or following specified nodes into JSDoc comments|
