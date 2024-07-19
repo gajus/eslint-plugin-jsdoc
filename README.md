@@ -93,6 +93,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-indentation": 1,
         "jsdoc/check-line-alignment": 1,
         "jsdoc/check-param-names": 1, // Recommended
+        "jsdoc/check-template-names": 1,
         "jsdoc/check-property-names": 1, // Recommended
         "jsdoc/check-syntax": 1,
         "jsdoc/check-tag-names": 1, // Recommended
@@ -130,6 +131,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-returns-check": 1, // Recommended
         "jsdoc/require-returns-description": 1, // Recommended
         "jsdoc/require-returns-type": 1, // Recommended
+        "jsdoc/require-template": 1,
         "jsdoc/require-throws": 1,
         "jsdoc/require-yields": 1, // Recommended
         "jsdoc/require-yields-check": 1, // Recommended
