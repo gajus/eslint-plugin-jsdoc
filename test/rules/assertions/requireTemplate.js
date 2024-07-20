@@ -205,5 +205,13 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @typedef Foo
+         * @prop {string} bar
+         */
+      `,
+    },
   ],
 };
