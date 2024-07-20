@@ -142,6 +142,22 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         * @typedef Pairs
+         * @property {V} foo
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@template D not in use',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -198,6 +214,17 @@ export default {
         /**
          * @typedef Foo
          * @prop {string} bar
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         * @typedef Pairs
+         * @property {D} foo
+         * @property {V} bar
          */
       `,
     },

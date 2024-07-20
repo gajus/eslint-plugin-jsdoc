@@ -64,27 +64,40 @@ export default iterateJsdoc(({
     return;
   }
 
-  const potentialType = typedefTags[0].type;
-
-  let parsedType;
-  try {
-    parsedType = mode === 'permissive' ?
-      tryParseType(/** @type {string} */ (potentialType)) :
-      parseType(/** @type {string} */ (potentialType), mode)
-  } catch {
-    // Todo: Should handle types in @prop/erty
-    return;
-  }
-
-  traverse(parsedType, (nde) => {
-    const {
-      type,
-      value,
-    } = /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde);
-    if (type === 'JsdocTypeName' && (/^[A-Z]$/).test(value)) {
-      usedNames.add(value);
+  /**
+   * @param {string} potentialType
+   */
+  const checkForUsedTypes = (potentialType) => {
+    let parsedType;
+    try {
+      parsedType = mode === 'permissive' ?
+        tryParseType(/** @type {string} */ (potentialType)) :
+        parseType(/** @type {string} */ (potentialType), mode);
+    } catch {
+      return;
     }
-  });
+
+    traverse(parsedType, (nde) => {
+      const {
+        type,
+        value,
+      } = /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde);
+      if (type === 'JsdocTypeName' && (/^[A-Z]$/).test(value)) {
+        usedNames.add(value);
+      }
+    });
+  };
+
+  const potentialTypedefType = typedefTags[0].type;
+  checkForUsedTypes(potentialTypedefType);
+
+  const tagName = /** @type {string} */ (utils.getPreferredTagName({
+    tagName: 'property',
+  }));
+  const propertyTags = utils.getTags(tagName);
+  for (const propertyTag of propertyTags) {
+    checkForUsedTypes(propertyTag.type);
+  }
 
   for (const tag of templateTags) {
     const {name} = tag;

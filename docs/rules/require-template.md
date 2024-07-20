@@ -106,6 +106,14 @@ export type Pairs<D, V> = [D, V | undefined];
  */
 // "jsdoc/require-template": ["error"|"warn", {"requireSeparateTemplates":true}]
 // Message: Missing separate @template for V
+
+/**
+ * @template X
+ * @typedef {object} Pairs
+ * @property {D} foo
+ * @property {X} bar
+ */
+// Message: Missing @template D
 ````
 
 
@@ -147,6 +155,14 @@ export type Extras<D, U, V> = [D, U, V | undefined];
 /**
  * @typedef Foo
  * @prop {string} bar
+ */
+
+/**
+ * @template D
+ * @template V
+ * @typedef {object} Pairs
+ * @property {D} foo
+ * @property {V} bar
  */
 ````
 
