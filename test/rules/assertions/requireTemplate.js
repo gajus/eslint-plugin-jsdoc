@@ -155,6 +155,22 @@ export default {
         }
       ],
     },
+    {
+      code: `
+        /**
+         * @template X
+         * @typedef {object} Pairs
+         * @property {D} foo
+         * @property {X} bar
+         */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Missing @template D',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -210,6 +226,17 @@ export default {
         /**
          * @typedef Foo
          * @prop {string} bar
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         * @typedef {object} Pairs
+         * @property {D} foo
+         * @property {V} bar
          */
       `,
     },

@@ -87,6 +87,14 @@ export type Extras<D, U> = [D, U | undefined];
  * @typedef {[D, U | undefined]} Extras
  */
 // Message: @template V not in use
+
+/**
+ * @template D
+ * @template V
+ * @typedef Pairs
+ * @property {V} foo
+ */
+// Message: @template D not in use
 ````
 
 
@@ -129,6 +137,14 @@ export type Extras<D, U, V> = [D, U, V | undefined];
 /**
  * @typedef Foo
  * @prop {string} bar
+ */
+
+/**
+ * @template D
+ * @template V
+ * @typedef Pairs
+ * @property {D} foo
+ * @property {V} bar
  */
 ````
 
