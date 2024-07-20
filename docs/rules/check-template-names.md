@@ -125,5 +125,10 @@ export type Extras<D, U, V> = [D, U, V | undefined];
  * @typedef {[D, U, V | undefined]} Extras
  * @typedef {[D, U, V | undefined]} Extras
  */
+
+/**
+ * @typedef Foo
+ * @prop {string} bar
+ */
 ````
 

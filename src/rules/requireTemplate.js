@@ -76,9 +76,16 @@ export default iterateJsdoc(({
   }
 
   const potentialType = typedefTags[0].type;
-  const parsedType = mode === 'permissive' ?
-    tryParseType(/** @type {string} */ (potentialType)) :
-    parseType(/** @type {string} */ (potentialType), mode)
+
+  let parsedType;
+  try {
+    parsedType = mode === 'permissive' ?
+      tryParseType(/** @type {string} */ (potentialType)) :
+      parseType(/** @type {string} */ (potentialType), mode)
+  } catch {
+    // Todo: Should handle types in @prop/erty
+    return;
+  }
 
   traverse(parsedType, (nde) => {
     const {
