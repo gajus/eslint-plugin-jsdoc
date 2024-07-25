@@ -629,10 +629,10 @@ const getBasicUtils = (context, {
     tagName,
   }) => {
     const ret = jsdocUtils.getPreferredTagNameSimple(
-      context,
-      /** @type {import('./jsdocUtils.js').ParserMode} */ (mode),
       tagName,
+      /** @type {import('./jsdocUtils.js').ParserMode} */ (mode),
       tagNamePreference,
+      context,
     );
     const isObject = ret && typeof ret === 'object';
     if (ret === false || (isObject && !ret.replacement)) {
@@ -1340,8 +1340,10 @@ const getUtils = (
   /** @type {GetPreferredTagName} */
   utils.getPreferredTagName = (args) => {
     return jsdocUtils.getPreferredTagName(
-      context, mode, report, tagNamePreference,
-      jsdoc, args
+      jsdoc, {
+        ...args,
+        context, mode, report, tagNamePreference,
+      }
     );
   };
 
@@ -1644,8 +1646,10 @@ const getUtils = (
   /** @type {ForEachPreferredTag} */
   utils.forEachPreferredTag = (tagName, arrayHandler, skipReportingBlockedTag) => {
     return jsdocUtils.forEachPreferredTag(
-      context, mode, report, tagNamePreference,
-      jsdoc, tagName, arrayHandler, skipReportingBlockedTag
+      jsdoc, tagName, arrayHandler, {
+        skipReportingBlockedTag,
+        context, mode, report, tagNamePreference
+      }
     );
   };
 
