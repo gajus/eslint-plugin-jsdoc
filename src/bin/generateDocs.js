@@ -127,6 +127,7 @@ const getSomeBranch = () => {
 const extraFiles = [
   'settings.md',
   'advanced.md',
+  'processors.md',
   'README.md',
 ];
 

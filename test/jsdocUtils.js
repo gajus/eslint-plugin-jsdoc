@@ -8,6 +8,23 @@ import {
  */
 
 describe('jsdocUtils', () => {
+  describe('getPreferredTagName()', () => {
+    context('report', () => {
+      jsdocUtils.getPreferredTagName({
+        tags: [
+          // @ts-expect-error Just a skeleton
+          {
+            tag: 'example',
+          },
+        ]
+      }, {
+        tagName: 'example',
+        tagNamePreference: {
+          'example': false
+        }
+      });
+    });
+  });
   describe('getPreferredTagNameSimple()', () => {
     context('no preferences', () => {
       context('alias name', () => {
