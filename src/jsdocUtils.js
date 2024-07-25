@@ -731,10 +731,10 @@ const getTags = (jsdoc, tagName) => {
  * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
  * @param {{
  *   tagName: string,
- *   context: import('eslint').Rule.RuleContext,
- *   mode: ParserMode,
- *   report: import('./iterateJsdoc.js').Report
- *   tagNamePreference: TagNamePreference
+ *   context?: import('eslint').Rule.RuleContext,
+ *   mode?: ParserMode,
+ *   report?: import('./iterateJsdoc.js').Report
+ *   tagNamePreference?: TagNamePreference
  *   skipReportingBlockedTag?: boolean,
  *   allowObjectReturn?: boolean,
  *   defaultMessage?: string,
@@ -749,7 +749,9 @@ const getTags = (jsdoc, tagName) => {
  */
 const getPreferredTagName = (jsdoc, {
   tagName,
-  context, mode, report, tagNamePreference,
+  context, mode,
+  tagNamePreference,
+  report = () => {},
   skipReportingBlockedTag = false,
   allowObjectReturn = false,
   defaultMessage = `Unexpected tag \`@${tagName}\``,
@@ -781,10 +783,10 @@ const getPreferredTagName = (jsdoc, {
  *   targetTagName: string
  * ) => void} arrayHandler
  * @param {object} cfg
- * @param {import('eslint').Rule.RuleContext} cfg.context
- * @param {ParserMode} cfg.mode
- * @param {import('./iterateJsdoc.js').Report} cfg.report
- * @param {TagNamePreference} cfg.tagNamePreference
+ * @param {import('eslint').Rule.RuleContext} [cfg.context]
+ * @param {ParserMode} [cfg.mode]
+ * @param {import('./iterateJsdoc.js').Report} [cfg.report]
+ * @param {TagNamePreference} [cfg.tagNamePreference]
  * @param {boolean} [cfg.skipReportingBlockedTag]
  * @returns {void}
  */
@@ -794,7 +796,7 @@ const forEachPreferredTag = (
     context, mode, report,
     tagNamePreference,
     skipReportingBlockedTag = false,
-  }
+  } = {}
 ) => {
   const targetTagName = /** @type {string|false} */ (
     getPreferredTagName(jsdoc, {

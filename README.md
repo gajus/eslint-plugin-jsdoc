@@ -17,6 +17,7 @@ JSDoc linting rules for ESLint.
     * [Options](#user-content-eslint-plugin-jsdoc-options)
     * [Settings](#user-content-eslint-plugin-jsdoc-settings)
     * [Advanced](#user-content-eslint-plugin-jsdoc-advanced)
+    * [Processors](#user-content-eslint-plugin-jsdoc-processors)
     * [Rules](#user-content-eslint-plugin-jsdoc-rules)
 
 
@@ -240,6 +241,12 @@ See [Settings](./docs/settings.md#readme).
 ## Advanced
 
 See [Advanced](./docs/advanced.md#readme).
+
+<a name="user-content-eslint-plugin-jsdoc-processors"></a>
+<a name="eslint-plugin-jsdoc-processors"></a>
+## Processors
+
+See our `@example` and other item [processors](./docs/processors.md#readme).
 
 <a name="user-content-eslint-plugin-jsdoc-rules"></a>
 <a name="eslint-plugin-jsdoc-rules"></a>

@@ -15,8 +15,8 @@
 * [Passing examples](#user-content-check-examples-passing-examples)
 
 
-> **NOTE**: This rule currently does not work in ESLint 8 (we are waiting for
-> [issue 14745](https://github.com/eslint/eslint/issues/14745)).
+> **NOTE**: This rule only works in ESLint 7. For ESLint 9, please see our
+> [processors](../processors.md) section.
 
 Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules. Also
 has options to lint the default values of optional `@param`/`@arg`/`@argument`

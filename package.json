@@ -34,6 +34,7 @@
     "@types/chai": "^4.3.16",
     "@types/debug": "^4.1.12",
     "@types/eslint": "^8.56.10",
+    "@types/espree": "^10.1.0",
     "@types/esquery": "^1.5.4",
     "@types/estree": "^1.0.5",
     "@types/json-schema": "^7.0.15",

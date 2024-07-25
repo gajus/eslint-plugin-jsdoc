@@ -216,6 +216,10 @@ See [Settings](./docs/settings.md#readme).
 
 See [Advanced](./docs/advanced.md#readme).
 
+## Processors
+
+See our `@example` and other item [processors](./docs/processors.md#readme).
+
 ## Rules
 
 Problems reported by rules which have a wrench :wrench: below can be fixed automatically by running ESLint on the command line with `--fix` option.
