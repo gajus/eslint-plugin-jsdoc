@@ -12,24 +12,32 @@ describe('jsdocUtils', () => {
     context('no preferences', () => {
       context('alias name', () => {
         it('returns the primary tag name', () => {
-          expect(jsdocUtils.getPreferredTagNameSimple(/** @type {BadArgument} */ ({}), 'jsdoc', 'return')).to.equal('returns');
+          expect(jsdocUtils.getPreferredTagNameSimple(
+            'return', 'jsdoc',
+          )).to.equal('returns');
         });
         it('works with the constructor tag', () => {
-          expect(jsdocUtils.getPreferredTagNameSimple(/** @type {BadArgument} */ ({}), 'jsdoc', 'constructor')).to.equal('class');
+          expect(jsdocUtils.getPreferredTagNameSimple('constructor', 'jsdoc')).to.equal('class');
         });
       });
       it('works with tags that clash with prototype properties', () => {
-        expect(jsdocUtils.getPreferredTagNameSimple(/** @type {BadArgument} */ ({}), 'jsdoc', 'toString')).to.equal('toString');
+        expect(jsdocUtils.getPreferredTagNameSimple('toString', 'jsdoc')).to.equal('toString');
       });
       it('returns the primary tag name', () => {
-        expect(jsdocUtils.getPreferredTagNameSimple(/** @type {BadArgument} */ ({}), 'jsdoc', 'returns')).to.equal('returns');
+        expect(jsdocUtils.getPreferredTagNameSimple('returns', 'jsdoc')).to.equal('returns');
       });
     });
     context('with preferences', () => {
       it('returns the preferred tag name', () => {
-        expect(jsdocUtils.getPreferredTagNameSimple(/** @type {BadArgument} */ ({}), 'jsdoc', 'return', /** @type {BadArgument} */ ({
+        expect(jsdocUtils.getPreferredTagNameSimple('return', 'jsdoc', {
           returns: 'return',
-        }))).to.equal('return');
+        })).to.equal('return');
+      });
+    });
+
+    context('with context', () => {
+      it('returns the preferred tag name', () => {
+        expect(jsdocUtils.getPreferredTagNameSimple('returns', /** @type {BadArgument} */ ('badArg'))).to.equal('returns');
       });
     });
   });

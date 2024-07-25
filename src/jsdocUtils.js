@@ -521,7 +521,7 @@ const modeWarnSettings = WarnSettings();
 
 /**
  * @param {ParserMode|undefined} mode
- * @param {import('eslint').Rule.RuleContext} context
+ * @param {Reporter} context
  * @returns {import('./tagNames.js').AliasedTags}
  */
 const getTagNamesForMode = (mode, context) => {
@@ -602,20 +602,30 @@ const getTagDescription = (tg, returnArray) => {
 };
 
 /**
- * @param {import('eslint').Rule.RuleContext} context
- * @param {ParserMode|undefined} mode
+ * @typedef {{
+ *   report: (descriptor: import('eslint').Rule.ReportDescriptor) => void
+ * }} Reporter
+ */
+
+/**
  * @param {string} name
+ * @param {ParserMode|undefined} mode
  * @param {TagNamePreference} tagPreference
+ * @param {Reporter} context
  * @returns {string|false|{
  *   message: string;
  *   replacement?: string|undefined;
  * }}
  */
 const getPreferredTagNameSimple = (
-  context,
-  mode,
   name,
+  mode,
   tagPreference = {},
+  context = {
+    report () {
+      // No-op
+    }
+  },
 ) => {
   const prefValues = Object.values(tagPreference);
   if (prefValues.includes(name) || prefValues.some((prefVal) => {
@@ -718,16 +728,16 @@ const getTags = (jsdoc, tagName) => {
 };
 
 /**
- * @param {import('eslint').Rule.RuleContext} context
- * @param {ParserMode} mode
- * @param {import('./iterateJsdoc.js').Report} report
- * @param {TagNamePreference} tagNamePreference
  * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
  * @param {{
  *   tagName: string,
+ *   context: import('eslint').Rule.RuleContext,
+ *   mode: ParserMode,
+ *   report: import('./iterateJsdoc.js').Report
+ *   tagNamePreference: TagNamePreference
  *   skipReportingBlockedTag?: boolean,
  *   allowObjectReturn?: boolean,
- *   defaultMessage?: string
+ *   defaultMessage?: string,
  * }} cfg
  * @returns {string|undefined|false|{
  *   message: string;
@@ -737,13 +747,14 @@ const getTags = (jsdoc, tagName) => {
  *   tagName: string
  * }}
  */
-const getPreferredTagName = (context, mode, report, tagNamePreference, jsdoc, {
+const getPreferredTagName = (jsdoc, {
   tagName,
+  context, mode, report, tagNamePreference,
   skipReportingBlockedTag = false,
   allowObjectReturn = false,
   defaultMessage = `Unexpected tag \`@${tagName}\``,
 }) => {
-  const ret = getPreferredTagNameSimple(context, mode, tagName, tagNamePreference);
+  const ret = getPreferredTagNameSimple(tagName, mode, tagNamePreference, context);
   const isObject = ret && typeof ret === 'object';
   if (hasTag(jsdoc, tagName) && (ret === false || isObject && !ret.replacement)) {
     if (skipReportingBlockedTag) {
@@ -763,24 +774,33 @@ const getPreferredTagName = (context, mode, report, tagNamePreference, jsdoc, {
 };
 
 /**
- * @param {import('eslint').Rule.RuleContext} context
- * @param {ParserMode} mode
- * @param {import('./iterateJsdoc.js').Report} report
- * @param {TagNamePreference} tagNamePreference
  * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
  * @param {string} tagName
  * @param {(
-*   matchingJsdocTag: import('@es-joy/jsdoccomment').JsdocTagWithInline,
-*   targetTagName: string
-* ) => void} arrayHandler
-* @param {boolean} [skipReportingBlockedTag]
-* @returns {void}
-*/
-const forEachPreferredTag = (context, mode, report, tagNamePreference, jsdoc, tagName, arrayHandler, skipReportingBlockedTag = false) => {
+ *   matchingJsdocTag: import('@es-joy/jsdoccomment').JsdocTagWithInline,
+ *   targetTagName: string
+ * ) => void} arrayHandler
+ * @param {object} cfg
+ * @param {import('eslint').Rule.RuleContext} cfg.context
+ * @param {ParserMode} cfg.mode
+ * @param {import('./iterateJsdoc.js').Report} cfg.report
+ * @param {TagNamePreference} cfg.tagNamePreference
+ * @param {boolean} [cfg.skipReportingBlockedTag]
+ * @returns {void}
+ */
+const forEachPreferredTag = (
+  jsdoc, tagName, arrayHandler,
+  {
+    context, mode, report,
+    tagNamePreference,
+    skipReportingBlockedTag = false,
+  }
+) => {
   const targetTagName = /** @type {string|false} */ (
-    getPreferredTagName(context, mode, report, tagNamePreference, jsdoc, {
+    getPreferredTagName(jsdoc, {
       skipReportingBlockedTag,
       tagName,
+      context, mode, report, tagNamePreference
     })
   );
   if (!targetTagName ||
