@@ -556,6 +556,52 @@ const getTagNamesForMode = (mode, context) => {
 };
 
 /**
+ * @param {import('comment-parser').Spec} tg
+ * @param {boolean} [returnArray]
+ * @returns {string[]|string}
+ */
+const getTagDescription = (tg, returnArray) => {
+    /**
+     * @type {string[]}
+     */
+    const descriptions = [];
+    tg.source.some(({
+      tokens: {
+        end,
+        lineEnd,
+        postDelimiter,
+        tag,
+        postTag,
+        name,
+        type,
+        description,
+      },
+    }) => {
+      const desc = (
+        tag && postTag ||
+        !tag && !name && !type && postDelimiter || ''
+
+      // Remove space
+      ).slice(1) +
+        (description || '') + (lineEnd || '');
+
+      if (end) {
+        if (desc) {
+          descriptions.push(desc);
+        }
+
+        return true;
+      }
+
+      descriptions.push(desc);
+
+      return false;
+    });
+
+    return returnArray ? descriptions : descriptions.join('\n');
+};
+
+/**
  * @param {import('eslint').Rule.RuleContext} context
  * @param {ParserMode|undefined} mode
  * @param {string} name
@@ -565,7 +611,7 @@ const getTagNamesForMode = (mode, context) => {
  *   replacement?: string|undefined;
  * }}
  */
-const getPreferredTagName = (
+const getPreferredTagNameSimple = (
   context,
   mode,
   name,
@@ -647,6 +693,117 @@ const hasTag = (jsdoc, targetTagName) => {
   return jsdoc.tags.some((doc) => {
     return doc.tag.toLowerCase() === targetTagLower;
   });
+};
+
+/**
+ * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
+ * @param {(tag: import('@es-joy/jsdoccomment').JsdocTagWithInline) => boolean} filter
+ * @returns {import('@es-joy/jsdoccomment').JsdocTagWithInline[]}
+ */
+const filterTags = (jsdoc, filter) => {
+  return jsdoc.tags.filter((tag) => {
+    return filter(tag);
+  });
+};
+
+/**
+ * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
+ * @param {string} tagName
+ * @returns {import('comment-parser').Spec[]}
+ */
+const getTags = (jsdoc, tagName) => {
+  return filterTags(jsdoc, (item) => {
+    return item.tag === tagName;
+  });
+};
+
+/**
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {ParserMode} mode
+ * @param {import('./iterateJsdoc.js').Report} report
+ * @param {TagNamePreference} tagNamePreference
+ * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
+ * @param {{
+ *   tagName: string,
+ *   skipReportingBlockedTag?: boolean,
+ *   allowObjectReturn?: boolean,
+ *   defaultMessage?: string
+ * }} cfg
+ * @returns {string|undefined|false|{
+ *   message: string;
+ *   replacement?: string|undefined;
+ * }|{
+ *   blocked: true,
+ *   tagName: string
+ * }}
+ */
+const getPreferredTagName = (context, mode, report, tagNamePreference, jsdoc, {
+  tagName,
+  skipReportingBlockedTag = false,
+  allowObjectReturn = false,
+  defaultMessage = `Unexpected tag \`@${tagName}\``,
+}) => {
+  const ret = getPreferredTagNameSimple(context, mode, tagName, tagNamePreference);
+  const isObject = ret && typeof ret === 'object';
+  if (hasTag(jsdoc, tagName) && (ret === false || isObject && !ret.replacement)) {
+    if (skipReportingBlockedTag) {
+      return {
+        blocked: true,
+        tagName,
+      };
+    }
+
+    const message = isObject && ret.message || defaultMessage;
+    report(message, null, getTags(jsdoc, tagName)[0]);
+
+    return false;
+  }
+
+  return isObject && !allowObjectReturn ? ret.replacement : ret;
+};
+
+/**
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {ParserMode} mode
+ * @param {import('./iterateJsdoc.js').Report} report
+ * @param {TagNamePreference} tagNamePreference
+ * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
+ * @param {string} tagName
+ * @param {(
+*   matchingJsdocTag: import('@es-joy/jsdoccomment').JsdocTagWithInline,
+*   targetTagName: string
+* ) => void} arrayHandler
+* @param {boolean} [skipReportingBlockedTag]
+* @returns {void}
+*/
+const forEachPreferredTag = (context, mode, report, tagNamePreference, jsdoc, tagName, arrayHandler, skipReportingBlockedTag = false) => {
+  const targetTagName = /** @type {string|false} */ (
+    getPreferredTagName(context, mode, report, tagNamePreference, jsdoc, {
+      skipReportingBlockedTag,
+      tagName,
+    })
+  );
+  if (!targetTagName ||
+    skipReportingBlockedTag && targetTagName && typeof targetTagName === 'object'
+  ) {
+    return;
+  }
+
+  const matchingJsdocTags = jsdoc.tags.filter(({
+    tag,
+  }) => {
+    return tag === targetTagName;
+  });
+
+  for (const matchingJsdocTag of matchingJsdocTags) {
+    arrayHandler(
+      /**
+       * @type {import('@es-joy/jsdoccomment').JsdocTagWithInline}
+       */ (
+        matchingJsdocTag
+      ), targetTagName,
+    );
+  }
 };
 
 /**
@@ -1652,19 +1809,24 @@ const getRegexFromString = (regexString, requiredFlags) => {
   return new RegExp(regex, flags);
 };
 
-export default {
+export {
   comparePaths,
   dropPathSegmentQuotes,
   enforcedContexts,
   exemptSpeciaMethods,
+  filterTags,
   flattenRoots,
+  forEachPreferredTag,
   getAllTags,
   getContextObject,
   getFunctionParameterNames,
   getIndent,
   getJsdocTagsDeep,
   getPreferredTagName,
+  getPreferredTagNameSimple,
   getRegexFromString,
+  getTagDescription,
+  getTags,
   getTagsByType,
   getTagStructureForMode,
   hasATag,

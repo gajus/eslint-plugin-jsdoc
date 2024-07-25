@@ -1,4 +1,4 @@
-import jsdocUtils from './jsdocUtils.js';
+import * as jsdocUtils from './jsdocUtils.js';
 import {
   commentHandler,
   getJSDocComment,
@@ -628,7 +628,7 @@ const getBasicUtils = (context, {
   utils.getPreferredTagNameObject = ({
     tagName,
   }) => {
-    const ret = jsdocUtils.getPreferredTagName(
+    const ret = jsdocUtils.getPreferredTagNameSimple(
       context,
       /** @type {import('./jsdocUtils.js').ParserMode} */ (mode),
       tagName,
@@ -783,44 +783,7 @@ const getUtils = (
 
   /** @type {GetTagDescription} */
   utils.getTagDescription = (tg, returnArray) => {
-    /**
-     * @type {string[]}
-     */
-    const descriptions = [];
-    tg.source.some(({
-      tokens: {
-        end,
-        lineEnd,
-        postDelimiter,
-        tag,
-        postTag,
-        name,
-        type,
-        description,
-      },
-    }) => {
-      const desc = (
-        tag && postTag ||
-        !tag && !name && !type && postDelimiter || ''
-
-      // Remove space
-      ).slice(1) +
-        (description || '') + (lineEnd || '');
-
-      if (end) {
-        if (desc) {
-          descriptions.push(desc);
-        }
-
-        return true;
-      }
-
-      descriptions.push(desc);
-
-      return false;
-    });
-
-    return returnArray ? descriptions : descriptions.join('\n');
+    return jsdocUtils.getTagDescription(tg, returnArray);
   };
 
   /** @type {SetTagDescription} */
@@ -1375,29 +1338,11 @@ const getUtils = (
   };
 
   /** @type {GetPreferredTagName} */
-  utils.getPreferredTagName = ({
-    tagName,
-    skipReportingBlockedTag = false,
-    allowObjectReturn = false,
-    defaultMessage = `Unexpected tag \`@${tagName}\``,
-  }) => {
-    const ret = jsdocUtils.getPreferredTagName(context, mode, tagName, tagNamePreference);
-    const isObject = ret && typeof ret === 'object';
-    if (utils.hasTag(tagName) && (ret === false || isObject && !ret.replacement)) {
-      if (skipReportingBlockedTag) {
-        return {
-          blocked: true,
-          tagName,
-        };
-      }
-
-      const message = isObject && ret.message || defaultMessage;
-      report(message, null, utils.getTags(tagName)[0]);
-
-      return false;
-    }
-
-    return isObject && !allowObjectReturn ? ret.replacement : ret;
+  utils.getPreferredTagName = (args) => {
+    return jsdocUtils.getPreferredTagName(
+      context, mode, report, tagNamePreference,
+      jsdoc, args
+    );
   };
 
   /** @type {IsValidTag} */
@@ -1619,21 +1564,19 @@ const getUtils = (
 
   /** @type {GetTags} */
   utils.getTags = (tagName) => {
-    return utils.filterTags((item) => {
-      return item.tag === tagName;
-    });
+    return jsdocUtils.getTags(jsdoc, tagName);
   };
 
   /** @type {GetPresentTags} */
   utils.getPresentTags = (tagList) => {
-    return utils.filterTags((tag) => {
+    return jsdocUtils.filterTags(jsdoc, (tag) => {
       return tagList.includes(tag.tag);
     });
   };
 
   /** @type {FilterTags} */
   utils.filterTags = (filter) => {
-    return jsdoc.tags.filter((tag) => {
+    return jsdocUtils.filterTags(jsdoc, (tag) => {
       return filter(tag);
     });
   };
@@ -1699,34 +1642,11 @@ const getUtils = (
   };
 
   /** @type {ForEachPreferredTag} */
-  utils.forEachPreferredTag = (tagName, arrayHandler, skipReportingBlockedTag = false) => {
-    const targetTagName = /** @type {string|false} */ (
-      utils.getPreferredTagName({
-        skipReportingBlockedTag,
-        tagName,
-      })
+  utils.forEachPreferredTag = (tagName, arrayHandler, skipReportingBlockedTag) => {
+    return jsdocUtils.forEachPreferredTag(
+      context, mode, report, tagNamePreference,
+      jsdoc, tagName, arrayHandler, skipReportingBlockedTag
     );
-    if (!targetTagName ||
-      skipReportingBlockedTag && targetTagName && typeof targetTagName === 'object'
-    ) {
-      return;
-    }
-
-    const matchingJsdocTags = jsdoc.tags.filter(({
-      tag,
-    }) => {
-      return tag === targetTagName;
-    });
-
-    for (const matchingJsdocTag of matchingJsdocTags) {
-      arrayHandler(
-        /**
-         * @type {import('@es-joy/jsdoccomment').JsdocTagWithInline}
-         */ (
-          matchingJsdocTag
-        ), targetTagName,
-      );
-    }
   };
 
   /** @type {FindContext} */
@@ -2030,8 +1950,8 @@ const iterate = (
     !ruleConfig.checkPrivate && settings.ignorePrivate &&
     (
       utils.hasTag('private') ||
-      jsdoc.tags
-        .filter(({
+      jsdocUtils
+        .filterTags(jsdoc, ({
           tag,
         }) => {
           return tag === 'access';

@@ -1,4 +1,4 @@
-import jsdocUtils from '../src/jsdocUtils.js';
+import * as jsdocUtils from '../src/jsdocUtils.js';
 import {
   expect,
 } from 'chai';
@@ -8,26 +8,26 @@ import {
  */
 
 describe('jsdocUtils', () => {
-  describe('getPreferredTagName()', () => {
+  describe('getPreferredTagNameSimple()', () => {
     context('no preferences', () => {
       context('alias name', () => {
         it('returns the primary tag name', () => {
-          expect(jsdocUtils.getPreferredTagName(/** @type {BadArgument} */ ({}), 'jsdoc', 'return')).to.equal('returns');
+          expect(jsdocUtils.getPreferredTagNameSimple(/** @type {BadArgument} */ ({}), 'jsdoc', 'return')).to.equal('returns');
         });
         it('works with the constructor tag', () => {
-          expect(jsdocUtils.getPreferredTagName(/** @type {BadArgument} */ ({}), 'jsdoc', 'constructor')).to.equal('class');
+          expect(jsdocUtils.getPreferredTagNameSimple(/** @type {BadArgument} */ ({}), 'jsdoc', 'constructor')).to.equal('class');
         });
       });
       it('works with tags that clash with prototype properties', () => {
-        expect(jsdocUtils.getPreferredTagName(/** @type {BadArgument} */ ({}), 'jsdoc', 'toString')).to.equal('toString');
+        expect(jsdocUtils.getPreferredTagNameSimple(/** @type {BadArgument} */ ({}), 'jsdoc', 'toString')).to.equal('toString');
       });
       it('returns the primary tag name', () => {
-        expect(jsdocUtils.getPreferredTagName(/** @type {BadArgument} */ ({}), 'jsdoc', 'returns')).to.equal('returns');
+        expect(jsdocUtils.getPreferredTagNameSimple(/** @type {BadArgument} */ ({}), 'jsdoc', 'returns')).to.equal('returns');
       });
     });
     context('with preferences', () => {
       it('returns the preferred tag name', () => {
-        expect(jsdocUtils.getPreferredTagName(/** @type {BadArgument} */ ({}), 'jsdoc', 'return', /** @type {BadArgument} */ ({
+        expect(jsdocUtils.getPreferredTagNameSimple(/** @type {BadArgument} */ ({}), 'jsdoc', 'return', /** @type {BadArgument} */ ({
           returns: 'return',
         }))).to.equal('return');
       });
