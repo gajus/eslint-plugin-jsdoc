@@ -3,8 +3,8 @@
 Checks that any `@template` names are actually used in the connected
 `@typedef` or type alias.
 
-Currently checks `FunctionDeclaration`, `TSInterfaceDeclaration` or
-`TSTypeAliasDeclaration` such as:
+Currently checks `ClassDeclaration`, `FunctionDeclaration`,
+`TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
 
 ```ts
 /**

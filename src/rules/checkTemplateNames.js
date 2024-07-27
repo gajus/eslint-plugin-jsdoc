@@ -21,6 +21,7 @@ export default iterateJsdoc(({
   const usedNames = new Set();
   /**
    * @param {import('@typescript-eslint/types').TSESTree.FunctionDeclaration|
+   *   import('@typescript-eslint/types').TSESTree.ClassDeclaration|
    *   import('@typescript-eslint/types').TSESTree.TSInterfaceDeclaration|
    *   import('@typescript-eslint/types').TSESTree.TSTypeAliasDeclaration} aliasDeclaration
    */
@@ -52,6 +53,7 @@ export default iterateJsdoc(({
     case 'ExportDefaultDeclaration':
     case 'ExportNamedDeclaration':
       switch (nde.declaration?.type) {
+        case 'ClassDeclaration':
         case 'FunctionDeclaration':
         case 'TSTypeAliasDeclaration':
         case 'TSInterfaceDeclaration':
@@ -59,6 +61,7 @@ export default iterateJsdoc(({
           break;
       }
       break;
+    case 'ClassDeclaration':
     case 'FunctionDeclaration':
     case 'TSTypeAliasDeclaration':
     case 'TSInterfaceDeclaration':

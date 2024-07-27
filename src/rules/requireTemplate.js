@@ -36,6 +36,7 @@ export default iterateJsdoc(({
 
   /**
    * @param {import('@typescript-eslint/types').TSESTree.FunctionDeclaration|
+   *   import('@typescript-eslint/types').TSESTree.ClassDeclaration|
    *   import('@typescript-eslint/types').TSESTree.TSInterfaceDeclaration|
    *   import('@typescript-eslint/types').TSESTree.TSTypeAliasDeclaration} aliasDeclaration
    */
@@ -62,6 +63,7 @@ export default iterateJsdoc(({
     switch (nde.type) {
     case 'ExportDefaultDeclaration':
       switch (nde.declaration?.type) {
+        case 'ClassDeclaration':
         case 'FunctionDeclaration':
         case 'TSInterfaceDeclaration':
           checkTypeParams(nde.declaration);
@@ -70,6 +72,7 @@ export default iterateJsdoc(({
       break;
     case 'ExportNamedDeclaration':
       switch (nde.declaration?.type) {
+      case 'ClassDeclaration':
       case 'FunctionDeclaration':
       case 'TSTypeAliasDeclaration':
       case 'TSInterfaceDeclaration':
@@ -77,6 +80,7 @@ export default iterateJsdoc(({
         break;
       }
       break;
+    case 'ClassDeclaration':
     case 'FunctionDeclaration':
     case 'TSTypeAliasDeclaration':
     case 'TSInterfaceDeclaration':

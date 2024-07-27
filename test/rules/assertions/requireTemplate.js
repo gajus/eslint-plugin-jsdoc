@@ -285,6 +285,86 @@ export default {
         parser: typescriptEslintParser
       },
     },
+    {
+      code: `
+        /**
+         *
+         */
+        class GenericNumber<NumType> {
+          zeroValue: NumType;
+          add: (x: NumType, y: NumType) => NumType;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template NumType',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        export class GenericNumber<NumType> {
+          zeroValue: NumType;
+          add: (x: NumType, y: NumType) => NumType;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template NumType',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        export default class GenericNumber<NumType> {
+          zeroValue: NumType;
+          add: (x: NumType, y: NumType) => NumType;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template NumType',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        export default class <NumType> {
+          zeroValue: NumType;
+          add: (x: NumType, y: NumType) => NumType;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template NumType',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
   ],
   valid: [
     {
@@ -426,6 +506,62 @@ export default {
          */
         export default function identity<Type>(arg: Type): Type {
           return arg;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template NumType
+         */
+        class GenericNumber<NumType> {
+          zeroValue: NumType;
+          add: (x: NumType, y: NumType) => NumType;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template NumType
+         */
+        export class GenericNumber<NumType> {
+          zeroValue: NumType;
+          add: (x: NumType, y: NumType) => NumType;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template NumType
+         */
+        export default class GenericNumber<NumType> {
+          zeroValue: NumType;
+          add: (x: NumType, y: NumType) => NumType;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template NumType
+         */
+        export default class <NumType> {
+          zeroValue: NumType;
+          add: (x: NumType, y: NumType) => NumType;
         }
       `,
       languageOptions: {

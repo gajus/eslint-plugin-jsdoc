@@ -5,8 +5,8 @@
 Checks to see that `@template` tags are present for any detected type
 parameters.
 
-Currently checks `FunctionDeclaration`, `TSInterfaceDeclaration` or
-`TSTypeAliasDeclaration` such as:
+Currently checks `ClassDeclaration`, `FunctionDeclaration`,
+`TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
 
 ```ts
 export type Pairs<D, V> = [D, V | undefined];
@@ -163,6 +163,42 @@ export default function identity<Type>(arg: Type): Type {
   return arg;
 }
 // Message: Missing @template Type
+
+/**
+ *
+ */
+class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: Missing @template NumType
+
+/**
+ *
+ */
+export class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: Missing @template NumType
+
+/**
+ *
+ */
+export default class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: Missing @template NumType
+
+/**
+ *
+ */
+export default class <NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: Missing @template NumType
 ````
 
 
@@ -254,6 +290,38 @@ export function identity<Type>(arg: Type): Type {
  */
 export default function identity<Type>(arg: Type): Type {
   return arg;
+}
+
+/**
+ * @template NumType
+ */
+class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+
+/**
+ * @template NumType
+ */
+export class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+
+/**
+ * @template NumType
+ */
+export default class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+
+/**
+ * @template NumType
+ */
+export default class <NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
 }
 ````
 
