@@ -228,6 +228,63 @@ export default {
         parser: typescriptEslintParser
       },
     },
+    {
+      code: `
+        /**
+         *
+         */
+        function identity<Type>(arg: Type): Type {
+          return arg;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template Type',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        export function identity<Type>(arg: Type): Type {
+          return arg;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template Type',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        export default function identity<Type>(arg: Type): Type {
+          return arg;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template Type',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
   ],
   valid: [
     {
@@ -330,6 +387,45 @@ export default {
          */
         export default interface GenericIdentityFn<Type> {
           (arg: Type): Type;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        function identity<Type>(arg: Type): Type {
+          return arg;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        export function identity<Type>(arg: Type): Type {
+          return arg;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        export default function identity<Type>(arg: Type): Type {
+          return arg;
         }
       `,
       languageOptions: {

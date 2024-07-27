@@ -230,6 +230,78 @@ export default {
         parser: typescriptEslintParser
       },
     },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         */
+        function identity<Type>(arg: Type): Type {
+          return arg;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@template D not in use',
+        },
+        {
+          line: 4,
+          message: '@template V not in use',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         */
+        export function identity<Type>(arg: Type): Type {
+          return arg;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@template D not in use',
+        },
+        {
+          line: 4,
+          message: '@template V not in use',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         */
+        export default function identity<Type>(arg: Type): Type {
+          return arg;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@template D not in use',
+        },
+        {
+          line: 4,
+          message: '@template V not in use',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
   ],
   valid: [
     {
@@ -333,6 +405,45 @@ export default {
          */
         export default interface GenericIdentityFn<Type> {
           (arg: Type): Type;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        function identity<Type>(arg: Type): Type {
+          return arg;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        export function identity<Type>(arg: Type): Type {
+          return arg;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        export default function identity<Type>(arg: Type): Type {
+          return arg;
         }
       `,
       languageOptions: {

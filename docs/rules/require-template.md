@@ -5,7 +5,8 @@
 Checks to see that `@template` tags are present for any detected type
 parameters.
 
-Currently checks `TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
+Currently checks `FunctionDeclaration`, `TSInterfaceDeclaration` or
+`TSTypeAliasDeclaration` such as:
 
 ```ts
 export type Pairs<D, V> = [D, V | undefined];
@@ -138,6 +139,30 @@ export default interface GenericIdentityFn<Type> {
   (arg: Type): Type;
 }
 // Message: Missing @template Type
+
+/**
+ *
+ */
+function identity<Type>(arg: Type): Type {
+  return arg;
+}
+// Message: Missing @template Type
+
+/**
+ *
+ */
+export function identity<Type>(arg: Type): Type {
+  return arg;
+}
+// Message: Missing @template Type
+
+/**
+ *
+ */
+export default function identity<Type>(arg: Type): Type {
+  return arg;
+}
+// Message: Missing @template Type
 ````
 
 
@@ -208,6 +233,27 @@ export interface GenericIdentityFn<Type> {
  */
 export default interface GenericIdentityFn<Type> {
   (arg: Type): Type;
+}
+
+/**
+ * @template Type
+ */
+function identity<Type>(arg: Type): Type {
+  return arg;
+}
+
+/**
+ * @template Type
+ */
+export function identity<Type>(arg: Type): Type {
+  return arg;
+}
+
+/**
+ * @template Type
+ */
+export default function identity<Type>(arg: Type): Type {
+  return arg;
 }
 ````
 
