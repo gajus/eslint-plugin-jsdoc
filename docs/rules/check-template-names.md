@@ -5,8 +5,8 @@
 Checks that any `@template` names are actually used in the connected
 `@typedef` or type alias.
 
-Currently checks `FunctionDeclaration`, `TSInterfaceDeclaration` or
-`TSTypeAliasDeclaration` such as:
+Currently checks `ClassDeclaration`, `FunctionDeclaration`,
+`TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
 
 ```ts
 /**
@@ -150,6 +150,46 @@ export default function identity<Type>(arg: Type): Type {
   return arg;
 }
 // Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export default class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export default class <NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: @template D not in use
 ````
 
 
@@ -242,6 +282,38 @@ export function identity<Type>(arg: Type): Type {
  */
 export default function identity<Type>(arg: Type): Type {
   return arg;
+}
+
+/**
+ * @template NumType
+ */
+class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+
+/**
+ * @template NumType
+ */
+export class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+
+/**
+ * @template NumType
+ */
+export default class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+
+/**
+ * @template NumType
+ */
+export default class <NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
 }
 ````
 
