@@ -5,7 +5,8 @@
 Checks that any `@template` names are actually used in the connected
 `@typedef` or type alias.
 
-Currently checks `TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
+Currently checks `FunctionDeclaration`, `TSInterfaceDeclaration` or
+`TSTypeAliasDeclaration` such as:
 
 ```ts
 /**
@@ -122,6 +123,33 @@ export default interface GenericIdentityFn<Type> {
   (arg: Type): Type;
 }
 // Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+function identity<Type>(arg: Type): Type {
+  return arg;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export function identity<Type>(arg: Type): Type {
+  return arg;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export default function identity<Type>(arg: Type): Type {
+  return arg;
+}
+// Message: @template D not in use
 ````
 
 
@@ -193,6 +221,27 @@ export interface GenericIdentityFn<Type> {
  */
 export default interface GenericIdentityFn<Type> {
   (arg: Type): Type;
+}
+
+/**
+ * @template Type
+ */
+function identity<Type>(arg: Type): Type {
+  return arg;
+}
+
+/**
+ * @template Type
+ */
+export function identity<Type>(arg: Type): Type {
+  return arg;
+}
+
+/**
+ * @template Type
+ */
+export default function identity<Type>(arg: Type): Type {
+  return arg;
 }
 ````
 
