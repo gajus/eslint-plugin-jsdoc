@@ -35,9 +35,10 @@ export default iterateJsdoc(({
   }
 
   /**
-   * @param {import('@typescript-eslint/types').TSESTree.TSTypeAliasDeclaration} aliasDeclaration
+   * @param {import('@typescript-eslint/types').TSESTree.TSInterfaceDeclaration|
+   *   import('@typescript-eslint/types').TSESTree.TSTypeAliasDeclaration} aliasDeclaration
    */
-  const checkParameters = (aliasDeclaration) => {
+  const checkTypeParams = (aliasDeclaration) => {
     /* c8 ignore next -- Guard */
     const {params} = aliasDeclaration.typeParameters ?? {params: []};
     for (const {name: {name}} of params) {
@@ -50,7 +51,7 @@ export default iterateJsdoc(({
     }
   };
 
-  const handleTypeAliases = () => {
+  const handleTypes = () => {
     const nde = /** @type {import('@typescript-eslint/types').TSESTree.Node} */ (
       node
     );
@@ -58,20 +59,31 @@ export default iterateJsdoc(({
       return;
     }
     switch (nde.type) {
+    case 'ExportDefaultDeclaration':
+      switch (nde.declaration?.type) {
+        case 'TSInterfaceDeclaration':
+          checkTypeParams(nde.declaration);
+          break;
+      }
+      break;
     case 'ExportNamedDeclaration':
-      if (nde.declaration?.type === 'TSTypeAliasDeclaration') {
-        checkParameters(nde.declaration);
+      switch (nde.declaration?.type) {
+      case 'TSTypeAliasDeclaration':
+      case 'TSInterfaceDeclaration':
+        checkTypeParams(nde.declaration);
+        break;
       }
       break;
     case 'TSTypeAliasDeclaration':
-      checkParameters(nde);
+    case 'TSInterfaceDeclaration':
+      checkTypeParams(nde);
       break;
     }
   };
 
   const typedefTags = utils.getTags('typedef');
   if (!typedefTags.length || typedefTags.length >= 2) {
-    handleTypeAliases();
+    handleTypes();
     return;
   }
 

@@ -3,7 +3,7 @@
 Checks to see that `@template` tags are present for any detected type
 parameters.
 
-Currently checks `TSTypeAliasDeclaration` such as:
+Currently checks `TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
 
 ```ts
 export type Pairs<D, V> = [D, V | undefined];

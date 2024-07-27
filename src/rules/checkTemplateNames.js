@@ -20,7 +20,8 @@ export default iterateJsdoc(({
 
   const usedNames = new Set();
   /**
-   * @param {import('@typescript-eslint/types').TSESTree.TSTypeAliasDeclaration} aliasDeclaration
+   * @param {import('@typescript-eslint/types').TSESTree.TSInterfaceDeclaration|
+   *   import('@typescript-eslint/types').TSESTree.TSTypeAliasDeclaration} aliasDeclaration
    */
   const checkParameters = (aliasDeclaration) => {
     /* c8 ignore next -- Guard */
@@ -47,12 +48,17 @@ export default iterateJsdoc(({
       return;
     }
     switch (nde.type) {
+    case 'ExportDefaultDeclaration':
     case 'ExportNamedDeclaration':
-      if (nde.declaration?.type === 'TSTypeAliasDeclaration') {
-        checkParameters(nde.declaration);
+      switch (nde.declaration?.type) {
+        case 'TSTypeAliasDeclaration':
+        case 'TSInterfaceDeclaration':
+            checkParameters(nde.declaration);
+          break;
       }
       break;
     case 'TSTypeAliasDeclaration':
+    case 'TSInterfaceDeclaration':
       checkParameters(nde);
       break;
     }
