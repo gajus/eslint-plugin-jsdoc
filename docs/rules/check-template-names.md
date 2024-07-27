@@ -5,7 +5,7 @@
 Checks that any `@template` names are actually used in the connected
 `@typedef` or type alias.
 
-Currently checks `TSTypeAliasDeclaration` such as:
+Currently checks `TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
 
 ```ts
 /**
@@ -95,6 +95,33 @@ export type Extras<D, U> = [D, U | undefined];
  * @property {V} foo
  */
 // Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export default interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+// Message: @template D not in use
 ````
 
 
@@ -146,5 +173,26 @@ export type Extras<D, U, V> = [D, U, V | undefined];
  * @property {D} foo
  * @property {V} bar
  */
+
+/**
+ * @template Type
+ */
+interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+
+/**
+ * @template Type
+ */
+export interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+
+/**
+ * @template Type
+ */
+export default interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
 ````
 

@@ -5,7 +5,7 @@
 Checks to see that `@template` tags are present for any detected type
 parameters.
 
-Currently checks `TSTypeAliasDeclaration` such as:
+Currently checks `TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
 
 ```ts
 export type Pairs<D, V> = [D, V | undefined];
@@ -114,6 +114,30 @@ export type Pairs<D, V> = [D, V | undefined];
  * @property {X} bar
  */
 // Message: Missing @template D
+
+/**
+ *
+ */
+interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+// Message: Missing @template Type
+
+/**
+ *
+ */
+export interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+// Message: Missing @template Type
+
+/**
+ *
+ */
+export default interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+// Message: Missing @template Type
 ````
 
 
@@ -164,5 +188,26 @@ export type Extras<D, U, V> = [D, U, V | undefined];
  * @property {D} foo
  * @property {V} bar
  */
+
+/**
+ * @template Type
+ */
+interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+
+/**
+ * @template Type
+ */
+export interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+
+/**
+ * @template Type
+ */
+export default interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
 ````
 

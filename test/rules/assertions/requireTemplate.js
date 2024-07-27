@@ -171,6 +171,63 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         *
+         */
+        interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template Type',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        export interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template Type',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        export default interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template Type',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
   ],
   valid: [
     {
@@ -239,6 +296,45 @@ export default {
          * @property {V} bar
          */
       `,
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        export interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        export default interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
   ],
 };

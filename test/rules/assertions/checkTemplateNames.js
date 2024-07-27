@@ -158,6 +158,78 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         */
+        interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@template D not in use',
+        },
+        {
+          line: 4,
+          message: '@template V not in use',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         */
+        export interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@template D not in use',
+        },
+        {
+          line: 4,
+          message: '@template V not in use',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         */
+        export default interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@template D not in use',
+        },
+        {
+          line: 4,
+          message: '@template V not in use',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
   ],
   valid: [
     {
@@ -227,6 +299,45 @@ export default {
          * @property {V} bar
          */
       `,
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        export interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        /**
+         * @template Type
+         */
+        export default interface GenericIdentityFn<Type> {
+          (arg: Type): Type;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     },
   ],
 };
