@@ -371,12 +371,16 @@ index.configs['examples-and-default-expressions'] = /** @type {import('eslint').
     },
   },
   ...index.configs.examples.map((config) => {
-    delete config.plugins;
-    return config;
+    return {
+      ...config,
+      plugins: {}
+    };
   }),
   ...index.configs['default-expressions'].map((config) => {
-    delete config.plugins;
-    return config;
+    return {
+      ...config,
+      plugins: {}
+    };
   })
 ]);
 
