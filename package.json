@@ -91,9 +91,16 @@
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "exports": {
-    "types": "./dist/index.d.ts",
-    "import": "./src/index.js",
-    "require": "./dist/index.cjs"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./src/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./getJsdocProcessorPlugin.js": {
+      "types": "./dist/getJsdocProcessorPlugin.d.ts",
+      "import": "./dist/getJsdocProcessorPlugin.cjs",
+      "require": "./src/getJsdocProcessorPlugin.js"
+    }
   },
   "name": "eslint-plugin-jsdoc",
   "mocha": {

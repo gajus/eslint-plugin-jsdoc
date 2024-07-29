@@ -380,6 +380,4 @@ index.configs['examples-and-default-expressions'] = /** @type {import('eslint').
   })
 ]);
 
-export { getJsdocProcessorPlugin };
-
 export default index;
