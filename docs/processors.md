@@ -60,10 +60,10 @@ Alternatively you can just use our built-in configs which do the above for you:
 import jsdoc from 'eslint-plugin-jsdoc';
 
 export default [
-  ...index.configs.examples
+  ...jsdoc.configs.examples
 
   // Or for @default, @param and @property default expression processing
-  // ...index.configs['default-expressions']
+  // ...jsdoc.configs['default-expressions']
 
   // Or for both, use:
   // ...jsdoc.configs['examples-and-default-expressions'],
