@@ -20,63 +20,6 @@ export default iterateJsdoc(({
 
   const usedNames = new Set();
   /**
-   * @param {import('@typescript-eslint/types').TSESTree.FunctionDeclaration|
-   *   import('@typescript-eslint/types').TSESTree.ClassDeclaration|
-   *   import('@typescript-eslint/types').TSESTree.TSInterfaceDeclaration|
-   *   import('@typescript-eslint/types').TSESTree.TSTypeAliasDeclaration} aliasDeclaration
-   */
-  const checkParameters = (aliasDeclaration) => {
-    /* c8 ignore next -- Guard */
-    const {params} = aliasDeclaration.typeParameters ?? {params: []};
-    for (const {name: {name}} of params) {
-      usedNames.add(name);
-    }
-    for (const tag of templateTags) {
-      const {name} = tag;
-      const names = name.split(/,\s*/);
-      for (const name of names) {
-        if (!usedNames.has(name)) {
-          report(`@template ${name} not in use`, null, tag);
-        }
-      }
-    }
-  };
-
-  const handleTypeAliases = () => {
-    const nde = /** @type {import('@typescript-eslint/types').TSESTree.Node} */ (
-      node
-    );
-    if (!nde) {
-      return;
-    }
-    switch (nde.type) {
-    case 'ExportDefaultDeclaration':
-    case 'ExportNamedDeclaration':
-      switch (nde.declaration?.type) {
-        case 'ClassDeclaration':
-        case 'FunctionDeclaration':
-        case 'TSTypeAliasDeclaration':
-        case 'TSInterfaceDeclaration':
-          checkParameters(nde.declaration);
-          break;
-      }
-      break;
-    case 'ClassDeclaration':
-    case 'FunctionDeclaration':
-    case 'TSTypeAliasDeclaration':
-    case 'TSInterfaceDeclaration':
-      checkParameters(nde);
-      break;
-    }
-  };
-
-  const typedefTags = utils.getTags('typedef');
-  if (!typedefTags.length || typedefTags.length >= 2) {
-    handleTypeAliases();
-    return;
-  }
-
-  /**
    * @param {string} potentialType
    */
   const checkForUsedTypes = (potentialType) => {
@@ -100,13 +43,92 @@ export default iterateJsdoc(({
     });
   };
 
+  /**
+   * @param {import('@typescript-eslint/types').TSESTree.FunctionDeclaration|
+   *   import('@typescript-eslint/types').TSESTree.ClassDeclaration|
+   *   import('@typescript-eslint/types').TSESTree.TSInterfaceDeclaration|
+   *   import('@typescript-eslint/types').TSESTree.TSTypeAliasDeclaration} aliasDeclaration
+   * @param {boolean} [checkParamsAndReturns]
+   */
+  const checkParameters = (aliasDeclaration, checkParamsAndReturns) => {
+    /* c8 ignore next -- Guard */
+    const {params} = aliasDeclaration.typeParameters ?? {params: []};
+    for (const {name: {name}} of params) {
+      usedNames.add(name);
+    }
+    if (checkParamsAndReturns) {
+      const paramName = /** @type {string} */ (utils.getPreferredTagName({
+        tagName: 'param',
+      }));
+      const paramTags = utils.getTags(paramName);
+      for (const paramTag of paramTags) {
+        checkForUsedTypes(paramTag.type);
+      }
+
+      const returnsName = /** @type {string} */ (utils.getPreferredTagName({
+        tagName: 'returns',
+      }));
+      const returnsTags = utils.getTags(returnsName);
+      for (const returnsTag of returnsTags) {
+        checkForUsedTypes(returnsTag.type);
+      }
+    }
+    for (const tag of templateTags) {
+      const {name} = tag;
+      const names = name.split(/,\s*/);
+      for (const name of names) {
+        if (!usedNames.has(name)) {
+          report(`@template ${name} not in use`, null, tag);
+        }
+      }
+    }
+  };
+
+  const handleTypeAliases = () => {
+    const nde = /** @type {import('@typescript-eslint/types').TSESTree.Node} */ (
+      node
+    );
+    if (!nde) {
+      return;
+    }
+    switch (nde.type) {
+    case 'ExportDefaultDeclaration':
+    case 'ExportNamedDeclaration':
+      switch (nde.declaration?.type) {
+        case 'FunctionDeclaration':
+          checkParameters(nde.declaration, true);
+          break;
+        case 'ClassDeclaration':
+        case 'TSTypeAliasDeclaration':
+        case 'TSInterfaceDeclaration':
+          checkParameters(nde.declaration);
+          break;
+      }
+      break;
+    case 'FunctionDeclaration':
+      checkParameters(nde, true);
+      break;
+    case 'ClassDeclaration':
+    case 'TSTypeAliasDeclaration':
+    case 'TSInterfaceDeclaration':
+      checkParameters(nde);
+      break;
+    }
+  };
+
+  const typedefTags = utils.getTags('typedef');
+  if (!typedefTags.length || typedefTags.length >= 2) {
+    handleTypeAliases();
+    return;
+  }
+
   const potentialTypedefType = typedefTags[0].type;
   checkForUsedTypes(potentialTypedefType);
 
-  const tagName = /** @type {string} */ (utils.getPreferredTagName({
+  const propertyName = /** @type {string} */ (utils.getPreferredTagName({
     tagName: 'property',
   }));
-  const propertyTags = utils.getTags(tagName);
+  const propertyTags = utils.getTags(propertyName);
   for (const propertyTag of propertyTags) {
     checkForUsedTypes(propertyTag.type);
   }

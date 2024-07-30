@@ -606,5 +606,23 @@ export default {
         parser: typescriptEslintParser
       },
     },
+    {
+      code: `
+        /**
+         * Uses the provided callback to group the given array into the keys of a map.
+         * Based on the array grouping proposal: https://github.com/tc39/proposal-array-grouping/
+         *
+         * @template T
+         * @param {T[]} array
+         * @param {(value: T, index: number) => string} callbackFn
+         * @returns {Map<string, T[]>}
+         */
+        export function mapGroupBy(array, callbackFn) {
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
   ],
 };
