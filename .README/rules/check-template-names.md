@@ -1,7 +1,7 @@
 # `check-template-names`
 
 Checks that any `@template` names are actually used in the connected
-`@typedef` or type alias.
+`@typedef`, `@callback`, `@function` or type structure.
 
 Currently checks `ClassDeclaration`, `FunctionDeclaration`,
 `TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:

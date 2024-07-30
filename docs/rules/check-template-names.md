@@ -3,7 +3,7 @@
 # <code>check-template-names</code>
 
 Checks that any `@template` names are actually used in the connected
-`@typedef` or type alias.
+`@typedef`, `@callback`, `@function` or type structure.
 
 Currently checks `ClassDeclaration`, `FunctionDeclaration`,
 `TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
@@ -190,6 +190,30 @@ export default class <NumType> {
   add: (x: NumType, y: NumType) => NumType;
 }
 // Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ * @callback
+ * @returns {[X, Y | undefined]}
+ */
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ * @function
+ * @returns {[X, Y | undefined]}
+ */
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ * @function
+ * @param {[X, Y | undefined]} someParam
+ */
+// Message: @template D not in use
 ````
 
 
@@ -327,5 +351,26 @@ export default class <NumType> {
  */
 export function mapGroupBy(array, callbackFn) {
 }
+
+/**
+ * @template D
+ * @template V
+ * @callback
+ * @returns {[D, V | undefined]}
+ */
+
+/**
+ * @template D
+ * @template V
+ * @function
+ * @returns {[D, V | undefined]}
+ */
+
+/**
+ * @template D
+ * @template V
+ * @function
+ * @param {[D, V | undefined]} someParam
+ */
 ````
 
