@@ -20,8 +20,8 @@ or
 
 Note that in the latter TypeScript-flavor JavaScript example, there is no way
 for us to firmly distinguish between `D` and `V` as type parameters or as some
-other identifiers, so we use an algorithm that any single capital letters
-are assumed to be templates.
+other identifiers, so we use an algorithm that assumes that any single capital
+letters are templates.
 
 ## Options
 

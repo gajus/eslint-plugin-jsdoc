@@ -365,6 +365,42 @@ export default {
         parser: typescriptEslintParser
       },
     },
+    {
+      code: `
+        /**
+         * @callback
+         * @param {[D, V | undefined]} someParam
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing @template D',
+        },
+        {
+          line: 4,
+          message: 'Missing @template V',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @callback
+         * @returns {[D, V | undefined]}
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Missing @template D',
+        },
+        {
+          line: 4,
+          message: 'Missing @template V',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -567,6 +603,34 @@ export default {
       languageOptions: {
         parser: typescriptEslintParser
       },
+    },
+    {
+      code: `
+        /**
+         * @callback
+         * @template D
+         * @template V
+         * @param {[D, V | undefined]} someParam
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @callback
+         * @template D
+         * @template V
+         * @returns {[D, V | undefined]}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @callback
+         * @returns {[Something | undefined]}
+         */
+      `,
     },
   ],
 };

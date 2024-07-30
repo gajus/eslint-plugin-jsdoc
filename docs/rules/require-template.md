@@ -22,8 +22,8 @@ or
 
 Note that in the latter TypeScript-flavor JavaScript example, there is no way
 for us to firmly distinguish between `D` and `V` as type parameters or as some
-other identifiers, so we use an algorithm that any single capital letters
-are assumed to be templates.
+other identifiers, so we use an algorithm that assumes that any single capital
+letters are templates.
 
 <a name="user-content-require-template-options"></a>
 <a name="require-template-options"></a>
@@ -199,6 +199,18 @@ export default class <NumType> {
   add: (x: NumType, y: NumType) => NumType;
 }
 // Message: Missing @template NumType
+
+/**
+ * @callback
+ * @param {[D, V | undefined]} someParam
+ */
+// Message: Missing @template D
+
+/**
+ * @callback
+ * @returns {[D, V | undefined]}
+ */
+// Message: Missing @template D
 ````
 
 
@@ -323,5 +335,24 @@ export default class <NumType> {
   zeroValue: NumType;
   add: (x: NumType, y: NumType) => NumType;
 }
+
+/**
+ * @callback
+ * @template D
+ * @template V
+ * @param {[D, V | undefined]} someParam
+ */
+
+/**
+ * @callback
+ * @template D
+ * @template V
+ * @returns {[D, V | undefined]}
+ */
+
+/**
+ * @callback
+ * @returns {[Something | undefined]}
+ */
 ````
 

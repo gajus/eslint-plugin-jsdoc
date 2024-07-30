@@ -89,12 +89,6 @@ export default iterateJsdoc(({
     }
   };
 
-  const typedefTags = utils.getTags('typedef');
-  if (!typedefTags.length || typedefTags.length >= 2) {
-    handleTypes();
-    return;
-  }
-
   const usedNameToTag = new Map();
 
   /**
@@ -124,23 +118,45 @@ export default iterateJsdoc(({
     });
   };
 
+  /**
+   * @param {string[]} tagNames
+   */
+  const checkTagsAndTemplates = (tagNames) => {
+    for (const tagName of tagNames) {
+      const preferredTagName = /** @type {string} */ (utils.getPreferredTagName({
+        tagName,
+      }));
+      const matchingTags = utils.getTags(preferredTagName);
+      for (const matchingTag of matchingTags) {
+        checkForUsedTypes(matchingTag);
+      }
+    }
+
+    // Could check against whitelist/blacklist
+    for (const usedName of usedNames) {
+      if (!templateNames.includes(usedName)) {
+        report(`Missing @template ${usedName}`, null, usedNameToTag.get(usedName));
+      }
+    }
+  };
+
+  const callbackTags = utils.getTags('callback');
+  const functionTags = utils.getTags('function');
+  if (callbackTags.length || functionTags.length) {
+    checkTagsAndTemplates(['param', 'returns']);
+    return;
+  }
+
+  const typedefTags = utils.getTags('typedef');
+  if (!typedefTags.length || typedefTags.length >= 2) {
+    handleTypes();
+    return;
+  }
+
   const potentialTypedef = typedefTags[0];
   checkForUsedTypes(potentialTypedef);
 
-  const tagName = /** @type {string} */ (utils.getPreferredTagName({
-    tagName: 'property',
-  }));
-  const propertyTags = utils.getTags(tagName);
-  for (const propertyTag of propertyTags) {
-    checkForUsedTypes(propertyTag);
-  }
-
-  // Could check against whitelist/blacklist
-  for (const usedName of usedNames) {
-    if (!templateNames.includes(usedName)) {
-      report(`Missing @template ${usedName}`, null, usedNameToTag.get(usedName));
-    }
-  }
+  checkTagsAndTemplates(['property']);
 }, {
   iterateAllJsdocs: true,
   meta: {
