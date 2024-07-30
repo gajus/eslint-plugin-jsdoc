@@ -402,6 +402,66 @@ export default {
         parser: typescriptEslintParser
       },
     },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         * @callback
+         * @returns {[X, Y | undefined]}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@template D not in use',
+        },
+        {
+          line: 4,
+          message: '@template V not in use',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         * @function
+         * @returns {[X, Y | undefined]}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@template D not in use',
+        },
+        {
+          line: 4,
+          message: '@template V not in use',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         * @function
+         * @param {[X, Y | undefined]} someParam
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@template D not in use',
+        },
+        {
+          line: 4,
+          message: '@template V not in use',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -623,6 +683,36 @@ export default {
       languageOptions: {
         parser: typescriptEslintParser
       },
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         * @callback
+         * @returns {[D, V | undefined]}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         * @function
+         * @returns {[D, V | undefined]}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template D
+         * @template V
+         * @function
+         * @param {[D, V | undefined]} someParam
+         */
+      `,
     },
   ],
 };

@@ -43,6 +43,36 @@ export default iterateJsdoc(({
     });
   };
 
+  const checkParamsAndReturnsTags = () => {
+    const paramName = /** @type {string} */ (utils.getPreferredTagName({
+      tagName: 'param',
+    }));
+    const paramTags = utils.getTags(paramName);
+    for (const paramTag of paramTags) {
+      checkForUsedTypes(paramTag.type);
+    }
+
+    const returnsName = /** @type {string} */ (utils.getPreferredTagName({
+      tagName: 'returns',
+    }));
+    const returnsTags = utils.getTags(returnsName);
+    for (const returnsTag of returnsTags) {
+      checkForUsedTypes(returnsTag.type);
+    }
+  };
+
+  const checkTemplateTags = () => {
+    for (const tag of templateTags) {
+      const {name} = tag;
+      const names = name.split(/,\s*/);
+      for (const name of names) {
+        if (!usedNames.has(name)) {
+          report(`@template ${name} not in use`, null, tag);
+        }
+      }
+    }
+  };
+
   /**
    * @param {import('@typescript-eslint/types').TSESTree.FunctionDeclaration|
    *   import('@typescript-eslint/types').TSESTree.ClassDeclaration|
@@ -57,31 +87,10 @@ export default iterateJsdoc(({
       usedNames.add(name);
     }
     if (checkParamsAndReturns) {
-      const paramName = /** @type {string} */ (utils.getPreferredTagName({
-        tagName: 'param',
-      }));
-      const paramTags = utils.getTags(paramName);
-      for (const paramTag of paramTags) {
-        checkForUsedTypes(paramTag.type);
-      }
+      checkParamsAndReturnsTags();
+    }
 
-      const returnsName = /** @type {string} */ (utils.getPreferredTagName({
-        tagName: 'returns',
-      }));
-      const returnsTags = utils.getTags(returnsName);
-      for (const returnsTag of returnsTags) {
-        checkForUsedTypes(returnsTag.type);
-      }
-    }
-    for (const tag of templateTags) {
-      const {name} = tag;
-      const names = name.split(/,\s*/);
-      for (const name of names) {
-        if (!usedNames.has(name)) {
-          report(`@template ${name} not in use`, null, tag);
-        }
-      }
-    }
+    checkTemplateTags();
   };
 
   const handleTypeAliases = () => {
@@ -115,6 +124,14 @@ export default iterateJsdoc(({
       break;
     }
   };
+
+  const callbackTags = utils.getTags('callback');
+  const functionTags = utils.getTags('function');
+  if (callbackTags.length || functionTags.length) {
+    checkParamsAndReturnsTags();
+    checkTemplateTags();
+    return;
+  }
 
   const typedefTags = utils.getTags('typedef');
   if (!typedefTags.length || typedefTags.length >= 2) {
