@@ -1,6 +1,8 @@
 // Todo: Support TS by fenced block type
 
-import {readFileSync} from 'fs';
+import {readFileSync} from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import * as espree from 'espree';
 import {
   getRegexFromString,
@@ -13,9 +15,11 @@ import {
   parseComment,
 } from '@es-joy/jsdoccomment';
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 const {version} = JSON.parse(
   // @ts-expect-error `Buffer` is ok for `JSON.parse`
-  readFileSync('./package.json')
+  readFileSync(join(__dirname, '../package.json'))
 );
 
 // const zeroBasedLineIndexAdjust = -1;
