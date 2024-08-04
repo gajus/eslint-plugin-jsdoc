@@ -16,6 +16,7 @@
   "implements-on-classes",
   "imports-as-dependencies",
   "informative-docs",
+  "lines-before-block",
   "match-description",
   "match-name",
   "multiline-blocks",
