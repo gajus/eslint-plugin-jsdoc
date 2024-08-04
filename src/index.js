@@ -15,6 +15,7 @@ import emptyTags from './rules/emptyTags.js';
 import implementsOnClasses from './rules/implementsOnClasses.js';
 import importsAsDependencies from './rules/importsAsDependencies.js';
 import informativeDocs from './rules/informativeDocs.js';
+import linesBeforeBlock from './rules/linesBeforeBlock.js';
 import matchDescription from './rules/matchDescription.js';
 import matchName from './rules/matchName.js';
 import multilineBlocks from './rules/multilineBlocks.js';
@@ -92,6 +93,7 @@ const index = {
     'implements-on-classes': implementsOnClasses,
     'imports-as-dependencies': importsAsDependencies,
     'informative-docs': informativeDocs,
+    'lines-before-block': linesBeforeBlock,
     'match-description': matchDescription,
     'match-name': matchName,
     'multiline-blocks': multilineBlocks,
@@ -167,6 +169,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/implements-on-classes': warnOrError,
       'jsdoc/imports-as-dependencies': 'off',
       'jsdoc/informative-docs': 'off',
+      'jsdoc/lines-before-block': warnOrError,
       'jsdoc/match-description': 'off',
       'jsdoc/match-name': 'off',
       'jsdoc/multiline-blocks': warnOrError,
