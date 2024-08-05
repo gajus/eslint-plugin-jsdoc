@@ -72,7 +72,7 @@ report a padding issue:
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**  foo */
 function quux () {
 
@@ -188,7 +188,7 @@ function quux () {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * foo
  *

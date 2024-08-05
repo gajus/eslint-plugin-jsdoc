@@ -141,7 +141,7 @@ Whether to avoid checks for missing `@param` definitions. Defaults to `false`. C
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @param Foo
  */
@@ -691,7 +691,7 @@ export function fn(...[type, arg]: FnArgs): void {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  *
  */

@@ -39,7 +39,7 @@ Whether or not to auto-remove the blank block. Defaults to `false`.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /** */
 // "jsdoc/no-blank-blocks": ["error"|"warn", {"enableFixer":true}]
 // Message: No empty blocks
@@ -84,7 +84,7 @@ The following patterns are considered problems:
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /** @tag */
 
 /**

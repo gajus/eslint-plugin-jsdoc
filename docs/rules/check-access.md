@@ -36,7 +36,7 @@ Also reports:
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @access foo
  */
@@ -145,7 +145,7 @@ function quux (foo) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  *
  */

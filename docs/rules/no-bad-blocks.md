@@ -57,7 +57,7 @@ apparent tag content.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /*
  * @param foo
  */
@@ -117,7 +117,7 @@ function quux (foo) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @property foo
  */

@@ -128,7 +128,7 @@ cannot be reliably added after the tag either).
 
 The following patterns are considered problems:
 
-````js
+````ts
 /** Reported up here
  * because the rest is multiline
  */
@@ -293,7 +293,7 @@ The following patterns are considered problems:
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /** Not reported */
 
 /**

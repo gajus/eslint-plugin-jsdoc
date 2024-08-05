@@ -52,7 +52,7 @@ be removed even if it has a different type or description).
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @typedef (SomeType) SomeTypedef
  * @property Foo.Bar
@@ -175,7 +175,7 @@ function quux ({foo, bar}, baz) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  *
  */

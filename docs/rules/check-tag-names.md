@@ -322,7 +322,7 @@ this
 
 The following patterns are considered problems:
 
-````js
+````ts
 /** @type {string} */let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 // Message: '@type' is redundant when using a type system.
@@ -775,7 +775,7 @@ function quux () {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /** @default 0 */
 let a;
 // "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]

@@ -26,7 +26,7 @@ Requires that each `@property` tag has a type value (within curly brackets).
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @typedef {SomeType} SomeTypedef
  * @property foo
@@ -56,7 +56,7 @@ The following patterns are considered problems:
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @typedef {SomeType} SomeTypedef
  */

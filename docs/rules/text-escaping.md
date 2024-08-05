@@ -60,7 +60,7 @@ This option escapes the first backtick (`` ` ``) in a paired sequence.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * Some things to escape: <a> and &gt; and `test`
  */
@@ -127,7 +127,7 @@ The following patterns are considered problems:
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * Some things to escape: &lt;a> and &gt; and `test`
  */

@@ -98,7 +98,7 @@ will be checked, but you must use `file` on the configuration object).
 
 The following patterns are considered problems:
 
-````js
+````ts
 
 // Message: Missing @file
 
@@ -246,7 +246,7 @@ function quux () {}
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @file
  */

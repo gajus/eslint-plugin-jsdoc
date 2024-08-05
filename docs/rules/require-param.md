@@ -456,7 +456,7 @@ supplied as default values. Defaults to `false`.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  *
  */
@@ -1172,7 +1172,7 @@ class A {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @param foo
  */

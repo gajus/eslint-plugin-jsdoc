@@ -97,7 +97,7 @@ Disables `wrapIndent`; existing wrap indentation is preserved without changes.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * Function description.
  *
@@ -582,7 +582,7 @@ function quux () {}
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * Function description.
  *

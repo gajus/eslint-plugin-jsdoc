@@ -180,9 +180,9 @@ const generateDocs = async () => {
         }
 
         return passingFailing === 'failing' ?
-          'The following patterns are considered problems:\n\n````js\n' +
+          'The following patterns are considered problems:\n\n````ts\n' +
             ruleAssertions.invalid.join('\n\n') + '\n````\n\n' :
-          'The following patterns are not considered problems:\n\n````js\n' +
+          'The following patterns are not considered problems:\n\n````ts\n' +
             ruleAssertions.valid.join('\n\n') + '\n````\n';
       },
     // Allow relative paths in source for #902 but generate compiled file in

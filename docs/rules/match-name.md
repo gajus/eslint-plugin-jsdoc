@@ -82,7 +82,7 @@ be applied, however.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @param opt_a
  * @param opt_b
@@ -194,7 +194,7 @@ function quux () {}
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @param opt_a
  * @param opt_b

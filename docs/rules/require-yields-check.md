@@ -62,7 +62,7 @@ Will also report if multiple `@yields` tags are present.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @yields
  */
@@ -221,7 +221,7 @@ function * quux (foo) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @yields Foo.
  */

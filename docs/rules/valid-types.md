@@ -120,7 +120,7 @@ value). See the setting for more details.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @param {Array<string} foo
  */
@@ -505,7 +505,7 @@ function quux (items) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @param {Array<string>} foo
  */

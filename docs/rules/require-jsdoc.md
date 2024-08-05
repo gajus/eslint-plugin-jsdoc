@@ -174,7 +174,7 @@ empty string.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /** This is comment */
 export interface Foo {
   /** This is comment x2 */
@@ -1030,7 +1030,7 @@ export type LoginOptions = CmdOptions<{
 
 The following patterns are not considered problems:
 
-````js
+````ts
 interface FooBar {
   fooBar: string;
 }

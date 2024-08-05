@@ -56,7 +56,7 @@ other tags besides the `@param` tag (or the `@arg` tag if so set):
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @param foo Foo.
  */
@@ -203,7 +203,7 @@ function quux () {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @param foo - Foo.
  */

@@ -107,7 +107,7 @@ Defaults to `true`.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  *
  */
@@ -244,7 +244,7 @@ function quux (someParam) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  *
  */

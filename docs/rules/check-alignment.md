@@ -32,7 +32,7 @@ Fixes alignment.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
   * @param {Number} foo
  */
@@ -120,7 +120,7 @@ class Foo {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * Desc
  *

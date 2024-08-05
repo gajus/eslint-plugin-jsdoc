@@ -102,7 +102,7 @@ The default `uselessWords` option is:
 
 The following patterns are considered problems:
 
-````js
+````ts
 /** the  */
 let myValue = 3;
 // Message: This description only repeats the name it describes.
@@ -300,7 +300,7 @@ export default function packageNameFromPath(path) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**   */
 let myValue = 3;
 
