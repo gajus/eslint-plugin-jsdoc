@@ -40,7 +40,7 @@ or
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @template D
  * @template V
@@ -224,7 +224,7 @@ export default class <NumType> {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @template D
  * @template V
