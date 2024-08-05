@@ -76,7 +76,7 @@ Prevent the likes of this:
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  *
  **
@@ -182,7 +182,7 @@ The following patterns are considered problems:
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  *
  * Desc. ***

@@ -75,7 +75,7 @@ add them within this option.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @abstract extra text
  */
@@ -153,7 +153,7 @@ function quux () {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @abstract
  */

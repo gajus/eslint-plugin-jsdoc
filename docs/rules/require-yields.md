@@ -84,7 +84,7 @@ option to expect a non-standard `@next` tag.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  *
  */
@@ -486,7 +486,7 @@ function * quux () {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @yields Foo.
  */

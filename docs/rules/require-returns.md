@@ -73,7 +73,7 @@ Will also report if multiple `@returns` tags are present.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  *
  */
@@ -723,7 +723,7 @@ window.quux = function quux (foo) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @returns Foo.
  */

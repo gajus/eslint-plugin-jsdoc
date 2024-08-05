@@ -73,7 +73,7 @@ section of our README for more on the expected format.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @param foo
  */
@@ -174,7 +174,7 @@ function quux (foo, {bar}, baz) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  *
  */

@@ -192,7 +192,7 @@ permitted.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @param {abc} foo
  */
@@ -856,7 +856,7 @@ function a () {}
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @param {number} foo
  * @param {Bar} bar

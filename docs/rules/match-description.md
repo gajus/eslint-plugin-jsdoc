@@ -216,7 +216,7 @@ section of our README for more on the expected format.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * foo.
  */
@@ -633,7 +633,7 @@ function quux () {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  *
  */

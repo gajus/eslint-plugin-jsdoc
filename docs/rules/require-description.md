@@ -62,7 +62,7 @@ An options object may have any of the following properties:
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  *
  */
@@ -360,7 +360,7 @@ this.treeViewSelection = [];
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  *
  */

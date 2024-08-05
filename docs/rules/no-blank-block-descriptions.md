@@ -34,7 +34,7 @@ in the block description.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  *
  * @param {number} x
@@ -58,7 +58,7 @@ function functionWithClearName() {}
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * Non-empty description
  * @param {number} x

@@ -58,7 +58,7 @@ Defaults to `false`.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  *
  */
@@ -221,7 +221,7 @@ export default class <NumType> {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @template D
  * @template V

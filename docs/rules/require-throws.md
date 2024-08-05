@@ -58,7 +58,7 @@ on why TypeScript doesn't offer such a feature.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  *
  */
@@ -249,7 +249,7 @@ function quux (foo) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @throws An error.
  */

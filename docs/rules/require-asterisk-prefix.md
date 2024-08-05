@@ -61,7 +61,7 @@ which applies to the main jsdoc block description.
 
 The following patterns are considered problems:
 
-````js
+````ts
 
 /**
  @param {Number} foo
@@ -186,7 +186,7 @@ function quux (foo) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * Desc
  *

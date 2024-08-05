@@ -19,7 +19,7 @@ which is not listed in `dependencies` or `devDependencies`.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @type {null|import('sth').SomeApi}
  */
@@ -50,7 +50,7 @@ The following patterns are considered problems:
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @type {null|import('eslint').ESLint}
  */

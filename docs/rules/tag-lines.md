@@ -102,7 +102,7 @@ following keys:
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * Some description
  * @param {string} a
@@ -315,7 +315,7 @@ The following patterns are considered problems:
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * Some description
  * @param {string} a

@@ -26,7 +26,7 @@ Requires that all `@property` tags have names.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @typedef {SomeType} SomeTypedef
  * @property
@@ -55,7 +55,7 @@ The following patterns are considered problems:
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @typedef {SomeType} SomeTypedef
  * @property foo

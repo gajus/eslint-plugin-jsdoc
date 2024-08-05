@@ -281,7 +281,7 @@ such tags. Do not use with `true` if you are using `tag-lines` and `always`.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @returns {string}
  * @param b
@@ -529,7 +529,7 @@ function quux () {}
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @param b
  * @param a

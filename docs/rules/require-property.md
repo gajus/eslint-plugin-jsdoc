@@ -36,7 +36,7 @@ The fixer for `require-property` will add an empty `@property`.
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @typedef {object} SomeTypedef
  */
@@ -70,7 +70,7 @@ class Test {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  *
  */

@@ -220,7 +220,7 @@ expression-oriented rules will be used by default as well:
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @example alert('hello')
  */
@@ -563,7 +563,7 @@ const functionName = function (paramOne, paramTwo,
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @example ```js
  alert('hello');

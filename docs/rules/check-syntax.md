@@ -36,7 +36,7 @@ rule is enforced (except under "permissive" and "closure" modes).
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @param {string=} foo
  */
@@ -54,7 +54,7 @@ function quux (foo) {
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @param {string=} foo
  */

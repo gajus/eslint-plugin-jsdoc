@@ -100,7 +100,7 @@ Defaults to `VariableDeclarator`, `TSPropertySignature`, `PropertyDefinition`.
 
 The following patterns are considered problems:
 
-````js
+````ts
 // A single line comment
 function quux () {}
 // "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
@@ -211,7 +211,7 @@ var a = []; // Test comment
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /** A single line comment */
 function quux () {}
 // "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]

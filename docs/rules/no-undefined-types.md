@@ -89,7 +89,7 @@ An option object may have the following keys:
 
 The following patterns are considered problems:
 
-````js
+````ts
 /**
  * @param {HerType} baz - Foo.
  */
@@ -347,7 +347,7 @@ const a = new Todo();
 
 The following patterns are not considered problems:
 
-````js
+````ts
 /**
  * @param {string} foo - Bar.
  */
