@@ -164,7 +164,7 @@ export default iterateJsdoc(({
   meta: {
     docs: {
       description: 'Checks that any `@template` names are actually used in the connected `@typedef` or type alias.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-template.md#repos-sticky-header',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-template-names.md#repos-sticky-header',
     },
     schema: [],
     type: 'suggestion',
