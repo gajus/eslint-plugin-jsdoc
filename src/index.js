@@ -169,7 +169,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/implements-on-classes': warnOrError,
       'jsdoc/imports-as-dependencies': 'off',
       'jsdoc/informative-docs': 'off',
-      'jsdoc/lines-before-block': warnOrError,
+      'jsdoc/lines-before-block': 'off',
       'jsdoc/match-description': 'off',
       'jsdoc/match-name': 'off',
       'jsdoc/multiline-blocks': warnOrError,
