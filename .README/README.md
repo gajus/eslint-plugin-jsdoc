@@ -50,6 +50,38 @@ const config = [
 export default config;
 ```
 
+The general starting rulesets you can extend from in flat config are:
+
+* `jsdoc.configs['flat/recommended']`: Recommended starting rules for enforcing proper tag values, that common tags exist, and that tags are formatted and styled consistently
+  * `jsdoc.configs['flat/recommended-error']`: The same, reporting with failing errors instead of mere warnings
+* `jsdoc.configs['flat/recommended-typescript']`: A similar recommended starting list, adjusted for projects using TypeScript syntax (and not just "typescript" `mode`)
+  * `jsdoc.configs['flat/recommended-typescript-error']`: The same, reporting with failing errors instead of mere warnings
+* `jsdoc.configs['flat/recommended-typescript-flavor']`: A similar recommended starting list, adjusted for projects using JavaScript syntax (source files that are still `.js`) but using TypeScript flavor within JSDoc (i.e., the default "typescript" `mode` in `eslint-plugin-jsdoc`)
+  * `jsdoc.configs['flat/recommended-typescript-flavor-error']`: The same, reporting with failing errors instead of mere warnings
+
+#### Granular Flat Configs
+
+There also exist several more granular, standalone TypeScript rulesets you can extend from.
+These each only enable a subset of the recommended starting rules:
+
+* `jsdoc.configs['flat/logical-typescript']`: Includes only the rules that enforce proper tag values
+  * `jsdoc.configs['flat/logical-typescript-error']`: The same, reporting with failing errors instead of mere warnings
+* `jsdoc.configs['flat/requirements-typescript']`: Includes only the rules that enforce tags exist
+  * `jsdoc.configs['flat/requirements-typescript-error']`: The same, reporting with failing errors instead of mere warnings
+* `jsdoc.configs['flat/stylistic-typescript']`: Includes only the rules that enforce clear, consistent tag formatting and styles
+  * `jsdoc.configs['flat/stylistic-typescript-error']`: The same, reporting with failing errors instead of mere warnings
+
+For example, to enforce only that any JSDoc tags are valid and styled consistently, without enforcing that they must always exist:
+
+```js
+import jsdoc from 'eslint-plugin-jsdoc';
+
+export default [
+  jsdoc.configs['flat/logical-typescript-error'],
+  jsdoc.configs['flat/stylistic-typescript-error'],
+];
+```
+
 ### `eslintrc`
 
 Add `plugins` section to [.eslintrc.*](https://eslint.org/docs/user-guide/configuring#configuration-file-formats)
