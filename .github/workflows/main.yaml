@@ -1,8 +1,20 @@
+name: Build and release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  # Grant Permissions to the GH Token to capture attestation information from the GH agent
+  id-token: write
+
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
     environment: release
-    name: Release
+    
     steps:
       - uses: pnpm/action-setup@v4
         with:
@@ -21,8 +33,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-name: Build and release
-on:
-  push:
-    branches:
-      - main
+          NPM_CONFIG_PROVENANCE: true
+
