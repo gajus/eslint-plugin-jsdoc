@@ -31,6 +31,16 @@ export default iterateJsdoc(({
     allComments
   ).filter((comment) => {
     const commentText = sourceCode.getText(comment);
+
+    const initialText = commentText.replace(commentRegexp, '').trimStart();
+    if ([
+      'eslint'
+    ].some((directive) => {
+      return initialText.startsWith(directive);
+    })) {
+      return false;
+    }
+
     let sliceIndex = 2;
     if (!commentRegexp.test(commentText)) {
       const multiline = extraAsteriskCommentRegexp.exec(commentText)?.[0];
