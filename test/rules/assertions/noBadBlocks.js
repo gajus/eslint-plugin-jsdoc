@@ -250,5 +250,15 @@ export default {
     {
       code: '/***/',
     },
+    {
+      code: '/* eslint-disable @stylistic/max-len  */',
+      plugins: {
+        '@stylistic': {
+          rules: {
+            'max-len': () => {}
+          }
+        }
+      },
+    },
   ],
 };
