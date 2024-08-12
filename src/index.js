@@ -261,7 +261,7 @@ const createRecommendedTypeScriptFlavorRuleset = (warnOrError, flatName) => {
 };
 
 /**
- * @param {string[]} ruleNames
+ * @param {(string | unknown[])[]} ruleNames
  */
 const createStandaloneRulesetFactory = (ruleNames) => {
   /**
@@ -273,15 +273,36 @@ const createStandaloneRulesetFactory = (ruleNames) => {
     return {
       name: 'jsdoc/' + flatName,
       plugins: { jsdoc: index },
-      rules: Object.fromEntries(ruleNames.map(ruleName => [ruleName, warnOrError])),
+      rules: Object.fromEntries(
+        ruleNames.map(
+          ruleName =>
+            typeof ruleName === "string"
+              ? [ruleName, warnOrError]
+              : [ruleName[0], warnOrError, ...ruleName.slice(1)]
+        )
+      ),
     };
   };
 }
 
-const createLogicalTypescriptRuleset = createStandaloneRulesetFactory([
+const contentsRules = [
+  'jsdoc/informative-docs',
+  'jsdoc/match-description',
+  'jsdoc/match-name',
+  'jsdoc/no-blank-block-descriptions',
+  'jsdoc/no-blank-blocks',
+  ['jsdoc/text-escaping', { escapeHTML: true }]
+]
+
+const createContentsTypescriptRuleset = createStandaloneRulesetFactory(contentsRules);
+
+const createContentsTypescriptFlavorRuleset = createStandaloneRulesetFactory(contentsRules);
+
+const logicalRules = [
   'jsdoc/check-access',
   'jsdoc/check-param-names',
   'jsdoc/check-property-names',
+  'jsdoc/check-syntax',
   'jsdoc/check-tag-names',
   'jsdoc/check-template-names',
   'jsdoc/check-types',
@@ -290,13 +311,18 @@ const createLogicalTypescriptRuleset = createStandaloneRulesetFactory([
   'jsdoc/implements-on-classes',
   'jsdoc/require-returns-check',
   'jsdoc/require-yields-check',
+  'jsdoc/no-bad-blocks',
   'jsdoc/no-defaults',
   'jsdoc/no-types',
   'jsdoc/no-undefined-types',
   'jsdoc/valid-types',
-]);
+];
 
-const createRequirementsTypeScriptRuleset = createStandaloneRulesetFactory([
+const createLogicalTypescriptRuleset = createStandaloneRulesetFactory(logicalRules);
+
+const createLogicalTypescriptFlavorRuleset = createStandaloneRulesetFactory(logicalRules);
+
+const requirementsRules = [
   'jsdoc/require-example',
   'jsdoc/require-jsdoc',
   'jsdoc/require-param',
@@ -308,15 +334,32 @@ const createRequirementsTypeScriptRuleset = createStandaloneRulesetFactory([
   'jsdoc/require-returns',
   'jsdoc/require-returns-description',
   'jsdoc/require-yields',
+];
+
+const createRequirementsTypeScriptRuleset = createStandaloneRulesetFactory(requirementsRules);
+
+const createRequirementsTypeScriptFlavorRuleset = createStandaloneRulesetFactory([
+  ...requirementsRules,
+  'jsdoc/require-param-type',
+  'jsdoc/require-property-type',
+  'jsdoc/require-returns-type',
+  'jsdoc/require-template',
 ]);
 
-const createStylisticTypeScriptRuleset = createStandaloneRulesetFactory([
+const stylisticRules = [
   'jsdoc/check-alignment',
+  'jsdoc/check-line-alignment',
   'jsdoc/lines-before-block',
   'jsdoc/multiline-blocks',
   'jsdoc/no-multi-asterisks',
+  'jsdoc/require-asterisk-prefix',
+  ['jsdoc/require-hyphen-before-param-description', 'never'],
   'jsdoc/tag-lines',
-]);
+];
+
+const createStylisticTypeScriptRuleset = createStandaloneRulesetFactory(stylisticRules);
+
+const createStylisticTypeScriptFlavorRuleset = createStandaloneRulesetFactory(stylisticRules);
 
 /* c8 ignore next 3 -- TS */
 if (!index.configs) {
@@ -337,12 +380,22 @@ index.configs['flat/recommended-typescript-error'] = createRecommendedTypeScript
 index.configs['flat/recommended-typescript-flavor'] = createRecommendedTypeScriptFlavorRuleset('warn', 'flat/recommended-typescript-flavor');
 index.configs['flat/recommended-typescript-flavor-error'] = createRecommendedTypeScriptFlavorRuleset('error', 'flat/recommended-typescript-flavor-error');
 
+index.configs['flat/contents-typescript'] = createContentsTypescriptRuleset('warn', 'flat/contents-typescript');
+index.configs['flat/contents-typescript-error'] = createContentsTypescriptRuleset('error', 'flat/contents-typescript-error');
+index.configs['flat/contents-typescript-flavor'] = createContentsTypescriptFlavorRuleset('warn', 'flat/contents-typescript-flavor');
+index.configs['flat/contents-typescript-flavor-error'] = createContentsTypescriptFlavorRuleset('error', 'flat/contents-typescript-error-flavor');
 index.configs['flat/logical-typescript'] = createLogicalTypescriptRuleset('warn', 'flat/logical-typescript');
 index.configs['flat/logical-typescript-error'] = createLogicalTypescriptRuleset('error', 'flat/logical-typescript-error');
+index.configs['flat/logical-typescript-flavor'] = createLogicalTypescriptFlavorRuleset('warn', 'flat/logical-typescript-flavor');
+index.configs['flat/logical-typescript-flavor-error'] = createLogicalTypescriptFlavorRuleset('error', 'flat/logical-typescript-error-flavor');
 index.configs['flat/requirements-typescript'] = createRequirementsTypeScriptRuleset('warn', 'flat/requirements-typescript');
 index.configs['flat/requirements-typescript-error'] = createRequirementsTypeScriptRuleset('error', 'flat/requirements-typescript-error');
+index.configs['flat/requirements-typescript-flavor'] = createRequirementsTypeScriptFlavorRuleset('warn', 'flat/requirements-typescript-flavor');
+index.configs['flat/requirements-typescript-flavor-error'] = createRequirementsTypeScriptFlavorRuleset('error', 'flat/requirements-typescript-error-flavor');
 index.configs['flat/stylistic-typescript'] = createStylisticTypeScriptRuleset('warn', 'flat/stylistic-typescript');
 index.configs['flat/stylistic-typescript-error'] = createStylisticTypeScriptRuleset('error', 'flat/stylistic-typescript-error');
+index.configs['flat/stylistic-typescript-flavor'] = createStylisticTypeScriptFlavorRuleset('warn', 'flat/stylistic-typescript-flavor');
+index.configs['flat/stylistic-typescript-flavor-error'] = createStylisticTypeScriptFlavorRuleset('error', 'flat/stylistic-typescript-error-flavor');
 
 index.configs.examples = /** @type {import('eslint').Linter.FlatConfig[]} */ ([
   {

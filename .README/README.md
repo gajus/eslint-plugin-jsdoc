@@ -62,21 +62,36 @@ The general starting rulesets you can extend from in flat config are:
 #### Granular Flat Configs
 
 There also exist several more granular, standalone TypeScript rulesets you can extend from.
-These each only enable a subset of the recommended starting rules:
+These each only enable mostly or only rules from the recommended starting rules:
 
-* `jsdoc.configs['flat/logical-typescript']`: Includes only the rules that enforce proper tag values
-  * `jsdoc.configs['flat/logical-typescript-error']`: The same, reporting with failing errors instead of mere warnings
-* `jsdoc.configs['flat/requirements-typescript']`: Includes only the rules that enforce tags exist
-  * `jsdoc.configs['flat/requirements-typescript-error']`: The same, reporting with failing errors instead of mere warnings
-* `jsdoc.configs['flat/stylistic-typescript']`: Includes only the rules that enforce clear, consistent tag formatting and styles
-  * `jsdoc.configs['flat/stylistic-typescript-error']`: The same, reporting with failing errors instead of mere warnings
+* **Contents**: rules that check names and descriptions
+  * `jsdoc.configs['flat/contents-typescript']`: for TypeScript files, with reports set to warn
+  * `jsdoc.configs['flat/contents-typescript-error']`: for TypeScript files, with reports set to error
+  * `jsdoc.configs['flat/contents-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
+  * `jsdoc.configs['flat/contents-typescript-flavor-error']`: for files using JavaScript syntax and JSDoc types, with reports set to error
+* **Logical**: rules that enforce proper tag values
+  * `jsdoc.configs['flat/logical-typescript']`: for TypeScript files, with reports set to warn
+  * `jsdoc.configs['flat/logical-typescript-error']`: for TypeScript files, with reports set to error
+  * `jsdoc.configs['flat/logical-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
+  * `jsdoc.configs['flat/logical-typescript-flavor-error']`: for files using JavaScript syntax and JSDoc types, with reports set to error
+* **Requirements**: rules that enforce tags exist
+  * `jsdoc.configs['flat/requirements-typescript']`: for TypeScript files, with reports set to warn
+  * `jsdoc.configs['flat/requirements-typescript-error']`: for TypeScript files, with reports set to error
+  * `jsdoc.configs['flat/requirements-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
+  * `jsdoc.configs['flat/requirements-typescript-flavor-error']`: for files using JavaScript syntax and JSDoc types, with reports set to error
+* **Stylistic**: rules that enforce clear, consistent tag formatting and styles
+  * `jsdoc.configs['flat/stylistic-typescript']`: for TypeScript files, with reports set to warn
+  * `jsdoc.configs['flat/stylistic-typescript-error']`: for TypeScript files, with reports set to error
+  * `jsdoc.configs['flat/stylistic-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
+  * `jsdoc.configs['flat/stylistic-typescript-flavor-error']`: for files using JavaScript syntax and JSDoc types, with reports set to error
 
-For example, to enforce only that any JSDoc tags are valid and styled consistently, without enforcing that they must always exist:
+For example, to enforce only that any JSDoc tags and their contents are valid and styled consistently in TypeScript files, without enforcing that tags must always exist:
 
 ```js
 import jsdoc from 'eslint-plugin-jsdoc';
 
 export default [
+  jsdoc.configs['flat/contents-typescript-error'],
   jsdoc.configs['flat/logical-typescript-error'],
   jsdoc.configs['flat/stylistic-typescript-error'],
 ];
