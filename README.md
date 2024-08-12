@@ -117,6 +117,30 @@ export default [
 ];
 ```
 
+<a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-granular-flat-configs-why-certain-rules-were-excluded-from-the-granular-configs"></a>
+<a name="eslint-plugin-jsdoc-configuration-flat-config-granular-flat-configs-why-certain-rules-were-excluded-from-the-granular-configs"></a>
+##### Why certain rules were excluded from the granular configs
+
+A few rules were left out of the granular configs. Here is why:
+
+Rules which might have been added to `required`:
+  - [`require-throws`](./docs/rules/require-throws.md#readme) - Since this can't enforce all cases, some may not wish this rule enforced.
+  - [`require-file-overview`](./docs/rules/require-file-overview.md#readme) - Too demanding for all projects
+  - [`convert-to-jsdoc-comments`](./docs/rules/convert-to-jsdoc-comments.md#readme) - Overly aggressive for some projects
+
+Rules which might have been added to `logical`:
+  - [`no-missing-syntax`](./docs/rules/no-missing-syntax.md#readme) - Has no default options.
+  - [`no-restricted-syntax`](./docs/rules/no-restricted-syntax.md#readme) - Has no default options.
+
+Rules which might have been added to `contents`:
+  - [`match-name`](./docs/rules/match-name.md#readme) - Has no default options.
+  - [`require-description`](./docs/rules/require-description.md#readme) - Too demanding for all projects
+  - [`require-description-complete-sentence`](./docs/rules/require-description-complete-sentence.md#readme) - Too demanding for all projects
+
+Rules which might have been added to `stylistic`:
+  - [`check-indentation`](./docs/rules/check-indentation.md#readme) - May not be desired by all projects
+  - [`sort-tags`](./docs/rules/sort-tags.md#readme) - Too project-specific
+
 <a name="user-content-eslint-plugin-jsdoc-configuration-eslintrc"></a>
 <a name="eslint-plugin-jsdoc-configuration-eslintrc"></a>
 ### <code>eslintrc</code>
