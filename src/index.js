@@ -291,7 +291,6 @@ const createLogicalTypescriptRuleset = createStandaloneRulesetFactory([
   'jsdoc/require-returns-check',
   'jsdoc/require-yields-check',
   'jsdoc/no-defaults',
-  'jsdoc/no-multi-asterisks',
   'jsdoc/no-types',
   'jsdoc/no-undefined-types',
   'jsdoc/valid-types',

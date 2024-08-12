@@ -54,7 +54,7 @@ The general starting rulesets you can extend from in flat config are:
 
 * `jsdoc.configs['flat/recommended']`: Recommended starting rules for enforcing proper tag values, that common tags exist, and that tags are formatted and styled consistently
   * `jsdoc.configs['flat/recommended-error']`: The same, reporting with failing errors instead of mere warnings
-* `jsdoc.configs['flat/recommended-typescript']`: A similar recommended starting list, adjusted for projects using TypeScript syntax (and not just "typescript" `mode`)
+* `jsdoc.configs['flat/recommended-typescript']`: A similar recommended starting list, adjusted for projects using TypeScript syntax (and not just the "typescript" `mode` setting)
   * `jsdoc.configs['flat/recommended-typescript-error']`: The same, reporting with failing errors instead of mere warnings
 * `jsdoc.configs['flat/recommended-typescript-flavor']`: A similar recommended starting list, adjusted for projects using JavaScript syntax (source files that are still `.js`) but using TypeScript flavor within JSDoc (i.e., the default "typescript" `mode` in `eslint-plugin-jsdoc`)
   * `jsdoc.configs['flat/recommended-typescript-flavor-error']`: The same, reporting with failing errors instead of mere warnings
