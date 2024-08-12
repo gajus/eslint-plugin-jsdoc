@@ -288,10 +288,8 @@ const createStandaloneRulesetFactory = (ruleNames) => {
 const contentsRules = [
   'jsdoc/informative-docs',
   'jsdoc/match-description',
-  'jsdoc/match-name',
   'jsdoc/no-blank-block-descriptions',
   'jsdoc/no-blank-blocks',
-  ['jsdoc/text-escaping', { escapeHTML: true }]
 ]
 
 const createContentsTypescriptRuleset = createStandaloneRulesetFactory(contentsRules);
