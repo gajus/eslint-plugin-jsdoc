@@ -591,5 +591,23 @@ export default {
         'never',
       ],
     },
+    {
+      code: `
+        /**
+         * @template {any} T - Arg 1
+         * @template {string | number} K - Arg 2
+         * @template {any} [R=(K extends keyof T ? T[K] : never)] - Arg 3  ->  Errors here
+         * @typedef {any} Test
+         */
+      `,
+      options: [
+        'always',
+        {
+          tags: {
+            template: 'always'
+          }
+        }
+      ],
+    },
   ],
 };

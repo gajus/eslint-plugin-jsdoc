@@ -86,7 +86,7 @@ const getLinesCols = (text) => {
  * @property {string} [exampleCodeRegex]
  * @property {string} [rejectExampleCodeRegex]
  * @property {"script"|"module"} [sourceType]
- * @property {import('eslint').Linter.FlatConfigParserModule} [parser]
+ * @property {import('eslint').Linter.ESTreeParser|import('eslint').Linter.NonESTreeParser} [parser]
  */
 
 /**
@@ -486,7 +486,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
             // May be running a second time so catch and ignore
             try {
               ast = parser
-                // @ts-expect-error Ok
+                // @ts-expect-error Should be present
                 ? parser.parseForESLint(text, {
                   ecmaVersion: 'latest',
                   sourceType,
