@@ -50,6 +50,75 @@ const config = [
 export default config;
 ```
 
+The general starting rulesets you can extend from in flat config are:
+
+- `jsdoc.configs['flat/recommended']`: Recommended starting rules for enforcing proper tag values, that common tags exist, and that tags are formatted and styled consistently
+  - `jsdoc.configs['flat/recommended-error']`: The same, reporting with failing errors instead of mere warnings
+- `jsdoc.configs['flat/recommended-typescript']`: A similar recommended starting list, adjusted for projects using TypeScript syntax (and not just the "typescript" `mode` setting)
+  - `jsdoc.configs['flat/recommended-typescript-error']`: The same, reporting with failing errors instead of mere warnings
+- `jsdoc.configs['flat/recommended-typescript-flavor']`: A similar recommended starting list, adjusted for projects using JavaScript syntax (source files that are still `.js`) but using TypeScript flavor within JSDoc (i.e., the default "typescript" `mode` in `eslint-plugin-jsdoc`)
+  - `jsdoc.configs['flat/recommended-typescript-flavor-error']`: The same, reporting with failing errors instead of mere warnings
+
+#### Granular Flat Configs
+
+There also exist several more granular, standalone TypeScript rulesets you can extend from.
+These each only enable mostly or only rules from the recommended starting rules:
+
+- **Contents**: rules that check names and descriptions
+  - `jsdoc.configs['flat/contents-typescript']`: for TypeScript files, with reports set to warn
+  - `jsdoc.configs['flat/contents-typescript-error']`: for TypeScript files, with reports set to error
+  - `jsdoc.configs['flat/contents-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
+  - `jsdoc.configs['flat/contents-typescript-flavor-error']`: for files using JavaScript syntax and JSDoc types, with reports set to error
+- **Logical**: rules that enforce proper tag values
+  - `jsdoc.configs['flat/logical-typescript']`: for TypeScript files, with reports set to warn
+  - `jsdoc.configs['flat/logical-typescript-error']`: for TypeScript files, with reports set to error
+  - `jsdoc.configs['flat/logical-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
+  - `jsdoc.configs['flat/logical-typescript-flavor-error']`: for files using JavaScript syntax and JSDoc types, with reports set to error
+- **Requirements**: rules that enforce tags exist
+  - `jsdoc.configs['flat/requirements-typescript']`: for TypeScript files, with reports set to warn
+  - `jsdoc.configs['flat/requirements-typescript-error']`: for TypeScript files, with reports set to error
+  - `jsdoc.configs['flat/requirements-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
+  - `jsdoc.configs['flat/requirements-typescript-flavor-error']`: for files using JavaScript syntax and JSDoc types, with reports set to error
+- **Stylistic**: rules that enforce clear, consistent tag formatting and styles
+  - `jsdoc.configs['flat/stylistic-typescript']`: for TypeScript files, with reports set to warn
+  - `jsdoc.configs['flat/stylistic-typescript-error']`: for TypeScript files, with reports set to error
+  - `jsdoc.configs['flat/stylistic-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
+  - `jsdoc.configs['flat/stylistic-typescript-flavor-error']`: for files using JavaScript syntax and JSDoc types, with reports set to error
+
+For example, to enforce only that any JSDoc tags and their contents are valid and styled consistently in TypeScript files, without enforcing that tags must always exist:
+
+```js
+import jsdoc from 'eslint-plugin-jsdoc';
+
+export default [
+  jsdoc.configs['flat/contents-typescript-error'],
+  jsdoc.configs['flat/logical-typescript-error'],
+  jsdoc.configs['flat/stylistic-typescript-error'],
+];
+```
+
+##### Why certain rules were excluded from the granular configs
+
+A few rules were left out of the granular configs. Here is why:
+
+Rules which might have been added to `required`:
+  - [`require-throws`](./docs/rules/require-throws.md#readme) - Since this can't enforce all cases, some may not wish this rule enforced.
+  - [`require-file-overview`](./docs/rules/require-file-overview.md#readme) - Too demanding for all projects
+  - [`convert-to-jsdoc-comments`](./docs/rules/convert-to-jsdoc-comments.md#readme) - Overly aggressive for some projects
+
+Rules which might have been added to `logical`:
+  - [`no-missing-syntax`](./docs/rules/no-missing-syntax.md#readme) - Has no default options.
+  - [`no-restricted-syntax`](./docs/rules/no-restricted-syntax.md#readme) - Has no default options.
+
+Rules which might have been added to `contents`:
+  - [`match-name`](./docs/rules/match-name.md#readme) - Has no default options.
+  - [`require-description`](./docs/rules/require-description.md#readme) - Too demanding for all projects
+  - [`require-description-complete-sentence`](./docs/rules/require-description-complete-sentence.md#readme) - Too demanding for all projects
+
+Rules which might have been added to `stylistic`:
+  - [`check-indentation`](./docs/rules/check-indentation.md#readme) - May not be desired by all projects
+  - [`sort-tags`](./docs/rules/sort-tags.md#readme) - Too project-specific
+
 ### `eslintrc`
 
 Add `plugins` section to [.eslintrc.*](https://eslint.org/docs/user-guide/configuring#configuration-file-formats)
