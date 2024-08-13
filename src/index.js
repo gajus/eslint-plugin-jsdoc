@@ -278,7 +278,7 @@ const createStandaloneRulesetFactory = (ruleNames) => {
           ruleName =>
             typeof ruleName === "string"
               ? [ruleName, warnOrError]
-              : [ruleName[0], warnOrError, ...ruleName.slice(1)]
+              : [ruleName[0], [warnOrError, ...ruleName.slice(1)]]
         )
       ),
     };
