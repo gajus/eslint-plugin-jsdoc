@@ -34,13 +34,15 @@ within it or your documentation.
 ### <code>escapeHTML</code>
 
 This option escapes all `<` and `&` characters (except those followed by
-whitespace which are treated as literals by Visual Studio Code).
+whitespace which are treated as literals by Visual Studio Code). Defaults to
+`false`.
 
 <a name="user-content-text-escaping-options-escapemarkdown"></a>
 <a name="text-escaping-options-escapemarkdown"></a>
 ### <code>escapeMarkdown</code>
 
 This option escapes the first backtick (`` ` ``) in a paired sequence.
+Defaults to `false`.
 
 <a name="user-content-text-escaping-context-and-settings"></a>
 <a name="text-escaping-context-and-settings"></a>
