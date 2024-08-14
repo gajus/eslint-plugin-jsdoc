@@ -329,5 +329,9 @@ values are objects with the following optional properties:
 ### `contexts`
 
 `settings.jsdoc.contexts` can be used as the default for any rules
-with a `contexts` property option. See the "AST and Selectors" section
-for more on this format.
+with a `contexts` property option. **Please note**: This will replace any
+default contexts, including for function rules, so if, for example, you exclude
+`FunctionDeclaration` here, rules like `require-param` will not check
+function declarations.
+
+See the "AST and Selectors" section for more on this format.
