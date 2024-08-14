@@ -1804,5 +1804,14 @@ function a (b) {}
 function sumDestructure(this: unknown, { a, b }: { a: number, b: number }) {
   return a + b;
 }
+
+/**
+ *
+ */
+const inner = (c: number, d: string): void => {
+  console.log(c);
+  console.log(d);
+};
+// Settings: {"jsdoc":{"contexts":["VariableDeclaration"]}}
 ````
 

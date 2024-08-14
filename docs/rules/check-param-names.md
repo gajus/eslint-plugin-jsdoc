@@ -1119,5 +1119,15 @@ function quux (foo, bar) {
 export function fn(...[type, arg]: FnArgs): void {
   // ...
 }
+
+/**
+ * @param c c
+ * @param d d
+ */
+const inner = (c: number, d: string): void => {
+  console.log(c);
+  console.log(d);
+};
+// Settings: {"jsdoc":{"contexts":["VariableDeclaration"]}}
 ````
 

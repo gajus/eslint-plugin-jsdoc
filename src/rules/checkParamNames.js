@@ -354,11 +354,18 @@ const validateParameterNamesDeep = (
   });
 };
 
+const allowedNodes = [
+  'ArrowFunctionExpression', 'FunctionDeclaration', 'FunctionExpression', 'TSDeclareFunction',
+    // Add this to above defaults
+    'TSMethodSignature'
+];
+
 export default iterateJsdoc(({
   context,
   jsdoc,
   report,
   utils,
+  node,
 }) => {
   const {
     allowExtraTrailingParamDocs,
@@ -370,6 +377,15 @@ export default iterateJsdoc(({
     disableExtraPropertyReporting = false,
     disableMissingParamChecks = false,
   } = context.options[0] || {};
+
+  // Although we might just remove global settings contexts from applying to
+  //   this rule (as they can cause problems with `getFunctionParameterNames`
+  //   checks if they are not functions but say variables), the user may
+  //   instead wish to narrow contexts in those settings, so this check
+  //   is still useful
+  if (!allowedNodes.includes(/** @type {import('estree').Node} */ (node).type)) {
+    return;
+  }
 
   const checkTypesRegex = utils.getRegexFromString(checkTypesPattern);
 
@@ -406,11 +422,7 @@ export default iterateJsdoc(({
     targetTagName, allowExtraTrailingParamDocs, jsdocParameterNamesDeep, jsdoc, report,
   );
 }, {
-  contextDefaults: [
-    'ArrowFunctionExpression', 'FunctionDeclaration', 'FunctionExpression', 'TSDeclareFunction',
-    // Add this to above defaults
-    'TSMethodSignature'
-  ],
+  contextDefaults: allowedNodes,
   meta: {
     docs: {
       description: 'Ensures that parameter names in JSDoc match those in the function declaration.',
