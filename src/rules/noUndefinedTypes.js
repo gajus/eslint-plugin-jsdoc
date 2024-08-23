@@ -1,19 +1,25 @@
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-
-import { createSyncFn } from 'synckit';
+import iterateJsdoc, {
+  parseComment,
+} from '../iterateJsdoc.js';
 import {
   getJSDocComment,
   parse as parseType,
   traverse,
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
-import iterateJsdoc, {
-  parseComment,
-} from '../iterateJsdoc.js';
+import {
+  dirname,
+  join,
+} from 'path';
+import {
+  createSyncFn,
+} from 'synckit';
+import {
+  fileURLToPath,
+} from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const pathName = join(__dirname, '../import-worker.mjs');
+const dirName = dirname(fileURLToPath(import.meta.url));
+const pathName = join(dirName, '../import-worker.mjs');
 
 const extraTypes = [
   'null', 'undefined', 'void', 'string', 'boolean', 'object',
@@ -90,9 +96,9 @@ export default iterateJsdoc(({
   /** @type {(string|undefined)[]} */
   let definedPreferredTypes = [];
   const {
+    mode,
     preferredTypes,
     structuredTags,
-    mode,
   } = settings;
   if (Object.keys(preferredTypes).length) {
     definedPreferredTypes = /** @type {string[]} */ (Object.values(preferredTypes).map((preferredType) => {
@@ -136,7 +142,6 @@ export default iterateJsdoc(({
       return tag.name;
     });
 
-
   const importTags = settings.mode === 'typescript' ? /** @type {string[]} */ (comments.flatMap((doc) => {
     return doc.tags.filter(({
       tag,
@@ -145,12 +150,14 @@ export default iterateJsdoc(({
     });
   }).flatMap((tag) => {
     const {
-      type, name, description
+      description,
+      name,
+      type,
     } = tag;
-    const typePart = type ? `{${type}} `: '';
-    const imprt = 'import ' + (description
-      ? `${typePart}${name} ${description}`
-      : `${typePart}${name}`);
+    const typePart = type ? `{${type}} ` : '';
+    const imprt = 'import ' + (description ?
+      `${typePart}${name} ${description}` :
+      `${typePart}${name}`);
 
     const getImports = createSyncFn(pathName);
     const imports = /** @type {import('parse-imports').Import[]} */ (getImports(imprt));
@@ -158,18 +165,27 @@ export default iterateJsdoc(({
       return null;
     }
 
-    return imports.flatMap(({importClause}) => {
-      /* c8 ignore next */
-      const {default: dflt, named, namespace} = importClause || {};
+    return imports.flatMap(({
+      importClause,
+    }) => {
+      const {
+        default: dflt,
+        named,
+        namespace,
+      } /* c8 ignore next */ = importClause || {};
       const types = [];
       if (dflt) {
         types.push(dflt);
       }
+
       if (namespace) {
         types.push(namespace);
       }
+
       if (named) {
-        for (const {binding} of named) {
+        for (const {
+          binding,
+        } of named) {
           types.push(binding);
         }
       }
@@ -320,8 +336,8 @@ export default iterateJsdoc(({
   ].filter(Boolean));
 
   for (const {
-    tag,
     parsedType,
+    tag,
   } of tagsWithTypes) {
     traverse(parsedType, (nde) => {
       const {

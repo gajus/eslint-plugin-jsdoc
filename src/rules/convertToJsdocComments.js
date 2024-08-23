@@ -1,17 +1,16 @@
-import iterateJsdoc from '../iterateJsdoc.js';
 import {
   getSettings,
 } from '../iterateJsdoc.js';
 import {
-  getIndent,
-  getContextObject,
   enforcedContexts,
+  getContextObject,
+  getIndent,
 } from '../jsdocUtils.js';
 import {
-  getNonJsdocComment,
   getDecorator,
-  getReducedASTNode,
   getFollowingComment,
+  getNonJsdocComment,
+  getReducedASTNode,
 } from '@es-joy/jsdoccomment';
 
 /** @type {import('eslint').Rule.RuleModule} */
@@ -44,15 +43,17 @@ export default {
     }
 
     const {
+      allowedPrefixes = [
+        '@ts-', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-',
+      ],
       contexts = settings.contexts || [],
       contextsAfter = /** @type {string[]} */ ([]),
       contextsBeforeAndAfter = [
-        'VariableDeclarator', 'TSPropertySignature', 'PropertyDefinition'
+        'VariableDeclarator', 'TSPropertySignature', 'PropertyDefinition',
       ],
       enableFixer = true,
       enforceJsdocLineStyle = 'multi',
       lineOrBlockStyle = 'both',
-      allowedPrefixes = ['@ts-', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-']
     } = context.options[0] ?? {};
 
     let reportingNonJsdoc = false;
@@ -75,7 +76,7 @@ export default {
           column: 0,
           /* c8 ignore next 2 -- Guard */
           // @ts-expect-error Ok
-          line: (comment.loc?.start?.line ?? 1)
+          line: (comment.loc?.start?.line ?? 1),
         },
       };
 
@@ -110,7 +111,7 @@ export default {
 
         const decorator = getDecorator(
           /** @type {import('eslint').Rule.Node} */
-          (baseNode)
+          (baseNode),
         );
         if (decorator) {
           baseNode = /** @type {import('@typescript-eslint/types').TSESTree.Decorator} */ (
@@ -169,6 +170,7 @@ export default {
         if (lineOrBlockStyle === 'line') {
           return;
         }
+
         report('blockCommentsJsdocStyle', comment, node, fixer);
         return;
       }
@@ -177,6 +179,7 @@ export default {
         if (lineOrBlockStyle === 'block') {
           return;
         }
+
         report('lineCommentsJsdocStyle', comment, node, fixer);
       }
     };
@@ -199,18 +202,20 @@ export default {
 
       reportingNonJsdoc = true;
 
+      /* eslint-disable unicorn/consistent-function-scoping */
       /** @type {AddComment} */
-      const addComment = (inlineCommentBlock, comment, indent, lines, fixer) => {
+      const addComment = (inlineCommentBlock, cmmnt, indent, lines, fixer) => {
+        /* eslint-enable unicorn/consistent-function-scoping */
         const insertion = (
-          inlineCommentBlock || enforceJsdocLineStyle === 'single'
-            ? `/** ${comment.value.trim()} `
-            : `/**\n${indent}*${comment.value.trimEnd()}\n${indent}`
+          inlineCommentBlock || enforceJsdocLineStyle === 'single' ?
+            `/** ${cmmnt.value.trim()} ` :
+            `/**\n${indent}*${cmmnt.value.trimEnd()}\n${indent}`
         ) +
             `*/${'\n'.repeat((lines || 1) - 1)}`;
 
         return fixer.replaceText(
           /** @type {import('eslint').AST.Token} */
-          (comment),
+          (cmmnt),
           insertion,
         );
       };
@@ -237,24 +242,26 @@ export default {
       }
 
       /** @type {AddComment} */
-      const addComment = (inlineCommentBlock, comment, indent, lines, fixer) => {
+      const addCommentAfter = (inlineCommentBlock, cmmnt, indent, lines, fixer) => {
         const insertion = (
-          inlineCommentBlock || enforceJsdocLineStyle === 'single'
-            ? `/** ${comment.value.trim()} `
-            : `/**\n${indent}*${comment.value.trimEnd()}\n${indent}`
+          inlineCommentBlock || enforceJsdocLineStyle === 'single' ?
+            `/** ${cmmnt.value.trim()} ` :
+            `/**\n${indent}*${cmmnt.value.trimEnd()}\n${indent}`
         ) +
             `*/${'\n'.repeat((lines || 1) - 1)}${lines ? `\n${indent.slice(1)}` : ' '}`;
 
-        return [fixer.remove(
+        return [
+          fixer.remove(
           /** @type {import('eslint').AST.Token} */
-          (comment)
-        ), fixer.insertTextBefore(
-          node.type === 'VariableDeclarator' ? node.parent : node,
-          insertion,
-        )];
+            (cmmnt),
+          ), fixer.insertTextBefore(
+            node.type === 'VariableDeclarator' ? node.parent : node,
+            insertion,
+          ),
+        ];
       };
 
-      reportings(comment, node, addComment, ctxts);
+      reportings(comment, node, addCommentAfter, ctxts);
     };
 
     // Todo: add contexts to check after (and handle if want both before and after)
@@ -276,31 +283,31 @@ export default {
           if (!reportingNonJsdoc) {
             checkNonJsdocAfter(node, contextsBeforeAndAfter);
           }
-        }
-      )
+        },
+      ),
     };
   },
   meta: {
+    docs: {
+      description: 'Converts non-JSDoc comments preceding or following nodes into JSDoc ones',
+      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/convert-to-jsdoc-comments.md#repos-sticky-header',
+    },
+
     fixable: 'code',
 
     messages: {
       blockCommentsJsdocStyle: 'Block comments should be JSDoc-style.',
       lineCommentsJsdocStyle: 'Line comments should be JSDoc-style.',
     },
-
-    docs: {
-      description: 'Converts non-JSDoc comments preceding or following nodes into JSDoc ones',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/convert-to-jsdoc-comments.md#repos-sticky-header',
-    },
     schema: [
       {
         additionalProperties: false,
         properties: {
           allowedPrefixes: {
-            type: 'array',
             items: {
-              type: 'string'
-            }
+              type: 'string',
+            },
+            type: 'array',
           },
           contexts: {
             items: {
@@ -369,15 +376,19 @@ export default {
             type: 'array',
           },
           enableFixer: {
-            type: 'boolean'
+            type: 'boolean',
           },
           enforceJsdocLineStyle: {
+            enum: [
+              'multi', 'single',
+            ],
             type: 'string',
-            enum: ['multi', 'single']
           },
           lineOrBlockStyle: {
+            enum: [
+              'block', 'line', 'both',
+            ],
             type: 'string',
-            enum: ['block', 'line', 'both']
           },
         },
         type: 'object',

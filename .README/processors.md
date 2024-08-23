@@ -132,7 +132,8 @@ same name.
 #### `exampleCodeRegex` and `rejectExampleCodeRegex`
 
 See the [`check-examples`](./rules/check-examples.md#readme) option of the
-same name.
+same name. The default of `rejectExampleCodeRegex` is, however, changed to
+`^\s*\`\`\`` when no `exampleCodeRegex` is provided.
 
 #### `sourceType`
 

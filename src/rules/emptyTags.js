@@ -6,6 +6,7 @@ const defaultEmptyTags = new Set([
 
   // jsdoc doesn't use this form in its docs, but allow for compatibility with
   //  TypeScript which allows and Closure which requires
+  // eslint-disable-next-line perfectionist/sort-sets -- Grouping
   'inheritDoc',
 
   // jsdoc doesn't use but allow for TypeScript
@@ -17,6 +18,7 @@ const emptyIfNotClosure = new Set([
   'package', 'private', 'protected', 'public', 'static',
 
   // Closure doesn't allow with this casing
+  // eslint-disable-next-line perfectionist/sort-sets -- Grouping
   'inheritdoc',
 ]);
 
@@ -25,8 +27,8 @@ const emptyIfClosure = new Set([
 ]);
 
 export default iterateJsdoc(({
-  settings,
   jsdoc,
+  settings,
   utils,
 }) => {
   const emptyTags = utils.filterTags(({

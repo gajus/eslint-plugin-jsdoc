@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default {
   invalid: [
@@ -1119,15 +1121,15 @@ export default {
         }
       }
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         'any',
         {
           startLines: 1,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
   ],
 };

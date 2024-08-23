@@ -1,12 +1,12 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
 export default iterateJsdoc(({
-  sourceCode,
-  utils,
-  report,
   context,
   jsdoc,
   jsdocNode,
+  report,
+  sourceCode,
+  utils,
 }) => {
   const [
     mainCircumstance,

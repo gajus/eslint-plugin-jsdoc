@@ -18,7 +18,8 @@ const maskExcludedContent = (str, excludeTags) => {
  * @returns {string}
  */
 const maskCodeBlocks = (str) => {
-  const regContent = /([ \t]+\*)[ \t]```[^\n]*?([\w|\W]*?\n)(?=[ \t]*\*(?:[ \t]*(?:```|@\w+\s)|\/))/gu;
+  // eslint-disable-next-line regexp/no-super-linear-backtracking
+  const regContent = /([ \t]+\*)[ \t]```[^\n]*?([\s\S]*?\n)(?=[ \t]*\*(?:[ \t]*(?:```|@\w+\s)|\/))/gu;
 
   return str.replaceAll(regContent, (_match, margin, code) => {
     return (margin + '\n').repeat(code.match(/\n/gu).length);
@@ -26,10 +27,10 @@ const maskCodeBlocks = (str) => {
 };
 
 export default iterateJsdoc(({
-  sourceCode,
+  context,
   jsdocNode,
   report,
-  context,
+  sourceCode,
 }) => {
   const options = context.options[0] || {};
   const /** @type {{excludeTags: string[]}} */ {

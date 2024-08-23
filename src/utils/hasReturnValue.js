@@ -19,16 +19,16 @@ const isNewPromiseExpression = (node) => {
  * @returns {boolean}
  */
 const isVoidPromise = (node) => {
-  return /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */ (node)?.typeArguments?.params?.[0]?.type === 'TSVoidKeyword'
-    /* c8 ignore next 4 */
-    || /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */ (
-      node
-    // @ts-expect-error Ok
-    )?.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
+  return /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */ (node)?.typeArguments?.params?.[0]?.type === 'TSVoidKeyword' ||
+  /* c8 ignore next 4 */
+  /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */ (
+    node
+  // @ts-expect-error Ok
+  )?.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
 };
 
 const undefinedKeywords = new Set([
-  'TSVoidKeyword', 'TSUndefinedKeyword', 'TSNeverKeyword',
+  'TSNeverKeyword', 'TSUndefinedKeyword', 'TSVoidKeyword',
 ]);
 
 /**
@@ -209,7 +209,8 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
               if (/** @type {Error} */ (error).message === 'Null return') {
                 return false;
               }
-              /* c8 ignore next 2 */
+              /* c8 ignore next 3 */
+
               throw error;
             }
 
@@ -498,7 +499,8 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, all
         if (/** @type {Error} */ (error).message === 'Null return') {
           return false;
         }
-        /* c8 ignore next 2 */
+        /* c8 ignore next 3 */
+
         throw error;
       }
 
@@ -525,8 +527,8 @@ const hasValueOrExecutorHasNonEmptyResolveValue = (node, anyPromiseAsReturn, all
     }
 
     const {
-      params,
       body,
+      params,
     } =
     /**
      * @type {import('@typescript-eslint/types').TSESTree.FunctionExpression|

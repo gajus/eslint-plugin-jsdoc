@@ -11,10 +11,10 @@ const inlineTags = new Set([
 ]);
 
 const jsdocTypePrattKeywords = new Set([
-  'typeof',
-  'readonly',
   'import',
   'is',
+  'readonly',
+  'typeof',
 ]);
 
 const asExpression = /as\s+/u;
@@ -70,8 +70,8 @@ const suppressTypes = new Set([
   'untranspilableFeatures',
   'unusedLocalVariables',
   'unusedPrivateMembers',
-  'useOfGoogProvide',
   'uselessCode',
+  'useOfGoogProvide',
   'visibility',
   'with',
 ]);
@@ -94,11 +94,11 @@ const tryParsePathIgnoreError = (path) => {
 
 // eslint-disable-next-line complexity
 export default iterateJsdoc(({
+  context,
   jsdoc,
   report,
-  utils,
-  context,
   settings,
+  utils,
 }) => {
   const {
     allowEmptyNamepaths = false,
@@ -297,8 +297,8 @@ export default iterateJsdoc(({
     //  `require-param-name` (`@property` would similarly seem to require one,
     //  but is handled by `require-property-name`)
     if (tagMustHaveNamePosition !== false && !tag.name && !allowEmptyNamepaths && ![
-      'param', 'arg', 'argument',
-      'property', 'prop',
+      'arg', 'argument', 'param',
+      'prop', 'property',
     ].includes(tag.tag) &&
       (tag.tag !== 'see' || !utils.getTagDescription(tag).includes('{@link'))
     ) {

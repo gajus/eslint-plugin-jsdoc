@@ -1,25 +1,35 @@
 // Todo: Support TS by fenced block type
 
-import {readFileSync} from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import * as espree from 'espree';
+// https://github.com/eslint/eslint/issues/14745
 import {
-  getRegexFromString,
   forEachPreferredTag,
-  getTagDescription,
   getPreferredTagName,
+  getRegexFromString,
+  getTagDescription,
   hasTag,
 } from './jsdocUtils.js';
 import {
   parseComment,
 } from '@es-joy/jsdoccomment';
+import * as espree from 'espree';
+import {
+  readFileSync,
+} from 'node:fs';
+import {
+  dirname,
+  join,
+} from 'node:path';
+import {
+  fileURLToPath,
+} from 'node:url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const dirName = dirname(fileURLToPath(import.meta.url));
 
-const {version} = JSON.parse(
+const {
+  version,
+} = JSON.parse(
   // @ts-expect-error `Buffer` is ok for `JSON.parse`
-  readFileSync(join(__dirname, '../package.json'))
+  readFileSync(join(dirName, '../package.json')),
 );
 
 // const zeroBasedLineIndexAdjust = -1;
@@ -51,20 +61,20 @@ const countChars = (str, ch) => {
 /**
  * @param {string} text
  * @returns {[
-*   import('./iterateJsdoc.js').Integer,
-*   import('./iterateJsdoc.js').Integer
-* ]}
-*/
+ *   import('./iterateJsdoc.js').Integer,
+ *   import('./iterateJsdoc.js').Integer
+ * ]}
+ */
 const getLinesCols = (text) => {
- const matchLines = countChars(text, '\n');
+  const matchLines = countChars(text, '\n');
 
- const colDelta = matchLines ?
-   text.slice(text.lastIndexOf('\n') + 1).length :
-   text.length;
+  const colDelta = matchLines ?
+    text.slice(text.lastIndexOf('\n') + 1).length :
+    text.length;
 
- return [
-   matchLines, colDelta,
- ];
+  return [
+    matchLines, colDelta,
+  ];
 };
 
 /**
@@ -73,20 +83,20 @@ const getLinesCols = (text) => {
 
 /**
  * @typedef {object} JsdocProcessorOptions
- * @property {boolean} [captionRequired]
- * @property {Integer} [paddedIndent]
- * @property {boolean} [checkDefaults]
- * @property {boolean} [checkParams]
- * @property {boolean} [checkExamples]
- * @property {boolean} [checkProperties]
- * @property {string} [matchingFileName]
- * @property {string} [matchingFileNameDefaults]
- * @property {string} [matchingFileNameParams]
- * @property {string} [matchingFileNameProperties]
- * @property {string} [exampleCodeRegex]
- * @property {string} [rejectExampleCodeRegex]
- * @property {"script"|"module"} [sourceType]
- * @property {import('eslint').Linter.ESTreeParser|import('eslint').Linter.NonESTreeParser} [parser]
+ * @property {boolean} [captionRequired] Whether a <caption> is required
+ * @property {Integer} [paddedIndent] Number of initial spaces to remove before evaluation
+ * @property {boolean} [checkDefaults] Whether to check \@default
+ * @property {boolean} [checkParams] Whether to check \@param
+ * @property {boolean} [checkExamples] Whether to check \@example
+ * @property {boolean} [checkProperties] Whether to check \@property
+ * @property {string} [matchingFileName] Matching file name for \@example
+ * @property {string} [matchingFileNameDefaults] Matching file name for \@default
+ * @property {string} [matchingFileNameParams] Matching file name for \@param
+ * @property {string} [matchingFileNameProperties] Matching file name for \@property
+ * @property {string} [exampleCodeRegex] The regex to match for \@example
+ * @property {string} [rejectExampleCodeRegex] The regex to not include for \@example
+ * @property {"script"|"module"} [sourceType] Whether a "script" or "module" type
+ * @property {import('eslint').Linter.ESTreeParser|import('eslint').Linter.NonESTreeParser} [parser] Any parser
  */
 
 /**
@@ -96,20 +106,20 @@ const getLinesCols = (text) => {
  */
 export const getJsdocProcessorPlugin = (options = {}) => {
   const {
-    exampleCodeRegex = null,
-    rejectExampleCodeRegex = null,
-    checkExamples = true,
+    captionRequired = false,
     checkDefaults = false,
+    checkExamples = true,
     checkParams = false,
     checkProperties = false,
+    exampleCodeRegex = null,
     matchingFileName = null,
     matchingFileNameDefaults = null,
     matchingFileNameParams = null,
     matchingFileNameProperties = null,
     paddedIndent = 0,
-    captionRequired = false,
+    parser = undefined,
+    rejectExampleCodeRegex = exampleCodeRegex ? null : '^\\s*```',
     sourceType = 'module',
-    parser = undefined
   } = options;
 
   /** @type {RegExp} */
@@ -178,18 +188,18 @@ export const getJsdocProcessorPlugin = (options = {}) => {
      * }} cfg
      */
     const checkSource = ({
-      filename,
-      ext,
-      defaultFileName,
-      lines = 0,
       cols = 0,
+      defaultFileName,
+      ext,
+      filename,
+      lines = 0,
       skipInit,
       source,
-      targetTagName,
       sources = [],
       tag = {
         line: 0,
       },
+      targetTagName,
     }) => {
       if (!skipInit) {
         sources.push({
@@ -231,16 +241,16 @@ export const getJsdocProcessorPlugin = (options = {}) => {
         const codeStartCol = likelyNestedJSDocIndentSpace;
 
         textsAndFileNames.push({
-          text: src,
           filename: file,
+          text: src,
         });
         otherInfo.push({
-          targetTagName,
-          ext,
-          codeStartLine,
           codeStartCol,
+          codeStartLine,
+          commentLineCols,
+          ext,
           nonJSPrefacingCols,
-          commentLineCols
+          targetTagName,
         });
       };
 
@@ -272,8 +282,8 @@ export const getJsdocProcessorPlugin = (options = {}) => {
       }
 
       return {
-        ext,
         defaultFileName,
+        ext,
         filename,
       };
     };
@@ -342,11 +352,11 @@ export const getJsdocProcessorPlugin = (options = {}) => {
 
       if (captionRequired && (!match || !match[1].trim())) {
         extraMessages.push({
-          line: 1 + commentLineCols[0] + (tag.line ?? tag.source[0].number),
           column: commentLineCols[1] + 1,
-          severity: 2,
+          line: 1 + commentLineCols[0] + (tag.line ?? tag.source[0].number),
           message: `@${targetTagName} error - Caption is expected for examples.`,
-          ruleId: 'jsdoc/example-missing-caption'
+          ruleId: 'jsdoc/example-missing-caption',
+          severity: 2,
         });
         return;
       }
@@ -378,9 +388,9 @@ export const getJsdocProcessorPlugin = (options = {}) => {
         exampleCodeRegExp.lastIndex = 0;
         while ((exampleCode = exampleCodeRegExp.exec(source)) !== null) {
           const {
-            index,
             '0': n0,
             '1': n1,
+            index,
           } = exampleCode;
 
           // Count anything preceding user regex match (can affect line numbering)
@@ -476,6 +486,75 @@ export const getJsdocProcessorPlugin = (options = {}) => {
           version,
         },
         /**
+         * @param {import('eslint').Linter.LintMessage[][]} messages
+         * @param {string} _filename
+         */
+        postprocess ([
+          jsMessages,
+          ...messages
+        // eslint-disable-next-line no-unused-vars
+        ], _filename) {
+          for (const [
+            idx,
+            message,
+          ] of messages.entries()) {
+            const {
+              codeStartCol,
+              codeStartLine,
+              commentLineCols,
+              nonJSPrefacingCols,
+              targetTagName,
+            } = otherInfo[idx];
+
+            for (const msg of message) {
+              const {
+                column,
+                endColumn,
+                endLine,
+                fatal,
+                line,
+                message: msge,
+                ruleId,
+                severity,
+
+                // Todo: Make fixable
+                // fix
+                // fix: {range: [number, number], text: string}
+                // suggestions: {desc: , messageId:, fix: }[],
+              } = msg;
+
+              const [
+                codeCtxLine,
+                codeCtxColumn,
+              ] = commentLineCols;
+              const startLine = codeCtxLine + codeStartLine + line;
+              // Seems to need one more now
+              const startCol = 1 +
+                codeCtxColumn + codeStartCol + (
+              // This might not work for line 0, but line 0 is unlikely for examples
+                line <= 1 ? nonJSPrefacingCols + firstLinePrefixLength : preTagSpaceLength
+              ) + column;
+
+              msg.message = '@' + targetTagName + ' ' + (severity === 2 ? 'error' : 'warning') +
+                (ruleId ? ' (' + ruleId + ')' : '') + ': ' +
+                (fatal ? 'Fatal: ' : '') +
+                msge;
+              msg.line = startLine;
+              msg.column = startCol;
+              msg.endLine = endLine ? startLine + endLine : startLine;
+              // added `- column` to offset what `endColumn` already seemed to include
+              msg.endColumn = endColumn ? startCol - column + endColumn : startCol;
+            }
+          }
+
+          const ret = [
+            ...jsMessages,
+          ].concat(...messages, ...extraMessages);
+          extraMessages = [];
+          return ret;
+        },
+
+        /**
          * @param {string} text
          * @param {string} filename
          */
@@ -485,20 +564,22 @@ export const getJsdocProcessorPlugin = (options = {}) => {
 
             // May be running a second time so catch and ignore
             try {
-              ast = parser
+              ast = parser ?
                 // @ts-expect-error Should be present
-                ? parser.parseForESLint(text, {
+                parser.parseForESLint(text, {
+                  comment: true,
                   ecmaVersion: 'latest',
                   sourceType,
-                  comment: true
-                }).ast
-                : espree.parse(text, {
+                }).ast :
+                espree.parse(text, {
+                  comment: true,
                   ecmaVersion: 'latest',
                   sourceType,
-                  comment: true
                 });
-            } catch (err) {
-              return [text];
+            } catch {
+              return [
+                text,
+              ];
             }
 
             /** @type {[number, number][]} */
@@ -513,18 +594,25 @@ export const getJsdocProcessorPlugin = (options = {}) => {
             ).filter((comment) => {
               return (/^\*\s/u).test(comment.value);
             }).map((comment) => {
-              /* c8 ignore next -- Unsupporting processors only? */
-              const [start] = comment.range ?? [];
+              const [
+                start,
+              ] /* c8 ignore next -- Unsupporting processors only? */ =
+                comment.range ?? [];
               const textToStart = text.slice(0, start);
 
-              const [lines, cols] = getLinesCols(textToStart);
+              const [
+                lines,
+                cols,
+              ] = getLinesCols(textToStart);
 
               // const lines = [...textToStart.matchAll(/\n/gu)].length
               // const lastLinePos = textToStart.lastIndexOf('\n');
               // const cols = lastLinePos === -1
               //   ? 0
               //   : textToStart.slice(lastLinePos).length;
-              commentLineCols.push([lines, cols]);
+              commentLineCols.push([
+                lines, cols,
+              ]);
               return parseComment(comment);
             });
 
@@ -534,72 +622,18 @@ export const getJsdocProcessorPlugin = (options = {}) => {
                 return getTextsAndFileNames(
                   jsdoc,
                   filename,
-                  commentLineCols[idx]
+                  commentLineCols[idx],
                 );
-              }).filter(Boolean)
+              }).filter(Boolean),
             ];
-          /* c8 ignore next 3 */
-          } catch (err) {
-            console.log('err', filename, err);
+          /* c8 ignore next 5 */
+          } catch (error) {
+            // eslint-disable-next-line no-console -- Debugging
+            console.log('err', filename, error);
+            return undefined;
           }
         },
-
-        /**
-         * @param {import('eslint').Linter.LintMessage[][]} messages
-         * @param {string} filename
-         */
-        postprocess ([jsMessages, ...messages], filename) {
-          messages.forEach((message, idx) => {
-            const {
-              targetTagName,
-              codeStartLine,
-              codeStartCol,
-              nonJSPrefacingCols,
-              commentLineCols
-            } = otherInfo[idx];
-
-            message.forEach((msg) => {
-              const {
-                message,
-                ruleId,
-                severity,
-                fatal,
-                line,
-                column,
-                endColumn,
-                endLine,
-
-                // Todo: Make fixable
-                // fix
-                // fix: {range: [number, number], text: string}
-                // suggestions: {desc: , messageId:, fix: }[],
-              } = msg;
-
-              const [codeCtxLine, codeCtxColumn] = commentLineCols;
-              const startLine = codeCtxLine + codeStartLine + line;
-              const startCol = 1 + // Seems to need one more now
-                codeCtxColumn + codeStartCol + (
-                  // This might not work for line 0, but line 0 is unlikely for examples
-                  line <= 1 ? nonJSPrefacingCols + firstLinePrefixLength : preTagSpaceLength
-                ) + column;
-
-              msg.message = '@' + targetTagName + ' ' + (severity === 2 ? 'error' : 'warning') +
-                (ruleId ? ' (' + ruleId + ')' : '') + ': ' +
-                (fatal ? 'Fatal: ' : '') +
-                message;
-              msg.line = startLine;
-              msg.column = startCol;
-              msg.endLine = endLine ? startLine + endLine : startLine;
-              // added `- column` to offset what `endColumn` already seemed to include
-              msg.endColumn = endColumn ? startCol - column + endColumn : startCol;
-            });
-          });
-
-          const ret = [...jsMessages].concat(...messages, ...extraMessages);
-          extraMessages = [];
-          return ret;
-        },
-        supportsAutofix: true
+        // supportsAutofix: true,
       },
     },
   };

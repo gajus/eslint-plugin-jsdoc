@@ -1,34 +1,38 @@
+import iterateJsdoc from '../iterateJsdoc.js';
 import {
   parse as parseType,
   traverse,
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
-import iterateJsdoc from '../iterateJsdoc.js';
 
 export default iterateJsdoc(({
   context,
-  utils,
   node,
-  settings,
   report,
+  settings,
+  utils,
 }) => {
   const {
     requireSeparateTemplates = false,
   } = context.options[0] || {};
 
   const {
-    mode
+    mode,
   } = settings;
 
   const usedNames = new Set();
   const templateTags = utils.getTags('template');
-  const templateNames = templateTags.flatMap(({name}) => {
-    return name.split(/,\s*/);
+  const templateNames = templateTags.flatMap(({
+    name,
+  }) => {
+    return name.split(/,\s*/u);
   });
 
   for (const tag of templateTags) {
-    const {name} = tag;
-    const names = name.split(/,\s*/);
+    const {
+      name,
+    } = tag;
+    const names = name.split(/,\s*/u);
     if (requireSeparateTemplates && names.length > 1) {
       report(`Missing separate @template for ${names[1]}`, null, tag);
     }
@@ -41,11 +45,19 @@ export default iterateJsdoc(({
    *   import('@typescript-eslint/types').TSESTree.TSTypeAliasDeclaration} aliasDeclaration
    */
   const checkTypeParams = (aliasDeclaration) => {
-    /* c8 ignore next -- Guard */
-    const {params} = aliasDeclaration.typeParameters ?? {params: []};
-    for (const {name: {name}} of params) {
+    const {
+      params,
+    } /* c8 ignore next -- Guard */ = aliasDeclaration.typeParameters ?? {
+      params: [],
+    };
+    for (const {
+      name: {
+        name,
+      },
+    } of params) {
       usedNames.add(name);
     }
+
     for (const usedName of usedNames) {
       if (!templateNames.includes(usedName)) {
         report(`Missing @template ${usedName}`);
@@ -60,15 +72,17 @@ export default iterateJsdoc(({
     if (!nde) {
       return;
     }
+
     switch (nde.type) {
     case 'ExportDefaultDeclaration':
       switch (nde.declaration?.type) {
-        case 'ClassDeclaration':
-        case 'FunctionDeclaration':
-        case 'TSInterfaceDeclaration':
-          checkTypeParams(nde.declaration);
-          break;
+      case 'ClassDeclaration':
+      case 'FunctionDeclaration':
+      case 'TSInterfaceDeclaration':
+        checkTypeParams(nde.declaration);
+        break;
       }
+
       break;
     case 'ExportNamedDeclaration':
       switch (nde.declaration?.type) {
@@ -79,6 +93,7 @@ export default iterateJsdoc(({
         checkTypeParams(nde.declaration);
         break;
       }
+
       break;
     case 'ClassDeclaration':
     case 'FunctionDeclaration':
@@ -99,7 +114,7 @@ export default iterateJsdoc(({
     try {
       parsedType = mode === 'permissive' ?
         tryParseType(/** @type {string} */ (potentialTag.type)) :
-        parseType(/** @type {string} */ (potentialTag.type), mode)
+        parseType(/** @type {string} */ (potentialTag.type), mode);
     } catch {
       return;
     }
@@ -109,7 +124,7 @@ export default iterateJsdoc(({
         type,
         value,
       } = /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde);
-      if (type === 'JsdocTypeName' && (/^[A-Z]$/).test(value)) {
+      if (type === 'JsdocTypeName' && (/^[A-Z]$/u).test(value)) {
         usedNames.add(value);
         if (!usedNameToTag.has(value)) {
           usedNameToTag.set(value, potentialTag);
@@ -143,7 +158,9 @@ export default iterateJsdoc(({
   const callbackTags = utils.getTags('callback');
   const functionTags = utils.getTags('function');
   if (callbackTags.length || functionTags.length) {
-    checkTagsAndTemplates(['param', 'returns']);
+    checkTagsAndTemplates([
+      'param', 'returns',
+    ]);
     return;
   }
 
@@ -156,7 +173,9 @@ export default iterateJsdoc(({
   const potentialTypedef = typedefTags[0];
   checkForUsedTypes(potentialTypedef);
 
-  checkTagsAndTemplates(['property']);
+  checkTagsAndTemplates([
+    'property',
+  ]);
 }, {
   iterateAllJsdocs: true,
   meta: {
@@ -169,8 +188,8 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           requireSeparateTemplates: {
-            type: 'boolean'
-          }
+            type: 'boolean',
+          },
         },
         type: 'object',
       },

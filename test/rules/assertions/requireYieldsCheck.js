@@ -714,8 +714,8 @@ export default {
           }
       `,
       languageOptions: {
-        sourceType: 'script'
-      }
+        sourceType: 'script',
+      },
     },
     {
       code: `

@@ -7,7 +7,9 @@ import {
 import {
   readFileSync,
 } from 'fs';
-import {isBuiltin as isBuiltinModule} from 'node:module';
+import {
+  isBuiltin as isBuiltinModule,
+} from 'node:module';
 import {
   join,
 } from 'path';
@@ -81,6 +83,7 @@ export default iterateJsdoc(({
 
       if (nde.type === 'JsdocTypeImport') {
         let mod = nde.element.value.replace(
+          // eslint-disable-next-line regexp/no-super-linear-backtracking
           /^(@[^/]+\/[^/]+|[^/]+).*$/u, '$1',
         );
 

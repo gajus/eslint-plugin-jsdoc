@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default {
   invalid: [
@@ -167,14 +169,14 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           exemptAsync: false,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -211,14 +213,14 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           exemptGenerators: false,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
       settings: {
         jsdoc: {
           mode: 'typescript',
@@ -287,14 +289,14 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           exemptAsync: false,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -312,15 +314,15 @@ export default {
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           exemptAsync: false,
           reportMissingReturnForUndefinedTypes: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -392,7 +394,7 @@ export default {
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -414,7 +416,7 @@ export default {
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -457,7 +459,7 @@ export default {
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1054,8 +1056,8 @@ export default {
           }
       `,
       languageOptions: {
-        sourceType: 'script'
-      }
+        sourceType: 'script',
+      },
     },
     {
       code: `
@@ -1094,14 +1096,14 @@ export default {
             return 5;
           }
       `,
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           exemptAsync: false,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -1132,14 +1134,14 @@ export default {
           return new Promise(resolve => resolve());
         }
       `,
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           reportMissingReturnForUndefinedTypes: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -1194,14 +1196,14 @@ export default {
            */
           function * quux() {}
       `,
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           exemptGenerators: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
       settings: {
         jsdoc: {
           mode: 'jsdoc',
@@ -1232,7 +1234,7 @@ export default {
       export function readFixture(path: string): Promise<Buffer>;
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1248,7 +1250,7 @@ export default {
       export function readFixture(path: string): Promise<Buffer>;
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1266,7 +1268,7 @@ export default {
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1282,7 +1284,7 @@ export default {
       export function readFixture(path: string);
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1499,7 +1501,7 @@ export default {
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {

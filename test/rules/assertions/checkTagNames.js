@@ -1,9 +1,11 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
 import {
   closureTags,
   jsdocTags,
   typeScriptTags,
 } from '../../../src/tagNames.js';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 /**
  * @param {import('../../../src/tagNames.js').AliasedTags} tags
@@ -26,7 +28,7 @@ const buildTagBlock = (tags) => {
  */
 const lineCount = (code) => {
   /* eslint-disable jsdoc/no-undefined-types -- TS */
-  return /** @type {RegExpMatchArray} */ (code.match(/\n/ug)).length;
+  return /** @type {RegExpMatchArray} */ (code.match(/\n/gu)).length;
   /* eslint-enable jsdoc/no-undefined-types -- TS */
 };
 
@@ -1035,14 +1037,14 @@ export default {
         let a;
       `,
       filename: 'file.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           typed: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1050,14 +1052,14 @@ export default {
         declare let a;
       `,
       filename: 'file.d.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           typed: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1077,14 +1079,14 @@ export default {
         declare let a;
       `,
       filename: 'file.d.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           typed: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1092,14 +1094,14 @@ export default {
         { declare let a; }
       `,
       filename: 'file.d.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           typed: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1109,14 +1111,14 @@ export default {
         }
       `,
       filename: 'file.d.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           typed: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1422,7 +1424,7 @@ export default {
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {

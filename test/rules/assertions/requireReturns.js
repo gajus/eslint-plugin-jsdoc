@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default {
   invalid: [
@@ -152,14 +154,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceRequireReturn: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -174,14 +176,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceRequireReturn: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -196,14 +198,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceRequireReturn: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -218,14 +220,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceRequireReturn: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -344,14 +346,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceReturnsWithAsync: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -476,14 +478,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceReturnsWithAsync: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -500,14 +502,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceReturnsWithAsync: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -524,14 +526,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           checkGetters: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -808,8 +810,8 @@ export default {
         },
       ],
       languageOptions: {
-        sourceType: 'script'
-      }
+        sourceType: 'script',
+      },
     },
     {
       code: `
@@ -1416,7 +1418,7 @@ export default {
       ],
       ignoreReadme: true,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1446,7 +1448,7 @@ export default {
       ],
       ignoreReadme: true,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1557,14 +1559,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceReturnsWithAsync: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -1581,14 +1583,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceReturnsWithAsync: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -1648,6 +1650,9 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1658,9 +1663,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1677,7 +1679,7 @@ export default {
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1696,7 +1698,7 @@ export default {
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1713,7 +1715,7 @@ export default {
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1729,14 +1731,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           forceRequireReturn: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1751,14 +1753,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           forceRequireReturn: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1819,6 +1821,9 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1830,9 +1835,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1874,14 +1876,14 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           publicOnly: true,
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -1899,6 +1901,9 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           publicOnly: {
@@ -1907,9 +1912,6 @@ export default {
           },
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -1927,6 +1929,9 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           publicOnly: {
@@ -1934,9 +1939,6 @@ export default {
           },
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -1954,6 +1956,9 @@ export default {
           message: 'Missing JSDoc @returns declaration.',
         },
       ],
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           publicOnly: {
@@ -1961,9 +1966,6 @@ export default {
           },
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
   ],
   valid: [
@@ -2291,14 +2293,14 @@ export default {
           async function quux () {
           }
       `,
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceRequireReturn: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -2308,14 +2310,14 @@ export default {
           async function quux () {
           }
       `,
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceReturnsWithAsync: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -2527,14 +2529,14 @@ export default {
             }
           }
       `,
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           checkGetters: false,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -2545,14 +2547,14 @@ export default {
             }
           }
       `,
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           checkGetters: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -2563,14 +2565,14 @@ export default {
             }
           }
       `,
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           checkGetters: false,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -2769,6 +2771,9 @@ export default {
       export default Gender;
       `,
       ignoreReadme: true,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -2776,9 +2781,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -2789,7 +2791,7 @@ export default {
           new Promise<void>((res) => setTimeout(res, ms));
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -2802,7 +2804,7 @@ export default {
         };
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -2815,7 +2817,7 @@ export default {
       export function readFixture(path: string): Promise<Buffer>;
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -2828,7 +2830,7 @@ export default {
       export function readFixture(path: string): void;
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -2839,7 +2841,7 @@ export default {
       export function readFixture(path: string): void;
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -2850,7 +2852,7 @@ export default {
       export function readFixture(path: string);
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -2867,6 +2869,9 @@ export default {
           abstract Test(): string;
         }
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -2878,9 +2883,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `

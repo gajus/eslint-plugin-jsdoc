@@ -1,29 +1,31 @@
 // These are Visual Studio Code settings that should apply to this particular repository
 {
-    // ----------------
-    // Vanilla settings
-    // ----------------
 
-    // This matches the Canonical ESLint Config
-    // https://www.npmjs.com/package/eslint-config-canonical
-    "editor.rulers": [100],
-    "editor.tabSize": 2,
+  // ----------
+  // JavaScript
+  // ----------
 
-    // Linux line endings are used in this project
-    "files.eol": "\n",
+  // Automatically run the formatter when a JavaScript file is saved
+  "[javascript]": {
+    "editor.codeActionsOnSave": [
+      "source.fixAll.eslint"
+    ],
+    "editor.tabSize": 2
+  },
+  // ----------------
+  // Vanilla settings
+  // ----------------
 
-    // Automatically removing all trailing whitespace when saving a file
-    "files.trimTrailingWhitespace": true,
+  // This matches the Canonical ESLint Config
+  // https://www.npmjs.com/package/eslint-config-canonical
+  "editor.rulers": [
+    100
+  ],
+  "editor.tabSize": 2,
 
-    // ----------
-    // JavaScript
-    // ----------
+  // Linux line endings are used in this project
+  "files.eol": "\n",
 
-    // Automatically run the formatter when a JavaScript file is saved
-    "[javascript]": {
-      "editor.codeActionsOnSave": [
-        "source.fixAll.eslint",
-      ],
-      "editor.tabSize": 2,
-    },
-  }
+  // Automatically removing all trailing whitespace when saving a file
+  "files.trimTrailingWhitespace": true
+}

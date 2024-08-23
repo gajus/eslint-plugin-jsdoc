@@ -5,8 +5,8 @@ const otherDescriptiveTags = new Set([
   // 'copyright' and 'see' might be good addition, but as the former may be
   //   sensitive text, and the latter may have just a link, they are not
   //   included by default
-  'summary', 'file', 'fileoverview', 'overview', 'classdesc', 'todo',
-  'deprecated', 'throws', 'exception', 'yields', 'yield',
+  'classdesc', 'deprecated', 'exception', 'file', 'fileoverview', 'overview',
+  'summary', 'throws', 'todo', 'yield', 'yields',
 ]);
 
 /**
@@ -14,7 +14,7 @@ const otherDescriptiveTags = new Set([
  * @returns {string[]}
  */
 const extractParagraphs = (text) => {
-  return text.split(/(?<![;:])\n\n+/u);
+  return text.split(/(?<![;:])\n{2,}/u);
 };
 
 /**
@@ -30,7 +30,7 @@ const extractSentences = (text, abbreviationsRegex) => {
     // Remove custom abbreviations
     .replace(abbreviationsRegex, '');
 
-  const sentenceEndGrouping = /([.?!])(?:\s+|$)/ug;
+  const sentenceEndGrouping = /([.?!])(?:\s+|$)/gu;
 
   const puncts = [
     ...txt.matchAll(sentenceEndGrouping),
@@ -112,7 +112,7 @@ const validateDescription = (
     return false;
   }
 
-  const descriptionNoHeadings = description.replaceAll(/^\s*#[^\n]*(\n|$)/gm, '');
+  const descriptionNoHeadings = description.replaceAll(/^\s*#[^\n]*(\n|$)/gmu, '');
 
   const paragraphs = extractParagraphs(descriptionNoHeadings).filter(Boolean);
 
@@ -123,7 +123,7 @@ const validateDescription = (
       let text = sourceCode.getText(jsdocNode);
 
       if (!/[.:?!]$/u.test(paragraph)) {
-        const line = paragraph.split('\n').filter(Boolean).pop();
+        const line = paragraph.split('\n').findLast(Boolean);
         text = text.replace(new RegExp(`${escapeStringRegexp(
           /** @type {string} */
           (line),
@@ -210,11 +210,11 @@ const validateDescription = (
 };
 
 export default iterateJsdoc(({
-  sourceCode,
   context,
   jsdoc,
-  report,
   jsdocNode,
+  report,
+  sourceCode,
   utils,
 }) => {
   const /** @type {{abbreviations: string[], newlineBeforeCapsAssumesBadSentenceEnd: boolean}} */ {
@@ -224,7 +224,7 @@ export default iterateJsdoc(({
 
   const abbreviationsRegex = abbreviations.length ?
     new RegExp('\\b' + abbreviations.map((abbreviation) => {
-      return escapeStringRegexp(abbreviation.replaceAll(/\.$/ug, '') + '.');
+      return escapeStringRegexp(abbreviation.replaceAll(/\.$/gu, '') + '.');
     }).join('|') + '(?:$|\\s)', 'gu') :
     '';
 

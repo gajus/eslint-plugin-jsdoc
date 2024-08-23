@@ -1,5 +1,7 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
 import * as jsdocEslintParser from '@es-joy/jsdoc-eslint-parser/typescript.js';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default {
   invalid: [
@@ -330,6 +332,9 @@ export default {
           message: '@enum not allowed on declarations',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -346,9 +351,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -389,6 +391,9 @@ export default {
         },
       ],
       ignoreReadme: true,
+      languageOptions: {
+        parser: jsdocEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -398,9 +403,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: jsdocEslintParser,
-      }
     },
     {
       code: `
@@ -566,6 +568,9 @@ export default {
           message: 'Functions with non-void return types must have a @returns tag',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -577,9 +582,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -594,6 +596,9 @@ export default {
           message: 'Functions with non-void return types must have a @returns tag',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -605,9 +610,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -622,6 +624,9 @@ export default {
           message: 'FunctionType\'s with non-void return types must have a @returns tag with a description',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -633,9 +638,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -652,6 +654,9 @@ export default {
           message: 'methods with non-void return types must have a @returns tag',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -663,9 +668,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -825,6 +827,9 @@ export default {
           VAL_A: "myvala"
         } as const);
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -841,9 +846,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -869,6 +871,9 @@ export default {
         /** Does something very important. */
         function foo(): string;
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -878,9 +883,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -986,6 +988,9 @@ export default {
        */
       function test(): void { }
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -997,9 +1002,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1008,6 +1010,9 @@ export default {
        */
       let test = (): undefined => { };
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1019,9 +1024,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1030,6 +1032,9 @@ export default {
        */
       let test: () => string;
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1041,9 +1046,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1054,6 +1056,9 @@ export default {
         abstract Test(): void;
       }
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1065,9 +1070,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `

@@ -48,7 +48,8 @@ const getSymbolValue = function (symbol) {
   if (symbol.type === 'literal') {
     return /** @type {ValueObject} */ (symbol.value).value;
   }
-  /* c8 ignore next */
+  /* c8 ignore next 2 */
+
   return null;
 };
 
@@ -102,8 +103,6 @@ const getIdentifier = function (node, globals, scope, opts) {
 /** @type {CreateSymbol} */
 let createSymbol; // eslint-disable-line prefer-const
 
-/* eslint-disable complexity -- Temporary */
-
 /**
  * @typedef {{
  *   simpleIdentifier?: boolean
@@ -119,7 +118,6 @@ let createSymbol; // eslint-disable-line prefer-const
  * @returns {CreatedNode|null}
  */
 const getSymbol = function (node, globals, scope, opt) {
-  /* eslint-enable complexity -- Temporary */
   const opts = opt || {};
   /* c8 ignore next */
   switch (node.type) {
@@ -152,7 +150,8 @@ const getSymbol = function (node, globals, scope, opt) {
 
       return block;
     }
-    /* c8 ignore next 10 */
+    /* c8 ignore next 11 */
+
     /*
     if (opts.createMissingProps && propertyValue) {
       obj.props[propertyValue] = createNode();
@@ -177,13 +176,14 @@ const getSymbol = function (node, globals, scope, opt) {
     );
   }
 
-  /* c8 ignore next 7 -- No longer needed? */
+  /* c8 ignore next 8 -- No longer needed? */
   // @ts-expect-error TS OK
   case 'TSTypeAliasDeclaration':
   // @ts-expect-error TS OK
   // Fallthrough
   case 'TSEnumDeclaration':
   // @ts-expect-error TS OK
+  // Fallthrough
   case 'TSInterfaceDeclaration':
   case 'ClassDeclaration':
   case 'FunctionExpression': case 'FunctionDeclaration':
@@ -251,11 +251,11 @@ const getSymbol = function (node, globals, scope, opt) {
     val.type = 'object';
     for (const prop of node.properties) {
       if ([
-        // typescript-eslint, espree, acorn, etc.
-        'SpreadElement',
-
         // @babel/eslint-parser
         'ExperimentalSpreadProperty',
+
+        // typescript-eslint, espree, acorn, etc.
+        'SpreadElement',
       ].includes(prop.type)) {
         continue;
       }
@@ -291,7 +291,8 @@ const getSymbol = function (node, globals, scope, opt) {
     return val;
   }
   }
-  /* c8 ignore next */
+  /* c8 ignore next 2 */
+
   return null;
 };
 
@@ -339,7 +340,8 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
         globals,
       );
     }
-    /* c8 ignore next 2 */
+    /* c8 ignore next 3 */
+
     break;
   }
 
@@ -353,14 +355,16 @@ createSymbol = function (node, globals, value, scope, isGlobal) {
 
         return block.props[nde.name];
       }
-      /* c8 ignore next */
+      /* c8 ignore next 2 */
+
       debug('Identifier: Missing value symbol for %s', nde.name);
     } else {
       createBlockSymbol(block, nde.name, createNode(), globals, isGlobal);
 
       return block.props[nde.name];
     }
-    /* c8 ignore next 2 */
+    /* c8 ignore next 3 */
+
     break;
   }
 
@@ -469,8 +473,6 @@ const initVariables = function (node, globals, opts) {
   }
 };
 
-/* eslint-disable complexity -- Temporary */
-
 /**
  * Populates variable maps using AST
  * @param {import('eslint').Rule.Node} node
@@ -480,7 +482,6 @@ const initVariables = function (node, globals, opts) {
  * @returns {boolean}
  */
 const mapVariables = function (node, globals, opt, isExport) {
-  /* eslint-enable complexity -- Temporary */
   /* c8 ignore next */
   const opts = opt || {};
   /* c8 ignore next */
@@ -700,10 +701,10 @@ const findNode = function (node, block, cache) {
 };
 
 const exportTypes = new Set([
-  'ExportNamedDeclaration', 'ExportDefaultDeclaration',
+  'ExportDefaultDeclaration', 'ExportNamedDeclaration',
 ]);
 const ignorableNestedTypes = new Set([
-  'FunctionDeclaration', 'ArrowFunctionExpression', 'FunctionExpression',
+  'ArrowFunctionExpression', 'FunctionDeclaration', 'FunctionExpression',
 ]);
 
 /**
@@ -732,25 +733,25 @@ const getExportAncestor = function (nde) {
 };
 
 const canBeExportedByAncestorType = new Set([
-  'TSPropertySignature',
-  'TSMethodSignature',
   'ClassProperty',
-  'PropertyDefinition',
   'Method',
+  'PropertyDefinition',
+  'TSMethodSignature',
+  'TSPropertySignature',
 ]);
 
 const canExportChildrenType = new Set([
-  'TSInterfaceBody',
-  'TSInterfaceDeclaration',
-  'TSTypeLiteral',
-  'TSTypeAliasDeclaration',
-  'TSTypeParameterInstantiation',
-  'TSTypeReference',
-  'ClassDeclaration',
   'ClassBody',
+  'ClassDeclaration',
   'ClassDefinition',
   'ClassExpression',
   'Program',
+  'TSInterfaceBody',
+  'TSInterfaceDeclaration',
+  'TSTypeAliasDeclaration',
+  'TSTypeLiteral',
+  'TSTypeParameterInstantiation',
+  'TSTypeReference',
 ]);
 
 /**
@@ -893,8 +894,8 @@ const parse = function (ast, node, opt) {
 };
 
 const accessibilityNodes = new Set([
-  'PropertyDefinition',
   'MethodDefinition',
+  'PropertyDefinition',
 ]);
 
 /**

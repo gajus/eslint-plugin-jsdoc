@@ -233,14 +233,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceRequireYields: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -257,14 +257,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 8,
+      },
       options: [
         {
           forceRequireYields: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 8,
-      },
     },
     {
       code: `
@@ -281,14 +281,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           forceRequireYields: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -305,14 +305,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           forceRequireYields: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -461,14 +461,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           forceRequireYields: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -485,14 +485,14 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           forceRequireYields: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -551,6 +551,9 @@ export default {
           message: 'Missing JSDoc @yields declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           contexts: [
@@ -559,9 +562,6 @@ export default {
           withGeneratorTag: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -576,6 +576,9 @@ export default {
           message: 'Missing JSDoc @next declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           contexts: [
@@ -584,9 +587,6 @@ export default {
           nextWithGeneratorTag: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -893,8 +893,8 @@ export default {
         },
       ],
       languageOptions: {
-        sourceType: 'script'
-      }
+        sourceType: 'script',
+      },
     },
     {
       code: `
@@ -1257,6 +1257,9 @@ export default {
         },
       ],
       ignoreReadme: true,
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           contexts: [
@@ -1264,9 +1267,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -1286,6 +1286,9 @@ export default {
         },
       ],
       ignoreReadme: true,
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           contexts: [
@@ -1293,9 +1296,6 @@ export default {
           ],
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
   ],
   valid: [
@@ -1567,14 +1567,14 @@ export default {
           async function * quux () {
           }
       `,
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           forceRequireYields: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -1893,9 +1893,11 @@ export default {
       `,
       options: [
         {
-          contexts: ['ExportNamedDeclaration']
-        }
-      ]
-    }
+          contexts: [
+            'ExportNamedDeclaration',
+          ],
+        },
+      ],
+    },
   ],
 };

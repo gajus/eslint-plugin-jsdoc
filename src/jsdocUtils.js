@@ -4,10 +4,6 @@ import {
   jsdocTags,
   typeScriptTags,
 } from './tagNames.js';
-import {
-  hasReturnValue,
-  hasValueOrExecutorHasNonEmptyResolveValue,
-} from './utils/hasReturnValue.js';
 import WarnSettings from './WarnSettings.js';
 import {
   tryParse,
@@ -429,7 +425,7 @@ const getFunctionParameterNames = (
     }
 
     if ([
-      'RestElement', 'ExperimentalRestProperty',
+      'ExperimentalRestProperty', 'RestElement',
     ].includes(param.type)) {
       return {
         isRestProperty: isProperty,
@@ -437,9 +433,12 @@ const getFunctionParameterNames = (
           /** @type {import('@typescript-eslint/types').TSESTree.RestElement} */ (
             param
           // @ts-expect-error Ok
-          ).argument).name ?? param?.argument?.elements?.map(({name}) => {
-            return name;
-          }),
+          ).argument).name ?? param?.argument?.elements?.map(({
+          // @ts-expect-error Ok
+          name,
+        }) => {
+          return name;
+        }),
         restElement: true,
       };
     }
@@ -526,12 +525,12 @@ const modeWarnSettings = WarnSettings();
  */
 const getTagNamesForMode = (mode, context) => {
   switch (mode) {
-  case 'jsdoc':
-    return jsdocTags;
-  case 'typescript':
-    return typeScriptTags;
-  case 'closure': case 'permissive':
+  case 'closure':
+  case 'permissive':
     return closureTags;
+  case 'jsdoc':
+    return jsdocTags; case 'typescript':
+    return typeScriptTags;
   default:
     if (!modeWarnSettings.hasBeenWarned(context, 'mode')) {
       context.report({
@@ -561,44 +560,44 @@ const getTagNamesForMode = (mode, context) => {
  * @returns {string[]|string}
  */
 const getTagDescription = (tg, returnArray) => {
-    /**
-     * @type {string[]}
-     */
-    const descriptions = [];
-    tg.source.some(({
-      tokens: {
-        end,
-        lineEnd,
-        postDelimiter,
-        tag,
-        postTag,
-        name,
-        type,
-        description,
-      },
-    }) => {
-      const desc = (
-        tag && postTag ||
+  /**
+   * @type {string[]}
+   */
+  const descriptions = [];
+  tg.source.some(({
+    tokens: {
+      description,
+      end,
+      lineEnd,
+      name,
+      postDelimiter,
+      postTag,
+      tag,
+      type,
+    },
+  }) => {
+    const desc = (
+      tag && postTag ||
         !tag && !name && !type && postDelimiter || ''
 
-      // Remove space
-      ).slice(1) +
+    // Remove space
+    ).slice(1) +
         (description || '') + (lineEnd || '');
 
-      if (end) {
-        if (desc) {
-          descriptions.push(desc);
-        }
-
-        return true;
+    if (end) {
+      if (desc) {
+        descriptions.push(desc);
       }
 
-      descriptions.push(desc);
+      return true;
+    }
 
-      return false;
-    });
+    descriptions.push(desc);
 
-    return returnArray ? descriptions : descriptions.join('\n');
+    return false;
+  });
+
+  return returnArray ? descriptions : descriptions.join('\n');
 };
 
 /**
@@ -621,10 +620,11 @@ const getPreferredTagNameSimple = (
   name,
   mode,
   tagPreference = {},
+  // eslint-disable-next-line unicorn/no-object-as-default-parameter
   context = {
     report () {
       // No-op
-    }
+    },
   },
 ) => {
   const prefValues = Object.values(tagPreference);
@@ -748,12 +748,14 @@ const getTags = (jsdoc, tagName) => {
  * }}
  */
 const getPreferredTagName = (jsdoc, {
-  tagName,
-  context, mode,
-  tagNamePreference,
+  allowObjectReturn = false,
+  context,
+  mode,
   report = () => {},
   skipReportingBlockedTag = false,
-  allowObjectReturn = false,
+  tagName,
+  tagNamePreference,
+  // eslint-disable-next-line perfectionist/sort-objects
   defaultMessage = `Unexpected tag \`@${tagName}\``,
 }) => {
   const ret = getPreferredTagNameSimple(tagName, mode, tagNamePreference, context);
@@ -793,16 +795,21 @@ const getPreferredTagName = (jsdoc, {
 const forEachPreferredTag = (
   jsdoc, tagName, arrayHandler,
   {
-    context, mode, report,
-    tagNamePreference,
+    context,
+    mode,
+    report,
     skipReportingBlockedTag = false,
-  } = {}
+    tagNamePreference,
+  } = {},
 ) => {
   const targetTagName = /** @type {string|false} */ (
     getPreferredTagName(jsdoc, {
+      context,
+      mode,
+      report,
       skipReportingBlockedTag,
       tagName,
-      context, mode, report, tagNamePreference
+      tagNamePreference,
     })
   );
   if (!targetTagName ||
@@ -985,8 +992,8 @@ const overrideTagStructure = (structuredTags, tagMap = tagStructure) => {
     tag,
     {
       name,
-      type,
       required = [],
+      type,
     },
   ] of Object.entries(structuredTags)) {
     const tagStruct = ensureMap(tagMap, tag);
@@ -1401,7 +1408,7 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
  * @param {boolean} [innerFunction]
  * @returns {boolean}
  */
-// eslint-disable-next-line complexity
+
 const hasThrowValue = (node, innerFunction) => {
   if (!node) {
     return false;
@@ -1483,6 +1490,7 @@ const parseClosureTemplateTag = (tag) => {
   return tag.name
     .split(',')
     .map((type) => {
+      // eslint-disable-next-line regexp/no-super-linear-backtracking
       return type.trim().replace(/^\[(?<name>.*?)=.*\]$/u, '$<name>');
     });
 };
@@ -1584,11 +1592,12 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
 };
 
 const tagsWithNamesAndDescriptions = new Set([
-  'param', 'arg', 'argument', 'property', 'prop',
+  'arg', 'argument', 'param', 'prop', 'property',
   'template',
 
   // These two are parsed by our custom parser as though having a `name`
-  'returns', 'return',
+  // eslint-disable-next-line perfectionist/sort-sets -- Grouping
+  'return', 'returns',
 ]);
 
 /**
@@ -1685,9 +1694,9 @@ const isSetter = (node) => {
  */
 const hasAccessorPair = (node) => {
   const {
-    type,
-    kind: sourceKind,
     key,
+    kind: sourceKind,
+    type,
   } =
     /**
      * @type {import('@typescript-eslint/types').TSESTree.MethodDefinition|
@@ -1712,8 +1721,8 @@ const hasAccessorPair = (node) => {
   return (
     sibling.some((child) => {
       const {
-        kind,
         key: ky,
+        kind,
       } = /**
            * @type {import('@typescript-eslint/types').TSESTree.MethodDefinition|
            *   import('@typescript-eslint/types').TSESTree.Property}
@@ -1810,7 +1819,7 @@ const pathDoesNotBeginWith = (name, otherPathName) => {
  * @returns {RegExp}
  */
 const getRegexFromString = (regexString, requiredFlags) => {
-  const match = regexString.match(/^\/(.*)\/([gimyus]*)$/us);
+  const match = regexString.match(/^\/(.*)\/([gimyus]*)$/su);
   let flags = 'u';
   let regex = regexString;
   if (match) {
@@ -1853,10 +1862,10 @@ export {
   getTagStructureForMode,
   hasATag,
   hasParams,
-  hasReturnValue,
+
   hasTag,
   hasThrowValue,
-  hasValueOrExecutorHasNonEmptyResolveValue,
+
   hasYieldValue,
   isConstructor,
   isGetter,
@@ -1878,3 +1887,7 @@ export {
   tagMustHaveNamePosition,
   tagMustHaveTypePosition,
 };
+export {
+  hasReturnValue,
+  hasValueOrExecutorHasNonEmptyResolveValue,
+} from './utils/hasReturnValue.js';

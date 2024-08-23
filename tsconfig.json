@@ -1,24 +1,28 @@
 {
   "compilerOptions": {
-    "lib": ["es2022"],
-    "moduleResolution": "Bundler",
-    "module": "ESNext",
     "allowJs": true,
     "checkJs": true,
-    "noEmit": true,
     "declaration": true,
     "declarationMap": true,
-    "strict": true,
+    "lib": [
+      "es2023"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "outDir": "dist",
     "skipLibCheck": true,
-    "target": "es2018",
-    "outDir": "dist"
+    "strict": true,
+    "target": "es2018"
   },
+  "exclude": [
+    "node_modules"
+  ],
   "include": [
     "src/**/*.js",
     "test/**/*.js",
     "typings/gitdown.d.ts",
     "typings/babel__eslint-parser.d.ts",
     "src/import-worker.mjs"
-  ],
-  "exclude": ["node_modules"]
+  ]
 }

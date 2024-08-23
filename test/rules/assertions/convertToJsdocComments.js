@@ -1,4 +1,7 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+/* eslint-disable no-useless-concat */
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default {
   invalid: [
@@ -15,13 +18,13 @@ export default {
       ],
       options: [
         {
-          enforceJsdocLineStyle: 'single'
-        }
+          enforceJsdocLineStyle: 'single',
+        },
       ],
       output: `
         /** A single line comment */
         function quux () {}
-      `
+      `,
     },
     {
       code: `
@@ -39,15 +42,15 @@ export default {
           contexts: [
             {
               context: 'FunctionDeclaration',
-              inlineCommentBlock: true
-            }
-          ]
-        }
+              inlineCommentBlock: true,
+            },
+          ],
+        },
       ],
       output: `
         /** A single line comment */
         function quux () {}
-      `
+      `,
     },
     {
       code: `
@@ -63,8 +66,8 @@ export default {
       options: [
         {
           enableFixer: false,
-          enforceJsdocLineStyle: 'single'
-        }
+          enforceJsdocLineStyle: 'single',
+        },
       ],
     },
     {
@@ -80,30 +83,9 @@ export default {
       ],
       options: [
         {
+          enforceJsdocLineStyle: 'single',
           lineOrBlockStyle: 'line',
-          enforceJsdocLineStyle: 'single'
-        }
-      ],
-      output: `
-        /** A single line comment */
-        function quux () {}
-      `
-    },
-    {
-      code: `
-        /* A single line comment */
-        function quux () {}
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Block comments should be JSDoc-style.',
         },
-      ],
-      options: [
-        {
-          enforceJsdocLineStyle: 'single'
-        }
       ],
       output: `
         /** A single line comment */
@@ -123,9 +105,30 @@ export default {
       ],
       options: [
         {
+          enforceJsdocLineStyle: 'single',
+        },
+      ],
+      output: `
+        /** A single line comment */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /* A single line comment */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Block comments should be JSDoc-style.',
+        },
+      ],
+      options: [
+        {
+          enforceJsdocLineStyle: 'single',
           lineOrBlockStyle: 'block',
-          enforceJsdocLineStyle: 'single'
-        }
+        },
       ],
       output: `
         /** A single line comment */
@@ -145,8 +148,8 @@ export default {
       ],
       options: [
         {
-          enforceJsdocLineStyle: 'multi'
-        }
+          enforceJsdocLineStyle: 'multi',
+        },
       ],
       output: `
         /**
@@ -186,8 +189,8 @@ export default {
       ],
       options: [
         {
-          enforceJsdocLineStyle: 'multi'
-        }
+          enforceJsdocLineStyle: 'multi',
+        },
       ],
       output: `
         /**
@@ -235,10 +238,16 @@ export default {
           message: 'Block comments should be JSDoc-style.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
       options: [
         {
-          contexts: ['ClassDeclaration']
-        }
+          contexts: [
+            'ClassDeclaration',
+          ],
+        },
       ],
       output: `
         /**
@@ -248,10 +257,6 @@ export default {
         export class User {
         }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser,
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -265,18 +270,18 @@ export default {
       ],
       options: [
         {
-          enforceJsdocLineStyle: 'single'
-        }
-      ],
-      settings: {
-        jsdoc: {
-          minLines: 0,
-          maxLines: 0,
+          enforceJsdocLineStyle: 'single',
         },
-      },
+      ],
       output: `
         /** A single line comment */ function quux () {}
-      `
+      `,
+      settings: {
+        jsdoc: {
+          maxLines: 0,
+          minLines: 0,
+        },
+      },
     },
     {
       code: `
@@ -290,9 +295,11 @@ export default {
       ],
       options: [
         {
+          contextsAfter: [
+            'VariableDeclarator',
+          ],
           contextsBeforeAndAfter: [],
-          contextsAfter: ['VariableDeclarator']
-        }
+        },
       ],
       output: `
         /**
@@ -313,14 +320,14 @@ export default {
       ],
       options: [
         {
-          contextsBeforeAndAfter: [],
           contextsAfter: [
             {
               context: 'VariableDeclarator',
-              inlineCommentBlock: true
-            }
-          ]
-        }
+              inlineCommentBlock: true,
+            },
+          ],
+          contextsBeforeAndAfter: [],
+        },
       ],
       output: `
         /** Test comment */
@@ -339,22 +346,22 @@ export default {
       ],
       options: [
         {
-          contextsBeforeAndAfter: [],
           contextsAfter: [
             {
               context: 'VariableDeclarator',
-              inlineCommentBlock: true
-            }
-          ]
-        }
+              inlineCommentBlock: true,
+            },
+          ],
+          contextsBeforeAndAfter: [],
+        },
       ],
       output: `
         /** Test comment */ var a = []; ` + `
       `,
       settings: {
         jsdoc: {
-          minLines: 0,
           maxLines: 0,
+          minLines: 0,
         },
       },
     },
@@ -371,15 +378,17 @@ export default {
       ],
       options: [
         {
-          contextsBeforeAndAfter: ['VariableDeclaration']
-        }
+          contextsBeforeAndAfter: [
+            'VariableDeclaration',
+          ],
+        },
       ],
       output: `
         /**
          * Test comment
          */
         var a = [];
-      `
+      `,
     },
     {
       code: `
@@ -393,8 +402,10 @@ export default {
       ],
       options: [
         {
-          contextsBeforeAndAfter: ['VariableDeclaration']
-        }
+          contextsBeforeAndAfter: [
+            'VariableDeclaration',
+          ],
+        },
       ],
       output: `
         /**
@@ -421,8 +432,10 @@ export default {
       },
       options: [
         {
-          contextsBeforeAndAfter: ['TSPropertySignature']
-        }
+          contextsBeforeAndAfter: [
+            'TSPropertySignature',
+          ],
+        },
       ],
       output: `
         interface B {
@@ -451,8 +464,10 @@ export default {
       },
       options: [
         {
-          contextsBeforeAndAfter: ['PropertyDefinition']
-        }
+          contextsBeforeAndAfter: [
+            'PropertyDefinition',
+          ],
+        },
       ],
       output: `
         class TestClass {
@@ -475,8 +490,10 @@ export default {
       ],
       options: [
         {
-          contextsBeforeAndAfter: ['VariableDeclarator'],
-        }
+          contextsBeforeAndAfter: [
+            'VariableDeclarator',
+          ],
+        },
       ],
       output: `
         /**
@@ -494,8 +511,8 @@ export default {
       `,
       options: [
         {
-          enforceJsdocLineStyle: 'single'
-        }
+          enforceJsdocLineStyle: 'single',
+        },
       ],
     },
     {
@@ -505,8 +522,8 @@ export default {
       `,
       options: [
         {
-          enforceJsdocLineStyle: 'multi'
-        }
+          enforceJsdocLineStyle: 'multi',
+        },
       ],
     },
     {
@@ -517,7 +534,7 @@ export default {
       options: [
         {
           lineOrBlockStyle: 'line',
-        }
+        },
       ],
     },
     {
@@ -528,7 +545,7 @@ export default {
       options: [
         {
           lineOrBlockStyle: 'block',
-        }
+        },
       ],
     },
     {
@@ -538,9 +555,9 @@ export default {
       `,
       options: [
         {
+          enforceJsdocLineStyle: 'single',
           lineOrBlockStyle: 'line',
-          enforceJsdocLineStyle: 'single'
-        }
+        },
       ],
     },
     {
@@ -550,9 +567,9 @@ export default {
       `,
       options: [
         {
+          enforceJsdocLineStyle: 'single',
           lineOrBlockStyle: 'block',
-          enforceJsdocLineStyle: 'single'
-        }
+        },
       ],
     },
     {
@@ -568,8 +585,10 @@ export default {
       `,
       options: [
         {
-          allowedPrefixes: ['@custom-']
-        }
+          allowedPrefixes: [
+            '@custom-',
+          ],
+        },
       ],
     },
     {
@@ -579,9 +598,11 @@ export default {
       `,
       options: [
         {
+          contextsAfter: [
+            'VariableDeclarator',
+          ],
           contextsBeforeAndAfter: [],
-          contextsAfter: ['VariableDeclarator']
-        }
+        },
       ],
     },
   ],

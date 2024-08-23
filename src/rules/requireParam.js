@@ -33,9 +33,9 @@ const rootNamer = (desiredRoots, currentIndex) => {
 
 /* eslint-disable complexity -- Temporary */
 export default iterateJsdoc(({
+  context,
   jsdoc,
   utils,
-  context,
 }) => {
   /* eslint-enable complexity -- Temporary */
   if (utils.avoidDocs()) {
@@ -49,13 +49,13 @@ export default iterateJsdoc(({
 
   const {
     autoIncrementBase = 0,
-    checkRestProperty = false,
     checkDestructured = true,
     checkDestructuredRoots = true,
+    checkRestProperty = false,
     checkTypesPattern = '/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/',
     enableFixer = true,
-    enableRootFixer = true,
     enableRestElementFixer = true,
+    enableRootFixer = true,
     unnamedRootBase = [
       'root',
     ],
@@ -220,7 +220,6 @@ export default iterateJsdoc(({
     functionParameterIdx,
     functionParameterName,
   ] of functionParameterNames.entries()) {
-
     let inc;
     if (Array.isArray(functionParameterName)) {
       const matchedJsdoc = shallowJsdocParameterNames[functionParameterIdx - thisOffset];
@@ -238,6 +237,7 @@ export default iterateJsdoc(({
         rootName = nextRootName;
         inc = incremented;
       }
+
       [
         nextRootName,
         incremented,
@@ -245,10 +245,10 @@ export default iterateJsdoc(({
       ] = namer();
 
       const {
-        hasRestElement,
         hasPropertyRest,
-        rests,
+        hasRestElement,
         names,
+        rests,
       } = /**
            * @type {import('../jsdocUtils.js').FlattendRootInfo & {
            *   annotationParamName?: string | undefined;
@@ -389,8 +389,8 @@ export default iterateJsdoc(({
   const fix = ({
     functionParameterIdx,
     functionParameterName,
-    remove,
     inc,
+    remove,
     type,
   }) => {
     if (inc && !enableRootFixer) {
@@ -455,8 +455,8 @@ export default iterateJsdoc(({
 
     const offset = jsdoc.source.findIndex(({
       tokens: {
-        tag,
         end,
+        tag,
       },
     }) => {
       return tag || end;

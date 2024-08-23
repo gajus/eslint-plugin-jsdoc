@@ -3,8 +3,8 @@ import iterateJsdoc from '../iterateJsdoc.js';
 const middleAsterisksBlockWS = /^([\t ]|\*(?!\*))+/u;
 const middleAsterisksNoBlockWS = /^\*+/u;
 
-const endAsterisksSingleLineBlockWS = /\*((?:\*|(?: |\t))*)\*$/u;
-const endAsterisksMultipleLineBlockWS = /((?:\*|(?: |\t))*)\*$/u;
+const endAsterisksSingleLineBlockWS = /\*([* \t]*)\*$/u;
+const endAsterisksMultipleLineBlockWS = /([* \t]*)\*$/u;
 
 const endAsterisksSingleLineNoBlockWS = /\*(\**)\*$/u;
 const endAsterisksMultipleLineNoBlockWS = /(\**)\*$/u;
@@ -22,19 +22,18 @@ export default iterateJsdoc(({
 
   const middleAsterisks = allowWhitespace ? middleAsterisksNoBlockWS : middleAsterisksBlockWS;
 
-  // eslint-disable-next-line complexity -- Todo
   jsdoc.source.some(({
-    tokens,
     number,
+    tokens,
   }) => {
     const {
       delimiter,
-      tag,
-      name,
-      type,
       description,
       end,
+      name,
       postDelimiter,
+      tag,
+      type,
     } = tokens;
 
     if (

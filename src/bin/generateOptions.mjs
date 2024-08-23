@@ -33,7 +33,7 @@ for (const file of dirContents) {
   const results = esquery.query(
     ast,
     'ExportDefaultDeclaration[declaration.callee.name="iterateJsdoc"]' +
-     ' Property[key.name="meta"] Property[key.name="schema"]',
+      ' Property[key.name="meta"] Property[key.name="schema"]',
   );
   if (results[0]?.value) {
     const schema = generate(results[0]?.value);
@@ -58,9 +58,11 @@ for (const file of dirContents) {
           // throw new Error('Unexpected long schema array');
         }
 
-        initial = `string (${parsed[0].enum.map((item) => {
-          return `"${item}"`;
-        }).join(', ')}) followed by object with `;
+        initial = `string (${parsed[0].enum
+          .map((item) => {
+            return `"${item}"`;
+          })
+          .join(', ')}) followed by object with `;
         parsed.shift();
       }
     }
@@ -72,13 +74,17 @@ for (const file of dirContents) {
     }).replace(/\.js$/u, '.md');
     const docPath = join('.README/rules', hyphenatedRule);
 
-    const ruleDocs = (await readFile(docPath, 'utf8'))
-      .replace(/(\|\s*Options\s*\|)([^|]*)(\|)?/u, `$1${
+    const ruleDocs = (await readFile(docPath, 'utf8')).replace(
+      /(\|\s*Options\s*\|)([^|]*)(\|)?/u,
+      `$1${
         initial +
-        Object.keys(obj.properties).map((key) => {
-          return `\`${key}\``;
-        }).join(', ')
-      }$3`);
+        Object.keys(obj.properties)
+          .map((key) => {
+            return `\`${key}\``;
+          })
+          .join(', ')
+      }$3`,
+    );
 
     await writeFile(docPath, ruleDocs);
   }

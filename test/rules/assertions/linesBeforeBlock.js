@@ -35,8 +35,8 @@ export default {
       ],
       options: [
         {
-          ignoreSameLine: false
-        }
+          ignoreSameLine: false,
+        },
       ],
       output: `
         someCode;
@@ -58,8 +58,8 @@ export default {
       ],
       options: [
         {
-          ignoreSameLine: false
-        }
+          ignoreSameLine: false,
+        },
       ],
       output: `
         someCode;
@@ -164,7 +164,7 @@ export default {
   ],
   valid: [
     {
-      code: `/**\n *\n */`,
+      code: '/**\n *\n */',
     },
     {
       code: `
@@ -237,10 +237,12 @@ export default {
       `,
       options: [
         {
-          excludedTags: ['lends'],
-          ignoreSameLine: false
-        }
-      ]
+          excludedTags: [
+            'lends',
+          ],
+          ignoreSameLine: false,
+        },
+      ],
     },
   ],
 };

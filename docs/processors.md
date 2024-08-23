@@ -158,7 +158,8 @@ same name.
 #### <code>exampleCodeRegex</code> and <code>rejectExampleCodeRegex</code>
 
 See the [`check-examples`](./rules/check-examples.md#readme) option of the
-same name.
+same name. The default of `rejectExampleCodeRegex` is, however, changed to
+`^\s*\`\`\`` when no `exampleCodeRegex` is provided.
 
 <a name="user-content-processors-options-sourcetype"></a>
 <a name="processors-options-sourcetype"></a>

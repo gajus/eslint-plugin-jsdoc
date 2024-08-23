@@ -1,7 +1,6 @@
 import defaultTagOrder from '../defaultTagOrder.js';
 import iterateJsdoc from '../iterateJsdoc.js';
 
-// eslint-disable-next-line complexity -- Temporary
 export default iterateJsdoc(({
   context,
   jsdoc,
@@ -19,11 +18,11 @@ export default iterateJsdoc(({
      *   reportIntraTagGroupSpacing: boolean,
      * }}
      */ {
-      linesBetween = 1,
-      tagSequence = defaultTagOrder,
       alphabetizeExtras = false,
-      reportTagGroupSpacing = true,
+      linesBetween = 1,
       reportIntraTagGroupSpacing = true,
+      reportTagGroupSpacing = true,
+      tagSequence = defaultTagOrder,
     } = context.options[0] || {};
 
   const tagList = tagSequence.flatMap((obj) => {
@@ -142,10 +141,10 @@ export default iterateJsdoc(({
       return tag.source.reduce((acc, {
         tokens: {
           description,
-          name,
-          type,
           end,
+          name,
           tag: tg,
+          type,
         },
       }) => {
         const empty = !tg && !type && !name && !description;
@@ -330,7 +329,6 @@ export default iterateJsdoc(({
 
       const ct = countTagEmptyLines(tag);
       if (ct) {
-        // eslint-disable-next-line complexity -- Temporary
         const fixer = () => {
           let foundFirstTag = false;
 
@@ -342,10 +340,10 @@ export default iterateJsdoc(({
             {
               tokens: {
                 description,
-                name,
-                type,
                 end,
+                name,
                 tag: tg,
+                type,
               },
             },
           ] of jsdoc.source.entries()) {

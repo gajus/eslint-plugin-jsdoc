@@ -255,9 +255,9 @@ export default {
       plugins: {
         '@stylistic': {
           rules: {
-            'max-len': () => {}
-          }
-        }
+            'max-len': () => {},
+          },
+        },
       },
     },
   ],

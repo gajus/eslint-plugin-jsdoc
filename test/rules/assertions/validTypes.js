@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default {
   invalid: [
@@ -1467,7 +1469,7 @@ export default {
       function foo(bar) {}
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1648,7 +1650,7 @@ export default {
       type ComplicatedType<T, U, V, W, X> = never
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1851,7 +1853,7 @@ export default {
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -1859,6 +1861,6 @@ export default {
          * @import { TestOne, TestTwo } from "./types"
          */
       `,
-    }
+    },
   ],
 };

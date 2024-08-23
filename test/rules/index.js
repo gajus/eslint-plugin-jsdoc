@@ -1,5 +1,4 @@
 import config from '../../src/index.js';
-import {fileURLToPath} from 'url';
 import camelCase from 'camelcase';
 import {
   ESLint,
@@ -14,14 +13,16 @@ import {
   join,
 } from 'path';
 import semver from 'semver';
+import {
+  fileURLToPath,
+} from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const dirName = dirname(fileURLToPath(import.meta.url));
 
 const ruleTester = new RuleTester();
 
-// eslint-disable-next-line complexity -- Temporary
 const main = async () => {
-  const ruleNames = JSON.parse(readFileSync(join(__dirname, './ruleNames.json'), 'utf8'));
+  const ruleNames = JSON.parse(readFileSync(join(dirName, './ruleNames.json'), 'utf8'));
 
   if (!config.rules) {
     throw new Error('TypeScript guard');
