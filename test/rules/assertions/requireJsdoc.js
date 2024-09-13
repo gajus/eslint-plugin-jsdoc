@@ -6293,5 +6293,25 @@ function quux (foo) {
         },
       ],
     },
+    {
+      code: `
+        class Abc {
+          static {
+            this.x = '2'
+          }
+        }
+      `,
+      languageOptions: {
+        parser: babelEslintParser,
+      },
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            ClassDeclaration: true
+          }
+        }
+      ],
+    }
   ],
 };
