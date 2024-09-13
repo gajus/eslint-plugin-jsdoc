@@ -1894,5 +1894,12 @@ export class MyClass {
   #myPrivateProp = 5;
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"contexts":["PropertyDefinition"],"require":{"MethodDefinition":true}}]
+
+class Abc {
+  static {
+    this.x = '2'
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"ClassDeclaration":true}}]
 ````
 

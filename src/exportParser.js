@@ -212,6 +212,9 @@ const getSymbol = function (node, globals, scope, opt) {
   case 'ClassBody': {
     const val = createNode();
     for (const method of node.body) {
+      if (!('key' in method)) { // StaticBlock
+        continue;
+      }
       val.props[
         /** @type {import('estree').Identifier} */ (
           /** @type {import('estree').MethodDefinition} */ (
