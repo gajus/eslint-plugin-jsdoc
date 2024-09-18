@@ -1558,5 +1558,20 @@ export default {
         }
       `,
     },
+    {
+      code: `
+        /**
+         * @returns {number}
+         */
+        function foo() {
+          for (;;) {
+            const n = Math.random();
+            if (n < 0.5) {
+              return n;
+            }
+          }
+        }
+      `,
+    },
   ],
 };
