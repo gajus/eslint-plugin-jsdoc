@@ -177,8 +177,13 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
     }
 
     // Fallthrough
-  case 'LabeledStatement':
   case 'ForStatement':
+    if (node.test === null) {
+      // If this is an infinite loop, we assume only one branch
+      //   is needed to provide a return
+      return hasReturnValue(node.body, false, promFilter);
+    }
+  case 'LabeledStatement':
   case 'ForInStatement':
   case 'ForOfStatement':
   case 'WithStatement': {
