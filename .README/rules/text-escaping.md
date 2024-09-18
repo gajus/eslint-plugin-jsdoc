@@ -19,11 +19,13 @@ within it or your documentation.
 ### `escapeHTML`
 
 This option escapes all `<` and `&` characters (except those followed by
-whitespace which are treated as literals by Visual Studio Code).
+whitespace which are treated as literals by Visual Studio Code). Defaults to
+`false`.
 
 ### `escapeMarkdown`
 
 This option escapes the first backtick (`` ` ``) in a paired sequence.
+Defaults to `false`.
 
 ## Context and settings
 

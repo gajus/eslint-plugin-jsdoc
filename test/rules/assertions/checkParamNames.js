@@ -2015,5 +2015,28 @@ export default {
         sourceType: 'module',
       },
     },
+    {
+      code: `
+        /**
+         * @param c c
+         * @param d d
+         */
+        const inner = (c: number, d: string): void => {
+          console.log(c);
+          console.log(d);
+        };
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      settings: {
+        jsdoc: {
+          contexts: [
+            'VariableDeclaration',
+          ]
+        }
+      },
+    },
   ],
 };

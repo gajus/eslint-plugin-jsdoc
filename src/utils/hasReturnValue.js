@@ -20,8 +20,11 @@ const isNewPromiseExpression = (node) => {
  */
 const isVoidPromise = (node) => {
   return /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */ (node)?.typeArguments?.params?.[0]?.type === 'TSVoidKeyword'
-    /* c8 ignore next */
-    || /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */ (node)?.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
+    /* c8 ignore next 4 */
+    || /** @type {import('@typescript-eslint/types').TSESTree.TSTypeReference} */ (
+      node
+    // @ts-expect-error Ok
+    )?.typeParameters?.params?.[0]?.type === 'TSVoidKeyword';
 };
 
 const undefinedKeywords = new Set([
@@ -174,8 +177,13 @@ const allBrancheshaveReturnValues = (node, promFilter) => {
     }
 
     // Fallthrough
-  case 'LabeledStatement':
   case 'ForStatement':
+    if (node.test === null) {
+      // If this is an infinite loop, we assume only one branch
+      //   is needed to provide a return
+      return hasReturnValue(node.body, false, promFilter);
+    }
+  case 'LabeledStatement':
   case 'ForInStatement':
   case 'ForOfStatement':
   case 'WithStatement': {

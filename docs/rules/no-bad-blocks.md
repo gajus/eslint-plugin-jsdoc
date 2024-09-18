@@ -5,10 +5,13 @@
 
 
 This rule checks for multi-line-style comments which fail to meet the
-criteria of a jsdoc block, namely that it should begin with two and only two
-asterisks, but which appear to be intended as jsdoc blocks due to the presence
+criteria of a JSDoc block, namely that it should begin with two and only two
+asterisks, but which appear to be intended as JSDoc blocks due to the presence
 of whitespace followed by whitespace or asterisks, and
-an at-sign (`@`) and some non-whitespace (as with a jsdoc block tag).
+an at-sign (`@`) and some non-whitespace (as with a JSDoc block tag).
+
+Exceptions are made for ESLint directive comments (which may use `@` in
+rule names).
 
 <a name="user-content-fixer"></a>
 <a name="fixer"></a>
@@ -170,5 +173,7 @@ function quux (foo) {
 }
 
 /***/
+
+/* eslint-disable @stylistic/max-len  */
 ````
 
