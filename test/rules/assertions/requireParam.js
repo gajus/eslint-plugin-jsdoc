@@ -2527,6 +2527,33 @@ export default {
         }
       `,
     },
+    {
+      code: `
+        /**
+         * Some desc.
+         * @param a
+         */
+        function quux (a, b) {}
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "b" declaration.',
+        },
+      ],
+      options: [
+        {
+          ignoreWhenAllParamsMissing: true,
+        }
+      ],
+      output: `
+        /**
+         * Some desc.
+         * @param a
+         * @param b
+         */
+        function quux (a, b) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -3603,6 +3630,19 @@ export default {
           ]
         }
       },
+    },
+    {
+      code: `
+        /**
+         * Some desc.
+         */
+        function quux (a, b) {}
+      `,
+      options: [
+        {
+          ignoreWhenAllParamsMissing: true,
+        }
+      ],
     },
   ],
 };

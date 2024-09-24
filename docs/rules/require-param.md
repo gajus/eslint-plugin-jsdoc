@@ -23,6 +23,7 @@
     * [`checkDestructured`](#user-content-require-param-options-checkdestructured)
     * [`checkDestructuredRoots`](#user-content-require-param-options-checkdestructuredroots)
     * [`useDefaultObjectProperties`](#user-content-require-param-options-usedefaultobjectproperties)
+    * [`ignoreWhenAllParamsMissing`](#user-content-require-param-options-ignorewhenallparamsmissing)
 * [Context and settings](#user-content-require-param-context-and-settings)
 * [Failing examples](#user-content-require-param-failing-examples)
 * [Passing examples](#user-content-require-param-passing-examples)
@@ -437,6 +438,13 @@ documentation). Defaults to `true`.
 Set to `true` if you wish to expect documentation of properties on objects
 supplied as default values. Defaults to `false`.
 
+<a name="user-content-require-param-options-ignorewhenallparamsmissing"></a>
+<a name="require-param-options-ignorewhenallparamsmissing"></a>
+### <code>ignoreWhenAllParamsMissing</code>
+
+Set to `true` to ignore reporting when all params are missing. Defaults to
+`false`.
+
 <a name="user-content-require-param-context-and-settings"></a>
 <a name="require-param-context-and-settings"></a>
 ## Context and settings
@@ -447,7 +455,7 @@ supplied as default values. Defaults to `false`.
 | Tags     | `param` |
 | Aliases  | `arg`, `argument` |
 |Recommended | true|
-| Options  |`autoIncrementBase`, `checkConstructors`, `checkDestructured`, `checkDestructuredRoots`, `checkGetters`, `checkRestProperty`, `checkSetters`, `checkTypesPattern`, `contexts`, `enableFixer`, `enableRestElementFixer`, `enableRootFixer`, `exemptedBy`, `unnamedRootBase`, `useDefaultObjectProperties`|
+| Options  |`autoIncrementBase`, `checkConstructors`, `checkDestructured`, `checkDestructuredRoots`, `checkGetters`, `checkRestProperty`, `checkSetters`, `checkTypesPattern`, `contexts`, `enableFixer`, `enableRestElementFixer`, `enableRootFixer`, `exemptedBy`, `ignoreWhenAllParamsMissing`, `unnamedRootBase`, `useDefaultObjectProperties`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <a name="user-content-require-param-failing-examples"></a>
@@ -1162,6 +1170,14 @@ class A {
   }
 }
 // Message: Missing JSDoc @param "root1" declaration.
+
+/**
+ * Some desc.
+ * @param a
+ */
+function quux (a, b) {}
+// "jsdoc/require-param": ["error"|"warn", {"ignoreWhenAllParamsMissing":true}]
+// Message: Missing JSDoc @param "b" declaration.
 ````
 
 
@@ -1813,5 +1829,11 @@ const inner = (c: number, d: string): void => {
   console.log(d);
 };
 // Settings: {"jsdoc":{"contexts":["VariableDeclaration"]}}
+
+/**
+ * Some desc.
+ */
+function quux (a, b) {}
+// "jsdoc/require-param": ["error"|"warn", {"ignoreWhenAllParamsMissing":true}]
 ````
 
