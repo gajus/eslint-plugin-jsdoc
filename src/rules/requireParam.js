@@ -60,6 +60,7 @@ export default iterateJsdoc(({
       'root',
     ],
     useDefaultObjectProperties = false,
+    ignoreWhenAllParamsMissing = false,
   } = context.options[0] || {};
 
   const preferredTagName = /** @type {string} */ (utils.getPreferredTagName({
@@ -82,6 +83,10 @@ export default iterateJsdoc(({
      *   type: string;
      * }[]}
      */ (utils.getJsdocTagsDeep(preferredTagName));
+
+  if (ignoreWhenAllParamsMissing && !jsdocParameterNames.length) {
+    return;
+  }
 
   const shallowJsdocParameterNames = jsdocParameterNames.filter((tag) => {
     return !tag.name.includes('.');
@@ -570,6 +575,9 @@ export default iterateJsdoc(({
               type: 'string',
             },
             type: 'array',
+          },
+          ignoreWhenAllParamsMissing: {
+            type: 'boolean',
           },
           unnamedRootBase: {
             items: {
