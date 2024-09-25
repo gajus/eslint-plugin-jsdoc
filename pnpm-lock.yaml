@@ -76,8 +76,8 @@ importers:
         specifier: ^13.0.0
         version: 13.0.0(semantic-release@24.0.0(typescript@5.5.3))
       '@semantic-release/github':
-        specifier: ^10.1.4
-        version: 10.1.4(semantic-release@24.0.0(typescript@5.5.3))
+        specifier: ^11.0.0
+        version: 11.0.0(semantic-release@24.0.0(typescript@5.5.3))
       '@semantic-release/npm':
         specifier: ^12.0.1
         version: 12.0.1(semantic-release@24.0.0(typescript@5.5.3))
@@ -1305,6 +1305,12 @@ packages:
     engines: {node: '>=20.8.1'}
     peerDependencies:
       semantic-release: '>=20.1.0'
+
+  '@semantic-release/github@11.0.0':
+    resolution: {integrity: sha512-Uon6G6gJD8U1JNvPm7X0j46yxNRJ8Ui6SgK4Zw5Ktu8RgjEft3BGn+l/RX1TTzhhO3/uUcKuqM+/9/ETFxWS/Q==}
+    engines: {node: '>=20.8.1'}
+    peerDependencies:
+      semantic-release: '>=24.1.0'
 
   '@semantic-release/npm@12.0.1':
     resolution: {integrity: sha512-/6nntGSUGK2aTOI0rHPwY3ZjgY9FkXmEHbW9Kr+62NVOsyqpKKeP0lrCH+tphv+EsNdJNmqqwijTEnVWUMQ2Nw==}
@@ -6873,6 +6879,28 @@ snapshots:
   '@semantic-release/error@4.0.0': {}
 
   '@semantic-release/github@10.1.4(semantic-release@24.0.0(typescript@5.5.3))':
+    dependencies:
+      '@octokit/core': 6.1.1
+      '@octokit/plugin-paginate-rest': 11.3.0(@octokit/core@6.1.1)
+      '@octokit/plugin-retry': 7.1.0(@octokit/core@6.1.1)
+      '@octokit/plugin-throttling': 9.1.0(@octokit/core@6.1.1)
+      '@semantic-release/error': 4.0.0
+      aggregate-error: 5.0.0
+      debug: 4.3.6(supports-color@8.1.1)
+      dir-glob: 3.0.1
+      globby: 14.0.0
+      http-proxy-agent: 7.0.0
+      https-proxy-agent: 7.0.2
+      issue-parser: 7.0.0
+      lodash-es: 4.17.21
+      mime: 4.0.1
+      p-filter: 4.1.0
+      semantic-release: 24.0.0(typescript@5.5.3)
+      url-join: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
+
+  '@semantic-release/github@11.0.0(semantic-release@24.0.0(typescript@5.5.3))':
     dependencies:
       '@octokit/core': 6.1.1
       '@octokit/plugin-paginate-rest': 11.3.0(@octokit/core@6.1.1)
