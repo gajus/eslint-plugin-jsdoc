@@ -4196,6 +4196,57 @@ function quux (foo) {
         parser: typescriptEslintParser,
       },
     },
+    {
+      code: `
+        type Props = {
+          variant: string
+        }
+
+        export type { Props as ComponentProps };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          publicOnly: { esm: true },
+          require: {
+            FunctionDeclaration: true,
+            FunctionExpression: true,
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            MethodDefinition: true,
+          },
+          contexts: [
+            "VariableDeclaration",
+            "TSTypeAliasDeclaration",
+            // Encourage documenting React prop types
+            "TSPropertySignature",
+            "TSInterfaceDeclaration",
+            "TSMethodSignature",
+            "TSEnumDeclaration"
+          ],
+          enableFixer: true,
+        },
+      ],
+      output: `
+        /**
+         *
+         */
+        type Props = {
+          variant: string
+        }
+
+        export type { Props as ComponentProps };
+      `,
+    },
   ],
   valid: [
     {
@@ -6312,6 +6363,6 @@ function quux (foo) {
           }
         }
       ],
-    }
+    },
   ],
 };

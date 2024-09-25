@@ -1020,6 +1020,14 @@ export type LoginOptions = CmdOptions<{
 }>;
 // "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"contexts":["TSTypeAliasDeclaration","TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"]}]
 // Message: Missing JSDoc comment.
+
+type Props = {
+  variant: string
+}
+
+export type { Props as ComponentProps };
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"esm":true},"require":{"FunctionDeclaration":true,"FunctionExpression":true,"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"MethodDefinition":true},"contexts":["VariableDeclaration","TSTypeAliasDeclaration","TSPropertySignature","TSInterfaceDeclaration","TSMethodSignature","TSEnumDeclaration"],"enableFixer":true}]
+// Message: Missing JSDoc comment.
 ````
 
 

@@ -14,7 +14,7 @@ const debug = debugModule('requireExportJsdoc');
 /**
  * @typedef {{
  *   type?: string,
- *   value?: ValueObject|import('eslint').Rule.Node,
+ *   value?: ValueObject|import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Node,
  *   props: {
  *     [key: string]: CreatedNode|null,
  *   },
@@ -93,7 +93,7 @@ const getIdentifier = function (node, globals, scope, opts) {
  * @callback CreateSymbol
  * @param {import('eslint').Rule.Node|null} node
  * @param {CreatedNode} globals
- * @param {import('eslint').Rule.Node|null} value
+ * @param {import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Node|null} value
  * @param {CreatedNode} [scope]
  * @param {boolean|SymbolOptions} [isGlobal]
  * @returns {CreatedNode|null}
@@ -112,7 +112,7 @@ let createSymbol; // eslint-disable-line prefer-const
 
 /**
  *
- * @param {import('eslint').Rule.Node} node
+ * @param {import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Node} node
  * @param {CreatedNode} globals
  * @param {CreatedNode} scope
  * @param {SymbolOptions} [opt]
@@ -177,13 +177,10 @@ const getSymbol = function (node, globals, scope, opt) {
     );
   }
 
-  /* c8 ignore next 7 -- No longer needed? */
-  // @ts-expect-error TS OK
+  /* c8 ignore next 4 -- No longer needed? */
   case 'TSTypeAliasDeclaration':
-  // @ts-expect-error TS OK
   // Fallthrough
   case 'TSEnumDeclaration':
-  // @ts-expect-error TS OK
   case 'TSInterfaceDeclaration':
   case 'ClassDeclaration':
   case 'FunctionExpression': case 'FunctionDeclaration':
@@ -473,7 +470,7 @@ const initVariables = function (node, globals, opts) {
 
 /**
  * Populates variable maps using AST
- * @param {import('eslint').Rule.Node} node
+ * @param {import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Node} node
  * @param {CreatedNode} globals
  * @param {import('./rules/requireJsdoc.js').RequireJsdocOpts} opt
  * @param {true} [isExport]
@@ -543,6 +540,7 @@ const mapVariables = function (node, globals, opt, isExport) {
     break;
   }
 
+  case 'TSTypeAliasDeclaration':
   case 'FunctionDeclaration': {
     /* c8 ignore next 10 */
     if (/** @type {import('estree').Identifier} */ (node.id).type === 'Identifier') {
@@ -655,9 +653,9 @@ const mapVariables = function (node, globals, opt, isExport) {
  *
  * @param {import('eslint').Rule.Node} node
  * @param {CreatedNode|ValueObject|string|undefined|
- *   import('eslint').Rule.Node} block
+ *   import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Node} block
  * @param {(CreatedNode|ValueObject|string|
- *   import('eslint').Rule.Node)[]} [cache]
+ *   import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Node)[]} [cache]
  * @returns {boolean}
  */
 const findNode = function (node, block, cache) {
