@@ -110,6 +110,13 @@ class Foo {
   quux(a) {}
 }
 // Message: Expected JSDoc block to be aligned.
+
+export const myVar = {/**
+  * This is JSDoc
+  */
+  myProperty: 'hello'
+}
+// Message: Expected JSDoc block to be aligned.
 ````
 
 
