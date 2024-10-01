@@ -1999,7 +1999,13 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
     /** @type {import('estree').SourceLocation} */
     (jsdocNode.loc).start.line - 1
   ];
-  const indnt = sourceLine.charAt(0).repeat(
+
+  let indentChar = sourceLine.charAt(0);
+  if (indentChar !== ' ' && indentChar !== '\t') {
+    indentChar = ' ';
+  }
+
+  const indnt = indentChar.repeat(
     /** @type {import('estree').SourceLocation} */
     (jsdocNode.loc).start.column,
   );

@@ -236,6 +236,28 @@ function quux (foo) {
         }
       `,
     },
+    {
+      code: `
+export const myVar = {/**
+  * This is JSDoc
+  */
+  myProperty: 'hello'
+}
+`,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      output: `
+export const myVar = {/**
+                       * This is JSDoc
+                       */
+  myProperty: 'hello'
+}
+`,
+    },
   ],
   valid: [
     {
