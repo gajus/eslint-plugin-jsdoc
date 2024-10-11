@@ -33,38 +33,39 @@ export default iterateJsdoc(({
     }
 
     const startsWithHyphen = (/^\s*-/u).test(desc);
+    let lines = 0;
+    for (const {
+      tokens,
+    } of jsdocTag.source) {
+      if (tokens.description) {
+        break;
+      }
+
+      lines++;
+    }
+
     if (always) {
       if (!startsWithHyphen) {
-        report(`There must be a hyphen before @${targetTagName} description.`, (fixer) => {
-          const lineIndex = /** @type {import('../iterateJsdoc.js').Integer} */ (
-            jsdocTag.line
-          );
-          const sourceLines = sourceCode.getText(jsdocNode).split('\n');
-
-          // Get start index of description, accounting for multi-line descriptions
-          const description = desc.split('\n')[0];
-          const descriptionIndex = sourceLines[lineIndex].lastIndexOf(description);
-
-          const replacementLine = sourceLines[lineIndex]
-            .slice(0, descriptionIndex) + '- ' + description;
-          sourceLines.splice(lineIndex, 1, replacementLine);
-          const replacement = sourceLines.join('\n');
-
-          return fixer.replaceText(jsdocNode, replacement);
-        }, jsdocTag);
+        utils.reportJSDoc(
+          `There must be a hyphen before @${targetTagName} description.`,
+          {
+            line: jsdocTag.source[0].number + lines,
+          },
+          () => {
+            for (const {
+              tokens,
+            } of jsdocTag.source) {
+              if (tokens.description) {
+                tokens.description = tokens.description.replace(
+                  /^(\s*)/u, '$1- ',
+                );
+                break;
+              }
+            }
+          }
+        );
       }
     } else if (startsWithHyphen) {
-      let lines = 0;
-      for (const {
-        tokens,
-      } of jsdocTag.source) {
-        if (tokens.description) {
-          break;
-        }
-
-        lines++;
-      }
-
       utils.reportJSDoc(
         `There must be no hyphen before @${targetTagName} description.`,
         {

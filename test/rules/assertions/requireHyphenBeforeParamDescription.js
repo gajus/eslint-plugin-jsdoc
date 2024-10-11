@@ -447,6 +447,32 @@ export default {
        */
       `,
     },
+    {
+      code: `
+        /**
+         * @param {(
+         *  | string
+         *  | number
+         * )} input The input value
+         */
+        function test(input) {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'There must be a hyphen before @param description.',
+        },
+      ],
+      output: `
+        /**
+         * @param {(
+         *  | string
+         *  | number
+         * )} input - The input value
+         */
+        function test(input) {}
+      `,
+    },
   ],
   valid: [
     {
