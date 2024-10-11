@@ -193,6 +193,15 @@ function quux () {
  */
 // "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"*":"never","property":"always"}}]
 // Message: There must be no hyphen before @returns description.
+
+/**
+ * @param {(
+ *  | string
+ *  | number
+ * )} input The input value
+ */
+function test(input) {}
+// Message: There must be a hyphen before @param description.
 ````
 
 
