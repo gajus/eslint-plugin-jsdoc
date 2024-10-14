@@ -473,6 +473,29 @@ export default {
         function test(input) {}
       `,
     },
+    {
+      code: `
+        /**
+         * @template [O=unknown]
+         * @param {string} name The name of the thing.
+         */
+        function test(name) {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'There must be a hyphen before @param description.',
+        },
+      ],
+      ignoreReadme: true,
+      output: `
+        /**
+         * @template [O=unknown]
+         * @param {string} name - The name of the thing.
+         */
+        function test(name) {}
+      `,
+    },
   ],
   valid: [
     {
