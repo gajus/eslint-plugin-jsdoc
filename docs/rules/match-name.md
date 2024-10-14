@@ -251,6 +251,6 @@ class A {
  * @typedef {object} Test
  * @property {T} test
  */
-// "jsdoc/match-name": ["error"|"warn", {"match":[{"allowName":"/^\\[?[A-Z]{1}(=.*\\])$/","message":"The name should be a single capital letter.","tags":["template"]}]}]
+// "jsdoc/match-name": ["error"|"warn", {"match":[{"allowName":"/^[A-Z]{1}$/","message":"The name should be a single capital letter.","tags":["template"]}]}]
 ````
 
