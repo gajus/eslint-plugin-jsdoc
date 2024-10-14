@@ -38,8 +38,9 @@ export default iterateJsdoc(({
 
   let reported = false;
   for (const tag of applicableTags) {
-    const allowed = !allowNameRegex || allowNameRegex.test(tag.name);
-    const disallowed = disallowNameRegex && disallowNameRegex.test(tag.name);
+    const tagName = tag.name.replace(/^\[/u, '').replace(/(=.*)?\]$/u, '');
+    const allowed = !allowNameRegex || allowNameRegex.test(tagName);
+    const disallowed = disallowNameRegex && disallowNameRegex.test(tagName);
     const hasRegex = allowNameRegex || disallowNameRegex;
     if (hasRegex && allowed && !disallowed) {
       continue;
@@ -66,10 +67,10 @@ export default iterateJsdoc(({
     if (!message) {
       if (hasRegex) {
         message = disallowed ?
-          `Only allowing names not matching \`${disallowNameRegex}\` but found "${tag.name}".` :
-          `Only allowing names matching \`${allowNameRegex}\` but found "${tag.name}".`;
+          `Only allowing names not matching \`${disallowNameRegex}\` but found "${tagName}".` :
+          `Only allowing names matching \`${allowNameRegex}\` but found "${tagName}".`;
       } else {
-        message = `Prohibited context for "${tag.name}".`;
+        message = `Prohibited context for "${tagName}".`;
       }
     }
 
@@ -86,7 +87,7 @@ export default iterateJsdoc(({
         // Could also supply `context`, `comment`, `tags`
         allowName,
         disallowName,
-        name: tag.name,
+        name: tagName,
       },
     );
     if (!hasRegex) {

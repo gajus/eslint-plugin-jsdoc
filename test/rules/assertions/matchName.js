@@ -553,7 +553,7 @@ export default {
       `,
       options: [{
         match: [{
-          allowName: "/^\\[?[A-Z]{1}(=.*\\])$/",
+          allowName: "/^[A-Z]{1}$/",
           message: "The name should be a single capital letter.",
           tags: ["template"],
         }],
