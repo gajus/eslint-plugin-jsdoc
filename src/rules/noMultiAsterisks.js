@@ -108,7 +108,7 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     docs: {
-      description: '',
+      description: 'Prevents use of multiple asterisks at the beginning of lines.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-multi-asterisks.md#repos-sticky-header',
     },
     fixable: 'code',
