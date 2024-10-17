@@ -122,7 +122,7 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     docs: {
-      description: '',
+      description: 'Auto-escape certain characters that are input within block and tag descriptions.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/text-escaping.md#repos-sticky-header',
     },
     fixable: 'code',
