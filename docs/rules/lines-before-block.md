@@ -34,7 +34,7 @@ lines before the block will not be added).
 |---|---|
 |Context|everywhere|
 |Tags|N/A|
-|Recommended|false|
+|Recommended|true|
 |Settings||
 |Options|`excludedTags`, `ignoreSameLine`, `lines`|
 

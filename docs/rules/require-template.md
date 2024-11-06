@@ -48,7 +48,7 @@ Defaults to `false`.
 |---|---|
 |Context|everywhere|
 |Tags|`template`|
-|Recommended|false|
+|Recommended|true|
 |Settings||
 |Options|`requireSeparateTemplates`|
 
