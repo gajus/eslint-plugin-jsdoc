@@ -48,7 +48,7 @@ on why TypeScript doesn't offer such a feature.
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
 | Tags     | `throws` |
 | Aliases  | `exception` |
-|Recommended|true|
+|Recommended|false|
 | Options  |`contexts`, `exemptedBy`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
