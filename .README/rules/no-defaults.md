@@ -48,7 +48,7 @@ section of our README for more on the expected format.
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|`param`, `default`|
 |Aliases|`arg`, `argument`, `defaultvalue`|
-|Recommended|false|
+|Recommended|true|
 |Options|`contexts`, `noOptionalParamNames`|
 
 ## Failing examples
