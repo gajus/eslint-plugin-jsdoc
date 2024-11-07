@@ -43,6 +43,7 @@ which applies to the main jsdoc block description.
 |---|---|
 |Context|everywhere|
 |Tags|All or as limited by the `tags` option|
+|Recommended|false|
 |Options|string ("always", "never", "any") followed by object with `tags`|
 
 ## Failing examples
