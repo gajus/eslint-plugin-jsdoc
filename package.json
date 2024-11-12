@@ -100,6 +100,11 @@
       "types": "./dist/getJsdocProcessorPlugin.d.ts",
       "import": "./dist/getJsdocProcessorPlugin.cjs",
       "require": "./src/getJsdocProcessorPlugin.js"
+    },
+    "./iterateJsdoc.js": {
+      "types": "./dist/iterateJsdoc.d.ts",
+      "import": "./dist/iterateJsdoc.cjs",
+      "require": "./src/iterateJsdoc.js"
     }
   },
   "name": "eslint-plugin-jsdoc",
