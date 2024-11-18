@@ -134,7 +134,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gajus/eslint-plugin-jsdoc"
+    "url": "git+https://github.com/gajus/eslint-plugin-jsdoc.git"
   },
   "run-if-changed": {
     "package-lock.json": "npm run install-offline"
