@@ -136,6 +136,7 @@
     "type": "git",
     "url": "git+https://github.com/gajus/eslint-plugin-jsdoc.git"
   },
+  "homepage": "https://github.com/gajus/eslint-plugin-jsdoc#readme",
   "run-if-changed": {
     "package-lock.json": "npm run install-offline"
   },
