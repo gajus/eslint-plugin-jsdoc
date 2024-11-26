@@ -161,6 +161,110 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        {
+          /**
+           * Description.
+           */
+          let value;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Required 1 line(s) before JSDoc block'
+        }
+      ],
+      options: [{ checkBlockStarts: true }],
+      output: `
+        {
+
+          /**
+           * Description.
+           */
+          let value;
+        }
+      `,
+    },
+    {
+      code: `
+        class MyClass {
+          /**
+           * Description.
+           */
+          method() {}
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Required 1 line(s) before JSDoc block'
+        }
+      ],
+      options: [{ checkBlockStarts: true }],
+      output: `
+        class MyClass {
+
+          /**
+           * Description.
+           */
+          method() {}
+        }
+      `,
+    },
+    {
+      code: `
+        function myFunction() {
+          /**
+           * Description.
+           */
+          let value;
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Required 1 line(s) before JSDoc block'
+        }
+      ],
+      options: [{ checkBlockStarts: true }],
+      output: `
+        function myFunction() {
+
+          /**
+           * Description.
+           */
+          let value;
+        }
+      `,
+    },
+    {
+      code: `
+        const values = [
+          /**
+           * Description.
+           */
+          value,
+        ];
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Required 1 line(s) before JSDoc block'
+        }
+      ],
+      options: [{ checkBlockStarts: true }],
+      output: `
+        const values = [
+
+          /**
+           * Description.
+           */
+          value,
+        ];
+      `,
+    }
   ],
   valid: [
     {
@@ -242,5 +346,35 @@ export default {
         }
       ]
     },
+    {
+      code: `
+        {
+          /**
+           * Description.
+           */
+          let value;
+        }
+      `,
+    },
+    {
+      code: `
+        class MyClass {
+          /**
+           * Description.
+           */
+          method() {}
+        }
+      `,
+    },
+    {
+      code: `
+        function myFunction() {
+          /**
+           * Description.
+           */
+          let value;
+        }
+      `,
+    }
   ],
 };

@@ -1,9 +1,14 @@
 # `lines-before-block`
 
 This rule enforces minimum number of newlines before JSDoc comment blocks
-(except at the beginning of a file).
+(except at the beginning of a block or file).
 
 ## Options
+
+### `checkBlockStarts`
+
+Whether to additionally check the start of blocks, such as classes or functions.
+Defaults to `false`.
 
 ### `lines`
 
@@ -26,7 +31,7 @@ lines before the block will not be added).
 |Tags|N/A|
 |Recommended|false|
 |Settings||
-|Options|`excludedTags`, `ignoreSameLine`, `lines`|
+|Options|`checkBlockStarts`, `excludedTags`, `ignoreSameLine`, `lines`|
 
 ## Failing examples
 
