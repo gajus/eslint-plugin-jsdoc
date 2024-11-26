@@ -8,6 +8,7 @@ export default iterateJsdoc(({
   utils,
 }) => {
   const {
+    checkBlockStarts,
     lines = 1,
     ignoreSameLine = true,
     excludedTags = ['type']
@@ -19,7 +20,7 @@ export default iterateJsdoc(({
 
   const tokensBefore = sourceCode.getTokensBefore(jsdocNode, {includeComments: true});
   const tokenBefore = tokensBefore.slice(-1)[0];
-  if (!tokenBefore) {
+  if (!tokenBefore || (tokenBefore.value === '{' && !checkBlockStarts)) {
     return;
   }
 
@@ -80,6 +81,9 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          checkBlockStarts: {
+            type: 'boolean',
+          },
           excludedTags: {
             type: 'array',
             items: {

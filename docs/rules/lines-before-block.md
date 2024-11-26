@@ -3,11 +3,18 @@
 # <code>lines-before-block</code>
 
 This rule enforces minimum number of newlines before JSDoc comment blocks
-(except at the beginning of a file).
+(except at the beginning of a block or file).
 
 <a name="user-content-lines-before-block-options"></a>
 <a name="lines-before-block-options"></a>
 ## Options
+
+<a name="user-content-lines-before-block-options-checkblockstarts"></a>
+<a name="lines-before-block-options-checkblockstarts"></a>
+### <code>checkBlockStarts</code>
+
+Whether to additionally check the start of blocks, such as classes or functions.
+Defaults to `false`.
 
 <a name="user-content-lines-before-block-options-lines"></a>
 <a name="lines-before-block-options-lines"></a>
@@ -36,7 +43,7 @@ lines before the block will not be added).
 |Tags|N/A|
 |Recommended|false|
 |Settings||
-|Options|`excludedTags`, `ignoreSameLine`, `lines`|
+|Options|`checkBlockStarts`, `excludedTags`, `ignoreSameLine`, `lines`|
 
 <a name="user-content-lines-before-block-failing-examples"></a>
 <a name="lines-before-block-failing-examples"></a>
@@ -86,6 +93,42 @@ someCode;
 /**
  *
  */
+// Message: Required 1 line(s) before JSDoc block
+
+{
+  /**
+   * Description.
+   */
+  let value;
+}
+// "jsdoc/lines-before-block": ["error"|"warn", {"checkBlockStarts":true}]
+// Message: Required 1 line(s) before JSDoc block
+
+class MyClass {
+  /**
+   * Description.
+   */
+  method() {}
+}
+// "jsdoc/lines-before-block": ["error"|"warn", {"checkBlockStarts":true}]
+// Message: Required 1 line(s) before JSDoc block
+
+function myFunction() {
+  /**
+   * Description.
+   */
+  let value;
+}
+// "jsdoc/lines-before-block": ["error"|"warn", {"checkBlockStarts":true}]
+// Message: Required 1 line(s) before JSDoc block
+
+const values = [
+  /**
+   * Description.
+   */
+  value,
+];
+// "jsdoc/lines-before-block": ["error"|"warn", {"checkBlockStarts":true}]
 // Message: Required 1 line(s) before JSDoc block
 ````
 
@@ -146,5 +189,26 @@ const a = /** @lends SomeClass */ {
   someProp: (someVal)
 };
 // "jsdoc/lines-before-block": ["error"|"warn", {"excludedTags":["lends"],"ignoreSameLine":false}]
+
+{
+  /**
+   * Description.
+   */
+  let value;
+}
+
+class MyClass {
+  /**
+   * Description.
+   */
+  method() {}
+}
+
+function myFunction() {
+  /**
+   * Description.
+   */
+  let value;
+}
 ````
 
