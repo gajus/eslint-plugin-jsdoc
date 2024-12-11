@@ -59,11 +59,11 @@ import validTypes from './rules/validTypes.js';
 import { getJsdocProcessorPlugin } from './getJsdocProcessorPlugin.js';
 
 /**
- * @typedef {"recommended" | "stylistic" | "contents" | "logical"} ConfigGrous
+ * @typedef {"recommended" | "stylistic" | "contents" | "logical"} ConfigGroups
  * @typedef {"" | "-typescript" | "-typescript-flavor"} ConfigVariants
  * @typedef {"" | "-error"} ErrorLevelVariants
  * @type {import('eslint').ESLint.Plugin & {
-*   configs: Record<`flat/${ConfigGrous}${ConfigVariants}${ErrorLevelVariants}`, import('eslint').Linter.Config>
+*   configs: Record<`flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`, import('eslint').Linter.Config>
 * }}
 */
 const index = {
