@@ -1,7 +1,7 @@
 import {parser as typescriptEslintParser} from 'typescript-eslint';
 import * as babelEslintParser from '@babel/eslint-parser';
 
-export default {
+export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `
@@ -2039,4 +2039,4 @@ export default {
       },
     },
   ],
-};
+});

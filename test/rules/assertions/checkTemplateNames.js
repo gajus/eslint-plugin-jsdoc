@@ -1,6 +1,6 @@
 import {parser as typescriptEslintParser} from 'typescript-eslint';
 
-export default {
+export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `
@@ -715,4 +715,4 @@ export default {
       `,
     },
   ],
-};
+});

@@ -2,7 +2,7 @@ import {parser as typescriptEslintParser} from 'typescript-eslint';
 import * as babelEslintParser from '@babel/eslint-parser';
 import globals from 'globals';
 
-export default {
+export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `
@@ -6365,4 +6365,4 @@ function quux (foo) {
       ],
     },
   ],
-};
+});

@@ -15,6 +15,12 @@ import {
 } from 'path';
 import semver from 'semver';
 
+/**
+ * @typedef {object} TestCases
+ * @property {import('eslint').RuleTester.ValidTestCase[]} valid
+ * @property {import('eslint').RuleTester.InvalidTestCase[]} invalid
+ */
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const ruleTester = new RuleTester();
