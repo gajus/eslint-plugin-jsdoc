@@ -1,4 +1,4 @@
-export default {
+export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `
@@ -261,4 +261,4 @@ export default {
       },
     },
   ],
-};
+});

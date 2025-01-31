@@ -37,7 +37,7 @@ const ONE_CLOSURE_TAGS_COMMENT = buildTagBlock({
   externs: closureTags.externs,
 });
 
-export default {
+export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `/** @type {string} */let a;
@@ -1452,4 +1452,4 @@ export default {
       ],
     },
   ],
-};
+});
