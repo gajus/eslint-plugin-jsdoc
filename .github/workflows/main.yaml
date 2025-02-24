@@ -2,6 +2,9 @@ jobs:
   release:
     runs-on: ubuntu-latest
     environment: release
+    permissions:
+      contents: read
+      id-token: write
     name: Release
     steps:
       - uses: pnpm/action-setup@v4

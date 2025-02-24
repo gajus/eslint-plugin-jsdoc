@@ -65,6 +65,8 @@ jobs:
       - run: pnpm build
     timeout-minutes: 10
 name: Lint, test and build
+permissions:
+  contents: read
 on:
   pull_request:
     branches:
