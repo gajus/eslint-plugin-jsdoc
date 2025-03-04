@@ -316,5 +316,35 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @example
+         * \`\`\`
+         * Some things to escape: <a> and &gt; and &#xabc; and \`test\`
+         * \`\`\`
+         */
+      `,
+      options: [
+        {
+          escapeHTML: true,
+        },
+      ]
+    },
+    {
+      code: `
+        /**
+         * @example
+         * \`\`\`
+         * Some things to escape: <a> and &gt; and &#xabc; and \`test\`
+         * \`\`\`
+         */
+      `,
+      options: [
+        {
+          escapeMarkdown: true,
+        },
+      ]
+    },
   ],
 });
