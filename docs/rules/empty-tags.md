@@ -216,5 +216,10 @@ function quux () {
  * @returns {string[]} The array of nodes.
  */
 function quux () {}
+
+/** Application boot function.
+  @async
+  @private **/
+function quux () {}
 ````
 
