@@ -10,6 +10,8 @@ Markdown and you therefore do not wish for it to be accidentally interpreted
 as such by the likes of Visual Studio Code or if you wish to view it escaped
 within it or your documentation.
 
+`@example` tag content will not be checked.
+
 ## Fixer
 
 (TODO)
