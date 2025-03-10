@@ -19,6 +19,8 @@ Markdown and you therefore do not wish for it to be accidentally interpreted
 as such by the likes of Visual Studio Code or if you wish to view it escaped
 within it or your documentation.
 
+`@example` tag content will not be checked.
+
 <a name="user-content-text-escaping-fixer"></a>
 <a name="text-escaping-fixer"></a>
 ## Fixer
@@ -175,5 +177,21 @@ The following patterns are not considered problems:
  * to escape
  */
 // "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
+
+/**
+ * @example
+ * ```
+ * Some things to escape: <a> and &gt; and &#xabc; and `test`
+ * ```
+ */
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeHTML":true}]
+
+/**
+ * @example
+ * ```
+ * Some things to escape: <a> and &gt; and &#xabc; and `test`
+ * ```
+ */
+// "jsdoc/text-escaping": ["error"|"warn", {"escapeMarkdown":true}]
 ````
 
