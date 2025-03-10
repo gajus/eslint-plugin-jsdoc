@@ -308,5 +308,13 @@ export default /** @type {import('../index.js').TestCases} */ ({
       function quux () {}
       `,
     },
+    {
+      code: `
+      /** Application boot function.
+        @async
+        @private **/
+      function quux () {}
+      `,
+    },
   ],
 });
