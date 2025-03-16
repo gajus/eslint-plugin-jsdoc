@@ -1484,6 +1484,18 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+          function quux() {
+            const foo = 1;
+            /** {@link foo} */
+            const bar = foo;
+            console.log(bar);
+          }
+
+          quux();
+      `,
+    },
+    {
+      code: `
         /**
          * @import BadImportIgnoredByThisRule
          */
