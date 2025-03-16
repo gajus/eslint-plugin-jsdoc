@@ -807,6 +807,15 @@ function quux(foo) {
 
 quux(0);
 
+function quux() {
+  const foo = 1;
+  /** {@link foo} */
+  const bar = foo;
+  console.log(bar);
+}
+
+quux();
+
 /**
  * @import BadImportIgnoredByThisRule
  */
