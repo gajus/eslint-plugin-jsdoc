@@ -227,12 +227,14 @@ export default iterateJsdoc(({
    * @returns {Set<string>}
    */
   const getValidRuntimeIdentifiers = (scope) => {
-    return scope
-      ? new Set([
-          ...new Set(scope.variables.map(({ name }) => name)),
-          ...getValidRuntimeIdentifiers(scope.upper),
-        ])
-      : new Set();
+    const result = new Set()
+    while (scope) {
+      for (const {name} of scope.variables) {
+        result.add(name)
+      }
+      scope = scope.upper
+    }
+    return result
   };
 
   const allDefinedTypes = new Set(globalScope.variables.map(({
