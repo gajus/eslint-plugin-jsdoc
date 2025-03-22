@@ -202,6 +202,9 @@ const getDocPaths = () => {
       // Will get path separately below
       return null;
     }
+    if (docFile === '.DS_Store') {
+      return null;
+    }
 
     const innerBasePath = path.join(basePath, docFile);
     const writeInnerBasePath = path.join(writeBasePath, docFile);
