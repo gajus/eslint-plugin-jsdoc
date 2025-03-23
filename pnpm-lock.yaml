@@ -29,9 +29,6 @@ importers:
       esquery:
         specifier: ^1.6.0
         version: 1.6.0
-      make-synchronized:
-        specifier: ^0.3.0
-        version: 0.3.0
       parse-imports:
         specifier: ^2.1.1
         version: 2.1.1
@@ -41,6 +38,9 @@ importers:
       spdx-expression-parse:
         specifier: ^4.0.0
         version: 4.0.0
+      synckit:
+        specifier: ^0.9.1
+        version: 0.9.1
     devDependencies:
       '@babel/cli':
         specifier: ^7.24.8
@@ -3757,9 +3757,6 @@ packages:
   make-fetch-happen@13.0.0:
     resolution: {integrity: sha512-7ThobcL8brtGo9CavByQrQi+23aIfgYU++wg4B87AIS8Rb2ZBt/MEaDqzA00Xwv/jUjAjYkLHjVolYuTLKda2A==}
     engines: {node: ^16.14.0 || >=18.0.0}
-
-  make-synchronized@0.3.0:
-    resolution: {integrity: sha512-LxLHK8OcrBcish1CslGgHppoq2TfbQIVs5t48saE4uHmdTswYgu7H/lsGIS0ssj6/RFGTeQ60PpnBk73kCJgeg==}
 
   markdown-contents@1.0.11:
     resolution: {integrity: sha512-6o8It0JhmoN398ATp8zOWHAniTB3/tEXUVTCP00gTqwZNc465DIoHTTaspyEkaov93QLhrqirxizJ29E/i8/0Q==}
@@ -9892,8 +9889,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
     optional: true
-
-  make-synchronized@0.3.0: {}
 
   markdown-contents@1.0.11:
     dependencies:
