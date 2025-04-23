@@ -1,7 +1,7 @@
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
-import { createSyncFn } from 'synckit';
+import {parseImportsExports} from 'parse-imports-exports';
 import {
   getJSDocComment,
   parse as parseType,
@@ -13,7 +13,6 @@ import iterateJsdoc, {
 } from '../iterateJsdoc.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const pathName = join(__dirname, '../import-worker.mjs');
 
 const extraTypes = [
   'null', 'undefined', 'void', 'string', 'boolean', 'object',
@@ -152,30 +151,30 @@ export default iterateJsdoc(({
       ? `${typePart}${name} ${description}`
       : `${typePart}${name}`);
 
-    const getImports = createSyncFn(pathName);
-    const imports = /** @type {import('parse-imports').Import[]} */ (getImports(imprt));
-    if (!imports) {
-      return null;
+    const importsExports = parseImportsExports(imprt);
+
+    const types = [];
+    const namedImports = Object.values(importsExports.namedImports || {})[0]?.[0];
+    if (namedImports) {
+      if (namedImports.default) {
+        types.push(namedImports.default);
+      }
+      if (namedImports.names) {
+        types.push(...Object.keys(namedImports.names));
+      }
     }
 
-    return imports.flatMap(({importClause}) => {
-      /* c8 ignore next */
-      const {default: dflt, named, namespace} = importClause || {};
-      const types = [];
-      if (dflt) {
-        types.push(dflt);
+    const namespaceImports = Object.values(importsExports.namespaceImports || {})[0]?.[0];
+    if (namespaceImports) {
+      if (namespaceImports.namespace) {
+        types.push(namespaceImports.namespace);
       }
-      if (namespace) {
-        types.push(namespace);
+      if (namespaceImports.default) {
+        types.push(namespaceImports.default);
       }
-      if (named) {
-        for (const {binding} of named) {
-          types.push(binding);
-        }
-      }
+    }
 
-      return types;
-    });
+    return types;
   }).filter(Boolean)) : [];
 
   const ancestorNodes = [];
