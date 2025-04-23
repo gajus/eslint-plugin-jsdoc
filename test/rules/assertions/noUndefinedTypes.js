@@ -1503,6 +1503,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @import LinterDef, { Sth as Something, Another as Another2 } from "eslint"
          */
         /**
+         * @import LinterDef2, * as LinterDef3 from "eslint"
+         */
+        /**
          * @import { Linter } from "eslint"
          */
         /**
@@ -1517,6 +1520,12 @@ export default /** @type {import('../index.js').TestCases} */ ({
 
         /**
          * @type {LinterDef}
+         */
+        /**
+         * @type {LinterDef2}
+         */
+        /**
+         * @type {LinterDef3}
          */
         /**
          * @type {Something}
