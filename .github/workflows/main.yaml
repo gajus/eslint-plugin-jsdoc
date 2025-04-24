@@ -2,6 +2,9 @@ jobs:
   release:
     runs-on: ubuntu-latest
     environment: release
+    permissions:
+      contents: read
+      id-token: write
     name: Release
     steps:
       - uses: pnpm/action-setup@v4
@@ -11,9 +14,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: setup node.js
         uses: actions/setup-node@v4
         with:
+          check-latest: true
           node-version: "20"
       - run: pnpm install
       - run: pnpm build
@@ -22,6 +27,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 name: Build and release
+permissions:
+  contents: read
 on:
   push:
     branches:
