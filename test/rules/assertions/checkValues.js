@@ -631,5 +631,13 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+      /** @import { ReactNode } from 'react' */
+
+      /** @type {ReactNode} */
+      export const TEST = null
+      `,
+    },
   ],
 });

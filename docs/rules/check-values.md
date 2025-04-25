@@ -430,5 +430,10 @@ function quux (foo) {
 /**
  * @import * as Linters from "eslint"
  */
+
+/** @import { ReactNode } from 'react' */
+
+/** @type {ReactNode} */
+export const TEST = null
 ````
 
