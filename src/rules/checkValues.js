@@ -174,7 +174,7 @@ export default iterateJsdoc(({
         ? `${typePart}${name} ${description}`
         : `${typePart}${name}`);
 
-      const importsExports = parseImportsExports(imprt);
+      const importsExports = parseImportsExports(imprt.trim());
 
       if (importsExports.errors) {
         report(
