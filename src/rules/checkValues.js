@@ -1,12 +1,7 @@
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
 import semver from 'semver';
 import spdxExpressionParse from 'spdx-expression-parse';
 import {parseImportsExports} from 'parse-imports-exports';
 import iterateJsdoc from '../iterateJsdoc.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const allowedKinds = new Set([
   'class',

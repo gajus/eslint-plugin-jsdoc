@@ -1,5 +1,4 @@
 import config from '../../src/index.js';
-import {fileURLToPath} from 'url';
 import camelCase from 'camelcase';
 import {
   ESLint,
@@ -10,7 +9,6 @@ import {
 } from 'fs';
 import defaultsDeep from 'lodash.defaultsdeep';
 import {
-  dirname,
   join,
 } from 'path';
 import semver from 'semver';
@@ -21,13 +19,13 @@ import semver from 'semver';
  * @property {import('eslint').RuleTester.InvalidTestCase[]} invalid
  */
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
 const ruleTester = new RuleTester();
 
 // eslint-disable-next-line complexity -- Temporary
 const main = async () => {
-  const ruleNames = JSON.parse(readFileSync(join(__dirname, './ruleNames.json'), 'utf8'));
+  const ruleNames = JSON.parse(readFileSync(join(
+    import.meta.dirname, './ruleNames.json'
+  ), 'utf8'));
 
   if (!config.rules) {
     throw new Error('TypeScript guard');

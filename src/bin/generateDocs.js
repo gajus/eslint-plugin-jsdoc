@@ -1,8 +1,7 @@
 /**
  * This script is used to inline assertions into the README.md documents.
  */
-import path, {dirname} from 'path';
-import {fileURLToPath} from 'url';
+import path from 'path';
 import fs from 'fs';
 import decamelize from 'decamelize';
 import Gitdown from 'gitdown';
@@ -10,7 +9,7 @@ import {
   glob,
 } from 'glob';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = import.meta.dirname;
 
 /**
  * @param {string} code

@@ -1,12 +1,11 @@
 /* eslint-disable no-console -- CLI */
 
-import {fileURLToPath} from 'url';
 import {
   existsSync,
 } from 'fs';
 import fs from 'fs/promises';
 import {
-  resolve, dirname,
+  resolve,
 } from 'path';
 
 /**
@@ -19,8 +18,6 @@ import {
 
 import camelCase from 'camelcase';
 import open from 'open-editor';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Todo: Would ideally have prompts, e.g., to ask for whether
 //   type was problem/layout, etc.
@@ -283,7 +280,7 @@ export default iterateJsdoc(({
   */
 
   // Set chdir as somehow still in operation from other test
-  process.chdir(resolve(__dirname, '../../'));
+  process.chdir(resolve(import.meta.dirname, '../../'));
   await open([
     // Could even add editor line column numbers like `${rulePath}:1:1`
     ruleReadmePath,
