@@ -269,6 +269,82 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+        const values = [
+          value1,
+          /**
+           * Description.
+           */
+          value2
+        ];
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Required 1 line(s) before JSDoc block'
+        }
+      ],
+      output: `
+        const values = [
+          value1,
+
+          /**
+           * Description.
+           */
+          value2
+        ];
+      `,
+    },
+    {
+      code: `
+        const values = [
+          value1,
+          value2
+        ]
+        /**
+         * Description.
+         */
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Required 1 line(s) before JSDoc block'
+        }
+      ],
+      output: `
+        const values = [
+          value1,
+          value2
+        ]
+
+        /**
+         * Description.
+         */
+      `,
+    },
+    {
+      // This test is interesting due to the lack of semicolons.
+      code: `
+        const value = 123
+        /**
+         * Description.
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Required 1 line(s) before JSDoc block'
+        }
+      ],
+      output: `
+        const value = 123
+
+        /**
+         * Description.
+         */
+      `,
+    },
+    {
+      code: `
         type UnionDocumentation =
           /** Description. */
           | { someProp: number }

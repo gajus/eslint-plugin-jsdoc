@@ -131,6 +131,30 @@ const values = [
 // "jsdoc/lines-before-block": ["error"|"warn", {"checkBlockStarts":true}]
 // Message: Required 1 line(s) before JSDoc block
 
+const values = [
+  value1,
+  /**
+   * Description.
+   */
+  value2
+];
+// Message: Required 1 line(s) before JSDoc block
+
+const values = [
+  value1,
+  value2
+]
+/**
+ * Description.
+ */
+// Message: Required 1 line(s) before JSDoc block
+
+const value = 123
+/**
+ * Description.
+ */
+// Message: Required 1 line(s) before JSDoc block
+
 type UnionDocumentation =
   /** Description. */
   | { someProp: number }
