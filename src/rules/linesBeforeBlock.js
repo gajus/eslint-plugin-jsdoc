@@ -5,7 +5,7 @@ import iterateJsdoc from '../iterateJsdoc.js';
  * `&` is seen in the middle of an intersection. All other punctuators are for things like arrays,
  * functions, type aliases, and so on that shouldn't require a line before it.
  */
-const lintedPunctuators = [';', '}', '|', '&'];
+const lintedPunctuators = new Set([';', '}', '|', '&']);
 
 export default iterateJsdoc(({
   context,
@@ -31,7 +31,7 @@ export default iterateJsdoc(({
     !tokenBefore || (
       tokenBefore.type === 'Punctuator' &&
       !checkBlockStarts &&
-      !lintedPunctuators.includes(tokenBefore.value)
+      !lintedPunctuators.has(tokenBefore.value)
     )
   ) {
     return;
