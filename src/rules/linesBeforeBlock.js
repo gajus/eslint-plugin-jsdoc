@@ -1,5 +1,12 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
+/**
+ * `;` ends a previous statement, `}` ends a previous block, `|` is seen the middle of a union, and
+ * `&` is seen in the middle of an intersection. All other punctuators are for things like arrays,
+ * functions, type aliases, and so on that shouldn't require a line before it.
+ */
+const lintedPunctuators = new Set([';', '}', '|', '&']);
+
 export default iterateJsdoc(({
   context,
   jsdocNode,
@@ -19,8 +26,14 @@ export default iterateJsdoc(({
   }
 
   const tokensBefore = sourceCode.getTokensBefore(jsdocNode, {includeComments: true});
-  const tokenBefore = tokensBefore.slice(-1)[0];
-  if (!tokenBefore || (tokenBefore.value === '{' && !checkBlockStarts)) {
+  const tokenBefore = tokensBefore.at(-1);
+  if (
+    !tokenBefore || (
+      tokenBefore.type === 'Punctuator' &&
+      !checkBlockStarts &&
+      !lintedPunctuators.has(tokenBefore.value)
+    )
+  ) {
     return;
   }
 

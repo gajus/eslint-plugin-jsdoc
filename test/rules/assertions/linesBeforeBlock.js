@@ -1,3 +1,5 @@
+import {parser as typescriptEslintParser} from 'typescript-eslint';
+
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
@@ -264,6 +266,83 @@ export default /** @type {import('../index.js').TestCases} */ ({
           value,
         ];
       `,
+    },
+    {
+      code: `
+        type UnionDocumentation =
+          /** Description. */
+          | { someProp: number }
+          /** Description. */
+          | { otherProp: string }
+
+        type IntersectionDocumentation =
+          /** Description. */
+          { someProp: number } &
+          /** Description. */
+          { otherProp: string }
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Required 1 line(s) before JSDoc block'
+        },
+        {
+          line: 11,
+          message: 'Required 1 line(s) before JSDoc block'
+        }
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+      output: `
+        type UnionDocumentation =
+          /** Description. */
+          | { someProp: number }
+
+          /** Description. */
+          | { otherProp: string }
+
+        type IntersectionDocumentation =
+          /** Description. */
+          { someProp: number } &
+
+          /** Description. */
+          { otherProp: string }
+      `,
+    },
+    {
+      // While this looks ugly this is exactly how Prettier currently requires such an intersection
+      // to be formatted. See https://github.com/prettier/prettier/issues/3986.
+      code: `
+        type IntersectionDocumentation = {
+          someProp: number;
+        } & /** Description. */ {
+          otherProp: string;
+        };
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Required 1 line(s) before JSDoc block'
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+      options: [
+        {
+          ignoreSameLine: false,
+        }
+      ],
+      output: `
+        type IntersectionDocumentation = {
+          someProp: number;
+        } &
+
+        /** Description. */ {
+          otherProp: string;
+        };
+      `
     }
   ],
   valid: [
@@ -375,6 +454,76 @@ export default /** @type {import('../index.js').TestCases} */ ({
           let value;
         }
       `,
+    },
+    {
+      code: `
+        class SomeClass {
+          constructor(
+            /**
+             * Description.
+             */
+            param
+          ) {};
+
+          method(
+            /**
+             * Description.
+             */
+            param
+          ) {};
+        }
+      `,
+    },
+    {
+      code: `
+        type FunctionAlias1 =
+          /**
+           * @param param - Description.
+           */
+          (param: number) => void;
+
+        type FunctionAlias2 = (
+          /**
+           * @param param - Description.
+           */
+          param: number
+        ) => void;
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        type UnionDocumentation =
+          /** Description. */
+          | { someProp: number }
+
+          /** Description. */
+          | { otherProp: string }
+
+        type IntersectionDocumentation =
+          /** Description. */
+          { someProp: number } &
+
+          /** Description. */
+          { otherProp: string }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
+    },
+    {
+      code: `
+        type IntersectionDocumentation = {
+          someProp: number;
+        } & /** Description. */ {
+          otherProp: string;
+        };
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser
+      },
     }
   ],
 });

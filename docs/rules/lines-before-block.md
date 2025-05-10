@@ -130,6 +130,27 @@ const values = [
 ];
 // "jsdoc/lines-before-block": ["error"|"warn", {"checkBlockStarts":true}]
 // Message: Required 1 line(s) before JSDoc block
+
+type UnionDocumentation =
+  /** Description. */
+  | { someProp: number }
+  /** Description. */
+  | { otherProp: string }
+
+type IntersectionDocumentation =
+  /** Description. */
+  { someProp: number } &
+  /** Description. */
+  { otherProp: string }
+// Message: Required 1 line(s) before JSDoc block
+
+type IntersectionDocumentation = {
+  someProp: number;
+} & /** Description. */ {
+  otherProp: string;
+};
+// "jsdoc/lines-before-block": ["error"|"warn", {"ignoreSameLine":false}]
+// Message: Required 1 line(s) before JSDoc block
 ````
 
 
@@ -210,5 +231,54 @@ function myFunction() {
    */
   let value;
 }
+
+class SomeClass {
+  constructor(
+    /**
+     * Description.
+     */
+    param
+  ) {};
+
+  method(
+    /**
+     * Description.
+     */
+    param
+  ) {};
+}
+
+type FunctionAlias1 =
+  /**
+   * @param param - Description.
+   */
+  (param: number) => void;
+
+type FunctionAlias2 = (
+  /**
+   * @param param - Description.
+   */
+  param: number
+) => void;
+
+type UnionDocumentation =
+  /** Description. */
+  | { someProp: number }
+
+  /** Description. */
+  | { otherProp: string }
+
+type IntersectionDocumentation =
+  /** Description. */
+  { someProp: number } &
+
+  /** Description. */
+  { otherProp: string }
+
+type IntersectionDocumentation = {
+  someProp: number;
+} & /** Description. */ {
+  otherProp: string;
+};
 ````
 
