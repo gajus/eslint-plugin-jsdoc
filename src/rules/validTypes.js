@@ -291,6 +291,14 @@ export default iterateJsdoc(({
       continue;
     }
 
+    // Documentation like `@returns {@link SomeType}` is technically ambiguous. Specifically it
+    // could either be intepreted as a type `"@link SomeType"` or a description `"{@link SomeType}"`.
+    // However this is a good heuristic.
+    if (tag.type.trim().startsWith('@')) {
+      tag.description = `{${tag.type}} ${tag.description}`;
+      tag.type = '';
+    }
+
     const mightHaveTypePosition = utils.tagMightHaveTypePosition(tag.tag, otherModeMaps);
     if (mightHaveTypePosition !== true && tag.type) {
       const modeInfo = mightHaveTypePosition === false ? '' : ` in "${mode}" mode`;

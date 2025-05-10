@@ -884,5 +884,9 @@ function quux() {
 /**
  * @import { TestOne, TestTwo } from "./types"
  */
+
+/**
+ * @returns {@link SomeType}
+ */
 ````
 
