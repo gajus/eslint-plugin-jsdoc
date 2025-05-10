@@ -1859,6 +1859,13 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @import { TestOne, TestTwo } from "./types"
          */
       `,
+    },
+    {
+      code: `
+        /**
+         * @returns {@link SomeType}
+         */
+      `,
     }
   ],
 });
