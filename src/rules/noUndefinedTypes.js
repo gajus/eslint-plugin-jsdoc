@@ -1,6 +1,3 @@
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-
 import {parseImportsExports} from 'parse-imports-exports';
 import {
   getJSDocComment,
@@ -11,8 +8,6 @@ import {
 import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const extraTypes = [
   'null', 'undefined', 'void', 'string', 'boolean', 'object',
