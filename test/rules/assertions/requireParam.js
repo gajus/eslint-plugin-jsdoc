@@ -2554,6 +2554,37 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux (a, b) {}
       `,
     },
+    {
+      code: `
+        /**
+         * Some test function type.
+         */
+        export type Test = (foo: number) => string;
+      `,
+      errors: [
+        {
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      options: [
+        {
+          contexts: [
+            'TSFunctionType',
+          ],
+        },
+      ],
+      output: `
+        /**
+         * Some test function type.
+         * @param foo
+         */
+        export type Test = (foo: number) => string;
+      `,
+    },
   ],
   valid: [
     {
