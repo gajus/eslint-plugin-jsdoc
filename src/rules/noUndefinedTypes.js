@@ -261,7 +261,12 @@ export default iterateJsdoc(({
     .concat(importTags)
     .concat(definedTypes)
     .concat(/** @type {string[]} */ (definedPreferredTypes))
-    .concat(...getValidRuntimeIdentifiers(node && sourceCode.getScope(node)))
+    .concat(...getValidRuntimeIdentifiers(node && (
+      (sourceCode.getScope &&
+      /* c8 ignore next 2 */
+      sourceCode.getScope(node)) ||
+      context.getScope()
+    )))
     .concat(
       settings.mode === 'jsdoc' ?
         [] :
