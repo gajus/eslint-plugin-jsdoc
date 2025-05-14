@@ -1178,6 +1178,13 @@ class A {
 function quux (a, b) {}
 // "jsdoc/require-param": ["error"|"warn", {"ignoreWhenAllParamsMissing":true}]
 // Message: Missing JSDoc @param "b" declaration.
+
+/**
+ * Some test function type.
+ */
+export type Test = (foo: number) => string;
+// "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
+// Message: Missing JSDoc @param "foo" declaration.
 ````
 
 

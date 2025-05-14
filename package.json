@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "~0.49.0",
+    "@es-joy/jsdoccomment": "~0.50.1",
     "are-docs-informative": "^0.0.2",
     "comment-parser": "1.4.1",
     "debug": "^4.3.6",
@@ -31,19 +31,19 @@
     "@semantic-release/commit-analyzer": "^13.0.0",
     "@semantic-release/github": "^11.0.0",
     "@semantic-release/npm": "^12.0.1",
-    "@types/chai": "^4.3.17",
+    "@types/chai": "^5.2.2",
     "@types/debug": "^4.1.12",
-    "@types/eslint": "^9.6.0",
+    "@types/eslint": "^9.6.1",
     "@types/espree": "^10.1.0",
     "@types/esquery": "^1.5.4",
-    "@types/estree": "^1.0.5",
+    "@types/estree": "^1.0.7",
     "@types/json-schema": "^7.0.15",
     "@types/lodash.defaultsdeep": "^4.6.9",
-    "@types/mocha": "^10.0.7",
-    "@types/node": "^22.2.0",
-    "@types/semver": "^7.5.8",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.15.18",
+    "@types/semver": "^7.7.0",
     "@types/spdx-expression-parse": "^3.0.5",
-    "@typescript-eslint/types": "^8.1.0",
+    "@typescript-eslint/types": "^8.32.1",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-istanbul": "^7.0.0",
     "babel-plugin-transform-import-meta": "^2.2.1",
@@ -67,8 +67,8 @@
     "replace": "^1.2.2",
     "rimraf": "^5.0.7",
     "semantic-release": "^24.1.1",
-    "typescript": "5.5.x",
-    "typescript-eslint": "^8.1.0"
+    "typescript": "5.8.x",
+    "typescript-eslint": "^8.32.1"
   },
   "engines": {
     "node": ">=18"
