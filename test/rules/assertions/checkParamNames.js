@@ -1,5 +1,7 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
 import * as babelEslintParser from '@babel/eslint-parser';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -696,14 +698,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing @param "options.extra"',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           checkRestProperty: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -723,14 +725,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: '@param "cfg.bar" does not exist on cfg',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           checkRestProperty: true,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -816,14 +818,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing @param "fetchOptions.options"',
         },
       ],
+      languageOptions: {
+        parser: babelEslintParser,
+      },
       options: [
         {
           checkRestProperty: true,
         },
       ],
-      languageOptions: {
-        parser: babelEslintParser
-      },
     },
     {
       code: `
@@ -854,7 +856,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -983,14 +985,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: '@param "props.prop.b" does not exist on props',
         },
       ],
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           useDefaultObjectProperties: false,
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -1171,7 +1173,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1183,15 +1185,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux (bar, foo) {
         }
       `,
-      options: [
-        {
-          disableMissingParamChecks: false,
-        },
-      ],
       errors: [
         {
           line: 3,
           message: 'Expected @param names to be "bar, foo". Got "foo".',
+        },
+      ],
+      options: [
+        {
+          disableMissingParamChecks: false,
         },
       ],
     },
@@ -1203,15 +1205,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux (bar, baz) {
         }
       `,
-      options: [
-        {
-          disableMissingParamChecks: true,
-        },
-      ],
       errors: [
         {
           line: 3,
           message: 'Expected @param names to be "bar, baz". Got "foo".',
+        },
+      ],
+      options: [
+        {
+          disableMissingParamChecks: true,
         },
       ],
     },
@@ -1224,15 +1226,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux (foo, bar) {
         }
       `,
-      options: [
-        {
-          disableMissingParamChecks: true,
-        },
-      ],
       errors: [
         {
           line: 3,
           message: 'Expected @param names to be "foo, bar". Got "bar, foo".',
+        },
+      ],
+      options: [
+        {
+          disableMissingParamChecks: true,
         },
       ],
     },
@@ -1245,15 +1247,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function quux (foo) {
         }
       `,
-      options: [
-        {
-          disableMissingParamChecks: true,
-        },
-      ],
       errors: [
         {
           line: 4,
           message: '@param "bar" does not match an existing function parameter.',
+        },
+      ],
+      options: [
+        {
+          disableMissingParamChecks: true,
         },
       ],
     },
@@ -1645,7 +1647,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1662,7 +1664,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1679,7 +1681,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1806,14 +1808,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       export function testFn1 ({ prop = { a: 1, b: 2 } }) {
       }
       `,
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           useDefaultObjectProperties: true,
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -1849,7 +1851,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1870,7 +1872,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       function foo(this: void, arg1: number): void;
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1883,7 +1885,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1900,7 +1902,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       ignoreReadme: true,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1918,7 +1920,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       ignoreReadme: true,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1938,7 +1940,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1954,7 +1956,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -2034,8 +2036,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
         jsdoc: {
           contexts: [
             'VariableDeclaration',
-          ]
-        }
+          ],
+        },
       },
     },
   ],

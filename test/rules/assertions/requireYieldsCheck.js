@@ -714,8 +714,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
           }
       `,
       languageOptions: {
-        sourceType: 'script'
-      }
+        sourceType: 'script',
+      },
     },
     {
       code: `

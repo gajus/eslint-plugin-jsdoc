@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -20,7 +22,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -41,7 +43,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -97,7 +99,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -128,12 +130,12 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
       options: [
         {
           requireSeparateTemplates: true,
-        }
+        },
       ],
     },
     {
@@ -152,7 +154,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           requireSeparateTemplates: true,
-        }
+        },
       ],
     },
     {
@@ -187,7 +189,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -206,7 +208,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -225,7 +227,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -244,7 +246,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -263,7 +265,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -282,7 +284,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -302,7 +304,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -322,7 +324,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -342,7 +344,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -362,7 +364,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -412,7 +414,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         export type Pairs<D, V> = [D, V | undefined];
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -432,7 +434,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         export type Extras<D, U, V> = [D, U, V | undefined];
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -480,7 +482,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -493,7 +495,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -506,7 +508,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -519,7 +521,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -532,7 +534,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -545,7 +547,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -559,7 +561,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -573,7 +575,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -587,7 +589,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -601,7 +603,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {

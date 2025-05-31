@@ -1,12 +1,9 @@
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
+import iterateJsdoc from '../iterateJsdoc.js';
+import {
+  parseImportsExports,
+} from 'parse-imports-exports';
 import semver from 'semver';
 import spdxExpressionParse from 'spdx-expression-parse';
-import {parseImportsExports} from 'parse-imports-exports';
-import iterateJsdoc from '../iterateJsdoc.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const allowedKinds = new Set([
   'class',
@@ -23,17 +20,17 @@ const allowedKinds = new Set([
 ]);
 
 export default iterateJsdoc(({
-  utils,
-  report,
   context,
+  report,
   settings,
+  utils,
 }) => {
   const options = context.options[0] || {};
   const {
-    allowedLicenses = null,
     allowedAuthors = null,
-    numericOnlyVariation = false,
+    allowedLicenses = null,
     licensePattern = '/([^\n\r]*)/gu',
+    numericOnlyVariation = false,
   } = options;
 
   utils.forEachPreferredTag('version', (jsdocParameter, targetTagName) => {
@@ -167,18 +164,20 @@ export default iterateJsdoc(({
   if (settings.mode === 'typescript') {
     utils.forEachPreferredTag('import', (tag) => {
       const {
-        type, name, description
+        description,
+        name,
+        type,
       } = tag;
-      const typePart = type ? `{${type}} `: '';
-      const imprt = 'import ' + (description
-        ? `${typePart}${name} ${description}`
-        : `${typePart}${name}`);
+      const typePart = type ? `{${type}} ` : '';
+      const imprt = 'import ' + (description ?
+        `${typePart}${name} ${description}` :
+        `${typePart}${name}`);
 
       const importsExports = parseImportsExports(imprt.trim());
 
       if (importsExports.errors) {
         report(
-          `Bad @import tag`,
+          'Bad @import tag',
           null,
           tag,
         );

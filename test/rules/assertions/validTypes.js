@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -1467,7 +1469,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       function foo(bar) {}
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1648,7 +1650,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       type ComplicatedType<T, U, V, W, X> = never
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1851,7 +1853,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
           function quux() {
 
           }
-      `
+      `,
     },
     {
       code: `
@@ -1866,6 +1868,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @returns {@link SomeType}
          */
       `,
-    }
+    },
   ],
 });

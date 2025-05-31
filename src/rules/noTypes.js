@@ -34,7 +34,7 @@ export default iterateJsdoc(({
   contextDefaults: [
     'ArrowFunctionExpression', 'FunctionDeclaration', 'FunctionExpression', 'TSDeclareFunction',
     // Add this to above defaults
-    'TSMethodSignature'
+    'TSMethodSignature',
   ],
   meta: {
     docs: {

@@ -1,26 +1,27 @@
 /* eslint-disable no-console -- CLI */
 
-import {fileURLToPath} from 'url';
+import camelCase from 'camelcase';
 import {
   existsSync,
 } from 'fs';
 import fs from 'fs/promises';
-import {
-  resolve, dirname,
-} from 'path';
-
 /**
- * @example
  *
  * ```shell
  * npm run create-rule my-new-rule -- --recommended
  * ```
  */
-
-import camelCase from 'camelcase';
 import open from 'open-editor';
+import {
+  dirname as getDirname,
+  resolve,
+} from 'path';
+// Todo: Add back `@example` when reject other langs from processing
+import {
+  fileURLToPath,
+} from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const dirname = getDirname(fileURLToPath(import.meta.url));
 
 // Todo: Would ideally have prompts, e.g., to ask for whether
 //   type was problem/layout, etc.
@@ -155,11 +156,11 @@ export default iterateJsdoc(({
    * @returns {Promise<void>}
    */
   const replaceInOrder = async ({
-    path,
-    oldRegex,
     checkName,
     newLine,
     oldIsCamel,
+    oldRegex,
+    path,
   }) => {
     /**
      * @typedef {number} Integer
@@ -283,7 +284,7 @@ export default iterateJsdoc(({
   */
 
   // Set chdir as somehow still in operation from other test
-  process.chdir(resolve(__dirname, '../../'));
+  process.chdir(resolve(dirname, '../../'));
   await open([
     // Could even add editor line column numbers like `${rulePath}:1:1`
     ruleReadmePath,

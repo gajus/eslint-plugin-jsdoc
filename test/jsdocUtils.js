@@ -16,12 +16,12 @@ describe('jsdocUtils', () => {
           {
             tag: 'example',
           },
-        ]
+        ],
       }, {
         tagName: 'example',
         tagNamePreference: {
-          'example': false
-        }
+          example: false,
+        },
       });
     });
   });

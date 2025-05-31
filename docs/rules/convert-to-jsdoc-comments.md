@@ -118,7 +118,7 @@ function quux () {}
 
 // A single line comment
 function quux () {}
-// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"lineOrBlockStyle":"line","enforceJsdocLineStyle":"single"}]
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single","lineOrBlockStyle":"line"}]
 // Message: Line comments should be JSDoc-style.
 
 /* A single line comment */
@@ -128,7 +128,7 @@ function quux () {}
 
 /* A single line comment */
 function quux () {}
-// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"lineOrBlockStyle":"block","enforceJsdocLineStyle":"single"}]
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single","lineOrBlockStyle":"block"}]
 // Message: Block comments should be JSDoc-style.
 
 // A single line comment
@@ -160,21 +160,21 @@ export class User {
 // Message: Block comments should be JSDoc-style.
 
 /* A single line comment */ function quux () {}
-// Settings: {"jsdoc":{"minLines":0,"maxLines":0}}
+// Settings: {"jsdoc":{"maxLines":0,"minLines":0}}
 // "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
 // Message: Block comments should be JSDoc-style.
 
 var a = []; // Test comment
-// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":[],"contextsAfter":["VariableDeclarator"]}]
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsAfter":["VariableDeclarator"],"contextsBeforeAndAfter":[]}]
 // Message: Line comments should be JSDoc-style.
 
 var a = []; // Test comment
-// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":[],"contextsAfter":[{"context":"VariableDeclarator","inlineCommentBlock":true}]}]
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsAfter":[{"context":"VariableDeclarator","inlineCommentBlock":true}],"contextsBeforeAndAfter":[]}]
 // Message: Line comments should be JSDoc-style.
 
 var a = []; // Test comment
-// Settings: {"jsdoc":{"minLines":0,"maxLines":0}}
-// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":[],"contextsAfter":[{"context":"VariableDeclarator","inlineCommentBlock":true}]}]
+// Settings: {"jsdoc":{"maxLines":0,"minLines":0}}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsAfter":[{"context":"VariableDeclarator","inlineCommentBlock":true}],"contextsBeforeAndAfter":[]}]
 // Message: Line comments should be JSDoc-style.
 
 // Test comment
@@ -230,11 +230,11 @@ function quux () {}
 
 /* A single line comment */
 function quux () {}
-// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"lineOrBlockStyle":"line","enforceJsdocLineStyle":"single"}]
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single","lineOrBlockStyle":"line"}]
 
 // A single line comment
 function quux () {}
-// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"lineOrBlockStyle":"block","enforceJsdocLineStyle":"single"}]
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single","lineOrBlockStyle":"block"}]
 
 // @ts-expect-error
 function quux () {}
@@ -245,6 +245,6 @@ function quux () {}
 
 // Test comment
 var a = [];
-// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":[],"contextsAfter":["VariableDeclarator"]}]
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsAfter":["VariableDeclarator"],"contextsBeforeAndAfter":[]}]
 ````
 

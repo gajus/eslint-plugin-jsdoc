@@ -3,13 +3,13 @@ import {
   getSettings,
 } from '../iterateJsdoc.js';
 import {
-  exemptSpeciaMethods,
-  isConstructor,
-  getFunctionParameterNames,
-  hasReturnValue,
-  getIndent,
-  getContextObject,
   enforcedContexts,
+  exemptSpeciaMethods,
+  getContextObject,
+  getFunctionParameterNames,
+  getIndent,
+  hasReturnValue,
+  isConstructor,
 } from '../jsdocUtils.js';
 import {
   getDecorator,
@@ -215,13 +215,13 @@ const getOption = (context, baseObject, option, key) => {
  */
 const getOptions = (context, settings) => {
   const {
-    publicOnly,
     contexts = settings.contexts || [],
+    enableFixer = true,
     exemptEmptyConstructors = true,
     exemptEmptyFunctions = false,
-    enableFixer = true,
     fixerMessage = '',
     minLineCount = undefined,
+    publicOnly,
   } = context.options[0] || {};
 
   return {
@@ -309,13 +309,13 @@ export default {
     const opts = getOptions(context, settings);
 
     const {
-      require: requireOption,
       contexts,
-      exemptEmptyFunctions,
-      exemptEmptyConstructors,
       enableFixer,
+      exemptEmptyConstructors,
+      exemptEmptyFunctions,
       fixerMessage,
       minLineCount,
+      require: requireOption,
     } = opts;
 
     const publicOnly =
@@ -429,7 +429,7 @@ export default {
 
         const decorator = getDecorator(
           /** @type {import('eslint').Rule.Node} */
-          (baseNode)
+          (baseNode),
         );
         if (decorator) {
           baseNode = decorator;
@@ -535,10 +535,10 @@ export default {
 
         if (
           [
-            'VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration',
+            'AssignmentExpression', 'ExportDefaultDeclaration', 'VariableDeclarator',
           ].includes(node.parent.type) ||
           [
-            'Property', 'ObjectProperty', 'ClassProperty', 'PropertyDefinition',
+            'ClassProperty', 'ObjectProperty', 'Property', 'PropertyDefinition',
           ].includes(node.parent.type) &&
             node ===
               /**
@@ -591,10 +591,10 @@ export default {
 
         if (
           [
-            'VariableDeclarator', 'AssignmentExpression', 'ExportDefaultDeclaration',
+            'AssignmentExpression', 'ExportDefaultDeclaration', 'VariableDeclarator',
           ].includes(node.parent.type) ||
           [
-            'Property', 'ObjectProperty', 'ClassProperty', 'PropertyDefinition',
+            'ClassProperty', 'ObjectProperty', 'Property', 'PropertyDefinition',
           ].includes(node.parent.type) &&
             node ===
               /**

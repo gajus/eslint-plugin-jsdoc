@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -134,6 +136,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: '@enum required on declarations',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -150,9 +155,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `

@@ -30,7 +30,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         const fn = ( lorem, sit ) => {}
       `,
     },
-    /* eslint-disable no-tabs */
+    /* eslint-disable @stylistic/no-tabs */
     {
       code: `
 				/**
@@ -61,7 +61,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         const fn = ( lorem, sit ) => {}
       `,
     },
-    /* eslint-enable no-tabs */
+    /* eslint-enable @stylistic/no-tabs */
     {
       code: `
         /**
@@ -1504,7 +1504,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         'always',
       ],
     },
-    /* eslint-disable no-tabs */
+    /* eslint-disable @stylistic/no-tabs */
     {
       code: `
 				/**
@@ -1519,7 +1519,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         'always',
       ],
     },
-    /* eslint-enable no-tabs */
+    /* eslint-enable @stylistic/no-tabs */
     {
       code: `
         /**

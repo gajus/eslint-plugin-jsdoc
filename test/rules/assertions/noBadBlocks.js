@@ -255,9 +255,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
       plugins: {
         '@stylistic': {
           rules: {
-            'max-len': () => {}
-          }
-        }
+            'max-len': () => {},
+          },
+        },
       },
     },
   ],

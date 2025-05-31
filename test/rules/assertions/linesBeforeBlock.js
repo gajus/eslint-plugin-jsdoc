@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -37,8 +39,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          ignoreSameLine: false
-        }
+          ignoreSameLine: false,
+        },
       ],
       output: `
         someCode;
@@ -60,8 +62,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          ignoreSameLine: false
-        }
+          ignoreSameLine: false,
+        },
       ],
       output: `
         someCode;
@@ -175,10 +177,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 3,
-          message: 'Required 1 line(s) before JSDoc block'
-        }
+          message: 'Required 1 line(s) before JSDoc block',
+        },
       ],
-      options: [{ checkBlockStarts: true }],
+      options: [
+        {
+          checkBlockStarts: true,
+        },
+      ],
       output: `
         {
 
@@ -201,10 +207,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 3,
-          message: 'Required 1 line(s) before JSDoc block'
-        }
+          message: 'Required 1 line(s) before JSDoc block',
+        },
       ],
-      options: [{ checkBlockStarts: true }],
+      options: [
+        {
+          checkBlockStarts: true,
+        },
+      ],
       output: `
         class MyClass {
 
@@ -227,10 +237,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 3,
-          message: 'Required 1 line(s) before JSDoc block'
-        }
+          message: 'Required 1 line(s) before JSDoc block',
+        },
       ],
-      options: [{ checkBlockStarts: true }],
+      options: [
+        {
+          checkBlockStarts: true,
+        },
+      ],
       output: `
         function myFunction() {
 
@@ -253,10 +267,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 3,
-          message: 'Required 1 line(s) before JSDoc block'
-        }
+          message: 'Required 1 line(s) before JSDoc block',
+        },
       ],
-      options: [{ checkBlockStarts: true }],
+      options: [
+        {
+          checkBlockStarts: true,
+        },
+      ],
       output: `
         const values = [
 
@@ -280,8 +298,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 4,
-          message: 'Required 1 line(s) before JSDoc block'
-        }
+          message: 'Required 1 line(s) before JSDoc block',
+        },
       ],
       output: `
         const values = [
@@ -307,8 +325,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 6,
-          message: 'Required 1 line(s) before JSDoc block'
-        }
+          message: 'Required 1 line(s) before JSDoc block',
+        },
       ],
       output: `
         const values = [
@@ -332,8 +350,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 3,
-          message: 'Required 1 line(s) before JSDoc block'
-        }
+          message: 'Required 1 line(s) before JSDoc block',
+        },
       ],
       output: `
         const value = 123
@@ -360,15 +378,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 5,
-          message: 'Required 1 line(s) before JSDoc block'
+          message: 'Required 1 line(s) before JSDoc block',
         },
         {
           line: 11,
-          message: 'Required 1 line(s) before JSDoc block'
-        }
+          message: 'Required 1 line(s) before JSDoc block',
+        },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
       output: `
         type UnionDocumentation =
@@ -399,16 +417,16 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 4,
-          message: 'Required 1 line(s) before JSDoc block'
+          message: 'Required 1 line(s) before JSDoc block',
         },
       ],
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
       options: [
         {
           ignoreSameLine: false,
-        }
+        },
       ],
       output: `
         type IntersectionDocumentation = {
@@ -418,12 +436,12 @@ export default /** @type {import('../index.js').TestCases} */ ({
         /** Description. */ {
           otherProp: string;
         };
-      `
-    }
+      `,
+    },
   ],
   valid: [
     {
-      code: `/**\n *\n */`,
+      code: '/**\n *\n */',
     },
     {
       code: `
@@ -496,10 +514,12 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       options: [
         {
-          excludedTags: ['lends'],
-          ignoreSameLine: false
-        }
-      ]
+          excludedTags: [
+            'lends',
+          ],
+          ignoreSameLine: false,
+        },
+      ],
     },
     {
       code: `
@@ -566,7 +586,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         ) => void;
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -586,7 +606,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
           { otherProp: string }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -598,8 +618,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
         };
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
-    }
+    },
   ],
 });

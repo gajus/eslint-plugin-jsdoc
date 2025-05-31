@@ -278,7 +278,7 @@ let emoji;
  */
 export function packageNameFromPath(path) {
   const base = basename(path);
-  return /^vd+(.d+)?$/.exec(base) || /^tsd.d/.exec(base) ? basename(dirname(path)) : base;
+  return /^v\d+(\.\d+)?$/.exec(base) || /^ts\d\.\d/.exec(base) ? basename(dirname(path)) : base;
 }
 // Message: This description only repeats the name it describes.
 
@@ -287,7 +287,7 @@ export function packageNameFromPath(path) {
  */
 export default function packageNameFromPath(path) {
   const base = basename(path);
-  return /^vd+(.d+)?$/.exec(base) || /^tsd.d/.exec(base) ? basename(dirname(path)) : base;
+  return /^v\d+(\.\d+)?$/.exec(base) || /^ts\d\.\d/.exec(base) ? basename(dirname(path)) : base;
 }
 // Message: This description only repeats the name it describes.
 ````
