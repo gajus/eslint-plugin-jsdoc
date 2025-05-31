@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@es-joy/jsdoccomment": "~0.50.2",
-    "are-docs-informative": "^0.0.2",
+    "are-docs-informative": "^0.1.1",
     "comment-parser": "1.4.1",
     "debug": "^4.4.1",
     "escape-string-regexp": "^4.0.0",
@@ -55,7 +55,7 @@
     "eslint": "9.28.0",
     "eslint-config-canonical": "~44.9.5",
     "gitdown": "^4.1.1",
-    "glob": "^10.4.2",
+    "glob": "^11.0.2",
     "globals": "^16.2.0",
     "husky": "^9.1.7",
     "jsdoc-type-pratt-parser": "^4.1.0",
@@ -65,13 +65,13 @@
     "mocha": "^11.5.0",
     "open-editor": "^5.1.0",
     "replace": "^1.2.2",
-    "rimraf": "^5.0.7",
+    "rimraf": "^6.0.1",
     "semantic-release": "^24.2.5",
     "typescript": "5.8.3",
     "typescript-eslint": "^8.33.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.11.0"
   },
   "keywords": [
     "eslint",

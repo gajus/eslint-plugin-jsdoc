@@ -13,15 +13,8 @@ import fs from 'fs/promises';
  */
 import open from 'open-editor';
 import {
-  dirname as getDirname,
   resolve,
 } from 'path';
-// Todo: Add back `@example` when reject other langs from processing
-import {
-  fileURLToPath,
-} from 'url';
-
-const dirname = getDirname(fileURLToPath(import.meta.url));
 
 // Todo: Would ideally have prompts, e.g., to ask for whether
 //   type was problem/layout, etc.
@@ -284,7 +277,7 @@ export default iterateJsdoc(({
   */
 
   // Set chdir as somehow still in operation from other test
-  process.chdir(resolve(dirname, '../../'));
+  process.chdir(resolve(import.meta.dirname, '../../'));
   await open([
     // Could even add editor line column numbers like `${rulePath}:1:1`
     ruleReadmePath,
