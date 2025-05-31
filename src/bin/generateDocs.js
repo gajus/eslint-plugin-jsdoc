@@ -1,16 +1,20 @@
-/**
- * This script is used to inline assertions into the README.md documents.
- */
-import path, {dirname} from 'path';
-import {fileURLToPath} from 'url';
-import fs from 'fs';
 import decamelize from 'decamelize';
+import fs from 'fs';
 import Gitdown from 'gitdown';
 import {
   glob,
 } from 'glob';
+/**
+ * This script is used to inline assertions into the README.md documents.
+ */
+import path, {
+  dirname as getDirname,
+} from 'path';
+import {
+  fileURLToPath,
+} from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const dirname = getDirname(fileURLToPath(import.meta.url));
 
 /**
  * @param {string} code
@@ -65,7 +69,7 @@ const formatCodeSnippet = (setup, ruleName) => {
 };
 
 const getAssertions = async () => {
-  const assertionFiles = (await glob(path.resolve(__dirname, '../../test/rules/assertions/*.js'))).filter((file) => {
+  const assertionFiles = (await glob(path.resolve(dirname, '../../test/rules/assertions/*.js'))).filter((file) => {
     return !file.includes('flatConfig');
   }).reverse();
 
@@ -115,7 +119,7 @@ const getAssertions = async () => {
 };
 
 const getSomeBranch = () => {
-  const gitConfig = fs.readFileSync(path.join(__dirname, '../../.git/config')).toString();
+  const gitConfig = fs.readFileSync(path.join(dirname, '../../.git/config')).toString();
   const [
     , branch,
   ] = /\[branch "([^"]+)"\]/u.exec(gitConfig) || [];
@@ -132,19 +136,19 @@ const extraFiles = [
 ];
 
 const otherPaths = extraFiles.map((extraFile) => {
-  return path.join(__dirname, '..', '..', '.README', extraFile);
+  return path.join(dirname, '..', '..', '.README', extraFile);
 });
 
 const generateDocs = async () => {
   const {
-    assertions,
     assertionNames,
+    assertions,
   } = await getAssertions();
 
   const docContents = await Promise.all([
     ...assertionNames.map((assertionName) => {
       return path.join(
-        __dirname, '..', '..', '.README', 'rules', decamelize(assertionName, {
+        dirname, '..', '..', '.README', 'rules', decamelize(assertionName, {
           separator: '-',
         }) + '.md',
       );
@@ -156,7 +160,7 @@ const generateDocs = async () => {
     gitdown.setConfig({
       gitinfo: {
         defaultBranchName: getSomeBranch() || 'master',
-        gitPath: path.join(__dirname, '../../.git'),
+        gitPath: path.join(dirname, '../../.git'),
       },
     });
 
@@ -195,13 +199,14 @@ const generateDocs = async () => {
  * @returns {string[]}
  */
 const getDocPaths = () => {
-  const basePath = path.join(__dirname, '..', '..', '.README');
-  const writeBasePath = path.join(__dirname, '..', '..', 'docs');
+  const basePath = path.join(dirname, '..', '..', '.README');
+  const writeBasePath = path.join(dirname, '..', '..', 'docs');
   const docPaths = /** @type {string[]} */ (fs.readdirSync(basePath).flatMap((docFile) => {
     if (extraFiles.includes(docFile)) {
       // Will get path separately below
       return null;
     }
+
     if (docFile === '.DS_Store') {
       return null;
     }
@@ -230,9 +235,9 @@ const getDocPaths = () => {
   return [
     ...docPaths,
     ...extraFiles.slice(0, -1).map((extraFile) => {
-      return path.join(__dirname, '..', '..', 'docs', extraFile);
+      return path.join(dirname, '..', '..', 'docs', extraFile);
     }),
-    path.join(__dirname, '..', '..', 'README.md'),
+    path.join(dirname, '..', '..', 'README.md'),
   ];
 };
 

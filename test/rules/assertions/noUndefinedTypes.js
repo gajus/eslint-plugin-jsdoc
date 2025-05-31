@@ -1,6 +1,8 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
 import * as babelEslintParser from '@babel/eslint-parser';
 import globals from 'globals';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -1176,7 +1178,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -1227,12 +1229,12 @@ export default /** @type {import('../index.js').TestCases} */ ({
           });
         };
       `,
+      ignoreReadme: true,
       languageOptions: {
         globals: {
           Promise: 'readonly',
         },
       },
-      ignoreReadme: true,
     },
     {
       // https://github.com/gajus/eslint-plugin-jsdoc/issues/749
@@ -1345,7 +1347,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: babelEslintParser
+        parser: babelEslintParser,
       },
       settings: {
         jsdoc: {
@@ -1416,14 +1418,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
           quux(0);
       `,
       ignoreReadme: true,
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           markVariablesAsUsed: false,
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -1437,14 +1439,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
 
       }
       `,
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           disableReporting: true,
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
     {
       code: `

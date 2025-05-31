@@ -7,16 +7,16 @@ export default iterateJsdoc(({
 }) => {
   const {
     allowMultipleTags = true,
-    noFinalLineText = true,
-    noZeroLineText = true,
-    noSingleLineBlocks = false,
-    singleLineTags = [
-      'lends', 'type',
-    ],
-    noMultilineBlocks = false,
     minimumLengthForMultiline = Number.POSITIVE_INFINITY,
     multilineTags = [
       '*',
+    ],
+    noFinalLineText = true,
+    noMultilineBlocks = false,
+    noSingleLineBlocks = false,
+    noZeroLineText = true,
+    singleLineTags = [
+      'lends', 'type',
     ],
   } = context.options[0] || {};
 
@@ -209,13 +209,13 @@ export default iterateJsdoc(({
             tokens: jsdoc.source.reduce((obj, {
               tokens: {
                 description: desc,
-                tag: tg,
-                type: typ,
-                name: nme,
                 lineEnd,
-                postType,
+                name: nme,
                 postName,
                 postTag,
+                postType,
+                tag: tg,
+                type: typ,
               },
             }) => {
               if (typ) {

@@ -1,5 +1,7 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
 import * as babelEslintParser from '@babel/eslint-parser';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -996,6 +998,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
       output: `
         export class SomeClass {
           /**
@@ -1005,10 +1011,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           constructor(private property: string, private foo: number) {}
         }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser,
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -1283,6 +1285,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1299,9 +1304,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
       TestMethod(id: number): void;
       }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1322,6 +1324,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1342,9 +1347,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
       abstract TestFunction(id);
       }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1365,6 +1367,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1385,9 +1390,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
       TestMethod(id);
       }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1402,6 +1404,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1416,9 +1421,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
        */
       declare let TestFunction: (id) => void;
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1433,6 +1435,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1447,9 +1452,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
         let TestFunction: (id) => void;
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1468,6 +1470,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1486,9 +1491,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           return processor(10);
         }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1506,6 +1508,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1523,9 +1528,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           return processor(10);
         }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1542,6 +1544,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1558,9 +1563,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           public Test: (id: number) => string;
         }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1579,6 +1581,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1597,9 +1602,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           }
         }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1616,6 +1618,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1632,9 +1637,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         Test: (id: number) => string;
         }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1651,6 +1653,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1667,9 +1672,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           TestMethod(): (id: number) => string;
         }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1684,6 +1686,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1698,9 +1703,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
         function test(): (id: number) => string;
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1718,6 +1720,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "id" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1735,9 +1740,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           return (id) => \`\${id}\`;
         }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1799,6 +1801,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "options.permissions" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       output: `
       class Client {
         /**
@@ -1828,9 +1833,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         ) {}
       }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1876,6 +1878,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "data.last_modified" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       output: `
       class Client {
         /**
@@ -1889,9 +1894,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         ) {}
       }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1907,6 +1909,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "cfg.extra" declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           checkRestProperty: true,
@@ -1921,9 +1926,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
       function quux ({num, ...extra}) {
       }
       `,
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -1940,6 +1942,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "cfg.opts.extra" declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_018,
+      },
       options: [
         {
           checkRestProperty: true,
@@ -1955,9 +1960,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
       function quux ({opts: {num, ...extra}}) {
       }
       `,
-      languageOptions: {
-        ecmaVersion: 2_018,
-      },
     },
     {
       code: `
@@ -1974,6 +1976,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "cfg."1"" declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_015,
+      },
       output: `
       /**
        * @param {GenericArray} cfg
@@ -1984,9 +1989,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         //
       }
       `,
-      languageOptions: {
-        ecmaVersion: 2_015,
-      },
     },
     {
       code: `
@@ -2003,6 +2005,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "extra" declaration.',
         },
       ],
+      languageOptions: {
+        ecmaVersion: 2_015,
+      },
       output: `
       /**
        * @param a
@@ -2012,9 +2017,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         //
       }
       `,
-      languageOptions: {
-        ecmaVersion: 2_015,
-      },
     },
     {
       code: `
@@ -2116,6 +2118,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "fetchOptions.options" declaration.',
         },
       ],
+      languageOptions: {
+        parser: babelEslintParser,
+      },
       options: [
         {
           checkRestProperty: true,
@@ -2133,11 +2138,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       };
       `,
-      languageOptions: {
-        parser: babelEslintParser,
-      }
     },
-    /* eslint-disable no-tabs */
+    /* eslint-disable @stylistic/no-tabs */
     {
       code: `
 (function() {
@@ -2166,7 +2168,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
 	}
 })();
       `,
-      /* eslint-enable no-tabs */
+      /* eslint-enable @stylistic/no-tabs */
     },
     {
       code: `
@@ -2318,6 +2320,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "props.prop.b" declaration.',
         },
       ],
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           useDefaultObjectProperties: true,
@@ -2335,9 +2340,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
       export function testFn1 ({ prop = { a: 1, b: 2 } }) {
       }
       `,
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -2378,6 +2380,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "baz" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -2396,9 +2401,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
         export function myPublicFunction(foo: number, bar: number, baz: number) {}
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -2420,6 +2422,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       ignoreReadme: true,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -2441,9 +2446,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
          verbose = false,
        ): void {}
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -2466,6 +2468,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @param "btnState" declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -2489,9 +2494,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -2511,7 +2513,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
         {
           message: 'Missing JSDoc @param "root1.bar" declaration.',
-        }
+        },
       ],
       output: `
         class A {
@@ -2543,7 +2545,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           ignoreWhenAllParamsMissing: true,
-        }
+        },
       ],
       output: `
         /**
@@ -3082,7 +3084,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       languageOptions: {
         parser: babelEslintParser,
-      }
+      },
     },
     {
       code: `
@@ -3181,7 +3183,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
     }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -3213,6 +3215,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
         return (id) => \`\${id}\`;
       }
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -3220,9 +3225,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -3278,7 +3280,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
     }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -3316,14 +3318,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
         //
       }
       `,
+      languageOptions: {
+        ecmaVersion: 2_015,
+      },
       options: [
         {
           enableRestElementFixer: false,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_015,
-      },
     },
     {
       code: `
@@ -3334,14 +3336,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
         //
       }
       `,
+      languageOptions: {
+        ecmaVersion: 2_015,
+      },
       options: [
         {
           enableRestElementFixer: false,
         },
       ],
-      languageOptions: {
-        ecmaVersion: 2_015,
-      },
     },
     {
       code: `
@@ -3383,7 +3385,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -3507,14 +3509,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       export function testFn1 ({ prop = { a: 1, b: 2 } }) {
       }
       `,
+      languageOptions: {
+        sourceType: 'module',
+      },
       options: [
         {
           useDefaultObjectProperties: false,
         },
       ],
-      languageOptions: {
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -3531,6 +3533,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       ignoreReadme: true,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -3538,9 +3543,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -3565,6 +3567,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
        export function setCustomStage(): void {}
        `,
       ignoreReadme: true,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -3572,9 +3577,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -3589,7 +3591,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -3604,7 +3606,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {
@@ -3658,8 +3660,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
         jsdoc: {
           contexts: [
             'VariableDeclaration',
-          ]
-        }
+          ],
+        },
       },
     },
     {
@@ -3672,7 +3674,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           ignoreWhenAllParamsMissing: true,
-        }
+        },
       ],
     },
   ],

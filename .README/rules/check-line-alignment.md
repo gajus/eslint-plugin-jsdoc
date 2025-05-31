@@ -58,7 +58,7 @@ Disables `wrapIndent`; existing wrap indentation is preserved without changes.
 |||
 |---|---|
 |Context|everywhere|
-|Options|string ("always", "never", "any") followed by object with `customSpacings`, `preserveMainDescriptionPostDelimiter`, `tags`, `wrapIndent`, `disableWrapIndent`|
+|Options|string ("always", "never", "any") followed by object with `customSpacings`, `disableWrapIndent`, `preserveMainDescriptionPostDelimiter`, `tags`, `wrapIndent`|
 |Tags|`param`, `property`, `returns` and others added by `tags`|
 |Aliases|`arg`, `argument`, `prop`, `return`|
 |Recommended|false|

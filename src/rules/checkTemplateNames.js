@@ -1,19 +1,18 @@
+import iterateJsdoc from '../iterateJsdoc.js';
 import {
   parse as parseType,
   traverse,
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
-import iterateJsdoc from '../iterateJsdoc.js';
 
 export default iterateJsdoc(({
-  context,
-  utils,
   node,
-  settings,
   report,
+  settings,
+  utils,
 }) => {
   const {
-    mode
+    mode,
   } = settings;
 
   const templateTags = utils.getTags('template');
@@ -63,11 +62,13 @@ export default iterateJsdoc(({
 
   const checkTemplateTags = () => {
     for (const tag of templateTags) {
-      const {name} = tag;
-      const names = name.split(/,\s*/);
-      for (const name of names) {
-        if (!usedNames.has(name)) {
-          report(`@template ${name} not in use`, null, tag);
+      const {
+        name,
+      } = tag;
+      const names = name.split(/,\s*/u);
+      for (const nme of names) {
+        if (!usedNames.has(nme)) {
+          report(`@template ${nme} not in use`, null, tag);
         }
       }
     }
@@ -82,10 +83,19 @@ export default iterateJsdoc(({
    */
   const checkParameters = (aliasDeclaration, checkParamsAndReturns) => {
     /* c8 ignore next -- Guard */
-    const {params} = aliasDeclaration.typeParameters ?? {params: []};
-    for (const {name: {name}} of params) {
+    const {
+      params,
+    } = aliasDeclaration.typeParameters ?? {
+      params: [],
+    };
+    for (const {
+      name: {
+        name,
+      },
+    } of params) {
       usedNames.add(name);
     }
+
     if (checkParamsAndReturns) {
       checkParamsAndReturnsTags();
     }
@@ -100,28 +110,30 @@ export default iterateJsdoc(({
     if (!nde) {
       return;
     }
+
     switch (nde.type) {
-    case 'ExportDefaultDeclaration':
-    case 'ExportNamedDeclaration':
-      switch (nde.declaration?.type) {
-        case 'FunctionDeclaration':
-          checkParameters(nde.declaration, true);
-          break;
-        case 'ClassDeclaration':
-        case 'TSTypeAliasDeclaration':
-        case 'TSInterfaceDeclaration':
-          checkParameters(nde.declaration);
-          break;
-      }
-      break;
-    case 'FunctionDeclaration':
-      checkParameters(nde, true);
-      break;
-    case 'ClassDeclaration':
-    case 'TSTypeAliasDeclaration':
-    case 'TSInterfaceDeclaration':
-      checkParameters(nde);
-      break;
+      case 'ClassDeclaration':
+      case 'TSInterfaceDeclaration':
+      case 'TSTypeAliasDeclaration':
+        checkParameters(nde);
+        break;
+      case 'ExportDefaultDeclaration':
+      case 'ExportNamedDeclaration':
+        switch (nde.declaration?.type) {
+          case 'ClassDeclaration':
+          case 'TSInterfaceDeclaration':
+          case 'TSTypeAliasDeclaration':
+            checkParameters(nde.declaration);
+            break;
+          case 'FunctionDeclaration':
+            checkParameters(nde.declaration, true);
+            break;
+        }
+
+        break;
+      case 'FunctionDeclaration':
+        checkParameters(nde, true);
+        break;
     }
   };
 
@@ -151,11 +163,13 @@ export default iterateJsdoc(({
   }
 
   for (const tag of templateTags) {
-    const {name} = tag;
-    const names = name.split(/,\s*/);
-    for (const name of names) {
-      if (!usedNames.has(name)) {
-        report(`@template ${name} not in use`, null, tag);
+    const {
+      name,
+    } = tag;
+    const names = name.split(/,\s*/u);
+    for (const nme of names) {
+      if (!usedNames.has(nme)) {
+        report(`@template ${nme} not in use`, null, tag);
       }
     }
   }

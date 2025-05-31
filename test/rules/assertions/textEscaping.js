@@ -329,7 +329,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           escapeHTML: true,
         },
-      ]
+      ],
     },
     {
       code: `
@@ -344,7 +344,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           escapeMarkdown: true,
         },
-      ]
+      ],
     },
   ],
 });

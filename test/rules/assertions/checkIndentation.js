@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -318,6 +320,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
         return (Base: Function) => {};
       }
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           excludeTags: [
@@ -325,9 +330,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -344,7 +346,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
   ],

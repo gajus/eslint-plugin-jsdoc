@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -216,6 +218,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Missing JSDoc @description declaration.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -224,9 +229,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           descriptionStyle: 'tag',
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -862,14 +864,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
 
           }
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           descriptionStyle: 'tag',
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -880,6 +882,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
             checked?: boolean
           }
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -887,9 +892,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `

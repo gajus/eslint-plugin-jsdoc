@@ -1,4 +1,8 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+/* eslint-disable no-useless-concat -- Avoid trimming of trailing spaces by IDE */
+
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -15,13 +19,13 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          enforceJsdocLineStyle: 'single'
-        }
+          enforceJsdocLineStyle: 'single',
+        },
       ],
       output: `
         /** A single line comment */
         function quux () {}
-      `
+      `,
     },
     {
       code: `
@@ -39,15 +43,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
           contexts: [
             {
               context: 'FunctionDeclaration',
-              inlineCommentBlock: true
-            }
-          ]
-        }
+              inlineCommentBlock: true,
+            },
+          ],
+        },
       ],
       output: `
         /** A single line comment */
         function quux () {}
-      `
+      `,
     },
     {
       code: `
@@ -63,8 +67,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           enableFixer: false,
-          enforceJsdocLineStyle: 'single'
-        }
+          enforceJsdocLineStyle: 'single',
+        },
       ],
     },
     {
@@ -80,30 +84,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
+          enforceJsdocLineStyle: 'single',
           lineOrBlockStyle: 'line',
-          enforceJsdocLineStyle: 'single'
-        }
-      ],
-      output: `
-        /** A single line comment */
-        function quux () {}
-      `
-    },
-    {
-      code: `
-        /* A single line comment */
-        function quux () {}
-      `,
-      errors: [
-        {
-          line: 2,
-          message: 'Block comments should be JSDoc-style.',
         },
-      ],
-      options: [
-        {
-          enforceJsdocLineStyle: 'single'
-        }
       ],
       output: `
         /** A single line comment */
@@ -123,9 +106,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
+          enforceJsdocLineStyle: 'single',
+        },
+      ],
+      output: `
+        /** A single line comment */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        /* A single line comment */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Block comments should be JSDoc-style.',
+        },
+      ],
+      options: [
+        {
+          enforceJsdocLineStyle: 'single',
           lineOrBlockStyle: 'block',
-          enforceJsdocLineStyle: 'single'
-        }
+        },
       ],
       output: `
         /** A single line comment */
@@ -145,8 +149,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          enforceJsdocLineStyle: 'multi'
-        }
+          enforceJsdocLineStyle: 'multi',
+        },
       ],
       output: `
         /**
@@ -186,8 +190,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          enforceJsdocLineStyle: 'multi'
-        }
+          enforceJsdocLineStyle: 'multi',
+        },
       ],
       output: `
         /**
@@ -235,10 +239,16 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'Block comments should be JSDoc-style.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
       options: [
         {
-          contexts: ['ClassDeclaration']
-        }
+          contexts: [
+            'ClassDeclaration',
+          ],
+        },
       ],
       output: `
         /**
@@ -248,10 +258,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         export class User {
         }
       `,
-      languageOptions: {
-        parser: typescriptEslintParser,
-        sourceType: 'module',
-      },
     },
     {
       code: `
@@ -265,18 +271,18 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          enforceJsdocLineStyle: 'single'
-        }
-      ],
-      settings: {
-        jsdoc: {
-          minLines: 0,
-          maxLines: 0,
+          enforceJsdocLineStyle: 'single',
         },
-      },
+      ],
       output: `
         /** A single line comment */ function quux () {}
-      `
+      `,
+      settings: {
+        jsdoc: {
+          maxLines: 0,
+          minLines: 0,
+        },
+      },
     },
     {
       code: `
@@ -290,9 +296,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
+          contextsAfter: [
+            'VariableDeclarator',
+          ],
           contextsBeforeAndAfter: [],
-          contextsAfter: ['VariableDeclarator']
-        }
+        },
       ],
       output: `
         /**
@@ -313,14 +321,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          contextsBeforeAndAfter: [],
           contextsAfter: [
             {
               context: 'VariableDeclarator',
-              inlineCommentBlock: true
-            }
-          ]
-        }
+              inlineCommentBlock: true,
+            },
+          ],
+          contextsBeforeAndAfter: [],
+        },
       ],
       output: `
         /** Test comment */
@@ -339,22 +347,22 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          contextsBeforeAndAfter: [],
           contextsAfter: [
             {
               context: 'VariableDeclarator',
-              inlineCommentBlock: true
-            }
-          ]
-        }
+              inlineCommentBlock: true,
+            },
+          ],
+          contextsBeforeAndAfter: [],
+        },
       ],
       output: `
         /** Test comment */ var a = []; ` + `
       `,
       settings: {
         jsdoc: {
-          minLines: 0,
           maxLines: 0,
+          minLines: 0,
         },
       },
     },
@@ -371,15 +379,17 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          contextsBeforeAndAfter: ['VariableDeclaration']
-        }
+          contextsBeforeAndAfter: [
+            'VariableDeclaration',
+          ],
+        },
       ],
       output: `
         /**
          * Test comment
          */
         var a = [];
-      `
+      `,
     },
     {
       code: `
@@ -393,8 +403,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          contextsBeforeAndAfter: ['VariableDeclaration']
-        }
+          contextsBeforeAndAfter: [
+            'VariableDeclaration',
+          ],
+        },
       ],
       output: `
         /**
@@ -421,8 +433,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
       },
       options: [
         {
-          contextsBeforeAndAfter: ['TSPropertySignature']
-        }
+          contextsBeforeAndAfter: [
+            'TSPropertySignature',
+          ],
+        },
       ],
       output: `
         interface B {
@@ -451,8 +465,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
       },
       options: [
         {
-          contextsBeforeAndAfter: ['PropertyDefinition']
-        }
+          contextsBeforeAndAfter: [
+            'PropertyDefinition',
+          ],
+        },
       ],
       output: `
         class TestClass {
@@ -475,8 +491,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       options: [
         {
-          contextsBeforeAndAfter: ['VariableDeclarator'],
-        }
+          contextsBeforeAndAfter: [
+            'VariableDeclarator',
+          ],
+        },
       ],
       output: `
         /**
@@ -494,8 +512,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       options: [
         {
-          enforceJsdocLineStyle: 'single'
-        }
+          enforceJsdocLineStyle: 'single',
+        },
       ],
     },
     {
@@ -505,8 +523,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       options: [
         {
-          enforceJsdocLineStyle: 'multi'
-        }
+          enforceJsdocLineStyle: 'multi',
+        },
       ],
     },
     {
@@ -517,7 +535,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           lineOrBlockStyle: 'line',
-        }
+        },
       ],
     },
     {
@@ -528,7 +546,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           lineOrBlockStyle: 'block',
-        }
+        },
       ],
     },
     {
@@ -538,9 +556,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       options: [
         {
+          enforceJsdocLineStyle: 'single',
           lineOrBlockStyle: 'line',
-          enforceJsdocLineStyle: 'single'
-        }
+        },
       ],
     },
     {
@@ -550,9 +568,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       options: [
         {
+          enforceJsdocLineStyle: 'single',
           lineOrBlockStyle: 'block',
-          enforceJsdocLineStyle: 'single'
-        }
+        },
       ],
     },
     {
@@ -568,8 +586,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       options: [
         {
-          allowedPrefixes: ['@custom-']
-        }
+          allowedPrefixes: [
+            '@custom-',
+          ],
+        },
       ],
     },
     {
@@ -579,9 +599,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       options: [
         {
+          contextsAfter: [
+            'VariableDeclarator',
+          ],
           contextsBeforeAndAfter: [],
-          contextsAfter: ['VariableDeclarator']
-        }
+        },
       ],
     },
   ],

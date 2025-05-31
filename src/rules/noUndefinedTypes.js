@@ -1,18 +1,15 @@
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-
-import {parseImportsExports} from 'parse-imports-exports';
+import iterateJsdoc, {
+  parseComment,
+} from '../iterateJsdoc.js';
 import {
   getJSDocComment,
   parse as parseType,
   traverse,
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
-import iterateJsdoc, {
-  parseComment,
-} from '../iterateJsdoc.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import {
+  parseImportsExports,
+} from 'parse-imports-exports';
 
 const extraTypes = [
   'null', 'undefined', 'void', 'string', 'boolean', 'object',
@@ -89,9 +86,9 @@ export default iterateJsdoc(({
   /** @type {(string|undefined)[]} */
   let definedPreferredTypes = [];
   const {
+    mode,
     preferredTypes,
     structuredTags,
-    mode,
   } = settings;
   if (Object.keys(preferredTypes).length) {
     definedPreferredTypes = /** @type {string[]} */ (Object.values(preferredTypes).map((preferredType) => {
@@ -135,7 +132,6 @@ export default iterateJsdoc(({
       return tag.name;
     });
 
-
   const importTags = settings.mode === 'typescript' ? /** @type {string[]} */ (comments.flatMap((doc) => {
     return doc.tags.filter(({
       tag,
@@ -144,12 +140,14 @@ export default iterateJsdoc(({
     });
   }).flatMap((tag) => {
     const {
-      type, name, description
+      description,
+      name,
+      type,
     } = tag;
-    const typePart = type ? `{${type}} `: '';
-    const imprt = 'import ' + (description
-      ? `${typePart}${name} ${description}`
-      : `${typePart}${name}`);
+    const typePart = type ? `{${type}} ` : '';
+    const imprt = 'import ' + (description ?
+      `${typePart}${name} ${description}` :
+      `${typePart}${name}`);
 
     const importsExports = parseImportsExports(imprt.trim());
 
@@ -159,6 +157,7 @@ export default iterateJsdoc(({
       if (namedImports.default) {
         types.push(namedImports.default);
       }
+
       if (namedImports.names) {
         types.push(...Object.keys(namedImports.names));
       }
@@ -169,6 +168,7 @@ export default iterateJsdoc(({
       if (namespaceImports.namespace) {
         types.push(namespaceImports.namespace);
       }
+
       if (namespaceImports.default) {
         types.push(namespaceImports.default);
       }
@@ -226,14 +226,20 @@ export default iterateJsdoc(({
    * @returns {Set<string>}
    */
   const getValidRuntimeIdentifiers = (scope) => {
-    const result = new Set()
-    while (scope) {
-      for (const {name} of scope.variables) {
-        result.add(name)
+    const result = new Set();
+
+    let scp = scope;
+    while (scp) {
+      for (const {
+        name,
+      } of scp.variables) {
+        result.add(name);
       }
-      scope = scope.upper
+
+      scp = scp.upper;
     }
-    return result
+
+    return result;
   };
 
   const allDefinedTypes = new Set(globalScope.variables.map(({
@@ -340,8 +346,8 @@ export default iterateJsdoc(({
   ].filter(Boolean));
 
   for (const {
-    tag,
     parsedType,
+    tag,
   } of tagsWithTypes) {
     traverse(parsedType, (nde) => {
       const {

@@ -1,9 +1,11 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
 import {
   closureTags,
   jsdocTags,
   typeScriptTags,
 } from '../../../src/tagNames.js';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 /**
  * @param {import('../../../src/tagNames.js').AliasedTags} tags
@@ -1035,14 +1037,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
         let a;
       `,
       filename: 'file.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           typed: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1050,14 +1052,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
         declare let a;
       `,
       filename: 'file.d.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           typed: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1077,14 +1079,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
         declare let a;
       `,
       filename: 'file.d.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           typed: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1092,14 +1094,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
         { declare let a; }
       `,
       filename: 'file.d.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           typed: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1109,14 +1111,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       filename: 'file.d.ts',
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           typed: true,
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1422,7 +1424,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
       languageOptions: {
-        parser: typescriptEslintParser
+        parser: typescriptEslintParser,
       },
     },
     {

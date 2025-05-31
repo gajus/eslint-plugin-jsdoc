@@ -1,4 +1,6 @@
-import {parser as typescriptEslintParser} from 'typescript-eslint';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
@@ -771,6 +773,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'JSDoc description does not satisfy the regex pattern.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -778,9 +783,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -797,6 +799,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'JSDoc description does not satisfy the regex pattern.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -804,9 +809,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -961,6 +963,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'JSDoc description does not satisfy the regex pattern.',
         },
       ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -971,9 +976,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           matchDescription: '^\\S[\\s\\S]*\\S$',
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1342,6 +1344,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
         myClassField = 1
       }
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1349,9 +1354,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1362,6 +1364,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
 
           }
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1369,9 +1374,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1622,6 +1624,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
         /** Does something very important. */
         function foo(): string;
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1632,9 +1637,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           matchDescription: '^\\S[\\s\\S]*\\S$',
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `
@@ -1645,6 +1647,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
         function foo(): void;
       `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
       options: [
         {
           contexts: [
@@ -1655,9 +1660,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
           matchDescription: '^\\S[\\s\\S]*\\S$',
         },
       ],
-      languageOptions: {
-        parser: typescriptEslintParser
-      },
     },
     {
       code: `

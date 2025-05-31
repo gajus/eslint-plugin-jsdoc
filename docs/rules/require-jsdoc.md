@@ -1018,7 +1018,7 @@ export type LoginOptions = CmdOptions<{
   username?: string;
   password?: string;
 }>;
-// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"ancestorsOnly":true},"contexts":["TSTypeAliasDeclaration","TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"]}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSTypeAliasDeclaration","TSInterfaceDeclaration","TSMethodSignature","TSPropertySignature"],"publicOnly":{"ancestorsOnly":true}}]
 // Message: Missing JSDoc comment.
 
 type Props = {
@@ -1026,7 +1026,7 @@ type Props = {
 }
 
 export type { Props as ComponentProps };
-// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":{"esm":true},"require":{"FunctionDeclaration":true,"FunctionExpression":true,"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"MethodDefinition":true},"contexts":["VariableDeclaration","TSTypeAliasDeclaration","TSPropertySignature","TSInterfaceDeclaration","TSMethodSignature","TSEnumDeclaration"],"enableFixer":true}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["VariableDeclaration","TSTypeAliasDeclaration","TSPropertySignature","TSInterfaceDeclaration","TSMethodSignature","TSEnumDeclaration"],"enableFixer":true,"publicOnly":{"esm":true},"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -1901,7 +1901,7 @@ export class MyClass {
 
   #myPrivateProp = 5;
 }
-// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"contexts":["PropertyDefinition"],"require":{"MethodDefinition":true}}]
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["PropertyDefinition"],"publicOnly":true,"require":{"MethodDefinition":true}}]
 
 class Abc {
   static {

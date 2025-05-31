@@ -1,5 +1,5 @@
 import {
-  // dslint-disable-next-line import/no-named-default
+  // eslint-disable-next-line import/no-named-default
   default as iterateJsdoc,
   parseComment,
 } from '../src/iterateJsdoc.js';

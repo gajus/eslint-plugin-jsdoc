@@ -653,9 +653,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
         'always',
         {
           tags: {
-            template: 'always'
-          }
-        }
+            template: 'always',
+          },
+        },
       ],
     },
   ],
