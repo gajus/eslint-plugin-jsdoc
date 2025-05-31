@@ -9,13 +9,9 @@ import {
 } from 'fs';
 import defaultsDeep from 'lodash.defaultsdeep';
 import {
-  dirname as getDirname,
   join,
 } from 'path';
 import semver from 'semver';
-import {
-  fileURLToPath,
-} from 'url';
 
 /**
  * @typedef {object} TestCases
@@ -23,13 +19,13 @@ import {
  * @property {import('eslint').RuleTester.InvalidTestCase[]} invalid Invalid test cases
  */
 
-const dirname = getDirname(fileURLToPath(import.meta.url));
-
 const ruleTester = new RuleTester();
 
 // eslint-disable-next-line complexity -- Temporary
 const main = async () => {
-  const ruleNames = JSON.parse(readFileSync(join(dirname, './ruleNames.json'), 'utf8'));
+  const ruleNames = JSON.parse(readFileSync(join(
+    import.meta.dirname, './ruleNames.json',
+  ), 'utf8'));
 
   if (!config.rules) {
     throw new Error('TypeScript guard');
