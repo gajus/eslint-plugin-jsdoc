@@ -380,7 +380,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
       if (allowedLanguagesToProcess) {
         const matches = (/^\s*```(?<language>\S+)([\s\S]*)```\s*$/u).exec(source);
         if (matches?.groups && !allowedLanguagesToProcess.includes(
-          matches.groups.language,
+          matches.groups.language.toLowerCase(),
         )) {
           return;
         }
