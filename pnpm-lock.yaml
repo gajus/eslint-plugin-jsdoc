@@ -12,8 +12,8 @@ importers:
         specifier: ~0.50.2
         version: 0.50.2
       are-docs-informative:
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.0.2
+        version: 0.0.2
       comment-parser:
         specifier: 1.4.1
         version: 1.4.1
@@ -1624,10 +1624,6 @@ packages:
   are-docs-informative@0.0.2:
     resolution: {integrity: sha512-ixiS0nLNNG5jNQzgZJNoUpBKdo9yTYZMGJ+QgT2jmjR7G7+QHRCc4v6LQ3NgE7EBJq+o0ams3waJwkrlBom8Ig==}
     engines: {node: '>=14'}
-
-  are-docs-informative@0.1.0:
-    resolution: {integrity: sha512-CplVvB5za1z5Zn528h0EUogt/McTT7lvHZKFtb2NYldodL7G3u2O49Mgws3mP/TrKhpNuDjKPHYxmh8t2DGTtQ==}
-    engines: {node: '>=18'}
 
   argparse@1.0.10:
     resolution: {integrity: sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==}
@@ -7369,8 +7365,6 @@ snapshots:
     optional: true
 
   are-docs-informative@0.0.2: {}
-
-  are-docs-informative@0.1.0: {}
 
   argparse@1.0.10:
     dependencies:
