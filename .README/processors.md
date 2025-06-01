@@ -134,6 +134,16 @@ same name.
 See the [`check-examples`](./rules/check-examples.md#readme) option of the
 same name.
 
+#### `allowedLanguagesToProcess`
+
+This is an array which will narrow the allowable languages of fenced blocks
+down to those within the array.
+
+Set to `false` to ensure all present languages (not excluded by
+any `exampleCodeRegex` and `rejectExampleCodeRegex` options) will be processed.
+
+Defaults to `['js', 'ts', 'javascript', 'typescript']`.
+
 #### `sourceType`
 
 Whether to use "script" or "module" with the parser. Defaults to `"module"`.
