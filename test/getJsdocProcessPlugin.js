@@ -749,4 +749,78 @@ describe('`getJsdocProcessorPlugin`', () => {
       text,
     });
   });
+
+  it('ignores language not present in default `allowedLanguagesToProcess`', () => {
+    const options = {};
+    const filename = 'something.js';
+    const text = `
+    /**
+     * @example
+     * \`\`\`shell
+     * node doSth.js
+     * \`\`\`
+     */
+    function doSth () {}
+    `;
+    check({
+      filename,
+      options,
+      result: [
+        text,
+      ],
+      text,
+    });
+  });
+
+  it('ignores language not present in supplied `allowedLanguagesToProcess`', () => {
+    const options = {
+      allowedLanguagesToProcess: [
+        'javascript',
+      ],
+    };
+    const filename = 'something.js';
+    const text = `
+    /**
+     * @example
+     * \`\`\`js
+     * doSth();
+     * \`\`\`
+     */
+    function doSth () {}
+    `;
+    check({
+      filename,
+      options,
+      result: [
+        text,
+      ],
+      text,
+    });
+  });
+
+  it('checks language present in default `allowedLanguagesToProcess`', () => {
+    const options = {};
+    const filename = 'something.js';
+    const text = `
+    /**
+     * @example
+     * \`\`\`js
+     * doSth();
+     * \`\`\`
+     */
+    function doSth () {}
+    `;
+    check({
+      filename,
+      options,
+      result: [
+        text,
+        {
+          filename: 'something.md/*.js',
+          text: '\n```js\ndoSth();\n```',
+        },
+      ],
+      text,
+    });
+  });
 });

@@ -6,7 +6,7 @@ import {
 } from 'fs';
 import fs from 'fs/promises';
 /**
- *
+ * @example
  * ```shell
  * npm run create-rule my-new-rule -- --recommended
  * ```

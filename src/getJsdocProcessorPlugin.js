@@ -1,5 +1,3 @@
-// Todo: Support TS by fenced block type
-
 import {
   forEachPreferredTag,
   getPreferredTagName,
@@ -94,6 +92,7 @@ const getLinesCols = (text) => {
  * @property {string} [matchingFileNameProperties] See docs
  * @property {string} [exampleCodeRegex] See docs
  * @property {string} [rejectExampleCodeRegex] See docs
+ * @property {string[]} [allowedLanguagesToProcess] See docs
  * @property {"script"|"module"} [sourceType] See docs
  * @property {import('eslint').Linter.ESTreeParser|import('eslint').Linter.NonESTreeParser} [parser] See docs
  */
@@ -105,6 +104,9 @@ const getLinesCols = (text) => {
  */
 export const getJsdocProcessorPlugin = (options = {}) => {
   const {
+    allowedLanguagesToProcess = [
+      'js', 'ts', 'javascript', 'typescript',
+    ],
     captionRequired = false,
     checkDefaults = false,
     checkExamples = true,
@@ -372,6 +374,15 @@ export const getJsdocProcessorPlugin = (options = {}) => {
         rejectExampleCodeRegex && rejectExampleCodeRegExp.test(source)
       ) {
         return;
+      }
+
+      if (allowedLanguagesToProcess) {
+        const matches = (/^\s*```(?<language>\S+)([\s\S]*)```\s*$/u).exec(source);
+        if (matches?.groups && !allowedLanguagesToProcess.includes(
+          matches.groups.language,
+        )) {
+          return;
+        }
       }
 
       const sources = [];
