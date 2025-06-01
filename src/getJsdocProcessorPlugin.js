@@ -376,6 +376,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
         return;
       }
 
+      // If `allowedLanguagesToProcess` is falsy, all languages should be processed.
       if (allowedLanguagesToProcess) {
         const matches = (/^\s*```(?<language>\S+)([\s\S]*)```\s*$/u).exec(source);
         if (matches?.groups && !allowedLanguagesToProcess.includes(
