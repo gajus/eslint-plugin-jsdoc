@@ -13,20 +13,14 @@ import {
   readFileSync,
 } from 'node:fs';
 import {
-  dirname as getDirname,
   join,
 } from 'node:path';
-import {
-  fileURLToPath,
-} from 'node:url';
-
-const dirname = getDirname(fileURLToPath(import.meta.url));
 
 const {
   version,
 } = JSON.parse(
   // @ts-expect-error `Buffer` is ok for `JSON.parse`
-  readFileSync(join(dirname, '../package.json')),
+  readFileSync(join(import.meta.dirname, '../package.json')),
 );
 
 // const zeroBasedLineIndexAdjust = -1;
