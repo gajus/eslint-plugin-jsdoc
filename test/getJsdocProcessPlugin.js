@@ -92,6 +92,34 @@ describe('`getJsdocProcessorPlugin`', () => {
     });
   });
 
+  it('returns text and files with `exampleCodeRegex` (as RegExp)', () => {
+    const options = {
+      exampleCodeRegex: /```js([\s\S]*)```/u,
+    };
+    const filename = 'something.js';
+    const text = `
+    /**
+     * @example
+     * \`\`\`js
+     * doSth('a');
+     * \`\`\`
+     */
+    function doSth () {}
+    `;
+    check({
+      filename,
+      options,
+      result: [
+        text,
+        {
+          filename: 'something.md/*.js',
+          text: '\ndoSth(\'a\');\n',
+        },
+      ],
+      text,
+    });
+  });
+
   it('returns text and files with `exampleCodeRegex` (no parentheses)', () => {
     const options = {
       exampleCodeRegex: '// begin[\\s\\S]*// end',
@@ -216,6 +244,39 @@ describe('`getJsdocProcessorPlugin`', () => {
   it('returns text and files (with `rejectExampleCodeRegex`)', () => {
     const options = {
       rejectExampleCodeRegex: '^\\s*<.*>\\s*$',
+    };
+    const filename = 'something.js';
+    const text = `
+      /**
+       * @example <b>Not JavaScript</b>
+       */
+      function quux () {
+
+      }
+      /**
+       * @example quux2();
+       */
+      function quux2 () {
+
+      }
+    `;
+    check({
+      filename,
+      options,
+      result: [
+        text,
+        {
+          filename: 'something.md/*.js',
+          text: 'quux2();',
+        },
+      ],
+      text,
+    });
+  });
+
+  it('returns text and files (with `rejectExampleCodeRegex`) as RegExp', () => {
+    const options = {
+      rejectExampleCodeRegex: /^\s*<.*>\s*$/u,
     };
     const filename = 'something.js';
     const text = `

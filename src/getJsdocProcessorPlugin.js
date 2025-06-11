@@ -90,8 +90,8 @@ const getLinesCols = (text) => {
  * @property {string} [matchingFileNameDefaults] See docs
  * @property {string} [matchingFileNameParams] See docs
  * @property {string} [matchingFileNameProperties] See docs
- * @property {string} [exampleCodeRegex] See docs
- * @property {string} [rejectExampleCodeRegex] See docs
+ * @property {string|RegExp} [exampleCodeRegex] See docs
+ * @property {string|RegExp} [rejectExampleCodeRegex] See docs
  * @property {string[]} [allowedLanguagesToProcess] See docs
  * @property {"script"|"module"} [sourceType] See docs
  * @property {import('eslint').Linter.ESTreeParser|import('eslint').Linter.NonESTreeParser} [parser] See docs
@@ -129,11 +129,15 @@ export const getJsdocProcessorPlugin = (options = {}) => {
   let rejectExampleCodeRegExp;
 
   if (exampleCodeRegex) {
-    exampleCodeRegExp = getRegexFromString(exampleCodeRegex);
+    exampleCodeRegExp = typeof exampleCodeRegex === 'string' ?
+      getRegexFromString(exampleCodeRegex) :
+      exampleCodeRegex;
   }
 
   if (rejectExampleCodeRegex) {
-    rejectExampleCodeRegExp = getRegexFromString(rejectExampleCodeRegex);
+    rejectExampleCodeRegExp = typeof rejectExampleCodeRegex === 'string' ?
+      getRegexFromString(rejectExampleCodeRegex) :
+      rejectExampleCodeRegex;
   }
 
   /**
@@ -646,7 +650,8 @@ export const getJsdocProcessorPlugin = (options = {}) => {
 
           return [];
         },
-        supportsAutofix: true,
+        // Todo: Reenable
+        supportsAutofix: false,
       },
     },
   };
