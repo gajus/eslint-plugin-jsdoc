@@ -7,14 +7,9 @@ import {
 /**
  * This script is used to inline assertions into the README.md documents.
  */
-import path, {
-  dirname as getDirname,
-} from 'path';
-import {
-  fileURLToPath,
-} from 'url';
+import path from 'path';
 
-const dirname = getDirname(fileURLToPath(import.meta.url));
+const dirname = import.meta.dirname;
 
 /**
  * @param {string} code
