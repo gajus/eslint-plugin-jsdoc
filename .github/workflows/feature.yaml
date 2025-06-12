@@ -13,7 +13,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.11.0'
+          node-version: '22'
       - run: pnpm install
       - run: pnpm build
       - run: pnpm lint
@@ -40,7 +40,6 @@ jobs:
       fail-fast: false
       matrix:
         node_js_version:
-          - '20.11.0'
           - '22'
   build:
     runs-on: ubuntu-latest
@@ -56,7 +55,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.11.0'
+          node-version: '22'
       - run: pnpm install
       - run: pnpm build
     timeout-minutes: 10
