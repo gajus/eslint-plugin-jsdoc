@@ -865,5 +865,44 @@ quux();
 /**
  * @type {Linters}
  */
+
+class Filler {
+  static methodOne () {
+    return 'Method One';
+  }
+
+  nonStaticMethodTwo (param) {
+    return `Method Two received: ${param}`;
+  }
+
+  /**
+   * {@link methodOne} shouldn't report eslint error
+   * {@link nonStaticMethodTwo} also shouldn't report eslint error
+   * @returns {number} A number representing the answer to everything.
+   */
+  static methodThree () {
+    return 42;
+  }
+
+  /**
+   * {@link Filler.methodOne} doesn't report eslint error
+   * {@link Filler.nonStaticMethodTwo} also doesn't report eslint error
+   * @returns {string} A string indicating the method's purpose.
+   */
+  methodFour() {
+    return 'Method Four';
+  }
+}
+
+class Foo {
+  foo = "foo";
+  /**
+   * Something related to {@link foo}
+   * @returns {string} Something awesome
+   */
+  bar() {
+    return "bar";
+  }
+}
 ````
 

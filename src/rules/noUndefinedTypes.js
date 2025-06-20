@@ -267,6 +267,31 @@ export default iterateJsdoc(({
     .concat(importTags)
     .concat(definedTypes)
     .concat(/** @type {string[]} */ (definedPreferredTypes))
+    .concat((() => {
+      // Other methods are not in scope, but we need them, and we grab them here
+      if (node?.type === 'MethodDefinition') {
+        return /** @type {import('estree').ClassBody} */ (node.parent).body.map((methodOrProp) => {
+          if (methodOrProp.type === 'MethodDefinition') {
+            // eslint-disable-next-line unicorn/no-lonely-if -- Pattern
+            if (methodOrProp.key.type === 'Identifier') {
+              return methodOrProp.key.name;
+            }
+          }
+
+          if (methodOrProp.type === 'PropertyDefinition') {
+            // eslint-disable-next-line unicorn/no-lonely-if -- Pattern
+            if (methodOrProp.key.type === 'Identifier') {
+              return methodOrProp.key.name;
+            }
+          }
+          /* c8 ignore next 2 -- Not yet built */
+
+          return '';
+        }).filter(Boolean);
+      }
+
+      return [];
+    })())
     .concat(...getValidRuntimeIdentifiers(node && (
       (sourceCode.getScope &&
       /* c8 ignore next 2 */
