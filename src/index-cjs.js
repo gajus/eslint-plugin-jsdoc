@@ -57,6 +57,7 @@ import requireYieldsCheck from './rules/requireYieldsCheck.js';
 import sortTags from './rules/sortTags.js';
 import tagLines from './rules/tagLines.js';
 import textEscaping from './rules/textEscaping.js';
+import typeFormatting from './rules/typeFormatting.js';
 import validTypes from './rules/validTypes.js';
 
 /* eslint-disable jsdoc/valid-types -- Bug */
@@ -129,6 +130,7 @@ index.rules = {
   'sort-tags': sortTags,
   'tag-lines': tagLines,
   'text-escaping': textEscaping,
+  'type-formatting': typeFormatting,
   'valid-types': validTypes,
 };
 
@@ -206,6 +208,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/sort-tags': 'off',
       'jsdoc/tag-lines': warnOrError,
       'jsdoc/text-escaping': 'off',
+      'jsdoc/type-formatting': 'off',
       'jsdoc/valid-types': warnOrError,
     },
   };

@@ -55,5 +55,6 @@
   "sort-tags",
   "tag-lines",
   "text-escaping",
+  "type-formatting",
   "valid-types"
 ]
