@@ -1028,6 +1028,19 @@ type Props = {
 export type { Props as ComponentProps };
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["VariableDeclaration","TSTypeAliasDeclaration","TSPropertySignature","TSInterfaceDeclaration","TSMethodSignature","TSEnumDeclaration"],"enableFixer":true,"publicOnly":{"esm":true},"require":{"ArrowFunctionExpression":true,"ClassDeclaration":true,"ClassExpression":true,"FunctionDeclaration":true,"FunctionExpression":true,"MethodDefinition":true}}]
 // Message: Missing JSDoc comment.
+
+export interface A {
+  a: string;
+}
+
+export class B implements A, B {
+  a = 'abc';
+  public f(): void {
+    //
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["MethodDefinition"]}]
+// Message: Missing JSDoc comment.
 ````
 
 
@@ -1931,5 +1944,21 @@ export function arrayMap<Target, Source extends Array<unknown>>(data: Source, ca
 export function arrayMap<Target, Source extends AnyArrayType>(data: Source, callback: MapCallback<Target, Source>): AnyArrayType<Target> {
   return data.map(callback);
 }
+
+export interface A {
+  a: string;
+  /**
+   * Documentation.
+   */
+  f(): void;
+}
+
+export class B implements A {
+  a = 'abc';
+  public f(): void {
+    //
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["MethodDefinition"]}]
 ````
 
