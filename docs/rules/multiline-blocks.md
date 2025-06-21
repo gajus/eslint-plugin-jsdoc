@@ -50,6 +50,14 @@ line will be reported. (Text preceding a newline is not reported.)
 If this is `true`, any single line blocks will be reported, except those which
 are whitelisted in `singleLineTags`.
 
+<a name="user-content-options-requiresinglelineundercount-defaults-to-null"></a>
+<a name="options-requiresinglelineundercount-defaults-to-null"></a>
+### <code>requireSingleLineUnderCount</code> (defaults to <code>null</code>)
+
+If this number is set, it indicates a minimum line width for single-line
+description multi-line comments. If a line is under the minimum length, it will
+be reported so as to enforce single line JSDoc blocks for such cases.
+
 <a name="user-content-options-singlelinetags-defaults-to-lends-type"></a>
 <a name="options-singlelinetags-defaults-to-lends-type"></a>
 ### <code>singleLineTags</code> (defaults to <code>[&#39;lends&#39;, &#39;type&#39;]</code>)
@@ -120,7 +128,7 @@ cannot be reliably added after the tag either).
 |Tags|Any (though `singleLineTags` and `multilineTags` control the application)|
 |Recommended|true|
 |Settings||
-|Options|`allowMultipleTags`, `minimumLengthForMultiline`, `multilineTags`, `noFinalLineText`, `noMultilineBlocks`, `noSingleLineBlocks`, `noZeroLineText`, `singleLineTags`|
+|Options|`allowMultipleTags`, `minimumLengthForMultiline`, `multilineTags`, `noFinalLineText`, `noMultilineBlocks`, `noSingleLineBlocks`, `noZeroLineText`, `requireSingleLineUnderCount`, `singleLineTags`|
 
 <a name="user-content-failing-examples"></a>
 <a name="failing-examples"></a>
@@ -283,6 +291,38 @@ The following patterns are considered problems:
  * Description */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineText":true}]
 // Message: Should have no text on the final line (before the `*/`).
+
+/**
+ * Description too short
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+// Message: Description is too short to be multi-line.
+
+/** Description too short
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+// Message: Description is too short to be multi-line.
+
+/**
+ * Description too short */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+// Message: Description is too short to be multi-line.
+
+/**
+ * @someTag {someType} Description too short
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+// Message: Description is too short to be multi-line.
+
+/** @someTag {someType} Description too short
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+// Message: Description is too short to be multi-line.
+
+/**
+ * @someTag {someType} Description too short */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+// Message: Description is too short to be multi-line.
 ````
 
 
@@ -394,5 +434,39 @@ The following patterns are not considered problems:
 
 /** @someTag with Description */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"noFinalLineText":true}]
+
+/**
+ * This description here is very much long enough, I'd say, wouldn't you?
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+
+/**
+ * This description here is
+ * on multiple lines.
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+
+/** This description here is on a single line, so it doesn't matter if it goes over. */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+
+/**
+ * @someTag {someType} This description here is very much long enough, I'd say, wouldn't you?
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+
+/**
+ * @someTag {someType} This description here is
+ * on multiple lines.
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+
+/** @someTag {someTag} This description here is on a single line, so it doesn't matter if it goes over. */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+
+/**
+ * Description short but has...
+ * @someTag
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
 ````
 
