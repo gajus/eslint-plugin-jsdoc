@@ -4251,6 +4251,51 @@ function quux (foo) {
         export type { Props as ComponentProps };
       `,
     },
+    {
+      code: `
+        export interface A {
+          a: string;
+        }
+
+        export class B implements A, B {
+          a = 'abc';
+          public f(): void {
+            //
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 8,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'MethodDefinition',
+          ],
+        },
+      ],
+      output: `
+        export interface A {
+          a: string;
+        }
+
+        export class B implements A, B {
+          a = 'abc';
+          /**
+           *
+           */
+          public f(): void {
+            //
+          }
+        }
+      `,
+    },
   ],
   valid: [
     {
@@ -6397,6 +6442,34 @@ function quux (foo) {
       languageOptions: {
         parser: typescriptEslintParser,
       },
+    },
+    {
+      code: `
+        export interface A {
+          a: string;
+          /**
+           * Documentation.
+           */
+          f(): void;
+        }
+
+        export class B implements A {
+          a = 'abc';
+          public f(): void {
+            //
+          }
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'MethodDefinition',
+          ],
+        },
+      ],
     },
   ],
 });

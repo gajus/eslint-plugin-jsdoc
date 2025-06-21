@@ -174,6 +174,100 @@ const OPTIONS_SCHEMA = {
 };
 
 /**
+ * @param {string} interfaceName
+ * @param {string} methodName
+ * @param {import("eslint").Scope.Scope | null} scope
+ * @returns {import('@typescript-eslint/types').TSESTree.TSMethodSignature|null}
+ */
+const getMethodOnInterface = (interfaceName, methodName, scope) => {
+  let scp = scope;
+  while (scp) {
+    for (const {
+      identifiers,
+      name,
+    } of scp.variables) {
+      if (interfaceName !== name) {
+        continue;
+      }
+
+      for (const identifier of identifiers) {
+        const interfaceDeclaration = /** @type {import('@typescript-eslint/types').TSESTree.Identifier & {parent: import('@typescript-eslint/types').TSESTree.TSInterfaceDeclaration}} */ (
+          identifier
+        ).parent;
+        /* c8 ignore next 3 -- TS */
+        if (interfaceDeclaration.type !== 'TSInterfaceDeclaration') {
+          continue;
+        }
+
+        for (const bodyItem of interfaceDeclaration.body.body) {
+          const methodSig = /** @type {import('@typescript-eslint/types').TSESTree.TSMethodSignature} */ (
+            bodyItem
+          );
+          if (methodName === /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+            methodSig.key
+          ).name) {
+            return methodSig;
+          }
+        }
+      }
+    }
+
+    scp = scp.upper;
+  }
+
+  return null;
+};
+
+/**
+ * @param {import('eslint').Rule.Node} node
+ * @param {import('eslint').SourceCode} sourceCode
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {import('../iterateJsdoc.js').Settings} settings
+ */
+const isExemptedImplementer = (node, sourceCode, context, settings) => {
+  if (node.type === 'FunctionExpression' &&
+    node.parent.type === 'MethodDefinition' &&
+    node.parent.parent.type === 'ClassBody' &&
+    node.parent.parent.parent.type === 'ClassDeclaration' &&
+    'implements' in node.parent.parent.parent
+  ) {
+    const implments = /** @type {import('@typescript-eslint/types').TSESTree.TSClassImplements[]} */ (
+      node.parent.parent.parent.implements
+    );
+
+    const {
+      name: methodName,
+    } = /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+      node.parent.key
+    );
+
+    for (const impl of implments) {
+      const {
+        name: interfaceName,
+      } = /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+        impl.expression
+      );
+
+      const interfaceMethodNode = getMethodOnInterface(interfaceName, methodName, node && (
+        (sourceCode.getScope &&
+        /* c8 ignore next 2 */
+        sourceCode.getScope(node)) ||
+        context.getScope()
+      ));
+      if (interfaceMethodNode) {
+        // @ts-expect-error Ok
+        const comment = getJSDocComment(sourceCode, interfaceMethodNode, settings);
+        if (comment) {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+};
+
+/**
  * @param {import('eslint').Rule.RuleContext} context
  * @param {import('json-schema').JSONSchema4Object} baseObject
  * @param {string} option
@@ -419,6 +513,10 @@ export default {
         if (!functionParameterNames.length && !hasReturnValue(node)) {
           return;
         }
+      }
+
+      if (isExemptedImplementer(node, sourceCode, context, settings)) {
+        return;
       }
 
       const fix = /** @type {import('eslint').Rule.ReportFixer} */ (fixer) => {
