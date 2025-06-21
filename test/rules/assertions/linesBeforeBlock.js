@@ -63,6 +63,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           ignoreSameLine: false,
+          ignoreSingleLines: false,
         },
       ],
       output: `
@@ -388,6 +389,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       languageOptions: {
         parser: typescriptEslintParser,
       },
+      options: [
+        {
+          ignoreSingleLines: false,
+        },
+      ],
       output: `
         type UnionDocumentation =
           /** Description. */
@@ -426,6 +432,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           ignoreSameLine: false,
+          ignoreSingleLines: false,
         },
       ],
       output: `
@@ -436,6 +443,45 @@ export default /** @type {import('../index.js').TestCases} */ ({
         /** Description. */ {
           otherProp: string;
         };
+      `,
+    },
+    {
+      code: `
+        /** The parameters for a request */
+        export type RequestParams = {
+          /** The year to retrieve. */
+          year: \`\${number}\`;
+          /**
+           * The month to retrieve.
+           */
+          month: \`\${number}\`;
+        }
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Required 1 line(s) before JSDoc block',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          ignoreSingleLines: true,
+        },
+      ],
+      output: `
+        /** The parameters for a request */
+        export type RequestParams = {
+          /** The year to retrieve. */
+          year: \`\${number}\`;
+
+          /**
+           * The month to retrieve.
+           */
+          month: \`\${number}\`;
+        }
       `,
     },
   ],
@@ -620,6 +666,25 @@ export default /** @type {import('../index.js').TestCases} */ ({
       languageOptions: {
         parser: typescriptEslintParser,
       },
+    },
+    {
+      code: `
+        /** The parameters for a request */
+        export type RequestParams = {
+          /** The year to retrieve. */
+          year: \`\${number}\`;
+          /** The month to retrieve. */
+          month: \`\${number}\`;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          ignoreSingleLines: true,
+        },
+      ],
     },
   ],
 });

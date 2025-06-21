@@ -29,6 +29,13 @@ The minimum number of lines to require. Defaults to 1.
 This option excludes cases where the JSDoc block occurs on the same line as a
 preceding code or comment. Defaults to `true`.
 
+<a name="user-content-lines-before-block-options-ignoresinglelines"></a>
+<a name="lines-before-block-options-ignoresinglelines"></a>
+### <code>ignoreSingleLines</code>
+
+This option excludes cases where the JSDoc block is only one line long.
+Defaults to `true`.
+
 <a name="user-content-lines-before-block-options-excludedtags"></a>
 <a name="lines-before-block-options-excludedtags"></a>
 ### <code>excludedTags</code>
@@ -43,7 +50,7 @@ lines before the block will not be added).
 |Tags|N/A|
 |Recommended|false|
 |Settings||
-|Options|`checkBlockStarts`, `excludedTags`, `ignoreSameLine`, `lines`|
+|Options|`checkBlockStarts`, `excludedTags`, `ignoreSameLine`, `ignoreSingleLines`, `lines`|
 
 <a name="user-content-lines-before-block-failing-examples"></a>
 <a name="lines-before-block-failing-examples"></a>
@@ -65,7 +72,7 @@ someCode; /**
 // Message: Required 1 line(s) before JSDoc block
 
 someCode; /** */
-// "jsdoc/lines-before-block": ["error"|"warn", {"ignoreSameLine":false}]
+// "jsdoc/lines-before-block": ["error"|"warn", {"ignoreSameLine":false,"ignoreSingleLines":false}]
 // Message: Required 1 line(s) before JSDoc block
 
 someCode;
@@ -166,6 +173,7 @@ type IntersectionDocumentation =
   { someProp: number } &
   /** Description. */
   { otherProp: string }
+// "jsdoc/lines-before-block": ["error"|"warn", {"ignoreSingleLines":false}]
 // Message: Required 1 line(s) before JSDoc block
 
 type IntersectionDocumentation = {
@@ -173,7 +181,19 @@ type IntersectionDocumentation = {
 } & /** Description. */ {
   otherProp: string;
 };
-// "jsdoc/lines-before-block": ["error"|"warn", {"ignoreSameLine":false}]
+// "jsdoc/lines-before-block": ["error"|"warn", {"ignoreSameLine":false,"ignoreSingleLines":false}]
+// Message: Required 1 line(s) before JSDoc block
+
+/** The parameters for a request */
+export type RequestParams = {
+  /** The year to retrieve. */
+  year: `${number}`;
+  /**
+   * The month to retrieve.
+   */
+  month: `${number}`;
+}
+// "jsdoc/lines-before-block": ["error"|"warn", {"ignoreSingleLines":true}]
 // Message: Required 1 line(s) before JSDoc block
 ````
 
@@ -304,5 +324,14 @@ type IntersectionDocumentation = {
 } & /** Description. */ {
   otherProp: string;
 };
+
+/** The parameters for a request */
+export type RequestParams = {
+  /** The year to retrieve. */
+  year: `${number}`;
+  /** The month to retrieve. */
+  month: `${number}`;
+}
+// "jsdoc/lines-before-block": ["error"|"warn", {"ignoreSingleLines":true}]
 ````
 

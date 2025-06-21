@@ -19,6 +19,11 @@ The minimum number of lines to require. Defaults to 1.
 This option excludes cases where the JSDoc block occurs on the same line as a
 preceding code or comment. Defaults to `true`.
 
+### `ignoreSingleLines`
+
+This option excludes cases where the JSDoc block is only one line long.
+Defaults to `true`.
+
 ### `excludedTags`
 
 An array of tags whose presence in the JSDoc block will prevent the
@@ -31,7 +36,7 @@ lines before the block will not be added).
 |Tags|N/A|
 |Recommended|false|
 |Settings||
-|Options|`checkBlockStarts`, `excludedTags`, `ignoreSameLine`, `lines`|
+|Options|`checkBlockStarts`, `excludedTags`, `ignoreSameLine`, `ignoreSingleLines`, `lines`|
 
 ## Failing examples
 
