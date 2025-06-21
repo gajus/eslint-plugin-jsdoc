@@ -38,6 +38,12 @@ line will be reported. (Text preceding a newline is not reported.)
 If this is `true`, any single line blocks will be reported, except those which
 are whitelisted in `singleLineTags`.
 
+### `requireSingleLineUnderCount` (defaults to `null`)
+
+If this number is set, it indicates a minimum line width for single-line
+description multi-line comments. If a line is under the minimum length, it will
+be reported so as to enforce single line JSDoc blocks for such cases.
+
 ### `singleLineTags` (defaults to `['lends', 'type']`)
 
 An array of tags which can nevertheless be allowed as single line blocks when
@@ -96,7 +102,7 @@ cannot be reliably added after the tag either).
 |Tags|Any (though `singleLineTags` and `multilineTags` control the application)|
 |Recommended|true|
 |Settings||
-|Options|`allowMultipleTags`, `minimumLengthForMultiline`, `multilineTags`, `noFinalLineText`, `noMultilineBlocks`, `noSingleLineBlocks`, `noZeroLineText`, `singleLineTags`|
+|Options|`allowMultipleTags`, `minimumLengthForMultiline`, `multilineTags`, `noFinalLineText`, `noMultilineBlocks`, `noSingleLineBlocks`, `noZeroLineText`, `requireSingleLineUnderCount`, `singleLineTags`|
 
 ## Failing examples
 
