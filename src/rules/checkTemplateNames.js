@@ -1,14 +1,22 @@
-import iterateJsdoc from '../iterateJsdoc.js';
+import iterateJsdoc, {
+  parseComment,
+} from '../iterateJsdoc.js';
 import {
+  getTags,
+} from '../jsdocUtils.js';
+import {
+  getJSDocComment,
   parse as parseType,
   traverse,
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
 
 export default iterateJsdoc(({
+  jsdoc,
   node,
   report,
   settings,
+  sourceCode,
   utils,
 }) => {
   const {
@@ -42,11 +50,11 @@ export default iterateJsdoc(({
     });
   };
 
-  const checkParamsAndReturnsTags = () => {
+  const checkParamsAndReturnsTags = (jsdc = jsdoc) => {
     const paramName = /** @type {string} */ (utils.getPreferredTagName({
       tagName: 'param',
     }));
-    const paramTags = utils.getTags(paramName);
+    const paramTags = getTags(jsdc, paramName);
     for (const paramTag of paramTags) {
       checkForUsedTypes(paramTag.type);
     }
@@ -54,7 +62,7 @@ export default iterateJsdoc(({
     const returnsName = /** @type {string} */ (utils.getPreferredTagName({
       tagName: 'returns',
     }));
-    const returnsTags = utils.getTags(returnsName);
+    const returnsTags = getTags(jsdc, returnsName);
     for (const returnsTag of returnsTags) {
       checkForUsedTypes(returnsTag.type);
     }
@@ -98,6 +106,26 @@ export default iterateJsdoc(({
 
     if (checkParamsAndReturns) {
       checkParamsAndReturnsTags();
+    } else if (aliasDeclaration.type === 'ClassDeclaration') {
+      /* c8 ignore next -- TS */
+      for (const nde of aliasDeclaration?.body?.body ?? []) {
+        // @ts-expect-error Should be ok
+        const commentNode = getJSDocComment(sourceCode, nde, settings);
+        if (!commentNode) {
+          continue;
+        }
+
+        const innerJsdoc = parseComment(commentNode, '');
+        checkParamsAndReturnsTags(innerJsdoc);
+
+        const typeName = /** @type {string} */ (utils.getPreferredTagName({
+          tagName: 'type',
+        }));
+        const typeTags = getTags(innerJsdoc, typeName);
+        for (const typeTag of typeTags) {
+          checkForUsedTypes(typeTag.type);
+        }
+      }
     }
 
     checkTemplateTags();
@@ -162,17 +190,7 @@ export default iterateJsdoc(({
     checkForUsedTypes(propertyTag.type);
   }
 
-  for (const tag of templateTags) {
-    const {
-      name,
-    } = tag;
-    const names = name.split(/,\s*/u);
-    for (const nme of names) {
-      if (!usedNames.has(nme)) {
-        report(`@template ${nme} not in use`, null, tag);
-      }
-    }
-  }
+  checkTemplateTags();
 }, {
   iterateAllJsdocs: true,
   meta: {
