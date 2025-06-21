@@ -619,6 +619,128 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * Description too short
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Description is too short to be multi-line.',
+        },
+      ],
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+      output: `
+        /** Description too short */
+      `,
+    },
+    {
+      code: `
+        /** Description too short
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Description is too short to be multi-line.',
+        },
+      ],
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+      output: `
+        /** Description too short */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Description too short */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Description is too short to be multi-line.',
+        },
+      ],
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+      output: `
+        /** Description too short */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @someTag {someType} Description too short
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Description is too short to be multi-line.',
+        },
+      ],
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+      output: `
+        /** @someTag {someType} Description too short */
+      `,
+    },
+    {
+      code: `
+        /** @someTag {someType} Description too short
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Description is too short to be multi-line.',
+        },
+      ],
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+      output: `
+        /** @someTag {someType} Description too short */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @someTag {someType} Description too short */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Description is too short to be multi-line.',
+        },
+      ],
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+      output: `
+        /** @someTag {someType} Description too short */
+      `,
+    },
   ],
   valid: [
     {
@@ -892,6 +1014,89 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           noFinalLineText: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * This description here is very much long enough, I'd say, wouldn't you?
+         */
+`,
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * This description here is
+         * on multiple lines.
+         */
+`,
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+    },
+    {
+      code: `
+        /** This description here is on a single line, so it doesn't matter if it goes over. */
+`,
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @someTag {someType} This description here is very much long enough, I'd say, wouldn't you?
+         */
+`,
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @someTag {someType} This description here is
+         * on multiple lines.
+         */
+`,
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+    },
+    {
+      code: `
+        /** @someTag {someTag} This description here is on a single line, so it doesn't matter if it goes over. */
+`,
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Description short but has...
+         * @someTag
+         */
+      `,
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
         },
       ],
     },
