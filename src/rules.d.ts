@@ -756,6 +756,28 @@ export interface Rules {
         }
       ];
 
+  "jsdoc/type-formatting": 
+    | []
+    | [
+        {
+          arrayBrackets?: "angle" | "square";
+          enableFixer?: boolean;
+          genericDot?: boolean;
+          objectFieldIndent?: string;
+          objectFieldQuote?: "double" | "single" | null;
+          objectFieldSeparator?:
+            | "comma"
+            | "comma-and-linebreak"
+            | "linebreak"
+            | "semicolon"
+            | "semicolon-and-linebreak"
+            | null;
+          propertyQuotes?: "double" | "single" | null;
+          separatorForSingleObjectField?: boolean;
+          stringQuotes?: "double" | "single";
+        }
+      ];
+
   "jsdoc/valid-types": 
     | []
     | [
