@@ -606,6 +606,33 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        class Filler {
+          /**
+           * {@link Filler.methodTwo} non-existent
+           * {@link Filler.nonStaticMethodTwo} non-existent too
+           * {@link Filler.methodThree} existent
+           * @returns {string} A string indicating the method's purpose.
+           */
+          methodOne() {
+            return 'Method Four';
+          }
+
+          methodThree() {}
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'Filler.methodTwo\' is undefined.',
+        },
+        {
+          line: 4,
+          message: 'The type \'Filler.nonStaticMethodTwo\' is undefined.',
+        },
+      ],
+    },
   ],
   valid: [
     {

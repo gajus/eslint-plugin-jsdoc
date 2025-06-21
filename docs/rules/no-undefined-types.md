@@ -337,6 +337,21 @@ const a = new Todo();
  * @type {Another}
  */
 // Message: The type 'BadImportIgnoredByThisRule' is undefined.
+
+class Filler {
+  /**
+   * {@link Filler.methodTwo} non-existent
+   * {@link Filler.nonStaticMethodTwo} non-existent too
+   * {@link Filler.methodThree} existent
+   * @returns {string} A string indicating the method's purpose.
+   */
+  methodOne() {
+    return 'Method Four';
+  }
+
+  methodThree() {}
+}
+// Message: The type 'Filler.methodTwo' is undefined.
 ````
 
 

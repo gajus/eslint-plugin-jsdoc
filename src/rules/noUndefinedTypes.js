@@ -270,18 +270,28 @@ export default iterateJsdoc(({
     .concat((() => {
       // Other methods are not in scope, but we need them, and we grab them here
       if (node?.type === 'MethodDefinition') {
-        return /** @type {import('estree').ClassBody} */ (node.parent).body.map((methodOrProp) => {
+        return /** @type {import('estree').ClassBody} */ (node.parent).body.flatMap((methodOrProp) => {
           if (methodOrProp.type === 'MethodDefinition') {
             // eslint-disable-next-line unicorn/no-lonely-if -- Pattern
             if (methodOrProp.key.type === 'Identifier') {
-              return methodOrProp.key.name;
+              return [
+                methodOrProp.key.name,
+                `${/** @type {import('estree').ClassDeclaration} */ (
+                  node.parent?.parent
+                )?.id?.name}.${methodOrProp.key.name}`,
+              ];
             }
           }
 
           if (methodOrProp.type === 'PropertyDefinition') {
             // eslint-disable-next-line unicorn/no-lonely-if -- Pattern
             if (methodOrProp.key.type === 'Identifier') {
-              return methodOrProp.key.name;
+              return [
+                methodOrProp.key.name,
+                `${/** @type {import('estree').ClassDeclaration} */ (
+                  node.parent?.parent
+                )?.id?.name}.${methodOrProp.key.name}`,
+              ];
             }
           }
           /* c8 ignore next 2 -- Not yet built */
@@ -374,26 +384,49 @@ export default iterateJsdoc(({
     parsedType,
     tag,
   } of tagsWithTypes) {
-    traverse(parsedType, (nde) => {
+    traverse(parsedType, (nde, parentNode) => {
+      /**
+       * @type {import('jsdoc-type-pratt-parser').NameResult & {
+       *   _parent?: import('jsdoc-type-pratt-parser').NonRootResult
+       * }}
+       */
+      // eslint-disable-next-line canonical/id-match -- Avoid clashes
+      (nde)._parent = parentNode;
       const {
         type,
         value,
       } = /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde);
 
+      let val = value;
+
+      /** @type {import('jsdoc-type-pratt-parser').NonRootResult|undefined} */
+      let currNode = nde;
+      do {
+        currNode =
+          /**
+           * @type {import('jsdoc-type-pratt-parser').NameResult & {
+           *   _parent?: import('jsdoc-type-pratt-parser').NonRootResult
+           * }}
+           */ (currNode)._parent;
+        if (currNode && 'right' in currNode && currNode.right?.type === 'JsdocTypeProperty') {
+          val = val + '.' + currNode.right.value;
+        }
+      } while (currNode?.type === 'JsdocTypeNamePath');
+
       if (type === 'JsdocTypeName') {
         const structuredTypes = structuredTags[tag.tag]?.type;
-        if (!allDefinedTypes.has(value) &&
-          (!Array.isArray(structuredTypes) || !structuredTypes.includes(value))
+        if (!allDefinedTypes.has(val) &&
+          (!Array.isArray(structuredTypes) || !structuredTypes.includes(val))
         ) {
           if (!disableReporting) {
-            report(`The type '${value}' is undefined.`, null, tag);
+            report(`The type '${val}' is undefined.`, null, tag);
           }
-        } else if (markVariablesAsUsed && !extraTypes.includes(value)) {
+        } else if (markVariablesAsUsed && !extraTypes.includes(val)) {
           if (sourceCode.markVariableAsUsed) {
-            sourceCode.markVariableAsUsed(value);
+            sourceCode.markVariableAsUsed(val);
           /* c8 ignore next 3 */
           } else {
-            context.markVariableAsUsed(value);
+            context.markVariableAsUsed(val);
           }
         }
       }
