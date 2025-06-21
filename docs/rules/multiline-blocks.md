@@ -54,9 +54,10 @@ are whitelisted in `singleLineTags`.
 <a name="options-requiresinglelineundercount-defaults-to-null"></a>
 ### <code>requireSingleLineUnderCount</code> (defaults to <code>null</code>)
 
-If this number is set, it indicates a minimum line width for single-line
-description multi-line comments. If a line is under the minimum length, it will
-be reported so as to enforce single line JSDoc blocks for such cases.
+If this number is set, it indicates a minimum line width for a single line of
+JSDoc content spread over a multi-line comment block. If a line is under the
+minimum length, it will be reported so as to enforce single line JSDoc blocks
+for such cases.
 
 <a name="user-content-options-singlelinetags-defaults-to-lends-type"></a>
 <a name="options-singlelinetags-defaults-to-lends-type"></a>

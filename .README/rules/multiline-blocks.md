@@ -40,9 +40,10 @@ are whitelisted in `singleLineTags`.
 
 ### `requireSingleLineUnderCount` (defaults to `null`)
 
-If this number is set, it indicates a minimum line width for single-line
-description multi-line comments. If a line is under the minimum length, it will
-be reported so as to enforce single line JSDoc blocks for such cases.
+If this number is set, it indicates a minimum line width for a single line of
+JSDoc content spread over a multi-line comment block. If a line is under the
+minimum length, it will be reported so as to enforce single line JSDoc blocks
+for such cases.
 
 ### `singleLineTags` (defaults to `['lends', 'type']`)
 
