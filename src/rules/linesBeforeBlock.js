@@ -22,6 +22,7 @@ export default iterateJsdoc(({
       'type',
     ],
     ignoreSameLine = true,
+    ignoreSingleLines = true,
     lines = 1,
   } = context.options[0] || {};
 
@@ -51,6 +52,10 @@ export default iterateJsdoc(({
     const sameLine = tokenBefore.loc?.end?.line === startLine;
 
     if (sameLine && ignoreSameLine) {
+      return;
+    }
+
+    if (ignoreSingleLines && jsdocNode.loc?.start.line === jsdocNode.loc?.end.line) {
       return;
     }
 
@@ -112,6 +117,9 @@ export default iterateJsdoc(({
             type: 'array',
           },
           ignoreSameLine: {
+            type: 'boolean',
+          },
+          ignoreSingleLines: {
             type: 'boolean',
           },
           lines: {
