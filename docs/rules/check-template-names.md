@@ -372,5 +372,28 @@ export function mapGroupBy(array, callbackFn) {
  * @function
  * @param {[D, V | undefined]} someParam
  */
+
+/**
+ * @template {string} U
+ */
+export class User {
+  /**
+   * @type {U}
+   */
+  name;
+}
+
+/**
+ * @template {string} U
+ */
+export class User {
+  /**
+   * @param {U} name
+   */
+  constructor(name) {
+    this.name = name;
+  }
+  methodToIgnore() {}
+}
 ````
 

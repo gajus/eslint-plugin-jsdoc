@@ -716,5 +716,37 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @template {string} U
+         */
+        export class User {
+          /**
+           * @type {U}
+           */
+          name;
+        }
+      `,
+      languageOptions: {
+        ecmaVersion: 2_022,
+      },
+    },
+    {
+      code: `
+        /**
+         * @template {string} U
+         */
+        export class User {
+          /**
+           * @param {U} name
+           */
+          constructor(name) {
+            this.name = name;
+          }
+          methodToIgnore() {}
+        }
+      `,
+    },
   ],
 });
