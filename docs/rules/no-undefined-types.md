@@ -939,6 +939,9 @@ export class Code {
 
     /** @type {AnotherGlobal.AnotherMethod} */
     static #test4
+
+    /** @type {AGlobal.AnotherMethod} */
+    static #test5
 }
 ````
 

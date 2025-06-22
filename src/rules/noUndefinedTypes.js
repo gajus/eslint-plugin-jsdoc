@@ -126,7 +126,7 @@ export default iterateJsdoc(({
       return (/^\s*globals/u).test(comment.value);
     }).flatMap((commentNode) => {
       return commentNode.value.replace(/^\s*globals/u, '').trim().split(/,\s*/u);
-    });
+    }).concat(Object.keys(context.languageOptions.globals ?? []));
 
   const typedefDeclarations = comments
     .flatMap((doc) => {

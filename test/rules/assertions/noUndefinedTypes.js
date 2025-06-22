@@ -1645,9 +1645,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
 
             /** @type {AnotherGlobal.AnotherMethod} */
             static #test4
+
+            /** @type {AGlobal.AnotherMethod} */
+            static #test5
         }
       `,
       languageOptions: {
+        globals: {
+          AGlobal: 'readonly',
+        },
         parser: typescriptEslintParser,
       },
     },
