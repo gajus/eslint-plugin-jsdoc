@@ -12,7 +12,7 @@ When `contexts` are supplied, will also strip `@property` when on a
 
 ## Fixer
 
-Strips any times that are found.
+Strips any types that are found.
 
 ## Options
 
