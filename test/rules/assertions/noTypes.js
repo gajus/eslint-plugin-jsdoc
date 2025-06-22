@@ -257,6 +257,35 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
     },
+    {
+      code: `
+        /**
+         * @class
+         * @property {object} x
+         */
+        class Example {
+          x: number;
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Types are not permitted on @property in the supplied context.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      output: `
+        /**
+         * @class
+         * @property x
+         */
+        class Example {
+          x: number;
+        }
+      `,
+    },
   ],
   valid: [
     {
