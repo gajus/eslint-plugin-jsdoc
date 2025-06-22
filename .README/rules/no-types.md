@@ -7,9 +7,12 @@ This rule reports types being used on `@param` or `@returns`.
 The rule is intended to prevent the indication of types on tags where
 the type information would be redundant with TypeScript.
 
+When `contexts` are supplied, will also strip `@property` when on a
+`ClassDeclaration`.
+
 ## Fixer
 
-(TODO)
+Strips any types that are found.
 
 ## Options
 

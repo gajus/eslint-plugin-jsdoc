@@ -15,11 +15,14 @@ This rule reports types being used on `@param` or `@returns`.
 The rule is intended to prevent the indication of types on tags where
 the type information would be redundant with TypeScript.
 
+When `contexts` are supplied, will also strip `@property` when on a
+`ClassDeclaration`.
+
 <a name="user-content-no-types-fixer"></a>
 <a name="no-types-fixer"></a>
 ## Fixer
 
-(TODO)
+Strips any types that are found.
 
 <a name="user-content-no-types-options"></a>
 <a name="no-types-options"></a>
@@ -137,6 +140,15 @@ export interface B {
   methodB(paramB: string): void
 }
 // Message: Types are not permitted on @param.
+
+/**
+ * @class
+ * @property {object} x
+ */
+class Example {
+  x: number;
+}
+// Message: Types are not permitted on @property in the supplied context.
 ````
 
 
