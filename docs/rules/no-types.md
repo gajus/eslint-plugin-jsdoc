@@ -22,7 +22,7 @@ When `contexts` are supplied, will also strip `@property` when on a
 <a name="no-types-fixer"></a>
 ## Fixer
 
-Strips any times that are found.
+Strips any types that are found.
 
 <a name="user-content-no-types-options"></a>
 <a name="no-types-options"></a>
