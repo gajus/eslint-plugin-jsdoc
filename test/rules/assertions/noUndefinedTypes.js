@@ -1624,5 +1624,32 @@ export default /** @type {import('../index.js').TestCases} */ ({
         ecmaVersion: 2_022,
       },
     },
+    {
+      code: `
+        /* globals SomeGlobal, AnotherGlobal */
+        import * as Ably from "ably"
+        import Testing, { another as Another, stillMore as StillMore } from "testing"
+
+        export class Code {
+            /** @type {Ably.Realtime} */
+            static #client
+
+            /** @type {Testing.SomeMethod} */
+            static #test
+
+            /** @type {Another.AnotherMethod} */
+            static #test2
+
+            /** @type {StillMore.AnotherMethod} */
+            static #test3
+
+            /** @type {AnotherGlobal.AnotherMethod} */
+            static #test4
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
   ],
 });

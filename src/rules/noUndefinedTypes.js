@@ -112,12 +112,20 @@ export default iterateJsdoc(({
       .filter(Boolean));
   }
 
-  const comments = sourceCode.getAllComments()
+  const allComments = sourceCode.getAllComments();
+  const comments = allComments
     .filter((comment) => {
       return (/^\*\s/u).test(comment.value);
     })
     .map((commentNode) => {
       return parseComment(commentNode, '');
+    });
+
+  const globals = allComments
+    .filter((comment) => {
+      return (/^\s*globals/u).test(comment.value);
+    }).flatMap((commentNode) => {
+      return commentNode.value.replace(/^\s*globals/u, '').trim().split(/,\s*/u);
     });
 
   const typedefDeclarations = comments
@@ -242,6 +250,12 @@ export default iterateJsdoc(({
     return result;
   };
 
+  /**
+   * We treat imports differently as we can't introspect their children.
+   * @type {string[]}
+   */
+  const imports = [];
+
   const allDefinedTypes = new Set(globalScope.variables.map(({
     name,
   }) => {
@@ -256,8 +270,22 @@ export default iterateJsdoc(({
         }) => {
           return variables;
         }).map(({
+          identifiers,
           name,
         }) => {
+          if (
+            [
+              'ImportDefaultSpecifier',
+              'ImportNamespaceSpecifier',
+              'ImportSpecifier',
+            ].includes(
+              /** @type {import('estree').Identifier & {parent: {type: string}}} */ (
+                identifiers?.[0])?.parent?.type,
+            )
+          ) {
+            imports.push(name);
+          }
+
           return name;
         /* c8 ignore next */
         }) : [],
@@ -408,7 +436,12 @@ export default iterateJsdoc(({
            *   _parent?: import('jsdoc-type-pratt-parser').NonRootResult
            * }}
            */ (currNode)._parent;
-        if (currNode && 'right' in currNode && currNode.right?.type === 'JsdocTypeProperty') {
+        if (
+          // Avoid appending for imports and globals since we don't want to
+          //  check their properties which may or may not exist
+          !imports.includes(val) && !globals.includes(val) &&
+          currNode && 'right' in currNode &&
+          currNode.right?.type === 'JsdocTypeProperty') {
           val = val + '.' + currNode.right.value;
         }
       } while (currNode?.type === 'JsdocTypeNamePath');
