@@ -1657,5 +1657,40 @@ export default /** @type {import('../index.js').TestCases} */ ({
         parser: typescriptEslintParser,
       },
     },
+    {
+      code: `
+        import jsdoc from "eslint-plugin-jsdoc";
+
+        /**
+         * @import { Linter } from "eslint"
+         */
+
+        /**
+         * @type {Linter.Config}
+         */
+        export default [
+          {
+            plugins: { jsdoc },
+            rules: {
+              "jsdoc/no-undefined-types": "error"
+            }
+          }
+        ];
+      `,
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} Abc
+         * @property {string} def Some string
+         */
+
+        /**
+         * @type {Abc['def']}
+         */
+        export const a = 'someString';
+
+      `,
+    },
   ],
 });

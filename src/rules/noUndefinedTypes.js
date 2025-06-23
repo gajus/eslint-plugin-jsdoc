@@ -440,6 +440,8 @@ export default iterateJsdoc(({
           // Avoid appending for imports and globals since we don't want to
           //  check their properties which may or may not exist
           !imports.includes(val) && !globals.includes(val) &&
+          !importTags.includes(val) &&
+          !typedefDeclarations.includes(val) &&
           currNode && 'right' in currNode &&
           currNode.right?.type === 'JsdocTypeProperty') {
           val = val + '.' + currNode.right.value;
