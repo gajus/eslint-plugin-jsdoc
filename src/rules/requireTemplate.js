@@ -22,19 +22,19 @@ export default iterateJsdoc(({
 
   const usedNames = new Set();
   const templateTags = utils.getTags('template');
-  const templateNames = templateTags.flatMap(({
-    name,
-  }) => {
-    return name.split(/,\s*/u);
+  const templateNames = templateTags.flatMap((tag) => {
+    return utils.parseClosureTemplateTag(tag);
   });
 
-  for (const tag of templateTags) {
-    const {
-      name,
-    } = tag;
-    const names = name.split(/,\s*/u);
-    if (requireSeparateTemplates && names.length > 1) {
-      report(`Missing separate @template for ${names[1]}`, null, tag);
+  if (requireSeparateTemplates) {
+    for (const tag of templateTags) {
+      const {
+        name,
+      } = tag;
+      const names = name.split(/,\s*/u);
+      if (names.length > 1) {
+        report(`Missing separate @template for ${names[1]}`, null, tag);
+      }
     }
   }
 

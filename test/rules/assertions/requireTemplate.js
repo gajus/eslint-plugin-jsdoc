@@ -634,5 +634,16 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @template {string | Buffer} [T=string, U=number]
+         * @typedef {object} Dirent
+         * @property {T} name name
+         * @property {U} aNumber number
+         * @property {string} parentPath path
+         */
+      `,
+    },
   ],
 });
