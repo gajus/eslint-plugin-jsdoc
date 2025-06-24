@@ -1495,7 +1495,7 @@ const parseClosureTemplateTag = (tag) => {
   return tag.name
     .split(',')
     .map((type) => {
-      return type.trim().replace(/^\[(?<name>.*?)=.*\]$/u, '$<name>');
+      return type.trim().replace(/^\[?(?<name>.*?)=.*$/u, '$<name>');
     });
 };
 
