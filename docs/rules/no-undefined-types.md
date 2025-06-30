@@ -971,5 +971,23 @@ export default [
  * @type {Abc['def']}
  */
 export const a = 'someString';
+
+export interface SomeInterface {
+  someProp: unknown;
+}
+
+/**
+ * {@link SomeInterface.someProp}
+ * @returns something
+ */
+
+class SomeClass {
+  someMethod () {}
+}
+
+/**
+ * {@link SomeClass.someMethod}
+ * @returns something
+ */
 ````
 

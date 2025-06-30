@@ -1692,5 +1692,32 @@ export default /** @type {import('../index.js').TestCases} */ ({
 
       `,
     },
+    {
+      code: `
+        export interface SomeInterface {
+          someProp: unknown;
+        }
+
+        /**
+         * {@link SomeInterface.someProp}
+         * @returns something
+         */
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        class SomeClass {
+          someMethod () {}
+        }
+
+        /**
+         * {@link SomeClass.someMethod}
+         * @returns something
+         */
+      `,
+    },
   ],
 });
