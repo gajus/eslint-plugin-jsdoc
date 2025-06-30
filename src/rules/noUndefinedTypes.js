@@ -269,24 +269,54 @@ export default iterateJsdoc(({
           variables,
         }) => {
           return variables;
-        }).map(({
+        }).flatMap(({
           identifiers,
           name,
         }) => {
-          if (
-            [
-              'ImportDefaultSpecifier',
-              'ImportNamespaceSpecifier',
-              'ImportSpecifier',
-            ].includes(
-              /** @type {import('estree').Identifier & {parent: {type: string}}} */ (
-                identifiers?.[0])?.parent?.type,
-            )
-          ) {
-            imports.push(name);
+          const globalItem = /** @type {import('estree').Identifier & {parent: import('@typescript-eslint/types').TSESTree.Node}} */ (
+            identifiers?.[0]
+          )?.parent;
+          switch (globalItem?.type) {
+            case 'ClassDeclaration':
+              return [
+                name,
+                ...globalItem.body.body.map((item) => {
+                  const property = /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+                    /** @type {import('@typescript-eslint/types').TSESTree.PropertyDefinition} */ (
+                      item)?.key)?.name;
+                  /* c8 ignore next 3 -- Guard */
+                  if (!property) {
+                    return '';
+                  }
+
+                  return `${name}.${property}`;
+                }).filter(Boolean),
+              ];
+            case 'ImportDefaultSpecifier':
+            case 'ImportNamespaceSpecifier':
+            case 'ImportSpecifier':
+              imports.push(name);
+              break;
+            case 'TSInterfaceDeclaration':
+              return [
+                name,
+                ...globalItem.body.body.map((item) => {
+                  const property = /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+                    /** @type {import('@typescript-eslint/types').TSESTree.TSPropertySignature} */ (
+                      item)?.key)?.name;
+                  /* c8 ignore next 3 -- Guard */
+                  if (!property) {
+                    return '';
+                  }
+
+                  return `${name}.${property}`;
+                }).filter(Boolean),
+              ];
           }
 
-          return name;
+          return [
+            name,
+          ];
         /* c8 ignore next */
         }) : [],
     )
