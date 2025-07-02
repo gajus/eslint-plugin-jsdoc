@@ -989,5 +989,12 @@ class SomeClass {
  * {@link SomeClass.someMethod}
  * @returns something
  */
+
+/**
+ * The internationalized collator object that will be used.
+ * Intl.Collator(null, {numeric: true, sensitivity: 'base'}) is used by default;.
+ *
+ * @member {Intl.Collator}
+ */
 ````
 
