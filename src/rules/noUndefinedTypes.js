@@ -17,7 +17,7 @@ const extraTypes = [
   'number', 'bigint', 'NaN', 'Infinity',
   'any', '*', 'never', 'unknown', 'const',
   'this', 'true', 'false',
-  'Array', 'Object', 'RegExp', 'Date', 'Function',
+  'Array', 'Object', 'RegExp', 'Date', 'Function', 'Intl',
 ];
 
 const typescriptGlobals = [
@@ -471,6 +471,7 @@ export default iterateJsdoc(({
           //  check their properties which may or may not exist
           !imports.includes(val) && !globals.includes(val) &&
           !importTags.includes(val) &&
+          !extraTypes.includes(val) &&
           !typedefDeclarations.includes(val) &&
           currNode && 'right' in currNode &&
           currNode.right?.type === 'JsdocTypeProperty') {
