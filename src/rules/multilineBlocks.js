@@ -11,8 +11,8 @@ const checkForShortTags = (jsdoc, utils, requireSingleLineUnderCount) => {
   }
 
   let lastLineWithTag = 0;
-  let exceedsLength = false;
-  let hasDesc = false;
+  let isUnderCountLimit = false;
+  let hasMultiDescOrType = false;
   const tagLines = jsdoc.source.reduce((acc, {
     tokens: {
       delimiter,
@@ -35,19 +35,19 @@ const checkForShortTags = (jsdoc, utils, requireSingleLineUnderCount) => {
         tag.length + postTag.length + desc.length <
           requireSingleLineUnderCount
       ) {
-        exceedsLength = true;
+        isUnderCountLimit = true;
       }
 
       return acc + 1;
-    } else if (desc.length) {
-      hasDesc = true;
+    } else if (desc.length || type.length) {
+      hasMultiDescOrType = true;
       return acc;
     }
 
     return acc;
   }, 0);
   // Could be tagLines > 1
-  if (!hasDesc && exceedsLength && tagLines === 1) {
+  if (!hasMultiDescOrType && isUnderCountLimit && tagLines === 1) {
     const fixer = () => {
       const tokens = jsdoc.source[lastLineWithTag].tokens;
       jsdoc.source = [
@@ -93,7 +93,7 @@ const checkForShortDescriptions = (jsdoc, utils, requireSingleLineUnderCount) =>
   }
 
   let lastLineWithDesc = 0;
-  let exceedsLength = false;
+  let isUnderCountLimit = false;
   const descLines = jsdoc.source.reduce((acc, {
     tokens: {
       delimiter,
@@ -108,7 +108,7 @@ const checkForShortDescriptions = (jsdoc, utils, requireSingleLineUnderCount) =>
         start.length + delimiter.length + postDelimiter.length + desc.length <
           requireSingleLineUnderCount
       ) {
-        exceedsLength = true;
+        isUnderCountLimit = true;
       }
 
       return acc + 1;
@@ -117,7 +117,7 @@ const checkForShortDescriptions = (jsdoc, utils, requireSingleLineUnderCount) =>
     return acc;
   }, 0);
   // Could be descLines > 1
-  if (exceedsLength && descLines === 1) {
+  if (isUnderCountLimit && descLines === 1) {
     const fixer = () => {
       const desc = jsdoc.source[lastLineWithDesc].tokens.description;
       jsdoc.source = [

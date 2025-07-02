@@ -41,9 +41,11 @@ are whitelisted in `singleLineTags`.
 ### `requireSingleLineUnderCount` (defaults to `null`)
 
 If this number is set, it indicates a minimum line width for a single line of
-JSDoc content spread over a multi-line comment block. If a line is under the
-minimum length, it will be reported so as to enforce single line JSDoc blocks
-for such cases.
+JSDoc content spread over a multi-line comment block. If a single line is under
+the minimum length, it will be reported so as to enforce single line JSDoc blocks
+for such cases. Blocks are not reported which have multi-line descriptions,
+multiple tags, a block description and tag, or tags with multi-line types or
+descriptions.
 
 ### `singleLineTags` (defaults to `['lends', 'type']`)
 

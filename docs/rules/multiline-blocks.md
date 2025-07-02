@@ -55,9 +55,11 @@ are whitelisted in `singleLineTags`.
 ### <code>requireSingleLineUnderCount</code> (defaults to <code>null</code>)
 
 If this number is set, it indicates a minimum line width for a single line of
-JSDoc content spread over a multi-line comment block. If a line is under the
-minimum length, it will be reported so as to enforce single line JSDoc blocks
-for such cases.
+JSDoc content spread over a multi-line comment block. If a single line is under
+the minimum length, it will be reported so as to enforce single line JSDoc blocks
+for such cases. Blocks are not reported which have multi-line descriptions,
+multiple tags, a block description and tag, or tags with multi-line types or
+descriptions.
 
 <a name="user-content-options-singlelinetags-defaults-to-lends-type"></a>
 <a name="options-singlelinetags-defaults-to-lends-type"></a>
@@ -469,5 +471,22 @@ The following patterns are not considered problems:
  * @someTag
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+
+/**
+ * @someTag
+ * @anotherTag
+ */
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":80}]
+
+/**
+ * @type {{
+    visible: import("vue").Ref<boolean>,
+    attack: import("vue").Ref<AttackPve|AttackPvp|undefined>,
+    hero: import("vue").Ref<HeroOwn|undefined>,
+    outpost: import("vue").Ref<Outpost|undefined>,
+    rewards: import("vue").Ref<Rewards|undefined>
+* }}
+*/
+// "jsdoc/multiline-blocks": ["error"|"warn", {"requireSingleLineUnderCount":120}]
 ````
 

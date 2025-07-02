@@ -1100,5 +1100,36 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @someTag
+         * @anotherTag
+         */
+      `,
+      options: [
+        {
+          requireSingleLineUnderCount: 80,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @type {{
+            visible: import("vue").Ref<boolean>,
+            attack: import("vue").Ref<AttackPve|AttackPvp|undefined>,
+            hero: import("vue").Ref<HeroOwn|undefined>,
+            outpost: import("vue").Ref<Outpost|undefined>,
+            rewards: import("vue").Ref<Rewards|undefined>
+        * }}
+        */
+      `,
+      options: [
+        {
+          requireSingleLineUnderCount: 120,
+        },
+      ],
+    },
   ],
 });
