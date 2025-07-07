@@ -996,5 +996,13 @@ class SomeClass {
  *
  * @member {Intl.Collator}
  */
+
+const otherFile = require('./other-file');
+
+/**
+ * A function
+ * @param {otherFile.MyType} a
+ */
+function f(a) {}
 ````
 

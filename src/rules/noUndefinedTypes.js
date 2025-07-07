@@ -312,6 +312,19 @@ export default iterateJsdoc(({
                   return `${name}.${property}`;
                 }).filter(Boolean),
               ];
+            case 'VariableDeclarator':
+              if (/** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+                /** @type {import('@typescript-eslint/types').TSESTree.CallExpression} */ (
+                  globalItem?.init
+                )?.callee)?.name === 'require'
+              ) {
+                imports.push(/** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
+                  globalItem.id
+                ).name);
+                break;
+              }
+
+              return [];
           }
 
           return [
