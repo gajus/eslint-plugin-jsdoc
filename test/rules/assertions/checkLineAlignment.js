@@ -187,6 +187,36 @@ export default /** @type {import('../index.js').TestCases} */ ({
         /**
          * Function description.
          *
+         * @template  {string} Arg Description.
+         * @param     {Arg}    arg Description
+         */
+        function hello(arg) {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc block lines to be aligned.',
+          type: 'Block',
+        },
+      ],
+      options: [
+        'always',
+      ],
+      output: `
+        /**
+         * Function description.
+         *
+         * @template {string} Arg Description.
+         * @param    {Arg}    arg Description
+         */
+        function hello(arg) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
          * @param {string} lorem Description.
          * @param {int} sit Description multi words.
          */
