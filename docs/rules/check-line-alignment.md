@@ -161,6 +161,16 @@ const fn = ( lorem, sit ) => {}
 /**
  * Function description.
  *
+ * @template  {string} Arg Description.
+ * @param     {Arg}    arg Description
+ */
+function hello(arg) {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always"]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * Function description.
+ *
  * @param {string} lorem Description.
  * @param {int} sit Description multi words.
  */
@@ -1014,3 +1024,4 @@ function quux () {
 const fn = ( lorem ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "any",{"disableWrapIndent":true,"wrapIndent":"  "}]
 ````
+
