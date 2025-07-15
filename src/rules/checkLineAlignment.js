@@ -229,7 +229,7 @@ export default iterateJsdoc(({
     disableWrapIndent = false,
     preserveMainDescriptionPostDelimiter,
     tags: applicableTags = [
-      'param', 'arg', 'argument', 'property', 'prop', 'returns', 'return',
+      'param', 'arg', 'argument', 'property', 'prop', 'returns', 'return', 'template',
     ],
     wrapIndent = '',
   } = context.options[1] || {};
