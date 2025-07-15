@@ -43,7 +43,7 @@ After the string, an options object is allowed with the following properties.
 ### <code>tags</code>
 
 Use this to change the tags which are sought for alignment changes. Defaults to an array of
-`['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return']`.
+`['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return', 'template']`.
 
 <a name="user-content-check-line-alignment-options-customspacings"></a>
 <a name="check-line-alignment-options-customspacings"></a>
@@ -1014,4 +1014,3 @@ function quux () {
 const fn = ( lorem ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "any",{"disableWrapIndent":true,"wrapIndent":"  "}]
 ````
-
