@@ -107,8 +107,8 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           match: {
-            additionalProperties: false,
             items: {
+              additionalProperties: false,
               properties: {
                 allowName: {
                   type: 'string',
@@ -123,6 +123,9 @@ export default iterateJsdoc(({
                   type: 'string',
                 },
                 message: {
+                  type: 'string',
+                },
+                replacement: {
                   type: 'string',
                 },
                 tags: {

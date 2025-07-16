@@ -158,6 +158,7 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           tags: {
+            additionalProperties: false,
             properties: {
               always: {
                 items: {
