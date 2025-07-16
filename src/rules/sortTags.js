@@ -536,6 +536,7 @@ export default iterateJsdoc(({
           },
           tagSequence: {
             items: {
+              additionalProperties: false,
               properties: {
                 tags: {
                   items: {
