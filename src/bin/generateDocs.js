@@ -16,10 +16,10 @@ const dirname = import.meta.dirname;
  * @returns {string}
  */
 const trimCode = (code) => {
-  let lines = code.replace(/^\n/u, '').trimEnd().split('\n');
+  let lines = code.replace(/^\n/v, '').trimEnd().split('\n');
 
-  const firsLineIndentation = lines[0].match(/^\s+/u);
-  const lastLineIndentation = lines[lines.length - 1].match(/^\s+/u);
+  const firsLineIndentation = lines[0].match(/^\s+/v);
+  const lastLineIndentation = lines[lines.length - 1].match(/^\s+/v);
 
   const firstIndentSize = firsLineIndentation ? firsLineIndentation[0].length : 0;
   const lastIndentSize = lastLineIndentation ? lastLineIndentation[0].length : 0;
@@ -117,7 +117,7 @@ const getSomeBranch = () => {
   const gitConfig = fs.readFileSync(path.join(dirname, '../../.git/config')).toString();
   const [
     , branch,
-  ] = /\[branch "([^"]+)"\]/u.exec(gitConfig) || [];
+  ] = /\[branch "([^"]+)"\]/v.exec(gitConfig) || [];
 
   return branch;
 };
@@ -164,7 +164,7 @@ const generateDocs = async () => {
 
   return docContents.map((docContent) => {
     return docContent.replaceAll(
-      /<!-- assertions-(passing|failing) ([a-z]+?) -->/gui,
+      /<!-- assertions-(passing|failing) ([a-z]+?) -->/gvi,
       /**
        * @param {string} _assertionsBlock
        * @param {string} passingFailing
@@ -218,8 +218,8 @@ const getDocPaths = () => {
       return fs.readdirSync(innerBasePath).map((innerDocFile) => {
         return path.join(writeInnerBasePath, innerDocFile);
       }).sort((a, b) => {
-        const newA = a.replace(/\.md/u, '');
-        const newB = b.replace(/\.md/u, '');
+        const newA = a.replace(/\.md/v, '');
+        const newB = b.replace(/\.md/v, '');
         return newA < newB ? -1 : (newB > newA ? 1 : 0);
       });
     }

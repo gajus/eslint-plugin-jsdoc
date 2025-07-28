@@ -68,7 +68,7 @@ export default iterateJsdoc(({
         // @ts-expect-error Should be a comment
         indent = /** @type {import('estree').Comment} */ (
           jsdocNode
-        ).value.match(/^\*\n([\t ]*) \*/u)?.[1]?.slice(spaceDiff);
+        ).value.match(/^\*\n([\t ]*) \*/v)?.[1]?.slice(spaceDiff);
         if (!indent) {
           /** @type {import('eslint').AST.Token|import('estree').Comment|undefined} */
           let tokenPrior = tokenBefore;

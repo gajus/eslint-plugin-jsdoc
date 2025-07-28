@@ -34,16 +34,16 @@ If present as an array, will be used in place of SPDX identifiers.
 
 ### `licensePattern`
 
-A string to be converted into a `RegExp` (with `u` flag) and whose first
+A string to be converted into a `RegExp` (with `v` flag) and whose first
 parenthetical grouping, if present, will match the portion of the license
 description to check (if no grouping is present, then the whole portion
-matched will be used). Defaults to `/([^\n\r]*)/gu`, i.e., the SPDX expression
+matched will be used). Defaults to `/([^\n\r]*)/gv`, i.e., the SPDX expression
 is expected before any line breaks.
 
 Note that the `/` delimiters are optional, but necessary to add flags.
 
-Defaults to using the `u` flag, so to add your own flags, encapsulate
-your expression as a string, but like a literal, e.g., `/^mit$/ui`.
+Defaults to using the `v` flag, so to add your own flags, encapsulate
+your expression as a string, but like a literal, e.g., `/^mit$/vi`.
 
 ### `numericOnlyVariation`
 

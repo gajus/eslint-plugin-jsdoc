@@ -27,7 +27,7 @@ for (const file of dirContents) {
   const fileContents = await readFile(join(rulesDir, file), 'utf8');
   // console.log('file', file);
   const ast = parse(fileContents, {
-    ecmaVersion: 2_022,
+    ecmaVersion: 2_024,
     sourceType: 'module',
   });
   const results = esquery.query(
@@ -69,11 +69,11 @@ for (const file of dirContents) {
 
     const hyphenatedRule = decamelize(file, {
       separator: '-',
-    }).replace(/\.js$/u, '.md');
+    }).replace(/\.js$/v, '.md');
     const docPath = join('.README/rules', hyphenatedRule);
 
     const ruleDocs = (await readFile(docPath, 'utf8'))
-      .replace(/(\|\s*Options\s*\|)([^|]*)(\|)?/u, `$1${
+      .replace(/(\|\s*Options\s*\|)([^\|]*)(\|)?/v, `$1${
         initial +
         Object.keys(obj.properties).map((key) => {
           return `\`${key}\``;

@@ -307,7 +307,7 @@ export const bboxToObj = function ({x, y, width, height}) {
 ```
 
 By default `checkTypesPattern` is set to
-`/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/u`,
+`/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/v`,
 meaning that destructuring will be required only if the type of the `@param`
 (the text between curly brackets) is a match for "Object" or "Array" (with or
 without initial caps), "PlainObject", or "GenericObject", "GenericArray" (or
@@ -317,8 +317,8 @@ parameters.
 
 Note that the `/` delimiters are optional, but necessary to add flags.
 
-Defaults to using (only) the `u` flag, so to add your own flags, encapsulate
-your expression as a string, but like a literal, e.g., `/^object$/ui`.
+Defaults to using (only) the `v` flag, so to add your own flags, encapsulate
+your expression as a string, but like a literal, e.g., `/^object$/vi`.
 
 You could set this regular expression to a more expansive list, or you
 could restrict it such that even types matching those strings would not

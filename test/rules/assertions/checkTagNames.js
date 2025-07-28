@@ -28,7 +28,7 @@ const buildTagBlock = (tags) => {
  */
 const lineCount = (code) => {
   /* eslint-disable jsdoc/no-undefined-types -- TS */
-  return /** @type {RegExpMatchArray} */ (code.match(/\n/ug)).length;
+  return /** @type {RegExpMatchArray} */ (code.match(/\n/gv)).length;
   /* eslint-enable jsdoc/no-undefined-types -- TS */
 };
 

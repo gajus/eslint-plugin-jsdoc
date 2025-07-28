@@ -39,6 +39,12 @@ export default [
       'linebreak-style': 0,
       'no-inline-comments': 0,
       'prefer-named-capture-group': 0,
+      'require-unicode-regexp': [
+        'error',
+        {
+          requireFlag: 'v',
+        },
+      ],
       'unicorn/import-index': 0,
       'unicorn/no-array-reduce': 0,
       'unicorn/no-unsafe-regex': 0,

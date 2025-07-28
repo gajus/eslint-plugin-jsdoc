@@ -366,7 +366,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 3,
-          message: 'Only allowing names not matching `/^$/u` but found "".',
+          message: 'Only allowing names not matching `/^$/v` but found "".',
         },
       ],
       options: [

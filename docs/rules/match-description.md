@@ -20,7 +20,7 @@ The default is this basic expression to match English sentences (Support
 for Unicode upper case may be added in a future version when it can be handled
 by our supported Node versions):
 
-``^\n?([A-Z`\\d_][\\s\\S]*[.?!`]\\s*)?$``
+``^\n?([A-Z`\\d_][\\s\\S]*[.?!`\\p{RGI_Emoji}]\\s*)?$``
 
 Applies by default to the jsdoc block description and to the following tags:
 
@@ -31,9 +31,9 @@ Applies by default to the jsdoc block description and to the following tags:
 
 In addition, the `tags` option (see below) may be used to match other tags.
 
-The default (and all regex options) defaults to using (only) the `u` flag, so
+The default (and all regex options) defaults to using (only) the `v` flag, so
 to add your own flags, encapsulate your expression as a string, but like a
-literal, e.g., `/[A-Z].*\\./ui`.
+literal, e.g., `/[A-Z].*\\./vi`.
 
 Note that `/` delimiters are optional, but necessary to add flags (besides
 `u`).
@@ -970,7 +970,7 @@ function quux (foo) {
  * - the `loadScript` option is set to `true`.
  * @param enabled `true` to enable, `false` to disable. Default: `true`.
  */
-// "jsdoc/match-description": ["error"|"warn", {"contexts":["any"],"mainDescription":"/^[A-Z`-].*\\.$/us","matchDescription":"^([A-Z`-].*(\\.|:)|-\\s.*)$","tags":{"param":true,"returns":true}}]
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["any"],"mainDescription":"/^[A-Z`\\-].*\\.$/vs","matchDescription":"^([A-Z`\\-].*(\\.|:)|-\\s.*)$","tags":{"param":true,"returns":true}}]
 
 /**
  * @constructor
@@ -998,5 +998,10 @@ function foo(): void;
 function quux () {
 }
 // "jsdoc/match-description": ["error"|"warn", {"nonemptyTags":false}]
+
+/**
+ * Example text. 🙂
+ */
+export const example = () => { };
 ````
 

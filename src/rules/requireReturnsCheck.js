@@ -81,7 +81,7 @@ export default iterateJsdoc(({
   const type = tag.type.trim();
 
   // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions
-  if (/asserts\s/u.test(type)) {
+  if (/asserts\s/v.test(type)) {
     return;
   }
 
