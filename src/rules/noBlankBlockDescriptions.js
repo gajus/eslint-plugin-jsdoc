@@ -1,7 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
-const anyWhitespaceLines = /^\s*$/u;
-const atLeastTwoLinesWhitespace = /^[ \t]*\n[ \t]*\n\s*$/u;
+const anyWhitespaceLines = /^\s*$/v;
+const atLeastTwoLinesWhitespace = /^[ \t]*\n[ \t]*\n\s*$/v;
 
 export default iterateJsdoc(({
   jsdoc,

@@ -2,15 +2,15 @@ import iterateJsdoc from '../iterateJsdoc.js';
 
 // We could disallow raw gt, quot, and apos, but allow for parity; but we do
 //  not allow hex or decimal character references
-const htmlRegex = /(<|&(?!(?:amp|lt|gt|quot|apos);))(?=\S)/u;
-const markdownRegex = /(?<!\\)(`+)([^`]+)\1(?!`)/u;
+const htmlRegex = /(<|&(?!(?:amp|lt|gt|quot|apos);))(?=\S)/v;
+const markdownRegex = /(?<!\\)(`+)([^`]+)\1(?!`)/v;
 
 /**
  * @param {string} desc
  * @returns {string}
  */
 const htmlReplacer = (desc) => {
-  return desc.replaceAll(new RegExp(htmlRegex, 'gu'), (_) => {
+  return desc.replaceAll(new RegExp(htmlRegex, 'gv'), (_) => {
     if (_ === '<') {
       return '&lt;';
     }
@@ -24,7 +24,7 @@ const htmlReplacer = (desc) => {
  * @returns {string}
  */
 const markdownReplacer = (desc) => {
-  return desc.replaceAll(new RegExp(markdownRegex, 'gu'), (_, backticks, encapsed) => {
+  return desc.replaceAll(new RegExp(markdownRegex, 'gv'), (_, backticks, encapsed) => {
     const bookend = '`'.repeat(backticks.length);
     return `\\${bookend}${encapsed}${bookend}`;
   });

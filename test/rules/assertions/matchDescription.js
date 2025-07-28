@@ -1576,8 +1576,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
           contexts: [
             'any',
           ],
-          mainDescription: '/^[A-Z`-].*\\.$/us',
-          matchDescription: '^([A-Z`-].*(\\.|:)|-\\s.*)$',
+          mainDescription: '/^[A-Z`\\-].*\\.$/vs',
+          matchDescription: '^([A-Z`\\-].*(\\.|:)|-\\s.*)$',
           tags: {
             param: true,
             returns: true,
@@ -1674,6 +1674,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
           nonemptyTags: false,
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * Example text. 🙂
+         */
+        export const example = () => { };
+      `,
     },
   ],
 });

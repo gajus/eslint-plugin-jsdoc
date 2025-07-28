@@ -647,12 +647,12 @@ const getPreferredTagNameSimple = (
         value,
       ]) => {
         return [
-          key.replace(/^tag /u, ''), value,
+          key.replace(/^tag /v, ''), value,
         ];
       }),
   );
 
-  if (Object.prototype.hasOwnProperty.call(tagPreferenceFixed, name)) {
+  if (Object.hasOwn(tagPreferenceFixed, name)) {
     return tagPreferenceFixed[name];
   }
 
@@ -1480,7 +1480,7 @@ const hasThrowValue = (node, innerFunction) => {
  */
 /*
 const isInlineTag = (tag) => {
-  return /^(@link|@linkcode|@linkplain|@tutorial) /u.test(tag);
+  return /^(@link|@linkcode|@linkplain|@tutorial) /v.test(tag);
 };
 */
 
@@ -1495,7 +1495,7 @@ const parseClosureTemplateTag = (tag) => {
   return tag.name
     .split(',')
     .map((type) => {
-      return type.trim().replace(/^\[?(?<name>.*?)=.*$/u, '$<name>');
+      return type.trim().replace(/^\[?(?<name>.*?)=.*$/v, '$<name>');
     });
 };
 
@@ -1649,7 +1649,7 @@ const getTagsByType = (context, mode, tags) => {
  * @returns {string}
  */
 const getIndent = (sourceCode) => {
-  return (sourceCode.text.match(/^\n*([ \t]+)/u)?.[1] ?? '') + ' ';
+  return (sourceCode.text.match(/^\n*([ \t]+)/v)?.[1] ?? '') + ' ';
 };
 
 /**
@@ -1789,7 +1789,7 @@ const exemptSpeciaMethods = (jsdoc, node, context, schema) => {
  * @returns {string}
  */
 const dropPathSegmentQuotes = (str) => {
-  return str.replaceAll(/\.(['"])(.*)\1/gu, '.$2');
+  return str.replaceAll(/\.(['"])(.*)\1/gv, '.$2');
 };
 
 /**
@@ -1822,8 +1822,8 @@ const pathDoesNotBeginWith = (name, otherPathName) => {
  * @returns {RegExp}
  */
 const getRegexFromString = (regexString, requiredFlags) => {
-  const match = regexString.match(/^\/(.*)\/([gimyus]*)$/us);
-  let flags = 'u';
+  const match = regexString.match(/^\/(.*)\/([gimyvus]*)$/vs);
+  let flags = 'v';
   let regex = regexString;
   if (match) {
     [
@@ -1831,7 +1831,7 @@ const getRegexFromString = (regexString, requiredFlags) => {
       flags,
     ] = match;
     if (!flags) {
-      flags = 'u';
+      flags = 'v';
     }
   }
 

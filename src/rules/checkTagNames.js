@@ -267,7 +267,7 @@ export default iterateJsdoc(({
       if (preferredTagName !== tagName) {
         report(message, (fixer) => {
           const replacement = sourceCode.getText(jsdocNode).replace(
-            new RegExp(`@${escapeStringRegexp(tagName)}\\b`, 'u'),
+            new RegExp(`@${escapeStringRegexp(tagName)}\\b`, 'v'),
             `@${preferredTagName}`,
           );
 

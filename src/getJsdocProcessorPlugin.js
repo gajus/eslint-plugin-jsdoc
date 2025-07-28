@@ -30,14 +30,14 @@ const preTagSpaceLength = 1;
 // If a space is present, we should ignore it
 const firstLinePrefixLength = preTagSpaceLength;
 
-const hasCaptionRegex = /^\s*<caption>([\s\S]*?)<\/caption>/u;
+const hasCaptionRegex = /^\s*<caption>([\s\S]*?)<\/caption>/v;
 
 /**
  * @param {string} str
  * @returns {string}
  */
 const escapeStringRegexp = (str) => {
-  return str.replaceAll(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+  return str.replaceAll(/[.*+?^$\{\}\(\)\|\[\]\\]/gv, '\\$&');
 };
 
 /**
@@ -46,7 +46,7 @@ const escapeStringRegexp = (str) => {
  * @returns {import('./iterateJsdoc.js').Integer}
  */
 const countChars = (str, ch) => {
-  return (str.match(new RegExp(escapeStringRegexp(ch), 'gu')) || []).length;
+  return (str.match(new RegExp(escapeStringRegexp(ch), 'gv')) || []).length;
 };
 
 /**
@@ -221,7 +221,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
         string,
       }) {
         const src = paddedIndent ?
-          string.replaceAll(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gu'), '\n') :
+          string.replaceAll(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gv'), '\n') :
           string;
 
         // Programmatic ESLint API: https://eslint.org/docs/developer-guide/nodejs-api
@@ -274,7 +274,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
       let defaultFileName;
       if (!filename) {
         if (typeof jsFileName === 'string' && jsFileName.includes('.')) {
-          defaultFileName = jsFileName.replace(/\.[^.]*$/u, `.${ext}`);
+          defaultFileName = jsFileName.replace(/\.[^.]*$/v, `.${ext}`);
         } else {
           defaultFileName = `dummy.${ext}`;
         }
@@ -376,7 +376,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
 
       // If `allowedLanguagesToProcess` is falsy, all languages should be processed.
       if (allowedLanguagesToProcess) {
-        const matches = (/^\s*```(?<language>\S+)([\s\S]*)```\s*$/u).exec(source);
+        const matches = (/^\s*```(?<language>\S+)([\s\S]*)```\s*$/v).exec(source);
         if (matches?.groups && !allowedLanguagesToProcess.includes(
           matches.groups.language.toLowerCase(),
         )) {
@@ -602,7 +602,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
                */
               (ast).comments
             ).filter((comment) => {
-              return (/^\*\s/u).test(comment.value);
+              return (/^\*\s/v).test(comment.value);
             }).map((comment) => {
               const [
                 start,
@@ -615,7 +615,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
                 cols,
               ] = getLinesCols(textToStart);
 
-              // const lines = [...textToStart.matchAll(/\n/gu)].length
+              // const lines = [...textToStart.matchAll(/\n/gv)].length
               // const lastLinePos = textToStart.lastIndexOf('\n');
               // const cols = lastLinePos === -1
               //   ? 0

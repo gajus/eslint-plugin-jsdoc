@@ -93,8 +93,8 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
   };
 
   const postHyphenSpacing = customSpacings?.postHyphen ?? 1;
-  const exactHyphenSpacing = new RegExp(`^\\s*-\\s{${postHyphenSpacing},${postHyphenSpacing}}(?!\\s)`, 'u');
-  const hasNoHyphen = !(/^\s*-(?!$)(?=\s)/u).test(tokens.description);
+  const exactHyphenSpacing = new RegExp(`^\\s*-\\s{${postHyphenSpacing},${postHyphenSpacing}}(?!\\s)`, 'v');
+  const hasNoHyphen = !(/^\s*-(?!$)(?=\s)/v).test(tokens.description);
   const hasExactHyphenSpacing = exactHyphenSpacing.test(
     tokens.description,
   );
@@ -144,7 +144,7 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
     }
 
     if (!hasExactHyphenSpacing) {
-      const hyphenSpacing = /^\s*-\s+/u;
+      const hyphenSpacing = /^\s*-\s+/v;
       tokens.description = tokens.description.replace(
         hyphenSpacing, '-' + ''.padStart(postHyphenSpacing, ' '),
       );

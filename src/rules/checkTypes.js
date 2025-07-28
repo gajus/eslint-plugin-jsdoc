@@ -43,7 +43,7 @@ const adjustNames = (type, preferred, isGenericMatch, typeNodeName, node, parent
       parentMeta.dot = false;
       ret = 'Array';
     } else {
-      const dotBracketEnd = preferred.match(/\.(?:<>)?$/u);
+      const dotBracketEnd = preferred.match(/\.(?:<>)?$/v);
       if (dotBracketEnd) {
         parentMeta.brackets = 'angle';
         parentMeta.dot = true;
@@ -69,7 +69,7 @@ const adjustNames = (type, preferred, isGenericMatch, typeNodeName, node, parent
 
   /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (
     node
-  ).value = ret.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
+  ).value = ret.replace(/(?:\.|<>|\.<>|\[\])$/v, '');
 
   // For bare pseudo-types like `<>`
   if (!ret) {

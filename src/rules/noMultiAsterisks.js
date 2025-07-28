@@ -1,13 +1,13 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
-const middleAsterisksBlockWS = /^([\t ]|\*(?!\*))+/u;
-const middleAsterisksNoBlockWS = /^\*+/u;
+const middleAsterisksBlockWS = /^([\t ]|\*(?!\*))+/v;
+const middleAsterisksNoBlockWS = /^\*+/v;
 
-const endAsterisksSingleLineBlockWS = /\*((?:\*|(?: |\t))*)\*$/u;
-const endAsterisksMultipleLineBlockWS = /((?:\*|(?: |\t))*)\*$/u;
+const endAsterisksSingleLineBlockWS = /\*((?:\*|(?: |\t))*)\*$/v;
+const endAsterisksMultipleLineBlockWS = /((?:\*|(?: |\t))*)\*$/v;
 
-const endAsterisksSingleLineNoBlockWS = /\*(\**)\*$/u;
-const endAsterisksMultipleLineNoBlockWS = /(\**)\*$/u;
+const endAsterisksSingleLineNoBlockWS = /\*(\**)\*$/v;
+const endAsterisksMultipleLineNoBlockWS = /(\**)\*$/v;
 
 export default iterateJsdoc(({
   context,

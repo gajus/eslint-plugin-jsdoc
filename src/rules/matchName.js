@@ -38,7 +38,7 @@ export default iterateJsdoc(({
 
   let reported = false;
   for (const tag of applicableTags) {
-    const tagName = tag.name.replace(/^\[/u, '').replace(/(=.*)?\]$/u, '');
+    const tagName = tag.name.replace(/^\[/v, '').replace(/(=.*)?\]$/v, '');
     const allowed = !allowNameRegex || allowNameRegex.test(tagName);
     const disallowed = disallowNameRegex && disallowNameRegex.test(tagName);
     const hasRegex = allowNameRegex || disallowNameRegex;

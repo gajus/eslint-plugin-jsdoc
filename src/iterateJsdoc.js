@@ -756,7 +756,7 @@ const getUtils = (
         const text = sourceCode.getText();
         const lastLineBreakPos = text.slice(
           0, jsdocNode.range[0],
-        ).search(/\n[ \t]*$/u);
+        ).search(/\n[ \t]*$/v);
         if (lastLineBreakPos > -1) {
           return fixer.removeRange([
             lastLineBreakPos, jsdocNode.range[1],
@@ -764,7 +764,7 @@ const getUtils = (
         }
 
         return fixer.removeRange(
-          (/\s/u).test(text.charAt(jsdocNode.range[1])) ?
+          (/\s/v).test(text.charAt(jsdocNode.range[1])) ?
             [
               jsdocNode.range[0], jsdocNode.range[1] + 1,
             ] :
@@ -2118,7 +2118,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
     const utils = getBasicUtils(context, /** @type {Settings} */ (settings));
     for (const jsdocNode of jsdocNodes) {
       const jsdocNde = /** @type {unknown} */ (jsdocNode);
-      if (!(/^\/\*\*\s/u).test(sourceCode.getText(
+      if (!(/^\/\*\*\s/v).test(sourceCode.getText(
         /** @type {import('estree').Node} */
         (jsdocNde),
       ))) {

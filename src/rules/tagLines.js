@@ -228,11 +228,11 @@ export default iterateJsdoc(({
       description,
       lastDescriptionLine,
     } = utils.getDescription();
-    if (!(/\S/u).test(description)) {
+    if (!(/\S/v).test(description)) {
       return;
     }
 
-    const trailingLines = description.match(/\n+$/u)?.[0]?.length;
+    const trailingLines = description.match(/\n+$/v)?.[0]?.length;
     const trailingDiff = (trailingLines ?? 0) - startLines;
     if (trailingDiff > 0) {
       utils.reportJSDoc(

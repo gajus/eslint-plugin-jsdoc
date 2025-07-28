@@ -5,8 +5,8 @@ import {
 
 // Neither a single nor 3+ asterisks are valid jsdoc per
 //  https://jsdoc.app/about-getting-started.html#adding-documentation-comments-to-your-code
-const commentRegexp = /^\/\*(?!\*)/u;
-const extraAsteriskCommentRegexp = /^\/\*{3,}/u;
+const commentRegexp = /^\/\*(?!\*)/v;
+const extraAsteriskCommentRegexp = /^\/\*{3,}/v;
 
 export default iterateJsdoc(({
   allComments,

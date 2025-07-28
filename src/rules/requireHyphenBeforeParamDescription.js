@@ -29,7 +29,7 @@ export default iterateJsdoc(({
       return;
     }
 
-    const startsWithHyphen = (/^\s*-/u).test(desc);
+    const startsWithHyphen = (/^\s*-/v).test(desc);
     let lines = 0;
     for (const {
       tokens,
@@ -54,7 +54,7 @@ export default iterateJsdoc(({
             } of jsdocTag.source) {
               if (tokens.description) {
                 tokens.description = tokens.description.replace(
-                  /^(\s*)/u, '$1- ',
+                  /^(\s*)/v, '$1- ',
                 );
                 break;
               }
@@ -74,7 +74,7 @@ export default iterateJsdoc(({
           } of jsdocTag.source) {
             if (tokens.description) {
               tokens.description = tokens.description.replace(
-                /^\s*-\s*/u, '',
+                /^\s*-\s*/v, '',
               );
               break;
             }

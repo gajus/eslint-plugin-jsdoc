@@ -183,7 +183,7 @@ function quux () {}
  * @template
  */
 // "jsdoc/match-name": ["error"|"warn", {"match":[{"disallowName":"/^$/","tags":["template"]}]}]
-// Message: Only allowing names not matching `/^$/u` but found "".
+// Message: Only allowing names not matching `/^$/v` but found "".
 ````
 
 

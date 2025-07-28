@@ -33,7 +33,7 @@ const recommended = options.includes('--recommended');
     return;
   }
 
-  if ((/[A-Z]/u).test(ruleName)) {
+  if ((/[A-Z]/v).test(ruleName)) {
     console.error('Please ensure the rule has no capital letters');
 
     return;
@@ -241,7 +241,7 @@ export default iterateJsdoc(({
   // await replaceInOrder({
   //   checkName: 'README',
   //   newLine: `{"gitdown": "include", "file": "./rules/${ruleName}.md"}`,
-  //   oldRegex: /\n\{"gitdown": "include", "file": ".\/rules\/(?<oldRule>[^.]*).md"\}/gu,
+  //   oldRegex: /\n\{"gitdown": "include", "file": ".\/rules\/(?<oldRule>[^.]*).md"\}/gv,
   //   path: './.README/README.md',
   // });
 
@@ -249,21 +249,21 @@ export default iterateJsdoc(({
     checkName: 'index import',
     newLine: `import ${camelCasedRuleName} from './rules/${camelCasedRuleName}.js';`,
     oldIsCamel: true,
-    oldRegex: /\nimport (?<oldRule>[^ ]*) from '.\/rules\/\1\.js';/gu,
+    oldRegex: /\nimport (?<oldRule>[^ ]*) from '.\/rules\/\1\.js';/gv,
     path: './src/index.js',
   });
 
   await replaceInOrder({
     checkName: 'index recommended',
     newLine: `${' '.repeat(6)}'jsdoc/${ruleName}': ${recommended ? 'warnOrError' : '\'off\''},`,
-    oldRegex: /\n\s{6}'jsdoc\/(?<oldRule>[^']*)': .*?,/gu,
+    oldRegex: /\n\s{6}'jsdoc\/(?<oldRule>[^']*)': .*?,/gv,
     path: './src/index.js',
   });
 
   await replaceInOrder({
     checkName: 'index rules',
     newLine: `${' '.repeat(4)}'${ruleName}': ${camelCasedRuleName},`,
-    oldRegex: /\n\s{4}'(?<oldRule>[^']*)': [^,]*,/gu,
+    oldRegex: /\n\s{4}'(?<oldRule>[^']*)': [^,]*,/gv,
     path: './src/index.js',
   });
 

@@ -6,10 +6,10 @@ import iterateJsdoc from '../iterateJsdoc.js';
  * @returns {string}
  */
 const maskExcludedContent = (str, excludeTags) => {
-  const regContent = new RegExp(`([ \\t]+\\*)[ \\t]@(?:${excludeTags.join('|')})(?=[ \\n])([\\w|\\W]*?\\n)(?=[ \\t]*\\*(?:[ \\t]*@\\w+\\s|\\/))`, 'gu');
+  const regContent = new RegExp(`([ \\t]+\\*)[ \\t]@(?:${excludeTags.join('|')})(?=[ \\n])([\\w\\|\\W]*?\\n)(?=[ \\t]*\\*(?:[ \\t]*@\\w+\\s|\\/))`, 'gv');
 
   return str.replace(regContent, (_match, margin, code) => {
-    return (margin + '\n').repeat(code.match(/\n/gu).length);
+    return (margin + '\n').repeat(code.match(/\n/gv).length);
   });
 };
 
@@ -18,10 +18,10 @@ const maskExcludedContent = (str, excludeTags) => {
  * @returns {string}
  */
 const maskCodeBlocks = (str) => {
-  const regContent = /([ \t]+\*)[ \t]```[^\n]*?([\w|\W]*?\n)(?=[ \t]*\*(?:[ \t]*(?:```|@\w+\s)|\/))/gu;
+  const regContent = /([ \t]+\*)[ \t]```[^\n]*?([\w\|\W]*?\n)(?=[ \t]*\*(?:[ \t]*(?:```|@\w+\s)|\/))/gv;
 
   return str.replaceAll(regContent, (_match, margin, code) => {
-    return (margin + '\n').repeat(code.match(/\n/gu).length);
+    return (margin + '\n').repeat(code.match(/\n/gv).length);
   });
 };
 
@@ -38,12 +38,12 @@ export default iterateJsdoc(({
     ],
   } = options;
 
-  const reg = /^(?:\/?\**|[ \t]*)\*[ \t]{2}/gmu;
+  const reg = /^(?:\/?\**|[ \t]*)\*[ \t]{2}/gmv;
   const textWithoutCodeBlocks = maskCodeBlocks(sourceCode.getText(jsdocNode));
   const text = excludeTags.length ? maskExcludedContent(textWithoutCodeBlocks, excludeTags) : textWithoutCodeBlocks;
 
   if (reg.test(text)) {
-    const lineBreaks = text.slice(0, reg.lastIndex).match(/\n/gu) || [];
+    const lineBreaks = text.slice(0, reg.lastIndex).match(/\n/gv) || [];
     report('There must be no indentation.', null, {
       line: lineBreaks.length,
     });

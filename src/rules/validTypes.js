@@ -17,7 +17,7 @@ const jsdocTypePrattKeywords = new Set([
   'typeof',
 ]);
 
-const asExpression = /as\s+/u;
+const asExpression = /as\s+/v;
 
 const suppressTypes = new Set([
   // https://github.com/google/closure-compiler/wiki/@suppress-annotations

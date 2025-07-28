@@ -53,7 +53,7 @@ export default iterateJsdoc(({
     const content = tag.name || tag.description || tag.type;
     if (content.trim() && (
       // Allow for JSDoc-block final asterisks
-      key !== emptyTags.length - 1 || !(/^\s*\*+$/u).test(content)
+      key !== emptyTags.length - 1 || !(/^\s*\*+$/v).test(content)
     )) {
       const fix = () => {
         // By time of call in fixer, `tag` will have `line` added

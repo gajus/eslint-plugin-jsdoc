@@ -50,7 +50,7 @@ const typescriptGlobals = [
  * @returns {undefined|string|false}
  */
 const stripPseudoTypes = (str) => {
-  return str && str.replace(/(?:\.|<>|\.<>|\[\])$/u, '');
+  return str && str.replace(/(?:\.|<>|\.<>|\[\])$/v, '');
 };
 
 export default iterateJsdoc(({
@@ -115,7 +115,7 @@ export default iterateJsdoc(({
   const allComments = sourceCode.getAllComments();
   const comments = allComments
     .filter((comment) => {
-      return (/^\*\s/u).test(comment.value);
+      return (/^\*\s/v).test(comment.value);
     })
     .map((commentNode) => {
       return parseComment(commentNode, '');
@@ -123,9 +123,9 @@ export default iterateJsdoc(({
 
   const globals = allComments
     .filter((comment) => {
-      return (/^\s*globals/u).test(comment.value);
+      return (/^\s*globals/v).test(comment.value);
     }).flatMap((commentNode) => {
-      return commentNode.value.replace(/^\s*globals/u, '').trim().split(/,\s*/u);
+      return commentNode.value.replace(/^\s*globals/v, '').trim().split(/,\s*/v);
     }).concat(Object.keys(context.languageOptions.globals ?? []));
 
   const typedefDeclarations = comments

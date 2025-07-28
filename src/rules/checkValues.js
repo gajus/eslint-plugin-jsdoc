@@ -29,7 +29,7 @@ export default iterateJsdoc(({
   const {
     allowedAuthors = null,
     allowedLicenses = null,
-    licensePattern = '/([^\n\r]*)/gu',
+    licensePattern = '/([^\n\r]*)/gv',
     numericOnlyVariation = false,
   } = options;
 

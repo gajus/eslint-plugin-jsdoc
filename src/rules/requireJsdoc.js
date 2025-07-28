@@ -444,7 +444,7 @@ export default {
          */
         const underMinLine = (count) => {
           return count !== undefined && count >
-            (sourceCode.getText(node).match(/\n/gu)?.length ?? 0) + 1;
+            (sourceCode.getText(node).match(/\n/gv)?.length ?? 0) + 1;
         };
 
         if (underMinLine(minLineCount)) {

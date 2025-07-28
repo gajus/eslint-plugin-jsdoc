@@ -2,7 +2,7 @@ import iterateJsdoc from '../iterateJsdoc.js';
 
 // If supporting Node >= 10, we could loosen the default to this for the
 //   initial letter: \\p{Upper}
-const matchDescriptionDefault = '^\n?([A-Z`\\d_][\\s\\S]*[.?!`]\\s*)?$';
+const matchDescriptionDefault = '^\n?([A-Z`\\d_][\\s\\S]*[.?!`\\p{RGI_Emoji}]\\s*)?$';
 
 /**
  * @param {string} value
@@ -43,7 +43,7 @@ export default iterateJsdoc(({
     }
 
     if (mainDescriptionMatch === false && (
-      !tag || !Object.prototype.hasOwnProperty.call(tags, tag.tag))
+      !tag || !Object.hasOwn(tags, tag.tag))
     ) {
       return;
     }
@@ -114,7 +114,7 @@ export default iterateJsdoc(({
       utils.forEachPreferredTag(tag, (matchingJsdocTag, targetTagName) => {
         const desc = (matchingJsdocTag.name + ' ' + utils.getTagDescription(matchingJsdocTag)).trim();
 
-        if (hasNoTag(targetTagName) && !(/.+/u).test(desc)) {
+        if (hasNoTag(targetTagName) && !(/.+/v).test(desc)) {
           report(
             'JSDoc description must not be empty.',
             null,
@@ -150,7 +150,7 @@ export default iterateJsdoc(({
   tagsWithNames.some((tag) => {
     const desc = /** @type {string} */ (
       utils.getTagDescription(tag)
-    ).replace(/^[- ]*/u, '')
+    ).replace(/^[\- ]*/v, '')
       .trim();
 
     return validateDescription(desc, tag);

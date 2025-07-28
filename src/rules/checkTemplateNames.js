@@ -73,7 +73,7 @@ export default iterateJsdoc(({
       const {
         name,
       } = tag;
-      const names = name.split(/,\s*/u);
+      const names = name.split(/,\s*/v);
       for (const nme of names) {
         if (!usedNames.has(nme)) {
           report(`@template ${nme} not in use`, null, tag);

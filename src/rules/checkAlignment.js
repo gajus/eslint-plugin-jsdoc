@@ -5,7 +5,7 @@ import iterateJsdoc from '../iterateJsdoc.js';
  * @returns {string}
  */
 const trimStart = (string) => {
-  return string.replace(/^\s+/u, '');
+  return string.replace(/^\s+/v, '');
 };
 
 export default iterateJsdoc(({

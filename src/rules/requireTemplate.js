@@ -31,7 +31,7 @@ export default iterateJsdoc(({
       const {
         name,
       } = tag;
-      const names = name.split(/,\s*/u);
+      const names = name.split(/,\s*/v);
       if (names.length > 1) {
         report(`Missing separate @template for ${names[1]}`, null, tag);
       }
@@ -126,7 +126,7 @@ export default iterateJsdoc(({
         type,
         value,
       } = /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde);
-      if (type === 'JsdocTypeName' && (/^[A-Z]$/u).test(value)) {
+      if (type === 'JsdocTypeName' && (/^[A-Z]$/v).test(value)) {
         usedNames.add(value);
         if (!usedNameToTag.has(value)) {
           usedNameToTag.set(value, potentialTag);

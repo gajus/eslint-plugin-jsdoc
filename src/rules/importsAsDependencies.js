@@ -83,10 +83,10 @@ export default iterateJsdoc(({
 
       if (nde.type === 'JsdocTypeImport') {
         let mod = nde.element.value.replace(
-          /^(@[^/]+\/[^/]+|[^/]+).*$/u, '$1',
+          /^(@[^\/]+\/[^\/]+|[^\/]+).*$/v, '$1',
         );
 
-        if ((/^[./]/u).test(mod)) {
+        if ((/^[.\/]/v).test(mod)) {
           return;
         }
 

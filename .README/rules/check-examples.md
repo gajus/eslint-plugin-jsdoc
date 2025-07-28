@@ -37,7 +37,7 @@ syntax highlighting). The following options determine whether a given
   exists or matches, the whole matching expression will be used.
   An example might be ````"^```(?:js|javascript)([\\s\\S]*)```\s*$"````
   to only match explicitly fenced JavaScript blocks. Defaults to only
-  using the `u` flag, so to add your own flags, encapsulate your
+  using the `v` flag, so to add your own flags, encapsulate your
   expression as a string, but like a literal, e.g., ````/```js.*```/gi````.
   Note that specifying a global regular expression (i.e., with `g`) will
   allow independent linting of matched blocks within a single `@example`.
@@ -45,7 +45,7 @@ syntax highlighting). The following options determine whether a given
   non-lintable examples (has priority over `exampleCodeRegex`). An example
   might be ```"^`"``` to avoid linting fenced blocks which may indicate
   a non-JavaScript language. See `exampleCodeRegex` on how to add flags
-  if the default `u` is not sufficient.
+  if the default `v` is not sufficient.
 
 If neither is in use, all examples will be matched. Note also that even if
 `captionRequired` is not set, any initial `<caption>` will be stripped out

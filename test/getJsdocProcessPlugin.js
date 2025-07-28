@@ -94,7 +94,7 @@ describe('`getJsdocProcessorPlugin`', () => {
 
   it('returns text and files with `exampleCodeRegex` (as RegExp)', () => {
     const options = {
-      exampleCodeRegex: /```js([\s\S]*)```/u,
+      exampleCodeRegex: /```js([\s\S]*)```/v,
     };
     const filename = 'something.js';
     const text = `
@@ -276,7 +276,7 @@ describe('`getJsdocProcessorPlugin`', () => {
 
   it('returns text and files (with `rejectExampleCodeRegex`) as RegExp', () => {
     const options = {
-      rejectExampleCodeRegex: /^\s*<.*>\s*$/u,
+      rejectExampleCodeRegex: /^\s*<.*>\s*$/v,
     };
     const filename = 'something.js';
     const text = `

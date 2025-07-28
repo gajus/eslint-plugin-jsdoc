@@ -16,14 +16,14 @@ const preTagSpaceLength = 1;
 // If a space is present, we should ignore it
 const firstLinePrefixLength = preTagSpaceLength;
 
-const hasCaptionRegex = /^\s*<caption>([\s\S]*?)<\/caption>/u;
+const hasCaptionRegex = /^\s*<caption>([\s\S]*?)<\/caption>/v;
 
 /**
  * @param {string} str
  * @returns {string}
  */
 const escapeStringRegexp = (str) => {
-  return str.replaceAll(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+  return str.replaceAll(/[.*+?^$\{\}\(\)\|\[\]\\]/gv, '\\$&');
 };
 
 /**
@@ -32,7 +32,7 @@ const escapeStringRegexp = (str) => {
  * @returns {import('../iterateJsdoc.js').Integer}
  */
 const countChars = (str, ch) => {
-  return (str.match(new RegExp(escapeStringRegexp(ch), 'gu')) || []).length;
+  return (str.match(new RegExp(escapeStringRegexp(ch), 'gv')) || []).length;
 };
 
 /** @type {import('eslint').Linter.RulesRecord} */
@@ -244,7 +244,7 @@ export default iterateJsdoc(({
       const cliConfigStr = JSON.stringify(cliConfig);
 
       const src = paddedIndent ?
-        string.replaceAll(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gu'), '\n') :
+        string.replaceAll(new RegExp(`(^|\n) {${paddedIndent}}(?!$)`, 'gv'), '\n') :
         string;
 
       // Programmatic ESLint API: https://eslint.org/docs/developer-guide/nodejs-api
@@ -345,7 +345,7 @@ export default iterateJsdoc(({
     if (!filename) {
       const jsFileName = context.getFilename();
       if (typeof jsFileName === 'string' && jsFileName.includes('.')) {
-        defaultFileName = jsFileName.replace(/\.[^.]*$/u, `.${ext}`);
+        defaultFileName = jsFileName.replace(/\.[^.]*$/v, `.${ext}`);
       } else {
         defaultFileName = `dummy.${ext}`;
       }
