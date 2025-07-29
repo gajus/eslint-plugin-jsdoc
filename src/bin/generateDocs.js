@@ -267,7 +267,7 @@ const assertDocsAreUpToDate = async () => {
     const isUpToDate = fs.readFileSync(docPath, 'utf8') === docContent;
 
     if (!isUpToDate) {
-      throw new Error('Docs are not up to date, please run `npm run create-docs` to update it.');
+      throw new Error('Docs are not up to date, please run `pnpm run create-docs` to update it.');
     }
   }
 };

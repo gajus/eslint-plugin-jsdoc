@@ -8,7 +8,7 @@ import fs from 'fs/promises';
 /**
  * @example
  * ```shell
- * npm run create-rule my-new-rule -- --recommended
+ * pnpm run create-rule my-new-rule -- --recommended
  * ```
  */
 import open from 'open-editor';

@@ -1,2 +1,1 @@
-
-npm test && npm run build && npm run check-docs
+pnpm test && pnpm run build && pnpm run check-docs
