@@ -79,7 +79,7 @@
   ],
   "license": "BSD-3-Clause",
   "lint-staged": {
-    "*.js": "pnpm run lint-arg --fix"
+    "*.js": "eslint --fix"
   },
   "type": "module",
   "main": "./dist/index.cjs",
@@ -146,14 +146,13 @@
     "create-rule": "babel-node ./src/bin/generateRule.js",
     "create-options": "node ./src/bin/generateOptions.mjs",
     "install-offline": "pnpm install --prefer-offline --no-audit",
-    "lint": "pnpm run lint-arg -- .",
-    "lint-arg": "eslint",
-    "lint-fix": "pnpm run lint-arg --fix .",
+    "lint": "eslint",
+    "lint-fix": "eslint --fix",
     "prepare": "husky",
     "test-no-cov": "BABEL_ENV=test mocha",
     "test": "c8 pnpm run test-no-cov",
     "test-cov": "TIMING=1 c8 --reporter text pnpm run test-no-cov",
-    "test-index": "pnpm run test-no-cov -- test/rules/index.js"
+    "test-index": "pnpm run test-no-cov test/rules/index.js"
   },
   "version": "1.0.0"
 }
