@@ -9,6 +9,9 @@ import {
 } from 'fs';
 import defaultsDeep from 'lodash.defaultsdeep';
 import {
+  parseArgs,
+} from 'node:util';
+import {
   join,
 } from 'path';
 import semver from 'semver';
@@ -31,7 +34,33 @@ const main = async () => {
     throw new Error('TypeScript guard');
   }
 
-  for (const ruleName of process.env.npm_config_rule ? process.env.npm_config_rule.split(',') : ruleNames) {
+  /**
+   * @satisfies {import('node:util').ParseArgsOptionsConfig}
+   */
+  const options = {
+    invalid: {
+      type: 'string',
+    },
+    rule: {
+      type: 'string',
+    },
+    valid: {
+      type: 'string',
+    },
+  };
+
+  const {
+    values: {
+      invalid,
+      rule: rules,
+      valid,
+    },
+  } = parseArgs({
+    allowPositionals: true,
+    options,
+  });
+
+  for (const ruleName of rules ? rules.split(/[, ]/v) : ruleNames) {
     if (semver.gte(ESLint.version, '8.0.0') && ruleName === 'check-examples') {
       // Uses the processor instead for higher versions
       continue;
@@ -124,24 +153,24 @@ const main = async () => {
       return assertion;
     });
 
-    if (process.env.npm_config_invalid) {
-      const indexes = process.env.npm_config_invalid.split(',');
+    if (invalid) {
+      const indexes = invalid.split(/[, ]/v);
       assertions.invalid = assertions.invalid.filter((_assertion, idx) => {
         return indexes.includes(String(idx)) ||
           indexes.includes(String(idx - assertions.invalid.length));
       });
-      if (!process.env.npm_config_valid) {
+      if (!valid) {
         assertions.valid = [];
       }
     }
 
-    if (process.env.npm_config_valid) {
-      const indexes = process.env.npm_config_valid.split(',');
+    if (valid) {
+      const indexes = valid.split(/[, ]/v);
       assertions.valid = assertions.valid.filter((_assertion, idx) => {
         return indexes.includes(String(idx)) ||
           indexes.includes(String(idx - assertions.valid.length));
       });
-      if (!process.env.npm_config_invalid) {
+      if (!invalid) {
         assertions.invalid = [];
       }
     }

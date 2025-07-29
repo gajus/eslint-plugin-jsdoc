@@ -68,12 +68,12 @@ can be ignored by being preceded by `/* c8 ignore next */` (including
 for warnings where the block is never passed over (i.e., the block is always
 entered)). If you want to test without coverage at all, you can use
 `pnpm test-no-cov`. To only test rules rather than other files, you
-can use `npm run test-index` (`pnpm` doesn't work with this script currently).
+can use `pnpm run test-index`.
 
 To test specific rules, you can supply a comma-separated list with the `--rule`
 flag passed to `test-index`, e.g., for `check-examples` and `require-example`:
 
-`npm run test-index --rule=check-examples,require-example`.
+`pnpm run test-index --rule=check-examples,require-example`.
 
 You can further limit this by providing `--invalid` and/or `--valid` flags
 with a comma-separated list of 0-based indexes that you wish to include (also
@@ -81,7 +81,7 @@ accepts negative offsets from the end, e.g., `-1` for the last item). For
 example, to check the first and third invalid tests of `check-examples`
 along with the second valid test, you can run:
 
-`npm run test-index --rule=require-example --invalid=0,2 --valid=1`.
+`pnpm run test-index --rule=require-example --invalid=0,2 --valid=1`.
 
 ## Requirements for PRs
 
