@@ -18,9 +18,10 @@
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
-    "@arethetypeswrong/core": "^0.18.2",
+    "@babel/cli": "^7.27.2",
     "@babel/core": "^7.27.4",
     "@babel/eslint-parser": "^7.27.5",
+    "@babel/node": "^7.27.1",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@babel/plugin-transform-flow-strip-types": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
@@ -62,12 +63,11 @@
     "lodash.defaultsdeep": "^4.6.1",
     "mocha": "^11.7.0",
     "open-editor": "^5.1.0",
-    "publint": "^0.3.12",
+    "replace": "^1.2.2",
+    "rimraf": "^6.0.1",
     "semantic-release": "^24.2.5",
-    "tsdown": "^0.13.0",
     "typescript": "5.8.3",
-    "typescript-eslint": "^8.34.1",
-    "unplugin-unused": "^0.5.1"
+    "typescript-eslint": "^8.34.1"
   },
   "engines": {
     "node": ">=20.11.0"
@@ -82,42 +82,25 @@
     "*.js": "eslint --fix"
   },
   "type": "module",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "default": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
+      "types": "./dist/index.d.ts",
+      "import": "./src/index.js",
+      "require": "./dist/index.cjs"
     },
     "./getJsdocProcessorPlugin.js": {
-      "import": {
-        "types": "./dist/getJsdocProcessorPlugin.d.ts",
-        "default": "./dist/getJsdocProcessorPlugin.js"
-      },
-      "default": {
-        "types": "./dist/getJsdocProcessorPlugin.d.cts",
-        "default": "./dist/getJsdocProcessorPlugin.cjs"
-      }
+      "types": "./dist/getJsdocProcessorPlugin.d.ts",
+      "import": "./dist/getJsdocProcessorPlugin.cjs",
+      "require": "./src/getJsdocProcessorPlugin.js"
     },
     "./iterateJsdoc.js": {
-      "import": {
-        "types": "./dist/iterateJsdoc.d.ts",
-        "default": "./dist/iterateJsdoc.js"
-      },
-      "default": {
-        "types": "./dist/iterateJsdoc.d.cts",
-        "default": "./dist/iterateJsdoc.cjs"
-      }
-    },
-    "./package.json": "./package.json"
+      "types": "./dist/iterateJsdoc.d.ts",
+      "import": "./dist/iterateJsdoc.cjs",
+      "require": "./src/iterateJsdoc.js"
+    }
   },
-  "files": [
-    "dist/"
-  ],
   "name": "eslint-plugin-jsdoc",
   "mocha": {
     "reporter": "dot",
@@ -156,11 +139,12 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "build": "tsdown",
-    "check-docs": "node ./src/bin/generateDocs.js --check",
-    "create-docs": "pnpm run create-options && node ./src/bin/generateDocs.js",
-    "create-rule": "node ./src/bin/generateRule.js",
-    "create-options": "node ./src/bin/generateOptions.js",
+    "tsc-build": "tsc -p tsconfig-prod.json",
+    "build": "rimraf ./dist && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build",
+    "check-docs": "babel-node ./src/bin/generateDocs.js --check",
+    "create-docs": "pnpm run create-options && babel-node ./src/bin/generateDocs.js",
+    "create-rule": "babel-node ./src/bin/generateRule.js",
+    "create-options": "node ./src/bin/generateOptions.mjs",
     "install-offline": "pnpm install --prefer-offline --no-audit",
     "lint": "eslint",
     "lint-fix": "eslint --fix",
