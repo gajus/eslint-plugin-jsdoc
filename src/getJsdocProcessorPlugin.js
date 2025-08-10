@@ -16,17 +16,6 @@ import {
   join,
 } from 'node:path';
 
-/**
- * @import {
- *   Integer,
- *   JsdocBlockWithInline,
- * } from './iterateJsdoc.js';
- * @import {
- *   ESLint,
- *   Linter,
- * } from 'eslint';
- */
-
 const {
   version,
 } = JSON.parse(
@@ -54,7 +43,7 @@ const escapeStringRegexp = (str) => {
 /**
  * @param {string} str
  * @param {string} ch
- * @returns {Integer}
+ * @returns {import('./iterateJsdoc.js').Integer}
  */
 const countChars = (str, ch) => {
   return (str.match(new RegExp(escapeStringRegexp(ch), 'gv')) || []).length;
@@ -63,8 +52,8 @@ const countChars = (str, ch) => {
 /**
  * @param {string} text
  * @returns {[
- *   Integer,
- *   Integer
+ *   import('./iterateJsdoc.js').Integer,
+ *   import('./iterateJsdoc.js').Integer
  * ]}
  */
 const getLinesCols = (text) => {
@@ -106,7 +95,6 @@ const getLinesCols = (text) => {
  * We use a function for the ability of the user to pass in a config, but
  * without requiring all users of the plugin to do so.
  * @param {JsdocProcessorOptions} [options]
- * @returns {ESLint.Plugin}
  */
 export const getJsdocProcessorPlugin = (options = {}) => {
   const {
@@ -162,7 +150,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
   let extraMessages = [];
 
   /**
-   * @param {JsdocBlockWithInline} jsdoc
+   * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
    * @param {string} jsFileName
    * @param {[number, number]} commentLineCols
    */
@@ -182,19 +170,19 @@ export const getJsdocProcessorPlugin = (options = {}) => {
      *   source: string,
      *   targetTagName: string,
      *   rules?: import('eslint').Linter.RulesRecord|undefined,
-     *   lines?: Integer,
-     *   cols?: Integer,
+     *   lines?: import('./iterateJsdoc.js').Integer,
+     *   cols?: import('./iterateJsdoc.js').Integer,
      *   skipInit?: boolean,
      *   ext: string,
      *   sources?: {
-     *     nonJSPrefacingCols: Integer,
-     *     nonJSPrefacingLines: Integer,
+     *     nonJSPrefacingCols: import('./iterateJsdoc.js').Integer,
+     *     nonJSPrefacingLines: import('./iterateJsdoc.js').Integer,
      *     string: string,
      *   }[],
      *   tag?: import('comment-parser').Spec & {
-     *     line?: Integer,
+     *     line?: import('./iterateJsdoc.js').Integer,
      *   }|{
-     *     line: Integer,
+     *     line: import('./iterateJsdoc.js').Integer,
      *   }
      * }} cfg
      */
@@ -222,8 +210,8 @@ export const getJsdocProcessorPlugin = (options = {}) => {
 
       /**
        * @param {{
-       *   nonJSPrefacingCols: Integer,
-       *   nonJSPrefacingLines: Integer,
+       *   nonJSPrefacingCols: import('./iterateJsdoc.js').Integer,
+       *   nonJSPrefacingLines: import('./iterateJsdoc.js').Integer,
        *   string: string
        * }} cfg
        */
@@ -246,7 +234,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
         // NOTE: `tag.line` can be 0 if of form `/** @tag ... */`
         const codeStartLine = /**
                                * @type {import('comment-parser').Spec & {
-                               *     line: Integer,
+                               *     line: import('./iterateJsdoc.js').Integer,
                                * }}
                                */ (tag).line + nonJSPrefacingLines;
         const codeStartCol = likelyNestedJSDocIndentSpace;
@@ -579,7 +567,6 @@ export const getJsdocProcessorPlugin = (options = {}) => {
         /**
          * @param {string} text
          * @param {string} filename
-         * @returns {(string | Linter.ProcessorFile)[]}
          */
         preprocess (text, filename) {
           try {
@@ -647,14 +634,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
                   filename,
                   commentLineCols[idx],
                 );
-              }).filter(
-                /**
-                 * @returns {file is Linter.ProcessorFile}
-                 */
-                (file) => {
-                  return file !== null && file !== undefined;
-                },
-              ),
+              }).filter(Boolean),
             ];
           /* c8 ignore next 6 */
           } catch (error) {
