@@ -476,6 +476,7 @@ import esquery from 'esquery';
 /**
  * @typedef {BasicUtils & {
  *   isIteratingFunction: IsIteratingFunction,
+ *   isIteratingFunctionOrVariable: IsIteratingFunction,
  *   isVirtualFunction: IsVirtualFunction,
  *   stringify: Stringify,
  *   reportJSDoc: ReportJSDoc,
@@ -716,14 +717,36 @@ const getUtils = (
     tagNamePreference,
   } = settings;
 
+  const functionTypes = [
+    'ArrowFunctionExpression',
+    'FunctionDeclaration',
+    'FunctionExpression',
+    'MethodDefinition',
+  ];
+
   /** @type {IsIteratingFunction} */
   utils.isIteratingFunction = () => {
-    return !iteratingAll || [
-      'ArrowFunctionExpression',
-      'FunctionDeclaration',
-      'FunctionExpression',
-      'MethodDefinition',
-    ].includes(String(node && node.type));
+    return !iteratingAll || functionTypes.includes(String(node?.type));
+  };
+
+  /** @type {IsIteratingFunction} */
+  utils.isIteratingFunctionOrVariable = () => {
+    if (utils.isIteratingFunction()) {
+      return true;
+    }
+
+    /** @type {import('estree').VariableDeclarator[]} */
+    const declarations = node?.type === 'VariableDeclaration' ?
+      node.declarations :
+      (node?.type === 'ExportNamedDeclaration' && node.declaration?.type === 'VariableDeclaration' ?
+        node.declaration.declarations :
+        []);
+
+    return declarations.some(({
+      init,
+    }) => {
+      return functionTypes.includes(String(init?.type));
+    });
   };
 
   /** @type {IsVirtualFunction} */

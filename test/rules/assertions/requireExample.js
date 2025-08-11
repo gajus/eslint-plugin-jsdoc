@@ -1,3 +1,7 @@
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
+
 export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
@@ -377,6 +381,41 @@ function quux () {
         },
       ],
       output: null,
+    },
+    {
+      code: `
+        /**
+         * Returns a Promise...
+         *
+         * @param {number} ms - The number of ...
+         */
+        const sleep = (ms: number): Promise<unknown> => {};
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
+      output: `
+        /**
+         * Returns a Promise...
+         *
+         * @param {number} ms - The number of ...
+         * @example
+         */
+        const sleep = (ms: number): Promise<unknown> => {};
+      `,
     },
   ],
   valid: [

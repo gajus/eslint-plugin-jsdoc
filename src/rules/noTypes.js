@@ -14,7 +14,7 @@ export default iterateJsdoc(({
   node,
   utils,
 }) => {
-  if (!utils.isIteratingFunction() && !utils.isVirtualFunction()) {
+  if (!utils.isIteratingFunctionOrVariable() && !utils.isVirtualFunction()) {
     return;
   }
 

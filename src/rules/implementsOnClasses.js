@@ -4,7 +4,7 @@ export default iterateJsdoc(({
   report,
   utils,
 }) => {
-  const iteratingFunction = utils.isIteratingFunction();
+  const iteratingFunction = utils.isIteratingFunctionOrVariable();
 
   if (iteratingFunction) {
     if (utils.hasATag([

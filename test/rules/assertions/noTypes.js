@@ -286,6 +286,74 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
     },
+    {
+      code: `
+        /**
+         * Returns a Promise...
+         *
+         * @param {number} ms - The number of ...
+         */
+        const sleep = (ms: number): Promise<unknown> => {};
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Types are not permitted on @param.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
+      output: `
+        /**
+         * Returns a Promise...
+         *
+         * @param ms - The number of ...
+         */
+        const sleep = (ms: number): Promise<unknown> => {};
+      `,
+    },
+    {
+      code: `
+        /**
+         * Returns a Promise...
+         *
+         * @param {number} ms - The number of ...
+         */
+        export const sleep = (ms: number): Promise<unknown> => {};
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Types are not permitted on @param.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+        },
+      ],
+      output: `
+        /**
+         * Returns a Promise...
+         *
+         * @param ms - The number of ...
+         */
+        export const sleep = (ms: number): Promise<unknown> => {};
+      `,
+    },
   ],
   valid: [
     {

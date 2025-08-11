@@ -149,6 +149,24 @@ class Example {
   x: number;
 }
 // Message: Types are not permitted on @property in the supplied context.
+
+/**
+ * Returns a Promise...
+ *
+ * @param {number} ms - The number of ...
+ */
+const sleep = (ms: number): Promise<unknown> => {};
+// "jsdoc/no-types": ["error"|"warn", {"contexts":["any"]}]
+// Message: Types are not permitted on @param.
+
+/**
+ * Returns a Promise...
+ *
+ * @param {number} ms - The number of ...
+ */
+export const sleep = (ms: number): Promise<unknown> => {};
+// "jsdoc/no-types": ["error"|"warn", {"contexts":["any"]}]
+// Message: Types are not permitted on @param.
 ````
 
 
