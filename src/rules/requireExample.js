@@ -24,7 +24,7 @@ export default iterateJsdoc(({
   });
 
   if (!functionExamples.length) {
-    if (exemptNoArguments && utils.isIteratingFunction() &&
+    if (exemptNoArguments && utils.isIteratingFunctionOrVariable() &&
       !utils.hasParams()
     ) {
       return;

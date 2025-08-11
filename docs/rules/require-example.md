@@ -234,6 +234,15 @@ function quux (someParam) {
 }
 // "jsdoc/require-example": ["error"|"warn", {"enableFixer":false}]
 // Message: Missing JSDoc @example declaration.
+
+/**
+ * Returns a Promise...
+ *
+ * @param {number} ms - The number of ...
+ */
+const sleep = (ms: number): Promise<unknown> => {};
+// "jsdoc/require-example": ["error"|"warn", {"contexts":["any"]}]
+// Message: Missing JSDoc @example declaration.
 ````
 
 
