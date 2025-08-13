@@ -250,21 +250,21 @@ export default iterateJsdoc(({
     newLine: `import ${camelCasedRuleName} from './rules/${camelCasedRuleName}.js';`,
     oldIsCamel: true,
     oldRegex: /\nimport (?<oldRule>[^ ]*) from '.\/rules\/\1\.js';/gv,
-    path: './src/plugin.js',
+    path: './src/index.js',
   });
 
   await replaceInOrder({
     checkName: 'index recommended',
     newLine: `${' '.repeat(6)}'jsdoc/${ruleName}': ${recommended ? 'warnOrError' : '\'off\''},`,
     oldRegex: /\n\s{6}'jsdoc\/(?<oldRule>[^']*)': .*?,/gv,
-    path: './src/plugin.js',
+    path: './src/index.js',
   });
 
   await replaceInOrder({
     checkName: 'index rules',
     newLine: `${' '.repeat(4)}'${ruleName}': ${camelCasedRuleName},`,
     oldRegex: /\n\s{4}'(?<oldRule>[^']*)': [^,]*,/gv,
-    path: './src/plugin.js',
+    path: './src/index.js',
   });
 
   await import('./generateDocs.js');
