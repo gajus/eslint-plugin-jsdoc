@@ -1,4 +1,4 @@
-import config from '../../src/plugin.js';
+import config from '../../src/index.js';
 import camelCase from 'camelcase';
 import {
   ESLint,
