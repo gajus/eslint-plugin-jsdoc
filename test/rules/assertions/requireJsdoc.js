@@ -4296,6 +4296,92 @@ function quux (foo) {
         }
       `,
     },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         * Test function without param.
+         */
+        function myFunction(): void;
+        function myFunction(foo?: string) {}
+      `,
+      errors: [
+        {
+          line: 11,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         * Test function without param.
+         */
+        function myFunction(): void;
+        /**
+         *
+         */
+        function myFunction(foo?: string) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Test function without param.
+         */
+        function myFunction(): void;
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        function myFunction(foo?: string) {}
+      `,
+      errors: [
+        {
+          line: 11,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        /**
+         * Test function without param.
+         */
+        function myFunction(): void;
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         *
+         */
+        function myFunction(foo?: string) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -6442,6 +6528,11 @@ function quux (foo) {
       languageOptions: {
         parser: typescriptEslintParser,
       },
+      options: [
+        {
+          skipInterveningOverloadedDeclarations: true,
+        },
+      ],
     },
     {
       code: `
@@ -6470,6 +6561,23 @@ function quux (foo) {
           ],
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         * Test function without param.
+         */
+        function myFunction(): void;
+        function myFunction(foo?: string) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
     },
   ],
 });
