@@ -375,8 +375,9 @@ export default iterateJsdoc(({
     })())
     .concat(...getValidRuntimeIdentifiers(node && (
       (sourceCode.getScope &&
-      /* c8 ignore next 2 */
+      /* c8 ignore next 3 */
       sourceCode.getScope(node)) ||
+      // @ts-expect-error ESLint 8
       context.getScope()
     )))
     .concat(
@@ -503,8 +504,9 @@ export default iterateJsdoc(({
         } else if (markVariablesAsUsed && !extraTypes.includes(val)) {
           if (sourceCode.markVariableAsUsed) {
             sourceCode.markVariableAsUsed(val);
-          /* c8 ignore next 3 */
+          /* c8 ignore next 4 */
           } else {
+            // @ts-expect-error ESLint 8
             context.markVariableAsUsed(val);
           }
         }

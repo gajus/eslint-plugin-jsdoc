@@ -692,9 +692,10 @@ const getUtils = (
     (sc.getAncestors ?
       (
         sc.getAncestors(node)
-      /* c8 ignore next 4 */
+      /* c8 ignore next 5 */
       ) :
       (
+        // @ts-expect-error ESLint 8
         context.getAncestors()
       )) :
     []);
