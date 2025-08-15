@@ -250,8 +250,9 @@ const isExemptedImplementer = (node, sourceCode, context, settings) => {
 
       const interfaceMethodNode = getMethodOnInterface(interfaceName, methodName, node && (
         (sourceCode.getScope &&
-        /* c8 ignore next 2 */
+        /* c8 ignore next 3 */
         sourceCode.getScope(node)) ||
+        // @ts-expect-error ESLint 8
         context.getScope()
       ));
       if (interfaceMethodNode) {

@@ -1,5 +1,6 @@
 ignoredBuiltDependencies:
   - core-js
   - core-js-pure
+  - unrs-resolver
 
 shellEmulator: true
