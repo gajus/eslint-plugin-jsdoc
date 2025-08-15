@@ -3677,5 +3677,23 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         * Test function without param.
+         */
+        function myFunction(): void;
+        function myFunction(foo?: string) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+    },
   ],
 });

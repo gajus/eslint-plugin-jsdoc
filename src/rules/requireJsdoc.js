@@ -169,6 +169,10 @@ const OPTIONS_SCHEMA = {
       },
       type: 'object',
     },
+    skipInterveningOverloadedDeclarations: {
+      default: true,
+      type: 'boolean',
+    },
   },
   type: 'object',
 };
@@ -302,6 +306,7 @@ const getOption = (context, baseObject, option, key) => {
  *   enableFixer: boolean,
  *   exemptEmptyConstructors: boolean,
  *   exemptEmptyFunctions: boolean,
+ *   skipInterveningOverloadedDeclarations: boolean,
  *   fixerMessage: string,
  *   minLineCount: undefined|import('../iterateJsdoc.js').Integer,
  *   publicOnly: boolean|{[key: string]: boolean|undefined}
@@ -317,6 +322,7 @@ const getOptions = (context, settings) => {
     fixerMessage = '',
     minLineCount = undefined,
     publicOnly,
+    skipInterveningOverloadedDeclarations = true,
   } = context.options[0] || {};
 
   return {
@@ -386,6 +392,7 @@ const getOptions = (context, settings) => {
       /** @type {import('json-schema').JSONSchema4Object} */
       (OPTIONS_SCHEMA.properties).require,
     ),
+    skipInterveningOverloadedDeclarations,
   };
 };
 
@@ -411,6 +418,7 @@ export default {
       fixerMessage,
       minLineCount,
       require: requireOption,
+      skipInterveningOverloadedDeclarations,
     } = opts;
 
     const publicOnly =
@@ -476,7 +484,11 @@ export default {
         }
       }
 
-      const jsDocNode = getJSDocComment(sourceCode, node, settings);
+      const jsDocNode = getJSDocComment(
+        sourceCode, node, settings, {
+          checkOverloads: skipInterveningOverloadedDeclarations,
+        },
+      );
 
       if (jsDocNode) {
         return;

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@es-joy/jsdoccomment':
-        specifier: ~0.53.0
-        version: 0.53.0
+        specifier: ~0.54.0
+        version: 0.54.0
       are-docs-informative:
         specifier: ^0.0.2
         version: 0.0.2
@@ -773,10 +773,6 @@ packages:
   '@es-joy/jsdoccomment@0.50.2':
     resolution: {integrity: sha512-YAdE/IJSpwbOTiaURNCKECdAwqrJuFiZhylmesBcIRawtYKnBR2wxPhoIewMg+Yu+QuYvHfJNReWpoxGBKOChA==}
     engines: {node: '>=18'}
-
-  '@es-joy/jsdoccomment@0.53.0':
-    resolution: {integrity: sha512-Wyed8Wfn3vMNVwrZrgLMxmqwmlcCE1/RfUAOHFzMJb3QLH03mi9Yv1iOCZjif0yx5EZUeJ+17VD1MHPka9IQjQ==}
-    engines: {node: '>=20.11.0'}
 
   '@es-joy/jsdoccomment@0.54.0':
     resolution: {integrity: sha512-r+DsSLA9rhdL9+IXySvqi/4VfhVwMlMztv7xJCxki82DvcTSlk4AT878sUKxizUwSJ8UieuCbjjbNi1OL5by+Q==}
@@ -5930,14 +5926,6 @@ snapshots:
       comment-parser: 1.4.1
       esquery: 1.6.0
       jsdoc-type-pratt-parser: 4.1.0
-
-  '@es-joy/jsdoccomment@0.53.0':
-    dependencies:
-      '@types/estree': 1.0.8
-      '@typescript-eslint/types': 8.41.0
-      comment-parser: 1.4.1
-      esquery: 1.6.0
-      jsdoc-type-pratt-parser: 4.8.0
 
   '@es-joy/jsdoccomment@0.54.0':
     dependencies:
