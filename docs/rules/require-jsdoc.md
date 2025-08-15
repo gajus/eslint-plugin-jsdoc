@@ -15,6 +15,7 @@
     * [`enableFixer`](#user-content-require-jsdoc-options-enablefixer)
     * [`minLineCount`](#user-content-require-jsdoc-options-minlinecount)
     * [`fixerMessage`](#user-content-require-jsdoc-options-fixermessage)
+    * [`skipInterveningOverloadedDeclarations`](#user-content-require-jsdoc-options-skipinterveningoverloadeddeclarations)
 * [Context and settings](#user-content-require-jsdoc-context-and-settings)
 * [Failing examples](#user-content-require-jsdoc-failing-examples)
 * [Passing examples](#user-content-require-jsdoc-passing-examples)
@@ -157,6 +158,14 @@ apply to any context; see `contexts` for line counts per context.
 An optional message to add to the inserted JSDoc block. Defaults to the
 empty string.
 
+<a name="user-content-require-jsdoc-options-skipinterveningoverloadeddeclarations"></a>
+<a name="require-jsdoc-options-skipinterveningoverloadeddeclarations"></a>
+### <code>skipInterveningOverloadedDeclarations</code>
+
+If `true`, will skip above uncommented overloaded functions to check
+for a comment block (e.g., at the top of a set of overloaded functions).
+Defaults to `true`.
+
 <a name="user-content-require-jsdoc-context-and-settings"></a>
 <a name="require-jsdoc-context-and-settings"></a>
 ## Context and settings
@@ -166,7 +175,7 @@ empty string.
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
 |Recommended|true|
-|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`, `fixerMessage`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`, `fixerMessage`, `skipInterveningOverloadedDeclarations`|
 
 <a name="user-content-require-jsdoc-failing-examples"></a>
 <a name="require-jsdoc-failing-examples"></a>
@@ -1040,6 +1049,32 @@ export class B implements A, B {
   }
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["MethodDefinition"]}]
+// Message: Missing JSDoc comment.
+
+/**
+ * Test function with param.
+ * @param foo - Test param.
+ */
+function myFunction(foo: string): void;
+/**
+ * Test function without param.
+ */
+function myFunction(): void;
+function myFunction(foo?: string) {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"skipInterveningOverloadedDeclarations":false}]
+// Message: Missing JSDoc comment.
+
+/**
+ * Test function without param.
+ */
+function myFunction(): void;
+/**
+ * Test function with param.
+ * @param foo - Test param.
+ */
+function myFunction(foo: string): void;
+function myFunction(foo?: string) {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"skipInterveningOverloadedDeclarations":false}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -1944,6 +1979,7 @@ export function arrayMap<Target, Source extends Array<unknown>>(data: Source, ca
 export function arrayMap<Target, Source extends AnyArrayType>(data: Source, callback: MapCallback<Target, Source>): AnyArrayType<Target> {
   return data.map(callback);
 }
+// "jsdoc/require-jsdoc": ["error"|"warn", {"skipInterveningOverloadedDeclarations":true}]
 
 export interface A {
   a: string;
@@ -1960,5 +1996,16 @@ export class B implements A {
   }
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["MethodDefinition"]}]
+
+/**
+ * Test function with param.
+ * @param foo - Test param.
+ */
+function myFunction(foo: string): void;
+/**
+ * Test function without param.
+ */
+function myFunction(): void;
+function myFunction(foo?: string) {}
 ````
 
