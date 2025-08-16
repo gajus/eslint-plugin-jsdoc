@@ -496,6 +496,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
         function test(name) {}
       `,
     },
+    {
+      code: `
+        /**
+         * @param foo -
+         * The possible values for \`foo\` are as follows.
+         * - \`"option1"\`: Description of option 1.
+         * - \`"option2"\`: Description of option 2.
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be no hyphen followed by newline after the @param name.',
+        },
+      ],
+      output: `
+        /**
+         * @param foo
+         * The possible values for \`foo\` are as follows.
+         * - \`"option1"\`: Description of option 1.
+         * - \`"option2"\`: Description of option 2.
+         */
+      `,
+    },
   ],
   valid: [
     {
@@ -657,6 +681,34 @@ export default /** @type {import('../index.js').TestCases} */ ({
           },
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * @param foo - The possible values for \`foo\` are as follows.
+         * - \`"option1"\`: Description of option 1.
+         * - \`"option2"\`: Description of option 2.
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param foo
+         * The possible values for \`foo\` are as follows.
+         * - \`"option1"\`: Description of option 1.
+         * - \`"option2"\`: Description of option 2.
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param foo
+         * - \`"option1"\`: Description of option 1.
+         * - \`"option2"\`: Description of option 2.
+         */
+      `,
     },
   ],
 });

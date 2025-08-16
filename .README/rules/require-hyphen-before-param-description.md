@@ -6,7 +6,7 @@ Requires (or disallows) a hyphen before the `@param` description.
 
 ## Fixer
 
-(Todo)
+Adds a hyphen for "always" and removes a hyphen for "never".
 
 ## Options
 
@@ -15,6 +15,11 @@ This rule takes one optional string argument and an optional options object.
 If the string is `"always"` then a problem is raised when there is no hyphen
 before the description. If it is `"never"` then a problem is raised when there
 is a hyphen before the description. The default value is `"always"`.
+
+Even if hyphens are set to "always" appear after the tag name, they will
+actually be forbidden in the event that they are followed immediately by
+the end of a line (this will otherwise cause Visual Studio Code to display
+incorrectly).
 
 The options object may have the following properties to indicate behavior for
 other tags besides the `@param` tag (or the `@arg` tag if so set):

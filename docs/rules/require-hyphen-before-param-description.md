@@ -15,7 +15,7 @@ Requires (or disallows) a hyphen before the `@param` description.
 <a name="require-hyphen-before-param-description-fixer"></a>
 ## Fixer
 
-(Todo)
+Adds a hyphen for "always" and removes a hyphen for "never".
 
 <a name="user-content-require-hyphen-before-param-description-options"></a>
 <a name="require-hyphen-before-param-description-options"></a>
@@ -26,6 +26,11 @@ This rule takes one optional string argument and an optional options object.
 If the string is `"always"` then a problem is raised when there is no hyphen
 before the description. If it is `"never"` then a problem is raised when there
 is a hyphen before the description. The default value is `"always"`.
+
+Even if hyphens are set to "always" appear after the tag name, they will
+actually be forbidden in the event that they are followed immediately by
+the end of a line (this will otherwise cause Visual Studio Code to display
+incorrectly).
 
 The options object may have the following properties to indicate behavior for
 other tags besides the `@param` tag (or the `@arg` tag if so set):
@@ -202,6 +207,14 @@ function quux () {
  */
 function test(input) {}
 // Message: There must be a hyphen before @param description.
+
+/**
+ * @param foo -
+ * The possible values for `foo` are as follows.
+ * - `"option1"`: Description of option 1.
+ * - `"option2"`: Description of option 2.
+ */
+// Message: There must be no hyphen followed by newline after the @param name.
 ````
 
 
@@ -294,5 +307,24 @@ function main(argv) {
  * @typedef {any} Test
  */
 // "jsdoc/require-hyphen-before-param-description": ["error"|"warn", "always",{"tags":{"template":"always"}}]
+
+/**
+ * @param foo - The possible values for `foo` are as follows.
+ * - `"option1"`: Description of option 1.
+ * - `"option2"`: Description of option 2.
+ */
+
+/**
+ * @param foo
+ * The possible values for `foo` are as follows.
+ * - `"option1"`: Description of option 1.
+ * - `"option2"`: Description of option 2.
+ */
+
+/**
+ * @param foo
+ * - `"option1"`: Description of option 1.
+ * - `"option2"`: Description of option 2.
+ */
 ````
 
