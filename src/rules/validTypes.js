@@ -11,6 +11,7 @@ const inlineTags = new Set([
 ]);
 
 const jsdocTypePrattKeywords = new Set([
+  'extends',
   'import',
   'is',
   'readonly',
