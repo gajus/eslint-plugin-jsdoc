@@ -1842,5 +1842,16 @@ const inner = (c: number, d: string): void => {
  */
 function quux (a, b) {}
 // "jsdoc/require-param": ["error"|"warn", {"ignoreWhenAllParamsMissing":true}]
+
+/**
+ * Test function with param.
+ * @param foo - Test param.
+ */
+function myFunction(foo: string): void;
+/**
+ * Test function without param.
+ */
+function myFunction(): void;
+function myFunction(foo?: string) {}
 ````
 
