@@ -66,7 +66,7 @@ const formatCodeSnippet = (setup, ruleName) => {
 const getAssertions = async () => {
   const assertionFiles = (await glob(path.resolve(dirname, '../../test/rules/assertions/*.js'))).filter((file) => {
     return !file.includes('flatConfig');
-  }).reverse();
+  }).toReversed();
 
   const assertionNames = assertionFiles.map((filePath) => {
     return path.basename(filePath, '.js');
