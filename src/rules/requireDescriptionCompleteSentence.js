@@ -247,7 +247,7 @@ export default iterateJsdoc(({
       index,
       length,
     };
-  }).reverse();
+  }).toReversed();
 
   for (const {
     index,

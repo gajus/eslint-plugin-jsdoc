@@ -169,7 +169,7 @@ export default iterateJsdoc(({
       },
     ] of tg.source.entries()) {
       if (description) {
-        lines.splice(0, lines.length);
+        lines.splice(0);
         tagSourceIdx = idx;
       }
 

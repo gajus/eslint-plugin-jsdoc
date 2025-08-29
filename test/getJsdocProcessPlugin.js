@@ -23,6 +23,10 @@ const check = ({
   text,
 }) => {
   const plugin = getJsdocProcessorPlugin(options);
+  if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function') {
+    throw new Error('No processors');
+  }
+
   const results = plugin.processors.examples.preprocess(
     text, filename,
   );
@@ -168,6 +172,10 @@ describe('`getJsdocProcessorPlugin`', () => {
     `;
 
     const plugin = getJsdocProcessorPlugin(options);
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
     const results = plugin.processors.examples.preprocess(
       text, filename,
     );
@@ -178,6 +186,10 @@ describe('`getJsdocProcessorPlugin`', () => {
         text: '\nquux(); // does something useful\n',
       },
     ]);
+
+    if (!plugin.processors || typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
 
     const postResults = plugin.processors.examples.postprocess(
       [
@@ -380,7 +392,6 @@ describe('`getJsdocProcessorPlugin`', () => {
     `;
     check({
       filename,
-      // @ts-expect-error Ok?
       options,
       result: [
         text,
@@ -651,6 +662,10 @@ describe('`getJsdocProcessorPlugin`', () => {
     `;
 
     const plugin = getJsdocProcessorPlugin(options);
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
     const results = plugin.processors.examples.preprocess(
       text, filename,
     );
@@ -661,6 +676,10 @@ describe('`getJsdocProcessorPlugin`', () => {
         text: 'alert(\'a\');',
       },
     ]);
+
+    if (!plugin.processors || typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
 
     const postResults = plugin.processors.examples.postprocess(
       [
@@ -700,6 +719,11 @@ describe('`getJsdocProcessorPlugin`', () => {
     `;
 
     const plugin = getJsdocProcessorPlugin(options);
+
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
     const results = plugin.processors.examples.preprocess(
       text, filename,
     );
@@ -710,6 +734,10 @@ describe('`getJsdocProcessorPlugin`', () => {
         text: 'alert(\'a\');',
       },
     ]);
+
+    if (!plugin.processors || typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
 
     const postResults = plugin.processors.examples.postprocess(
       [
@@ -750,6 +778,11 @@ describe('`getJsdocProcessorPlugin`', () => {
     `;
 
     const plugin = getJsdocProcessorPlugin(options);
+
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
     const results = plugin.processors.examples.preprocess(
       text, filename,
     );
@@ -760,6 +793,10 @@ describe('`getJsdocProcessorPlugin`', () => {
         text: '\nalert(',
       },
     ]);
+
+    if (!plugin.processors || typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
 
     const postResults = plugin.processors.examples.postprocess(
       [

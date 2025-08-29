@@ -27,7 +27,7 @@ export default iterateJsdoc(({
       line: lastDescriptionLine,
     },
     enableFixer ? () => {
-      jsdoc.source.splice(0, jsdoc.source.length);
+      jsdoc.source.splice(0);
     } : null,
   );
 }, {
