@@ -117,7 +117,17 @@ empty string.
 
 If `true`, will skip above uncommented overloaded functions to check
 for a comment block (e.g., at the top of a set of overloaded functions).
+
+If `false`, will force each overloaded function to be checked for a
+comment block.
+
 Defaults to `true`.
+
+### `exemptOverloadedImplementations`
+
+If set to `true` will avoid checking an overloaded function's implementation.
+
+Defaults to `false`.
 
 ## Context and settings
 

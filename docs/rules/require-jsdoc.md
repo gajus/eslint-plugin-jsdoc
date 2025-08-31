@@ -16,6 +16,7 @@
     * [`minLineCount`](#user-content-require-jsdoc-options-minlinecount)
     * [`fixerMessage`](#user-content-require-jsdoc-options-fixermessage)
     * [`skipInterveningOverloadedDeclarations`](#user-content-require-jsdoc-options-skipinterveningoverloadeddeclarations)
+    * [`exemptOverloadedImplementations`](#user-content-require-jsdoc-options-exemptoverloadedimplementations)
 * [Context and settings](#user-content-require-jsdoc-context-and-settings)
 * [Failing examples](#user-content-require-jsdoc-failing-examples)
 * [Passing examples](#user-content-require-jsdoc-passing-examples)
@@ -164,7 +165,19 @@ empty string.
 
 If `true`, will skip above uncommented overloaded functions to check
 for a comment block (e.g., at the top of a set of overloaded functions).
+
+If `false`, will force each overloaded function to be checked for a
+comment block.
+
 Defaults to `true`.
+
+<a name="user-content-require-jsdoc-options-exemptoverloadedimplementations"></a>
+<a name="require-jsdoc-options-exemptoverloadedimplementations"></a>
+### <code>exemptOverloadedImplementations</code>
+
+If set to `true` will avoid checking an overloaded function's implementation.
+
+Defaults to `false`.
 
 <a name="user-content-require-jsdoc-context-and-settings"></a>
 <a name="require-jsdoc-context-and-settings"></a>
@@ -1075,6 +1088,20 @@ function myFunction(): void;
 function myFunction(foo: string): void;
 function myFunction(foo?: string) {}
 // "jsdoc/require-jsdoc": ["error"|"warn", {"skipInterveningOverloadedDeclarations":false}]
+// Message: Missing JSDoc comment.
+
+/**
+ * Test function with param.
+ * @param foo - Test param.
+ */
+function myFunction(foo: string): void;
+function myFunction(): void;
+/**
+ * Function implementation
+ * @param foo
+ */
+function myFunction(foo?: string) {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSDeclareFunction"],"exemptOverloadedImplementations":false,"skipInterveningOverloadedDeclarations":false}]
 // Message: Missing JSDoc comment.
 ````
 
@@ -2007,5 +2034,40 @@ function myFunction(foo: string): void;
  */
 function myFunction(): void;
 function myFunction(foo?: string) {}
+
+/**
+ * Test function with param.
+ * @param foo - Test param.
+ */
+function myFunction(foo: string): void;
+/**
+ * Test function without param.
+ */
+function myFunction(): void;
+function myFunction(foo?: string) {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSDeclareFunction"],"exemptOverloadedImplementations":true,"skipInterveningOverloadedDeclarations":false}]
+
+/**
+ * Test function with param.
+ * @param foo - Test param.
+ */
+export function myFunction(foo: string): void;
+/**
+ * Test function without param.
+ */
+export function myFunction(): void;
+export function myFunction(foo?: string) {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSDeclareFunction"],"exemptOverloadedImplementations":true,"skipInterveningOverloadedDeclarations":false}]
+
+/**
+ *
+ */
+const quux = () => {
+  /**
+   *
+   */
+  function myFunction(foo?: string) {}
+};
+// "jsdoc/require-jsdoc": ["error"|"warn", {"exemptOverloadedImplementations":true,"require":{"ArrowFunctionExpression":true}}]
 ````
 

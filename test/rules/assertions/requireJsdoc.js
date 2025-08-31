@@ -4382,6 +4382,55 @@ function quux (foo) {
         function myFunction(foo?: string) {}
       `,
     },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        function myFunction(): void;
+        /**
+         * Function implementation
+         * @param foo
+         */
+        function myFunction(foo?: string) {}
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          exemptOverloadedImplementations: false,
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         *
+         */
+        function myFunction(): void;
+        /**
+         * Function implementation
+         * @param foo
+         */
+        function myFunction(foo?: string) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -6578,6 +6627,82 @@ function quux (foo) {
       languageOptions: {
         parser: typescriptEslintParser,
       },
+    },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         * Test function without param.
+         */
+        function myFunction(): void;
+        function myFunction(foo?: string) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          exemptOverloadedImplementations: true,
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        export function myFunction(foo: string): void;
+        /**
+         * Test function without param.
+         */
+        export function myFunction(): void;
+        export function myFunction(foo?: string) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          exemptOverloadedImplementations: true,
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        const quux = () => {
+          /**
+           *
+           */
+          function myFunction(foo?: string) {}
+        };
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptOverloadedImplementations: true,
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
     },
   ],
 });
