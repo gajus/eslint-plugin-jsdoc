@@ -1869,5 +1869,22 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @template {string} Selector
+         * @template {keyof GlobalEventHandlersEventMap} TEventType
+         * @template {Element} [TElement=import('typed-query-selector/parser').ParseSelector<Selector, HTMLElement>]
+         * @param {Selector} selector
+         * @param {TEventType} type
+         * @param {import('delegate-it').DelegateEventHandler<GlobalEventHandlersEventMap[TEventType], TElement>} callback
+         * @param {Omit<AddEventListenerOptions, 'once' | 'signal'>} [options]
+         * @returns {void}
+         */
+        export function onGlobalEvent (selector, type, callback, options) {
+          delegate(document, selector, type, callback, options)
+        }
+      `,
+    },
   ],
 });

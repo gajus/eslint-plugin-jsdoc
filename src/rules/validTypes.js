@@ -358,8 +358,15 @@ export default iterateJsdoc(({
 
     if (hasNameOrNamepathPosition) {
       if (mode !== 'jsdoc' && tag.tag === 'template') {
-        for (const namepath of utils.parseClosureTemplateTag(tag)) {
-          validNamepathParsing(namepath);
+        if (!tryParsePathIgnoreError(
+          // May be an issue with the commas of
+          //   `utils.parseClosureTemplateTag`, so first try a raw
+          //   value; we really need a proper parser instead, however.
+          tag.name.trim().replace(/^\[?(?<name>.*?)=.*$/v, '$<name>'),
+        )) {
+          for (const namepath of utils.parseClosureTemplateTag(tag)) {
+            validNamepathParsing(namepath);
+          }
         }
       } else {
         validNamepathParsing(tag.name, tag.tag);
