@@ -104,6 +104,10 @@ const OPTIONS_SCHEMA = {
       default: false,
       type: 'boolean',
     },
+    exemptOverloadedImplementations: {
+      default: false,
+      type: 'boolean',
+    },
     fixerMessage: {
       default: '',
       type: 'string',
@@ -307,6 +311,7 @@ const getOption = (context, baseObject, option, key) => {
  *   exemptEmptyConstructors: boolean,
  *   exemptEmptyFunctions: boolean,
  *   skipInterveningOverloadedDeclarations: boolean,
+ *   exemptOverloadedImplementations: boolean,
  *   fixerMessage: string,
  *   minLineCount: undefined|import('../iterateJsdoc.js').Integer,
  *   publicOnly: boolean|{[key: string]: boolean|undefined}
@@ -319,6 +324,7 @@ const getOptions = (context, settings) => {
     enableFixer = true,
     exemptEmptyConstructors = true,
     exemptEmptyFunctions = false,
+    exemptOverloadedImplementations = false,
     fixerMessage = '',
     minLineCount = undefined,
     publicOnly,
@@ -330,6 +336,7 @@ const getOptions = (context, settings) => {
     enableFixer,
     exemptEmptyConstructors,
     exemptEmptyFunctions,
+    exemptOverloadedImplementations,
     fixerMessage,
     minLineCount,
     publicOnly: ((baseObj) => {
@@ -396,6 +403,48 @@ const getOptions = (context, settings) => {
   };
 };
 
+/**
+ * @param {ESLintOrTSNode} node
+ */
+const isFunctionWithOverload = (node) => {
+  if (node.type !== 'FunctionDeclaration') {
+    return false;
+  }
+
+  let parent;
+  let child;
+
+  if (node.parent?.type === 'Program') {
+    parent = node.parent;
+    child = node;
+  } else if (node.parent?.type === 'ExportNamedDeclaration' &&
+      node.parent?.parent.type === 'Program') {
+    parent = node.parent?.parent;
+    child = node.parent;
+  }
+
+  if (!child || !parent) {
+    return false;
+  }
+
+  const functionName = node.id.name;
+
+  const idx = parent.body.indexOf(child);
+  const prevSibling = parent.body[idx - 1];
+
+  return (
+    // @ts-expect-error Should be ok
+    (prevSibling?.type === 'TSDeclareFunction' &&
+      // @ts-expect-error Should be ok
+      functionName === prevSibling.id.name) ||
+    (prevSibling?.type === 'ExportNamedDeclaration' &&
+      // @ts-expect-error Should be ok
+      prevSibling.declaration?.type === 'TSDeclareFunction' &&
+      // @ts-expect-error Should be ok
+      prevSibling.declaration?.id?.name === functionName)
+  );
+};
+
 /** @type {import('eslint').Rule.RuleModule} */
 export default {
   create (context) {
@@ -415,6 +464,7 @@ export default {
       enableFixer,
       exemptEmptyConstructors,
       exemptEmptyFunctions,
+      exemptOverloadedImplementations,
       fixerMessage,
       minLineCount,
       require: requireOption,
@@ -482,6 +532,10 @@ export default {
         if (underMinLine(contextMinLineCount)) {
           return;
         }
+      }
+
+      if (exemptOverloadedImplementations && isFunctionWithOverload(node)) {
+        return;
       }
 
       const jsDocNode = getJSDocComment(

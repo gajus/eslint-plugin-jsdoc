@@ -4382,6 +4382,96 @@ function quux (foo) {
         function myFunction(foo?: string) {}
       `,
     },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        function myFunction(): void;
+        /**
+         * Function implementation
+         * @param foo
+         */
+        function myFunction(foo?: string) {}
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          exemptOverloadedImplementations: false,
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         *
+         */
+        function myFunction(): void;
+        /**
+         * Function implementation
+         * @param foo
+         */
+        function myFunction(foo?: string) {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        function myFunction(): void;
+        function myFunction(foo?: string) {}
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          exemptOverloadedImplementations: true,
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         *
+         */
+        function myFunction(): void;
+        function myFunction(foo?: string) {}
+      `,
+    },
   ],
   valid: [
     {
@@ -6536,6 +6626,43 @@ function quux (foo) {
     },
     {
       code: `
+        /**
+         * Array map function with overload for NonEmptyArray
+         * @example
+         * const data = [{value: 'value'}] as const;
+         * const result1: NonEmptyReadonlyArray<'value'> = arrayMap(data, (value) => value.value); // pick type from data
+         * const result2: NonEmptyReadonlyArray<'value'> = arrayMap<'value', typeof data>(data, (value) => value.value); // enforce output type
+         * @template Target - The type of the array to map to
+         * @template Source - The type of the array to map from
+         * @param {Source} data - The array to map
+         * @param {MapCallback<Target, Source>} callback - Callback function to map data from the array
+         * @returns {AnyArrayType<Target>} Mapped array
+         * @since v0.2.0
+         */
+        export function arrayMap<Target, Source extends NonEmptyArray<unknown> | NonEmptyReadonlyArray<unknown>>(
+          data: Source,
+          callback: MapCallback<Target, Source>,
+        ): NonEmptyArray<Target>;
+        export function arrayMap<Target, Source extends Array<unknown>>(data: Source, callback: MapCallback<Target, Source>): Array<Target>;
+        export function arrayMap<Target, Source extends AnyArrayType>(data: Source, callback: MapCallback<Target, Source>): AnyArrayType<Target> {
+          return data.map(callback);
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          exemptOverloadedImplementations: false,
+          skipInterveningOverloadedDeclarations: true,
+        },
+      ],
+    },
+    {
+      code: `
         export interface A {
           a: string;
           /**
@@ -6578,6 +6705,82 @@ function quux (foo) {
       languageOptions: {
         parser: typescriptEslintParser,
       },
+    },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         * Test function without param.
+         */
+        function myFunction(): void;
+        function myFunction(foo?: string) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          exemptOverloadedImplementations: true,
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        export function myFunction(foo: string): void;
+        /**
+         * Test function without param.
+         */
+        export function myFunction(): void;
+        export function myFunction(foo?: string) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          exemptOverloadedImplementations: true,
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *
+         */
+        const quux = () => {
+          /**
+           *
+           */
+          function myFunction(foo?: string) {}
+        };
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptOverloadedImplementations: true,
+          require: {
+            ArrowFunctionExpression: true,
+          },
+        },
+      ],
     },
   ],
 });
