@@ -26,12 +26,18 @@ import {
  *   Linter,
  * } from 'eslint';
  */
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const {
+
+
   version,
 } = JSON.parse(
   // @ts-expect-error `Buffer` is ok for `JSON.parse`
-  readFileSync(join(import.meta.dirname, '../package.json')),
+  readFileSync(join(__dirname, '../package.json')),
 );
 
 // const zeroBasedLineIndexAdjust = -1;
