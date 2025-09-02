@@ -12,6 +12,10 @@ export default iterateJsdoc(({
   settings,
   utils,
 }) => {
+  if (utils.avoidDocs()) {
+    return;
+  }
+
   const {
     requireSeparateTemplates = false,
   } = context.options[0] || {};
@@ -189,6 +193,12 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          exemptedBy: {
+            items: {
+              type: 'string',
+            },
+            type: 'array',
+          },
           requireSeparateTemplates: {
             type: 'boolean',
           },

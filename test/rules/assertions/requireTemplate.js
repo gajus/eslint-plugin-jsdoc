@@ -645,5 +645,38 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @type {Something}
+         */
+        type Pairs<D, V> = [D, V | undefined];
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          exemptedBy: [
+            'type',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @inheritdoc
+         * @typedef {[D, V | undefined]} Pairs
+         */
+      `,
+      options: [
+        {
+          exemptedBy: [
+            'inheritdoc',
+          ],
+        },
+      ],
+    },
   ],
 });

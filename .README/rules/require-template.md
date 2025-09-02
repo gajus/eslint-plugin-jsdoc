@@ -38,13 +38,21 @@ templates of this format:
 
 Defaults to `false`.
 
+### `exemptedBy`
+
+Array of tags (e.g., `['type']`) whose presence on the document
+block avoids the need for a `@template`. Defaults to an array with
+`inheritdoc`. If you set this array, it will overwrite the default,
+so be sure to add back `inheritdoc` if you wish its presence to cause
+exemption of the rule.
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|`template`|
 |Recommended|false|
 |Settings||
-|Options|`requireSeparateTemplates`|
+|Options|`exemptedBy`, `requireSeparateTemplates`|
 
 ## Failing examples
 
