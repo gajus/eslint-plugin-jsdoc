@@ -1103,6 +1103,16 @@ function myFunction(): void;
 function myFunction(foo?: string) {}
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSDeclareFunction"],"exemptOverloadedImplementations":false,"skipInterveningOverloadedDeclarations":false}]
 // Message: Missing JSDoc comment.
+
+/**
+ * Test function with param.
+ * @param foo - Test param.
+ */
+function myFunction(foo: string): void;
+function myFunction(): void;
+function myFunction(foo?: string) {}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSDeclareFunction"],"exemptOverloadedImplementations":true,"skipInterveningOverloadedDeclarations":false}]
+// Message: Missing JSDoc comment.
 ````
 
 

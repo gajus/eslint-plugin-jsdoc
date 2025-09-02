@@ -4431,6 +4431,47 @@ function quux (foo) {
         function myFunction(foo?: string) {}
       `,
     },
+    {
+      code: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        function myFunction(): void;
+        function myFunction(foo?: string) {}
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          contexts: [
+            'TSDeclareFunction',
+          ],
+          exemptOverloadedImplementations: true,
+          skipInterveningOverloadedDeclarations: false,
+        },
+      ],
+      output: `
+        /**
+         * Test function with param.
+         * @param foo - Test param.
+         */
+        function myFunction(foo: string): void;
+        /**
+         *
+         */
+        function myFunction(): void;
+        function myFunction(foo?: string) {}
+      `,
+    },
   ],
   valid: [
     {
