@@ -137,7 +137,7 @@ const index = {
 /**
  * @param {"warn"|"error"} warnOrError
  * @param {string} [flatName]
- * @returns {import('eslint').Linter.FlatConfig}
+ * @returns {import('eslint').Linter.Config}
  */
 const createRecommendedRuleset = (warnOrError, flatName) => {
   return {
@@ -216,7 +216,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
 /**
  * @param {"warn"|"error"} warnOrError
  * @param {string} [flatName]
- * @returns {import('eslint').Linter.FlatConfig}
+ * @returns {import('eslint').Linter.Config}
  */
 const createRecommendedTypeScriptRuleset = (warnOrError, flatName) => {
   const ruleset = createRecommendedRuleset(warnOrError, flatName);
@@ -244,7 +244,7 @@ const createRecommendedTypeScriptRuleset = (warnOrError, flatName) => {
 /**
  * @param {"warn"|"error"} warnOrError
  * @param {string} [flatName]
- * @returns {import('eslint').Linter.FlatConfig}
+ * @returns {import('eslint').Linter.Config}
  */
 const createRecommendedTypeScriptFlavorRuleset = (warnOrError, flatName) => {
   const ruleset = createRecommendedRuleset(warnOrError, flatName);
@@ -267,7 +267,7 @@ const createStandaloneRulesetFactory = (ruleNames) => {
   /**
    * @param {"warn"|"error"} warnOrError
    * @param {string} [flatName]
-   * @returns {import('eslint').Linter.FlatConfig}
+   * @returns {import('eslint').Linter.Config}
    */
   return (warnOrError, flatName) => {
     return {
@@ -411,7 +411,7 @@ index.configs['flat/stylistic-typescript-error'] = createStylisticTypeScriptRule
 index.configs['flat/stylistic-typescript-flavor'] = createStylisticTypeScriptFlavorRuleset('warn', 'flat/stylistic-typescript-flavor');
 index.configs['flat/stylistic-typescript-flavor-error'] = createStylisticTypeScriptFlavorRuleset('error', 'flat/stylistic-typescript-error-flavor');
 
-index.configs.examples = /** @type {import('eslint').Linter.FlatConfig[]} */ ([
+index.configs.examples = /** @type {import('eslint').Linter.Config[]} */ ([
   {
     files: [
       '**/*.js',
@@ -465,7 +465,7 @@ index.configs.examples = /** @type {import('eslint').Linter.FlatConfig[]} */ ([
   },
 ]);
 
-index.configs['default-expressions'] = /** @type {import('eslint').Linter.FlatConfig[]} */ ([
+index.configs['default-expressions'] = /** @type {import('eslint').Linter.Config[]} */ ([
   {
     files: [
       '**/*.js',
@@ -502,7 +502,7 @@ index.configs['default-expressions'] = /** @type {import('eslint').Linter.FlatCo
   },
 ]);
 
-index.configs['examples-and-default-expressions'] = /** @type {import('eslint').Linter.FlatConfig[]} */ ([
+index.configs['examples-and-default-expressions'] = /** @type {import('eslint').Linter.Config[]} */ ([
   {
     name: 'jsdoc/examples-and-default-expressions',
     plugins: {
