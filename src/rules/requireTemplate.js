@@ -32,10 +32,7 @@ export default iterateJsdoc(({
 
   if (requireSeparateTemplates) {
     for (const tag of templateTags) {
-      const {
-        name,
-      } = tag;
-      const names = name.split(/,\s*/v);
+      const names = utils.parseClosureTemplateTag(tag);
       if (names.length > 1) {
         report(`Missing separate @template for ${names[1]}`, null, tag);
       }

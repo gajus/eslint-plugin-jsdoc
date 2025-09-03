@@ -748,5 +748,24 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
     },
+    {
+      code: `
+        /**
+         * @template [ChannelDataType=undefined]
+         * @param {string} messageType - A key used for sending and receiving messages.
+         * @returns {MessageChannel<ChannelDataType>} A channel that can create messages of its
+         * own type.
+         */
+        export function createMessageChannel(messageType) {
+          // Note: It should also infer the type if the new channel is returned
+          // directly rather than returned as a typed variable.
+
+          /** @type {MessageChannel<ChannelDataType>} */
+          const messageChannel = new MessageChannel(messageType);
+
+          return messageChannel;
+        }
+      `,
+    },
   ],
 });
