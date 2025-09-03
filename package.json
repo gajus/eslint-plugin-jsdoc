@@ -143,7 +143,7 @@
     "check-docs": "babel-node ./src/bin/generateDocs.js --check",
     "create-docs": "pnpm run create-options && babel-node ./src/bin/generateDocs.js",
     "create-rule": "babel-node ./src/bin/generateRule.js",
-    "create-options": "node ./src/bin/generateOptions.mjs",
+    "create-options": "node ./src/bin/generateOptions.js",
     "install-offline": "pnpm install --prefer-offline --no-audit",
     "lint": "eslint",
     "lint-fix": "eslint --fix",

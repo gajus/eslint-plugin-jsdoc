@@ -14,7 +14,9 @@
     "outDir": "dist"
   },
   "include": [
-    "src/**/*.js",
+    "src/*.js",
+    "src/rules/*.js",
+    "src/utils/*.js",
     "test/**/*.js",
     "typings/gitdown.d.ts",
     "typings/babel__eslint-parser.d.ts"
