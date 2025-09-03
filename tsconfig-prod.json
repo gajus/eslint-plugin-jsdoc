@@ -15,7 +15,9 @@
     "outDir": "dist"
   },
   "include": [
-    "src/**/*.js"
+    "src/*.js",
+    "src/rules/*.js",
+    "src/utils/*.js",
   ],
   "exclude": ["node_modules", "src/bin/*.js"]
 }
