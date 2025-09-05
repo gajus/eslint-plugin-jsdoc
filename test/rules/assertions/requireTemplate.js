@@ -403,6 +403,29 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @param bar
+         * @param baz
+         * @returns
+         */
+        function foo<T>(bar: T, baz: number): T;
+        function foo<T>(bar: T, baz: boolean): T;
+        function foo<T>(bar: T, baz: number | boolean): T {
+          return bar;
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing @template T',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
   ],
   valid: [
     {
