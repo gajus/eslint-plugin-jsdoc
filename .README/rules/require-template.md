@@ -3,7 +3,7 @@
 Checks to see that `@template` tags are present for any detected type
 parameters.
 
-Currently checks `ClassDeclaration`, `FunctionDeclaration`,
+Currently checks `ClassDeclaration`, `FunctionDeclaration`, `TSDeclareFunction`,
 `TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
 
 ```ts

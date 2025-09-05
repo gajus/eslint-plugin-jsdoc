@@ -5,7 +5,7 @@
 Checks to see that `@template` tags are present for any detected type
 parameters.
 
-Currently checks `ClassDeclaration`, `FunctionDeclaration`,
+Currently checks `ClassDeclaration`, `FunctionDeclaration`, `TSDeclareFunction`,
 `TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
 
 ```ts
@@ -221,6 +221,18 @@ export default class <NumType> {
  * @returns {[D, V | undefined]}
  */
 // Message: Missing @template D
+
+/**
+ * @param bar
+ * @param baz
+ * @returns
+ */
+function foo<T>(bar: T, baz: number): T;
+function foo<T>(bar: T, baz: boolean): T;
+function foo<T>(bar: T, baz: number | boolean): T {
+  return bar;
+}
+// Message: Missing @template T
 ````
 
 
