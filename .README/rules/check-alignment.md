@@ -8,6 +8,13 @@ Reports invalid alignment of JSDoc block asterisks.
 
 Fixes alignment.
 
+## Options
+
+### `innerIndent`
+
+Set to 0 if you wish to avoid the normal requirement for an inner indentation of
+one space. Defaults to 1 (one space of normal inner indentation).
+
 ## Context and settings
 
 |||
@@ -15,6 +22,7 @@ Fixes alignment.
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|true|
+|Options|`innerIndent`|
 
 ## Failing examples
 
