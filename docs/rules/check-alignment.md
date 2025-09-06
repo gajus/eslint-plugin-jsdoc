@@ -3,6 +3,8 @@
 # <code>check-alignment</code>
 
 * [Fixer](#user-content-check-alignment-fixer)
+* [Options](#user-content-check-alignment-options)
+    * [`innerIndent`](#user-content-check-alignment-options-innerindent)
 * [Context and settings](#user-content-check-alignment-context-and-settings)
 * [Failing examples](#user-content-check-alignment-failing-examples)
 * [Passing examples](#user-content-check-alignment-passing-examples)
@@ -16,6 +18,17 @@ Reports invalid alignment of JSDoc block asterisks.
 
 Fixes alignment.
 
+<a name="user-content-check-alignment-options"></a>
+<a name="check-alignment-options"></a>
+## Options
+
+<a name="user-content-check-alignment-options-innerindent"></a>
+<a name="check-alignment-options-innerindent"></a>
+### <code>innerIndent</code>
+
+Set to 0 if you wish to avoid the normal requirement for an inner indentation of
+one space. Defaults to 1 (one space of normal inner indentation).
+
 <a name="user-content-check-alignment-context-and-settings"></a>
 <a name="check-alignment-context-and-settings"></a>
 ## Context and settings
@@ -25,6 +38,7 @@ Fixes alignment.
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|true|
+|Options|`innerIndent`|
 
 <a name="user-content-check-alignment-failing-examples"></a>
 <a name="check-alignment-failing-examples"></a>
