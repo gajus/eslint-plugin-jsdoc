@@ -258,6 +258,70 @@ export const myVar = {/**
 }
 `,
     },
+    {
+      code: `
+        /**
+         * @param {Number} foo
+        * @access private
+        */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      options: [
+        {
+          innerIndent: 0,
+        },
+      ],
+      output: `
+        /**
+        * @param {Number} foo
+        * @access private
+        */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
+    {
+      code: `
+        /**
+        Some desc.
+        @param {Number} foo
+        @access private
+         */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected JSDoc block to be aligned.',
+        },
+      ],
+      options: [
+        {
+          innerIndent: 0,
+        },
+      ],
+      output: `
+        /**
+        Some desc.
+        @param {Number} foo
+        @access private
+        */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+    },
   ],
   valid: [
     {
@@ -327,6 +391,39 @@ export const myVar = {/**
           ignorePrivate: true,
         },
       },
+    },
+    {
+      code: `
+        /**
+        * @param {Number} foo
+        * @access private
+        */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      options: [
+        {
+          innerIndent: 0,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+        Some desc.
+        @param {Number} foo
+        @access private
+        */
+        function quux (foo) {
+          // with spaces
+        }
+      `,
+      options: [
+        {
+          innerIndent: 0,
+        },
+      ],
     },
   ],
 });

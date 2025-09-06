@@ -117,6 +117,27 @@ export const myVar = {/**
   myProperty: 'hello'
 }
 // Message: Expected JSDoc block to be aligned.
+
+/**
+ * @param {Number} foo
+* @access private
+*/
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/check-alignment": ["error"|"warn", {"innerIndent":0}]
+// Message: Expected JSDoc block to be aligned.
+
+/**
+Some desc.
+@param {Number} foo
+@access private
+ */
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/check-alignment": ["error"|"warn", {"innerIndent":0}]
+// Message: Expected JSDoc block to be aligned.
 ````
 
 
@@ -172,5 +193,24 @@ function quux (foo) {
   // with spaces
 }
 // Settings: {"jsdoc":{"ignorePrivate":true}}
+
+/**
+* @param {Number} foo
+* @access private
+*/
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/check-alignment": ["error"|"warn", {"innerIndent":0}]
+
+/**
+Some desc.
+@param {Number} foo
+@access private
+*/
+function quux (foo) {
+  // with spaces
+}
+// "jsdoc/check-alignment": ["error"|"warn", {"innerIndent":0}]
 ````
 
