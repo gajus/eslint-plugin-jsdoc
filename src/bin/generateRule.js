@@ -263,7 +263,7 @@ export default iterateJsdoc(({
   await replaceInOrder({
     checkName: 'index rules',
     newLine: `${' '.repeat(4)}'${ruleName}': ${camelCasedRuleName},`,
-    oldRegex: /\n\s{4}'(?<oldRule>[^']*)': [^,]*,/gv,
+    oldRegex: /\n\s{2}'(?<oldRule>[^']*)': [^,]*,/gv,
     path: './src/index.js',
   });
 
