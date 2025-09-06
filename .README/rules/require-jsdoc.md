@@ -113,6 +113,22 @@ apply to any context; see `contexts` for line counts per context.
 An optional message to add to the inserted JSDoc block. Defaults to the
 empty string.
 
+### `skipInterveningOverloadedDeclarations`
+
+If `true`, will skip above uncommented overloaded functions to check
+for a comment block (e.g., at the top of a set of overloaded functions).
+
+If `false`, will force each overloaded function to be checked for a
+comment block.
+
+Defaults to `true`.
+
+### `exemptOverloadedImplementations`
+
+If set to `true` will avoid checking an overloaded function's implementation.
+
+Defaults to `false`.
+
 ## Context and settings
 
 |||
@@ -120,7 +136,7 @@ empty string.
 |Context|`ArrowFunctionExpression`, `ClassDeclaration`, `ClassExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled|
 |Tags|N/A|
 |Recommended|true|
-|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`, `fixerMessage`|
+|Options|`publicOnly`, `require`, `contexts`, `exemptEmptyConstructors`, `exemptEmptyFunctions`, `enableFixer`, `minLineCount`, `fixerMessage`, `skipInterveningOverloadedDeclarations`|
 
 ## Failing examples
 
