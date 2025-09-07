@@ -543,6 +543,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
                 // fix: {range: [number, number], text: string}
                 // suggestions: {desc: , messageId:, fix: }[],
               } = msg;
+              delete msg.fix;
 
               const [
                 codeCtxLine,
@@ -664,8 +665,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
 
           return [];
         },
-        // Todo: Reenable
-        supportsAutofix: false,
+        supportsAutofix: true,
       },
     },
   };
