@@ -12,8 +12,7 @@ JSDoc linting rules for ESLint.
 * [eslint-plugin-jsdoc](#user-content-eslint-plugin-jsdoc)
     * [Installation](#user-content-eslint-plugin-jsdoc-installation)
     * [Configuration](#user-content-eslint-plugin-jsdoc-configuration)
-        * [Flat config (procedural)](#user-content-eslint-plugin-jsdoc-configuration-flat-config-procedural)
-        * [Flat config (declarative)](#user-content-eslint-plugin-jsdoc-configuration-flat-config-declarative)
+        * [Flat config](#user-content-eslint-plugin-jsdoc-configuration-flat-config)
         * [`eslintrc`](#user-content-eslint-plugin-jsdoc-configuration-eslintrc)
     * [Options](#user-content-eslint-plugin-jsdoc-options)
     * [Settings](#user-content-eslint-plugin-jsdoc-settings)
@@ -44,73 +43,9 @@ npm install --save-dev eslint-plugin-jsdoc
 <a name="eslint-plugin-jsdoc-configuration"></a>
 ## Configuration
 
-<a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-procedural"></a>
-<a name="eslint-plugin-jsdoc-configuration-flat-config-procedural"></a>
-### Flat config (procedural)
-
-This is the currently recommended approach.
-
-```js
-import jsdoc from 'eslint-plugin-jsdoc';
-
-export default [
-  ...jsdoc({
-    config: 'flat/recommended',
-  })
-];
-```
-
-Or with settings supplied:
-
-```js
-import jsdoc from 'eslint-plugin-jsdoc';
-
-export default [
-  ...jsdoc({
-    config: 'flat/recommended',
-    // Uncomment this if you wish your `settings` to overwrite the config's own settings;
-    //   otherwise, the default behavior is to merge recursively
-    // mergeSettings: false,
-    settings: {
-      // Do not add a `jsdoc` child object here as you would for regular ESLint `settings`
-      structuredTags: {
-        see: {
-          name: 'namepath-referencing',
-          required: [
-            'name',
-          ],
-        },
-      },
-      /*
-        // Since the recommended config has been chosen, the above settings will
-        //    be merged by default with the following (which are tags that are
-        //    being allowed and requiring a type):
-        structuredTags: {
-          next: {
-            required: [
-              'type',
-            ],
-          },
-          throws: {
-            required: [
-              'type',
-            ],
-          },
-          yields: {
-            required: [
-              'type',
-            ],
-          },
-        },
-      */
-    }
-  })
-];
-```
-
-<a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-declarative"></a>
-<a name="eslint-plugin-jsdoc-configuration-flat-config-declarative"></a>
-### Flat config (declarative)
+<a name="user-content-eslint-plugin-jsdoc-configuration-flat-config"></a>
+<a name="eslint-plugin-jsdoc-configuration-flat-config"></a>
+### Flat config
 
 ```js
 import jsdoc from 'eslint-plugin-jsdoc';
@@ -121,7 +56,6 @@ const config = [
   // other configuration objects...
   {
     files: ['**/*.js'],
-    // `plugins` here is not necessary if including the above config
     plugins: {
       jsdoc,
     },
@@ -143,8 +77,8 @@ The general starting rulesets you can extend from in flat config are:
 - `jsdoc.configs['flat/recommended-typescript-flavor']`: A similar recommended starting list, adjusted for projects using JavaScript syntax (source files that are still `.js`) but using TypeScript flavor within JSDoc (i.e., the default "typescript" `mode` in `eslint-plugin-jsdoc`)
   - `jsdoc.configs['flat/recommended-typescript-flavor-error']`: The same, reporting with failing errors instead of mere warnings
 
-<a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-declarative-granular-flat-configs"></a>
-<a name="eslint-plugin-jsdoc-configuration-flat-config-declarative-granular-flat-configs"></a>
+<a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-granular-flat-configs"></a>
+<a name="eslint-plugin-jsdoc-configuration-flat-config-granular-flat-configs"></a>
 #### Granular Flat Configs
 
 There also exist several more granular, standalone TypeScript rulesets you can extend from.
@@ -160,7 +94,7 @@ These each only enable mostly or only rules from the recommended starting rules:
   - `jsdoc.configs['flat/logical-typescript-error']`: for TypeScript files, with reports set to error
   - `jsdoc.configs['flat/logical-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
   - `jsdoc.configs['flat/logical-typescript-flavor-error']`: for files using JavaScript syntax and JSDoc types, with reports set to error
-- **Requirements**: rules that enforce tags exist or have or don't have types
+- **Requirements**: rules that enforce tags exist
   - `jsdoc.configs['flat/requirements-typescript']`: for TypeScript files, with reports set to warn
   - `jsdoc.configs['flat/requirements-typescript-error']`: for TypeScript files, with reports set to error
   - `jsdoc.configs['flat/requirements-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
@@ -183,8 +117,8 @@ export default [
 ];
 ```
 
-<a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-declarative-granular-flat-configs-why-certain-rules-were-excluded-from-the-granular-configs"></a>
-<a name="eslint-plugin-jsdoc-configuration-flat-config-declarative-granular-flat-configs-why-certain-rules-were-excluded-from-the-granular-configs"></a>
+<a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-granular-flat-configs-why-certain-rules-were-excluded-from-the-granular-configs"></a>
+<a name="eslint-plugin-jsdoc-configuration-flat-config-granular-flat-configs-why-certain-rules-were-excluded-from-the-granular-configs"></a>
 ##### Why certain rules were excluded from the granular configs
 
 A few rules were left out of the granular configs. Here is why:
