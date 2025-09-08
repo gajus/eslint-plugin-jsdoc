@@ -7,12 +7,10 @@ import {
 import {
   readFileSync,
 } from 'fs';
+import defaultsDeep from 'lodash.defaultsdeep';
 import {
   parseArgs,
 } from 'node:util';
-import {
-  merge,
-} from 'object-deep-merge';
 import {
   join,
 } from 'path';
@@ -72,9 +70,8 @@ const main = async () => {
       config.rules[ruleName]
     );
 
-    /** @type {{ecmaVersion: import('eslint').Linter.EcmaVersion}} */
     const languageOptions = {
-      ecmaVersion: 'latest',
+      ecmaVersion: 6,
     };
 
     // Catch syntax errors
@@ -111,7 +108,7 @@ const main = async () => {
     let count = 0;
     assertions.invalid = assertions.invalid.map((assertion) => {
       Reflect.deleteProperty(assertion, 'ignoreReadme');
-      assertion.languageOptions = merge(assertion.languageOptions ?? {}, languageOptions);
+      assertion.languageOptions = defaultsDeep(assertion.languageOptions, languageOptions);
       for (const error of /** @type {import('eslint').RuleTester.TestCaseError[]} */ (
         assertion.errors || []
       )) {
@@ -151,7 +148,7 @@ const main = async () => {
         throw new Error(`Valid assertions for rule ${ruleName} should not have an \`output\` property.`);
       }
 
-      assertion.languageOptions = merge(assertion.languageOptions ?? {}, languageOptions);
+      assertion.languageOptions = defaultsDeep(assertion.languageOptions, languageOptions);
 
       return assertion;
     });
