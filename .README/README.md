@@ -27,7 +27,69 @@ npm install --save-dev eslint-plugin-jsdoc
 
 ## Configuration
 
-### Flat config
+### Flat config (procedural)
+
+This is the currently recommended approach.
+
+```js
+import {jsdoc} from 'eslint-plugin-jsdoc';
+
+export default [
+  ...jsdoc({
+    config: 'flat/recommended',
+  })
+];
+```
+
+Or with settings supplied:
+
+```js
+import {jsdoc} from 'eslint-plugin-jsdoc';
+
+export default [
+  ...jsdoc({
+    config: 'flat/recommended',
+    // Uncomment this if you wish your `settings` to overwrite the config's own settings;
+    //   otherwise, the default behavior is to merge recursively
+    // mergeSettings: false,
+    settings: {
+      // Do not add a `jsdoc` child object here as you would for regular ESLint `settings`
+      structuredTags: {
+        see: {
+          name: 'namepath-referencing',
+          required: [
+            'name',
+          ],
+        },
+      },
+      /*
+        // Since the recommended config has been chosen, the above settings will
+        //    be merged by default with the following (which are tags that are
+        //    being allowed and requiring a type):
+        structuredTags: {
+          next: {
+            required: [
+              'type',
+            ],
+          },
+          throws: {
+            required: [
+              'type',
+            ],
+          },
+          yields: {
+            required: [
+              'type',
+            ],
+          },
+        },
+      */
+    }
+  })
+];
+```
+
+### Flat config (declarative)
 
 ```js
 import jsdoc from 'eslint-plugin-jsdoc';
@@ -38,6 +100,7 @@ const config = [
   // other configuration objects...
   {
     files: ['**/*.js'],
+    // `plugins` here is not necessary if including the above config
     plugins: {
       jsdoc,
     },
@@ -74,7 +137,7 @@ These each only enable mostly or only rules from the recommended starting rules:
   - `jsdoc.configs['flat/logical-typescript-error']`: for TypeScript files, with reports set to error
   - `jsdoc.configs['flat/logical-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn
   - `jsdoc.configs['flat/logical-typescript-flavor-error']`: for files using JavaScript syntax and JSDoc types, with reports set to error
-- **Requirements**: rules that enforce tags exist
+- **Requirements**: rules that enforce tags exist or have or don't have types
   - `jsdoc.configs['flat/requirements-typescript']`: for TypeScript files, with reports set to warn
   - `jsdoc.configs['flat/requirements-typescript-error']`: for TypeScript files, with reports set to error
   - `jsdoc.configs['flat/requirements-typescript-flavor']`: for files using JavaScript syntax and JSDoc types, with reports set to warn

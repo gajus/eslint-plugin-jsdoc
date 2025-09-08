@@ -58,6 +58,9 @@ import sortTags from './rules/sortTags.js';
 import tagLines from './rules/tagLines.js';
 import textEscaping from './rules/textEscaping.js';
 import validTypes from './rules/validTypes.js';
+import {
+  merge,
+} from 'object-deep-merge';
 
 /* eslint-disable jsdoc/valid-types -- Bug */
 /**
@@ -69,69 +72,67 @@ import validTypes from './rules/validTypes.js';
  *   import('eslint').Linter.Config>
  * }}
  */
-const index = {
-  /* eslint-enable jsdoc/valid-types -- Bug */
-  // @ts-expect-error Ok
-  configs: {},
-  rules: {
-    'check-access': checkAccess,
-    'check-alignment': checkAlignment,
-    'check-examples': checkExamples,
-    'check-indentation': checkIndentation,
-    'check-line-alignment': checkLineAlignment,
-    'check-param-names': checkParamNames,
-    'check-property-names': checkPropertyNames,
-    'check-syntax': checkSyntax,
-    'check-tag-names': checkTagNames,
-    'check-template-names': checkTemplateNames,
-    'check-types': checkTypes,
-    'check-values': checkValues,
-    'convert-to-jsdoc-comments': convertToJsdocComments,
-    'empty-tags': emptyTags,
-    'implements-on-classes': implementsOnClasses,
-    'imports-as-dependencies': importsAsDependencies,
-    'informative-docs': informativeDocs,
-    'lines-before-block': linesBeforeBlock,
-    'match-description': matchDescription,
-    'match-name': matchName,
-    'multiline-blocks': multilineBlocks,
-    'no-bad-blocks': noBadBlocks,
-    'no-blank-block-descriptions': noBlankBlockDescriptions,
-    'no-blank-blocks': noBlankBlocks,
-    'no-defaults': noDefaults,
-    'no-missing-syntax': noMissingSyntax,
-    'no-multi-asterisks': noMultiAsterisks,
-    'no-restricted-syntax': noRestrictedSyntax,
-    'no-types': noTypes,
-    'no-undefined-types': noUndefinedTypes,
-    'require-asterisk-prefix': requireAsteriskPrefix,
-    'require-description': requireDescription,
-    'require-description-complete-sentence': requireDescriptionCompleteSentence,
-    'require-example': requireExample,
-    'require-file-overview': requireFileOverview,
-    'require-hyphen-before-param-description': requireHyphenBeforeParamDescription,
-    'require-jsdoc': requireJsdoc,
-    'require-param': requireParam,
-    'require-param-description': requireParamDescription,
-    'require-param-name': requireParamName,
-    'require-param-type': requireParamType,
-    'require-property': requireProperty,
-    'require-property-description': requirePropertyDescription,
-    'require-property-name': requirePropertyName,
-    'require-property-type': requirePropertyType,
-    'require-returns': requireReturns,
-    'require-returns-check': requireReturnsCheck,
-    'require-returns-description': requireReturnsDescription,
-    'require-returns-type': requireReturnsType,
-    'require-template': requireTemplate,
-    'require-throws': requireThrows,
-    'require-yields': requireYields,
-    'require-yields-check': requireYieldsCheck,
-    'sort-tags': sortTags,
-    'tag-lines': tagLines,
-    'text-escaping': textEscaping,
-    'valid-types': validTypes,
-  },
+const index = {};
+/* eslint-enable jsdoc/valid-types -- Bug */
+index.configs = {};
+index.rules = {
+  'check-access': checkAccess,
+  'check-alignment': checkAlignment,
+  'check-examples': checkExamples,
+  'check-indentation': checkIndentation,
+  'check-line-alignment': checkLineAlignment,
+  'check-param-names': checkParamNames,
+  'check-property-names': checkPropertyNames,
+  'check-syntax': checkSyntax,
+  'check-tag-names': checkTagNames,
+  'check-template-names': checkTemplateNames,
+  'check-types': checkTypes,
+  'check-values': checkValues,
+  'convert-to-jsdoc-comments': convertToJsdocComments,
+  'empty-tags': emptyTags,
+  'implements-on-classes': implementsOnClasses,
+  'imports-as-dependencies': importsAsDependencies,
+  'informative-docs': informativeDocs,
+  'lines-before-block': linesBeforeBlock,
+  'match-description': matchDescription,
+  'match-name': matchName,
+  'multiline-blocks': multilineBlocks,
+  'no-bad-blocks': noBadBlocks,
+  'no-blank-block-descriptions': noBlankBlockDescriptions,
+  'no-blank-blocks': noBlankBlocks,
+  'no-defaults': noDefaults,
+  'no-missing-syntax': noMissingSyntax,
+  'no-multi-asterisks': noMultiAsterisks,
+  'no-restricted-syntax': noRestrictedSyntax,
+  'no-types': noTypes,
+  'no-undefined-types': noUndefinedTypes,
+  'require-asterisk-prefix': requireAsteriskPrefix,
+  'require-description': requireDescription,
+  'require-description-complete-sentence': requireDescriptionCompleteSentence,
+  'require-example': requireExample,
+  'require-file-overview': requireFileOverview,
+  'require-hyphen-before-param-description': requireHyphenBeforeParamDescription,
+  'require-jsdoc': requireJsdoc,
+  'require-param': requireParam,
+  'require-param-description': requireParamDescription,
+  'require-param-name': requireParamName,
+  'require-param-type': requireParamType,
+  'require-property': requireProperty,
+  'require-property-description': requirePropertyDescription,
+  'require-property-name': requirePropertyName,
+  'require-property-type': requirePropertyType,
+  'require-returns': requireReturns,
+  'require-returns-check': requireReturnsCheck,
+  'require-returns-description': requireReturnsDescription,
+  'require-returns-type': requireReturnsType,
+  'require-template': requireTemplate,
+  'require-throws': requireThrows,
+  'require-yields': requireYields,
+  'require-yields-check': requireYieldsCheck,
+  'sort-tags': sortTags,
+  'tag-lines': tagLines,
+  'text-escaping': textEscaping,
+  'valid-types': validTypes,
 };
 
 /**
@@ -526,5 +527,73 @@ index.configs['examples-and-default-expressions'] = /** @type {import('eslint').
     };
   }),
 ]);
+
+/* eslint-disable jsdoc/valid-types -- Bug */
+/**
+ * @type {((
+ *   cfg?: {
+ *     mergeSettings?: boolean,
+ *     config?: `flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`,
+ *     settings?: Partial<import('./iterateJsdoc.js').Settings>
+ *   }
+ * ) => import('eslint').Linter.Config) & import('eslint').ESLint.Plugin & {
+ *   configs: Record<`flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`,
+ *   import('eslint').Linter.Config>
+ * }}
+ */
+/* eslint-enable jsdoc/valid-types -- Bug */
+// @ts-expect-error Ok
+export const jsdoc = function (cfg) {
+  /** @type {import('eslint').Linter.Config} */
+  let outputConfig = {
+    plugins: {
+      jsdoc: index,
+    },
+  };
+  if (
+    cfg?.config
+  ) {
+    // @ts-expect-error Security check
+    if (cfg.config === '__proto__') {
+      throw new TypeError('Disallowed config value');
+    }
+
+    outputConfig = index.configs[cfg.config];
+  }
+
+  outputConfig.settings = {
+    jsdoc: cfg?.mergeSettings === false ?
+      cfg.settings :
+      merge(
+        {},
+        cfg?.settings ?? {},
+        cfg?.config?.includes('recommended') ?
+          {
+            // We may need to drop these for "typescript" (non-"flavor") configs,
+            //   if support is later added: https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html
+            structuredTags: {
+              next: {
+                required: [
+                  'type',
+                ],
+              },
+              throws: {
+                required: [
+                  'type',
+                ],
+              },
+              yields: {
+                required: [
+                  'type',
+                ],
+              },
+            },
+          } :
+          {},
+      ),
+  };
+
+  return outputConfig;
+};
 
 export default index;

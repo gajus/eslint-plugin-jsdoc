@@ -1,4 +1,6 @@
-import jsdoc from './src/index.js';
+import {
+  jsdoc,
+} from './src/index.js';
 import {
   recommended as canonical,
 } from 'eslint-config-canonical/canonical';
@@ -16,7 +18,9 @@ const common = {
 export default [
   ...canonical,
   ...canonicalJsdoc,
-  ...jsdoc.configs['examples-and-default-expressions'],
+  ...jsdoc({
+    config: 'examples-and-default-expressions',
+  }),
   {
     // Must be by itself
     ignores: [
