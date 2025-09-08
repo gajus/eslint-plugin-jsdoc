@@ -85,7 +85,7 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./src/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index-cjs.cjs"
     },
     "./getJsdocProcessorPlugin.js": {
       "types": "./dist/getJsdocProcessorPlugin.d.ts",

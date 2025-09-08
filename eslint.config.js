@@ -37,6 +37,8 @@ export default [
     rules: {
       '@stylistic/array-element-newline': 0,
       '@stylistic/no-extra-parens': 0,
+      'canonical/filename-match-exported': 0,
+      'canonical/filename-match-regex': 0,
       'filenames/match-regex': 0,
       'import/extensions': 0,
       'import/no-useless-path-segments': 0,
