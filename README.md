@@ -54,7 +54,7 @@ This is the currently recommended approach.
 import {jsdoc} from 'eslint-plugin-jsdoc';
 
 export default [
-  ...jsdoc({
+  jsdoc({
     config: 'flat/recommended',
   })
 ];
@@ -66,7 +66,7 @@ Or with settings supplied:
 import {jsdoc} from 'eslint-plugin-jsdoc';
 
 export default [
-  ...jsdoc({
+  jsdoc({
     config: 'flat/recommended',
     // Uncomment this if you wish your `settings` to overwrite the config's own settings;
     //   otherwise, the default behavior is to merge recursively
