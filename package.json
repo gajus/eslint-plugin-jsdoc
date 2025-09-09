@@ -19,6 +19,7 @@
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "@babel/cli": "^7.28.3",
     "@babel/core": "^7.28.4",
     "@babel/eslint-parser": "^7.28.4",
@@ -83,19 +84,24 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./src/index.js",
-      "require": "./dist/index-cjs.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./src/index.js"
+      },
+      "require": {
+        "types": "./dist/index-cjs.d.ts",
+        "default": "./dist/index-cjs.cjs"
+      }
     },
     "./getJsdocProcessorPlugin.js": {
       "types": "./dist/getJsdocProcessorPlugin.d.ts",
-      "import": "./dist/getJsdocProcessorPlugin.cjs",
-      "require": "./src/getJsdocProcessorPlugin.js"
+      "import": "./src/getJsdocProcessorPlugin.js",
+      "require": "./dist/getJsdocProcessorPlugin.cjs"
     },
     "./iterateJsdoc.js": {
       "types": "./dist/iterateJsdoc.d.ts",
-      "import": "./dist/iterateJsdoc.cjs",
-      "require": "./src/iterateJsdoc.js"
+      "import": "./src/iterateJsdoc.js",
+      "require": "./dist/iterateJsdoc.cjs"
     }
   },
   "name": "eslint-plugin-jsdoc",
@@ -137,7 +143,8 @@
   "scripts": {
     "tsc": "tsc",
     "tsc-build": "tsc -p tsconfig-prod.json",
-    "build": "rimraf ./dist && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build",
+    "build": "node ./src/bin/buildEntryFileForTS.js && rimraf ./dist && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build",
+    "attw": "attw --pack .",
     "check-docs": "node ./src/bin/generateDocs.js --check",
     "create-docs": "pnpm run create-options && node ./src/bin/generateDocs.js",
     "create-rule": "node ./src/bin/generateRule.js",
