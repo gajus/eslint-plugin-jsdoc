@@ -538,7 +538,7 @@ export default index;
  * @type {((
  *   cfg?: {
  *     mergeSettings?: boolean,
- *     config?: `flat/${import('./index-cjs.js').ConfigGroups}${import('./index-cjs.js').ConfigVariants}${import('./index-cjs.js').ErrorLevelVariants}`,
+ *     config?: `flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`,
  *     settings?: Partial<import('./iterateJsdoc.js').Settings>
  *   }
  * ) => import('eslint').Linter.Config)}
