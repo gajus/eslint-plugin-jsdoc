@@ -16,6 +16,7 @@
   "include": [
     "src/*.js",
     "src/rules/*.js",
+    "src/rules.d.ts",
     "src/utils/*.js",
     "test/**/*.js",
     "typings/gitdown.d.ts",

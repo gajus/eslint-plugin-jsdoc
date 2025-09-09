@@ -60,7 +60,7 @@ export default [
 ];
 ```
 
-Or with settings supplied:
+Or with TypeScript-aware extra rules and settings supplied:
 
 ```js
 import {jsdoc} from 'eslint-plugin-jsdoc';
@@ -68,6 +68,16 @@ import {jsdoc} from 'eslint-plugin-jsdoc';
 export default [
   jsdoc({
     config: 'flat/recommended',
+    rules: {
+      'jsdoc/check-values': [
+        'error',
+        {
+          allowedLicenses: [
+            'MIT', 'ISC',
+          ],
+        },
+      ],
+    },
     // Uncomment this if you wish your `settings` to overwrite the config's own settings;
     //   otherwise, the default behavior is to merge recursively
     // mergeSettings: false,

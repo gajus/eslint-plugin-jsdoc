@@ -58,6 +58,7 @@
     "husky": "^9.1.7",
     "jsdoc-type-pratt-parser": "^5.1.1",
     "json-schema": "^0.4.0",
+    "json-schema-to-typescript": "^15.0.4",
     "lint-staged": "^16.1.6",
     "mocha": "^11.7.2",
     "open-editor": "^5.1.0",
@@ -141,6 +142,7 @@
     "package-lock.json": "pnpm run install-offline"
   },
   "scripts": {
+    "ruleTypes": "node ./src/bin/generateRuleTypes.js",
     "tsc": "tsc",
     "tsc-build": "tsc -p tsconfig-prod.json",
     "build": "node ./src/bin/buildEntryFileForTS.js && rimraf ./dist && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build",
