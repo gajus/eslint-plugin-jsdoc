@@ -17,6 +17,7 @@
   "include": [
     "src/*.js",
     "src/rules/*.js",
+    "src/rules.d.ts",
     "src/utils/*.js",
   ],
   "exclude": ["node_modules", "src/bin/*.js"]

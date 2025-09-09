@@ -529,7 +529,8 @@ const getTagNamesForMode = (mode, context) => {
     case 'permissive':
       return closureTags;
     case 'jsdoc':
-      return jsdocTags; case 'typescript':
+      return jsdocTags;
+    case 'typescript':
       return typeScriptTags;
     default:
       if (!modeWarnSettings.hasBeenWarned(context, 'mode')) {

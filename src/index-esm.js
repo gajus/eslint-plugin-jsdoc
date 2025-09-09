@@ -16,7 +16,8 @@ export default index;
  *   cfg?: {
  *     mergeSettings?: boolean,
  *     config?: `flat/${import('./index-cjs.js').ConfigGroups}${import('./index-cjs.js').ConfigVariants}${import('./index-cjs.js').ErrorLevelVariants}`,
- *     settings?: Partial<import('./iterateJsdoc.js').Settings>
+ *     settings?: Partial<import('./iterateJsdoc.js').Settings>,
+ *     rules?: {[key in keyof import('./rules.d.ts').Rules]?: ["error"|"warn"|"off", ...import('./rules.d.ts').Rules[key]]}
  *   }
  * ) => import('eslint').Linter.Config)}
  */
@@ -37,6 +38,10 @@ export const jsdoc = function (cfg) {
     }
 
     outputConfig = index.configs[cfg.config];
+  }
+
+  if (cfg?.rules) {
+    outputConfig.rules = cfg.rules;
   }
 
   outputConfig.settings = {

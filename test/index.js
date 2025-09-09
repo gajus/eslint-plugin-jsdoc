@@ -14,6 +14,27 @@ describe('jsdoc()', () => {
     });
   });
 
+  it('Builds simple plugins config with rules', () => {
+    /* eslint-disable jsdoc/valid-types -- Bug */
+    const rules = /** @type {{[key in keyof import('../src/rules.d.ts').Rules]?: ["error"|"warn"|"off", ...import('../src/rules.d.ts').Rules[key]]}} */ ({
+      /* eslint-enable jsdoc/valid-types -- Bug */
+      'jsdoc/check-alignment': [
+        'error',
+        {
+          innerIndent: 0,
+        },
+      ],
+    });
+    const cfg = jsdoc({
+      rules,
+    });
+    expect(cfg.plugins?.jsdoc).to.equal(jsdocDefault);
+    expect(cfg.settings).to.deep.equal({
+      jsdoc: {},
+    });
+    expect(cfg.rules).to.deep.equal(rules);
+  });
+
   it('Throws with bad config', () => {
     expect(() => {
       jsdoc({
