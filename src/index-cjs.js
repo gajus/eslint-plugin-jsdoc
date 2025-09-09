@@ -142,7 +142,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
     ...(flatName ? {
       name: 'jsdoc/' + flatName,
     } : {}),
-    // @ts-expect-error Ok
+    // @ts-expect-error ESLint 8 plugins
     plugins:
       flatName ? {
         jsdoc: index,
