@@ -60,7 +60,7 @@ export default [
 ];
 ```
 
-Or with TypeScript-aware extra rules and settings supplied:
+Or with TypeScript-aware extra rules and/or settings supplied:
 
 ```js
 import {jsdoc} from 'eslint-plugin-jsdoc';
@@ -117,6 +117,10 @@ export default [
   })
 ];
 ```
+
+A `plugins` property can also be supplied to merge with the resulting `jsdoc` plugin.
+
+Other config properties such as `files`, `ignores`, etc. are also copied over.
 
 <a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-declarative"></a>
 <a name="eslint-plugin-jsdoc-configuration-flat-config-declarative"></a>

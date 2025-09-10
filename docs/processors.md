@@ -11,7 +11,7 @@ The approach below works in ESLint 9. For ESLint 7, please see our [`check-examp
 The approach requires that we first indicate the JavaScript files that will be checked for `@example` tags.
 
 ```js
-import {getJsdocProcessorPlugin} from 'eslint-plugin-jsdoc/getJsdocProcessorPlugin.js';
+import {getJsdocProcessorPlugin} from 'eslint-plugin-jsdoc';
 
 export default [
   {

@@ -14,6 +14,64 @@ describe('jsdoc()', () => {
     });
   });
 
+  it('Builds config with additional plugin', () => {
+    const pluginCfg = /** @type {Record<string, import('eslint').ESLint.Plugin>} */ ({
+      something: {
+        configs: {
+          testConfig: {
+            rules: {
+              semi: 'off',
+            },
+          },
+        },
+      },
+    });
+    const cfg = jsdoc({
+      plugins: pluginCfg,
+    });
+    expect(cfg.plugins?.jsdoc).to.equal(jsdocDefault);
+    expect(cfg.plugins?.something).to.equal(pluginCfg.something);
+    expect(cfg.settings).to.deep.equal({
+      jsdoc: {},
+    });
+  });
+
+  it('Builds config reflecting copied properties', () => {
+    const expected = {
+      basePath: 'aPath',
+      files: [
+        'someFiles',
+      ],
+      ignores: [
+        'ignore1', 'dist',
+      ],
+      language: 'json/jsonc',
+      languageOptions: {
+        ecmaVersion: /** @type {const} */ (2_023),
+      },
+      linterOptions: {
+        noInlineConfig: true,
+      },
+      name: 'test',
+      processor: 'abc',
+    };
+
+    const config = structuredClone(expected);
+    const cfg = jsdoc(config);
+    expect(cfg.plugins?.jsdoc).to.equal(jsdocDefault);
+    expect(cfg.settings).to.deep.equal({
+      jsdoc: {},
+    });
+    for (const [
+      prop,
+      val,
+    ] of Object.entries(expected)) {
+      expect(cfg[
+        /** @type {keyof import('eslint').Linter.Config} */ (prop)
+      ]).to.deep.equal(val);
+    }
+  });
+
   it('Builds simple plugins config with rules', () => {
     /* eslint-disable jsdoc/valid-types -- Bug */
     const rules = /** @type {{[key in keyof import('../src/rules.d.ts').Rules]?: import('eslint').Linter.RuleEntry<import('../src/rules.d.ts').Rules[key]>}} */ ({
