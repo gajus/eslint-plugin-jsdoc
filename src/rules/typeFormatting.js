@@ -19,10 +19,11 @@ export default iterateJsdoc(({
     genericDot = false,
     objectFieldIndent = '',
     objectFieldQuote = null,
-    objectFieldSeparator = null,
+    objectFieldSeparator = 'comma',
     propertyQuotes = null,
     separatorForSingleObjectField = false,
     stringQuotes = 'single',
+    unionSpacing = ' ',
   } = context.options[0] || {};
 
   const {
@@ -183,20 +184,20 @@ export default iterateJsdoc(({
 
     /** @type {string[]} */
     const errorMessages = [];
-    let needToReport = false;
+
+    // eslint-disable-next-line complexity -- Todo
     traverse(parsedType, (nde) => {
-      let typeFound = true;
       let errorMessage = '';
-      const initialType = stringify(
-        /** @type {import('jsdoc-type-pratt-parser').RootResult} */ (nde),
-      );
+
       switch (nde.type) {
         case 'JsdocTypeGeneric': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (nde);
           if ('value' in typeNode.left && typeNode.left.value === 'Array') {
-            typeNode.meta.brackets = arrayBrackets;
-            errorMessage = `Array bracket style should be ${arrayBrackets}`;
-          } else {
+            if (typeNode.meta.brackets !== arrayBrackets) {
+              typeNode.meta.brackets = arrayBrackets;
+              errorMessage = `Array bracket style should be ${arrayBrackets}`;
+            }
+          } else if (typeNode.meta.dot !== genericDot) {
             typeNode.meta.dot = genericDot;
             errorMessage = `Dot usage should be ${genericDot}`;
           }
@@ -206,22 +207,28 @@ export default iterateJsdoc(({
 
         case 'JsdocTypeObject': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').ObjectResult} */ (nde);
-          typeNode.meta.separator = objectFieldSeparator ?? undefined;
-          typeNode.meta.separatorForSingleObjectField = separatorForSingleObjectField;
-          typeNode.meta.propertyIndent = objectFieldIndent;
-          errorMessage = `Inconsistent ${objectFieldSeparator} usage`;
+          if (
+            (typeNode.meta.separator ?? 'comma') !== objectFieldSeparator ||
+            (typeNode.meta.separatorForSingleObjectField ?? false) !== separatorForSingleObjectField ||
+            (typeNode.meta.propertyIndent ?? '') !== objectFieldIndent
+          ) {
+            typeNode.meta.separator = objectFieldSeparator;
+            typeNode.meta.separatorForSingleObjectField = separatorForSingleObjectField;
+            typeNode.meta.propertyIndent = objectFieldIndent;
+            errorMessage = `Inconsistent ${objectFieldSeparator} separator usage`;
+          }
+
           break;
         }
 
         case 'JsdocTypeObjectField': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').ObjectFieldResult} */ (nde);
-          if (objectFieldQuote ||
-            (typeof typeNode.key === 'string' && !(/\s/v).test(typeNode.key))
+          if ((objectFieldQuote ||
+            (typeof typeNode.key === 'string' && !(/\s/v).test(typeNode.key))) &&
+            typeNode.meta.quote !== (objectFieldQuote ?? undefined)
           ) {
             typeNode.meta.quote = objectFieldQuote ?? undefined;
             errorMessage = `Inconsistent object field quotes ${objectFieldQuote}`;
-          } else {
-            typeFound = false;
           }
 
           break;
@@ -230,13 +237,12 @@ export default iterateJsdoc(({
         case 'JsdocTypeProperty': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').PropertyResult} */ (nde);
 
-          if (propertyQuotes ||
-            (typeof typeNode.value === 'string' && !(/\s/v).test(typeNode.value))
+          if ((propertyQuotes ||
+            (typeof typeNode.value === 'string' && !(/\s/v).test(typeNode.value))) &&
+            typeNode.meta.quote !== (propertyQuotes ?? undefined)
           ) {
             typeNode.meta.quote = propertyQuotes ?? undefined;
             errorMessage = `Inconsistent ${propertyQuotes} property quotes usage`;
-          } else {
-            typeFound = false;
           }
 
           break;
@@ -244,31 +250,49 @@ export default iterateJsdoc(({
 
         case 'JsdocTypeStringValue': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').StringValueResult} */ (nde);
-          typeNode.meta.quote = stringQuotes;
-          errorMessage = `Inconsistent ${stringQuotes} string quotes usage`;
+          if (typeNode.meta.quote !== stringQuotes) {
+            typeNode.meta.quote = stringQuotes;
+            errorMessage = `Inconsistent ${stringQuotes} string quotes usage`;
+          }
+
+          break;
+        }
+
+        case 'JsdocTypeUnion': {
+          const typeNode = /** @type {import('jsdoc-type-pratt-parser').UnionResult} */ (nde);
+          if (typeNode.meta?.spacing !== unionSpacing) {
+            typeNode.meta = {
+              spacing: unionSpacing,
+            };
+            errorMessage = `Inconsistent "${unionSpacing}" union spacing usage`;
+          }
+
           break;
         }
 
         default:
-          typeFound = false;
           break;
       }
 
-      if (typeFound) {
-        const convertedType = stringify(/** @type {import('jsdoc-type-pratt-parser').RootResult} */ (nde));
-        if (initialType !== convertedType) {
-          needToReport = true;
-          errorMessages.push(errorMessage);
-        }
+      if (errorMessage) {
+        errorMessages.push(errorMessage);
       }
     });
 
-    if (needToReport) {
+    const differentResult = tag.type !== stringify(parsedType);
+
+    if (errorMessages.length && differentResult) {
       for (const errorMessage of errorMessages) {
         utils.reportJSDoc(
-          errorMessage, tag, enableFixer ? fix : null, true,
+          errorMessage, tag, enableFixer ? fix : null,
         );
       }
+    // Stringification may have been equal previously (and thus no error reported)
+    //   because the stringification doesn't preserve everything
+    } else if (differentResult) {
+      utils.reportJSDoc(
+        'There was an error with type formatting', tag, enableFixer ? fix : null,
+      );
     }
   };
 
@@ -320,7 +344,6 @@ export default iterateJsdoc(({
               'linebreak',
               'semicolon',
               'semicolon-and-linebreak',
-              null,
             ],
           },
           propertyQuotes: {
@@ -338,6 +361,9 @@ export default iterateJsdoc(({
               'double',
               'single',
             ],
+          },
+          unionSpacing: {
+            type: 'string',
           },
         },
         type: 'object',

@@ -57,13 +57,17 @@ property-value field. Defaults to the empty string.
 Whether to apply the `objectFieldSeparator` when there is only one
 property-value object field present. Defaults to `false`.
 
+### `unionSpacing`
+
+Determines the spacing to add to unions (`|`). Defaults to a single space.
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|``|
 |Recommended|false|
 |Settings||
-|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`|
+|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `unionSpacing`|
 
 ## Failing examples
 

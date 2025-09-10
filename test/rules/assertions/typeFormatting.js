@@ -9,7 +9,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Inconsistent semicolon usage',
+          message: 'Inconsistent semicolon separator usage',
         },
       ],
       options: [
@@ -32,7 +32,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Inconsistent semicolon usage',
+          message: 'Inconsistent semicolon separator usage',
         },
       ],
       options: [
@@ -60,7 +60,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Inconsistent semicolon usage',
+          message: 'Inconsistent semicolon separator usage',
         },
       ],
       options: [
@@ -79,7 +79,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Inconsistent comma usage',
+          message: 'Inconsistent comma separator usage',
         },
       ],
       options: [
@@ -102,7 +102,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Inconsistent linebreak usage',
+          message: 'Inconsistent linebreak separator usage',
         },
       ],
       options: [
@@ -134,7 +134,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Inconsistent linebreak usage',
+          message: 'Inconsistent linebreak separator usage',
         },
       ],
       options: [
@@ -282,7 +282,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Inconsistent semicolon usage',
+          message: 'Inconsistent semicolon separator usage',
         },
       ],
       options: [
@@ -306,7 +306,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Inconsistent linebreak usage',
+          message: 'Inconsistent linebreak separator usage',
         },
       ],
       options: [
@@ -331,7 +331,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Inconsistent linebreak usage',
+          message: 'Inconsistent linebreak separator usage',
         },
       ],
       options: [
@@ -357,7 +357,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Inconsistent linebreak usage',
+          message: 'Inconsistent linebreak separator usage',
         },
       ],
       options: [
@@ -388,7 +388,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Inconsistent semicolon-and-linebreak usage',
+          message: 'Inconsistent semicolon-and-linebreak separator usage',
         },
       ],
       options: [
@@ -404,6 +404,79 @@ export default {
          *   b: number
          * }} cfg A long
          *   description
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {ab | cd} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent "" union spacing usage',
+        },
+      ],
+      options: [
+        {
+          unionSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {ab|cd} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {ab|cd} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent " " union spacing usage',
+        },
+      ],
+      options: [
+        {
+          unionSpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @param {ab | cd} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Due to jsdoc-type-pratt-parser representing the separator at the
+         *   object level, the exact error will not be reported.
+         * @param {{a: string, b: number; c: boolean,}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'There was an error with type formatting',
+        },
+      ],
+      options: [
+        {
+          objectFieldSeparator: 'comma',
+        },
+      ],
+      output: `
+        /**
+         * Due to jsdoc-type-pratt-parser representing the separator at the
+         *   object level, the exact error will not be reported.
+         * @param {{a: string, b: number, c: boolean}} cfg
          */
       `,
     },
@@ -460,20 +533,6 @@ export default {
     {
       code: `
         /**
-         * Due to jsdoc-type-pratt-parser representing the separator at the
-         *   object level, this will not be reported.
-         * @param {{a: string, b: number; c: boolean,}} cfg
-         */
-      `,
-      options: [
-        {
-          objectFieldSeparator: 'comma',
-        },
-      ],
-    },
-    {
-      code: `
-        /**
          * @param {A<} badParam
          */
       `,
@@ -506,6 +565,30 @@ export default {
       options: [
         {
           propertyQuotes: null,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {ab | cd} cfg
+         */
+      `,
+      options: [
+        {
+          unionSpacing: ' ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {ab|cd} cfg
+         */
+      `,
+      options: [
+        {
+          unionSpacing: '',
         },
       ],
     },
