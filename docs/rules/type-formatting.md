@@ -79,13 +79,19 @@ property-value field. Defaults to the empty string.
 Whether to apply the `objectFieldSeparator` when there is only one
 property-value object field present. Defaults to `false`.
 
+<a name="user-content-type-formatting-options-unionspacing"></a>
+<a name="type-formatting-options-unionspacing"></a>
+### <code>unionSpacing</code>
+
+Determines the spacing to add to unions (`|`). Defaults to a single space.
+
 |||
 |---|---|
 |Context|everywhere|
 |Tags|``|
 |Recommended|false|
 |Settings||
-|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`|
+|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
 <a name="type-formatting-failing-examples"></a>
@@ -98,32 +104,32 @@ The following patterns are considered problems:
  * @param {{a: string; b: number; c: boolean,}} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"semicolon"}]
-// Message: Inconsistent semicolon usage
+// Message: Inconsistent semicolon separator usage
 
 /**
  * @param {{a: string; b: number; c: boolean,}} cfg
  */
 // Settings: {"jsdoc":{"mode":"permissive"}}
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"semicolon"}]
-// Message: Inconsistent semicolon usage
+// Message: Inconsistent semicolon separator usage
 
 /**
  * @param {{a: string; b: number; c: boolean,}} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"enableFixer":false,"objectFieldSeparator":"semicolon"}]
-// Message: Inconsistent semicolon usage
+// Message: Inconsistent semicolon separator usage
 
 /**
  * @param {{a: string, b: number; c: boolean;}} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma"}]
-// Message: Inconsistent comma usage
+// Message: Inconsistent comma separator usage
 
 /**
  * @param {{a: string, b: number; c: boolean,}} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"linebreak"}]
-// Message: Inconsistent linebreak usage
+// Message: Inconsistent linebreak separator usage
 
 /**
  * @param {{
@@ -133,7 +139,7 @@ The following patterns are considered problems:
  * }} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"linebreak"}]
-// Message: Inconsistent linebreak usage
+// Message: Inconsistent linebreak separator usage
 
 /**
  * @param {'abc'} cfg
@@ -170,21 +176,21 @@ The following patterns are considered problems:
  *   description
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon","separatorForSingleObjectField":true}]
-// Message: Inconsistent semicolon usage
+// Message: Inconsistent semicolon separator usage
 
 /** @param {{a: string, b: number; c: boolean,}} cfg */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"linebreak"}]
-// Message: Inconsistent linebreak usage
+// Message: Inconsistent linebreak separator usage
 
 /**
  * @param {{a: string, b: number; c: boolean,}} cfg */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"linebreak"}]
-// Message: Inconsistent linebreak usage
+// Message: Inconsistent linebreak separator usage
 
 /** @param {{a: string, b: number; c: boolean,}} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"linebreak"}]
-// Message: Inconsistent linebreak usage
+// Message: Inconsistent linebreak separator usage
 
 /**
  * @param {{
@@ -194,7 +200,27 @@ The following patterns are considered problems:
  *   description
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon-and-linebreak"}]
-// Message: Inconsistent semicolon-and-linebreak usage
+// Message: Inconsistent semicolon-and-linebreak separator usage
+
+/**
+ * @param {ab | cd} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"unionSpacing":""}]
+// Message: Inconsistent "" union spacing usage
+
+/**
+ * @param {ab|cd} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"unionSpacing":" "}]
+// Message: Inconsistent " " union spacing usage
+
+/**
+ * Due to jsdoc-type-pratt-parser representing the separator at the
+ *   object level, the exact error will not be reported.
+ * @param {{a: string, b: number; c: boolean,}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma"}]
+// Message: There was an error with type formatting
 ````
 
 
@@ -227,13 +253,6 @@ The following patterns are not considered problems:
 // "jsdoc/type-formatting": ["error"|"warn", {"genericDot":true}]
 
 /**
- * Due to jsdoc-type-pratt-parser representing the separator at the
- *   object level, this will not be reported.
- * @param {{a: string, b: number; c: boolean,}} cfg
- */
-// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma"}]
-
-/**
  * @param {A<} badParam
  */
 
@@ -250,6 +269,16 @@ The following patterns are not considered problems:
  * @param {ab."cd ef".gh} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"propertyQuotes":null}]
+
+/**
+ * @param {ab | cd} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"unionSpacing":" "}]
+
+/**
+ * @param {ab|cd} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"unionSpacing":""}]
 
 /**
  * @param cfg
