@@ -13,7 +13,7 @@ export default index;
 /* eslint-disable jsdoc/valid-types -- Bug */
 /**
  * @type {((
- *   cfg?: {
+ *   cfg?: import('eslint').Linter.Config & {
  *     mergeSettings?: boolean,
  *     config?: `flat/${import('./index-cjs.js').ConfigGroups}${import('./index-cjs.js').ConfigVariants}${import('./index-cjs.js').ErrorLevelVariants}`,
  *     settings?: Partial<import('./iterateJsdoc.js').Settings>,
@@ -29,19 +29,62 @@ export const jsdoc = function (cfg) {
       jsdoc: index,
     },
   };
-  if (
-    cfg?.config
-  ) {
-    // @ts-expect-error Security check
-    if (cfg.config === '__proto__') {
-      throw new TypeError('Disallowed config value');
+
+  if (cfg) {
+    if (cfg.config) {
+      // @ts-expect-error Security check
+      if (cfg.config === '__proto__') {
+        throw new TypeError('Disallowed config value');
+      }
+
+      outputConfig = index.configs[cfg.config];
     }
 
-    outputConfig = index.configs[cfg.config];
-  }
+    if (cfg.rules) {
+      outputConfig.rules = {
+        ...outputConfig.rules,
+        ...cfg.rules,
+      };
+    }
 
-  if (cfg?.rules) {
-    outputConfig.rules = cfg.rules;
+    if (cfg.plugins) {
+      outputConfig.plugins = {
+        ...outputConfig.plugins,
+        ...cfg.plugins,
+      };
+    }
+
+    if (cfg.name) {
+      outputConfig.name = cfg.name;
+    }
+
+    if (cfg.basePath) {
+      outputConfig.basePath = cfg.basePath;
+    }
+
+    if (cfg.files) {
+      outputConfig.files = cfg.files;
+    }
+
+    if (cfg.ignores) {
+      outputConfig.ignores = cfg.ignores;
+    }
+
+    if (cfg.language) {
+      outputConfig.language = cfg.language;
+    }
+
+    if (cfg.languageOptions) {
+      outputConfig.languageOptions = cfg.languageOptions;
+    }
+
+    if (cfg.linterOptions) {
+      outputConfig.linterOptions = cfg.linterOptions;
+    }
+
+    if (cfg.processor) {
+      outputConfig.processor = cfg.processor;
+    }
   }
 
   outputConfig.settings = {
@@ -78,3 +121,7 @@ export const jsdoc = function (cfg) {
 
   return outputConfig;
 };
+
+export {
+  getJsdocProcessorPlugin,
+} from './getJsdocProcessorPlugin.js';
