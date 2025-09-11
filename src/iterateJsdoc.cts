@@ -5,7 +5,4 @@ const exp = iterateJsdoc as ((iterator: JsdocVisitor, ruleConfig: RuleConfig) =>
   parseComment: typeof parseComment
 };
 
-exp.getSettings = getSettings;
-exp.parseComment = parseComment;
-
 export = exp;

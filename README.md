@@ -469,4 +469,5 @@ non-default-recommended fixer).
 |||[sort-tags](./docs/rules/sort-tags.md#readme)|Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups|
 |:heavy_check_mark:|:wrench:|[tag-lines](./docs/rules/tag-lines.md#readme)|Enforces lines (or no lines) between tags|
 ||:wrench:|[text-escaping](./docs/rules/text-escaping.md#readme)|This rule can auto-escape certain characters that are input within block and tag descriptions|
+||:wrench:|[type-formatting](./docs/rules/type-formatting.md#readme)|Formats JSDoc type values|
 |:heavy_check_mark:||[valid-types](./docs/rules/valid-types.md#readme)|Requires all types/namepaths to be valid JSDoc, Closure compiler, or TypeScript types (configurable in settings)|
