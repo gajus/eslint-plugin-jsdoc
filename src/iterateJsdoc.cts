@@ -1,6 +1,7 @@
-import iterateJsdoc, {getSettings, parseComment, type JsdocVisitor, type RuleConfig} from './iterateJsdoc.js';
+import iterateJsdoc, {getSettings, parseComment} from './iterateJsdoc.js';
 
-const exp = iterateJsdoc as ((iterator: JsdocVisitor, ruleConfig: RuleConfig) => import('eslint').Rule.RuleModule) & {
+const exp = {
+  default: typeof iterateJsdoc,
   getSettings: typeof getSettings,
   parseComment: typeof parseComment
 };
