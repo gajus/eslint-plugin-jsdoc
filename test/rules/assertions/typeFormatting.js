@@ -272,6 +272,24 @@ export default {
     {
       code: `
         /**
+         * @param {{"a": string}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent object field quotes null',
+        },
+      ],
+      output: `
+        /**
+         * @param {{a: string}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
          * @param {ab.cd.ef} cfg
          */
       `,
@@ -490,13 +508,15 @@ export default {
     {
       code: `
         /**
+         * Due to jsdoc-type-pratt-parser not consuming whitespace, the exact
+         *   error will not be reported.
          * @param {ab|cd} cfg
          */
       `,
       errors: [
         {
-          line: 3,
-          message: 'Inconsistent " " union spacing usage',
+          line: 5,
+          message: 'There was an error with type formatting',
         },
       ],
       options: [
@@ -506,9 +526,33 @@ export default {
       ],
       output: `
         /**
+         * Due to jsdoc-type-pratt-parser not consuming whitespace, the exact
+         *   error will not be reported.
          * @param {ab | cd} cfg
          */
       `,
+    },
+    {
+      code: `
+        /**
+         * Due to jsdoc-type-pratt-parser not consuming whitespace, the exact
+         *   error will not be reported.
+         * @param {ab|cd} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'There was an error with type formatting',
+        },
+      ],
+      ignoreReadme: true,
+      options: [
+        {
+          enableFixer: false,
+          unionSpacing: ' ',
+        },
+      ],
     },
     {
       code: `
@@ -580,6 +624,29 @@ export default {
       output: `
         /**
          * @type {string}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {ab."cd".ef} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent null property quotes usage',
+        },
+      ],
+      options: [
+        {
+          propertyQuotes: null,
+        },
+      ],
+      output: `
+        /**
+         * @param {ab.cd.ef} cfg
          */
       `,
     },
