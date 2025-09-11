@@ -72,6 +72,15 @@ Defaults to `null` which is equivalent to "semicolon".
 Indicates the whitespace to be added on each line preceding an object
 property-value field. Defaults to the empty string.
 
+<a name="user-content-type-formatting-options-objectfieldseparatortrailingpunctuation"></a>
+<a name="type-formatting-options-objectfieldseparatortrailingpunctuation"></a>
+### <code>objectFieldSeparatorTrailingPunctuation</code>
+
+If `separatorForSingleObjectField` is not in effect (i.e., if it is `false`
+or there are multiple property-value object fields present), this property
+will determine whether to add trailing punctuation corresponding to the
+`objectFieldSeparator`. Defaults to `false`.
+
 <a name="user-content-type-formatting-options-separatorforsingleobjectfield"></a>
 <a name="type-formatting-options-separatorforsingleobjectfield"></a>
 ### <code>separatorForSingleObjectField</code>
@@ -99,7 +108,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space.
 |Tags|``|
 |Recommended|false|
 |Settings||
-|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
+|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorTrailingPunctuation`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
 <a name="type-formatting-failing-examples"></a>
@@ -112,6 +121,12 @@ The following patterns are considered problems:
  * @param {{a: string; b: number; c: boolean,}} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"semicolon"}]
+// Message: Inconsistent semicolon separator usage
+
+/**
+ * @param {{a: string; b: number; c: boolean,}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"semicolon","objectFieldSeparatorTrailingPunctuation":true}]
 // Message: Inconsistent semicolon separator usage
 
 /**
@@ -208,6 +223,16 @@ The following patterns are considered problems:
  *   description
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon-and-linebreak"}]
+// Message: Inconsistent semicolon-and-linebreak separator usage
+
+/**
+ * @param {{
+ *   a: string,
+ *   b: number
+ * }} cfg A long
+ *   description
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon-and-linebreak","objectFieldSeparatorTrailingPunctuation":true}]
 // Message: Inconsistent semicolon-and-linebreak separator usage
 
 /**

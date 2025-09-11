@@ -20,6 +20,7 @@ export default iterateJsdoc(({
     objectFieldIndent = '',
     objectFieldQuote = null,
     objectFieldSeparator = 'comma',
+    objectFieldSeparatorTrailingPunctuation = false,
     propertyQuotes = null,
     separatorForSingleObjectField = false,
     stringQuotes = 'single',
@@ -232,11 +233,13 @@ export default iterateJsdoc(({
           if (
             (typeNode.meta.separator ?? 'comma') !== objectFieldSeparator ||
             (typeNode.meta.separatorForSingleObjectField ?? false) !== separatorForSingleObjectField ||
-            (typeNode.meta.propertyIndent ?? '') !== objectFieldIndent
+            (typeNode.meta.propertyIndent ?? '') !== objectFieldIndent ||
+            (typeNode.meta.trailingPunctuation ?? false) !== objectFieldSeparatorTrailingPunctuation
           ) {
             typeNode.meta.separator = objectFieldSeparator;
             typeNode.meta.separatorForSingleObjectField = separatorForSingleObjectField;
             typeNode.meta.propertyIndent = objectFieldIndent;
+            typeNode.meta.trailingPunctuation = objectFieldSeparatorTrailingPunctuation;
             errorMessage = `Inconsistent ${objectFieldSeparator} separator usage`;
           }
 
@@ -372,6 +375,9 @@ export default iterateJsdoc(({
               'semicolon',
               'semicolon-and-linebreak',
             ],
+          },
+          objectFieldSeparatorTrailingPunctuation: {
+            type: 'boolean',
           },
           propertyQuotes: {
             enum: [
