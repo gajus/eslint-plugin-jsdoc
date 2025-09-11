@@ -69,8 +69,8 @@ Defaults to `"comma"`.
 <a name="type-formatting-options-objectfieldindent"></a>
 ### <code>objectFieldIndent</code>
 
-Indicates the whitespace to be added on each line preceding an object
-property-value field. Defaults to the empty string.
+A string indicating the whitespace to be added on each line preceding an
+object property-value field. Defaults to the empty string.
 
 <a name="user-content-type-formatting-options-objectfieldseparatortrailingpunctuation"></a>
 <a name="type-formatting-options-objectfieldseparatortrailingpunctuation"></a>
@@ -78,15 +78,16 @@ property-value field. Defaults to the empty string.
 
 If `separatorForSingleObjectField` is not in effect (i.e., if it is `false`
 or there are multiple property-value object fields present), this property
-will determine whether to add trailing punctuation corresponding to the
-`objectFieldSeparator`. Defaults to `false`.
+will determine whether to add punctuation corresponding to the
+`objectFieldSeparator` (e.g., a semicolon) to the final object field.
+Defaults to `false`.
 
 <a name="user-content-type-formatting-options-separatorforsingleobjectfield"></a>
 <a name="type-formatting-options-separatorforsingleobjectfield"></a>
 ### <code>separatorForSingleObjectField</code>
 
-Whether to apply the `objectFieldSeparator` when there is only one
-property-value object field present. Defaults to `false`.
+Whether to apply the `objectFieldSeparator` (e.g., a semicolon) when there
+is only one property-value object field present. Defaults to `false`.
 
 <a name="user-content-type-formatting-options-typebracketspacing"></a>
 <a name="type-formatting-options-typebracketspacing"></a>
@@ -100,14 +101,14 @@ to the empty string.
 <a name="type-formatting-options-unionspacing"></a>
 ### <code>unionSpacing</code>
 
-Determines the spacing to add to unions (`|`). Defaults to a single space.
+Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`).
 
 |||
 |---|---|
 |Context|everywhere|
-|Tags|``|
+|Tags|`param`, `returns`, `type`, `typedef`|
 |Recommended|false|
-|Settings||
+|Settings|`mode`|
 |Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorTrailingPunctuation`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
