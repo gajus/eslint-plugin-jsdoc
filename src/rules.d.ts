@@ -765,16 +765,13 @@ export interface Rules {
           genericDot?: boolean;
           objectFieldIndent?: string;
           objectFieldQuote?: "double" | "single" | null;
-          objectFieldSeparator?:
-            | "comma"
-            | "comma-and-linebreak"
-            | "linebreak"
-            | "semicolon"
-            | "semicolon-and-linebreak"
-            | null;
+          objectFieldSeparator?: "comma" | "comma-and-linebreak" | "linebreak" | "semicolon" | "semicolon-and-linebreak";
+          objectFieldSeparatorTrailingPunctuation?: boolean;
           propertyQuotes?: "double" | "single" | null;
           separatorForSingleObjectField?: boolean;
           stringQuotes?: "double" | "single";
+          typeBracketSpacing?: string;
+          unionSpacing?: string;
         }
       ];
 

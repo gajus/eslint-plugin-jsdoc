@@ -45,7 +45,7 @@ For object properties, specify whether a "semicolon", "comma", "linebreak",
 "semicolon-and-linebreak", or "comma-and-linebreak" should be used after
 each object property-value pair.
 
-Defaults to `null` which is equivalent to "semicolon".
+Defaults to `"comma"`.
 
 ### `objectFieldIndent`
 
