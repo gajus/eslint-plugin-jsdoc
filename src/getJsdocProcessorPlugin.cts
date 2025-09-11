@@ -1,3 +1,5 @@
 import {getJsdocProcessorPlugin} from './getJsdocProcessorPlugin.js';
 
-exports.getJsdocProcessorPlugin = getJsdocProcessorPlugin;
+export = {
+  getJsdocProcessorPlugin: getJsdocProcessorPlugin as typeof getJsdocProcessorPlugin
+};
