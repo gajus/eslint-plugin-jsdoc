@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2023", // Or your desired target
+    "module": "commonjs", // Crucial for CommonJS output
+    "allowJs": true,
+    "declaration": true, // Generates declaration files (.d.ts)
+    "outDir": "./dist/cjs", // Output directory for CommonJS files
+    "esModuleInterop": true, // Improves interoperability between ESM and CJS
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/*.cts"
+  ] // Your source files
+}
