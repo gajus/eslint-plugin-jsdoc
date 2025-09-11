@@ -231,6 +231,7 @@ export default iterateJsdoc(({
         case 'JsdocTypeObject': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').ObjectResult} */ (nde);
           if (
+            /* c8 ignore next -- Guard */
             (typeNode.meta.separator ?? 'comma') !== objectFieldSeparator ||
             (typeNode.meta.separatorForSingleObjectField ?? false) !== separatorForSingleObjectField ||
             (typeNode.meta.propertyIndent ?? '') !== objectFieldIndent ||
@@ -285,7 +286,8 @@ export default iterateJsdoc(({
 
         case 'JsdocTypeUnion': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').UnionResult} */ (nde);
-          if (typeNode.meta?.spacing !== unionSpacing) {
+          /* c8 ignore next -- Guard */
+          if ((typeNode.meta?.spacing ?? ' ') !== unionSpacing) {
             typeNode.meta = {
               spacing: unionSpacing,
             };

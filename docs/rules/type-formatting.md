@@ -189,6 +189,11 @@ The following patterns are considered problems:
 // Message: Inconsistent object field quotes double
 
 /**
+ * @param {{"a": string}} cfg
+ */
+// Message: Inconsistent object field quotes null
+
+/**
  * @param {ab.cd.ef} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"propertyQuotes":"double"}]
@@ -242,10 +247,12 @@ The following patterns are considered problems:
 // Message: Inconsistent "" union spacing usage
 
 /**
+ * Due to jsdoc-type-pratt-parser not consuming whitespace, the exact
+ *   error will not be reported.
  * @param {ab|cd} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"unionSpacing":" "}]
-// Message: Inconsistent " " union spacing usage
+// Message: There was an error with type formatting
 
 /**
  * Due to jsdoc-type-pratt-parser representing the separator at the
@@ -266,6 +273,12 @@ The following patterns are considered problems:
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"typeBracketSpacing":""}]
 // Message: Must have no initial spacing
+
+/**
+ * @param {ab."cd".ef} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"propertyQuotes":null}]
+// Message: Inconsistent null property quotes usage
 ````
 
 
