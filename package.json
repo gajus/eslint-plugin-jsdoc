@@ -28,6 +28,7 @@
     "@babel/preset-env": "^7.28.3",
     "@es-joy/escodegen": "^3.5.1",
     "@es-joy/jsdoc-eslint-parser": "^0.23.0",
+    "@eslint/core": "^0.15.2",
     "@hkdobrev/run-if-changed": "^0.6.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/github": "^11.0.5",
