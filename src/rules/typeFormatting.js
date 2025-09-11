@@ -326,9 +326,13 @@ export default iterateJsdoc(({
 
   const tags = utils.getPresentTags([
     'param',
+    'property',
     'returns',
+    'this',
+    'throws',
     'type',
     'typedef',
+    'yields',
   ]);
   for (const tag of tags) {
     if (tag.type) {
