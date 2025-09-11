@@ -23,6 +23,7 @@ export default iterateJsdoc(({
     propertyQuotes = null,
     separatorForSingleObjectField = false,
     stringQuotes = 'single',
+    typeBracketSpacing = '',
     unionSpacing = ' ',
   } = context.options[0] || {};
 
@@ -55,7 +56,10 @@ export default iterateJsdoc(({
         return tokens.name || tokens.description;
       });
 
-      const nameAndDesc = tag.source.slice(beginNameOrDescIdx);
+      const nameAndDesc = beginNameOrDescIdx === -1 ?
+        null :
+        tag.source.slice(beginNameOrDescIdx);
+
       const initialNumber = tag.source[0].number;
       const src = [
         // Get inevitably present tag from first `tag.source`
@@ -70,7 +74,7 @@ export default iterateJsdoc(({
               postName: '',
               postType: '',
             } : {}),
-            type: '{' + firstTypeLine + (!typeLines.length && lastTypeLine === undefined ? '}' : ''),
+            type: '{' + typeBracketSpacing + firstTypeLine + (!typeLines.length && lastTypeLine === undefined ? typeBracketSpacing + '}' : ''),
           },
         },
         // Get any intervening type lines
@@ -98,14 +102,14 @@ export default iterateJsdoc(({
       // Merge any final type line and name and description
       if (
         // Name and description may be already included if present with the tag
-        beginNameOrDescIdx > 0
+        nameAndDesc && beginNameOrDescIdx > 0
       ) {
         src.push({
           number: src.length + 1,
           source: '',
           tokens: {
             ...nameAndDesc[0].tokens,
-            type: lastTypeLine + '}',
+            type: lastTypeLine + typeBracketSpacing + '}',
           },
         });
 
@@ -126,7 +130,7 @@ export default iterateJsdoc(({
             }),
           );
         }
-      } else {
+      } else if (nameAndDesc) {
         if (lastTypeLine) {
           src.push({
             number: src.length + 1,
@@ -137,14 +141,14 @@ export default iterateJsdoc(({
               postTag: '',
               start: indent + ' ',
               tag: '',
-              type: lastTypeLine + '}',
+              type: lastTypeLine + typeBracketSpacing + '}',
             },
           });
         }
 
         if (
           // Get any remaining description lines
-          nameAndDesc.length > 1
+          nameAndDesc && nameAndDesc.length > 1
         ) {
           src.push(
             ...nameAndDesc.slice(1).map(({
@@ -172,6 +176,14 @@ export default iterateJsdoc(({
         return tg;
       });
 
+      const initialEndSource = jsdoc.source.find(({
+        tokens: {
+          end,
+        },
+      }) => {
+        return end;
+      });
+
       jsdoc.source = [
         ...jsdoc.source.slice(0, firstTagIdx),
         ...jsdoc.tags.flatMap(({
@@ -180,10 +192,20 @@ export default iterateJsdoc(({
           return source;
         }),
       ];
+
+      if (initialEndSource && !jsdoc.source.at(-1)?.tokens?.end) {
+        jsdoc.source.push(initialEndSource);
+      }
     };
 
     /** @type {string[]} */
     const errorMessages = [];
+
+    if (typeBracketSpacing && (!tag.type.startsWith(typeBracketSpacing) || !tag.type.endsWith(typeBracketSpacing))) {
+      errorMessages.push(`Must have initial and final "${typeBracketSpacing}" spacing`);
+    } else if (!typeBracketSpacing && ((/^\s/v).test(tag.type) || (/\s$/v).test(tag.type))) {
+      errorMessages.push('Must have no initial spacing');
+    }
 
     // eslint-disable-next-line complexity -- Todo
     traverse(parsedType, (nde) => {
@@ -279,7 +301,8 @@ export default iterateJsdoc(({
       }
     });
 
-    const differentResult = tag.type !== stringify(parsedType);
+    const differentResult = tag.type !==
+      typeBracketSpacing + stringify(parsedType) + typeBracketSpacing;
 
     if (errorMessages.length && differentResult) {
       for (const errorMessage of errorMessages) {
@@ -299,9 +322,13 @@ export default iterateJsdoc(({
   const tags = utils.getPresentTags([
     'param',
     'returns',
+    'type',
+    'typedef',
   ]);
   for (const tag of tags) {
-    checkTypeFormats(tag);
+    if (tag.type) {
+      checkTypeFormats(tag);
+    }
   }
 }, {
   iterateAllJsdocs: true,
@@ -361,6 +388,9 @@ export default iterateJsdoc(({
               'double',
               'single',
             ],
+          },
+          typeBracketSpacing: {
+            type: 'string',
           },
           unionSpacing: {
             type: 'string',

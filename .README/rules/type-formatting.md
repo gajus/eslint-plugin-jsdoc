@@ -57,6 +57,12 @@ property-value field. Defaults to the empty string.
 Whether to apply the `objectFieldSeparator` when there is only one
 property-value object field present. Defaults to `false`.
 
+### `typeBracketSpacing`
+
+A string of spaces that will be added immediately after the type's initial
+curly bracket and immediately before its ending curly bracket. Defaults
+to the empty string.
+
 ### `unionSpacing`
 
 Determines the spacing to add to unions (`|`). Defaults to a single space.
@@ -67,7 +73,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space.
 |Tags|``|
 |Recommended|false|
 |Settings||
-|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `unionSpacing`|
+|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 ## Failing examples
 

@@ -79,6 +79,14 @@ property-value field. Defaults to the empty string.
 Whether to apply the `objectFieldSeparator` when there is only one
 property-value object field present. Defaults to `false`.
 
+<a name="user-content-type-formatting-options-typebracketspacing"></a>
+<a name="type-formatting-options-typebracketspacing"></a>
+### <code>typeBracketSpacing</code>
+
+A string of spaces that will be added immediately after the type's initial
+curly bracket and immediately before its ending curly bracket. Defaults
+to the empty string.
+
 <a name="user-content-type-formatting-options-unionspacing"></a>
 <a name="type-formatting-options-unionspacing"></a>
 ### <code>unionSpacing</code>
@@ -91,7 +99,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space.
 |Tags|``|
 |Recommended|false|
 |Settings||
-|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `unionSpacing`|
+|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
 <a name="type-formatting-failing-examples"></a>
@@ -221,6 +229,18 @@ The following patterns are considered problems:
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma"}]
 // Message: There was an error with type formatting
+
+/**
+ * @type {string}
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"typeBracketSpacing":" "}]
+// Message: Must have initial and final " " spacing
+
+/**
+ * @type { string }
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"typeBracketSpacing":""}]
+// Message: Must have no initial spacing
 ````
 
 
