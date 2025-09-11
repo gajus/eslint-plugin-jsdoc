@@ -2,6 +2,9 @@ import jsdocDefault, {
   jsdoc,
 } from '../src/index.js';
 import {
+  runRuleTests,
+} from './rules/index.js';
+import {
   expect,
 } from 'chai';
 
@@ -204,3 +207,77 @@ describe('jsdoc()', () => {
     });
   });
 });
+
+for (const [
+  contextName,
+  contexts,
+  assertions,
+  description,
+] of
+  /**
+   * @type {[
+   *   string,
+   *   (string|{message: string; context: string; comment: string;})[],
+   *   import('./rules/index.js').TestCases,
+   *   string?
+   * ][]
+   * }
+   */ ([
+    [
+      'Any',
+      [
+        {
+          comment: 'JsdocBlock:has(JsdocTypeName[value="any"])',
+          context: 'any',
+          message: '`any` is not allowed; use a more specific type',
+        },
+      ],
+      {
+        invalid: [
+          {
+            code: `
+              /**
+               * @param {Promise<any>}
+               */
+              function quux () {
+
+              }
+            `,
+            errors: [
+              {
+                line: 2,
+                message: '`any` is not allowed; use a more specific type',
+              },
+            ],
+          },
+        ],
+        valid: [
+          {
+            code: `
+              /**
+               * @param {Promise<NotAny>}
+               */
+              function quux () {
+
+              }
+            `,
+          },
+        ],
+      },
+    ],
+  ])) {
+  runRuleTests({
+    assertions,
+    config: jsdoc({
+      extraRuleDefinitions: {
+        forbid: {
+          [contextName]: {
+            contexts,
+            description,
+          },
+        },
+      },
+    }).plugins?.jsdoc,
+    ruleName: `forbid-${contextName}`,
+  });
+}

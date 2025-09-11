@@ -69,6 +69,9 @@ importers:
       '@es-joy/jsdoc-eslint-parser':
         specifier: ^0.23.0
         version: 0.23.0(jiti@2.5.1)
+      '@eslint/core':
+        specifier: ^0.15.2
+        version: 0.15.2
       '@hkdobrev/run-if-changed':
         specifier: ^0.6.3
         version: 0.6.3(typescript@5.9.2)
