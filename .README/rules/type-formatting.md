@@ -78,7 +78,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`
 |||
 |---|---|
 |Context|everywhere|
-|Tags|`param`, `returns`, `type`, `typedef`|
+|Tags|`param`, `property`, `returns`, `this`, `throws`, `type`, `typedef`, `yields`|
 |Recommended|false|
 |Settings|`mode`|
 |Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorTrailingPunctuation`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
