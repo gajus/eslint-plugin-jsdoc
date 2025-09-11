@@ -480,6 +480,52 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @type {string}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Must have initial and final " " spacing',
+        },
+      ],
+      options: [
+        {
+          typeBracketSpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @type { string }
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type { string }
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Must have no initial spacing',
+        },
+      ],
+      options: [
+        {
+          typeBracketSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @type {string}
+         */
+      `,
+    },
   ],
   valid: [
     {
