@@ -149,7 +149,7 @@ export default iterateJsdoc(({
 
         if (
           // Get any remaining description lines
-          nameAndDesc && nameAndDesc.length > 1
+          nameAndDesc.length > 1
         ) {
           src.push(
             ...nameAndDesc.slice(1).map(({
