@@ -38,6 +38,30 @@ export default {
       options: [
         {
           objectFieldSeparator: 'semicolon',
+          objectFieldSeparatorTrailingPunctuation: true,
+        },
+      ],
+      output: `
+        /**
+         * @param {{a: string; b: number; c: boolean;}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{a: string; b: number; c: boolean,}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent semicolon separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldSeparator: 'semicolon',
         },
       ],
       output: `
@@ -402,6 +426,39 @@ export default {
          * @param {{
          *   a: string;
          *   b: number
+         * }} cfg A long
+         *   description
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{
+         *   a: string,
+         *   b: number
+         * }} cfg A long
+         *   description
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent semicolon-and-linebreak separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldIndent: '  ',
+          objectFieldSeparator: 'semicolon-and-linebreak',
+          objectFieldSeparatorTrailingPunctuation: true,
+        },
+      ],
+      output: `
+        /**
+         * @param {{
+         *   a: string;
+         *   b: number;
          * }} cfg A long
          *   description
          */

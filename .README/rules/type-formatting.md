@@ -52,6 +52,13 @@ Defaults to `null` which is equivalent to "semicolon".
 Indicates the whitespace to be added on each line preceding an object
 property-value field. Defaults to the empty string.
 
+### `objectFieldSeparatorTrailingPunctuation`
+
+If `separatorForSingleObjectField` is not in effect (i.e., if it is `false`
+or there are multiple property-value object fields present), this property
+will determine whether to add trailing punctuation corresponding to the
+`objectFieldSeparator`. Defaults to `false`.
+
 ### `separatorForSingleObjectField`
 
 Whether to apply the `objectFieldSeparator` when there is only one
@@ -73,7 +80,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space.
 |Tags|``|
 |Recommended|false|
 |Settings||
-|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
+|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorTrailingPunctuation`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 ## Failing examples
 
