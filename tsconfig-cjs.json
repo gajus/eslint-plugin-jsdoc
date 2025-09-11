@@ -4,6 +4,7 @@
     "module": "commonjs", // Crucial for CommonJS output
     "allowJs": true,
     "declaration": true, // Generates declaration files (.d.ts)
+    "emitDeclarationOnly": true,
     "outDir": "./dist/cjs", // Output directory for CommonJS files
     "esModuleInterop": true, // Improves interoperability between ESM and CJS
     "forceConsistentCasingInFileNames": true,

@@ -91,7 +91,7 @@
       },
       "require": {
         "types": "./dist/cjs/index.cjs.d.cts",
-        "default": "./dist/cjs/index.cjs.cts"
+        "default": "./dist/index-cjs.cjs"
       }
     },
     "./getJsdocProcessorPlugin.js": {
@@ -101,7 +101,7 @@
       },
       "require": {
         "types": "./dist/cjs/getJsdocProcessorPlugin.d.cts",
-        "default": "./dist/cjs/getJsdocProcessorPlugin.cjs"
+        "default": "./dist/getJsdocProcessorPlugin.cjs"
       }
     },
     "./iterateJsdoc.js": {
@@ -111,7 +111,7 @@
       },
       "require": {
         "types": "./dist/cjs/iterateJsdoc.d.cts",
-        "default": "./dist/cjs/iterateJsdoc.cjs"
+        "default": "./dist/iterateJsdoc.cjs"
       }
     }
   },
