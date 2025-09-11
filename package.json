@@ -90,19 +90,29 @@
         "default": "./src/index.js"
       },
       "require": {
-        "types": "./dist/index-cjs.d.ts",
-        "default": "./dist/index-cjs.cjs"
+        "types": "./dist/cjs/index.cjs.d.cts",
+        "default": "./dist/cjs/index.cjs.cts"
       }
     },
     "./getJsdocProcessorPlugin.js": {
-      "types": "./dist/getJsdocProcessorPlugin.d.ts",
-      "import": "./src/getJsdocProcessorPlugin.js",
-      "require": "./dist/getJsdocProcessorPlugin.cjs"
+      "import": {
+        "types": "./dist/getJsdocProcessorPlugin.d.ts",
+        "default": "./src/getJsdocProcessorPlugin.js"
+      },
+      "require": {
+        "types": "./dist/cjs/getJsdocProcessorPlugin.d.cts",
+        "default": "./dist/cjs/getJsdocProcessorPlugin.cjs"
+      }
     },
     "./iterateJsdoc.js": {
-      "types": "./dist/iterateJsdoc.d.ts",
-      "import": "./src/iterateJsdoc.js",
-      "require": "./dist/iterateJsdoc.cjs"
+      "import": {
+        "types": "./dist/iterateJsdoc.d.ts",
+        "default": "./src/iterateJsdoc.js"
+      },
+      "require": {
+        "types": "./dist/cjs/iterateJsdoc.d.cts",
+        "default": "./dist/cjs/iterateJsdoc.cjs"
+      }
     }
   },
   "name": "eslint-plugin-jsdoc",
@@ -145,7 +155,8 @@
     "ruleTypes": "node ./src/bin/generateRuleTypes.js",
     "tsc": "tsc",
     "tsc-build": "tsc -p tsconfig-prod.json",
-    "build": "node ./src/bin/buildEntryFileForTS.js && rimraf ./dist && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build",
+    "tsc-cjs": "tsc -p tsconfig-cjs.json",
+    "build": "node ./src/bin/buildEntryFileForTS.js && rimraf ./dist && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build && pnpm tsc-cjs",
     "attw": "attw --pack .",
     "check-docs": "node ./src/bin/generateDocs.js --check",
     "create-docs": "pnpm run create-options && node ./src/bin/generateDocs.js",
