@@ -120,7 +120,13 @@ export default [
 
 A `plugins` property can also be supplied to merge with the resulting `jsdoc` plugin.
 
-Other config properties such as `files`, `ignores`, etc. are also copied over.
+Other config properties such as `files`, `ignores`, etc. are also copied over,
+though noting that if the specified config produces an array, they will not
+currently function.
+
+There is also a `extraRuleDefinitions.forbid` option, the details of which are
+explained in the [Advanced](./docs/advanced.md#forbidding-structures) docs
+(under creating your own rules and forbidding structures).
 
 <a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-declarative"></a>
 <a name="eslint-plugin-jsdoc-configuration-flat-config-declarative"></a>

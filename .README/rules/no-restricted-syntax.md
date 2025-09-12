@@ -16,6 +16,10 @@ structures, (whether or not you add a specific `comment` condition).
 Note that if your parser supports comment AST (as [jsdoc-eslint-parser](https://github.com/brettz9/jsdoc-eslint-parser)
 is designed to do), you can just use ESLint's rule.
 
+For an alternative to this rule, see the
+[Advanced](./docs/advanced.md#forbidding-structures) docs under
+creating your own rules and forbidding structures.
+
 ## Options
 
 ### `contexts`
