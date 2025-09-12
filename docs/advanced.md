@@ -6,6 +6,8 @@
     * [`contexts` format](#user-content-advanced-ast-and-selectors-contexts-format)
     * [Discovering available AST definitions](#user-content-advanced-ast-and-selectors-discovering-available-ast-definitions)
     * [Uses/Tips for AST](#user-content-advanced-ast-and-selectors-uses-tips-for-ast)
+* [Creating your own rules](#user-content-advanced-creating-your-own-rules)
+    * [Forbidding structures](#user-content-advanced-creating-your-own-rules-forbidding-structures)
 
 
 <a name="user-content-advanced-ast-and-selectors"></a>
@@ -100,3 +102,83 @@ we have
 to the selector you wish so as to get messages reported in the bottom right
 pane which match your [esquery](https://github.com/estools/esquery/#readme)
 selector).
+
+<a name="user-content-advanced-creating-your-own-rules"></a>
+<a name="advanced-creating-your-own-rules"></a>
+### Creating your own rules
+
+<a name="user-content-advanced-creating-your-own-rules-forbidding-structures"></a>
+<a name="advanced-creating-your-own-rules-forbidding-structures"></a>
+#### Forbidding structures
+
+Although `jsdoc/no-restricted-syntax` is available for restricting certain syntax,
+it comes at a cost that, no matter how many restrictions one adds, one can only
+disable a single restriction by disabling them all.
+
+With the `extraRuleDefinitions.forbid` option, one can add information that is used
+to create extra individual rules forbidding specific structures, and these rules can
+then be selectively enabled and optionally disabled on a case-by-case basis.
+
+For each `forbid` key, add the name of the context (this will be appended to
+`forbid-` to decide the name of the rule, so with "Any" as the key, the rule
+created will be `forbid-Any`). Then provide an optional `description` key
+(which will be used for the created rule's `meta.docs.description`) and the
+`contexts` array. See the `jsdoc/restricted-syntax` rule for more details.
+
+```js
+import {jsdoc} from 'eslint-plugin-jsdoc';
+
+export default [
+  jsdoc({
+    config: 'flat/recommended',
+    extraRuleDefinitions: {
+      forbid: {
+        Any: {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTypeName[value="any"])',
+              context: 'any',
+              message: '`any` is not allowed; use a more specific type',
+            },
+          ],
+          descriptions: 'Testing here',
+        },
+        Function: {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTypeName[value="Function"])',
+              context: 'any',
+              message: '`Function` is not allowed; use a more specific type',
+            },
+          ],
+        },
+      },
+    },
+    // Be sure to enable the rules as well
+    rules: {
+      'jsdoc/forbid-Any': [
+        'error',
+      ],
+      'jsdoc/forbid-Function': [
+        'warn',
+      ],
+    },
+  }),
+];
+```
+
+Now you can selectively disable the rules you have created. In the following,
+because of the individual disable directive, only the `Function` rule will be
+triggered (as a warning since its rule was set to "warn"):
+
+```js
+/* eslint-disable jsdoc/forbid-Any */
+/**
+ * @param {any} abc Test
+ * @param {Function} def Test2
+ */
+export const a = (abc, def) => {
+  b(5, abc, def);
+};
+/* eslint-enable jsdoc/forbid-Any */
+```
