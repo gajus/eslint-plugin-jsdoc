@@ -51,7 +51,7 @@ const validatePropertyNames = (
  *   type: string;
  * }[]} jsdocPropertyNames
  * @param {import('comment-parser').Block} jsdoc
- * @param {Function} report
+ * @param {import('../iterateJsdoc.js').Report} report
  */
 const validatePropertyNamesDeep = (
   targetTagName,

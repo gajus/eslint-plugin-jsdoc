@@ -315,7 +315,7 @@ const validateParameterNames = (
  *   idx: import('../iterateJsdoc.js').Integer
  * }[]} jsdocParameterNames
  * @param {import('comment-parser').Block} jsdoc
- * @param {Function} report
+ * @param {import('../iterateJsdoc.js').Report} report
  * @returns {boolean}
  */
 const validateParameterNamesDeep = (
