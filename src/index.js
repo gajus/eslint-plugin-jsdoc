@@ -598,6 +598,40 @@ const buildForbidRuleDefinition = ({
       schema: [],
       type: 'suggestion',
     },
+    modifyContext: (context) => {
+      return {
+        cwd: context.cwd,
+        filename: context.filename,
+        getCwd (...args) {
+          return context.getCwd(...args);
+        },
+        getFilename (...args) {
+          return context.getFilename(...args);
+        },
+        getPhysicalFilename (...args) {
+          return context.getPhysicalFilename(...args);
+        },
+        getSourceCode (...args) {
+          return context.getSourceCode(...args);
+        },
+        id: context.id,
+        languageOptions: context.languageOptions,
+        // Here's why we override:
+        options: [
+          {
+            contexts,
+          },
+        ],
+        parserOptions: context.parserOptions,
+        parserPath: context.parserPath,
+        physicalFilename: context.physicalFilename,
+        report (...args) {
+          return context.report(...args);
+        },
+        settings: context.settings,
+        sourceCode: context.sourceCode,
+      };
+    },
     nonGlobalSettings: true,
   });
 };

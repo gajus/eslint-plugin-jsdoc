@@ -15,12 +15,42 @@ const common = {
   },
 };
 
+// /**
+//  * @param {any} abc Test
+//  */
+// export const a = (abc) => {
+//   // eslint-disable-next-line no-console -- Testing
+//   console.log('abc', abc);
+// };
+
 export default [
   ...canonical,
   ...canonicalJsdoc,
   ...jsdoc({
     config: 'examples-and-default-expressions',
   }),
+  // jsdoc({
+  //   config: 'flat/recommended',
+  //   extraRuleDefinitions: {
+  //     forbid: {
+  //       Any: {
+  //         contexts: [
+  //           {
+  //             comment: 'JsdocBlock:has(JsdocTypeName[value="any"])',
+  //             context: 'any',
+  //             message: '`any` is not allowed; use a more specific type',
+  //           },
+  //         ],
+  //         descriptions: 'Testing here',
+  //       },
+  //     },
+  //   },
+  //   rules: {
+  //     'jsdoc/forbid-Any': [
+  //       'error',
+  //     ],
+  //   },
+  // }),
   {
     // Must be by itself
     ignores: [

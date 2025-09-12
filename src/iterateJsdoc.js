@@ -543,8 +543,6 @@ const {
   seedTokens,
 } = util;
 
-// todo: Change these `any` types once importing types properly.
-
 /**
  * Should use ESLint rule's typing.
  * @typedef {import('eslint').Rule.RuleMetaData} EslintRuleMeta
@@ -1749,8 +1747,14 @@ const getUtils = (
  *   mode: import('./jsdocUtils.js').ParserMode,
  *   preferredTypes: PreferredTypes,
  *   structuredTags: StructuredTags,
- *   [name: string]: any,
- *   contexts?: Context[]
+ *   contexts?: Context[],
+ *   augmentsExtendsReplacesDocs?: boolean,
+ *   ignoreReplacesDocs?: boolean,
+ *   implementsReplacesDocs?: boolean,
+ *   overrideReplacesDocs?: boolean,
+ *   ignoreInternal?: boolean,
+ *   ignorePrivate?: boolean,
+ *   exemptDestructuredRootsFromChecks?: boolean,
  * }} Settings
  */
 
@@ -1923,7 +1927,7 @@ const makeReport = (context, commentNode) => {
  *     settings: Settings,
  *     utils: BasicUtils,
  *   }
- * ) => any } JsdocVisitorBasic
+ * ) => void } JsdocVisitorBasic
  */
 /**
  * @typedef {(
@@ -1948,7 +1952,7 @@ const makeReport = (context, commentNode) => {
  *     settings: Settings,
  *     utils: Utils,
  *   }
- * ) => any } JsdocVisitor
+ * ) => void } JsdocVisitor
  */
 
 /**
@@ -2084,6 +2088,7 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
  * @property {EslintRuleMeta} meta ESLint rule meta
  * @property {import('./jsdocUtils.js').DefaultContexts} [contextDefaults] Any default contexts
  * @property {true} [contextSelected] Whether to force a `contexts` check
+ * @property {(context: import('eslint').Rule.RuleContext) => import('eslint').Rule.RuleContext} [modifyContext] Modify the rule's context object
  * @property {true} [iterateAllJsdocs] Whether to iterate all JSDoc blocks by default
  *   regardless of context
  * @property {true} [checkPrivate] Whether to check `@private` blocks (normally exempted)
@@ -2391,13 +2396,17 @@ export default function iterateJsdoc (iterator, ruleConfig) {
   return {
     /**
      * The entrypoint for the JSDoc rule.
-     * @param {import('eslint').Rule.RuleContext} context
+     * @param {import('eslint').Rule.RuleContext} ctx
      *   a reference to the context which hold all important information
      *   like settings and the sourcecode to check.
      * @returns {import('eslint').Rule.RuleListener}
      *   a listener with parser callback function.
      */
-    create (context) {
+    create (ctx) {
+      const context = ruleConfig.modifyContext ?
+        ruleConfig.modifyContext(ctx) :
+        ctx;
+
       const settings = getSettings(context);
       if (!settings) {
         return {};
