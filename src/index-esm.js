@@ -24,6 +24,7 @@ export default index;
  *       forbid: {
  *         [contextName: string]: {
  *           description?: string,
+ *           url?: string,
  *           contexts: (string|{
  *             message: string,
  *             context: string,
@@ -111,6 +112,7 @@ export const jsdoc = function (cfg) {
           {
             contexts,
             description,
+            url,
           },
         ] of Object.entries(cfg.extraRuleDefinitions.forbid)) {
           outputConfig.plugins.jsdoc.rules[`forbid-${contextName}`] =
@@ -118,6 +120,7 @@ export const jsdoc = function (cfg) {
               contextName,
               contexts,
               description,
+              url,
             });
         }
       }

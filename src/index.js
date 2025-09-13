@@ -76,6 +76,7 @@ import validTypes from './rules/validTypes.js';
  *   })[],
  *   description?: string,
  *   contextName?: string
+ *   url?: string,
  * }} cfg
  * @returns {import('@eslint/core').RuleDefinition<
  *   import('@eslint/core').RuleDefinitionTypeOptions
@@ -85,6 +86,7 @@ export const buildForbidRuleDefinition = ({
   contextName,
   contexts,
   description,
+  url,
 }) => {
   return iterateJsdoc(({
     // context,
@@ -122,7 +124,7 @@ export const buildForbidRuleDefinition = ({
     meta: {
       docs: {
         description: description ?? contextName ?? 'Reports when certain comment structures are present.',
-        url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-restricted-syntax.md#repos-sticky-header',
+        url: url ?? 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-restricted-syntax.md#repos-sticky-header',
       },
       fixable: 'code',
       schema: [],
@@ -210,6 +212,7 @@ index.rules = {
       },
     ],
     description: 'Requires a type for @next tags',
+    url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-next-type.md#repos-sticky-header',
   }),
   'require-param': requireParam,
   'require-param-description': requireParamDescription,
@@ -234,6 +237,7 @@ index.rules = {
       },
     ],
     description: 'Requires a type for @throws tags',
+    url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-throws-type.md#repos-sticky-header',
   }),
   'require-yields': requireYields,
   'require-yields-check': requireYieldsCheck,
@@ -246,6 +250,7 @@ index.rules = {
       },
     ],
     description: 'Requires a type for @yields tags',
+    url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-yields-type.md#repos-sticky-header',
   }),
   'sort-tags': sortTags,
   'tag-lines': tagLines,
@@ -668,6 +673,7 @@ export default index;
  *       forbid: {
  *         [contextName: string]: {
  *           description?: string,
+ *           url?: string,
  *           contexts: (string|{
  *             message: string,
  *             context: string,
@@ -755,6 +761,7 @@ export const jsdoc = function (cfg) {
           {
             contexts,
             description,
+            url,
           },
         ] of Object.entries(cfg.extraRuleDefinitions.forbid)) {
           outputConfig.plugins.jsdoc.rules[`forbid-${contextName}`] =
@@ -762,6 +769,7 @@ export const jsdoc = function (cfg) {
               contextName,
               contexts,
               description,
+              url,
             });
         }
       }

@@ -221,6 +221,22 @@ describe('buildForbidRuleDefinition', () => {
       'Reports when certain comment structures are present.',
     );
   });
+
+  it('Can supply `url`', () => {
+    const rule = buildForbidRuleDefinition({
+      contexts: [
+        {
+          comment: 'JsdocBlock:has(JsdocTag[tag=yields]:not([parsedType.type]))',
+          context: 'any',
+          message: '@yields should have a type',
+        },
+      ],
+      url: 'https://example.com',
+    });
+    expect(rule.meta?.docs?.url).to.equal(
+      'https://example.com',
+    );
+  });
 });
 
 for (const [
