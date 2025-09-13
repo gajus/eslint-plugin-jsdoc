@@ -1886,5 +1886,27 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
     },
+    {
+      code: `
+        /**
+         * Even if added to \`structuredTags\` as in our recommended config,
+         *   we don't want \`valid-types\` to report since
+         *   \`jsdoc/require-next-type\` already does this.
+         * @next
+         */
+        function a () {}
+      `,
+      settings: {
+        jsdoc: {
+          structuredTags: {
+            next: {
+              required: [
+                'type',
+              ],
+            },
+          },
+        },
+      },
+    },
   ],
 });

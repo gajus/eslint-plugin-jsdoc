@@ -328,7 +328,10 @@ export default iterateJsdoc(({
 
     // REQUIRED TYPE
     const mustHaveTypePosition = utils.tagMustHaveTypePosition(tag.tag, otherModeMaps);
-    if (mustHaveTypePosition !== false && !tag.type) {
+    if (mustHaveTypePosition !== false && !tag.type &&
+      // Auto-added to settings and has own rule already, so don't duplicate
+      tag.tag !== 'next'
+    ) {
       const modeInfo = mustHaveTypePosition === true ? '' : ` in "${mode}" mode`;
       report(`Tag @${tag.tag} must have a type${modeInfo}.`, null, tag);
 

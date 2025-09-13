@@ -902,5 +902,14 @@ function quux() {
 export function onGlobalEvent (selector, type, callback, options) {
   delegate(document, selector, type, callback, options)
 }
+
+/**
+ * Even if added to `structuredTags` as in our recommended config,
+ *   we don't want `valid-types` to report since
+ *   `jsdoc/require-next-type` already does this.
+ * @next
+ */
+function a () {}
+// Settings: {"jsdoc":{"structuredTags":{"next":{"required":["type"]}}}}
 ````
 
