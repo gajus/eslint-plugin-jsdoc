@@ -124,7 +124,7 @@ export const buildForbidRuleDefinition = ({
     meta: {
       docs: {
         description: description ?? contextName ?? 'Reports when certain comment structures are present.',
-        url: url ?? 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-restricted-syntax.md#repos-sticky-header',
+        url: url ?? 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/advanced.md#user-content-advanced-creating-your-own-rules',
       },
       fixable: 'code',
       schema: [],
