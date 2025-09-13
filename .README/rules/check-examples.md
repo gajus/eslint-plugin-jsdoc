@@ -135,37 +135,40 @@ by decreasing precedence:
 
 ### Rules Disabled by Default Unless `noDefaultExampleRules` is Set to `true`
 
-* `eol-last` - Insisting that a newline "always" be at the end is less likely
-  to be desired in sample code as with the code file convention.
+* `eol-last` (and `@stylistic/eol-last`) - Insisting that a newline "always"
+  be at the end is less likely to be desired in sample code as with the code
+  file convention.
 * `no-console` - This rule is unlikely to have inadvertent temporary debugging
   within examples.
-* `no-multiple-empty-lines` - This rule may be problematic for projects which
+* `no-multiple-empty-lines` (and `@stylistic/no-multiple-empty-lines`) - This
+  rule may be problematic for projects which
   use an initial newline just to start an example. Also, projects may wish to
   use extra lines within examples just for easier illustration
   purposes.
 * `no-undef` - Many variables in examples will be `undefined`.
 * `no-unused-vars` - It is common to define variables for clarity without
   always using them within examples.
-* `padded-blocks` - It can generally look nicer to pad a little even if one's
-  code follows more stringency as far as block padding.
+* `padded-blocks` (and `@stylistic/padded-blocks`) - It can generally look
+  nicer to pad a little even if one's code follows more stringency as far
+  as block padding.
 * `jsdoc/require-file-overview` - Shouldn't check example for jsdoc blocks.
 * `jsdoc/require-jsdoc` - Wouldn't expect jsdoc blocks within jsdoc blocks.
 * `import/no-unresolved` - One wouldn't generally expect example paths to
   resolve relative to the current JavaScript file as one would with real code.
 * `import/unambiguous` - Snippets in examples are likely too short to always
   include full import/export info.
-* `node/no-missing-import` - See `import/no-unresolved`.
-* `node/no-missing-require` -  See `import/no-unresolved`.
+* `node/no-missing-import` (and `n/no-missing-import`) - See `import/no-unresolved`.
+* `node/no-missing-require` (and `n/no-missing-require`) -  See `import/no-unresolved`.
 
 For `checkDefaults`, `checkParams`, and `checkProperties`, the following
 expression-oriented rules will be used by default as well:
 
-* `quotes` - Will insist on "double".
-* `semi` - Will insist on "never".
+* `quotes` (and `@stylistic/quotes`) - Will insist on "double".
+* `semi` (and `@stylistic/semi`) - Will insist on "never".
 * `strict` - Disabled.
 * `no-empty-function` - Disabled.
 * `no-new` - Disabled.
-* `no-unused-expressions` - Disabled.
+* `no-unused-expressions` (and `@typescript-eslint/no-unused-expressions`) - Disabled.
 * `chai-friendly/no-unused-expressions` - Disabled.
 
 ### Options for checking other than `@example` (`checkDefaults`, `checkParams`, or `checkProperties`)
