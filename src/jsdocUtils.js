@@ -1289,9 +1289,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
       hasNonFunctionYield(node.property, checkYieldReturnValue);
 
     case 'ObjectExpression':
-    /* eslint-disable no-fallthrough */
     case 'ObjectPattern':
-      /* eslint-enable no-fallthrough */
       return node.properties.some((property) => {
         return hasNonFunctionYield(property, checkYieldReturnValue);
       });
@@ -1414,7 +1412,6 @@ const hasYieldValue = (node, checkYieldReturnValue) => {
  * @param {boolean} [innerFunction]
  * @returns {boolean}
  */
-// eslint-disable-next-line complexity
 const hasThrowValue = (node, innerFunction) => {
   if (!node) {
     return false;

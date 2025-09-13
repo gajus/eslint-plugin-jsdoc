@@ -1,7 +1,6 @@
 import defaultTagOrder from '../defaultTagOrder.js';
 import iterateJsdoc from '../iterateJsdoc.js';
 
-// eslint-disable-next-line complexity -- Temporary
 export default iterateJsdoc(({
   context,
   jsdoc,
@@ -330,7 +329,6 @@ export default iterateJsdoc(({
 
       const ct = countTagEmptyLines(tag);
       if (ct) {
-        // eslint-disable-next-line complexity -- Temporary
         const fixer = () => {
           let foundFirstTag = false;
 

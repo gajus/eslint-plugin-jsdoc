@@ -3,11 +3,11 @@
 import {
   merge,
 } from 'object-deep-merge';
-import iterateJsdoc from './iterateJsdoc.js';
 
 import {
   getJsdocProcessorPlugin,
 } from './getJsdocProcessorPlugin.js';
+import iterateJsdoc from './iterateJsdoc.js';
 import checkAccess from './rules/checkAccess.js';
 import checkAlignment from './rules/checkAlignment.js';
 import checkExamples from './rules/checkExamples.js';
@@ -67,6 +67,89 @@ import textEscaping from './rules/textEscaping.js';
 import typeFormatting from './rules/typeFormatting.js';
 import validTypes from './rules/validTypes.js';
 
+/**
+ * @param {{
+ *   contexts: (string|{
+ *     comment: string,
+ *     context: string,
+ *     message: string
+ *   })[],
+ *   description?: string,
+ *   contextName?: string
+ * }} cfg
+ * @returns {import('@eslint/core').RuleDefinition<
+ *   import('@eslint/core').RuleDefinitionTypeOptions
+ * >}
+ */
+export const buildForbidRuleDefinition = ({
+  contextName,
+  contexts,
+  description,
+}) => {
+  return iterateJsdoc(({
+    // context,
+    info: {
+      comment,
+    },
+    report,
+    utils,
+  }) => {
+    const {
+      contextStr,
+      foundContext,
+    } = utils.findContext(contexts, comment);
+
+    // We are not on the *particular* matching context/comment, so don't assume
+    //   we need reporting
+    if (!foundContext) {
+      return;
+    }
+
+    const message = /** @type {import('./iterateJsdoc.js').ContextObject} */ (
+      foundContext
+    )?.message ??
+      'Syntax is restricted: {{context}}' +
+        (comment ? ' with {{comment}}' : '');
+
+    report(message, null, null, comment ? {
+      comment,
+      context: contextStr,
+    } : {
+      context: contextStr,
+    });
+  }, {
+    contextSelected: true,
+    meta: {
+      docs: {
+        description: description ?? contextName ?? 'Reports when certain comment structures are present.',
+        url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-restricted-syntax.md#repos-sticky-header',
+      },
+      fixable: 'code',
+      schema: [],
+      type: 'suggestion',
+    },
+    modifyContext: (context) => {
+      // Reproduce context object with our own `contexts`
+      const propertyDescriptors = Object.getOwnPropertyDescriptors(context);
+      return Object.create(
+        Object.getPrototypeOf(context),
+        {
+          ...propertyDescriptors,
+          options: {
+            ...propertyDescriptors.options,
+            value: [
+              {
+                contexts,
+              },
+            ],
+          },
+        },
+      );
+    },
+    nonGlobalSettings: true,
+  });
+};
+
 /* eslint-disable jsdoc/valid-types -- Bug */
 /**
  * @typedef {"recommended" | "stylistic" | "contents" | "logical" | "requirements"} ConfigGroups
@@ -118,6 +201,16 @@ index.rules = {
   'require-file-overview': requireFileOverview,
   'require-hyphen-before-param-description': requireHyphenBeforeParamDescription,
   'require-jsdoc': requireJsdoc,
+  'require-next-type': buildForbidRuleDefinition({
+    contexts: [
+      {
+        comment: 'JsdocBlock:has(JsdocTag[tag=next]:not([parsedType.type]))',
+        context: 'any',
+        message: '@next should have a type',
+      },
+    ],
+    description: 'Requires a type for @next tags',
+  }),
   'require-param': requireParam,
   'require-param-description': requireParamDescription,
   'require-param-name': requireParamName,
@@ -132,8 +225,28 @@ index.rules = {
   'require-returns-type': requireReturnsType,
   'require-template': requireTemplate,
   'require-throws': requireThrows,
+  'require-throws-type': buildForbidRuleDefinition({
+    contexts: [
+      {
+        comment: 'JsdocBlock:has(JsdocTag[tag=throws]:not([parsedType.type]))',
+        context: 'any',
+        message: '@throws should have a type',
+      },
+    ],
+    description: 'Requires a type for @throws tags',
+  }),
   'require-yields': requireYields,
   'require-yields-check': requireYieldsCheck,
+  'require-yields-type': buildForbidRuleDefinition({
+    contexts: [
+      {
+        comment: 'JsdocBlock:has(JsdocTag[tag=yields]:not([parsedType.type]))',
+        context: 'any',
+        message: '@yields should have a type',
+      },
+    ],
+    description: 'Requires a type for @yields tags',
+  }),
   'sort-tags': sortTags,
   'tag-lines': tagLines,
   'text-escaping': textEscaping,
@@ -196,6 +309,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/require-file-overview': 'off',
       'jsdoc/require-hyphen-before-param-description': 'off',
       'jsdoc/require-jsdoc': warnOrError,
+      'jsdoc/require-next-type': warnOrError,
       'jsdoc/require-param': warnOrError,
       'jsdoc/require-param-description': warnOrError,
       'jsdoc/require-param-name': warnOrError,
@@ -210,8 +324,10 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/require-returns-type': warnOrError,
       'jsdoc/require-template': 'off',
       'jsdoc/require-throws': 'off',
+      'jsdoc/require-throws-type': warnOrError,
       'jsdoc/require-yields': warnOrError,
       'jsdoc/require-yields-check': warnOrError,
+      'jsdoc/require-yields-type': warnOrError,
       'jsdoc/sort-tags': 'off',
       'jsdoc/tag-lines': warnOrError,
       'jsdoc/text-escaping': 'off',
@@ -345,6 +461,7 @@ const createLogicalTypescriptFlavorRuleset = createStandaloneRulesetFactory(logi
 const requirementsRules = [
   'jsdoc/require-example',
   'jsdoc/require-jsdoc',
+  'jsdoc/require-next-type',
   'jsdoc/require-param',
   'jsdoc/require-param-description',
   'jsdoc/require-param-name',
@@ -353,7 +470,9 @@ const requirementsRules = [
   'jsdoc/require-property-name',
   'jsdoc/require-returns',
   'jsdoc/require-returns-description',
+  'jsdoc/require-throws-type',
   'jsdoc/require-yields',
+  'jsdoc/require-yields-type',
 ];
 
 const createRequirementsTypeScriptRuleset = createStandaloneRulesetFactory(requirementsRules);
@@ -537,105 +656,6 @@ index.configs['examples-and-default-expressions'] = /** @type {import('eslint').
 
 export default index;
 
-/**
- * @param {{
- *   contexts: (string|{
- *     comment: string,
- *     context: string,
- *     message: string
- *   })[],
- *   description?: string,
- *   contextName: string
- * }} cfg
- * @returns {import('@eslint/core').RuleDefinition<
- *   import('@eslint/core').RuleDefinitionTypeOptions
- * >}
- */
-const buildForbidRuleDefinition = ({
-  contextName,
-  contexts,
-  description,
-}) => {
-  return iterateJsdoc(({
-    // context,
-    info: {
-      comment,
-    },
-    report,
-    utils,
-  }) => {
-    const {
-      contextStr,
-      foundContext,
-    } = utils.findContext(contexts, comment);
-
-    // We are not on the *particular* matching context/comment, so don't assume
-    //   we need reporting
-    if (!foundContext) {
-      return;
-    }
-
-    const message = /** @type {import('./iterateJsdoc.js').ContextObject} */ (
-      foundContext
-    )?.message ??
-      'Syntax is restricted: {{context}}' +
-        (comment ? ' with {{comment}}' : '');
-
-    report(message, null, null, comment ? {
-      comment,
-      context: contextStr,
-    } : {
-      context: contextStr,
-    });
-  }, {
-    contextSelected: true,
-    meta: {
-      docs: {
-        description: description ?? contextName ?? 'Reports when certain comment structures are present.',
-        url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-restricted-syntax.md#repos-sticky-header',
-      },
-      fixable: 'code',
-      schema: [],
-      type: 'suggestion',
-    },
-    modifyContext: (context) => {
-      return {
-        cwd: context.cwd,
-        filename: context.filename,
-        getCwd (...args) {
-          return context.getCwd(...args);
-        },
-        getFilename (...args) {
-          return context.getFilename(...args);
-        },
-        getPhysicalFilename (...args) {
-          return context.getPhysicalFilename(...args);
-        },
-        getSourceCode (...args) {
-          return context.getSourceCode(...args);
-        },
-        id: context.id,
-        languageOptions: context.languageOptions,
-        // Here's why we override:
-        options: [
-          {
-            contexts,
-          },
-        ],
-        parserOptions: context.parserOptions,
-        parserPath: context.parserPath,
-        physicalFilename: context.physicalFilename,
-        report (...args) {
-          return context.report(...args);
-        },
-        settings: context.settings,
-        sourceCode: context.sourceCode,
-      };
-    },
-    nonGlobalSettings: true,
-  });
-};
-
 /* eslint-disable jsdoc/valid-types -- Bug */
 /**
  * @type {((
@@ -760,16 +780,6 @@ export const jsdoc = function (cfg) {
             //   if support is later added: https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html
             structuredTags: {
               next: {
-                required: [
-                  'type',
-                ],
-              },
-              throws: {
-                required: [
-                  'type',
-                ],
-              },
-              yields: {
                 required: [
                   'type',
                 ],

@@ -1,4 +1,5 @@
 import jsdocDefault, {
+  buildForbidRuleDefinition,
   jsdoc,
 } from '../src/index.js';
 import {
@@ -7,6 +8,9 @@ import {
 import {
   expect,
 } from 'chai';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
 
 describe('jsdoc()', () => {
   it('Builds simple plugins config', () => {
@@ -118,16 +122,6 @@ describe('jsdoc()', () => {
               'type',
             ],
           },
-          throws: {
-            required: [
-              'type',
-            ],
-          },
-          yields: {
-            required: [
-              'type',
-            ],
-          },
         },
       },
     });
@@ -160,16 +154,6 @@ describe('jsdoc()', () => {
             name: 'namepath-referencing',
             required: [
               'name',
-            ],
-          },
-          throws: {
-            required: [
-              'type',
-            ],
-          },
-          yields: {
-            required: [
-              'type',
             ],
           },
         },
@@ -205,6 +189,37 @@ describe('jsdoc()', () => {
         },
       },
     });
+  });
+
+  it('throws when no jsdoc plugin is present with `extraRuleDefinitions`', () => {
+    expect(() => {
+      jsdoc({
+        config: 'flat/stylistic-typescript-flavor',
+        extraRuleDefinitions: {
+          forbid: {},
+        },
+        plugins: {
+          jsdoc: {},
+        },
+      });
+    }).to.throw();
+  });
+});
+
+describe('buildForbidRuleDefinition', () => {
+  it('Falls back in description when `description` and `contextName` are missing', () => {
+    const rule = buildForbidRuleDefinition({
+      contexts: [
+        {
+          comment: 'JsdocBlock:has(JsdocTag[tag=yields]:not([parsedType.type]))',
+          context: 'any',
+          message: '@yields should have a type',
+        },
+      ],
+    });
+    expect(rule.meta?.docs?.description).to.equal(
+      'Reports when certain comment structures are present.',
+    );
   });
 });
 
@@ -265,6 +280,178 @@ for (const [
         ],
       },
     ],
+    [
+      'AnyNoMessage',
+      [
+        {
+          comment: 'JsdocBlock:has(JsdocTypeName[value="any"])',
+          context: 'any',
+        },
+      ],
+      {
+        invalid: [
+          {
+            code: `
+              /**
+               * @param {Promise<any>}
+               */
+              function quux () {
+
+              }
+            `,
+            errors: [
+              {
+                line: 2,
+                message: 'Syntax is restricted: any with JsdocBlock:has(JsdocTypeName[value="any"])',
+              },
+            ],
+          },
+        ],
+        valid: [
+          {
+            code: `
+              /**
+               * @param {Promise<NotAny>}
+               */
+              function quux () {
+
+              }
+            `,
+          },
+        ],
+      },
+    ],
+    [
+      'FunctionDeclaration',
+      [
+        {
+          context: 'FunctionDeclaration',
+          message: '`FunctionDeclaration` is not allowed with JSDoc; use another function type',
+        },
+      ],
+      {
+        invalid: [
+          {
+            code: `
+              /**
+               *
+               */
+              function quux () {
+
+              }
+            `,
+            errors: [
+              {
+                line: 2,
+                message: '`FunctionDeclaration` is not allowed with JSDoc; use another function type',
+              },
+            ],
+          },
+        ],
+        valid: [
+          {
+            code: `
+              /**
+               *
+               */
+              const quux = function () {
+
+              };
+            `,
+          },
+        ],
+      },
+    ],
+    [
+      'FunctionDeclarationNoMessage',
+      [
+        {
+          context: 'FunctionDeclaration',
+        },
+      ],
+      {
+        invalid: [
+          {
+            code: `
+              /**
+               *
+               */
+              function quux () {
+
+              }
+            `,
+            errors: [
+              {
+                line: 2,
+                message: 'Syntax is restricted: FunctionDeclaration',
+              },
+            ],
+          },
+        ],
+        valid: [
+          {
+            code: `
+              /**
+               *
+               */
+              const quux = function () {
+
+              };
+            `,
+          },
+        ],
+      },
+    ],
+    [
+      'EnumAndAccess',
+      [
+        {
+          comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])',
+          context: 'any',
+          message: 'Access modifier tags must come first',
+        },
+        {
+          comment: 'JsdocBlock[postDelimiter=""]:has(JsdocTag[tag="enum"])',
+          context: ':declaration:not(TSEnumDeclaration):not(:has(ObjectExpression)), :function',
+          message: '@enum is only allowed on potential enum types',
+        },
+      ],
+      {
+        invalid: [
+          {
+            code: `
+              /**
+               * @enum {String}
+               * @private
+               * Object holding values of some custom enum
+               */
+              const MY_ENUM = Object.freeze({
+                VAL_A: "myvala"
+              } as const);
+            `,
+            errors: [
+              {
+                line: 2,
+                message: 'Access modifier tags must come first',
+              },
+            ],
+          },
+        ],
+        valid: [
+          {
+            code: `
+              /**
+               * @enum {String}
+               * Object holding values of some custom enum
+               */
+              const MY_ENUM = Object.freeze({
+                VAL_A: "myvala"
+              } as const);
+            `,
+          },
+        ],
+      },
+    ],
   ])) {
   runRuleTests({
     assertions,
@@ -278,6 +465,9 @@ for (const [
         },
       },
     }).plugins?.jsdoc,
+    languageOptions: {
+      parser: typescriptEslintParser,
+    },
     ruleName: `forbid-${contextName}`,
   });
 }

@@ -16,7 +16,6 @@ export default iterateJsdoc(({
     } = {},
   ] = context.options;
 
-  // eslint-disable-next-line complexity -- Temporary
   jsdoc.tags.some((tg, tagIdx) => {
     let lastTag;
 
