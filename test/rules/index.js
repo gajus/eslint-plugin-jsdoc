@@ -32,13 +32,17 @@ const ruleTester = new RuleTester();
  *   assertions: TestCases,
  *   ruleName: string,
  *   valid?: string,
- *   invalid?: string
+ *   invalid?: string,
+ *   languageOptions?: import('eslint').Linter.LanguageOptions,
  * }} cfg
  */
 export const runRuleTests = ({
   assertions,
   config,
   invalid,
+  languageOptions = {
+    ecmaVersion: 'latest',
+  },
   ruleName,
   valid,
 }) => {
@@ -49,11 +53,6 @@ export const runRuleTests = ({
   const rule = /** @type {import('eslint').Rule.RuleModule} */ (
     config.rules[ruleName]
   );
-
-  /** @type {{ecmaVersion: import('eslint').Linter.EcmaVersion}} */
-  const languageOptions = {
-    ecmaVersion: 'latest',
-  };
 
   if (!(rule.meta && 'schema' in rule.meta) && (
     assertions.invalid.some((item) => {
@@ -152,7 +151,6 @@ export const runRuleTests = ({
   }
 };
 
-// eslint-disable-next-line complexity -- Temporary
 const main = async () => {
   const ruleNames = JSON.parse(readFileSync(join(
     import.meta.dirname, './ruleNames.json',

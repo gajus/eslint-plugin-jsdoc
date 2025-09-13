@@ -2,113 +2,15 @@
 import {
   merge,
 } from 'object-deep-merge';
-import iterateJsdoc from './iterateJsdoc.js';
 
 // BEGIN REPLACE
-import index from './index-cjs.js';
+import index, {
+  buildForbidRuleDefinition,
+} from './index-cjs.js';
 
 // eslint-disable-next-line unicorn/prefer-export-from --- Reusing `index`
 export default index;
 // END REPLACE
-
-/**
- * @param {{
- *   contexts: (string|{
- *     comment: string,
- *     context: string,
- *     message: string
- *   })[],
- *   description?: string,
- *   contextName: string
- * }} cfg
- * @returns {import('@eslint/core').RuleDefinition<
- *   import('@eslint/core').RuleDefinitionTypeOptions
- * >}
- */
-const buildForbidRuleDefinition = ({
-  contextName,
-  contexts,
-  description,
-}) => {
-  return iterateJsdoc(({
-    // context,
-    info: {
-      comment,
-    },
-    report,
-    utils,
-  }) => {
-    const {
-      contextStr,
-      foundContext,
-    } = utils.findContext(contexts, comment);
-
-    // We are not on the *particular* matching context/comment, so don't assume
-    //   we need reporting
-    if (!foundContext) {
-      return;
-    }
-
-    const message = /** @type {import('./iterateJsdoc.js').ContextObject} */ (
-      foundContext
-    )?.message ??
-      'Syntax is restricted: {{context}}' +
-        (comment ? ' with {{comment}}' : '');
-
-    report(message, null, null, comment ? {
-      comment,
-      context: contextStr,
-    } : {
-      context: contextStr,
-    });
-  }, {
-    contextSelected: true,
-    meta: {
-      docs: {
-        description: description ?? contextName ?? 'Reports when certain comment structures are present.',
-        url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-restricted-syntax.md#repos-sticky-header',
-      },
-      fixable: 'code',
-      schema: [],
-      type: 'suggestion',
-    },
-    modifyContext: (context) => {
-      return {
-        cwd: context.cwd,
-        filename: context.filename,
-        getCwd (...args) {
-          return context.getCwd(...args);
-        },
-        getFilename (...args) {
-          return context.getFilename(...args);
-        },
-        getPhysicalFilename (...args) {
-          return context.getPhysicalFilename(...args);
-        },
-        getSourceCode (...args) {
-          return context.getSourceCode(...args);
-        },
-        id: context.id,
-        languageOptions: context.languageOptions,
-        // Here's why we override:
-        options: [
-          {
-            contexts,
-          },
-        ],
-        parserOptions: context.parserOptions,
-        parserPath: context.parserPath,
-        physicalFilename: context.physicalFilename,
-        report (...args) {
-          return context.report(...args);
-        },
-        settings: context.settings,
-        sourceCode: context.sourceCode,
-      };
-    },
-    nonGlobalSettings: true,
-  });
-};
 
 /* eslint-disable jsdoc/valid-types -- Bug */
 /**
@@ -234,16 +136,6 @@ export const jsdoc = function (cfg) {
             //   if support is later added: https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html
             structuredTags: {
               next: {
-                required: [
-                  'type',
-                ],
-              },
-              throws: {
-                required: [
-                  'type',
-                ],
-              },
-              yields: {
                 required: [
                   'type',
                 ],

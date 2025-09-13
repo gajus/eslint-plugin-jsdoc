@@ -33,7 +33,6 @@ const canSkip = (utils, settings) => {
     settings.mode === 'closure' && utils.classHasTag('record');
 };
 
-// eslint-disable-next-line complexity -- Temporary
 export default iterateJsdoc(({
   context,
   node,

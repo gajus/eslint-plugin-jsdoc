@@ -22,7 +22,6 @@ export default iterateJsdoc(({
 
   const middleAsterisks = allowWhitespace ? middleAsterisksNoBlockWS : middleAsterisksBlockWS;
 
-  // eslint-disable-next-line complexity -- Todo
   jsdoc.source.some(({
     number,
     tokens,

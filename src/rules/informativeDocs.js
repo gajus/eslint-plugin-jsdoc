@@ -13,8 +13,6 @@ const defaultUselessWords = [
   'a', 'an', 'i', 'in', 'of', 's', 'the',
 ];
 
-/* eslint-disable complexity -- Temporary */
-
 /**
  * @param {import('eslint').Rule.Node|import('@typescript-eslint/types').TSESTree.Node|null|undefined} node
  * @returns {string[]}
@@ -89,7 +87,6 @@ const getNamesFromNode = (node) => {
       return [];
   }
 };
-/* eslint-enable complexity -- Temporary */
 
 export default iterateJsdoc(({
   context,
