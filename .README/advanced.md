@@ -101,9 +101,10 @@ then be selectively enabled and optionally disabled on a case-by-case basis.
 
 For each `forbid` key, add the name of the context (this will be appended to
 `forbid-` to decide the name of the rule, so with "Any" as the key, the rule
-created will be `forbid-Any`). Then provide an optional `description` key
-(which will be used for the created rule's `meta.docs.description`) and the
-`contexts` array. See the `jsdoc/restricted-syntax` rule for more details.
+created will be `forbid-Any`). Then provide an optional `description` and
+`url` keys (which will be used for the created rule's `meta.docs`
+`description` and `url` properties) and the `contexts` array.
+See the `jsdoc/restricted-syntax` rule for more details.
 
 ```js
 import {jsdoc} from 'eslint-plugin-jsdoc';
@@ -121,7 +122,8 @@ export default [
               message: '`any` is not allowed; use a more specific type',
             },
           ],
-          descriptions: 'Testing here',
+          description: 'Forbids `any` usage',
+          url: 'https://example.com/docs-for-my-any-rule/'
         },
         Function: {
           contexts: [
