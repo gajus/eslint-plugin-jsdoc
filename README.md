@@ -48,7 +48,9 @@ npm install --save-dev eslint-plugin-jsdoc
 <a name="eslint-plugin-jsdoc-configuration-flat-config-procedural"></a>
 ### Flat config (procedural)
 
-This is the currently recommended approach.
+This is the currently recommended approach for all flat configs (besides the
+array-based `examples`, `default-expressions`, and
+`examples-and-default-expressions` configs).
 
 ```js
 import {jsdoc} from 'eslint-plugin-jsdoc';
