@@ -40,7 +40,6 @@ const recommended = options.includes('--recommended');
   }
 
   const ruleNamesPath = './test/rules/ruleNames.json';
-  // @ts-expect-error Older types?
   const ruleNames = JSON.parse(await fs.readFile(
     ruleNamesPath,
   ));
