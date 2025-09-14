@@ -4,9 +4,10 @@ import {
 } from 'object-deep-merge';
 
 // BEGIN REPLACE
-import index, {
+import index from './index-cjs.js';
+import {
   buildForbidRuleDefinition,
-} from './index-cjs.js';
+} from './buildForbidRuleDefinition.js';
 
 // eslint-disable-next-line unicorn/prefer-export-from --- Reusing `index`
 export default index;

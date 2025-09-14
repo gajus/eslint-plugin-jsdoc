@@ -1,5 +1,7 @@
-import jsdocDefault, {
+import {
   buildForbidRuleDefinition,
+} from '../src/buildForbidRuleDefinition.js';
+import jsdocDefault, {
   jsdoc,
 } from '../src/index.js';
 import {
