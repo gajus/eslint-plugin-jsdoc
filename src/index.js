@@ -561,6 +561,15 @@ index.configs.examples = /** @type {import('eslint').Linter.Config[]} */ ([
     name: 'jsdoc/examples/rules',
     rules: {
       // "always" newline rule at end unlikely in sample code
+      '@stylistic/eol-last': 0,
+      // Often wish to start `@example` code after newline; also may use
+      //   empty lines for spacing
+      '@stylistic/no-multiple-empty-lines': 0,
+
+      // Can generally look nicer to pad a little even if code imposes more stringency
+      '@stylistic/padded-blocks': 0,
+
+      // "always" newline rule at end unlikely in sample code
       'eol-last': 0,
 
       // Wouldn't generally expect example paths to resolve relative to JS file
@@ -574,6 +583,11 @@ index.configs.examples = /** @type {import('eslint').Linter.Config[]} */ ([
       // The end of a multiline comment would end the comment the example is in.
       'jsdoc/require-jsdoc': 0,
 
+      // See import/no-unresolved
+      'n/no-missing-import': 0,
+
+      'n/no-missing-require': 0,
+
       // Unlikely to have inadvertent debugging within examples
       'no-console': 0,
 
@@ -583,7 +597,6 @@ index.configs.examples = /** @type {import('eslint').Linter.Config[]} */ ([
 
       // Many variables in examples will be `undefined`
       'no-undef': 0,
-
       // Common to define variables for clarity without always using them
       'no-unused-vars': 0,
 
@@ -619,6 +632,13 @@ index.configs['default-expressions'] = /** @type {import('eslint').Linter.Config
     name: 'jsdoc/default-expressions/rules',
     rules: {
       ...index.configs.examples[1].rules,
+      '@stylistic/quotes': [
+        'error', 'double',
+      ],
+      '@stylistic/semi': [
+        'error', 'never',
+      ],
+      '@typescript-eslint/no-unused-expressions': 0,
       'chai-friendly/no-unused-expressions': 0,
       'no-empty-function': 0,
       'no-new': 0,
