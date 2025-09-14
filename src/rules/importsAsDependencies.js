@@ -22,8 +22,7 @@ let deps;
 const setDeps = function () {
   try {
     const pkg = JSON.parse(
-      // @ts-expect-error It's ok
-      readFileSync(join(process.cwd(), './package.json')),
+      readFileSync(join(process.cwd(), './package.json'), 'utf8'),
     );
     deps = new Set([
       ...(pkg.dependencies ?
@@ -98,8 +97,7 @@ export default iterateJsdoc(({
           let pkg;
           try {
             pkg = JSON.parse(
-              // @ts-expect-error It's ok
-              readFileSync(join(process.cwd(), 'node_modules', mod, './package.json')),
+              readFileSync(join(process.cwd(), 'node_modules', mod, './package.json'), 'utf8'),
             );
           } catch {
             // Ignore

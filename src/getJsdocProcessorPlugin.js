@@ -30,8 +30,7 @@ import {
 const {
   version,
 } = JSON.parse(
-  // @ts-expect-error `Buffer` is ok for `JSON.parse`
-  readFileSync(join(import.meta.dirname, '../package.json')),
+  readFileSync(join(import.meta.dirname, '../package.json'), 'utf8'),
 );
 
 // const zeroBasedLineIndexAdjust = -1;
