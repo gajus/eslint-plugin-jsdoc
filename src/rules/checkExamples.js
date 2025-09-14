@@ -47,6 +47,8 @@ const defaultMdRules = {
   // Can generally look nicer to pad a little even if code imposes more stringency
   '@stylistic/padded-blocks': 0,
 
+  '@typescript-eslint/no-unused-vars': 0,
+
   // "always" newline rule at end unlikely in sample code
   'eol-last': 0,
 
