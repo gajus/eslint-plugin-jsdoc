@@ -95,6 +95,66 @@ For defaults, a couple rules are enabled which are usually useful:
   context for double quotes to be used.
 - `semi` - Set to 'never' since a semi-colon is not desirable in this context.
 
+<a name="user-content-processors-use-with-typescript"></a>
+<a name="processors-use-with-typescript"></a>
+### Use with TypeScript
+
+```js
+import {getJsdocProcessorPlugin} from 'eslint-plugin-jsdoc';
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
+
+export default [
+  {
+    files: [
+      '**/*.ts',
+    ],
+    languageOptions: {
+      // Allows normal processing of TS files
+      parser: typescriptEslintParser
+    },
+
+    // Apply the processor to these TypeScript files
+    name: 'jsdoc/examples/processor',
+    plugins: {
+      examples: getJsdocProcessorPlugin({
+        // Allows processor to parse TS files for @example tags
+        parser: typescriptEslintParser,
+        // In order to avoid the default of processing our examples
+        //   as *.js files, we indicate the inner blocks are TS.
+        //   This allows us to target the examples as TS files, as
+        //     we do below.
+        matchingFileName: 'dummy.md/*.ts',
+        // If you only want to match @example content within fenced
+        //    Markdown blocks, use:
+        // exampleCodeRegex: "^```ts([\\s\\S]*)```\\s*$"
+      }),
+    },
+    processor: 'examples/examples'
+  },
+  {
+    // Target the blocks within TypeScript
+    files: [
+      // `**/*.ts` could also work if you want to share this config
+      //   with other non-@example TypeScript
+      '**/*.md/*.ts',
+    ],
+    name: 'jsdoc/examples/rules',
+    languageOptions: {
+      // Allows @example itself to use TS
+      parser: typescriptEslintParser,
+    },
+    rules: {
+      // Add the rules you want to apply to @example here
+      'no-extra-semi': 'error',
+      // disable problematic rules here, e.g.,
+      // ...jsdoc.configs.examples[1].rules
+    }
+  }
+];
+```
+
 <a name="user-content-processors-options"></a>
 <a name="processors-options"></a>
 ### Options
