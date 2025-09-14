@@ -97,7 +97,7 @@ For defaults, a couple rules are enabled which are usually useful:
 
 ```js
 import {getJsdocProcessorPlugin} from 'eslint-plugin-jsdoc';
-import {
+import ts, {
   parser as typescriptEslintParser,
 } from 'typescript-eslint';
 
@@ -129,8 +129,10 @@ export default [
     },
     processor: 'examples/examples'
   },
+  // Apply your TypeScript config
+  ...ts.configs.recommended,
   {
-    // Target the blocks within TypeScript
+    // Target the @example blocks within TypeScript
     files: [
       // `**/*.ts` could also work if you want to share this config
       //   with other non-@example TypeScript
@@ -144,8 +146,13 @@ export default [
     rules: {
       // Add the rules you want to apply to @example here
       'no-extra-semi': 'error',
+
       // disable problematic rules here, e.g.,
       // ...jsdoc.configs.examples[1].rules
+
+      // Due to https://github.com/gajus/eslint-plugin-jsdoc/issues/1377 ,
+      //   `typescript-eslint` type-checked rules must currently be disbaled
+      ...ts.configs.disableTypeChecked.rules
     }
   }
 ];
