@@ -36,8 +36,8 @@ export default index;
  *   }
  * ) => import('eslint').Linter.Config)}
  */
-/* eslint-enable jsdoc/valid-types -- Bug */
 export const jsdoc = function (cfg) {
+  /* eslint-enable jsdoc/valid-types -- Bug */
   /** @type {import('eslint').Linter.Config} */
   let outputConfig = {
     plugins: {
@@ -52,7 +52,7 @@ export const jsdoc = function (cfg) {
         throw new TypeError('Disallowed config value');
       }
 
-      outputConfig = index.configs[cfg.config];
+      outputConfig = /** @type {import('eslint').Linter.Config} */ (index.configs[cfg.config]);
     }
 
     if (cfg.rules) {

@@ -159,7 +159,7 @@ export const buildForbidRuleDefinition = ({
  * @typedef {"" | "-error"} ErrorLevelVariants
  * @type {import('eslint').ESLint.Plugin & {
  *   configs: Record<`flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`,
- *   import('eslint').Linter.Config>
+ *   import('eslint').Linter.Config>|Record<"examples"|"default-expressions"|"examples-and-default-expressions", import('eslint').Linter.Config[]>
  * }}
  */
 const index = {};
@@ -705,8 +705,8 @@ export default index;
  *   }
  * ) => import('eslint').Linter.Config)}
  */
-/* eslint-enable jsdoc/valid-types -- Bug */
 export const jsdoc = function (cfg) {
+  /* eslint-enable jsdoc/valid-types -- Bug */
   /** @type {import('eslint').Linter.Config} */
   let outputConfig = {
     plugins: {
@@ -721,7 +721,7 @@ export const jsdoc = function (cfg) {
         throw new TypeError('Disallowed config value');
       }
 
-      outputConfig = index.configs[cfg.config];
+      outputConfig = /** @type {import('eslint').Linter.Config} */ (index.configs[cfg.config]);
     }
 
     if (cfg.rules) {

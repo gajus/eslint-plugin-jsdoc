@@ -153,7 +153,7 @@ export const buildForbidRuleDefinition = ({
  * @typedef {"" | "-error"} ErrorLevelVariants
  * @type {import('eslint').ESLint.Plugin & {
  *   configs: Record<`flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`,
- *   import('eslint').Linter.Config>
+ *   import('eslint').Linter.Config>|Record<"examples"|"default-expressions"|"examples-and-default-expressions", import('eslint').Linter.Config[]>
  * }}
  */
 const index = {};
