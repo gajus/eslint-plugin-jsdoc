@@ -48,6 +48,13 @@ each object property-value pair.
 
 Defaults to `"comma"`.
 
+### `objectFieldSeparatorOptionalLinebreak`
+
+Whether `objectFieldSeparator` set to `"semicolon-and-linebreak"` or
+`"comma-and-linebreak"` should be allowed to optionally drop the linebreak.
+
+Defaults to `true`.
+
 ### `objectFieldIndent`
 
 A string indicating the whitespace to be added on each line preceding an
@@ -82,7 +89,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`
 |Tags|`param`, `property`, `returns`, `this`, `throws`, `type`, `typedef`, `yields`|
 |Recommended|false|
 |Settings|`mode`|
-|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorTrailingPunctuation`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
+|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 ## Failing examples
 

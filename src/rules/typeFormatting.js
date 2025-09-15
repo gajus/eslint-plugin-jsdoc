@@ -22,6 +22,7 @@ export default iterateJsdoc(({
     objectFieldIndent = '',
     objectFieldQuote = null,
     objectFieldSeparator = 'comma',
+    objectFieldSeparatorOptionalLinebreak = true,
     objectFieldSeparatorTrailingPunctuation = false,
     propertyQuotes = null,
     separatorForSingleObjectField = false,
@@ -232,14 +233,21 @@ export default iterateJsdoc(({
 
         case 'JsdocTypeObject': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').ObjectResult} */ (nde);
+          /* c8 ignore next -- Guard */
+          const separator = typeNode.meta.separator ?? 'comma';
           if (
-            /* c8 ignore next -- Guard */
-            (typeNode.meta.separator ?? 'comma') !== objectFieldSeparator ||
+            (separator !== objectFieldSeparator &&
+              (!objectFieldSeparatorOptionalLinebreak ||
+                !(objectFieldSeparator.endsWith('-linebreak') &&
+                  objectFieldSeparator.startsWith(separator)))) ||
             (typeNode.meta.separatorForSingleObjectField ?? false) !== separatorForSingleObjectField ||
-            (typeNode.meta.propertyIndent ?? '') !== objectFieldIndent ||
+            ((typeNode.meta.propertyIndent ?? '') !== objectFieldIndent &&
+              separator.endsWith('-linebreak')) ||
             (typeNode.meta.trailingPunctuation ?? false) !== objectFieldSeparatorTrailingPunctuation
           ) {
-            typeNode.meta.separator = objectFieldSeparator;
+            typeNode.meta.separator = objectFieldSeparatorOptionalLinebreak && !separator.endsWith('and-linebreak') ?
+              objectFieldSeparator.replace(/-and-linebreak$/v, '') :
+              objectFieldSeparator;
             typeNode.meta.separatorForSingleObjectField = separatorForSingleObjectField;
             typeNode.meta.propertyIndent = objectFieldIndent;
             typeNode.meta.trailingPunctuation = objectFieldSeparatorTrailingPunctuation;
@@ -390,6 +398,9 @@ export default iterateJsdoc(({
               'semicolon',
               'semicolon-and-linebreak',
             ],
+          },
+          objectFieldSeparatorOptionalLinebreak: {
+            type: 'boolean',
           },
           objectFieldSeparatorTrailingPunctuation: {
             type: 'boolean',

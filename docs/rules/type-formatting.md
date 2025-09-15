@@ -66,6 +66,15 @@ each object property-value pair.
 
 Defaults to `"comma"`.
 
+<a name="user-content-type-formatting-options-objectfieldseparatoroptionallinebreak"></a>
+<a name="type-formatting-options-objectfieldseparatoroptionallinebreak"></a>
+### <code>objectFieldSeparatorOptionalLinebreak</code>
+
+Whether `objectFieldSeparator` set to `"semicolon-and-linebreak"` or
+`"comma-and-linebreak"` should be allowed to optionally drop the linebreak.
+
+Defaults to `true`.
+
 <a name="user-content-type-formatting-options-objectfieldindent"></a>
 <a name="type-formatting-options-objectfieldindent"></a>
 ### <code>objectFieldIndent</code>
@@ -110,7 +119,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`
 |Tags|`param`, `property`, `returns`, `this`, `throws`, `type`, `typedef`, `yields`|
 |Recommended|false|
 |Settings|`mode`|
-|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorTrailingPunctuation`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
+|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
 <a name="type-formatting-failing-examples"></a>
@@ -281,6 +290,21 @@ The following patterns are considered problems:
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"propertyQuotes":null}]
 // Message: Inconsistent null property quotes usage
+
+/**
+ * @param {{a: string, b: number}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon-and-linebreak","objectFieldSeparatorOptionalLinebreak":true}]
+// Message: Inconsistent semicolon-and-linebreak separator usage
+
+/**
+ * @param {{
+ *   a: string,
+ *   b: number
+ * }} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon-and-linebreak","objectFieldSeparatorOptionalLinebreak":true}]
+// Message: Inconsistent semicolon-and-linebreak separator usage
 ````
 
 
@@ -357,5 +381,18 @@ The following patterns are not considered problems:
 /**
  * @param cfg
  */
+
+/**
+ * @param {{a: string; b: number}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon-and-linebreak","objectFieldSeparatorOptionalLinebreak":true}]
+
+/**
+ * @param {{
+ *   a: string;
+ *   b: number
+ * }} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon-and-linebreak","objectFieldSeparatorOptionalLinebreak":true}]
 ````
 
