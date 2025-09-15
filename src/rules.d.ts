@@ -766,6 +766,7 @@ export interface Rules {
           objectFieldIndent?: string;
           objectFieldQuote?: "double" | "single" | null;
           objectFieldSeparator?: "comma" | "comma-and-linebreak" | "linebreak" | "semicolon" | "semicolon-and-linebreak";
+          objectFieldSeparatorOptionalLinebreak?: boolean;
           objectFieldSeparatorTrailingPunctuation?: boolean;
           propertyQuotes?: "double" | "single" | null;
           separatorForSingleObjectField?: boolean;

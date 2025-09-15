@@ -650,6 +650,62 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @param {{a: string, b: number}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent semicolon-and-linebreak separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldIndent: '  ',
+          objectFieldSeparator: 'semicolon-and-linebreak',
+          objectFieldSeparatorOptionalLinebreak: true,
+        },
+      ],
+      output: `
+        /**
+         * @param {{a: string; b: number}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{
+         *   a: string,
+         *   b: number
+         * }} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent semicolon-and-linebreak separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldIndent: '  ',
+          objectFieldSeparator: 'semicolon-and-linebreak',
+          objectFieldSeparatorOptionalLinebreak: true,
+        },
+      ],
+      output: `
+        /**
+         * @param {{
+         *   a: string;
+         *   b: number
+         * }} cfg
+         */
+      `,
+    },
   ],
   valid: [
     {
@@ -799,6 +855,37 @@ export default {
          * @param cfg
          */
       `,
+    },
+    {
+      code: `
+        /**
+         * @param {{a: string; b: number}} cfg
+         */
+      `,
+      options: [
+        {
+          objectFieldIndent: '  ',
+          objectFieldSeparator: 'semicolon-and-linebreak',
+          objectFieldSeparatorOptionalLinebreak: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{
+         *   a: string;
+         *   b: number
+         * }} cfg
+         */
+      `,
+      options: [
+        {
+          objectFieldIndent: '  ',
+          objectFieldSeparator: 'semicolon-and-linebreak',
+          objectFieldSeparatorOptionalLinebreak: true,
+        },
+      ],
     },
   ],
 };
