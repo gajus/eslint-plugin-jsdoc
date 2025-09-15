@@ -1,4 +1,5 @@
 export interface Rules {
+  /** Reports invalid alignment of JSDoc block asterisks. */
   "jsdoc/check-alignment": 
     | []
     | [
@@ -7,6 +8,7 @@ export interface Rules {
         }
       ];
 
+  /** Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules. */
   "jsdoc/check-examples": 
     | []
     | [
@@ -33,6 +35,7 @@ export interface Rules {
         }
       ];
 
+  /** Reports invalid padding inside JSDoc blocks. */
   "jsdoc/check-indentation": 
     | []
     | [
@@ -41,6 +44,7 @@ export interface Rules {
         }
       ];
 
+  /** Reports invalid alignment of JSDoc block lines. */
   "jsdoc/check-line-alignment": 
     | []
     | ["always" | "never" | "any"]
@@ -61,6 +65,7 @@ export interface Rules {
         }
       ];
 
+  /** Ensures that parameter names in JSDoc match those in the function declaration. */
   "jsdoc/check-param-names": 
     | []
     | [
@@ -76,6 +81,7 @@ export interface Rules {
         }
       ];
 
+  /** Ensures that property names in JSDoc are not duplicated on the same block and that nested properties have defined roots. */
   "jsdoc/check-property-names": 
     | []
     | [
@@ -84,6 +90,7 @@ export interface Rules {
         }
       ];
 
+  /** Reports invalid block tag names. */
   "jsdoc/check-tag-names": 
     | []
     | [
@@ -95,6 +102,7 @@ export interface Rules {
         }
       ];
 
+  /** Reports invalid types. */
   "jsdoc/check-types": 
     | []
     | [
@@ -108,6 +116,7 @@ export interface Rules {
         }
       ];
 
+  /** This rule checks the values for a handful of tags: `@version`, `@since`, `@license` and `@author`. */
   "jsdoc/check-values": 
     | []
     | [
@@ -119,6 +128,7 @@ export interface Rules {
         }
       ];
 
+  /** Converts non-JSDoc comments preceding or following nodes into JSDoc ones */
   "jsdoc/convert-to-jsdoc-comments": 
     | []
     | [
@@ -151,6 +161,7 @@ export interface Rules {
         }
       ];
 
+  /** Expects specific tags to be empty of any content. */
   "jsdoc/empty-tags": 
     | []
     | [
@@ -159,6 +170,7 @@ export interface Rules {
         }
       ];
 
+  /** Reports an issue with any non-constructor function using `@implements`. */
   "jsdoc/implements-on-classes": 
     | []
     | [
@@ -173,6 +185,7 @@ export interface Rules {
         }
       ];
 
+  /** This rule reports doc comments that only restate their attached name. */
   "jsdoc/informative-docs": 
     | []
     | [
@@ -189,6 +202,7 @@ export interface Rules {
         }
       ];
 
+  /** Enforces minimum number of newlines before JSDoc comment blocks */
   "jsdoc/lines-before-block": 
     | []
     | [
@@ -201,6 +215,7 @@ export interface Rules {
         }
       ];
 
+  /** Enforces a regular expression pattern on descriptions. */
   "jsdoc/match-description": 
     | []
     | [
@@ -238,6 +253,7 @@ export interface Rules {
         }
       ];
 
+  /** Reports the name portion of a JSDoc tag if matching or not matching a given regular expression. */
   "jsdoc/match-name": 
     | []
     | [
@@ -254,6 +270,7 @@ export interface Rules {
         }
       ];
 
+  /** Controls how and whether jsdoc blocks can be expressed as single or multiple line blocks. */
   "jsdoc/multiline-blocks": 
     | []
     | [
@@ -270,6 +287,7 @@ export interface Rules {
         }
       ];
 
+  /** This rule checks for multi-line-style comments which fail to meet the criteria of a jsdoc block. */
   "jsdoc/no-bad-blocks": 
     | []
     | [
@@ -279,6 +297,7 @@ export interface Rules {
         }
       ];
 
+  /** Removes empty blocks with nothing but possibly line breaks */
   "jsdoc/no-blank-blocks": 
     | []
     | [
@@ -287,6 +306,7 @@ export interface Rules {
         }
       ];
 
+  /** This rule reports defaults being used on the relevant portion of `@param` or `@default`. */
   "jsdoc/no-defaults": 
     | []
     | [
@@ -302,6 +322,7 @@ export interface Rules {
         }
       ];
 
+  /** Reports when certain comment structures are always expected. */
   "jsdoc/no-missing-syntax": 
     | []
     | [
@@ -318,6 +339,7 @@ export interface Rules {
         }
       ];
 
+  /** Prevents use of multiple asterisks at the beginning of lines. */
   "jsdoc/no-multi-asterisks": 
     | []
     | [
@@ -328,6 +350,7 @@ export interface Rules {
         }
       ];
 
+  /** Reports when certain comment structures are present. */
   "jsdoc/no-restricted-syntax": 
     | []
     | [
@@ -343,6 +366,7 @@ export interface Rules {
         }
       ];
 
+  /** This rule reports types being used on `@param` or `@returns`. */
   "jsdoc/no-types": 
     | []
     | [
@@ -357,6 +381,7 @@ export interface Rules {
         }
       ];
 
+  /** Checks that types in jsdoc comments are defined. */
   "jsdoc/no-undefined-types": 
     | []
     | [
@@ -367,6 +392,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that each JSDoc line starts with an `*`. */
   "jsdoc/require-asterisk-prefix": 
     | []
     | ["always" | "never" | "any"]
@@ -381,6 +407,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that all functions have a description. */
   "jsdoc/require-description": 
     | []
     | [
@@ -400,6 +427,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that block description, explicit `@description`, and `@param`/`@returns` tag descriptions are written in complete sentences. */
   "jsdoc/require-description-complete-sentence": 
     | []
     | [
@@ -410,6 +438,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that all functions have examples. */
   "jsdoc/require-example": 
     | []
     | [
@@ -430,6 +459,7 @@ export interface Rules {
         }
       ];
 
+  /** Checks that all files have one `@file`, `@fileoverview`, or `@overview` tag at the beginning of the file. */
   "jsdoc/require-file-overview": 
     | []
     | [
@@ -448,6 +478,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires a hyphen before the `@param` description. */
   "jsdoc/require-hyphen-before-param-description": 
     | []
     | ["always" | "never"]
@@ -466,6 +497,7 @@ export interface Rules {
         }
       ];
 
+  /** Require JSDoc comments */
   "jsdoc/require-jsdoc": 
     | []
     | [
@@ -507,6 +539,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that all function parameters are documented. */
   "jsdoc/require-param": 
     | []
     | [
@@ -536,6 +569,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that each `@param` tag has a `description` value. */
   "jsdoc/require-param-description": 
     | []
     | [
@@ -552,6 +586,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that all function parameters have names. */
   "jsdoc/require-param-name": 
     | []
     | [
@@ -566,6 +601,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that each `@param` tag has a `type` value. */
   "jsdoc/require-param-type": 
     | []
     | [
@@ -582,6 +618,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that returns are documented. */
   "jsdoc/require-returns": 
     | []
     | [
@@ -611,6 +648,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires a return statement in function body if a `@returns` tag is specified in jsdoc comment. */
   "jsdoc/require-returns-check": 
     | []
     | [
@@ -621,6 +659,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that the `@returns` tag has a `description` value. */
   "jsdoc/require-returns-description": 
     | []
     | [
@@ -635,6 +674,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that `@returns` tag has `type` value. */
   "jsdoc/require-returns-type": 
     | []
     | [
@@ -649,6 +689,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires template tags for each generic type parameter */
   "jsdoc/require-template": 
     | []
     | [
@@ -658,6 +699,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires that throw statements are documented. */
   "jsdoc/require-throws": 
     | []
     | [
@@ -673,6 +715,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires yields are documented. */
   "jsdoc/require-yields": 
     | []
     | [
@@ -693,6 +736,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires a yield statement in function body if a `@yields` tag is specified in jsdoc comment. */
   "jsdoc/require-yields-check": 
     | []
     | [
@@ -710,6 +754,7 @@ export interface Rules {
         }
       ];
 
+  /** Sorts tags by a specified sequence according to tag name. */
   "jsdoc/sort-tags": 
     | []
     | [
@@ -724,6 +769,7 @@ export interface Rules {
         }
       ];
 
+  /** Enforces lines (or no lines) between tags. */
   "jsdoc/tag-lines": 
     | []
     | ["always" | "any" | "never"]
@@ -747,6 +793,7 @@ export interface Rules {
         }
       ];
 
+  /** Auto-escape certain characters that are input within block and tag descriptions. */
   "jsdoc/text-escaping": 
     | []
     | [
@@ -756,6 +803,7 @@ export interface Rules {
         }
       ];
 
+  /** Formats JSDoc type values. */
   "jsdoc/type-formatting": 
     | []
     | [
@@ -776,6 +824,7 @@ export interface Rules {
         }
       ];
 
+  /** Requires all types to be valid JSDoc or Closure compiler types without syntax errors. */
   "jsdoc/valid-types": 
     | []
     | [
