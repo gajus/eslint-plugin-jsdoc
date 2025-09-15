@@ -13,6 +13,7 @@ for (const [
   rule,
 ] of Object.entries(index.rules)) {
   if (rule.meta?.schema?.[0]) {
+    str += `  /** ${rule.meta.docs.description} */\n`;
     str += `  "jsdoc/${ruleName}": `;
     const ts = await compile({
       items: rule.meta.schema,
