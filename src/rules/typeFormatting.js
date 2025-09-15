@@ -6,6 +6,8 @@ import {
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
 
+const digitRegex = (/^(\d+(\.\d*)?|\.\d+)([eE][\-+]?\d+)?$/v);
+
 export default iterateJsdoc(({
   context,
   indent,
@@ -252,13 +254,13 @@ export default iterateJsdoc(({
           if ((objectFieldQuote ||
             (typeof typeNode.key === 'string' &&
               (
-                (/^\p{ID_Start}\p{ID_Continue}*$/v).test(typeNode.key) ||
-                (/^(\d+(\.\d*)?|\.\d+)([eE][\-+]?\d+)?$/v).test(typeNode.key)
+                (/^[\p{ID_Start}$_][\p{ID_Continue}$\u200C\u200D]*$/v).test(typeNode.key) ||
+                digitRegex.test(typeNode.key)
               )
             )) &&
             typeNode.meta.quote !== (objectFieldQuote ?? undefined) &&
             (typeof typeNode.key !== 'string' ||
-                !(/^(\d+(\.\d*)?|\.\d+)([eE][\-+]?\d+)?$/v).test(typeNode.key))
+                !digitRegex.test(typeNode.key))
           ) {
             typeNode.meta.quote = objectFieldQuote ?? undefined;
             errorMessage = `Inconsistent object field quotes ${objectFieldQuote}`;
