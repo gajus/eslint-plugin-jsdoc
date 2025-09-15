@@ -38,7 +38,8 @@ Boolean value of whether to use a dot before the angled brackets of a generic (e
 
 Whether and how object field properties should be quoted (e.g., `{"a": string}`).
 Set to `single`, `double`, or `null`. Defaults to `null` (no quotes unless
-required due to whitespace within the field).
+required due to special characters within the field). Digits will be kept as is,
+regardless of setting (they can either represent a digit or a string digit).
 
 <a name="user-content-type-formatting-options-propertyquotes"></a>
 <a name="type-formatting-options-propertyquotes"></a>
@@ -318,6 +319,20 @@ The following patterns are not considered problems:
 /**
  * @param {{"a bc": string}} quotedKeyParam
  */
+
+/**
+ * @param {{55: string}} quotedKeyParam
+ */
+
+/**
+ * @param {{"a-b-c": string}} quotedKeyParam
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldQuote":null}]
+
+/**
+ * @param {{55: string}} quotedKeyParam
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldQuote":"double"}]
 
 /**
  * @param {ab.cd.ef} cfg

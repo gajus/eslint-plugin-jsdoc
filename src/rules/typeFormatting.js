@@ -250,8 +250,15 @@ export default iterateJsdoc(({
         case 'JsdocTypeObjectField': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').ObjectFieldResult} */ (nde);
           if ((objectFieldQuote ||
-            (typeof typeNode.key === 'string' && !(/\s/v).test(typeNode.key))) &&
-            typeNode.meta.quote !== (objectFieldQuote ?? undefined)
+            (typeof typeNode.key === 'string' &&
+              (
+                (/^\p{ID_Start}\p{ID_Continue}*$/v).test(typeNode.key) ||
+                (/^(\d+(\.\d*)?|\.\d+)([eE][\-+]?\d+)?$/v).test(typeNode.key)
+              )
+            )) &&
+            typeNode.meta.quote !== (objectFieldQuote ?? undefined) &&
+            (typeof typeNode.key !== 'string' ||
+                !(/^(\d+(\.\d*)?|\.\d+)([eE][\-+]?\d+)?$/v).test(typeNode.key))
           ) {
             typeNode.meta.quote = objectFieldQuote ?? undefined;
             errorMessage = `Inconsistent object field quotes ${objectFieldQuote}`;

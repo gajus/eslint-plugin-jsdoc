@@ -717,6 +717,37 @@ export default {
     {
       code: `
         /**
+         * @param {{55: string}} quotedKeyParam
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{"a-b-c": string}} quotedKeyParam
+         */
+      `,
+      options: [
+        {
+          objectFieldQuote: null,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{55: string}} quotedKeyParam
+         */
+      `,
+      options: [
+        {
+          objectFieldQuote: 'double',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
          * @param {ab.cd.ef} cfg
          */
       `,

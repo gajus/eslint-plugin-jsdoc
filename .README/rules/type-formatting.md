@@ -26,7 +26,8 @@ Boolean value of whether to use a dot before the angled brackets of a generic (e
 
 Whether and how object field properties should be quoted (e.g., `{"a": string}`).
 Set to `single`, `double`, or `null`. Defaults to `null` (no quotes unless
-required due to whitespace within the field).
+required due to special characters within the field). Digits will be kept as is,
+regardless of setting (they can either represent a digit or a string digit).
 
 ### `propertyQuotes`
 
