@@ -57,7 +57,10 @@ RegExp
     `*` is only a child type. Note that there is no detection of parent
     and child type together, e.g., you cannot specify preferences for
     `string[]` specifically as distinct from say `number[]`, but you can
-    target both with `[]` or the child types `number` or `string`.
+    target both with `[]` or the child types `number` or `string`. If
+    `unifyParentAndChildTypeChecks` is set instead on `preferredTypes`,
+    then that value will be used instead. Note that the latter is the
+    preferred approach.
 
 If a value is present both as a key and as a value, neither the key nor the
 value will be reported. Thus one can use this fact to allow both `object`

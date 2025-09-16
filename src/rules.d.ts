@@ -112,6 +112,9 @@ export interface Rules {
             types?: boolean | string[];
           }[];
           noDefaults?: boolean;
+          /**
+           * @deprecated Use the `preferredTypes[preferredType]` setting of the same name instead
+           */
           unifyParentAndChildTypeChecks?: boolean;
         }
       ];

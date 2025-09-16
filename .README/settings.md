@@ -265,6 +265,8 @@ The format of the configuration is as follows:
       - `false` (for forbidding the type)
     - an optional key `skipRootChecking` (for `check-types`) to allow for this
       type in the context of a root (i.e., a parent object of some child type)
+    - an optional key `unifyParentAndChildTypeChecks` to override the
+      `jsdoc/check-types` option of the same name.
 
 Note that the preferred types indicated as targets in
 `settings.jsdoc.preferredTypes` map will be assumed to be defined by
