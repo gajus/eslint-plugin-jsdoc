@@ -34,20 +34,20 @@ This rule checks the values for a handful of tags:
 <a name="check-values-options"></a>
 ## Options
 
+A single options object has the following properties.
+
 <a name="user-content-check-values-options-allowedauthors"></a>
 <a name="check-values-options-allowedauthors"></a>
 ### <code>allowedAuthors</code>
 
 An array of allowable author values. If absent, only non-whitespace will
 be checked for.
-
 <a name="user-content-check-values-options-allowedlicenses"></a>
 <a name="check-values-options-allowedlicenses"></a>
 ### <code>allowedLicenses</code>
 
 An array of allowable license values or `true` to allow any license text.
-If present as an array, will be used in place of SPDX identifiers.
-
+If present as an array, will be used in place of [SPDX identifiers](https://spdx.org/licenses/).
 <a name="user-content-check-values-options-licensepattern"></a>
 <a name="check-values-options-licensepattern"></a>
 ### <code>licensePattern</code>
@@ -62,13 +62,13 @@ Note that the `/` delimiters are optional, but necessary to add flags.
 
 Defaults to using the `v` flag, so to add your own flags, encapsulate
 your expression as a string, but like a literal, e.g., `/^mit$/vi`.
-
 <a name="user-content-check-values-options-numericonlyvariation"></a>
 <a name="check-values-options-numericonlyvariation"></a>
 ### <code>numericOnlyVariation</code>
 
 Whether to enable validation that `@variation` must be a number. Defaults to
 `false`.
+
 
 <a name="user-content-check-values-context-and-settings"></a>
 <a name="check-values-context-and-settings"></a>

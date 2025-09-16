@@ -14,20 +14,12 @@ within it or your documentation.
 
 ## Fixer
 
-(TODO)
+Auto-escapes certain HTML or Markdown characters that are input within block and
+tag descriptions.
 
 ## Options
 
-### `escapeHTML`
-
-This option escapes all `<` and `&` characters (except those followed by
-whitespace which are treated as literals by Visual Studio Code). Defaults to
-`false`.
-
-### `escapeMarkdown`
-
-This option escapes the first backtick (`` ` ``) in a paired sequence.
-Defaults to `false`.
+{"gitdown": "options"}
 
 ## Context and settings
 

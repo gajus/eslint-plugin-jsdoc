@@ -401,6 +401,13 @@ export default iterateJsdoc(({
         properties: {
           allowEmptyNamepaths: {
             default: false,
+            description: `Set to \`false\` to bulk disallow
+empty name paths with namepath groups 2 and 4 (these might often be
+expected to have an accompanying name path, though they have some
+indicative value without one; these may also allow names to be defined
+in another manner elsewhere in the block); you can use
+\`settings.jsdoc.structuredTags\` with the \`required\` key set to "name" if you
+wish to require name paths on a tag-by-tag basis. Defaults to \`true\`.`,
             type: 'boolean',
           },
         },

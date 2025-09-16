@@ -5,46 +5,16 @@
 Prevents use of multiple asterisks at the beginning of lines.
 
 Note that if you wish to prevent multiple asterisks at the very beginning of
-the jsdoc block, you should use `no-bad-blocks` (as that is not proper jsdoc
+the JSDoc block, you should use `no-bad-blocks` (as that is not proper jsdoc
 and that rule is for catching blocks which only seem like jsdoc).
 
 ## Fixer
 
-(TODO)
+Removes multiple asterisks on middle or end lines.
 
 ## Options
 
-### `allowWhitespace` (defaults to `false`)
-
-Set to `true` if you wish to allow asterisks after a space (as with Markdown):
-
-```js
-/**
- * *bold* text
- */
-```
-
-### `preventAtMiddleLines` (defaults to `true`)
-
-Prevent the likes of this:
-
-```js
-/**
- *
- **
- */
-```
-
-### `preventAtEnd` (defaults to `true`)
-
-Prevent the likes of this:
-
-```js
-/**
- *
- *
- **/
-```
+{"gitdown": "options"}
 
 ## Context and settings
 

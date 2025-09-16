@@ -3,6 +3,7 @@
 # <code>no-blank-blocks</code>
 
 * [Fixer](#user-content-no-blank-blocks-fixer)
+    * [`enableFixer`](#user-content-no-blank-blocks-fixer-enablefixer)
 * [Failing examples](#user-content-no-blank-blocks-failing-examples)
 * [Passing examples](#user-content-no-blank-blocks-passing-examples)
 
@@ -13,17 +14,20 @@ Reports and optionally removes blocks with whitespace only.
 <a name="no-blank-blocks-fixer"></a>
 ## Fixer
 
-(TODO)
+Auto-removes blank blocks with whitespace only.
 
 <a name="user-content-no-blank-blocks-fixer-options"></a>
 <a name="no-blank-blocks-fixer-options"></a>
 #### Options
 
-<a name="user-content-no-blank-blocks-fixer-options-enablefixer"></a>
-<a name="no-blank-blocks-fixer-options-enablefixer"></a>
-##### <code>enableFixer</code>
+A single options object has the following properties.
+
+<a name="user-content-no-blank-blocks-fixer-enablefixer"></a>
+<a name="no-blank-blocks-fixer-enablefixer"></a>
+### <code>enableFixer</code>
 
 Whether or not to auto-remove the blank block. Defaults to `false`.
+
 
 |||
 |---|---|

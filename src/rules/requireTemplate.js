@@ -194,12 +194,28 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           exemptedBy: {
+            description: `Array of tags (e.g., \`['type']\`) whose presence on the document
+block avoids the need for a \`@template\`. Defaults to an array with
+\`inheritdoc\`. If you set this array, it will overwrite the default,
+so be sure to add back \`inheritdoc\` if you wish its presence to cause
+exemption of the rule.`,
             items: {
               type: 'string',
             },
             type: 'array',
           },
           requireSeparateTemplates: {
+            description: `Requires that each template have its own separate line, i.e., preventing
+templates of this format:
+
+\`\`\`js
+/**
+ * @template T, U, V
+ */
+\`\`\`
+
+Defaults to \`false\`.
+`,
             type: 'boolean',
           },
         },

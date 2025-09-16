@@ -31,6 +31,8 @@ creating your own rules and forbidding structures.
 <a name="no-restricted-syntax-options"></a>
 ## Options
 
+A single options object has the following properties.
+
 <a name="user-content-no-restricted-syntax-options-contexts"></a>
 <a name="no-restricted-syntax-options-contexts"></a>
 ### <code>contexts</code>
@@ -38,16 +40,21 @@ creating your own rules and forbidding structures.
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
 
-Use the `message` property to indicate the specific error to be shown when an
-error is reported for that context being found.
+`context` defaults to `any` and `comment` defaults to no specific comment context.
 
-Set to `"any"` if you want the rule to apply to any jsdoc block throughout
+Use the `message` property to indicate the specific error to be shown when an
+error is reported for that context being found. Defaults to
+`"Syntax is restricted: {{context}}"`, or with a comment, to
+`"Syntax is restricted: {{context}} with {{comment}}"`.
+
+Set to `"any"` if you want the rule to apply to any JSDoc block throughout
 your files (as is necessary for finding function blocks not attached to a
 function declaration or expression, i.e., `@callback` or `@function` (or its
 aliases `@func` or `@method`) (including those associated with an `@interface`).
 
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
-section of our README for more on the expected format.
+section of our Advanced docs for more on the expected format.
+
 
 <a name="user-content-no-restricted-syntax-context-and-settings"></a>
 <a name="no-restricted-syntax-context-and-settings"></a>

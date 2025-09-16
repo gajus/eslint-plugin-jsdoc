@@ -2,10 +2,10 @@
 
 {"gitdown": "contents", "rootId": "no-undefined-types"}
 
-Checks that types in jsdoc comments are defined. This can be used to check
+Checks that types in JSDoc comments are defined. This can be used to check
 unimported types.
 
-When enabling this rule, types in jsdoc comments will resolve as used
+When enabling this rule, types in JSDoc comments will resolve as used
 variables, i.e. will not be marked as unused by `no-unused-vars`.
 
 In addition to considering globals found in code (or in ESLint-indicated
@@ -47,18 +47,7 @@ array's items will be considered as defined for the purposes of that tag.
 
 ## Options
 
-An option object may have the following keys:
-
-- `definedTypes` - This array can be populated to indicate other types which
-  are automatically considered as defined (in addition to globals, etc.).
-  Defaults to an empty array.
-- `markVariablesAsUsed` - Whether to mark variables as used for the purposes
-  of the `no-unused-vars` rule when they are not found to be undefined.
-  Defaults to `true`. May be set to `false` to enforce a practice of not
-  importing types unless used in code.
-- `disableReporting` - Whether to disable reporting of errors. Defaults to
-  `false`. This may be set to `true` in order to take advantage of only
-  marking defined variables as used.
+{"gitdown": "options"}
 
 ## Context and settings
 

@@ -296,6 +296,11 @@ export default iterateJsdoc(({
     fixable: 'code',
     schema: [
       {
+        description: `Defaults to "never". "any" is only useful with \`tags\` (allowing non-enforcement of lines except
+for particular tags) or with \`startLines\` or \`endLines\`. It is also
+necessary if using the linebreak-setting options of the \`sort-tags\` rule
+so that the two rules won't conflict in both attempting to set lines
+between tags.`,
         enum: [
           'always', 'any', 'never',
         ],
@@ -305,9 +310,16 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           applyToEndTag: {
+            description: `Set to \`false\` and use with "always" to indicate the normal lines to be
+added after tags should not be added after the final tag.
+
+Defaults to \`true\`.`,
             type: 'boolean',
           },
           count: {
+            description: `Use with "always" to indicate the number of lines to require be present.
+
+Defaults to 1.`,
             type: 'integer',
           },
           endLines: {
@@ -319,6 +331,10 @@ export default iterateJsdoc(({
                 type: 'null',
               },
             ],
+            description: `If not set to \`null\`, will enforce end lines to the given count on the
+final tag only.
+
+Defaults to \`0\`.`,
           },
           startLines: {
             anyOf: [
@@ -329,8 +345,22 @@ export default iterateJsdoc(({
                 type: 'null',
               },
             ],
+            description: `If not set to \`null\`, will enforce end lines to the given count before the
+first tag only, unless there is only whitespace content, in which case,
+a line count will not be enforced.
+
+Defaults to \`0\`.`,
           },
           tags: {
+            description: `Overrides the default behavior depending on specific tags.
+
+An object whose keys are tag names and whose values are objects with the
+following keys:
+
+1. \`lines\` - Set to \`always\`, \`never\`, or \`any\` to override.
+2. \`count\` - Overrides main \`count\` (for "always")
+
+Defaults to empty object.`,
             patternProperties: {
               '.*': {
                 additionalProperties: false,

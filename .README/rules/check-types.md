@@ -24,55 +24,7 @@ RegExp
 
 ## Options
 
-`check-types` allows one option:
-
-- An option object:
-  - with the key `noDefaults` to insist that only the supplied option type
-    map is to be used, and that the default preferences (such as "string"
-    over "String") will not be enforced. The option's default is `false`.
-  - with the key `exemptTagContexts` which will avoid reporting when a
-    bad type is found on a specified tag. Set to an array of objects with
-    a key `tag` set to the tag to exempt, and a `types` key which can
-    either be `true` to indicate that any types on that tag will be allowed,
-    or to an array of strings which will only allow specific bad types.
-    If an array of strings is given, these must match the type exactly,
-    e.g., if you only allow `"object"`, it will not allow
-    `"object<string, string>"`. Note that this is different from the
-    behavior of `settings.jsdoc.preferredTypes`. This option is useful
-    for normally restricting generic types like `object` with
-    `preferredTypes`, but allowing `typedef` to indicate that its base
-    type is `object`.
-  - with the key `unifyParentAndChildTypeChecks` which will treat
-    `settings.jsdoc.preferredTypes` keys such as `SomeType` as matching
-    not only child types such as an unadorned `SomeType` but also
-    `SomeType<aChildType>` and `SomeType.<aChildType>` (and if the type is
-    instead `Array` (or `[]`), it will match `aChildType[]`). If this
-    option is `false` or
-    unset, the former format will only apply to types which are not parent
-    types/unions whereas the latter formats will only apply for parent
-    types/unions. The special types `[]`, `.<>` (or `.`), and `<>`
-    act only as parent types (and will not match a bare child type such as
-    `Array` even when unified, though, as mentioned, `Array` will match
-    say `string[]` or `Array.<string>` when unified). The special type
-    `*` is only a child type. Note that there is no detection of parent
-    and child type together, e.g., you cannot specify preferences for
-    `string[]` specifically as distinct from say `number[]`, but you can
-    target both with `[]` or the child types `number` or `string`. If
-    `unifyParentAndChildTypeChecks` is set instead on `preferredTypes`,
-    then that value will be used instead. Note that the latter is the
-    preferred approach.
-
-If a value is present both as a key and as a value, neither the key nor the
-value will be reported. Thus one can use this fact to allow both `object`
-and `Object`, for example. Note that in "typescript" mode, this is the default
-behavior.
-
-See also the documentation on `settings.jsdoc.preferredTypes` which impacts
-the behavior of `check-types`.
-
-Note that if there is an error [parsing](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser)
-types for a tag, the function will silently ignore that tag, leaving it to
-the `valid-types` rule to report parsing errors.
+{"gitdown": "options"}
 
 ## Why not capital case everything?
 
@@ -156,7 +108,8 @@ permitted.
 
 ## Fixer
 
-(Todo)
+Replaces native types with standard casing and replaces according to
+`preferredTypes` settings.
 
 ## Context and settings
 

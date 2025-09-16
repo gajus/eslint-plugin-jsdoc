@@ -17,13 +17,13 @@ rule names).
 <a name="fixer"></a>
 ## Fixer
 
-(TODO)
+Repairs badly-formed blocks missing two initial asterisks.
 
 <a name="user-content-options"></a>
 <a name="options"></a>
 ## Options
 
-Takes an optional options object with the following.
+A single options object has the following properties.
 
 <a name="user-content-options-ignore"></a>
 <a name="options-ignore"></a>
@@ -42,6 +42,7 @@ Defaults to `['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck']`
 A boolean (defaulting to `false`) which if `true` will prevent all
 JSDoc-like blocks with more than two initial asterisks even those without
 apparent tag content.
+
 
 <a name="user-content-context-and-settings"></a>
 <a name="context-and-settings"></a>

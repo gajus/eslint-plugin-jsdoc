@@ -14,7 +14,7 @@ in the block description.
 <a name="fixer"></a>
 ## Fixer
 
-(TODO)
+Strips empty lines in block descriptions.
 
 <a name="user-content-context-and-settings"></a>
 <a name="context-and-settings"></a>

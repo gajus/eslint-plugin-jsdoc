@@ -4,12 +4,12 @@
 
 
 
-Controls how and whether jsdoc blocks can be expressed as single or multiple
+Controls how and whether JSDoc blocks can be expressed as single or multiple
 line blocks.
 
 Note that if you set `noSingleLineBlocks` and `noMultilineBlocks` to `true`
 and configure them in a certain manner, you might effectively be prohibiting
-all jsdoc blocks!
+all JSDoc blocks!
 
 Also allows for preventing text at the very beginning or very end of blocks.
 
@@ -17,71 +17,33 @@ Also allows for preventing text at the very beginning or very end of blocks.
 <a name="fixer"></a>
 ## Fixer
 
-(TODO)
+Optionally converts single line blocks to multiline ones and vice versa.
 
 <a name="user-content-options"></a>
 <a name="options"></a>
 ## Options
 
-A single options object with the following properties.
+A single options object has the following properties.
 
-<a name="user-content-options-nozerolinetext-defaults-to-true"></a>
-<a name="options-nozerolinetext-defaults-to-true"></a>
-### <code>noZeroLineText</code> (defaults to <code>true</code>)
+<a name="user-content-options-allowmultipletags"></a>
+<a name="options-allowmultipletags"></a>
+### <code>allowMultipleTags</code>
 
-For multiline blocks, any non-whitespace text immediately after the `/**` and
-space will be reported. (Text after a newline is not reported.)
+If `noMultilineBlocks` is set to `true` with this option and multiple tags are
+found in a block, an error will not be reported.
 
-`noMultilineBlocks` will have priority over this rule if it applies.
+Since multiple-tagged lines cannot be collapsed into a single line, this option
+prevents them from being reported. Set to `false` if you really want to report
+any blocks.
 
-<a name="user-content-options-nofinallinetext-defaults-to-true"></a>
-<a name="options-nofinallinetext-defaults-to-true"></a>
-### <code>noFinalLineText</code> (defaults to <code>true</code>)
+This option will also be applied when there is a block description and a single
+tag (since a description cannot precede a tag on a single line, and also
+cannot be reliably added after the tag either).
 
-For multiline blocks, any non-whitespace text preceding the `*/` on the final
-line will be reported. (Text preceding a newline is not reported.)
-
-`noMultilineBlocks` will have priority over this rule if it applies.
-
-<a name="user-content-options-nosinglelineblocks-defaults-to-false"></a>
-<a name="options-nosinglelineblocks-defaults-to-false"></a>
-### <code>noSingleLineBlocks</code> (defaults to <code>false</code>)
-
-If this is `true`, any single line blocks will be reported, except those which
-are whitelisted in `singleLineTags`.
-
-<a name="user-content-options-requiresinglelineundercount-defaults-to-null"></a>
-<a name="options-requiresinglelineundercount-defaults-to-null"></a>
-### <code>requireSingleLineUnderCount</code> (defaults to <code>null</code>)
-
-If this number is set, it indicates a minimum line width for a single line of
-JSDoc content spread over a multi-line comment block. If a single line is under
-the minimum length, it will be reported so as to enforce single line JSDoc blocks
-for such cases. Blocks are not reported which have multi-line descriptions,
-multiple tags, a block description and tag, or tags with multi-line types or
-descriptions.
-
-<a name="user-content-options-singlelinetags-defaults-to-lends-type"></a>
-<a name="options-singlelinetags-defaults-to-lends-type"></a>
-### <code>singleLineTags</code> (defaults to <code>[&#39;lends&#39;, &#39;type&#39;]</code>)
-
-An array of tags which can nevertheless be allowed as single line blocks when
-`noSingleLineBlocks` is set.  You may set this to a empty array to
-cause all single line blocks to be reported. If `'*'` is present, then
-the presence of a tag will allow single line blocks (but not if a tag is
-missing).
-
-<a name="user-content-options-nomultilineblocks-defaults-to-false"></a>
-<a name="options-nomultilineblocks-defaults-to-false"></a>
-### <code>noMultilineBlocks</code> (defaults to <code>false</code>)
-
-Requires that jsdoc blocks are restricted to single lines only unless impacted
-by the options `minimumLengthForMultiline`, `multilineTags`, or
-`allowMultipleTags`.
-
-<a name="user-content-options-minimumlengthformultiline-defaults-to-not-being-in-effect"></a>
-<a name="options-minimumlengthformultiline-defaults-to-not-being-in-effect"></a>
-### <code>minimumLengthForMultiline</code> (defaults to not being in effect)
+Defaults to `true`.
+<a name="user-content-options-minimumlengthformultiline"></a>
+<a name="options-minimumlengthformultiline"></a>
+### <code>minimumLengthForMultiline</code>
 
 If `noMultilineBlocks` is set with this numeric option, multiline blocks will
 be permitted if containing at least the given amount of text.
@@ -89,9 +51,10 @@ be permitted if containing at least the given amount of text.
 If not set, multiline blocks will not be permitted regardless of length unless
 a relevant tag is present and `multilineTags` is set.
 
-<a name="user-content-options-multilinetags-defaults-to"></a>
-<a name="options-multilinetags-defaults-to"></a>
-### <code>multilineTags</code> (defaults to <code>[&#39;*&#39;]</code>)
+Defaults to not being in effect.
+<a name="user-content-options-multilinetags"></a>
+<a name="options-multilinetags"></a>
+### <code>multilineTags</code>
 
 If `noMultilineBlocks` is set with this option, multiline blocks may be allowed
 regardless of length as long as a tag or a tag of a certain type is present.
@@ -106,20 +69,71 @@ such a tag will cause multiline blocks to be allowed.
 You may set this to an empty array to prevent any tag from permitting multiple
 lines.
 
-<a name="user-content-options-allowmultipletags-defaults-to-true"></a>
-<a name="options-allowmultipletags-defaults-to-true"></a>
-### <code>allowMultipleTags</code> (defaults to <code>true</code>)
+Defaults to `['*']`.
 
-If `noMultilineBlocks` is set to `true` with this option and multiple tags are
-found in a block, an error will not be reported.
+<a name="user-content-options-nofinallinetext"></a>
+<a name="options-nofinallinetext"></a>
+### <code>noFinalLineText</code>
 
-Since multiple-tagged lines cannot be collapsed into a single line, this option
-prevents them from being reported. Set to `false` if you really want to report
-any blocks.
+For multiline blocks, any non-whitespace text preceding the `*/` on the final
+line will be reported. (Text preceding a newline is not reported.)
 
-This option will also be applied when there is a block description and a single
-tag (since a description cannot precede a tag on a single line, and also
-cannot be reliably added after the tag either).
+`noMultilineBlocks` will have priority over this rule if it applies.
+
+Defaults to `true`.
+<a name="user-content-options-nomultilineblocks"></a>
+<a name="options-nomultilineblocks"></a>
+### <code>noMultilineBlocks</code>
+
+Requires that JSDoc blocks are restricted to single lines only unless impacted
+by the options `minimumLengthForMultiline`, `multilineTags`, or
+`allowMultipleTags`.
+
+Defaults to `false`.
+<a name="user-content-options-nosinglelineblocks"></a>
+<a name="options-nosinglelineblocks"></a>
+### <code>noSingleLineBlocks</code>
+
+If this is `true`, any single line blocks will be reported, except those which
+are whitelisted in `singleLineTags`.
+
+Defaults to `false`.
+
+<a name="user-content-options-nozerolinetext"></a>
+<a name="options-nozerolinetext"></a>
+### <code>noZeroLineText</code>
+
+For multiline blocks, any non-whitespace text immediately after the `/**` and
+space will be reported. (Text after a newline is not reported.)
+
+`noMultilineBlocks` will have priority over this rule if it applies.
+
+Defaults to `true`.
+<a name="user-content-options-requiresinglelineundercount"></a>
+<a name="options-requiresinglelineundercount"></a>
+### <code>requireSingleLineUnderCount</code>
+
+If this number is set, it indicates a minimum line width for a single line of
+JSDoc content spread over a multi-line comment block. If a single line is under
+the minimum length, it will be reported so as to enforce single line JSDoc blocks
+for such cases. Blocks are not reported which have multi-line descriptions,
+multiple tags, a block description and tag, or tags with multi-line types or
+descriptions.
+
+Defaults to `null`.
+
+<a name="user-content-options-singlelinetags"></a>
+<a name="options-singlelinetags"></a>
+### <code>singleLineTags</code>
+
+An array of tags which can nevertheless be allowed as single line blocks when
+`noSingleLineBlocks` is set.  You may set this to a empty array to
+cause all single line blocks to be reported. If `'*'` is present, then
+the presence of a tag will allow single line blocks (but not if a tag is
+missing).
+
+Defaults to `['lends', 'type']`.
+
 
 <a name="user-content-context-and-settings"></a>
 <a name="context-and-settings"></a>
@@ -181,44 +195,44 @@ The following patterns are considered problems:
  * Desc.
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration.
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
 
 /** desc
  *
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration.
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
 
 /** desc
  *
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"noMultilineBlocks":true,"noSingleLineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration but fixing would result in a single line block which you have prohibited with `noSingleLineBlocks`.
+// Message: Multiline JSDoc blocks are prohibited by your configuration but fixing would result in a single line block which you have prohibited with `noSingleLineBlocks`.
 
 /**
  *
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration.
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
 
 /**
  * This is not long enough to be permitted.
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"minimumLengthForMultiline":100,"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration.
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
 
 /**
  * This is not long enough to be permitted.
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"allowMultipleTags":true,"minimumLengthForMultiline":100,"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration.
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
 
 /**
  * This has the wrong tags so is not permitted.
  * @notTheRightTag
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"allowMultipleTags":false,"multilineTags":["onlyThisIsExempted"],"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration but the block has a description with a tag.
+// Message: Multiline JSDoc blocks are prohibited by your configuration but the block has a description with a tag.
 
 /**
  * This has too many tags so cannot be fixed ot a single line.
@@ -226,51 +240,51 @@ The following patterns are considered problems:
  * @anotherTag
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"allowMultipleTags":false,"multilineTags":[],"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration but the block has multiple tags.
+// Message: Multiline JSDoc blocks are prohibited by your configuration but the block has multiple tags.
 
 /**
  * This has a tag and description so cannot be fixed ot a single line.
  * @oneTag
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"allowMultipleTags":false,"multilineTags":[],"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration but the block has a description with a tag.
+// Message: Multiline JSDoc blocks are prohibited by your configuration but the block has a description with a tag.
 
 /**
  * This has no tags so is not permitted.
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"multilineTags":["*"],"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration.
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
 
 /**
  * This has the wrong tags so is not permitted.
  * @notTheRightTag
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"allowMultipleTags":false,"minimumLengthForMultiline":500,"multilineTags":["onlyThisIsExempted"],"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration but the block has a description with a tag.
+// Message: Multiline JSDoc blocks are prohibited by your configuration but the block has a description with a tag.
 
 /**
  * @lends This can be safely fixed to a single line.
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"multilineTags":[],"noMultilineBlocks":true,"noSingleLineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration.
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
 
 /**
  * @type {aType} This can be safely fixed to a single line.
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"multilineTags":[],"noMultilineBlocks":true,"noSingleLineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration.
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
 
 /**
  * @aTag
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"multilineTags":[],"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration.
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
 
 /**
  * This is a problem when single and multiline are blocked.
  */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"noMultilineBlocks":true,"noSingleLineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration but fixing would result in a single line block which you have prohibited with `noSingleLineBlocks`.
+// Message: Multiline JSDoc blocks are prohibited by your configuration but fixing would result in a single line block which you have prohibited with `noSingleLineBlocks`.
 
 /** This comment is bad
  * It should not have text on line zero
@@ -283,7 +297,7 @@ The following patterns are considered problems:
  * to a single
  * line. */
 // "jsdoc/multiline-blocks": ["error"|"warn", {"multilineTags":[],"noMultilineBlocks":true}]
-// Message: Multiline jsdoc blocks are prohibited by your configuration.
+// Message: Multiline JSDoc blocks are prohibited by your configuration.
 
 /**
  * @someTag {aType} with Description */

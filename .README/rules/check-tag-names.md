@@ -134,7 +134,7 @@ template
 
 And for [Closure](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler),
 when `settings.jsdoc.mode` is set to `closure`, one may use the following (in
-addition to the jsdoc and TypeScript tags–though replacing `returns` with
+addition to the JSDoc and TypeScript tags–though replacing `returns` with
 `return`):
 
 ```
@@ -194,92 +194,11 @@ tag to `false`:
 
 ## Fixer
 
-(Todo)
+Auto-removes types that are redundant with the [`typed` option](#typed).
 
 ## Options
 
-### `definedTags`
-
-Use an array of `definedTags` strings to configure additional, allowed tags.
-The format is as follows:
-
-```json
-{
-  "definedTags": ["note", "record"]
-}
-```
-
-### `enableFixer`
-
-Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#typed).
-
-### `jsxTags`
-
-If this is set to `true`, all of the following tags used to control JSX output are allowed:
-
-```
-jsx
-jsxFrag
-jsxImportSource
-jsxRuntime
-```
-
-For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).
-
-### `typed`
-
-If this is set to `true`, additionally checks for tag names that are redundant when using a type checker such as TypeScript.
-
-These tags are always unnecessary when using TypeScript or similar:
-
-```
-augments
-callback
-class
-enum
-implements
-private
-property
-protected
-public
-readonly
-this
-type
-typedef
-```
-
-These tags are unnecessary except when inside a TypeScript `declare` context:
-
-```
-abstract
-access
-class
-constant
-constructs
-default
-enum
-export
-exports
-function
-global
-inherits
-instance
-interface
-member
-memberof
-memberOf
-method
-mixes
-mixin
-module
-name
-namespace
-override
-property
-requires
-static
-this
-```
+{"gitdown": "options"}
 
 ## Context and settings
 

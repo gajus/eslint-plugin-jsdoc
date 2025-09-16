@@ -13,25 +13,11 @@ rule names).
 
 ## Fixer
 
-(TODO)
+Repairs badly-formed blocks missing two initial asterisks.
 
 ## Options
 
-Takes an optional options object with the following.
-
-### `ignore`
-
-An array of directives that will not be reported if present at the beginning of
-a multi-comment block and at-sign `/* @`.
-
-Defaults to `['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck']`
-(some directives [used by TypeScript](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html#ts-check)).
-
-### `preventAllMultiAsteriskBlocks`
-
-A boolean (defaulting to `false`) which if `true` will prevent all
-JSDoc-like blocks with more than two initial asterisks even those without
-apparent tag content.
+{"gitdown": "options"}
 
 ## Context and settings
 

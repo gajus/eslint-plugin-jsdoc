@@ -3,12 +3,12 @@
 # <code>match-description</code>
 
 * [Options](#user-content-match-description-options)
+    * [`contexts`](#user-content-match-description-options-contexts)
+    * [`mainDescription`](#user-content-match-description-options-maindescription)
     * [`matchDescription`](#user-content-match-description-options-matchdescription)
     * [`message`](#user-content-match-description-options-message)
     * [`nonemptyTags`](#user-content-match-description-options-nonemptytags)
     * [`tags`](#user-content-match-description-options-tags)
-    * [`mainDescription`](#user-content-match-description-options-maindescription)
-    * [`contexts`](#user-content-match-description-options-contexts)
 * [Context and settings](#user-content-match-description-context-and-settings)
 * [Failing examples](#user-content-match-description-failing-examples)
 * [Passing examples](#user-content-match-description-passing-examples)
@@ -22,7 +22,7 @@ by our supported Node versions):
 
 ``^\n?([A-Z`\\d_][\\s\\S]*[.?!`\\p{RGI_Emoji}]\\s*)?$``
 
-Applies by default to the jsdoc block description and to the following tags:
+Applies by default to the JSDoc block description and to the following tags:
 
 - `@description`/`@desc`
 - `@summary`
@@ -36,7 +36,7 @@ to add your own flags, encapsulate your expression as a string, but like a
 literal, e.g., `/[A-Z].*\\./vi`.
 
 Note that `/` delimiters are optional, but necessary to add flags (besides
-`u`).
+`v`).
 
 Also note that the default or optional regular expressions is *not*
 case-insensitive unless one opts in to add the `i` flag.
@@ -48,6 +48,65 @@ that the trailing newlines of a description will not be matched.
 <a name="match-description-options"></a>
 ## Options
 
+A single options object has the following properties.
+
+<a name="user-content-match-description-options-contexts"></a>
+<a name="match-description-options-contexts"></a>
+### <code>contexts</code>
+
+Set this to an array of strings representing the AST context (or an object with
+optional `context` and `comment` properties) where you wish the rule to be applied (e.g.,
+`ClassDeclaration` for ES6 classes).
+
+`context` defaults to `any` and `comment` defaults to no specific comment context.
+
+Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`,
+`FunctionExpression`). Set to `"any"` if you want the rule to apply to any
+JSDoc block throughout your files.
+
+See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our Advanced docs for more on the expected format.
+
+<a name="user-content-match-description-options-maindescription"></a>
+<a name="match-description-options-maindescription"></a>
+### <code>mainDescription</code>
+
+If you wish to override the main block description without changing the
+default `match-description` (which can cascade to the `tags` with `true`),
+you may use `mainDescription`:
+
+```js
+{
+  'jsdoc/match-description': ['error', {
+    mainDescription: '[A-Z].*\\.',
+    tags: {
+      param: true,
+      returns: true
+    }
+  }]
+}
+```
+
+There is no need to add `mainDescription: true`, as by default, the main
+block description (and only the main block description) is linted, though you
+may disable checking it by setting it to `false`.
+
+You may also provide an object with `message`:
+
+```js
+{
+  'jsdoc/match-description': ['error', {
+    mainDescription: {
+      message: 'Capitalize first word of JSDoc block descriptions',
+      match: '[A-Z].*\\.'
+    },
+    tags: {
+      param: true,
+      returns: true
+    }
+  }]
+}
+```
 <a name="user-content-match-description-options-matchdescription"></a>
 <a name="match-description-options-matchdescription"></a>
 ### <code>matchDescription</code>
@@ -55,12 +114,15 @@ that the trailing newlines of a description will not be matched.
 You can supply your own expression to override the default, passing a
 `matchDescription` string on the options object.
 
+Defaults to using (only) the `v` flag, so
+to add your own flags, encapsulate your expression as a string, but like a
+literal, e.g., `/[A-Z].*\./vi`.
+
 ```js
 {
   'jsdoc/match-description': ['error', {matchDescription: '[A-Z].*\\.'}]
 }
 ```
-
 <a name="user-content-match-description-options-message"></a>
 <a name="match-description-options-message"></a>
 ### <code>message</code>
@@ -92,7 +154,6 @@ some content:
 
 If you supply your own tag description for any of the above tags in `tags`,
 your description will take precedence.
-
 <a name="user-content-match-description-options-tags"></a>
 <a name="match-description-options-tags"></a>
 ### <code>tags</code>
@@ -143,59 +204,6 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
-<a name="user-content-match-description-options-maindescription"></a>
-<a name="match-description-options-maindescription"></a>
-### <code>mainDescription</code>
-
-If you wish to override the main block description without changing the
-default `match-description` (which can cascade to the `tags` with `true`),
-you may use `mainDescription`:
-
-```js
-{
-  'jsdoc/match-description': ['error', {
-    mainDescription: '[A-Z].*\\.',
-    tags: {
-      param: true,
-      returns: true
-    }
-  }]
-}
-```
-
-There is no need to add `mainDescription: true`, as by default, the main
-block description (and only the main block description) is linted, though you
-may disable checking it by setting it to `false`.
-
-You may also provide an object with `message`:
-
-```js
-{
-  'jsdoc/match-description': ['error', {
-    mainDescription: {
-      message: 'Capitalize first word of JSDoc block descriptions',
-      match: '[A-Z].*\\.'
-    },
-    tags: {
-      param: true,
-      returns: true
-    }
-  }]
-}
-```
-
-<a name="user-content-match-description-options-contexts"></a>
-<a name="match-description-options-contexts"></a>
-### <code>contexts</code>
-
-Set this to an array of strings representing the AST context (or an object with
-`context` and `comment` properties) where you wish the rule to be applied.
-(e.g., `ClassDeclaration` for ES6
-classes). Overrides the default contexts (see below). Set to `"any"` if you
-want the rule to apply to any jsdoc block throughout your files.
-
-See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
-section of our README for more on the expected format.
 
 <a name="user-content-match-description-context-and-settings"></a>
 <a name="match-description-context-and-settings"></a>

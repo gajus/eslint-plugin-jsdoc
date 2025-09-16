@@ -27,6 +27,8 @@ This rule requires all docs comments contain at least one word not already in th
 <a name="informative-docs-options"></a>
 ## Options
 
+A single options object has the following properties.
+
 <a name="user-content-informative-docs-options-aliases"></a>
 <a name="informative-docs-options-aliases"></a>
 ### <code>aliases</code>
@@ -83,6 +85,8 @@ The default `uselessWords` option is:
 ```json
 ["a", "an", "i", "in", "of", "s", "the"]
 ```
+
+
 
 <a name="user-content-informative-docs-context-and-settings"></a>
 <a name="informative-docs-context-and-settings"></a>

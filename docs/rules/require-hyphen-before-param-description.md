@@ -4,6 +4,7 @@
 
 * [Fixer](#user-content-require-hyphen-before-param-description-fixer)
 * [Options](#user-content-require-hyphen-before-param-description-options)
+    * [`tags`](#user-content-require-hyphen-before-param-description-options-tags)
 * [Context and settings](#user-content-require-hyphen-before-param-description-context-and-settings)
 * [Failing examples](#user-content-require-hyphen-before-param-description-failing-examples)
 * [Passing examples](#user-content-require-hyphen-before-param-description-passing-examples)
@@ -21,8 +22,7 @@ Adds a hyphen for "always" and removes a hyphen for "never".
 <a name="require-hyphen-before-param-description-options"></a>
 ## Options
 
-This rule takes one optional string argument and an optional options object.
-
+The first option is a string with the following possible values: "always", "never".
 If the string is `"always"` then a problem is raised when there is no hyphen
 before the description. If it is `"never"` then a problem is raised when there
 is a hyphen before the description. The default value is `"always"`.
@@ -32,16 +32,23 @@ actually be forbidden in the event that they are followed immediately by
 the end of a line (this will otherwise cause Visual Studio Code to display
 incorrectly).
 
-The options object may have the following properties to indicate behavior for
-other tags besides the `@param` tag (or the `@arg` tag if so set):
+The next option is an object with the following properties.
 
-- `tags` - Object whose keys indicate different tags to check for the
+The options object may have the following property to indicate behavior for
+other tags besides the `@param` tag (or the `@arg` tag if so set).
+<a name="user-content-require-hyphen-before-param-description-options-tags"></a>
+<a name="require-hyphen-before-param-description-options-tags"></a>
+### <code>tags</code>
+
+Object whose keys indicate different tags to check for the
   presence or absence of hyphens; the key value should be "always" or "never",
   indicating how hyphens are to be applied, e.g., `{property: 'never'}`
   to ensure `@property` never uses hyphens. A key can also be set as `*`, e.g.,
   `'*': 'always'` to apply hyphen checking to any tag (besides the preferred
   `@param` tag which follows the main string option setting and besides any
   other `tags` entries).
+
+
 
 <a name="user-content-require-hyphen-before-param-description-context-and-settings"></a>
 <a name="require-hyphen-before-param-description-context-and-settings"></a>

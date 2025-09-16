@@ -380,10 +380,10 @@ non-default-recommended fixer).
 |||[check-examples](./docs/rules/check-examples.md#readme)|Linting of JavaScript within `@example`|
 |||[check-indentation](./docs/rules/check-indentation.md#readme)|Checks for invalid padding inside JSDoc blocks|
 ||:wrench:|[check-line-alignment](./docs/rules/check-line-alignment.md#readme)|Reports invalid alignment of JSDoc block lines.|
-|:heavy_check_mark:|:wrench:|[check-param-names](./docs/rules/check-param-names.md#readme)|Checks for dupe `@param` names, that nested param names have roots, and that parameter names in function declarations match jsdoc param names.|
+|:heavy_check_mark:|:wrench:|[check-param-names](./docs/rules/check-param-names.md#readme)|Checks for dupe `@param` names, that nested param names have roots, and that parameter names in function declarations match JSDoc param names.|
 |:heavy_check_mark:|:wrench:|[check-property-names](./docs/rules/check-property-names.md#readme)|Checks for dupe `@property` names, that nested property names have roots|
 |||[check-syntax](./docs/rules/check-syntax.md#readme)|Reports use against current mode (currently only prohibits Closure-specific syntax)|
-|:heavy_check_mark:|:wrench:|[check-tag-names](./docs/rules/check-tag-names.md#readme)|Reports invalid jsdoc (block) tag names|
+|:heavy_check_mark:|:wrench:|[check-tag-names](./docs/rules/check-tag-names.md#readme)|Reports invalid JSDoc (block) tag names|
 | || [check-template-names](./docs/rules/check-template-names.md#readme)|Checks that any `@template` names are actually used in the connected `@typedef` or type alias.
 |:heavy_check_mark:|:wrench:|[check-types](./docs/rules/check-types.md#readme)|Reports types deemed invalid (customizable and with defaults, for preventing and/or recommending replacements)|
 |:heavy_check_mark:||[check-values](./docs/rules/check-values.md#readme)|Checks for expected content within some miscellaneous tags (`@version`, `@since`, `@license`, `@author`)|
@@ -394,8 +394,8 @@ non-default-recommended fixer).
 |||[lines-before-block](./docs/rules/lines-before-block.md#readme)|Enforces minimum number of newlines before JSDoc comment blocks|
 |||[match-description](./docs/rules/match-description.md#readme)|Defines customizable regular expression rules for your tag descriptions|
 ||:wrench:|[match-name](./docs/rules/match-name.md#readme)|Reports the name portion of a JSDoc tag if matching or not matching a given regular expression|
-|:heavy_check_mark:|:wrench:|[multiline-blocks](./docs/rules/multiline-blocks.md#readme)|Controls how and whether jsdoc blocks can be expressed as single or multiple line blocks|
-||:wrench:|[no-bad-blocks](./docs/rules/no-bad-blocks.md#readme)|This rule checks for multi-line-style comments which fail to meet the criteria of a jsdoc block|
+|:heavy_check_mark:|:wrench:|[multiline-blocks](./docs/rules/multiline-blocks.md#readme)|Controls how and whether JSDoc blocks can be expressed as single or multiple line blocks|
+||:wrench:|[no-bad-blocks](./docs/rules/no-bad-blocks.md#readme)|This rule checks for multi-line-style comments which fail to meet the criteria of a JSDoc block|
 ||:wrench:|[no-blank-block-descriptions](./docs/rules/no-blank-block-descriptions.md#readme)|If tags are present, this rule will prevent empty lines in the block description. If no tags are present, this rule will prevent extra empty lines in the block description.|
 ||:wrench:|[no-blank-blocks](./docs/rules/no-blank-blocks.md#readme)|Reports and optionally removes blocks with whitespace only|
 |:heavy_check_mark:|:wrench:|[no-defaults](./docs/rules/no-defaults.md#readme)|This rule reports defaults being used on the relevant portion of `@param` or `@default`|
@@ -412,7 +412,7 @@ non-default-recommended fixer).
 ||:wrench:|[require-example](./docs/rules/require-example.md#readme)|Requires that all functions (and potentially other contexts) have examples.|
 |||[require-file-overview](./docs/rules/require-file-overview.md#readme)|By default, requires a single `@file` tag at the beginning of each linted file|
 ||:wrench:|[require-hyphen-before-param-description](./docs/rules/require-hyphen-before-param-description.md#readme)|Requires a hyphen before `@param` descriptions (and optionally before `@property` descriptions)|
-|:heavy_check_mark:|:wrench:|[require-jsdoc](./docs/rules/require-jsdoc.md#readme)|Checks for presence of jsdoc comments, on functions and potentially other contexts (optionally limited to exports).|
+|:heavy_check_mark:|:wrench:|[require-jsdoc](./docs/rules/require-jsdoc.md#readme)|Checks for presence of JSDoc comments, on functions and potentially other contexts (optionally limited to exports).|
 |:heavy_check_mark:||[require-next-type](./docs/rules/require-next-type.md#readme)|Requires a type on the (non-standard) `@next` tag.|
 |:heavy_check_mark:|:wrench:|[require-param](./docs/rules/require-param.md#readme)|Requires that all function parameters are documented with a `@param` tag.|
 |:heavy_check_mark:||[require-param-description](./docs/rules/require-param-description.md#readme)|Requires that each `@param` tag has a `description` value.|
@@ -423,7 +423,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:||[require-property-name](./docs/rules/require-property-name.md#readme)|Requires that all `@property` tags have names.|
 |:heavy_check_mark: (off in TS)||[require-property-type](./docs/rules/require-property-type.md#readme)|Requires that each `@property` tag has a type value (within curly brackets).|
 |:heavy_check_mark:||[require-returns](./docs/rules/require-returns.md#readme)|Requires that return statements are documented.|
-|:heavy_check_mark:||[require-returns-check](./docs/rules/require-returns-check.md#readme)|Requires a return statement be present in a function body if a `@returns` tag is specified in the jsdoc comment block (and reports if multiple `@returns` tags are present).|
+|:heavy_check_mark:||[require-returns-check](./docs/rules/require-returns-check.md#readme)|Requires a return statement be present in a function body if a `@returns` tag is specified in the JSDoc comment block (and reports if multiple `@returns` tags are present).|
 |:heavy_check_mark:||[require-returns-description](./docs/rules/require-returns-description.md#readme)|Requires that the `@returns` tag has a `description` value (not including `void`/`undefined` type returns).|
 |:heavy_check_mark: (off in TS)||[require-returns-type](./docs/rules/require-returns-type.md#readme)|Requires that `@returns` tag has a type value (in curly brackets).|
 | || [require-template](./docs/rules/require-template.md#readme) | Requires `@template` tags be present when type parameters are used.|

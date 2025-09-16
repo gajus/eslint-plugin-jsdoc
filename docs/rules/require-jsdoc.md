@@ -4,25 +4,25 @@
 
 * [Fixer](#user-content-require-jsdoc-fixer)
 * [Options](#user-content-require-jsdoc-options)
-    * [`publicOnly`](#user-content-require-jsdoc-options-publiconly)
-    * [`require`](#user-content-require-jsdoc-options-require)
-    * [`contexts`](#user-content-require-jsdoc-options-contexts)
-    * [`exemptEmptyConstructors`](#user-content-require-jsdoc-options-exemptemptyconstructors)
-    * [`exemptEmptyFunctions`](#user-content-require-jsdoc-options-exemptemptyfunctions)
     * [`checkConstructors`](#user-content-require-jsdoc-options-checkconstructors)
     * [`checkGetters`](#user-content-require-jsdoc-options-checkgetters)
     * [`checkSetters`](#user-content-require-jsdoc-options-checksetters)
+    * [`contexts`](#user-content-require-jsdoc-options-contexts)
     * [`enableFixer`](#user-content-require-jsdoc-options-enablefixer)
-    * [`minLineCount`](#user-content-require-jsdoc-options-minlinecount)
-    * [`fixerMessage`](#user-content-require-jsdoc-options-fixermessage)
-    * [`skipInterveningOverloadedDeclarations`](#user-content-require-jsdoc-options-skipinterveningoverloadeddeclarations)
+    * [`exemptEmptyConstructors`](#user-content-require-jsdoc-options-exemptemptyconstructors)
+    * [`exemptEmptyFunctions`](#user-content-require-jsdoc-options-exemptemptyfunctions)
     * [`exemptOverloadedImplementations`](#user-content-require-jsdoc-options-exemptoverloadedimplementations)
+    * [`fixerMessage`](#user-content-require-jsdoc-options-fixermessage)
+    * [`minLineCount`](#user-content-require-jsdoc-options-minlinecount)
+    * [`publicOnly`](#user-content-require-jsdoc-options-publiconly)
+    * [`require`](#user-content-require-jsdoc-options-require)
+    * [`skipInterveningOverloadedDeclarations`](#user-content-require-jsdoc-options-skipinterveningoverloadeddeclarations)
 * [Context and settings](#user-content-require-jsdoc-context-and-settings)
 * [Failing examples](#user-content-require-jsdoc-failing-examples)
 * [Passing examples](#user-content-require-jsdoc-passing-examples)
 
 
-Checks for presence of jsdoc comments, on class declarations as well as
+Checks for presence of JSDoc comments, on class declarations as well as
 functions.
 
 <a name="user-content-require-jsdoc-fixer"></a>
@@ -38,76 +38,9 @@ to insert.
 <a name="require-jsdoc-options"></a>
 ## Options
 
-Accepts one optional options object with the following optional keys.
+A single options object has the following properties.
 
-<a name="user-content-require-jsdoc-options-publiconly"></a>
-<a name="require-jsdoc-options-publiconly"></a>
-### <code>publicOnly</code>
-
-This option will insist that missing jsdoc blocks are only reported for
-function bodies / class declarations that are exported from the module.
-May be a boolean or object. If set to `true`, the defaults below will be
-used. If unset, jsdoc block reporting will not be limited to exports.
-
-This object supports the following optional boolean keys (`false` unless
-otherwise noted):
-
-- `ancestorsOnly` - Only check node ancestors to check if node is exported
-- `esm` - ESM exports are checked for JSDoc comments (Defaults to `true`)
-- `cjs` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
-- `window` - Window global exports are checked for JSDoc comments
-
-<a name="user-content-require-jsdoc-options-require"></a>
-<a name="require-jsdoc-options-require"></a>
-### <code>require</code>
-
-An object with the following optional boolean keys which all default to
-`false` except as noted, indicating the contexts where the rule will apply:
-
-- `ArrowFunctionExpression`
-- `ClassDeclaration`
-- `ClassExpression`
-- `FunctionDeclaration` (defaults to `true`)
-- `FunctionExpression`
-- `MethodDefinition`
-
-<a name="user-content-require-jsdoc-options-contexts"></a>
-<a name="require-jsdoc-options-contexts"></a>
-### <code>contexts</code>
-
-Set this to an array of strings or objects representing the additional AST
-contexts where you wish the rule to be applied (e.g., `Property` for
-properties). If specified as an object, it should have a `context` property
-and can have an `inlineCommentBlock` property which, if set to `true`, will
-add an inline `/** */` instead of the regular, multi-line, indented jsdoc
-block which will otherwise be added. Defaults to an empty array. Contexts
-may also have their own `minLineCount` property.
-
-Note that you may need to disable `require` items (e.g., `MethodDefinition`)
-if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition:not([accessibility="private"] > FunctionExpression`).
-
-See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
-section of our README for more on the expected format.
-
-<a name="user-content-require-jsdoc-options-exemptemptyconstructors"></a>
-<a name="require-jsdoc-options-exemptemptyconstructors"></a>
-### <code>exemptEmptyConstructors</code>
-
-Default: true
-
-When `true`, the rule will not report missing jsdoc blocks above constructors
-with no parameters or return values (this is enabled by default as the class
-name or description should be seen as sufficient to convey intent).
-
-<a name="user-content-require-jsdoc-options-exemptemptyfunctions"></a>
-<a name="require-jsdoc-options-exemptemptyfunctions"></a>
-### <code>exemptEmptyFunctions</code>
-
-Default: false.
-
-When `true`, the rule will not report missing jsdoc blocks above
-functions/methods with no parameters or return values (intended where
-function/method names are sufficient for themselves as documentation).
+Has the following optional keys.
 
 <a name="user-content-require-jsdoc-options-checkconstructors"></a>
 <a name="require-jsdoc-options-checkconstructors"></a>
@@ -116,7 +49,6 @@ function/method names are sufficient for themselves as documentation).
 A value indicating whether `constructor`s should be checked. Defaults to
 `true`. When `true`, `exemptEmptyConstructors` may still avoid reporting when
 no parameters or return values are found.
-
 <a name="user-content-require-jsdoc-options-checkgetters"></a>
 <a name="require-jsdoc-options-checkgetters"></a>
 ### <code>checkGetters</code>
@@ -136,29 +68,126 @@ boolean, this option can be set to the string `"no-getter"` to indicate that
 setters should be checked but only when there is no getter. This may be useful
 if one only wishes documentation on one of the two accessors. Defaults to
 `false`.
+<a name="user-content-require-jsdoc-options-contexts"></a>
+<a name="require-jsdoc-options-contexts"></a>
+### <code>contexts</code>
 
+Set this to an array of strings or objects representing the additional AST
+contexts where you wish the rule to be applied (e.g., `Property` for
+properties). If specified as an object, it should have a `context` property
+and can have an `inlineCommentBlock` property which, if set to `true`, will
+add an inline `/** */` instead of the regular, multi-line, indented jsdoc
+block which will otherwise be added. Defaults to an empty array. Contexts
+may also have their own `minLineCount` property which is an integer
+indicating a minimum number of lines expected for a node in order
+for it to require documentation.
+
+Note that you may need to disable `require` items (e.g., `MethodDefinition`)
+if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition:not([accessibility="private"] > FunctionExpression`).
+
+See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our Advanced docs for more on the expected format.
 <a name="user-content-require-jsdoc-options-enablefixer"></a>
 <a name="require-jsdoc-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
-A boolean on whether to enable the fixer (which adds an empty jsdoc block).
+A boolean on whether to enable the fixer (which adds an empty JSDoc block).
 Defaults to `true`.
+<a name="user-content-require-jsdoc-options-exemptemptyconstructors"></a>
+<a name="require-jsdoc-options-exemptemptyconstructors"></a>
+### <code>exemptEmptyConstructors</code>
 
-<a name="user-content-require-jsdoc-options-minlinecount"></a>
-<a name="require-jsdoc-options-minlinecount"></a>
-### <code>minLineCount</code>
+When `true`, the rule will not report missing JSDoc blocks above constructors
+with no parameters or return values (this is enabled by default as the class
+name or description should be seen as sufficient to convey intent).
 
-An integer to indicate a minimum number of lines expected for a node in order
-for it to require documentation. Defaults to `undefined`. This option will
-apply to any context; see `contexts` for line counts per context.
+Defaults to `true`.
+<a name="user-content-require-jsdoc-options-exemptemptyfunctions"></a>
+<a name="require-jsdoc-options-exemptemptyfunctions"></a>
+### <code>exemptEmptyFunctions</code>
 
+When `true`, the rule will not report missing JSDoc blocks above
+functions/methods with no parameters or return values (intended where
+function/method names are sufficient for themselves as documentation).
+
+Defaults to `false`.
+
+<a name="user-content-require-jsdoc-options-exemptoverloadedimplementations"></a>
+<a name="require-jsdoc-options-exemptoverloadedimplementations"></a>
+### <code>exemptOverloadedImplementations</code>
+
+If set to `true` will avoid checking an overloaded function's implementation.
+
+Defaults to `false`.
 <a name="user-content-require-jsdoc-options-fixermessage"></a>
 <a name="require-jsdoc-options-fixermessage"></a>
 ### <code>fixerMessage</code>
 
 An optional message to add to the inserted JSDoc block. Defaults to the
 empty string.
+<a name="user-content-require-jsdoc-options-minlinecount"></a>
+<a name="require-jsdoc-options-minlinecount"></a>
+### <code>minLineCount</code>
 
+An integer to indicate a minimum number of lines expected for a node in order
+for it to require documentation. Defaults to `undefined`. This option will
+apply to any context; see `contexts` for line counts specific to a context.
+<a name="user-content-require-jsdoc-options-publiconly"></a>
+<a name="require-jsdoc-options-publiconly"></a>
+### <code>publicOnly</code>
+
+This option will insist that missing JSDoc blocks are only reported for
+function bodies / class declarations that are exported from the module.
+May be a boolean or object. If set to `true`, the defaults below will be
+used. If unset, JSDoc block reporting will not be limited to exports.
+
+This object supports the following optional boolean keys (`false` unless
+otherwise noted):
+
+- `ancestorsOnly` - Optimization to only check node ancestors to check if node is exported
+- `esm` - ESM exports are checked for JSDoc comments (Defaults to `true`)
+- `cjs` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
+- `window` - Window global exports are checked for JSDoc comments
+
+<a name="user-content-require-jsdoc-options-require"></a>
+<a name="require-jsdoc-options-require"></a>
+### <code>require</code>
+
+
+A single options object has the following properties.
+
+An object with the following optional boolean keys which all default to
+`false` except for `FunctionDeclaration` which defaults to `true`.
+<a name="user-content-require-jsdoc-options-require-arrowfunctionexpression"></a>
+<a name="require-jsdoc-options-require-arrowfunctionexpression"></a>
+#### <code>ArrowFunctionExpression</code>
+
+Whether to check arrow functions like `() => {}`
+<a name="user-content-require-jsdoc-options-require-classdeclaration"></a>
+<a name="require-jsdoc-options-require-classdeclaration"></a>
+#### <code>ClassDeclaration</code>
+
+Whether to check declarations like `class A {}`
+<a name="user-content-require-jsdoc-options-require-classexpression"></a>
+<a name="require-jsdoc-options-require-classexpression"></a>
+#### <code>ClassExpression</code>
+
+Whether to check class expressions like `const myClass = class {}`
+<a name="user-content-require-jsdoc-options-require-functiondeclaration"></a>
+<a name="require-jsdoc-options-require-functiondeclaration"></a>
+#### <code>FunctionDeclaration</code>
+
+Whether to check function declarations like `function a {}`
+<a name="user-content-require-jsdoc-options-require-functionexpression"></a>
+<a name="require-jsdoc-options-require-functionexpression"></a>
+#### <code>FunctionExpression</code>
+
+Whether to check function expressions like `const a = function {}`
+<a name="user-content-require-jsdoc-options-require-methoddefinition"></a>
+<a name="require-jsdoc-options-require-methoddefinition"></a>
+#### <code>MethodDefinition</code>
+
+Whether to check method definitions like `class A { someMethodDefinition () {} }`
 <a name="user-content-require-jsdoc-options-skipinterveningoverloadeddeclarations"></a>
 <a name="require-jsdoc-options-skipinterveningoverloadeddeclarations"></a>
 ### <code>skipInterveningOverloadedDeclarations</code>
@@ -171,13 +200,6 @@ comment block.
 
 Defaults to `true`.
 
-<a name="user-content-require-jsdoc-options-exemptoverloadedimplementations"></a>
-<a name="require-jsdoc-options-exemptoverloadedimplementations"></a>
-### <code>exemptOverloadedImplementations</code>
-
-If set to `true` will avoid checking an overloaded function's implementation.
-
-Defaults to `false`.
 
 <a name="user-content-require-jsdoc-context-and-settings"></a>
 <a name="require-jsdoc-context-and-settings"></a>

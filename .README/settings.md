@@ -16,11 +16,11 @@
 ### `maxLines` and `minLines`
 
 One can use `minLines` and `maxLines` to indicate how many line breaks
-(if any) will be checked to find a jsdoc comment block before the given
+(if any) will be checked to find a JSDoc comment block before the given
 code block. These settings default to `0` and `1` respectively.
 
 In conjunction with the `require-jsdoc` rule, these settings can
-be enforced so as to report problems if a jsdoc block is not found within
+be enforced so as to report problems if a JSDoc block is not found within
 the specified boundaries. The settings are also used in the fixer to determine
 how many line breaks to add when a block is missing.
 
@@ -265,8 +265,23 @@ The format of the configuration is as follows:
       - `false` (for forbidding the type)
     - an optional key `skipRootChecking` (for `check-types`) to allow for this
       type in the context of a root (i.e., a parent object of some child type)
-    - an optional key `unifyParentAndChildTypeChecks` to override the
-      `jsdoc/check-types` option of the same name.
+    - an optional key `unifyParentAndChildTypeChecks` will treat
+      `settings.jsdoc.preferredTypes` keys such as `SomeType` as matching
+      not only child types such as an unadorned `SomeType` but also
+      `SomeType<aChildType>` and `SomeType.<aChildType>` (and if the type is
+      instead `Array` (or `[]`), it will match `aChildType[]`). If this
+      setting is `false` or unset, the former format will only apply to
+      types which are not parent types/unions whereas the latter formats
+      will only apply for parent types/unions. The special types
+      `[]`, `.<>` (or `.`), and `<>` act only as parent types (and will
+      not match a bare child type such as `Array` even when unified, though,
+      as mentioned, `Array` will match say `string[]` or `Array.<string>`
+      when unified). The special type `*` is only a child type. Note that
+      there is no detection of parent and child type together, e.g., you
+      cannot specify preferences for `string[]` specifically as distinct
+      from say `number[]`, but you can target both with `[]` or the child
+      types `number` or `string`. Note: the (deprecated) `jsdoc/check-types`
+      option of the same name, if set to `true`, will override this behavior.
 
 Note that the preferred types indicated as targets in
 `settings.jsdoc.preferredTypes` map will be assumed to be defined by
@@ -280,7 +295,12 @@ only (e.g., to match `Array` if the type is `Array` vs. `Array.<string>`).
 Note that if a value is present both as a key and as a value, neither the
 key nor the value will be reported. Thus in `check-types`, this fact can
 be used to allow both `object` and `Object` if one has a `preferredTypes`
-key `object: 'Object'` and `Object: 'object'`.
+key `object: 'Object'` and `Object: 'object'`. (In the default "typescript"
+mode, this object behavior is a default one.)
+
+Note that if there is an error [parsing](https://github.com/jsdoc-type-pratt-parser/jsdoc-type-pratt-parser)
+types for a tag with `check-types`, the function will silently ignore
+that tag, leaving it to the `valid-types` rule to report parsing errors.
 
 ### `structuredTags`
 
@@ -309,7 +329,7 @@ values are objects with the following optional properties:
       - `true` - Allows valid types within brackets. This is the default.
       - `false` - Explicitly disallows any brackets or bracketed type. You
         might use this with `@throws` to suggest that only free form text
-        is being input or with `@augments` (for jsdoc mode) to disallow
+        is being input or with `@augments` (for "jsdoc" mode) to disallow
         Closure-style bracketed usage along with a required namepath.
       - (An array of strings) - A list of permissible types.
   - `required` - Array of one of the following (defaults to an empty array,

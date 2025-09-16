@@ -15,20 +15,27 @@ Requires that `@returns` tag has a `type` value (in curly brackets).
 <a name="require-returns-type-options"></a>
 ## Options
 
+A single options object has the following properties.
+
 <a name="user-content-require-returns-type-options-contexts"></a>
 <a name="require-returns-type-options-contexts"></a>
 ### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
-`context` and `comment` properties) where you wish the rule to be applied.
-Overrides the default contexts (see below). Set to `"any"` if you want
-the rule to apply to any jsdoc block throughout your files (as is necessary
+optional `context` and `comment` properties) where you wish the rule to be applied.
+
+`context` defaults to `any` and `comment` defaults to no specific comment context.
+
+Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`,
+`FunctionExpression`). Set to `"any"` if you want
+the rule to apply to any JSDoc block throughout your files (as is necessary
 for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
-section of our README for more on the expected format.
+section of our Advanced docs for more on the expected format.
+
 
 <a name="user-content-require-returns-type-context-and-settings"></a>
 <a name="require-returns-type-context-and-settings"></a>

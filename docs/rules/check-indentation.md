@@ -29,7 +29,7 @@ the following description is not reported:
 <a name="check-indentation-options"></a>
 ## Options
 
-This rule has an object option.
+A single options object has the following properties.
 
 <a name="user-content-check-indentation-options-excludetags"></a>
 <a name="check-indentation-options-excludetags"></a>
@@ -54,6 +54,7 @@ report a padding issue:
  * });
  */
 ```
+
 
 <a name="user-content-check-indentation-context-and-settings"></a>
 <a name="check-indentation-context-and-settings"></a>

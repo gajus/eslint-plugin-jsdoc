@@ -4,11 +4,11 @@
 
 * [Fixer](#user-content-tag-lines-fixer)
 * [Options](#user-content-tag-lines-options)
-    * [`count` (defaults to 1)](#user-content-tag-lines-options-count-defaults-to-1)
-    * [`applyToEndTag` (defaults to `true`)](#user-content-tag-lines-options-applytoendtag-defaults-to-true)
-    * [`startLines` (defaults to `0`)](#user-content-tag-lines-options-startlines-defaults-to-0)
-    * [`endLines` (defaults to `0`)](#user-content-tag-lines-options-endlines-defaults-to-0)
-    * [`tags` (default to empty object)](#user-content-tag-lines-options-tags-default-to-empty-object)
+    * [`applyToEndTag`](#user-content-tag-lines-options-applytoendtag)
+    * [`count`](#user-content-tag-lines-options-count)
+    * [`endLines`](#user-content-tag-lines-options-endlines)
+    * [`startLines`](#user-content-tag-lines-options-startlines)
+    * [`tags`](#user-content-tag-lines-options-tags)
 * [Context and settings](#user-content-tag-lines-context-and-settings)
 * [Failing examples](#user-content-tag-lines-failing-examples)
 * [Passing examples](#user-content-tag-lines-passing-examples)
@@ -27,54 +27,56 @@ may try to impose a conflicting number of lines.
 <a name="tag-lines-fixer"></a>
 ## Fixer
 
-(TODO)
+Removes or adds lines between tags or trailing tags.
 
 <a name="user-content-tag-lines-options"></a>
 <a name="tag-lines-options"></a>
 ## Options
 
-The first option is a single string set to "always", "never", or "any"
-(defaults to "never").
-
-"any" is only useful with `tags` (allowing non-enforcement of lines except
+The first option is a string with the following possible values: "always", "any", "never".
+Defaults to "never". "any" is only useful with `tags` (allowing non-enforcement of lines except
 for particular tags) or with `startLines` or `endLines`. It is also
 necessary if using the linebreak-setting options of the `sort-tags` rule
 so that the two rules won't conflict in both attempting to set lines
 between tags.
 
-The second option is an object with the following optional properties.
+The next option is an object with the following properties.
 
-<a name="user-content-tag-lines-options-count-defaults-to-1"></a>
-<a name="tag-lines-options-count-defaults-to-1"></a>
-### <code>count</code> (defaults to 1)
-
-Use with "always" to indicate the number of lines to require be present.
-
-<a name="user-content-tag-lines-options-applytoendtag-defaults-to-true"></a>
-<a name="tag-lines-options-applytoendtag-defaults-to-true"></a>
-### <code>applyToEndTag</code> (defaults to <code>true</code>)
+<a name="user-content-tag-lines-options-applytoendtag"></a>
+<a name="tag-lines-options-applytoendtag"></a>
+### <code>applyToEndTag</code>
 
 Set to `false` and use with "always" to indicate the normal lines to be
 added after tags should not be added after the final tag.
 
-<a name="user-content-tag-lines-options-startlines-defaults-to-0"></a>
-<a name="tag-lines-options-startlines-defaults-to-0"></a>
-### <code>startLines</code> (defaults to <code>0</code>)
+Defaults to `true`.
+<a name="user-content-tag-lines-options-count"></a>
+<a name="tag-lines-options-count"></a>
+### <code>count</code>
+
+Use with "always" to indicate the number of lines to require be present.
+
+Defaults to 1.
+<a name="user-content-tag-lines-options-endlines"></a>
+<a name="tag-lines-options-endlines"></a>
+### <code>endLines</code>
+
+If not set to `null`, will enforce end lines to the given count on the
+final tag only.
+
+Defaults to `0`.
+<a name="user-content-tag-lines-options-startlines"></a>
+<a name="tag-lines-options-startlines"></a>
+### <code>startLines</code>
 
 If not set to `null`, will enforce end lines to the given count before the
 first tag only, unless there is only whitespace content, in which case,
 a line count will not be enforced.
 
-<a name="user-content-tag-lines-options-endlines-defaults-to-0"></a>
-<a name="tag-lines-options-endlines-defaults-to-0"></a>
-### <code>endLines</code> (defaults to <code>0</code>)
-
-If not set to `null`, will enforce end lines to the given count on the
-final tag only.
-
-<a name="user-content-tag-lines-options-tags-default-to-empty-object"></a>
-<a name="tag-lines-options-tags-default-to-empty-object"></a>
-### <code>tags</code> (default to empty object)
+Defaults to `0`.
+<a name="user-content-tag-lines-options-tags"></a>
+<a name="tag-lines-options-tags"></a>
+### <code>tags</code>
 
 Overrides the default behavior depending on specific tags.
 
@@ -83,6 +85,9 @@ following keys:
 
 1. `lines` - Set to `always`, `never`, or `any` to override.
 2. `count` - Overrides main `count` (for "always")
+
+Defaults to empty object.
+
 
 <a name="user-content-tag-lines-context-and-settings"></a>
 <a name="tag-lines-context-and-settings"></a>

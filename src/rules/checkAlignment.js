@@ -69,9 +69,12 @@ export default iterateJsdoc(({
         properties: {
           innerIndent: {
             default: 1,
+            description: `Set to 0 if you wish to avoid the normal requirement for an inner indentation of
+one space. Defaults to 1 (one space of normal inner indentation).`,
             type: 'integer',
           },
         },
+        type: 'object',
       },
     ],
     type: 'layout',

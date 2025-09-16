@@ -7,6 +7,10 @@ declare module 'gitdown' {
       }
     }) => void
     get: () => string
+    registerHelper: (name: string, helper: {
+      compile: () => string
+      weight?: number
+    }) => void
   }
   export function readFile(path: string): Gitdown
 }

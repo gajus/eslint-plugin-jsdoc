@@ -3,6 +3,12 @@
 # <code>require-description</code>
 
 * [Options](#user-content-require-description-options)
+    * [`checkConstructors`](#user-content-require-description-options-checkconstructors)
+    * [`checkGetters`](#user-content-require-description-options-checkgetters)
+    * [`checkSetters`](#user-content-require-description-options-checksetters)
+    * [`contexts`](#user-content-require-description-options-contexts)
+    * [`descriptionStyle`](#user-content-require-description-options-descriptionstyle)
+    * [`exemptedBy`](#user-content-require-description-options-exemptedby)
 * [Context and settings](#user-content-require-description-context-and-settings)
 * [Failing examples](#user-content-require-description-failing-examples)
 * [Passing examples](#user-content-require-description-passing-examples)
@@ -14,7 +20,7 @@ have a description.
 * All functions must have an implicit description (e.g., text above tags) or
   have the option `descriptionStyle` set to `tag` (requiring `@description`
   (or `@desc` if that is set as your preferred tag name)).
-* Every jsdoc block description (or `@description` tag if `descriptionStyle`
+* Every JSDoc block description (or `@description` tag if `descriptionStyle`
   is `"tag"`) must have a non-empty description that explains the purpose of
   the method.
 
@@ -22,26 +28,62 @@ have a description.
 <a name="require-description-options"></a>
 ## Options
 
-An options object may have any of the following properties:
+A single options object has the following properties.
 
-- `contexts` - Set to an array of strings representing the AST context
-  where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6
-  classes). Overrides the default contexts (see below).  Set to `"any"` if
-  you want the rule to apply to any jsdoc block throughout your files.
-- `exemptedBy` - Array of tags (e.g., `['type']`) whose presence on the
-    document block avoids the need for a `@description`. Defaults to an
-    array with `inheritdoc`. If you set this array, it will overwrite the
-    default, so be sure to add back `inheritdoc` if you wish its presence
-    to cause exemption of the rule.
-- `descriptionStyle` - Whether to accept implicit descriptions (`"body"`) or
-    `@description` tags (`"tag"`) as satisfying the rule. Set to `"any"` to
-    accept either style. Defaults to `"body"`.
-- `checkConstructors` - A value indicating whether `constructor`s should be
-    checked. Defaults to `true`.
-- `checkGetters` - A value indicating whether getters should be checked.
-    Defaults to `true`.
-- `checkSetters` - A value indicating whether setters should be checked.
-    Defaults to `true`.
+<a name="user-content-require-description-options-checkconstructors"></a>
+<a name="require-description-options-checkconstructors"></a>
+### <code>checkConstructors</code>
+
+A value indicating whether `constructor`s should be
+checked. Defaults to `true`.
+<a name="user-content-require-description-options-checkgetters"></a>
+<a name="require-description-options-checkgetters"></a>
+### <code>checkGetters</code>
+
+A value indicating whether getters should be checked.
+Defaults to `true`.
+<a name="user-content-require-description-options-checksetters"></a>
+<a name="require-description-options-checksetters"></a>
+### <code>checkSetters</code>
+
+A value indicating whether setters should be checked.
+Defaults to `true`.
+<a name="user-content-require-description-options-contexts"></a>
+<a name="require-description-options-contexts"></a>
+### <code>contexts</code>
+
+Set to an array of strings representing the AST context
+where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6
+classes).
+
+`context` defaults to `any` and `comment` defaults to no specific comment context.
+
+Overrides the default contexts (`ArrowFunctionExpression`,
+`FunctionDeclaration`, `FunctionExpression`). Set to `"any"` if you want
+the rule to apply to any JSDoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression, i.e., `@callback` or `@function` (or its aliases `@func` or
+`@method`) (including those associated with an `@interface`).
+
+See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our Advanced docs for more on the expected format.
+<a name="user-content-require-description-options-descriptionstyle"></a>
+<a name="require-description-options-descriptionstyle"></a>
+### <code>descriptionStyle</code>
+
+Whether to accept implicit descriptions (`"body"`) or
+`@description` tags (`"tag"`) as satisfying the rule. Set to `"any"` to
+accept either style. Defaults to `"body"`.
+<a name="user-content-require-description-options-exemptedby"></a>
+<a name="require-description-options-exemptedby"></a>
+### <code>exemptedBy</code>
+
+Array of tags (e.g., `['type']`) whose presence on the
+document block avoids the need for a `@description`. Defaults to an
+array with `inheritdoc`. If you set this array, it will overwrite the
+default, so be sure to add back `inheritdoc` if you wish its presence
+to cause exemption of the rule.
+
 
 <a name="user-content-require-description-context-and-settings"></a>
 <a name="require-description-context-and-settings"></a>
@@ -50,7 +92,7 @@ An options object may have any of the following properties:
 | | |
 | -------- | ---------------------- |
 | Context  | `ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`; others when `contexts` option enabled |
-| Tags     | `description` or jsdoc block |
+| Tags     | `description` or JSDoc block |
 | Aliases  | `desc` |
 | Recommended | false |
 | Options  |`checkConstructors`, `checkGetters`, `checkSetters`, `contexts`, `descriptionStyle`, `exemptedBy`|

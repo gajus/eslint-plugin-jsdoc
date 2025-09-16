@@ -6,13 +6,11 @@ Reports and optionally removes blocks with whitespace only.
 
 ## Fixer
 
-(TODO)
+Auto-removes blank blocks with whitespace only.
 
 #### Options
 
-##### `enableFixer`
-
-Whether or not to auto-remove the blank block. Defaults to `false`.
+{"gitdown": "options"}
 
 |||
 |---|---|

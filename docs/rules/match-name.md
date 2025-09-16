@@ -23,7 +23,7 @@ Will replace `disallowName` with `replacement` if these are provided.
 <a name="options"></a>
 ## Options
 
-A single options object with the following properties:
+A single options object has the following properties.
 
 <a name="user-content-options-match"></a>
 <a name="options-match"></a>
@@ -33,28 +33,7 @@ A single options object with the following properties:
 the conditions whereby a name is reported as being problematic.
 
 These objects can have any combination of the following groups of optional
-properties, all of which act to confine one another:
-
-- `tags` - This array should include tag names or `*` to indicate the
-  match will apply for all tags (except as confined by any context
-  properties). If `*` is not used, then these rules will only apply to
-  the specified tags. If `tags` is omitted, then `*` is assumed.
-
-- `allowName` - Indicates which names are allowed for the given tag (or `*`).
-    Accepts a string regular expression (optionally wrapped between two
-    `/` delimiters followed by optional flags) used to match the name.
-- `disallowName` - As with `allowName` but indicates names that are not
-    allowed.
-- `replacement` - If `disallowName` is supplied and this value is present, it
-    will replace the matched `disallowName` text.
-
-- `context` - AST to confine the allowing or disallowing to jsdoc blocks
-    associated with a particular context. See the
-    ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
-    section of our README for more on the expected format.
-- `comment` - As with `context` but AST for the JSDoc block comment and types
-
-- `message` - An optional custom message to use when there is a match.
+properties, all of which act to confine one another.
 
 Note that `comment`, even if targeting a specific tag, is used to match the
 whole block. So if a `comment` finds its specific tag, it may still apply
@@ -63,6 +42,54 @@ disallowed name. An alternative is to ensure that `comment` finds the specific
 tag of the desired tag and/or name and no `disallowName` (or `allowName`) is
 supplied. In such a case, only one error will be reported, but no fixer will
 be applied, however.
+
+A single options object has the following properties.
+
+<a name="user-content-options-match-allowname"></a>
+<a name="options-match-allowname"></a>
+##### <code>allowName</code>
+
+Indicates which names are allowed for the given tag (or `*`).
+Accepts a string regular expression (optionally wrapped between two
+`/` delimiters followed by optional flags) used to match the name.
+<a name="user-content-options-match-comment"></a>
+<a name="options-match-comment"></a>
+##### <code>comment</code>
+
+As with `context` but AST for the JSDoc block comment and types.
+<a name="user-content-options-match-context"></a>
+<a name="options-match-context"></a>
+##### <code>context</code>
+
+AST to confine the allowing or disallowing to JSDoc blocks
+associated with a particular context. See the
+["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our Advanced docs for more on the expected format.
+<a name="user-content-options-match-disallowname"></a>
+<a name="options-match-disallowname"></a>
+##### <code>disallowName</code>
+
+As with `allowName` but indicates names that are not allowed.
+<a name="user-content-options-match-message"></a>
+<a name="options-match-message"></a>
+##### <code>message</code>
+
+An optional custom message to use when there is a match.
+<a name="user-content-options-match-replacement"></a>
+<a name="options-match-replacement"></a>
+##### <code>replacement</code>
+
+If `disallowName` is supplied and this value is present, it
+will replace the matched `disallowName` text.
+<a name="user-content-options-match-tags"></a>
+<a name="options-match-tags"></a>
+##### <code>tags</code>
+
+This array should include tag names or `*` to indicate the
+  match will apply for all tags (except as confined by any context
+  properties). If `*` is not used, then these rules will only apply to
+  the specified tags. If `tags` is omitted, then `*` is assumed.
+
 
 <a name="user-content-context-and-settings"></a>
 <a name="context-and-settings"></a>

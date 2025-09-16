@@ -23,6 +23,8 @@ Checks that:
 <a name="require-file-overview-options"></a>
 ## Options
 
+A single options object has the following properties.
+
 <a name="user-content-require-file-overview-options-tags"></a>
 <a name="require-file-overview-options-tags"></a>
 ### <code>tags</code>
@@ -30,9 +32,16 @@ Checks that:
 The keys of this object are tag names, and the values are configuration
 objects indicating what will be checked for these whole-file tags.
 
-Each configuration object has the following boolean keys (which default
-to `false` when this option is supplied): `mustExist`, `preventDuplicates`,
-`initialCommentsOnly`. These correspond to the three items above.
+Each configuration object has 3 potential boolean keys (which default
+to `false` when this option is supplied).
+
+1. `mustExist` - enforces that all files have a `@file`, `@fileoverview`, or `@overview` tag.
+2. `preventDuplicates` - enforces that duplicate file overview tags within a given file will be reported
+3. `initialCommentsOnly` - reports file overview tags which are not, as per
+  [the docs](https://jsdoc.app/tags-file.html), "at the beginning of
+  the file"–where beginning of the file is interpreted in this rule
+  as being when the overview tag is not preceded by anything other than
+  a comment.
 
 When no `tags` is present, the default is:
 
@@ -75,10 +84,13 @@ Note that if you choose to use `preventDuplicates` with `license`, you still
 have a way to allow multiple licenses for the whole page by using the SPDX
 "AND" expression, e.g., `@license (MIT AND GPL-3.0)`.
 
-Note that the tag names are the main jsdoc tag name, so you should use `file`
+Note that the tag names are the main JSDoc tag name, so you should use `file`
 in this configuration object regardless of whether you have configured
 `fileoverview` instead of `file` on `tagNamePreference` (i.e., `fileoverview`
 will be checked, but you must use `file` on the configuration object).
+
+
+
 
 <a name="user-content-require-file-overview-context-and-settings"></a>
 <a name="require-file-overview-context-and-settings"></a>

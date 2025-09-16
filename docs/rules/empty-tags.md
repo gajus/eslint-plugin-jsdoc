@@ -39,11 +39,13 @@ Similarly, `@internal` will still be checked for content by this rule even with
 <a name="fixer"></a>
 ## Fixer
 
-(Todo)
+Strips content if present for the above-mentioned tags.
 
 <a name="user-content-options"></a>
 <a name="options"></a>
 ## Options
+
+A single options object has the following properties.
 
 <a name="user-content-options-tags"></a>
 <a name="options-tags"></a>
@@ -57,6 +59,8 @@ add them within this option.
   'jsdoc/empty-tags': ['error', {tags: ['event']}]
 }
 ```
+
+
 
 <a name="user-content-context-and-settings"></a>
 <a name="context-and-settings"></a>

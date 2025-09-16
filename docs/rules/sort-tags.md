@@ -4,11 +4,11 @@
 
 * [Fixer](#user-content-sort-tags-fixer)
 * [Options](#user-content-sort-tags-options)
-    * [`tagSequence`](#user-content-sort-tags-options-tagsequence)
     * [`alphabetizeExtras`](#user-content-sort-tags-options-alphabetizeextras)
     * [`linesBetween`](#user-content-sort-tags-options-linesbetween)
-    * [`reportTagGroupSpacing`](#user-content-sort-tags-options-reporttaggroupspacing)
     * [`reportIntraTagGroupSpacing`](#user-content-sort-tags-options-reportintrataggroupspacing)
+    * [`reportTagGroupSpacing`](#user-content-sort-tags-options-reporttaggroupspacing)
+    * [`tagSequence`](#user-content-sort-tags-options-tagsequence)
 * [Context and settings](#user-content-sort-tags-context-and-settings)
 * [Failing examples](#user-content-sort-tags-failing-examples)
 * [Passing examples](#user-content-sort-tags-passing-examples)
@@ -35,12 +35,47 @@ You may, however, safely set the "any" option in that rule along with
 <a name="sort-tags-fixer"></a>
 ## Fixer
 
-(TODO)
+Sorts tags by a specified sequence according to tag name, optionally
+adding line breaks between tag groups.
 
 <a name="user-content-sort-tags-options"></a>
 <a name="sort-tags-options"></a>
 ## Options
 
+A single options object has the following properties.
+
+<a name="user-content-sort-tags-options-alphabetizeextras"></a>
+<a name="sort-tags-options-alphabetizeextras"></a>
+### <code>alphabetizeExtras</code>
+
+Defaults to `false`. Alphabetizes any items not within `tagSequence` after any
+items within `tagSequence` (or in place of the special `-other` pseudo-tag)
+are sorted.
+
+If you want all your tags alphabetized, you can supply an empty array for
+`tagSequence` along with setting this option to `true`.
+<a name="user-content-sort-tags-options-linesbetween"></a>
+<a name="sort-tags-options-linesbetween"></a>
+### <code>linesBetween</code>
+
+Indicates the number of lines to be added between tag groups. Defaults to 1.
+Do not set to 0 or 2+ if you are using `tag-lines` and `"always"` and do not
+set to 1+ if you are using `tag-lines` and `"never"`.
+<a name="user-content-sort-tags-options-reportintrataggroupspacing"></a>
+<a name="sort-tags-options-reportintrataggroupspacing"></a>
+### <code>reportIntraTagGroupSpacing</code>
+
+Whether to enable reporting and fixing of line breaks within tags of a given
+tag group. Defaults to `true` which will remove any line breaks at the end of
+such tags. Do not use with `true` if you are using `tag-lines` and `always`.
+<a name="user-content-sort-tags-options-reporttaggroupspacing"></a>
+<a name="sort-tags-options-reporttaggroupspacing"></a>
+### <code>reportTagGroupSpacing</code>
+
+Whether to enable reporting and fixing of line breaks between tag groups
+as set by `linesBetween`. Defaults to `true`. Note that the very last tag
+will not have spacing applied regardless. For adding line breaks there, you
+may wish to use the `endLines` option of the `tag-lines` rule.
 <a name="user-content-sort-tags-options-tagsequence"></a>
 <a name="sort-tags-options-tagsequence"></a>
 ### <code>tagSequence</code>
@@ -227,41 +262,14 @@ a fixed order that doesn't change into the future, supply your own
 ]}];
 ```
 
-<a name="user-content-sort-tags-options-alphabetizeextras"></a>
-<a name="sort-tags-options-alphabetizeextras"></a>
-### <code>alphabetizeExtras</code>
+A single options object has the following properties.
 
-Defaults to `false`. Alphabetizes any items not within `tagSequence` after any
-items within `tagSequence` (or in place of the special `-other` pseudo-tag)
-are sorted.
+<a name="user-content-sort-tags-options-tagsequence-tags"></a>
+<a name="sort-tags-options-tagsequence-tags"></a>
+##### <code>tags</code>
 
-If you want all your tags alphabetized, you can supply an empty array for
-`tagSequence` along with setting this option to `true`.
+See description on `tagSequence`.
 
-<a name="user-content-sort-tags-options-linesbetween"></a>
-<a name="sort-tags-options-linesbetween"></a>
-### <code>linesBetween</code>
-
-Indicates the number of lines to be added between tag groups. Defaults to 1.
-Do not set to 0 or 2+ if you are using `tag-lines` and `"always"` and do not
-set to 1+ if you are using `tag-lines` and `"never"`.
-
-<a name="user-content-sort-tags-options-reporttaggroupspacing"></a>
-<a name="sort-tags-options-reporttaggroupspacing"></a>
-### <code>reportTagGroupSpacing</code>
-
-Whether to enable reporting and fixing of line breaks between tag groups
-as set by `linesBetween`. Defaults to `true`. Note that the very last tag
-will not have spacing applied regardless. For adding line breaks there, you
-may wish to use the `endLines` option of the `tag-lines` rule.
-
-<a name="user-content-sort-tags-options-reportintrataggroupspacing"></a>
-<a name="sort-tags-options-reportintrataggroupspacing"></a>
-### <code>reportIntraTagGroupSpacing</code>
-
-Whether to enable reporting and fixing of line breaks within tags of a given
-tag group. Defaults to `true` which will remove any line breaks at the end of
-such tags. Do not use with `true` if you are using `tag-lines` and `always`.
 
 <a name="user-content-sort-tags-context-and-settings"></a>
 <a name="sort-tags-context-and-settings"></a>

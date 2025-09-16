@@ -9,6 +9,8 @@ This rule enforces minimum number of newlines before JSDoc comment blocks
 <a name="lines-before-block-options"></a>
 ## Options
 
+A single options object has the following properties.
+
 <a name="user-content-lines-before-block-options-checkblockstarts"></a>
 <a name="lines-before-block-options-checkblockstarts"></a>
 ### <code>checkBlockStarts</code>
@@ -16,11 +18,13 @@ This rule enforces minimum number of newlines before JSDoc comment blocks
 Whether to additionally check the start of blocks, such as classes or functions.
 Defaults to `false`.
 
-<a name="user-content-lines-before-block-options-lines"></a>
-<a name="lines-before-block-options-lines"></a>
-### <code>lines</code>
+<a name="user-content-lines-before-block-options-excludedtags"></a>
+<a name="lines-before-block-options-excludedtags"></a>
+### <code>excludedTags</code>
 
-The minimum number of lines to require. Defaults to 1.
+An array of tags whose presence in the JSDoc block will prevent the
+application of the rule. Defaults to `['type']` (i.e., if `@type` is present,
+lines before the block will not be added).
 
 <a name="user-content-lines-before-block-options-ignoresameline"></a>
 <a name="lines-before-block-options-ignoresameline"></a>
@@ -36,13 +40,12 @@ preceding code or comment. Defaults to `true`.
 This option excludes cases where the JSDoc block is only one line long.
 Defaults to `true`.
 
-<a name="user-content-lines-before-block-options-excludedtags"></a>
-<a name="lines-before-block-options-excludedtags"></a>
-### <code>excludedTags</code>
+<a name="user-content-lines-before-block-options-lines"></a>
+<a name="lines-before-block-options-lines"></a>
+### <code>lines</code>
 
-An array of tags whose presence in the JSDoc block will prevent the
-application of the rule. Defaults to `['type']` (i.e., if `@type` is present,
-lines before the block will not be added).
+The minimum number of lines to require. Defaults to 1.
+
 
 |||
 |---|---|

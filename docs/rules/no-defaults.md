@@ -4,8 +4,8 @@
 
 * [Fixer](#user-content-no-defaults-fixer)
 * [Options](#user-content-no-defaults-options)
-    * [`noOptionalParamNames`](#user-content-no-defaults-options-nooptionalparamnames)
     * [`contexts`](#user-content-no-defaults-options-contexts)
+    * [`noOptionalParamNames`](#user-content-no-defaults-options-nooptionalparamnames)
 * [Context and settings](#user-content-no-defaults-context-and-settings)
 * [Failing examples](#user-content-no-defaults-failing-examples)
 * [Passing examples](#user-content-no-defaults-passing-examples)
@@ -27,12 +27,32 @@ to an appropriate context, including, if you wish, "any".
 <a name="no-defaults-fixer"></a>
 ## Fixer
 
-(TODO)
+Strips the default value.
 
 <a name="user-content-no-defaults-options"></a>
 <a name="no-defaults-options"></a>
 ## Options
 
+A single options object has the following properties.
+
+<a name="user-content-no-defaults-options-contexts"></a>
+<a name="no-defaults-options-contexts"></a>
+### <code>contexts</code>
+
+Set this to an array of strings representing the AST context (or an object with
+optional `context` and `comment` properties) where you wish the rule to be applied.
+
+`context` defaults to `any` and `comment` defaults to no specific comment context.
+
+Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`,
+`FunctionExpression`). Set to `"any"` if you want
+the rule to apply to any JSDoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression, i.e., `@callback` or `@function` (or its aliases `@func` or
+`@method`) (including those associated with an `@interface`).
+
+See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our Advanced docs for more on the expected format.
 <a name="user-content-no-defaults-options-nooptionalparamnames"></a>
 <a name="no-defaults-options-nooptionalparamnames"></a>
 ### <code>noOptionalParamNames</code>
@@ -43,20 +63,6 @@ the presence of ES6 default parameters (bearing in mind that such
 "defaults" are only applied when the supplied value is missing or
 `undefined` but not for `null` or other "falsey" values).
 
-<a name="user-content-no-defaults-options-contexts"></a>
-<a name="no-defaults-options-contexts"></a>
-### <code>contexts</code>
-
-Set this to an array of strings representing the AST context (or an object with
-`context` and `comment` properties) where you wish the rule to be applied.
-Overrides the default contexts (see below). Set to `"any"` if you want
-the rule to apply to any jsdoc block throughout your files (as is necessary
-for finding function blocks not attached to a function declaration or
-expression, i.e., `@callback` or `@function` (or its aliases `@func` or
-`@method`) (including those associated with an `@interface`).
-
-See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
-section of our README for more on the expected format.
 
 <a name="user-content-no-defaults-context-and-settings"></a>
 <a name="no-defaults-context-and-settings"></a>

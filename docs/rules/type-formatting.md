@@ -14,24 +14,29 @@ Currently offers the following options for formatting types.
 <a name="type-formatting-options"></a>
 ## Options
 
+A single options object has the following properties.
+
 <a name="user-content-type-formatting-options-arraybrackets"></a>
 <a name="type-formatting-options-arraybrackets"></a>
 ### <code>arrayBrackets</code>
 
 Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square".
-
 <a name="user-content-type-formatting-options-enablefixer"></a>
 <a name="type-formatting-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.
-
 <a name="user-content-type-formatting-options-genericdot"></a>
 <a name="type-formatting-options-genericdot"></a>
 ### <code>genericDot</code>
 
 Boolean value of whether to use a dot before the angled brackets of a generic (e.g., `SomeType.<AnotherType>`). Defaults to `false`.
+<a name="user-content-type-formatting-options-objectfieldindent"></a>
+<a name="type-formatting-options-objectfieldindent"></a>
+### <code>objectFieldIndent</code>
 
+A string indicating the whitespace to be added on each line preceding an
+object property-value field. Defaults to the empty string.
 <a name="user-content-type-formatting-options-objectfieldquote"></a>
 <a name="type-formatting-options-objectfieldquote"></a>
 ### <code>objectFieldQuote</code>
@@ -40,22 +45,6 @@ Whether and how object field properties should be quoted (e.g., `{"a": string}`)
 Set to `single`, `double`, or `null`. Defaults to `null` (no quotes unless
 required due to special characters within the field). Digits will be kept as is,
 regardless of setting (they can either represent a digit or a string digit).
-
-<a name="user-content-type-formatting-options-propertyquotes"></a>
-<a name="type-formatting-options-propertyquotes"></a>
-### <code>propertyQuotes</code>
-
-Whether and how namepath properties should be quoted (e.g., `ab."cd"."ef"`).
-Set to `single`, `double`, or `null`. Defaults to `null` (no quotes unless
-required due to whitespace within the property).
-
-<a name="user-content-type-formatting-options-stringquotes"></a>
-<a name="type-formatting-options-stringquotes"></a>
-### stringQuotes
-
-How string literals should be quoted (e.g., `"abc"`). Set to `single`
-or `double`. Defaults to 'single'.
-
 <a name="user-content-type-formatting-options-objectfieldseparator"></a>
 <a name="type-formatting-options-objectfieldseparator"></a>
 ### <code>objectFieldSeparator</code>
@@ -65,7 +54,6 @@ For object properties, specify whether a "semicolon", "comma", "linebreak",
 each object property-value pair.
 
 Defaults to `"comma"`.
-
 <a name="user-content-type-formatting-options-objectfieldseparatoroptionallinebreak"></a>
 <a name="type-formatting-options-objectfieldseparatoroptionallinebreak"></a>
 ### <code>objectFieldSeparatorOptionalLinebreak</code>
@@ -74,14 +62,6 @@ Whether `objectFieldSeparator` set to `"semicolon-and-linebreak"` or
 `"comma-and-linebreak"` should be allowed to optionally drop the linebreak.
 
 Defaults to `true`.
-
-<a name="user-content-type-formatting-options-objectfieldindent"></a>
-<a name="type-formatting-options-objectfieldindent"></a>
-### <code>objectFieldIndent</code>
-
-A string indicating the whitespace to be added on each line preceding an
-object property-value field. Defaults to the empty string.
-
 <a name="user-content-type-formatting-options-objectfieldseparatortrailingpunctuation"></a>
 <a name="type-formatting-options-objectfieldseparatortrailingpunctuation"></a>
 ### <code>objectFieldSeparatorTrailingPunctuation</code>
@@ -91,14 +71,18 @@ or there are multiple property-value object fields present), this property
 will determine whether to add punctuation corresponding to the
 `objectFieldSeparator` (e.g., a semicolon) to the final object field.
 Defaults to `false`.
-
 <a name="user-content-type-formatting-options-separatorforsingleobjectfield"></a>
 <a name="type-formatting-options-separatorforsingleobjectfield"></a>
 ### <code>separatorForSingleObjectField</code>
 
 Whether to apply the `objectFieldSeparator` (e.g., a semicolon) when there
 is only one property-value object field present. Defaults to `false`.
+<a name="user-content-type-formatting-options-stringquotes"></a>
+<a name="type-formatting-options-stringquotes"></a>
+### <code>stringQuotes</code>
 
+How string literals should be quoted (e.g., `"abc"`). Set to `single`
+or `double`. Defaults to 'single'.
 <a name="user-content-type-formatting-options-typebracketspacing"></a>
 <a name="type-formatting-options-typebracketspacing"></a>
 ### <code>typeBracketSpacing</code>
@@ -106,12 +90,12 @@ is only one property-value object field present. Defaults to `false`.
 A string of spaces that will be added immediately after the type's initial
 curly bracket and immediately before its ending curly bracket. Defaults
 to the empty string.
-
 <a name="user-content-type-formatting-options-unionspacing"></a>
 <a name="type-formatting-options-unionspacing"></a>
 ### <code>unionSpacing</code>
 
 Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`).
+
 
 |||
 |---|---|
