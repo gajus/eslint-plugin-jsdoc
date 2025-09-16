@@ -404,6 +404,8 @@ non-default-recommended fixer).
 |||[no-restricted-syntax](./docs/rules/no-restricted-syntax.md#readme)|Reports when certain comment structures are present|
 |On in TS|:wrench:|[no-types](./docs/rules/no-types.md#readme)|Prohibits types on `@param` or `@returns` (redundant with TypeScript)|
 |:heavy_check_mark: (off in TS and TS flavor)||[no-undefined-types](./docs/rules/no-undefined-types.md#readme)|Besides some expected built-in types, prohibits any types not specified as globals or within `@typedef` |
+|:heavy_check_mark:||[reject-any-type](./docs/rules/reject-any-type.md#readme)|Reports use of `any` (or `*`) type within JSDoc tag types|
+|:heavy_check_mark:||[reject-function-type](./docs/rules/reject-function-type.md#readme)|Reports use of `Function` type within JSDoc tag types|
 ||:wrench:|[require-asterisk-prefix](./docs/rules/require-asterisk-prefix.md#readme)|Requires that each JSDoc line starts with an `*`|
 |||[require-description](./docs/rules/require-description.md#readme)|Requires that all functions (and potentially other contexts) have a description.|
 ||:wrench:|[require-description-complete-sentence](./docs/rules/require-description-complete-sentence.md#readme)|Requires that block description, explicit `@description`, and `@param`/`@returns` tag descriptions are written in complete sentences|
