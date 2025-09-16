@@ -197,58 +197,78 @@ export default iterateJsdoc(({
     let typeName = typeNodeName;
 
     const isNameOfGeneric = parentNode !== undefined && parentNode.type === 'JsdocTypeGeneric' && property === 'left';
-    if (unifyParentAndChildTypeChecks || isNameOfGeneric) {
-      const brackets = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (
-        parentNode
-      )?.meta?.brackets;
-      const dot = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (
-        parentNode
-      )?.meta?.dot;
 
-      if (brackets === 'angle') {
-        const checkPostFixes = dot ? [
-          '.', '.<>',
-        ] : [
-          '<>',
-        ];
-        isGenericMatch = checkPostFixes.some((checkPostFix) => {
-          if (preferredTypes?.[typeNodeName + checkPostFix] !== undefined) {
-            typeName += checkPostFix;
+    const brackets = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (
+      parentNode
+    )?.meta?.brackets;
+    const dot = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (
+      parentNode
+    )?.meta?.dot;
 
-            return true;
-          }
+    if (brackets === 'angle') {
+      const checkPostFixes = dot ? [
+        '.', '.<>',
+      ] : [
+        '<>',
+      ];
+      isGenericMatch = checkPostFixes.some((checkPostFix) => {
+        const preferredType = preferredTypes?.[typeNodeName + checkPostFix];
 
-          return false;
-        });
-      }
+        // Does `unifyParentAndChildTypeChecks` need to be checked here?
+        if (
+          (unifyParentAndChildTypeChecks || isNameOfGeneric ||
+            /* c8 ignore next 2 -- If checking `unifyParentAndChildTypeChecks` */
+            (typeof preferredType === 'object' &&
+              preferredType?.unifyParentAndChildTypeChecks)
+          ) &&
+          preferredType !== undefined
+        ) {
+          typeName += checkPostFix;
 
-      if (
-        !isGenericMatch && property &&
-        /** @type {import('jsdoc-type-pratt-parser').NonRootResult} */ (
-          parentNode
-        ).type === 'JsdocTypeGeneric'
-      ) {
-        const checkPostFixes = dot ? [
-          '.', '.<>',
-        ] : [
-          brackets === 'angle' ? '<>' : '[]',
-        ];
+          return true;
+        }
 
-        isGenericMatch = checkPostFixes.some((checkPostFix) => {
-          if (preferredTypes?.[checkPostFix] !== undefined) {
-            typeName = checkPostFix;
-
-            return true;
-          }
-
-          return false;
-        });
-      }
+        return false;
+      });
     }
 
-    const directNameMatch = preferredTypes?.[typeNodeName] !== undefined &&
+    if (
+      !isGenericMatch && property &&
+      /** @type {import('jsdoc-type-pratt-parser').NonRootResult} */ (
+        parentNode
+      ).type === 'JsdocTypeGeneric'
+    ) {
+      const checkPostFixes = dot ? [
+        '.', '.<>',
+      ] : [
+        brackets === 'angle' ? '<>' : '[]',
+      ];
+
+      isGenericMatch = checkPostFixes.some((checkPostFix) => {
+        const preferredType = preferredTypes?.[checkPostFix];
+        if (
+          // Does `unifyParentAndChildTypeChecks` need to be checked here?
+          (unifyParentAndChildTypeChecks || isNameOfGeneric ||
+            /* c8 ignore next 2 -- If checking `unifyParentAndChildTypeChecks` */
+            (typeof preferredType === 'object' &&
+            preferredType?.unifyParentAndChildTypeChecks)) &&
+            preferredType !== undefined
+        ) {
+          typeName = checkPostFix;
+
+          return true;
+        }
+
+        return false;
+      });
+    }
+
+    const prefType = preferredTypes?.[typeNodeName];
+    const directNameMatch = prefType !== undefined &&
       !Object.values(preferredTypes).includes(typeNodeName);
-    const unifiedSyntaxParentMatch = property && directNameMatch && unifyParentAndChildTypeChecks;
+    const specificUnify = typeof prefType === 'object' &&
+      prefType?.unifyParentAndChildTypeChecks;
+    const unifiedSyntaxParentMatch = property && directNameMatch && (unifyParentAndChildTypeChecks || specificUnify);
     isGenericMatch = isGenericMatch || Boolean(unifiedSyntaxParentMatch);
 
     hasMatchingPreferredType = isGenericMatch ||
@@ -524,6 +544,7 @@ export default iterateJsdoc(({
             type: 'boolean',
           },
           unifyParentAndChildTypeChecks: {
+            description: '@deprecated Use the `preferredTypes[preferredType]` setting of the same name instead',
             type: 'boolean',
           },
         },

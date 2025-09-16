@@ -1726,6 +1726,7 @@ const getUtils = (
  *     message: string,
  *     replacement?: false|string
  *     skipRootChecking?: boolean
+ *     unifyParentAndChildTypeChecks?: boolean
  *   }
  * }} PreferredTypes
  */

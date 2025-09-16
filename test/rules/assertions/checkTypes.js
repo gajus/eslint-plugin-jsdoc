@@ -2371,6 +2371,104 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        /**
+         * @typedef {Object<string, number>} foo
+         */
+        function a () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @typedef "foo" type "Object"; prefer: "object".',
+        },
+      ],
+      output: `
+        /**
+         * @typedef {object<string, number>} foo
+         */
+        function a () {}
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            Object: {
+              replacement: 'object',
+              unifyParentAndChildTypeChecks: true,
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @typedef {Object} foo
+         */
+        function a () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @typedef "foo" type "Object"; prefer: "object".',
+        },
+      ],
+      output: `
+        /**
+         * @typedef {object} foo
+         */
+        function a () {}
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            Object: {
+              replacement: 'object',
+              unifyParentAndChildTypeChecks: true,
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @param {object.<string>} foo
+         */
+        function quux (foo) {
+
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc @param "foo" type "object"; prefer: "Object<>".',
+        },
+      ],
+      output: `
+        /**
+         * @param {Object<string>} foo
+         */
+        function quux (foo) {
+
+        }
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+          preferredTypes: {
+            Object: 'object',
+            'object.<>': {
+              replacement: 'Object<>',
+              unifyParentAndChildTypeChecks: true,
+            },
+            'Object.<>': 'Object<>',
+            'object<>': 'Object<>',
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -3074,6 +3172,24 @@ export default /** @type {import('../index.js').TestCases} */ ({
             '[]': {
               message: 'Do not use *[], use Array<*> instead',
               replacement: 'Array',
+            },
+          },
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} foo
+         */
+        function a () {}
+      `,
+      settings: {
+        jsdoc: {
+          preferredTypes: {
+            Object: {
+              replacement: 'object',
+              unifyParentAndChildTypeChecks: true,
             },
           },
         },
