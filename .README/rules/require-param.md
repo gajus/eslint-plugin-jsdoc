@@ -374,6 +374,15 @@ supplied as default values. Defaults to `false`.
 Set to `true` to ignore reporting when all params are missing. Defaults to
 `false`.
 
+### `interfaceExemptsParamsCheck`
+
+Set if you wish TypeScript interfaces to exempt checks for the existence of
+`@param`'s.
+
+Will check for a type defining the function itself (on a variable
+declaration) or if there is a single destructured object with a type.
+Defaults to `false`.
+
 ## Context and settings
 
 |          |                      |
@@ -382,7 +391,7 @@ Set to `true` to ignore reporting when all params are missing. Defaults to
 | Tags     | `param` |
 | Aliases  | `arg`, `argument` |
 |Recommended | true|
-| Options  |`autoIncrementBase`, `checkConstructors`, `checkDestructured`, `checkDestructuredRoots`, `checkGetters`, `checkRestProperty`, `checkSetters`, `checkTypesPattern`, `contexts`, `enableFixer`, `enableRestElementFixer`, `enableRootFixer`, `exemptedBy`, `ignoreWhenAllParamsMissing`, `unnamedRootBase`, `useDefaultObjectProperties`|
+| Options  |`autoIncrementBase`, `checkConstructors`, `checkDestructured`, `checkDestructuredRoots`, `checkGetters`, `checkRestProperty`, `checkSetters`, `checkTypesPattern`, `contexts`, `enableFixer`, `enableRestElementFixer`, `enableRootFixer`, `exemptedBy`, `ignoreWhenAllParamsMissing`, `interfaceExemptsParamsCheck`, `unnamedRootBase`, `useDefaultObjectProperties`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 ## Failing examples

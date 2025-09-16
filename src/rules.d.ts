@@ -591,6 +591,7 @@ export interface Rules {
           enableRootFixer?: boolean;
           exemptedBy?: string[];
           ignoreWhenAllParamsMissing?: boolean;
+          interfaceExemptsParamsCheck?: boolean;
           unnamedRootBase?: string[];
           useDefaultObjectProperties?: boolean;
         }
