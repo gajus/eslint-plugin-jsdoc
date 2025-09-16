@@ -410,6 +410,12 @@ export interface Rules {
         }
       ];
 
+  /** Reports use of `any` or `*` type */
+  "jsdoc/reject-any-type": [];
+
+  /** Reports use of `Function` type */
+  "jsdoc/reject-function-type": [];
+
   /** Requires that each JSDoc line starts with an `*`. */
   "jsdoc/require-asterisk-prefix": 
     | []

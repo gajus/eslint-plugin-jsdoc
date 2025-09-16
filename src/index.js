@@ -7,9 +7,9 @@ import {
 import {
   buildForbidRuleDefinition,
 } from './buildForbidRuleDefinition.js';
-// import {
-//   buildRejectOrPreferRuleDefinition,
-// } from './buildRejectOrPreferRuleDefinition.js';
+import {
+  buildRejectOrPreferRuleDefinition,
+} from './buildRejectOrPreferRuleDefinition.js';
 import {
   getJsdocProcessorPlugin,
 } from './getJsdocProcessorPlugin.js';
@@ -116,20 +116,33 @@ index.rules = {
   'no-restricted-syntax': noRestrictedSyntax,
   'no-types': noTypes,
   'no-undefined-types': noUndefinedTypes,
-  // 'reject-any-type': buildRejectOrPreferRuleDefinition({
-  //   contexts: [
-  //     {
-  //       unifyParentAndChildTypeChecks: true,
-  //     },
-  //   ],
-  // }),
-  // 'reject-function-type': buildRejectOrPreferRuleDefinition({
-  //   contexts: [
-  //     {
-  //       unifyParentAndChildTypeChecks: true,
-  //     },
-  //   ],
-  // }),
+  'reject-any-type': buildRejectOrPreferRuleDefinition({
+    description: 'Reports use of `any` or `*` type',
+    overrideSettings: {
+      '*': {
+        message: 'Prefer a more specific type to `*`',
+        replacement: false,
+        unifyParentAndChildTypeChecks: true,
+      },
+      any: {
+        message: 'Prefer a more specific type to `any`',
+        replacement: false,
+        unifyParentAndChildTypeChecks: true,
+      },
+    },
+    url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/reject-any-type.md#repos-sticky-header',
+  }),
+  'reject-function-type': buildRejectOrPreferRuleDefinition({
+    description: 'Reports use of `Function` type',
+    overrideSettings: {
+      Function: {
+        message: 'Prefer a more specific type to `Function`',
+        replacement: false,
+        unifyParentAndChildTypeChecks: true,
+      },
+    },
+    url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/reject-function-type.md#repos-sticky-header',
+  }),
   'require-asterisk-prefix': requireAsteriskPrefix,
   'require-description': requireDescription,
   'require-description-complete-sentence': requireDescriptionCompleteSentence,
@@ -241,6 +254,8 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/no-restricted-syntax': 'off',
       'jsdoc/no-types': 'off',
       'jsdoc/no-undefined-types': warnOrError,
+      'jsdoc/reject-any-type': warnOrError,
+      'jsdoc/reject-function-type': warnOrError,
       'jsdoc/require-asterisk-prefix': 'off',
       'jsdoc/require-description': 'off',
       'jsdoc/require-description-complete-sentence': 'off',
@@ -626,7 +641,7 @@ export default index;
  *     settings?: Partial<import('./iterateJsdoc.js').Settings>,
  *     rules?: {[key in keyof import('./rules.d.ts').Rules]?: import('eslint').Linter.RuleEntry<import('./rules.d.ts').Rules[key]>},
  *     extraRuleDefinitions?: {
- *       forbid: {
+ *       forbid?: {
  *         [contextName: string]: {
  *           description?: string,
  *           url?: string,
@@ -635,6 +650,19 @@ export default index;
  *             context: string,
  *             comment: string
  *           })[]
+ *         }
+ *       },
+ *       preferTypes?: {
+ *         [typeName: string]: {
+ *           description: string,
+ *           overrideSettings: {
+ *             [typeNodeName: string]: {
+ *               message: string,
+ *               replacement?: false|string,
+ *               unifyParentAndChildTypeChecks?: boolean,
+ *             }
+ *           },
+ *           url: string,
  *         }
  *       }
  *     }
@@ -725,6 +753,25 @@ export const jsdoc = function (cfg) {
               contextName,
               contexts,
               description,
+              url,
+            });
+        }
+      }
+
+      if (cfg.extraRuleDefinitions.preferTypes) {
+        for (const [
+          typeName,
+          {
+            description,
+            overrideSettings,
+            url,
+          },
+        ] of Object.entries(cfg.extraRuleDefinitions.preferTypes)) {
+          outputConfig.plugins.jsdoc.rules[`prefer-type-${typeName}`] =
+            buildRejectOrPreferRuleDefinition({
+              description,
+              overrideSettings,
+              typeName,
               url,
             });
         }

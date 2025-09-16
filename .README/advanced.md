@@ -164,3 +164,56 @@ export const a = (abc, def) => {
 };
 /* eslint-enable jsdoc/forbid-Any */
 ```
+
+#### Preferring type structures
+
+When the structures in question are types, a disadvantage of the previous approach
+is that one cannot perform replacements nor can one distinguish between parent and
+child types for a generic.
+
+If targeting a type structure, you can use `extraRuleDefinitions.preferTypes`.
+
+While one can get this same behavior using the `preferredTypes` setting, the
+advantage of creating a rule definition is that handling is distributed not to
+a single rule (`jsdoc/check-types`), but to an individual rule for each preferred
+type (which can then be selectively enabled and disabled).
+
+```js
+import {jsdoc} from 'eslint-plugin-jsdoc';
+
+export default [
+  jsdoc({
+    config: 'flat/recommended',
+    extraRuleDefinitions: {
+      preferTypes: {
+        // This key will be used in the rule name
+        promise: {
+          description: 'This rule disallows Promises without a generic type',
+          overrideSettings: {
+            // Uses the same keys are are available on the `preferredTypes` settings
+
+            // This key will indicate the type node name to find
+            Promise: {
+              // This is the specific error message if reported
+              message: 'Add a generic type for this Promise.',
+
+              // This can instead be a string replacement if an auto-replacement
+              //   is desired
+              replacement: false,
+
+              // If `true`, this will check in both parent and child positions
+              unifyParentAndChildTypeChecks: false,
+            },
+          },
+          url: 'https://example.com/Promise-rule.md',
+        },
+      },
+    },
+    rules: {
+      // Don't forget to enable the above-defined rules
+      'jsdoc/prefer-type-promise': [
+        'error',
+      ],
+    }
+  })
+```

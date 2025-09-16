@@ -65,7 +65,7 @@ Prevent the likes of this:
 |||
 |---|---|
 |Context|everywhere|
-|Tags|(any)|
+|Tags|(Any)|
 |Recommended|true|
 |Settings||
 |Options|`allowWhitespace`, `preventAtEnd`, `preventAtMiddleLines`|
