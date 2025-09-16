@@ -1,6 +1,9 @@
 import {
   buildForbidRuleDefinition,
 } from './buildForbidRuleDefinition.js';
+// import {
+//   buildRejectOrPreferRuleDefinition,
+// } from './buildRejectOrPreferRuleDefinition.js';
 import {
   getJsdocProcessorPlugin,
 } from './getJsdocProcessorPlugin.js';
@@ -107,6 +110,20 @@ index.rules = {
   'no-restricted-syntax': noRestrictedSyntax,
   'no-types': noTypes,
   'no-undefined-types': noUndefinedTypes,
+  // 'reject-any-type': buildRejectOrPreferRuleDefinition({
+  //   contexts: [
+  //     {
+  //       unifyParentAndChildTypeChecks: true,
+  //     },
+  //   ],
+  // }),
+  // 'reject-function-type': buildRejectOrPreferRuleDefinition({
+  //   contexts: [
+  //     {
+  //       unifyParentAndChildTypeChecks: true,
+  //     },
+  //   ],
+  // }),
   'require-asterisk-prefix': requireAsteriskPrefix,
   'require-description': requireDescription,
   'require-description-complete-sentence': requireDescriptionCompleteSentence,
