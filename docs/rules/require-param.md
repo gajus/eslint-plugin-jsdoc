@@ -24,6 +24,7 @@
     * [`checkDestructuredRoots`](#user-content-require-param-options-checkdestructuredroots)
     * [`useDefaultObjectProperties`](#user-content-require-param-options-usedefaultobjectproperties)
     * [`ignoreWhenAllParamsMissing`](#user-content-require-param-options-ignorewhenallparamsmissing)
+    * [`interfaceExemptsParamsCheck`](#user-content-require-param-options-interfaceexemptsparamscheck)
 * [Context and settings](#user-content-require-param-context-and-settings)
 * [Failing examples](#user-content-require-param-failing-examples)
 * [Passing examples](#user-content-require-param-passing-examples)
@@ -445,6 +446,17 @@ supplied as default values. Defaults to `false`.
 Set to `true` to ignore reporting when all params are missing. Defaults to
 `false`.
 
+<a name="user-content-require-param-options-interfaceexemptsparamscheck"></a>
+<a name="require-param-options-interfaceexemptsparamscheck"></a>
+### <code>interfaceExemptsParamsCheck</code>
+
+Set if you wish TypeScript interfaces to exempt checks for the existence of
+`@param`'s.
+
+Will check for a type defining the function itself (on a variable
+declaration) or if there is a single destructured object with a type.
+Defaults to `false`.
+
 <a name="user-content-require-param-context-and-settings"></a>
 <a name="require-param-context-and-settings"></a>
 ## Context and settings
@@ -455,7 +467,7 @@ Set to `true` to ignore reporting when all params are missing. Defaults to
 | Tags     | `param` |
 | Aliases  | `arg`, `argument` |
 |Recommended | true|
-| Options  |`autoIncrementBase`, `checkConstructors`, `checkDestructured`, `checkDestructuredRoots`, `checkGetters`, `checkRestProperty`, `checkSetters`, `checkTypesPattern`, `contexts`, `enableFixer`, `enableRestElementFixer`, `enableRootFixer`, `exemptedBy`, `ignoreWhenAllParamsMissing`, `unnamedRootBase`, `useDefaultObjectProperties`|
+| Options  |`autoIncrementBase`, `checkConstructors`, `checkDestructured`, `checkDestructuredRoots`, `checkGetters`, `checkRestProperty`, `checkSetters`, `checkTypesPattern`, `contexts`, `enableFixer`, `enableRestElementFixer`, `enableRootFixer`, `exemptedBy`, `ignoreWhenAllParamsMissing`, `interfaceExemptsParamsCheck`, `unnamedRootBase`, `useDefaultObjectProperties`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs`|
 
 <a name="user-content-require-param-failing-examples"></a>
@@ -1185,6 +1197,25 @@ function quux (a, b) {}
 export type Test = (foo: number) => string;
 // "jsdoc/require-param": ["error"|"warn", {"contexts":["TSFunctionType"]}]
 // Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ *
+ */
+const quux = function quux (foo) {
+};
+// "jsdoc/require-param": ["error"|"warn", {"interfaceExemptsParamsCheck":true}]
+// Message: Missing JSDoc @param "foo" declaration.
+
+/**
+ *
+ */
+function quux ({
+  abc,
+  def
+}) {
+}
+// "jsdoc/require-param": ["error"|"warn", {"interfaceExemptsParamsCheck":true}]
+// Message: Missing JSDoc @param "root0" declaration.
 ````
 
 
@@ -1853,5 +1884,22 @@ function myFunction(foo: string): void;
  */
 function myFunction(): void;
 function myFunction(foo?: string) {}
+
+/**
+ *
+ */
+const quux: FunctionInterface = function quux (foo) {
+};
+// "jsdoc/require-param": ["error"|"warn", {"interfaceExemptsParamsCheck":true}]
+
+/**
+ *
+ */
+function quux ({
+  abc,
+  def
+}: FunctionInterface) {
+}
+// "jsdoc/require-param": ["error"|"warn", {"interfaceExemptsParamsCheck":true}]
 ````
 

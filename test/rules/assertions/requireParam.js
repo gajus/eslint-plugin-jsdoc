@@ -2587,6 +2587,87 @@ export default /** @type {import('../index.js').TestCases} */ ({
         export type Test = (foo: number) => string;
       `,
     },
+    {
+      code: `
+          /**
+           *
+           */
+          const quux = function quux (foo) {
+          };
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "foo" declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      options: [
+        {
+          interfaceExemptsParamsCheck: true,
+        },
+      ],
+      output: `
+          /**
+           *
+           * @param foo
+           */
+          const quux = function quux (foo) {
+          };
+      `,
+    },
+
+    {
+      code: `
+          /**
+           *
+           */
+          function quux ({
+            abc,
+            def
+          }) {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.abc" declaration.',
+        },
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.def" declaration.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      options: [
+        {
+          interfaceExemptsParamsCheck: true,
+        },
+      ],
+      output: `
+          /**
+           *
+           * @param root0
+           * @param root0.abc
+           * @param root0.def
+           */
+          function quux ({
+            abc,
+            def
+          }) {
+          }
+      `,
+    },
   ],
   valid: [
     {
@@ -3694,6 +3775,46 @@ export default /** @type {import('../index.js').TestCases} */ ({
         parser: typescriptEslintParser,
         sourceType: 'module',
       },
+    },
+    {
+      code: `
+          /**
+           *
+           */
+          const quux: FunctionInterface = function quux (foo) {
+          };
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      options: [
+        {
+          interfaceExemptsParamsCheck: true,
+        },
+      ],
+    },
+
+    {
+      code: `
+          /**
+           *
+           */
+          function quux ({
+            abc,
+            def
+          }: FunctionInterface) {
+          }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      options: [
+        {
+          interfaceExemptsParamsCheck: true,
+        },
+      ],
     },
   ],
 });

@@ -35,6 +35,7 @@ const rootNamer = (desiredRoots, currentIndex) => {
 export default iterateJsdoc(({
   context,
   jsdoc,
+  node,
   utils,
 }) => {
   /* eslint-enable complexity -- Temporary */
@@ -57,11 +58,27 @@ export default iterateJsdoc(({
     enableRestElementFixer = true,
     enableRootFixer = true,
     ignoreWhenAllParamsMissing = false,
+    interfaceExemptsParamsCheck = false,
     unnamedRootBase = [
       'root',
     ],
     useDefaultObjectProperties = false,
   } = context.options[0] || {};
+
+  if (interfaceExemptsParamsCheck) {
+    if (node && 'params' in node && node.params.length === 1 &&
+        node.params?.[0] && typeof node.params[0] === 'object' &&
+        node.params[0].type === 'ObjectPattern' &&
+        'typeAnnotation' in node.params[0] && node.params[0].typeAnnotation
+    ) {
+      return;
+    }
+
+    if (node && node.parent.type === 'VariableDeclarator' &&
+        'typeAnnotation' in node.parent.id && node.parent.id.typeAnnotation) {
+      return;
+    }
+  }
 
   const preferredTagName = /** @type {string} */ (utils.getPreferredTagName({
     tagName: 'param',
@@ -577,6 +594,9 @@ export default iterateJsdoc(({
             type: 'array',
           },
           ignoreWhenAllParamsMissing: {
+            type: 'boolean',
+          },
+          interfaceExemptsParamsCheck: {
             type: 'boolean',
           },
           unnamedRootBase: {
