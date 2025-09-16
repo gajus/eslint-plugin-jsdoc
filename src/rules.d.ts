@@ -557,7 +557,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires a type for @next tags */
+  /** Requires a type for `@next` tags */
   "jsdoc/require-next-type": [];
 
   /** Requires that all function parameters are documented. */
@@ -748,7 +748,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires a type for @throws tags */
+  /** Requires a type for `@throws` tags */
   "jsdoc/require-throws-type": [];
 
   /** Requires yields are documented. */
@@ -790,7 +790,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires a type for @yields tags */
+  /** Requires a type for `@yields` tags */
   "jsdoc/require-yields-type": [];
 
   /** Sorts tags by a specified sequence according to tag name. */
