@@ -88,6 +88,28 @@ const getMessage = (upperCase) => {
   '`' + (upperCase ? 'O' : 'o') + 'bject`, e.g., `{[key: string]: string}`';
 };
 
+/**
+ * @type {{
+ *   message: string,
+ *   replacement: false
+ * }}
+ */
+const info = {
+  message: getMessage(),
+  replacement: false,
+};
+
+/**
+ * @type {{
+ *   message: string,
+ *   replacement: false
+ * }}
+ */
+const infoUC = {
+  message: getMessage(true),
+  replacement: false,
+};
+
 export default iterateJsdoc(({
   context,
   jsdocNode,
@@ -119,28 +141,6 @@ export default iterateJsdoc(({
     'object.<>' in preferredTypesOriginal ||
     'Object.<>' in preferredTypesOriginal ||
     'object<>' in preferredTypesOriginal);
-
-  /**
-   * @type {{
-   *   message: string,
-   *   replacement: false
-   * }}
-   */
-  const info = {
-    message: getMessage(),
-    replacement: false,
-  };
-
-  /**
-   * @type {{
-   *   message: string,
-   *   replacement: false
-   * }}
-   */
-  const infoUC = {
-    message: getMessage(true),
-    replacement: false,
-  };
 
   /** @type {import('../iterateJsdoc.js').PreferredTypes} */
   const typeToInject = mode === 'typescript' ?

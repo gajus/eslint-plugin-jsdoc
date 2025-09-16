@@ -1,4 +1,7 @@
 export interface Rules {
+  /** Checks that `@access` tags have a valid value. */
+  "jsdoc/check-access": [];
+
   /** Reports invalid alignment of JSDoc block asterisks. */
   "jsdoc/check-alignment": 
     | []
@@ -90,6 +93,9 @@ export interface Rules {
         }
       ];
 
+  /** Reports against syntax not valid for the mode (e.g., Google Closure Compiler in non-Closure mode). */
+  "jsdoc/check-syntax": [];
+
   /** Reports invalid block tag names. */
   "jsdoc/check-tag-names": 
     | []
@@ -101,6 +107,9 @@ export interface Rules {
           typed?: boolean;
         }
       ];
+
+  /** Checks that any `@template` names are actually used in the connected `@typedef` or type alias. */
+  "jsdoc/check-template-names": [];
 
   /** Reports invalid types. */
   "jsdoc/check-types": 
@@ -187,6 +196,9 @@ export interface Rules {
           )[];
         }
       ];
+
+  /** Reports if JSDoc `import()` statements point to a package which is not listed in `dependencies` or `devDependencies` */
+  "jsdoc/imports-as-dependencies": [];
 
   /** This rule reports doc comments that only restate their attached name. */
   "jsdoc/informative-docs": 
@@ -299,6 +311,9 @@ export interface Rules {
           preventAllMultiAsteriskBlocks?: boolean;
         }
       ];
+
+  /** Detects and removes extra lines of a blank block description */
+  "jsdoc/no-blank-block-descriptions": [];
 
   /** Removes empty blocks with nothing but possibly line breaks */
   "jsdoc/no-blank-blocks": 
@@ -542,6 +557,9 @@ export interface Rules {
         }
       ];
 
+  /** Requires a type for @next tags */
+  "jsdoc/require-next-type": [];
+
   /** Requires that all function parameters are documented. */
   "jsdoc/require-param": 
     | []
@@ -620,6 +638,18 @@ export interface Rules {
           setDefaultDestructuredRootType?: boolean;
         }
       ];
+
+  /** Requires that all `@typedef` and `@namespace` tags have `@property` when their type is a plain `object`, `Object`, or `PlainObject`. */
+  "jsdoc/require-property": [];
+
+  /** Requires that each `@property` tag has a `description` value. */
+  "jsdoc/require-property-description": [];
+
+  /** Requires that all function `@property` tags have names. */
+  "jsdoc/require-property-name": [];
+
+  /** Requires that each `@property` tag has a `type` value. */
+  "jsdoc/require-property-type": [];
 
   /** Requires that returns are documented. */
   "jsdoc/require-returns": 
@@ -718,6 +748,9 @@ export interface Rules {
         }
       ];
 
+  /** Requires a type for @throws tags */
+  "jsdoc/require-throws-type": [];
+
   /** Requires yields are documented. */
   "jsdoc/require-yields": 
     | []
@@ -756,6 +789,9 @@ export interface Rules {
           next?: boolean;
         }
       ];
+
+  /** Requires a type for @yields tags */
+  "jsdoc/require-yields-type": [];
 
   /** Sorts tags by a specified sequence according to tag name. */
   "jsdoc/sort-tags": 
