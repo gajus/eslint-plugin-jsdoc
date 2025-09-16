@@ -489,3 +489,195 @@ for (const [
     ruleName: `forbid-${contextName}`,
   });
 }
+
+for (const [
+  typeName,
+  overrideSettings,
+  assertions,
+  description,
+  url,
+] of
+  /**
+   * @type {[
+   *   string,
+   *   {
+   *     [key: string]: {
+   *       message: string,
+   *       replacement?: false|string,
+   *       unifyParentAndChildTypeChecks?: boolean
+   *     }
+   *   },
+   *   import('./rules/index.js').TestCases,
+   *   string,
+   *   string
+   * ][]
+   * }
+   */ ([
+    [
+      'promise',
+      {
+        Promise: {
+          message: 'Add a generic type for this Promise.',
+          replacement: false,
+          unifyParentAndChildTypeChecks: false,
+        },
+      },
+      {
+        invalid: [
+          {
+            code: `
+              /**
+               * @type {Promise}
+               */
+            `,
+            errors: [
+              {
+                line: 3,
+                message: 'Add a generic type for this Promise.',
+              },
+            ],
+          },
+        ],
+        valid: [
+          {
+            code: `
+              /**
+               * @type {Promise<void>}
+               */
+            `,
+          },
+          {
+            code: `
+              /**
+               * @type {Promise<string>}
+               */
+            `,
+          },
+        ],
+      },
+      'Disallow Promises without a generic type',
+      'https://example.com/Promise-rule.md',
+    ],
+    [
+      'object',
+      {
+        Object: {
+          message: 'Use the specific object type or add `object` to ' +
+            'a typedef if truly arbitrary',
+          replacement: 'object',
+          unifyParentAndChildTypeChecks: false,
+        },
+      },
+      {
+        invalid: [
+          {
+            code: `
+              /**
+               * @type {Object}
+               */
+            `,
+            errors: [
+              {
+                line: 3,
+                message: 'Use the specific object type or add `object` to ' +
+                  'a typedef if truly arbitrary',
+              },
+            ],
+            output: `
+              /**
+               * @type {object}
+               */
+            `,
+          },
+        ],
+        valid: [
+          {
+            code: `
+              /**
+               * @type {object}
+               */
+            `,
+          },
+          {
+            code: `
+              /**
+               * @type {Object<SomeType>}
+               */
+            `,
+          },
+        ],
+      },
+      'Replace `Object` with `object',
+      'https://example.com/Object-rule.md',
+    ],
+    [
+      'object-parent',
+      {
+        'object<>': {
+          message: 'Use the upper-case form for current TypeScript ' +
+            'JSDoc compatibility and generic-like appearance for a parent',
+          replacement: 'Object<>',
+        },
+      },
+      {
+        invalid: [
+          {
+            code: `
+              /**
+               * @type {object<string>}
+               */
+            `,
+            errors: [
+              {
+                line: 3,
+                message: 'Use the upper-case form for current TypeScript ' +
+                  'JSDoc compatibility and generic-like appearance for a parent',
+              },
+            ],
+            output: `
+              /**
+               * @type {Object<string>}
+               */
+            `,
+          },
+        ],
+        valid: [
+          {
+            code: `
+              /**
+               * @type {Object<string>}
+               */
+            `,
+          },
+          {
+            code: `
+              /**
+               * @type {object}
+               */
+            `,
+          },
+        ],
+      },
+      'Replace `object<>` with `Object<>',
+      'https://example.com/Object-parent-rule.md',
+    ],
+  ])) {
+  runRuleTests({
+    assertions,
+    config: jsdoc({
+      extraRuleDefinitions: {
+        preferTypes: {
+          [typeName]: {
+            description,
+            overrideSettings,
+            url,
+          },
+        },
+      },
+    }).plugins?.jsdoc,
+    languageOptions: {
+      parser: typescriptEslintParser,
+    },
+    ruleName: `prefer-type-${typeName}`,
+  });
+}

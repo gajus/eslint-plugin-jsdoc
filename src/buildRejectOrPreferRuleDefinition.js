@@ -97,10 +97,11 @@ const infoUC = {
 
 /**
  * @param {{
- *   checkNativeTypes: import('./rules/checkTypes.js').CheckNativeTypes|null
- *   overrideSettings?: null,
+ *   checkNativeTypes?: import('./rules/checkTypes.js').CheckNativeTypes|null
+ *   overrideSettings?: import('./iterateJsdoc.js').Settings['preferredTypes']|null,
  *   description?: string,
  *   schema?: import('eslint').Rule.RuleMetaData['schema'],
+ *   typeName?: string,
  *   url?: string,
  * }} cfg
  * @returns {import('@eslint/core').RuleDefinition<
@@ -109,7 +110,8 @@ const infoUC = {
  */
 export const buildRejectOrPreferRuleDefinition = ({
   checkNativeTypes = null,
-  description = 'Reports invalid types.',
+  typeName,
+  description = typeName ?? 'Reports invalid types.',
   overrideSettings = null,
   schema = [],
   url = 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-types.md#repos-sticky-header',
@@ -136,10 +138,14 @@ export const buildRejectOrPreferRuleDefinition = ({
          * }}
          */
         {
-          mode = settings.mode,
+          mode,
           preferredTypes: preferredTypesOriginal,
-          structuredTags = {},
-        } = overrideSettings ?? settings;
+          structuredTags,
+        } = overrideSettings ? {
+          mode: settings.mode,
+          preferredTypes: overrideSettings,
+          structuredTags: {},
+        } : settings;
 
       const injectObjectPreferredTypes = !('Object' in preferredTypesOriginal ||
         'object' in preferredTypesOriginal ||
@@ -199,7 +205,7 @@ export const buildRejectOrPreferRuleDefinition = ({
       const getPreferredTypeInfo = (_type, typeNodeName, parentNode, property) => {
         let hasMatchingPreferredType = false;
         let isGenericMatch = false;
-        let typeName = typeNodeName;
+        let typName = typeNodeName;
 
         const isNameOfGeneric = parentNode !== undefined && parentNode.type === 'JsdocTypeGeneric' && property === 'left';
 
@@ -228,7 +234,7 @@ export const buildRejectOrPreferRuleDefinition = ({
               ) &&
               preferredType !== undefined
             ) {
-              typeName += checkPostFix;
+              typName += checkPostFix;
 
               return true;
             }
@@ -259,7 +265,7 @@ export const buildRejectOrPreferRuleDefinition = ({
                 preferredType?.unifyParentAndChildTypeChecks)) &&
                 preferredType !== undefined
             ) {
-              typeName = checkPostFix;
+              typName = checkPostFix;
 
               return true;
             }
@@ -280,7 +286,7 @@ export const buildRejectOrPreferRuleDefinition = ({
           directNameMatch && !property;
 
         return [
-          hasMatchingPreferredType, typeName, isGenericMatch,
+          hasMatchingPreferredType, typName, isGenericMatch,
         ];
       };
 
@@ -302,15 +308,15 @@ export const buildRejectOrPreferRuleDefinition = ({
 
         const [
           hasMatchingPreferredType,
-          typeName,
+          typName,
           isGenericMatch,
         ] = getPreferredTypeInfo(type, typeNodeName, parentNode, property);
 
         let preferred;
         let types;
         if (hasMatchingPreferredType) {
-          const preferredSetting = preferredTypes[typeName];
-          typeNodeName = typeName === '[]' ? typeName : typeNodeName;
+          const preferredSetting = preferredTypes[typName];
+          typeNodeName = typName === '[]' ? typName : typeNodeName;
 
           if (!preferredSetting) {
             invalidTypes.push([

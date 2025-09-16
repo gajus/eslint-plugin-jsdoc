@@ -8,6 +8,9 @@ import index from './index-cjs.js';
 import {
   buildForbidRuleDefinition,
 } from './buildForbidRuleDefinition.js';
+import {
+  buildRejectOrPreferRuleDefinition,
+} from './buildRejectOrPreferRuleDefinition.js';
 
 // eslint-disable-next-line unicorn/prefer-export-from --- Reusing `index`
 export default index;
@@ -22,7 +25,7 @@ export default index;
  *     settings?: Partial<import('./iterateJsdoc.js').Settings>,
  *     rules?: {[key in keyof import('./rules.d.ts').Rules]?: import('eslint').Linter.RuleEntry<import('./rules.d.ts').Rules[key]>},
  *     extraRuleDefinitions?: {
- *       forbid: {
+ *       forbid?: {
  *         [contextName: string]: {
  *           description?: string,
  *           url?: string,
@@ -31,6 +34,19 @@ export default index;
  *             context: string,
  *             comment: string
  *           })[]
+ *         }
+ *       },
+ *       preferTypes?: {
+ *         [typeName: string]: {
+ *           description: string,
+ *           overrideSettings: {
+ *             [typeNodeName: string]: {
+ *               message: string,
+ *               replacement?: false|string,
+ *               unifyParentAndChildTypeChecks?: boolean,
+ *             }
+ *           },
+ *           url: string,
  *         }
  *       }
  *     }
@@ -121,6 +137,25 @@ export const jsdoc = function (cfg) {
               contextName,
               contexts,
               description,
+              url,
+            });
+        }
+      }
+
+      if (cfg.extraRuleDefinitions.preferTypes) {
+        for (const [
+          typeName,
+          {
+            description,
+            overrideSettings,
+            url,
+          },
+        ] of Object.entries(cfg.extraRuleDefinitions.preferTypes)) {
+          outputConfig.plugins.jsdoc.rules[`prefer-type-${typeName}`] =
+            buildRejectOrPreferRuleDefinition({
+              description,
+              overrideSettings,
+              typeName,
               url,
             });
         }

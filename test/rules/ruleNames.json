@@ -29,6 +29,8 @@
   "no-restricted-syntax",
   "no-types",
   "no-undefined-types",
+  "reject-any-type",
+  "reject-function-type",
   "require-asterisk-prefix",
   "require-description",
   "require-description-complete-sentence",
