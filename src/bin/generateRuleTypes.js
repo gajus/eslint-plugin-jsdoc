@@ -12,22 +12,20 @@ for (const [
   ruleName,
   rule,
 ] of Object.entries(index.rules)) {
-  if (rule.meta?.schema?.[0]) {
-    str += `  /** ${rule.meta.docs.description} */\n`;
-    str += `  "jsdoc/${ruleName}": `;
-    const ts = await compile({
-      items: rule.meta.schema,
-      type: 'array',
-    }, 'Test', {
-      bannerComment: '',
-    });
+  str += `  /** ${rule.meta.docs.description} */\n`;
+  str += `  "jsdoc/${ruleName}": `;
+  const ts = await compile({
+    items: rule.meta.schema ?? [],
+    type: 'array',
+  }, 'Test', {
+    bannerComment: '',
+  });
 
-    str += ts
-      .replace(/^export type Test = ?/v, '')
-      .replace(/^export interface Test /v, '')
-      .replaceAll('\n', '\n  ').trimEnd().replace(/;$/v, '') +
-        ';\n\n';
-  }
+  str += ts
+    .replace(/^export type Test = ?/v, '')
+    .replace(/^export interface Test /v, '')
+    .replaceAll('\n', '\n  ').trimEnd().replace(/;$/v, '') +
+      ';\n\n';
 }
 
 str = str.replace(/\n$/v, '') + '}\n';
