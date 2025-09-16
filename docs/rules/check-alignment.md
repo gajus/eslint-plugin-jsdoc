@@ -22,12 +22,15 @@ Fixes alignment.
 <a name="check-alignment-options"></a>
 ## Options
 
+A single options object has the following properties.
+
 <a name="user-content-check-alignment-options-innerindent"></a>
 <a name="check-alignment-options-innerindent"></a>
 ### <code>innerIndent</code>
 
 Set to 0 if you wish to avoid the normal requirement for an inner indentation of
 one space. Defaults to 1 (one space of normal inner indentation).
+
 
 <a name="user-content-check-alignment-context-and-settings"></a>
 <a name="check-alignment-context-and-settings"></a>
@@ -112,7 +115,7 @@ function quux (foo) {
 // Message: Expected JSDoc block to be aligned.
 
 /**
-   * A jsdoc not attached to any node.
+   * A JSDoc not attached to any node.
  */
 // Message: Expected JSDoc block to be aligned.
 

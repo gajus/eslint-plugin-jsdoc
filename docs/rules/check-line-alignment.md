@@ -4,11 +4,11 @@
 
 * [Fixer](#user-content-check-line-alignment-fixer)
 * [Options](#user-content-check-line-alignment-options)
-    * [`tags`](#user-content-check-line-alignment-options-tags)
     * [`customSpacings`](#user-content-check-line-alignment-options-customspacings)
-    * [`preserveMainDescriptionPostDelimiter`](#user-content-check-line-alignment-options-preservemaindescriptionpostdelimiter)
-    * [`wrapIndent`](#user-content-check-line-alignment-options-wrapindent)
     * [`disableWrapIndent`](#user-content-check-line-alignment-options-disablewrapindent)
+    * [`preserveMainDescriptionPostDelimiter`](#user-content-check-line-alignment-options-preservemaindescriptionpostdelimiter)
+    * [`tags`](#user-content-check-line-alignment-options-tags)
+    * [`wrapIndent`](#user-content-check-line-alignment-options-wrapindent)
 * [Context and settings](#user-content-check-line-alignment-context-and-settings)
 * [Failing examples](#user-content-check-line-alignment-failing-examples)
 * [Passing examples](#user-content-check-line-alignment-passing-examples)
@@ -22,50 +22,77 @@ for example.
 <a name="check-line-alignment-fixer"></a>
 ## Fixer
 
-(TODO)
+Will either add alignment between the tag, type, name, and description across
+lines of the JSDoc block or remove it.
 
 <a name="user-content-check-line-alignment-options"></a>
 <a name="check-line-alignment-options"></a>
 ## Options
 
-This rule allows one optional string argument. If it is `"always"` then a
-problem is raised when the lines are not aligned. If it is `"never"` then
-a problem should be raised when there is more than one space between each
-line's parts. If it is `"any"`, no alignment is made. Defaults to `"never"`.
+The first option is a string with the following possible values: "always", "never", "any".
+If the string value is
+`"always"` then a problem is raised when the lines are not aligned.
+If it is `"never"` then a problem should be raised when there is more than
+one space between each line's parts. If it is `"any"`, no alignment is made.
+Defaults to `"never"`.
 
 Note that in addition to alignment, the "never" and "always" options will both
 ensure that at least one space is present after the asterisk delimiter.
 
-After the string, an options object is allowed with the following properties.
-
-<a name="user-content-check-line-alignment-options-tags"></a>
-<a name="check-line-alignment-options-tags"></a>
-### <code>tags</code>
-
-Use this to change the tags which are sought for alignment changes. Defaults to an array of
-`['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return', 'template']`.
+The next option is an object with the following properties.
 
 <a name="user-content-check-line-alignment-options-customspacings"></a>
 <a name="check-line-alignment-options-customspacings"></a>
 ### <code>customSpacings</code>
 
-An object with any of the following keys set to an integer. Affects spacing:
 
-- `postDelimiter` - after the asterisk (e.g., `*   @param`)
-- `postTag` - after the tag (e.g., `* @param  `)
-- `postType` - after the type (e.g., `* @param {someType}   `)
-- `postName` - after the name (e.g., `* @param {someType} name   `)
-- `postHyphen` - after any hyphens in the description (e.g., `* @param {someType} name -  A description`)
+A single options object has the following properties.
 
+An object with any of the following spacing keys set to an integer.
 If a spacing is not defined, it defaults to one.
 
+<a name="user-content-check-line-alignment-options-customspacings-postdelimiter"></a>
+<a name="check-line-alignment-options-customspacings-postdelimiter"></a>
+#### <code>postDelimiter</code>
+
+Affects spacing after the asterisk (e.g., `*   @param`)
+<a name="user-content-check-line-alignment-options-customspacings-posthyphen"></a>
+<a name="check-line-alignment-options-customspacings-posthyphen"></a>
+#### <code>postHyphen</code>
+
+Affects spacing after any hyphens in the description (e.g., `* @param {someType} name -  A description`)
+<a name="user-content-check-line-alignment-options-customspacings-postname"></a>
+<a name="check-line-alignment-options-customspacings-postname"></a>
+#### <code>postName</code>
+
+Affects spacing after the name (e.g., `* @param {someType} name   `)
+<a name="user-content-check-line-alignment-options-customspacings-posttag"></a>
+<a name="check-line-alignment-options-customspacings-posttag"></a>
+#### <code>postTag</code>
+
+Affects spacing after the tag (e.g., `* @param  `)
+<a name="user-content-check-line-alignment-options-customspacings-posttype"></a>
+<a name="check-line-alignment-options-customspacings-posttype"></a>
+#### <code>postType</code>
+
+Affects spacing after the type (e.g., `* @param {someType}   `)
+<a name="user-content-check-line-alignment-options-disablewrapindent"></a>
+<a name="check-line-alignment-options-disablewrapindent"></a>
+### <code>disableWrapIndent</code>
+
+Disables `wrapIndent`; existing wrap indentation is preserved without changes.
 <a name="user-content-check-line-alignment-options-preservemaindescriptionpostdelimiter"></a>
 <a name="check-line-alignment-options-preservemaindescriptionpostdelimiter"></a>
 ### <code>preserveMainDescriptionPostDelimiter</code>
 
 A boolean to determine whether to preserve the post-delimiter spacing of the
 main description. If `false` or unset, will be set to a single space.
+<a name="user-content-check-line-alignment-options-tags"></a>
+<a name="check-line-alignment-options-tags"></a>
+### <code>tags</code>
 
+Use this to change the tags which are sought for alignment changes. Defaults to an array of
+`['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return', 'template']`.
 <a name="user-content-check-line-alignment-options-wrapindent"></a>
 <a name="check-line-alignment-options-wrapindent"></a>
 ### <code>wrapIndent</code>
@@ -73,11 +100,6 @@ main description. If `false` or unset, will be set to a single space.
 The indent that will be applied for tag text after the first line.
 Default to the empty string (no indent).
 
-<a name="user-content-check-line-alignment-options-disablewrapindent"></a>
-<a name="check-line-alignment-options-disablewrapindent"></a>
-### <code>disableWrapIndent</code>
-
-Disables `wrapIndent`; existing wrap indentation is preserved without changes.
 
 <a name="user-content-check-line-alignment-context-and-settings"></a>
 <a name="check-line-alignment-context-and-settings"></a>

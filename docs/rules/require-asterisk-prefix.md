@@ -10,28 +10,33 @@ Requires that each JSDoc line starts with an `*`.
 <a name="fixer"></a>
 ## Fixer
 
-(TODO)
+Adds an asterisk for each missing line of the JSDoc block.
 
 <a name="user-content-options"></a>
 <a name="options"></a>
 ## Options
 
-This rule allows an optional string argument. If it is `"always"` then a
-problem is raised when there is no asterisk prefix on a given jsdoc line. If
-it is `"never"` then a problem is raised when there is an asterisk present.
+The first option is a string with the following possible values: "always", "never", "any".
+If it is `"always"` then a problem is raised when there is no asterisk
+prefix on a given JSDoc line. If it is `"never"` then a problem is raised
+when there is an asterisk present.
+
 The default value is `"always"`. You may also set the default to `"any"`
 and use the `tags` option to apply to specific tags only.
 
-After the string option, one may add an object with the following.
+The next option is an object with the following properties.
 
 <a name="user-content-options-tags"></a>
 <a name="options-tags"></a>
 ### <code>tags</code>
 
+
+A single options object has the following properties.
+
 If you want different values to apply to specific tags, you may use
 the `tags` option object. The keys are `always`, `never`, or `any` and
 the values are arrays of tag names or the special value `*description`
-which applies to the main jsdoc block description.
+which applies to the main JSDoc block description.
 
 ```js
 {
@@ -44,6 +49,25 @@ which applies to the main jsdoc block description.
   }]
 }
 ```
+
+<a name="user-content-options-tags-always"></a>
+<a name="options-tags-always"></a>
+#### <code>always</code>
+
+If it is `"always"` then a problem is raised when there is no asterisk
+prefix on a given JSDoc line.
+<a name="user-content-options-tags-any"></a>
+<a name="options-tags-any"></a>
+#### <code>any</code>
+
+No problem is raised regardless of asterisk presence or non-presence.
+<a name="user-content-options-tags-never"></a>
+<a name="options-tags-never"></a>
+#### <code>never</code>
+
+If it is `"never"` then a problem is raised
+when there is an asterisk present.
+
 
 <a name="user-content-context-and-settings"></a>
 <a name="context-and-settings"></a>

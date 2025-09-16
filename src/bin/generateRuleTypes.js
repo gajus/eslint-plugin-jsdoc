@@ -11,11 +11,16 @@ let str = 'export interface Rules {\n';
 for (const [
   ruleName,
   rule,
-] of Object.entries(index.rules)) {
-  str += `  /** ${rule.meta.docs.description} */\n`;
+] of Object.entries(
+  /** @type {Record<string, import('@eslint/core').RuleDefinition<import('@eslint/core').RuleDefinitionTypeOptions>>} */ (
+      index.rules
+    ),
+  )
+) {
+  str += `  /** ${rule.meta?.docs?.description ?? ''} */\n`;
   str += `  "jsdoc/${ruleName}": `;
   const ts = await compile({
-    items: rule.meta.schema ?? [],
+    items: rule?.meta?.schema || [],
     type: 'array',
   }, 'Test', {
     bannerComment: '',
@@ -32,5 +37,4 @@ str = str.replace(/\n$/v, '') + '}\n';
 
 await writeFile(import.meta.dirname + '/../rules.d.ts', str);
 
-// eslint-disable-next-line no-console -- Todo
-console.log('str', str);
+// console.log('str', str);

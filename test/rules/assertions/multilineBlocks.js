@@ -187,7 +187,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration.',
         },
       ],
@@ -209,7 +209,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration.',
         },
       ],
@@ -231,7 +231,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration but fixing would result in a single ' +
                   'line block which you have prohibited with ' +
                   '`noSingleLineBlocks`.',
@@ -253,7 +253,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration.',
         },
       ],
@@ -275,7 +275,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration.',
         },
       ],
@@ -298,7 +298,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration.',
         },
       ],
@@ -323,7 +323,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by your ' +
+          message: 'Multiline JSDoc blocks are prohibited by your ' +
           'configuration but the block has a description with a tag.',
         },
       ],
@@ -348,7 +348,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration but the block has multiple tags.',
         },
       ],
@@ -370,7 +370,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by your ' +
+          message: 'Multiline JSDoc blocks are prohibited by your ' +
           'configuration but the block has a description with a tag.',
         },
       ],
@@ -391,7 +391,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration.',
         },
       ],
@@ -417,7 +417,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by your ' +
+          message: 'Multiline JSDoc blocks are prohibited by your ' +
           'configuration but the block has a description with a tag.',
         },
       ],
@@ -441,7 +441,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration.',
         },
       ],
@@ -465,7 +465,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration.',
         },
       ],
@@ -489,7 +489,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration.',
         },
       ],
@@ -512,7 +512,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration but fixing would result in a single ' +
                   'line block which you have prohibited with ' +
                   '`noSingleLineBlocks`.',
@@ -561,7 +561,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Multiline jsdoc blocks are prohibited by ' +
+          message: 'Multiline JSDoc blocks are prohibited by ' +
                   'your configuration.',
         },
       ],

@@ -145,7 +145,7 @@ template
 
 And for [Closure](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler),
 when `settings.jsdoc.mode` is set to `closure`, one may use the following (in
-addition to the jsdoc and TypeScript tags–though replacing `returns` with
+addition to the JSDoc and TypeScript tags–though replacing `returns` with
 `return`):
 
 ```
@@ -207,11 +207,13 @@ tag to `false`:
 <a name="check-tag-names-fixer"></a>
 ## Fixer
 
-(Todo)
+Auto-removes types that are redundant with the [`typed` option](#user-content-typed).
 
 <a name="user-content-check-tag-names-options"></a>
 <a name="check-tag-names-options"></a>
 ## Options
+
+A single options object has the following properties.
 
 <a name="user-content-check-tag-names-options-definedtags"></a>
 <a name="check-tag-names-options-definedtags"></a>
@@ -225,13 +227,11 @@ The format is as follows:
   "definedTags": ["note", "record"]
 }
 ```
-
 <a name="user-content-check-tag-names-options-enablefixer"></a>
 <a name="check-tag-names-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
 Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#user-content-typed).
-
 <a name="user-content-check-tag-names-options-jsxtags"></a>
 <a name="check-tag-names-options-jsxtags"></a>
 ### <code>jsxTags</code>
@@ -246,7 +246,6 @@ jsxRuntime
 ```
 
 For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).
-
 <a name="user-content-check-tag-names-options-typed"></a>
 <a name="check-tag-names-options-typed"></a>
 ### <code>typed</code>
@@ -303,6 +302,7 @@ requires
 static
 this
 ```
+
 
 <a name="user-content-check-tag-names-context-and-settings"></a>
 <a name="check-tag-names-context-and-settings"></a>

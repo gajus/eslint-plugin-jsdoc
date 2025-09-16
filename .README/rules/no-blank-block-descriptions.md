@@ -10,7 +10,7 @@ in the block description.
 
 ## Fixer
 
-(TODO)
+Strips empty lines in block descriptions.
 
 ## Context and settings
 

@@ -96,7 +96,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: At most one access-control tag may be present on a jsdoc block.
+// Message: At most one access-control tag may be present on a JSDoc block.
 
 /**
  * @access public
@@ -106,7 +106,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"ignorePrivate":true}}
-// Message: At most one access-control tag may be present on a jsdoc block.
+// Message: At most one access-control tag may be present on a JSDoc block.
 
 /**
  * @public
@@ -115,7 +115,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: At most one access-control tag may be present on a jsdoc block.
+// Message: At most one access-control tag may be present on a JSDoc block.
 
 /**
  * @public
@@ -125,7 +125,7 @@ function quux (foo) {
 
 }
 // Settings: {"jsdoc":{"ignorePrivate":true}}
-// Message: At most one access-control tag may be present on a jsdoc block.
+// Message: At most one access-control tag may be present on a JSDoc block.
 
 /**
  * @public
@@ -134,7 +134,7 @@ function quux (foo) {
 function quux (foo) {
 
 }
-// Message: At most one access-control tag may be present on a jsdoc block.
+// Message: At most one access-control tag may be present on a JSDoc block.
 ````
 
 

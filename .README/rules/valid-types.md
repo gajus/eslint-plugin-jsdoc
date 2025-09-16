@@ -51,7 +51,7 @@ text after the tag name) checked:
     TypeScript)
 1. Name(path)-pointing tags requiring namepath: `@alias`, `@augments`,
     `@extends` (JSDoc only), `@lends`, `@memberof`, `@memberof!`, `@mixes`, `@requires`, `@this`
-    (jsdoc only)
+    (JSDoc only)
 1. Name(path)-pointing tags (which may have value without namepath or their
     namepath can be expressed elsewhere on the block): `@listens`, `@fires`,
     `@emits`.
@@ -84,13 +84,7 @@ value). See the setting for more details.
 
 ## Options
 
-- `allowEmptyNamepaths` (default: true) - Set to `false` to bulk disallow
-  empty name paths with namepath groups 2 and 4 (these might often be
-  expected to have an accompanying name path, though they have some
-  indicative value without one; these may also allow names to be defined
-  in another manner elsewhere in the block); you can use
-  `settings.jsdoc.structuredTags` with the `required` key set to "name" if you
-  wish to require name paths on a tag-by-tag basis.
+{"gitdown": "options"}
 
 ## Context and settings
 

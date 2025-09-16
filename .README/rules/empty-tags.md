@@ -35,20 +35,11 @@ Similarly, `@internal` will still be checked for content by this rule even with
 
 ## Fixer
 
-(Todo)
+Strips content if present for the above-mentioned tags.
 
 ## Options
 
-### `tags`
-
-If you want additional tags to be checked for their descriptions, you may
-add them within this option.
-
-```js
-{
-  'jsdoc/empty-tags': ['error', {tags: ['event']}]
-}
-```
+{"gitdown": "options"}
 
 ## Context and settings
 

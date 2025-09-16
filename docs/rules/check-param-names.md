@@ -5,14 +5,14 @@
 * [Fixer](#user-content-check-param-names-fixer)
 * [Destructuring](#user-content-check-param-names-destructuring)
 * [Options](#user-content-check-param-names-options)
-    * [`checkRestProperty`](#user-content-check-param-names-options-checkrestproperty)
-    * [`checkTypesPattern`](#user-content-check-param-names-options-checktypespattern)
-    * [`enableFixer`](#user-content-check-param-names-options-enablefixer)
     * [`allowExtraTrailingParamDocs`](#user-content-check-param-names-options-allowextratrailingparamdocs)
     * [`checkDestructured`](#user-content-check-param-names-options-checkdestructured)
-    * [`useDefaultObjectProperties`](#user-content-check-param-names-options-usedefaultobjectproperties)
+    * [`checkRestProperty`](#user-content-check-param-names-options-checkrestproperty)
+    * [`checkTypesPattern`](#user-content-check-param-names-options-checktypespattern)
     * [`disableExtraPropertyReporting`](#user-content-check-param-names-options-disableextrapropertyreporting)
     * [`disableMissingParamChecks`](#user-content-check-param-names-options-disablemissingparamchecks)
+    * [`enableFixer`](#user-content-check-param-names-options-enablefixer)
+    * [`useDefaultObjectProperties`](#user-content-check-param-names-options-usedefaultobjectproperties)
 * [Context and settings](#user-content-check-param-names-context-and-settings)
 * [Failing examples](#user-content-check-param-names-failing-examples)
 * [Passing examples](#user-content-check-param-names-passing-examples)
@@ -25,7 +25,11 @@ the function declaration.
 <a name="check-param-names-fixer"></a>
 ## Fixer
 
-(Todo)
+Auto-removes `@param` duplicates (based on identical names).
+
+Note that this option will remove duplicates of the same name even if
+the definitions do not match in other ways (e.g., the second param will
+be removed even if it has a different type or description).
 
 <a name="user-content-check-param-names-destructuring"></a>
 <a name="check-param-names-destructuring"></a>
@@ -48,7 +52,7 @@ To require that `extra` be documented--and that any extraneous properties
 get reported--e.g., if there had been a `@param options.bar` above--you
 can use the `checkRestProperty` option which insists that the rest
 property be documented (and that there be no other implicit properties).
-Note, however, that jsdoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
+Note, however, that JSDoc [does not appear](https://github.com/jsdoc/jsdoc/issues/1773)
 to currently support syntax or output to distinguish rest properties from
 other properties, so in looking at the docs alone without looking at the
 function signature, the disadvantage of enabling this option is that it
@@ -58,28 +62,7 @@ may appear that there is an actual property named `extra`.
 <a name="check-param-names-options"></a>
 ## Options
 
-<a name="user-content-check-param-names-options-checkrestproperty"></a>
-<a name="check-param-names-options-checkrestproperty"></a>
-### <code>checkRestProperty</code>
-
-See the "Destructuring" section. Defaults to `false`.
-
-<a name="user-content-check-param-names-options-checktypespattern"></a>
-<a name="check-param-names-options-checktypespattern"></a>
-### <code>checkTypesPattern</code>
-
-See `require-param` under the option of the same name.
-
-<a name="user-content-check-param-names-options-enablefixer"></a>
-<a name="check-param-names-options-enablefixer"></a>
-### <code>enableFixer</code>
-
-Set to `true` to auto-remove `@param` duplicates (based on identical
-names).
-
-Note that this option will remove duplicates of the same name even if
-the definitions do not match in other ways (e.g., the second param will
-be removed even if it has a different type or description).
+A single options object has the following properties.
 
 <a name="user-content-check-param-names-options-allowextratrailingparamdocs"></a>
 <a name="check-param-names-options-allowextratrailingparamdocs"></a>
@@ -89,22 +72,57 @@ If set to `true`, this option will allow extra `@param` definitions (e.g.,
 representing future expected or virtual params) to be present without needing
 their presence within the function signature. Other inconsistencies between
 `@param`'s and present function parameters will still be reported.
-
 <a name="user-content-check-param-names-options-checkdestructured"></a>
 <a name="check-param-names-options-checkdestructured"></a>
 ### <code>checkDestructured</code>
 
 Whether to check destructured properties. Defaults to `true`.
+<a name="user-content-check-param-names-options-checkrestproperty"></a>
+<a name="check-param-names-options-checkrestproperty"></a>
+### <code>checkRestProperty</code>
 
-<a name="user-content-check-param-names-options-usedefaultobjectproperties"></a>
-<a name="check-param-names-options-usedefaultobjectproperties"></a>
-### <code>useDefaultObjectProperties</code>
+If set to `true`, will require that rest properties are documented and
+that any extraneous properties (which may have been within the rest property)
+are documented. Defaults to `false`.
+<a name="user-content-check-param-names-options-checktypespattern"></a>
+<a name="check-param-names-options-checktypespattern"></a>
+### <code>checkTypesPattern</code>
 
-Set to `true` if you wish to avoid reporting of child property documentation
-where instead of destructuring, a whole plain object is supplied as default
-value but you wish its keys to be considered as signalling that the properties
-are present and can therefore be documented. Defaults to `false`.
+Defines a regular expression pattern to indicate which types should be
+checked for destructured content (and that those not matched should not
+be checked).
 
+When one specifies a type, unless it is of a generic type, like `object`
+or `array`, it may be considered unnecessary to have that object's
+destructured components required, especially where generated docs will
+link back to the specified type. For example:
+
+```js
+/**
+ * @param {SVGRect} bbox - a SVGRect
+ */
+export const bboxToObj = function ({x, y, width, height}) {
+  return {x, y, width, height};
+};
+```
+
+By default `checkTypesPattern` is set to
+`/^(?:[oO]bject|[aA]rray|PlainObject|Generic(?:Object|Array))$/v`,
+meaning that destructuring will be required only if the type of the `@param`
+(the text between curly brackets) is a match for "Object" or "Array" (with or
+without initial caps), "PlainObject", or "GenericObject", "GenericArray" (or
+if no type is present). So in the above example, the lack of a match will
+mean that no complaint will be given about the undocumented destructured
+parameters.
+
+Note that the `/` delimiters are optional, but necessary to add flags.
+
+Defaults to using (only) the `v` flag, so to add your own flags, encapsulate
+your expression as a string, but like a literal, e.g., `/^object$/vi`.
+
+You could set this regular expression to a more expansive list, or you
+could restrict it such that even types matching those strings would not
+need destructuring.
 <a name="user-content-check-param-names-options-disableextrapropertyreporting"></a>
 <a name="check-param-names-options-disableextrapropertyreporting"></a>
 ### <code>disableExtraPropertyReporting</code>
@@ -116,12 +134,30 @@ their own types. Note that extra properties will always be reported if another
 item at the same level is destructured as destructuring will prevent other
 access and this option is only intended to permit documenting extra properties
 that are available and actually used in the function.
-
 <a name="user-content-check-param-names-options-disablemissingparamchecks"></a>
 <a name="check-param-names-options-disablemissingparamchecks"></a>
 ### <code>disableMissingParamChecks</code>
 
 Whether to avoid checks for missing `@param` definitions. Defaults to `false`. Change to `true` if you want to be able to omit properties.
+<a name="user-content-check-param-names-options-enablefixer"></a>
+<a name="check-param-names-options-enablefixer"></a>
+### <code>enableFixer</code>
+
+Set to `true` to auto-remove `@param` duplicates (based on identical
+names).
+
+Note that this option will remove duplicates of the same name even if
+the definitions do not match in other ways (e.g., the second param will
+be removed even if it has a different type or description).
+<a name="user-content-check-param-names-options-usedefaultobjectproperties"></a>
+<a name="check-param-names-options-usedefaultobjectproperties"></a>
+### <code>useDefaultObjectProperties</code>
+
+Set to `true` if you wish to avoid reporting of child property documentation
+where instead of destructuring, a whole plain object is supplied as default
+value but you wish its keys to be considered as signalling that the properties
+are present and can therefore be documented. Defaults to `false`.
+
 
 <a name="user-content-check-param-names-context-and-settings"></a>
 <a name="check-param-names-context-and-settings"></a>

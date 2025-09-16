@@ -47,27 +47,34 @@ not report if there were only a function declaration of the name "ignoreMe"
 <a name="no-missing-syntax-options"></a>
 ## Options
 
+A single options object has the following properties.
+
 <a name="user-content-no-missing-syntax-options-contexts"></a>
 <a name="no-missing-syntax-options-contexts"></a>
 ### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
-`context` and `comment` properties) where you wish the rule to be applied.
+optional `context` and `comment` properties) where you wish the rule to be applied.
+
+`context` defaults to `any` and `comment` defaults to no specific comment context.
 
 Use the `minimum` property (defaults to 1) to indicate how many are required
 for the rule to be reported.
 
 Use the `message` property to indicate the specific error to be shown when an
 error is reported for that context being found missing. You may use
-`{{context}}` and `{{comment}}` with such messages.
+`{{context}}` and `{{comment}}` with such messages. Defaults to
+`"Syntax is required: {{context}}"`, or with a comment, to
+`"Syntax is required: {{context}} with {{comment}}"`.
 
-Set to `"any"` if you want the rule to apply to any jsdoc block throughout
+Set to `"any"` if you want the rule to apply to any JSDoc block throughout
 your files (as is necessary for finding function blocks not attached to a
 function declaration or expression, i.e., `@callback` or `@function` (or its
 aliases `@func` or `@method`) (including those associated with an `@interface`).
 
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
-section of our README for more on the expected format.
+section of our Advanced docs for more on the expected format.
+
 
 <a name="user-content-no-missing-syntax-context-and-settings"></a>
 <a name="no-missing-syntax-context-and-settings"></a>

@@ -291,18 +291,89 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           definedTags: {
+            description: `Use an array of \`definedTags\` strings to configure additional, allowed tags.
+The format is as follows:
+
+\`\`\`json
+{
+  "definedTags": ["note", "record"]
+}
+\`\`\``,
             items: {
               type: 'string',
             },
             type: 'array',
           },
           enableFixer: {
+            description: 'Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#typed).',
             type: 'boolean',
           },
           jsxTags: {
+            description: `If this is set to \`true\`, all of the following tags used to control JSX output are allowed:
+
+\`\`\`
+jsx
+jsxFrag
+jsxImportSource
+jsxRuntime
+\`\`\`
+
+For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).`,
             type: 'boolean',
           },
           typed: {
+            description: `If this is set to \`true\`, additionally checks for tag names that are redundant when using a type checker such as TypeScript.
+
+These tags are always unnecessary when using TypeScript or similar:
+
+\`\`\`
+augments
+callback
+class
+enum
+implements
+private
+property
+protected
+public
+readonly
+this
+type
+typedef
+\`\`\`
+
+These tags are unnecessary except when inside a TypeScript \`declare\` context:
+
+\`\`\`
+abstract
+access
+class
+constant
+constructs
+default
+enum
+export
+exports
+function
+global
+inherits
+instance
+interface
+member
+memberof
+memberOf
+method
+mixes
+mixin
+module
+name
+namespace
+override
+property
+requires
+static
+this
+\`\`\``,
             type: 'boolean',
           },
         },

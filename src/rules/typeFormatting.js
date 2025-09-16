@@ -370,21 +370,31 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           arrayBrackets: {
+            description: 'Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square".',
             enum: [
               'angle',
               'square',
             ],
+            type: 'string',
           },
           enableFixer: {
+            description: 'Whether to enable the fixer. Defaults to `true`.',
             type: 'boolean',
           },
           genericDot: {
+            description: 'Boolean value of whether to use a dot before the angled brackets of a generic (e.g., `SomeType.<AnotherType>`). Defaults to `false`.',
             type: 'boolean',
           },
           objectFieldIndent: {
+            description: `A string indicating the whitespace to be added on each line preceding an
+object property-value field. Defaults to the empty string.`,
             type: 'string',
           },
           objectFieldQuote: {
+            description: `Whether and how object field properties should be quoted (e.g., \`{"a": string}\`).
+Set to \`single\`, \`double\`, or \`null\`. Defaults to \`null\` (no quotes unless
+required due to special characters within the field). Digits will be kept as is,
+regardless of setting (they can either represent a digit or a string digit).`,
             enum: [
               'double',
               'single',
@@ -392,6 +402,11 @@ export default iterateJsdoc(({
             ],
           },
           objectFieldSeparator: {
+            description: `For object properties, specify whether a "semicolon", "comma", "linebreak",
+"semicolon-and-linebreak", or "comma-and-linebreak" should be used after
+each object property-value pair.
+
+Defaults to \`"comma"\`.`,
             enum: [
               'comma',
               'comma-and-linebreak',
@@ -399,33 +414,55 @@ export default iterateJsdoc(({
               'semicolon',
               'semicolon-and-linebreak',
             ],
+            type: 'string',
           },
           objectFieldSeparatorOptionalLinebreak: {
+            description: `Whether \`objectFieldSeparator\` set to \`"semicolon-and-linebreak"\` or
+\`"comma-and-linebreak"\` should be allowed to optionally drop the linebreak.
+
+Defaults to \`true\`.`,
             type: 'boolean',
           },
           objectFieldSeparatorTrailingPunctuation: {
+            description: `If \`separatorForSingleObjectField\` is not in effect (i.e., if it is \`false\`
+or there are multiple property-value object fields present), this property
+will determine whether to add punctuation corresponding to the
+\`objectFieldSeparator\` (e.g., a semicolon) to the final object field.
+Defaults to \`false\`.`,
             type: 'boolean',
           },
-          // propertyQuotes: {
-          //   enum: [
-          //     'double',
-          //     'single',
-          //     null,
-          //   ],
-          // },
+          //           propertyQuotes: {
+          //             description: `Whether and how namepath properties should be quoted (e.g., \`ab."cd"."ef"\`).
+          // Set to \`single\`, \`double\`, or \`null\`. Defaults to \`null\` (no quotes unless
+          // required due to whitespace within the property).`,
+          //             enum: [
+          //               'double',
+          //               'single',
+          //               null,
+          //             ],
+          //           },
           separatorForSingleObjectField: {
+            description: `Whether to apply the \`objectFieldSeparator\` (e.g., a semicolon) when there
+is only one property-value object field present. Defaults to \`false\`.`,
             type: 'boolean',
           },
           stringQuotes: {
+            description: `How string literals should be quoted (e.g., \`"abc"\`). Set to \`single\`
+or \`double\`. Defaults to 'single'.`,
             enum: [
               'double',
               'single',
             ],
+            type: 'string',
           },
           typeBracketSpacing: {
+            description: `A string of spaces that will be added immediately after the type's initial
+curly bracket and immediately before its ending curly bracket. Defaults
+to the empty string.`,
             type: 'string',
           },
           unionSpacing: {
+            description: 'Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`).',
             type: 'string',
           },
         },

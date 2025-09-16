@@ -136,7 +136,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'At most one access-control tag may be present on a jsdoc block.',
+          message: 'At most one access-control tag may be present on a JSDoc block.',
         },
       ],
     },
@@ -153,7 +153,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'At most one access-control tag may be present on a jsdoc block.',
+          message: 'At most one access-control tag may be present on a JSDoc block.',
         },
       ],
       settings: {
@@ -175,7 +175,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'At most one access-control tag may be present on a jsdoc block.',
+          message: 'At most one access-control tag may be present on a JSDoc block.',
         },
       ],
     },
@@ -192,7 +192,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'At most one access-control tag may be present on a jsdoc block.',
+          message: 'At most one access-control tag may be present on a JSDoc block.',
         },
       ],
       settings: {
@@ -214,7 +214,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'At most one access-control tag may be present on a jsdoc block.',
+          message: 'At most one access-control tag may be present on a JSDoc block.',
         },
       ],
     },

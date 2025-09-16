@@ -84,6 +84,15 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           tags: {
+            description: `If you want additional tags to be checked for their descriptions, you may
+add them within this option.
+
+\`\`\`js
+{
+  'jsdoc/empty-tags': ['error', {tags: ['event']}]
+}
+\`\`\`
+`,
             items: {
               type: 'string',
             },

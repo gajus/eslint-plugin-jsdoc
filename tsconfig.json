@@ -14,6 +14,7 @@
     "outDir": "dist"
   },
   "include": [
+    "src/bin/*.js",
     "src/*.js",
     "src/rules/*.js",
     "src/rules.d.ts",
@@ -22,5 +23,8 @@
     "typings/gitdown.d.ts",
     "typings/babel__eslint-parser.d.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "src/bin/generateOptions.js"
+  ]
 }

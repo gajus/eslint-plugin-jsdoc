@@ -195,7 +195,7 @@ function quux (foo) {
     {
       code: `
         /**
-           * A jsdoc not attached to any node.
+           * A JSDoc not attached to any node.
          */
       `,
       errors: [
@@ -206,7 +206,7 @@ function quux (foo) {
       ],
       output: `
         /**
-         * A jsdoc not attached to any node.
+         * A JSDoc not attached to any node.
          */
       `,
     },

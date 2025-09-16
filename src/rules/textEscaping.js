@@ -138,11 +138,15 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
-          // Option properties here (or remove the object)
           escapeHTML: {
+            description: `This option escapes all \`<\` and \`&\` characters (except those followed by
+whitespace which are treated as literals by Visual Studio Code). Defaults to
+\`false\`.`,
             type: 'boolean',
           },
           escapeMarkdown: {
+            description: `This option escapes the first backtick (\`\` \` \`\`) in a paired sequence.
+Defaults to \`false\`.`,
             type: 'boolean',
           },
         },

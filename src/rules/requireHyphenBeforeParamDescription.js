@@ -155,6 +155,14 @@ export default iterateJsdoc(({
     fixable: 'code',
     schema: [
       {
+        description: `If the string is \`"always"\` then a problem is raised when there is no hyphen
+before the description. If it is \`"never"\` then a problem is raised when there
+is a hyphen before the description. The default value is \`"always"\`.
+
+Even if hyphens are set to "always" appear after the tag name, they will
+actually be forbidden in the event that they are followed immediately by
+the end of a line (this will otherwise cause Visual Studio Code to display
+incorrectly).`,
         enum: [
           'always', 'never',
         ],
@@ -162,6 +170,8 @@ export default iterateJsdoc(({
       },
       {
         additionalProperties: false,
+        description: `The options object may have the following property to indicate behavior for
+other tags besides the \`@param\` tag (or the \`@arg\` tag if so set).`,
         properties: {
           tags: {
             anyOf: [
@@ -183,6 +193,14 @@ export default iterateJsdoc(({
                 type: 'string',
               },
             ],
+            description: `Object whose keys indicate different tags to check for the
+  presence or absence of hyphens; the key value should be "always" or "never",
+  indicating how hyphens are to be applied, e.g., \`{property: 'never'}\`
+  to ensure \`@property\` never uses hyphens. A key can also be set as \`*\`, e.g.,
+  \`'*': 'always'\` to apply hyphen checking to any tag (besides the preferred
+  \`@param\` tag which follows the main string option setting and besides any
+  other \`tags\` entries).
+`,
           },
         },
         type: 'object',

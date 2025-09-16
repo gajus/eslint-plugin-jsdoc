@@ -43,9 +43,11 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           enableFixer: {
+            description: 'Whether or not to auto-remove the blank block. Defaults to `false`.',
             type: 'boolean',
           },
         },
+        type: 'object',
       },
     ],
     type: 'suggestion',

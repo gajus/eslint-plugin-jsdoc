@@ -1,3 +1,4 @@
+import plugin from '../index.js';
 import decamelize from 'decamelize';
 import fs from 'fs';
 import Gitdown from 'gitdown';
@@ -10,6 +11,13 @@ import {
 import path from 'path';
 
 const dirname = import.meta.dirname;
+
+/**
+ * @param {string} str
+ */
+const escapeDescription = (str) => {
+  return str.replaceAll(/(?<!`|\* +|'|\/\/ )@\w+/gv, '<code>$&</code>');
+};
 
 /**
  * @param {string} code
@@ -140,22 +148,131 @@ const generateDocs = async () => {
     assertions,
   } = await getAssertions();
 
+  /** @type {import('json-schema').JSONSchema4[][]} */
+  const schemas = [];
+
   const docContents = await Promise.all([
     ...assertionNames.map((assertionName) => {
+      const decamelized = decamelize(assertionName, {
+        separator: '-',
+      });
+      schemas.push(
+        /** @type {import('json-schema').JSONSchema4[]} */
+        (plugin.rules?.[decamelized].meta?.schema),
+      );
+
       return path.join(
-        dirname, '..', '..', '.README', 'rules', decamelize(assertionName, {
-          separator: '-',
-        }) + '.md',
+        dirname, '..', '..', '.README', 'rules', decamelized + '.md',
       );
     }),
     ...otherPaths,
-  ].map(async (docPath) => {
+  ].map(async (docPath, idx) => {
     const gitdown = await Gitdown.readFile(docPath);
 
     gitdown.setConfig({
       gitinfo: {
         defaultBranchName: getSomeBranch() || 'master',
         gitPath: path.join(dirname, '../../.git'),
+      },
+    });
+
+    gitdown.registerHelper('options', {
+      compile () {
+        if (!schemas[idx]) {
+          return '';
+        }
+
+        /**
+         * @param {import('json-schema').JSONSchema4} schema
+         * @param {number} jIdx
+         * @param {import('json-schema').JSONSchema4[]} arr
+         * @param {number} [nesting]
+         */
+        const convertFromSchema = (schema, jIdx, arr, nesting = 3) => {
+          let ret = '';
+          switch (schema.type) {
+            case 'array':
+              ret += convertFromSchema(
+                /** @type {import('json-schema').JSONSchema4} */ (schema.items),
+                0,
+                [],
+                nesting + 1,
+              );
+              break;
+            case 'object':
+              if (!schema.properties) {
+                break;
+              }
+
+              if (jIdx === 0) {
+                ret += (arr.length <= 1 ? 'A single' : 'An') +
+                ' options object has the following properties.\n\n';
+              } else {
+                ret += '\n\nThe next option is an object with the following properties.\n\n';
+              }
+
+              if (schema.description) {
+                ret += `${escapeDescription(schema.description)}\n`;
+              }
+
+              for (const [
+                property,
+                innerSchema,
+              ] of Object.entries(schema.properties)) {
+                const {
+                  description,
+                  type,
+                } = innerSchema;
+                if (!description) {
+                  throw new Error(
+                    'Missing description for property ' + property + ' for rule ' + assertionNames[idx] + ' with schema ' + JSON.stringify(innerSchema),
+                  );
+                }
+
+                ret += '#'.repeat(nesting) + ` \`${property}\`
+
+${type === 'object' && innerSchema.properties ? '' : escapeDescription(description)}
+`;
+                if (type === 'object' || type === 'array') {
+                  ret += convertFromSchema(innerSchema, 0, [], nesting + 1);
+                }
+              }
+
+              break;
+            case 'string':
+              if (jIdx !== 0) {
+                throw new Error('Unexpected string schema');
+              }
+
+              // If a simple string, should be documented by parent
+              if (schema.enum) {
+                ret += 'The first option is a string with the following possible values: ';
+                ret += schema.enum?.map((val) => {
+                  return `"${val}"`;
+                }).join(', ') + '.\n';
+              }
+
+              if (schema.description) {
+                ret += escapeDescription(schema.description);
+              }
+
+              break;
+            default:
+              // Describe on parent object
+              if (schema.anyOf) {
+                break;
+              }
+
+              throw new Error('Unrecognized type ' + schema.type + ' for schema: ' +
+                JSON.stringify(schema));
+          }
+
+          return ret;
+        };
+
+        return schemas[idx].map((schema, jIdx, arr) => {
+          return convertFromSchema(schema, jIdx, arr);
+        }).join('');
       },
     });
 

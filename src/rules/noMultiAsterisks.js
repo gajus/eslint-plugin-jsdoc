@@ -116,12 +116,41 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           allowWhitespace: {
+            description: `Set to \`true\` if you wish to allow asterisks after a space (as with Markdown):
+
+\`\`\`js
+/**
+ * *bold* text
+ */
+\`\`\`
+
+Defaults to \`false\`.`,
             type: 'boolean',
           },
           preventAtEnd: {
+            description: `Prevent the likes of this:
+
+\`\`\`js
+/**
+ *
+ *
+ **/
+\`\`\`
+
+Defaults to \`true\`.`,
             type: 'boolean',
           },
           preventAtMiddleLines: {
+            description: `Prevent the likes of this:
+
+\`\`\`js
+/**
+ *
+ **
+ */
+\`\`\`
+
+Defaults to \`true\`.`,
             type: 'boolean',
           },
         },

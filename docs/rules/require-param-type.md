@@ -3,9 +3,9 @@
 # <code>require-param-type</code>
 
 * [Options](#user-content-require-param-type-options)
-    * [`setDefaultDestructuredRootType`](#user-content-require-param-type-options-setdefaultdestructuredroottype)
-    * [`defaultDestructuredRootType`](#user-content-require-param-type-options-defaultdestructuredroottype)
     * [`contexts`](#user-content-require-param-type-options-contexts)
+    * [`defaultDestructuredRootType`](#user-content-require-param-type-options-defaultdestructuredroottype)
+    * [`setDefaultDestructuredRootType`](#user-content-require-param-type-options-setdefaultdestructuredroottype)
 * [Context and settings](#user-content-require-param-type-context-and-settings)
 * [Failing examples](#user-content-require-param-type-failing-examples)
 * [Passing examples](#user-content-require-param-type-passing-examples)
@@ -22,6 +22,31 @@ Will exempt destructured roots and their children if
 <a name="require-param-type-options"></a>
 ## Options
 
+A single options object has the following properties.
+
+<a name="user-content-require-param-type-options-contexts"></a>
+<a name="require-param-type-options-contexts"></a>
+### <code>contexts</code>
+
+Set this to an array of strings representing the AST context (or an object with
+optional `context` and `comment` properties) where you wish the rule to be applied.
+
+`context` defaults to `any` and `comment` defaults to no specific comment context.
+
+Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`,
+`FunctionExpression`). Set to `"any"` if you want
+the rule to apply to any JSDoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression, i.e., `@callback` or `@function` (or its aliases `@func` or
+`@method`) (including those associated with an `@interface`).
+
+See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our Advanced docs for more on the expected format.
+<a name="user-content-require-param-type-options-defaultdestructuredroottype"></a>
+<a name="require-param-type-options-defaultdestructuredroottype"></a>
+### <code>defaultDestructuredRootType</code>
+
+The type string to set by default for destructured roots. Defaults to "object".
 <a name="user-content-require-param-type-options-setdefaultdestructuredroottype"></a>
 <a name="require-param-type-options-setdefaultdestructuredroottype"></a>
 ### <code>setDefaultDestructuredRootType</code>
@@ -32,26 +57,6 @@ corresponding to a destructured root object as it is always going to be an
 object. Uses `defaultDestructuredRootType` for the type string. Defaults to
 `false`.
 
-<a name="user-content-require-param-type-options-defaultdestructuredroottype"></a>
-<a name="require-param-type-options-defaultdestructuredroottype"></a>
-### <code>defaultDestructuredRootType</code>
-
-The type string to set by default for destructured roots. Defaults to "object".
-
-<a name="user-content-require-param-type-options-contexts"></a>
-<a name="require-param-type-options-contexts"></a>
-### <code>contexts</code>
-
-Set this to an array of strings representing the AST context (or an object with
-`context` and `comment` properties) where you wish the rule to be applied.
-Overrides the default contexts (see below). Set to `"any"` if you want
-the rule to apply to any jsdoc block throughout your files (as is necessary
-for finding function blocks not attached to a function declaration or
-expression, i.e., `@callback` or `@function` (or its aliases `@func` or
-`@method`) (including those associated with an `@interface`).
-
-See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
-section of our README for more on the expected format.
 
 <a name="user-content-require-param-type-context-and-settings"></a>
 <a name="require-param-type-context-and-settings"></a>

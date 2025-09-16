@@ -3,9 +3,9 @@
 # <code>require-param-description</code>
 
 * [Options](#user-content-require-param-description-options)
-    * [`setDefaultDestructuredRootDescription`](#user-content-require-param-description-options-setdefaultdestructuredrootdescription)
-    * [`defaultDestructuredRootDescription`](#user-content-require-param-description-options-defaultdestructuredrootdescription)
     * [`contexts`](#user-content-require-param-description-options-contexts)
+    * [`defaultDestructuredRootDescription`](#user-content-require-param-description-options-defaultdestructuredrootdescription)
+    * [`setDefaultDestructuredRootDescription`](#user-content-require-param-description-options-setdefaultdestructuredrootdescription)
 * [Context and settings](#user-content-require-param-description-context-and-settings)
 * [Failing examples](#user-content-require-param-description-failing-examples)
 * [Passing examples](#user-content-require-param-description-passing-examples)
@@ -22,6 +22,32 @@ Will exempt destructured roots and their children if
 <a name="require-param-description-options"></a>
 ## Options
 
+A single options object has the following properties.
+
+<a name="user-content-require-param-description-options-contexts"></a>
+<a name="require-param-description-options-contexts"></a>
+### <code>contexts</code>
+
+Set this to an array of strings representing the AST context (or an object with
+optional `context` and `comment` properties) where you wish the rule to be applied.
+
+`context` defaults to `any` and `comment` defaults to no specific comment context.
+
+Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`,
+`FunctionExpression`). Set to `"any"` if you want
+the rule to apply to any JSDoc block throughout your files (as is necessary
+for finding function blocks not attached to a function declaration or
+expression, i.e., `@callback` or `@function` (or its aliases `@func` or
+`@method`) (including those associated with an `@interface`).
+
+See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
+section of our Advanced docs for more on the expected format.
+<a name="user-content-require-param-description-options-defaultdestructuredrootdescription"></a>
+<a name="require-param-description-options-defaultdestructuredrootdescription"></a>
+### <code>defaultDestructuredRootDescription</code>
+
+The description string to set by default for destructured roots. Defaults to
+"The root object".
 <a name="user-content-require-param-description-options-setdefaultdestructuredrootdescription"></a>
 <a name="require-param-description-options-setdefaultdestructuredrootdescription"></a>
 ### <code>setDefaultDestructuredRootDescription</code>
@@ -32,27 +58,6 @@ corresponding to a destructured root object as it should always be the same
 type of object. Uses `defaultDestructuredRootDescription` for the description
 string. Defaults to `false`.
 
-<a name="user-content-require-param-description-options-defaultdestructuredrootdescription"></a>
-<a name="require-param-description-options-defaultdestructuredrootdescription"></a>
-### <code>defaultDestructuredRootDescription</code>
-
-The description string to set by default for destructured roots. Defaults to
-"The root object".
-
-<a name="user-content-require-param-description-options-contexts"></a>
-<a name="require-param-description-options-contexts"></a>
-### <code>contexts</code>
-
-Set this to an array of strings representing the AST context (or an object with
-`context` and `comment` properties) where you wish the rule to be applied.
-Overrides the default contexts (see below). Set to `"any"` if you want
-the rule to apply to any jsdoc block throughout your files (as is necessary
-for finding function blocks not attached to a function declaration or
-expression, i.e., `@callback` or `@function` (or its aliases `@func` or
-`@method`) (including those associated with an `@interface`).
-
-See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
-section of our README for more on the expected format.
 
 <a name="user-content-require-param-description-context-and-settings"></a>
 <a name="require-param-description-context-and-settings"></a>

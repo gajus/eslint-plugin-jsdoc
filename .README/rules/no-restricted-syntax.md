@@ -22,21 +22,7 @@ creating your own rules and forbidding structures.
 
 ## Options
 
-### `contexts`
-
-Set this to an array of strings representing the AST context (or an object with
-`context` and `comment` properties) where you wish the rule to be applied.
-
-Use the `message` property to indicate the specific error to be shown when an
-error is reported for that context being found.
-
-Set to `"any"` if you want the rule to apply to any jsdoc block throughout
-your files (as is necessary for finding function blocks not attached to a
-function declaration or expression, i.e., `@callback` or `@function` (or its
-aliases `@func` or `@method`) (including those associated with an `@interface`).
-
-See the ["AST and Selectors"](../#advanced-ast-and-selectors)
-section of our README for more on the expected format.
+{"gitdown": "options"}
 
 ## Context and settings
 

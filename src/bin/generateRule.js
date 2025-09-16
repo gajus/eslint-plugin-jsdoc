@@ -41,7 +41,8 @@ const recommended = options.includes('--recommended');
 
   const ruleNamesPath = './test/rules/ruleNames.json';
   const ruleNames = JSON.parse(await fs.readFile(
-    ruleNamesPath,
+    // eslint-disable-next-line unicorn/prefer-json-parse-buffer -- TypeScript
+    ruleNamesPath, 'utf8',
   ));
   if (!ruleNames.includes(ruleName)) {
     ruleNames.push(ruleName);

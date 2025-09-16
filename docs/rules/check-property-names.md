@@ -17,11 +17,17 @@ and that nested properties have defined roots.
 <a name="check-property-names-fixer"></a>
 ## Fixer
 
-(Todo)
+Auto-removes `@property` duplicates (based on identical names).
+
+Note that this option will remove duplicates of the same name even if
+the definitions do not match in other ways (e.g., the second property will
+be removed even if it has a different type or description).
 
 <a name="user-content-check-property-names-options"></a>
 <a name="check-property-names-options"></a>
 ## Options
+
+A single options object has the following properties.
 
 <a name="user-content-check-property-names-options-enablefixer"></a>
 <a name="check-property-names-options-enablefixer"></a>
@@ -33,6 +39,7 @@ identical names).
 Note that this option will remove duplicates of the same name even if
 the definitions do not match in other ways (e.g., the second property will
 be removed even if it has a different type or description).
+
 
 <a name="user-content-check-property-names-context-and-settings"></a>
 <a name="check-property-names-context-and-settings"></a>

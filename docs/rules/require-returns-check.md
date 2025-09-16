@@ -3,6 +3,9 @@
 # <code>require-returns-check</code>
 
 * [Options](#user-content-require-returns-check-options)
+    * [`exemptAsync`](#user-content-require-returns-check-options-exemptasync)
+    * [`exemptGenerators`](#user-content-require-returns-check-options-exemptgenerators)
+    * [`reportMissingReturnForUndefinedTypes`](#user-content-require-returns-check-options-reportmissingreturnforundefinedtypes)
 * [Context and settings](#user-content-require-returns-check-context-and-settings)
 * [Failing examples](#user-content-require-returns-check-failing-examples)
 * [Passing examples](#user-content-require-returns-check-passing-examples)
@@ -23,27 +26,42 @@ Will also report if multiple `@returns` tags are present.
 <a name="require-returns-check-options"></a>
 ## Options
 
-- `exemptGenerators`- Because a generator might be labeled as having a
-  `IterableIterator` `@returns` value (along with an iterator type
-  corresponding to the type of any `yield` statements), projects might wish to
-  leverage `@returns` in generators even without a` return` statement. This
-  option is therefore `true` by default in `typescript` mode (in "jsdoc" mode,
-  one might be more likely to take advantage of `@yields`). Set it to `false`
-  if you wish for a missing `return` to be flagged regardless.
-- `exemptAsync` - By default, functions which return a `Promise` that are not
-    detected as resolving with a non-`undefined` value and `async` functions
-    (even ones that do not explicitly return a value, as these are returning a
-    `Promise` implicitly) will be exempted from reporting by this rule.
-    If you wish to insist that only `Promise`'s which resolve to
-    non-`undefined` values or `async` functions with explicit `return`'s will
-    be exempted from reporting (i.e., that `async` functions can be reported
-    if they lack an explicit (non-`undefined`) `return` when a `@returns` is
-    present), you can set `exemptAsync` to `false` on the options object.
-- `reportMissingReturnForUndefinedTypes` - If `true` and no return or
-    resolve value is found, this setting will even insist that reporting occur
-    with `void` or `undefined` (including as an indicated `Promise` type).
-    Unlike `require-returns`, with this option in the rule, one can
-     *discourage* the labeling of `undefined` types. Defaults to `false`.
+A single options object has the following properties.
+
+<a name="user-content-require-returns-check-options-exemptasync"></a>
+<a name="require-returns-check-options-exemptasync"></a>
+### <code>exemptAsync</code>
+
+By default, functions which return a `Promise` that are not
+detected as resolving with a non-`undefined` value and `async` functions
+(even ones that do not explicitly return a value, as these are returning a
+`Promise` implicitly) will be exempted from reporting by this rule.
+If you wish to insist that only `Promise`'s which resolve to
+non-`undefined` values or `async` functions with explicit `return`'s will
+be exempted from reporting (i.e., that `async` functions can be reported
+if they lack an explicit (non-`undefined`) `return` when a `@returns` is
+present), you can set `exemptAsync` to `false` on the options object.
+<a name="user-content-require-returns-check-options-exemptgenerators"></a>
+<a name="require-returns-check-options-exemptgenerators"></a>
+### <code>exemptGenerators</code>
+
+Because a generator might be labeled as having a
+`IterableIterator` `@returns` value (along with an iterator type
+corresponding to the type of any `yield` statements), projects might wish to
+leverage `@returns` in generators even without a `return` statement. This
+option is therefore `true` by default in `typescript` mode (in "jsdoc" mode,
+one might be more likely to take advantage of `@yields`). Set it to `false`
+if you wish for a missing `return` to be flagged regardless.
+<a name="user-content-require-returns-check-options-reportmissingreturnforundefinedtypes"></a>
+<a name="require-returns-check-options-reportmissingreturnforundefinedtypes"></a>
+### <code>reportMissingReturnForUndefinedTypes</code>
+
+If `true` and no return or
+resolve value is found, this setting will even insist that reporting occur
+with `void` or `undefined` (including as an indicated `Promise` type).
+Unlike `require-returns`, with this option in the rule, one can
+*discourage* the labeling of `undefined` types. Defaults to `false`.
+
 
 <a name="user-content-require-returns-check-context-and-settings"></a>
 <a name="require-returns-check-context-and-settings"></a>

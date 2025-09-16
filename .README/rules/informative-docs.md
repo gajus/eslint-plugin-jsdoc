@@ -16,56 +16,7 @@ This rule requires all docs comments contain at least one word not already in th
 
 ## Options
 
-### `aliases`
-
-The `aliases` option allows indicating words as synonyms (aliases) of each other.
-
-For example, with `{ aliases: { emoji: ["smiley", "winkey"] } }`, the following comment would be considered uninformative:
-
-```js
-/** A smiley/winkey. */
-let emoji;
-```
-
-The default `aliases` option is:
-
-```json
-{
-  "a": ["an", "our"]
-}
-```
-
-### `excludedTags`
-
-Tags that should not be checked for valid contents.
-
-For example, with `{ excludedTags: ["category"] }`, the following comment would not be considered uninformative:
-
-```js
-/** @category Types */
-function computeTypes(node) {
-  // ...
-}
-```
-
-No tags are excluded by default.
-
-### `uselessWords`
-
-Words that are ignored when searching for one that adds meaning.
-
-For example, with `{ uselessWords: ["our"] }`, the following comment would be considered uninformative:
-
-```js
-/** Our text. */
-let text;
-```
-
-The default `uselessWords` option is:
-
-```json
-["a", "an", "i", "in", "of", "s", "the"]
-```
+{"gitdown": "options"}
 
 ## Context and settings
 

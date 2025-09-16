@@ -22,33 +22,7 @@ This rule checks the values for a handful of tags:
 
 ## Options
 
-### `allowedAuthors`
-
-An array of allowable author values. If absent, only non-whitespace will
-be checked for.
-
-### `allowedLicenses`
-
-An array of allowable license values or `true` to allow any license text.
-If present as an array, will be used in place of SPDX identifiers.
-
-### `licensePattern`
-
-A string to be converted into a `RegExp` (with `v` flag) and whose first
-parenthetical grouping, if present, will match the portion of the license
-description to check (if no grouping is present, then the whole portion
-matched will be used). Defaults to `/([^\n\r]*)/gv`, i.e., the SPDX expression
-is expected before any line breaks.
-
-Note that the `/` delimiters are optional, but necessary to add flags.
-
-Defaults to using the `v` flag, so to add your own flags, encapsulate
-your expression as a string, but like a literal, e.g., `/^mit$/vi`.
-
-### `numericOnlyVariation`
-
-Whether to enable validation that `@variation` must be a number. Defaults to
-`false`.
+{"gitdown": "options"}
 
 ## Context and settings
 
