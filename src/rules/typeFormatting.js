@@ -24,7 +24,7 @@ export default iterateJsdoc(({
     objectFieldSeparator = 'comma',
     objectFieldSeparatorOptionalLinebreak = true,
     objectFieldSeparatorTrailingPunctuation = false,
-    propertyQuotes = null,
+    // propertyQuotes = null,
     separatorForSingleObjectField = false,
     stringQuotes = 'single',
     typeBracketSpacing = '',
@@ -277,19 +277,20 @@ export default iterateJsdoc(({
           break;
         }
 
-        case 'JsdocTypeProperty': {
-          const typeNode = /** @type {import('jsdoc-type-pratt-parser').PropertyResult} */ (nde);
+        // Only suitable for namepaths (and would need changes); see https://github.com/gajus/eslint-plugin-jsdoc/issues/1524
+        // case 'JsdocTypeProperty': {
+        //   const typeNode = /** @type {import('jsdoc-type-pratt-parser').PropertyResult} */ (nde);
 
-          if ((propertyQuotes ||
-            (typeof typeNode.value === 'string' && !(/\s/v).test(typeNode.value))) &&
-            typeNode.meta.quote !== (propertyQuotes ?? undefined)
-          ) {
-            typeNode.meta.quote = propertyQuotes ?? undefined;
-            errorMessage = `Inconsistent ${propertyQuotes} property quotes usage`;
-          }
+        //   if ((propertyQuotes ||
+        //     (typeof typeNode.value === 'string' && !(/\s/v).test(typeNode.value))) &&
+        //     typeNode.meta.quote !== (propertyQuotes ?? undefined)
+        //   ) {
+        //     typeNode.meta.quote = propertyQuotes ?? undefined;
+        //     errorMessage = `Inconsistent ${propertyQuotes} property quotes usage`;
+        //   }
 
-          break;
-        }
+        //   break;
+        // }
 
         case 'JsdocTypeStringValue': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').StringValueResult} */ (nde);
@@ -405,13 +406,13 @@ export default iterateJsdoc(({
           objectFieldSeparatorTrailingPunctuation: {
             type: 'boolean',
           },
-          propertyQuotes: {
-            enum: [
-              'double',
-              'single',
-              null,
-            ],
-          },
+          // propertyQuotes: {
+          //   enum: [
+          //     'double',
+          //     'single',
+          //     null,
+          //   ],
+          // },
           separatorForSingleObjectField: {
             type: 'boolean',
           },
