@@ -287,33 +287,33 @@ export default {
          */
       `,
     },
-    {
-      code: `
-        /**
-         * @param {ab.cd.ef} cfg
-         */
-      `,
-      errors: [
-        {
-          line: 3,
-          message: 'Inconsistent double property quotes usage',
-        },
-        {
-          line: 3,
-          message: 'Inconsistent double property quotes usage',
-        },
-      ],
-      options: [
-        {
-          propertyQuotes: 'double',
-        },
-      ],
-      output: `
-        /**
-         * @param {ab."cd"."ef"} cfg
-         */
-      `,
-    },
+    // {
+    //   code: `
+    //     /**
+    //      * @param {ab.cd.ef} cfg
+    //      */
+    //   `,
+    //   errors: [
+    //     {
+    //       line: 3,
+    //       message: 'Inconsistent double property quotes usage',
+    //     },
+    //     {
+    //       line: 3,
+    //       message: 'Inconsistent double property quotes usage',
+    //     },
+    //   ],
+    //   options: [
+    //     {
+    //       propertyQuotes: 'double',
+    //     },
+    //   ],
+    //   output: `
+    //     /**
+    //      * @param {ab."cd"."ef"} cfg
+    //      */
+    //   `,
+    // },
     {
       code: `
         /**
@@ -627,29 +627,29 @@ export default {
          */
       `,
     },
-    {
-      code: `
-        /**
-         * @param {ab."cd".ef} cfg
-         */
-      `,
-      errors: [
-        {
-          line: 3,
-          message: 'Inconsistent null property quotes usage',
-        },
-      ],
-      options: [
-        {
-          propertyQuotes: null,
-        },
-      ],
-      output: `
-        /**
-         * @param {ab.cd.ef} cfg
-         */
-      `,
-    },
+    // {
+    //   code: `
+    //     /**
+    //      * @param {ab."cd".ef} cfg
+    //      */
+    //   `,
+    //   errors: [
+    //     {
+    //       line: 3,
+    //       message: 'Inconsistent null property quotes usage',
+    //     },
+    //   ],
+    //   options: [
+    //     {
+    //       propertyQuotes: null,
+    //     },
+    //   ],
+    //   output: `
+    //     /**
+    //      * @param {ab.cd.ef} cfg
+    //      */
+    //   `,
+    // },
     {
       code: `
         /**
@@ -801,30 +801,30 @@ export default {
         },
       ],
     },
-    {
-      code: `
-        /**
-         * @param {ab.cd.ef} cfg
-         */
-      `,
-      options: [
-        {
-          propertyQuotes: null,
-        },
-      ],
-    },
-    {
-      code: `
-        /**
-         * @param {ab."cd ef".gh} cfg
-         */
-      `,
-      options: [
-        {
-          propertyQuotes: null,
-        },
-      ],
-    },
+    // {
+    //   code: `
+    //     /**
+    //      * @param {ab.cd.ef} cfg
+    //      */
+    //   `,
+    //   options: [
+    //     {
+    //       propertyQuotes: null,
+    //     },
+    //   ],
+    // },
+    // {
+    //   code: `
+    //     /**
+    //      * @param {ab."cd ef".gh} cfg
+    //      */
+    //   `,
+    //   options: [
+    //     {
+    //       propertyQuotes: null,
+    //     },
+    //   ],
+    // },
     {
       code: `
         /**

@@ -119,7 +119,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`
 |Tags|`param`, `property`, `returns`, `this`, `throws`, `type`, `typedef`, `yields`|
 |Recommended|false|
 |Settings|`mode`|
-|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `propertyQuotes`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
+|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
 <a name="type-formatting-failing-examples"></a>
@@ -205,12 +205,6 @@ The following patterns are considered problems:
 // Message: Inconsistent object field quotes null
 
 /**
- * @param {ab.cd.ef} cfg
- */
-// "jsdoc/type-formatting": ["error"|"warn", {"propertyQuotes":"double"}]
-// Message: Inconsistent double property quotes usage
-
-/**
  * @param {{a: string}} cfg A long
  *   description
  */
@@ -286,12 +280,6 @@ The following patterns are considered problems:
 // Message: Must have no initial spacing
 
 /**
- * @param {ab."cd".ef} cfg
- */
-// "jsdoc/type-formatting": ["error"|"warn", {"propertyQuotes":null}]
-// Message: Inconsistent null property quotes usage
-
-/**
  * @param {{a: string, b: number}} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon-and-linebreak","objectFieldSeparatorOptionalLinebreak":true}]
@@ -357,16 +345,6 @@ The following patterns are not considered problems:
  * @param {{55: string}} quotedKeyParam
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldQuote":"double"}]
-
-/**
- * @param {ab.cd.ef} cfg
- */
-// "jsdoc/type-formatting": ["error"|"warn", {"propertyQuotes":null}]
-
-/**
- * @param {ab."cd ef".gh} cfg
- */
-// "jsdoc/type-formatting": ["error"|"warn", {"propertyQuotes":null}]
 
 /**
  * @param {ab | cd} cfg
