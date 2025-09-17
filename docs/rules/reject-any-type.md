@@ -28,10 +28,22 @@ function quux () {}
 // Message: Prefer a more specific type to `any`
 
 /**
+ * @param {*} abc
+ */
+function quux () {}
+// Message: Prefer a more specific type to `*`
+
+/**
  * @param {string|Promise<any>} abc
  */
 function quux () {}
 // Message: Prefer a more specific type to `any`
+
+/**
+ * @param {Array<*>|number} abc
+ */
+function quux () {}
+// Message: Prefer a more specific type to `*`
 ````
 
 
