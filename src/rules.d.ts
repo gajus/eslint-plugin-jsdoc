@@ -15,7 +15,7 @@ export interface Rules {
         }
       ];
 
-  /** Ensures that (JavaScript) samples within `@example` tags adhere to ESLint rules. */
+  /** @deprecated - Use `getJsdocProcessorPlugin` processor; ensures that (JavaScript) samples within `@example` tags adhere to ESLint rules. */
   "jsdoc/check-examples": 
     | []
     | [
