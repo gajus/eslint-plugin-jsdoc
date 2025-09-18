@@ -591,13 +591,44 @@ export default /** @type {import('../index.js').TestCases} */ ({
         /**
          * Some description
          *
+         *
+         *
+         * @param {string} a
+         */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Expected only 2 lines after block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          startLines: 2,
+        },
+      ],
+      output: `
+        /**
+         * Some description
+         *
+         *
+         * @param {string} a
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * Some description
+         *
          * @param {string} a
          */
       `,
       errors: [
         {
           line: 3,
-          message: 'Expected only 0 line after block description',
+          message: 'Expected only 0 lines after block description',
         },
       ],
       options: [
@@ -668,6 +699,159 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @param {string} a
          */
       `,
+    },
+    {
+      code: `
+        /**
+         *
+         * Some description
+         *
+         * Abc
+         *
+         *
+         *
+         * Def
+         *
+         * @param {string} a
+         */
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected a maximum of 2 lines within block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          maxBlockLines: 2,
+        },
+      ],
+      output: `
+        /**
+         *
+         * Some description
+         *
+         * Abc
+         *
+         *
+         * Def
+         *
+         * @param {string} a
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         *
+         * Some description
+         *
+         * Abc
+         *
+         *
+         *
+         * Def
+         *
+         * @param {string} a
+         */
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Expected a maximum of 1 line within block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          maxBlockLines: 1,
+        },
+      ],
+      output: `
+        /**
+         *
+         * Some description
+         *
+         * Abc
+         *
+         * Def
+         *
+         * @param {string} a
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         *
+         * Some description
+         *
+         * Abc
+         *
+         *
+         *
+         * Def
+         *
+         * @param {string} a
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected a maximum of 0 lines within block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          maxBlockLines: 0,
+        },
+      ],
+      output: `
+        /**
+         * Some description
+         *
+         * Abc
+         *
+         *
+         *
+         * Def
+         *
+         * @param {string} a
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         *
+         * Some description
+         *
+         * Abc
+         *
+         *
+         * Def
+         *
+         *
+         *
+         *
+         * @param {string} a
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'If set to a number, `maxBlockLines` must be greater than or equal to `startLines`.',
+        },
+      ],
+      options: [
+        'any',
+        {
+          maxBlockLines: 2,
+          startLines: 5,
+        },
+      ],
     },
   ],
   valid: [
@@ -1128,6 +1312,26 @@ export default /** @type {import('../index.js').TestCases} */ ({
         'any',
         {
           startLines: 1,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *
+         * Some description
+         *
+         * Abc
+         *
+         *
+         * Def
+         * @param {string} a
+         */
+      `,
+      options: [
+        'any',
+        {
+          maxBlockLines: 2,
         },
       ],
     },
