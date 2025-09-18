@@ -1757,6 +1757,9 @@ export interface Rules {
         }
       ];
 
+  /** Requires a description for `@next` tags */
+  "jsdoc/require-next-description": [];
+
   /** Requires a type for `@next` tags */
   "jsdoc/require-next-type": [];
 
@@ -2434,6 +2437,9 @@ export interface Rules {
         }
       ];
 
+  /** Requires a description for `@throws` tags */
+  "jsdoc/require-throws-description": [];
+
   /** Requires a type for `@throws` tags */
   "jsdoc/require-throws-type": [];
 
@@ -2567,6 +2573,9 @@ export interface Rules {
           next?: boolean;
         }
       ];
+
+  /** Requires a description for `@yields` tags */
+  "jsdoc/require-yields-description": [];
 
   /** Requires a type for `@yields` tags */
   "jsdoc/require-yields-type": [];

@@ -144,6 +144,17 @@ index.rules = {
   'require-file-overview': requireFileOverview,
   'require-hyphen-before-param-description': requireHyphenBeforeParamDescription,
   'require-jsdoc': requireJsdoc,
+  'require-next-description': buildForbidRuleDefinition({
+    contexts: [
+      {
+        comment: 'JsdocBlock:has(JsdocTag[tag=next]:not([name!=""]))',
+        context: 'any',
+        message: '@next should have a description',
+      },
+    ],
+    description: 'Requires a description for `@next` tags',
+    url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-next-description.md#repos-sticky-header',
+  }),
   'require-next-type': buildForbidRuleDefinition({
     contexts: [
       {
@@ -169,6 +180,17 @@ index.rules = {
   'require-returns-type': requireReturnsType,
   'require-template': requireTemplate,
   'require-throws': requireThrows,
+  'require-throws-description': buildForbidRuleDefinition({
+    contexts: [
+      {
+        comment: 'JsdocBlock:has(JsdocTag[tag=throws]:not([description!=""]))',
+        context: 'any',
+        message: '@throws should have a description',
+      },
+    ],
+    description: 'Requires a description for `@throws` tags',
+    url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-throws-description.md#repos-sticky-header',
+  }),
   'require-throws-type': buildForbidRuleDefinition({
     contexts: [
       {
@@ -182,6 +204,17 @@ index.rules = {
   }),
   'require-yields': requireYields,
   'require-yields-check': requireYieldsCheck,
+  'require-yields-description': buildForbidRuleDefinition({
+    contexts: [
+      {
+        comment: 'JsdocBlock:has(JsdocTag[tag=yields]:not([name!=""]))',
+        context: 'any',
+        message: '@yields should have a description',
+      },
+    ],
+    description: 'Requires a description for `@yields` tags',
+    url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-yields-description.md#repos-sticky-header',
+  }),
   'require-yields-type': buildForbidRuleDefinition({
     contexts: [
       {
@@ -257,6 +290,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/require-file-overview': 'off',
       'jsdoc/require-hyphen-before-param-description': 'off',
       'jsdoc/require-jsdoc': warnOrError,
+      'jsdoc/require-next-description': 'off',
       'jsdoc/require-next-type': warnOrError,
       'jsdoc/require-param': warnOrError,
       'jsdoc/require-param-description': warnOrError,
@@ -272,9 +306,11 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/require-returns-type': warnOrError,
       'jsdoc/require-template': 'off',
       'jsdoc/require-throws': 'off',
+      'jsdoc/require-throws-description': 'off',
       'jsdoc/require-throws-type': warnOrError,
       'jsdoc/require-yields': warnOrError,
       'jsdoc/require-yields-check': warnOrError,
+      'jsdoc/require-yields-description': 'off',
       'jsdoc/require-yields-type': warnOrError,
       'jsdoc/sort-tags': 'off',
       'jsdoc/tag-lines': warnOrError,

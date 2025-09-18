@@ -451,6 +451,7 @@ non-default-recommended fixer).
 ||| [require-file-overview](./docs/rules/require-file-overview.md#readme) | Checks that all files have one `@file`, `@fileoverview`, or `@overview` tag at the beginning of the file. |
 ||:wrench:| [require-hyphen-before-param-description](./docs/rules/require-hyphen-before-param-description.md#readme) | Requires a hyphen before the `@param` description (and optionally before `@property` descriptions). |
 |:heavy_check_mark:|:wrench:| [require-jsdoc](./docs/rules/require-jsdoc.md#readme) | Checks for presence of JSDoc comments, on functions and potentially other contexts (optionally limited to exports). |
+||| [require-next-description](./docs/rules/require-next-description.md#readme) | Requires a description for `@next` tags |
 |:heavy_check_mark:|| [require-next-type](./docs/rules/require-next-type.md#readme) | Requires a type for `@next` tags |
 |:heavy_check_mark:|:wrench:| [require-param](./docs/rules/require-param.md#readme) | Requires that all function parameters are documented with a `@param` tag. |
 |:heavy_check_mark:|:wrench:| [require-param-description](./docs/rules/require-param-description.md#readme) | Requires that each `@param` tag has a `description` value. |
@@ -466,9 +467,11 @@ non-default-recommended fixer).
 |:heavy_check_mark: (Off in TS; On in TS flavor)|| [require-returns-type](./docs/rules/require-returns-type.md#readme) | Requires that `@returns` tag has type value (in curly brackets). |
 ||| [require-template](./docs/rules/require-template.md#readme) | Requires `@template` tags be present when type parameters are used. |
 ||| [require-throws](./docs/rules/require-throws.md#readme) | Requires that throw statements are documented with `@throws` tags. |
+||| [require-throws-description](./docs/rules/require-throws-description.md#readme) | Requires a description for `@throws` tags |
 |:heavy_check_mark:|| [require-throws-type](./docs/rules/require-throws-type.md#readme) | Requires a type for `@throws` tags |
 |:heavy_check_mark:|| [require-yields](./docs/rules/require-yields.md#readme) | Requires yields are documented with `@yields` tags. |
 |:heavy_check_mark:|| [require-yields-check](./docs/rules/require-yields-check.md#readme) | Ensures that if a `@yields` is present that a `yield` (or `yield` with a value) is present in the function body (or that if a `@next` is present that there is a yield with a return value present). |
+||| [require-yields-description](./docs/rules/require-yields-description.md#readme) | Requires a description for `@yields` tags |
 |:heavy_check_mark:|| [require-yields-type](./docs/rules/require-yields-type.md#readme) | Requires a type for `@yields` tags |
 ||:wrench:| [sort-tags](./docs/rules/sort-tags.md#readme) | Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups. |
 |:heavy_check_mark:|:wrench:| [tag-lines](./docs/rules/tag-lines.md#readme) | Enforces lines (or no lines) between tags. |

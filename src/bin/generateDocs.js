@@ -213,7 +213,7 @@ const generateDocs = async () => {
       },
     });
 
-    gitdown.registerHelper('rulestable', {
+    gitdown.registerHelper('rules-table', {
       compile () {
         return tableRows.toSorted(({
           decamelized,

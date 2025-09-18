@@ -375,4 +375,4 @@ non-default-recommended fixer).
 
 |recommended|fixable|rule|description|
 |-|-|-|-|
-{"gitdown": "rulestable"}
+{"gitdown": "rules-table"}
