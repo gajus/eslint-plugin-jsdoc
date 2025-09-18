@@ -414,7 +414,7 @@ non-default-recommended fixer).
 |-|-|-|-|
 |:heavy_check_mark:|| [check-access](./docs/rules/check-access.md#readme) | Checks that `@access` tags have a valid value. |
 |:heavy_check_mark:|:wrench:| [check-alignment](./docs/rules/check-alignment.md#readme) | Reports invalid alignment of JSDoc block asterisks. |
-||| [check-examples](./docs/rules/check-examples.md#readme) | Ensures that (JavaScript) samples within `@example` tags adhere to ESLint rules. |
+||| [check-examples](./docs/rules/check-examples.md#readme) | @deprecated - Use `getJsdocProcessorPlugin` processor; ensures that (JavaScript) samples within `@example` tags adhere to ESLint rules. |
 ||| [check-indentation](./docs/rules/check-indentation.md#readme) | Reports invalid padding inside JSDoc blocks. |
 ||:wrench:| [check-line-alignment](./docs/rules/check-line-alignment.md#readme) | Reports invalid alignment of JSDoc block lines. |
 |:heavy_check_mark:|:wrench:| [check-param-names](./docs/rules/check-param-names.md#readme) | Checks for dupe `@param` names, that nested param names have roots, and that parameter names in function declarations match JSDoc param names. |
