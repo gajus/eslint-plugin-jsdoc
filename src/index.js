@@ -153,7 +153,7 @@ index.rules = {
   'require-next-description': buildForbidRuleDefinition({
     contexts: [
       {
-        comment: 'JsdocBlock:has(JsdocTag[tag=next]:not([name!=""]))',
+        comment: 'JsdocBlock:has(JsdocTag[tag=next]:not([name!=""]):not([description!=""]))',
         context: 'any',
         message: '@next should have a description',
       },
@@ -213,7 +213,7 @@ index.rules = {
   'require-yields-description': buildForbidRuleDefinition({
     contexts: [
       {
-        comment: 'JsdocBlock:has(JsdocTag[tag=yields]:not([name!=""]))',
+        comment: 'JsdocBlock:has(JsdocTag[tag=yields]:not([name!=""]):not([description!=""]))',
         context: 'any',
         message: '@yields should have a description',
       },

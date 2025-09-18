@@ -160,7 +160,7 @@
     "build": "node ./src/bin/buildEntryFileForTS.js && rimraf ./dist && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build && pnpm tsc-cjs",
     "attw": "attw --pack .",
     "check-docs": "node ./src/bin/generateDocs.js --check",
-    "create-docs": "pnpm run create-options && node ./src/bin/generateDocs.js",
+    "create-docs": "pnpm run create-options && node ./src/bin/generateDocs.js && pnpm ruleTypes",
     "create-rule": "node ./src/bin/generateRule.js",
     "create-options": "node ./src/bin/generateOptions.js",
     "install-offline": "pnpm install --prefer-offline --no-audit",
