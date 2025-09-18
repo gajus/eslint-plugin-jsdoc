@@ -37,5 +37,11 @@ The following patterns are not considered problems:
 /**
  * @yields {SomeType} Has a description
  */
+
+/**
+ * @yields
+ *  The results.
+ */
+export function *test1(): IterableIterator<string> { yield "hello"; }
 ````
 
