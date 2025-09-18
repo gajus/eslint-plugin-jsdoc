@@ -144,7 +144,7 @@ export default iterateJsdoc(({
   contextDefaults: true,
   meta: {
     docs: {
-      description: 'Requires that returns are documented.',
+      description: 'Requires that returns are documented with `@returns`.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-returns.md#repos-sticky-header',
     },
     fixable: 'code',

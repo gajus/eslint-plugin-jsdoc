@@ -5,8 +5,8 @@
 > **NOTE**: This rule only works in ESLint 7. For ESLint 9, please see our
 > [processors](../processors.md) section.
 
-Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules. Also
-has options to lint the default values of optional `@param`/`@arg`/`@argument`
+Ensures that (JavaScript) samples within `@example` tags adhere to ESLint rules.
+Also has options to lint the default values of optional `@param`/`@arg`/`@argument`
 and `@property`/`@prop` tags or the values of `@default`/`@defaultvalue` tags.
 
 ## Options

@@ -59,7 +59,6 @@ export const buildForbidRuleDefinition = ({
         description: description ?? contextName ?? 'Reports when certain comment structures are present.',
         url: url ?? 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/advanced.md#user-content-advanced-creating-your-own-rules',
       },
-      fixable: 'code',
       schema: [],
       type: 'suggestion',
     },

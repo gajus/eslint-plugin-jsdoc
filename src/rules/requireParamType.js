@@ -44,7 +44,7 @@ export default iterateJsdoc(({
   contextDefaults: true,
   meta: {
     docs: {
-      description: 'Requires that each `@param` tag has a `type` value.',
+      description: 'Requires that each `@param` tag has a type value (in curly brackets).',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-param-type.md#repos-sticky-header',
     },
     fixable: 'code',

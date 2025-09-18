@@ -99,7 +99,7 @@ export default iterateJsdoc(({
   contextDefaults: true,
   meta: {
     docs: {
-      description: 'Requires that all functions have a description.',
+      description: 'Requires that all functions (and potentially other contexts) have a description.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-description.md#repos-sticky-header',
     },
     schema: [

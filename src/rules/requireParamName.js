@@ -17,7 +17,7 @@ export default iterateJsdoc(({
   contextDefaults: true,
   meta: {
     docs: {
-      description: 'Requires that all function parameters have names.',
+      description: 'Requires that all `@param` tags have names.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-param-name.md#repos-sticky-header',
     },
     schema: [

@@ -13,7 +13,7 @@ export default iterateJsdoc(({
   contextDefaults: true,
   meta: {
     docs: {
-      description: 'Requires that `@returns` tag has `type` value.',
+      description: 'Requires that `@returns` tag has type value (in curly brackets).',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-returns-type.md#repos-sticky-header',
     },
     schema: [

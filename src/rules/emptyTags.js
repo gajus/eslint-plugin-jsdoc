@@ -75,7 +75,7 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     docs: {
-      description: 'Expects specific tags to be empty of any content.',
+      description: 'Checks tags that are expected to be empty (e.g., `@abstract` or `@async`), reporting if they have content',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/empty-tags.md#repos-sticky-header',
     },
     fixable: 'code',
