@@ -21,7 +21,7 @@ export default iterateJsdoc(({
   contextDefaults: true,
   meta: {
     docs: {
-      description: 'Requires that the `@returns` tag has a `description` value.',
+      description: 'Requires that the `@returns` tag has a `description` value (not including `void`/`undefined` type returns).',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-returns-description.md#repos-sticky-header',
     },
     schema: [

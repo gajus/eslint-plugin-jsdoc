@@ -869,7 +869,7 @@ export default {
   meta: {
     docs: {
       category: 'Stylistic Issues',
-      description: 'Require JSDoc comments',
+      description: 'Checks for presence of JSDoc comments, on functions and potentially other contexts (optionally limited to exports).',
       recommended: true,
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-jsdoc.md#repos-sticky-header',
     },

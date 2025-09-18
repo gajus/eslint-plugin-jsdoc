@@ -151,6 +151,14 @@ const generateDocs = async () => {
   /** @type {import('json-schema').JSONSchema4[][]} */
   const schemas = [];
 
+  /**
+   * @type {{
+   *   decamelized: string,
+   *   row: string
+   * }[]}
+   */
+  const tableRows = [];
+
   const docContents = await Promise.all([
     ...assertionNames.map((assertionName) => {
       const decamelized = decamelize(assertionName, {
@@ -160,6 +168,35 @@ const generateDocs = async () => {
         /** @type {import('json-schema').JSONSchema4[]} */
         (plugin.rules?.[decamelized].meta?.schema),
       );
+      const ruleDescription = plugin.rules?.[decamelized]?.meta?.docs?.description;
+      if (!ruleDescription) {
+        throw new Error(`Rule ${assertionName} missing description`);
+      }
+
+      const fixable = plugin.rules?.[decamelized]?.meta?.fixable ?? null;
+
+      const recommended = plugin.configs['flat/recommended'].rules?.['jsdoc/' + decamelized] !== 'off';
+      const tsRecommended = plugin.configs['flat/recommended-typescript'].rules?.['jsdoc/' + decamelized] !== 'off';
+      const tsRecommendedFlavor = plugin.configs['flat/recommended-typescript-flavor'].rules?.['jsdoc/' + decamelized] !== 'off';
+
+      tableRows.push({
+        decamelized,
+        row: `|${
+          recommended ?
+            (tsRecommended && tsRecommendedFlavor ?
+              ':heavy_check_mark:' :
+              ':heavy_check_mark: (' + (tsRecommended ? 'On in TS' : 'Off in TS') +
+                '; ' +
+                (tsRecommendedFlavor ? 'On in TS flavor' : 'Off in TS flavor') +
+                ')'
+            ) :
+            (tsRecommended || tsRecommendedFlavor ?
+              (tsRecommended ? 'On in TS' : 'Off in TS') +
+                '; ' +
+                (tsRecommendedFlavor ? 'On in TS flavor' : 'Off in TS flavor') :
+              '')
+        }|${fixable ? ':wrench:' : ''}| [${decamelized}](./docs/rules/${decamelized}.md#readme) | ${ruleDescription} |`,
+      });
 
       return path.join(
         dirname, '..', '..', '.README', 'rules', decamelized + '.md',
@@ -173,6 +210,22 @@ const generateDocs = async () => {
       gitinfo: {
         defaultBranchName: getSomeBranch() || 'master',
         gitPath: path.join(dirname, '../../.git'),
+      },
+    });
+
+    gitdown.registerHelper('rulestable', {
+      compile () {
+        return tableRows.toSorted(({
+          decamelized,
+        }, {
+          decamelized: dc,
+        }) => {
+          return decamelized < dc ? -1 : (decamelized > dc ? 1 : 0);
+        }).map(({
+          row,
+        }) => {
+          return row;
+        }).join('\n');
       },
     });
 

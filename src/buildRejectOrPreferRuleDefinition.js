@@ -111,7 +111,7 @@ const infoUC = {
 export const buildRejectOrPreferRuleDefinition = ({
   checkNativeTypes = null,
   typeName,
-  description = typeName ?? 'Reports invalid types.',
+  description = typeName ?? 'Reports types deemed invalid (customizable and with defaults, for preventing and/or recommending replacements).',
   overrideSettings = null,
   schema = [],
   url = 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-types.md#repos-sticky-header',
@@ -463,7 +463,17 @@ export const buildRejectOrPreferRuleDefinition = ({
           description,
           url,
         },
-        fixable: 'code',
+        ...(!overrideSettings || (Object.values(overrideSettings).some((os) => {
+          return os && typeof os === 'object' ?
+            /* c8 ignore next -- Ok */
+            os.replacement :
+            typeof os === 'string';
+        })) ?
+          {
+            fixable: 'code',
+          } :
+          {}
+        ),
         schema,
         type: 'suggestion',
       },

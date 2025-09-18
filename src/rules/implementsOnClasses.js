@@ -26,7 +26,7 @@ export default iterateJsdoc(({
   contextDefaults: true,
   meta: {
     docs: {
-      description: 'Reports an issue with any non-constructor function using `@implements`.',
+      description: 'Prohibits use of `@implements` on non-constructor functions (to enforce the tag only being used on classes/constructors).',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/implements-on-classes.md#repos-sticky-header',
     },
     schema: [

@@ -186,7 +186,7 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     docs: {
-      description: 'Requires template tags for each generic type parameter',
+      description: 'Requires `@template` tags be present when type parameters are used.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-template.md#repos-sticky-header',
     },
     schema: [

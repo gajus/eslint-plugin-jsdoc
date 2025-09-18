@@ -517,7 +517,7 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     docs: {
-      description: 'Checks that types in JSDoc comments are defined.',
+      description: 'Besides some expected built-in types, prohibits any types not specified as globals or within `@typedef`.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-undefined-types.md#repos-sticky-header',
     },
     schema: [

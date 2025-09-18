@@ -53,7 +53,7 @@ export default iterateJsdoc(({
   contextDefaults: true,
   meta: {
     docs: {
-      description: 'Requires that all functions have examples.',
+      description: 'Requires that all functions (and potentially other contexts) have examples.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-example.md#repos-sticky-header',
     },
     fixable: 'code',

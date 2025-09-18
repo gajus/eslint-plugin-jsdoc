@@ -15,7 +15,7 @@ export interface Rules {
         }
       ];
 
-  /** Ensures that (JavaScript) examples within JSDoc adhere to ESLint rules. */
+  /** Ensures that (JavaScript) samples within `@example` tags adhere to ESLint rules. */
   "jsdoc/check-examples": 
     | []
     | [
@@ -128,7 +128,7 @@ export interface Rules {
         }
       ];
 
-  /** Ensures that parameter names in JSDoc match those in the function declaration. */
+  /** Checks for dupe `@param` names, that nested param names have roots, and that parameter names in function declarations match JSDoc param names. */
   "jsdoc/check-param-names": 
     | []
     | [
@@ -335,7 +335,7 @@ export interface Rules {
   /** Checks that any `@template` names are actually used in the connected `@typedef` or type alias. */
   "jsdoc/check-template-names": [];
 
-  /** Reports invalid types. */
+  /** Reports types deemed invalid (customizable and with defaults, for preventing and/or recommending replacements). */
   "jsdoc/check-types": 
     | []
     | [
@@ -506,7 +506,7 @@ export interface Rules {
         }
       ];
 
-  /** Expects specific tags to be empty of any content. */
+  /** Checks tags that are expected to be empty (e.g., `@abstract` or `@async`), reporting if they have content */
   "jsdoc/empty-tags": 
     | []
     | [
@@ -526,7 +526,7 @@ export interface Rules {
         }
       ];
 
-  /** Reports an issue with any non-constructor function using `@implements`. */
+  /** Prohibits use of `@implements` on non-constructor functions (to enforce the tag only being used on classes/constructors). */
   "jsdoc/implements-on-classes": 
     | []
     | [
@@ -1037,7 +1037,7 @@ export interface Rules {
         }
       ];
 
-  /** Detects and removes extra lines of a blank block description */
+  /** If tags are present, this rule will prevent empty lines in the block description. If no tags are present, this rule will prevent extra empty lines in the block description. */
   "jsdoc/no-blank-block-descriptions": [];
 
   /** Removes empty blocks with nothing but possibly line breaks */
@@ -1212,7 +1212,7 @@ export interface Rules {
         }
       ];
 
-  /** This rule reports types being used on `@param` or `@returns`. */
+  /** This rule reports types being used on `@param` or `@returns` (redundant with TypeScript). */
   "jsdoc/no-types": 
     | []
     | [
@@ -1245,7 +1245,7 @@ export interface Rules {
         }
       ];
 
-  /** Checks that types in JSDoc comments are defined. */
+  /** Besides some expected built-in types, prohibits any types not specified as globals or within `@typedef`. */
   "jsdoc/no-undefined-types": 
     | []
     | [
@@ -1323,7 +1323,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires that all functions have a description. */
+  /** Requires that all functions (and potentially other contexts) have a description. */
   "jsdoc/require-description": 
     | []
     | [
@@ -1428,7 +1428,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires that all functions have examples. */
+  /** Requires that all functions (and potentially other contexts) have examples. */
   "jsdoc/require-example": 
     | []
     | [
@@ -1570,7 +1570,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires a hyphen before the `@param` description. */
+  /** Requires a hyphen before the `@param` description (and optionally before `@property` descriptions). */
   "jsdoc/require-hyphen-before-param-description": 
     | []
     | ["always" | "never"]
@@ -1599,7 +1599,7 @@ export interface Rules {
         }
       ];
 
-  /** Require JSDoc comments */
+  /** Checks for presence of JSDoc comments, on functions and potentially other contexts (optionally limited to exports). */
   "jsdoc/require-jsdoc": 
     | []
     | [
@@ -1760,7 +1760,7 @@ export interface Rules {
   /** Requires a type for `@next` tags */
   "jsdoc/require-next-type": [];
 
-  /** Requires that all function parameters are documented. */
+  /** Requires that all function parameters are documented with a `@param` tag. */
   "jsdoc/require-param": 
     | []
     | [
@@ -2081,7 +2081,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires that all function parameters have names. */
+  /** Requires that all `@param` tags have names. */
   "jsdoc/require-param-name": 
     | []
     | [
@@ -2113,7 +2113,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires that each `@param` tag has a `type` value. */
+  /** Requires that each `@param` tag has a type value (in curly brackets). */
   "jsdoc/require-param-type": 
     | []
     | [
@@ -2162,13 +2162,13 @@ export interface Rules {
   /** Requires that each `@property` tag has a `description` value. */
   "jsdoc/require-property-description": [];
 
-  /** Requires that all function `@property` tags have names. */
+  /** Requires that all `@property` tags have names. */
   "jsdoc/require-property-name": [];
 
-  /** Requires that each `@property` tag has a `type` value. */
+  /** Requires that each `@property` tag has a type value (in curly brackets). */
   "jsdoc/require-property-type": [];
 
-  /** Requires that returns are documented. */
+  /** Requires that returns are documented with `@returns`. */
   "jsdoc/require-returns": 
     | []
     | [
@@ -2267,7 +2267,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires a return statement in function body if a `@returns` tag is specified in JSDoc comment. */
+  /** Requires a return statement in function body if a `@returns` tag is specified in JSDoc comment(and reports if multiple `@returns` tags are present). */
   "jsdoc/require-returns-check": 
     | []
     | [
@@ -2305,7 +2305,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires that the `@returns` tag has a `description` value. */
+  /** Requires that the `@returns` tag has a `description` value (not including `void`/`undefined` type returns). */
   "jsdoc/require-returns-description": 
     | []
     | [
@@ -2336,7 +2336,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires that `@returns` tag has `type` value. */
+  /** Requires that `@returns` tag has type value (in curly brackets). */
   "jsdoc/require-returns-type": 
     | []
     | [
@@ -2367,7 +2367,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires template tags for each generic type parameter */
+  /** Requires `@template` tags be present when type parameters are used. */
   "jsdoc/require-template": 
     | []
     | [
@@ -2397,7 +2397,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires that throw statements are documented. */
+  /** Requires that throw statements are documented with `@throws` tags. */
   "jsdoc/require-throws": 
     | []
     | [
@@ -2437,7 +2437,7 @@ export interface Rules {
   /** Requires a type for `@throws` tags */
   "jsdoc/require-throws-type": [];
 
-  /** Requires yields are documented. */
+  /** Requires yields are documented with `@yields` tags. */
   "jsdoc/require-yields": 
     | []
     | [
@@ -2521,7 +2521,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires a yield statement in function body if a `@yields` tag is specified in JSDoc comment. */
+  /** Ensures that if a `@yields` is present that a `yield` (or `yield` with a value) is present in the function body (or that if a `@next` is present that there is a yield with a return value present). */
   "jsdoc/require-yields-check": 
     | []
     | [
@@ -2571,7 +2571,7 @@ export interface Rules {
   /** Requires a type for `@yields` tags */
   "jsdoc/require-yields-type": [];
 
-  /** Sorts tags by a specified sequence according to tag name. */
+  /** Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups. */
   "jsdoc/sort-tags": 
     | []
     | [
@@ -2950,7 +2950,7 @@ export interface Rules {
         }
       ];
 
-  /** Requires all types to be valid JSDoc or Closure compiler types without syntax errors. */
+  /** Requires all types/namepaths to be valid JSDoc, Closure compiler, or TypeScript types (configurable in settings). */
   "jsdoc/valid-types": 
     | []
     | [
