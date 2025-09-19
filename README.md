@@ -487,6 +487,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:|| [require-yields-check](./docs/rules/require-yields-check.md#readme) | Ensures that if a `@yields` is present that a `yield` (or `yield` with a value) is present in the function body (or that if a `@next` is present that there is a yield with a return value present). |
 ||| [require-yields-description](./docs/rules/require-yields-description.md#readme) | Requires a description for `@yields` tags |
 |:heavy_check_mark:|| [require-yields-type](./docs/rules/require-yields-type.md#readme) | Requires a type for `@yields` tags |
+||| [required-tags](./docs/rules/required-tags.md#readme) | Requires tags be present, optionally for specific contexts |
 ||:wrench:| [sort-tags](./docs/rules/sort-tags.md#readme) | Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups. |
 |:heavy_check_mark:|:wrench:| [tag-lines](./docs/rules/tag-lines.md#readme) | Enforces lines (or no lines) between tags. |
 ||:wrench:| [text-escaping](./docs/rules/text-escaping.md#readme) | Auto-escape certain characters that are input within block and tag descriptions. |

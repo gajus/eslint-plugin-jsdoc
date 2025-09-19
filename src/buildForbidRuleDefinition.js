@@ -1,14 +1,24 @@
 import iterateJsdoc from './iterateJsdoc.js';
 
 /**
+ * @typedef {(string|{
+ *   comment: string,
+ *   context: string,
+ *   message?: string
+ * })[]} Contexts
+ */
+
+/**
  * @param {{
- *   contexts: (string|{
- *     comment: string,
- *     context: string,
- *     message: string
- *   })[],
+ *   contexts?: Contexts,
  *   description?: string,
- *   contextName?: string
+ *   getContexts?: (
+ *     ctxt: import('eslint').Rule.RuleContext,
+ *     report: import('./iterateJsdoc.js').Report
+ *   ) => Contexts|false,
+ *   contextName?: string,
+ *   modifyContext?: (context: import('eslint').Rule.RuleContext) => import('eslint').Rule.RuleContext,
+ *   schema?: import('eslint').Rule.RuleMetaData['schema']
  *   url?: string,
  * }} cfg
  * @returns {import('@eslint/core').RuleDefinition<
@@ -17,22 +27,35 @@ import iterateJsdoc from './iterateJsdoc.js';
  */
 export const buildForbidRuleDefinition = ({
   contextName,
-  contexts,
+  contexts: cntxts,
   description,
+  getContexts,
+  modifyContext,
+  schema,
   url,
 }) => {
   return iterateJsdoc(({
-    // context,
+    context,
     info: {
       comment,
     },
     report,
     utils,
   }) => {
+    /** @type {Contexts|boolean|undefined} */
+    let contexts = cntxts;
+
+    if (getContexts) {
+      contexts = getContexts(context, report);
+      if (!contexts) {
+        return;
+      }
+    }
+
     const {
       contextStr,
       foundContext,
-    } = utils.findContext(contexts, comment);
+    } = utils.findContext(/** @type {Contexts} */ (contexts), comment);
 
     // We are not on the *particular* matching context/comment, so don't assume
     //   we need reporting
@@ -59,10 +82,10 @@ export const buildForbidRuleDefinition = ({
         description: description ?? contextName ?? 'Reports when certain comment structures are present.',
         url: url ?? 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/advanced.md#user-content-advanced-creating-your-own-rules',
       },
-      schema: [],
+      schema: schema ?? [],
       type: 'suggestion',
     },
-    modifyContext: (context) => {
+    modifyContext: modifyContext ?? (getContexts ? undefined : (context) => {
       // Reproduce context object with our own `contexts`
       const propertyDescriptors = Object.getOwnPropertyDescriptors(context);
       return Object.create(
@@ -73,13 +96,13 @@ export const buildForbidRuleDefinition = ({
             ...propertyDescriptors.options,
             value: [
               {
-                contexts,
+                contexts: cntxts,
               },
             ],
           },
         },
       );
-    },
+    }),
     nonGlobalSettings: true,
   });
 };

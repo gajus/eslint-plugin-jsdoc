@@ -1,59 +1,26 @@
-import iterateJsdoc from '../iterateJsdoc.js';
+import {
+  buildForbidRuleDefinition,
+} from '../buildForbidRuleDefinition.js';
 
-export default iterateJsdoc(({
-  context,
-  info: {
-    comment,
+export default buildForbidRuleDefinition({
+  getContexts (context, report) {
+    if (!context.options.length) {
+      report('Rule `no-restricted-syntax` is missing a `contexts` option.');
+      return false;
+    }
+
+    const {
+      contexts,
+    } = context.options[0];
+
+    return contexts;
   },
-  report,
-  utils,
-}) => {
-  if (!context.options.length) {
-    report('Rule `no-restricted-syntax` is missing a `contexts` option.');
-
-    return;
-  }
-
-  const {
-    contexts,
-  } = context.options[0];
-
-  const {
-    contextStr,
-    foundContext,
-  } = utils.findContext(contexts, comment);
-
-  // We are not on the *particular* matching context/comment, so don't assume
-  //   we need reporting
-  if (!foundContext) {
-    return;
-  }
-
-  const message = /** @type {import('../iterateJsdoc.js').ContextObject} */ (
-    foundContext
-  )?.message ??
-    'Syntax is restricted: {{context}}' +
-      (comment ? ' with {{comment}}' : '');
-
-  report(message, null, null, comment ? {
-    comment,
-    context: contextStr,
-  } : {
-    context: contextStr,
-  });
-}, {
-  contextSelected: true,
-  meta: {
-    docs: {
-      description: 'Reports when certain comment structures are present.',
-      url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-restricted-syntax.md#repos-sticky-header',
-    },
-    schema: [
-      {
-        additionalProperties: false,
-        properties: {
-          contexts: {
-            description: `Set this to an array of strings representing the AST context (or an object with
+  schema: [
+    {
+      additionalProperties: false,
+      properties: {
+        contexts: {
+          description: `Set this to an array of strings representing the AST context (or an object with
 \`context\` and \`comment\` properties) where you wish the rule to be applied.
 
 \`context\` defaults to \`any\` and \`comment\` defaults to no specific comment context.
@@ -70,38 +37,36 @@ aliases \`@func\` or \`@method\`) (including those associated with an \`@interfa
 
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
 section of our Advanced docs for more on the expected format.`,
-            items: {
-              anyOf: [
-                {
-                  type: 'string',
-                },
-                {
-                  additionalProperties: false,
-                  properties: {
-                    comment: {
-                      type: 'string',
-                    },
-                    context: {
-                      type: 'string',
-                    },
-                    message: {
-                      type: 'string',
-                    },
+          items: {
+            anyOf: [
+              {
+                type: 'string',
+              },
+              {
+                additionalProperties: false,
+                properties: {
+                  comment: {
+                    type: 'string',
                   },
-                  type: 'object',
+                  context: {
+                    type: 'string',
+                  },
+                  message: {
+                    type: 'string',
+                  },
                 },
-              ],
-            },
-            type: 'array',
+                type: 'object',
+              },
+            ],
           },
+          type: 'array',
         },
-        required: [
-          'contexts',
-        ],
-        type: 'object',
       },
-    ],
-    type: 'suggestion',
-  },
-  nonGlobalSettings: true,
+      required: [
+        'contexts',
+      ],
+      type: 'object',
+    },
+  ],
+  url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-restricted-syntax.md#repos-sticky-header',
 });
