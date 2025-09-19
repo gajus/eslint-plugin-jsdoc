@@ -267,6 +267,8 @@ export default iterateJsdoc(({
     path: './src/index-cjs.js',
   });
 
+  await import('./buildEntryFileForTS.js');
+
   await import('./generateDocs.js');
 
   /*
