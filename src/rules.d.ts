@@ -1272,6 +1272,26 @@ export interface Rules {
         }
       ];
 
+  /** Prefer `@import` tags to inline `import()` statements. */
+  "jsdoc/prefer-import-tag": 
+    | []
+    | [
+        {
+          /**
+           * Whether or not to enable the fixer to add `@import` tags.
+           */
+          enableFixer?: boolean;
+          /**
+           * Whether to allow `import()` statements within `@typedef`
+           */
+          exemptTypedefs?: boolean;
+          /**
+           * What kind of `@import` to generate when no matching `@typedef` or `@import` is found
+           */
+          outputType?: "named-import" | "namespaced-import";
+        }
+      ];
+
   /** Reports use of `any` or `*` type */
   "jsdoc/reject-any-type": [];
 

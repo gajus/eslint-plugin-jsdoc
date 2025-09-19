@@ -456,6 +456,7 @@ non-default-recommended fixer).
 ||| [no-restricted-syntax](./docs/rules/no-restricted-syntax.md#readme) | Reports when certain comment structures are present. |
 |On in TS; Off in TS flavor|:wrench:| [no-types](./docs/rules/no-types.md#readme) | This rule reports types being used on `@param` or `@returns` (redundant with TypeScript). |
 |:heavy_check_mark: (Off in TS; Off in TS flavor)|| [no-undefined-types](./docs/rules/no-undefined-types.md#readme) | Besides some expected built-in types, prohibits any types not specified as globals or within `@typedef`. |
+||:wrench:| [prefer-import-tag](./docs/rules/prefer-import-tag.md#readme) | Prefer `@import` tags to inline `import()` statements. |
 |:heavy_check_mark:|| [reject-any-type](./docs/rules/reject-any-type.md#readme) | Reports use of `any` or `*` type |
 |:heavy_check_mark:|| [reject-function-type](./docs/rules/reject-function-type.md#readme) | Reports use of `Function` type |
 ||:wrench:| [require-asterisk-prefix](./docs/rules/require-asterisk-prefix.md#readme) | Requires that each JSDoc line starts with an `*`. |

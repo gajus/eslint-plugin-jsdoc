@@ -37,6 +37,7 @@ import noMultiAsterisks from './rules/noMultiAsterisks.js';
 import noRestrictedSyntax from './rules/noRestrictedSyntax.js';
 import noTypes from './rules/noTypes.js';
 import noUndefinedTypes from './rules/noUndefinedTypes.js';
+import preferImportTag from './rules/preferImportTag.js';
 import requireAsteriskPrefix from './rules/requireAsteriskPrefix.js';
 import requireDescription from './rules/requireDescription.js';
 import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence.js';
@@ -111,6 +112,7 @@ index.rules = {
   'no-restricted-syntax': noRestrictedSyntax,
   'no-types': noTypes,
   'no-undefined-types': noUndefinedTypes,
+  'prefer-import-tag': preferImportTag,
   'reject-any-type': buildRejectOrPreferRuleDefinition({
     description: 'Reports use of `any` or `*` type',
     overrideSettings: {
@@ -283,6 +285,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/no-restricted-syntax': 'off',
       'jsdoc/no-types': 'off',
       'jsdoc/no-undefined-types': warnOrError,
+      'jsdoc/prefer-import-tag': 'off',
       'jsdoc/reject-any-type': warnOrError,
       'jsdoc/reject-function-type': warnOrError,
       'jsdoc/require-asterisk-prefix': 'off',
