@@ -117,6 +117,10 @@ export default iterateJsdoc(({
 
   const ruleReadmeTemplate = `# \`${ruleName}\`
 
+## Options
+
+{"gitdown": "options"}
+
 |||
 |---|---|
 |Context|everywhere|
