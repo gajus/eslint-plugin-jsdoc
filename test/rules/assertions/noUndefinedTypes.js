@@ -633,6 +633,24 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /*** @typedef {object} SomeType */
+          /**
+           * @param {SomeType} foo - Bar.
+           */
+          function quux(foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The type \'SomeType\' is undefined.',
+        },
+      ],
+      ignoreReadme: true,
+    },
   ],
   valid: [
     {
@@ -1738,6 +1756,18 @@ export default /** @type {import('../index.js').TestCases} */ ({
          * @param {otherFile.MyType} a
          */
         function f(a) {}
+      `,
+    },
+    {
+      code: `
+      /**@typedef {import('restify').Request} Request */
+      /**@typedef {import('./types').helperError} helperError */
+
+      /**
+       * @param {Request} b
+       * @param {helperError} c
+       */
+      function a (b, c) {}
       `,
     },
   ],
