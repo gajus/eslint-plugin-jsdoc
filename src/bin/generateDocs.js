@@ -169,7 +169,7 @@ const generateDocs = async () => {
         (plugin.rules?.[decamelized].meta?.schema),
       );
       const ruleDescription = plugin.rules?.[decamelized]?.meta?.docs?.description;
-      if (!ruleDescription) {
+      if (ruleDescription === undefined) {
         throw new Error(`Rule ${assertionName} missing description`);
       }
 
