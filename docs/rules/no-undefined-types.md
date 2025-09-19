@@ -1020,5 +1020,14 @@ const otherFile = require('./other-file');
  * @param {otherFile.MyType} a
  */
 function f(a) {}
+
+/**@typedef {import('restify').Request} Request */
+/**@typedef {import('./types').helperError} helperError */
+
+/**
+ * @param {Request} b
+ * @param {helperError} c
+ */
+function a (b, c) {}
 ````
 

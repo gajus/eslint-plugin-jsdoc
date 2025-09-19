@@ -115,7 +115,7 @@ export default iterateJsdoc(({
   const allComments = sourceCode.getAllComments();
   const comments = allComments
     .filter((comment) => {
-      return (/^\*\s/v).test(comment.value);
+      return (/^\*(?!\*)/v).test(comment.value);
     })
     .map((commentNode) => {
       return parseComment(commentNode, '');
