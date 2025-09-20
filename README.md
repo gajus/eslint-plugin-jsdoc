@@ -479,6 +479,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:|| [require-returns-check](./docs/rules/require-returns-check.md#readme) | Requires a return statement in function body if a `@returns` tag is specified in JSDoc comment(and reports if multiple `@returns` tags are present). |
 |:heavy_check_mark:|| [require-returns-description](./docs/rules/require-returns-description.md#readme) | Requires that the `@returns` tag has a `description` value (not including `void`/`undefined` type returns). |
 |:heavy_check_mark: (Off in TS; On in TS flavor)|| [require-returns-type](./docs/rules/require-returns-type.md#readme) | Requires that `@returns` tag has type value (in curly brackets). |
+||| [require-tags](./docs/rules/require-tags.md#readme) | Requires tags be present, optionally for specific contexts |
 ||| [require-template](./docs/rules/require-template.md#readme) | Requires `@template` tags be present when type parameters are used. |
 ||| [require-throws](./docs/rules/require-throws.md#readme) | Requires that throw statements are documented with `@throws` tags. |
 ||| [require-throws-description](./docs/rules/require-throws-description.md#readme) | Requires a description for `@throws` tags |
@@ -487,7 +488,6 @@ non-default-recommended fixer).
 |:heavy_check_mark:|| [require-yields-check](./docs/rules/require-yields-check.md#readme) | Ensures that if a `@yields` is present that a `yield` (or `yield` with a value) is present in the function body (or that if a `@next` is present that there is a yield with a return value present). |
 ||| [require-yields-description](./docs/rules/require-yields-description.md#readme) | Requires a description for `@yields` tags |
 |:heavy_check_mark:|| [require-yields-type](./docs/rules/require-yields-type.md#readme) | Requires a type for `@yields` tags |
-||| [required-tags](./docs/rules/required-tags.md#readme) | Requires tags be present, optionally for specific contexts |
 ||:wrench:| [sort-tags](./docs/rules/sort-tags.md#readme) | Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups. |
 |:heavy_check_mark:|:wrench:| [tag-lines](./docs/rules/tag-lines.md#readme) | Enforces lines (or no lines) between tags. |
 ||:wrench:| [text-escaping](./docs/rules/text-escaping.md#readme) | Auto-escape certain characters that are input within block and tag descriptions. |

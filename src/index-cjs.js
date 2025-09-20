@@ -40,7 +40,6 @@ import noUndefinedTypes from './rules/noUndefinedTypes.js';
 import requireAsteriskPrefix from './rules/requireAsteriskPrefix.js';
 import requireDescription from './rules/requireDescription.js';
 import requireDescriptionCompleteSentence from './rules/requireDescriptionCompleteSentence.js';
-import requiredTags from './rules/requiredTags.js';
 import requireExample from './rules/requireExample.js';
 import requireFileOverview from './rules/requireFileOverview.js';
 import requireHyphenBeforeParamDescription from './rules/requireHyphenBeforeParamDescription.js';
@@ -57,6 +56,7 @@ import requireReturns from './rules/requireReturns.js';
 import requireReturnsCheck from './rules/requireReturnsCheck.js';
 import requireReturnsDescription from './rules/requireReturnsDescription.js';
 import requireReturnsType from './rules/requireReturnsType.js';
+import requireTags from './rules/requireTags.js';
 import requireTemplate from './rules/requireTemplate.js';
 import requireThrows from './rules/requireThrows.js';
 import requireYields from './rules/requireYields.js';
@@ -179,6 +179,7 @@ index.rules = {
   'require-returns-check': requireReturnsCheck,
   'require-returns-description': requireReturnsDescription,
   'require-returns-type': requireReturnsType,
+  'require-tags': requireTags,
   'require-template': requireTemplate,
   'require-throws': requireThrows,
   'require-throws-description': buildForbidRuleDefinition({
@@ -227,7 +228,6 @@ index.rules = {
     description: 'Requires a type for `@yields` tags',
     url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-yields-type.md#repos-sticky-header',
   }),
-  'required-tags': requiredTags,
   'sort-tags': sortTags,
   'tag-lines': tagLines,
   'text-escaping': textEscaping,
@@ -306,6 +306,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/require-returns-check': warnOrError,
       'jsdoc/require-returns-description': warnOrError,
       'jsdoc/require-returns-type': warnOrError,
+      'jsdoc/require-tags': 'off',
       'jsdoc/require-template': 'off',
       'jsdoc/require-throws': 'off',
       'jsdoc/require-throws-description': 'off',
@@ -314,7 +315,6 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/require-yields-check': warnOrError,
       'jsdoc/require-yields-description': 'off',
       'jsdoc/require-yields-type': warnOrError,
-      'jsdoc/required-tags': 'off',
       'jsdoc/sort-tags': 'off',
       'jsdoc/tag-lines': warnOrError,
       'jsdoc/text-escaping': 'off',
