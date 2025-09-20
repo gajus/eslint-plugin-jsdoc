@@ -7,6 +7,7 @@
     * [`applyToEndTag`](#user-content-tag-lines-options-applytoendtag)
     * [`count`](#user-content-tag-lines-options-count)
     * [`endLines`](#user-content-tag-lines-options-endlines)
+    * [`maxBlockLines`](#user-content-tag-lines-options-maxblocklines)
     * [`startLines`](#user-content-tag-lines-options-startlines)
     * [`tags`](#user-content-tag-lines-options-tags)
 * [Context and settings](#user-content-tag-lines-context-and-settings)
@@ -35,7 +36,7 @@ Removes or adds lines between tags or trailing tags.
 
 The first option is a string with the following possible values: "always", "any", "never".
 Defaults to "never". "any" is only useful with `tags` (allowing non-enforcement of lines except
-for particular tags) or with `startLines` or `endLines`. It is also
+for particular tags) or with `startLines`, `endLines`, or `maxBlockLines`. It is also
 necessary if using the linebreak-setting options of the `sort-tags` rule
 so that the two rules won't conflict in both attempting to set lines
 between tags.
@@ -65,6 +66,15 @@ If not set to `null`, will enforce end lines to the given count on the
 final tag only.
 
 Defaults to `0`.
+<a name="user-content-tag-lines-options-maxblocklines"></a>
+<a name="tag-lines-options-maxblocklines"></a>
+### <code>maxBlockLines</code>
+
+If not set to `null`, will enforce a maximum number of lines to the given count anywhere in the block description.
+
+Note that if non-`null`, `maxBlockLines` must be greater than or equal to `startLines`.
+
+Defaults to `null`.
 <a name="user-content-tag-lines-options-startlines"></a>
 <a name="tag-lines-options-startlines"></a>
 ### <code>startLines</code>
@@ -99,7 +109,7 @@ Defaults to empty object.
 |Tags|Any|
 |Recommended|true|
 |Settings|N/A|
-|Options|string ("always", "any", "never") followed by object with `applyToEndTag`, `count`, `endLines`, `startLines`, `tags`|
+|Options|string ("always", "any", "never") followed by object with `applyToEndTag`, `count`, `endLines`, `maxBlockLines`, `startLines`, `tags`|
 
 <a name="user-content-tag-lines-failing-examples"></a>
 <a name="tag-lines-failing-examples"></a>
@@ -291,10 +301,20 @@ The following patterns are considered problems:
 /**
  * Some description
  *
+ *
+ *
+ * @param {string} a
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"startLines":2}]
+// Message: Expected only 2 lines after block description
+
+/**
+ * Some description
+ *
  * @param {string} a
  */
 // "jsdoc/tag-lines": ["error"|"warn", "any",{"startLines":0}]
-// Message: Expected only 0 line after block description
+// Message: Expected only 0 lines after block description
 
 /**
  * Some description
@@ -310,6 +330,68 @@ The following patterns are considered problems:
  */
 // "jsdoc/tag-lines": ["error"|"warn", "any",{"startLines":1}]
 // Message: Expected 1 lines after block description
+
+/**
+ *
+ * Some description
+ *
+ * Abc
+ *
+ *
+ *
+ * Def
+ *
+ * @param {string} a
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":2}]
+// Message: Expected a maximum of 2 lines within block description
+
+/**
+ *
+ * Some description
+ *
+ * Abc
+ *
+ *
+ *
+ * Def
+ *
+ * @param {string} a
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":1}]
+// Message: Expected a maximum of 1 line within block description
+
+/**
+ *
+ * Some description
+ *
+ * Abc
+ *
+ *
+ *
+ * Def
+ *
+ * @param {string} a
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":0}]
+// Message: Expected a maximum of 0 lines within block description
+
+/**
+ *
+ * Some description
+ *
+ * Abc
+ *
+ *
+ * Def
+ *
+ *
+ *
+ *
+ * @param {string} a
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":2,"startLines":5}]
+// Message: If set to a number, `maxBlockLines` must be greater than or equal to `startLines`.
 ````
 
 
@@ -544,5 +626,17 @@ class _Foo {
   }
 }
 // "jsdoc/tag-lines": ["error"|"warn", "any",{"startLines":1}]
+
+/**
+ *
+ * Some description
+ *
+ * Abc
+ *
+ *
+ * Def
+ * @param {string} a
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":2}]
 ````
 

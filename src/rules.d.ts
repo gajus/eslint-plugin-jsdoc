@@ -2826,7 +2826,7 @@ export interface Rules {
         }
       ];
 
-  /** Enforces lines (or no lines) between tags. */
+  /** Enforces lines (or no lines) before, after, or between tags. */
   "jsdoc/tag-lines": 
     | []
     | ["always" | "any" | "never"]
@@ -2853,6 +2853,14 @@ export interface Rules {
            * Defaults to `0`.
            */
           endLines?: number | null;
+          /**
+           * If not set to `null`, will enforce a maximum number of lines to the given count anywhere in the block description.
+           *
+           * Note that if non-`null`, `maxBlockLines` must be greater than or equal to `startLines`.
+           *
+           * Defaults to `null`.
+           */
+          maxBlockLines?: number | null;
           /**
            * If not set to `null`, will enforce end lines to the given count before the
            * first tag only, unless there is only whitespace content, in which case,

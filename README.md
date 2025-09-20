@@ -489,7 +489,7 @@ non-default-recommended fixer).
 ||| [require-yields-description](./docs/rules/require-yields-description.md#readme) | Requires a description for `@yields` tags |
 |:heavy_check_mark:|| [require-yields-type](./docs/rules/require-yields-type.md#readme) | Requires a type for `@yields` tags |
 ||:wrench:| [sort-tags](./docs/rules/sort-tags.md#readme) | Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups. |
-|:heavy_check_mark:|:wrench:| [tag-lines](./docs/rules/tag-lines.md#readme) | Enforces lines (or no lines) between tags. |
+|:heavy_check_mark:|:wrench:| [tag-lines](./docs/rules/tag-lines.md#readme) | Enforces lines (or no lines) before, after, or between tags. |
 ||:wrench:| [text-escaping](./docs/rules/text-escaping.md#readme) | Auto-escape certain characters that are input within block and tag descriptions. |
 ||:wrench:| [type-formatting](./docs/rules/type-formatting.md#readme) | Formats JSDoc type values. |
 |:heavy_check_mark:|| [valid-types](./docs/rules/valid-types.md#readme) | Requires all types/namepaths to be valid JSDoc, Closure compiler, or TypeScript types (configurable in settings). |
