@@ -60,7 +60,7 @@
   "require-yields-check",
   "require-yields-description",
   "require-yields-type",
-  "required-tags",
+  "require-tags",
   "sort-tags",
   "tag-lines",
   "text-escaping",

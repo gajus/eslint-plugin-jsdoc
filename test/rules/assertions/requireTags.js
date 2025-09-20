@@ -79,7 +79,7 @@ export default {
       errors: [
         {
           line: 2,
-          message: 'Rule `required-tags` is missing a `tags` option.',
+          message: 'Rule `require-tags` is missing a `tags` option.',
         },
       ],
     },

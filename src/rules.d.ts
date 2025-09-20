@@ -2370,6 +2370,26 @@ export interface Rules {
         }
       ];
 
+  /** Requires tags be present, optionally for specific contexts */
+  "jsdoc/require-tags": 
+    | []
+    | [
+        {
+          /**
+           * May be an array of either strings or objects with
+           * a string `tag` property and `context` string property.
+           */
+          tags?: (
+            | string
+            | {
+                context?: string;
+                tag?: string;
+                [k: string]: unknown;
+              }
+          )[];
+        }
+      ];
+
   /** Requires `@template` tags be present when type parameters are used. */
   "jsdoc/require-template": 
     | []
@@ -2579,26 +2599,6 @@ export interface Rules {
 
   /** Requires a type for `@yields` tags */
   "jsdoc/require-yields-type": [];
-
-  /** Requires tags be present, optionally for specific contexts */
-  "jsdoc/required-tags": 
-    | []
-    | [
-        {
-          /**
-           * May be an array of either strings or objects with
-           * a string `tag` property and `context` string property.
-           */
-          tags?: (
-            | string
-            | {
-                context?: string;
-                tag?: string;
-                [k: string]: unknown;
-              }
-          )[];
-        }
-      ];
 
   /** Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups. */
   "jsdoc/sort-tags": 

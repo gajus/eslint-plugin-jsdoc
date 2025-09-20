@@ -1,4 +1,4 @@
-# `required-tags`
+# `require-tags`
 
 Requires tags be present, optionally for specific contexts.
 
@@ -16,8 +16,8 @@ Requires tags be present, optionally for specific contexts.
 
 ## Failing examples
 
-<!-- assertions-failing requiredTags -->
+<!-- assertions-failing requireTags -->
 
 ## Passing examples
 
-<!-- assertions-passing requiredTags -->
+<!-- assertions-passing requireTags -->

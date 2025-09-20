@@ -7,7 +7,7 @@ export default buildForbidRuleDefinition({
   getContexts (context, report) {
     // Transformed options to this option in `modifyContext`:
     if (!context.options[0].contexts) {
-      report('Rule `required-tags` is missing a `tags` option.');
+      report('Rule `require-tags` is missing a `tags` option.');
       return false;
     }
 
@@ -81,5 +81,5 @@ a string \`tag\` property and \`context\` string property.`,
       type: 'object',
     },
   ],
-  url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/required-tags.md#repos-sticky-header',
+  url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-tags.md#repos-sticky-header',
 });
