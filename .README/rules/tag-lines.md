@@ -27,7 +27,7 @@ Removes or adds lines between tags or trailing tags.
 |Tags|Any|
 |Recommended|true|
 |Settings|N/A|
-|Options|string ("always", "any", "never") followed by object with `applyToEndTag`, `count`, `endLines`, `startLines`, `tags`|
+|Options|string ("always", "any", "never") followed by object with `applyToEndTag`, `count`, `endLines`, `maxBlockLines`, `startLines`, `tags`|
 
 ## Failing examples
 

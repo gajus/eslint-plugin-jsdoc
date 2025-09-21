@@ -1,5 +1,66 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
+/**
+ * @param {{
+ *   maxBlockLines: null|number,
+ *   startLines: null|number,
+ *   utils: import('../iterateJsdoc.js').Utils
+ * }} cfg
+ */
+const checkMaxBlockLines = ({
+  maxBlockLines,
+  startLines,
+  utils,
+}) => {
+  if (typeof maxBlockLines !== 'number') {
+    return false;
+  }
+
+  if (typeof startLines === 'number' && maxBlockLines < startLines) {
+    utils.reportJSDoc(
+      'If set to a number, `maxBlockLines` must be greater than or equal to `startLines`.',
+    );
+    return true;
+  }
+
+  const {
+    description,
+  } = utils.getDescription();
+  const excessBlockLinesRegex = new RegExp('\n{' + (maxBlockLines + 2) + ',}', 'v');
+  const excessBlockLinesMatch = description.match(excessBlockLinesRegex);
+  const excessBlockLines = excessBlockLinesMatch?.[0]?.length ?? 0;
+  if (excessBlockLinesMatch) {
+    const excessIndexLine = description.slice(0, excessBlockLinesMatch.index).match(/\n/gv)?.length ?? 0;
+    utils.reportJSDoc(
+      `Expected a maximum of ${maxBlockLines} line${maxBlockLines === 1 ? '' : 's'} within block description`,
+      {
+        line: excessIndexLine,
+      },
+      () => {
+        utils.setBlockDescription((info, seedTokens, descLines) => {
+          return [
+            ...descLines.slice(0, excessIndexLine),
+            ...descLines.slice(excessIndexLine + excessBlockLines - 1 - maxBlockLines),
+          ].map((desc) => {
+            return {
+              number: 0,
+              source: '',
+              tokens: seedTokens({
+                ...info,
+                description: desc,
+                postDelimiter: desc.trim() ? ' ' : '',
+              }),
+            };
+          });
+        });
+      },
+    );
+    return true;
+  }
+
+  return false;
+};
+
 export default iterateJsdoc(({
   context,
   jsdoc,
@@ -11,6 +72,7 @@ export default iterateJsdoc(({
       applyToEndTag = true,
       count = 1,
       endLines = 0,
+      maxBlockLines = null,
       startLines = 0,
       tags = {},
     } = {},
@@ -218,6 +280,14 @@ export default iterateJsdoc(({
     return false;
   });
 
+  if (checkMaxBlockLines({
+    maxBlockLines,
+    startLines,
+    utils,
+  })) {
+    return;
+  }
+
   if (typeof startLines === 'number') {
     if (!jsdoc.tags.length) {
       return;
@@ -235,7 +305,7 @@ export default iterateJsdoc(({
     const trailingDiff = (trailingLines ?? 0) - startLines;
     if (trailingDiff > 0) {
       utils.reportJSDoc(
-        `Expected only ${startLines} line after block description`,
+        `Expected only ${startLines} line${startLines === 1 ? '' : 's'} after block description`,
         {
           line: lastDescriptionLine - trailingDiff,
         },
@@ -290,14 +360,14 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     docs: {
-      description: 'Enforces lines (or no lines) between tags.',
+      description: 'Enforces lines (or no lines) before, after, or between tags.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/tag-lines.md#repos-sticky-header',
     },
     fixable: 'code',
     schema: [
       {
         description: `Defaults to "never". "any" is only useful with \`tags\` (allowing non-enforcement of lines except
-for particular tags) or with \`startLines\` or \`endLines\`. It is also
+for particular tags) or with \`startLines\`, \`endLines\`, or \`maxBlockLines\`. It is also
 necessary if using the linebreak-setting options of the \`sort-tags\` rule
 so that the two rules won't conflict in both attempting to set lines
 between tags.`,
@@ -335,6 +405,21 @@ Defaults to 1.`,
 final tag only.
 
 Defaults to \`0\`.`,
+          },
+          maxBlockLines: {
+            anyOf: [
+              {
+                type: 'integer',
+              },
+              {
+                type: 'null',
+              },
+            ],
+            description: `If not set to \`null\`, will enforce a maximum number of lines to the given count anywhere in the block description.
+
+Note that if non-\`null\`, \`maxBlockLines\` must be greater than or equal to \`startLines\`.
+
+Defaults to \`null\`.`,
           },
           startLines: {
             anyOf: [
