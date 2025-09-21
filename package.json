@@ -12,6 +12,7 @@
     "escape-string-regexp": "^4.0.0",
     "espree": "^10.4.0",
     "esquery": "^1.6.0",
+    "html-entities": "^2.6.0",
     "object-deep-merge": "^1.0.5",
     "parse-imports-exports": "^0.2.4",
     "semver": "^7.7.2",

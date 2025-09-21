@@ -10,12 +10,14 @@ import {
 } from '@es-joy/jsdoccomment';
 import * as espree from 'espree';
 import {
+  decode,
+} from 'html-entities';
+import {
   readFileSync,
 } from 'node:fs';
 import {
   join,
 } from 'node:path';
-
 /**
  * @import {
  *   Integer,
@@ -252,7 +254,22 @@ export const getJsdocProcessorPlugin = (options = {}) => {
 
         textsAndFileNames.push({
           filename: file,
-          text: src.replaceAll(/(?<=\*)\\(?=\\*\/)/gv, ''),
+          // See https://github.com/gajus/eslint-plugin-jsdoc/issues/710
+          text: src.replaceAll(/(?<=\*)\\(?=\\*\/)/gv, '').replaceAll(/&([^\s;]+);/gv, (_, code) => {
+            // Dec
+            if ((/^#\d+$/v).test(code)) {
+              return String.fromCodePoint(Number.parseInt(code.slice(1), 10));
+            }
+
+            // Hex
+            if ((/^#x\d+$/v).test(code)) {
+              return String.fromCodePoint(Number.parseInt(code.slice(2), 16));
+            }
+
+            return decode(_, {
+              level: 'html5',
+            });
+          }),
         });
         otherInfo.push({
           codeStartCol,
