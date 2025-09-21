@@ -455,6 +455,7 @@ non-default-recommended fixer).
 ||:wrench:| [no-blank-block-descriptions](./docs/rules/no-blank-block-descriptions.md#readme) | If tags are present, this rule will prevent empty lines in the block description. If no tags are present, this rule will prevent extra empty lines in the block description. |
 ||:wrench:| [no-blank-blocks](./docs/rules/no-blank-blocks.md#readme) | Removes empty blocks with nothing but possibly line breaks |
 |:heavy_check_mark:|:wrench:| [no-defaults](./docs/rules/no-defaults.md#readme) | This rule reports defaults being used on the relevant portion of `@param` or `@default`. |
+||:wrench:| [no-lines-after-blocks](./docs/rules/no-lines-after-blocks.md#readme) | Reports extra lines between functions (and other language structures) and their JSDoc blocks. |
 ||| [no-missing-syntax](./docs/rules/no-missing-syntax.md#readme) | Reports when certain comment structures are always expected. |
 |:heavy_check_mark:|:wrench:| [no-multi-asterisks](./docs/rules/no-multi-asterisks.md#readme) | Prevents use of multiple asterisks at the beginning of lines. |
 ||| [no-restricted-syntax](./docs/rules/no-restricted-syntax.md#readme) | Reports when certain comment structures are present. |

@@ -39,6 +39,7 @@ import noBadBlocks from './rules/noBadBlocks.js';
 import noBlankBlockDescriptions from './rules/noBlankBlockDescriptions.js';
 import noBlankBlocks from './rules/noBlankBlocks.js';
 import noDefaults from './rules/noDefaults.js';
+import noLinesAfterBlocks from './rules/noLinesAfterBlocks.js';
 import noMissingSyntax from './rules/noMissingSyntax.js';
 import noMultiAsterisks from './rules/noMultiAsterisks.js';
 import noRestrictedSyntax from './rules/noRestrictedSyntax.js';
@@ -120,6 +121,7 @@ index.rules = {
   'no-blank-block-descriptions': noBlankBlockDescriptions,
   'no-blank-blocks': noBlankBlocks,
   'no-defaults': noDefaults,
+  'no-lines-after-blocks': noLinesAfterBlocks,
   'no-missing-syntax': noMissingSyntax,
   'no-multi-asterisks': noMultiAsterisks,
   'no-restricted-syntax': noRestrictedSyntax,
@@ -305,6 +307,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/no-blank-block-descriptions': 'off',
       'jsdoc/no-blank-blocks': 'off',
       'jsdoc/no-defaults': warnOrError,
+      'jsdoc/no-lines-after-blocks': 'off',
       'jsdoc/no-missing-syntax': 'off',
       'jsdoc/no-multi-asterisks': warnOrError,
       'jsdoc/no-restricted-syntax': 'off',
