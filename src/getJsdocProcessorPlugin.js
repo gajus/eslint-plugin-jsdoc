@@ -252,7 +252,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
 
         textsAndFileNames.push({
           filename: file,
-          text: src,
+          text: src.replaceAll(/(?<=\*)\\(?=\\*\/)/gv, ''),
         });
         otherInfo.push({
           codeStartCol,
