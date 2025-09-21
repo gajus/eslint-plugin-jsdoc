@@ -2668,6 +2668,35 @@ export default /** @type {import('../index.js').TestCases} */ ({
           }
       `,
     },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param baz
+           * @returns {number}
+           */
+          function quux (foo, bar, baz) {
+            return foo + bar + baz;
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "bar" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * @param foo
+           * @param bar
+           * @param baz
+           * @returns {number}
+           */
+          function quux (foo, bar, baz) {
+            return foo + bar + baz;
+          }
+      `,
+    },
   ],
   valid: [
     {
