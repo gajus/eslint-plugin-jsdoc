@@ -651,6 +651,25 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       ignoreReadme: true,
     },
+    {
+      code: `
+        /** @typedef {string} SomeType */
+        /** @typedef {number} AnotherType */
+
+        /** @type {AnotherType} */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'This typedef was not used within the file',
+        },
+      ],
+      options: [
+        {
+          checkUsedTypedefs: true,
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1769,6 +1788,18 @@ export default /** @type {import('../index.js').TestCases} */ ({
        */
       function a (b, c) {}
       `,
+    },
+    {
+      code: `
+        /** @typedef {string} SomeType */
+
+        /** @type {SomeType} */
+      `,
+      options: [
+        {
+          checkUsedTypedefs: true,
+        },
+      ],
     },
   ],
 });

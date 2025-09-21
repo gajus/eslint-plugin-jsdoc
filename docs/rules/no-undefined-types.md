@@ -3,6 +3,7 @@
 # <code>no-undefined-types</code>
 
 * [Options](#user-content-no-undefined-types-options)
+    * [`checkUsedTypedefs`](#user-content-no-undefined-types-options-checkusedtypedefs)
     * [`definedTypes`](#user-content-no-undefined-types-options-definedtypes)
     * [`disableReporting`](#user-content-no-undefined-types-options-disablereporting)
     * [`markVariablesAsUsed`](#user-content-no-undefined-types-options-markvariablesasused)
@@ -60,6 +61,11 @@ array's items will be considered as defined for the purposes of that tag.
 
 A single options object has the following properties.
 
+<a name="user-content-no-undefined-types-options-checkusedtypedefs"></a>
+<a name="no-undefined-types-options-checkusedtypedefs"></a>
+### <code>checkUsedTypedefs</code>
+
+Whether to check typedefs for use within the file
 <a name="user-content-no-undefined-types-options-definedtypes"></a>
 <a name="no-undefined-types-options-definedtypes"></a>
 ### <code>definedTypes</code>
@@ -73,7 +79,7 @@ Defaults to an empty array.
 
 Whether to disable reporting of errors. Defaults to
 `false`. This may be set to `true` in order to take advantage of only
-marking defined variables as used.
+marking defined variables as used or checking used typedefs.
 <a name="user-content-no-undefined-types-options-markvariablesasused"></a>
 <a name="no-undefined-types-options-markvariablesasused"></a>
 ### <code>markVariablesAsUsed</code>
@@ -95,7 +101,7 @@ importing types unless used in code.
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Recommended|true|
-|Options|`definedTypes`, `disableReporting`, `markVariablesAsUsed`|
+|Options|`checkUsedTypedefs`, `definedTypes`, `disableReporting`, `markVariablesAsUsed`|
 |Settings|`preferredTypes`, `mode`, `structuredTags`|
 
 
@@ -368,6 +374,13 @@ class Filler {
   methodThree() {}
 }
 // Message: The type 'Filler.methodTwo' is undefined.
+
+/** @typedef {string} SomeType */
+/** @typedef {number} AnotherType */
+
+/** @type {AnotherType} */
+// "jsdoc/no-undefined-types": ["error"|"warn", {"checkUsedTypedefs":true}]
+// Message: This typedef was not used within the file
 ````
 
 
@@ -1029,5 +1042,10 @@ function f(a) {}
  * @param {helperError} c
  */
 function a (b, c) {}
+
+/** @typedef {string} SomeType */
+
+/** @type {SomeType} */
+// "jsdoc/no-undefined-types": ["error"|"warn", {"checkUsedTypedefs":true}]
 ````
 

@@ -92,6 +92,10 @@ import esquery from 'esquery';
  *   parseClosureTemplateTag: ParseClosureTemplateTag,
  *   getPreferredTagNameObject: GetPreferredTagNameObject,
  *   pathDoesNotBeginWith: import('./jsdocUtils.js').PathDoesNotBeginWith
+ *   isNamepathDefiningTag: IsNamepathX,
+ *   isNamepathReferencingTag: IsNamepathX,
+ *   isNamepathOrUrlReferencingTag: IsNamepathX,
+ *   tagMightHaveNamepath: IsNamepathX,
  * }} BasicUtils
  */
 
@@ -566,7 +570,8 @@ const {
  *   hasNonComment: number,
  *   hasNonCommentBeforeTag: {
  *     [key: string]: boolean|number
- *   }
+ *   },
+ *   foundTypedefValues: string[]
  * }} StateObject
  */
 
@@ -598,6 +603,24 @@ const getBasicUtils = (context, {
 }) => {
   /** @type {BasicUtils} */
   const utils = {};
+
+  for (const method of [
+    'isNamepathDefiningTag',
+    'isNamepathReferencingTag',
+    'isNamepathOrUrlReferencingTag',
+    'tagMightHaveNamepath',
+  ]) {
+    /** @type {IsNamepathX} */
+    utils[
+      /** @type {"isNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNamepath"} */ (
+        method
+      )] = (tagName) => {
+      return jsdocUtils[
+        /** @type {"isNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNamepath"} */
+        (method)
+      ](tagName);
+    };
+  }
 
   /** @type {ReportSettings} */
   utils.reportSettings = (message) => {
@@ -1540,24 +1563,6 @@ const getUtils = (
       return otherResult ? true : {
         otherMode: false,
       };
-    };
-  }
-
-  for (const method of [
-    'isNamepathDefiningTag',
-    'isNamepathReferencingTag',
-    'isNamepathOrUrlReferencingTag',
-    'tagMightHaveNamepath',
-  ]) {
-    /** @type {IsNamepathX} */
-    utils[
-      /** @type {"isNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNamepath"} */ (
-        method
-      )] = (tagName) => {
-      return jsdocUtils[
-        /** @type {"isNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNamepath"} */
-        (method)
-      ](tagName);
     };
   }
 

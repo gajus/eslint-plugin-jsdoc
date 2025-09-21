@@ -59,8 +59,12 @@ export default iterateJsdoc(({
   report,
   settings,
   sourceCode,
+  state,
   utils,
 }) => {
+  /** @type {string[]} */
+  const foundTypedefValues = [];
+
   const {
     scopeManager,
   } = sourceCode;
@@ -73,11 +77,13 @@ export default iterateJsdoc(({
   const
     /**
      * @type {{
+     *   checkUsedTypedefs: boolean
      *   definedTypes: string[],
      *   disableReporting: boolean,
-     *   markVariablesAsUsed: boolean
+     *   markVariablesAsUsed: boolean,
      * }}
      */ {
+      checkUsedTypedefs = false,
       definedTypes = [],
       disableReporting = false,
       markVariablesAsUsed = true,
@@ -128,14 +134,16 @@ export default iterateJsdoc(({
       return commentNode.value.replace(/^\s*globals/v, '').trim().split(/,\s*/v);
     }).concat(Object.keys(context.languageOptions.globals ?? []));
 
-  const typedefDeclarations = comments
+  const typedefs = comments
     .flatMap((doc) => {
       return doc.tags.filter(({
         tag,
       }) => {
         return utils.isNamepathDefiningTag(tag);
       });
-    })
+    });
+
+  const typedefDeclarations = typedefs
     .map((tag) => {
       return tag.name;
     });
@@ -204,9 +212,9 @@ export default iterateJsdoc(({
       return [];
     }
 
-    const jsdoc = parseComment(commentNode, '');
+    const jsdc = parseComment(commentNode, '');
 
-    return jsdoc.tags.filter((tag) => {
+    return jsdc.tags.filter((tag) => {
       return tag.tag === 'template';
     });
   };
@@ -510,10 +518,74 @@ export default iterateJsdoc(({
             context.markVariableAsUsed(val);
           }
         }
+
+        if (checkUsedTypedefs && typedefDeclarations.includes(val)) {
+          foundTypedefValues.push(val);
+        }
       }
     });
   }
+
+  state.foundTypedefValues = foundTypedefValues;
 }, {
+  // We use this method rather than checking at end of handler above because
+  //   in that case, it is invoked too many times and would thus report errors
+  //   too many times.
+  exit ({
+    context,
+    state,
+    utils,
+  }) {
+    const {
+      checkUsedTypedefs = false,
+    } = context.options[0] || {};
+
+    if (!checkUsedTypedefs) {
+      return;
+    }
+
+    const allComments = context.sourceCode.getAllComments();
+    const comments = allComments
+      .filter((comment) => {
+        return (/^\*(?!\*)/v).test(comment.value);
+      })
+      .map((commentNode) => {
+        return {
+          doc: parseComment(commentNode, ''),
+          loc: commentNode.loc,
+        };
+      });
+    const typedefs = comments
+      .flatMap(({
+        doc,
+        loc,
+      }) => {
+        const tags = doc.tags.filter(({
+          tag,
+        }) => {
+          return utils.isNamepathDefiningTag(tag);
+        });
+        if (!tags.length) {
+          return [];
+        }
+
+        return {
+          loc,
+          tags,
+        };
+      });
+
+    for (const typedef of typedefs) {
+      if (
+        !state.foundTypedefValues.includes(typedef.tags[0].name)
+      ) {
+        context.report({
+          loc: /** @type {import('@eslint/core').SourceLocation} */ (typedef.loc),
+          message: 'This typedef was not used within the file',
+        });
+      }
+    }
+  },
   iterateAllJsdocs: true,
   meta: {
     docs: {
@@ -524,6 +596,10 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          checkUsedTypedefs: {
+            description: 'Whether to check typedefs for use within the file',
+            type: 'boolean',
+          },
           definedTypes: {
             description: `This array can be populated to indicate other types which
 are automatically considered as defined (in addition to globals, etc.).
@@ -536,7 +612,7 @@ Defaults to an empty array.`,
           disableReporting: {
             description: `Whether to disable reporting of errors. Defaults to
 \`false\`. This may be set to \`true\` in order to take advantage of only
-marking defined variables as used.`,
+marking defined variables as used or checking used typedefs.`,
             type: 'boolean',
           },
           markVariablesAsUsed: {

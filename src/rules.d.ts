@@ -1251,6 +1251,10 @@ export interface Rules {
     | [
         {
           /**
+           * Whether to check typedefs for use within the file
+           */
+          checkUsedTypedefs?: boolean;
+          /**
            * This array can be populated to indicate other types which
            * are automatically considered as defined (in addition to globals, etc.).
            * Defaults to an empty array.
@@ -1259,7 +1263,7 @@ export interface Rules {
           /**
            * Whether to disable reporting of errors. Defaults to
            * `false`. This may be set to `true` in order to take advantage of only
-           * marking defined variables as used.
+           * marking defined variables as used or checking used typedefs.
            */
           disableReporting?: boolean;
           /**
