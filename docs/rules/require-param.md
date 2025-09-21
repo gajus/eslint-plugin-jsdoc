@@ -1265,6 +1265,16 @@ function quux ({
 }
 // "jsdoc/require-param": ["error"|"warn", {"interfaceExemptsParamsCheck":true}]
 // Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ * @param foo
+ * @param baz
+ * @returns {number}
+ */
+function quux (foo, bar, baz) {
+  return foo + bar + baz;
+}
+// Message: Missing JSDoc @param "bar" declaration.
 ````
 
 
