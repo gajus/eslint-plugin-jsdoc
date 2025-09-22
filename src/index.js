@@ -80,8 +80,15 @@ import validTypes from './rules/validTypes.js';
  * @typedef {"" | "-typescript" | "-typescript-flavor"} ConfigVariants
  * @typedef {"" | "-error"} ErrorLevelVariants
  * @type {import('eslint').ESLint.Plugin & {
- *   configs: Record<`flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`,
- *   import('eslint').Linter.Config> & Record<"examples"|"default-expressions"|"examples-and-default-expressions", import('eslint').Linter.Config[]>
+ *   configs: Record<
+ *       `flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`,
+ *       import('eslint').Linter.Config
+ *     > &
+ *     Record<
+ *       "examples"|"default-expressions"|"examples-and-default-expressions",
+ *       import('eslint').Linter.Config[]
+ *     > &
+ *     Record<"flat/recommended-mixed", import('eslint').Linter.Config[]>
  * }}
  */
 const index = {};
@@ -671,6 +678,21 @@ index.configs['examples-and-default-expressions'] = /** @type {import('eslint').
     };
   }),
 ]);
+
+index.configs['flat/recommended-mixed'] = [
+  {
+    ...index.configs['flat/recommended-typescript-flavor'],
+    files: [
+      '**/*.{js,jsx,cjs,mjs}',
+    ],
+  },
+  {
+    ...index.configs['flat/recommended-typescript'],
+    files: [
+      '**/*.{ts,tsx,cts,mts}',
+    ],
+  },
+];
 
 export default index;
 
