@@ -147,7 +147,8 @@ export const buildRejectOrPreferRuleDefinition = ({
           structuredTags: {},
         } : settings;
 
-      const injectObjectPreferredTypes = !('Object' in preferredTypesOriginal ||
+      const injectObjectPreferredTypes = !overrideSettings &&
+        !('Object' in preferredTypesOriginal ||
         'object' in preferredTypesOriginal ||
         'object.<>' in preferredTypesOriginal ||
         'Object.<>' in preferredTypesOriginal ||
