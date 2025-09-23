@@ -29,6 +29,7 @@
   "no-restricted-syntax",
   "no-types",
   "no-undefined-types",
+  "prefer-import-tag",
   "reject-any-type",
   "reject-function-type",
   "require-asterisk-prefix",

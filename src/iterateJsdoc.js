@@ -116,7 +116,7 @@ import esquery from 'esquery';
  * @callback ReportJSDoc
  * @param {string} msg
  * @param {null|import('comment-parser').Spec|{line: Integer, column?: Integer}} [tag]
- * @param {(() => void)|null} [handler]
+ * @param {((fixer: import('eslint').Rule.RuleFixer) => import('eslint').Rule.Fix|void)|null} [handler]
  * @param {boolean} [specRewire]
  * @param {undefined|{
  *   [key: string]: string
@@ -771,7 +771,8 @@ const getUtils = (
     report(msg, handler ? /** @type {import('eslint').Rule.ReportFixer} */ (
       fixer,
     ) => {
-      handler();
+      const extraFix = handler(fixer);
+
       const replacement = utils.stringify(jsdoc, specRewire);
 
       if (!replacement) {
@@ -780,21 +781,38 @@ const getUtils = (
           0, jsdocNode.range[0],
         ).search(/\n[ \t]*$/v);
         if (lastLineBreakPos > -1) {
-          return fixer.removeRange([
-            lastLineBreakPos, jsdocNode.range[1],
-          ]);
+          return [
+            fixer.removeRange([
+              lastLineBreakPos, jsdocNode.range[1],
+            ]),
+            /* c8 ignore next 2 -- Guard */
+            ...(extraFix ? [
+              extraFix,
+            ] : []),
+          ];
         }
 
-        return fixer.removeRange(
-          (/\s/v).test(text.charAt(jsdocNode.range[1])) ?
-            [
-              jsdocNode.range[0], jsdocNode.range[1] + 1,
-            ] :
-            jsdocNode.range,
-        );
+        return [
+          fixer.removeRange(
+            (/\s/v).test(text.charAt(jsdocNode.range[1])) ?
+              [
+                jsdocNode.range[0], jsdocNode.range[1] + 1,
+              ] :
+              jsdocNode.range,
+          ),
+          /* c8 ignore next 2 -- Guard */
+          ...(extraFix ? [
+            extraFix,
+          ] : []),
+        ];
       }
 
-      return fixer.replaceText(jsdocNode, replacement);
+      return [
+        fixer.replaceText(jsdocNode, replacement),
+        ...(extraFix ? [
+          extraFix,
+        ] : []),
+      ];
     } : null, tag, data);
   };
 
