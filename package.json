@@ -151,7 +151,7 @@
     "url": "https://github.com/gajus/eslint-plugin-jsdoc/issues"
   },
   "run-if-changed": {
-    "package-lock.json": "pnpm run install-offline"
+    "pnpm-lock.yaml": "pnpm run install-offline"
   },
   "pnpm": {
     "overrides": {
