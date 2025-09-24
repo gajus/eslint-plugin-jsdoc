@@ -169,7 +169,7 @@
     "create-docs": "pnpm run create-options && node ./src/bin/generateDocs.js && pnpm ruleTypes",
     "create-rule": "node ./src/bin/generateRule.js",
     "create-options": "node ./src/bin/generateOptions.js",
-    "install-offline": "pnpm install --prefer-offline --no-audit",
+    "install-offline": "pnpm install --prefer-offline",
     "lint": "eslint",
     "lint-fix": "eslint --fix",
     "prepare": "husky",
