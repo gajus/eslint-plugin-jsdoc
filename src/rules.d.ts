@@ -2444,6 +2444,9 @@ export interface Rules {
         }
       ];
 
+  /** Requires a description for `@template` tags */
+  "jsdoc/require-template-description": [];
+
   /** Requires that throw statements are documented with `@throws` tags. */
   "jsdoc/require-throws": 
     | []

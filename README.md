@@ -483,6 +483,7 @@ non-default-recommended fixer).
 |:heavy_check_mark: (Off in TS; On in TS flavor)|| [require-returns-type](./docs/rules/require-returns-type.md#readme) | Requires that `@returns` tag has type value (in curly brackets). |
 ||| [require-tags](./docs/rules/require-tags.md#readme) | Requires tags be present, optionally for specific contexts |
 ||| [require-template](./docs/rules/require-template.md#readme) | Requires `@template` tags be present when type parameters are used. |
+||| [require-template-description](./docs/rules/require-template-description.md#readme) | Requires a description for `@template` tags |
 ||| [require-throws](./docs/rules/require-throws.md#readme) | Requires that throw statements are documented with `@throws` tags. |
 ||| [require-throws-description](./docs/rules/require-throws-description.md#readme) | Requires a description for `@throws` tags |
 |:heavy_check_mark:|| [require-throws-type](./docs/rules/require-throws-type.md#readme) | Requires a type for `@throws` tags |
