@@ -83,7 +83,6 @@ const getLinesCols = (text) => {
 /**
  * @typedef {number} Integer
  */
-
 /**
  * @typedef {object} JsdocProcessorOptions
  * @property {boolean} [captionRequired] Require captions for example tags
@@ -110,6 +109,13 @@ const getLinesCols = (text) => {
  * @returns {ESLint.Plugin}
  */
 export const getJsdocProcessorPlugin = (options = {}) => {
+  /**
+   * @typedef {{
+   *   text: string,
+   *   filename: string|null|undefined
+   * }} TextAndFileName
+   */
+
   const {
     allowedLanguagesToProcess = [
       'js', 'ts', 'javascript', 'typescript',
@@ -169,10 +175,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
    */
   const getTextsAndFileNames = (jsdoc, jsFileName, commentLineCols) => {
     /**
-     * @type {{
-     *   text: string,
-     *   filename: string|null|undefined
-     * }[]}
+     * @type {TextAndFileName[]}
      */
     const textsAndFileNames = [];
 
@@ -666,6 +669,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
                 );
               }).filter(
                 /**
+                 * @param {TextAndFileName} file
                  * @returns {file is Linter.ProcessorFile}
                  */
                 (file) => {

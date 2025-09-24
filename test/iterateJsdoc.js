@@ -7,9 +7,11 @@ import {
   expect,
 } from 'chai';
 
+/* eslint-disable jsdoc/reject-any-type -- Deliberate error */
 /**
  * @typedef {any} BadArgument
  */
+/* eslint-enable jsdoc/reject-any-type -- Deliberate error */
 
 describe('iterateJsdoc', () => {
   describe('constructor', () => {
