@@ -58,7 +58,7 @@ array's items will be considered as defined for the purposes of that tag.
 |Aliases|`constructor`, `const`, `extends`, `var`, `arg`, `argument`, `prop`, `return`, `exception`, `yield`|
 |Closure-only|`package`, `private`, `protected`, `public`, `static`|
 |Recommended|true|
-|Options|`definedTypes`, `disableReporting`, `markVariablesAsUsed`|
+|Options|`checkUsedTypedefs`, `definedTypes`, `disableReporting`, `markVariablesAsUsed`|
 |Settings|`preferredTypes`, `mode`, `structuredTags`|
 
 
