@@ -4,9 +4,9 @@ import {
 import {
   recommended as canonical,
 } from 'eslint-config-canonical/canonical';
-import {
-  recommended as canonicalJsdoc,
-} from 'eslint-config-canonical/jsdoc';
+// import {
+//   recommended as canonicalJsdoc,
+// } from 'eslint-config-canonical/jsdoc';
 import globals from 'globals';
 
 const common = {
@@ -18,7 +18,10 @@ const common = {
 
 export default [
   ...canonical,
-  ...canonicalJsdoc,
+  // ...canonicalJsdoc,
+  jsdoc({
+    config: 'flat/recommended',
+  }),
   ...jsdoc({
     config: 'examples-and-default-expressions',
   }),
@@ -43,6 +46,9 @@ export default [
       'filenames/match-regex': 0,
       'import/extensions': 0,
       'import/no-useless-path-segments': 0,
+      'jsdoc/require-param-description': 0,
+      'jsdoc/require-returns': 0,
+      'jsdoc/require-returns-description': 0,
       'linebreak-style': 0,
       'no-inline-comments': 0,
       'prefer-named-capture-group': 0,

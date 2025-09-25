@@ -10,12 +10,14 @@ import {
 } from '@es-joy/jsdoccomment';
 import * as espree from 'espree';
 import {
+  decode,
+} from 'html-entities';
+import {
   readFileSync,
 } from 'node:fs';
 import {
   join,
 } from 'node:path';
-
 /**
  * @import {
  *   Integer,
@@ -81,7 +83,6 @@ const getLinesCols = (text) => {
 /**
  * @typedef {number} Integer
  */
-
 /**
  * @typedef {object} JsdocProcessorOptions
  * @property {boolean} [captionRequired] Require captions for example tags
@@ -108,6 +109,13 @@ const getLinesCols = (text) => {
  * @returns {ESLint.Plugin}
  */
 export const getJsdocProcessorPlugin = (options = {}) => {
+  /**
+   * @typedef {{
+   *   text: string,
+   *   filename: string|null|undefined
+   * }} TextAndFileName
+   */
+
   const {
     allowedLanguagesToProcess = [
       'js', 'ts', 'javascript', 'typescript',
@@ -167,10 +175,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
    */
   const getTextsAndFileNames = (jsdoc, jsFileName, commentLineCols) => {
     /**
-     * @type {{
-     *   text: string,
-     *   filename: string|null|undefined
-     * }[]}
+     * @type {TextAndFileName[]}
      */
     const textsAndFileNames = [];
 
@@ -252,7 +257,22 @@ export const getJsdocProcessorPlugin = (options = {}) => {
 
         textsAndFileNames.push({
           filename: file,
-          text: src,
+          // See https://github.com/gajus/eslint-plugin-jsdoc/issues/710
+          text: src.replaceAll(/(?<=\*)\\(?=\\*\/)/gv, '').replaceAll(/&([^\s;]+);/gv, (_, code) => {
+            // Dec
+            if ((/^#\d+$/v).test(code)) {
+              return String.fromCodePoint(Number.parseInt(code.slice(1), 10));
+            }
+
+            // Hex
+            if ((/^#x\d+$/v).test(code)) {
+              return String.fromCodePoint(Number.parseInt(code.slice(2), 16));
+            }
+
+            return decode(_, {
+              level: 'html5',
+            });
+          }),
         });
         otherInfo.push({
           codeStartCol,
@@ -649,6 +669,7 @@ export const getJsdocProcessorPlugin = (options = {}) => {
                 );
               }).filter(
                 /**
+                 * @param {TextAndFileName} file
                  * @returns {file is Linter.ProcessorFile}
                  */
                 (file) => {

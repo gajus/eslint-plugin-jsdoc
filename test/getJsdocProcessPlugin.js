@@ -224,6 +224,52 @@ describe('`getJsdocProcessorPlugin`', () => {
     });
   });
 
+  it('returns text and files (with escaped */)', () => {
+    const filename = 'something.js';
+    const text = `
+    /**
+     * @example
+     * doSth('a'); /* Ok *\\/
+     */
+    function doSth () {}
+    `;
+
+    check({
+      filename,
+      result: [
+        text,
+        {
+          filename: 'something.md/*.js',
+          text: '\ndoSth(\'a\'); /* Ok */',
+        },
+      ],
+      text,
+    });
+  });
+
+  it('returns text and files (with escaped &#1234; and &#x5678;)', () => {
+    const filename = 'something.js';
+    const text = `
+    /**
+     * @example
+     * doSth('&#1234; and &#x5678; and &amp; and &copy;');
+     */
+    function doSth () {}
+    `;
+
+    check({
+      filename,
+      result: [
+        text,
+        {
+          filename: 'something.md/*.js',
+          text: '\ndoSth(\'Ӓ and 噸 and & and ©\');',
+        },
+      ],
+      text,
+    });
+  });
+
   it('returns text and files (no asterisk example)', () => {
     const options = {
       exampleCodeRegex: '```js([\\s\\S]*)```',

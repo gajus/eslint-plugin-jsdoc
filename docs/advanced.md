@@ -82,6 +82,10 @@ providing some of your JavaScript to the wonderful
 [AST Explorer](https://astexplorer.net/) tool and see what AST is built out
 of your code. You can set the tool to the specific parser which you are using.
 
+For comment AST, see the [@es-joy/jsdoccomment demo](https://es-joy.github.io/jsdoccomment/demo/)
+or if you are only interested in type AST, see the
+[jsdoc-type-pratt-parser demo](https://jsdoc-type-pratt-parser.github.io/jsdoc-type-pratt-parser/).
+
 <a name="user-content-advanced-ast-and-selectors-uses-tips-for-ast"></a>
 <a name="advanced-ast-and-selectors-uses-tips-for-ast"></a>
 #### Uses/Tips for AST
