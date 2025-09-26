@@ -2697,6 +2697,53 @@ export default /** @type {import('../index.js').TestCases} */ ({
           }
       `,
     },
+    {
+      code: `
+        /**
+         * @example
+         * \`\`\`ts
+         * app.use(checkResourceOwnership({ entryPoint: 'seller_product' }));
+         * \`\`\`
+         *
+         * @example
+         * \`\`\`ts
+         * app.use(checkResourceOwnership({ entryPoint: 'service_zone' }));
+         * \`\`\`
+         *
+         * @param options - configuration
+         * @param options.entryPoint
+         * @param options.filterField
+         * @param options.paramIdField
+         */
+        export const checkResourceOwnership = ({ entryPoint, filterField, paramIdField, resourceId = () => '' }) => {};
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "options.resourceId" declaration.',
+        },
+      ],
+      output: `
+        /**
+         * @example
+         * \`\`\`ts
+         * app.use(checkResourceOwnership({ entryPoint: 'seller_product' }));
+         * \`\`\`
+         *
+         * @example
+         * \`\`\`ts
+         * app.use(checkResourceOwnership({ entryPoint: 'service_zone' }));
+         * \`\`\`
+         *
+         * @param options - configuration
+         * @param options.entryPoint
+         * @param options.filterField
+         * @param options.paramIdField
+         * @param options.resourceId
+         */
+        export const checkResourceOwnership = ({ entryPoint, filterField, paramIdField, resourceId = () => '' }) => {};
+      `,
+    },
   ],
   valid: [
     {
