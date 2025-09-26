@@ -726,6 +726,99 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @type {import('eslint').anchors[keyof DataMap.anchors]}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `/** @import * as eslint from 'eslint'; */
+        /**
+         * @type {eslint.anchors[keyof DataMap.anchors]}
+         */
+      `,
+    },
+    {
+      code: `
+        /** @typedef {import('eslint').Rule[keyof import('eslint').Rule]} Rule  */
+        /**
+         * @type {import('eslint').Abc.Rule}
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      options: [
+        {
+          exemptTypedefs: true,
+        },
+      ],
+      output: `/** @import * as eslint from 'eslint'; */
+        /** @typedef {import('eslint').Rule[keyof import('eslint').Rule]} Rule  */
+        /**
+         * @type {eslint.Abc.Rule}
+         */
+      `,
+    },
+    {
+      code: `
+        /** @typedef {import('eslint').Rule[keyof import('eslint').Rule]} Rule  */
+        /**
+         * @type {import('eslint').Rule[keyof import('eslint').Rule]}
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Inline `import()` found; using `@typedef`',
+        },
+      ],
+      options: [
+        {
+          exemptTypedefs: true,
+        },
+      ],
+      output: `
+        /** @typedef {import('eslint').Rule[keyof import('eslint').Rule]} Rule  */
+        /**
+         * @type {Rule}
+         */
+      `,
+    },
+    {
+      code: `
+        /** @typedef {import('eslint').Rule} Rule  */
+        /**
+         * @type {import('eslint').Rule[keyof import('eslint').Rule]}
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Inline `import()` found; using `@typedef`',
+        },
+      ],
+      options: [
+        {
+          exemptTypedefs: true,
+        },
+      ],
+      output: `
+        /** @typedef {import('eslint').Rule} Rule  */
+        /**
+         * @type {Rule[keyof import('eslint').Rule]}
+         */
+      `,
+    },
   ],
   valid: [
     {

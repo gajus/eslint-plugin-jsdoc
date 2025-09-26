@@ -266,6 +266,32 @@ The following patterns are considered problems:
  */
 // "jsdoc/prefer-import-tag": ["error"|"warn", {"exemptTypedefs":true}]
 // Message: Inline `import()` found; prefer `@import`
+
+/**
+ * @type {import('eslint').anchors[keyof DataMap.anchors]}
+ */
+// Message: Inline `import()` found; prefer `@import`
+
+/** @typedef {import('eslint').Rule[keyof import('eslint').Rule]} Rule  */
+/**
+ * @type {import('eslint').Abc.Rule}
+ */
+// "jsdoc/prefer-import-tag": ["error"|"warn", {"exemptTypedefs":true}]
+// Message: Inline `import()` found; prefer `@import`
+
+/** @typedef {import('eslint').Rule[keyof import('eslint').Rule]} Rule  */
+/**
+ * @type {import('eslint').Rule[keyof import('eslint').Rule]}
+ */
+// "jsdoc/prefer-import-tag": ["error"|"warn", {"exemptTypedefs":true}]
+// Message: Inline `import()` found; using `@typedef`
+
+/** @typedef {import('eslint').Rule} Rule  */
+/**
+ * @type {import('eslint').Rule[keyof import('eslint').Rule]}
+ */
+// "jsdoc/prefer-import-tag": ["error"|"warn", {"exemptTypedefs":true}]
+// Message: Inline `import()` found; using `@typedef`
 ````
 
 

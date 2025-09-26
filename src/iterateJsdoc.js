@@ -2284,7 +2284,10 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
       }
 
       if (contexts) {
-        handler = commentHandler(settings);
+        handler = commentHandler({
+          ...settings,
+          mode: settings.mode === 'permissive' ? 'typescript' : settings.mode,
+        });
       }
 
       const state = {};
@@ -2537,7 +2540,10 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         contextObject = jsdocUtils.getContextObject(
           contexts,
           checkJsdoc,
-          commentHandler(settings),
+          commentHandler({
+            ...settings,
+            mode: settings.mode === 'permissive' ? 'typescript' : settings.mode,
+          }),
         );
       } else {
         for (const prop of [

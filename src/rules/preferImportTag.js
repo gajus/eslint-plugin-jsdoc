@@ -117,10 +117,18 @@ export default iterateJsdoc(({
           break;
         }
 
-        pathSegments.unshift(currentNode.right.value);
+        pathSegments.unshift(
+          currentNode.right.type === 'JsdocTypeIndexedAccessIndex' ?
+            stringify(currentNode.right.right) :
+            currentNode.right.value,
+        );
         nodes.unshift(currentNode);
         propertyOrBrackets.unshift(currentNode.pathType);
-        quotes.unshift(currentNode.right.meta.quote);
+        quotes.unshift(
+          currentNode.right.type === 'JsdocTypeIndexedAccessIndex' ?
+            undefined :
+            currentNode.right.meta.quote,
+        );
       }
 
       /**
@@ -218,7 +226,12 @@ export default iterateJsdoc(({
               break;
             }
 
-            if (typedefNode.right.value !== pathSegment) {
+            if (
+              (typedefNode.right.type === 'JsdocTypeIndexedAccessIndex' &&
+                stringify(typedefNode.right.right) !== pathSegment) ||
+              (typedefNode.right.type !== 'JsdocTypeIndexedAccessIndex' &&
+                typedefNode.right.value !== pathSegment)
+            ) {
               if (namepathMatch === true) {
                 // It stopped matching, so stop
                 break;

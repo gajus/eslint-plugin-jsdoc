@@ -40,6 +40,35 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
+          message: 'Syntax is restricted: FunctionDeclaration',
+        },
+      ],
+      ignoreReadme: true,
+      options: [
+        {
+          contexts: [
+            'FunctionDeclaration',
+          ],
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       *
+       */
+      function quux () {
+
+      }
+      `,
+      errors: [
+        {
+          line: 2,
           message: 'Oops: `FunctionDeclaration`.',
         },
       ],
@@ -779,6 +808,32 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * @param ab
+         * @param cd
+         */
+        function a () {}
+      `,
+      ignoreReadme: true,
+      options: [
+        {
+          contexts: [
+            {
+              comment: 'JsdocBlock:has(JsdocTag[name=/opt_/])',
+              context: 'any',
+              message: 'Only allowing names not matching `/^opt_/i`.',
+            },
+          ],
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+        },
+      },
     },
     {
       code: `
