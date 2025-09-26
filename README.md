@@ -154,6 +154,7 @@ The general starting rulesets you can extend from in flat config are:
   - `jsdoc.configs['flat/recommended-typescript-error']`: The same, reporting with failing errors instead of mere warnings
 - `jsdoc.configs['flat/recommended-typescript-flavor']`: A similar recommended starting list, adjusted for projects using JavaScript syntax (source files that are still `.js`) but using TypeScript flavor within JSDoc (i.e., the default "typescript" `mode` in `eslint-plugin-jsdoc`)
   - `jsdoc.configs['flat/recommended-typescript-flavor-error']`: The same, reporting with failing errors instead of mere warnings
+- `jsdoc.configs['flat/recommended-mixed']`: A combination of `flat/recommended-typescript-flavor` and `flat/recommended-typescript` with automatic assignment of subconfig based on file extension (`**/*.{js,jsx,cjs,mjs}` and `**/*.{ts,tsx,cts,mts}`, respectively)
 
 <a name="user-content-eslint-plugin-jsdoc-configuration-flat-config-declarative-granular-flat-configs"></a>
 <a name="eslint-plugin-jsdoc-configuration-flat-config-declarative-granular-flat-configs"></a>
