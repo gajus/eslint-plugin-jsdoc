@@ -68,7 +68,6 @@ import textEscaping from './rules/textEscaping.js';
 import typeFormatting from './rules/typeFormatting.js';
 import validTypes from './rules/validTypes.js';
 
-/* eslint-disable jsdoc/valid-types -- Bug */
 /**
  * @typedef {"recommended" | "stylistic" | "contents" | "logical" | "requirements"} ConfigGroups
  * @typedef {"" | "-typescript" | "-typescript-flavor"} ConfigVariants
@@ -86,7 +85,6 @@ import validTypes from './rules/validTypes.js';
  * }}
  */
 const index = {};
-/* eslint-enable jsdoc/valid-types -- Bug */
 index.configs = {};
 index.rules = {
   'check-access': checkAccess,
