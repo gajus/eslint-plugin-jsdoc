@@ -262,6 +262,12 @@ export interface Rules {
            */
           enableFixer?: boolean;
           /**
+           * List of tags to allow inline.
+           *
+           * Defaults to array of `'link', 'linkcode', 'linkplain', 'tutorial'`
+           */
+          inlineTags?: string[];
+          /**
            * If this is set to `true`, all of the following tags used to control JSX output are allowed:
            *
            * ```
