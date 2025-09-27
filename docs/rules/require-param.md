@@ -1265,6 +1265,35 @@ function quux ({
 }
 // "jsdoc/require-param": ["error"|"warn", {"interfaceExemptsParamsCheck":true}]
 // Message: Missing JSDoc @param "root0" declaration.
+
+/**
+ * @param foo
+ * @param baz
+ * @returns {number}
+ */
+function quux (foo, bar, baz) {
+  return foo + bar + baz;
+}
+// Message: Missing JSDoc @param "bar" declaration.
+
+/**
+ * @example
+ * ```ts
+ * app.use(checkResourceOwnership({ entryPoint: 'seller_product' }));
+ * ```
+ *
+ * @example
+ * ```ts
+ * app.use(checkResourceOwnership({ entryPoint: 'service_zone' }));
+ * ```
+ *
+ * @param options - configuration
+ * @param options.entryPoint
+ * @param options.filterField
+ * @param options.paramIdField
+ */
+export const checkResourceOwnership = ({ entryPoint, filterField, paramIdField, resourceId = () => '' }) => {};
+// Message: Missing JSDoc @param "options.resourceId" declaration.
 ````
 
 

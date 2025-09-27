@@ -175,7 +175,10 @@ export default iterateJsdoc(({
    *   newAdd?: boolean
    * })[]} jsdocTags
    * @param {import('../iterateJsdoc.js').Integer} indexAtFunctionParams
-   * @returns {import('../iterateJsdoc.js').Integer}
+   * @returns {{
+   *   foundIndex: import('../iterateJsdoc.js').Integer,
+   *   tagLineCount: import('../iterateJsdoc.js').Integer,
+   * }}
    */
   const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
     const remainingRoots = functionParameterNames.slice(indexAtFunctionParams || 0);
@@ -225,7 +228,10 @@ export default iterateJsdoc(({
       }
     }
 
-    return tagLineCount;
+    return {
+      foundIndex,
+      tagLineCount,
+    };
   };
 
   let [
@@ -486,8 +492,22 @@ export default iterateJsdoc(({
     if (remove) {
       createTokens(functionParameterIdx, offset + functionParameterIdx, 1);
     } else {
-      const expectedIdx = findExpectedIndex(jsdoc.tags, functionParameterIdx);
-      createTokens(expectedIdx, offset + expectedIdx, 0);
+      const {
+        foundIndex,
+        tagLineCount: expectedIdx,
+      } =
+        findExpectedIndex(jsdoc.tags, functionParameterIdx);
+
+      const firstParamLine = jsdoc.source.findIndex(({
+        tokens,
+      }) => {
+        return tokens.tag === `@${preferredTagName}`;
+      });
+      const baseOffset = foundIndex > -1 || firstParamLine === -1 ?
+        offset :
+        firstParamLine;
+
+      createTokens(expectedIdx, baseOffset + expectedIdx, 0);
     }
   };
 
