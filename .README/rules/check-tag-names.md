@@ -192,6 +192,16 @@ tag to `false`:
 }
 ```
 
+Also checks for unknown inline tags, with the following being permitted by default
+(see the `inlineTags` option):
+
+```
+link
+linkcode
+linkplain
+tutorial
+```
+
 ## Fixer
 
 Auto-removes types that are redundant with the [`typed` option](#typed).
@@ -207,7 +217,7 @@ Auto-removes types that are redundant with the [`typed` option](#typed).
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|true|
-|Options|`definedTags`, `enableFixer`, `jsxTags`, `typed`|
+|Options|`definedTags`, `enableFixer`, `inlineTags`, `jsxTags`, `typed`|
 |Settings|`tagNamePreference`, `mode`|
 
 ## Failing examples

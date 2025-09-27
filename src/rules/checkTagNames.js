@@ -75,11 +75,15 @@ export default iterateJsdoc(({
      * @type {{
      *   definedTags: string[],
      *   enableFixer: boolean,
+     *   inlineTags: string[],
      *   jsxTags: boolean,
      *   typed: boolean
      }} */ {
       definedTags = [],
       enableFixer = true,
+      inlineTags = [
+        'link', 'linkcode', 'linkplain', 'tutorial',
+      ],
       jsxTags,
       typed,
     } = context.options[0] || {};
@@ -278,6 +282,12 @@ export default iterateJsdoc(({
       report(`Invalid JSDoc tag name "${tagName}".`, null, jsdocTag);
     }
   }
+
+  for (const inlineTag of utils.getInlineTags()) {
+    if (!inlineTags.includes(inlineTag.tag)) {
+      report(`Invalid JSDoc inline tag name "${inlineTag.tag}"`, null, inlineTag);
+    }
+  }
 }, {
   iterateAllJsdocs: true,
   meta: {
@@ -307,6 +317,15 @@ The format is as follows:
           enableFixer: {
             description: 'Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#typed).',
             type: 'boolean',
+          },
+          inlineTags: {
+            description: `List of tags to allow inline.
+
+Defaults to array of \`'link', 'linkcode', 'linkplain', 'tutorial'\``,
+            items: {
+              type: 'string',
+            },
+            type: 'array',
           },
           jsxTags: {
             description: `If this is set to \`true\`, all of the following tags used to control JSX output are allowed:
