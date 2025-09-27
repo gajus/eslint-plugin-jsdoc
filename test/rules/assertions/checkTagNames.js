@@ -1029,6 +1029,33 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        /**
+         * An {@inline sth} tag in the description and {@another} with a {@link}.
+         * @param {SomeType} name And an {@inlineTag} inside a tag description.
+         * @param {AnotherType} anotherName And yet {@another}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Invalid JSDoc inline tag name "inline"',
+        },
+        {
+          line: 3,
+          message: 'Invalid JSDoc inline tag name "another"',
+        },
+        {
+          line: 4,
+          message: 'Invalid JSDoc inline tag name "inlineTag"',
+        },
+        {
+          line: 5,
+          message: 'Invalid JSDoc inline tag name "another"',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1450,6 +1477,25 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           typed: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * An {@inline sth} tag in the description and {@another} with a {@link}.
+         * @param {SomeType} name And an {@inlineTag} inside a tag description.
+         * @param {AnotherType} anotherName And yet {@another}
+         */
+      `,
+      options: [
+        {
+          inlineTags: [
+            'inline',
+            'another',
+            'inlineTag',
+            'link',
+          ],
         },
       ],
     },

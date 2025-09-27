@@ -188,6 +188,17 @@ index.rules = {
   'require-returns-type': requireReturnsType,
   'require-tags': requireTags,
   'require-template': requireTemplate,
+  'require-template-description': buildForbidRuleDefinition({
+    contexts: [
+      {
+        comment: 'JsdocBlock:has(JsdocTag[tag=template]:not([description!=""]))',
+        context: 'any',
+        message: '@template should have a description',
+      },
+    ],
+    description: 'Requires a description for `@template` tags',
+    url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-template-description.md#repos-sticky-header',
+  }),
   'require-throws': requireThrows,
   'require-throws-description': buildForbidRuleDefinition({
     contexts: [
@@ -316,6 +327,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/require-returns-type': warnOrError,
       'jsdoc/require-tags': 'off',
       'jsdoc/require-template': 'off',
+      'jsdoc/require-template-description': 'off',
       'jsdoc/require-throws': 'off',
       'jsdoc/require-throws-description': 'off',
       'jsdoc/require-throws-type': warnOrError,

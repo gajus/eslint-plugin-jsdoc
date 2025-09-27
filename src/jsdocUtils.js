@@ -836,14 +836,15 @@ const forEachPreferredTag = (
 };
 
 /**
- * Get all tags, inline tags and inline tags in tags
+ * Get all inline tags and inline tags in tags
  * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
  * @returns {(import('comment-parser').Spec|
- *   import('@es-joy/jsdoccomment').JsdocInlineTagNoType)[]}
+ *   import('@es-joy/jsdoccomment').JsdocInlineTagNoType & {
+ *     line?: number | undefined; column?: number | undefined;
+ *   })[]}
  */
-const getAllTags = (jsdoc) => {
+const getInlineTags = (jsdoc) => {
   return [
-    ...jsdoc.tags,
     ...jsdoc.inlineTags.map((inlineTag) => {
       // Tags don't have source or line numbers, so add before returning
       let line = -1;
@@ -863,18 +864,6 @@ const getAllTags = (jsdoc) => {
       return inlineTag;
     }),
     ...jsdoc.tags.flatMap((tag) => {
-      let tagBegins = -1;
-      for (const {
-        tokens: {
-          tag: tg,
-        },
-      } of jsdoc.source) {
-        tagBegins++;
-        if (tg) {
-          break;
-        }
-      }
-
       for (const inlineTag of tag.inlineTags) {
         /** @type {import('./iterateJsdoc.js').Integer} */
         let line = 0;
@@ -890,7 +879,7 @@ const getAllTags = (jsdoc) => {
           }
         }
 
-        inlineTag.line = tagBegins + line - 1;
+        inlineTag.line = line;
       }
 
       return (
@@ -903,6 +892,21 @@ const getAllTags = (jsdoc) => {
         ).inlineTags
       );
     }),
+  ];
+};
+
+/**
+ * Get all tags, inline tags and inline tags in tags
+ * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
+ * @returns {(import('comment-parser').Spec|
+ *   import('@es-joy/jsdoccomment').JsdocInlineTagNoType & {
+ *     line?: number | undefined; column?: number | undefined;
+ *   })[]}
+ */
+const getAllTags = (jsdoc) => {
+  return [
+    ...jsdoc.tags,
+    ...getInlineTags(jsdoc),
   ];
 };
 
@@ -1853,6 +1857,7 @@ export {
   getContextObject,
   getFunctionParameterNames,
   getIndent,
+  getInlineTags,
   getJsdocTagsDeep,
   getPreferredTagName,
   getPreferredTagNameSimple,

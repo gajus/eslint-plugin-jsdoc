@@ -437,6 +437,14 @@ import esquery from 'esquery';
  */
 
 /**
+ * @callback getInlineTags
+ * @returns {(import('comment-parser').Spec|
+ *   import('@es-joy/jsdoccomment').JsdocInlineTagNoType & {
+ *     line?: number | undefined; column?: number | undefined;
+ *   })[]}
+ */
+
+/**
  * @callback GetTagsByType
  * @param {import('comment-parser').Spec[]} tags
  * @returns {{
@@ -533,6 +541,7 @@ import esquery from 'esquery';
  *   getPresentTags: GetPresentTags,
  *   filterTags: FilterTags,
  *   filterAllTags: FilterAllTags,
+ *   getInlineTags: getInlineTags,
  *   getTagsByType: GetTagsByType,
  *   hasOptionTag: HasOptionTag,
  *   getClassNode: GetClassNode,
@@ -1639,6 +1648,10 @@ const getUtils = (
     return tags.filter((tag) => {
       return filter(tag);
     });
+  };
+
+  utils.getInlineTags = () => {
+    return jsdocUtils.getInlineTags(jsdoc);
   };
 
   /** @type {GetTagsByType} */

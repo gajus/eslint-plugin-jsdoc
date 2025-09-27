@@ -262,6 +262,12 @@ export interface Rules {
            */
           enableFixer?: boolean;
           /**
+           * List of tags to allow inline.
+           *
+           * Defaults to array of `'link', 'linkcode', 'linkplain', 'tutorial'`
+           */
+          inlineTags?: string[];
+          /**
            * If this is set to `true`, all of the following tags used to control JSX output are allowed:
            *
            * ```
@@ -2443,6 +2449,9 @@ export interface Rules {
           requireSeparateTemplates?: boolean;
         }
       ];
+
+  /** Requires a description for `@template` tags */
+  "jsdoc/require-template-description": [];
 
   /** Requires that throw statements are documented with `@throws` tags. */
   "jsdoc/require-throws": 
