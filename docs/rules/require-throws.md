@@ -41,6 +41,7 @@ the rule to apply to any JSDoc block throughout your files (as is necessary
 for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
+
 <a name="user-content-require-throws-options-exemptedby"></a>
 <a name="require-throws-options-exemptedby"></a>
 ### <code>exemptedBy</code>

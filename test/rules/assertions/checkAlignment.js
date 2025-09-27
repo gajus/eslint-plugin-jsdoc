@@ -242,8 +242,7 @@ export const myVar = {/**
   * This is JSDoc
   */
   myProperty: 'hello'
-}
-`,
+}`,
       errors: [
         {
           line: 3,
@@ -255,8 +254,7 @@ export const myVar = {/**
                        * This is JSDoc
                        */
   myProperty: 'hello'
-}
-`,
+}`,
     },
     {
       code: `

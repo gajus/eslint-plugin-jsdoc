@@ -41,6 +41,7 @@ A single options object has the following properties.
 This option escapes all `<` and `&` characters (except those followed by
 whitespace which are treated as literals by Visual Studio Code). Defaults to
 `false`.
+
 <a name="user-content-text-escaping-options-escapemarkdown"></a>
 <a name="text-escaping-options-escapemarkdown"></a>
 ### <code>escapeMarkdown</code>

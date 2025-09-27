@@ -90,8 +90,6 @@ in this configuration object regardless of whether you have configured
 will be checked, but you must use `file` on the configuration object).
 
 
-
-
 <a name="user-content-require-file-overview-context-and-settings"></a>
 <a name="require-file-overview-context-and-settings"></a>
 ## Context and settings

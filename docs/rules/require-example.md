@@ -39,16 +39,19 @@ A single options object has the following properties.
 
 A value indicating whether `constructor`s should be checked.
 Defaults to `true`.
+
 <a name="user-content-require-example-options-checkgetters"></a>
 <a name="require-example-options-checkgetters"></a>
 ### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Defaults to `false`.
+
 <a name="user-content-require-example-options-checksetters"></a>
 <a name="require-example-options-checksetters"></a>
 ### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Defaults to `false`.
+
 <a name="user-content-require-example-options-contexts"></a>
 <a name="require-example-options-contexts"></a>
 ### <code>contexts</code>
@@ -65,12 +68,14 @@ JSDoc block throughout your files.
 
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our Advanced docs for more on the expected format.
+
 <a name="user-content-require-example-options-enablefixer"></a>
 <a name="require-example-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
 A boolean on whether to enable the fixer (which adds an empty `@example` block).
 Defaults to `true`.
+
 <a name="user-content-require-example-options-exemptedby"></a>
 <a name="require-example-options-exemptedby"></a>
 ### <code>exemptedBy</code>
@@ -80,6 +85,7 @@ block avoids the need for an `@example`. Defaults to an array with
 `inheritdoc`. If you set this array, it will overwrite the default,
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
+
 <a name="user-content-require-example-options-exemptnoarguments"></a>
 <a name="require-example-options-exemptnoarguments"></a>
 ### <code>exemptNoArguments</code>

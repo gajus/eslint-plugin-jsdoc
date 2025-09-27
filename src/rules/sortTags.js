@@ -729,8 +729,7 @@ a fixed order that doesn't change into the future, supply your own
   'deprecated',
   'todo',
 ]}];
-\`\`\`
-`,
+\`\`\``,
             items: {
               additionalProperties: false,
               properties: {

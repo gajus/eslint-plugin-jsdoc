@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "~0.62.0",
+    "@es-joy/jsdoccomment": "~0.64.0",
     "are-docs-informative": "^0.0.2",
     "comment-parser": "1.4.1",
     "debug": "^4.4.3",
@@ -41,10 +41,10 @@
     "@types/estree": "^1.0.8",
     "@types/json-schema": "^7.0.15",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^24.5.2",
+    "@types/node": "^24.6.0",
     "@types/semver": "^7.7.1",
     "@types/spdx-expression-parse": "^3.0.5",
-    "@typescript-eslint/types": "^8.44.1",
+    "@typescript-eslint/types": "^8.45.0",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-istanbul": "^7.0.1",
     "babel-plugin-transform-import-meta": "^2.3.3",
@@ -58,17 +58,17 @@
     "glob": "^11.0.3",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
-    "jsdoc-type-pratt-parser": "^5.9.2",
+    "jsdoc-type-pratt-parser": "^6.0.1",
     "json-schema": "^0.4.0",
     "json-schema-to-typescript": "^15.0.4",
-    "lint-staged": "^16.2.1",
-    "mocha": "^11.7.2",
+    "lint-staged": "^16.2.3",
+    "mocha": "^11.7.3",
     "open-editor": "^5.1.0",
     "replace": "^1.2.2",
     "rimraf": "^6.0.1",
     "semantic-release": "^24.2.9",
     "typescript": "5.9.2",
-    "typescript-eslint": "^8.44.1"
+    "typescript-eslint": "^8.45.0"
   },
   "engines": {
     "node": ">=20.11.0"

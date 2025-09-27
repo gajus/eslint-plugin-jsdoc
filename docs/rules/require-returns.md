@@ -39,12 +39,14 @@ A single options object has the following properties.
 
 A value indicating whether `constructor`s should
 be checked for `@returns` tags. Defaults to `false`.
+
 <a name="user-content-require-returns-options-checkgetters"></a>
 <a name="require-returns-options-checkgetters"></a>
 ### <code>checkGetters</code>
 
 Boolean to determine whether getter methods should
 be checked for `@returns` tags. Defaults to `true`.
+
 <a name="user-content-require-returns-options-contexts"></a>
 <a name="require-returns-options-contexts"></a>
 ### <code>contexts</code>
@@ -66,12 +68,14 @@ present and the `forceRequireReturn` option is set or if the
 `forceReturnsWithAsync` option is set with a present `@async` tag
 (since we are not checking against the actual `return` values in these
 cases).
+
 <a name="user-content-require-returns-options-enablefixer"></a>
 <a name="require-returns-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
 Whether to enable the fixer to add a blank `@returns`.
 Defaults to `false`.
+
 <a name="user-content-require-returns-options-exemptedby"></a>
 <a name="require-returns-options-exemptedby"></a>
 ### <code>exemptedBy</code>
@@ -81,6 +85,7 @@ document block avoids the need for a `@returns`. Defaults to an array
 with `inheritdoc`. If you set this array, it will overwrite the default,
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
+
 <a name="user-content-require-returns-options-forcerequirereturn"></a>
 <a name="require-returns-options-forcerequirereturn"></a>
 ### <code>forceRequireReturn</code>
@@ -89,6 +94,7 @@ Set to `true` to always insist on
 `@returns` documentation regardless of implicit or explicit `return`'s
 in the function. May be desired to flag that a project is aware of an
 `undefined`/`void` return. Defaults to `false`.
+
 <a name="user-content-require-returns-options-forcereturnswithasync"></a>
 <a name="require-returns-options-forcereturnswithasync"></a>
 ### <code>forceReturnsWithAsync</code>
@@ -101,6 +107,7 @@ detected non-`undefined` `resolve` value) to require `@return`
 documentation by setting `forceReturnsWithAsync` to `true` on the options
 object. This may be useful for flagging that there has been consideration
 of return type. Defaults to `false`.
+
 <a name="user-content-require-returns-options-publiconly"></a>
 <a name="require-returns-options-publiconly"></a>
 ### <code>publicOnly</code>
@@ -117,7 +124,6 @@ otherwise noted):
 - `esm` - ESM exports are checked for `@returns` JSDoc comments (Defaults to `true`)
 - `cjs` - CommonJS exports are checked for `@returns` JSDoc comments  (Defaults to `true`)
 - `window` - Window global exports are checked for `@returns` JSDoc comments
-
 
 
 <a name="user-content-require-returns-context-and-settings"></a>

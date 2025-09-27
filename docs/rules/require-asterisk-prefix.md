@@ -56,11 +56,13 @@ which applies to the main JSDoc block description.
 
 If it is `"always"` then a problem is raised when there is no asterisk
 prefix on a given JSDoc line.
+
 <a name="user-content-options-tags-any"></a>
 <a name="options-tags-any"></a>
 #### <code>any</code>
 
 No problem is raised regardless of asterisk presence or non-presence.
+
 <a name="user-content-options-tags-never"></a>
 <a name="options-tags-never"></a>
 #### <code>never</code>

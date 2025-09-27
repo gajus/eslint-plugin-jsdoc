@@ -243,6 +243,7 @@ A value indicating whether `constructor`s should be checked. Defaults to
 ### <code>checkDestructured</code>
 
 Whether to require destructured properties. Defaults to `true`.
+
 <a name="user-content-require-param-options-checkdestructuredroots"></a>
 <a name="require-param-options-checkdestructuredroots"></a>
 ### <code>checkDestructuredRoots</code>
@@ -262,6 +263,7 @@ documentation). Defaults to `true`.
 ### <code>checkGetters</code>
 
 A value indicating whether getters should be checked. Defaults to `false`.
+
 <a name="user-content-require-param-options-checkrestproperty"></a>
 <a name="require-param-options-checkrestproperty"></a>
 ### <code>checkRestProperty</code>
@@ -322,6 +324,7 @@ function quux ({num, ...extra}) {
 ### <code>checkSetters</code>
 
 A value indicating whether setters should be checked. Defaults to `false`.
+
 <a name="user-content-require-param-options-checktypespattern"></a>
 <a name="require-param-options-checktypespattern"></a>
 ### <code>checkTypesPattern</code>
@@ -357,6 +360,7 @@ your expression as a string, but like a literal, e.g., `/^object$/vi`.
 You could set this regular expression to a more expansive list, or you
 could restrict it such that even types matching those strings would not
 need destructuring.
+
 <a name="user-content-require-param-options-contexts"></a>
 <a name="require-param-options-contexts"></a>
 ### <code>contexts</code>
@@ -379,6 +383,7 @@ section of our Advanced docs for more on the expected format.
 ### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.
+
 <a name="user-content-require-param-options-enablerestelementfixer"></a>
 <a name="require-param-options-enablerestelementfixer"></a>
 ### <code>enableRestElementFixer</code>
@@ -447,6 +452,7 @@ function quux ({foo}, {bar}, {baz}) {
 ```
 
 Has no effect if `enableFixer` is set to `false`.
+
 <a name="user-content-require-param-options-exemptedby"></a>
 <a name="require-param-options-exemptedby"></a>
 ### <code>exemptedBy</code>
@@ -456,12 +462,14 @@ avoids the need for a `@param`. Defaults to an array with
 `inheritdoc`. If you set this array, it will overwrite the default,
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
+
 <a name="user-content-require-param-options-ignorewhenallparamsmissing"></a>
 <a name="require-param-options-ignorewhenallparamsmissing"></a>
 ### <code>ignoreWhenAllParamsMissing</code>
 
 Set to `true` to ignore reporting when all params are missing. Defaults to
 `false`.
+
 <a name="user-content-require-param-options-interfaceexemptsparamscheck"></a>
 <a name="require-param-options-interfaceexemptsparamscheck"></a>
 ### <code>interfaceExemptsParamsCheck</code>
@@ -472,6 +480,7 @@ Set if you wish TypeScript interfaces to exempt checks for the existence of
 Will check for a type defining the function itself (on a variable
 declaration) or if there is a single destructured object with a type.
 Defaults to `false`.
+
 <a name="user-content-require-param-options-unnamedrootbase"></a>
 <a name="require-param-options-unnamedrootbase"></a>
 ### <code>unnamedRootBase</code>
@@ -498,6 +507,7 @@ function quux ({foo}, [bar], {baz}) {
 * @param config1.baz
 */
 ```
+
 <a name="user-content-require-param-options-usedefaultobjectproperties"></a>
 <a name="require-param-options-usedefaultobjectproperties"></a>
 ### <code>useDefaultObjectProperties</code>

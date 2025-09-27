@@ -36,6 +36,7 @@ The next option is an object with the following properties.
 
 The options object may have the following property to indicate behavior for
 other tags besides the `@param` tag (or the `@arg` tag if so set).
+
 <a name="user-content-require-hyphen-before-param-description-options-tags"></a>
 <a name="require-hyphen-before-param-description-options-tags"></a>
 ### <code>tags</code>
@@ -47,7 +48,6 @@ Object whose keys indicate different tags to check for the
   `'*': 'always'` to apply hyphen checking to any tag (besides the preferred
   `@param` tag which follows the main string option setting and besides any
   other `tags` entries).
-
 
 
 <a name="user-content-require-hyphen-before-param-description-context-and-settings"></a>

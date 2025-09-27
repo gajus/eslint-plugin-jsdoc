@@ -54,6 +54,7 @@ are sorted.
 
 If you want all your tags alphabetized, you can supply an empty array for
 `tagSequence` along with setting this option to `true`.
+
 <a name="user-content-sort-tags-options-linesbetween"></a>
 <a name="sort-tags-options-linesbetween"></a>
 ### <code>linesBetween</code>
@@ -61,6 +62,7 @@ If you want all your tags alphabetized, you can supply an empty array for
 Indicates the number of lines to be added between tag groups. Defaults to 1.
 Do not set to 0 or 2+ if you are using `tag-lines` and `"always"` and do not
 set to 1+ if you are using `tag-lines` and `"never"`.
+
 <a name="user-content-sort-tags-options-reportintrataggroupspacing"></a>
 <a name="sort-tags-options-reportintrataggroupspacing"></a>
 ### <code>reportIntraTagGroupSpacing</code>
@@ -68,6 +70,7 @@ set to 1+ if you are using `tag-lines` and `"never"`.
 Whether to enable reporting and fixing of line breaks within tags of a given
 tag group. Defaults to `true` which will remove any line breaks at the end of
 such tags. Do not use with `true` if you are using `tag-lines` and `always`.
+
 <a name="user-content-sort-tags-options-reporttaggroupspacing"></a>
 <a name="sort-tags-options-reporttaggroupspacing"></a>
 ### <code>reportTagGroupSpacing</code>
@@ -76,6 +79,7 @@ Whether to enable reporting and fixing of line breaks between tag groups
 as set by `linesBetween`. Defaults to `true`. Note that the very last tag
 will not have spacing applied regardless. For adding line breaks there, you
 may wish to use the `endLines` option of the `tag-lines` rule.
+
 <a name="user-content-sort-tags-options-tagsequence"></a>
 <a name="sort-tags-options-tagsequence"></a>
 ### <code>tagSequence</code>

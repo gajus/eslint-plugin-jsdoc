@@ -41,7 +41,6 @@ See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and
 section of our Advanced docs for more on the expected format.
 
 
-
 <a name="user-content-require-param-name-context-and-settings"></a>
 <a name="require-param-name-context-and-settings"></a>
 ## Context and settings

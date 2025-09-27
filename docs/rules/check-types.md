@@ -45,6 +45,7 @@ A single options object has the following properties.
 ### <code>exemptTagContexts</code>
 
 Avoids reporting when a bad type is found on a specified tag.
+
 A single options object has the following properties.
 
 <a name="user-content-check-types-options-exempttagcontexts-tag"></a>
@@ -52,6 +53,7 @@ A single options object has the following properties.
 ##### <code>tag</code>
 
 Set a key `tag` to the tag to exempt
+
 <a name="user-content-check-types-options-exempttagcontexts-types"></a>
 <a name="check-types-options-exempttagcontexts-types"></a>
 ##### <code>types</code>
@@ -65,6 +67,7 @@ behavior of `settings.jsdoc.preferredTypes`. This option is useful
 for normally restricting generic types like `object` with
 `preferredTypes`, but allowing `typedef` to indicate that its base
 type is `object`.
+
 <a name="user-content-check-types-options-nodefaults"></a>
 <a name="check-types-options-nodefaults"></a>
 ### <code>noDefaults</code>
@@ -72,6 +75,7 @@ type is `object`.
 Insists that only the supplied option type
 map is to be used, and that the default preferences (such as "string"
 over "String") will not be enforced. The option's default is `false`.
+
 <a name="user-content-check-types-options-unifyparentandchildtypechecks"></a>
 <a name="check-types-options-unifyparentandchildtypechecks"></a>
 ### <code>unifyParentAndChildTypeChecks</code>

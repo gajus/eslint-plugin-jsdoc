@@ -13,6 +13,7 @@
   "check-values",
   "convert-to-jsdoc-comments",
   "empty-tags",
+  "escape-inline-tags",
   "implements-on-classes",
   "imports-as-dependencies",
   "informative-docs",

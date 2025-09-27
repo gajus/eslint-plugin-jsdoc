@@ -254,6 +254,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-values": 1, // Recommended
         "jsdoc/convert-to-jsdoc-comments": 1,
         "jsdoc/empty-tags": 1, // Recommended
+        "jsdoc/escape-inline-tags": 1, // Recommended for TS configs
         "jsdoc/implements-on-classes": 1, // Recommended
         "jsdoc/imports-as-dependencies": 1,
         "jsdoc/informative-docs": 1,
@@ -442,6 +443,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:|| [check-values](./docs/rules/check-values.md#readme) | This rule checks the values for a handful of tags: `@version`, `@since`, `@license` and `@author`. |
 ||:wrench:| [convert-to-jsdoc-comments](./docs/rules/convert-to-jsdoc-comments.md#readme) | Converts non-JSDoc comments preceding or following nodes into JSDoc ones |
 |:heavy_check_mark:|:wrench:| [empty-tags](./docs/rules/empty-tags.md#readme) | Checks tags that are expected to be empty (e.g., `@abstract` or `@async`), reporting if they have content |
+|:heavy_check_mark:|:wrench:| [escape-inline-tags](./docs/rules/escape-inline-tags.md#readme) | Reports use of JSDoc tags in non-tag positions (in the default "typescript" mode). |
 |:heavy_check_mark:|| [implements-on-classes](./docs/rules/implements-on-classes.md#readme) | Prohibits use of `@implements` on non-constructor functions (to enforce the tag only being used on classes/constructors). |
 ||| [imports-as-dependencies](./docs/rules/imports-as-dependencies.md#readme) | Reports if JSDoc `import()` statements point to a package which is not listed in `dependencies` or `devDependencies` |
 ||| [informative-docs](./docs/rules/informative-docs.md#readme) | This rule reports doc comments that only restate their attached name. |

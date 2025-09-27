@@ -42,6 +42,7 @@ A single options object has the following properties.
 
 Has the following optional keys.
 
+
 <a name="user-content-require-jsdoc-options-checkconstructors"></a>
 <a name="require-jsdoc-options-checkconstructors"></a>
 ### <code>checkConstructors</code>
@@ -49,6 +50,7 @@ Has the following optional keys.
 A value indicating whether `constructor`s should be checked. Defaults to
 `true`. When `true`, `exemptEmptyConstructors` may still avoid reporting when
 no parameters or return values are found.
+
 <a name="user-content-require-jsdoc-options-checkgetters"></a>
 <a name="require-jsdoc-options-checkgetters"></a>
 ### <code>checkGetters</code>
@@ -68,6 +70,7 @@ boolean, this option can be set to the string `"no-getter"` to indicate that
 setters should be checked but only when there is no getter. This may be useful
 if one only wishes documentation on one of the two accessors. Defaults to
 `false`.
+
 <a name="user-content-require-jsdoc-options-contexts"></a>
 <a name="require-jsdoc-options-contexts"></a>
 ### <code>contexts</code>
@@ -87,12 +90,14 @@ if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition
 
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our Advanced docs for more on the expected format.
+
 <a name="user-content-require-jsdoc-options-enablefixer"></a>
 <a name="require-jsdoc-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
 A boolean on whether to enable the fixer (which adds an empty JSDoc block).
 Defaults to `true`.
+
 <a name="user-content-require-jsdoc-options-exemptemptyconstructors"></a>
 <a name="require-jsdoc-options-exemptemptyconstructors"></a>
 ### <code>exemptEmptyConstructors</code>
@@ -102,6 +107,7 @@ with no parameters or return values (this is enabled by default as the class
 name or description should be seen as sufficient to convey intent).
 
 Defaults to `true`.
+
 <a name="user-content-require-jsdoc-options-exemptemptyfunctions"></a>
 <a name="require-jsdoc-options-exemptemptyfunctions"></a>
 ### <code>exemptEmptyFunctions</code>
@@ -119,12 +125,14 @@ Defaults to `false`.
 If set to `true` will avoid checking an overloaded function's implementation.
 
 Defaults to `false`.
+
 <a name="user-content-require-jsdoc-options-fixermessage"></a>
 <a name="require-jsdoc-options-fixermessage"></a>
 ### <code>fixerMessage</code>
 
 An optional message to add to the inserted JSDoc block. Defaults to the
 empty string.
+
 <a name="user-content-require-jsdoc-options-minlinecount"></a>
 <a name="require-jsdoc-options-minlinecount"></a>
 ### <code>minLineCount</code>
@@ -132,6 +140,7 @@ empty string.
 An integer to indicate a minimum number of lines expected for a node in order
 for it to require documentation. Defaults to `undefined`. This option will
 apply to any context; see `contexts` for line counts specific to a context.
+
 <a name="user-content-require-jsdoc-options-publiconly"></a>
 <a name="require-jsdoc-options-publiconly"></a>
 ### <code>publicOnly</code>
@@ -158,36 +167,43 @@ A single options object has the following properties.
 
 An object with the following optional boolean keys which all default to
 `false` except for `FunctionDeclaration` which defaults to `true`.
+
 <a name="user-content-require-jsdoc-options-require-arrowfunctionexpression"></a>
 <a name="require-jsdoc-options-require-arrowfunctionexpression"></a>
 #### <code>ArrowFunctionExpression</code>
 
 Whether to check arrow functions like `() => {}`
+
 <a name="user-content-require-jsdoc-options-require-classdeclaration"></a>
 <a name="require-jsdoc-options-require-classdeclaration"></a>
 #### <code>ClassDeclaration</code>
 
 Whether to check declarations like `class A {}`
+
 <a name="user-content-require-jsdoc-options-require-classexpression"></a>
 <a name="require-jsdoc-options-require-classexpression"></a>
 #### <code>ClassExpression</code>
 
 Whether to check class expressions like `const myClass = class {}`
+
 <a name="user-content-require-jsdoc-options-require-functiondeclaration"></a>
 <a name="require-jsdoc-options-require-functiondeclaration"></a>
 #### <code>FunctionDeclaration</code>
 
 Whether to check function declarations like `function a {}`
+
 <a name="user-content-require-jsdoc-options-require-functionexpression"></a>
 <a name="require-jsdoc-options-require-functionexpression"></a>
 #### <code>FunctionExpression</code>
 
 Whether to check function expressions like `const a = function {}`
+
 <a name="user-content-require-jsdoc-options-require-methoddefinition"></a>
 <a name="require-jsdoc-options-require-methoddefinition"></a>
 #### <code>MethodDefinition</code>
 
 Whether to check method definitions like `class A { someMethodDefinition () {} }`
+
 <a name="user-content-require-jsdoc-options-skipinterveningoverloadeddeclarations"></a>
 <a name="require-jsdoc-options-skipinterveningoverloadeddeclarations"></a>
 ### <code>skipInterveningOverloadedDeclarations</code>

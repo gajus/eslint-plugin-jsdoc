@@ -258,14 +258,14 @@ const generateDocs = async () => {
               }
 
               if (jIdx === 0) {
-                ret += (arr.length <= 1 ? 'A single' : 'An') +
-                ' options object has the following properties.\n\n';
+                ret += (nesting > 3 ? '\n' : '') + (arr.length <= 1 ? 'A single' : 'An') +
+                ' options object has the following properties.\n';
               } else {
-                ret += '\n\nThe next option is an object with the following properties.\n\n';
+                ret += '\n\nThe next option is an object with the following properties.\n';
               }
 
               if (schema.description) {
-                ret += `${escapeDescription(schema.description)}\n`;
+                ret += `\n${escapeDescription(schema.description)}\n`;
               }
 
               for (const [
@@ -282,10 +282,9 @@ const generateDocs = async () => {
                   );
                 }
 
-                ret += '#'.repeat(nesting) + ` \`${property}\`
+                ret += '\n' + '#'.repeat(nesting) + ` \`${property}\`
 
-${type === 'object' && innerSchema.properties ? '' : escapeDescription(description)}
-`;
+${type === 'object' && innerSchema.properties ? '' : escapeDescription(description) + '\n'}`;
                 if (type === 'object' || type === 'array') {
                   ret += convertFromSchema(innerSchema, 0, [], nesting + 1);
                 }

@@ -49,6 +49,7 @@ present and the `forceRequireYields` option is set or if the
 `withGeneratorTag` option is set with a present `@generator` tag
 (since we are not checking against the actual `yield` values in these
 cases).
+
 <a name="user-content-require-yields-options-exemptedby"></a>
 <a name="require-yields-options-exemptedby"></a>
 ### <code>exemptedBy</code>
@@ -58,6 +59,7 @@ document block avoids the need for a `@yields`. Defaults to an array
 with `inheritdoc`. If you set this array, it will overwrite the default,
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
+
 <a name="user-content-require-yields-options-forcerequirenext"></a>
 <a name="require-yields-options-forcerequirenext"></a>
 ### <code>forceRequireNext</code>
@@ -66,6 +68,7 @@ Set to `true` to always insist on
 `@next` documentation even if there are no `yield` statements in the
 function or none return values. May be desired to flag that a project is
 aware of the expected yield return being `undefined`. Defaults to `false`.
+
 <a name="user-content-require-yields-options-forcerequireyields"></a>
 <a name="require-yields-options-forcerequireyields"></a>
 ### <code>forceRequireYields</code>
@@ -75,6 +78,7 @@ Set to `true` to always insist on
 expressionless `yield` statements in the function. May be desired to flag
 that a project is aware of an `undefined`/`void` yield. Defaults to
 `false`.
+
 <a name="user-content-require-yields-options-next"></a>
 <a name="require-yields-options-next"></a>
 ### <code>next</code>
@@ -88,6 +92,7 @@ function) to the iterator (e.g., `it.next(value)`). The tag will not be
 expected if the generator function body merely has plain `yield;` or
 `yield value;` statements without returning the values. Defaults to
 `false`.
+
 <a name="user-content-require-yields-options-nextwithgeneratortag"></a>
 <a name="require-yields-options-nextwithgeneratortag"></a>
 ### <code>nextWithGeneratorTag</code>
@@ -98,6 +103,7 @@ or `undefined` in cases where generators do not use the `next()`-supplied
 incoming `yield`-returned value. Defaults to `false`. See `contexts` to
 `any` if you want to catch `@generator` with `@callback` or such not
 attached to a function.
+
 <a name="user-content-require-yields-options-withgeneratortag"></a>
 <a name="require-yields-options-withgeneratortag"></a>
 ### <code>withGeneratorTag</code>

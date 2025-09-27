@@ -42,12 +42,14 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our Advanced docs for more on the expected format.
+
 <a name="user-content-require-param-description-options-defaultdestructuredrootdescription"></a>
 <a name="require-param-description-options-defaultdestructuredrootdescription"></a>
 ### <code>defaultDestructuredRootDescription</code>
 
 The description string to set by default for destructured roots. Defaults to
 "The root object".
+
 <a name="user-content-require-param-description-options-setdefaultdestructuredrootdescription"></a>
 <a name="require-param-description-options-setdefaultdestructuredrootdescription"></a>
 ### <code>setDefaultDestructuredRootDescription</code>
