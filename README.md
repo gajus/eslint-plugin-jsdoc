@@ -293,6 +293,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-returns-type": 1, // Recommended in non-TS configs
         "jsdoc/require-returns": 1, // Recommended
         "jsdoc/require-template": 1,
+        "jsdoc/require-template-description": 1,
         "jsdoc/require-throws": 1,
         "jsdoc/require-throws-description": 1,
         "jsdoc/require-throws-type": 1, // Recommended
