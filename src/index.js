@@ -706,7 +706,6 @@ index.configs['flat/recommended-mixed'] = [
 
 export default index;
 
-/* eslint-disable jsdoc/valid-types -- Bug */
 /**
  * @type {((
  *   cfg?: import('eslint').Linter.Config & {
@@ -744,7 +743,6 @@ export default index;
  * ) => import('eslint').Linter.Config)}
  */
 export const jsdoc = function (cfg) {
-  /* eslint-enable jsdoc/valid-types -- Bug */
   /** @type {import('eslint').Linter.Config} */
   let outputConfig = {
     plugins: {

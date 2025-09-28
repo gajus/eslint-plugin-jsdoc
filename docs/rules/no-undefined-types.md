@@ -1047,5 +1047,24 @@ function a (b, c) {}
 
 /** @type {SomeType} */
 // "jsdoc/no-undefined-types": ["error"|"warn", {"checkUsedTypedefs":true}]
+
+/** @typedef {string} MyOwnType */
+
+/**
+ * @template T
+ * @param {<T extends unknown>(element: MyOwnType) => T} cb
+ * @returns {void}
+ */
+const getValue = () => {};
+
+/** @typedef {string} MyOwnType */
+/** @typedef {new () => void} CustomElementConstructor */
+
+/**
+ * @param {`${MyOwnType}-${string}`} tagName
+ * @param {CustomElementConstructor} component
+ */
+const defineCustomElement = (tagName, component) => {
+};
 ````
 

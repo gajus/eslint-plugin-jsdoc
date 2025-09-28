@@ -139,7 +139,13 @@ export default iterateJsdoc(({
       return doc.tags.filter(({
         tag,
       }) => {
-        return utils.isNamepathDefiningTag(tag);
+        return utils.isNamepathDefiningTag(tag) && ![
+          'arg',
+          'argument',
+          'param',
+          'prop',
+          'property',
+        ].includes(tag);
       });
     });
 

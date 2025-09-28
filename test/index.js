@@ -82,9 +82,7 @@ describe('jsdoc()', () => {
   });
 
   it('Builds simple plugins config with rules', () => {
-    /* eslint-disable jsdoc/valid-types -- Bug */
     const rules = /** @type {{[key in keyof import('../src/rules.d.ts').Rules]?: import('eslint').Linter.RuleEntry<import('../src/rules.d.ts').Rules[key]>}} */ ({
-      /* eslint-enable jsdoc/valid-types -- Bug */
       'jsdoc/check-alignment': [
         'error',
         {

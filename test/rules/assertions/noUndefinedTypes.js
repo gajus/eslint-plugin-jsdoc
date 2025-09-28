@@ -1801,5 +1801,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+      /** @typedef {string} MyOwnType */
+
+      /**
+       * @template T
+       * @param {<T extends unknown>(element: MyOwnType) => T} cb
+       * @returns {void}
+       */
+      const getValue = () => {};
+      `,
+    },
+    {
+      code: `
+        /** @typedef {string} MyOwnType */
+        /** @typedef {new () => void} CustomElementConstructor */
+
+        /**
+         * @param {\`\${MyOwnType}-\${string}\`} tagName
+         * @param {CustomElementConstructor} component
+         */
+        const defineCustomElement = (tagName, component) => {
+        };
+      `,
+    },
   ],
 });
