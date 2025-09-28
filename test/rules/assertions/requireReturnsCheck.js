@@ -277,7 +277,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       code: `
         /**
          * Description.
-         * @returns {string}
+         * @returns {SomeType}
          */
         async function foo() {
           return new Promise(resolve => resolve());
@@ -664,7 +664,27 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           * @returns {number}
+           */
+          async function quux (foo) {
 
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Function is async or otherwise returns a Promise but the return type is a native type.',
+        },
+      ],
+      options: [
+        {
+          exemptAsync: false,
+        },
+      ],
+    },
   ],
   valid: [
     {

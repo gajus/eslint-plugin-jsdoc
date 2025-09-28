@@ -962,7 +962,7 @@ const mayBeUndefinedTypeTag = (tag, mode) => {
     // We do not traverse deeply as it could be, e.g., `Promise<void>`
     parsedTypes &&
     parsedTypes.type === 'JsdocTypeUnion' &&
-    parsedTypes.elements.find((elem) => {
+    parsedTypes.elements.some((elem) => {
       return elem.type === 'JsdocTypeUndefined' ||
         elem.type === 'JsdocTypeName' && elem.value === 'void';
     })) {
@@ -1845,6 +1845,21 @@ const getRegexFromString = (regexString, requiredFlags) => {
   return new RegExp(regex, flags);
 };
 
+const strictNativeTypes = [
+  'undefined',
+  'null',
+  'boolean',
+  'number',
+  'bigint',
+  'string',
+  'symbol',
+  'object',
+  'Array',
+  'Function',
+  'Date',
+  'RegExp',
+];
+
 export {
   comparePaths,
   dropPathSegmentQuotes,
@@ -1885,6 +1900,7 @@ export {
   parseClosureTemplateTag,
   pathDoesNotBeginWith,
   setTagStructure,
+  strictNativeTypes,
   tagMightHaveEitherTypeOrNamePosition,
   tagMightHaveNamepath,
   tagMightHaveNamePosition,

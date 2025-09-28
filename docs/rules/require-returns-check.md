@@ -5,6 +5,7 @@
 * [Options](#user-content-require-returns-check-options)
     * [`exemptAsync`](#user-content-require-returns-check-options-exemptasync)
     * [`exemptGenerators`](#user-content-require-returns-check-options-exemptgenerators)
+    * [`noNativeTypes`](#user-content-require-returns-check-options-nonativetypes)
     * [`reportMissingReturnForUndefinedTypes`](#user-content-require-returns-check-options-reportmissingreturnforundefinedtypes)
 * [Context and settings](#user-content-require-returns-check-context-and-settings)
 * [Failing examples](#user-content-require-returns-check-failing-examples)
@@ -19,6 +20,8 @@ is specified in the function's JSDoc comment block.
 Will also report `@returns {void}` and `@returns {undefined}` if `exemptAsync`
 is set to `false` and a non-`undefined` value is returned or a resolved value
 is found. Also reports if `@returns {never}` is discovered with a return value.
+
+Will report if native types are specified for `@returns` on an async function.
 
 Will also report if multiple `@returns` tags are present.
 
@@ -54,6 +57,13 @@ option is therefore `true` by default in `typescript` mode (in "jsdoc" mode,
 one might be more likely to take advantage of `@yields`). Set it to `false`
 if you wish for a missing `return` to be flagged regardless.
 
+<a name="user-content-require-returns-check-options-nonativetypes"></a>
+<a name="require-returns-check-options-nonativetypes"></a>
+### <code>noNativeTypes</code>
+
+Whether to check that async functions do not
+indicate they return non-native types. Defaults to `true`.
+
 <a name="user-content-require-returns-check-options-reportmissingreturnforundefinedtypes"></a>
 <a name="require-returns-check-options-reportmissingreturnforundefinedtypes"></a>
 ### <code>reportMissingReturnForUndefinedTypes</code>
@@ -74,7 +84,7 @@ Unlike `require-returns`, with this option in the rule, one can
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
 |Tags|`returns`|
 |Aliases|`return`|
-|Options|`exemptAsync`, `exemptGenerators`, `reportMissingReturnForUndefinedTypes`|
+|Options|`exemptAsync`, `exemptGenerators`, `noNativeTypes`, `reportMissingReturnForUndefinedTypes`|
 |Recommended|true|
 
 <a name="user-content-require-returns-check-failing-examples"></a>
@@ -206,7 +216,7 @@ function quux() {
 
 /**
  * Description.
- * @returns {string}
+ * @returns {SomeType}
  */
 async function foo() {
   return new Promise(resolve => resolve());
@@ -401,6 +411,15 @@ function foo() {
   }
 }
 // Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @returns {number}
+ */
+async function quux (foo) {
+
+}
+// "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
+// Message: Function is async or otherwise returns a Promise but the return type is a native type.
 ````
 
 
