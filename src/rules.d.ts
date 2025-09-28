@@ -2318,6 +2318,11 @@ export interface Rules {
            */
           exemptGenerators?: boolean;
           /**
+           * Whether to check that async functions do not
+           * indicate they return non-native types. Defaults to `true`.
+           */
+          noNativeTypes?: boolean;
+          /**
            * If `true` and no return or
            * resolve value is found, this setting will even insist that reporting occur
            * with `void` or `undefined` (including as an indicated `Promise` type).
