@@ -48,6 +48,7 @@ A single options object has the following properties.
 You can provide an `abbreviations` options array to avoid such strings of text
 being treated as sentence endings when followed by dots. The `.` is not
 necessary at the end of the array items.
+
 <a name="user-content-require-description-complete-sentence-options-newlinebeforecapsassumesbadsentenceend"></a>
 <a name="require-description-complete-sentence-options-newlinebeforecapsassumesbadsentenceend"></a>
 ### <code>newlineBeforeCapsAssumesBadSentenceEnd</code>
@@ -55,6 +56,7 @@ necessary at the end of the array items.
 When `false` (the new default), we will not assume capital letters after
 newlines are an incorrect way to end the sentence (they may be proper
 nouns, for example).
+
 <a name="user-content-require-description-complete-sentence-options-tags"></a>
 <a name="require-description-complete-sentence-options-tags"></a>
 ### <code>tags</code>
@@ -79,7 +81,6 @@ an optional curly-bracketed type expression (and another space) as part of
 its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
-
 
 
 <a name="user-content-require-description-complete-sentence-context-and-settings"></a>

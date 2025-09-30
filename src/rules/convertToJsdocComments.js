@@ -319,8 +319,7 @@ Supplying your own value overrides the defaults.`,
 Can either be strings or an object with a \`context\` string and an optional, default \`false\` \`inlineCommentBlock\` boolean.
 
 Defaults to \`ArrowFunctionExpression\`, \`FunctionDeclaration\`,
-\`FunctionExpression\`, \`TSDeclareFunction\`.
-`,
+\`FunctionExpression\`, \`TSDeclareFunction\`.`,
             items: {
               anyOf: [
                 {
@@ -417,8 +416,7 @@ be converted to \`multi\` style JSDoc comments.)
 /** Some text */
 \`\`\`
 
-Defaults to \`multi\`.
-`,
+Defaults to \`multi\`.`,
             enum: [
               'multi', 'single',
             ],

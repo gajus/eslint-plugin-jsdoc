@@ -176,9 +176,7 @@ have a way to allow multiple licenses for the whole page by using the SPDX
 Note that the tag names are the main JSDoc tag name, so you should use \`file\`
 in this configuration object regardless of whether you have configured
 \`fileoverview\` instead of \`file\` on \`tagNamePreference\` (i.e., \`fileoverview\`
-will be checked, but you must use \`file\` on the configuration object).
-
-`,
+will be checked, but you must use \`file\` on the configuration object).`,
             patternProperties: {
               '.*': {
                 additionalProperties: false,

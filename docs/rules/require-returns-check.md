@@ -41,6 +41,7 @@ non-`undefined` values or `async` functions with explicit `return`'s will
 be exempted from reporting (i.e., that `async` functions can be reported
 if they lack an explicit (non-`undefined`) `return` when a `@returns` is
 present), you can set `exemptAsync` to `false` on the options object.
+
 <a name="user-content-require-returns-check-options-exemptgenerators"></a>
 <a name="require-returns-check-options-exemptgenerators"></a>
 ### <code>exemptGenerators</code>
@@ -52,6 +53,7 @@ leverage `@returns` in generators even without a `return` statement. This
 option is therefore `true` by default in `typescript` mode (in "jsdoc" mode,
 one might be more likely to take advantage of `@yields`). Set it to `false`
 if you wish for a missing `return` to be flagged regardless.
+
 <a name="user-content-require-returns-check-options-reportmissingreturnforundefinedtypes"></a>
 <a name="require-returns-check-options-reportmissingreturnforundefinedtypes"></a>
 ### <code>reportMissingReturnForUndefinedTypes</code>

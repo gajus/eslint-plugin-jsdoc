@@ -36,18 +36,21 @@ A single options object has the following properties.
 
 A value indicating whether `constructor`s should be
 checked. Defaults to `true`.
+
 <a name="user-content-require-description-options-checkgetters"></a>
 <a name="require-description-options-checkgetters"></a>
 ### <code>checkGetters</code>
 
 A value indicating whether getters should be checked.
 Defaults to `true`.
+
 <a name="user-content-require-description-options-checksetters"></a>
 <a name="require-description-options-checksetters"></a>
 ### <code>checkSetters</code>
 
 A value indicating whether setters should be checked.
 Defaults to `true`.
+
 <a name="user-content-require-description-options-contexts"></a>
 <a name="require-description-options-contexts"></a>
 ### <code>contexts</code>
@@ -67,6 +70,7 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our Advanced docs for more on the expected format.
+
 <a name="user-content-require-description-options-descriptionstyle"></a>
 <a name="require-description-options-descriptionstyle"></a>
 ### <code>descriptionStyle</code>
@@ -74,6 +78,7 @@ section of our Advanced docs for more on the expected format.
 Whether to accept implicit descriptions (`"body"`) or
 `@description` tags (`"tag"`) as satisfying the rule. Set to `"any"` to
 accept either style. Defaults to `"body"`.
+
 <a name="user-content-require-description-options-exemptedby"></a>
 <a name="require-description-options-exemptedby"></a>
 ### <code>exemptedBy</code>

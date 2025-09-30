@@ -56,43 +56,51 @@ If a spacing is not defined, it defaults to one.
 #### <code>postDelimiter</code>
 
 Affects spacing after the asterisk (e.g., `*   @param`)
+
 <a name="user-content-check-line-alignment-options-customspacings-posthyphen"></a>
 <a name="check-line-alignment-options-customspacings-posthyphen"></a>
 #### <code>postHyphen</code>
 
 Affects spacing after any hyphens in the description (e.g., `* @param {someType} name -  A description`)
+
 <a name="user-content-check-line-alignment-options-customspacings-postname"></a>
 <a name="check-line-alignment-options-customspacings-postname"></a>
 #### <code>postName</code>
 
 Affects spacing after the name (e.g., `* @param {someType} name   `)
+
 <a name="user-content-check-line-alignment-options-customspacings-posttag"></a>
 <a name="check-line-alignment-options-customspacings-posttag"></a>
 #### <code>postTag</code>
 
 Affects spacing after the tag (e.g., `* @param  `)
+
 <a name="user-content-check-line-alignment-options-customspacings-posttype"></a>
 <a name="check-line-alignment-options-customspacings-posttype"></a>
 #### <code>postType</code>
 
 Affects spacing after the type (e.g., `* @param {someType}   `)
+
 <a name="user-content-check-line-alignment-options-disablewrapindent"></a>
 <a name="check-line-alignment-options-disablewrapindent"></a>
 ### <code>disableWrapIndent</code>
 
 Disables `wrapIndent`; existing wrap indentation is preserved without changes.
+
 <a name="user-content-check-line-alignment-options-preservemaindescriptionpostdelimiter"></a>
 <a name="check-line-alignment-options-preservemaindescriptionpostdelimiter"></a>
 ### <code>preserveMainDescriptionPostDelimiter</code>
 
 A boolean to determine whether to preserve the post-delimiter spacing of the
 main description. If `false` or unset, will be set to a single space.
+
 <a name="user-content-check-line-alignment-options-tags"></a>
 <a name="check-line-alignment-options-tags"></a>
 ### <code>tags</code>
 
 Use this to change the tags which are sought for alignment changes. Defaults to an array of
 `['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return', 'template']`.
+
 <a name="user-content-check-line-alignment-options-wrapindent"></a>
 <a name="check-line-alignment-options-wrapindent"></a>
 ### <code>wrapIndent</code>

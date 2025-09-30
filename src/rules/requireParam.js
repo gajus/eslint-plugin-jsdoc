@@ -548,15 +548,13 @@ export default iterateJsdoc(({
           autoIncrementBase: {
             default: 0,
             description: `Numeric to indicate the number at which to begin auto-incrementing roots.
-Defaults to \`0\`.
-`,
+Defaults to \`0\`.`,
             type: 'integer',
           },
           checkConstructors: {
             default: true,
             description: `A value indicating whether \`constructor\`s should be checked. Defaults to
-\`true\`.
-`,
+\`true\`.`,
             type: 'boolean',
           },
           checkDestructured: {
@@ -574,8 +572,7 @@ the \`{a, b}\` object parameter).
 If \`checkDestructuredRoots\` is \`false\`, \`checkDestructured\` will also be
 implied to be \`false\` (i.e., the inside of the roots will not be checked
 either, e.g., it will also not complain if \`a\` or \`b\` do not have their own
-documentation). Defaults to \`true\`.
-`,
+documentation). Defaults to \`true\`.`,
             type: 'boolean',
           },
           checkGetters: {
@@ -634,8 +631,7 @@ Nor will this:
  */
 function quux ({num, ...extra}) {
 }
-\`\`\`
-`,
+\`\`\``,
             type: 'boolean',
           },
           checkSetters: {
@@ -689,8 +685,7 @@ Overrides the default contexts (\`ArrowFunctionExpression\`, \`FunctionDeclarati
 which are checked.
 
 See the ["AST and Selectors"](../#advanced-ast-and-selectors)
-section of our Advanced docs for more on the expected format.
-`,
+section of our Advanced docs for more on the expected format.`,
             items: {
               anyOf: [
                 {
@@ -749,8 +744,7 @@ function baar ([a, ...extra]) {
 Note that the type \`any\` is included since we don't know of any specific
 type to use.
 
-Defaults to \`true\`.
-`,
+Defaults to \`true\`.`,
             type: 'boolean',
           },
           enableRootFixer: {

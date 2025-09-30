@@ -227,6 +227,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/check-values": 1, // Recommended
         "jsdoc/convert-to-jsdoc-comments": 1,
         "jsdoc/empty-tags": 1, // Recommended
+        "jsdoc/escape-inline-tags": 1, // Recommended for TS configs
         "jsdoc/implements-on-classes": 1, // Recommended
         "jsdoc/imports-as-dependencies": 1,
         "jsdoc/informative-docs": 1,

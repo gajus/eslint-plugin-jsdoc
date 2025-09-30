@@ -40,6 +40,7 @@ block avoids the need for a `@template`. Defaults to an array with
 `inheritdoc`. If you set this array, it will overwrite the default,
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
+
 <a name="user-content-require-template-options-requireseparatetemplates"></a>
 <a name="require-template-options-requireseparatetemplates"></a>
 ### <code>requireSeparateTemplates</code>
@@ -54,7 +55,6 @@ templates of this format:
 ```
 
 Defaults to `false`.
-
 
 
 |||

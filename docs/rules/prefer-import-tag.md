@@ -22,11 +22,13 @@ A single options object has the following properties.
 ### <code>enableFixer</code>
 
 Whether or not to enable the fixer to add `@import` tags.
+
 <a name="user-content-prefer-import-tag-options-exempttypedefs"></a>
 <a name="prefer-import-tag-options-exempttypedefs"></a>
 ### <code>exemptTypedefs</code>
 
 Whether to allow `import()` statements within `@typedef`
+
 <a name="user-content-prefer-import-tag-options-outputtype"></a>
 <a name="prefer-import-tag-options-outputtype"></a>
 ### <code>outputType</code>

@@ -66,6 +66,7 @@ A single options object has the following properties.
 ### <code>checkUsedTypedefs</code>
 
 Whether to check typedefs for use within the file
+
 <a name="user-content-no-undefined-types-options-definedtypes"></a>
 <a name="no-undefined-types-options-definedtypes"></a>
 ### <code>definedTypes</code>
@@ -73,6 +74,7 @@ Whether to check typedefs for use within the file
 This array can be populated to indicate other types which
 are automatically considered as defined (in addition to globals, etc.).
 Defaults to an empty array.
+
 <a name="user-content-no-undefined-types-options-disablereporting"></a>
 <a name="no-undefined-types-options-disablereporting"></a>
 ### <code>disableReporting</code>
@@ -80,6 +82,7 @@ Defaults to an empty array.
 Whether to disable reporting of errors. Defaults to
 `false`. This may be set to `true` in order to take advantage of only
 marking defined variables as used or checking used typedefs.
+
 <a name="user-content-no-undefined-types-options-markvariablesasused"></a>
 <a name="no-undefined-types-options-markvariablesasused"></a>
 ### <code>markVariablesAsUsed</code>

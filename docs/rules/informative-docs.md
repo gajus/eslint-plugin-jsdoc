@@ -87,7 +87,6 @@ The default `uselessWords` option is:
 ```
 
 
-
 <a name="user-content-informative-docs-context-and-settings"></a>
 <a name="informative-docs-context-and-settings"></a>
 ## Context and settings

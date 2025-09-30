@@ -72,11 +72,13 @@ If set to `true`, this option will allow extra `@param` definitions (e.g.,
 representing future expected or virtual params) to be present without needing
 their presence within the function signature. Other inconsistencies between
 `@param`'s and present function parameters will still be reported.
+
 <a name="user-content-check-param-names-options-checkdestructured"></a>
 <a name="check-param-names-options-checkdestructured"></a>
 ### <code>checkDestructured</code>
 
 Whether to check destructured properties. Defaults to `true`.
+
 <a name="user-content-check-param-names-options-checkrestproperty"></a>
 <a name="check-param-names-options-checkrestproperty"></a>
 ### <code>checkRestProperty</code>
@@ -84,6 +86,7 @@ Whether to check destructured properties. Defaults to `true`.
 If set to `true`, will require that rest properties are documented and
 that any extraneous properties (which may have been within the rest property)
 are documented. Defaults to `false`.
+
 <a name="user-content-check-param-names-options-checktypespattern"></a>
 <a name="check-param-names-options-checktypespattern"></a>
 ### <code>checkTypesPattern</code>
@@ -123,6 +126,7 @@ your expression as a string, but like a literal, e.g., `/^object$/vi`.
 You could set this regular expression to a more expansive list, or you
 could restrict it such that even types matching those strings would not
 need destructuring.
+
 <a name="user-content-check-param-names-options-disableextrapropertyreporting"></a>
 <a name="check-param-names-options-disableextrapropertyreporting"></a>
 ### <code>disableExtraPropertyReporting</code>
@@ -134,11 +138,13 @@ their own types. Note that extra properties will always be reported if another
 item at the same level is destructured as destructuring will prevent other
 access and this option is only intended to permit documenting extra properties
 that are available and actually used in the function.
+
 <a name="user-content-check-param-names-options-disablemissingparamchecks"></a>
 <a name="check-param-names-options-disablemissingparamchecks"></a>
 ### <code>disableMissingParamChecks</code>
 
 Whether to avoid checks for missing `@param` definitions. Defaults to `false`. Change to `true` if you want to be able to omit properties.
+
 <a name="user-content-check-param-names-options-enablefixer"></a>
 <a name="check-param-names-options-enablefixer"></a>
 ### <code>enableFixer</code>
@@ -149,6 +155,7 @@ names).
 Note that this option will remove duplicates of the same name even if
 the definitions do not match in other ways (e.g., the second param will
 be removed even if it has a different type or description).
+
 <a name="user-content-check-param-names-options-usedefaultobjectproperties"></a>
 <a name="check-param-names-options-usedefaultobjectproperties"></a>
 ### <code>useDefaultObjectProperties</code>

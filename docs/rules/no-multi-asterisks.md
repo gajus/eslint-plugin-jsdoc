@@ -35,6 +35,7 @@ Set to `true` if you wish to allow asterisks after a space (as with Markdown):
 ```
 
 Defaults to `false`.
+
 <a name="user-content-options-preventatend"></a>
 <a name="options-preventatend"></a>
 ### <code>preventAtEnd</code>
@@ -49,6 +50,7 @@ Prevent the likes of this:
 ```
 
 Defaults to `true`.
+
 <a name="user-content-options-preventatmiddlelines"></a>
 <a name="options-preventatmiddlelines"></a>
 ### <code>preventAtMiddleLines</code>

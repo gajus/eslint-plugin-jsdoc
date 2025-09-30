@@ -28,6 +28,7 @@ An array of prefixes to allow at the beginning of a comment.
 Defaults to `['@ts-', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-']`.
 
 Supplying your own value overrides the defaults.
+
 <a name="user-content-convert-to-jsdoc-comments-options-contexts"></a>
 <a name="convert-to-jsdoc-comments-options-contexts"></a>
 ### <code>contexts</code>
@@ -48,6 +49,7 @@ The contexts array which will be checked for content on the same line after.
 Can either be strings or an object with a `context` string and an optional, default `false` `inlineCommentBlock` boolean.
 
 Defaults to an empty array.
+
 <a name="user-content-convert-to-jsdoc-comments-options-contextsbeforeandafter"></a>
 <a name="convert-to-jsdoc-comments-options-contextsbeforeandafter"></a>
 ### <code>contextsBeforeAndAfter</code>
@@ -58,11 +60,13 @@ line after.
 Can either be strings or an object with a `context` string and an optional, default `false` `inlineCommentBlock` boolean.
 
 Defaults to `VariableDeclarator`, `TSPropertySignature`, `PropertyDefinition`.
+
 <a name="user-content-convert-to-jsdoc-comments-options-enablefixer"></a>
 <a name="convert-to-jsdoc-comments-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
 Set to `false` to disable fixing.
+
 <a name="user-content-convert-to-jsdoc-comments-options-enforcejsdoclinestyle"></a>
 <a name="convert-to-jsdoc-comments-options-enforcejsdoclinestyle"></a>
 ### <code>enforceJsdocLineStyle</code>

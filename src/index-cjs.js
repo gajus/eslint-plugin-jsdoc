@@ -21,6 +21,7 @@ import checkTypes from './rules/checkTypes.js';
 import checkValues from './rules/checkValues.js';
 import convertToJsdocComments from './rules/convertToJsdocComments.js';
 import emptyTags from './rules/emptyTags.js';
+import escapeInlineTags from './rules/escapeInlineTags.js';
 import implementsOnClasses from './rules/implementsOnClasses.js';
 import importsAsDependencies from './rules/importsAsDependencies.js';
 import informativeDocs from './rules/informativeDocs.js';
@@ -101,6 +102,7 @@ index.rules = {
   'check-values': checkValues,
   'convert-to-jsdoc-comments': convertToJsdocComments,
   'empty-tags': emptyTags,
+  'escape-inline-tags': escapeInlineTags,
   'implements-on-classes': implementsOnClasses,
   'imports-as-dependencies': importsAsDependencies,
   'informative-docs': informativeDocs,
@@ -285,6 +287,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/check-values': warnOrError,
       'jsdoc/convert-to-jsdoc-comments': 'off',
       'jsdoc/empty-tags': warnOrError,
+      'jsdoc/escape-inline-tags': warnOrError,
       'jsdoc/implements-on-classes': warnOrError,
       'jsdoc/imports-as-dependencies': 'off',
       'jsdoc/informative-docs': 'off',
@@ -451,6 +454,7 @@ const logicalRules = [
   'jsdoc/check-types',
   'jsdoc/check-values',
   'jsdoc/empty-tags',
+  'jsdoc/escape-inline-tags',
   'jsdoc/implements-on-classes',
   'jsdoc/require-returns-check',
   'jsdoc/require-yields-check',

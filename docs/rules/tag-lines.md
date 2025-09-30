@@ -51,6 +51,7 @@ Set to `false` and use with "always" to indicate the normal lines to be
 added after tags should not be added after the final tag.
 
 Defaults to `true`.
+
 <a name="user-content-tag-lines-options-count"></a>
 <a name="tag-lines-options-count"></a>
 ### <code>count</code>
@@ -58,6 +59,7 @@ Defaults to `true`.
 Use with "always" to indicate the number of lines to require be present.
 
 Defaults to 1.
+
 <a name="user-content-tag-lines-options-endlines"></a>
 <a name="tag-lines-options-endlines"></a>
 ### <code>endLines</code>
@@ -66,6 +68,7 @@ If not set to `null`, will enforce end lines to the given count on the
 final tag only.
 
 Defaults to `0`.
+
 <a name="user-content-tag-lines-options-maxblocklines"></a>
 <a name="tag-lines-options-maxblocklines"></a>
 ### <code>maxBlockLines</code>
@@ -75,6 +78,7 @@ If not set to `null`, will enforce a maximum number of lines to the given count 
 Note that if non-`null`, `maxBlockLines` must be greater than or equal to `startLines`.
 
 Defaults to `null`.
+
 <a name="user-content-tag-lines-options-startlines"></a>
 <a name="tag-lines-options-startlines"></a>
 ### <code>startLines</code>
@@ -84,6 +88,7 @@ first tag only, unless there is only whitespace content, in which case,
 a line count will not be enforced.
 
 Defaults to `0`.
+
 <a name="user-content-tag-lines-options-tags"></a>
 <a name="tag-lines-options-tags"></a>
 ### <code>tags</code>

@@ -53,6 +53,7 @@ expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 
 See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our Advanced docs for more on the expected format.
+
 <a name="user-content-no-defaults-options-nooptionalparamnames"></a>
 <a name="no-defaults-options-nooptionalparamnames"></a>
 ### <code>noOptionalParamNames</code>

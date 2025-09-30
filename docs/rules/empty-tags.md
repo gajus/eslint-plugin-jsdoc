@@ -61,7 +61,6 @@ add them within this option.
 ```
 
 
-
 <a name="user-content-context-and-settings"></a>
 <a name="context-and-settings"></a>
 ## Context and settings

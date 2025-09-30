@@ -238,11 +238,13 @@ The format is as follows:
   "definedTags": ["note", "record"]
 }
 ```
+
 <a name="user-content-check-tag-names-options-enablefixer"></a>
 <a name="check-tag-names-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
 Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#user-content-typed).
+
 <a name="user-content-check-tag-names-options-inlinetags"></a>
 <a name="check-tag-names-options-inlinetags"></a>
 ### <code>inlineTags</code>
@@ -250,6 +252,7 @@ Set to `false` to disable auto-removal of types that are redundant with the [`ty
 List of tags to allow inline.
 
 Defaults to array of `'link', 'linkcode', 'linkplain', 'tutorial'`
+
 <a name="user-content-check-tag-names-options-jsxtags"></a>
 <a name="check-tag-names-options-jsxtags"></a>
 ### <code>jsxTags</code>
@@ -264,6 +267,7 @@ jsxRuntime
 ```
 
 For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).
+
 <a name="user-content-check-tag-names-options-typed"></a>
 <a name="check-tag-names-options-typed"></a>
 ### <code>typed</code>

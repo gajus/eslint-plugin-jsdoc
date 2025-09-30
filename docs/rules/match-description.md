@@ -107,6 +107,7 @@ You may also provide an object with `message`:
   }]
 }
 ```
+
 <a name="user-content-match-description-options-matchdescription"></a>
 <a name="match-description-options-matchdescription"></a>
 ### <code>matchDescription</code>
@@ -123,6 +124,7 @@ literal, e.g., `/[A-Z].*\./vi`.
   'jsdoc/match-description': ['error', {matchDescription: '[A-Z].*\\.'}]
 }
 ```
+
 <a name="user-content-match-description-options-message"></a>
 <a name="match-description-options-message"></a>
 ### <code>message</code>
@@ -154,6 +156,7 @@ some content:
 
 If you supply your own tag description for any of the above tags in `tags`,
 your description will take precedence.
+
 <a name="user-content-match-description-options-tags"></a>
 <a name="match-description-options-tags"></a>
 ### <code>tags</code>

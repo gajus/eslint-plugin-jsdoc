@@ -41,6 +41,7 @@ that all generators have `@yields`. This can be an optimization with the
 ESLint `require-yield` rule, as that rule already ensures a `yield` is
 present in generators, albeit assuming the generator is not empty).
 Defaults to `false`.
+
 <a name="user-content-require-yields-check-options-contexts"></a>
 <a name="require-yields-check-options-contexts"></a>
 ### <code>contexts</code>
@@ -53,6 +54,7 @@ the rule to be applied.
 
 Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`,
 `FunctionExpression`).
+
 <a name="user-content-require-yields-check-options-next"></a>
 <a name="require-yields-check-options-next"></a>
 ### <code>next</code>

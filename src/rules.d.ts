@@ -82,7 +82,6 @@ export interface Rules {
           /**
            * An object with any of the following spacing keys set to an integer.
            * If a spacing is not defined, it defaults to one.
-           *
            */
           customSpacings?: {
             /**
@@ -437,7 +436,6 @@ export interface Rules {
            *
            * Defaults to `ArrowFunctionExpression`, `FunctionDeclaration`,
            * `FunctionExpression`, `TSDeclareFunction`.
-           *
            */
           contexts?: (
             | string
@@ -496,7 +494,6 @@ export interface Rules {
            * ```
            *
            * Defaults to `multi`.
-           *
            */
           enforceJsdocLineStyle?: "multi" | "single";
           /**
@@ -526,9 +523,33 @@ export interface Rules {
            *   'jsdoc/empty-tags': ['error', {tags: ['event']}]
            * }
            * ```
-           *
            */
           tags?: string[];
+        }
+      ];
+
+  /** Reports use of JSDoc tags in non-tag positions (in the default "typescript" mode). */
+  "jsdoc/escape-inline-tags": 
+    | []
+    | [
+        {
+          /**
+           * A listing of tags you wish to allow unescaped. Defaults to an empty array.
+           */
+          allowedInlineTags?: string[];
+          /**
+           * Whether to enable the fixer. Defaults to `false`.
+           */
+          enableFixer?: boolean;
+          /**
+           * How to escape the inline tag.
+           *
+           * May be "backticks" to enclose tags in backticks (treating as code segments), or
+           * "backslash" to escape tags with a backslash, i.e., `\@`
+           *
+           * Defaults to "backslash".
+           */
+          fixType?: "backticks" | "backslash";
         }
       ];
 
@@ -588,7 +609,6 @@ export interface Rules {
            *   "a": ["an", "our"]
            * }
            * ```
-           *
            */
           aliases?: {
             /**
@@ -610,7 +630,6 @@ export interface Rules {
            * ```
            *
            * No tags are excluded by default.
-           *
            */
           excludedTags?: string[];
           /**
@@ -628,7 +647,6 @@ export interface Rules {
            * ```json
            * ["a", "an", "i", "in", "of", "s", "the"]
            * ```
-           *
            */
           uselessWords?: string[];
         }
@@ -642,26 +660,22 @@ export interface Rules {
           /**
            * Whether to additionally check the start of blocks, such as classes or functions.
            * Defaults to `false`.
-           *
            */
           checkBlockStarts?: boolean;
           /**
            * An array of tags whose presence in the JSDoc block will prevent the
            * application of the rule. Defaults to `['type']` (i.e., if `@type` is present,
            * lines before the block will not be added).
-           *
            */
           excludedTags?: string[];
           /**
            * This option excludes cases where the JSDoc block occurs on the same line as a
            * preceding code or comment. Defaults to `true`.
-           *
            */
           ignoreSameLine?: boolean;
           /**
            * This option excludes cases where the JSDoc block is only one line long.
            * Defaults to `true`.
-           *
            */
           ignoreSingleLines?: boolean;
           /**
@@ -689,7 +703,6 @@ export interface Rules {
            *
            * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
-           *
            */
           contexts?: (
             | string
@@ -771,7 +784,6 @@ export interface Rules {
            *
            * This can be overridden per tag or for the main block description by setting
            * `message` within `tags` or `mainDescription`, respectively.
-           *
            */
           message?: string;
           /**
@@ -869,7 +881,6 @@ export interface Rules {
            * tag of the desired tag and/or name and no `disallowName` (or `allowName`) is
            * supplied. In such a case, only one error will be reported, but no fixer will
            * be applied, however.
-           *
            */
           match: {
             /**
@@ -958,7 +969,6 @@ export interface Rules {
            * lines.
            *
            * Defaults to `['*']`.
-           *
            */
           multilineTags?: "*" | string[];
           /**
@@ -983,7 +993,6 @@ export interface Rules {
            * are whitelisted in `singleLineTags`.
            *
            * Defaults to `false`.
-           *
            */
           noSingleLineBlocks?: boolean;
           /**
@@ -1004,7 +1013,6 @@ export interface Rules {
            * descriptions.
            *
            * Defaults to `null`.
-           *
            */
           requireSingleLineUnderCount?: number;
           /**
@@ -1031,7 +1039,6 @@ export interface Rules {
            *
            * Defaults to `['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck']`
            * (some directives [used by TypeScript](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html#ts-check)).
-           *
            */
           ignore?: string[];
           /**
@@ -1239,7 +1246,6 @@ export interface Rules {
            *
            * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
-           *
            */
           contexts?: (
             | string
@@ -1332,7 +1338,6 @@ export interface Rules {
            *   }]
            * }
            * ```
-           *
            */
           tags?: {
             /**
@@ -1452,7 +1457,6 @@ export interface Rules {
            * its "description" (e.g., for `@returns {someType} some description`, the
            * description is `some description` while for `@some-tag xyz`, the description
            * is `xyz`).
-           *
            */
           tags?: string[];
         }
@@ -1583,8 +1587,6 @@ export interface Rules {
            * in this configuration object regardless of whether you have configured
            * `fileoverview` instead of `file` on `tagNamePreference` (i.e., `fileoverview`
            * will be checked, but you must use `file` on the configuration object).
-           *
-           *
            */
           tags?: {
             /**
@@ -1615,7 +1617,6 @@ export interface Rules {
            *   `'*': 'always'` to apply hyphen checking to any tag (besides the preferred
            *   `@param` tag which follows the main string option setting and besides any
            *   other `tags` entries).
-           *
            */
           tags?:
             | {
@@ -1646,7 +1647,6 @@ export interface Rules {
            * getters should be checked but only when there is no setter. This may be useful
            * if one only wishes documentation on one of the two accessors. Defaults to
            * `false`.
-           *
            */
           checkGetters?: boolean | "no-setter";
           /**
@@ -1701,7 +1701,6 @@ export interface Rules {
            * function/method names are sufficient for themselves as documentation).
            *
            * Defaults to `false`.
-           *
            */
           exemptEmptyFunctions?: boolean;
           /**
@@ -1734,7 +1733,6 @@ export interface Rules {
            * - `esm` - ESM exports are checked for JSDoc comments (Defaults to `true`)
            * - `cjs` - CommonJS exports are checked for JSDoc comments  (Defaults to `true`)
            * - `window` - Window global exports are checked for JSDoc comments
-           *
            */
           publicOnly?:
             | boolean
@@ -1801,13 +1799,11 @@ export interface Rules {
           /**
            * Numeric to indicate the number at which to begin auto-incrementing roots.
            * Defaults to `0`.
-           *
            */
           autoIncrementBase?: number;
           /**
            * A value indicating whether `constructor`s should be checked. Defaults to
            * `true`.
-           *
            */
           checkConstructors?: boolean;
           /**
@@ -1824,7 +1820,6 @@ export interface Rules {
            * implied to be `false` (i.e., the inside of the roots will not be checked
            * either, e.g., it will also not complain if `a` or `b` do not have their own
            * documentation). Defaults to `true`.
-           *
            */
           checkDestructuredRoots?: boolean;
           /**
@@ -1882,7 +1877,6 @@ export interface Rules {
            * function quux ({num, ...extra}) {
            * }
            * ```
-           *
            */
           checkRestProperty?: boolean;
           /**
@@ -1936,7 +1930,6 @@ export interface Rules {
            *
            * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
-           *
            */
           contexts?: (
             | string
@@ -1983,7 +1976,6 @@ export interface Rules {
            * type to use.
            *
            * Defaults to `true`.
-           *
            */
           enableRestElementFixer?: boolean;
           /**
@@ -2134,7 +2126,6 @@ export interface Rules {
            *
            * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
-           *
            */
           contexts?: (
             | string
@@ -2287,7 +2278,6 @@ export interface Rules {
            * - `esm` - ESM exports are checked for `@returns` JSDoc comments (Defaults to `true`)
            * - `cjs` - CommonJS exports are checked for `@returns` JSDoc comments  (Defaults to `true`)
            * - `window` - Window global exports are checked for `@returns` JSDoc comments
-           *
            */
           publicOnly?:
             | boolean
@@ -2444,7 +2434,6 @@ export interface Rules {
            * ```
            *
            * Defaults to `false`.
-           *
            */
           requireSeparateTemplates?: boolean;
         }
@@ -2848,7 +2837,6 @@ export interface Rules {
            *   'todo',
            * ]}];
            * ```
-           *
            */
           tagSequence?: {
             /**

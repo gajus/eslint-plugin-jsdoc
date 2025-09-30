@@ -52,11 +52,13 @@ A single options object has the following properties.
 Indicates which names are allowed for the given tag (or `*`).
 Accepts a string regular expression (optionally wrapped between two
 `/` delimiters followed by optional flags) used to match the name.
+
 <a name="user-content-options-match-comment"></a>
 <a name="options-match-comment"></a>
 ##### <code>comment</code>
 
 As with `context` but AST for the JSDoc block comment and types.
+
 <a name="user-content-options-match-context"></a>
 <a name="options-match-context"></a>
 ##### <code>context</code>
@@ -65,22 +67,26 @@ AST to confine the allowing or disallowing to JSDoc blocks
 associated with a particular context. See the
 ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
 section of our Advanced docs for more on the expected format.
+
 <a name="user-content-options-match-disallowname"></a>
 <a name="options-match-disallowname"></a>
 ##### <code>disallowName</code>
 
 As with `allowName` but indicates names that are not allowed.
+
 <a name="user-content-options-match-message"></a>
 <a name="options-match-message"></a>
 ##### <code>message</code>
 
 An optional custom message to use when there is a match.
+
 <a name="user-content-options-match-replacement"></a>
 <a name="options-match-replacement"></a>
 ##### <code>replacement</code>
 
 If `disallowName` is supplied and this value is present, it
 will replace the matched `disallowName` text.
+
 <a name="user-content-options-match-tags"></a>
 <a name="options-match-tags"></a>
 ##### <code>tags</code>

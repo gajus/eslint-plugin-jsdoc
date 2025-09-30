@@ -41,6 +41,7 @@ tag (since a description cannot precede a tag on a single line, and also
 cannot be reliably added after the tag either).
 
 Defaults to `true`.
+
 <a name="user-content-options-minimumlengthformultiline"></a>
 <a name="options-minimumlengthformultiline"></a>
 ### <code>minimumLengthForMultiline</code>
@@ -52,6 +53,7 @@ If not set, multiline blocks will not be permitted regardless of length unless
 a relevant tag is present and `multilineTags` is set.
 
 Defaults to not being in effect.
+
 <a name="user-content-options-multilinetags"></a>
 <a name="options-multilinetags"></a>
 ### <code>multilineTags</code>
@@ -81,6 +83,7 @@ line will be reported. (Text preceding a newline is not reported.)
 `noMultilineBlocks` will have priority over this rule if it applies.
 
 Defaults to `true`.
+
 <a name="user-content-options-nomultilineblocks"></a>
 <a name="options-nomultilineblocks"></a>
 ### <code>noMultilineBlocks</code>
@@ -90,6 +93,7 @@ by the options `minimumLengthForMultiline`, `multilineTags`, or
 `allowMultipleTags`.
 
 Defaults to `false`.
+
 <a name="user-content-options-nosinglelineblocks"></a>
 <a name="options-nosinglelineblocks"></a>
 ### <code>noSingleLineBlocks</code>
@@ -109,6 +113,7 @@ space will be reported. (Text after a newline is not reported.)
 `noMultilineBlocks` will have priority over this rule if it applies.
 
 Defaults to `true`.
+
 <a name="user-content-options-requiresinglelineundercount"></a>
 <a name="options-requiresinglelineundercount"></a>
 ### <code>requireSingleLineUnderCount</code>
