@@ -819,6 +819,38 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /** @type {import('foo')} */
+        let foo;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import * as foo from 'foo'; */
+        /** @type {foo} */
+        let foo;
+      `,
+    },
+    {
+      code: `/** @type {import('foo')} */
+let foo;
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `/** @import * as foo from 'foo'; */
+/** @type {foo} */
+let foo;
+      `,
+    },
   ],
   valid: [
     {
