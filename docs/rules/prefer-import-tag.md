@@ -302,6 +302,19 @@ let foo;
 /** @type {import('foo')} */
 let foo;
 // Message: Inline `import()` found; prefer `@import`
+
+/** @type {import('foo').bar} */
+let foo;
+// Message: Inline `import()` found; prefer `@import`
+
+/** @type {import('foo').bar} */
+let foo;
+// "jsdoc/prefer-import-tag": ["error"|"warn", {"outputType":"named-import"}]
+// Message: Inline `import()` found; prefer `@import`
+
+/** @type {import('foo').default} */
+let foo;
+// Message: Inline `import()` found; prefer `@import`
 ````
 
 

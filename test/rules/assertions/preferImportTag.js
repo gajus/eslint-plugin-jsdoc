@@ -234,7 +234,6 @@ export default {
          */
       `,
     },
-
     {
       code: `
         /**
@@ -849,6 +848,62 @@ let foo;
       output: `/** @import * as foo from 'foo'; */
 /** @type {foo} */
 let foo;
+      `,
+    },
+    {
+      code: `
+        /** @type {import('foo').bar} */
+        let foo;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import * as foo from 'foo'; */
+        /** @type {foo.bar} */
+        let foo;
+      `,
+    },
+    {
+      code: `
+        /** @type {import('foo').bar} */
+        let foo;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      options: [
+        {
+          outputType: 'named-import',
+        },
+      ],
+      output: `
+        /** @import { bar } from 'foo'; */
+        /** @type {bar} */
+        let foo;
+      `,
+    },
+    {
+      code: `
+        /** @type {import('foo').default} */
+        let foo;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `
+        /** @import foo from 'foo'; */
+        /** @type {foo} */
+        let foo;
       `,
     },
   ],
