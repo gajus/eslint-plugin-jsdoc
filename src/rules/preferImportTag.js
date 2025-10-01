@@ -386,10 +386,15 @@ export default iterateJsdoc(({
           enableFixer ? (fixer) => {
             getFixer(element.value, [])();
 
-            const programNode = sourceCode.getNodeByRangeIndex(0);
+            const programNode = sourceCode.ast;
+            const commentNodes = sourceCode.getCommentsBefore(programNode);
+
             return fixer.insertTextBefore(
-              /** @type {import('estree').Program} */ (programNode),
-              `/** @import ${element.value} from '${element.value}'; */`,
+              // @ts-expect-error Ok
+              commentNodes[0] ?? programNode,
+              `/** @import ${element.value} from '${element.value}'; */${
+                commentNodes[0] ? '\n' + indent : ''
+              }`,
             );
           } : null,
         );
@@ -411,12 +416,18 @@ export default iterateJsdoc(({
             )();
           }
 
-          const programNode = sourceCode.getNodeByRangeIndex(0);
+          const programNode = sourceCode.ast;
+          const commentNodes = sourceCode.getCommentsBefore(programNode);
           return fixer.insertTextBefore(
-            /** @type {import('estree').Program} */ (programNode),
+            // @ts-expect-error Ok
+            commentNodes[0] ?? programNode,
             outputType === 'namespaced-import' ?
-              `/** @import * as ${element.value} from '${element.value}'; */` :
-              `/** @import { ${pathSegments.at(-1)} } from '${element.value}'; */`,
+              `/** @import * as ${element.value} from '${element.value}'; */${
+                commentNodes[0] ? '\n' + indent : ''
+              }` :
+              `/** @import { ${pathSegments.at(-1)} } from '${element.value}'; */${
+                commentNodes[0] ? '\n' + indent : ''
+              }`,
           );
         } : null,
       );
