@@ -294,6 +294,14 @@ The following patterns are considered problems:
  */
 // "jsdoc/prefer-import-tag": ["error"|"warn", {"exemptTypedefs":true}]
 // Message: Inline `import()` found; using `@typedef`
+
+/** @type {import('foo')} */
+let foo;
+// Message: Inline `import()` found; prefer `@import`
+
+/** @type {import('foo')} */
+let foo;
+// Message: Inline `import()` found; prefer `@import`
 ````
 
 

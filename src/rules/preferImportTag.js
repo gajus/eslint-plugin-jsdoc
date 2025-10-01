@@ -16,6 +16,7 @@ import {
 
 export default iterateJsdoc(({
   context,
+  indent,
   jsdoc,
   settings,
   sourceCode,
@@ -363,10 +364,14 @@ export default iterateJsdoc(({
           enableFixer ? (fixer) => {
             getFixer(element.value, [])();
 
-            const programNode = sourceCode.getNodeByRangeIndex(0);
+            const programNode = sourceCode.ast;
+            const commentNodes = sourceCode.getCommentsBefore(programNode);
             return fixer.insertTextBefore(
-              /** @type {import('estree').Program} */ (programNode),
-              `/** @import * as ${element.value} from '${element.value}'; */`,
+              // @ts-expect-error Ok
+              commentNodes[0] ?? programNode,
+              `/** @import * as ${element.value} from '${element.value}'; */${
+                commentNodes[0] ? '\n' + indent : ''
+              }`,
             );
           } : null,
         );
