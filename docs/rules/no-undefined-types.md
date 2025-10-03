@@ -50,7 +50,7 @@ types for a tag, the function will silently ignore that tag, leaving it to
 the `valid-types` rule to report parsing errors.
 
 If you define your own tags, you can use `settings.jsdoc.structuredTags`
-to indicate that a tag's `name` is "namepath-defining" (and should prevent
+to indicate that a tag's `name` is "name-defining" or "namepath-defining" (and should prevent
 reporting on use of that namepath elsewhere) and/or that a tag's `type` is
 `false` (and should not be checked for types). If the `type` is an array, that
 array's items will be considered as defined for the purposes of that tag.

@@ -139,7 +139,7 @@ export default iterateJsdoc(({
       return doc.tags.filter(({
         tag,
       }) => {
-        return utils.isNamepathDefiningTag(tag) && ![
+        return utils.isNameOrNamepathDefiningTag(tag) && ![
           'arg',
           'argument',
           'param',
@@ -569,7 +569,7 @@ export default iterateJsdoc(({
         const tags = doc.tags.filter(({
           tag,
         }) => {
-          return utils.isNamepathDefiningTag(tag);
+          return utils.isNameOrNamepathDefiningTag(tag);
         });
         if (!tags.length) {
           return [];

@@ -49,7 +49,7 @@ const checkNotAlignedPerTag = (utils, tag, customSpacings) => {
   let spacerProps;
   /** @type {ContentProp[]} */
   let contentProps;
-  const mightHaveNamepath = utils.tagMightHaveNamepath(tag.tag);
+  const mightHaveNamepath = utils.tagMightHaveNameOrNamepath(tag.tag);
   if (mightHaveNamepath) {
     spacerProps = [
       'postDelimiter', 'postTag', 'postType', 'postName',

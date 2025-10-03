@@ -315,6 +315,7 @@ values are objects with the following optional properties:
       name position (non-whitespace immediately after the tag and whitespace),
       e.g., in `@throws This is an error`, "This" would normally be the name,
       but "text" allows non-name text here also. This is the default.
+    - `"name-defining"` - Indicates the tag adds a name to definitions. May not be an arbitrary namepath, unlike `"namepath-defining"`
     - `"namepath-defining"` - As with `namepath-referencing`, but also
       indicates the tag adds a namepath to definitions, e.g., to prevent
       `no-undefined-types` from reporting references to that namepath.

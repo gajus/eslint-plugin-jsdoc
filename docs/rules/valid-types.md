@@ -503,6 +503,15 @@ function quux (items) {
  * @param {SomeType} aName An inline {@link} tag without content.
  */
 // Message: Inline tag "link" missing content
+
+/**
+ * With reserved word in type
+ * @param {Array<import>} foo
+ */
+function quux() {
+
+}
+// Message: Syntax error in type: Array<import>
 ````
 
 
@@ -919,5 +928,42 @@ export function onGlobalEvent (selector, type, callback, options) {
  */
 function a () {}
 // Settings: {"jsdoc":{"structuredTags":{"next":{"required":["type"]}}}}
+
+/**
+ * With reserved word in name
+ * @typedef {SomeType} import
+ */
+
+/**
+ * With reserved word in namepath
+ * @param {SomeType} import
+ */
+
+/**
+ * @param readonly
+ */
+
+/**
+ * @param {boolean} readonly
+ */
+
+/**
+ * @param {object} params
+ * @param {boolean} params.readonly
+ */
+
+/**
+ * An object interface
+ * @typedef  {Object} FooBar
+ * @property {boolean} readonly
+ * @property {boolean} private
+ * @property {boolean} public
+ * @property {boolean} constant
+ */
+
+/**
+ * @param {object} props
+ * @param {string} props.is
+ */
 ````
 
