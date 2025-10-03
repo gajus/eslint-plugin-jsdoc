@@ -1055,10 +1055,14 @@ const getTagStructureForMode = (mode, structuredTags) => {
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
-const isNamepathDefiningTag = (tag, tagMap = tagStructure) => {
+const isNameOrNamepathDefiningTag = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
-  return tagStruct.get('namepathRole') === 'namepath-defining';
+  return /** @type {(string|boolean|undefined)[]} */ ([
+    'name-defining',
+    'namepath-defining',
+  ]).includes(/** @type {string|boolean|undefined} */ (
+    tagStruct.get('namepathRole')));
 };
 
 /**
@@ -1110,7 +1114,8 @@ const tagMightHaveTypePosition = (tag, tagMap = tagStructure) => {
 };
 
 const namepathTypes = new Set([
-  'namepath-defining', 'namepath-referencing',
+  'name-defining', 'namepath-defining',
+  'namepath-referencing',
 ]);
 
 /**
@@ -1131,7 +1136,7 @@ const tagMightHaveNamePosition = (tag, tagMap = tagStructure) => {
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
  */
-const tagMightHaveNamepath = (tag, tagMap = tagStructure) => {
+const tagMightHaveNameOrNamepath = (tag, tagMap = tagStructure) => {
   const tagStruct = ensureMap(tagMap, tag);
 
   const nampathRole = tagStruct.get('namepathRole');
@@ -1157,7 +1162,7 @@ const tagMustHaveNamePosition = (tag, tagMap = tagStructure) => {
  * @returns {boolean}
  */
 const tagMightHaveEitherTypeOrNamePosition = (tag, tagMap) => {
-  return Boolean(tagMightHaveTypePosition(tag, tagMap)) || tagMightHaveNamepath(tag, tagMap);
+  return Boolean(tagMightHaveTypePosition(tag, tagMap)) || tagMightHaveNameOrNamepath(tag, tagMap);
 };
 
 /**
@@ -1182,7 +1187,7 @@ const tagMissingRequiredTypeOrNamepath = (tag, tagMap = tagStructure) => {
   const hasTypePosition = mightHaveTypePosition && Boolean(tag.type);
   const hasNameOrNamepathPosition = (
     tagMustHaveNamePosition(tag.tag, tagMap) ||
-    tagMightHaveNamepath(tag.tag, tagMap)
+    tagMightHaveNameOrNamepath(tag.tag, tagMap)
   ) && Boolean(tag.name);
   const mustHaveEither = tagMustHaveEitherTypeOrNamePosition(tag.tag, tagMap);
   const hasEither = tagMightHaveEitherTypeOrNamePosition(tag.tag, tagMap) &&
@@ -1890,7 +1895,7 @@ export {
   hasYieldValue,
   isConstructor,
   isGetter,
-  isNamepathDefiningTag,
+  isNameOrNamepathDefiningTag,
   isNamepathOrUrlReferencingTag,
   isNamepathReferencingTag,
   isSetter,
@@ -1902,7 +1907,7 @@ export {
   setTagStructure,
   strictNativeTypes,
   tagMightHaveEitherTypeOrNamePosition,
-  tagMightHaveNamepath,
+  tagMightHaveNameOrNamepath,
   tagMightHaveNamePosition,
   tagMightHaveTypePosition,
   tagMissingRequiredTypeOrNamepath,

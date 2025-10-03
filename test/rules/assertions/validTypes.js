@@ -1129,6 +1129,23 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+          /**
+           * With reserved word in type
+           * @param {Array<import>} foo
+           */
+          function quux() {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Syntax error in type: Array<import>',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1907,6 +1924,58 @@ export default /** @type {import('../index.js').TestCases} */ ({
           },
         },
       },
+    },
+    {
+      code: `
+          /**
+           * With reserved word in name
+           * @typedef {SomeType} import
+           */
+      `,
+    },
+    {
+      code: `
+          /**
+           * With reserved word in namepath
+           * @param {SomeType} import
+           */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param readonly
+         */
+
+        /**
+         * @param {boolean} readonly
+         */
+
+        /**
+         * @param {object} params
+         * @param {boolean} params.readonly
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * An object interface
+         * @typedef  {Object} FooBar
+         * @property {boolean} readonly
+         * @property {boolean} private
+         * @property {boolean} public
+         * @property {boolean} constant
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {object} props
+         * @param {string} props.is
+         */
+      `,
     },
   ],
 });

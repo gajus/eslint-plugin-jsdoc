@@ -1,6 +1,8 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
   parse,
+  // parseName,
+  parseNamePath,
   traverse,
   tryParse,
 } from '@es-joy/jsdoccomment';
@@ -8,14 +10,6 @@ import {
 const inlineTags = new Set([
   'link', 'linkcode', 'linkplain',
   'tutorial',
-]);
-
-const jsdocTypePrattKeywords = new Set([
-  'extends',
-  'import',
-  'is',
-  'readonly',
-  'typeof',
 ]);
 
 const asExpression = /as\s+/v;
@@ -88,11 +82,14 @@ const suppressTypes = new Set([
 
 /**
  * @param {string} path
+ * @param {import('jsdoc-type-pratt-parser').ParseMode|"permissive"} mode
  * @returns {boolean}
  */
-const tryParsePathIgnoreError = (path) => {
+const tryParsePathIgnoreError = (path, mode) => {
   try {
-    tryParse(path);
+    parseNamePath(path, mode === 'permissive' ? 'jsdoc' : mode, {
+      includeSpecial: true,
+    });
 
     return true;
   } catch {
@@ -125,8 +122,7 @@ export default iterateJsdoc(({
      */
     const validNamepathParsing = function (namepath, tagName) {
       if (
-        tryParsePathIgnoreError(namepath) ||
-        jsdocTypePrattKeywords.has(namepath)
+        tryParsePathIgnoreError(namepath, mode)
       ) {
         return true;
       }
@@ -141,7 +137,7 @@ export default iterateJsdoc(({
             if ([
               '#', '.', '~',
             ].includes(endChar)) {
-              handled = tryParsePathIgnoreError(namepath.slice(0, -1));
+              handled = tryParsePathIgnoreError(namepath.slice(0, -1), mode);
             }
 
             break;
@@ -149,7 +145,7 @@ export default iterateJsdoc(({
 
           case 'module': case 'requires': {
             if (!namepath.startsWith('module:')) {
-              handled = tryParsePathIgnoreError(`module:${namepath}`);
+              handled = tryParsePathIgnoreError(`module:${namepath}`, mode);
             }
 
             break;
@@ -160,7 +156,7 @@ export default iterateJsdoc(({
             if ([
               '#', '.', '~',
             ].includes(startChar)) {
-              handled = tryParsePathIgnoreError(namepath.slice(1));
+              handled = tryParsePathIgnoreError(namepath.slice(1), mode);
             }
           }
         }
@@ -356,7 +352,7 @@ export default iterateJsdoc(({
     // VALID NAME/NAMEPATH
     const hasNameOrNamepathPosition = (
       tagMustHaveNamePosition !== false ||
-      utils.tagMightHaveNamepath(tag.tag)
+      utils.tagMightHaveNameOrNamepath(tag.tag)
     ) && Boolean(tag.name);
 
     if (hasNameOrNamepathPosition) {
@@ -366,6 +362,7 @@ export default iterateJsdoc(({
           //   `utils.parseClosureTemplateTag`, so first try a raw
           //   value; we really need a proper parser instead, however.
           tag.name.trim().replace(/^\[?(?<name>.*?)=.*$/v, '$<name>'),
+          mode,
         )) {
           for (const namepath of utils.parseClosureTemplateTag(tag)) {
             validNamepathParsing(namepath);

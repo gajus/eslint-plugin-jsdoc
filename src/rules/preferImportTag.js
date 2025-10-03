@@ -48,7 +48,7 @@ export default iterateJsdoc(({
       return doc.tags.filter(({
         tag,
       }) => {
-        return utils.isNamepathDefiningTag(tag);
+        return utils.isNameOrNamepathDefiningTag(tag);
       });
     });
 
@@ -437,7 +437,7 @@ export default iterateJsdoc(({
   for (const tag of jsdoc.tags) {
     const mightHaveTypePosition = utils.tagMightHaveTypePosition(tag.tag);
     const hasTypePosition = mightHaveTypePosition === true && Boolean(tag.type);
-    if (hasTypePosition && (!exemptTypedefs || !utils.isNamepathDefiningTag(tag.tag))) {
+    if (hasTypePosition && (!exemptTypedefs || !utils.isNameOrNamepathDefiningTag(tag.tag))) {
       iterateInlineImports(tag);
     }
   }

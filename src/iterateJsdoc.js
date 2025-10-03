@@ -92,10 +92,10 @@ import esquery from 'esquery';
  *   parseClosureTemplateTag: ParseClosureTemplateTag,
  *   getPreferredTagNameObject: GetPreferredTagNameObject,
  *   pathDoesNotBeginWith: import('./jsdocUtils.js').PathDoesNotBeginWith
- *   isNamepathDefiningTag: IsNamepathX,
+ *   isNameOrNamepathDefiningTag: IsNamepathX,
  *   isNamepathReferencingTag: IsNamepathX,
  *   isNamepathOrUrlReferencingTag: IsNamepathX,
- *   tagMightHaveNamepath: IsNamepathX,
+ *   tagMightHaveNameOrNamepath: IsNamepathX,
  * }} BasicUtils
  */
 
@@ -526,10 +526,10 @@ import esquery from 'esquery';
  *   tagMustHaveNamePosition: TagMustHave,
  *   tagMustHaveTypePosition: TagMustHave,
  *   tagMissingRequiredTypeOrNamepath: TagMissingRequiredTypeOrNamepath,
- *   isNamepathDefiningTag: IsNamepathX,
+ *   isNameOrNamepathDefiningTag: IsNamepathX,
  *   isNamepathReferencingTag: IsNamepathX,
  *   isNamepathOrUrlReferencingTag: IsNamepathX,
- *   tagMightHaveNamepath: IsNamepathX,
+ *   tagMightHaveNameOrNamepath: IsNamepathX,
  *   getTagStructureForMode: GetTagStructureForMode,
  *   mayBeUndefinedTypeTag: MayBeUndefinedTypeTag,
  *   hasValueOrExecutorHasNonEmptyResolveValue: HasValueOrExecutorHasNonEmptyResolveValue,
@@ -614,18 +614,18 @@ const getBasicUtils = (context, {
   const utils = {};
 
   for (const method of [
-    'isNamepathDefiningTag',
+    'isNameOrNamepathDefiningTag',
     'isNamepathReferencingTag',
     'isNamepathOrUrlReferencingTag',
-    'tagMightHaveNamepath',
+    'tagMightHaveNameOrNamepath',
   ]) {
     /** @type {IsNamepathX} */
     utils[
-      /** @type {"isNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNamepath"} */ (
+      /** @type {"isNameOrNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNameOrNamepath"} */ (
         method
       )] = (tagName) => {
       return jsdocUtils[
-        /** @type {"isNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNamepath"} */
+        /** @type {"isNameOrNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNameOrNamepath"} */
         (method)
       ](tagName);
     };
@@ -1769,7 +1769,7 @@ const getUtils = (
 /**
  * @typedef {{
  *   [key: string]: {
- *     name?: "text"|"namepath-defining"|"namepath-referencing"|false,
+ *     name?: "text"|"name-defining"|"namepath-defining"|"namepath-referencing"|false,
  *     type?: boolean|string[],
  *     required?: ("name"|"type"|"typeOrNameRequired")[]
  *   }
