@@ -1148,6 +1148,37 @@ const tagMightHaveNameOrNamepath = (tag, tagMap = tagStructure) => {
 /**
  * @param {string} tag
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
+ * @returns {boolean}
+ */
+const tagMightHaveNamepath = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
+
+  const nampathRole = tagStruct.get('namepathRole');
+
+  return nampathRole !== false &&
+    [
+      'namepath-defining',
+      'namepath-referencing',
+    ].includes(/** @type {string} */ (nampathRole));
+};
+
+/**
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
+ * @returns {boolean}
+ */
+const tagMightHaveName = (tag, tagMap = tagStructure) => {
+  const tagStruct = ensureMap(tagMap, tag);
+
+  const nampathRole = tagStruct.get('namepathRole');
+
+  return nampathRole !== false &&
+    nampathRole === 'name-defining';
+};
+
+/**
+ * @param {string} tag
+ * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean|undefined}
  */
 const tagMustHaveNamePosition = (tag, tagMap = tagStructure) => {
@@ -1907,7 +1938,9 @@ export {
   setTagStructure,
   strictNativeTypes,
   tagMightHaveEitherTypeOrNamePosition,
+  tagMightHaveName,
   tagMightHaveNameOrNamepath,
+  tagMightHaveNamepath,
   tagMightHaveNamePosition,
   tagMightHaveTypePosition,
   tagMissingRequiredTypeOrNamepath,
