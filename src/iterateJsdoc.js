@@ -2134,6 +2134,7 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
  * @property {true} [nonGlobalSettings] Whether to avoid relying on settings for global contexts
  * @property {true} [noTracking] Whether to disable the tracking of visited comment nodes (as
  *   non-tracked may conduct further actions)
+ * @property {Partial<Settings>} [ruleSettings] Any additional settings
  * @property {true} [matchContext] Whether the rule expects contexts to be based on a match option
  * @property {(args: {
  *   context: import('eslint').Rule.RuleContext,
@@ -2314,7 +2315,10 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
          */
         '*:not(Program)' (node) {
           const commentNode = getJSDocComment(
-            sourceCode, node, /** @type {Settings} */ (settings),
+            sourceCode, node, /** @type {Settings} */ ({
+              ...settings,
+              ...ruleConfig.ruleSettings,
+            }),
           );
           if (!ruleConfig.noTracking && trackedJsdocs.has(commentNode)) {
             return;
