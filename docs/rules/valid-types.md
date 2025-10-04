@@ -233,7 +233,18 @@ function quux() {
 /**
  * @typedef {string} UserStr%ng
  */
-// Message: Syntax error in namepath: UserStr%ng
+// Message: Syntax error in name: UserStr%ng
+
+/**
+ * @typedef {string} module:abc/def
+ */
+// Message: Syntax error in name: module:abc/def
+
+/**
+ * @typedef {string} module:abc/def
+ */
+// Settings: {"jsdoc":{"mode":"permissive"}}
+// Message: Syntax error in name: module:abc/def
 
 /**
  * @this

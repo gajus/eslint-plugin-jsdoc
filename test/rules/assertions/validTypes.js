@@ -233,9 +233,40 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 3,
-          message: 'Syntax error in namepath: UserStr%ng',
+          message: 'Syntax error in name: UserStr%ng',
         },
       ],
+    },
+    {
+      code: `
+          /**
+           * @typedef {string} module:abc/def
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in name: module:abc/def',
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @typedef {string} module:abc/def
+           */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Syntax error in name: module:abc/def',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+        },
+      },
     },
     {
       code: `
