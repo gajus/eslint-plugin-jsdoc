@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "~0.67.2",
+    "@es-joy/jsdoccomment": "~0.68.1",
     "are-docs-informative": "^0.0.2",
     "comment-parser": "1.4.1",
     "debug": "^4.4.3",
@@ -27,7 +27,7 @@
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@babel/plugin-transform-flow-strip-types": "^7.27.1",
     "@babel/preset-env": "^7.28.3",
-    "@es-joy/escodegen": "^4.0.3",
+    "@es-joy/escodegen": "^4.2.0",
     "@es-joy/jsdoc-eslint-parser": "^0.24.0",
     "@eslint/core": "^0.16.0",
     "@hkdobrev/run-if-changed": "^0.6.3",
@@ -58,7 +58,7 @@
     "glob": "^11.0.3",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
-    "jsdoc-type-pratt-parser": "^6.3.2",
+    "jsdoc-type-pratt-parser": "^6.3.3",
     "json-schema": "^0.4.0",
     "json-schema-to-typescript": "^15.0.4",
     "lint-staged": "^16.2.3",

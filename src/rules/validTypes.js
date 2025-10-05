@@ -1,7 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
   parse,
-  // parseName,
+  parseName,
   parseNamePath,
   traverse,
   tryParse,
@@ -90,6 +90,23 @@ const tryParsePathIgnoreError = (path, mode) => {
     parseNamePath(path, mode === 'permissive' ? 'jsdoc' : mode, {
       includeSpecial: true,
     });
+
+    return true;
+  } catch {
+    // Keep the original error for including the whole type
+  }
+
+  return false;
+};
+
+/**
+ * @param {string} name
+ * @param {import('jsdoc-type-pratt-parser').ParseMode|"permissive"} mode
+ * @returns {boolean}
+ */
+const tryParseNameIgnoreError = (name, mode) => {
+  try {
+    parseName(name, mode === 'permissive' ? 'jsdoc' : mode);
 
     return true;
   } catch {
@@ -350,12 +367,12 @@ export default iterateJsdoc(({
     }
 
     // VALID NAME/NAMEPATH
-    const hasNameOrNamepathPosition = (
+    const hasNamepathPosition = (
       tagMustHaveNamePosition !== false ||
-      utils.tagMightHaveNameOrNamepath(tag.tag)
+      utils.tagMightHaveNamepath(tag.tag)
     ) && Boolean(tag.name);
 
-    if (hasNameOrNamepathPosition) {
+    if (hasNamepathPosition) {
       if (mode !== 'jsdoc' && tag.tag === 'template') {
         if (!tryParsePathIgnoreError(
           // May be an issue with the commas of
@@ -371,6 +388,12 @@ export default iterateJsdoc(({
       } else {
         validNamepathParsing(tag.name, tag.tag);
       }
+    }
+
+    const hasNamePosition = utils.tagMightHaveName(tag.tag) &&
+      Boolean(tag.name);
+    if (hasNamePosition && !tryParseNameIgnoreError(tag.name, mode)) {
+      report(`Syntax error in name: ${tag.name}`, null, tag);
     }
 
     for (const inlineTag of tag.inlineTags) {

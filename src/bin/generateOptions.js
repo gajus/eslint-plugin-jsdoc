@@ -36,11 +36,13 @@ for (const file of dirContents) {
      ' Property[key.name="meta"] Property[key.name="schema"]',
   );
   if (results[0]?.value) {
-    const schema = generate(results[0]?.value);
-
-    // eslint-disable-next-line no-eval -- Need some parser
-    const json = eval('JSON.stringify(' + schema + ', null, 2)');
-    const parsed = JSON.parse(json);
+    const schema = generate(results[0]?.value, {
+      format: {
+        json: true,
+        quotes: 'double',
+      },
+    });
+    const parsed = JSON.parse(schema);
 
     let initial = '';
     if (Array.isArray(parsed)) {

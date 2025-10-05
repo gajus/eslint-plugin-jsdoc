@@ -96,6 +96,7 @@ import esquery from 'esquery';
  *   isNamepathReferencingTag: IsNamepathX,
  *   isNamepathOrUrlReferencingTag: IsNamepathX,
  *   tagMightHaveNameOrNamepath: IsNamepathX,
+ *   tagMightHaveName: IsNamepathX
  * }} BasicUtils
  */
 
@@ -530,6 +531,8 @@ import esquery from 'esquery';
  *   isNamepathReferencingTag: IsNamepathX,
  *   isNamepathOrUrlReferencingTag: IsNamepathX,
  *   tagMightHaveNameOrNamepath: IsNamepathX,
+ *   tagMightHaveName: IsNamepathX,
+ *   tagMightHaveNamepath: IsNamepathX,
  *   getTagStructureForMode: GetTagStructureForMode,
  *   mayBeUndefinedTypeTag: MayBeUndefinedTypeTag,
  *   hasValueOrExecutorHasNonEmptyResolveValue: HasValueOrExecutorHasNonEmptyResolveValue,
@@ -618,14 +621,16 @@ const getBasicUtils = (context, {
     'isNamepathReferencingTag',
     'isNamepathOrUrlReferencingTag',
     'tagMightHaveNameOrNamepath',
+    'tagMightHaveName',
+    'tagMightHaveNamepath',
   ]) {
     /** @type {IsNamepathX} */
     utils[
-      /** @type {"isNameOrNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNameOrNamepath"} */ (
+      /** @type {"isNameOrNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNameOrNamepath"|"tagMightHaveName"} */ (
         method
       )] = (tagName) => {
       return jsdocUtils[
-        /** @type {"isNameOrNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNameOrNamepath"} */
+        /** @type {"isNameOrNamepathDefiningTag"|"isNamepathReferencingTag"|"isNamepathOrUrlReferencingTag"|"tagMightHaveNameOrNamepath"|"tagMightHaveName"} */
         (method)
       ](tagName);
     };
