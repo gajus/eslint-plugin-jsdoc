@@ -384,6 +384,29 @@ class Filler {
 /** @type {AnotherType} */
 // "jsdoc/no-undefined-types": ["error"|"warn", {"checkUsedTypedefs":true}]
 // Message: This typedef was not used within the file
+
+/** @typedef {'cwd'} */
+let MyOwnType1
+
+/**
+ * @param {`${MyOwnType1}-${string}`} tagName
+ * @param {CustomElementConstructor} component
+ */
+let defineCustomElement = (tagName, component) => {
+  customElements.define(tagName, component)
+}
+
+/** @typedef {string} */
+let MyOwnType2
+
+/**
+ * @param {<T extends unknown>(element: MyOwnType2) => T} callback
+ * @returns {void}
+ */
+let getValue = (callback) => {
+  callback(`hello`)
+}
+// Message: The type 'CustomElementConstructor' is undefined.
 ````
 
 

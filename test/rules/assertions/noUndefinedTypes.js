@@ -670,6 +670,37 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /** @typedef {'cwd'} */
+        let MyOwnType1
+
+        /**
+         * @param {\`\${MyOwnType1}-\${string}\`} tagName
+         * @param {CustomElementConstructor} component
+         */
+        let defineCustomElement = (tagName, component) => {
+          customElements.define(tagName, component)
+        }
+
+        /** @typedef {string} */
+        let MyOwnType2
+
+        /**
+         * @param {<T extends unknown>(element: MyOwnType2) => T} callback
+         * @returns {void}
+         */
+        let getValue = (callback) => {
+          callback(\`hello\`)
+        }
+      `,
+      errors: [
+        {
+          line: 7,
+          message: 'The type \'CustomElementConstructor\' is undefined.',
+        },
+      ],
+    },
   ],
   valid: [
     {
