@@ -101,12 +101,12 @@ const tryParsePathIgnoreError = (path, mode) => {
 
 /**
  * @param {string} name
- * @param {import('jsdoc-type-pratt-parser').ParseMode|"permissive"} mode
+ * @param {import('jsdoc-type-pratt-parser').ParseMode} mode
  * @returns {boolean}
  */
 const tryParseNameIgnoreError = (name, mode) => {
   try {
-    parseName(name, mode === 'permissive' ? 'jsdoc' : mode);
+    parseName(name, mode);
 
     return true;
   } catch {
@@ -396,8 +396,14 @@ export default iterateJsdoc(({
 
     const hasNamePosition = utils.tagMightHaveName(tag.tag) &&
       Boolean(tag.name);
-    if (hasNamePosition && !tryParseNameIgnoreError(tag.name, mode)) {
+    if (
+      hasNamePosition &&
+      mode === 'typescript' &&
+      !tryParseNameIgnoreError(tag.name, mode)
+    ) {
       report(`Syntax error in name: ${tag.name}`, null, tag);
+    } else if (hasNamePosition && mode !== 'typescript') {
+      validNamepathParsing(tag.name, tag.tag);
     }
 
     for (const inlineTag of tag.inlineTags) {
