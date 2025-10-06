@@ -976,5 +976,12 @@ function a () {}
  * @param {object} props
  * @param {string} props.is
  */
+
+class Test {
+  /**
+   * @returns {this}
+   */
+  method() { return this; }
+}
 ````
 

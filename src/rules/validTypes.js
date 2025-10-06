@@ -196,9 +196,13 @@ export default iterateJsdoc(({
       let parsedTypes;
       try {
         if (mode === 'permissive') {
-          parsedTypes = tryParse(type);
+          parsedTypes = tryParse(type, undefined, {
+            classContext: true,
+          });
         } else {
-          parsedTypes = parse(type, mode);
+          parsedTypes = parse(type, mode, {
+            classContext: true,
+          });
         }
       } catch {
         report(`Syntax error in type: ${type}`, null, tag);
