@@ -512,6 +512,25 @@ export default iterateJsdoc(({
         if (!allDefinedTypes.has(val) &&
           (!Array.isArray(structuredTypes) || !structuredTypes.includes(val))
         ) {
+          const parent =
+            /**
+             * @type {import('jsdoc-type-pratt-parser').RootResult & {
+             *   _parent?: import('jsdoc-type-pratt-parser').NonRootResult
+             * }}
+             */ (nde)._parent;
+          if (parent?.type === 'JsdocTypeTypeParameter') {
+            return;
+          }
+
+          if (parent?.type === 'JsdocTypeFunction' &&
+            /** @type {import('jsdoc-type-pratt-parser').FunctionResult} */
+            (parent)?.typeParameters?.some((typeParam) => {
+              return value === typeParam.name.value;
+            })
+          ) {
+            return;
+          }
+
           if (!disableReporting) {
             report(`The type '${val}' is undefined.`, null, tag);
           }
