@@ -2008,5 +2008,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        class Test {
+          /**
+           * @returns {this}
+           */
+          method() { return this; }
+        }
+      `,
+    },
   ],
 });
