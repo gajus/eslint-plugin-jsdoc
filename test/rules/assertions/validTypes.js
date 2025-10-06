@@ -264,7 +264,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       settings: {
         jsdoc: {
-          mode: 'permissive',
+          mode: 'typescript',
         },
       },
     },
@@ -2017,6 +2017,18 @@ export default /** @type {import('../index.js').TestCases} */ ({
           method() { return this; }
         }
       `,
+    },
+    {
+      code: `
+        /**
+         * @typedef {Object} module:src/core/Player~mediaFormat
+         */
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
     },
   ],
 });

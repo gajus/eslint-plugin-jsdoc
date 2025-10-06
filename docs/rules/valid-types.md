@@ -243,7 +243,7 @@ function quux() {
 /**
  * @typedef {string} module:abc/def
  */
-// Settings: {"jsdoc":{"mode":"permissive"}}
+// Settings: {"jsdoc":{"mode":"typescript"}}
 // Message: Syntax error in name: module:abc/def
 
 /**
@@ -983,5 +983,10 @@ class Test {
    */
   method() { return this; }
 }
+
+/**
+ * @typedef {Object} module:src/core/Player~mediaFormat
+ */
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
 ````
 
