@@ -22,6 +22,18 @@ A single options object has the following properties.
 
 Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square".
 
+<a name="user-content-type-formatting-options-defaultvaluespacing"></a>
+<a name="type-formatting-options-defaultvaluespacing"></a>
+### <code>defaultValueSpacing</code>
+
+The space character (if any) to use between the equal signs of a default value
+
+<a name="user-content-type-formatting-options-elementspacing"></a>
+<a name="type-formatting-options-elementspacing"></a>
+### <code>elementSpacing</code>
+
+The space character (if any) to use between elements in generics and tuples
+
 <a name="user-content-type-formatting-options-enablefixer"></a>
 <a name="type-formatting-options-enablefixer"></a>
 ### <code>enableFixer</code>
@@ -114,7 +126,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`
 |Tags|`param`, `property`, `returns`, `this`, `throws`, `type`, `typedef`, `yields`|
 |Recommended|false|
 |Settings|`mode`|
-|Options|`arrayBrackets`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
+|Options|`arrayBrackets`, `defaultValueSpacing`, `elementSpacing`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
 <a name="type-formatting-failing-examples"></a>
@@ -288,6 +300,24 @@ The following patterns are considered problems:
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon-and-linebreak","objectFieldSeparatorOptionalLinebreak":true}]
 // Message: Inconsistent semicolon-and-linebreak separator usage
+
+/**
+ * @param {SomeType<T, U>} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"elementSpacing":""}]
+// Message: Element spacing should be ""
+
+/**
+ * @param {[string, number]} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"elementSpacing":""}]
+// Message: Element spacing should be ""
+
+/**
+ * @param {<T, U extends V = string, W = string>(x: T) => U} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"defaultValueSpacing":""}]
+// Message: Default value spacing should be ""
 ````
 
 
@@ -367,5 +397,20 @@ The following patterns are not considered problems:
  * }} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldIndent":"  ","objectFieldSeparator":"semicolon-and-linebreak","objectFieldSeparatorOptionalLinebreak":true}]
+
+/**
+ * @param {SomeType<T,U>} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"elementSpacing":""}]
+
+/**
+ * @param {[string,number]} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"elementSpacing":""}]
+
+/**
+ * @param {<T, U extends V=string, W=string>(x: T) => U} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"defaultValueSpacing":""}]
 ````
 

@@ -17,6 +17,7 @@ export default iterateJsdoc(({
 }) => {
   const {
     arrayBrackets = 'square',
+    defaultValueSpacing = ' ',
     elementSpacing = ' ',
     enableFixer = true,
     genericDot = false,
@@ -318,6 +319,18 @@ export default iterateJsdoc(({
           break;
         }
 
+        case 'JsdocTypeTypeParameter': {
+          const typeNode = /** @type {import('jsdoc-type-pratt-parser').TypeParameterResult} */ (nde);
+          if (typeNode.defaultValue && (typeNode.meta?.defaultValueSpacing ?? ' ') !== defaultValueSpacing) {
+            typeNode.meta = {
+              defaultValueSpacing,
+            };
+            errorMessage = `Default value spacing should be "${defaultValueSpacing}"`;
+          }
+
+          break;
+        }
+
         case 'JsdocTypeUnion': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').UnionResult} */ (nde);
           /* c8 ignore next -- Guard */
@@ -391,6 +404,10 @@ export default iterateJsdoc(({
               'angle',
               'square',
             ],
+            type: 'string',
+          },
+          defaultValueSpacing: {
+            description: 'The space character (if any) to use between the equal signs of a default value',
             type: 'string',
           },
           elementSpacing: {

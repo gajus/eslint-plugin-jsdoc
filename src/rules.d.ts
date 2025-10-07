@@ -2948,6 +2948,14 @@ export interface Rules {
            */
           arrayBrackets?: "angle" | "square";
           /**
+           * The space character (if any) to use between the equal signs of a default value
+           */
+          defaultValueSpacing?: string;
+          /**
+           * The space character (if any) to use between elements in generics and tuples
+           */
+          elementSpacing?: string;
+          /**
            * Whether to enable the fixer. Defaults to `true`.
            */
           enableFixer?: boolean;
