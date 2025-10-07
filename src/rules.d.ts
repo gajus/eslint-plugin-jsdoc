@@ -2948,11 +2948,39 @@ export interface Rules {
            */
           arrayBrackets?: "angle" | "square";
           /**
+           * The space character (if any) to use after return markers (`=>`). Defaults to " ".
+           */
+          arrowFunctionPostReturnMarkerSpacing?: string;
+          /**
+           * The space character (if any) to use before return markers (`=>`). Defaults to " ".
+           */
+          arrowFunctionPreReturnMarkerSpacing?: string;
+          /**
            * Whether to enable the fixer. Defaults to `true`.
            */
           enableFixer?: boolean;
           /**
-           * The space character (if any) to use between elements in generics and tuples
+           * The space character (if any) to use between function or class parameters. Defaults to " ".
+           */
+          functionOrClassParameterSpacing?: string;
+          /**
+           * The space character (if any) to use after a generic expression in a function or class. Defaults to "".
+           */
+          functionOrClassPostGenericSpacing?: string;
+          /**
+           * The space character (if any) to use after return markers (`:`). Defaults to "".
+           */
+          functionOrClassPostReturnMarkerSpacing?: string;
+          /**
+           * The space character (if any) to use before return markers (`:`). Defaults to "".
+           */
+          functionOrClassPreReturnMarkerSpacing?: string;
+          /**
+           * The space character (if any) to use between type parameters in a function or class. Defaults to " ".
+           */
+          functionOrClassTypeParameterSpacing?: string;
+          /**
+           * The space character (if any) to use between elements in generics and tuples. Defaults to " ".
            */
           genericAndTupleElementSpacing?: string;
           /**
@@ -2960,21 +2988,25 @@ export interface Rules {
            */
           genericDot?: boolean;
           /**
-           * The amount of spacing (if any) after the colon of a key-value or object-field pair
+           * The amount of spacing (if any) after the colon of a key-value or object-field pair. Defaults to " ".
            */
           keyValuePostColonSpacing?: string;
           /**
-           * The amount of spacing (if any) immediately after keys in a key-value or object-field pair
+           * The amount of spacing (if any) immediately after keys in a key-value or object-field pair. Defaults to "".
            */
           keyValuePostKeySpacing?: string;
           /**
-           * The amount of spacing (if any) after the optional operator (`?`) in a key-value or object-field pair
+           * The amount of spacing (if any) after the optional operator (`?`) in a key-value or object-field pair. Defaults to "".
            */
           keyValuePostOptionalSpacing?: string;
           /**
-           * The amount of spacing (if any) after a variadic operator (`...`) in a key-value pair
+           * The amount of spacing (if any) after a variadic operator (`...`) in a key-value pair. Defaults to "".
            */
           keyValuePostVariadicSpacing?: string;
+          /**
+           * The style of quotation mark for surrounding method names when quoted. Defaults to `double`
+           */
+          methodQuotes?: "double" | "single";
           /**
            * A string indicating the whitespace to be added on each line preceding an
            * object property-value field. Defaults to the empty string.
@@ -3011,9 +3043,17 @@ export interface Rules {
            */
           objectFieldSeparatorTrailingPunctuation?: boolean;
           /**
-           * The space character (if any) to use between the equal signs of a default value
+           * The space character (if any) to use between the equal signs of a default value. Defaults to " ".
            */
           parameterDefaultValueSpacing?: string;
+          /**
+           * The space character (if any) to add after a method name. Defaults to "".
+           */
+          postMethodNameSpacing?: string;
+          /**
+           * The space character (if any) to add after "new" in a constructor. Defaults to " ".
+           */
+          postNewSpacing?: string;
           /**
            * Whether to apply the `objectFieldSeparator` (e.g., a semicolon) when there
            * is only one property-value object field present. Defaults to `false`.

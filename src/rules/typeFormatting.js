@@ -8,6 +8,7 @@ import {
 
 const digitRegex = (/^(\d+(\.\d*)?|\.\d+)([eE][\-+]?\d+)?$/v);
 
+// eslint-disable-next-line complexity -- Todo
 export default iterateJsdoc(({
   context,
   indent,
@@ -17,19 +18,29 @@ export default iterateJsdoc(({
 }) => {
   const {
     arrayBrackets = 'square',
+    arrowFunctionPostReturnMarkerSpacing = ' ',
+    arrowFunctionPreReturnMarkerSpacing = ' ',
     enableFixer = true,
+    functionOrClassParameterSpacing = ' ',
+    functionOrClassPostGenericSpacing = '',
+    functionOrClassPostReturnMarkerSpacing = ' ',
+    functionOrClassPreReturnMarkerSpacing = '',
+    functionOrClassTypeParameterSpacing = ' ',
     genericAndTupleElementSpacing = ' ',
     genericDot = false,
     keyValuePostColonSpacing = ' ',
     keyValuePostKeySpacing = '',
     keyValuePostOptionalSpacing = '',
     keyValuePostVariadicSpacing = '',
+    methodQuotes = 'double',
     objectFieldIndent = '',
     objectFieldQuote = null,
     objectFieldSeparator = 'comma',
     objectFieldSeparatorOptionalLinebreak = true,
     objectFieldSeparatorTrailingPunctuation = false,
     parameterDefaultValueSpacing = ' ',
+    postMethodNameSpacing = '',
+    postNewSpacing = ' ',
     // propertyQuotes = null,
     separatorForSingleObjectField = false,
     stringQuotes = 'single',
@@ -221,7 +232,177 @@ export default iterateJsdoc(({
     traverse(parsedType, (nde) => {
       let errorMessage = '';
 
+      /**
+       * @param {Partial<import('jsdoc-type-pratt-parser').FunctionResult['meta']> & {
+       *   postNewSpacing?: string,
+       *   postMethodNameSpacing?: string
+       * }} meta
+       * @returns {Required<import('jsdoc-type-pratt-parser').FunctionResult['meta']> & {
+       *   postNewSpacing?: string,
+       *   postMethodNameSpacing?: string
+       * }}
+       */
+      const conditionalAdds = (meta) => {
+        const typNode =
+        /**
+         * @type {import('jsdoc-type-pratt-parser').FunctionResult|
+         *   import('jsdoc-type-pratt-parser').CallSignatureResult|
+         *   import('jsdoc-type-pratt-parser').ComputedMethodResult|
+         *   import('jsdoc-type-pratt-parser').ConstructorSignatureResult|
+         *   import('jsdoc-type-pratt-parser').MethodSignatureResult
+         * }
+         */ (nde);
+
+        /**
+         * @type {Required<import('jsdoc-type-pratt-parser').FunctionResult['meta']> & {
+         *   postNewSpacing?: string,
+         *   postMethodNameSpacing?: string
+         * }}
+         */
+        const newMeta = {
+          parameterSpacing: meta.parameterSpacing ?? typNode.meta?.parameterSpacing ?? ' ',
+          postGenericSpacing: meta.postGenericSpacing ?? typNode.meta?.postGenericSpacing ?? '',
+          postReturnMarkerSpacing: meta.postReturnMarkerSpacing ?? typNode.meta?.postReturnMarkerSpacing ?? ' ',
+          preReturnMarkerSpacing: meta.preReturnMarkerSpacing ?? typNode.meta?.preReturnMarkerSpacing ?? '',
+          typeParameterSpacing: meta.typeParameterSpacing ?? typNode.meta?.typeParameterSpacing ?? ' ',
+        };
+
+        if (typNode.type === 'JsdocTypeConstructorSignature') {
+          newMeta.postNewSpacing = meta.postNewSpacing;
+        }
+
+        if (typNode.type === 'JsdocTypeMethodSignature') {
+          newMeta.postMethodNameSpacing = meta.postMethodNameSpacing ?? typNode.meta?.postMethodNameSpacing ?? '';
+        }
+
+        return newMeta;
+      };
+
       switch (nde.type) {
+        case 'JsdocTypeConstructorSignature': {
+          const typeNode = /** @type {import('jsdoc-type-pratt-parser').ConstructorSignatureResult} */ (nde);
+          /* c8 ignore next -- Guard */
+          if ((typeNode.meta?.postNewSpacing ?? ' ') !== postNewSpacing) {
+            typeNode.meta =
+              /**
+               * @type {Required<import('jsdoc-type-pratt-parser').FunctionResult['meta']> & {
+               *   postNewSpacing: string,
+               * }}
+               */ (conditionalAdds({
+                postNewSpacing,
+              }));
+            errorMessage = `Post-\`new\` spacing should be "${postNewSpacing}"`;
+            break;
+          }
+        }
+
+        case 'JsdocTypeFunction': {
+          const typeNode =
+            /**
+             * @type {import('jsdoc-type-pratt-parser').FunctionResult}
+             */ nde;
+          if ('arrow' in typeNode && typeNode.arrow) {
+            /* c8 ignore next -- Guard */
+            if ((typeNode.meta?.postReturnMarkerSpacing ?? ' ') !== arrowFunctionPostReturnMarkerSpacing) {
+              typeNode.meta =
+              /**
+               * @type {Required<import('jsdoc-type-pratt-parser').FunctionResult['meta']> & {
+               *   postNewSpacing: string,
+               * }}
+               */ (conditionalAdds({
+                  postReturnMarkerSpacing: arrowFunctionPostReturnMarkerSpacing,
+                  /* c8 ignore next -- Guard */
+                  preReturnMarkerSpacing: typeNode.meta?.preReturnMarkerSpacing ?? ' ',
+                }));
+              errorMessage = `Post-return-marker spacing should be "${arrowFunctionPostReturnMarkerSpacing}"`;
+              break;
+            /* c8 ignore next -- Guard */
+            } else if ((typeNode.meta?.preReturnMarkerSpacing ?? ' ') !== arrowFunctionPreReturnMarkerSpacing) {
+              typeNode.meta =
+              /**
+               * @type {Required<import('jsdoc-type-pratt-parser').FunctionResult['meta']> & {
+               *   postNewSpacing: string,
+               * }}
+               */ (conditionalAdds({
+                  /* c8 ignore next -- Guard */
+                  postReturnMarkerSpacing: typeNode.meta?.postReturnMarkerSpacing ?? ' ',
+                  preReturnMarkerSpacing: arrowFunctionPreReturnMarkerSpacing,
+                }));
+              errorMessage = `Pre-return-marker spacing should be "${arrowFunctionPreReturnMarkerSpacing}"`;
+              break;
+            }
+
+            break;
+          }
+        }
+
+        case 'JsdocTypeCallSignature':
+        case 'JsdocTypeComputedMethod':
+        case 'JsdocTypeMethodSignature': {
+          const typeNode =
+            /**
+             * @type {import('jsdoc-type-pratt-parser').FunctionResult|
+             *   import('jsdoc-type-pratt-parser').CallSignatureResult|
+             *   import('jsdoc-type-pratt-parser').ComputedMethodResult|
+             *   import('jsdoc-type-pratt-parser').ConstructorSignatureResult|
+             *   import('jsdoc-type-pratt-parser').MethodSignatureResult
+             * }
+             */ (nde);
+          if (typeNode.type === 'JsdocTypeMethodSignature' &&
+            (typeNode.meta?.postMethodNameSpacing ?? '') !== postMethodNameSpacing
+          ) {
+            typeNode.meta = {
+              quote: typeNode.meta.quote,
+              ...conditionalAdds({
+                postMethodNameSpacing,
+              }),
+            };
+            errorMessage = `Post-method-name spacing should be "${postMethodNameSpacing}"`;
+            break;
+          } else if (typeNode.type === 'JsdocTypeMethodSignature' &&
+            typeNode.meta.quote !== undefined &&
+            typeNode.meta.quote !== methodQuotes
+          ) {
+            typeNode.meta = {
+              ...conditionalAdds({
+                postMethodNameSpacing: typeNode.meta.postMethodNameSpacing ?? '',
+              }),
+              quote: methodQuotes,
+            };
+            errorMessage = `Method quoting style should be "${methodQuotes}"`;
+            break;
+          }
+
+          if ((typeNode.meta?.parameterSpacing ?? ' ') !== functionOrClassParameterSpacing) {
+            typeNode.meta = conditionalAdds({
+              parameterSpacing: functionOrClassParameterSpacing,
+            });
+            errorMessage = `Parameter spacing should be "${functionOrClassParameterSpacing}"`;
+          } else if ((typeNode.meta?.postGenericSpacing ?? '') !== functionOrClassPostGenericSpacing) {
+            typeNode.meta = conditionalAdds({
+              postGenericSpacing: functionOrClassPostGenericSpacing,
+            });
+            errorMessage = `Post-generic spacing should be "${functionOrClassPostGenericSpacing}"`;
+          } else if ((typeNode.meta?.postReturnMarkerSpacing ?? ' ') !== functionOrClassPostReturnMarkerSpacing) {
+            typeNode.meta = conditionalAdds({
+              postReturnMarkerSpacing: functionOrClassPostReturnMarkerSpacing,
+            });
+            errorMessage = `Post-return-marker spacing should be "${functionOrClassPostReturnMarkerSpacing}"`;
+          } else if ((typeNode.meta?.preReturnMarkerSpacing ?? '') !== functionOrClassPreReturnMarkerSpacing) {
+            typeNode.meta = conditionalAdds({
+              preReturnMarkerSpacing: functionOrClassPreReturnMarkerSpacing,
+            });
+            errorMessage = `Pre-return-marker spacing should be "${functionOrClassPreReturnMarkerSpacing}"`;
+          } else if ((typeNode.meta?.typeParameterSpacing ?? ' ') !== functionOrClassTypeParameterSpacing) {
+            typeNode.meta = conditionalAdds({
+              typeParameterSpacing: functionOrClassTypeParameterSpacing,
+            });
+            errorMessage = `Type parameter spacing should be "${functionOrClassTypeParameterSpacing}"`;
+          }
+
+          break;
+        }
+
         case 'JsdocTypeGeneric': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').GenericResult} */ (nde);
           if ('value' in typeNode.left && typeNode.left.value === 'Array') {
@@ -242,32 +423,42 @@ export default iterateJsdoc(({
 
         case 'JsdocTypeKeyValue': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').KeyValueResult} */ (nde);
+          /* c8 ignore next -- Guard */
           if ((typeNode.meta?.postKeySpacing ?? '') !== keyValuePostKeySpacing) {
             typeNode.meta = {
+              /* c8 ignore next -- Guard */
               postColonSpacing: typeNode.meta?.postColonSpacing ?? ' ',
               postKeySpacing: keyValuePostKeySpacing,
+              /* c8 ignore next 2 -- Guard */
               postOptionalSpacing: typeNode.meta?.postOptionalSpacing ?? '',
               postVariadicSpacing: typeNode.meta?.postVariadicSpacing ?? '',
             };
             errorMessage = `Post key spacing should be "${keyValuePostKeySpacing}"`;
+          /* c8 ignore next -- Guard */
           } else if ((typeNode.meta?.postColonSpacing ?? ' ') !== keyValuePostColonSpacing) {
             typeNode.meta = {
               postColonSpacing: keyValuePostColonSpacing,
+              /* c8 ignore next 3 -- Guard */
               postKeySpacing: typeNode.meta?.postKeySpacing ?? '',
               postOptionalSpacing: typeNode.meta?.postOptionalSpacing ?? '',
               postVariadicSpacing: typeNode.meta?.postVariadicSpacing ?? '',
             };
             errorMessage = `Post colon spacing should be "${keyValuePostColonSpacing}"`;
+          /* c8 ignore next -- Guard */
           } else if ((typeNode.meta?.postOptionalSpacing ?? '') !== keyValuePostOptionalSpacing) {
             typeNode.meta = {
+              /* c8 ignore next 2 -- Guard */
               postColonSpacing: typeNode.meta?.postColonSpacing ?? ' ',
               postKeySpacing: typeNode.meta?.postKeySpacing ?? '',
               postOptionalSpacing: keyValuePostOptionalSpacing,
+              /* c8 ignore next -- Guard */
               postVariadicSpacing: typeNode.meta?.postVariadicSpacing ?? '',
             };
             errorMessage = `Post optional (\`?\`) spacing should be "${keyValuePostOptionalSpacing}"`;
-          } else if ((typeNode.meta?.postVariadicSpacing ?? '') !== keyValuePostVariadicSpacing) {
+          /* c8 ignore next -- Guard */
+          } else if (typeNode.variadic && (typeNode.meta?.postVariadicSpacing ?? '') !== keyValuePostVariadicSpacing) {
             typeNode.meta = {
+              /* c8 ignore next 3 -- Guard */
               postColonSpacing: typeNode.meta?.postColonSpacing ?? ' ',
               postKeySpacing: typeNode.meta?.postKeySpacing ?? '',
               postOptionalSpacing: typeNode.meta?.postOptionalSpacing ?? '',
@@ -361,6 +552,7 @@ export default iterateJsdoc(({
 
         case 'JsdocTypeTuple': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').TupleResult} */ (nde);
+          /* c8 ignore next -- Guard */
           if ((typeNode.meta?.elementSpacing ?? ' ') !== genericAndTupleElementSpacing) {
             typeNode.meta = {
               elementSpacing: genericAndTupleElementSpacing,
@@ -373,6 +565,7 @@ export default iterateJsdoc(({
 
         case 'JsdocTypeTypeParameter': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').TypeParameterResult} */ (nde);
+          /* c8 ignore next -- Guard */
           if (typeNode.defaultValue && (typeNode.meta?.defaultValueSpacing ?? ' ') !== parameterDefaultValueSpacing) {
             typeNode.meta = {
               defaultValueSpacing: parameterDefaultValueSpacing,
@@ -458,12 +651,40 @@ export default iterateJsdoc(({
             ],
             type: 'string',
           },
+          arrowFunctionPostReturnMarkerSpacing: {
+            description: 'The space character (if any) to use after return markers (`=>`). Defaults to " ".',
+            type: 'string',
+          },
+          arrowFunctionPreReturnMarkerSpacing: {
+            description: 'The space character (if any) to use before return markers (`=>`). Defaults to " ".',
+            type: 'string',
+          },
           enableFixer: {
             description: 'Whether to enable the fixer. Defaults to `true`.',
             type: 'boolean',
           },
+          functionOrClassParameterSpacing: {
+            description: 'The space character (if any) to use between function or class parameters. Defaults to " ".',
+            type: 'string',
+          },
+          functionOrClassPostGenericSpacing: {
+            description: 'The space character (if any) to use after a generic expression in a function or class. Defaults to "".',
+            type: 'string',
+          },
+          functionOrClassPostReturnMarkerSpacing: {
+            description: 'The space character (if any) to use after return markers (`:`). Defaults to "".',
+            type: 'string',
+          },
+          functionOrClassPreReturnMarkerSpacing: {
+            description: 'The space character (if any) to use before return markers (`:`). Defaults to "".',
+            type: 'string',
+          },
+          functionOrClassTypeParameterSpacing: {
+            description: 'The space character (if any) to use between type parameters in a function or class. Defaults to " ".',
+            type: 'string',
+          },
           genericAndTupleElementSpacing: {
-            description: 'The space character (if any) to use between elements in generics and tuples',
+            description: 'The space character (if any) to use between elements in generics and tuples. Defaults to " ".',
             type: 'string',
           },
           genericDot: {
@@ -471,19 +692,27 @@ export default iterateJsdoc(({
             type: 'boolean',
           },
           keyValuePostColonSpacing: {
-            description: 'The amount of spacing (if any) after the colon of a key-value or object-field pair',
+            description: 'The amount of spacing (if any) after the colon of a key-value or object-field pair. Defaults to " ".',
             type: 'string',
           },
           keyValuePostKeySpacing: {
-            description: 'The amount of spacing (if any) immediately after keys in a key-value or object-field pair',
+            description: 'The amount of spacing (if any) immediately after keys in a key-value or object-field pair. Defaults to "".',
             type: 'string',
           },
           keyValuePostOptionalSpacing: {
-            description: 'The amount of spacing (if any) after the optional operator (`?`) in a key-value or object-field pair',
+            description: 'The amount of spacing (if any) after the optional operator (`?`) in a key-value or object-field pair. Defaults to "".',
             type: 'string',
           },
           keyValuePostVariadicSpacing: {
-            description: 'The amount of spacing (if any) after a variadic operator (`...`) in a key-value pair',
+            description: 'The amount of spacing (if any) after a variadic operator (`...`) in a key-value pair. Defaults to "".',
+            type: 'string',
+          },
+          methodQuotes: {
+            description: 'The style of quotation mark for surrounding method names when quoted. Defaults to `double`',
+            enum: [
+              'double',
+              'single',
+            ],
             type: 'string',
           },
           objectFieldIndent: {
@@ -533,7 +762,15 @@ Defaults to \`false\`.`,
             type: 'boolean',
           },
           parameterDefaultValueSpacing: {
-            description: 'The space character (if any) to use between the equal signs of a default value',
+            description: 'The space character (if any) to use between the equal signs of a default value. Defaults to " ".',
+            type: 'string',
+          },
+          postMethodNameSpacing: {
+            description: 'The space character (if any) to add after a method name. Defaults to "".',
+            type: 'string',
+          },
+          postNewSpacing: {
+            description: 'The space character (if any) to add after "new" in a constructor. Defaults to " ".',
             type: 'string',
           },
           //           propertyQuotes: {
