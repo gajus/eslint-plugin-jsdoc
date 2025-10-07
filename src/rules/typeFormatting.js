@@ -17,15 +17,19 @@ export default iterateJsdoc(({
 }) => {
   const {
     arrayBrackets = 'square',
-    defaultValueSpacing = ' ',
-    elementSpacing = ' ',
     enableFixer = true,
+    genericAndTupleElementSpacing = ' ',
     genericDot = false,
+    keyValuePostColonSpacing = ' ',
+    keyValuePostKeySpacing = '',
+    keyValuePostOptionalSpacing = '',
+    keyValuePostVariadicSpacing = '',
     objectFieldIndent = '',
     objectFieldQuote = null,
     objectFieldSeparator = 'comma',
     objectFieldSeparatorOptionalLinebreak = true,
     objectFieldSeparatorTrailingPunctuation = false,
+    parameterDefaultValueSpacing = ' ',
     // propertyQuotes = null,
     separatorForSingleObjectField = false,
     stringQuotes = 'single',
@@ -228,9 +232,48 @@ export default iterateJsdoc(({
           } else if (typeNode.meta.dot !== genericDot) {
             typeNode.meta.dot = genericDot;
             errorMessage = `Dot usage should be ${genericDot}`;
-          } else if ((typeNode.meta.elementSpacing ?? ' ') !== elementSpacing) {
-            typeNode.meta.elementSpacing = elementSpacing;
-            errorMessage = `Element spacing should be "${elementSpacing}"`;
+          } else if ((typeNode.meta.elementSpacing ?? ' ') !== genericAndTupleElementSpacing) {
+            typeNode.meta.elementSpacing = genericAndTupleElementSpacing;
+            errorMessage = `Element spacing should be "${genericAndTupleElementSpacing}"`;
+          }
+
+          break;
+        }
+
+        case 'JsdocTypeKeyValue': {
+          const typeNode = /** @type {import('jsdoc-type-pratt-parser').KeyValueResult} */ (nde);
+          if ((typeNode.meta?.postKeySpacing ?? '') !== keyValuePostKeySpacing) {
+            typeNode.meta = {
+              postColonSpacing: typeNode.meta?.postColonSpacing ?? ' ',
+              postKeySpacing: keyValuePostKeySpacing,
+              postOptionalSpacing: typeNode.meta?.postOptionalSpacing ?? '',
+              postVariadicSpacing: typeNode.meta?.postVariadicSpacing ?? '',
+            };
+            errorMessage = `Post key spacing should be "${keyValuePostKeySpacing}"`;
+          } else if ((typeNode.meta?.postColonSpacing ?? ' ') !== keyValuePostColonSpacing) {
+            typeNode.meta = {
+              postColonSpacing: keyValuePostColonSpacing,
+              postKeySpacing: typeNode.meta?.postKeySpacing ?? '',
+              postOptionalSpacing: typeNode.meta?.postOptionalSpacing ?? '',
+              postVariadicSpacing: typeNode.meta?.postVariadicSpacing ?? '',
+            };
+            errorMessage = `Post colon spacing should be "${keyValuePostColonSpacing}"`;
+          } else if ((typeNode.meta?.postOptionalSpacing ?? '') !== keyValuePostOptionalSpacing) {
+            typeNode.meta = {
+              postColonSpacing: typeNode.meta?.postColonSpacing ?? ' ',
+              postKeySpacing: typeNode.meta?.postKeySpacing ?? '',
+              postOptionalSpacing: keyValuePostOptionalSpacing,
+              postVariadicSpacing: typeNode.meta?.postVariadicSpacing ?? '',
+            };
+            errorMessage = `Post optional (\`?\`) spacing should be "${keyValuePostOptionalSpacing}"`;
+          } else if ((typeNode.meta?.postVariadicSpacing ?? '') !== keyValuePostVariadicSpacing) {
+            typeNode.meta = {
+              postColonSpacing: typeNode.meta?.postColonSpacing ?? ' ',
+              postKeySpacing: typeNode.meta?.postKeySpacing ?? '',
+              postOptionalSpacing: typeNode.meta?.postOptionalSpacing ?? '',
+              postVariadicSpacing: keyValuePostVariadicSpacing,
+            };
+            errorMessage = `Post variadic (\`...\`) spacing should be "${keyValuePostVariadicSpacing}"`;
           }
 
           break;
@@ -277,6 +320,15 @@ export default iterateJsdoc(({
           ) {
             typeNode.meta.quote = objectFieldQuote ?? undefined;
             errorMessage = `Inconsistent object field quotes ${objectFieldQuote}`;
+          } else if ((typeNode.meta?.postKeySpacing ?? '') !== keyValuePostKeySpacing) {
+            typeNode.meta.postKeySpacing = keyValuePostKeySpacing;
+            errorMessage = `Post key spacing should be "${keyValuePostKeySpacing}"`;
+          } else if ((typeNode.meta?.postColonSpacing ?? ' ') !== keyValuePostColonSpacing) {
+            typeNode.meta.postColonSpacing = keyValuePostColonSpacing;
+            errorMessage = `Post colon spacing should be "${keyValuePostColonSpacing}"`;
+          } else if ((typeNode.meta?.postOptionalSpacing ?? '') !== keyValuePostOptionalSpacing) {
+            typeNode.meta.postOptionalSpacing = keyValuePostOptionalSpacing;
+            errorMessage = `Post optional (\`?\`) spacing should be "${keyValuePostOptionalSpacing}"`;
           }
 
           break;
@@ -309,11 +361,11 @@ export default iterateJsdoc(({
 
         case 'JsdocTypeTuple': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').TupleResult} */ (nde);
-          if ((typeNode.meta?.elementSpacing ?? ' ') !== elementSpacing) {
+          if ((typeNode.meta?.elementSpacing ?? ' ') !== genericAndTupleElementSpacing) {
             typeNode.meta = {
-              elementSpacing,
+              elementSpacing: genericAndTupleElementSpacing,
             };
-            errorMessage = `Element spacing should be "${elementSpacing}"`;
+            errorMessage = `Element spacing should be "${genericAndTupleElementSpacing}"`;
           }
 
           break;
@@ -321,11 +373,11 @@ export default iterateJsdoc(({
 
         case 'JsdocTypeTypeParameter': {
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').TypeParameterResult} */ (nde);
-          if (typeNode.defaultValue && (typeNode.meta?.defaultValueSpacing ?? ' ') !== defaultValueSpacing) {
+          if (typeNode.defaultValue && (typeNode.meta?.defaultValueSpacing ?? ' ') !== parameterDefaultValueSpacing) {
             typeNode.meta = {
-              defaultValueSpacing,
+              defaultValueSpacing: parameterDefaultValueSpacing,
             };
-            errorMessage = `Default value spacing should be "${defaultValueSpacing}"`;
+            errorMessage = `Default value spacing should be "${parameterDefaultValueSpacing}"`;
           }
 
           break;
@@ -406,21 +458,33 @@ export default iterateJsdoc(({
             ],
             type: 'string',
           },
-          defaultValueSpacing: {
-            description: 'The space character (if any) to use between the equal signs of a default value',
-            type: 'string',
-          },
-          elementSpacing: {
-            description: 'The space character (if any) to use between elements in generics and tuples',
-            type: 'string',
-          },
           enableFixer: {
             description: 'Whether to enable the fixer. Defaults to `true`.',
             type: 'boolean',
           },
+          genericAndTupleElementSpacing: {
+            description: 'The space character (if any) to use between elements in generics and tuples',
+            type: 'string',
+          },
           genericDot: {
             description: 'Boolean value of whether to use a dot before the angled brackets of a generic (e.g., `SomeType.<AnotherType>`). Defaults to `false`.',
             type: 'boolean',
+          },
+          keyValuePostColonSpacing: {
+            description: 'The amount of spacing (if any) after the colon of a key-value or object-field pair',
+            type: 'string',
+          },
+          keyValuePostKeySpacing: {
+            description: 'The amount of spacing (if any) immediately after keys in a key-value or object-field pair',
+            type: 'string',
+          },
+          keyValuePostOptionalSpacing: {
+            description: 'The amount of spacing (if any) after the optional operator (`?`) in a key-value or object-field pair',
+            type: 'string',
+          },
+          keyValuePostVariadicSpacing: {
+            description: 'The amount of spacing (if any) after a variadic operator (`...`) in a key-value pair',
+            type: 'string',
           },
           objectFieldIndent: {
             description: `A string indicating the whitespace to be added on each line preceding an
@@ -467,6 +531,10 @@ will determine whether to add punctuation corresponding to the
 \`objectFieldSeparator\` (e.g., a semicolon) to the final object field.
 Defaults to \`false\`.`,
             type: 'boolean',
+          },
+          parameterDefaultValueSpacing: {
+            description: 'The space character (if any) to use between the equal signs of a default value',
+            type: 'string',
           },
           //           propertyQuotes: {
           //             description: `Whether and how namepath properties should be quoted (e.g., \`ab."cd"."ef"\`).
