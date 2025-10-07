@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@es-joy/jsdoccomment':
-        specifier: ~0.71.0
-        version: 0.71.0
+        specifier: ~0.73.0
+        version: 0.73.0
       are-docs-informative:
         specifier: ^0.0.2
         version: 0.0.2
@@ -163,8 +163,8 @@ importers:
         specifier: ^9.1.7
         version: 9.1.7
       jsdoc-type-pratt-parser:
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.8.0
+        version: 6.8.0
       json-schema:
         specifier: ^0.4.0
         version: 0.4.0
@@ -796,8 +796,8 @@ packages:
     resolution: {integrity: sha512-yWi6sm7INEwnfS7IJvE0dU+RTrwzLPFcY7e7eGpu/l5Q9lWfQ2ROwZ0qVnc242jw2TUPsfHX3XMIISkGBv57RQ==}
     engines: {node: '>=20.11.0'}
 
-  '@es-joy/jsdoccomment@0.71.0':
-    resolution: {integrity: sha512-2p9+dXWNQnp5Kq/V0XVWZiVAabzlX6rUW8vXXvtX8Yc1CkKgD93IPDEnv1sYZFkkS6HMvg6H0RMZfob/Co0YXA==}
+  '@es-joy/jsdoccomment@0.73.0':
+    resolution: {integrity: sha512-7qLo/QVcqrCTAp/uWmTYryd/qf6fWZEJBRp9HtyOo+XBT41D6fQZ74ehEFZH1IzHD90iPTUYlE7u2V+yGhVpnw==}
     engines: {node: '>=20.11.0'}
 
   '@eslint-community/eslint-utils@4.9.0':
@@ -3426,8 +3426,8 @@ packages:
     resolution: {integrity: sha512-TYzkACp/wPvDJLRY7qpHXtrhgwoAaojIOnLaaVNi+AbPU2u1kkjfKd9hXXTq0qSAGsyYXvwUXt99h9I5iCmjjw==}
     engines: {node: '>=12.0.0'}
 
-  jsdoc-type-pratt-parser@6.6.0:
-    resolution: {integrity: sha512-3hSD14nXx66Rspx1RMnz1Pj4JacrMBAsC0CrF9lZYO/Qsp5/oIr6KqujVUNhQu94B6mMip2ukki8MpEWZwyhKA==}
+  jsdoc-type-pratt-parser@6.8.0:
+    resolution: {integrity: sha512-ai5xhGwgsWWGs4DfUV2DO1R8INNWVC9M7G3XlZZXxNL/NieEkTUdgNm6dMZKydRBIMw/o9Bi2qDroTshyERljQ==}
     engines: {node: '>=20.0.0'}
 
   jsdom@6.5.1:
@@ -5976,13 +5976,13 @@ snapshots:
       esquery: 1.6.0
       jsdoc-type-pratt-parser: 5.9.2
 
-  '@es-joy/jsdoccomment@0.71.0':
+  '@es-joy/jsdoccomment@0.73.0':
     dependencies:
       '@types/estree': 1.0.8
       '@typescript-eslint/types': 8.46.0
       comment-parser: 1.4.1
       esquery: 1.6.0
-      jsdoc-type-pratt-parser: 6.6.0
+      jsdoc-type-pratt-parser: 6.8.0
 
   '@eslint-community/eslint-utils@4.9.0(eslint@9.37.0(jiti@2.6.1))':
     dependencies:
@@ -9092,7 +9092,7 @@ snapshots:
 
   jsdoc-type-pratt-parser@5.9.2: {}
 
-  jsdoc-type-pratt-parser@6.6.0: {}
+  jsdoc-type-pratt-parser@6.8.0: {}
 
   jsdom@6.5.1:
     dependencies:
