@@ -752,6 +752,33 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @param {<T, U extends V = string, W = string>(x: T) => U} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Default value spacing should be ""',
+        },
+        {
+          line: 3,
+          message: 'Default value spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          defaultValueSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {<T, U extends V=string, W=string>(x: T) => U} cfg
+         */
+      `,
+    },
   ],
   valid: [
     {
@@ -930,6 +957,42 @@ export default {
           objectFieldIndent: '  ',
           objectFieldSeparator: 'semicolon-and-linebreak',
           objectFieldSeparatorOptionalLinebreak: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {SomeType<T,U>} cfg
+         */
+      `,
+      options: [
+        {
+          elementSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {[string,number]} cfg
+         */
+      `,
+      options: [
+        {
+          elementSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {<T, U extends V=string, W=string>(x: T) => U} cfg
+         */
+      `,
+      options: [
+        {
+          defaultValueSpacing: '',
         },
       ],
     },
