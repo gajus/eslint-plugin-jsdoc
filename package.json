@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "~0.73.0",
+    "@es-joy/jsdoccomment": "~0.75.0",
     "are-docs-informative": "^0.0.2",
     "comment-parser": "1.4.1",
     "debug": "^4.4.3",
@@ -15,7 +15,7 @@
     "html-entities": "^2.6.0",
     "object-deep-merge": "^1.0.5",
     "parse-imports-exports": "^0.2.4",
-    "semver": "^7.7.2",
+    "semver": "^7.7.3",
     "spdx-expression-parse": "^4.0.0"
   },
   "description": "JSDoc linting rules for ESLint.",
@@ -58,7 +58,7 @@
     "glob": "^11.0.3",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
-    "jsdoc-type-pratt-parser": "^6.8.0",
+    "jsdoc-type-pratt-parser": "^6.9.1",
     "json-schema": "^0.4.0",
     "json-schema-to-typescript": "^15.0.4",
     "lint-staged": "^16.2.3",

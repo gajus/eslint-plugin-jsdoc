@@ -720,7 +720,7 @@ export default {
       ],
       options: [
         {
-          elementSpacing: '',
+          genericAndTupleElementSpacing: '',
         },
       ],
       output: `
@@ -743,7 +743,7 @@ export default {
       ],
       options: [
         {
-          elementSpacing: '',
+          genericAndTupleElementSpacing: '',
         },
       ],
       output: `
@@ -770,12 +770,150 @@ export default {
       ],
       options: [
         {
-          defaultValueSpacing: '',
+          parameterDefaultValueSpacing: '',
         },
       ],
       output: `
         /**
          * @param {<T, U extends V=string, W=string>(x: T) => U} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{a: 3}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post colon spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          keyValuePostColonSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {{a:3}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{a: 3}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post key spacing should be " "',
+        },
+      ],
+      options: [
+        {
+          keyValuePostKeySpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @param {{a : 3}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{a?: 3}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post optional (`?`) spacing should be " "',
+        },
+      ],
+      options: [
+        {
+          keyValuePostOptionalSpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @param {{a? : 3}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {[a: 3]} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post colon spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          keyValuePostColonSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {[a:3]} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {[a: 3]} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post key spacing should be " "',
+        },
+      ],
+      options: [
+        {
+          keyValuePostKeySpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @param {[a : 3]} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {[a?: 3]} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post optional (`?`) spacing should be " "',
+        },
+      ],
+      options: [
+        {
+          keyValuePostOptionalSpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @param {[a? : 3]} cfg
          */
       `,
     },
@@ -968,7 +1106,7 @@ export default {
       `,
       options: [
         {
-          elementSpacing: '',
+          genericAndTupleElementSpacing: '',
         },
       ],
     },
@@ -980,7 +1118,7 @@ export default {
       `,
       options: [
         {
-          elementSpacing: '',
+          genericAndTupleElementSpacing: '',
         },
       ],
     },
@@ -992,7 +1130,79 @@ export default {
       `,
       options: [
         {
-          defaultValueSpacing: '',
+          parameterDefaultValueSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{a:3}} cfg
+         */
+      `,
+      options: [
+        {
+          keyValuePostColonSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{a : 3}} cfg
+         */
+      `,
+      options: [
+        {
+          keyValuePostKeySpacing: ' ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{a? : 3}} cfg
+         */
+      `,
+      options: [
+        {
+          keyValuePostOptionalSpacing: ' ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {[a:3]} cfg
+         */
+      `,
+      options: [
+        {
+          keyValuePostColonSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {[a : 3]} cfg
+         */
+      `,
+      options: [
+        {
+          keyValuePostKeySpacing: ' ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {[a? : 3]} cfg
+         */
+      `,
+      options: [
+        {
+          keyValuePostOptionalSpacing: ' ',
         },
       ],
     },

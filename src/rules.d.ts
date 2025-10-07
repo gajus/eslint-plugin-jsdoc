@@ -2948,21 +2948,33 @@ export interface Rules {
            */
           arrayBrackets?: "angle" | "square";
           /**
-           * The space character (if any) to use between the equal signs of a default value
-           */
-          defaultValueSpacing?: string;
-          /**
-           * The space character (if any) to use between elements in generics and tuples
-           */
-          elementSpacing?: string;
-          /**
            * Whether to enable the fixer. Defaults to `true`.
            */
           enableFixer?: boolean;
           /**
+           * The space character (if any) to use between elements in generics and tuples
+           */
+          genericAndTupleElementSpacing?: string;
+          /**
            * Boolean value of whether to use a dot before the angled brackets of a generic (e.g., `SomeType.<AnotherType>`). Defaults to `false`.
            */
           genericDot?: boolean;
+          /**
+           * The amount of spacing (if any) after the colon of a key-value or object-field pair
+           */
+          keyValuePostColonSpacing?: string;
+          /**
+           * The amount of spacing (if any) immediately after keys in a key-value or object-field pair
+           */
+          keyValuePostKeySpacing?: string;
+          /**
+           * The amount of spacing (if any) after the optional operator (`?`) in a key-value or object-field pair
+           */
+          keyValuePostOptionalSpacing?: string;
+          /**
+           * The amount of spacing (if any) after a variadic operator (`...`) in a key-value pair
+           */
+          keyValuePostVariadicSpacing?: string;
           /**
            * A string indicating the whitespace to be added on each line preceding an
            * object property-value field. Defaults to the empty string.
@@ -2998,6 +3010,10 @@ export interface Rules {
            * Defaults to `false`.
            */
           objectFieldSeparatorTrailingPunctuation?: boolean;
+          /**
+           * The space character (if any) to use between the equal signs of a default value
+           */
+          parameterDefaultValueSpacing?: string;
           /**
            * Whether to apply the `objectFieldSeparator` (e.g., a semicolon) when there
            * is only one property-value object field present. Defaults to `false`.

@@ -22,29 +22,47 @@ A single options object has the following properties.
 
 Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square".
 
-<a name="user-content-type-formatting-options-defaultvaluespacing"></a>
-<a name="type-formatting-options-defaultvaluespacing"></a>
-### <code>defaultValueSpacing</code>
-
-The space character (if any) to use between the equal signs of a default value
-
-<a name="user-content-type-formatting-options-elementspacing"></a>
-<a name="type-formatting-options-elementspacing"></a>
-### <code>elementSpacing</code>
-
-The space character (if any) to use between elements in generics and tuples
-
 <a name="user-content-type-formatting-options-enablefixer"></a>
 <a name="type-formatting-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.
 
+<a name="user-content-type-formatting-options-genericandtupleelementspacing"></a>
+<a name="type-formatting-options-genericandtupleelementspacing"></a>
+### <code>genericAndTupleElementSpacing</code>
+
+The space character (if any) to use between elements in generics and tuples
+
 <a name="user-content-type-formatting-options-genericdot"></a>
 <a name="type-formatting-options-genericdot"></a>
 ### <code>genericDot</code>
 
 Boolean value of whether to use a dot before the angled brackets of a generic (e.g., `SomeType.<AnotherType>`). Defaults to `false`.
+
+<a name="user-content-type-formatting-options-keyvaluepostcolonspacing"></a>
+<a name="type-formatting-options-keyvaluepostcolonspacing"></a>
+### <code>keyValuePostColonSpacing</code>
+
+The amount of spacing (if any) after the colon of a key-value or object-field pair
+
+<a name="user-content-type-formatting-options-keyvaluepostkeyspacing"></a>
+<a name="type-formatting-options-keyvaluepostkeyspacing"></a>
+### <code>keyValuePostKeySpacing</code>
+
+The amount of spacing (if any) immediately after keys in a key-value or object-field pair
+
+<a name="user-content-type-formatting-options-keyvaluepostoptionalspacing"></a>
+<a name="type-formatting-options-keyvaluepostoptionalspacing"></a>
+### <code>keyValuePostOptionalSpacing</code>
+
+The amount of spacing (if any) after the optional operator (`?`) in a key-value or object-field pair
+
+<a name="user-content-type-formatting-options-keyvaluepostvariadicspacing"></a>
+<a name="type-formatting-options-keyvaluepostvariadicspacing"></a>
+### <code>keyValuePostVariadicSpacing</code>
+
+The amount of spacing (if any) after a variadic operator (`...`) in a key-value pair
 
 <a name="user-content-type-formatting-options-objectfieldindent"></a>
 <a name="type-formatting-options-objectfieldindent"></a>
@@ -91,6 +109,12 @@ will determine whether to add punctuation corresponding to the
 `objectFieldSeparator` (e.g., a semicolon) to the final object field.
 Defaults to `false`.
 
+<a name="user-content-type-formatting-options-parameterdefaultvaluespacing"></a>
+<a name="type-formatting-options-parameterdefaultvaluespacing"></a>
+### <code>parameterDefaultValueSpacing</code>
+
+The space character (if any) to use between the equal signs of a default value
+
 <a name="user-content-type-formatting-options-separatorforsingleobjectfield"></a>
 <a name="type-formatting-options-separatorforsingleobjectfield"></a>
 ### <code>separatorForSingleObjectField</code>
@@ -126,7 +150,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`
 |Tags|`param`, `property`, `returns`, `this`, `throws`, `type`, `typedef`, `yields`|
 |Recommended|false|
 |Settings|`mode`|
-|Options|`arrayBrackets`, `defaultValueSpacing`, `elementSpacing`, `enableFixer`, `genericDot`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
+|Options|`arrayBrackets`, `enableFixer`, `genericAndTupleElementSpacing`, `genericDot`, `keyValuePostColonSpacing`, `keyValuePostKeySpacing`, `keyValuePostOptionalSpacing`, `keyValuePostVariadicSpacing`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `parameterDefaultValueSpacing`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
 <a name="type-formatting-failing-examples"></a>
@@ -304,20 +328,56 @@ The following patterns are considered problems:
 /**
  * @param {SomeType<T, U>} cfg
  */
-// "jsdoc/type-formatting": ["error"|"warn", {"elementSpacing":""}]
+// "jsdoc/type-formatting": ["error"|"warn", {"genericAndTupleElementSpacing":""}]
 // Message: Element spacing should be ""
 
 /**
  * @param {[string, number]} cfg
  */
-// "jsdoc/type-formatting": ["error"|"warn", {"elementSpacing":""}]
+// "jsdoc/type-formatting": ["error"|"warn", {"genericAndTupleElementSpacing":""}]
 // Message: Element spacing should be ""
 
 /**
  * @param {<T, U extends V = string, W = string>(x: T) => U} cfg
  */
-// "jsdoc/type-formatting": ["error"|"warn", {"defaultValueSpacing":""}]
+// "jsdoc/type-formatting": ["error"|"warn", {"parameterDefaultValueSpacing":""}]
 // Message: Default value spacing should be ""
+
+/**
+ * @param {{a: 3}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostColonSpacing":""}]
+// Message: Post colon spacing should be ""
+
+/**
+ * @param {{a: 3}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostKeySpacing":" "}]
+// Message: Post key spacing should be " "
+
+/**
+ * @param {{a?: 3}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostOptionalSpacing":" "}]
+// Message: Post optional (`?`) spacing should be " "
+
+/**
+ * @param {[a: 3]} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostColonSpacing":""}]
+// Message: Post colon spacing should be ""
+
+/**
+ * @param {[a: 3]} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostKeySpacing":" "}]
+// Message: Post key spacing should be " "
+
+/**
+ * @param {[a?: 3]} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostOptionalSpacing":" "}]
+// Message: Post optional (`?`) spacing should be " "
 ````
 
 
@@ -401,16 +461,46 @@ The following patterns are not considered problems:
 /**
  * @param {SomeType<T,U>} cfg
  */
-// "jsdoc/type-formatting": ["error"|"warn", {"elementSpacing":""}]
+// "jsdoc/type-formatting": ["error"|"warn", {"genericAndTupleElementSpacing":""}]
 
 /**
  * @param {[string,number]} cfg
  */
-// "jsdoc/type-formatting": ["error"|"warn", {"elementSpacing":""}]
+// "jsdoc/type-formatting": ["error"|"warn", {"genericAndTupleElementSpacing":""}]
 
 /**
  * @param {<T, U extends V=string, W=string>(x: T) => U} cfg
  */
-// "jsdoc/type-formatting": ["error"|"warn", {"defaultValueSpacing":""}]
+// "jsdoc/type-formatting": ["error"|"warn", {"parameterDefaultValueSpacing":""}]
+
+/**
+ * @param {{a:3}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostColonSpacing":""}]
+
+/**
+ * @param {{a : 3}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostKeySpacing":" "}]
+
+/**
+ * @param {{a? : 3}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostOptionalSpacing":" "}]
+
+/**
+ * @param {[a:3]} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostColonSpacing":""}]
+
+/**
+ * @param {[a : 3]} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostKeySpacing":" "}]
+
+/**
+ * @param {[a? : 3]} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostOptionalSpacing":" "}]
 ````
 
