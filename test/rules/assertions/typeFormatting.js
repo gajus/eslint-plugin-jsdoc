@@ -706,6 +706,52 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @param {SomeType<T, U>} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Element spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          elementSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {SomeType<T,U>} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {[string, number]} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Element spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          elementSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {[string,number]} cfg
+         */
+      `,
+    },
   ],
   valid: [
     {

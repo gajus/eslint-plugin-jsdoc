@@ -17,6 +17,7 @@ export default iterateJsdoc(({
 }) => {
   const {
     arrayBrackets = 'square',
+    elementSpacing = ' ',
     enableFixer = true,
     genericDot = false,
     objectFieldIndent = '',
@@ -226,6 +227,9 @@ export default iterateJsdoc(({
           } else if (typeNode.meta.dot !== genericDot) {
             typeNode.meta.dot = genericDot;
             errorMessage = `Dot usage should be ${genericDot}`;
+          } else if ((typeNode.meta.elementSpacing ?? ' ') !== elementSpacing) {
+            typeNode.meta.elementSpacing = elementSpacing;
+            errorMessage = `Element spacing should be "${elementSpacing}"`;
           }
 
           break;
@@ -277,6 +281,16 @@ export default iterateJsdoc(({
           break;
         }
 
+        case 'JsdocTypeStringValue': {
+          const typeNode = /** @type {import('jsdoc-type-pratt-parser').StringValueResult} */ (nde);
+          if (typeNode.meta.quote !== stringQuotes) {
+            typeNode.meta.quote = stringQuotes;
+            errorMessage = `Inconsistent ${stringQuotes} string quotes usage`;
+          }
+
+          break;
+        }
+
         // Only suitable for namepaths (and would need changes); see https://github.com/gajus/eslint-plugin-jsdoc/issues/1524
         // case 'JsdocTypeProperty': {
         //   const typeNode = /** @type {import('jsdoc-type-pratt-parser').PropertyResult} */ (nde);
@@ -292,11 +306,13 @@ export default iterateJsdoc(({
         //   break;
         // }
 
-        case 'JsdocTypeStringValue': {
-          const typeNode = /** @type {import('jsdoc-type-pratt-parser').StringValueResult} */ (nde);
-          if (typeNode.meta.quote !== stringQuotes) {
-            typeNode.meta.quote = stringQuotes;
-            errorMessage = `Inconsistent ${stringQuotes} string quotes usage`;
+        case 'JsdocTypeTuple': {
+          const typeNode = /** @type {import('jsdoc-type-pratt-parser').TupleResult} */ (nde);
+          if ((typeNode.meta?.elementSpacing ?? ' ') !== elementSpacing) {
+            typeNode.meta = {
+              elementSpacing,
+            };
+            errorMessage = `Element spacing should be "${elementSpacing}"`;
           }
 
           break;
@@ -375,6 +391,10 @@ export default iterateJsdoc(({
               'angle',
               'square',
             ],
+            type: 'string',
+          },
+          elementSpacing: {
+            description: 'The space character (if any) to use between elements in generics and tuples',
             type: 'string',
           },
           enableFixer: {
