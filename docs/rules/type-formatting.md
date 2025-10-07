@@ -22,17 +22,59 @@ A single options object has the following properties.
 
 Determines how array generics are represented. Set to `angle` for the style `Array<type>` or `square` for the style `type[]`. Defaults to "square".
 
+<a name="user-content-type-formatting-options-arrowfunctionpostreturnmarkerspacing"></a>
+<a name="type-formatting-options-arrowfunctionpostreturnmarkerspacing"></a>
+### <code>arrowFunctionPostReturnMarkerSpacing</code>
+
+The space character (if any) to use after return markers (`=>`). Defaults to " ".
+
+<a name="user-content-type-formatting-options-arrowfunctionprereturnmarkerspacing"></a>
+<a name="type-formatting-options-arrowfunctionprereturnmarkerspacing"></a>
+### <code>arrowFunctionPreReturnMarkerSpacing</code>
+
+The space character (if any) to use before return markers (`=>`). Defaults to " ".
+
 <a name="user-content-type-formatting-options-enablefixer"></a>
 <a name="type-formatting-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.
 
+<a name="user-content-type-formatting-options-functionorclassparameterspacing"></a>
+<a name="type-formatting-options-functionorclassparameterspacing"></a>
+### <code>functionOrClassParameterSpacing</code>
+
+The space character (if any) to use between function or class parameters. Defaults to " ".
+
+<a name="user-content-type-formatting-options-functionorclasspostgenericspacing"></a>
+<a name="type-formatting-options-functionorclasspostgenericspacing"></a>
+### <code>functionOrClassPostGenericSpacing</code>
+
+The space character (if any) to use after a generic expression in a function or class. Defaults to "".
+
+<a name="user-content-type-formatting-options-functionorclasspostreturnmarkerspacing"></a>
+<a name="type-formatting-options-functionorclasspostreturnmarkerspacing"></a>
+### <code>functionOrClassPostReturnMarkerSpacing</code>
+
+The space character (if any) to use after return markers (`:`). Defaults to "".
+
+<a name="user-content-type-formatting-options-functionorclassprereturnmarkerspacing"></a>
+<a name="type-formatting-options-functionorclassprereturnmarkerspacing"></a>
+### <code>functionOrClassPreReturnMarkerSpacing</code>
+
+The space character (if any) to use before return markers (`:`). Defaults to "".
+
+<a name="user-content-type-formatting-options-functionorclasstypeparameterspacing"></a>
+<a name="type-formatting-options-functionorclasstypeparameterspacing"></a>
+### <code>functionOrClassTypeParameterSpacing</code>
+
+The space character (if any) to use between type parameters in a function or class. Defaults to " ".
+
 <a name="user-content-type-formatting-options-genericandtupleelementspacing"></a>
 <a name="type-formatting-options-genericandtupleelementspacing"></a>
 ### <code>genericAndTupleElementSpacing</code>
 
-The space character (if any) to use between elements in generics and tuples
+The space character (if any) to use between elements in generics and tuples. Defaults to " ".
 
 <a name="user-content-type-formatting-options-genericdot"></a>
 <a name="type-formatting-options-genericdot"></a>
@@ -44,25 +86,31 @@ Boolean value of whether to use a dot before the angled brackets of a generic (e
 <a name="type-formatting-options-keyvaluepostcolonspacing"></a>
 ### <code>keyValuePostColonSpacing</code>
 
-The amount of spacing (if any) after the colon of a key-value or object-field pair
+The amount of spacing (if any) after the colon of a key-value or object-field pair. Defaults to " ".
 
 <a name="user-content-type-formatting-options-keyvaluepostkeyspacing"></a>
 <a name="type-formatting-options-keyvaluepostkeyspacing"></a>
 ### <code>keyValuePostKeySpacing</code>
 
-The amount of spacing (if any) immediately after keys in a key-value or object-field pair
+The amount of spacing (if any) immediately after keys in a key-value or object-field pair. Defaults to "".
 
 <a name="user-content-type-formatting-options-keyvaluepostoptionalspacing"></a>
 <a name="type-formatting-options-keyvaluepostoptionalspacing"></a>
 ### <code>keyValuePostOptionalSpacing</code>
 
-The amount of spacing (if any) after the optional operator (`?`) in a key-value or object-field pair
+The amount of spacing (if any) after the optional operator (`?`) in a key-value or object-field pair. Defaults to "".
 
 <a name="user-content-type-formatting-options-keyvaluepostvariadicspacing"></a>
 <a name="type-formatting-options-keyvaluepostvariadicspacing"></a>
 ### <code>keyValuePostVariadicSpacing</code>
 
-The amount of spacing (if any) after a variadic operator (`...`) in a key-value pair
+The amount of spacing (if any) after a variadic operator (`...`) in a key-value pair. Defaults to "".
+
+<a name="user-content-type-formatting-options-methodquotes"></a>
+<a name="type-formatting-options-methodquotes"></a>
+### <code>methodQuotes</code>
+
+The style of quotation mark for surrounding method names when quoted. Defaults to `double`
 
 <a name="user-content-type-formatting-options-objectfieldindent"></a>
 <a name="type-formatting-options-objectfieldindent"></a>
@@ -113,7 +161,19 @@ Defaults to `false`.
 <a name="type-formatting-options-parameterdefaultvaluespacing"></a>
 ### <code>parameterDefaultValueSpacing</code>
 
-The space character (if any) to use between the equal signs of a default value
+The space character (if any) to use between the equal signs of a default value. Defaults to " ".
+
+<a name="user-content-type-formatting-options-postmethodnamespacing"></a>
+<a name="type-formatting-options-postmethodnamespacing"></a>
+### <code>postMethodNameSpacing</code>
+
+The space character (if any) to add after a method name. Defaults to "".
+
+<a name="user-content-type-formatting-options-postnewspacing"></a>
+<a name="type-formatting-options-postnewspacing"></a>
+### <code>postNewSpacing</code>
+
+The space character (if any) to add after "new" in a constructor. Defaults to " ".
 
 <a name="user-content-type-formatting-options-separatorforsingleobjectfield"></a>
 <a name="type-formatting-options-separatorforsingleobjectfield"></a>
@@ -150,7 +210,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`
 |Tags|`param`, `property`, `returns`, `this`, `throws`, `type`, `typedef`, `yields`|
 |Recommended|false|
 |Settings|`mode`|
-|Options|`arrayBrackets`, `enableFixer`, `genericAndTupleElementSpacing`, `genericDot`, `keyValuePostColonSpacing`, `keyValuePostKeySpacing`, `keyValuePostOptionalSpacing`, `keyValuePostVariadicSpacing`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `parameterDefaultValueSpacing`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
+|Options|`arrayBrackets`, `arrowFunctionPostReturnMarkerSpacing`, `arrowFunctionPreReturnMarkerSpacing`, `enableFixer`, `functionOrClassParameterSpacing`, `functionOrClassPostGenericSpacing`, `functionOrClassPostReturnMarkerSpacing`, `functionOrClassPreReturnMarkerSpacing`, `functionOrClassTypeParameterSpacing`, `genericAndTupleElementSpacing`, `genericDot`, `keyValuePostColonSpacing`, `keyValuePostKeySpacing`, `keyValuePostOptionalSpacing`, `keyValuePostVariadicSpacing`, `methodQuotes`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `parameterDefaultValueSpacing`, `postMethodNameSpacing`, `postNewSpacing`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
 <a name="type-formatting-failing-examples"></a>
@@ -378,6 +438,72 @@ The following patterns are considered problems:
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostOptionalSpacing":" "}]
 // Message: Post optional (`?`) spacing should be " "
+
+/**
+ * @param {() => void} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"arrowFunctionPostReturnMarkerSpacing":""}]
+// Message: Post-return-marker spacing should be ""
+
+/**
+ * @param {() => void} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"arrowFunctionPreReturnMarkerSpacing":""}]
+// Message: Pre-return-marker spacing should be ""
+
+/**
+ * @param {{hello(): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"postMethodNameSpacing":" "}]
+// Message: Post-method-name spacing should be " "
+
+/**
+ * @param {{new (): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"postNewSpacing":""}]
+// Message: Post-`new` spacing should be ""
+
+/**
+ * @param {function(): void} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"functionOrClassPreReturnMarkerSpacing":" "}]
+// Message: Pre-return-marker spacing should be " "
+
+/**
+ * @param {{new (): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"functionOrClassPostReturnMarkerSpacing":""}]
+// Message: Post-return-marker spacing should be ""
+
+/**
+ * @param {{method(a: string, b: number): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"functionOrClassParameterSpacing":""}]
+// Message: Parameter spacing should be ""
+
+/**
+ * @param {{method<T>(a: T, b: number): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"functionOrClassPostGenericSpacing":" "}]
+// Message: Post-generic spacing should be " "
+
+/**
+ * @param {{method<T, U>(a: T, b: U): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"functionOrClassTypeParameterSpacing":""}]
+// Message: Type parameter spacing should be ""
+
+/**
+ * @param {{'some-method'(a: string, b: number): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"methodQuotes":"double"}]
+// Message: Method quoting style should be "double"
+
+/**
+ * @param {[a: string, ...b: number]} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostVariadicSpacing":" "}]
+// Message: Post variadic (`...`) spacing should be " "
 ````
 
 
@@ -464,6 +590,11 @@ The following patterns are not considered problems:
 // "jsdoc/type-formatting": ["error"|"warn", {"genericAndTupleElementSpacing":""}]
 
 /**
+ * @param {SomeType<T, U>} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"genericAndTupleElementSpacing":" "}]
+
+/**
  * @param {[string,number]} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"genericAndTupleElementSpacing":""}]
@@ -502,5 +633,60 @@ The following patterns are not considered problems:
  * @param {[a? : 3]} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostOptionalSpacing":" "}]
+
+/**
+ * @param {() =>void} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"arrowFunctionPostReturnMarkerSpacing":""}]
+
+/**
+ * @param {()=> void} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"arrowFunctionPreReturnMarkerSpacing":""}]
+
+/**
+ * @param {{hello (): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"postMethodNameSpacing":" "}]
+
+/**
+ * @param {{new(): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"postNewSpacing":""}]
+
+/**
+ * @param {{new (): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"postNewSpacing":" "}]
+
+/**
+ * @param {function() : void} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"functionOrClassPreReturnMarkerSpacing":" "}]
+
+/**
+ * @param {{new ():void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"functionOrClassPostReturnMarkerSpacing":""}]
+
+/**
+ * @param {{method(a: string,b: number): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"functionOrClassParameterSpacing":""}]
+
+/**
+ * @param {{method<T> (a: T, b: number): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"functionOrClassPostGenericSpacing":" "}]
+
+/**
+ * @param {{method<T,U>(a: T, b: U): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"functionOrClassTypeParameterSpacing":""}]
+
+/**
+ * @param {{"some-method"(a: string, b: number): void}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"methodQuotes":"double"}]
 ````
 

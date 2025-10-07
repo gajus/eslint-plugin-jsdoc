@@ -917,6 +917,259 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @param {() => void} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post-return-marker spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          arrowFunctionPostReturnMarkerSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {() =>void} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {() => void} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Pre-return-marker spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          arrowFunctionPreReturnMarkerSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {()=> void} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{hello(): void}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post-method-name spacing should be " "',
+        },
+      ],
+      options: [
+        {
+          postMethodNameSpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @param {{hello (): void}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{new (): void}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post-`new` spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          postNewSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {{new(): void}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {function(): void} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Pre-return-marker spacing should be " "',
+        },
+      ],
+      options: [
+        {
+          functionOrClassPreReturnMarkerSpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @param {function() : void} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{new (): void}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post-return-marker spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          functionOrClassPostReturnMarkerSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {{new ():void}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{method(a: string, b: number): void}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Parameter spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          functionOrClassParameterSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {{method(a: string,b: number): void}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{method<T>(a: T, b: number): void}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post-generic spacing should be " "',
+        },
+      ],
+      options: [
+        {
+          functionOrClassPostGenericSpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @param {{method<T> (a: T, b: number): void}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{method<T, U>(a: T, b: U): void}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Type parameter spacing should be ""',
+        },
+      ],
+      options: [
+        {
+          functionOrClassTypeParameterSpacing: '',
+        },
+      ],
+      output: `
+        /**
+         * @param {{method<T,U>(a: T, b: U): void}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {{'some-method'(a: string, b: number): void}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Method quoting style should be "double"',
+        },
+      ],
+      options: [
+        {
+          methodQuotes: 'double',
+        },
+      ],
+      output: `
+        /**
+         * @param {{"some-method"(a: string, b: number): void}} cfg
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {[a: string, ...b: number]} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Post variadic (`...`) spacing should be " "',
+        },
+      ],
+      options: [
+        {
+          keyValuePostVariadicSpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @param {[a: string, ... b: number]} cfg
+         */
+      `,
+    },
   ],
   valid: [
     {
@@ -1113,6 +1366,18 @@ export default {
     {
       code: `
         /**
+         * @param {SomeType<T, U>} cfg
+         */
+      `,
+      options: [
+        {
+          genericAndTupleElementSpacing: ' ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
          * @param {[string,number]} cfg
          */
       `,
@@ -1203,6 +1468,138 @@ export default {
       options: [
         {
           keyValuePostOptionalSpacing: ' ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {() =>void} cfg
+         */
+      `,
+      options: [
+        {
+          arrowFunctionPostReturnMarkerSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {()=> void} cfg
+         */
+      `,
+      options: [
+        {
+          arrowFunctionPreReturnMarkerSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{hello (): void}} cfg
+         */
+      `,
+      options: [
+        {
+          postMethodNameSpacing: ' ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{new(): void}} cfg
+         */
+      `,
+      options: [
+        {
+          postNewSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{new (): void}} cfg
+         */
+      `,
+      options: [
+        {
+          postNewSpacing: ' ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {function() : void} cfg
+         */
+      `,
+      options: [
+        {
+          functionOrClassPreReturnMarkerSpacing: ' ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{new ():void}} cfg
+         */
+      `,
+      options: [
+        {
+          functionOrClassPostReturnMarkerSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{method(a: string,b: number): void}} cfg
+         */
+      `,
+      options: [
+        {
+          functionOrClassParameterSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{method<T> (a: T, b: number): void}} cfg
+         */
+      `,
+      options: [
+        {
+          functionOrClassPostGenericSpacing: ' ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{method<T,U>(a: T, b: U): void}} cfg
+         */
+      `,
+      options: [
+        {
+          functionOrClassTypeParameterSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{"some-method"(a: string, b: number): void}} cfg
+         */
+      `,
+      options: [
+        {
+          methodQuotes: 'double',
         },
       ],
     },
