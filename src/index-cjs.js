@@ -66,6 +66,7 @@ import requireYieldsCheck from './rules/requireYieldsCheck.js';
 import sortTags from './rules/sortTags.js';
 import tagLines from './rules/tagLines.js';
 import textEscaping from './rules/textEscaping.js';
+import tsMethodSignatureStyle from './rules/tsMethodSignatureStyle.js';
 import typeFormatting from './rules/typeFormatting.js';
 import validTypes from './rules/validTypes.js';
 
@@ -251,6 +252,7 @@ index.rules = {
   'sort-tags': sortTags,
   'tag-lines': tagLines,
   'text-escaping': textEscaping,
+  'ts-method-signature-style': tsMethodSignatureStyle,
   'type-formatting': typeFormatting,
   'valid-types': validTypes,
 };
@@ -341,6 +343,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/sort-tags': 'off',
       'jsdoc/tag-lines': warnOrError,
       'jsdoc/text-escaping': 'off',
+      'jsdoc/ts-method-signature-style': 'off',
       'jsdoc/type-formatting': 'off',
       'jsdoc/valid-types': warnOrError,
     },

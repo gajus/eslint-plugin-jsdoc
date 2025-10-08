@@ -67,6 +67,7 @@
   "sort-tags",
   "tag-lines",
   "text-escaping",
+  "ts-method-signature-style",
   "type-formatting",
   "valid-types"
 ]

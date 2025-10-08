@@ -1,5 +1,8 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
+  rewireByParsedType,
+} from '../jsdocUtils.js';
+import {
   parse as parseType,
   stringify,
   traverse,
@@ -67,156 +70,7 @@ export default iterateJsdoc(({
     }
 
     const fix = () => {
-      const typeLines = stringify(parsedType).split('\n');
-      const firstTypeLine = typeLines.shift();
-      const lastTypeLine = typeLines.pop();
-
-      const beginNameOrDescIdx = tag.source.findIndex(({
-        tokens,
-      }) => {
-        return tokens.name || tokens.description;
-      });
-
-      const nameAndDesc = beginNameOrDescIdx === -1 ?
-        null :
-        tag.source.slice(beginNameOrDescIdx);
-
-      const initialNumber = tag.source[0].number;
-      const src = [
-        // Get inevitably present tag from first `tag.source`
-        {
-          number: initialNumber,
-          source: '',
-          tokens: {
-            ...tag.source[0].tokens,
-            ...(typeLines.length || lastTypeLine ? {
-              end: '',
-              name: '',
-              postName: '',
-              postType: '',
-            } : {}),
-            type: '{' + typeBracketSpacing + firstTypeLine + (!typeLines.length && lastTypeLine === undefined ? typeBracketSpacing + '}' : ''),
-          },
-        },
-        // Get any intervening type lines
-        ...(typeLines.length ? typeLines.map((typeLine, idx) => {
-          return {
-            number: initialNumber + idx + 1,
-            source: '',
-            tokens: {
-              // Grab any delimiter info from first item
-              ...tag.source[0].tokens,
-              delimiter: tag.source[0].tokens.delimiter === '/**' ? '*' : tag.source[0].tokens.delimiter,
-              end: '',
-              name: '',
-              postName: '',
-              postTag: '',
-              postType: '',
-              start: indent + ' ',
-              tag: '',
-              type: typeLine,
-            },
-          };
-        }) : []),
-      ];
-
-      // Merge any final type line and name and description
-      if (
-        // Name and description may be already included if present with the tag
-        nameAndDesc && beginNameOrDescIdx > 0
-      ) {
-        src.push({
-          number: src.length + 1,
-          source: '',
-          tokens: {
-            ...nameAndDesc[0].tokens,
-            type: lastTypeLine + typeBracketSpacing + '}',
-          },
-        });
-
-        if (
-          // Get any remaining description lines
-          nameAndDesc.length > 1
-        ) {
-          src.push(
-            ...nameAndDesc.slice(1).map(({
-              source,
-              tokens,
-            }, idx) => {
-              return {
-                number: src.length + idx + 2,
-                source,
-                tokens,
-              };
-            }),
-          );
-        }
-      } else if (nameAndDesc) {
-        if (lastTypeLine) {
-          src.push({
-            number: src.length + 1,
-            source: '',
-            tokens: {
-              ...nameAndDesc[0].tokens,
-              delimiter: nameAndDesc[0].tokens.delimiter === '/**' ? '*' : nameAndDesc[0].tokens.delimiter,
-              postTag: '',
-              start: indent + ' ',
-              tag: '',
-              type: lastTypeLine + typeBracketSpacing + '}',
-            },
-          });
-        }
-
-        if (
-          // Get any remaining description lines
-          nameAndDesc.length > 1
-        ) {
-          src.push(
-            ...nameAndDesc.slice(1).map(({
-              source,
-              tokens,
-            }, idx) => {
-              return {
-                number: src.length + idx + 2,
-                source,
-                tokens,
-              };
-            }),
-          );
-        }
-      }
-
-      tag.source = src;
-
-      // Properly rewire `jsdoc.source`
-      const firstTagIdx = jsdoc.source.findIndex(({
-        tokens: {
-          tag: tg,
-        },
-      }) => {
-        return tg;
-      });
-
-      const initialEndSource = jsdoc.source.find(({
-        tokens: {
-          end,
-        },
-      }) => {
-        return end;
-      });
-
-      jsdoc.source = [
-        ...jsdoc.source.slice(0, firstTagIdx),
-        ...jsdoc.tags.flatMap(({
-          source,
-        }) => {
-          return source;
-        }),
-      ];
-
-      if (initialEndSource && !jsdoc.source.at(-1)?.tokens?.end) {
-        jsdoc.source.push(initialEndSource);
-      }
+      rewireByParsedType(jsdoc, tag, parsedType, indent, typeBracketSpacing);
     };
 
     /** @type {string[]} */
