@@ -2938,6 +2938,20 @@ export interface Rules {
         }
       ];
 
+  /** Prefers either function properties or method signatures */
+  "jsdoc/ts-method-signature-style": 
+    | []
+    | ["method" | "property"]
+    | [
+        "method" | "property",
+        {
+          /**
+           * Whether to enable the fixer. Defaults to `true`.
+           */
+          enableFixer?: boolean;
+        }
+      ];
+
   /** Formats JSDoc type values. */
   "jsdoc/type-formatting": 
     | []

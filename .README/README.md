@@ -278,6 +278,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/sort-tags": 1,
         "jsdoc/tag-lines": 1, // Recommended
         "jsdoc/text-escaping": 1,
+        "jsdoc/ts-method-signature-style": 1,
         "jsdoc/type-formatting": 1,
         "jsdoc/valid-types": 1 // Recommended
     }

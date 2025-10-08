@@ -305,6 +305,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/sort-tags": 1,
         "jsdoc/tag-lines": 1, // Recommended
         "jsdoc/text-escaping": 1,
+        "jsdoc/ts-method-signature-style": 1,
         "jsdoc/type-formatting": 1,
         "jsdoc/valid-types": 1 // Recommended
     }
@@ -497,5 +498,6 @@ non-default-recommended fixer).
 ||:wrench:| [sort-tags](./docs/rules/sort-tags.md#readme) | Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups. |
 |:heavy_check_mark:|:wrench:| [tag-lines](./docs/rules/tag-lines.md#readme) | Enforces lines (or no lines) before, after, or between tags. |
 ||:wrench:| [text-escaping](./docs/rules/text-escaping.md#readme) | Auto-escape certain characters that are input within block and tag descriptions. |
+||:wrench:| [ts-method-signature-style](./docs/rules/ts-method-signature-style.md#readme) | Prefers either function properties or method signatures |
 ||:wrench:| [type-formatting](./docs/rules/type-formatting.md#readme) | Formats JSDoc type values. |
 |:heavy_check_mark:|| [valid-types](./docs/rules/valid-types.md#readme) | Requires all types/namepaths to be valid JSDoc, Closure compiler, or TypeScript types (configurable in settings). |
