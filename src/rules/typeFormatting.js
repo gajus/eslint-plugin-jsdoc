@@ -43,7 +43,7 @@ export default iterateJsdoc(({
     postNewSpacing = ' ',
     // propertyQuotes = null,
     separatorForSingleObjectField = false,
-    stringQuotes = 'single',
+    stringQuotes = 'double',
     typeBracketSpacing = '',
     unionSpacing = ' ',
   } = context.options[0] || {};
@@ -790,7 +790,7 @@ is only one property-value object field present. Defaults to \`false\`.`,
           },
           stringQuotes: {
             description: `How string literals should be quoted (e.g., \`"abc"\`). Set to \`single\`
-or \`double\`. Defaults to 'single'.`,
+or \`double\`. Defaults to 'double'.`,
             enum: [
               'double',
               'single',
