@@ -13,6 +13,19 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @yield
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '@yields should have a type',
+        },
+      ],
+    },
   ],
   valid: [
     {
