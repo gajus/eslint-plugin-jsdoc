@@ -23,6 +23,11 @@ The following patterns are considered problems:
  * @yields
  */
 // Message: @yields should have a type
+
+/**
+ * @yield
+ */
+// Message: @yields should have a type
 ````
 
 

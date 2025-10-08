@@ -211,7 +211,7 @@ index.rules = {
   'require-throws-description': buildForbidRuleDefinition({
     contexts: [
       {
-        comment: 'JsdocBlock:has(JsdocTag[tag=throws]:not([description!=""]))',
+        comment: 'JsdocBlock:has(JsdocTag[tag=/^(?:throws|exception)$/]:not([description!=""]))',
         context: 'any',
         message: '@throws should have a description',
       },
@@ -222,7 +222,7 @@ index.rules = {
   'require-throws-type': buildForbidRuleDefinition({
     contexts: [
       {
-        comment: 'JsdocBlock:has(JsdocTag[tag=throws]:not([parsedType.type]))',
+        comment: 'JsdocBlock:has(JsdocTag[tag=/^(?:throws|exception)$/]:not([parsedType.type]))',
         context: 'any',
         message: '@throws should have a type',
       },
@@ -235,7 +235,7 @@ index.rules = {
   'require-yields-description': buildForbidRuleDefinition({
     contexts: [
       {
-        comment: 'JsdocBlock:has(JsdocTag[tag=yields]:not([name!=""]):not([description!=""]))',
+        comment: 'JsdocBlock:has(JsdocTag[tag=/^yields?$/]:not([name!=""]):not([description!=""]))',
         context: 'any',
         message: '@yields should have a description',
       },
@@ -246,7 +246,7 @@ index.rules = {
   'require-yields-type': buildForbidRuleDefinition({
     contexts: [
       {
-        comment: 'JsdocBlock:has(JsdocTag[tag=yields]:not([parsedType.type]))',
+        comment: 'JsdocBlock:has(JsdocTag[tag=/^yields?$/]:not([parsedType.type]))',
         context: 'any',
         message: '@yields should have a type',
       },
