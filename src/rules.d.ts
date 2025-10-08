@@ -3061,7 +3061,7 @@ export interface Rules {
           separatorForSingleObjectField?: boolean;
           /**
            * How string literals should be quoted (e.g., `"abc"`). Set to `single`
-           * or `double`. Defaults to 'single'.
+           * or `double`. Defaults to 'double'.
            */
           stringQuotes?: "double" | "single";
           /**

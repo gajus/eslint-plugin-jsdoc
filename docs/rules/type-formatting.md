@@ -187,7 +187,7 @@ is only one property-value object field present. Defaults to `false`.
 ### <code>stringQuotes</code>
 
 How string literals should be quoted (e.g., `"abc"`). Set to `single`
-or `double`. Defaults to 'single'.
+or `double`. Defaults to 'double'.
 
 <a name="user-content-type-formatting-options-typebracketspacing"></a>
 <a name="type-formatting-options-typebracketspacing"></a>
