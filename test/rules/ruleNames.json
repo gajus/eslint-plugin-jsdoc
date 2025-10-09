@@ -68,6 +68,7 @@
   "tag-lines",
   "text-escaping",
   "ts-method-signature-style",
+  "ts-no-empty-object-type",
   "ts-prefer-function-type",
   "type-formatting",
   "valid-types"

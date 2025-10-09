@@ -2952,6 +2952,9 @@ export interface Rules {
         }
       ];
 
+  /** Warns against use of the empty object type */
+  "jsdoc/ts-no-empty-object-type": [];
+
   /** Prefers function types over call signatures when there are no other properties. */
   "jsdoc/ts-prefer-function-type": 
     | []

@@ -307,6 +307,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/text-escaping": 1,
         "jsdoc/ts-prefer-function-type": 1,
         "jsdoc/ts-method-signature-style": 1,
+        "jsdoc/ts-prefer-function-type": 1,
         "jsdoc/type-formatting": 1,
         "jsdoc/valid-types": 1 // Recommended
     }
@@ -500,6 +501,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:|:wrench:| [tag-lines](./docs/rules/tag-lines.md#readme) | Enforces lines (or no lines) before, after, or between tags. |
 ||:wrench:| [text-escaping](./docs/rules/text-escaping.md#readme) | Auto-escape certain characters that are input within block and tag descriptions. |
 ||:wrench:| [ts-method-signature-style](./docs/rules/ts-method-signature-style.md#readme) | Prefers either function properties or method signatures |
+|:heavy_check_mark:|| [ts-no-empty-object-type](./docs/rules/ts-no-empty-object-type.md#readme) | Warns against use of the empty object type |
 ||:wrench:| [ts-prefer-function-type](./docs/rules/ts-prefer-function-type.md#readme) | Prefers function types over call signatures when there are no other properties. |
 ||:wrench:| [type-formatting](./docs/rules/type-formatting.md#readme) | Formats JSDoc type values. |
 |:heavy_check_mark:|| [valid-types](./docs/rules/valid-types.md#readme) | Requires all types/namepaths to be valid JSDoc, Closure compiler, or TypeScript types (configurable in settings). |
