@@ -2955,6 +2955,18 @@ export interface Rules {
   /** Warns against use of the empty object type */
   "jsdoc/ts-no-empty-object-type": [];
 
+  /** Catches unnecessary template expressions such as string expressions within a template literal. */
+  "jsdoc/ts-no-unnecessary-template-expression": 
+    | []
+    | [
+        {
+          /**
+           * Whether to enable the fixer. Defaults to `true`.
+           */
+          enableFixer?: boolean;
+        }
+      ];
+
   /** Prefers function types over call signatures when there are no other properties. */
   "jsdoc/ts-prefer-function-type": 
     | []
