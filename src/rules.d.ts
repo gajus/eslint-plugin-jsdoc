@@ -2952,7 +2952,7 @@ export interface Rules {
         }
       ];
 
-  /**  */
+  /** Prefers function types over call signatures when there are no other properties. */
   "jsdoc/ts-prefer-function-type": 
     | []
     | [
