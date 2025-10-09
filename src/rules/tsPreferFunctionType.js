@@ -106,7 +106,7 @@ export default iterateJsdoc(({
   iterateAllJsdocs: true,
   meta: {
     docs: {
-      description: '',
+      description: 'Prefers function types over call signatures when there are no other properties.',
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/ts-prefer-function-type.md#repos-sticky-header',
     },
     fixable: 'code',
