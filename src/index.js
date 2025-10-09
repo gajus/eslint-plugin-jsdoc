@@ -73,6 +73,7 @@ import sortTags from './rules/sortTags.js';
 import tagLines from './rules/tagLines.js';
 import textEscaping from './rules/textEscaping.js';
 import tsMethodSignatureStyle from './rules/tsMethodSignatureStyle.js';
+import tsNoEmptyObjectType from './rules/tsNoEmptyObjectType.js';
 import tsPreferFunctionType from './rules/tsPreferFunctionType.js';
 import typeFormatting from './rules/typeFormatting.js';
 import validTypes from './rules/validTypes.js';
@@ -260,6 +261,7 @@ index.rules = {
   'tag-lines': tagLines,
   'text-escaping': textEscaping,
   'ts-method-signature-style': tsMethodSignatureStyle,
+  'ts-no-empty-object-type': tsNoEmptyObjectType,
   'ts-prefer-function-type': tsPreferFunctionType,
   'type-formatting': typeFormatting,
   'valid-types': validTypes,
@@ -352,6 +354,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/tag-lines': warnOrError,
       'jsdoc/text-escaping': 'off',
       'jsdoc/ts-method-signature-style': 'off',
+      'jsdoc/ts-no-empty-object-type': warnOrError,
       'jsdoc/ts-prefer-function-type': 'off',
       'jsdoc/type-formatting': 'off',
       'jsdoc/valid-types': warnOrError,
