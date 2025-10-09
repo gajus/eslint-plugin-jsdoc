@@ -499,5 +499,6 @@ non-default-recommended fixer).
 |:heavy_check_mark:|:wrench:| [tag-lines](./docs/rules/tag-lines.md#readme) | Enforces lines (or no lines) before, after, or between tags. |
 ||:wrench:| [text-escaping](./docs/rules/text-escaping.md#readme) | Auto-escape certain characters that are input within block and tag descriptions. |
 ||:wrench:| [ts-method-signature-style](./docs/rules/ts-method-signature-style.md#readme) | Prefers either function properties or method signatures |
+||:wrench:| [ts-prefer-function-type](./docs/rules/ts-prefer-function-type.md#readme) |  |
 ||:wrench:| [type-formatting](./docs/rules/type-formatting.md#readme) | Formats JSDoc type values. |
 |:heavy_check_mark:|| [valid-types](./docs/rules/valid-types.md#readme) | Requires all types/namepaths to be valid JSDoc, Closure compiler, or TypeScript types (configurable in settings). |

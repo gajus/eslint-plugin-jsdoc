@@ -2952,6 +2952,18 @@ export interface Rules {
         }
       ];
 
+  /**  */
+  "jsdoc/ts-prefer-function-type": 
+    | []
+    | [
+        {
+          /**
+           * Whether to enable the fixer or not
+           */
+          enableFixer?: boolean;
+        }
+      ];
+
   /** Formats JSDoc type values. */
   "jsdoc/type-formatting": 
     | []
