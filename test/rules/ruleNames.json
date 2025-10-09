@@ -69,6 +69,7 @@
   "text-escaping",
   "ts-method-signature-style",
   "ts-no-empty-object-type",
+  "ts-no-unnecessary-template-expression",
   "ts-prefer-function-type",
   "type-formatting",
   "valid-types"
