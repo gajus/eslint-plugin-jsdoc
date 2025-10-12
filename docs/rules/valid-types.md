@@ -988,5 +988,9 @@ class Test {
  * @typedef {Object} module:src/core/Player~mediaFormat
  */
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
+
+let SettingName = /** @type {const} */ ({
+  THEME: `theme`,
+})
 ````
 
