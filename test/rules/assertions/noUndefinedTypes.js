@@ -1857,5 +1857,18 @@ export default /** @type {import('../index.js').TestCases} */ ({
         };
       `,
     },
+    {
+      code: `
+        class Storage {
+          /** @type {globalThis.localStorage} */
+          #storage
+        }
+      `,
+      languageOptions: {
+        globals: {
+          localStorage: 'readonly',
+        },
+      },
+    },
   ],
 });
