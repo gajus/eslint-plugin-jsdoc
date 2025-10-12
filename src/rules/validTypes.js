@@ -366,7 +366,7 @@ export default iterateJsdoc(({
 
     // VALID TYPE
     const hasTypePosition = mightHaveTypePosition === true && Boolean(tag.type);
-    if (hasTypePosition) {
+    if (hasTypePosition && (tag.type !== 'const' || tag.tag !== 'type')) {
       validTypeParsing(tag.type);
     }
 

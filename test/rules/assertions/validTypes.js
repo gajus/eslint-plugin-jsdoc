@@ -2030,5 +2030,12 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        let SettingName = /** @type {const} */ ({
+          THEME: \`theme\`,
+        })
+      `,
+    },
   ],
 });
