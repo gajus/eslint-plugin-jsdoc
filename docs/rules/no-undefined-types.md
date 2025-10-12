@@ -1092,5 +1092,10 @@ const getValue = () => {};
  */
 const defineCustomElement = (tagName, component) => {
 };
+
+class Storage {
+  /** @type {globalThis.localStorage} */
+  #storage
+}
 ````
 

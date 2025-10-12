@@ -20,6 +20,10 @@ const extraTypes = [
   'Array', 'Object', 'RegExp', 'Date', 'Function', 'Intl',
 ];
 
+const globalTypes = [
+  'globalThis', 'global', 'window', 'self',
+];
+
 const typescriptGlobals = [
   // https://www.typescriptlang.org/docs/handbook/utility-types.html
   'Awaited',
@@ -470,6 +474,7 @@ export default iterateJsdoc(({
     parsedType,
     tag,
   } of tagsWithTypes) {
+    // eslint-disable-next-line complexity -- Refactor
     traverse(parsedType, (nde, parentNode) => {
       /**
        * @type {import('jsdoc-type-pratt-parser').NameResult & {
@@ -501,8 +506,10 @@ export default iterateJsdoc(({
           !importTags.includes(val) &&
           !extraTypes.includes(val) &&
           !typedefDeclarations.includes(val) &&
+          !globalTypes.includes(val) &&
           currNode && 'right' in currNode &&
-          currNode.right?.type === 'JsdocTypeProperty') {
+          currNode.right?.type === 'JsdocTypeProperty'
+        ) {
           val = val + '.' + currNode.right.value;
         }
       } while (currNode?.type === 'JsdocTypeNamePath');
