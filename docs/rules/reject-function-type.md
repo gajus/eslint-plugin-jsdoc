@@ -22,15 +22,17 @@ The following patterns are considered problems:
 
 ````ts
 /**
- * @param {Function} abc
+ * @param {Function} fooBar
  */
-function quux () {}
+function quux (fooBar) {
+  console.log(fooBar(3));
+}
 // Message: Prefer a more specific type to `Function`
 
 /**
  * @param {string|Array<Function>} abc
  */
-function quux () {}
+function buzz (abc) {}
 // Message: Prefer a more specific type to `Function`
 ````
 
@@ -43,9 +45,23 @@ function quux () {}
 The following patterns are not considered problems:
 
 ````ts
+// Define the callback with its inputs/outputs, and a name.
 /**
- * @param {SomeType} abc
+ * @callback          FOOBAR
+ * @param    {number} baz
+ * @return   {number}
  */
-function quux () {}
-````
 
+// Then reference the callback name as the type.
+/**
+ * @param {FOOBAR} fooBar
+ */
+function quux (fooBar) {
+  console.log(fooBar(3));
+}
+
+/**
+ * @param {string|Array<FOOBAR>} abc
+ */
+function buzz (abc) {}
+````
