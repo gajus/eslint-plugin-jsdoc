@@ -13,6 +13,7 @@ import {
 import {
   parseImportsExports,
 } from 'parse-imports-exports';
+import toValidIdentifier from 'to-valid-identifier';
 
 export default iterateJsdoc(({
   context,
@@ -133,10 +134,11 @@ export default iterateJsdoc(({
       }
 
       /**
-       * @param {string} matchingName
+       * @param {string} name
        * @param {string[]} extrPathSegments
        */
-      const getFixer = (matchingName, extrPathSegments) => {
+      const getFixer = (name, extrPathSegments) => {
+        const matchingName = toValidIdentifier(name);
         return () => {
           /** @type {import('jsdoc-type-pratt-parser').NamePathResult|undefined} */
           let node = nodes.at(0);
@@ -369,7 +371,7 @@ export default iterateJsdoc(({
             return fixer.insertTextBefore(
               // @ts-expect-error Ok
               commentNodes[0] ?? programNode,
-              `/** @import * as ${element.value} from '${element.value}'; */${
+              `/** @import * as ${toValidIdentifier(element.value)} from '${element.value}'; */${
                 commentNodes[0] ? '\n' + indent : ''
               }`,
             );
@@ -422,10 +424,13 @@ export default iterateJsdoc(({
             // @ts-expect-error Ok
             commentNodes[0] ?? programNode,
             outputType === 'namespaced-import' ?
-              `/** @import * as ${element.value} from '${element.value}'; */${
+              `/** @import * as ${toValidIdentifier(element.value)} from '${element.value}'; */${
                 commentNodes[0] ? '\n' + indent : ''
               }` :
-              `/** @import { ${pathSegments.at(-1)} } from '${element.value}'; */${
+              `/** @import { ${toValidIdentifier(
+                /* c8 ignore next -- TS */
+                pathSegments.at(-1) ?? '',
+              )} } from '${element.value}'; */${
                 commentNodes[0] ? '\n' + indent : ''
               }`,
           );
