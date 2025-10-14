@@ -67,6 +67,7 @@
     "replace": "^1.2.2",
     "rimraf": "^6.0.1",
     "semantic-release": "^24.2.9",
+    "to-valid-identifier": "^0.1.1",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.46.0"
   },

@@ -315,6 +315,15 @@ let foo;
 /** @type {import('foo').default} */
 let foo;
 // Message: Inline `import()` found; prefer `@import`
+
+/** @type { import('@typescript-eslint/utils').TSESLint.FlatConfig.Config['rules'] } */
+// Message: Inline `import()` found; prefer `@import`
+
+/** @type { import('node:zlib').createGzip } */
+// Message: Inline `import()` found; prefer `@import`
+
+/** @type { import('./lib/someFile.js').someImport } */
+// Message: Inline `import()` found; prefer `@import`
 ````
 
 

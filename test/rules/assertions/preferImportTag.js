@@ -906,6 +906,48 @@ let foo;
         let foo;
       `,
     },
+    {
+      code: `
+        /** @type { import('@typescript-eslint/utils').TSESLint.FlatConfig.Config['rules'] } */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `/** @import * as $12$typescript$j$eslint$l$utils from '@typescript-eslint/utils'; */
+        /** @type {$12$typescript$j$eslint$l$utils.TSESLint.FlatConfig.Config['rules']} */
+      `,
+    },
+    {
+      code: `
+        /** @type { import('node:zlib').createGzip } */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `/** @import * as node$w$zlib from 'node:zlib'; */
+        /** @type {node$w$zlib.createGzip} */
+      `,
+    },
+    {
+      code: `
+        /** @type { import('./lib/someFile.js').someImport } */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `/** @import * as $k$$l$lib$l$someFile$k$js from './lib/someFile.js'; */
+        /** @type {$k$$l$lib$l$someFile$k$js.someImport} */
+      `,
+    },
   ],
   valid: [
     {
