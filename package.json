@@ -16,7 +16,8 @@
     "object-deep-merge": "^1.0.5",
     "parse-imports-exports": "^0.2.4",
     "semver": "^7.7.3",
-    "spdx-expression-parse": "^4.0.0"
+    "spdx-expression-parse": "^4.0.0",
+    "to-valid-identifier": "^0.1.1"
   },
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
@@ -67,7 +68,6 @@
     "replace": "^1.2.2",
     "rimraf": "^6.0.1",
     "semantic-release": "^24.2.9",
-    "to-valid-identifier": "^0.1.1",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.46.0"
   },
