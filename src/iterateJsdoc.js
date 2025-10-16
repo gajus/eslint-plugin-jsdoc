@@ -212,7 +212,7 @@ import esquery from 'esquery';
  * @callback AddTag
  * @param {string} targetTagName
  * @param {Integer} [number]
- * @param {import('comment-parser').Tokens|{}} [tokens]
+ * @param {Partial<import('comment-parser').Tokens>} [tokens]
  * @returns {void}
  */
 
@@ -567,7 +567,7 @@ const {
 /**
  * A plain object for tracking state as needed by rules across iterations.
  * @typedef {{
- *   globalTags: {},
+ *   globalTags: boolean,
  *   hasDuplicates: {
  *     [key: string]: boolean
  *   },
