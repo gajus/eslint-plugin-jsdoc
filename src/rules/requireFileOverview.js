@@ -15,7 +15,7 @@ const defaultTags = {
 const setDefaults = (state) => {
   // First iteration
   if (!state.globalTags) {
-    state.globalTags = {};
+    state.globalTags = true;
     state.hasDuplicates = {};
     state.hasTag = {};
     state.hasNonCommentBeforeTag = {};
