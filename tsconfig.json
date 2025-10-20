@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es2023"],
+    "lib": ["es2024"],
     "moduleResolution": "Bundler",
     "module": "ESNext",
     "allowJs": true,

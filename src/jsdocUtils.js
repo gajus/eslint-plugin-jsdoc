@@ -521,7 +521,7 @@ const modeWarnSettings = WarnSettings();
 
 /**
  * @param {ParserMode|undefined} mode
- * @param {Reporter} context
+ * @param {import('eslint').Rule.RuleContext} context
  * @returns {import('./tagNames.js').AliasedTags}
  */
 const getTagNamesForMode = (mode, context) => {
@@ -612,7 +612,7 @@ const getTagDescription = (tg, returnArray) => {
  * @param {string} name
  * @param {ParserMode|undefined} mode
  * @param {TagNamePreference} tagPreference
- * @param {Reporter} context
+ * @param {import('eslint').Rule.RuleContext} context
  * @returns {string|false|{
  *   message: string;
  *   replacement?: string|undefined;
@@ -622,6 +622,7 @@ const getPreferredTagNameSimple = (
   name,
   mode,
   tagPreference = {},
+  // @ts-expect-error Just a no-op
   // eslint-disable-next-line unicorn/no-object-as-default-parameter -- Ok
   context = {
     report () {

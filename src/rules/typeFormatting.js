@@ -11,13 +11,13 @@ import {
 
 const digitRegex = (/^(\d+(\.\d*)?|\.\d+)([eE][\-+]?\d+)?$/v);
 
-// eslint-disable-next-line complexity -- Todo
 export default iterateJsdoc(({
   context,
   indent,
   jsdoc,
   settings,
   utils,
+// eslint-disable-next-line complexity -- Todo
 }) => {
   const {
     arrayBrackets = 'square',

@@ -116,13 +116,13 @@ const tryParseNameIgnoreError = (name, mode) => {
   return false;
 };
 
-// eslint-disable-next-line complexity
 export default iterateJsdoc(({
   context,
   jsdoc,
   report,
   settings,
   utils,
+// eslint-disable-next-line complexity
 }) => {
   const {
     allowEmptyNamepaths = false,
