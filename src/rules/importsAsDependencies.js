@@ -6,13 +6,13 @@ import {
 } from '@es-joy/jsdoccomment';
 import {
   readFileSync,
-} from 'fs';
+} from 'node:fs';
 import {
   isBuiltin as isBuiltinModule,
 } from 'node:module';
 import {
   join,
-} from 'path';
+} from 'node:path';
 
 /**
  * @type {Set<string>|null}

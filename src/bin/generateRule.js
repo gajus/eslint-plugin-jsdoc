@@ -1,20 +1,20 @@
 /* eslint-disable no-console -- CLI */
-
-import camelCase from 'camelcase';
-import {
-  existsSync,
-} from 'fs';
-import fs from 'fs/promises';
 /**
  * @example
  * ```shell
  * pnpm run create-rule my-new-rule -- --recommended
  * ```
  */
-import open from 'open-editor';
+
+import camelCase from 'camelcase';
+import {
+  existsSync,
+} from 'node:fs';
+import fs from 'node:fs/promises';
 import {
   resolve,
-} from 'path';
+} from 'node:path';
+import open from 'open-editor';
 
 // Todo: Would ideally have prompts, e.g., to ask for whether
 //   type was problem/layout, etc.
