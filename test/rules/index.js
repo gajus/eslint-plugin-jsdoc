@@ -6,16 +6,16 @@ import {
 } from 'eslint';
 import {
   readFileSync,
-} from 'fs';
+} from 'node:fs';
+import {
+  join,
+} from 'node:path';
 import {
   parseArgs,
 } from 'node:util';
 import {
   merge,
 } from 'object-deep-merge';
-import {
-  join,
-} from 'path';
 import semver from 'semver';
 
 /**

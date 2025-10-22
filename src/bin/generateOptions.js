@@ -10,10 +10,10 @@ import {
   readdir,
   readFile,
   writeFile,
-} from 'fs/promises';
+} from 'node:fs/promises';
 import {
   join,
-} from 'path';
+} from 'node:path';
 
 const rulesDir = './src/rules';
 

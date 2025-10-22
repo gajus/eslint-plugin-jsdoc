@@ -1,14 +1,14 @@
+/**
+ * This script is used to inline assertions into the README.md documents.
+ */
 import plugin from '../index.js';
 import decamelize from 'decamelize';
-import fs from 'fs';
 import Gitdown from 'gitdown';
 import {
   glob,
 } from 'glob';
-/**
- * This script is used to inline assertions into the README.md documents.
- */
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const dirname = import.meta.dirname;
 
