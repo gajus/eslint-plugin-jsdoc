@@ -4,6 +4,7 @@ import {
   traverse,
   tryParse,
 } from '@es-joy/jsdoccomment';
+import * as resolve from '@es-joy/resolve.exports';
 import {
   readFileSync,
 } from 'node:fs';
@@ -103,7 +104,11 @@ export default iterateJsdoc(({
             // Ignore
           }
 
-          if (!pkg || (!pkg.types && !pkg.typings)) {
+          if (!pkg || (!pkg.types && !pkg.typings && !resolve.exports(pkg, '.', {
+            conditions: [
+              '!default', '!import', '!node', 'types',
+            ],
+          }))) {
             mod = `@types/${mod}`;
           }
 

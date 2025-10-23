@@ -137,5 +137,12 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @type {null|import('playwright').SomeApi}
+         */
+      `,
+    },
   ],
 });
