@@ -40,6 +40,11 @@ The following patterns are considered problems:
  * @type {null|import('@sth/pkg').SomeApi}
  */
 // Message: import points to package which is not found in dependencies
+
+/**
+ * @type {null|import('sinon').SomeApi}
+ */
+// Message: import points to package which is not found in dependencies
 ````
 
 
