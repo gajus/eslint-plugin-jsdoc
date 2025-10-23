@@ -95,5 +95,9 @@ The following patterns are not considered problems:
 /**
  * @type {null|import('node:fs').PathLike}
  */
+
+/**
+ * @type {null|import('playwright').SomeApi}
+ */
 ````
 
