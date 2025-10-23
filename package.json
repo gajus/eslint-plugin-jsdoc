@@ -70,6 +70,7 @@
     "replace": "^1.2.2",
     "rimraf": "^6.0.1",
     "semantic-release": "^25.0.1",
+    "sinon": "^21.0.0",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.46.2"
   },

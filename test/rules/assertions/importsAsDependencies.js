@@ -57,6 +57,19 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @type {null|import('sinon').SomeApi}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'import points to package which is not found in dependencies',
+        },
+      ],
+    },
   ],
   valid: [
     {
