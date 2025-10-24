@@ -342,7 +342,10 @@ export default iterateJsdoc(({
                 break;
               }
 
-              return [];
+              // Module scope names are also defined
+              return [
+                name,
+              ];
           }
 
           return [
