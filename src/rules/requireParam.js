@@ -181,27 +181,35 @@ export default iterateJsdoc(({
    * }}
    */
   const findExpectedIndex = (jsdocTags, indexAtFunctionParams) => {
-    const remainingRoots = functionParameterNames.slice(indexAtFunctionParams || 0);
+    // Get the parameters that come after the current index in the flattened order
+    const remainingFlattenedRoots = flattenedRoots.slice((indexAtFunctionParams || 0) + 1);
+
+    // Find the first existing tag that comes after the current parameter in the flattened order
     const foundIndex = jsdocTags.findIndex(({
       name,
       newAdd,
     }) => {
-      return !newAdd && remainingRoots.some((remainingRoot) => {
-        if (Array.isArray(remainingRoot)) {
-          return (
-            /**
-             * @type {import('../jsdocUtils.js').FlattendRootInfo & {
-             *   annotationParamName?: string|undefined;
-             * }}
-             */ (remainingRoot[1]).names.includes(name)
-          );
+      if (newAdd) {
+        return false;
+      }
+
+      // Check if the tag name matches any of the remaining flattened roots
+      return remainingFlattenedRoots.some((flattenedRoot) => {
+        // The flattened roots don't have the root prefix (e.g., "bar", "bar.baz")
+        // but JSDoc tags do (e.g., "root0", "root0.bar", "root0.bar.baz")
+        // So we need to check if the tag name ends with the flattened root
+
+        // Check if tag name ends with ".<flattenedRoot>"
+        if (name.endsWith(`.${flattenedRoot}`)) {
+          return true;
         }
 
-        if (typeof remainingRoot === 'object') {
-          return name === remainingRoot.name;
+        // Also check if tag name exactly matches the flattenedRoot (for single-level params)
+        if (name === flattenedRoot) {
+          return true;
         }
 
-        return name === remainingRoot;
+        return false;
       });
     });
 

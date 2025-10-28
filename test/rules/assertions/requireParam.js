@@ -2273,8 +2273,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       /**
        * Description.
        * @param {Object} options
-       * @param options.foo
        * @param {FooBar} foo
+       * @param options.foo
        * @param options.foo.bar
        */
       function quux ({ foo: { bar } }) {}
