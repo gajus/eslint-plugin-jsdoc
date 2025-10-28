@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@es-joy/jsdoccomment": "~0.76.0",
-    "@es-joy/resolve.exports": "1.0.0",
+    "@es-joy/resolve.exports": "1.2.0",
     "are-docs-informative": "^0.0.2",
     "comment-parser": "1.4.1",
     "debug": "^4.4.3",
@@ -73,6 +73,7 @@
     "rollup": "^4.52.5",
     "semantic-release": "^25.0.1",
     "sinon": "^21.0.0",
+    "ts-api-utils": "^2.1.0",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.46.2"
   },
@@ -162,7 +163,13 @@
   "pnpm": {
     "overrides": {
       "@types/eslint": "0.0.0-interferes-with-eslint-now"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "core-js",
+      "core-js-pure",
+      "re2",
+      "unrs-resolver"
+    ]
   },
   "scripts": {
     "ruleTypes": "node ./src/bin/generateRuleTypes.js",
