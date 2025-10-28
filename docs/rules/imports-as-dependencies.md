@@ -104,5 +104,9 @@ The following patterns are not considered problems:
 /**
  * @type {null|import('playwright').SomeApi}
  */
+
+/**
+ * @type {null|import('ts-api-utils').SomeApi}
+ */
 ````
 

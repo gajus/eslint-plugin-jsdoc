@@ -104,15 +104,7 @@ export default iterateJsdoc(({
             // Ignore
           }
 
-          try {
-            if (!pkg || (!pkg.types && !pkg.typings && !resolve.exports(pkg, '.', {
-              conditions: [
-                '!default', '!import', '!node', 'types',
-              ],
-            }))) {
-              mod = `@types/${mod}`;
-            }
-          } catch {
+          if (!pkg || (!pkg.types && !pkg.typings && !resolve.types(pkg))) {
             mod = `@types/${mod}`;
           }
 
