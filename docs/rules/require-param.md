@@ -630,6 +630,15 @@ function quux ({ foo, bar: { baz }}) {
 // Message: Missing JSDoc @param "root0" declaration.
 
 /**
+ * @param root0
+ * @param root0.foo
+ * @param root0.bar.baz
+ */
+function quux ({ foo, bar: { baz }}) {
+}
+// Message: Missing JSDoc @param "root0.bar" declaration.
+
+/**
  *
  */
 function quux ({foo}, {bar}) {
