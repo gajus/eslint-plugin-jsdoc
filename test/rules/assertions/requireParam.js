@@ -342,6 +342,33 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
           /**
+           * @param root0
+           * @param root0.foo
+           * @param root0.bar.baz
+           */
+          function quux ({ foo, bar: { baz }}) {
+          }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @param "root0.bar" declaration.',
+        },
+      ],
+      output: `
+          /**
+           * @param root0
+           * @param root0.foo
+           * @param root0.bar
+           * @param root0.bar.baz
+           */
+          function quux ({ foo, bar: { baz }}) {
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            *
            */
           function quux ({foo}, {bar}) {
@@ -2244,8 +2271,8 @@ export default /** @type {import('../index.js').TestCases} */ ({
       /**
        * Description.
        * @param {Object} options
-       * @param options.foo
        * @param {FooBar} foo
+       * @param options.foo
        * @param options.foo.bar
        */
       function quux ({ foo: { bar } }) {}
