@@ -521,6 +521,7 @@ import esquery from 'esquery';
  *   hasTag: HasTag,
  *   comparePaths: ComparePaths,
  *   dropPathSegmentQuotes: DropPathSegmentQuotes,
+ *   stringifyDestructuredParam: (paramPath: string, rootName: string) => string,
  *   avoidDocs: AvoidDocs,
  *   tagMightHaveNamePosition: TagMightHaveNamePositionTypePosition,
  *   tagMightHaveTypePosition: TagMightHaveNamePositionTypePosition,
@@ -1452,6 +1453,15 @@ const getUtils = (
   /** @type {DropPathSegmentQuotes} */
   utils.dropPathSegmentQuotes = (name) => {
     return jsdocUtils.dropPathSegmentQuotes(name);
+  };
+
+  /**
+   * @param {string} paramPath
+   * @param {string} rootName
+   * @returns {string}
+   */
+  utils.stringifyDestructuredParam = (paramPath, rootName) => {
+    return jsdocUtils.stringifyDestructuredParam(paramPath, rootName);
   };
 
   /** @type {AvoidDocs} */

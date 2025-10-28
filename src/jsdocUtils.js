@@ -2077,6 +2077,37 @@ const rewireByParsedType = (jsdoc, tag, parsedType, indent, typeBracketSpacing =
   }
 };
 
+/**
+ * Converts a parameter path like "root.a.b.c" into a destructured notation
+ * like "{a: {b: {c}}}" for clearer error messages.
+ * @param {string} paramPath - The dot-notation parameter path
+ * @param {string} rootName - The root parameter name
+ * @returns {string} The destructured notation
+ */
+const stringifyDestructuredParam = (paramPath, rootName) => {
+  // If the path doesn't start with the root, return it as-is (edge case)
+  if (!paramPath.startsWith(rootName + '.')) {
+    return paramPath;
+  }
+
+  const pathWithoutRoot = paramPath.slice(rootName.length + 1);
+
+  // Split the path into segments and remove surrounding quotes if present
+  const segments = pathWithoutRoot.split('.').filter(Boolean).map((seg) => {
+    // Remove matching quote pairs from beginning and end
+    const quoted = /^(["'])(.*)\1$/v.exec(seg);
+    return quoted ? quoted[2] : seg;
+  });
+
+  // Build the destructured notation from the inside out
+  let result = segments[segments.length - 1];
+  for (let index = segments.length - 2; index >= 0; index--) {
+    result = `${segments[index]}: {${result}}`;
+  }
+
+  return `{${result}}`;
+};
+
 export {
   comparePaths,
   dropPathSegmentQuotes,
@@ -2119,6 +2150,7 @@ export {
   rewireByParsedType,
   setTagStructure,
   strictNativeTypes,
+  stringifyDestructuredParam,
   tagMightHaveEitherTypeOrNamePosition,
   tagMightHaveName,
   tagMightHaveNameOrNamepath,

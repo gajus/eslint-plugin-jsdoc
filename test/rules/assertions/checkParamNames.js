@@ -589,11 +589,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
         {
           line: 5,
-          message: '@param "prop.foo" does not exist on prop',
+          message: '@param "prop.foo" does not match any prop destructuring pattern (expected structure: {foo})',
         },
         {
           line: 6,
-          message: '@param "prop.bar" does not exist on prop',
+          message: '@param "prop.bar" does not match any prop destructuring pattern (expected structure: {bar})',
         },
       ],
       languageOptions: {
@@ -615,7 +615,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 6,
-          message: '@param "options.bar" does not exist on options',
+          message: '@param "options.bar" does not match any options destructuring pattern (expected structure: {bar})',
         },
       ],
       languageOptions: {
@@ -722,7 +722,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 5,
-          message: '@param "cfg.bar" does not exist on cfg',
+          message: '@param "cfg.bar" does not match any cfg destructuring pattern (expected structure: {bar})',
         },
       ],
       languageOptions: {
@@ -852,7 +852,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
         {
           line: 8,
-          message: '@param "options.four" does not exist on options',
+          message: '@param "options.four" does not match any options destructuring pattern (expected structure: {four})',
         },
       ],
       languageOptions: {
@@ -978,11 +978,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 6,
-          message: '@param "props.prop.a" does not exist on props',
+          message: '@param "props.prop.a" does not match any props destructuring pattern (expected structure: {prop: {a}})',
         },
         {
           line: 7,
-          message: '@param "props.prop.b" does not exist on props',
+          message: '@param "props.prop.b" does not match any props destructuring pattern (expected structure: {prop: {b}})',
         },
       ],
       languageOptions: {
@@ -1009,11 +1009,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 5,
-          message: '@param "cfg.bar" does not exist on cfg',
+          message: '@param "cfg.bar" does not match any cfg destructuring pattern (expected structure: {bar})',
         },
         {
           line: 6,
-          message: '@param "cfg.extra" does not exist on cfg',
+          message: '@param "cfg.extra" does not match any cfg destructuring pattern (expected structure: {extra})',
         },
       ],
     },
@@ -1032,11 +1032,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 5,
-          message: '@param "cfg.bar" does not exist on cfg',
+          message: '@param "cfg.bar" does not match any cfg destructuring pattern (expected structure: {bar})',
         },
         {
           line: 6,
-          message: '@param "cfg.extra" does not exist on cfg',
+          message: '@param "cfg.extra" does not match any cfg destructuring pattern (expected structure: {extra})',
         },
       ],
       options: [
@@ -1062,11 +1062,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 7,
-          message: '@param "root.cfg.a.bar" does not exist on root',
+          message: '@param "root.cfg.a.bar" does not match any root destructuring pattern (expected structure: {cfg: {a: {bar}}})',
         },
         {
           line: 8,
-          message: '@param "root.cfg.a.extra" does not exist on root',
+          message: '@param "root.cfg.a.extra" does not match any root destructuring pattern (expected structure: {cfg: {a: {extra}}})',
         },
       ],
     },
@@ -1087,11 +1087,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 7,
-          message: '@param "root.cfg.a.bar" does not exist on root',
+          message: '@param "root.cfg.a.bar" does not match any root destructuring pattern (expected structure: {cfg: {a: {bar}}})',
         },
         {
           line: 8,
-          message: '@param "root.cfg.a.extra" does not exist on root',
+          message: '@param "root.cfg.a.extra" does not match any root destructuring pattern (expected structure: {cfg: {a: {extra}}})',
         },
       ],
       options: [
@@ -1116,15 +1116,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 5,
-          message: '@param "root.cfg.foo" does not exist on root',
+          message: '@param "root.cfg.foo" does not match any root destructuring pattern (expected structure: {cfg: {foo}})',
         },
         {
           line: 6,
-          message: '@param "root.cfg.bar" does not exist on root',
+          message: '@param "root.cfg.bar" does not match any root destructuring pattern (expected structure: {cfg: {bar}})',
         },
         {
           line: 7,
-          message: '@param "root.cfg.extra" does not exist on root',
+          message: '@param "root.cfg.extra" does not match any root destructuring pattern (expected structure: {cfg: {extra}})',
         },
       ],
     },

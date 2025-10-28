@@ -227,7 +227,8 @@ const validateParameterNames = (
             extraProperty,
             tg,
           ] of extraProperties) {
-            report(`@${targetTagName} "${extraProperty}" does not exist on ${tag.name}`, null, tg);
+            const destructuredNotation = utils.stringifyDestructuredParam(extraProperty, tag.name.trim());
+            report(`@${targetTagName} "${extraProperty}" does not match any ${tag.name} destructuring pattern (expected structure: ${destructuredNotation})`, null, tg);
           }
 
           return true;
