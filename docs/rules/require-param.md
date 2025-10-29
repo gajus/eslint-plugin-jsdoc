@@ -1202,11 +1202,11 @@ function foo({ foo: { bar: { baz } }}) {}
 // Message: Missing JSDoc @param "options.foo.bar.baz" declaration.
 
 /**
-* Returns a number.
-* @param {Object} props Props.
-* @param {Object} props.prop Prop.
-* @return {number} A number.
-*/
+ * Returns a number.
+ * @param {Object} props Props.
+ * @param {Object} props.prop Prop.
+ * @return {number} A number.
+ */
 export function testFn1 ({ prop = { a: 1, b: 2 } }) {
 }
 // "jsdoc/require-param": ["error"|"warn", {"useDefaultObjectProperties":true}]

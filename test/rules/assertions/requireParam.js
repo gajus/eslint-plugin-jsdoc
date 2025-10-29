@@ -287,6 +287,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "options.foo" declaration.',
         },
       ],
@@ -1780,6 +1781,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "options.foo" declaration.',
         },
       ],
@@ -1825,6 +1827,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @param "options.permissions" declaration.',
         },
       ],
@@ -1933,6 +1936,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "cfg.extra" declaration.',
         },
       ],
@@ -1966,6 +1970,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "cfg.opts.extra" declaration.',
         },
       ],
@@ -2000,6 +2005,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "cfg."1"" declaration.',
         },
       ],
@@ -2057,15 +2063,19 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "bbox.x" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "bbox.y" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "bbox.width" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "bbox.height" declaration.',
         },
       ],
@@ -2100,15 +2110,19 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "bbox.x" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "bbox.y" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "bbox.width" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "bbox.height" declaration.',
         },
       ],
@@ -2139,9 +2153,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @param "fetchOptions.url" declaration.',
         },
         {
+          line: 3,
           message: 'Missing JSDoc @param "fetchOptions.options" declaration.',
         },
       ],
@@ -2208,6 +2224,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "options.foo.bar" declaration.',
         },
       ],
@@ -2232,6 +2249,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "options.foo.bar" declaration.',
         },
       ],
@@ -2261,9 +2279,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "options.foo" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "options.foo.bar" declaration.',
         },
       ],
@@ -2289,6 +2309,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "options.foo.bar" declaration.',
         },
       ],
@@ -2314,6 +2335,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "options.foo.bar.baz" declaration.',
         },
       ],
@@ -2331,19 +2353,21 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
       /**
-      * Returns a number.
-      * @param {Object} props Props.
-      * @param {Object} props.prop Prop.
-      * @return {number} A number.
-      */
+       * Returns a number.
+       * @param {Object} props Props.
+       * @param {Object} props.prop Prop.
+       * @return {number} A number.
+       */
       export function testFn1 ({ prop = { a: 1, b: 2 } }) {
       }
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "props.prop.a" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "props.prop.b" declaration.',
         },
       ],
@@ -2357,13 +2381,13 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       output: `
       /**
-      * Returns a number.
-      * @param {Object} props Props.
-      * @param {Object} props.prop Prop.
-      * @param props.prop.a
-      * @param props.prop.b
-      * @return {number} A number.
-      */
+       * Returns a number.
+       * @param {Object} props Props.
+       * @param {Object} props.prop Prop.
+       * @param props.prop.a
+       * @param props.prop.b
+       * @return {number} A number.
+       */
       export function testFn1 ({ prop = { a: 1, b: 2 } }) {
       }
       `,
@@ -2375,12 +2399,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "a" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "b" declaration.',
         },
         {
+          line: 2,
           message: 'Missing JSDoc @param "c" declaration.',
         },
       ],
@@ -2404,6 +2431,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "baz" declaration.',
         },
       ],
@@ -2445,6 +2473,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "verbose" declaration.',
         },
       ],
@@ -2492,6 +2521,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 6,
           message: 'Missing JSDoc @param "btnState" declaration.',
         },
       ],
@@ -2536,9 +2566,11 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 3,
           message: 'Missing JSDoc @param "root1" declaration.',
         },
         {
+          line: 3,
           message: 'Missing JSDoc @param "root1.bar" declaration.',
         },
       ],
@@ -2566,6 +2598,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "b" declaration.',
         },
       ],
@@ -2592,6 +2625,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
           message: 'Missing JSDoc @param "foo" declaration.',
         },
       ],
