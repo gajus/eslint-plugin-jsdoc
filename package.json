@@ -31,7 +31,7 @@
     "@babel/preset-env": "^7.28.5",
     "@es-joy/escodegen": "^4.2.0",
     "@es-joy/jsdoc-eslint-parser": "^0.25.0",
-    "@eslint/core": "^0.16.0",
+    "@eslint/core": "^0.17.0",
     "@hkdobrev/run-if-changed": "^0.6.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
