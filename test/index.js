@@ -11,6 +11,9 @@ import {
   expect,
 } from 'chai';
 import {
+  defineConfig,
+} from 'eslint/config';
+import {
   parser as typescriptEslintParser,
 } from 'typescript-eslint';
 
@@ -236,6 +239,18 @@ describe('buildForbidRuleDefinition', () => {
     expect(rule.meta?.docs?.url).to.equal(
       'https://example.com',
     );
+  });
+});
+
+describe('`defineConfig`', () => {
+  it('works with `defineConfig`', () => {
+    expect(() => {
+      defineConfig({
+        plugins: {
+          jsdoc: jsdocDefault,
+        },
+      });
+    }).not.to.throw();
   });
 });
 
