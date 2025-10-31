@@ -1406,7 +1406,7 @@ const hasNonFunctionYield = (node, checkYieldReturnValue) => {
         if (
         /** @type {import('eslint').Rule.Node} */ (
             node
-          ).parent.type === 'VariableDeclarator'
+          ).parent?.type === 'VariableDeclarator'
         ) {
           return true;
         }
@@ -1812,11 +1812,17 @@ const exemptSpeciaMethods = (jsdoc, node, context, schema) => {
       ])) ||
   isGetter(node) && (
     !checkGetters ||
-    checkGetters === 'no-setter' && hasAccessorPair(/** @type {import('./iterateJsdoc.js').Node} */ (node).parent)
+    checkGetters === 'no-setter' && hasAccessorPair(
+      /** @type {import('./iterateJsdoc.js').Node} */
+      (/** @type {import('./iterateJsdoc.js').Node} */ (node).parent),
+    )
   ) ||
   isSetter(node) && (
     !checkSetters ||
-    checkSetters === 'no-getter' && hasAccessorPair(/** @type {import('./iterateJsdoc.js').Node} */ (node).parent)
+    checkSetters === 'no-getter' && hasAccessorPair(
+      /** @type {import('./iterateJsdoc.js').Node} */
+      (/** @type {import('./iterateJsdoc.js').Node} */ (node).parent),
+    )
   );
 };
 
