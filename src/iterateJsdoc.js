@@ -687,7 +687,7 @@ const getBasicUtils = (context, {
 /**
  * @callback Report
  * @param {string} message
- * @param {import('eslint').Rule.ReportFixer|null} [fix]
+ * @param {import('@eslint/core').RuleFixer|null} [fix]
  * @param {null|
  *   {line?: Integer, column?: Integer}|
  *   import('comment-parser').Spec & {line?: Integer}
@@ -2120,9 +2120,7 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
 
 /**
  *
- * @typedef {{node: Node & {
- *   range: [number, number]
- * }, state: StateObject}} NonCommentArgs
+ * @typedef {{node: Node, state: StateObject}} NonCommentArgs
  */
 
 /**
@@ -2312,9 +2310,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
 
       return {
         /**
-         * @param {import('eslint').Rule.Node & {
-         *   range: [Integer, Integer];
-         * }} node
+         * @param {import('eslint').Rule.Node} node
          * @returns {void}
          */
         '*:not(Program)' (node) {

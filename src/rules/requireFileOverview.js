@@ -207,7 +207,7 @@ will be checked, but you must use \`file\` on the configuration object).`,
     state,
   }) {
     if (!state.hasNonComment) {
-      state.hasNonComment = node.range[0];
+      state.hasNonComment = /** @type {[number, number]} */ (node.range)?.[0];
     }
   },
 });

@@ -74,7 +74,7 @@ export default iterateJsdoc(({
       return;
     }
 
-    if (node && node.parent.type === 'VariableDeclarator' &&
+    if (node && node.parent?.type === 'VariableDeclarator' &&
         'typeAnnotation' in node.parent.id && node.parent.id.typeAnnotation) {
       return;
     }

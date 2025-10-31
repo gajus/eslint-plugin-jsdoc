@@ -670,6 +670,7 @@ export default {
 
         const decorator = getDecorator(
           /** @type {import('eslint').Rule.Node} */
+          // @ts-expect-error Bug?
           (baseNode),
         );
         if (decorator) {
