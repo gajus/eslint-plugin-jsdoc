@@ -466,6 +466,16 @@ export default iterateJsdoc(({
     return utils.isNamepathOrUrlReferencingTag(tag);
   }).map(tagToParsedType('namepathOrURL'));
 
+  const definedNamesAndNamepaths = new Set(utils.filterTags(({
+    tag,
+  }) => {
+    return utils.isNameOrNamepathDefiningTag(tag);
+  }).map(({
+    name,
+  }) => {
+    return name;
+  }));
+
   const tagsWithTypes = /** @type {TypeAndTagInfo[]} */ ([
     ...typeTags,
     ...namepathReferencingTags,
@@ -520,6 +530,7 @@ export default iterateJsdoc(({
       if (type === 'JsdocTypeName') {
         const structuredTypes = structuredTags[tag.tag]?.type;
         if (!allDefinedTypes.has(val) &&
+          !definedNamesAndNamepaths.has(val) &&
           (!Array.isArray(structuredTypes) || !structuredTypes.includes(val))
         ) {
           const parent =
