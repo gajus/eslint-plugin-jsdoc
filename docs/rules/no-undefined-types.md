@@ -1115,5 +1115,15 @@ const Severities = {
  */
 
 export default Severities;
+
+/**
+ * @template {unknown} T
+ * @param {unknown} value
+ * @param {...T} validValues
+ * @returns {value is T}
+ */
+const checkIsOnOf = (value, ...validValues) => {
+  return validValues.includes(value);
+};
 ````
 
