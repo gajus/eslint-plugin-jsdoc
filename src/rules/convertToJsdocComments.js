@@ -111,7 +111,6 @@ export default {
 
         const decorator = getDecorator(
           /** @type {import('eslint').Rule.Node} */
-          // @ts-expect-error Bug?
           (baseNode),
         );
         if (decorator) {
@@ -204,7 +203,6 @@ export default {
       reportingNonJsdoc = true;
 
       /** @type {AddComment} */
-      // eslint-disable-next-line unicorn/consistent-function-scoping -- Avoid conflicts
       const addComment = (inlineCommentBlock, commentToAdd, indent, lines, fixer) => {
         const insertion = (
           inlineCommentBlock || enforceJsdocLineStyle === 'single' ?
