@@ -40,8 +40,8 @@ jobs:
       fail-fast: false
       matrix:
         node_js_version:
-          - '20.11.0'
-          - '22'
+          - '20.19.0'
+          - '22.13.0'
           - '24'
   build:
     runs-on: ubuntu-latest
