@@ -14,7 +14,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -45,7 +44,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -76,7 +74,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -106,7 +103,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -136,7 +132,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -166,7 +161,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -196,7 +190,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -226,7 +219,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -258,7 +250,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 3,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -292,7 +283,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 3,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -324,7 +314,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -357,7 +346,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -391,7 +379,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -425,7 +412,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -461,7 +447,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -498,12 +483,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 5,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -533,7 +516,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -563,7 +545,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -593,7 +574,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       output: `
@@ -621,7 +601,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -655,7 +634,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -691,7 +669,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -720,12 +697,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 5,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -755,7 +730,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -785,7 +759,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -815,7 +788,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 5,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -846,7 +818,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 7,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -883,17 +854,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
         {
           line: 7,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
         {
           line: 8,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -926,7 +894,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -959,7 +926,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -999,7 +965,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1035,7 +1000,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1071,7 +1035,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1107,7 +1070,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1140,7 +1102,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1171,7 +1132,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1201,7 +1161,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1236,7 +1195,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 5,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1271,7 +1229,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1305,7 +1262,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1339,7 +1295,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 5,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1372,7 +1327,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: 'Expected wrap indent',
-          type: 'Block',
         },
       ],
       options: [
@@ -1405,7 +1359,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 2,
           message: 'Expected JSDoc block lines to be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1440,7 +1393,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Expected JSDoc block lines to not be aligned.',
-          type: 'Block',
         },
       ],
       options: [
@@ -1472,7 +1424,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: 'Expected wrap indent',
-          type: 'Block',
         },
       ],
       options: [
@@ -1501,7 +1452,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: 'Expected wrap indent',
-          type: 'Block',
         },
       ],
       options: [
