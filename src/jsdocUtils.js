@@ -203,11 +203,12 @@ const getPropertiesFromPropertySignature = (propSignature) => {
 /**
  * @param {ESTreeOrTypeScriptNode|null} functionNode
  * @param {boolean} [checkDefaultObjects]
+ * @param {boolean} [ignoreInterfacedParameters]
  * @throws {Error}
  * @returns {ParamNameInfo[]}
  */
 const getFunctionParameterNames = (
-  functionNode, checkDefaultObjects,
+  functionNode, checkDefaultObjects, ignoreInterfacedParameters,
 ) => {
   /* eslint-disable complexity -- Temporary */
   /**
@@ -230,6 +231,19 @@ const getFunctionParameterNames = (
     const hasLeftTypeAnnotation = 'left' in param && 'typeAnnotation' in param.left;
 
     if ('typeAnnotation' in param || hasLeftTypeAnnotation) {
+      if (ignoreInterfacedParameters && 'typeAnnotation' in param &&
+        param.typeAnnotation) {
+        // No-op
+        return [
+          undefined, {
+            hasPropertyRest: false,
+            hasRestElement: false,
+            names: [],
+            rests: [],
+          },
+        ];
+      }
+
       const typeAnnotation = hasLeftTypeAnnotation ?
         /** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
           param.left

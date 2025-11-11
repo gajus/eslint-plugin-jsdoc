@@ -257,6 +257,7 @@ import esquery from 'esquery';
 /**
  * @callback GetFunctionParameterNames
  * @param {boolean} [useDefaultObjectProperties]
+ * @param {boolean} [ignoreInterfacedParameters]
  * @returns {import('./jsdocUtils.js').ParamNameInfo[]}
  */
 
@@ -1369,8 +1370,8 @@ const getUtils = (
   utils.flattenRoots = jsdocUtils.flattenRoots;
 
   /** @type {GetFunctionParameterNames} */
-  utils.getFunctionParameterNames = (useDefaultObjectProperties) => {
-    return jsdocUtils.getFunctionParameterNames(node, useDefaultObjectProperties);
+  utils.getFunctionParameterNames = (useDefaultObjectProperties, ignoreInterfacedParameters) => {
+    return jsdocUtils.getFunctionParameterNames(node, useDefaultObjectProperties, ignoreInterfacedParameters);
   };
 
   /** @type {HasParams} */
