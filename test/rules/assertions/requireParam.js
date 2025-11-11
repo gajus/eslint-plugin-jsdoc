@@ -3953,5 +3953,26 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         *
+         */
+        export async function fetchMarketstackEOD(
+          parameters: FetchEODParameters,
+        ): Promise<MarketstackDataPoint[]>
+        {
+          // ...
+        };
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          interfaceExemptsParamsCheck: true,
+        },
+      ],
+    },
   ],
 });

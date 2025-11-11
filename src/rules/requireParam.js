@@ -65,19 +65,10 @@ export default iterateJsdoc(({
     useDefaultObjectProperties = false,
   } = context.options[0] || {};
 
-  if (interfaceExemptsParamsCheck) {
-    if (node && 'params' in node && node.params.length === 1 &&
-        node.params?.[0] && typeof node.params[0] === 'object' &&
-        node.params[0].type === 'ObjectPattern' &&
-        'typeAnnotation' in node.params[0] && node.params[0].typeAnnotation
-    ) {
-      return;
-    }
-
-    if (node && node.parent?.type === 'VariableDeclarator' &&
-        'typeAnnotation' in node.parent.id && node.parent.id.typeAnnotation) {
-      return;
-    }
+  if (interfaceExemptsParamsCheck && node &&
+    node.parent?.type === 'VariableDeclarator' &&
+    'typeAnnotation' in node.parent.id && node.parent.id.typeAnnotation) {
+    return;
   }
 
   const preferredTagName = /** @type {string} */ (utils.getPreferredTagName({
@@ -87,7 +78,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  const functionParameterNames = utils.getFunctionParameterNames(useDefaultObjectProperties);
+  const functionParameterNames = utils.getFunctionParameterNames(useDefaultObjectProperties, interfaceExemptsParamsCheck);
   if (!functionParameterNames.length) {
     return;
   }

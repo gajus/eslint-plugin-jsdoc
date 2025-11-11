@@ -1998,5 +1998,16 @@ function quux ({
 }: FunctionInterface) {
 }
 // "jsdoc/require-param": ["error"|"warn", {"interfaceExemptsParamsCheck":true}]
+
+/**
+ *
+ */
+export async function fetchMarketstackEOD(
+  parameters: FetchEODParameters,
+): Promise<MarketstackDataPoint[]>
+{
+  // ...
+};
+// "jsdoc/require-param": ["error"|"warn", {"interfaceExemptsParamsCheck":true}]
 ````
 
