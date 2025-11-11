@@ -19,7 +19,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Missing JSDoc comment.',
-          type: 'TSMethodSignature',
         },
       ],
       languageOptions: {
@@ -67,7 +66,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 6,
           message: 'Missing JSDoc comment.',
-          type: 'TSPropertySignature',
         },
       ],
       languageOptions: {
@@ -113,7 +111,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: 'Missing JSDoc comment.',
-          type: 'TSMethodSignature',
         },
       ],
       languageOptions: {
@@ -152,7 +149,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: 'Missing JSDoc comment.',
-          type: 'TSPropertySignature',
         },
       ],
       languageOptions: {
@@ -377,7 +373,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -411,7 +406,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       languageOptions: {
@@ -445,7 +439,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ArrowFunctionExpression',
         },
       ],
       languageOptions: {
@@ -478,7 +471,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ArrowFunctionExpression',
         },
       ],
       languageOptions: {
@@ -511,7 +503,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ArrowFunctionExpression',
         },
       ],
       languageOptions: {
@@ -548,7 +539,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ArrowFunctionExpression',
         },
       ],
       languageOptions: {
@@ -583,7 +573,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ClassExpression',
         },
       ],
       languageOptions: {
@@ -614,7 +603,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       languageOptions: {
@@ -647,7 +635,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ArrowFunctionExpression',
         },
       ],
       languageOptions: {
@@ -680,7 +667,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -713,7 +699,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ClassDeclaration',
         },
       ],
       languageOptions: {
@@ -820,7 +805,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       output: `
@@ -844,7 +828,6 @@ function quux (foo) {
         {
           line: 5,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -886,7 +869,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ClassDeclaration',
         },
       ],
       languageOptions: {
@@ -929,7 +911,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ClassDeclaration',
         },
       ],
       languageOptions: {
@@ -972,7 +953,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ClassDeclaration',
         },
       ],
       languageOptions: {
@@ -1015,7 +995,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ClassDeclaration',
         },
       ],
       languageOptions: {
@@ -1051,7 +1030,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ArrowFunctionExpression',
         },
       ],
       languageOptions: {
@@ -1079,7 +1057,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ArrowFunctionExpression',
         },
       ],
       languageOptions: {
@@ -1107,7 +1084,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       options: [
@@ -1132,7 +1108,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1160,7 +1135,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       options: [
@@ -1185,7 +1159,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       options: [
@@ -1210,7 +1183,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       options: [
@@ -1237,7 +1209,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1270,7 +1241,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1307,7 +1277,6 @@ function quux (foo) {
         {
           line: 3,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1346,7 +1315,6 @@ function quux (foo) {
         {
           line: 4,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1387,7 +1355,6 @@ function quux (foo) {
         {
           line: 4,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1426,7 +1393,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1464,7 +1430,6 @@ function quux (foo) {
         {
           line: 9,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1505,7 +1470,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1544,7 +1508,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ArrowFunctionExpression',
         },
       ],
       languageOptions: {
@@ -1583,7 +1546,6 @@ function quux (foo) {
         {
           line: 3,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1619,7 +1581,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       languageOptions: {
@@ -1652,7 +1613,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       languageOptions: {
@@ -1688,7 +1648,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       languageOptions: {
@@ -1722,7 +1681,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       languageOptions: {
@@ -1755,7 +1713,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       languageOptions: {
@@ -1827,7 +1784,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1861,7 +1817,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ClassDeclaration',
         },
       ],
       languageOptions: {
@@ -1894,7 +1849,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'ClassDeclaration',
         },
       ],
       languageOptions: {
@@ -1929,7 +1883,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1964,7 +1917,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -1999,7 +1951,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       languageOptions: {
@@ -2031,7 +1982,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionExpression',
         },
       ],
       languageOptions: {
@@ -2068,7 +2018,6 @@ function quux (foo) {
         {
           line: 2,
           message: 'Missing JSDoc comment.',
-          type: 'FunctionDeclaration',
         },
       ],
       languageOptions: {
@@ -2107,7 +2056,6 @@ function quux (foo) {
         {
           line: 3,
           message: 'Missing JSDoc comment.',
-          type: 'Property',
         },
       ],
       options: [
