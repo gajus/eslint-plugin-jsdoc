@@ -853,6 +853,83 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * My Test Function, with some example code.
+         *
+         * \`\`\`js
+         *   new Foo();
+         * \`\`\`
+         *
+         *
+         * @param {string} bar
+         */
+        function myTestFunction(bar) {
+
+        }
+      `,
+      errors: [
+        {
+          line: 8,
+          message: 'Expected only 1 line after block description',
+        },
+      ],
+      options: [
+        'any',
+        {
+          startLines: 1,
+        },
+      ],
+      output: `
+        /**
+         * My Test Function, with some example code.
+         *
+         * \`\`\`js
+         *   new Foo();
+         * \`\`\`
+         *
+         * @param {string} bar
+         */
+        function myTestFunction(bar) {
+
+        }
+      `,
+    },
+    {
+      code: `
+        /**
+         *
+         * Second Test Case
+         * @param {number} baz
+         *
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected 1 lines after block description',
+        },
+        {
+          line: 6,
+          message: 'Expected 0 trailing lines',
+        },
+      ],
+      options: [
+        'any',
+        {
+          startLines: 1,
+        },
+      ],
+      output: `
+        /**
+         *
+         * Second Test Case
+         *
+         * @param {number} baz
+         */
+      `,
+    },
   ],
   valid: [
     {

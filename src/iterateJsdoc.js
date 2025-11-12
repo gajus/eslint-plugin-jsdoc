@@ -170,7 +170,8 @@ import esquery from 'esquery';
  *   seedTokens: (
  *     tokens?: Partial<import('comment-parser').Tokens>
  *   ) => import('comment-parser').Tokens,
- *   descLines: string[]
+ *   descLines: string[],
+ *   postDelims: string[]
  * ) => import('comment-parser').Line[]} setter
  * @returns {void}
  */
@@ -928,6 +929,8 @@ const getUtils = (
   utils.setBlockDescription = (setter) => {
     /** @type {string[]} */
     const descLines = [];
+    /** @type {string[]} */
+    const postDelims = [];
     /**
      * @type {undefined|Integer}
      */
@@ -974,6 +977,7 @@ const getUtils = (
         return true;
       }
 
+      postDelims.push(postDelimiter);
       descLines.push(description);
       return false;
     });
@@ -994,6 +998,7 @@ const getUtils = (
           (info),
           seedTokens,
           descLines,
+          postDelims,
         ),
       );
     }

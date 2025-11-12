@@ -397,6 +397,31 @@ The following patterns are considered problems:
  */
 // "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":2,"startLines":5}]
 // Message: If set to a number, `maxBlockLines` must be greater than or equal to `startLines`.
+
+/**
+ * My Test Function, with some example code.
+ *
+ * ```js
+ *   new Foo();
+ * ```
+ *
+ *
+ * @param {string} bar
+ */
+function myTestFunction(bar) {
+
+}
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"startLines":1}]
+// Message: Expected only 1 line after block description
+
+/**
+ *
+ * Second Test Case
+ * @param {number} baz
+ *
+ */
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"startLines":1}]
+// Message: Expected 1 lines after block description
 ````
 
 
