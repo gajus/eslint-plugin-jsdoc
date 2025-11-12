@@ -36,7 +36,7 @@ adding line breaks between tag groups.
 |Tags|any|
 |Recommended|false|
 |Settings||
-|Options|`alphabetizeExtras`, `linesBetween`, `reportIntraTagGroupSpacing`, `reportTagGroupSpacing`, `tagSequence`|
+|Options|`alphabetizeExtras`, `linesBetween`, `reportIntraTagGroupSpacing`, `reportTagGroupSpacing`, `tagExceptions`, `tagSequence`|
 
 ## Failing examples
 

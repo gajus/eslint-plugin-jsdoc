@@ -8,6 +8,7 @@
     * [`linesBetween`](#user-content-sort-tags-options-linesbetween)
     * [`reportIntraTagGroupSpacing`](#user-content-sort-tags-options-reportintrataggroupspacing)
     * [`reportTagGroupSpacing`](#user-content-sort-tags-options-reporttaggroupspacing)
+    * [`tagExceptions`](#user-content-sort-tags-options-tagexceptions)
     * [`tagSequence`](#user-content-sort-tags-options-tagsequence)
 * [Context and settings](#user-content-sort-tags-context-and-settings)
 * [Failing examples](#user-content-sort-tags-failing-examples)
@@ -79,6 +80,12 @@ Whether to enable reporting and fixing of line breaks between tag groups
 as set by `linesBetween`. Defaults to `true`. Note that the very last tag
 will not have spacing applied regardless. For adding line breaks there, you
 may wish to use the `endLines` option of the `tag-lines` rule.
+
+<a name="user-content-sort-tags-options-tagexceptions"></a>
+<a name="sort-tags-options-tagexceptions"></a>
+### <code>tagExceptions</code>
+
+Allows specification by tag of a specific higher maximum number of lines. Keys are tags and values are the maximum number of lines allowed for such tags. Overrides `linesBetween`. Defaults to no special exceptions per tag.
 
 <a name="user-content-sort-tags-options-tagsequence"></a>
 <a name="sort-tags-options-tagsequence"></a>
@@ -285,7 +292,7 @@ See description on `tagSequence`.
 |Tags|any|
 |Recommended|false|
 |Settings||
-|Options|`alphabetizeExtras`, `linesBetween`, `reportIntraTagGroupSpacing`, `reportTagGroupSpacing`, `tagSequence`|
+|Options|`alphabetizeExtras`, `linesBetween`, `reportIntraTagGroupSpacing`, `reportTagGroupSpacing`, `tagExceptions`, `tagSequence`|
 
 <a name="user-content-sort-tags-failing-examples"></a>
 <a name="sort-tags-failing-examples"></a>
@@ -531,6 +538,19 @@ function quux () {}
  */
 // "jsdoc/sort-tags": ["error"|"warn", {"tagSequence":[{"tags":["internal"]},{"tags":["template","param"]},{"tags":["returns"]},{"tags":["throws"]},{"tags":["see"]},{"tags":["example"]},{"tags":["since"]},{"tags":["deprecated"]}]}]
 // Message: Tag groups do not have the expected whitespace
+
+/**
+ * @param b
+ * @param a
+ * @returns {string}
+ * @example abc
+ *
+ *
+ * @example def
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":0,"tagExceptions":{"example":1}}]
+// Message: Intra-group tags have unexpected whitespace
 ````
 
 
@@ -651,5 +671,16 @@ function quux () {}
  */
 function quux () {}
 // "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":2,"reportTagGroupSpacing":false,"tagSequence":[{"tags":["qrs"]},{"tags":["def","xyz"]},{"tags":["abc"]}]}]
+
+/**
+ * @param b
+ * @param a
+ * @returns {string}
+ * @example abc
+ *
+ * @example def
+ */
+function quux () {}
+// "jsdoc/sort-tags": ["error"|"warn", {"linesBetween":0,"tagExceptions":{"example":1}}]
 ````
 
