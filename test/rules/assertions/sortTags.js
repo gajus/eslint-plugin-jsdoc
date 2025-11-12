@@ -1461,6 +1461,45 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @param b
+         * @param a
+         * @returns {string}
+         * @example abc
+         *
+         *
+         * @example def
+         */
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'Intra-group tags have unexpected whitespace',
+        },
+      ],
+      options: [
+        {
+          linesBetween: 0,
+          tagExceptions: {
+            example: 1,
+          },
+        },
+      ],
+      output: `
+        /**
+         * @param b
+         * @param a
+         * @returns {string}
+         * @example abc
+         *
+         * @example def
+         */
+        function quux () {}
+      `,
+    },
   ],
   valid: [
     {
@@ -1887,6 +1926,27 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           reportIntraTagGroupSpacing: false,
           tagSequence: tagSequenceUser,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param b
+         * @param a
+         * @returns {string}
+         * @example abc
+         *
+         * @example def
+         */
+        function quux () {}
+      `,
+      options: [
+        {
+          linesBetween: 0,
+          tagExceptions: {
+            example: 1,
+          },
         },
       ],
     },

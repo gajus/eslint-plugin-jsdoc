@@ -2661,6 +2661,16 @@ export interface Rules {
            */
           reportTagGroupSpacing?: boolean;
           /**
+           * Allows specification by tag of a specific higher maximum number of lines. Keys are tags and values are the maximum number of lines allowed for such tags. Overrides `linesBetween`. Defaults to no special exceptions per tag.
+           */
+          tagExceptions?: {
+            /**
+             * This interface was referenced by `undefined`'s JSON-Schema definition
+             * via the `patternProperty` ".*".
+             */
+            [k: string]: number;
+          };
+          /**
            * An array of tag group objects indicating the preferred sequence for sorting tags.
            *
            * Each item in the array should be an object with a `tags` property set to an array
