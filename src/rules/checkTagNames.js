@@ -124,7 +124,8 @@ export default iterateJsdoc(({
    */
   const isInAmbientContext = (subNode) => {
     return subNode.type === 'Program' ?
-      context.getFilename().endsWith('.d.ts') :
+      /* c8 ignore next -- Support old ESLint */
+      (context.filename ?? context.getFilename()).endsWith('.d.ts') :
       Boolean(
         /** @type {import('@typescript-eslint/types').TSESTree.VariableDeclaration} */ (
           subNode
@@ -149,7 +150,8 @@ export default iterateJsdoc(({
       return false;
     }
 
-    if (context.getFilename().endsWith('.d.ts') && [
+    /* c8 ignore next -- Support old ESLint */
+    if ((context.filename ?? context.getFilename()).endsWith('.d.ts') && [
       null, 'Program', undefined,
     ].includes(node?.parent?.type)) {
       return false;

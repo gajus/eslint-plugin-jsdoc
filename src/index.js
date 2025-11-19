@@ -60,6 +60,7 @@ import requireProperty from './rules/requireProperty.js';
 import requirePropertyDescription from './rules/requirePropertyDescription.js';
 import requirePropertyName from './rules/requirePropertyName.js';
 import requirePropertyType from './rules/requirePropertyType.js';
+import requireRejects from './rules/requireRejects.js';
 import requireReturns from './rules/requireReturns.js';
 import requireReturnsCheck from './rules/requireReturnsCheck.js';
 import requireReturnsDescription from './rules/requireReturnsDescription.js';
@@ -194,6 +195,7 @@ index.rules = {
   'require-property-description': requirePropertyDescription,
   'require-property-name': requirePropertyName,
   'require-property-type': requirePropertyType,
+  'require-rejects': requireRejects,
   'require-returns': requireReturns,
   'require-returns-check': requireReturnsCheck,
   'require-returns-description': requireReturnsDescription,
@@ -338,6 +340,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/require-property-description': warnOrError,
       'jsdoc/require-property-name': warnOrError,
       'jsdoc/require-property-type': warnOrError,
+      'jsdoc/require-rejects': 'off',
       'jsdoc/require-returns': warnOrError,
       'jsdoc/require-returns-check': warnOrError,
       'jsdoc/require-returns-description': warnOrError,
@@ -879,6 +882,11 @@ export const jsdoc = function (cfg) {
             //   if support is later added: https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html
             structuredTags: {
               next: {
+                required: [
+                  'type',
+                ],
+              },
+              rejects: {
                 required: [
                   'type',
                 ],

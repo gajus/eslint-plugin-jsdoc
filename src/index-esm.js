@@ -177,6 +177,11 @@ export const jsdoc = function (cfg) {
                   'type',
                 ],
               },
+              rejects: {
+                required: [
+                  'type',
+                ],
+              },
             },
           } :
           {},

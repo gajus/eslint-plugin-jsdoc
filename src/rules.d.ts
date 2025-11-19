@@ -2196,6 +2196,39 @@ export interface Rules {
   /** Requires that each `@property` tag has a type value (in curly brackets). */
   "jsdoc/require-property-type": [];
 
+  /** Requires that Promise rejections are documented with `@rejects` tags. */
+  "jsdoc/require-rejects": 
+    | []
+    | [
+        {
+          /**
+           * Set this to an array of strings representing the AST context
+           * (or objects with optional `context` and `comment` properties) where you wish
+           * the rule to be applied.
+           *
+           * `context` defaults to `any` and `comment` defaults to no specific comment context.
+           *
+           * Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`,
+           * `FunctionExpression`).
+           */
+          contexts?: (
+            | string
+            | {
+                comment?: string;
+                context?: string;
+              }
+          )[];
+          /**
+           * Array of tags (e.g., `['type']`) whose presence on the
+           * document block avoids the need for a `@rejects`. Defaults to an array
+           * with `abstract`, `virtual`, and `type`. If you set this array, it will overwrite the default,
+           * so be sure to add back those tags if you wish their presence to cause
+           * exemption of the rule.
+           */
+          exemptedBy?: string[];
+        }
+      ];
+
   /** Requires that returns are documented with `@returns`. */
   "jsdoc/require-returns": 
     | []

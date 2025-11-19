@@ -17,6 +17,12 @@ const common = {
 };
 
 export default [
+  {
+    ignores: [
+      'coverage',
+      'dist',
+    ],
+  },
   ...canonical,
   // ...canonicalJsdoc,
   jsdoc({

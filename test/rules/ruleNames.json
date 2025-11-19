@@ -50,6 +50,7 @@
   "require-property-description",
   "require-property-name",
   "require-property-type",
+  "require-rejects",
   "require-returns",
   "require-returns-check",
   "require-returns-description",

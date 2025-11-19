@@ -84,6 +84,11 @@ export default [
               'type',
             ],
           },
+          rejects: {
+            required: [
+              'type',
+            ],
+          },
         },
       */
     }
@@ -262,6 +267,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-property-name": 1, // Recommended
         "jsdoc/require-property-type": 1, // Recommended in non-TS configs
         "jsdoc/require-property": 1, // Recommended
+        "jsdoc/require-rejects": 1, // Recommended
         "jsdoc/require-returns-check": 1, // Recommended
         "jsdoc/require-returns-description": 1, // Recommended
         "jsdoc/require-returns-type": 1, // Recommended in non-TS configs
