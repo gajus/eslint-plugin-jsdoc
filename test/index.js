@@ -125,6 +125,11 @@ describe('jsdoc()', () => {
               'type',
             ],
           },
+          rejects: {
+            required: [
+              'type',
+            ],
+          },
         },
       },
     });
@@ -149,6 +154,11 @@ describe('jsdoc()', () => {
       jsdoc: {
         structuredTags: {
           next: {
+            required: [
+              'type',
+            ],
+          },
+          rejects: {
             required: [
               'type',
             ],

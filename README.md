@@ -103,6 +103,11 @@ export default [
               'type',
             ],
           },
+          rejects: {
+            required: [
+              'type',
+            ],
+          },
         },
       */
     }
@@ -289,6 +294,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-property-name": 1, // Recommended
         "jsdoc/require-property-type": 1, // Recommended in non-TS configs
         "jsdoc/require-property": 1, // Recommended
+        "jsdoc/require-rejects": 1, // Recommended
         "jsdoc/require-returns-check": 1, // Recommended
         "jsdoc/require-returns-description": 1, // Recommended
         "jsdoc/require-returns-type": 1, // Recommended in non-TS configs
@@ -484,6 +490,7 @@ non-default-recommended fixer).
 |:heavy_check_mark:|| [require-property-description](./docs/rules/require-property-description.md#readme) | Requires that each `@property` tag has a `description` value. |
 |:heavy_check_mark:|| [require-property-name](./docs/rules/require-property-name.md#readme) | Requires that all `@property` tags have names. |
 |:heavy_check_mark: (Off in TS; On in TS flavor)|| [require-property-type](./docs/rules/require-property-type.md#readme) | Requires that each `@property` tag has a type value (in curly brackets). |
+||| [require-rejects](./docs/rules/require-rejects.md#readme) | Requires that Promise rejections are documented with `@rejects` tags. |
 |:heavy_check_mark:|:wrench:| [require-returns](./docs/rules/require-returns.md#readme) | Requires that returns are documented with `@returns`. |
 |:heavy_check_mark:|| [require-returns-check](./docs/rules/require-returns-check.md#readme) | Requires a return statement in function body if a `@returns` tag is specified in JSDoc comment(and reports if multiple `@returns` tags are present). |
 |:heavy_check_mark:|| [require-returns-description](./docs/rules/require-returns-description.md#readme) | Requires that the `@returns` tag has a `description` value (not including `void`/`undefined` type returns). |
