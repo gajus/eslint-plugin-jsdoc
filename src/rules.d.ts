@@ -48,6 +48,10 @@ export interface Rules {
     | [
         {
           /**
+           * Allows indentation of nested sections on subsequent lines (like bullet lists)
+           */
+          allowIndentedSections?: boolean;
+          /**
            * Array of tags (e.g., `['example', 'description']`) whose content will be
            * "hidden" from the `check-indentation` rule. Defaults to `['example']`.
            *

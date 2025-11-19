@@ -3,6 +3,7 @@
 # <code>check-indentation</code>
 
 * [Options](#user-content-check-indentation-options)
+    * [`allowIndentedSections`](#user-content-check-indentation-options-allowindentedsections)
     * [`excludeTags`](#user-content-check-indentation-options-excludetags)
 * [Context and settings](#user-content-check-indentation-context-and-settings)
 * [Failing examples](#user-content-check-indentation-failing-examples)
@@ -30,6 +31,12 @@ the following description is not reported:
 ## Options
 
 A single options object has the following properties.
+
+<a name="user-content-check-indentation-options-allowindentedsections"></a>
+<a name="check-indentation-options-allowindentedsections"></a>
+### <code>allowIndentedSections</code>
+
+Allows indentation of nested sections on subsequent lines (like bullet lists)
 
 <a name="user-content-check-indentation-options-excludetags"></a>
 <a name="check-indentation-options-excludetags"></a>
@@ -65,7 +72,7 @@ report a padding issue:
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|false|
-|Options|`excludeTags`|
+|Options|`allowIndentedSections`, `excludeTags`|
 
 <a name="user-content-check-indentation-failing-examples"></a>
 <a name="check-indentation-failing-examples"></a>
@@ -178,6 +185,19 @@ function quux () {
 * }
 */
 // "jsdoc/check-indentation": ["error"|"warn", {"excludeTags":[]}]
+// Message: There must be no indentation.
+
+/**
+ *   @param {number} val Still disallowed
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+// Message: There must be no indentation.
+
+/**
+ *   Disallowed
+ *   Indentation
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
 // Message: There must be no indentation.
 ````
 
@@ -293,5 +313,34 @@ function MyDecorator(options: { myOptions: number }) {
 function MyDecorator(options: { myOptions: number }) {
   return (Base: Function) => {};
 }
+
+/**
+ * Foobar
+ *
+ * This method does the following things:
+ * - foo...
+ *   this is the first step
+ * - bar
+ *   this is the second step
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+
+/**
+ * Allowed
+ *   Indentation
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+
+/**
+ * @param {number} val Multi-
+ *                     line
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+
+/**
+ * - foo:
+ *   - bar
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
 ````
 
