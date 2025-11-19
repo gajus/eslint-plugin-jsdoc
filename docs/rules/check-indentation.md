@@ -199,6 +199,19 @@ function quux () {
  */
 // "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
 // Message: There must be no indentation.
+
+/**
+ * Some text
+ *   that is indented
+ *  but is inconsistent
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+// Message: There must be no indentation.
+
+/**  Indented on first line
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+// Message: There must be no indentation.
 ````
 
 
@@ -340,6 +353,29 @@ function MyDecorator(options: { myOptions: number }) {
 /**
  * - foo:
  *   - bar
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+
+/**
+ * Some text
+ *   that is indented
+ *   and continues at same level
+ *     and increases further
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+
+/**
+ * Description
+ * @param {string} foo Param
+ *   with continuation
+ *   at same indentation
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+
+/**
+ * Description
+ *
+ * More content
  */
 // "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
 ````
