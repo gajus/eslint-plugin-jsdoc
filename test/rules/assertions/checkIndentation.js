@@ -251,6 +251,23 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**  Indented on first line
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be no indentation.',
+        },
+      ],
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -455,6 +472,50 @@ export default /** @type {import('../index.js').TestCases} */ ({
         /**
          * - foo:
          *   - bar
+         */
+      `,
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Some text
+         *   that is indented
+         *   and continues at same level
+         *     and increases further
+         */
+      `,
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Description
+         * @param {string} foo Param
+         *   with continuation
+         *   at same indentation
+         */
+      `,
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Description
+         *
+         * More content
          */
       `,
       options: [

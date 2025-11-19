@@ -25,6 +25,17 @@ const maskCodeBlocks = (str) => {
   });
 };
 
+/**
+ * @param {string[]} lines
+ * @param {number} lineIndex
+ * @returns {number}
+ */
+const getLineNumber = (lines, lineIndex) => {
+  const precedingText = lines.slice(0, lineIndex).join('\n');
+  const lineBreaks = precedingText.match(/\n/gv) || [];
+  return lineBreaks.length + 1;
+};
+
 export default iterateJsdoc(({
   context,
   jsdocNode,
@@ -47,46 +58,63 @@ export default iterateJsdoc(({
     // and the very first line of the main description
     const lines = text.split('\n');
     let hasSeenContent = false;
+    let currentSectionIndent = null;
 
     for (const [
       lineIndex,
       line,
     ] of lines.entries()) {
       // Check for indentation (two or more spaces after *)
-      const indentMatch = line.match(/^(?:\/?\**|[\t ]*)\*([\t ]{2,})/gv);
+      const indentMatch = line.match(/^(?:\/?\**|[\t ]*)\*([\t ]{2,})/v);
 
       if (indentMatch) {
         // Check what comes after the indentation
         const afterIndent = line.slice(indentMatch[0].length);
+        const indentAmount = indentMatch[1].length;
 
         // If this is a tag line with indentation, always report
         if (/^@\w+/v.test(afterIndent)) {
-          // Count newlines before this line
-          const precedingText = lines.slice(0, lineIndex).join('\n');
-          const lineBreaks = precedingText.match(/\n/gv) || [];
           report('There must be no indentation.', null, {
-            line: lineBreaks.length + 1,
+            line: getLineNumber(lines, lineIndex),
           });
           return;
         }
 
         // If we haven't seen any content yet (main description first line) and there's content, report
         if (!hasSeenContent && afterIndent.trim().length > 0) {
-          // Count newlines before this line
-          const precedingText = lines.slice(0, lineIndex).join('\n');
-          const lineBreaks = precedingText.match(/\n/gv) || [];
           report('There must be no indentation.', null, {
-            line: lineBreaks.length + 1,
+            line: getLineNumber(lines, lineIndex),
           });
           return;
         }
 
-        // Otherwise, allow it (continuation lines)
+        // For continuation lines, check consistency
+        if (hasSeenContent && afterIndent.trim().length > 0) {
+          if (currentSectionIndent === null) {
+            // First indented line in this section, set the indent level
+            currentSectionIndent = indentAmount;
+          } else if (indentAmount < currentSectionIndent) {
+            // Indentation is less than the established level (inconsistent)
+            report('There must be no indentation.', null, {
+              line: getLineNumber(lines, lineIndex),
+            });
+            return;
+          }
+        }
+      } else if (/^\s*\*\s+\S/v.test(line)) {
+        // No indentation on this line, reset section indent tracking
+        // (unless it's just whitespace or a closing comment)
+        currentSectionIndent = null;
       }
 
       // Track if we've seen any content (non-whitespace after the *)
       if (/^\s*\*\s+\S/v.test(line)) {
         hasSeenContent = true;
+      }
+
+      // Reset section indent when we encounter a tag
+      if (/@\w+/v.test(line)) {
+        currentSectionIndent = null;
       }
     }
   } else {
