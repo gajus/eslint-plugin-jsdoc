@@ -32,21 +32,71 @@ export default iterateJsdoc(({
   sourceCode,
 }) => {
   const options = context.options[0] || {};
-  const /** @type {{excludeTags: string[]}} */ {
+  const /** @type {{excludeTags: string[], allowIndentedSections: boolean}} */ {
+    allowIndentedSections = false,
     excludeTags = [
       'example',
     ],
   } = options;
 
-  const reg = /^(?:\/?\**|[ \t]*)\*[ \t]{2}/gmv;
   const textWithoutCodeBlocks = maskCodeBlocks(sourceCode.getText(jsdocNode));
   const text = excludeTags.length ? maskExcludedContent(textWithoutCodeBlocks, excludeTags) : textWithoutCodeBlocks;
 
-  if (reg.test(text)) {
-    const lineBreaks = text.slice(0, reg.lastIndex).match(/\n/gv) || [];
-    report('There must be no indentation.', null, {
-      line: lineBreaks.length,
-    });
+  if (allowIndentedSections) {
+    // When allowIndentedSections is enabled, only check for indentation on tag lines
+    // and the very first line of the main description
+    const lines = text.split('\n');
+    let hasSeenContent = false;
+
+    for (const [
+      lineIndex,
+      line,
+    ] of lines.entries()) {
+      // Check for indentation (two or more spaces after *)
+      const indentMatch = line.match(/^(?:\/?\**|[\t ]*)\*([\t ]{2,})/gv);
+
+      if (indentMatch) {
+        // Check what comes after the indentation
+        const afterIndent = line.slice(indentMatch[0].length);
+
+        // If this is a tag line with indentation, always report
+        if (/^@\w+/v.test(afterIndent)) {
+          // Count newlines before this line
+          const precedingText = lines.slice(0, lineIndex).join('\n');
+          const lineBreaks = precedingText.match(/\n/gv) || [];
+          report('There must be no indentation.', null, {
+            line: lineBreaks.length + 1,
+          });
+          return;
+        }
+
+        // If we haven't seen any content yet (main description first line) and there's content, report
+        if (!hasSeenContent && afterIndent.trim().length > 0) {
+          // Count newlines before this line
+          const precedingText = lines.slice(0, lineIndex).join('\n');
+          const lineBreaks = precedingText.match(/\n/gv) || [];
+          report('There must be no indentation.', null, {
+            line: lineBreaks.length + 1,
+          });
+          return;
+        }
+
+        // Otherwise, allow it (continuation lines)
+      }
+
+      // Track if we've seen any content (non-whitespace after the *)
+      if (/^\s*\*\s+\S/v.test(line)) {
+        hasSeenContent = true;
+      }
+    }
+  } else {
+    const reg = /^(?:\/?\**|[ \t]*)\*[ \t]{2}/gmv;
+    if (reg.test(text)) {
+      const lineBreaks = text.slice(0, reg.lastIndex).match(/\n/gv) || [];
+      report('There must be no indentation.', null, {
+        line: lineBreaks.length,
+      });
+    }
   }
 }, {
   iterateAllJsdocs: true,
@@ -59,6 +109,10 @@ export default iterateJsdoc(({
       {
         additionalProperties: false,
         properties: {
+          allowIndentedSections: {
+            description: 'Allows indentation of nested sections on subsequent lines (like bullet lists)',
+            type: 'boolean',
+          },
           excludeTags: {
             description: `Array of tags (e.g., \`['example', 'description']\`) whose content will be
 "hidden" from the \`check-indentation\` rule. Defaults to \`['example']\`.

@@ -194,6 +194,63 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         *   @param {number} val Still disallowed
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be no indentation.',
+        },
+      ],
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *   Disallowed
+         *   Indentation
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be no indentation.',
+        },
+      ],
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Some text
+         *   that is indented
+         *  but is inconsistent
+         */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'There must be no indentation.',
+        },
+      ],
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -348,6 +405,63 @@ export default /** @type {import('../index.js').TestCases} */ ({
       languageOptions: {
         parser: typescriptEslintParser,
       },
+    },
+    {
+      code: `
+        /**
+         * Foobar
+         *
+         * This method does the following things:
+         * - foo...
+         *   this is the first step
+         * - bar
+         *   this is the second step
+         */
+      `,
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Allowed
+         *   Indentation
+         */
+      `,
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {number} val Multi-
+         *                     line
+         */
+      `,
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * - foo:
+         *   - bar
+         */
+      `,
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
     },
   ],
 });
