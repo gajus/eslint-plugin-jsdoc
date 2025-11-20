@@ -1053,5 +1053,45 @@ function quux () {
  */
 const fn = ( lorem ) => {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "any",{"disableWrapIndent":true,"wrapIndent":"  "}]
+
+/**
+ * @return {Promise} A promise.
+ *   - On success, resolves.
+ *   - On error, rejects with details:
+ *     - When aborted, textStatus is "abort".
+ *     - On timeout, textStatus is "timeout".
+ */
+function test() {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"  "}]
+
+/**
+ * @param {string} lorem Description with list:
+ *   - First item
+ *   - Second item
+ *     - Nested item
+ *     - Another nested item
+ */
+function test() {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"  "}]
+
+/**
+ * @return {Promise} A promise.
+ *   1. First step
+ *   2. Second step with continuation
+ *      on another line
+ *   3. Third step
+ */
+function test() {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"  "}]
+
+/**
+ * @param {Object} options Configuration options.
+ *   * First option
+ *   * Second option with details:
+ *     * Nested detail
+ *     * Another detail
+ */
+function test() {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"  "}]
 ````
 
