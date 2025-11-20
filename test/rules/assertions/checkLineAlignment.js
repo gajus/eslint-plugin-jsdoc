@@ -2167,5 +2167,78 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    // List indentation tests - should preserve nested list structure
+    {
+      code: `
+        /**
+         * @return {Promise} A promise.
+         *   - On success, resolves.
+         *   - On error, rejects with details:
+         *     - When aborted, textStatus is "abort".
+         *     - On timeout, textStatus is "timeout".
+         */
+        function test() {}
+      `,
+      options: [
+        'never',
+        {
+          wrapIndent: '  ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {string} lorem Description with list:
+         *   - First item
+         *   - Second item
+         *     - Nested item
+         *     - Another nested item
+         */
+        function test() {}
+      `,
+      options: [
+        'never',
+        {
+          wrapIndent: '  ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @return {Promise} A promise.
+         *   1. First step
+         *   2. Second step with continuation
+         *      on another line
+         *   3. Third step
+         */
+        function test() {}
+      `,
+      options: [
+        'never',
+        {
+          wrapIndent: '  ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {Object} options Configuration options.
+         *   * First option
+         *   * Second option with details:
+         *     * Nested detail
+         *     * Another detail
+         */
+        function test() {}
+      `,
+      options: [
+        'never',
+        {
+          wrapIndent: '  ',
+        },
+      ],
+    },
   ],
 });

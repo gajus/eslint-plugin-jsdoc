@@ -9,6 +9,54 @@ const {
 } = transforms;
 
 /**
+ * Detects if a line starts with a markdown list marker
+ * Supports: -, *, numbered lists (1., 2., etc.)
+ * This explicitly excludes hyphens that are part of JSDoc tag syntax
+ * @param {string} text - The text to check
+ * @param {boolean} isFirstLineOfTag - True if this is the first line (tag line)
+ * @returns {boolean} - True if the text starts with a list marker
+ */
+const startsWithListMarker = (text, isFirstLineOfTag = false) => {
+  // On the first line of a tag, the hyphen is typically the JSDoc separator,
+  // not a list marker
+  if (isFirstLineOfTag) {
+    return false;
+  }
+
+  // Match lines that start with optional whitespace, then a list marker
+  // - or * followed by a space
+  // or a number followed by . or ) and a space
+  return /^\s*(?:[\-*]|\d+(?:\.|\)))\s+/v.test(text);
+};
+
+/**
+ * Checks if we should allow extra indentation beyond wrapIndent.
+ * This is true for list continuation lines (lines with more indent than wrapIndent
+ * that follow a list item).
+ * @param {import('comment-parser').Spec} tag - The tag being checked
+ * @param {import('../iterateJsdoc.js').Integer} idx - Current line index (0-based in tag.source.slice(1))
+ * @returns {boolean} - True if extra indentation should be allowed
+ */
+const shouldAllowExtraIndent = (tag, idx) => {
+  // Check if any previous line in this tag had a list marker
+  // idx is 0-based in the continuation lines (tag.source.slice(1))
+  // So tag.source[0] is the tag line, tag.source[idx+1] is current line
+  let hasSeenListMarker = false;
+
+  // Check all lines from the tag line onwards
+  for (let lineIdx = 0; lineIdx <= idx + 1; lineIdx++) {
+    const line = tag.source[lineIdx];
+    const isFirstLine = lineIdx === 0;
+    if (line?.tokens?.description && startsWithListMarker(line.tokens.description, isFirstLine)) {
+      hasSeenListMarker = true;
+      break;
+    }
+  }
+
+  return hasSeenListMarker;
+};
+
+/**
  * @typedef {{
  *   postDelimiter: import('../iterateJsdoc.js').Integer,
  *   postHyphen: import('../iterateJsdoc.js').Integer,
@@ -298,7 +346,17 @@ export default iterateJsdoc(({
         }
 
         // Don't include a single separating space/tab
-        if (!disableWrapIndent && tokens.postDelimiter.slice(1) !== wrapIndent) {
+        const actualIndent = tokens.postDelimiter.slice(1);
+        const hasCorrectWrapIndent = actualIndent === wrapIndent;
+
+        // Allow extra indentation if this line or previous lines contain list markers
+        // This preserves nested list structure
+        const hasExtraIndent = actualIndent.length > wrapIndent.length &&
+                                actualIndent.startsWith(wrapIndent);
+        const isInListContext = shouldAllowExtraIndent(tag, idx - 1);
+
+        if (!disableWrapIndent && !hasCorrectWrapIndent &&
+            !(hasExtraIndent && isInListContext)) {
           utils.reportJSDoc('Expected wrap indent', {
             line: tag.source[0].number + idx,
           }, () => {

@@ -10,6 +10,27 @@ import {
 } from 'comment-parser';
 
 /**
+ * Detects if a line starts with a markdown list marker
+ * Supports: -, *, numbered lists (1., 2., etc.)
+ * This explicitly excludes hyphens that are part of JSDoc tag syntax
+ * @param {string} text - The text to check
+ * @param {boolean} isFirstLineOfTag - True if this is the first line (tag line)
+ * @returns {boolean} - True if the text starts with a list marker
+ */
+const startsWithListMarker = (text, isFirstLineOfTag = false) => {
+  // On the first line of a tag, the hyphen is typically the JSDoc separator,
+  // not a list marker
+  if (isFirstLineOfTag) {
+    return false;
+  }
+
+  // Match lines that start with optional whitespace, then a list marker
+  // - or * followed by a space
+  // or a number followed by . or ) and a space
+  return /^\s*(?:[\-*]|\d+(?:\.|\)))\s+/v.test(text);
+};
+
+/**
  * @typedef {{
  *   hasNoTypes: boolean,
  *   maxNamedTagLength: import('./iterateJsdoc.js').Integer,
@@ -315,9 +336,45 @@ const alignTransform = ({
 
     // Not align.
     if (shouldAlign(tags, index, source)) {
+      // Save original postDelimiter before alignTokens modifies it
+      const originalPostDelimiter = tokens.postDelimiter;
+      // Remove the delimiter space
+      const originalIndent = tokens.postDelimiter.slice(1);
+
       alignTokens(tokens, typelessInfo);
+
       if (!disableWrapIndent && indentTag) {
-        tokens.postDelimiter += wrapIndent;
+        // Preserve extra indentation for list continuation lines
+        // Check if any previous line (or current) in the current tag has a list marker
+        let hasListMarker = false;
+
+        // Find the start of the current tag
+        let tagStartIndex = index;
+        while (tagStartIndex > 0 && source[tagStartIndex].tokens.tag === '') {
+          tagStartIndex--;
+        }
+
+        // Check all lines from tag start to current line for list markers
+        for (let idx = tagStartIndex; idx <= index; idx++) {
+          const isFirstLine = (idx === tagStartIndex);
+          if (source[idx]?.tokens?.description && startsWithListMarker(source[idx].tokens.description, isFirstLine)) {
+            hasListMarker = true;
+            break;
+          }
+        }
+
+        // If we're in a list context and this line has extra indentation beyond wrapIndent,
+        // preserve the original indentation
+        const hasExtraIndent = originalIndent.length > wrapIndent.length &&
+                                originalIndent.startsWith(wrapIndent);
+
+        if (hasListMarker && hasExtraIndent) {
+          // Preserve the original indentation completely
+          tokens.postDelimiter = originalPostDelimiter;
+        } else {
+          // Normal case: add wrapIndent after the aligned delimiter
+          tokens.postDelimiter += wrapIndent;
+        }
       }
     }
 
