@@ -1093,5 +1093,35 @@ function test() {}
  */
 function test() {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":"  "}]
+
+/**
+ * @param {string} param Description with list:
+ *                         - Item 1
+ *                           - Nested item
+ */
+function test(param) {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"wrapIndent":"  "}]
+
+/**
+ * Function description.
+ *
+ * @param {string} lorem Description.
+ * @param {int}    sit   Description with list:
+ *                         - First item
+ *                         - Second item
+ *                           - Nested item
+ */
+const fn = ( lorem, sit ) => {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"wrapIndent":"  "}]
+
+/**
+ * @return {Promise} A promise.
+ *                     - On success, resolves.
+ *                     - On error, rejects with details:
+ *                       - When aborted, status is "abort".
+ *                       - On timeout, status is "timeout".
+ */
+function test() {}
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"wrapIndent":"  "}]
 ````
 

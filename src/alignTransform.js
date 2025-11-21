@@ -10,6 +10,27 @@ import {
 } from 'comment-parser';
 
 /**
+ * Detects if a line starts with a markdown list marker
+ * Supports: -, *, numbered lists (1., 2., etc.)
+ * This explicitly excludes hyphens that are part of JSDoc tag syntax
+ * @param {string} text - The text to check
+ * @param {boolean} isFirstLineOfTag - True if this is the first line (tag line)
+ * @returns {boolean} - True if the text starts with a list marker
+ */
+const startsWithListMarker = (text, isFirstLineOfTag = false) => {
+  // On the first line of a tag, the hyphen is typically the JSDoc separator,
+  // not a list marker
+  if (isFirstLineOfTag) {
+    return false;
+  }
+
+  // Match lines that start with optional whitespace, then a list marker
+  // - or * followed by a space
+  // or a number followed by . or ) and a space
+  return /^\s*(?:[\-*]|\d+(?:\.|\)))\s+/v.test(text);
+};
+
+/**
  * @typedef {{
  *   hasNoTypes: boolean,
  *   maxNamedTagLength: import('./iterateJsdoc.js').Integer,
@@ -142,6 +163,59 @@ const getTypelessInfo = (fields) => {
  */
 const space = (len) => {
   return ''.padStart(len, ' ');
+};
+
+/**
+ * Check if a tag or any of its lines contain list markers
+ * @param {import('./iterateJsdoc.js').Integer} index - Current line index
+ * @param {import('comment-parser').Line[]} source - All source lines
+ * @returns {{hasListMarker: boolean, tagStartIndex: import('./iterateJsdoc.js').Integer}}
+ */
+const checkForListMarkers = (index, source) => {
+  let hasListMarker = false;
+  let tagStartIndex = index;
+  while (tagStartIndex > 0 && source[tagStartIndex].tokens.tag === '') {
+    tagStartIndex--;
+  }
+
+  for (let idx = tagStartIndex; idx <= index; idx++) {
+    const isFirstLine = (idx === tagStartIndex);
+    if (source[idx]?.tokens?.description && startsWithListMarker(source[idx].tokens.description, isFirstLine)) {
+      hasListMarker = true;
+      break;
+    }
+  }
+
+  return {
+    hasListMarker,
+    tagStartIndex,
+  };
+};
+
+/**
+ * Calculate extra indentation for list items relative to the first continuation line
+ * @param {import('./iterateJsdoc.js').Integer} index - Current line index
+ * @param {import('./iterateJsdoc.js').Integer} tagStartIndex - Index of the tag line
+ * @param {import('comment-parser').Line[]} source - All source lines
+ * @returns {string} - Extra indentation spaces
+ */
+const calculateListExtraIndent = (index, tagStartIndex, source) => {
+  // Find the first continuation line to use as baseline
+  let firstContinuationIndent = null;
+  for (let idx = tagStartIndex + 1; idx < source.length; idx++) {
+    if (source[idx].tokens.description && !source[idx].tokens.tag) {
+      firstContinuationIndent = source[idx].tokens.postDelimiter.length;
+      break;
+    }
+  }
+
+  // Calculate the extra indentation of current line relative to the first continuation line
+  const currentOriginalIndent = source[index].tokens.postDelimiter.length;
+  const extraIndent = firstContinuationIndent !== null && currentOriginalIndent > firstContinuationIndent ?
+    ' '.repeat(currentOriginalIndent - firstContinuationIndent) :
+    '';
+
+  return extraIndent;
 };
 
 /**
@@ -316,8 +390,20 @@ const alignTransform = ({
     // Not align.
     if (shouldAlign(tags, index, source)) {
       alignTokens(tokens, typelessInfo);
+
       if (!disableWrapIndent && indentTag) {
-        tokens.postDelimiter += wrapIndent;
+        const {
+          hasListMarker,
+          tagStartIndex,
+        } = checkForListMarkers(index, source);
+
+        if (hasListMarker && index > tagStartIndex) {
+          const extraIndent = calculateListExtraIndent(index, tagStartIndex, source);
+          tokens.postDelimiter += wrapIndent + extraIndent;
+        } else {
+          // Normal case: add wrapIndent after the aligned delimiter
+          tokens.postDelimiter += wrapIndent;
+        }
       }
     }
 
