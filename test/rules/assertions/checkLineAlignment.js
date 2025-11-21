@@ -2240,5 +2240,60 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    // Test cases for "always" mode with list indentation
+    {
+      code: `
+        /**
+         * @param {string} param Description with list:
+         *                         - Item 1
+         *                           - Nested item
+         */
+        function test(param) {}
+      `,
+      options: [
+        'always',
+        {
+          wrapIndent: '  ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * Function description.
+         *
+         * @param {string} lorem Description.
+         * @param {int}    sit   Description with list:
+         *                         - First item
+         *                         - Second item
+         *                           - Nested item
+         */
+        const fn = ( lorem, sit ) => {}
+      `,
+      options: [
+        'always',
+        {
+          wrapIndent: '  ',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @return {Promise} A promise.
+         *                     - On success, resolves.
+         *                     - On error, rejects with details:
+         *                       - When aborted, status is "abort".
+         *                       - On timeout, status is "timeout".
+         */
+        function test() {}
+      `,
+      options: [
+        'always',
+        {
+          wrapIndent: '  ',
+        },
+      ],
+    },
   ],
 });
