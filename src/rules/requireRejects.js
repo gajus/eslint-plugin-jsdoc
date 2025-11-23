@@ -4,10 +4,11 @@ import iterateJsdoc from '../iterateJsdoc.js';
  * Checks if a node or its children contain Promise rejection patterns
  * @param {import('eslint').Rule.Node} node
  * @param {boolean} [innerFunction]
+ * @param {boolean} [isAsync]
  * @returns {boolean}
  */
 // eslint-disable-next-line complexity -- Temporary
-const hasRejectValue = (node, innerFunction) => {
+const hasRejectValue = (node, innerFunction, isAsync) => {
   if (!node) {
     return false;
   }
@@ -19,16 +20,19 @@ const hasRejectValue = (node, innerFunction) => {
       // For inner functions in async contexts, check if they throw
       // (they could be called and cause rejection)
       if (innerFunction) {
-        // Check the inner function's body for throw statements
-        return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.body), false);
+        // Check inner functions for throws - if called from async context, throws become rejections
+        const innerIsAsync = node.async;
+        // Pass isAsync=true if the inner function is async OR if we're already in an async context
+        return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.body), false, innerIsAsync || isAsync);
       }
 
-      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.body), true);
+      // This is the top-level function we're checking
+      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.body), true, node.async);
     }
 
     case 'BlockStatement': {
       return node.body.some((bodyNode) => {
-        return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (bodyNode), innerFunction);
+        return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (bodyNode), innerFunction, isAsync);
       });
     }
 
@@ -65,15 +69,15 @@ const hasRejectValue = (node, innerFunction) => {
     case 'WhileStatement':
 
     case 'WithStatement': {
-      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.body), innerFunction);
+      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.body), innerFunction, isAsync);
     }
 
     case 'ExpressionStatement': {
-      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.expression), innerFunction);
+      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.expression), innerFunction, isAsync);
     }
 
     case 'IfStatement': {
-      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.consequent), innerFunction) || hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.alternate), innerFunction);
+      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.consequent), innerFunction, isAsync) || hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.alternate), innerFunction, isAsync);
     }
 
     case 'NewExpression': {
@@ -82,7 +86,7 @@ const hasRejectValue = (node, innerFunction) => {
         const executor = node.arguments[0];
         if (executor.type === 'ArrowFunctionExpression' || executor.type === 'FunctionExpression') {
           // Check if the executor has reject() calls
-          return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (executor.body), false);
+          return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (executor.body), false, false);
         }
       }
 
@@ -91,7 +95,7 @@ const hasRejectValue = (node, innerFunction) => {
 
     case 'ReturnStatement': {
       if (node.argument) {
-        return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.argument), innerFunction);
+        return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.argument), innerFunction, isAsync);
       }
 
       return false;
@@ -101,7 +105,7 @@ const hasRejectValue = (node, innerFunction) => {
       return node.cases.some(
         (someCase) => {
           return someCase.consequent.some((nde) => {
-            return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (nde), innerFunction);
+            return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (nde), innerFunction, isAsync);
           });
         },
       );
@@ -109,12 +113,12 @@ const hasRejectValue = (node, innerFunction) => {
 
     // Throw statements in async functions become rejections
     case 'ThrowStatement': {
-      return true;
+      return isAsync === true;
     }
 
     case 'TryStatement': {
-      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.handler && node.handler.body), innerFunction) ||
-        hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.finalizer), innerFunction);
+      return hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.handler && node.handler.body), innerFunction, isAsync) ||
+        hasRejectValue(/** @type {import('eslint').Rule.Node} */ (node.finalizer), innerFunction, isAsync);
     }
 
     default: {

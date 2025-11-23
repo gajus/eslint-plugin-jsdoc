@@ -352,5 +352,10 @@ async function quux () {
   throw new Error('abc');
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"rejects":false}}}
+
+/** @param bar Something. */
+export function foo(bar: string): void {
+  throw new Error(`some error: ${bar}`);
+}
 ````
 

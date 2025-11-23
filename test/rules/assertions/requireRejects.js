@@ -1,4 +1,8 @@
-export default {
+import {
+  parser as typescriptEslintParser,
+} from 'typescript-eslint';
+
+export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: `
@@ -485,5 +489,17 @@ export default {
         },
       },
     },
+    {
+      code: `
+        /** @param bar Something. */
+        export function foo(bar: string): void {
+          throw new Error(\`some error: \${bar}\`);
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+    },
   ],
-};
+});
