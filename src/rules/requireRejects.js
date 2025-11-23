@@ -183,7 +183,7 @@ export default iterateJsdoc(({
   };
 
   if (shouldReport()) {
-    report('Promise-rejecting function requires `@reject` tag');
+    report('Promise-rejecting function requires `@@rejects` tag');
   }
 }, {
   contextDefaults: true,
