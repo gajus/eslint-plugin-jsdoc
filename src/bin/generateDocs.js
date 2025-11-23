@@ -386,7 +386,7 @@ const getDocPaths = () => {
     if (stat.isDirectory()) {
       return fs.readdirSync(innerBasePath).map((innerDocFile) => {
         return path.join(writeInnerBasePath, innerDocFile);
-      }).sort((a, b) => {
+      }).toSorted((a, b) => {
         const newA = a.replace(/\.md/v, '');
         const newB = b.replace(/\.md/v, '');
         return newA < newB ? -1 : (newB > newA ? 1 : 0);

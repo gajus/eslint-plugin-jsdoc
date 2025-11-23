@@ -16,7 +16,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -32,7 +32,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -48,7 +48,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -70,7 +70,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -88,7 +88,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -106,7 +106,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -127,7 +127,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -143,7 +143,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -161,7 +161,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -181,7 +181,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -199,7 +199,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -220,7 +220,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -241,7 +241,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -262,7 +262,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -280,7 +280,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -298,7 +298,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },
@@ -318,7 +318,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Promise-rejecting function requires `@reject` tag',
+          message: 'Promise-rejecting function requires `@rejects` tag',
         },
       ],
     },

@@ -56,7 +56,7 @@ The following patterns are considered problems:
 async function quux () {
   throw new Error('abc');
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -64,7 +64,7 @@ async function quux () {
 const quux = async () => {
   throw new Error('abc');
 };
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -72,7 +72,7 @@ const quux = async () => {
 const quux = async function () {
   throw new Error('abc');
 };
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -86,7 +86,7 @@ async function quux () {
     }
   }
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -96,7 +96,7 @@ function quux () {
     reject(new Error('abc'));
   });
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -106,7 +106,7 @@ async function quux () {
     throw new Error('abc');
   }
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -119,7 +119,7 @@ async function quux () {
   }
   inner();
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -127,7 +127,7 @@ async function quux () {
 async function quux () {
   return Promise.reject(new Error('abc'));
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -137,7 +137,7 @@ function quux () {
     return Promise.reject(new Error('abc'));
   }
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -149,7 +149,7 @@ async function quux () {
     }
   }
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -159,7 +159,7 @@ async function quux () {
     throw new Error('abc');
   }
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -172,7 +172,7 @@ async function quux () {
       break;
   }
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -185,7 +185,7 @@ async function quux () {
     }
   }
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -198,7 +198,7 @@ async function quux () {
     }
   }
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -208,7 +208,7 @@ async function quux () {
     throw new Error('abc');
   } while (cond);
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -218,7 +218,7 @@ async function quux () {
     throw new Error('abc');
   }
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 
 /**
  *
@@ -230,7 +230,7 @@ async function quux () {
     throw new Error('cleanup failed');
   }
 }
-// Message: Promise-rejecting function requires `@reject` tag
+// Message: Promise-rejecting function requires `@rejects` tag
 ````
 
 
