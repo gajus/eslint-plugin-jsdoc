@@ -464,6 +464,26 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @template
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Unexpected tag `@template`',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            template: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {

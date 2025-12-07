@@ -214,6 +214,12 @@ export default class <NumType> {
  * @param {[X, Y | undefined]} someParam
  */
 // Message: @template D not in use
+
+/**
+ * @template
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"template":false}}}
+// Message: Unexpected tag `@template`
 ````
 
 

@@ -150,8 +150,11 @@ const typeScriptTags = {
   satisfies: [],
 
   // `@template` is also in TypeScript per:
-  //      https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc
-  template: [],
+  //      https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#template
+  template: [
+    // Alias as per https://typedoc.org/documents/Tags._typeParam.html
+    'typeParam',
+  ],
 };
 
 /**

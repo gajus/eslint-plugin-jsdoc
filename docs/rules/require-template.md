@@ -236,6 +236,12 @@ function foo<T>(bar: T, baz: number | boolean): T {
   return bar;
 }
 // Message: Missing @template T
+
+/**
+ * @template
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"template":false}}}
+// Message: Unexpected tag `@template`
 ````
 
 
@@ -399,5 +405,18 @@ type Pairs<D, V> = [D, V | undefined];
  * @typedef {[D, V | undefined]} Pairs
  */
 // "jsdoc/require-template": ["error"|"warn", {"exemptedBy":["inheritdoc"]}]
+
+/**
+ * Test interface for type definitions.
+ *
+ * @typeParam Foo - dummy type param
+ */
+export interface Test<Foo extends string> {
+  /**
+   *
+   */
+  bar: Foo;
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"template":"typeParam"}}}
 ````
 

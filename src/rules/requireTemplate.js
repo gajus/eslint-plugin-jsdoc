@@ -25,7 +25,16 @@ export default iterateJsdoc(({
   } = settings;
 
   const usedNames = new Set();
-  const templateTags = utils.getTags('template');
+
+  const tgName = /** @type {string} */ (utils.getPreferredTagName({
+    tagName: 'template',
+  }));
+  if (!tgName) {
+    return;
+  }
+
+  const templateTags = utils.getTags(tgName);
+
   const templateNames = templateTags.flatMap((tag) => {
     return utils.parseClosureTemplateTag(tag);
   });
@@ -34,7 +43,7 @@ export default iterateJsdoc(({
     for (const tag of templateTags) {
       const names = utils.parseClosureTemplateTag(tag);
       if (names.length > 1) {
-        report(`Missing separate @template for ${names[1]}`, null, tag);
+        report(`Missing separate @${tgName} for ${names[1]}`, null, tag);
       }
     }
   }
@@ -64,7 +73,7 @@ export default iterateJsdoc(({
 
     for (const usedName of usedNames) {
       if (!templateNames.includes(usedName)) {
-        report(`Missing @template ${usedName}`);
+        report(`Missing @${tgName} ${usedName}`);
       }
     }
   };
@@ -156,7 +165,7 @@ export default iterateJsdoc(({
     // Could check against whitelist/blacklist
     for (const usedName of usedNames) {
       if (!templateNames.includes(usedName)) {
-        report(`Missing @template ${usedName}`, null, usedNameToTag.get(usedName));
+        report(`Missing @${tgName} ${usedName}`, null, usedNameToTag.get(usedName));
       }
     }
   };
