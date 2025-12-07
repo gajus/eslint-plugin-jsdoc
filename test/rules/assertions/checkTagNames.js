@@ -1499,5 +1499,19 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @typeParam T
+         */
+      `,
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            template: 'typeParam',
+          },
+        },
+      },
+    },
   ],
 });

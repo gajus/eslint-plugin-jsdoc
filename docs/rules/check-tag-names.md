@@ -1157,5 +1157,10 @@ interface WebTwain {
  * @param {AnotherType} anotherName And yet {@another}
  */
 // "jsdoc/check-tag-names": ["error"|"warn", {"inlineTags":["inline","another","inlineTag","link"]}]
+
+/**
+ * @typeParam T
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"template":"typeParam"}}}
 ````
 

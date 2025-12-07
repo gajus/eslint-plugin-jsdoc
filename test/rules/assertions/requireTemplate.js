@@ -426,6 +426,26 @@ export default /** @type {import('../index.js').TestCases} */ ({
         parser: typescriptEslintParser,
       },
     },
+    {
+      code: `
+        /**
+         * @template
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Unexpected tag `@template`',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            template: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -700,6 +720,31 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
+    },
+    {
+      code: `
+        /**
+         * Test interface for type definitions.
+         *
+         * @typeParam Foo - dummy type param
+         */
+        export interface Test<Foo extends string> {
+          /**
+           *
+           */
+          bar: Foo;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            template: 'typeParam',
+          },
+        },
+      },
     },
   ],
 });

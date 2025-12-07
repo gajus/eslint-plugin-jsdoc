@@ -23,7 +23,14 @@ export default iterateJsdoc(({
     mode,
   } = settings;
 
-  const templateTags = utils.getTags('template');
+  const tgName = /** @type {string} */ (utils.getPreferredTagName({
+    tagName: 'template',
+  }));
+  if (!tgName) {
+    return;
+  }
+
+  const templateTags = utils.getTags(tgName);
 
   const usedNames = new Set();
   /**
@@ -73,7 +80,7 @@ export default iterateJsdoc(({
       const names = utils.parseClosureTemplateTag(tag);
       for (const nme of names) {
         if (!usedNames.has(nme)) {
-          report(`@template ${nme} not in use`, null, tag);
+          report(`@${tgName} ${nme} not in use`, null, tag);
         }
       }
     }
