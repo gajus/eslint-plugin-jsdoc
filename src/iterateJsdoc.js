@@ -1681,7 +1681,6 @@ const getUtils = (
 
   /** @type {GetClassNode} */
   utils.getClassNode = () => {
-    // eslint-disable-next-line canonical/no-use-extend-native -- Not extending
     return [
       ...ancestors, node,
     ].toReversed().find((parent) => {
