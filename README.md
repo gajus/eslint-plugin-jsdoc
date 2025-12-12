@@ -275,7 +275,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/no-restricted-syntax": 1,
         "jsdoc/no-types": 1, // Recommended for TS configs
         "jsdoc/no-undefined-types": 1, // Recommended for non-TS configs
-        "jsdoc/rejct-any-type": 1, // Recommended
+        "jsdoc/reject-any-type": 1, // Recommended
         "jsdoc/reject-function-type": 1, // Recommended
         "jsdoc/require-asterisk-prefix": 1,
         "jsdoc/require-description": 1,
