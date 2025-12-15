@@ -36,6 +36,13 @@ const OPTIONS_SCHEMA = {
   additionalProperties: false,
   description: 'Has the following optional keys.\n',
   properties: {
+    checkAllFunctionExpressions: {
+      default: false,
+      description: `Normally, when \`FunctionExpression\` is checked, additional checks are
+added to check the parent contexts where reporting is likely to be desired. If you really
+want to check *all* function expressions, then set this to \`true\`.`,
+      type: 'boolean',
+    },
     checkConstructors: {
       default: true,
       description: `A value indicating whether \`constructor\`s should be checked. Defaults to
@@ -378,6 +385,7 @@ const getOption = (context, baseObject, option, key) => {
  * @param {import('eslint').Rule.RuleContext} context
  * @param {import('../iterateJsdoc.js').Settings} settings
  * @returns {{
+ *   checkAllFunctionExpressions: boolean,
  *   contexts: (string|{
  *     context: string,
  *     inlineCommentBlock: boolean,
@@ -396,6 +404,7 @@ const getOption = (context, baseObject, option, key) => {
  */
 const getOptions = (context, settings) => {
   const {
+    checkAllFunctionExpressions = false,
     contexts = settings.contexts || [],
     enableFixer = true,
     exemptEmptyConstructors = true,
@@ -408,6 +417,7 @@ const getOptions = (context, settings) => {
   } = context.options[0] || {};
 
   return {
+    checkAllFunctionExpressions,
     contexts,
     enableFixer,
     exemptEmptyConstructors,
@@ -503,7 +513,7 @@ const isFunctionWithOverload = (node) => {
     return false;
   }
 
-  const functionName = node.id.name;
+  const functionName = node.id?.name;
 
   const idx = parent.body.indexOf(child);
   const prevSibling = parent.body[idx - 1];
@@ -536,6 +546,7 @@ export default {
     const opts = getOptions(context, settings);
 
     const {
+      checkAllFunctionExpressions,
       contexts,
       enableFixer,
       exemptEmptyConstructors,
@@ -831,7 +842,7 @@ export default {
           return;
         }
 
-        if (
+        if (checkAllFunctionExpressions ||
           [
             'AssignmentExpression', 'ExportDefaultDeclaration', 'VariableDeclarator',
           ].includes(node.parent.type) ||

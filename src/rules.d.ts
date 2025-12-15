@@ -1640,6 +1640,12 @@ export interface Rules {
     | [
         {
           /**
+           * Normally, when `FunctionExpression` is checked, additional checks are
+           * added to check the parent contexts where reporting is likely to be desired. If you really
+           * want to check *all* function expressions, then set this to `true`.
+           */
+          checkAllFunctionExpressions?: boolean;
+          /**
            * A value indicating whether `constructor`s should be checked. Defaults to
            * `true`. When `true`, `exemptEmptyConstructors` may still avoid reporting when
            * no parameters or return values are found.

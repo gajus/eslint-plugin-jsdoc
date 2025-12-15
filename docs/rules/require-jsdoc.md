@@ -4,6 +4,7 @@
 
 * [Fixer](#user-content-require-jsdoc-fixer)
 * [Options](#user-content-require-jsdoc-options)
+    * [`checkAllFunctionExpressions`](#user-content-require-jsdoc-options-checkallfunctionexpressions)
     * [`checkConstructors`](#user-content-require-jsdoc-options-checkconstructors)
     * [`checkGetters`](#user-content-require-jsdoc-options-checkgetters)
     * [`checkSetters`](#user-content-require-jsdoc-options-checksetters)
@@ -42,6 +43,14 @@ A single options object has the following properties.
 
 Has the following optional keys.
 
+
+<a name="user-content-require-jsdoc-options-checkallfunctionexpressions"></a>
+<a name="require-jsdoc-options-checkallfunctionexpressions"></a>
+### <code>checkAllFunctionExpressions</code>
+
+Normally, when `FunctionExpression` is checked, additional checks are
+added to check the parent contexts where reporting is likely to be desired. If you really
+want to check *all* function expressions, then set this to `true`.
 
 <a name="user-content-require-jsdoc-options-checkconstructors"></a>
 <a name="require-jsdoc-options-checkconstructors"></a>
@@ -1150,6 +1159,15 @@ function myFunction(foo: string): void;
 function myFunction(): void;
 function myFunction(foo?: string) {}
 // "jsdoc/require-jsdoc": ["error"|"warn", {"contexts":["TSDeclareFunction"],"exemptOverloadedImplementations":true,"skipInterveningOverloadedDeclarations":false}]
+// Message: Missing JSDoc comment.
+
+const foo = autolog(
+    function foo() {
+        log.debug('inside foo', 'this is a test helper function')
+    },
+    { withGovernance: true, withProfiling: true },
+)
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkAllFunctionExpressions":true,"contexts":["FunctionExpression"],"require":{"FunctionExpression":false}}]
 // Message: Missing JSDoc comment.
 ````
 
