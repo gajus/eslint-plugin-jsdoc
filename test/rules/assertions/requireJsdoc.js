@@ -4420,6 +4420,44 @@ function quux (foo) {
         function myFunction(foo?: string) {}
       `,
     },
+    {
+      code: `
+        const foo = autolog(
+            function foo() {
+                log.debug('inside foo', 'this is a test helper function')
+            },
+            { withGovernance: true, withProfiling: true },
+        )
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc comment.',
+        },
+      ],
+      options: [
+        {
+          checkAllFunctionExpressions: true,
+          contexts: [
+            'FunctionExpression',
+          ],
+          require: {
+            FunctionExpression: false,
+          },
+        },
+      ],
+      output: `
+        const foo = autolog(
+            /**
+             *
+             */
+            function foo() {
+                log.debug('inside foo', 'this is a test helper function')
+            },
+            { withGovernance: true, withProfiling: true },
+        )
+      `,
+    },
   ],
   valid: [
     {
