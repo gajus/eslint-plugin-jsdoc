@@ -192,8 +192,5 @@
     "test-cov": "TIMING=1 c8 --reporter text pnpm run test-no-cov",
     "test-index": "pnpm run test-no-cov test/rules/index.js"
   },
-  "version": "1.0.0",
-  "optionalDependencies": {
-    "@rollup/rollup-darwin-arm64": "^4.53.5"
-  }
+  "version": "1.0.0"
 }
