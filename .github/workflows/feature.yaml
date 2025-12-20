@@ -41,7 +41,7 @@ jobs:
       matrix:
         node_js_version:
           - '20.19.0'
-          - '22.13.0'
+          - '22.14.0'
           - '24'
   build:
     runs-on: ubuntu-latest
