@@ -14,7 +14,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "22.13.0"
       - run: pnpm install
       - run: pnpm build
       - run: npx semantic-release
