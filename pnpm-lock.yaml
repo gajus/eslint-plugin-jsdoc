@@ -216,10 +216,6 @@ importers:
       typescript-eslint:
         specifier: ^8.50.0
         version: 8.50.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
-    optionalDependencies:
-      '@rollup/rollup-darwin-arm64':
-        specifier: ^4.53.5
-        version: 4.53.5
 
 packages:
 
