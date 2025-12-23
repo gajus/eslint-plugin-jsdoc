@@ -313,6 +313,61 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        /**
+         * @typedef {object} foo
+         * @property {string} type
+         *
+         * @typedef {object} bar
+         * @property {object} abc
+         * @property {number} abc.def
+         * @property {number} abc.def
+         */
+      `,
+      errors: [
+        {
+          line: 9,
+          message: 'Duplicate @property "abc.def"',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} foo
+         * @property {string} type
+         *
+         * @typedef {object} bar
+         * @property {object} abc
+         * @property {number} abc
+         */
+      `,
+      errors: [
+        {
+          line: 8,
+          message: 'Duplicate @property "abc"',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} foo
+         * @property {string} type
+         * @property {string} type
+         *
+         * @typedef {object} bar
+         * @property {object} abc
+         */
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'Duplicate @property "type"',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -408,6 +463,28 @@ export default /** @type {import('../index.js').TestCases} */ ({
            * @property foo.baz
            * @property bar
            */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} foo
+         * @property {string} type
+         *
+         * @typedef {object} bar
+         * @property {number} type
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} foo
+         * @property {string} type
+         *
+         * @typedef {object} bar
+         * @property {number} anotherType
+         */
       `,
     },
   ],

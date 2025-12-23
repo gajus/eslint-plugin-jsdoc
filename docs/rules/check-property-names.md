@@ -172,6 +172,37 @@ function quux ({foo, bar}, baz) {
  */
 // Settings: {"jsdoc":{"tagNamePreference":{"property":false}}}
 // Message: Unexpected tag `@property`
+
+/**
+ * @typedef {object} foo
+ * @property {string} type
+ *
+ * @typedef {object} bar
+ * @property {object} abc
+ * @property {number} abc.def
+ * @property {number} abc.def
+ */
+// Message: Duplicate @property "abc.def"
+
+/**
+ * @typedef {object} foo
+ * @property {string} type
+ *
+ * @typedef {object} bar
+ * @property {object} abc
+ * @property {number} abc
+ */
+// Message: Duplicate @property "abc"
+
+/**
+ * @typedef {object} foo
+ * @property {string} type
+ * @property {string} type
+ *
+ * @typedef {object} bar
+ * @property {object} abc
+ */
+// Message: Duplicate @property "type"
 ````
 
 
@@ -246,6 +277,22 @@ function quux (code = 1) {
  * @property foo.bar
  * @property foo.baz
  * @property bar
+ */
+
+/**
+ * @typedef {object} foo
+ * @property {string} type
+ *
+ * @typedef {object} bar
+ * @property {number} type
+ */
+
+/**
+ * @typedef {object} foo
+ * @property {string} type
+ *
+ * @typedef {object} bar
+ * @property {number} anotherType
  */
 ````
 
