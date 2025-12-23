@@ -12,34 +12,50 @@ const validatePropertyNames = (
   enableFixer,
   jsdoc, utils,
 ) => {
-  const propertyTags = Object.entries(jsdoc.tags).filter(([
-    , tag,
-  ]) => {
-    return tag.tag === targetTagName;
-  });
-
-  return propertyTags.some(([
-    , tag,
-  ], index) => {
-    /** @type {import('../iterateJsdoc.js').Integer} */
-    let tagsIndex;
-    const dupeTagInfo = propertyTags.find(([
-      tgsIndex,
-      tg,
-    ], idx) => {
-      tagsIndex = Number(tgsIndex);
-
-      return tg.name === tag.name && idx !== index;
+  const jsdocTypedefs = utils.getJsdocTagsDeep('typedef');
+  let propertyTagGroups;
+  if (jsdocTypedefs && jsdocTypedefs.length > 1) {
+    propertyTagGroups = jsdocTypedefs.map(({
+      idx,
+    }, index) => {
+      return Object.entries(jsdoc.tags).slice(idx, jsdocTypedefs[index + 1]?.idx);
     });
-    if (dupeTagInfo) {
-      utils.reportJSDoc(`Duplicate @${targetTagName} "${tag.name}"`, dupeTagInfo[1], enableFixer ? () => {
-        utils.removeTag(tagsIndex);
-      } : null);
+  } else {
+    propertyTagGroups = [
+      Object.entries(jsdoc.tags),
+    ];
+  }
 
-      return true;
-    }
+  return propertyTagGroups.some((propertyTagGroup) => {
+    const propertyTags = propertyTagGroup.filter(([
+      , tag,
+    ]) => {
+      return tag.tag === targetTagName;
+    });
 
-    return false;
+    return propertyTags.some(([
+      , tag,
+    ], index) => {
+      /** @type {import('../iterateJsdoc.js').Integer} */
+      let tagsIndex;
+      const dupeTagInfo = propertyTags.find(([
+        tgsIndex,
+        tg,
+      ], idx) => {
+        tagsIndex = Number(tgsIndex);
+
+        return tg.name === tag.name && idx !== index;
+      });
+      if (dupeTagInfo) {
+        utils.reportJSDoc(`Duplicate @${targetTagName} "${tag.name}"`, dupeTagInfo[1], enableFixer ? () => {
+          utils.removeTag(tagsIndex);
+        } : null);
+
+        return true;
+      }
+
+      return false;
+    });
   });
 };
 
