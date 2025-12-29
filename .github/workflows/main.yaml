@@ -3,6 +3,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: release
     name: Release
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
     steps:
       - uses: pnpm/action-setup@v4
         with:
@@ -20,7 +25,6 @@ jobs:
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 name: Build and release
 on:
   push:
