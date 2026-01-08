@@ -13,13 +13,14 @@ jobs:
         with:
           version: latest
       - name: setup repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: setup node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "22.14.0"
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org/'
       - run: pnpm install
       - run: pnpm build
       - run: npx semantic-release
