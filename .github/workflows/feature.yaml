@@ -7,11 +7,11 @@ jobs:
         with:
           version: latest
       - name: setup repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: setup node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '20.11.0'
       - run: pnpm install
@@ -26,11 +26,11 @@ jobs:
         with:
           version: latest
       - name: setup repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: setup node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '${{ matrix.node_js_version }}'
       - run: pnpm install
@@ -51,11 +51,11 @@ jobs:
         with:
           version: latest
       - name: setup repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: setup node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '20.11.0'
       - run: pnpm install
