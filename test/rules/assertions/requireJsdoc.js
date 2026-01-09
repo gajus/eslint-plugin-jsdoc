@@ -6768,5 +6768,31 @@ function quux (foo) {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * JSdoc for foo function
+         */
+        const foo = autolog(function foo() {
+            log.debug('inside foo', 'this is a test helper function')
+        })
+      `,
+      options: [
+        {
+          checkAllFunctionExpressions: true,
+          contexts: [
+            'FunctionDeclaration', 'MethodDefinition', 'ClassDeclaration', 'TSDeclareFunction',
+          ],
+          require: {
+            FunctionExpression: true,
+          },
+        },
+      ],
+      settings: {
+        jsdoc: {
+          skipInvokedExpressionsForCommentFinding: true,
+        },
+      },
+    },
   ],
 });

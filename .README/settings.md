@@ -24,6 +24,21 @@ be enforced so as to report problems if a JSDoc block is not found within
 the specified boundaries. The settings are also used in the fixer to determine
 how many line breaks to add when a block is missing.
 
+### `skipInvokedExpressionsForCommentFinding`
+
+One can set this boolean to `true` to allow JSDoc blocks to be found across
+invocations such as call expressions and new expressions. Used with
+`jsdoc/require-jsdoc`.
+
+```js
+/**
+ * @param a
+ * @param b
+ * @param c
+ */
+const quux = foo(function (a, b, c) {});
+```
+
 ### Mode
 
 - `settings.jsdoc.mode` - Set to `typescript`, `closure`, or `jsdoc` (the

@@ -2158,5 +2158,14 @@ const quux = () => {
   function myFunction(foo?: string) {}
 };
 // "jsdoc/require-jsdoc": ["error"|"warn", {"exemptOverloadedImplementations":true,"require":{"ArrowFunctionExpression":true}}]
+
+/**
+ * JSdoc for foo function
+ */
+const foo = autolog(function foo() {
+    log.debug('inside foo', 'this is a test helper function')
+})
+// Settings: {"jsdoc":{"skipInvokedExpressionsForCommentFinding":true}}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"checkAllFunctionExpressions":true,"contexts":["FunctionDeclaration","MethodDefinition","ClassDeclaration","TSDeclareFunction"],"require":{"FunctionExpression":true}}]
 ````
 

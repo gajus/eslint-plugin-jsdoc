@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "~0.78.0",
+    "@es-joy/jsdoccomment": "~0.79.0",
     "@es-joy/resolve.exports": "1.2.0",
     "are-docs-informative": "^0.0.2",
     "comment-parser": "1.4.1",
@@ -78,7 +78,7 @@
     "typescript-eslint": "^8.52.0"
   },
   "engines": {
-    "node": ">=20.11.0"
+    "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "keywords": [
     "eslint",
