@@ -1802,6 +1802,7 @@ const getUtils = (
  *   ignoreInternal?: boolean,
  *   ignorePrivate?: boolean,
  *   exemptDestructuredRootsFromChecks?: boolean,
+ *   skipInvokedExpressionsForCommentFinding?: boolean
  * }} Settings
  */
 
@@ -1821,6 +1822,7 @@ const getUtils = (
  *       implementsReplacesDocs: boolean,
  *       augmentsExtendsReplacesDocs: boolean,
  *       exemptDestructuredRootsFromChecks: boolean,
+ *       skipInvokedExpressionsForCommentFinding: boolean,
  *       mode: import('./jsdocUtils.js').ParserMode,
  *       contexts: Context[],
  *     }
@@ -1840,6 +1842,8 @@ const getSettings = (context) => {
     ignoreInternal: Boolean(context.settings.jsdoc?.ignoreInternal),
     maxLines: Number(context.settings.jsdoc?.maxLines ?? 1),
     minLines: Number(context.settings.jsdoc?.minLines ?? 0),
+    skipInvokedExpressionsForCommentFinding:
+      Boolean(context.settings.jsdoc?.skipInvokedExpressionsForCommentFinding),
 
     // `check-tag-names` and many returns/param rules
     tagNamePreference: context.settings.jsdoc?.tagNamePreference ?? {},

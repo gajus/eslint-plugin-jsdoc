@@ -4,6 +4,7 @@
 
 * [Allow tags (`@private` or `@internal`) to disable rules for that comment block](#user-content-settings-allow-tags-private-or-internal-to-disable-rules-for-that-comment-block)
 * [`maxLines` and `minLines`](#user-content-settings-maxlines-and-minlines)
+* [`skipInvokedExpressionsForCommentFinding`](#user-content-settings-skipinvokedexpressionsforcommentfinding)
 * [Mode](#user-content-settings-mode)
 * [Alias Preference](#user-content-settings-alias-preference)
     * [Default Preferred Aliases](#user-content-settings-alias-preference-default-preferred-aliases)
@@ -38,6 +39,23 @@ In conjunction with the `require-jsdoc` rule, these settings can
 be enforced so as to report problems if a JSDoc block is not found within
 the specified boundaries. The settings are also used in the fixer to determine
 how many line breaks to add when a block is missing.
+
+<a name="user-content-settings-skipinvokedexpressionsforcommentfinding"></a>
+<a name="settings-skipinvokedexpressionsforcommentfinding"></a>
+### <code>skipInvokedExpressionsForCommentFinding</code>
+
+One can set this boolean to `true` to allow JSDoc blocks to be found across
+invocations such as call expressions and new expressions. Used with
+`jsdoc/require-jsdoc`.
+
+```js
+/**
+ * @param a
+ * @param b
+ * @param c
+ */
+const quux = foo(function (a, b, c) {});
+```
 
 <a name="user-content-settings-mode"></a>
 <a name="settings-mode"></a>
