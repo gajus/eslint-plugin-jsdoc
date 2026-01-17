@@ -2009,5 +2009,13 @@ export async function fetchMarketstackEOD(
   // ...
 };
 // "jsdoc/require-param": ["error"|"warn", {"interfaceExemptsParamsCheck":true}]
+
+/**
+ * @param {string}
+ *   foo The foo.
+ */
+export function x(foo) {
+  console.log(foo);
+}
 ````
 

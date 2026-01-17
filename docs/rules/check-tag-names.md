@@ -1162,5 +1162,10 @@ interface WebTwain {
  * @typeParam T
  */
 // Settings: {"jsdoc":{"tagNamePreference":{"template":"typeParam"}}}
+
+/**
+ * @ember/debug etc. etc.
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
 ````
 
