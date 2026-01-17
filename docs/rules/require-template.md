@@ -418,5 +418,10 @@ export interface Test<Foo extends string> {
   bar: Foo;
 }
 // Settings: {"jsdoc":{"tagNamePreference":{"template":"typeParam"}}}
+
+/**
+ * @template T
+ * @typedef {T extends Record<string, Record<string, infer F>> ? F : never} ExtractFunction
+ */
 ````
 

@@ -135,10 +135,16 @@ export default iterateJsdoc(({
     }
 
     traverse(parsedType, (nde) => {
+      if (nde.type === 'JsdocTypeInfer') {
+        templateNames.push(nde.element.value);
+        return;
+      }
+
       const {
         type,
         value,
       } = /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde);
+
       if (type === 'JsdocTypeName' && (/^[A-Z]$/v).test(value)) {
         usedNames.add(value);
         if (!usedNameToTag.has(value)) {
