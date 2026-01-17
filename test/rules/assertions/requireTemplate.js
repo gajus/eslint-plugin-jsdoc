@@ -746,5 +746,13 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        /**
+         * @template T
+         * @typedef {T extends Record<string, Record<string, infer F>> ? F : never} ExtractFunction
+         */
+      `,
+    },
   ],
 });
