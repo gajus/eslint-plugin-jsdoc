@@ -3974,5 +3974,16 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @param {string}
+         *   foo The foo.
+         */
+        export function x(foo) {
+          console.log(foo);
+        }
+      `,
+    },
   ],
 });

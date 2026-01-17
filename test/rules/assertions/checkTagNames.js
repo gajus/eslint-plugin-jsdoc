@@ -1513,5 +1513,17 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        /**
+         * @ember/debug etc. etc.
+         */
+      `,
+      options: [
+        {
+          typed: true,
+        },
+      ],
+    },
   ],
 });
