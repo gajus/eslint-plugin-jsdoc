@@ -269,10 +269,85 @@ export default iterateJsdoc(({
   };
 
   /**
+   * Recursively extracts types from a namespace declaration.
+   * @param {string} prefix - The namespace prefix (e.g., "MyNamespace" or "Outer.Inner").
+   * @param {import('@typescript-eslint/types').TSESTree.TSModuleDeclaration} moduleDeclaration - The module declaration node.
+   * @returns {string[]} Array of fully qualified type names.
+   */
+  const getNamespaceTypes = (prefix, moduleDeclaration) => {
+    /* c8 ignore next 3 -- Guard for ambient modules without body. */
+    if (!moduleDeclaration.body || moduleDeclaration.body.type !== 'TSModuleBlock') {
+      return [];
+    }
+
+    return moduleDeclaration.body.body.flatMap((item) => {
+      /** @type {import('@typescript-eslint/types').TSESTree.ProgramStatement | import('@typescript-eslint/types').TSESTree.NamedExportDeclarations | null} */
+      let declaration = item;
+
+      if (item.type === 'ExportNamedDeclaration' && item.declaration) {
+        declaration = item.declaration;
+      }
+
+      if (declaration.type === 'TSTypeAliasDeclaration' || declaration.type === 'ClassDeclaration') {
+        /* c8 ignore next 4 -- Guard for anonymous class declarations. */
+        if (!declaration.id) {
+          return [];
+        }
+
+        return [
+          `${prefix}.${declaration.id.name}`,
+        ];
+      }
+
+      if (declaration.type === 'TSInterfaceDeclaration') {
+        return [
+          `${prefix}.${declaration.id.name}`,
+          ...declaration.body.body.map((prop) => {
+            // Only `TSPropertySignature` and `TSMethodSignature` have 'key'.
+            if (prop.type !== 'TSPropertySignature' && prop.type !== 'TSMethodSignature') {
+              return '';
+            }
+
+            // Key can be computed or a literal, only handle Identifier.
+            if (prop.key.type !== 'Identifier') {
+              return '';
+            }
+
+            const propName = prop.key.name;
+            /* c8 ignore next -- `propName` is always truthy for Identifiers. */
+            return propName ? `${prefix}.${declaration.id.name}.${propName}` : '';
+          }).filter(Boolean),
+        ];
+      }
+
+      // Handle nested namespaces.
+      if (declaration.type === 'TSModuleDeclaration') {
+        /* c8 ignore next -- Nested string-literal modules aren't valid TS syntax. */
+        const nestedName = declaration.id?.type === 'Identifier' ? declaration.id.name : '';
+        /* c8 ignore next 3 -- Guard. */
+        if (!nestedName) {
+          return [];
+        }
+
+        return [
+          `${prefix}.${nestedName}`,
+          ...getNamespaceTypes(`${prefix}.${nestedName}`, declaration),
+        ];
+      }
+
+      // Fallback for unhandled declaration types (e.g., TSEnumDeclaration, FunctionDeclaration, etc.).
+      return [];
+    });
+  };
+
+  /**
    * We treat imports differently as we can't introspect their children.
    * @type {string[]}
    */
   const imports = [];
+
+  /** @type {Set<string>} */
+  const closedTypes = new Set();
 
   const allDefinedTypes = new Set(globalScope.variables.map(({
     name,
@@ -296,6 +371,7 @@ export default iterateJsdoc(({
           )?.parent;
           switch (globalItem?.type) {
             case 'ClassDeclaration':
+              closedTypes.add(name);
               return [
                 name,
                 ...globalItem.body.body.map((item) => {
@@ -329,6 +405,12 @@ export default iterateJsdoc(({
 
                   return `${name}.${property}`;
                 }).filter(Boolean),
+              ];
+            case 'TSModuleDeclaration':
+              closedTypes.add(name);
+              return [
+                name,
+                ...getNamespaceTypes(name, globalItem),
               ];
             case 'VariableDeclarator':
               if (/** @type {import('@typescript-eslint/types').TSESTree.Identifier} */ (
@@ -393,6 +475,29 @@ export default iterateJsdoc(({
       }
 
       return [];
+    })())
+    .concat((() => {
+      // Detect static property assignments like `MyClass.Prop = ...`
+      const programBody = /** @type {import('@typescript-eslint/types').TSESTree.Program} */ (
+        sourceCode.ast
+      ).body;
+
+      return programBody.flatMap((statement) => {
+        if (
+          statement.type === 'ExpressionStatement' &&
+          statement.expression.type === 'AssignmentExpression' &&
+          statement.expression.left.type === 'MemberExpression' &&
+          statement.expression.left.object.type === 'Identifier' &&
+          statement.expression.left.property.type === 'Identifier' &&
+          closedTypes.has(statement.expression.left.object.name)
+        ) {
+          return [
+            `${statement.expression.left.object.name}.${statement.expression.left.property.name}`,
+          ];
+        }
+
+        return [];
+      });
     })())
     .concat(...getValidRuntimeIdentifiers(node && (
       (sourceCode.getScope &&
@@ -529,9 +634,13 @@ export default iterateJsdoc(({
 
       if (type === 'JsdocTypeName') {
         const structuredTypes = structuredTags[tag.tag]?.type;
+        const rootNamespace = val.split('.')[0];
+        const isNamespaceValid = (definedTypes.includes(rootNamespace) || allDefinedTypes.has(rootNamespace)) &&
+          !closedTypes.has(rootNamespace);
+
         if (!allDefinedTypes.has(val) &&
           !definedNamesAndNamepaths.has(val) &&
-          (!Array.isArray(structuredTypes) || !structuredTypes.includes(val))
+          (!Array.isArray(structuredTypes) || !structuredTypes.includes(val)) && !isNamespaceValid
         ) {
           const parent =
             /**

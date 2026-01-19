@@ -407,6 +407,26 @@ let getValue = (callback) => {
   callback(`hello`)
 }
 // Message: The type 'CustomElementConstructor' is undefined.
+
+class MyClass {
+  static Existent = () =>{}
+}
+/** @type {MyClass.nonExistent} */
+const a = 1;
+// Message: The type 'MyClass.nonExistent' is undefined.
+
+declare namespace MyNamespace {
+  type MyType = string;
+  interface FooBar {
+    foobiz: string;
+  }
+}
+/** @type {MyNamespace.MyType} */
+const a = 's';
+/** @type {MyNamespace.OtherType} */
+const b = 's';
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyNamespace"]}]
+// Message: The type 'MyNamespace.OtherType' is undefined.
 ````
 
 
@@ -1125,5 +1145,94 @@ export default Severities;
 const checkIsOnOf = (value, ...validValues) => {
   return validValues.includes(value);
 };
+
+declare namespace MyNamespace {
+  type MyType = string;
+  interface FooBar {
+    foobiz: string;
+  }
+}
+/** @type {MyNamespace.MyType} */
+const a = 's';
+/** @type {MyNamespace.FooBar} */
+const c = { foobiz: 's' };
+/**
+ * Function quux.
+ * @param {MyNamespace.FooBar['foobiz']} biz - Parameter 'foobiz' from FooBar.
+ */
+function quux(biz) {}
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyNamespace"]}]
+
+declare namespace MyNamespace {
+  interface I {
+    [key: string]: string;
+    (): void;
+    new (): void;
+  }
+}
+/** @type {MyNamespace.I} */
+const x = null;
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyNamespace"]}]
+
+declare namespace Nested {
+  namespace Namespace {
+    export interface C {}
+  }
+}
+/** @type {Nested.Namespace.C} */
+const x = null;
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["Nested"]}]
+
+declare namespace NamespaceWithInterface {
+  export interface HasIndexSig {
+    [key: string]: string;
+    normalProp: number;
+  }
+}
+/** @type {NamespaceWithInterface.HasIndexSig} */
+const x = { normalProp: 1 };
+/** @type {NamespaceWithInterface.HasIndexSig['normalProp']} */
+const y = 1;
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["NamespaceWithInterface"]}]
+
+declare namespace NsWithLiteralKey {
+  export interface HasLiteralKey {
+    "string-key": string;
+    normalProp: number;
+  }
+}
+/** @type {NsWithLiteralKey.HasLiteralKey} */
+const x = { "string-key": "value", normalProp: 1 };
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["NsWithLiteralKey"]}]
+
+class MyClass {
+}
+MyClass.Existent = () => {};
+/** @type {MyClass.Existent} */
+const a = MyClass.Existent;
+
+class MyClass {
+  static Existent = () => {};
+}
+/** @type {MyClass.Existent} */
+const a = MyClass.Existent;
+
+declare namespace NamespaceWithEnum {
+  export enum Color {
+    Red,
+    Green,
+    Blue
+  }
+  export interface I {}
+}
+/** @type {NamespaceWithEnum.I} */
+const x = {};
+// "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["NamespaceWithEnum"]}]
+
+declare module "my-module" {
+  export interface ModuleType {}
+}
+/** @type {import("my-module").ModuleType} */
+const x = {};
 ````
 

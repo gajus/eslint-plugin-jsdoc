@@ -701,6 +701,51 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        class MyClass {
+          static Existent = () =>{}
+        }
+        /** @type {MyClass.nonExistent} */
+        const a = 1;
+      `,
+      errors: [
+        {
+          line: 5,
+          message: 'The type \'MyClass.nonExistent\' is undefined.',
+        },
+      ],
+    },
+    {
+      code: `
+        declare namespace MyNamespace {
+          type MyType = string;
+          interface FooBar {
+            foobiz: string;
+          }
+        }
+        /** @type {MyNamespace.MyType} */
+        const a = 's';
+        /** @type {MyNamespace.OtherType} */
+        const b = 's';
+      `,
+      errors: [
+        {
+          line: 10,
+          message: 'The type \'MyNamespace.OtherType\' is undefined.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          definedTypes: [
+            'MyNamespace',
+          ],
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -1903,6 +1948,185 @@ export default /** @type {import('../index.js').TestCases} */ ({
           return validValues.includes(value);
         };
       `,
+    },
+    {
+      code: `
+        declare namespace MyNamespace {
+          type MyType = string;
+          interface FooBar {
+            foobiz: string;
+          }
+        }
+        /** @type {MyNamespace.MyType} */
+        const a = 's';
+        /** @type {MyNamespace.FooBar} */
+        const c = { foobiz: 's' };
+        /**
+         * Function quux.
+         * @param {MyNamespace.FooBar['foobiz']} biz - Parameter 'foobiz' from FooBar.
+         */
+        function quux(biz) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          definedTypes: [
+            'MyNamespace',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        declare namespace MyNamespace {
+          interface I {
+            [key: string]: string;
+            (): void;
+            new (): void;
+          }
+        }
+        /** @type {MyNamespace.I} */
+        const x = null;
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          definedTypes: [
+            'MyNamespace',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        declare namespace Nested {
+          namespace Namespace {
+            export interface C {}
+          }
+        }
+        /** @type {Nested.Namespace.C} */
+        const x = null;
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          definedTypes: [
+            'Nested',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        declare namespace NamespaceWithInterface {
+          export interface HasIndexSig {
+            [key: string]: string;
+            normalProp: number;
+          }
+        }
+        /** @type {NamespaceWithInterface.HasIndexSig} */
+        const x = { normalProp: 1 };
+        /** @type {NamespaceWithInterface.HasIndexSig['normalProp']} */
+        const y = 1;
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          definedTypes: [
+            'NamespaceWithInterface',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        declare namespace NsWithLiteralKey {
+          export interface HasLiteralKey {
+            "string-key": string;
+            normalProp: number;
+          }
+        }
+        /** @type {NsWithLiteralKey.HasLiteralKey} */
+        const x = { "string-key": "value", normalProp: 1 };
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          definedTypes: [
+            'NsWithLiteralKey',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        class MyClass {
+        }
+        MyClass.Existent = () => {};
+        /** @type {MyClass.Existent} */
+        const a = MyClass.Existent;
+      `,
+      languageOptions: {
+        ecmaVersion: 2_022,
+      },
+    },
+    {
+      code: `
+        class MyClass {
+          static Existent = () => {};
+        }
+        /** @type {MyClass.Existent} */
+        const a = MyClass.Existent;
+      `,
+      languageOptions: {
+        ecmaVersion: 2_022,
+      },
+    },
+    {
+      code: `
+        declare namespace NamespaceWithEnum {
+          export enum Color {
+            Red,
+            Green,
+            Blue
+          }
+          export interface I {}
+        }
+        /** @type {NamespaceWithEnum.I} */
+        const x = {};
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          definedTypes: [
+            'NamespaceWithEnum',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        declare module "my-module" {
+          export interface ModuleType {}
+        }
+        /** @type {import("my-module").ModuleType} */
+        const x = {};
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
     },
   ],
 });
