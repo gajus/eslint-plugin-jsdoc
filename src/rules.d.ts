@@ -3137,6 +3137,10 @@ export interface Rules {
            */
           objectFieldSeparatorTrailingPunctuation?: boolean;
           /**
+           * The space character (if any) to add after an object's initial curly bracket and before its ending curly bracket
+           */
+          objectTypeBracketSpacing?: string;
+          /**
            * The space character (if any) to use between the equal signs of a default value. Defaults to " ".
            */
           parameterDefaultValueSpacing?: string;
