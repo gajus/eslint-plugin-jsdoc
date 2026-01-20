@@ -1170,6 +1170,29 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @param {{a: string}} cfg
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Object type bracket spacing should be " "',
+        },
+      ],
+      options: [
+        {
+          objectTypeBracketSpacing: ' ',
+        },
+      ],
+      output: `
+        /**
+         * @param {{ a: string }} cfg
+         */
+      `,
+    },
   ],
   valid: [
     {
@@ -1600,6 +1623,18 @@ export default {
       options: [
         {
           methodQuotes: 'double',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {{a: string}} cfg
+         */
+      `,
+      options: [
+        {
+          objectTypeBracketSpacing: '',
         },
       ],
     },

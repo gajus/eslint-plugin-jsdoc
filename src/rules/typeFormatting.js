@@ -41,6 +41,7 @@ export default iterateJsdoc(({
     objectFieldSeparator = 'comma',
     objectFieldSeparatorOptionalLinebreak = true,
     objectFieldSeparatorTrailingPunctuation = false,
+    objectTypeBracketSpacing = '',
     parameterDefaultValueSpacing = ' ',
     postMethodNameSpacing = '',
     postNewSpacing = ' ',
@@ -345,6 +346,9 @@ export default iterateJsdoc(({
             typeNode.meta.propertyIndent = objectFieldIndent;
             typeNode.meta.trailingPunctuation = objectFieldSeparatorTrailingPunctuation;
             errorMessage = `Inconsistent ${objectFieldSeparator} separator usage`;
+          } else if ((typeNode.meta.bracketSpacing ?? '') !== objectTypeBracketSpacing) {
+            typeNode.meta.bracketSpacing = objectTypeBracketSpacing;
+            errorMessage = `Object type bracket spacing should be "${objectTypeBracketSpacing}"`;
           }
 
           break;
@@ -614,6 +618,10 @@ will determine whether to add punctuation corresponding to the
 \`objectFieldSeparator\` (e.g., a semicolon) to the final object field.
 Defaults to \`false\`.`,
             type: 'boolean',
+          },
+          objectTypeBracketSpacing: {
+            description: 'The space character (if any) to add after an object\'s initial curly bracket and before its ending curly bracket',
+            type: 'string',
           },
           parameterDefaultValueSpacing: {
             description: 'The space character (if any) to use between the equal signs of a default value. Defaults to " ".',

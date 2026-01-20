@@ -157,6 +157,12 @@ will determine whether to add punctuation corresponding to the
 `objectFieldSeparator` (e.g., a semicolon) to the final object field.
 Defaults to `false`.
 
+<a name="user-content-type-formatting-options-objecttypebracketspacing"></a>
+<a name="type-formatting-options-objecttypebracketspacing"></a>
+### <code>objectTypeBracketSpacing</code>
+
+The space character (if any) to add after an object's initial curly bracket and before its ending curly bracket
+
 <a name="user-content-type-formatting-options-parameterdefaultvaluespacing"></a>
 <a name="type-formatting-options-parameterdefaultvaluespacing"></a>
 ### <code>parameterDefaultValueSpacing</code>
@@ -210,7 +216,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`
 |Tags|`param`, `property`, `returns`, `this`, `throws`, `type`, `typedef`, `yields`|
 |Recommended|false|
 |Settings|`mode`|
-|Options|`arrayBrackets`, `arrowFunctionPostReturnMarkerSpacing`, `arrowFunctionPreReturnMarkerSpacing`, `enableFixer`, `functionOrClassParameterSpacing`, `functionOrClassPostGenericSpacing`, `functionOrClassPostReturnMarkerSpacing`, `functionOrClassPreReturnMarkerSpacing`, `functionOrClassTypeParameterSpacing`, `genericAndTupleElementSpacing`, `genericDot`, `keyValuePostColonSpacing`, `keyValuePostKeySpacing`, `keyValuePostOptionalSpacing`, `keyValuePostVariadicSpacing`, `methodQuotes`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `parameterDefaultValueSpacing`, `postMethodNameSpacing`, `postNewSpacing`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
+|Options|`arrayBrackets`, `arrowFunctionPostReturnMarkerSpacing`, `arrowFunctionPreReturnMarkerSpacing`, `enableFixer`, `functionOrClassParameterSpacing`, `functionOrClassPostGenericSpacing`, `functionOrClassPostReturnMarkerSpacing`, `functionOrClassPreReturnMarkerSpacing`, `functionOrClassTypeParameterSpacing`, `genericAndTupleElementSpacing`, `genericDot`, `keyValuePostColonSpacing`, `keyValuePostKeySpacing`, `keyValuePostOptionalSpacing`, `keyValuePostVariadicSpacing`, `methodQuotes`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `objectTypeBracketSpacing`, `parameterDefaultValueSpacing`, `postMethodNameSpacing`, `postNewSpacing`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
 <a name="type-formatting-failing-examples"></a>
@@ -504,6 +510,12 @@ The following patterns are considered problems:
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"keyValuePostVariadicSpacing":" "}]
 // Message: Post variadic (`...`) spacing should be " "
+
+/**
+ * @param {{a: string}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectTypeBracketSpacing":" "}]
+// Message: Object type bracket spacing should be " "
 ````
 
 
@@ -688,5 +700,10 @@ The following patterns are not considered problems:
  * @param {{"some-method"(a: string, b: number): void}} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"methodQuotes":"double"}]
+
+/**
+ * @param {{a: string}} cfg
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectTypeBracketSpacing":""}]
 ````
 
