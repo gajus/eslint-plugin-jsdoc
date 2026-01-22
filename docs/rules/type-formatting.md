@@ -195,6 +195,12 @@ is only one property-value object field present. Defaults to `false`.
 How string literals should be quoted (e.g., `"abc"`). Set to `single`
 or `double`. Defaults to 'double'.
 
+<a name="user-content-type-formatting-options-trailingpunctuationmultilineonly"></a>
+<a name="type-formatting-options-trailingpunctuationmultilineonly"></a>
+### <code>trailingPunctuationMultilineOnly</code>
+
+If `objectFieldSeparatorTrailingPunctuation` is set, this will determine whether the trailing puncutation is only added when the type is multiline
+
 <a name="user-content-type-formatting-options-typebracketspacing"></a>
 <a name="type-formatting-options-typebracketspacing"></a>
 ### <code>typeBracketSpacing</code>
@@ -216,7 +222,7 @@ Determines the spacing to add to unions (`|`). Defaults to a single space (`" "`
 |Tags|`param`, `property`, `returns`, `this`, `throws`, `type`, `typedef`, `yields`|
 |Recommended|false|
 |Settings|`mode`|
-|Options|`arrayBrackets`, `arrowFunctionPostReturnMarkerSpacing`, `arrowFunctionPreReturnMarkerSpacing`, `enableFixer`, `functionOrClassParameterSpacing`, `functionOrClassPostGenericSpacing`, `functionOrClassPostReturnMarkerSpacing`, `functionOrClassPreReturnMarkerSpacing`, `functionOrClassTypeParameterSpacing`, `genericAndTupleElementSpacing`, `genericDot`, `keyValuePostColonSpacing`, `keyValuePostKeySpacing`, `keyValuePostOptionalSpacing`, `keyValuePostVariadicSpacing`, `methodQuotes`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `objectTypeBracketSpacing`, `parameterDefaultValueSpacing`, `postMethodNameSpacing`, `postNewSpacing`, `separatorForSingleObjectField`, `stringQuotes`, `typeBracketSpacing`, `unionSpacing`|
+|Options|`arrayBrackets`, `arrowFunctionPostReturnMarkerSpacing`, `arrowFunctionPreReturnMarkerSpacing`, `enableFixer`, `functionOrClassParameterSpacing`, `functionOrClassPostGenericSpacing`, `functionOrClassPostReturnMarkerSpacing`, `functionOrClassPreReturnMarkerSpacing`, `functionOrClassTypeParameterSpacing`, `genericAndTupleElementSpacing`, `genericDot`, `keyValuePostColonSpacing`, `keyValuePostKeySpacing`, `keyValuePostOptionalSpacing`, `keyValuePostVariadicSpacing`, `methodQuotes`, `objectFieldIndent`, `objectFieldQuote`, `objectFieldSeparator`, `objectFieldSeparatorOptionalLinebreak`, `objectFieldSeparatorTrailingPunctuation`, `objectTypeBracketSpacing`, `parameterDefaultValueSpacing`, `postMethodNameSpacing`, `postNewSpacing`, `separatorForSingleObjectField`, `stringQuotes`, `trailingPunctuationMultilineOnly`, `typeBracketSpacing`, `unionSpacing`|
 
 <a name="user-content-type-formatting-failing-examples"></a>
 <a name="type-formatting-failing-examples"></a>
@@ -515,7 +521,23 @@ The following patterns are considered problems:
  * @param {{a: string}} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectTypeBracketSpacing":" "}]
-// Message: Object type bracket spacing should be " "
+// Message: There was an error with type formatting
+
+/**
+ * @typedef {{ a: boolean, b: string, c: number, }} Example
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma-and-linebreak","objectFieldSeparatorTrailingPunctuation":true,"objectTypeBracketSpacing":" ","trailingPunctuationMultilineOnly":true}]
+// Message: There was an error with type formatting
+
+/**
+ * @typedef {{
+ * a: boolean,
+ * b: string,
+ * c: number
+ * }} Example
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma-and-linebreak","objectFieldSeparatorTrailingPunctuation":true,"objectTypeBracketSpacing":" ","trailingPunctuationMultilineOnly":true}]
+// Message: Inconsistent comma-and-linebreak separator usage
 ````
 
 
@@ -705,5 +727,19 @@ The following patterns are not considered problems:
  * @param {{a: string}} cfg
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectTypeBracketSpacing":""}]
+
+/**
+ * @typedef {{ a: boolean, b: string, c: number }} Example
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma-and-linebreak","objectFieldSeparatorTrailingPunctuation":true,"objectTypeBracketSpacing":" ","trailingPunctuationMultilineOnly":true}]
+
+/**
+ * @typedef {{
+ * a: boolean,
+ * b: string,
+ * c: number,
+ * }} Example
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma-and-linebreak","objectFieldSeparatorTrailingPunctuation":true,"objectTypeBracketSpacing":" ","trailingPunctuationMultilineOnly":true}]
 ````
 

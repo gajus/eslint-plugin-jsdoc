@@ -48,6 +48,7 @@ export default iterateJsdoc(({
     // propertyQuotes = null,
     separatorForSingleObjectField = false,
     stringQuotes = 'double',
+    trailingPunctuationMultilineOnly = false,
     typeBracketSpacing = '',
     unionSpacing = ' ',
   } = context.options[0] || {};
@@ -329,6 +330,7 @@ export default iterateJsdoc(({
           const typeNode = /** @type {import('jsdoc-type-pratt-parser').ObjectResult} */ (nde);
           /* c8 ignore next -- Guard */
           const separator = typeNode.meta.separator ?? 'comma';
+
           if (
             (separator !== objectFieldSeparator &&
               (!objectFieldSeparatorOptionalLinebreak ||
@@ -337,7 +339,12 @@ export default iterateJsdoc(({
             (typeNode.meta.separatorForSingleObjectField ?? false) !== separatorForSingleObjectField ||
             ((typeNode.meta.propertyIndent ?? '') !== objectFieldIndent &&
               separator.endsWith('-linebreak')) ||
-            (typeNode.meta.trailingPunctuation ?? false) !== objectFieldSeparatorTrailingPunctuation
+            /* c8 ignore next 5 -- jsdoc-type-pratt-parser doesn't encode as should */
+            ((typeNode.meta.trailingPunctuation ?? false) !== objectFieldSeparatorTrailingPunctuation &&
+              ((typeNode.meta.trailingPunctuation && (!trailingPunctuationMultilineOnly ||
+                !stringify(typeNode).includes('\n'))) ||
+              (!typeNode.meta.trailingPunctuation && (!trailingPunctuationMultilineOnly ||
+                stringify(typeNode).includes('\n')))))
           ) {
             typeNode.meta.separator = objectFieldSeparatorOptionalLinebreak && !separator.endsWith('and-linebreak') ?
               objectFieldSeparator.replace(/-and-linebreak$/v, '') :
@@ -348,7 +355,8 @@ export default iterateJsdoc(({
             errorMessage = `Inconsistent ${objectFieldSeparator} separator usage`;
           } else if ((typeNode.meta.bracketSpacing ?? '') !== objectTypeBracketSpacing) {
             typeNode.meta.bracketSpacing = objectTypeBracketSpacing;
-            errorMessage = `Object type bracket spacing should be "${objectTypeBracketSpacing}"`;
+            // This might not be the cause
+            // errorMessage = `Object type bracket spacing should be "${objectTypeBracketSpacing}"`;
           }
 
           break;
@@ -658,6 +666,10 @@ or \`double\`. Defaults to 'double'.`,
               'single',
             ],
             type: 'string',
+          },
+          trailingPunctuationMultilineOnly: {
+            description: 'If `objectFieldSeparatorTrailingPunctuation` is set, this will determine whether the trailing puncutation is only added when the type is multiline',
+            type: 'boolean',
           },
           typeBracketSpacing: {
             description: `A string of spaces that will be added immediately after the type's initial
