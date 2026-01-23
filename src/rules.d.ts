@@ -3163,6 +3163,10 @@ export interface Rules {
            */
           stringQuotes?: "double" | "single";
           /**
+           * If `objectFieldSeparatorTrailingPunctuation` is set, this will determine whether the trailing puncutation is only added when the type is multiline
+           */
+          trailingPunctuationMultilineOnly?: boolean;
+          /**
            * A string of spaces that will be added immediately after the type's initial
            * curly bracket and immediately before its ending curly bracket. Defaults
            * to the empty string.

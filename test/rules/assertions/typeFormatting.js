@@ -1179,7 +1179,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: 'Object type bracket spacing should be " "',
+          message: 'There was an error with type formatting',
         },
       ],
       options: [
@@ -1190,6 +1190,67 @@ export default {
       output: `
         /**
          * @param {{ a: string }} cfg
+         */
+      `,
+    },
+
+    {
+      code: `
+        /**
+         * @typedef {{ a: boolean, b: string, c: number, }} Example
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There was an error with type formatting',
+        },
+      ],
+      options: [
+        {
+          objectFieldSeparator: 'comma-and-linebreak',
+          objectFieldSeparatorTrailingPunctuation: true,
+          objectTypeBracketSpacing: ' ',
+          trailingPunctuationMultilineOnly: true,
+        },
+      ],
+      output: `
+        /**
+         * @typedef {{ a: boolean, b: string, c: number }} Example
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @typedef {{
+         * a: boolean,
+         * b: string,
+         * c: number
+         * }} Example
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Inconsistent comma-and-linebreak separator usage',
+        },
+      ],
+      options: [
+        {
+          objectFieldSeparator: 'comma-and-linebreak',
+          objectFieldSeparatorTrailingPunctuation: true,
+          objectTypeBracketSpacing: ' ',
+          trailingPunctuationMultilineOnly: true,
+        },
+      ],
+      output: `
+        /**
+         * @typedef {{
+         * a: boolean,
+         * b: string,
+         * c: number,
+         * }} Example
          */
       `,
     },
@@ -1635,6 +1696,40 @@ export default {
       options: [
         {
           objectTypeBracketSpacing: '',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @typedef {{ a: boolean, b: string, c: number }} Example
+         */
+      `,
+      options: [
+        {
+          objectFieldSeparator: 'comma-and-linebreak',
+          objectFieldSeparatorTrailingPunctuation: true,
+          objectTypeBracketSpacing: ' ',
+          trailingPunctuationMultilineOnly: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @typedef {{
+         * a: boolean,
+         * b: string,
+         * c: number,
+         * }} Example
+         */
+      `,
+      options: [
+        {
+          objectFieldSeparator: 'comma-and-linebreak',
+          objectFieldSeparatorTrailingPunctuation: true,
+          objectTypeBracketSpacing: ' ',
+          trailingPunctuationMultilineOnly: true,
         },
       ],
     },
