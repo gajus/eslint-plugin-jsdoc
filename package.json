@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "~0.82.0",
+    "@es-joy/jsdoccomment": "~0.83.0",
     "@es-joy/resolve.exports": "1.2.0",
     "are-docs-informative": "^0.0.2",
     "comment-parser": "1.4.5",
@@ -59,7 +59,7 @@
     "eslint-config-canonical": "^47.3.8",
     "gitdown": "^4.1.1",
     "glob": "^13.0.0",
-    "globals": "^17.0.0",
+    "globals": "^17.1.0",
     "husky": "^9.1.7",
     "jsdoc-type-pratt-parser": "^7.1.0",
     "json-schema": "^0.4.0",
@@ -67,7 +67,7 @@
     "lint-staged": "^16.2.7",
     "mocha": "^11.7.5",
     "open-editor": "^6.0.0",
-    "playwright": "^1.57.0",
+    "playwright": "^1.58.0",
     "replace": "^1.2.2",
     "rimraf": "^6.1.2",
     "rollup": "^4.56.0",
