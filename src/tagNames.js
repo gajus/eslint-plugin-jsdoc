@@ -131,10 +131,67 @@ const jsdocTags = {
 };
 
 /**
+ * @see {@link https://tsdoc.org/}
+ * @type {AliasedTags}
+ */
+const tsdocTags = {
+  alpha: [],
+  beta: [],
+  decorator: [],
+  eventProperty: [],
+  experimental: [],
+  packageDocumentation: [],
+  privateRemarks: [],
+  remarks: [],
+  sealed: [],
+};
+
+/**
+ * @see {@link https://typedoc.org/documents/Tags.html}
+ * @type {AliasedTags}
+ */
+const typedocTags = {
+  category: [],
+  // https://typedoc.org/documents/Tags._category.html#category-descriptions
+  categoryDescription: [],
+  // https://typedoc.org/documents/Tags._group.html#disablegroups
+  disableGroups: [],
+  document: [],
+  expand: [],
+  // https://typedoc.org/documents/Tags._expand.html#expandtype
+  expandType: [],
+  group: [],
+  // https://typedoc.org/documents/Tags._group.html#groupdescription
+  groupDescription: [],
+  hidden: [],
+  // https://typedoc.org/documents/Tags._category.html#navigation-customization
+  hideCategories: [],
+  // https://typedoc.org/documents/Tags._group.html#navigation-customization
+  hideGroups: [],
+  inline: [],
+  // https://typedoc.org/documents/Tags._inline.html#inlinetype
+  inlineType: [],
+  mergeModuleWith: [],
+  // https://typedoc.org/documents/Tags._expand.html#preventexpand
+  preventExpand: [],
+  // https://typedoc.org/documents/Tags._inline.html#preventinline
+  preventInline: [],
+  primaryExport: [],
+  // https://typedoc.org/documents/Tags._category.html#navigation-customization
+  showCategories: [],
+  // https://typedoc.org/documents/Tags._group.html#navigation-customization
+  showGroups: [],
+  sortStrategy: [],
+  useDeclaredType: [],
+};
+
+/**
  * @type {AliasedTags}
  */
 const typeScriptTags = {
   ...jsdocTags,
+  ...tsdocTags,
+  ...typedocTags,
 
   // https://github.com/microsoft/TypeScript/issues/22160
   // https://devblogs.microsoft.com/typescript/announcing-typescript-5-5/#the-jsdoc-import-tag
@@ -142,6 +199,9 @@ const typeScriptTags = {
 
   // https://www.typescriptlang.org/tsconfig/#stripInternal
   internal: [],
+
+  // https://typedoc.org/documents/Tags.TypeScript_Tags.html
+  jsx: [],
 
   // https://devblogs.microsoft.com/typescript/announcing-typescript-5-0/#overload-support-in-jsdoc
   overload: [],

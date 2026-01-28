@@ -196,10 +196,19 @@ Also checks for unknown inline tags, with the following being permitted by defau
 (see the `inlineTags` option):
 
 ```
+// JSDoc
 link
 linkcode
 linkplain
 tutorial
+
+// TSDoc
+inheritDoc
+label
+
+// typedoc
+include
+includeCode
 ```
 
 ## Fixer

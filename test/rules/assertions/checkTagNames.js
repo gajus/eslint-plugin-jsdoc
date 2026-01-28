@@ -824,27 +824,48 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `${ALL_TYPESCRIPT_TAGS_COMMENT}\nfunction quux (foo) {}`,
       errors: [
-        {
-          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 4,
-          message: 'Invalid JSDoc tag name "import".',
-        },
-        {
-          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 3,
-          message: 'Invalid JSDoc tag name "internal".',
-        },
-        {
-          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 2,
-          message: 'Invalid JSDoc tag name "overload".',
-        },
-        {
-          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - 1,
-          message: 'Invalid JSDoc tag name "satisfies".',
-        },
-        {
-          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT),
-          message: 'Invalid JSDoc tag name "template".',
-        },
-      ],
+        // TSDoc
+        'alpha',
+        'beta',
+        'decorator',
+        'eventProperty',
+        'experimental',
+        'packageDocumentation',
+        'privateRemarks',
+        'remarks',
+        'sealed',
+
+        // TypeDoc
+        'category',
+        'categoryDescription',
+        'disableGroups',
+        'document',
+        'expand',
+        'expandType',
+        'group',
+        'groupDescription',
+        'hidden',
+        'hideCategories',
+        'hideGroups',
+        'inline',
+        'inlineType',
+        'mergeModuleWith',
+        'preventExpand',
+        'preventInline',
+        'primaryExport',
+        'showCategories',
+        'showGroups',
+        'sortStrategy',
+        'useDeclaredType',
+
+        // JSDoc/TypeScript
+        'import', 'internal', 'jsx', 'overload', 'satisfies', 'template',
+      ].map((tagName, idx, arr) => {
+        return {
+          line: lineCount(ALL_TYPESCRIPT_TAGS_COMMENT) - arr.length + idx + 1,
+          message: `Invalid JSDoc tag name "${tagName}".`,
+        };
+      }),
       settings: {
         jsdoc: {
           mode: 'jsdoc',
@@ -862,7 +883,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
-        /** @jsx h */
         /** @jsxFrag Fragment */
         /** @jsxImportSource preact */
         /** @jsxRuntime automatic */
@@ -870,18 +890,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       errors: [
         {
           line: 2,
-          message: 'Invalid JSDoc tag name "jsx".',
-        },
-        {
-          line: 3,
           message: 'Invalid JSDoc tag name "jsxFrag".',
         },
         {
-          line: 4,
+          line: 3,
           message: 'Invalid JSDoc tag name "jsxImportSource".',
         },
         {
-          line: 5,
+          line: 4,
           message: 'Invalid JSDoc tag name "jsxRuntime".',
         },
       ],
