@@ -82,7 +82,13 @@ export default iterateJsdoc(({
       definedTags = [],
       enableFixer = true,
       inlineTags = [
+        // jsdoc
         'link', 'linkcode', 'linkplain', 'tutorial',
+        // https://tsdoc.org/pages/spec/tag_kinds/#inline-tags
+        'inheritDoc',
+        'label',
+        // https://typedoc.org/documents/Tags.html#inline-tags
+        'include', 'includeCode',
       ],
       jsxTags,
       typed,
@@ -323,7 +329,7 @@ The format is as follows:
           inlineTags: {
             description: `List of tags to allow inline.
 
-Defaults to array of \`'link', 'linkcode', 'linkplain', 'tutorial'\``,
+Defaults to array of \`'link', 'linkcode', 'linkplain', 'tutorial', 'inheritDoc', 'label', 'include', and 'includeCode'\``,
             items: {
               type: 'string',
             },

@@ -208,10 +208,19 @@ Also checks for unknown inline tags, with the following being permitted by defau
 (see the `inlineTags` option):
 
 ```
+// JSDoc
 link
 linkcode
 linkplain
 tutorial
+
+// TSDoc
+inheritDoc
+label
+
+// typedoc
+include
+includeCode
 ```
 
 <a name="user-content-check-tag-names-fixer"></a>
@@ -251,7 +260,7 @@ Set to `false` to disable auto-removal of types that are redundant with the [`ty
 
 List of tags to allow inline.
 
-Defaults to array of `'link', 'linkcode', 'linkplain', 'tutorial'`
+Defaults to array of `'link', 'linkcode', 'linkplain', 'tutorial', 'inheritDoc', 'label', 'include', and 'includeCode'`
 
 <a name="user-content-check-tag-names-options-jsxtags"></a>
 <a name="check-tag-names-options-jsxtags"></a>
@@ -727,15 +736,46 @@ function quux (foo) {}
  * @variation
  * @version
  * @yields
+ * @alpha
+ * @beta
+ * @decorator
+ * @eventProperty
+ * @experimental
+ * @packageDocumentation
+ * @privateRemarks
+ * @remarks
+ * @sealed
+ * @category
+ * @categoryDescription
+ * @disableGroups
+ * @document
+ * @expand
+ * @expandType
+ * @group
+ * @groupDescription
+ * @hidden
+ * @hideCategories
+ * @hideGroups
+ * @inline
+ * @inlineType
+ * @mergeModuleWith
+ * @preventExpand
+ * @preventInline
+ * @primaryExport
+ * @showCategories
+ * @showGroups
+ * @sortStrategy
+ * @useDeclaredType
  * @import
  * @internal
+ * @jsx
  * @overload
  * @satisfies
  * @template
  */
 function quux (foo) {}
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
-// Message: Invalid JSDoc tag name "import".
+// Message: Invalid JSDoc tag name "alpha".
 
 /** 
  * @externs
@@ -743,11 +783,10 @@ function quux (foo) {}
 function quux (foo) {}
 // Message: Invalid JSDoc tag name "externs".
 
-/** @jsx h */
 /** @jsxFrag Fragment */
 /** @jsxImportSource preact */
 /** @jsxRuntime automatic */
-// Message: Invalid JSDoc tag name "jsx".
+// Message: Invalid JSDoc tag name "jsxFrag".
 
 /**
  * @constructor
@@ -1049,8 +1088,39 @@ function quux (foo) {}
  * @variation
  * @version
  * @yields
+ * @alpha
+ * @beta
+ * @decorator
+ * @eventProperty
+ * @experimental
+ * @packageDocumentation
+ * @privateRemarks
+ * @remarks
+ * @sealed
+ * @category
+ * @categoryDescription
+ * @disableGroups
+ * @document
+ * @expand
+ * @expandType
+ * @group
+ * @groupDescription
+ * @hidden
+ * @hideCategories
+ * @hideGroups
+ * @inline
+ * @inlineType
+ * @mergeModuleWith
+ * @preventExpand
+ * @preventInline
+ * @primaryExport
+ * @showCategories
+ * @showGroups
+ * @sortStrategy
+ * @useDeclaredType
  * @import
  * @internal
+ * @jsx
  * @overload
  * @satisfies
  * @template
