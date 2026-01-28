@@ -222,6 +222,21 @@ export default iterateJsdoc(({
     newlineBeforeCapsAssumesBadSentenceEnd = false,
   } = context.options[0] || {};
 
+  // `@inheritDoc` can be used as inline tag with TSDoc/typedoc: https://typedoc.org/documents/Tags.__inheritDoc_.html
+  if (utils.getInlineTags().some(({
+    tag,
+  }) => {
+    return [
+      // Typdoc
+      'include', 'includeCode',
+      // TSDoc
+      'inheritDoc', 'inheritdoc',
+      'label',
+    ].includes(tag);
+  })) {
+    return;
+  }
+
   const abbreviationsRegex = abbreviations.length ?
     new RegExp('\\b' + abbreviations.map((abbreviation) => {
       return escapeStringRegexp(abbreviation.replaceAll(/\.$/gv, '') + '.');

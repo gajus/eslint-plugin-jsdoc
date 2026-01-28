@@ -1607,5 +1607,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
 
       `,
     },
+    {
+      code: `
+        /** {@inheritDoc SomeClass} */
+      `,
+    },
   ],
 });

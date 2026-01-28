@@ -844,5 +844,7 @@ const code = (parameter) => 123;
  */
 export class ClassExemple {
 }
+
+/** {@inheritDoc SomeClass} */
 ````
 
