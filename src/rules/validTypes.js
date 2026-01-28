@@ -8,7 +8,15 @@ import {
 } from '@es-joy/jsdoccomment';
 
 const inlineTags = new Set([
-  'link', 'linkcode', 'linkplain',
+  // Typdoc
+  'include', 'includeCode',
+  // TSDoc
+  'inheritDoc',
+  'inheritdoc',
+  'label',
+  // JSDoc
+  'link',
+  'linkcode', 'linkplain',
   'tutorial',
 ]);
 
