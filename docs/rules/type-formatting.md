@@ -741,5 +741,11 @@ The following patterns are not considered problems:
  * }} Example
  */
 // "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma-and-linebreak","objectFieldSeparatorTrailingPunctuation":true,"objectTypeBracketSpacing":" ","trailingPunctuationMultilineOnly":true}]
+
+/**
+ * @template {string} K
+ * @typedef {K extends keyof AllCodeGenerationSchemas ? AllCodeGenerationSchemas[K] : EXPECTED_ANY} CodeGenValue
+ */
+// "jsdoc/type-formatting": ["error"|"warn", {"objectFieldSeparator":"comma-and-linebreak","objectFieldSeparatorTrailingPunctuation":true,"objectTypeBracketSpacing":" ","trailingPunctuationMultilineOnly":true}]
 ````
 

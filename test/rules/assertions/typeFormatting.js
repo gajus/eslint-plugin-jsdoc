@@ -1733,5 +1733,21 @@ export default {
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @template {string} K
+         * @typedef {K extends keyof AllCodeGenerationSchemas ? AllCodeGenerationSchemas[K] : EXPECTED_ANY} CodeGenValue
+         */
+      `,
+      options: [
+        {
+          objectFieldSeparator: 'comma-and-linebreak',
+          objectFieldSeparatorTrailingPunctuation: true,
+          objectTypeBracketSpacing: ' ',
+          trailingPunctuationMultilineOnly: true,
+        },
+      ],
+    },
   ],
 };
