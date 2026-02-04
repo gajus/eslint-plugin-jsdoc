@@ -754,5 +754,42 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         *
+         */
+        export interface CodeGenerationResultData extends Omit<Map<string, any>, "get" | "set" | "has" | "delete"> {
+            /**
+             *
+             */
+            get<K extends string>(key: K): CodeGenValue<K> | undefined;
+
+            set<K extends string>(key: K, value: CodeGenValue<K>): this;
+
+            has<K extends string>(key: K): boolean;
+
+            delete<K extends string>(key: K): boolean;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} CodeGenMapOverloads
+         * @property {<K extends string>(key: K) => CodeGenValue<K> | undefined} get
+         * @property {<K extends string>(key: K, value: CodeGenValue<K>) => CodeGenerationResultData} set
+         * @property {<K extends string>(key: K) => boolean} has
+         * @property {<K extends string>(key: K) => boolean} delete
+         */
+
+        /**
+         * @typedef {Omit<Map<string, EXPECTED_ANY>, "get" | "set" | "has" | "delete"> & CodeGenMapOverloads} CodeGenerationResultData
+         */
+      `,
+    },
   ],
 });

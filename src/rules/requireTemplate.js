@@ -135,6 +135,11 @@ export default iterateJsdoc(({
     }
 
     traverse(parsedType, (nde) => {
+      if (nde.type === 'JsdocTypeTypeParameter') {
+        templateNames.push(nde.name.value);
+        return;
+      }
+
       if (nde.type === 'JsdocTypeInfer') {
         templateNames.push(nde.element.value);
         return;

@@ -423,5 +423,33 @@ export interface Test<Foo extends string> {
  * @template T
  * @typedef {T extends Record<string, Record<string, infer F>> ? F : never} ExtractFunction
  */
+
+/**
+ *
+ */
+export interface CodeGenerationResultData extends Omit<Map<string, any>, "get" | "set" | "has" | "delete"> {
+    /**
+     *
+     */
+    get<K extends string>(key: K): CodeGenValue<K> | undefined;
+
+    set<K extends string>(key: K, value: CodeGenValue<K>): this;
+
+    has<K extends string>(key: K): boolean;
+
+    delete<K extends string>(key: K): boolean;
+}
+
+/**
+ * @typedef {object} CodeGenMapOverloads
+ * @property {<K extends string>(key: K) => CodeGenValue<K> | undefined} get
+ * @property {<K extends string>(key: K, value: CodeGenValue<K>) => CodeGenerationResultData} set
+ * @property {<K extends string>(key: K) => boolean} has
+ * @property {<K extends string>(key: K) => boolean} delete
+ */
+
+/**
+ * @typedef {Omit<Map<string, EXPECTED_ANY>, "get" | "set" | "has" | "delete"> & CodeGenMapOverloads} CodeGenerationResultData
+ */
 ````
 
