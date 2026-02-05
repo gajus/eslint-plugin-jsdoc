@@ -992,5 +992,12 @@ class Test {
 let SettingName = /** @type {const} */ ({
   THEME: `theme`,
 })
+
+/**
+ * @typedef {Array} AnnotatedCharacter
+ * @property {string} 0 Character data
+ * @property {string[]} 1 Annotation hashses
+ */
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
 ````
 
