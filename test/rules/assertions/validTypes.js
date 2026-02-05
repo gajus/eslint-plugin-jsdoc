@@ -2037,5 +2037,34 @@ export default /** @type {import('../index.js').TestCases} */ ({
         })
       `,
     },
+    {
+      code: `
+        /**
+         * @typedef {Array} AnnotatedCharacter
+         * @property {string} 0 Character data
+         * @property {string[]} 1 Annotation hashses
+         */
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
+    {
+      code: `
+        /**
+         * @typedef {Array} AnnotatedCharacter
+         * @prop {string} 0 Character data
+         * @prop {string[]} 1 Annotation hashses
+         */
+      `,
+      ignoreReadme: true,
+      settings: {
+        jsdoc: {
+          mode: 'jsdoc',
+        },
+      },
+    },
   ],
 });

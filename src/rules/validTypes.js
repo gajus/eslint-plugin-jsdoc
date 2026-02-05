@@ -176,6 +176,15 @@ export default iterateJsdoc(({
             break;
           }
 
+          case 'prop':
+          case 'property': {
+            if (mode === 'jsdoc' && (/^\d+$/v).test(namepath)) {
+              handled = true;
+            }
+
+            break;
+          }
+
           case 'borrows': {
             const startChar = namepath.charAt(0);
             if ([
