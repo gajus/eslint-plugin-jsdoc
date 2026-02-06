@@ -79,6 +79,10 @@ import tsNoUnnecessaryTemplateExpression from './rules/tsNoUnnecessaryTemplateEx
 import tsPreferFunctionType from './rules/tsPreferFunctionType.js';
 import typeFormatting from './rules/typeFormatting.js';
 import validTypes from './rules/validTypes.js';
+import {
+  ESLint,
+} from 'eslint';
+import semver from 'semver';
 
 /**
  * @typedef {"recommended" | "stylistic" | "contents" | "logical" | "requirements"} ConfigGroups
@@ -598,9 +602,6 @@ index.configs.examples = /** @type {import('eslint').Linter.Config[]} */ ([
 
       '@typescript-eslint/no-unused-vars': 0,
 
-      // "always" newline rule at end unlikely in sample code
-      'eol-last': 0,
-
       // Wouldn't generally expect example paths to resolve relative to JS file
       'import/no-unresolved': 0,
 
@@ -620,9 +621,18 @@ index.configs.examples = /** @type {import('eslint').Linter.Config[]} */ ([
       // Unlikely to have inadvertent debugging within examples
       'no-console': 0,
 
-      // Often wish to start `@example` code after newline; also may use
-      //   empty lines for spacing
-      'no-multiple-empty-lines': 0,
+      /* c8 ignore next 11 -- Coercion should work */
+      ...(semver.gte(semver.coerce(ESLint.version) ?? '9.0.0', '9.0.0') ? {} : {
+        // "always" newline rule at end unlikely in sample code
+        'eol-last': 0,
+
+        // Often wish to start `@example` code after newline; also may use
+        //   empty lines for spacing
+        'no-multiple-empty-lines': 0,
+
+        // Can generally look nicer to pad a little even if code imposes more stringency
+        'padded-blocks': 0,
+      }),
 
       // Many variables in examples will be `undefined`
       'no-undef': 0,
@@ -632,9 +642,6 @@ index.configs.examples = /** @type {import('eslint').Linter.Config[]} */ ([
       // See import/no-unresolved
       'node/no-missing-import': 0,
       'node/no-missing-require': 0,
-
-      // Can generally look nicer to pad a little even if code imposes more stringency
-      'padded-blocks': 0,
     },
   },
 ]);
@@ -672,12 +679,15 @@ index.configs['default-expressions'] = /** @type {import('eslint').Linter.Config
       'no-empty-function': 0,
       'no-new': 0,
       'no-unused-expressions': 0,
-      quotes: [
-        'error', 'double',
-      ],
-      semi: [
-        'error', 'never',
-      ],
+      /* c8 ignore next 8 -- Coercion should work */
+      ...(semver.gte(semver.coerce(ESLint.version) ?? '9.0.0', '9.0.0') ? {} : {
+        quotes: [
+          'error', 'double',
+        ],
+        semi: [
+          'error', 'never',
+        ],
+      }),
       strict: 0,
     },
   },
