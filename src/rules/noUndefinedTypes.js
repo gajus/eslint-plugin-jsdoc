@@ -235,9 +235,15 @@ export default iterateJsdoc(({
     ancestorNodes.flatMap((ancestorNode) => {
       return getTemplateTags(ancestorNode);
     }) :
-    utils.getPresentTags([
-      'template',
-    ]);
+    // We err on the side of being too aggressive; checking only
+    //   present tags is not sufficient
+    comments.flatMap((doc) => {
+      return doc.tags.filter(({
+        tag,
+      }) => {
+        return tag === 'template';
+      });
+    });
 
   const closureGenericTypes = templateTags.flatMap((tag) => {
     return utils.parseClosureTemplateTag(tag);

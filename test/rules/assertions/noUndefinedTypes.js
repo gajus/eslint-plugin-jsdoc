@@ -2137,5 +2137,19 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @template T
+         */
+        class Test {
+          /** @typedef {T} Type */
+          /** @type {Type} */
+          t;
+        }
+
+        console.log(Test);
+      `,
+    },
   ],
 });
