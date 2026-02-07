@@ -1240,5 +1240,16 @@ class Test {}
  * @template {Test} T
  * @typedef {T extends Test<infer I> ? I : never} TestType
  */
+
+/**
+ * @template T
+ */
+class Test {
+  /** @typedef {T} Type */
+  /** @type {Type} */
+  t;
+}
+
+console.log(Test);
 ````
 
