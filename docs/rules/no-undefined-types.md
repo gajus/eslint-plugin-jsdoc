@@ -1234,5 +1234,11 @@ declare module "my-module" {
 }
 /** @type {import("my-module").ModuleType} */
 const x = {};
+
+class Test {}
+/**
+ * @template {Test} T
+ * @typedef {T extends Test<infer I> ? I : never} TestType
+ */
 ````
 

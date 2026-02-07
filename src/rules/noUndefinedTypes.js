@@ -661,6 +661,11 @@ export default iterateJsdoc(({
             return;
           }
 
+          if (parent?.type === 'JsdocTypeInfer' && value === parent.element.value) {
+            allDefinedTypes.add(value);
+            return;
+          }
+
           if (!disableReporting) {
             report(`The type '${val}' is undefined.`, null, tag);
           }

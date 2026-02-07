@@ -2128,5 +2128,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
         parser: typescriptEslintParser,
       },
     },
+    {
+      code: `
+        class Test {}
+        /**
+         * @template {Test} T
+         * @typedef {T extends Test<infer I> ? I : never} TestType
+         */
+      `,
+    },
   ],
 });
