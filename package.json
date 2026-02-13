@@ -25,7 +25,7 @@
     "@arethetypeswrong/cli": "^0.18.2",
     "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
-    "@babel/eslint-parser": "^7.28.6",
+    "@babel/eslint-parser": "8.0.0-rc.1",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@babel/plugin-transform-flow-strip-types": "^7.27.1",
     "@babel/preset-env": "^7.29.0",

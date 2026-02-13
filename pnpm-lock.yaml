@@ -65,8 +65,8 @@ importers:
         specifier: ^7.29.0
         version: 7.29.0
       '@babel/eslint-parser':
-        specifier: ^7.28.6
-        version: 7.28.6(@babel/core@7.29.0)(eslint@10.0.0(jiti@2.6.1))
+        specifier: 8.0.0-rc.1
+        version: 8.0.0-rc.1(@babel/core@7.29.0)(eslint@10.0.0(jiti@2.6.1))
       '@babel/plugin-syntax-class-properties':
         specifier: ^7.12.13
         version: 7.12.13(@babel/core@7.29.0)
@@ -276,6 +276,13 @@ packages:
     peerDependencies:
       '@babel/core': ^7.11.0
       eslint: ^7.5.0 || ^8.0.0 || ^9.0.0
+
+  '@babel/eslint-parser@8.0.0-rc.1':
+    resolution: {integrity: sha512-9AATS4rne/Y5FM+g+GCxGWpZ4lYdDec3Fyd4m7Vcb3z03VQGUtDBAiiX6h4zVqdgfuLxFw1Z3nULW1QGXYT+VA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      '@babel/core': ^7.11.0
+      eslint: ^9.0.0
 
   '@babel/generator@7.29.1':
     resolution: {integrity: sha512-qsaF+9Qcm2Qv8SRIMMscAvG4O3lJ0F1GuMo5HR/Bp02LopNgnZBC/EkbevHFeGs4ls/oPz9v+Bsmzbkbe+0dUw==}
@@ -5388,14 +5395,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/eslint-parser@7.28.6(@babel/core@7.29.0)(eslint@10.0.0(jiti@2.6.1))':
-    dependencies:
-      '@babel/core': 7.29.0
-      '@nicolo-ribaudo/eslint-scope-5-internals': 5.1.1-v1
-      eslint: 10.0.0(jiti@2.6.1)
-      eslint-visitor-keys: 2.1.0
-      semver: 6.3.1
-
   '@babel/eslint-parser@7.28.6(@babel/core@7.29.0)(eslint@9.39.2(jiti@2.6.1))':
     dependencies:
       '@babel/core': 7.29.0
@@ -5403,6 +5402,14 @@ snapshots:
       eslint: 9.39.2(jiti@2.6.1)
       eslint-visitor-keys: 2.1.0
       semver: 6.3.1
+
+  '@babel/eslint-parser@8.0.0-rc.1(@babel/core@7.29.0)(eslint@10.0.0(jiti@2.6.1))':
+    dependencies:
+      '@babel/core': 7.29.0
+      eslint: 10.0.0(jiti@2.6.1)
+      eslint-scope: 9.1.0
+      eslint-visitor-keys: 3.4.3
+      semver: 7.7.3
 
   '@babel/generator@7.29.1':
     dependencies:
