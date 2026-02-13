@@ -25,6 +25,16 @@ export default [
   },
   ...canonical,
   // ...canonicalJsdoc,
+  {
+    rules: {
+      // The following rules are coming from canonical recommended rule-set but are not compatible
+      // with ESLint 10.
+      'eslint-comments/disable-enable-pair': 0,
+      'eslint-comments/no-aggregating-enable': 0,
+      'eslint-comments/no-duplicate-disable': 0,
+      'eslint-comments/no-unlimited-disable': 0,
+    },
+  },
   jsdoc({
     config: 'flat/recommended',
   }),

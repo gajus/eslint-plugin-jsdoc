@@ -1,4 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc.js';
+import {
+  getFilename,
+} from '../utils/eslintVersionCompat.js';
 import eslint, {
   ESLint,
 } from 'eslint';
@@ -366,7 +369,7 @@ export default iterateJsdoc(({
   const getFilenameInfo = (filename, ext = 'md/*.js') => {
     let defaultFileName;
     if (!filename) {
-      const jsFileName = context.getFilename();
+      const jsFileName = getFilename(context);
       if (typeof jsFileName === 'string' && jsFileName.includes('.')) {
         defaultFileName = jsFileName.replace(/\.[^.]*$/v, `.${ext}`);
       } else {

@@ -55,7 +55,7 @@
     "camelcase": "^9.0.0",
     "chai": "^6.2.2",
     "decamelize": "^6.0.1",
-    "eslint": "9.39.2",
+    "eslint": "10.0.0",
     "eslint-config-canonical": "^47.4.2",
     "gitdown": "^4.1.1",
     "glob": "^13.0.1",
@@ -147,7 +147,7 @@
     "statements": 100
   },
   "peerDependencies": {
-    "eslint": "^7.0.0 || ^8.0.0 || ^9.0.0"
+    "eslint": "^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,8 @@
 import * as jsdocUtils from './jsdocUtils.js';
 import {
+  getSourceCode,
+} from './utils/eslintVersionCompat.js';
+import {
   commentHandler,
   getJSDocComment,
   parseComment,
@@ -739,7 +742,7 @@ const getUtils = (
 
   /* c8 ignore next -- Fallback to deprecated method */
   const {
-    sourceCode = context.getSourceCode(),
+    sourceCode = getSourceCode(context),
   } = context;
 
   const utils = /** @type {Utils} */ (getBasicUtils(context, settings));
@@ -2188,7 +2191,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
   const callIterator = (context, node, jsdocNodes, state, lastCall) => {
     /* c8 ignore next -- Fallback to deprecated method */
     const {
-      sourceCode = context.getSourceCode(),
+      sourceCode = getSourceCode(context),
     } = context;
     const {
       lines,
@@ -2301,7 +2304,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
     create (context) {
       /* c8 ignore next -- Fallback to deprecated method */
       const {
-        sourceCode = context.getSourceCode(),
+        sourceCode = getSourceCode(context),
       } = context;
       settings = getSettings(context);
       if (!settings) {
@@ -2381,7 +2384,7 @@ const checkFile = (iterator, ruleConfig) => {
     create (context) {
       /* c8 ignore next -- Fallback to deprecated method */
       const {
-        sourceCode = context.getSourceCode(),
+        sourceCode = getSourceCode(context),
       } = context;
       const settings = getSettings(context);
       if (!settings) {
@@ -2504,7 +2507,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
 
       /* c8 ignore next -- Fallback to deprecated method */
       const {
-        sourceCode = context.getSourceCode(),
+        sourceCode = getSourceCode(context),
       } = context;
       const {
         lines,
