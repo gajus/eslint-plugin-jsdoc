@@ -163,7 +163,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/eslint": "0.0.0-interferes-with-eslint-now"
+      "@types/eslint": "0.0.0-interferes-with-eslint-now",
+      "eslint-scope": "9.1.0"
     },
     "ignoredBuiltDependencies": [
       "core-js",
