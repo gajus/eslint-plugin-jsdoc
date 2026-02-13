@@ -1,6 +1,7 @@
 import {
   jsdoc,
 } from './src/index.js';
+import eslintComments from '@eslint-community/eslint-plugin-eslint-comments';
 import {
   recommended as canonical,
 } from 'eslint-config-canonical/canonical';
@@ -26,9 +27,21 @@ export default [
   ...canonical,
   // ...canonicalJsdoc,
   {
+    plugins: {
+      '@eslint-community/eslint-comments': eslintComments,
+    },
     rules: {
-      // The following rules are coming from canonical recommended rule-set but are not compatible
-      // with ESLint 10.
+      // Replacement rules for canonical recommended rules incompatible with ESLint 10.
+      '@eslint-community/eslint-comments/disable-enable-pair': [
+        2,
+        {
+          allowWholeFile: true,
+        },
+      ],
+      '@eslint-community/eslint-comments/no-aggregating-enable': 2,
+      '@eslint-community/eslint-comments/no-duplicate-disable': 2,
+      '@eslint-community/eslint-comments/no-unlimited-disable': 2,
+      // The original rules disabled.
       'eslint-comments/disable-enable-pair': 0,
       'eslint-comments/no-aggregating-enable': 0,
       'eslint-comments/no-duplicate-disable': 0,

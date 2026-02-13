@@ -81,6 +81,9 @@ importers:
       '@es-joy/jsdoc-eslint-parser':
         specifier: ^0.27.0
         version: 0.27.0(jiti@2.6.1)
+      '@eslint-community/eslint-plugin-eslint-comments':
+        specifier: ^4.6.0
+        version: 4.6.0(eslint@10.0.0(jiti@2.6.1))
       '@eslint/core':
         specifier: ^1.1.0
         version: 1.1.0
@@ -833,6 +836,12 @@ packages:
   '@es-joy/resolve.exports@1.2.0':
     resolution: {integrity: sha512-Q9hjxWI5xBM+qW2enxfe8wDKdFWMfd0Z29k5ZJnuBqD/CasY5Zryj09aCA6owbGATWz+39p5uIdaHXpopOcG8g==}
     engines: {node: '>=10'}
+
+  '@eslint-community/eslint-plugin-eslint-comments@4.6.0':
+    resolution: {integrity: sha512-2EX2bBQq1ez++xz2o9tEeEQkyvfieWgUFMH4rtJJri2q0Azvhja3hZGXsjPXs31R4fQkZDtWzNDDK2zQn5UE5g==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
 
   '@eslint-community/eslint-utils@4.9.1':
     resolution: {integrity: sha512-phrYmNiYppR7znFEdqgfWHXR6NCkZEK7hwWDHZUjit/2/U0r6XvkDl0SYnoM51Hq7FhCGdLDT6zxCCOY1hexsQ==}
@@ -6119,6 +6128,12 @@ snapshots:
       jsdoc-type-pratt-parser: 7.1.1
 
   '@es-joy/resolve.exports@1.2.0': {}
+
+  '@eslint-community/eslint-plugin-eslint-comments@4.6.0(eslint@10.0.0(jiti@2.6.1))':
+    dependencies:
+      escape-string-regexp: 4.0.0
+      eslint: 10.0.0(jiti@2.6.1)
+      ignore: 7.0.5
 
   '@eslint-community/eslint-utils@4.9.1(eslint@10.0.0(jiti@2.6.1))':
     dependencies:

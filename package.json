@@ -31,6 +31,7 @@
     "@babel/preset-env": "^7.29.0",
     "@es-joy/escodegen": "^4.2.0",
     "@es-joy/jsdoc-eslint-parser": "^0.27.0",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.6.0",
     "@eslint/core": "^1.1.0",
     "@hkdobrev/run-if-changed": "^0.6.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
