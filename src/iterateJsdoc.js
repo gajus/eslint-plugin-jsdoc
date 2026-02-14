@@ -739,6 +739,7 @@ const getUtils = (
 
   /* c8 ignore next -- Fallback to deprecated method */
   const {
+    // @ts-expect-error ESLint < 10
     sourceCode = context.getSourceCode(),
   } = context;
 
@@ -2188,6 +2189,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
   const callIterator = (context, node, jsdocNodes, state, lastCall) => {
     /* c8 ignore next -- Fallback to deprecated method */
     const {
+      // @ts-expect-error ESLint < 10
       sourceCode = context.getSourceCode(),
     } = context;
     const {
@@ -2301,6 +2303,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
     create (context) {
       /* c8 ignore next -- Fallback to deprecated method */
       const {
+        // @ts-expect-error ESLint < 10
         sourceCode = context.getSourceCode(),
       } = context;
       settings = getSettings(context);
@@ -2349,7 +2352,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
           ], /** @type {StateObject} */ (state));
         },
         'Program:exit' () {
-          const allComments = sourceCode.getAllComments();
+          const allComments = /** @type {import('estree').Comment[]} */ (
+            sourceCode.getAllComments()
+          );
           const untrackedJSdoc = allComments.filter((node) => {
             return !trackedJsdocs.has(node);
           });
@@ -2381,6 +2386,7 @@ const checkFile = (iterator, ruleConfig) => {
     create (context) {
       /* c8 ignore next -- Fallback to deprecated method */
       const {
+        // @ts-expect-error ESLint < 10
         sourceCode = context.getSourceCode(),
       } = context;
       const settings = getSettings(context);
@@ -2504,6 +2510,7 @@ export default function iterateJsdoc (iterator, ruleConfig) {
 
       /* c8 ignore next -- Fallback to deprecated method */
       const {
+        // @ts-expect-error ESLint < 10
         sourceCode = context.getSourceCode(),
       } = context;
       const {

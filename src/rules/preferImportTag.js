@@ -11,8 +11,12 @@ import {
   tryParse as tryParseType,
 } from '@es-joy/jsdoccomment';
 import {
+  Linter,
+} from 'eslint';
+import {
   parseImportsExports,
 } from 'parse-imports-exports';
+import semver from 'semver';
 import toValidIdentifier from 'to-valid-identifier';
 
 export default iterateJsdoc(({
@@ -65,6 +69,60 @@ export default iterateJsdoc(({
       tag.delimiter = '';
       return tag;
     });
+
+  /**
+   * Helper to insert an import statement at the top of the file.
+   * @param {string} importText - The import statement text (without newline)
+   * @returns {((fixer: import('eslint').Rule.RuleFixer) => import('eslint').Rule.Fix|void)} - Fixer function for ESLint
+   */
+  const createImportInserter = (importText) => {
+    return (fixer) => {
+      const programNode = sourceCode.ast;
+      const commentNodes = sourceCode.getCommentsBefore(programNode);
+
+      /* c8 ignore start -- ESLint < 10 */
+      if (commentNodes[0]) {
+        return fixer.insertTextBefore(
+          // @ts-expect-error - Comment is compatible with Node in practice
+          commentNodes[0],
+          `${importText}\n${indent}`,
+        );
+      }
+
+      // For ESLint < 10, use the simple approach of inserting before programNode
+      if (semver.lt(Linter.version, '10.0.0')) {
+        return fixer.insertTextBefore(
+          programNode,
+          importText,
+        );
+      }
+
+      // For ESLint 10+, handle the changed Program node range
+      const sourceText = sourceCode.getText();
+      const hasCode = programNode.body && programNode.body.length > 0;
+      const leadingMatch = hasCode ? sourceText.match(/^(\n[ \t]*)/v) : null;
+      if (leadingMatch) {
+        const leading = leadingMatch[1];
+        return fixer.replaceTextRange(
+          [
+            leading.length, leading.length,
+          ],
+          `${importText}\n${leading.slice(1)}`,
+        );
+      }
+
+      const startsWithNewline = sourceText[0] === '\n';
+      return fixer.replaceTextRange(
+        startsWithNewline ? [
+          0, 1,
+        ] : [
+          0, 0,
+        ],
+        `${importText}\n`,
+      );
+      /* c8 ignore end -- ESLint < 10 */
+    };
+  };
 
   /**
    * @param {import('@es-joy/jsdoccomment').JsdocTagWithInline} tag
@@ -365,16 +423,9 @@ export default iterateJsdoc(({
           tag,
           enableFixer ? (fixer) => {
             getFixer(element.value, [])();
-
-            const programNode = sourceCode.ast;
-            const commentNodes = sourceCode.getCommentsBefore(programNode);
-            return fixer.insertTextBefore(
-              // @ts-expect-error Ok
-              commentNodes[0] ?? programNode,
-              `/** @import * as ${toValidIdentifier(element.value)} from '${element.value}'; */${
-                commentNodes[0] ? '\n' + indent : ''
-              }`,
-            );
+            return createImportInserter(
+              `/** @import * as ${toValidIdentifier(element.value)} from '${element.value}'; */`,
+            )(fixer);
           } : null,
         );
         return;
@@ -387,17 +438,9 @@ export default iterateJsdoc(({
           tag,
           enableFixer ? (fixer) => {
             getFixer(element.value, [])();
-
-            const programNode = sourceCode.ast;
-            const commentNodes = sourceCode.getCommentsBefore(programNode);
-
-            return fixer.insertTextBefore(
-              // @ts-expect-error Ok
-              commentNodes[0] ?? programNode,
-              `/** @import ${element.value} from '${element.value}'; */${
-                commentNodes[0] ? '\n' + indent : ''
-              }`,
-            );
+            return createImportInserter(
+              `/** @import ${element.value} from '${element.value}'; */`,
+            )(fixer);
           } : null,
         );
         return;
@@ -418,22 +461,14 @@ export default iterateJsdoc(({
             )();
           }
 
-          const programNode = sourceCode.ast;
-          const commentNodes = sourceCode.getCommentsBefore(programNode);
-          return fixer.insertTextBefore(
-            // @ts-expect-error Ok
-            commentNodes[0] ?? programNode,
-            outputType === 'namespaced-import' ?
-              `/** @import * as ${toValidIdentifier(element.value)} from '${element.value}'; */${
-                commentNodes[0] ? '\n' + indent : ''
-              }` :
-              `/** @import { ${toValidIdentifier(
-                /* c8 ignore next -- TS */
-                pathSegments.at(-1) ?? '',
-              )} } from '${element.value}'; */${
-                commentNodes[0] ? '\n' + indent : ''
-              }`,
-          );
+          const importText = outputType === 'namespaced-import' ?
+            `/** @import * as ${toValidIdentifier(element.value)} from '${element.value}'; */` :
+            `/** @import { ${toValidIdentifier(
+              /* c8 ignore next -- TS */
+              pathSegments.at(-1) ?? '',
+            )} } from '${element.value}'; */`;
+
+          return createImportInserter(importText)(fixer);
         } : null,
       );
     });
