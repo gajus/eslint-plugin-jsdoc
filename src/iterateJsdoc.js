@@ -2352,7 +2352,9 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
           ], /** @type {StateObject} */ (state));
         },
         'Program:exit' () {
-          const allComments = sourceCode.getAllComments();
+          const allComments = /** @type {import('estree').Comment[]} */ (
+            sourceCode.getAllComments()
+          );
           const untrackedJSdoc = allComments.filter((node) => {
             return !trackedJsdocs.has(node);
           });

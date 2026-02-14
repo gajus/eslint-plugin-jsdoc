@@ -72,6 +72,13 @@ export default [
       '@stylistic/no-extra-parens': 0,
       'canonical/filename-match-exported': 0,
       'canonical/filename-match-regex': 0,
+
+      // Temporarily disable until supports ESLint 10
+      'eslint-comments/disable-enable-pair': 0,
+      'eslint-comments/no-aggregating-enable': 0,
+      'eslint-comments/no-duplicate-disable': 0,
+      'eslint-comments/no-unlimited-disable': 0,
+
       'filenames/match-regex': 0,
       'import/extensions': 0,
       'import/no-useless-path-segments': 0,
