@@ -16,7 +16,7 @@
     "html-entities": "^2.6.0",
     "object-deep-merge": "^2.0.0",
     "parse-imports-exports": "^0.2.4",
-    "semver": "^7.7.3",
+    "semver": "^7.7.4",
     "spdx-expression-parse": "^4.0.0",
     "to-valid-identifier": "^1.0.0"
   },
@@ -24,19 +24,18 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
     "@babel/cli": "^7.28.6",
-    "@babel/core": "^7.29.0",
-    "@babel/eslint-parser": "^7.28.6",
-    "@babel/plugin-syntax-class-properties": "^7.12.13",
-    "@babel/plugin-transform-flow-strip-types": "^7.27.1",
-    "@babel/preset-env": "^7.29.0",
+    "@babel/core": "8.0.0-rc.1",
+    "@babel/eslint-parser": "8.0.0-rc.1",
+    "@babel/plugin-transform-flow-strip-types": "8.0.0-rc.1",
+    "@babel/preset-env": "8.0.0-rc.1",
     "@es-joy/escodegen": "^4.2.0",
     "@es-joy/jsdoc-eslint-parser": "^0.27.0",
     "@eslint/core": "^1.1.0",
     "@hkdobrev/run-if-changed": "^0.6.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
-    "@semantic-release/github": "^12.0.3",
-    "@semantic-release/npm": "^13.1.3",
+    "@semantic-release/github": "^12.0.6",
+    "@semantic-release/npm": "^13.1.4",
     "@types/chai": "^5.2.3",
     "@types/debug": "^4.1.12",
     "@types/espree": "^10.1.0",
@@ -44,10 +43,10 @@
     "@types/estree": "^1.0.8",
     "@types/json-schema": "^7.0.15",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^25.2.0",
+    "@types/node": "^25.3.0",
     "@types/semver": "^7.7.1",
     "@types/spdx-expression-parse": "^3.0.5",
-    "@typescript-eslint/types": "^8.54.0",
+    "@typescript-eslint/types": "8.56.0",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-istanbul": "^7.0.1",
     "babel-plugin-transform-import-meta": "^2.3.3",
@@ -55,10 +54,10 @@
     "camelcase": "^9.0.0",
     "chai": "^6.2.2",
     "decamelize": "^6.0.1",
-    "eslint": "9.39.2",
+    "eslint": "10.0.0",
     "eslint-config-canonical": "^47.4.2",
     "gitdown": "^4.1.1",
-    "glob": "^13.0.1",
+    "glob": "^13.0.5",
     "globals": "^17.3.0",
     "husky": "^9.1.7",
     "jsdoc-type-pratt-parser": "^7.1.1",
@@ -67,15 +66,15 @@
     "lint-staged": "^16.2.7",
     "mocha": "^11.7.5",
     "open-editor": "^6.0.0",
-    "playwright": "^1.58.1",
+    "playwright": "^1.58.2",
     "replace": "^1.2.2",
-    "rimraf": "^6.1.2",
+    "rimraf": "^6.1.3",
     "rollup": "^4.57.1",
     "semantic-release": "^25.0.3",
     "sinon": "^21.0.1",
     "ts-api-utils": "^2.4.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "^8.54.0"
+    "typescript-eslint": "8.56.0"
   },
   "engines": {
     "node": "^20.19.0 || ^22.13.0 || >=24"
@@ -147,7 +146,7 @@
     "statements": 100
   },
   "peerDependencies": {
-    "eslint": "^7.0.0 || ^8.0.0 || ^9.0.0"
+    "eslint": "^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0"
   },
   "repository": {
     "type": "git",
@@ -162,7 +161,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/eslint": "0.0.0-interferes-with-eslint-now"
+      "@types/eslint": "0.0.0-interferes-with-eslint-now",
+      "eslint-scope": "9.1.0"
     },
     "ignoredBuiltDependencies": [
       "core-js",
@@ -177,7 +177,7 @@
     "tsc-build": "tsc -p tsconfig-prod.json",
     "tsc-cjs": "tsc -p tsconfig-cjs.json",
     "rollup": "rollup -c",
-    "build": "node ./src/bin/buildEntryFileForTS.js && rimraf ./dist && pnpm rollup && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'to-valid-identifier' '../to-valid-identifier.cjs' 'dist' -r --include=\"*.cjs\" && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build && pnpm tsc-cjs",
+    "build": "node ./src/bin/buildEntryFileForTS.js && rimraf ./dist && mkdir dist && pnpm rollup && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'to-valid-identifier' '../to-valid-identifier.cjs' 'dist' -r --include=\"*.cjs\" && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build && pnpm tsc-cjs",
     "attw": "attw --pack .",
     "check-docs": "node ./src/bin/generateDocs.js --check",
     "create-docs": "pnpm run create-options && node ./src/bin/generateDocs.js && pnpm ruleTypes",

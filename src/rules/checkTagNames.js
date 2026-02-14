@@ -130,7 +130,8 @@ export default iterateJsdoc(({
    */
   const isInAmbientContext = (subNode) => {
     return subNode.type === 'Program' ?
-      /* c8 ignore next -- Support old ESLint */
+      /* c8 ignore next 2 -- Support old ESLint */
+      // @ts-expect-error ESLint < 10
       (context.filename ?? context.getFilename()).endsWith('.d.ts') :
       Boolean(
         /** @type {import('@typescript-eslint/types').TSESTree.VariableDeclaration} */ (
@@ -156,7 +157,8 @@ export default iterateJsdoc(({
       return false;
     }
 
-    /* c8 ignore next -- Support old ESLint */
+    /* c8 ignore next 2 -- Support old ESLint */
+    // @ts-expect-error ESLint < 10
     if ((context.filename ?? context.getFilename()).endsWith('.d.ts') && [
       null, 'Program', undefined,
     ].includes(node?.parent?.type)) {

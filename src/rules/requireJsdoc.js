@@ -536,6 +536,7 @@ export default {
   create (context) {
     /* c8 ignore next -- Fallback to deprecated method */
     const {
+      // @ts-expect-error ESLint < 10
       sourceCode = context.getSourceCode(),
     } = context;
     const settings = getSettings(context);
@@ -876,7 +877,6 @@ export default {
   },
   meta: {
     docs: {
-      category: 'Stylistic Issues',
       description: 'Checks for presence of JSDoc comments, on functions and potentially other contexts (optionally limited to exports).',
       recommended: true,
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-jsdoc.md#repos-sticky-header',

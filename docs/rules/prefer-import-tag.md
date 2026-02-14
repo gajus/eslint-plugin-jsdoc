@@ -76,6 +76,13 @@ The following patterns are considered problems:
 // "jsdoc/prefer-import-tag": ["error"|"warn", {"outputType":"named-import"}]
 // Message: Inline `import()` found; prefer `@import`
 
+// Copyright 2026
+/**
+ * @type {import('foo')}
+ */
+let x;
+// Message: Inline `import()` found; prefer `@import`
+
 /**
  * @type {import('eslint').Rule.Node}
  */
