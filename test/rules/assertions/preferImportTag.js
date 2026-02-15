@@ -83,6 +83,27 @@ export default {
       `,
     },
     {
+      code: `// Copyright 2026
+/**
+ * @type {import('foo')}
+ */
+let x;
+`,
+      errors: [
+        {
+          line: 3,
+          message: 'Inline `import()` found; prefer `@import`',
+        },
+      ],
+      output: `/** @import * as foo from 'foo'; */
+// Copyright 2026
+/**
+ * @type {foo}
+ */
+let x;
+`,
+    },
+    {
       code: `
         /**
          * @type {import('eslint').Rule.Node}

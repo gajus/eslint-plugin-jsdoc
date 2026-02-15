@@ -2146,7 +2146,6 @@ function quux (foo) {
             },
             plugins: [
               '@babel/plugin-transform-flow-strip-types',
-              '@babel/plugin-syntax-class-properties',
               'add-module-exports',
             ],
             presets: [

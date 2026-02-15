@@ -366,6 +366,7 @@ export default iterateJsdoc(({
   const getFilenameInfo = (filename, ext = 'md/*.js') => {
     let defaultFileName;
     if (!filename) {
+      // @ts-expect-error ESLint < 10
       const jsFileName = context.getFilename();
       if (typeof jsFileName === 'string' && jsFileName.includes('.')) {
         defaultFileName = jsFileName.replace(/\.[^.]*$/v, `.${ext}`);

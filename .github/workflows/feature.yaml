@@ -13,14 +13,14 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '20.11.0'
+          node-version: '20.19.0'
       - run: pnpm install
       - run: pnpm build
       - run: pnpm lint
     timeout-minutes: 10
   test:
     runs-on: ubuntu-latest
-    name: Test (Node.js ${{ matrix.node_js_version }})
+    name: Test (Node.js ${{ matrix.node_js_version }}, ESLint ${{ matrix.eslint_version }})
     steps:
       - uses: pnpm/action-setup@v4
         with:
@@ -34,6 +34,8 @@ jobs:
         with:
           node-version: '${{ matrix.node_js_version }}'
       - run: pnpm install
+      - name: Install ESLint ${{ matrix.eslint_version }}
+        run: pnpm add -D eslint@${{ matrix.eslint_version }}
       - run: pnpm test
     timeout-minutes: 10
     strategy:
@@ -43,6 +45,11 @@ jobs:
           - '20.19.0'
           - '22.14.0'
           - '24'
+        eslint_version:
+          - '10'
+        include:
+          - node_js_version: '22.14.0'
+            eslint_version: '9'
   build:
     runs-on: ubuntu-latest
     name: Build
@@ -57,7 +64,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '20.11.0'
+          node-version: '20.19.0'
       - run: pnpm install
       - run: pnpm build
     timeout-minutes: 10
