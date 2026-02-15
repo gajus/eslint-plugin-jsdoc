@@ -7,6 +7,9 @@ import {
   getIndent,
 } from '../jsdocUtils.js';
 import {
+  getSourceCode,
+} from '../utils/eslintVersionCompat.js';
+import {
   getDecorator,
   getFollowingComment,
   getNonJsdocComment,
@@ -35,7 +38,7 @@ export default {
 
     /* c8 ignore next -- Fallback to deprecated method */
     const {
-      sourceCode = context.getSourceCode(),
+      sourceCode = getSourceCode(context),
     } = context;
     const settings = getSettings(context);
     if (!settings) {

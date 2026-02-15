@@ -12,6 +12,9 @@ import {
   isConstructor,
 } from '../jsdocUtils.js';
 import {
+  getSourceCode,
+} from '../utils/eslintVersionCompat.js';
+import {
   getDecorator,
   getJSDocComment,
   getReducedASTNode,
@@ -519,8 +522,7 @@ const isFunctionWithOverload = (node) => {
   const prevSibling = parent.body[idx - 1];
 
   return (
-    // @ts-expect-error Should be ok
-    (prevSibling?.type === 'TSDeclareFunction' &&
+    (/** @type {string} */(prevSibling?.type) === 'TSDeclareFunction' &&
       // @ts-expect-error Should be ok
       functionName === prevSibling.id.name) ||
     (prevSibling?.type === 'ExportNamedDeclaration' &&
@@ -536,7 +538,7 @@ export default {
   create (context) {
     /* c8 ignore next -- Fallback to deprecated method */
     const {
-      sourceCode = context.getSourceCode(),
+      sourceCode = getSourceCode(context),
     } = context;
     const settings = getSettings(context);
     if (!settings) {
@@ -875,12 +877,12 @@ export default {
     };
   },
   meta: {
-    docs: {
+    docs: /** @type {import('@eslint/core').RulesMetaDocs & { category: string}} */ ({
       category: 'Stylistic Issues',
       description: 'Checks for presence of JSDoc comments, on functions and potentially other contexts (optionally limited to exports).',
       recommended: true,
       url: 'https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-jsdoc.md#repos-sticky-header',
-    },
+    }),
 
     fixable: 'code',
 

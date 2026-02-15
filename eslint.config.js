@@ -1,6 +1,7 @@
 import {
   jsdoc,
 } from './src/index.js';
+import eslintComments from '@eslint-community/eslint-plugin-eslint-comments';
 import {
   recommended as canonical,
 } from 'eslint-config-canonical/canonical';
@@ -25,6 +26,28 @@ export default [
   },
   ...canonical,
   // ...canonicalJsdoc,
+  {
+    plugins: {
+      '@eslint-community/eslint-comments': eslintComments,
+    },
+    rules: {
+      // Replacement rules for canonical recommended rules incompatible with ESLint 10.
+      '@eslint-community/eslint-comments/disable-enable-pair': [
+        2,
+        {
+          allowWholeFile: true,
+        },
+      ],
+      '@eslint-community/eslint-comments/no-aggregating-enable': 2,
+      '@eslint-community/eslint-comments/no-duplicate-disable': 2,
+      '@eslint-community/eslint-comments/no-unlimited-disable': 2,
+      // The original rules disabled.
+      'eslint-comments/disable-enable-pair': 0,
+      'eslint-comments/no-aggregating-enable': 0,
+      'eslint-comments/no-duplicate-disable': 0,
+      'eslint-comments/no-unlimited-disable': 0,
+    },
+  },
   jsdoc({
     config: 'flat/recommended',
   }),
@@ -49,6 +72,13 @@ export default [
       '@stylistic/no-extra-parens': 0,
       'canonical/filename-match-exported': 0,
       'canonical/filename-match-regex': 0,
+
+      // Temporarily disable until supports ESLint 10
+      'eslint-comments/disable-enable-pair': 0,
+      'eslint-comments/no-aggregating-enable': 0,
+      'eslint-comments/no-duplicate-disable': 0,
+      'eslint-comments/no-unlimited-disable': 0,
+
       'filenames/match-regex': 0,
       'import/extensions': 0,
       'import/no-useless-path-segments': 0,

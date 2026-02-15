@@ -1,4 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc.js';
+import {
+  getFilename,
+} from '../utils/eslintVersionCompat.js';
 import escapeStringRegexp from 'escape-string-regexp';
 
 // https://babeljs.io/docs/en/babel-plugin-transform-react-jsx/
@@ -130,8 +133,7 @@ export default iterateJsdoc(({
    */
   const isInAmbientContext = (subNode) => {
     return subNode.type === 'Program' ?
-      /* c8 ignore next -- Support old ESLint */
-      (context.filename ?? context.getFilename()).endsWith('.d.ts') :
+      getFilename(context).endsWith('.d.ts') :
       Boolean(
         /** @type {import('@typescript-eslint/types').TSESTree.VariableDeclaration} */ (
           subNode
@@ -156,8 +158,7 @@ export default iterateJsdoc(({
       return false;
     }
 
-    /* c8 ignore next -- Support old ESLint */
-    if ((context.filename ?? context.getFilename()).endsWith('.d.ts') && [
+    if (getFilename(context).endsWith('.d.ts') && [
       null, 'Program', undefined,
     ].includes(node?.parent?.type)) {
       return false;

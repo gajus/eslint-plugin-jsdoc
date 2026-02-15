@@ -1,5 +1,8 @@
 import exportParser from '../exportParser.js';
 import iterateJsdoc from '../iterateJsdoc.js';
+import {
+  getSourceCode,
+} from '../utils/eslintVersionCompat.js';
 
 /**
  * We can skip checking for a return value, in case the documentation is inherited
@@ -106,7 +109,7 @@ export default iterateJsdoc(({
       };
       /* c8 ignore next -- Fallback to deprecated method */
       const {
-        sourceCode = context.getSourceCode(),
+        sourceCode = getSourceCode(context),
       } = context;
       const exported = exportParser.isUncommentedExport(
         /** @type {import('eslint').Rule.Node} */ (node), sourceCode, opt, settings,
