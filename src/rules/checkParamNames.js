@@ -365,7 +365,7 @@ const validateParameterNamesDeep = (
 const allowedNodes = [
   'ArrowFunctionExpression', 'FunctionDeclaration', 'FunctionExpression', 'TSDeclareFunction',
   // Add this to above defaults
-  'TSMethodSignature',
+  'TSMethodSignature', 'TSPropertySignature',
 ];
 
 export default iterateJsdoc(({

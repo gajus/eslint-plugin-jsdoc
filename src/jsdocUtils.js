@@ -476,11 +476,14 @@ const getFunctionParameterNames = (
     return [];
   }
 
-  return (/** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */ (
-    functionNode
-  ).params || /** @type {import('@typescript-eslint/types').TSESTree.MethodDefinition} */ (
-    functionNode
-  ).value?.params || []).map((param) => {
+  return (
+    /** @type {import('@typescript-eslint/types').TSESTree.TSFunctionType} */
+    (/** @type {import('@typescript-eslint/types').TSESTree.TSPropertySignature} */ (functionNode)?.typeAnnotation?.typeAnnotation)?.params ||
+    /** @type {import('@typescript-eslint/types').TSESTree.FunctionDeclaration} */ (
+      functionNode
+    ).params || /** @type {import('@typescript-eslint/types').TSESTree.MethodDefinition} */ (
+      functionNode
+    ).value?.params || []).map((param) => {
     return getParamName(param);
   });
 };

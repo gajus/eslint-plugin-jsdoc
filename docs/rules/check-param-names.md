@@ -724,6 +724,14 @@ export function fn(...[type, arg]: FnArgs): void {
   // ...
 }
 // Message: Expected @param name to be "type". Got "arg".
+
+interface Foo {
+  /** @param wrongNameA ... */
+  method(name1: string): void
+  /** @param wrongNameB ... */
+  arrow: (name2: string) => void
+}
+// Message: Expected @param names to be "name1". Got "wrongNameA".
 ````
 
 
