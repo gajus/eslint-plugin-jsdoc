@@ -1318,6 +1318,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
         sourceType: 'module',
       },
     },
+    {
+      code: `
+        interface Foo {
+          /** @param wrongNameA ... */
+          method(name1: string): void
+          /** @param wrongNameB ... */
+          arrow: (name2: string) => void
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "name1". Got "wrongNameA".',
+        },
+        {
+          line: 5,
+          message: 'Expected @param names to be "name2". Got "wrongNameB".',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+    },
   ],
   valid: [
     {
