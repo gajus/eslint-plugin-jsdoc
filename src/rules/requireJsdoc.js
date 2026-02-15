@@ -536,10 +536,7 @@ const isFunctionWithOverload = (node) => {
 /** @type {import('eslint').Rule.RuleModule} */
 export default {
   create (context) {
-    /* c8 ignore next -- Fallback to deprecated method */
-    const {
-      sourceCode = getSourceCode(context),
-    } = context;
+    const sourceCode = getSourceCode(context);
     const settings = getSettings(context);
     if (!settings) {
       return {};

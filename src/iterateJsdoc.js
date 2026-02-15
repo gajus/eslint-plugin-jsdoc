@@ -740,10 +740,7 @@ const getUtils = (
       )) :
     []);
 
-  /* c8 ignore next -- Fallback to deprecated method */
-  const {
-    sourceCode = getSourceCode(context),
-  } = context;
+  const sourceCode = getSourceCode(context);
 
   const utils = /** @type {Utils} */ (getBasicUtils(context, settings));
 
@@ -2189,13 +2186,8 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
    * @returns {void}
    */
   const callIterator = (context, node, jsdocNodes, state, lastCall) => {
-    /* c8 ignore next -- Fallback to deprecated method */
-    const {
-      sourceCode = getSourceCode(context),
-    } = context;
-    const {
-      lines,
-    } = sourceCode;
+    const sourceCode = getSourceCode(context);
+    const lines = sourceCode.lines;
 
     const utils = getBasicUtils(context, /** @type {Settings} */ (settings));
     for (const jsdocNode of jsdocNodes) {
@@ -2302,10 +2294,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
 
   return {
     create (context) {
-      /* c8 ignore next -- Fallback to deprecated method */
-      const {
-        sourceCode = getSourceCode(context),
-      } = context;
+      const sourceCode = getSourceCode(context);
       settings = getSettings(context);
       if (!settings) {
         return {};
@@ -2384,10 +2373,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
 const checkFile = (iterator, ruleConfig) => {
   return {
     create (context) {
-      /* c8 ignore next -- Fallback to deprecated method */
-      const {
-        sourceCode = getSourceCode(context),
-      } = context;
+      const sourceCode = getSourceCode(context);
       const settings = getSettings(context);
       if (!settings) {
         return {};
@@ -2507,13 +2493,8 @@ export default function iterateJsdoc (iterator, ruleConfig) {
         }
       }
 
-      /* c8 ignore next -- Fallback to deprecated method */
-      const {
-        sourceCode = getSourceCode(context),
-      } = context;
-      const {
-        lines,
-      } = sourceCode;
+      const sourceCode = getSourceCode(context);
+      const lines = sourceCode.lines;
 
       /** @type {Partial<StateObject>} */
       const state = {};

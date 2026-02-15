@@ -107,10 +107,7 @@ export default iterateJsdoc(({
         initModuleExports: Boolean(publicOnly?.cjs ?? true),
         initWindow: Boolean(publicOnly?.window ?? false),
       };
-      /* c8 ignore next -- Fallback to deprecated method */
-      const {
-        sourceCode = getSourceCode(context),
-      } = context;
+      const sourceCode = getSourceCode(context);
       const exported = exportParser.isUncommentedExport(
         /** @type {import('eslint').Rule.Node} */ (node), sourceCode, opt, settings,
       );

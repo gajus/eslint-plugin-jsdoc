@@ -36,10 +36,7 @@ export default {
      * @param {import('eslint').Rule.RuleFixer} fixer
      */
 
-    /* c8 ignore next -- Fallback to deprecated method */
-    const {
-      sourceCode = getSourceCode(context),
-    } = context;
+    const sourceCode = getSourceCode(context);
     const settings = getSettings(context);
     if (!settings) {
       return {};
