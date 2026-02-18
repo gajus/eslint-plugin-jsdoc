@@ -2949,6 +2949,10 @@ export interface Rules {
            */
           startLines?: number | null;
           /**
+           * If set to a number, will enforce a starting lines count when there are no tags. Defaults to `undefined`.
+           */
+          startLinesWithNoTags?: number;
+          /**
            * Overrides the default behavior depending on specific tags.
            *
            * An object whose keys are tag names and whose values are objects with the

@@ -930,6 +930,72 @@ export default /** @type {import('../index.js').TestCases} */ ({
          */
       `,
     },
+    {
+      code: `
+        /**
+         * Some text
+         */
+        function quux () {
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected 1 lines after block description',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        'any',
+        {
+          startLinesWithNoTags: 1,
+        },
+      ],
+      output: `
+        /**
+         * Some text
+         *
+         */
+        function quux () {
+        }
+      `,
+    },
+    {
+      code: `
+        export interface SubOptionTypeMap {
+          /**
+           * Checkboxes have two states - true (checked) and false (unchecked)
+           *
+           */
+          checkbox: boolean
+        }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected only 0 lines after block description',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        'any',
+        {
+          startLinesWithNoTags: 0,
+        },
+      ],
+      output: `
+        export interface SubOptionTypeMap {
+          /**
+           * Checkboxes have two states - true (checked) and false (unchecked)
+           */
+          checkbox: boolean
+        }
+      `,
+    },
   ],
   valid: [
     {
@@ -1409,6 +1475,27 @@ export default /** @type {import('../index.js').TestCases} */ ({
         'any',
         {
           maxBlockLines: 2,
+        },
+      ],
+    },
+    {
+      code: `
+        export interface SubOptionTypeMap {
+          /**
+           * Checkboxes have two states - true (checked) and false (unchecked)
+           *
+           */
+          checkbox: boolean
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        'any',
+        {
+          endLines: 0,
+          startLines: 0,
         },
       ],
     },
