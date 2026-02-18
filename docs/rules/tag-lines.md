@@ -9,6 +9,7 @@
     * [`endLines`](#user-content-tag-lines-options-endlines)
     * [`maxBlockLines`](#user-content-tag-lines-options-maxblocklines)
     * [`startLines`](#user-content-tag-lines-options-startlines)
+    * [`startLinesWithNoTags`](#user-content-tag-lines-options-startlineswithnotags)
     * [`tags`](#user-content-tag-lines-options-tags)
 * [Context and settings](#user-content-tag-lines-context-and-settings)
 * [Failing examples](#user-content-tag-lines-failing-examples)
@@ -36,7 +37,7 @@ Removes or adds lines between tags or trailing tags.
 
 The first option is a string with the following possible values: "always", "any", "never".
 Defaults to "never". "any" is only useful with `tags` (allowing non-enforcement of lines except
-for particular tags) or with `startLines`, `endLines`, or `maxBlockLines`. It is also
+for particular tags) or with `startLines`, `startLinesWithNoTags` `endLines`, or `maxBlockLines`. It is also
 necessary if using the linebreak-setting options of the `sort-tags` rule
 so that the two rules won't conflict in both attempting to set lines
 between tags.
@@ -89,6 +90,12 @@ a line count will not be enforced.
 
 Defaults to `0`.
 
+<a name="user-content-tag-lines-options-startlineswithnotags"></a>
+<a name="tag-lines-options-startlineswithnotags"></a>
+### <code>startLinesWithNoTags</code>
+
+If set to a number, will enforce a starting lines count when there are no tags. Defaults to `undefined`.
+
 <a name="user-content-tag-lines-options-tags"></a>
 <a name="tag-lines-options-tags"></a>
 ### <code>tags</code>
@@ -114,7 +121,7 @@ Defaults to empty object.
 |Tags|Any|
 |Recommended|true|
 |Settings|N/A|
-|Options|string ("always", "any", "never") followed by object with `applyToEndTag`, `count`, `endLines`, `maxBlockLines`, `startLines`, `tags`|
+|Options|string ("always", "any", "never") followed by object with `applyToEndTag`, `count`, `endLines`, `maxBlockLines`, `startLines`, `startLinesWithNoTags`, `tags`|
 
 <a name="user-content-tag-lines-failing-examples"></a>
 <a name="tag-lines-failing-examples"></a>
@@ -422,6 +429,24 @@ function myTestFunction(bar) {
  */
 // "jsdoc/tag-lines": ["error"|"warn", "any",{"startLines":1}]
 // Message: Expected 1 lines after block description
+
+/**
+ * Some text
+ */
+function quux () {
+}
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"startLinesWithNoTags":1}]
+// Message: Expected 1 lines after block description
+
+export interface SubOptionTypeMap {
+  /**
+   * Checkboxes have two states - true (checked) and false (unchecked)
+   *
+   */
+  checkbox: boolean
+}
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"startLinesWithNoTags":0}]
+// Message: Expected only 0 lines after block description
 ````
 
 
@@ -668,5 +693,14 @@ class _Foo {
  * @param {string} a
  */
 // "jsdoc/tag-lines": ["error"|"warn", "any",{"maxBlockLines":2}]
+
+export interface SubOptionTypeMap {
+  /**
+   * Checkboxes have two states - true (checked) and false (unchecked)
+   *
+   */
+  checkbox: boolean
+}
+// "jsdoc/tag-lines": ["error"|"warn", "any",{"endLines":0,"startLines":0}]
 ````
 

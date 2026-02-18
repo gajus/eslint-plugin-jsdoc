@@ -78,6 +78,7 @@ export default iterateJsdoc(({
       endLines = 0,
       maxBlockLines = null,
       startLines = 0,
+      startLinesWithNoTags = null,
       tags = {},
     } = {},
   ] = context.options;
@@ -292,8 +293,10 @@ export default iterateJsdoc(({
     return;
   }
 
-  if (typeof startLines === 'number') {
-    if (!jsdoc.tags.length) {
+  if (typeof startLines === 'number' || typeof startLinesWithNoTags === 'number') {
+    const noTags = !jsdoc.tags.length;
+
+    if (noTags && startLinesWithNoTags === null) {
       return;
     }
 
@@ -305,11 +308,13 @@ export default iterateJsdoc(({
       return;
     }
 
+    const startingLines = noTags ? startLinesWithNoTags : startLines;
+
     const trailingLines = description.match(/\n+$/v)?.[0]?.length;
-    const trailingDiff = (trailingLines ?? 0) - startLines;
+    const trailingDiff = (trailingLines ?? 0) - startingLines;
     if (trailingDiff > 0) {
       utils.reportJSDoc(
-        `Expected only ${startLines} line${startLines === 1 ? '' : 's'} after block description`,
+        `Expected only ${startingLines} line${startingLines === 1 ? '' : 's'} after block description`,
         {
           line: lastDescriptionLine - trailingDiff,
         },
@@ -331,7 +336,7 @@ export default iterateJsdoc(({
       );
     } else if (trailingDiff < 0) {
       utils.reportJSDoc(
-        `Expected ${startLines} lines after block description`,
+        `Expected ${startingLines} lines after block description`,
         {
           line: lastDescriptionLine,
         },
@@ -371,7 +376,7 @@ export default iterateJsdoc(({
     schema: [
       {
         description: `Defaults to "never". "any" is only useful with \`tags\` (allowing non-enforcement of lines except
-for particular tags) or with \`startLines\`, \`endLines\`, or \`maxBlockLines\`. It is also
+for particular tags) or with \`startLines\`, \`startLinesWithNoTags\` \`endLines\`, or \`maxBlockLines\`. It is also
 necessary if using the linebreak-setting options of the \`sort-tags\` rule
 so that the two rules won't conflict in both attempting to set lines
 between tags.`,
@@ -439,6 +444,10 @@ first tag only, unless there is only whitespace content, in which case,
 a line count will not be enforced.
 
 Defaults to \`0\`.`,
+          },
+          startLinesWithNoTags: {
+            description: 'If set to a number, will enforce a starting lines count when there are no tags. Defaults to `undefined`.',
+            type: 'number',
           },
           tags: {
             description: `Overrides the default behavior depending on specific tags.
