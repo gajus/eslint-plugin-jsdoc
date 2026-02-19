@@ -2064,5 +2064,19 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        const emit = defineEmits<{
+          /**
+           * Fired when an editable field is submitted.
+           * @param index the index of the editable field
+           */
+          submitField: [index: number];
+        }>();
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
   ],
 });

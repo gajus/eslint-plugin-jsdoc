@@ -386,12 +386,18 @@ export default iterateJsdoc(({
     useDefaultObjectProperties = false,
   } = context.options[0] || {};
 
+  const nde = /** @type {import('@typescript-eslint/types').TSESTree.Node} */ (node);
+
   // Although we might just remove global settings contexts from applying to
   //   this rule (as they can cause problems with `getFunctionParameterNames`
   //   checks if they are not functions but say variables), the user may
   //   instead wish to narrow contexts in those settings, so this check
   //   is still useful
-  if (!allowedNodes.includes(/** @type {import('estree').Node} */ (node).type)) {
+  if (!allowedNodes.includes(nde.type) ||
+    nde.type === 'TSPropertySignature' &&
+      (/** @type {import('@typescript-eslint/types').TSESTree.TSPropertySignature} */ (
+        nde
+      )?.typeAnnotation?.typeAnnotation?.type !== 'TSFunctionType')) {
     return;
   }
 
