@@ -1180,5 +1180,13 @@ const inner = (c: number, d: string): void => {
   console.log(d);
 };
 // Settings: {"jsdoc":{"contexts":["VariableDeclaration"]}}
+
+const emit = defineEmits<{
+  /**
+   * Fired when an editable field is submitted.
+   * @param index the index of the editable field
+   */
+  submitField: [index: number];
+}>();
 ````
 
