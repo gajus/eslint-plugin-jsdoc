@@ -285,7 +285,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-hyphen-before-param-description": 1,
         "jsdoc/require-jsdoc": 1, // Recommended
         "jsdoc/require-next-description": 1,
-        "jsdoc/require-next-type": 1, // Recommended
+        "jsdoc/require-next-type": 1, // Recommended in non-TS configs
         "jsdoc/require-param-description": 1, // Recommended
         "jsdoc/require-param-name": 1, // Recommended
         "jsdoc/require-param-type": 1, // Recommended in non-TS configs
@@ -303,10 +303,10 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-template-description": 1,
         "jsdoc/require-throws": 1,
         "jsdoc/require-throws-description": 1,
-        "jsdoc/require-throws-type": 1, // Recommended
+        "jsdoc/require-throws-type": 1, // Recommended in non-TS configs
         "jsdoc/require-yields-check": 1, // Recommended
         "jsdoc/require-yields-description": 1,
-        "jsdoc/require-yields-type": 1, // Recommended
+        "jsdoc/require-yields-type": 1, // Recommended in non-TS configs
         "jsdoc/require-yields": 1, // Recommended
         "jsdoc/sort-tags": 1,
         "jsdoc/tag-lines": 1, // Recommended
@@ -480,7 +480,7 @@ non-default-recommended fixer).
 ||:wrench:| [require-hyphen-before-param-description](./docs/rules/require-hyphen-before-param-description.md#readme) | Requires a hyphen before the `@param` description (and optionally before `@property` descriptions). |
 |:heavy_check_mark:|:wrench:| [require-jsdoc](./docs/rules/require-jsdoc.md#readme) | Checks for presence of JSDoc comments, on functions and potentially other contexts (optionally limited to exports). |
 ||| [require-next-description](./docs/rules/require-next-description.md#readme) | Requires a description for `@next` tags |
-|:heavy_check_mark:|| [require-next-type](./docs/rules/require-next-type.md#readme) | Requires a type for `@next` tags |
+|:heavy_check_mark: (Off in TS; On in TS flavor)|| [require-next-type](./docs/rules/require-next-type.md#readme) | Requires a type for `@next` tags |
 |:heavy_check_mark:|:wrench:| [require-param](./docs/rules/require-param.md#readme) | Requires that all function parameters are documented with a `@param` tag. |
 |:heavy_check_mark:|:wrench:| [require-param-description](./docs/rules/require-param-description.md#readme) | Requires that each `@param` tag has a `description` value. |
 |:heavy_check_mark:|| [require-param-name](./docs/rules/require-param-name.md#readme) | Requires that all `@param` tags have names. |
@@ -499,11 +499,11 @@ non-default-recommended fixer).
 ||| [require-template-description](./docs/rules/require-template-description.md#readme) | Requires a description for `@template` tags |
 ||| [require-throws](./docs/rules/require-throws.md#readme) | Requires that throw statements are documented with `@throws` tags. |
 ||| [require-throws-description](./docs/rules/require-throws-description.md#readme) | Requires a description for `@throws` tags |
-|:heavy_check_mark:|| [require-throws-type](./docs/rules/require-throws-type.md#readme) | Requires a type for `@throws` tags |
+|:heavy_check_mark: (Off in TS; On in TS flavor)|| [require-throws-type](./docs/rules/require-throws-type.md#readme) | Requires a type for `@throws` tags |
 |:heavy_check_mark:|| [require-yields](./docs/rules/require-yields.md#readme) | Requires yields are documented with `@yields` tags. |
 |:heavy_check_mark:|| [require-yields-check](./docs/rules/require-yields-check.md#readme) | Ensures that if a `@yields` is present that a `yield` (or `yield` with a value) is present in the function body (or that if a `@next` is present that there is a yield with a return value present). |
 ||| [require-yields-description](./docs/rules/require-yields-description.md#readme) | Requires a description for `@yields` tags |
-|:heavy_check_mark:|| [require-yields-type](./docs/rules/require-yields-type.md#readme) | Requires a type for `@yields` tags |
+|:heavy_check_mark: (Off in TS; On in TS flavor)|| [require-yields-type](./docs/rules/require-yields-type.md#readme) | Requires a type for `@yields` tags |
 ||:wrench:| [sort-tags](./docs/rules/sort-tags.md#readme) | Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups. |
 |:heavy_check_mark:|:wrench:| [tag-lines](./docs/rules/tag-lines.md#readme) | Enforces lines (or no lines) before, after, or between tags. |
 ||:wrench:| [text-escaping](./docs/rules/text-escaping.md#readme) | Auto-escape certain characters that are input within block and tag descriptions. |

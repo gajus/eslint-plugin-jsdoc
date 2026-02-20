@@ -258,7 +258,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-hyphen-before-param-description": 1,
         "jsdoc/require-jsdoc": 1, // Recommended
         "jsdoc/require-next-description": 1,
-        "jsdoc/require-next-type": 1, // Recommended
+        "jsdoc/require-next-type": 1, // Recommended in non-TS configs
         "jsdoc/require-param-description": 1, // Recommended
         "jsdoc/require-param-name": 1, // Recommended
         "jsdoc/require-param-type": 1, // Recommended in non-TS configs
@@ -276,10 +276,10 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-template-description": 1,
         "jsdoc/require-throws": 1,
         "jsdoc/require-throws-description": 1,
-        "jsdoc/require-throws-type": 1, // Recommended
+        "jsdoc/require-throws-type": 1, // Recommended in non-TS configs
         "jsdoc/require-yields-check": 1, // Recommended
         "jsdoc/require-yields-description": 1,
-        "jsdoc/require-yields-type": 1, // Recommended
+        "jsdoc/require-yields-type": 1, // Recommended in non-TS configs
         "jsdoc/require-yields": 1, // Recommended
         "jsdoc/sort-tags": 1,
         "jsdoc/tag-lines": 1, // Recommended

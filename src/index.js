@@ -392,9 +392,12 @@ const createRecommendedTypeScriptRuleset = (warnOrError, flatName) => {
         ],
         'jsdoc/no-types': warnOrError,
         'jsdoc/no-undefined-types': 'off',
+        'jsdoc/require-next-type': 'off',
         'jsdoc/require-param-type': 'off',
         'jsdoc/require-property-type': 'off',
         'jsdoc/require-returns-type': 'off',
+        'jsdoc/require-throws-type': 'off',
+        'jsdoc/require-yields-type': 'off',
       /* eslint-enable @stylistic/indent */
     },
   };
@@ -497,7 +500,6 @@ const createLogicalTypescriptFlavorRuleset = createStandaloneRulesetFactory(logi
 const requirementsRules = [
   'jsdoc/require-example',
   'jsdoc/require-jsdoc',
-  'jsdoc/require-next-type',
   'jsdoc/require-param',
   'jsdoc/require-param-description',
   'jsdoc/require-param-name',
@@ -506,19 +508,20 @@ const requirementsRules = [
   'jsdoc/require-property-name',
   'jsdoc/require-returns',
   'jsdoc/require-returns-description',
-  'jsdoc/require-throws-type',
   'jsdoc/require-yields',
-  'jsdoc/require-yields-type',
 ];
 
 const createRequirementsTypeScriptRuleset = createStandaloneRulesetFactory(requirementsRules);
 
 const createRequirementsTypeScriptFlavorRuleset = createStandaloneRulesetFactory([
   ...requirementsRules,
+  'jsdoc/require-next-type',
   'jsdoc/require-param-type',
   'jsdoc/require-property-type',
   'jsdoc/require-returns-type',
   'jsdoc/require-template',
+  'jsdoc/require-throws-type',
+  'jsdoc/require-yields-type',
 ]);
 
 const stylisticRules = [
