@@ -399,6 +399,27 @@ const createRecommendedTypeScriptRuleset = (warnOrError, flatName) => {
  * @param {string} [flatName]
  * @returns {import('eslint').Linter.Config}
  */
+const createRecommendedTsDocRuleset = (warnOrError, flatName) => {
+  const ruleset = createRecommendedTypeScriptRuleset(warnOrError, flatName);
+
+  return {
+    ...ruleset,
+    rules: {
+      ...ruleset.rules,
+      /* eslint-disable @stylistic/indent -- Extra indent to avoid use by auto-rule-editing */
+        'jsdoc/require-next-type': 'off',
+        'jsdoc/require-throws-type': 'off',
+        'jsdoc/require-yields-type': 'off',
+      /* eslint-enable @stylistic/indent */
+    },
+  };
+};
+
+/**
+ * @param {"warn"|"error"} warnOrError
+ * @param {string} [flatName]
+ * @returns {import('eslint').Linter.Config}
+ */
 const createRecommendedTypeScriptFlavorRuleset = (warnOrError, flatName) => {
   const ruleset = createRecommendedRuleset(warnOrError, flatName);
 
@@ -543,6 +564,8 @@ index.configs['recommended-typescript'] = createRecommendedTypeScriptRuleset('wa
 index.configs['recommended-typescript-error'] = createRecommendedTypeScriptRuleset('error');
 index.configs['recommended-typescript-flavor'] = createRecommendedTypeScriptFlavorRuleset('warn');
 index.configs['recommended-typescript-flavor-error'] = createRecommendedTypeScriptFlavorRuleset('error');
+index.configs['recommended-tsdoc'] = createRecommendedTsDocRuleset('warn');
+index.configs['recommended-tsdoc-error'] = createRecommendedTsDocRuleset('error');
 
 index.configs['flat/recommended'] = createRecommendedRuleset('warn', 'flat/recommended');
 index.configs['flat/recommended-error'] = createRecommendedRuleset('error', 'flat/recommended-error');
@@ -550,6 +573,8 @@ index.configs['flat/recommended-typescript'] = createRecommendedTypeScriptRulese
 index.configs['flat/recommended-typescript-error'] = createRecommendedTypeScriptRuleset('error', 'flat/recommended-typescript-error');
 index.configs['flat/recommended-typescript-flavor'] = createRecommendedTypeScriptFlavorRuleset('warn', 'flat/recommended-typescript-flavor');
 index.configs['flat/recommended-typescript-flavor-error'] = createRecommendedTypeScriptFlavorRuleset('error', 'flat/recommended-typescript-flavor-error');
+index.configs['flat/recommended-tsdoc'] = createRecommendedTsDocRuleset('warn', 'flat/recommended-tsdoc');
+index.configs['flat/recommended-tsdoc-error'] = createRecommendedTsDocRuleset('error', 'flat/recommended-tsdoc-error');
 
 index.configs['flat/contents-typescript'] = createContentsTypescriptRuleset('warn', 'flat/contents-typescript');
 index.configs['flat/contents-typescript-error'] = createContentsTypescriptRuleset('error', 'flat/contents-typescript-error');
