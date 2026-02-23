@@ -89,6 +89,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
            */
       `,
     },
+    {
+      code: `
+        /**
+         * @typedef {{id: string}} Something
+         *
+         * @return {{xyz: Something[]}}
+         */
+        function foo( abc ) {
+        }
+      `,
+      errors: [
+        {
+          line: 1,
+          message: 'Cannot prohibit `@property` in the `tagNamePreference` setting while using the `require-property` rule.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          tagNamePreference: {
+            property: false,
+          },
+        },
+      },
+    },
   ],
   valid: [
     {

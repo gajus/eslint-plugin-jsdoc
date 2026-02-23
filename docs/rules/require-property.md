@@ -60,6 +60,16 @@ class Test {
  * @namespace {Object} SomeName
  */
 // Message: Missing JSDoc @property.
+
+/**
+ * @typedef {{id: string}} Something
+ *
+ * @return {{xyz: Something[]}}
+ */
+function foo( abc ) {
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"property":false}}}
+// Message: Cannot prohibit `@property` in the `tagNamePreference` setting while using the `require-property` rule.
 ````
 
 
