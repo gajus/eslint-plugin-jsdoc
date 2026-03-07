@@ -1,6 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
 export default iterateJsdoc(({
+  context,
   utils,
 }) => {
   const propertyAssociatedTags = utils.filterTags(({
@@ -17,6 +18,23 @@ export default iterateJsdoc(({
   const targetTagName = /** @type {string} */ (utils.getPreferredTagName({
     tagName: 'property',
   }));
+
+  if (!targetTagName) {
+    context.report({
+      loc: {
+        end: {
+          column: 1,
+          line: 1,
+        },
+        start: {
+          column: 1,
+          line: 1,
+        },
+      },
+      message: 'Cannot prohibit `@property` in the `tagNamePreference` setting while using the `require-property` rule.',
+    });
+    return;
+  }
 
   if (utils.hasATag([
     targetTagName,
