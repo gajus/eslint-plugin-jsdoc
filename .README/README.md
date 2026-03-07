@@ -138,6 +138,8 @@ The general starting rulesets you can extend from in flat config are:
   - `jsdoc.configs['flat/recommended-typescript-error']`: The same, reporting with failing errors instead of mere warnings
 - `jsdoc.configs['flat/recommended-typescript-flavor']`: A similar recommended starting list, adjusted for projects using JavaScript syntax (source files that are still `.js`) but using TypeScript flavor within JSDoc (i.e., the default "typescript" `mode` in `eslint-plugin-jsdoc`)
   - `jsdoc.configs['flat/recommended-typescript-flavor-error']`: The same, reporting with failing errors instead of mere warnings
+- `jsdoc.configs['flat/recommended-tsdoc']`: Like `flat/recommended-typescript` but with `require-throws-type`, `require-yields-type`, and `require-next-type` turned off, for use with [TSDoc](https://tsdoc.org/) (e.g., [TypeDoc](https://typedoc.org/))
+  - `jsdoc.configs['flat/recommended-tsdoc-error']`: The same, reporting with failing errors instead of mere warnings
 - `jsdoc.configs['flat/recommended-mixed']`: A combination of `flat/recommended-typescript-flavor` and `flat/recommended-typescript` with automatic assignment of subconfig based on file extension (`**/*.{js,jsx,cjs,mjs}` and `**/*.{ts,tsx,cts,mts}`, respectively)
 
 #### Granular Flat Configs
@@ -348,6 +350,26 @@ use:
 ```json
 {
   "extends": ["plugin:jsdoc/recommended-typescript-flavor-error"]
+}
+```
+
+If you are using [TSDoc](https://tsdoc.org/) (e.g., with [TSDoc](https://tsdoc.org/) or
+[TypeDoc](https://typedoc.org/)), you may use the `tsdoc` config, which is like
+`recommended-typescript` but additionally turns off `require-throws-type`,
+`require-yields-type`, and `require-next-type` (since TSDoc does not support
+`{Type}` annotations on those tags):
+
+```json
+{
+  "extends": ["plugin:jsdoc/recommended-tsdoc"]
+}
+```
+
+...or to report with failing errors instead of mere warnings:
+
+```json
+{
+  "extends": ["plugin:jsdoc/recommended-tsdoc-error"]
 }
 ```
 
