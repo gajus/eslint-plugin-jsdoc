@@ -95,9 +95,16 @@ const suppressTypes = new Set([
  */
 const tryParsePathIgnoreError = (path, mode) => {
   try {
-    parseNamePath(path, mode === 'permissive' ? 'jsdoc' : mode, {
-      includeSpecial: true,
-    });
+    parseNamePath(
+      // Todo: Should avoid need for this by letting comment-parser parse default
+      //         values as such when they are not optional
+      // Strip default value
+      path.replace(/[=].*/v, ''),
+      mode === 'permissive' ? 'jsdoc' : mode,
+      {
+        includeSpecial: true,
+      },
+    );
 
     return true;
   } catch {

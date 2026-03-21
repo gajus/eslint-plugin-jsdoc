@@ -999,5 +999,15 @@ let SettingName = /** @type {const} */ ({
  * @property {string[]} 1 Annotation hashses
  */
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
+
+/** Some annoying set of bitmasks or something.
+ *
+ * @property {number} [BITMASK_VALUE_A=16] - blah blah
+ * @property {number} BITMASK_VALUE_B=32 - the other thing
+ */
+const MY_BITMASK_CONSTANT = {
+    BITMASK_VALUE_A: 1 << 4,
+    BITMASK_VALUE_B: somePrivateVariableHere
+};
 ````
 
