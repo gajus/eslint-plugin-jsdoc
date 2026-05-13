@@ -5,7 +5,7 @@
     "module": "ESNext",
     "allowJs": true,
     "checkJs": true,
-    "noEmit": false,
+    "noEmit": true,
     "emitDeclarationOnly": true,
     "declaration": true,
     "declarationMap": true,

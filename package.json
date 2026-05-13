@@ -176,7 +176,7 @@
     "tsc-build": "tsc -p tsconfig-prod.json",
     "tsc-cjs": "tsc -p tsconfig-cjs.json",
     "rollup": "rollup -c",
-    "build": "node ./src/bin/buildEntryFileForTS.js && rimraf ./dist && mkdir dist && pnpm rollup && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'to-valid-identifier' '../to-valid-identifier.cjs' 'dist' -r --include=\"*.cjs\" && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build && pnpm tsc-cjs",
+    "build": "node ./src/bin/buildEntryFileForTS.js && rimraf ./dist && mkdir dist && pnpm rollup && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --ignore ./src/bin/*.js --no-copy-ignored && replace 'to-valid-identifier' '../to-valid-identifier.cjs' 'dist' -r --include=\"*.cjs\" && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build && pnpm tsc-cjs",
     "attw": "attw --pack .",
     "check-docs": "node ./src/bin/generateDocs.js --check",
     "create-docs": "pnpm run create-options && node ./src/bin/generateDocs.js && pnpm ruleTypes",
