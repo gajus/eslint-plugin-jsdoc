@@ -1,1 +1,1 @@
-pnpm test && pnpm run build && pnpm run check-docs
+CI=1 pnpm test && pnpm run build && pnpm run check-docs

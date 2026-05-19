@@ -282,7 +282,7 @@ const getSymbol = function (node, globals, scope, opt) {
         /* c8 ignore next 8 */
         if (propVal) {
           val.props[
-          /** @type {import('estree').PrivateIdentifier} */
+          /** @type {import('estree').Identifier} */
             (
             /** @type {import('estree').Property} */ (prop).key
             ).name
