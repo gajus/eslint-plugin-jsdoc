@@ -337,6 +337,7 @@ import esquery from 'esquery';
 
 /**
  * @callback AvoidDocs
+ * @param {boolean} [exemptSpecialMethods]
  * @returns {boolean}
  */
 
@@ -1462,7 +1463,9 @@ const getUtils = (
   };
 
   /** @type {AvoidDocs} */
-  utils.avoidDocs = () => {
+  utils.avoidDocs = (
+    exemptSpecialMethods = true,
+  ) => {
     if (
       ignoreReplacesDocs !== false &&
         (utils.hasTag('ignore') || utils.classHasTag('ignore')) ||
@@ -1480,7 +1483,7 @@ const getUtils = (
       return true;
     }
 
-    if (jsdocUtils.exemptSpeciaMethods(
+    if (exemptSpecialMethods && jsdocUtils.exemptSpeciaMethods(
       jsdoc,
       node,
       context,

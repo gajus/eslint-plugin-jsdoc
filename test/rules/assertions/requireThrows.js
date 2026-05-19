@@ -18,6 +18,24 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+        class Quux {
+          /**
+           *
+           */
+          constructor (foo) {
+            throw new Error('err')
+          }
+        }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Missing JSDoc @throws declaration.',
+        },
+      ],
+    },
+    {
+      code: `
           /**
            *
            */

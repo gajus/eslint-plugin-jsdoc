@@ -83,6 +83,16 @@ function quux (foo) {
 }
 // Message: Missing JSDoc @throws declaration.
 
+class Quux {
+  /**
+   *
+   */
+  constructor (foo) {
+    throw new Error('err')
+  }
+}
+// Message: Missing JSDoc @throws declaration.
+
 /**
  *
  */
