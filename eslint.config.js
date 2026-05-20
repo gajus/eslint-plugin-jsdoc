@@ -58,6 +58,7 @@ export default [
 
       'filenames/match-regex': 0,
       'import/extensions': 0,
+      'import/no-cycle': 0,
       'import/no-useless-path-segments': 0,
       'jsdoc/require-param-description': 0,
       'jsdoc/require-returns': 0,
