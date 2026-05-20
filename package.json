@@ -158,14 +158,6 @@
   "run-if-changed": {
     "pnpm-lock.yaml": "pnpm run install-offline"
   },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "core-js",
-      "core-js-pure",
-      "re2",
-      "unrs-resolver"
-    ]
-  },
   "scripts": {
     "ruleTypes": "node ./src/bin/generateRuleTypes.js",
     "tsc": "tsc",

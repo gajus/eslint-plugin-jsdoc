@@ -1,6 +1,7 @@
-ignoredBuiltDependencies:
-  - core-js
-  - core-js-pure
-  - unrs-resolver
+allowBuilds:
+  core-js: false
+  core-js-pure: false
+  re2: false
+  unrs-resolver: false
 
 shellEmulator: true
