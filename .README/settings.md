@@ -372,4 +372,4 @@ default contexts, including for function rules, so if, for example, you exclude
 `FunctionDeclaration` here, rules like `require-param` will not check
 function declarations.
 
-See the "AST and Selectors" section for more on this format.
+See the ["AST and Selectors"](./advanced.md#ast-and-selectors) section for more on this format.

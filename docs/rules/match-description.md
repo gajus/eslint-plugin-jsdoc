@@ -64,7 +64,7 @@ Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`
 `FunctionExpression`). Set to `"any"` if you want the rule to apply to any
 JSDoc block throughout your files.
 
-See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
 <a name="user-content-match-description-options-maindescription"></a>

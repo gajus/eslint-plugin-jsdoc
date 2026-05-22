@@ -65,7 +65,7 @@ As with `context` but AST for the JSDoc block comment and types.
 
 AST to confine the allowing or disallowing to JSDoc blocks
 associated with a particular context. See the
-["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
+["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
 <a name="user-content-options-match-disallowname"></a>

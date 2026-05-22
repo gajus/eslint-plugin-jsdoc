@@ -135,7 +135,7 @@ Accepts a string regular expression (optionally wrapped between two
                 context: {
                   description: `AST to confine the allowing or disallowing to JSDoc blocks
 associated with a particular context. See the
-["AST and Selectors"](../#advanced-ast-and-selectors)
+["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.`,
                   type: 'string',
                 },
