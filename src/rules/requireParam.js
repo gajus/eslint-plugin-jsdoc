@@ -684,7 +684,7 @@ Overrides the default contexts (\`ArrowFunctionExpression\`, \`FunctionDeclarati
 \`TSMethodSignature\` in TypeScript or restricting the contexts
 which are checked.
 
-See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.`,
             items: {
               anyOf: [

@@ -575,7 +575,7 @@ export interface Rules {
            * expression, i.e., `@callback` or `@function` (or its aliases `@func` or
            * `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -705,7 +705,7 @@ export interface Rules {
            * `FunctionExpression`). Set to `"any"` if you want the rule to apply to any
            * JSDoc block throughout your files.
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -900,7 +900,7 @@ export interface Rules {
             /**
              * AST to confine the allowing or disallowing to JSDoc blocks
              * associated with a particular context. See the
-             * ["AST and Selectors"](../#advanced-ast-and-selectors)
+             * ["AST and Selectors"](../advanced.md#ast-and-selectors)
              * section of our Advanced docs for more on the expected format.
              */
             context?: string;
@@ -1087,7 +1087,7 @@ export interface Rules {
            * expression, i.e., `@callback` or `@function` (or its aliases `@func` or
            * `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -1133,7 +1133,7 @@ export interface Rules {
            * function declaration or expression, i.e., `@callback` or `@function` (or its
            * aliases `@func` or `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -1215,7 +1215,7 @@ export interface Rules {
            * function declaration or expression, i.e., `@callback` or `@function` (or its
            * aliases `@func` or `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts: (
@@ -1248,7 +1248,7 @@ export interface Rules {
            * expression, i.e., `@callback` or `@function` (or its aliases `@func` or
            * `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -1396,7 +1396,7 @@ export interface Rules {
            * expression, i.e., `@callback` or `@function` (or its aliases `@func` or
            * `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -1495,7 +1495,7 @@ export interface Rules {
            * `FunctionExpression`). Set to `"any"` if you want the rule to apply to any
            * JSDoc block throughout your files.
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -1681,7 +1681,7 @@ export interface Rules {
            * Note that you may need to disable `require` items (e.g., `MethodDefinition`)
            * if you are specifying a more precise form in `contexts` (e.g., `MethodDefinition:not([accessibility="private"] > FunctionExpression`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -1938,7 +1938,7 @@ export interface Rules {
            * `TSMethodSignature` in TypeScript or restricting the contexts
            * which are checked.
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -2090,7 +2090,7 @@ export interface Rules {
            * expression, i.e., `@callback` or `@function` (or its aliases `@func` or
            * `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -2134,7 +2134,7 @@ export interface Rules {
            * expression, i.e., `@callback` or `@function` (or its aliases `@func` or
            * `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -2165,7 +2165,7 @@ export interface Rules {
            * expression, i.e., `@callback` or `@function` (or its aliases `@func` or
            * `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -2394,7 +2394,7 @@ export interface Rules {
            * expression, i.e., `@callback` or `@function` (or its aliases `@func` or
            * `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (
@@ -2425,7 +2425,7 @@ export interface Rules {
            * expression, i.e., `@callback` or `@function` (or its aliases `@func` or
            * `@method`) (including those associated with an `@interface`).
            *
-           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
            * section of our Advanced docs for more on the expected format.
            */
           contexts?: (

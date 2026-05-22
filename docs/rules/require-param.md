@@ -375,7 +375,7 @@ Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`
 `TSMethodSignature` in TypeScript or restricting the contexts
 which are checked.
 
-See the ["AST and Selectors"](#user-content-eslint-plugin-jsdoc-advanced-ast-and-selectors)
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
 <a name="user-content-require-param-options-enablefixer"></a>
