@@ -215,6 +215,22 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       },
     },
+    {
+      code: `
+        /** @private A */
+        const a = "a";
+      `,
+      errors: [
+        {
+          line: 2,
+          message: '@private should be empty.',
+        },
+      ],
+      output: `
+        /** @private */
+        const a = "a";
+      `,
+    },
   ],
   valid: [
     {

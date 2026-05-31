@@ -55,6 +55,14 @@ export default iterateJsdoc(({
       // Allow for JSDoc-block final asterisks
       key !== emptyTags.length - 1 || !(/^\s*\*+$/v).test(content)
     )) {
+      const {
+        tokens: {
+          delimiter,
+          end,
+          postName,
+          start,
+        },
+      } = tag.source[0];
       const fix = () => {
         // By time of call in fixer, `tag` will have `line` added
         utils.setTag(
@@ -63,6 +71,12 @@ export default iterateJsdoc(({
            *   line: import('../iterateJsdoc.js').Integer
            * }}
            */ (tag),
+          {
+            delimiter,
+            end,
+            postName: end ? postName : '',
+            start,
+          },
         );
       };
 

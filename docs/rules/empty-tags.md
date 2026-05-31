@@ -146,6 +146,10 @@ function quux () {
 }
 // Settings: {"jsdoc":{"ignorePrivate":true}}
 // Message: @private should be empty.
+
+/** @private A */
+const a = "a";
+// Message: @private should be empty.
 ````
 
 
