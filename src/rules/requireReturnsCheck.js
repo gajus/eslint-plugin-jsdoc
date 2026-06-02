@@ -1,4 +1,6 @@
-import iterateJsdoc from '../iterateJsdoc.js';
+import iterateJsdoc, {
+  parseComment,
+} from '../iterateJsdoc.js';
 import {
   strictNativeTypes,
 } from '../jsdocUtils.js';
@@ -36,11 +38,40 @@ const canSkip = (utils, settings) => {
     settings.mode === 'closure' && utils.classHasTag('record');
 };
 
+/**
+ * @param {import('../iterateJsdoc.js').Utils} utils
+ * @param {import('eslint').SourceCode} sourceCode
+ * @returns {import('comment-parser').Spec[]}
+ */
+const getDocumentTypedefs = (utils, sourceCode) => {
+  return sourceCode.getAllComments()
+    .filter((comment) => {
+      return (/^\*(?!\*)/v).test(comment.value);
+    })
+    .map((commentNode) => {
+      return parseComment(commentNode, '');
+    })
+    .flatMap((doc) => {
+      return doc.tags.filter(({
+        tag,
+      }) => {
+        return utils.isNameOrNamepathDefiningTag(tag) && ![
+          'arg',
+          'argument',
+          'param',
+          'prop',
+          'property',
+        ].includes(tag);
+      });
+    });
+};
+
 export default iterateJsdoc(({
   context,
   node,
   report,
   settings,
+  sourceCode,
   utils,
 }) => {
   const {
@@ -90,6 +121,24 @@ export default iterateJsdoc(({
   }
 
   const returnNever = type === 'never';
+  const typedefs = getDocumentTypedefs(utils, sourceCode);
+
+  /**
+   * @param {import('comment-parser').Spec} returnTag
+   * @returns {boolean}
+   */
+  const mayReturnUndefined = (returnTag) => {
+    if (utils.mayBeUndefinedTypeTag(returnTag)) {
+      return true;
+    }
+
+    const returnType = returnTag.type.trim();
+    const referencedTypedef = typedefs.find((typedefTag) => {
+      return typedefTag.name === returnType;
+    });
+
+    return Boolean(referencedTypedef && utils.mayBeUndefinedTypeTag(referencedTypedef));
+  };
 
   if (returnNever && utils.hasValueOrExecutorHasNonEmptyResolveValue(false)) {
     report(`JSDoc @${tagName} declaration set with "never" but return expression is present in function.`);
@@ -107,7 +156,7 @@ export default iterateJsdoc(({
     !returnNever &&
     (
       reportMissingReturnForUndefinedTypes ||
-      !utils.mayBeUndefinedTypeTag(tag)
+      !mayReturnUndefined(tag)
     ) &&
     (tag.type === '' && !utils.hasValueOrExecutorHasNonEmptyResolveValue(
       exemptAsync,

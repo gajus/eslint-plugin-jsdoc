@@ -25,6 +25,11 @@ Will report if native types are specified for `@returns` on an async function.
 
 Will also report if multiple `@returns` tags are present.
 
+If a `@returns` type references a typedef in the same source document and that
+typedef may be `void` or `undefined`, the rule treats the return type as
+allowing an absent return value unless `reportMissingReturnForUndefinedTypes`
+is set to `true`.
+
 <a name="user-content-require-returns-check-options"></a>
 <a name="require-returns-check-options"></a>
 ## Options
@@ -420,6 +425,20 @@ async function quux (foo) {
 }
 // "jsdoc/require-returns-check": ["error"|"warn", {"exemptAsync":false}]
 // Message: Function is async or otherwise returns a Promise but the return type is a native type.
+
+/**
+ * @typedef {{ ok: boolean }} MaybeResult
+ */
+
+/**
+ * @returns {MaybeResult} Result.
+ */
+const maybeResult = () => {
+  if (Math.random() > 0.5) {
+    return;
+  }
+};
+// Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
 
@@ -952,6 +971,71 @@ function maybeTrue() {
 }
 
 /**
+ * @param {string} name
+ *
+ * @typedef {{ loadTime: number; runTime: number; totalTime: number } | void} PerfResult
+ * @returns {PerfResult} Perf result
+ */
+const perfCase = name => {
+  const loadStartTime = performance.now();
+
+  let syncFn;
+
+  try {
+    syncFn = require(`./${name}.cjs`);
+  } catch {
+    return;
+  }
+
+  const loadTime = performance.now() - loadStartTime;
+
+  let i = RUN_TIMES;
+
+  const runStartTime = performance.now();
+
+  while (i-- > 0) {
+    syncFn(__filename);
+  }
+
+  const runTime = performance.now() - runStartTime;
+
+  return {
+    loadTime,
+    runTime,
+    totalTime: runTime + loadTime,
+  };
+};
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @typedef {{ ok: boolean } | void} MaybeResult
+ */
+
+/**
+ * @returns {MaybeResult} Result.
+ */
+const maybeResult = () => {
+  if (Math.random() > 0.5) {
+    return { ok: true };
+  }
+};
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @returns {MaybeResult} Result.
+ */
+const maybeResult = () => {
+  if (Math.random() > 0.5) {
+    return { ok: true };
+  }
+};
+
+/**
+ * @typedef {{ ok: boolean } | void} MaybeResult
+ */
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
  * @param {AST} astNode
  * @returns {AST}
  */
@@ -1044,4 +1128,3 @@ function foo() {
   }
 }
 ````
-

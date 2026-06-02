@@ -685,6 +685,33 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+      /**
+       * @typedef {{ ok: boolean }} MaybeResult
+       */
+
+      /**
+       * @returns {MaybeResult} Result.
+       */
+      const maybeResult = () => {
+        if (Math.random() > 0.5) {
+          return;
+        }
+      };
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
   ],
   valid: [
     {
@@ -1459,6 +1486,50 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
       /**
+       * @param {string} name
+       *
+       * @typedef {{ loadTime: number; runTime: number; totalTime: number } | void} PerfResult
+       * @returns {PerfResult} Perf result
+       */
+      const perfCase = name => {
+        const loadStartTime = performance.now();
+
+        let syncFn;
+
+        try {
+          syncFn = require(\`./\${name}.cjs\`);
+        } catch {
+          return;
+        }
+
+        const loadTime = performance.now() - loadStartTime;
+
+        let i = RUN_TIMES;
+
+        const runStartTime = performance.now();
+
+        while (i-- > 0) {
+          syncFn(__filename);
+        }
+
+        const runTime = performance.now() - runStartTime;
+
+        return {
+          loadTime,
+          runTime,
+          totalTime: runTime + loadTime,
+        };
+      };
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+      /**
        * Maybe return a boolean.
        * @return {boolean|void} true, or undefined.
        */
@@ -1472,6 +1543,48 @@ export default /** @type {import('../index.js').TestCases} */ ({
       settings: {
         jsdoc: {
           mode: 'permissive',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @typedef {{ ok: boolean } | void} MaybeResult
+       */
+
+      /**
+       * @returns {MaybeResult} Result.
+       */
+      const maybeResult = () => {
+        if (Math.random() > 0.5) {
+          return { ok: true };
+        }
+      };
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @returns {MaybeResult} Result.
+       */
+      const maybeResult = () => {
+        if (Math.random() > 0.5) {
+          return { ok: true };
+        }
+      };
+
+      /**
+       * @typedef {{ ok: boolean } | void} MaybeResult
+       */
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
         },
       },
     },
