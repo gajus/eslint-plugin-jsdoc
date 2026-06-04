@@ -449,7 +449,21 @@ const maybeResult = () => {
  */
 const maybeResult = () => {
   if (Math.random() > 0.5) {
-    return 'ok';
+    return;
+  }
+};
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @typedef {{ ok: boolean }} MaybeResult
+ */
+
+/**
+ * @returns {Array<MaybeResult|void>} Result.
+ */
+const maybeResult = () => {
+  if (Math.random() > 0.5) {
+    return;
   }
 };
 // Message: JSDoc @returns declaration present but return expression not available in function.
@@ -1034,17 +1048,83 @@ const maybeResult = () => {
 };
 
 /**
- * @returns {MaybeResult|string} Result.
+ * @typedef {{ ok: boolean } | void} MaybeResult
+ */
+
+/**
+ * @returns {MaybeResult} Result.
  */
 const maybeResult = () => {
   if (Math.random() > 0.5) {
-    return 'ok';
+    return { ok: true };
+  }
+};
+// Settings: {"jsdoc":{"mode":"permissive"}}
+
+/**
+ * @returns {MaybeResult} Result.
+ */
+const maybeResult = () => {
+  if (Math.random() > 0.5) {
+    return { ok: true };
   }
 };
 
 /**
  * @typedef {{ ok: boolean } | void} MaybeResult
  */
+
+/**
+ * @typedef {{ ok: boolean } | undefined} MaybeResult
+ */
+
+/**
+ * @returns {MaybeResult|string} Result.
+ */
+const maybeResult = () => {
+  if (Math.random() > 0.5) {
+    return { ok: true };
+  }
+};
+
+/**
+ * @typedef {{ ok: boolean }} MaybeResult
+ */
+
+/**
+ * @returns {MaybeResult|void} Result.
+ */
+const maybeResult = () => {
+  if (Math.random() > 0.5) {
+    return { ok: true };
+  }
+};
+
+/**
+ * @typedef {{ ok: boolean }} MaybeResult
+ */
+
+/**
+ * @returns {(MaybeResult|void)} Result.
+ */
+const maybeResult = () => {
+  if (Math.random() > 0.5) {
+    return { ok: true };
+  }
+};
+
+/**
+ * @typedef {{ ok: boolean }} MaybeResult
+ */
+
+/**
+ * @returns {(MaybeResult|undefined)} Result.
+ */
+const maybeResult = () => {
+  if (Math.random() > 0.5) {
+    return { ok: true };
+  }
+};
 
 /**
  * @param {AST} astNode

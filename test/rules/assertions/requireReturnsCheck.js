@@ -718,7 +718,29 @@ export default /** @type {import('../index.js').TestCases} */ ({
        */
       const maybeResult = () => {
         if (Math.random() > 0.5) {
-          return 'ok';
+          return;
+        }
+      };
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
+        },
+      ],
+    },
+    {
+      code: `
+      /**
+       * @typedef {{ ok: boolean }} MaybeResult
+       */
+
+      /**
+       * @returns {Array<MaybeResult|void>} Result.
+       */
+      const maybeResult = () => {
+        if (Math.random() > 0.5) {
+          return;
         }
       };
       `,
@@ -1577,17 +1599,102 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
       /**
-       * @returns {MaybeResult|string} Result.
+       * @typedef {{ ok: boolean } | void} MaybeResult
+       */
+
+      /**
+       * @returns {MaybeResult} Result.
        */
       const maybeResult = () => {
         if (Math.random() > 0.5) {
-          return 'ok';
+          return { ok: true };
+        }
+      };
+      `,
+      settings: {
+        jsdoc: {
+          mode: 'permissive',
+        },
+      },
+    },
+    {
+      code: `
+      /**
+       * @returns {MaybeResult} Result.
+       */
+      const maybeResult = () => {
+        if (Math.random() > 0.5) {
+          return { ok: true };
         }
       };
 
       /**
        * @typedef {{ ok: boolean } | void} MaybeResult
        */
+      `,
+    },
+    {
+      code: `
+      /**
+       * @typedef {{ ok: boolean } | undefined} MaybeResult
+       */
+
+      /**
+       * @returns {MaybeResult|string} Result.
+       */
+      const maybeResult = () => {
+        if (Math.random() > 0.5) {
+          return { ok: true };
+        }
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+       * @typedef {{ ok: boolean }} MaybeResult
+       */
+
+      /**
+       * @returns {MaybeResult|void} Result.
+       */
+      const maybeResult = () => {
+        if (Math.random() > 0.5) {
+          return { ok: true };
+        }
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+       * @typedef {{ ok: boolean }} MaybeResult
+       */
+
+      /**
+       * @returns {(MaybeResult|void)} Result.
+       */
+      const maybeResult = () => {
+        if (Math.random() > 0.5) {
+          return { ok: true };
+        }
+      };
+      `,
+    },
+    {
+      code: `
+      /**
+       * @typedef {{ ok: boolean }} MaybeResult
+       */
+
+      /**
+       * @returns {(MaybeResult|undefined)} Result.
+       */
+      const maybeResult = () => {
+        if (Math.random() > 0.5) {
+          return { ok: true };
+        }
+      };
       `,
     },
     {

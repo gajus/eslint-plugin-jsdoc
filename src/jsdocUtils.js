@@ -738,42 +738,6 @@ const filterTags = (jsdoc, filter) => {
 };
 
 /**
- * @param {import('eslint').SourceCode} sourceCode
- * @returns {import('comment-parser').Block[]}
- */
-const getJSDocComments = (sourceCode) => {
-  return sourceCode.getAllComments()
-    .filter((comment) => {
-      return (/^\*(?!\*)/v).test(comment.value);
-    })
-    .map((commentNode) => {
-      return parseComment(commentNode, '');
-    });
-};
-
-/**
- * @param {import('./iterateJsdoc.js').Utils} utils
- * @param {import('eslint').SourceCode} sourceCode
- * @returns {import('comment-parser').Spec[]}
- */
-const getDocumentTypedefTags = (utils, sourceCode) => {
-  return getJSDocComments(sourceCode)
-    .flatMap((doc) => {
-      return doc.tags.filter(({
-        tag,
-      }) => {
-        return utils.isNameOrNamepathDefiningTag(tag) && ![
-          'arg',
-          'argument',
-          'param',
-          'prop',
-          'property',
-        ].includes(tag);
-      });
-    });
-};
-
-/**
  * @param {import('./iterateJsdoc.js').JsdocBlockWithInline} jsdoc
  * @param {string} tagName
  * @returns {import('comment-parser').Spec[]}
@@ -1119,6 +1083,41 @@ const isNameOrNamepathDefiningTag = (tag, tagMap = tagStructure) => {
     'namepath-defining',
   ]).includes(/** @type {string|boolean|undefined} */ (
     tagStruct.get('namepathRole')));
+};
+
+/**
+ * @param {import('eslint').SourceCode} sourceCode
+ * @returns {import('@es-joy/jsdoccomment').JsdocBlockWithInline[]}
+ */
+const getJSDocCommentBlocks = (sourceCode) => {
+  return sourceCode.getAllComments()
+    .filter((comment) => {
+      return (/^\*(?!\*)/v).test(comment.value);
+    })
+    .map((commentNode) => {
+      return parseComment(commentNode, '');
+    });
+};
+
+/**
+ * @param {import('eslint').SourceCode} sourceCode
+ * @returns {import('comment-parser').Spec[]}
+ */
+const getDocumentNamepathDefiningTags = (sourceCode) => {
+  return getJSDocCommentBlocks(sourceCode)
+    .flatMap((doc) => {
+      return doc.tags.filter(({
+        tag,
+      }) => {
+        return isNameOrNamepathDefiningTag(tag) && ![
+          'arg',
+          'argument',
+          'param',
+          'prop',
+          'property',
+        ].includes(tag);
+      });
+    });
 };
 
 /**
@@ -2147,11 +2146,11 @@ export {
   forEachPreferredTag,
   getAllTags,
   getContextObject,
-  getDocumentTypedefTags,
+  getDocumentNamepathDefiningTags,
   getFunctionParameterNames,
   getIndent,
   getInlineTags,
-  getJSDocComments,
+  getJSDocCommentBlocks,
   getJsdocTagsDeep,
   getPreferredTagName,
   getPreferredTagNameSimple,

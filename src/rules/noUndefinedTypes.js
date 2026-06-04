@@ -2,8 +2,8 @@ import iterateJsdoc, {
   parseComment,
 } from '../iterateJsdoc.js';
 import {
-  getDocumentTypedefTags,
-  getJSDocComments,
+  getDocumentNamepathDefiningTags,
+  getJSDocCommentBlocks,
 } from '../jsdocUtils.js';
 import {
   getJSDocComment,
@@ -127,7 +127,7 @@ export default iterateJsdoc(({
   }
 
   const allComments = sourceCode.getAllComments();
-  const comments = getJSDocComments(sourceCode);
+  const comments = getJSDocCommentBlocks(sourceCode);
 
   const globals = allComments
     .filter((comment) => {
@@ -136,7 +136,7 @@ export default iterateJsdoc(({
       return commentNode.value.replace(/^\s*globals/v, '').trim().split(/,\s*/v);
     }).concat(Object.keys(context.languageOptions.globals ?? []));
 
-  const typedefs = getDocumentTypedefTags(utils, sourceCode);
+  const typedefs = getDocumentNamepathDefiningTags(sourceCode);
 
   const typedefDeclarations = typedefs
     .map((tag) => {
