@@ -6,6 +6,7 @@ import {
 } from './tagNames.js';
 import WarnSettings from './WarnSettings.js';
 import {
+  parseComment,
   stringify,
   tryParse,
 } from '@es-joy/jsdoccomment';
@@ -734,6 +735,42 @@ const filterTags = (jsdoc, filter) => {
   return jsdoc.tags.filter((tag) => {
     return filter(tag);
   });
+};
+
+/**
+ * @param {import('eslint').SourceCode} sourceCode
+ * @returns {import('comment-parser').Block[]}
+ */
+const getJSDocComments = (sourceCode) => {
+  return sourceCode.getAllComments()
+    .filter((comment) => {
+      return (/^\*(?!\*)/v).test(comment.value);
+    })
+    .map((commentNode) => {
+      return parseComment(commentNode, '');
+    });
+};
+
+/**
+ * @param {import('./iterateJsdoc.js').Utils} utils
+ * @param {import('eslint').SourceCode} sourceCode
+ * @returns {import('comment-parser').Spec[]}
+ */
+const getDocumentTypedefTags = (utils, sourceCode) => {
+  return getJSDocComments(sourceCode)
+    .flatMap((doc) => {
+      return doc.tags.filter(({
+        tag,
+      }) => {
+        return utils.isNameOrNamepathDefiningTag(tag) && ![
+          'arg',
+          'argument',
+          'param',
+          'prop',
+          'property',
+        ].includes(tag);
+      });
+    });
 };
 
 /**
@@ -2110,9 +2147,11 @@ export {
   forEachPreferredTag,
   getAllTags,
   getContextObject,
+  getDocumentTypedefTags,
   getFunctionParameterNames,
   getIndent,
   getInlineTags,
+  getJSDocComments,
   getJsdocTagsDeep,
   getPreferredTagName,
   getPreferredTagNameSimple,

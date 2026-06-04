@@ -1,9 +1,13 @@
-import iterateJsdoc, {
-  parseComment,
-} from '../iterateJsdoc.js';
+import iterateJsdoc from '../iterateJsdoc.js';
 import {
+  getDocumentTypedefTags,
   strictNativeTypes,
 } from '../jsdocUtils.js';
+import {
+  parse as parseType,
+  traverse,
+  tryParse as tryParseType,
+} from '@es-joy/jsdoccomment';
 
 /**
  * @param {import('../iterateJsdoc.js').Utils} utils
@@ -36,34 +40,6 @@ const canSkip = (utils, settings) => {
     utils.isConstructor() ||
     utils.classHasTag('interface') ||
     settings.mode === 'closure' && utils.classHasTag('record');
-};
-
-/**
- * @param {import('../iterateJsdoc.js').Utils} utils
- * @param {import('eslint').SourceCode} sourceCode
- * @returns {import('comment-parser').Spec[]}
- */
-const getDocumentTypedefs = (utils, sourceCode) => {
-  return sourceCode.getAllComments()
-    .filter((comment) => {
-      return (/^\*(?!\*)/v).test(comment.value);
-    })
-    .map((commentNode) => {
-      return parseComment(commentNode, '');
-    })
-    .flatMap((doc) => {
-      return doc.tags.filter(({
-        tag,
-      }) => {
-        return utils.isNameOrNamepathDefiningTag(tag) && ![
-          'arg',
-          'argument',
-          'param',
-          'prop',
-          'property',
-        ].includes(tag);
-      });
-    });
 };
 
 export default iterateJsdoc(({
@@ -121,7 +97,7 @@ export default iterateJsdoc(({
   }
 
   const returnNever = type === 'never';
-  const typedefs = getDocumentTypedefs(utils, sourceCode);
+  const typedefs = getDocumentTypedefTags(utils, sourceCode);
 
   /**
    * @param {import('comment-parser').Spec} returnTag
@@ -132,12 +108,50 @@ export default iterateJsdoc(({
       return true;
     }
 
-    const returnType = returnTag.type.trim();
-    const referencedTypedef = typedefs.find((typedefTag) => {
-      return typedefTag.name === returnType;
+    let parsedType;
+    try {
+      const returnType = returnTag.type.trim();
+      parsedType = settings.mode === 'permissive' ?
+        tryParseType(returnType) :
+        parseType(returnType, settings.mode);
+    } catch {
+      return false;
+    }
+
+    let returnIsUndefined = false;
+    traverse(parsedType, (nde, parentNode) => {
+      const {
+        type: nodeType,
+      } = /** @type {import('jsdoc-type-pratt-parser').NameResult|import('jsdoc-type-pratt-parser').UndefinedResult} */ (nde);
+      const topLevelReturnType = !parentNode || parentNode.type === 'JsdocTypeUnion';
+
+      if (
+        topLevelReturnType && (
+          nodeType === 'JsdocTypeUndefined' ||
+          nodeType === 'JsdocTypeName' &&
+          /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde).value === 'void'
+        )
+      ) {
+        returnIsUndefined = true;
+      }
+
+      if (!topLevelReturnType || nodeType !== 'JsdocTypeName') {
+        return;
+      }
+
+      const {
+        value,
+      } = /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde);
+      const referencedTypedef = typedefs.find((typedefTag) => {
+        return typedefTag.name === value;
+      });
+
+      if (referencedTypedef && utils.mayBeUndefinedTypeTag(referencedTypedef)) {
+        returnIsUndefined = true;
+      }
     });
 
-    return Boolean(referencedTypedef && utils.mayBeUndefinedTypeTag(referencedTypedef));
+    return returnIsUndefined;
   };
 
   if (returnNever && utils.hasValueOrExecutorHasNonEmptyResolveValue(false)) {

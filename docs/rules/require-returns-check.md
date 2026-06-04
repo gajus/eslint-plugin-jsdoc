@@ -438,7 +438,20 @@ const maybeResult = () => {
     return;
   }
 };
-// Settings: {"jsdoc":{"mode":"typescript"}}
+// Message: JSDoc @returns declaration present but return expression not available in function.
+
+/**
+ * @typedef {{ ok: boolean }} MaybeResult
+ */
+
+/**
+ * @returns {MaybeResult|string} Result.
+ */
+const maybeResult = () => {
+  if (Math.random() > 0.5) {
+    return 'ok';
+  }
+};
 // Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
@@ -1000,13 +1013,12 @@ const perfCase = name => {
 
   const runTime = performance.now() - runStartTime;
 
-  return {
+return {
     loadTime,
     runTime,
     totalTime: runTime + loadTime,
   };
 };
-// Settings: {"jsdoc":{"mode":"typescript"}}
 
 /**
  * @typedef {{ ok: boolean } | void} MaybeResult
@@ -1020,21 +1032,19 @@ const maybeResult = () => {
     return { ok: true };
   }
 };
-// Settings: {"jsdoc":{"mode":"typescript"}}
 
 /**
- * @returns {MaybeResult} Result.
+ * @returns {MaybeResult|string} Result.
  */
 const maybeResult = () => {
   if (Math.random() > 0.5) {
-    return { ok: true };
+    return 'ok';
   }
 };
 
 /**
  * @typedef {{ ok: boolean } | void} MaybeResult
  */
-// Settings: {"jsdoc":{"mode":"typescript"}}
 
 /**
  * @param {AST} astNode
@@ -1129,4 +1139,3 @@ function foo() {
   }
 }
 ````
-

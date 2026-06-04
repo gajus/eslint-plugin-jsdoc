@@ -706,11 +706,28 @@ export default /** @type {import('../index.js').TestCases} */ ({
           message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
       ],
-      settings: {
-        jsdoc: {
-          mode: 'typescript',
+    },
+    {
+      code: `
+      /**
+       * @typedef {{ ok: boolean }} MaybeResult
+       */
+
+      /**
+       * @returns {MaybeResult|string} Result.
+       */
+      const maybeResult = () => {
+        if (Math.random() > 0.5) {
+          return 'ok';
+        }
+      };
+      `,
+      errors: [
+        {
+          line: 6,
+          message: 'JSDoc @returns declaration present but return expression not available in function.',
         },
-      },
+      ],
     },
   ],
   valid: [
@@ -1521,11 +1538,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
         };
       };
       `,
-      settings: {
-        jsdoc: {
-          mode: 'typescript',
-        },
-      },
     },
     {
       code: `
@@ -1561,20 +1573,15 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       };
       `,
-      settings: {
-        jsdoc: {
-          mode: 'typescript',
-        },
-      },
     },
     {
       code: `
       /**
-       * @returns {MaybeResult} Result.
+       * @returns {MaybeResult|string} Result.
        */
       const maybeResult = () => {
         if (Math.random() > 0.5) {
-          return { ok: true };
+          return 'ok';
         }
       };
 
@@ -1582,11 +1589,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
        * @typedef {{ ok: boolean } | void} MaybeResult
        */
       `,
-      settings: {
-        jsdoc: {
-          mode: 'typescript',
-        },
-      },
     },
     {
       code: `
