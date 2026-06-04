@@ -438,6 +438,7 @@ const maybeResult = () => {
     return;
   }
 };
+// Settings: {"jsdoc":{"mode":"typescript"}}
 // Message: JSDoc @returns declaration present but return expression not available in function.
 ````
 
@@ -1128,3 +1129,4 @@ function foo() {
   }
 }
 ````
+
