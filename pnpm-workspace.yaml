@@ -4,4 +4,7 @@ allowBuilds:
   re2: false
   unrs-resolver: false
 
+minimumReleaseAgeExclude:
+  - '@types/node@25.9.2'
+
 shellEmulator: true
