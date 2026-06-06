@@ -15,6 +15,11 @@ Will report if native types are specified for `@returns` on an async function.
 
 Will also report if multiple `@returns` tags are present.
 
+If a `@returns` type references a typedef in the same source document and that
+typedef may be `void` or `undefined`, the rule treats the return type as
+allowing an absent return value unless `reportMissingReturnForUndefinedTypes`
+is set to `true`.
+
 ## Options
 
 {"gitdown": "options"}

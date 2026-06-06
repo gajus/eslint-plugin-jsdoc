@@ -6,6 +6,7 @@ import {
 } from './tagNames.js';
 import WarnSettings from './WarnSettings.js';
 import {
+  parseComment,
   stringify,
   tryParse,
 } from '@es-joy/jsdoccomment';
@@ -1085,6 +1086,41 @@ const isNameOrNamepathDefiningTag = (tag, tagMap = tagStructure) => {
 };
 
 /**
+ * @param {import('eslint').SourceCode} sourceCode
+ * @returns {import('@es-joy/jsdoccomment').JsdocBlockWithInline[]}
+ */
+const getJSDocCommentBlocks = (sourceCode) => {
+  return sourceCode.getAllComments()
+    .filter((comment) => {
+      return (/^\*(?!\*)/v).test(comment.value);
+    })
+    .map((commentNode) => {
+      return parseComment(commentNode, '');
+    });
+};
+
+/**
+ * @param {import('eslint').SourceCode} sourceCode
+ * @returns {import('comment-parser').Spec[]}
+ */
+const getDocumentNamepathDefiningTags = (sourceCode) => {
+  return getJSDocCommentBlocks(sourceCode)
+    .flatMap((doc) => {
+      return doc.tags.filter(({
+        tag,
+      }) => {
+        return isNameOrNamepathDefiningTag(tag) && ![
+          'arg',
+          'argument',
+          'param',
+          'prop',
+          'property',
+        ].includes(tag);
+      });
+    });
+};
+
+/**
  * @param {string} tag
  * @param {import('./getDefaultTagStructureForMode.js').TagStructure} tagMap
  * @returns {boolean}
@@ -2110,9 +2146,11 @@ export {
   forEachPreferredTag,
   getAllTags,
   getContextObject,
+  getDocumentNamepathDefiningTags,
   getFunctionParameterNames,
   getIndent,
   getInlineTags,
+  getJSDocCommentBlocks,
   getJsdocTagsDeep,
   getPreferredTagName,
   getPreferredTagNameSimple,

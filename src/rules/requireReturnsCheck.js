@@ -1,7 +1,27 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 import {
+  getDocumentNamepathDefiningTags,
   strictNativeTypes,
 } from '../jsdocUtils.js';
+import {
+  traverse,
+  tryParse as tryParseType,
+} from '@es-joy/jsdoccomment';
+
+/**
+ * @type {Partial<Record<import('../jsdocUtils.js').ParserMode, import('jsdoc-type-pratt-parser').ParseMode[]>>}
+ */
+const parseTypeModes = {
+  closure: [
+    'closure',
+  ],
+  jsdoc: [
+    'jsdoc',
+  ],
+  typescript: [
+    'typescript',
+  ],
+};
 
 /**
  * @param {import('../iterateJsdoc.js').Utils} utils
@@ -36,11 +56,35 @@ const canSkip = (utils, settings) => {
     settings.mode === 'closure' && utils.classHasTag('record');
 };
 
+/**
+ * @param {import('jsdoc-type-pratt-parser').RootResult} parsedType
+ * @returns {import('jsdoc-type-pratt-parser').RootResult}
+ */
+const getReturnTypeLevelNode = (parsedType) => {
+  return parsedType.type === 'JsdocTypeParenthesis' ?
+    parsedType.element :
+    parsedType;
+};
+
+/**
+ * @param {import('eslint').Rule.RuleContext} context
+ * @param {import('../jsdocUtils.js').ParserMode} mode
+ * @returns {import('../jsdocUtils.js').ParserMode}
+ */
+const getParseMode = (context, mode) => {
+  const {
+    jsdoc,
+  } = /** @type {{jsdoc?: {mode?: import('../jsdocUtils.js').ParserMode}}} */ (context.settings);
+
+  return jsdoc?.mode ?? mode;
+};
+
 export default iterateJsdoc(({
   context,
   node,
   report,
   settings,
+  sourceCode,
   utils,
 }) => {
   const {
@@ -49,6 +93,10 @@ export default iterateJsdoc(({
     noNativeTypes = true,
     reportMissingReturnForUndefinedTypes = false,
   } = context.options[0] || {};
+  const {
+    mode,
+  } = settings;
+  const parseMode = getParseMode(context, mode);
 
   if (canSkip(utils, settings)) {
     return;
@@ -90,6 +138,67 @@ export default iterateJsdoc(({
   }
 
   const returnNever = type === 'never';
+  const typedefs = getDocumentNamepathDefiningTags(sourceCode);
+
+  /**
+   * @param {import('comment-parser').Spec} returnTag
+   * @returns {boolean}
+   */
+  const mayReturnUndefined = (returnTag) => {
+    if (utils.mayBeUndefinedTypeTag(returnTag)) {
+      return true;
+    }
+
+    const returnType = returnTag.type.trim();
+    let parsedType;
+    try {
+      parsedType = tryParseType(returnType, parseTypeModes[parseMode]);
+    } catch {
+      return false;
+    }
+
+    const returnTypeLevelNode = getReturnTypeLevelNode(parsedType);
+    let returnIsUndefined = false;
+    traverse(returnTypeLevelNode, (nde, parentNode) => {
+      const isReturnLevelNode = !parentNode ||
+        returnTypeLevelNode.type === 'JsdocTypeUnion' && parentNode === returnTypeLevelNode;
+      if (!isReturnLevelNode) {
+        return;
+      }
+
+      const {
+        type: nodeType,
+      } = /** @type {import('jsdoc-type-pratt-parser').RootResult} */ (nde);
+
+      if (nodeType === 'JsdocTypeUndefined') {
+        returnIsUndefined = true;
+        return;
+      }
+
+      if (nodeType !== 'JsdocTypeName') {
+        return;
+      }
+
+      const {
+        value,
+      } = /** @type {import('jsdoc-type-pratt-parser').NameResult} */ (nde);
+
+      if (value === 'void') {
+        returnIsUndefined = true;
+        return;
+      }
+
+      const referencedTypedef = typedefs.find((typedefTag) => {
+        return typedefTag.name === value;
+      });
+
+      if (referencedTypedef && utils.mayBeUndefinedTypeTag(referencedTypedef)) {
+        returnIsUndefined = true;
+      }
+    });
+
+    return returnIsUndefined;
+  };
 
   if (returnNever && utils.hasValueOrExecutorHasNonEmptyResolveValue(false)) {
     report(`JSDoc @${tagName} declaration set with "never" but return expression is present in function.`);
@@ -107,7 +216,7 @@ export default iterateJsdoc(({
     !returnNever &&
     (
       reportMissingReturnForUndefinedTypes ||
-      !utils.mayBeUndefinedTypeTag(tag)
+      !mayReturnUndefined(tag)
     ) &&
     (tag.type === '' && !utils.hasValueOrExecutorHasNonEmptyResolveValue(
       exemptAsync,
