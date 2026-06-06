@@ -1027,7 +1027,7 @@ const perfCase = name => {
 
   const runTime = performance.now() - runStartTime;
 
-return {
+  return {
     loadTime,
     runTime,
     totalTime: runTime + loadTime,
@@ -1219,3 +1219,4 @@ function foo() {
   }
 }
 ````
+
