@@ -340,16 +340,20 @@ export default iterateJsdoc(({
   /** @type {Set<string>} */
   const closedTypes = new Set();
 
-  const tsModuleVariables = scopeManager.scopes.find(({
+  const tsModuleVariables = scopeManager.scopes.filter(({
     type,
   }) => {
     // @ts-expect-error TS
     return type === 'tsModule';
-  })?.variables.map(({
-    name,
+  }).flatMap(({
+    variables,
   }) => {
-    return name;
-  }) ?? [];
+    return variables.map(({
+      name,
+    }) => {
+      return name;
+    });
+  });
 
   const allDefinedTypes = new Set(globalScope.variables.map(({
     name,
