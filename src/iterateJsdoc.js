@@ -2173,8 +2173,6 @@ const getIndentAndJSDoc = function (lines, jsdocNode) {
  * @returns {import('eslint').Rule.RuleModule}
  */
 const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContexts) => {
-  const trackedJsdocs = new Set();
-
   /** @type {import('@es-joy/jsdoccomment').CommentHandler} */
   let handler;
 
@@ -2321,6 +2319,7 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
         });
       }
 
+      const trackedJsdocs = new Set();
       const state = {};
 
       return {
