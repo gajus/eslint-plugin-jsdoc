@@ -1251,5 +1251,14 @@ class Test {
 }
 
 console.log(Test);
+
+declare global {
+  const foo: number;
+}
+
+/**
+ * {@link foo}
+ */
+export const bar = 1;
 ````
 
