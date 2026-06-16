@@ -340,6 +340,17 @@ export default iterateJsdoc(({
   /** @type {Set<string>} */
   const closedTypes = new Set();
 
+  const tsModuleVariables = scopeManager.scopes.find(({
+    type,
+  }) => {
+    // @ts-expect-error TS
+    return type === 'tsModule';
+  })?.variables.map(({
+    name,
+  }) => {
+    return name;
+  }) ?? [];
+
   const allDefinedTypes = new Set(globalScope.variables.map(({
     name,
   }) => {
@@ -431,6 +442,7 @@ export default iterateJsdoc(({
     .concat(typedefDeclarations)
     .concat(importTags)
     .concat(definedTypes)
+    .concat(tsModuleVariables)
     .concat(/** @type {string[]} */ (definedPreferredTypes))
     .concat((() => {
       // Other methods are not in scope, but we need them, and we grab them here

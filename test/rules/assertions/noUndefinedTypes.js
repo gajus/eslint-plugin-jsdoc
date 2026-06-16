@@ -2151,5 +2151,20 @@ export default /** @type {import('../index.js').TestCases} */ ({
         console.log(Test);
       `,
     },
+    {
+      code: `
+        declare global {
+          const foo: number;
+        }
+
+        /**
+         * {@link foo}
+         */
+        export const bar = 1;
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
   ],
 });
