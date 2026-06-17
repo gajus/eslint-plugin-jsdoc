@@ -1260,5 +1260,14 @@ declare global {
  * {@link foo}
  */
 export const bar = 1;
+
+/** {@link foo} */
+function a(foo: number) {}
+
+/** {@link foo} */
+const b = function (foo: number) {};
+
+/** {@link foo} */
+const b = (foo: number) => {};
 ````
 
