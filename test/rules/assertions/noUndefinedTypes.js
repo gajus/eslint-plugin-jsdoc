@@ -2166,5 +2166,32 @@ export default /** @type {import('../index.js').TestCases} */ ({
         parser: typescriptEslintParser,
       },
     },
+    {
+      code: `
+        /** {@link foo} */
+        function a(foo: number) {}
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /** {@link foo} */
+        const b = function (foo: number) {};
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /** {@link foo} */
+        const b = (foo: number) => {};
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
   ],
 });

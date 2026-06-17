@@ -246,6 +246,31 @@ export default iterateJsdoc(({
     const result = new Set();
 
     let scp = scope;
+
+    /**
+     * @param {import("eslint").Scope.Scope | null} sc
+     */
+    const getChildScopes = (sc) => {
+      if (sc) {
+        // We must check child scopes because when multiple nodes find
+        //   the same comment block, only one node is reported by our code,
+        //   and it can be the children which are not reported.
+        for (const childScope of sc.childScopes) {
+          for (const {
+            name,
+          } of childScope.variables) {
+            result.add(name);
+          }
+
+          for (const grandChildScope of childScope.childScopes) {
+            getChildScopes(grandChildScope);
+          }
+        }
+      }
+    };
+
+    getChildScopes(scp);
+
     while (scp) {
       for (const {
         name,
