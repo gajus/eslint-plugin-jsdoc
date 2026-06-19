@@ -4,7 +4,11 @@ allowBuilds:
   re2: false
   unrs-resolver: false
 
+overrides:
+  yargs@^17: 17.7.3
+
 minimumReleaseAgeExclude:
   - '@types/node@25.9.2'
+  - 'yargs'
 
 shellEmulator: true
