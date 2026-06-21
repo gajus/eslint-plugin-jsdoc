@@ -28,7 +28,15 @@ const globalTypes = [
   'globalThis', 'global', 'window', 'self',
 ];
 
+const iterableIterator = [
+  'Iterable',
+  'Iterator',
+  'IteratorObject',
+];
+
 const typescriptGlobals = [
+  ...iterableIterator,
+
   // https://www.typescriptlang.org/docs/handbook/utility-types.html
   'Awaited',
   'Partial',

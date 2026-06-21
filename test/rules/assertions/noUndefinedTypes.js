@@ -2193,5 +2193,17 @@ export default /** @type {import('../index.js').TestCases} */ ({
         parser: typescriptEslintParser,
       },
     },
+    {
+      code: `
+        /**
+         * @param {...Iterable<any>} its
+         * @returns {IteratorObject<any>}
+         * @see https://developer.mozilla.org/Web/JavaScript/Reference/Global_Objects/Iterator/concat
+         */
+        const concatIteratorJSDoc = (...its) => {
+            return Iterator.from(its.flat());
+        };
+      `,
+    },
   ],
 });
