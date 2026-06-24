@@ -787,5 +787,32 @@ export default /** @type {import('../index.js').TestCases} */ ({
         }
       `,
     },
+    {
+      code: `
+        /**
+         * @template T
+         * @augments {Set<T>}
+         */
+        export class MySet extends Set {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template U
+         * @extends {Set<U>}
+         */
+        export class MySet extends Set {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * @template T
+         * @implements {Iterable<T>}
+         */
+        export class MyIterable {}
+      `,
+    },
   ],
 });
