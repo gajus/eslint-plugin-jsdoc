@@ -132,6 +132,16 @@ export default iterateJsdoc(({
       }
     }
 
+    // Template names may be used only within the heritage clause types of a
+    // class/interface, e.g. `@template T` used in `@augments {Base<T>}`.
+    for (const heritageTagName of [
+      'augments', 'extends', 'implements',
+    ]) {
+      for (const heritageTag of getTags(jsdoc, heritageTagName)) {
+        checkForUsedTypes(heritageTag.type);
+      }
+    }
+
     checkTemplateTags();
   };
 

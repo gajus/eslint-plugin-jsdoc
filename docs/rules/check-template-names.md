@@ -417,5 +417,23 @@ export function createMessageChannel(messageType) {
 
   return messageChannel;
 }
+
+/**
+ * @template T
+ * @augments {Set<T>}
+ */
+export class MySet extends Set {}
+
+/**
+ * @template U
+ * @extends {Set<U>}
+ */
+export class MySet extends Set {}
+
+/**
+ * @template T
+ * @implements {Iterable<T>}
+ */
+export class MyIterable {}
 ````
 
