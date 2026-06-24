@@ -1578,6 +1578,42 @@ const isInlineTag = (tag) => {
 */
 
 /**
+ * Splits a `@template` tag's names on commas that separate template entries,
+ * ignoring commas nested within a type expression so that default values such
+ * as `[T=Record<string, unknown>]` are not split apart.
+ *
+ * Only `<`, `(` and `{` are treated as nesting: a comma within them is part of
+ * a type (generic arguments, function params, object type). Square brackets are
+ * deliberately not counted, since `[...]` is the optional/default wrapper in
+ * which commas do separate entries, e.g. `[T=string, U=number]`.
+ * @param {string} str
+ * @returns {string[]}
+ */
+const splitTopLevelCommas = (str) => {
+  const parts = [];
+  let depth = 0;
+  let current = '';
+  for (const char of str) {
+    if (char === '<' || char === '{' || char === '(') {
+      depth++;
+    } else if (char === '>' || char === '}' || char === ')') {
+      depth = Math.max(0, depth - 1);
+    }
+
+    if (char === ',' && depth === 0) {
+      parts.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+
+  parts.push(current);
+
+  return parts;
+};
+
+/**
  * Parses GCC Generic/Template types
  * @see {@link https://github.com/google/closure-compiler/wiki/Generic-Types}
  * @see {@link https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#template}
@@ -1585,8 +1621,7 @@ const isInlineTag = (tag) => {
  * @returns {string[]}
  */
 const parseClosureTemplateTag = (tag) => {
-  return tag.name
-    .split(',')
+  return splitTopLevelCommas(tag.name)
     .map((type) => {
       return type.trim().replace(/^\[?(?<name>.*?)=.*$/v, '$<name>');
     });

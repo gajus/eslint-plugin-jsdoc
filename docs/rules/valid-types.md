@@ -409,7 +409,7 @@ parseArray = function(parser) {
     };
 };
 // Settings: {"jsdoc":{"mode":"closure"}}
-// Message: Syntax error in namepath: T<~
+// Message: Syntax error in namepath: T<~, R
 
 /**
  * @template T, R<~
@@ -1009,5 +1009,10 @@ const MY_BITMASK_CONSTANT = {
     BITMASK_VALUE_A: 1 << 4,
     BITMASK_VALUE_B: somePrivateVariableHere
 };
+
+/**
+ * @template [T=Record<string, unknown>]
+ */
+function quux () {}
 ````
 
