@@ -167,4 +167,55 @@ describe('jsdocUtils', () => {
       });
     });
   });
+  describe('parseClosureTemplateTag()', () => {
+    it('splits multiple template names on top-level commas', () => {
+      expect(jsdocUtils.parseClosureTemplateTag({
+        name: 'S, T',
+      })).to.deep.equal([
+        'S', 'T',
+      ]);
+    });
+    it('returns a single template name', () => {
+      expect(jsdocUtils.parseClosureTemplateTag({
+        name: 'T',
+      })).to.deep.equal([
+        'T',
+      ]);
+    });
+    it('splits multiple defaulted names within the optional wrapper', () => {
+      expect(jsdocUtils.parseClosureTemplateTag({
+        name: '[T=string, U=number]',
+      })).to.deep.equal([
+        'T', 'U',
+      ]);
+    });
+    it('keeps commas inside a generic-type default', () => {
+      expect(jsdocUtils.parseClosureTemplateTag({
+        name: '[T=Record<string, unknown>]',
+      })).to.deep.equal([
+        'T',
+      ]);
+    });
+    it('keeps commas inside an object-type default', () => {
+      expect(jsdocUtils.parseClosureTemplateTag({
+        name: '[T={a: string, b: number}]',
+      })).to.deep.equal([
+        'T',
+      ]);
+    });
+    it('keeps commas inside a function-type default', () => {
+      expect(jsdocUtils.parseClosureTemplateTag({
+        name: '[T=(a: string, b: number) => void]',
+      })).to.deep.equal([
+        'T',
+      ]);
+    });
+    it('does not let an unbalanced closer push depth below zero', () => {
+      expect(jsdocUtils.parseClosureTemplateTag({
+        name: 'A>, B',
+      })).to.deep.equal([
+        'A>', 'B',
+      ]);
+    });
+  });
 });
