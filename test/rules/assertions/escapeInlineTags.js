@@ -500,6 +500,14 @@ export default {
     {
       code: `
         /**
+         * A description with a multi-line inline tag {@link
+         * @scope/pkg#Member} reference.
+         */
+      `,
+    },
+    {
+      code: `
+        /**
          * @example
          * Here are some unescaped tags: @yearly, @monthly
          */

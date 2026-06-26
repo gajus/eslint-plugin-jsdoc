@@ -224,6 +224,11 @@ The following patterns are not considered problems:
  */
 
 /**
+ * A description with a multi-line inline tag {@link
+ * @scope/pkg#Member} reference.
+ */
+
+/**
  * @example
  * Here are some unescaped tags: @yearly, @monthly
  */

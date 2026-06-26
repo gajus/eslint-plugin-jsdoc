@@ -138,17 +138,33 @@ export default iterateJsdoc(({
     return '';
   };
 
+  const normalizedDescription = description.startsWith('\n') ?
+    description.slice(1) :
+    description;
+
+  let nextLineStartOffset = 0;
   for (const [
     idx,
     descLine,
-  ] of (
-      description.startsWith('\n') ? description.slice(1) : description
-    ).split('\n').entries()
+  ] of normalizedDescription.split('\n').entries()
   ) {
+    const lineStartOffset = nextLineStartOffset;
+
+    // +1 for the `\n` removed by split.
+    nextLineStartOffset += descLine.length + 1;
+
     descLine.replaceAll(unescapedInlineTagRegex, (match, tagName, offset) => {
       if (
         allowedInlineTags.includes(tagName) ||
-        shouldIgnoreMatch(descLine, match, offset)
+        // Run ignore-detection against the full description text so that
+        // multi-line inline tags (e.g. `{@link` on one line and
+        // `@scope/pkg#Member}` on the next) are recognized as being inside an
+        // inline tag rather than scanned per-line.
+        shouldIgnoreMatch(
+          normalizedDescription,
+          match,
+          lineStartOffset + offset,
+        )
       ) {
         return match;
       }
@@ -171,12 +187,15 @@ export default iterateJsdoc(({
       },
       enableFixer ?
         () => {
+          // `tagName` and `fixType` are constant here, so compute the escaper
+          // once rather than rebuilding the RegExp + closure for every line.
+          const [
+            ,
+            escapeInlineTag,
+          ] = escapeInlineTags(tagName);
+
           utils.setBlockDescription((info, seedTokens, descLines) => {
             return descLines.map((desc) => {
-              const [
-                ,
-                escapeInlineTag,
-              ] = escapeInlineTags(tagName);
               const newDesc = escapeInlineTag(desc);
 
               return {
