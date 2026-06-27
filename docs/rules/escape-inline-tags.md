@@ -112,6 +112,30 @@ The following patterns are considered problems:
 // Message: Unexpected inline JSDoc tag. Did you mean to use {@yearly}, \@yearly, or `@yearly`?
 
 /**
+ * Some description @scope and {@link @scope/pkg#Member}
+ */
+// "jsdoc/escape-inline-tags": ["error"|"warn", {"enableFixer":true}]
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@scope}, \@scope, or `@scope`?
+
+/**
+ * Some description {@example @scope/pkg}
+ */
+// "jsdoc/escape-inline-tags": ["error"|"warn", {"enableFixer":true}]
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@scope}, \@scope, or `@scope`?
+
+/**
+ * Some description {@link @scope/pkg#Member
+ */
+// "jsdoc/escape-inline-tags": ["error"|"warn", {"enableFixer":true}]
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@scope}, \@scope, or `@scope`?
+
+/**
+ * Some description {@ @scope/pkg}
+ */
+// "jsdoc/escape-inline-tags": ["error"|"warn", {"enableFixer":true}]
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@scope}, \@scope, or `@scope`?
+
+/**
  * @param includeNonStandard Whether to include a @yearly, @monthly etc text labels in the generated expression.
  */
 // "jsdoc/escape-inline-tags": ["error"|"warn", {"allowedInlineTags":["monthly"],"enableFixer":true,"fixType":"backticks"}]
@@ -180,6 +204,10 @@ The following patterns are not considered problems:
  */
 
 /**
+ * Use this CodeMirror {@link @codemirror/state#StateField} reference.
+ */
+
+/**
  * @someTag {@link https://example.com}
  */
 
@@ -188,7 +216,16 @@ The following patterns are not considered problems:
  */
 
 /**
+ * @param {SomeType} aName {@inheritDoc @scope-name/pkg-name#Member}
+ */
+
+/**
  * @param {SomeType} aName A description with a {@link https://example.com}.
+ */
+
+/**
+ * A description with a multi-line inline tag {@link
+ * @scope/pkg#Member} reference.
  */
 
 /**

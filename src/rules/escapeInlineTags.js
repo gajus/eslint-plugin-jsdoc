@@ -31,61 +31,50 @@ export default iterateJsdoc(({
   const indexes = [];
 
   const unescapedInlineTagRegex = /(?:^|\s)@(\w+)/gv;
-  for (const [
-    idx,
-    descLine,
-  ] of (
-      description.startsWith('\n') ? description.slice(1) : description
-    ).split('\n').entries()
-  ) {
-    descLine.replaceAll(unescapedInlineTagRegex, (_, tagName) => {
-      if (allowedInlineTags.includes(tagName)) {
-        return _;
-      }
 
-      tagNames.push(tagName);
-      indexes.push(idx);
+  const scopedPackageNameRegex = /^@[\w.\-]+\/[\w.\-]+/v;
 
-      return _;
-    });
-  }
+  const declarationReferenceInlineTags = new Set([
+    'inheritDoc',
+    'link',
+    'linkcode',
+    'linkplain',
+  ]);
 
-  for (const [
-    idx,
-    tagName,
-  ] of tagNames.entries()) {
-    utils.reportJSDoc(
-      `Unexpected inline JSDoc tag. Did you mean to use {@${tagName}}, \\@${tagName}, or \`@${tagName}\`?`,
-      {
-        line: indexes[idx] + 1,
-      },
-      enableFixer ?
-        () => {
-          utils.setBlockDescription((info, seedTokens, descLines) => {
-            return descLines.map((desc) => {
-              const newDesc = desc.replaceAll(
-                new RegExp(`(^|\\s)@${
-                  // No need to escape, as contains only safe characters
-                  tagName
-                }`, 'gv'),
-                fixType === 'backticks' ? '$1`@' + tagName + '`' : '$1\\@' + tagName,
-              );
+  /**
+   * @param {string} desc
+   * @param {number} atSignIndex
+   * @returns {string}
+   */
+  const getInlineTagName = (desc, atSignIndex) => {
+    const inlineTagStart = desc.lastIndexOf('{@', atSignIndex);
 
-              return {
-                number: 0,
-                source: '',
-                tokens: seedTokens({
-                  ...info,
-                  description: newDesc,
-                  postDelimiter: newDesc.trim() ? ' ' : '',
-                }),
-              };
-            });
-          });
-        } :
-        null,
-    );
-  }
+    if (inlineTagStart === -1) {
+      return '';
+    }
+
+    const inlineTagEnd = desc.indexOf('}', inlineTagStart);
+
+    if (inlineTagEnd === -1 || inlineTagEnd <= atSignIndex) {
+      return '';
+    }
+
+    return desc.slice(inlineTagStart + 2).match(/^\w+/v)?.[0] || '';
+  };
+
+  /**
+   * @param {string} desc
+   * @param {string} match
+   * @param {number} offset
+   * @returns {boolean}
+   */
+  const shouldIgnoreMatch = (desc, match, offset) => {
+    const atSignIndex = offset + match.lastIndexOf('@');
+    const inlineTagName = getInlineTagName(desc, atSignIndex);
+
+    return declarationReferenceInlineTags.has(inlineTagName) &&
+      scopedPackageNameRegex.test(desc.slice(atSignIndex));
+  };
 
   /**
    * @param {string} tagName
@@ -108,11 +97,122 @@ export default iterateJsdoc(({
       (desc) => {
         return desc.replaceAll(
           regex,
-          fixType === 'backticks' ? '$1`@' + tagName + '`' : '$1\\@' + tagName,
+          (match, prefix, offset) => {
+            if (shouldIgnoreMatch(desc, match, offset)) {
+              return match;
+            }
+
+            return fixType === 'backticks' ?
+              prefix + '`@' + tagName + '`' :
+              prefix + '\\@' + tagName;
+          },
         );
       },
     ];
   };
+
+  /**
+   * @param {string} desc
+   * @returns {string}
+   */
+  const getUnescapedInlineTagName = (desc) => {
+    unescapedInlineTagRegex.lastIndex = 0;
+
+    let match;
+    while ((match = unescapedInlineTagRegex.exec(desc)) !== null) {
+      const [
+        fullMatch,
+        tagName,
+      ] = match;
+
+      if (
+        allowedInlineTags.includes(tagName) ||
+        shouldIgnoreMatch(desc, fullMatch, match.index)
+      ) {
+        continue;
+      }
+
+      return tagName;
+    }
+
+    return '';
+  };
+
+  const normalizedDescription = description.startsWith('\n') ?
+    description.slice(1) :
+    description;
+
+  let nextLineStartOffset = 0;
+  for (const [
+    idx,
+    descLine,
+  ] of normalizedDescription.split('\n').entries()
+  ) {
+    const lineStartOffset = nextLineStartOffset;
+
+    // +1 for the `\n` removed by split.
+    nextLineStartOffset += descLine.length + 1;
+
+    descLine.replaceAll(unescapedInlineTagRegex, (match, tagName, offset) => {
+      if (
+        allowedInlineTags.includes(tagName) ||
+        // Run ignore-detection against the full description text so that
+        // multi-line inline tags (e.g. `{@link` on one line and
+        // `@scope/pkg#Member}` on the next) are recognized as being inside an
+        // inline tag rather than scanned per-line.
+        shouldIgnoreMatch(
+          normalizedDescription,
+          match,
+          lineStartOffset + offset,
+        )
+      ) {
+        return match;
+      }
+
+      tagNames.push(tagName);
+      indexes.push(idx);
+
+      return match;
+    });
+  }
+
+  for (const [
+    idx,
+    tagName,
+  ] of tagNames.entries()) {
+    utils.reportJSDoc(
+      `Unexpected inline JSDoc tag. Did you mean to use {@${tagName}}, \\@${tagName}, or \`@${tagName}\`?`,
+      {
+        line: indexes[idx] + 1,
+      },
+      enableFixer ?
+        () => {
+          // `tagName` and `fixType` are constant here, so compute the escaper
+          // once rather than rebuilding the RegExp + closure for every line.
+          const [
+            ,
+            escapeInlineTag,
+          ] = escapeInlineTags(tagName);
+
+          utils.setBlockDescription((info, seedTokens, descLines) => {
+            return descLines.map((desc) => {
+              const newDesc = escapeInlineTag(desc);
+
+              return {
+                number: 0,
+                source: '',
+                tokens: seedTokens({
+                  ...info,
+                  description: newDesc,
+                  postDelimiter: newDesc.trim() ? ' ' : '',
+                }),
+              };
+            });
+          });
+        } :
+        null,
+    );
+  }
 
   for (const tag of jsdoc.tags) {
     if (tag.tag === 'example') {
@@ -125,10 +225,7 @@ export default iterateJsdoc(({
       utils.getTagDescription(tag, true)
     // eslint-disable-next-line no-loop-func -- Safe
     ).some((desc) => {
-      tagName = unescapedInlineTagRegex.exec(desc)?.[1] ?? '';
-      if (allowedInlineTags.includes(tagName)) {
-        return false;
-      }
+      tagName = getUnescapedInlineTagName(desc);
 
       return tagName;
     })) {
