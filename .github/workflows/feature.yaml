@@ -44,6 +44,7 @@ jobs:
         node_js_version:
           - '22.14.0'
           - '24'
+          - '26'
         eslint_version:
           - '10'
         include:
