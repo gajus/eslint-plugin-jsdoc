@@ -113,7 +113,6 @@ export default iterateJsdoc(({
     } else if (aliasDeclaration.type === 'ClassDeclaration') {
       /* c8 ignore next -- TS */
       for (const nde of aliasDeclaration?.body?.body ?? []) {
-        // @ts-expect-error Should be ok
         const commentNode = getJSDocComment(sourceCode, nde, settings);
         if (!commentNode) {
           continue;

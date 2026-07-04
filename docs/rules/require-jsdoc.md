@@ -2167,5 +2167,27 @@ const foo = autolog(function foo() {
 })
 // Settings: {"jsdoc":{"skipInvokedExpressionsForCommentFinding":true}}
 // "jsdoc/require-jsdoc": ["error"|"warn", {"checkAllFunctionExpressions":true,"contexts":["FunctionDeclaration","MethodDefinition","ClassDeclaration","TSDeclareFunction"],"require":{"FunctionExpression":true}}]
+
+/**
+ * Description for myFunction
+ */
+function myFunction(foo: string): string
+function myFunction(foo: number): string
+function myFunction(...args: any[]) {
+  return ''
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionDeclaration":true,"MethodDefinition":true}}]
+
+class Foo {
+  /**
+   * Description for bar
+   */
+  bar(foo: string): string
+  bar(foo: number): string
+  bar(...args: any[]) {
+    return ''
+  }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionDeclaration":true,"MethodDefinition":true}}]
 ````
 

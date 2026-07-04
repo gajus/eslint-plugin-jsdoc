@@ -347,7 +347,6 @@ const isExemptedImplementer = (node, sourceCode, context, settings) => {
         context.getScope()
       ));
       if (interfaceMethodNode) {
-        // @ts-expect-error Ok
         const comment = getJSDocComment(sourceCode, interfaceMethodNode, settings);
         if (comment) {
           return true;
