@@ -6793,5 +6793,53 @@ function quux (foo) {
         },
       },
     },
+    {
+      code: `
+        /**
+         * Description for myFunction
+         */
+        function myFunction(foo: string): string
+        function myFunction(foo: number): string
+        function myFunction(...args: any[]) {
+          return ''
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          require: {
+            FunctionDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+    },
+    {
+      code: `
+        class Foo {
+          /**
+           * Description for bar
+           */
+          bar(foo: string): string
+          bar(foo: number): string
+          bar(...args: any[]) {
+            return ''
+          }
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          require: {
+            FunctionDeclaration: true,
+            MethodDefinition: true,
+          },
+        },
+      ],
+    },
   ],
 });
