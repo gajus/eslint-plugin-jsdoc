@@ -1527,7 +1527,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
       /**
        * @param {string} name
        *
-       * @typedef {{ loadTime: number; runTime: number; totalTime: number } | void} PerfResult
+       * @typedef {void | { loadTime: number; runTime: number; totalTime: number }} PerfResult
        * @returns {PerfResult} Perf result
        */
       const perfCase = name => {
@@ -1583,7 +1583,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
       /**
-       * @typedef {{ ok: boolean } | void} MaybeResult
+       * @typedef {void | { ok: boolean }} MaybeResult
        */
 
       /**
@@ -1599,7 +1599,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
       /**
-       * @typedef {{ ok: boolean } | void} MaybeResult
+       * @typedef {void | { ok: boolean }} MaybeResult
        */
 
       /**
@@ -1629,14 +1629,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       };
 
       /**
-       * @typedef {{ ok: boolean } | void} MaybeResult
+       * @typedef {void | { ok: boolean }} MaybeResult
        */
       `,
     },
     {
       code: `
       /**
-       * @typedef {{ ok: boolean } | undefined} MaybeResult
+       * @typedef {undefined | { ok: boolean }} MaybeResult
        */
 
       /**
