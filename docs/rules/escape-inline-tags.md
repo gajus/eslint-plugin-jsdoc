@@ -61,6 +61,26 @@ The following patterns are considered problems:
 
 ````ts
 /**
+ * @file Use @outside before `npm init @eslint/config`.
+ */
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@outside}, \@outside, or `@outside`?
+
+/**
+ * @file Run `npm init @eslint/config` with @outside.
+ */
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@outside}, \@outside, or `@outside`?
+
+/**
+ * @file Run `npm init @eslint/config without a closing backtick.
+ */
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@eslint}, \@eslint, or `@eslint`?
+
+/**
+ * @file Literal \`npm init @eslint/config` text.
+ */
+// Message: Unexpected inline JSDoc tag. Did you mean to use {@eslint}, \@eslint, or `@eslint`?
+
+/**
  *
  * Whether to include a @yearly, @monthly etc text labels in the generated expression.
  */
@@ -171,6 +191,14 @@ The following patterns are considered problems:
 The following patterns are not considered problems:
 
 ````ts
+/**
+ * @file Main CLI that is run via the `npm init @eslint/config` command.
+ */
+
+/**
+ * @param value Run ``npm `init` @eslint/config``.
+ */
+
 /**
  * A description with an escaped \@tag.
  */

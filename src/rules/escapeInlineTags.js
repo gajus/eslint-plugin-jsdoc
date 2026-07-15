@@ -41,6 +41,34 @@ export default iterateJsdoc(({
     'linkplain',
   ]);
 
+  const markdownCodeSpanRegex = /(?<!\\)(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)/gv;
+
+  /**
+   * @param {string} desc
+   * @param {number} index
+   * @returns {boolean}
+   */
+  const isInsideMarkdownCodeSpan = (desc, index) => {
+    markdownCodeSpanRegex.lastIndex = 0;
+
+    let match;
+    while ((match = markdownCodeSpanRegex.exec(desc)) !== null) {
+      const delimiterLength = match[1].length;
+      const contentStart = match.index + delimiterLength;
+      const contentEnd = match.index + match[0].length - delimiterLength;
+
+      if (index < contentStart) {
+        return false;
+      }
+
+      if (index < contentEnd) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   /**
    * @param {string} desc
    * @param {number} atSignIndex
@@ -72,8 +100,9 @@ export default iterateJsdoc(({
     const atSignIndex = offset + match.lastIndexOf('@');
     const inlineTagName = getInlineTagName(desc, atSignIndex);
 
-    return declarationReferenceInlineTags.has(inlineTagName) &&
-      scopedPackageNameRegex.test(desc.slice(atSignIndex));
+    return isInsideMarkdownCodeSpan(desc, atSignIndex) ||
+      declarationReferenceInlineTags.has(inlineTagName) &&
+        scopedPackageNameRegex.test(desc.slice(atSignIndex));
   };
 
   /**

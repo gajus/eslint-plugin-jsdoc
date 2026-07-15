@@ -3,6 +3,58 @@ export default {
     {
       code: `
         /**
+         * @file Use @outside before \`npm init @eslint/config\`.
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Unexpected inline JSDoc tag. Did you mean to use {@outside}, \\@outside, or `@outside`?',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @file Run \`npm init @eslint/config\` with @outside.
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Unexpected inline JSDoc tag. Did you mean to use {@outside}, \\@outside, or `@outside`?',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @file Run \`npm init @eslint/config without a closing backtick.
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Unexpected inline JSDoc tag. Did you mean to use {@eslint}, \\@eslint, or `@eslint`?',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @file Literal \\\`npm init @eslint/config\` text.
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Unexpected inline JSDoc tag. Did you mean to use {@eslint}, \\@eslint, or `@eslint`?',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
          *
          * Whether to include a @yearly, @monthly etc text labels in the generated expression.
          */
@@ -406,6 +458,20 @@ export default {
     },
   ],
   valid: [
+    {
+      code: `
+        /**
+         * @file Main CLI that is run via the \`npm init @eslint/config\` command.
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param value Run \`\`npm \`init\` @eslint/config\`\`.
+         */
+      `,
+    },
     {
       code: `
         /**
