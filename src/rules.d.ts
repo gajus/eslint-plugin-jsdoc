@@ -1108,6 +1108,67 @@ export interface Rules {
         }
       ];
 
+  /** Reports extra lines between functions (and other language structures) and their JSDoc blocks. */
+  "jsdoc/no-lines-after-blocks": 
+    | []
+    | [
+        {
+          /**
+           * Set this to an array of strings representing the AST context (or an object with
+           * `context` and `comment` properties) where you wish the rule to be applied.
+           *
+           * `context` defaults to `any` and `comment` defaults to no specific comment context.
+           *
+           * Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`,
+           * `FunctionExpression`). Setting to `"any"` may be problematic if you have
+           * JSDoc-style comments at the top of your files.
+           *
+           * See the ["AST and Selectors"](../#advanced-ast-and-selectors)
+           * section of our Advanced docs for more on the expected format.
+           */
+          contexts?: (
+            | string
+            | {
+                comment?: string;
+                context?: string;
+              }
+          )[];
+          /**
+           * Whether to enable the fixer to remove line breaks
+           */
+          enableFixer?: boolean;
+          /**
+           * Tag names to be added to those which will exempt reporting for a block. Defaults to:
+           *
+           * - 'callback'
+           * - 'copyright'
+           * - 'exports'
+           * - 'interface'
+           * - 'event'
+           * - 'external'
+           * - 'file'
+           * - 'fileoverview'
+           * - 'host'
+           * - 'import'
+           * - 'license'
+           * - 'module'
+           * - 'namespace'
+           * - 'overview'
+           * - 'typedef'
+           *
+           */
+          exemptedBy?: string[];
+          /**
+           * Determines whether `exemptedBy` will override the default values. Defaults to `false`.
+           */
+          overrideDefaultExemptions?: boolean;
+          /**
+           * Whether to use the setting `minLines` as the basis for fixing lines going past `maxLines`
+           */
+          preferMinLines?: boolean;
+        }
+      ];
+
   /** Reports when certain comment structures are always expected. */
   "jsdoc/no-missing-syntax": 
     | []

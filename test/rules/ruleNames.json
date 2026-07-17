@@ -25,6 +25,7 @@
   "no-blank-block-descriptions",
   "no-blank-blocks",
   "no-defaults",
+  "no-lines-after-blocks",
   "no-missing-syntax",
   "no-multi-asterisks",
   "no-restricted-syntax",
