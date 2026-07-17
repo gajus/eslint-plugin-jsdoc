@@ -1292,6 +1292,22 @@ export interface Rules {
         }
       ];
 
+  /** Normalizes labeled links in `@see` tags to a canonical `{@link}` form. */
+  "jsdoc/normalize-see-links": 
+    | []
+    | [
+        {
+          /**
+           * The canonical `{@link}` form. Defaults to `"pipe"`.
+           */
+          canonicalForm?: "pipe" | "prefix";
+          /**
+           * Whether to enable the fixer. Defaults to `true`.
+           */
+          enableFixer?: boolean;
+        }
+      ];
+
   /** Prefer `@import` tags to inline `import()` statements. */
   "jsdoc/prefer-import-tag": 
     | []

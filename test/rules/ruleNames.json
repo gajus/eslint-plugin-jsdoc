@@ -30,6 +30,7 @@
   "no-restricted-syntax",
   "no-types",
   "no-undefined-types",
+  "normalize-see-links",
   "prefer-import-tag",
   "reject-any-type",
   "reject-function-type",
