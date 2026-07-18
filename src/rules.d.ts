@@ -1298,7 +1298,7 @@ export interface Rules {
     | [
         {
           /**
-           * The canonical `{@link}` form. Defaults to `"pipe"`.
+           * The canonical `{@link}` form: `"pipe"` produces `{@link url|label}`, while `"prefix"` produces `[label]{@link url}`. Defaults to `"pipe"`.
            */
           canonicalForm?: "pipe" | "prefix";
           /**

@@ -1,7 +1,7 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
 const markdownLinkRegex = /(?<!\\)\[([^`\]\r\n]+)\]\(([^`\(\)\s]+)\)/gv;
-const prefixLinkRegex = /(?<!\\)\[([^`\]\r\n]+)\]\{@link\s+([^\}\s\|]+)\}/gv;
+const prefixLinkRegex = /(?<!\\)\[([^\]\r\n]+)\]\{@link\s+([^\}\s\|]+)\}/gv;
 const pipeLinkRegex = /\{@link\s+([^\}\s\|]+)\s*\|\s*([^\}\r\n]+)\}/gv;
 
 const markdownLinkAttemptRegex = /(?<!\\)\[[^\]\r\n]*\]\([^\r\n]*(?:\)|$)/v;
@@ -14,19 +14,26 @@ const markdownCodeSpanRegex = /(?<!\\)(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)/gv;
 /**
  * @param {'pipe'|'prefix'} canonicalForm
  * @param {string} label
- * @param {string} target
  * @returns {boolean}
  */
-const cannotSafelyFormatLink = (canonicalForm, label, target) => {
+const cannotSafelyFormatLink = (canonicalForm, label) => {
   if (!label.trim()) {
     return true;
   }
 
   if (canonicalForm === 'pipe') {
-    return target.includes('|') || /[\}\|]/v.test(label);
+    return label.includes('}');
   }
 
-  return label.includes(']') || /[\}\|]/v.test(target);
+  return label.includes(']');
+};
+
+/**
+ * @param {string} target
+ * @returns {string}
+ */
+const encodeLinkTarget = (target) => {
+  return encodeURI(target).replaceAll(/%25(?=[\dA-F]{2})/giv, '%');
 };
 
 /**
@@ -55,9 +62,11 @@ const isInsideMarkdownCodeSpan = (description, index) => {
  * @returns {string}
  */
 const formatLink = (canonicalForm, label, target) => {
+  const encodedTarget = encodeLinkTarget(target);
+
   return canonicalForm === 'pipe' ?
-    `{@link ${target}|${label.trim()}}` :
-    `[${label.trim()}]{@link ${target}}`;
+    `{@link ${encodedTarget}|${label.trim()}}` :
+    `[${label.trim()}]{@link ${encodedTarget}}`;
 };
 
 /**
@@ -128,7 +137,7 @@ export default iterateJsdoc(({
       if (
         isInsideMarkdownCodeSpan(rawDescription, match.index) ||
         scopedPackageNameRegex.test(target) ||
-        cannotSafelyFormatLink(canonicalForm, label, target)
+        cannotSafelyFormatLink(canonicalForm, label)
       ) {
         hasAmbiguousLink = true;
       } else {
@@ -149,7 +158,6 @@ export default iterateJsdoc(({
       if (cannotSafelyFormatLink(
         canonicalForm,
         inlineTag.text,
-        inlineTag.namepathOrURL,
       )) {
         hasAmbiguousLink = true;
         continue;
@@ -255,7 +263,7 @@ export default iterateJsdoc(({
         additionalProperties: false,
         properties: {
           canonicalForm: {
-            description: 'The canonical `{@link}` form. Defaults to `"pipe"`.',
+            description: 'The canonical `{@link}` form: `"pipe"` produces `{@link url|label}`, while `"prefix"` produces `[label]{@link url}`. Defaults to `"pipe"`.',
             enum: [
               'pipe',
               'prefix',

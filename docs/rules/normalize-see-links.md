@@ -14,7 +14,7 @@ A single options object has the following properties.
 <a name="normalize-see-links-options-canonicalform"></a>
 ### <code>canonicalForm</code>
 
-The canonical `{<code>@link</code>}` form. Defaults to `"pipe"`.
+The canonical `{<code>@link</code>}` form: `"pipe"` produces `{<code>@link</code> url|label}`, while `"prefix"` produces `[label]{<code>@link</code> url}`. Defaults to `"pipe"`.
 
 <a name="user-content-normalize-see-links-options-enablefixer"></a>
 <a name="normalize-see-links-options-enablefixer"></a>
@@ -41,7 +41,7 @@ The following patterns are considered problems:
 /**
  * @see [Docs](https://api.example.com/v1?ids=1|2|3)
  */
-// Message: @see link cannot be safely normalized.
+// Message: Expected @see link to use the pipe form.
 
 /**
  * @see [See {options}](https://example.com/api)
@@ -57,15 +57,10 @@ The following patterns are considered problems:
  * @see [Foo](https://example.com/a|b)
  */
 // "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
-// Message: @see link cannot be safely normalized.
+// Message: Expected @see link to use the prefix form.
 
 /**
  * @see [ ](https://example.com)
- */
-// Message: @see link cannot be safely normalized.
-
-/**
- * @see {@link https://example.com|A|B}
  */
 // Message: @see link cannot be safely normalized.
 
@@ -84,6 +79,65 @@ The following patterns are considered problems:
  * @see [Foo](https://example.com/a}b)
  */
 // "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+// Message: Expected @see link to use the prefix form.
+
+/**
+ * @see [Foo](https://example.com/a{b)
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+// Message: Expected @see link to use the prefix form.
+
+/**
+ * @see [Braces](https://example.com/a{b}c)
+ */
+// Message: Expected @see link to use the pipe form.
+
+/**
+ * @see [Existing](https://example.com/%7C?x=1&y=2#frag)
+ */
+// Message: Expected @see link to use the pipe form.
+
+/**
+ * @see [Percent](https://example.com/100%)
+ */
+// Message: Expected @see link to use the pipe form.
+
+/**
+ * @see [A{B](https://example.com)
+ */
+// Message: Expected @see link to use the pipe form.
+
+/**
+ * @see [a}b](https://example.com)
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+// Message: Expected @see link to use the prefix form.
+
+/**
+ * @see {@link https://example.com|A|B}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+// Message: Expected @see link to use the prefix form.
+
+/**
+ * @see {@link https://example.com|A`B}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+// Message: Expected @see link to use the prefix form.
+
+/**
+ * @see [a\}b](https://example.com)
+ */
+// Message: @see link cannot be safely normalized.
+
+/**
+ * @see [See {{one} and {two}}](https://example.com)
+ */
+// Message: @see link cannot be safely normalized.
+
+/**
+ * @see [A}B|C](https://example.com)
+ */
 // Message: @see link cannot be safely normalized.
 
 /**
@@ -108,12 +162,12 @@ The following patterns are considered problems:
 // Message: Expected @see link to use the pipe form.
 
 /**
- * @see [Unsafe](https://example.com/a|b) and [Safe](https://example.com/safe)
+ * @see [Unsafe](https://example.com/a|b?x=1&y=2#frag) and [Safe](https://example.com/safe)
  */
-// Message: @see link cannot be safely normalized.
+// Message: Expected @see link to use the pipe form.
 
 /**
- * @see [JSDoc Markdown](https://example.com/jsdoc-markdown)
+ * @see [JSDoc Markdown](https://example.com/jsdoc|markdown)
  */
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 // Message: Expected @see link to use the pipe form.
@@ -194,7 +248,7 @@ The following patterns are considered problems:
 // Message: Expected @see link to use the pipe form.
 
 /**
- * @see [TypeScript](https://example.com/typescript)
+ * @see [TypeScript](https://example.com/type{script})
  */
 const value: string = 'value';
 // Message: Expected @see link to use the pipe form.
@@ -215,6 +269,64 @@ The following patterns are not considered problems:
 
 ````ts
 /**
+ * @see {@link https://api.example.com/v1?ids=1%7C2%7C3|Docs}
+ */
+
+/**
+ * @see [Foo]{@link https://example.com/a%7Cb}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+
+/**
+ * @see [Foo]{@link https://example.com/a%7Db}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+
+/**
+ * @see [Foo]{@link https://example.com/a%7Bb}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+
+/**
+ * @see {@link https://example.com/a%7Bb%7Dc|Braces}
+ */
+
+/**
+ * @see {@link https://example.com/%7C?x=1&y=2#frag|Existing}
+ */
+
+/**
+ * @see {@link https://example.com/100%25|Percent}
+ */
+
+/**
+ * @see {@link https://example.com|A{B}
+ */
+
+/**
+ * @see [a}b]{@link https://example.com}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+
+/**
+ * @see {@link https://example.com|A|B}
+ */
+
+/**
+ * @see [A|B]{@link https://example.com}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+
+/**
+ * @see [A`B]{@link https://example.com}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+
+/**
+ * @see {@link https://example.com/a%7Cb?x=1&y=2#frag|Unsafe} and {@link https://example.com/safe|Safe}
+ */
+
+/**
  * @see {@link https://example.com/read|Read the guide}
  */
 
@@ -232,7 +344,7 @@ The following patterns are not considered problems:
  */
 
 /**
- * @see {@link https://example.com/jsdoc-markdown|JSDoc Markdown}
+ * @see {@link https://example.com/jsdoc%7Cmarkdown|JSDoc Markdown}
  */
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 
@@ -265,7 +377,7 @@ The following patterns are not considered problems:
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 
 /**
- * @see {@link https://example.com/typescript|TypeScript}
+ * @see {@link https://example.com/type%7Bscript%7D|TypeScript}
  */
 const value: string = 'value';
 

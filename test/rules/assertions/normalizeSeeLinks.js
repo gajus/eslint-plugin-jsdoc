@@ -13,11 +13,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@see link cannot be safely normalized.',
+          message: 'Expected @see link to use the pipe form.',
         },
       ],
-      output: null,
+      output: `
+        /**
+         * @see {@link https://api.example.com/v1?ids=1%7C2%7C3|Docs}
+         */
+      `,
     },
+    // `\}` truncates pipe-label text in @es-joy/jsdoccomment.
     {
       code: `
         /**
@@ -32,6 +37,7 @@ export default {
       ],
       output: null,
     },
+    // `\}` truncates pipe-label text in @es-joy/jsdoccomment.
     {
       code: `
         /**
@@ -55,7 +61,7 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@see link cannot be safely normalized.',
+          message: 'Expected @see link to use the prefix form.',
         },
       ],
       options: [
@@ -63,8 +69,13 @@ export default {
           canonicalForm: 'prefix',
         },
       ],
-      output: null,
+      output: `
+        /**
+         * @see [Foo]{@link https://example.com/a%7Cb}
+         */
+      `,
     },
+    // A blank label has no intended text the fixer can preserve.
     {
       code: `
         /**
@@ -79,20 +90,7 @@ export default {
       ],
       output: null,
     },
-    {
-      code: `
-        /**
-         * @see {@link https://example.com|A|B}
-         */
-      `,
-      errors: [
-        {
-          line: 3,
-          message: '@see link cannot be safely normalized.',
-        },
-      ],
-      output: null,
-    },
+    // `\]` prevents prefix-form parsing in @es-joy/jsdoccomment.
     {
       code: `
         /**
@@ -112,6 +110,7 @@ export default {
       ],
       output: null,
     },
+    // A blank label has no intended text the fixer can preserve.
     {
       code: `
         /**
@@ -135,12 +134,225 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@see link cannot be safely normalized.',
+          message: 'Expected @see link to use the prefix form.',
         },
       ],
       options: [
         {
           canonicalForm: 'prefix',
+        },
+      ],
+      output: `
+        /**
+         * @see [Foo]{@link https://example.com/a%7Db}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [Foo](https://example.com/a{b)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the prefix form.',
+        },
+      ],
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+      output: `
+        /**
+         * @see [Foo]{@link https://example.com/a%7Bb}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [Braces](https://example.com/a{b}c)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com/a%7Bb%7Dc|Braces}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [Existing](https://example.com/%7C?x=1&y=2#frag)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com/%7C?x=1&y=2#frag|Existing}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [Percent](https://example.com/100%)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com/100%25|Percent}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [A{B](https://example.com)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com|A{B}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [a}b](https://example.com)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the prefix form.',
+        },
+      ],
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+      output: `
+        /**
+         * @see [a}b]{@link https://example.com}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com|A|B}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the prefix form.',
+        },
+      ],
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+      output: `
+        /**
+         * @see [A|B]{@link https://example.com}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com|A\`B}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the prefix form.',
+        },
+      ],
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+      output: `
+        /**
+         * @see [A\`B]{@link https://example.com}
+         */
+      `,
+    },
+    // An existing `\}` still truncates pipe-label text in the parser.
+    {
+      code: `
+        /**
+         * @see [a\\}b](https://example.com)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@see link cannot be safely normalized.',
+        },
+      ],
+      output: null,
+    },
+    // Nested and repeated braces still contain an unparseable pipe-label `}`.
+    {
+      code: `
+        /**
+         * @see [See {{one} and {two}}](https://example.com)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@see link cannot be safely normalized.',
+        },
+      ],
+      output: null,
+    },
+    // The extra pipe is safe, but the closing brace still truncates the label.
+    {
+      code: `
+        /**
+         * @see [A}B|C](https://example.com)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@see link cannot be safely normalized.',
         },
       ],
       output: null,
@@ -226,21 +438,7 @@ export default {
     {
       code: `
         /**
-         * @see [Unsafe](https://example.com/a|b) and [Safe](https://example.com/safe)
-         */
-      `,
-      errors: [
-        {
-          line: 3,
-          message: '@see link cannot be safely normalized.',
-        },
-      ],
-      output: null,
-    },
-    {
-      code: `
-        /**
-         * @see [JSDoc Markdown](https://example.com/jsdoc-markdown)
+         * @see [Unsafe](https://example.com/a|b?x=1&y=2#frag) and [Safe](https://example.com/safe)
          */
       `,
       errors: [
@@ -251,7 +449,25 @@ export default {
       ],
       output: `
         /**
-         * @see {@link https://example.com/jsdoc-markdown|JSDoc Markdown}
+         * @see {@link https://example.com/a%7Cb?x=1&y=2#frag|Unsafe} and {@link https://example.com/safe|Safe}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [JSDoc Markdown](https://example.com/jsdoc|markdown)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com/jsdoc%7Cmarkdown|JSDoc Markdown}
          */
       `,
       settings: {
@@ -505,7 +721,7 @@ export default {
     {
       code: `
         /**
-         * @see [TypeScript](https://example.com/typescript)
+         * @see [TypeScript](https://example.com/type{script})
          */
         const value: string = 'value';
       `,
@@ -520,7 +736,7 @@ export default {
       },
       output: `
         /**
-         * @see {@link https://example.com/typescript|TypeScript}
+         * @see {@link https://example.com/type%7Bscript%7D|TypeScript}
          */
         const value: string = 'value';
       `,
@@ -541,6 +757,127 @@ export default {
     },
   ],
   valid: [
+    {
+      code: `
+        /**
+         * @see {@link https://api.example.com/v1?ids=1%7C2%7C3|Docs}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [Foo]{@link https://example.com/a%7Cb}
+         */
+      `,
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @see [Foo]{@link https://example.com/a%7Db}
+         */
+      `,
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @see [Foo]{@link https://example.com/a%7Bb}
+         */
+      `,
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com/a%7Bb%7Dc|Braces}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com/%7C?x=1&y=2#frag|Existing}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com/100%25|Percent}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com|A{B}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [a}b]{@link https://example.com}
+         */
+      `,
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com|A|B}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [A|B]{@link https://example.com}
+         */
+      `,
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @see [A\`B]{@link https://example.com}
+         */
+      `,
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com/a%7Cb?x=1&y=2#frag|Unsafe} and {@link https://example.com/safe|Safe}
+         */
+      `,
+    },
     {
       code: `
         /**
@@ -573,7 +910,7 @@ export default {
     {
       code: `
         /**
-         * @see {@link https://example.com/jsdoc-markdown|JSDoc Markdown}
+         * @see {@link https://example.com/jsdoc%7Cmarkdown|JSDoc Markdown}
          */
       `,
       settings: {
@@ -643,7 +980,7 @@ export default {
     {
       code: `
         /**
-         * @see {@link https://example.com/typescript|TypeScript}
+         * @see {@link https://example.com/type%7Bscript%7D|TypeScript}
          */
         const value: string = 'value';
       `,
