@@ -36,6 +36,7 @@ import noDefaults from './rules/noDefaults.js';
 import noMissingSyntax from './rules/noMissingSyntax.js';
 import noMultiAsterisks from './rules/noMultiAsterisks.js';
 import noRestrictedSyntax from './rules/noRestrictedSyntax.js';
+import normalizeSeeLinks from './rules/normalizeSeeLinks.js';
 import noTypes from './rules/noTypes.js';
 import noUndefinedTypes from './rules/noUndefinedTypes.js';
 import preferImportTag from './rules/preferImportTag.js';
@@ -128,6 +129,7 @@ index.rules = {
   'no-restricted-syntax': noRestrictedSyntax,
   'no-types': noTypes,
   'no-undefined-types': noUndefinedTypes,
+  'normalize-see-links': normalizeSeeLinks,
   'prefer-import-tag': preferImportTag,
   'reject-any-type': buildRejectOrPreferRuleDefinition({
     description: 'Reports use of `any` or `*` type',
@@ -318,6 +320,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/no-restricted-syntax': 'off',
       'jsdoc/no-types': 'off',
       'jsdoc/no-undefined-types': warnOrError,
+      'jsdoc/normalize-see-links': 'off',
       'jsdoc/prefer-import-tag': 'off',
       'jsdoc/reject-any-type': warnOrError,
       'jsdoc/reject-function-type': warnOrError,
