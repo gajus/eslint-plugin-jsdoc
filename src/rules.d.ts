@@ -1305,6 +1305,10 @@ export interface Rules {
            * Whether to enable the fixer. Defaults to `true`.
            */
           enableFixer?: boolean;
+          /**
+           * Whether to wrap an `@see` description containing only a lowercase `http:` or `https:` URL (for example, `@see https://example.com`) in a plain `{@link https://example.com}`. Defaults to `false`.
+           */
+          wrapBareUrls?: boolean;
         }
       ];
 

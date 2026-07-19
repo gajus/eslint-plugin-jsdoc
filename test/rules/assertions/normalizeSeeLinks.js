@@ -755,6 +755,341 @@ export default {
       ],
       output: null,
     },
+    // wrapBareUrls: whole-description HTTPS URL.
+    {
+      code: `
+        /**
+         * @see https://example.com/docs
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+      ],
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com/docs}
+         */
+      `,
+    },
+    // wrapBareUrls: whole-description HTTP URL.
+    {
+      code: `
+        /**
+         * @see http://example.com/docs
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+      ],
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+      output: `
+        /**
+         * @see {@link http://example.com/docs}
+         */
+      `,
+    },
+    // wrapBareUrls: existing escapes stay encoded and link delimiters are encoded.
+    {
+      code: `
+        /**
+         * @see https://example.com/%7C?ids=1|2&brace={ok}#part}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+      ],
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com/%7C?ids=1%7C2&brace=%7Bok%7D#part%7D}
+         */
+      `,
+    },
+    // wrapBareUrls: canonicalForm prefix still produces a plain no-label link.
+    {
+      code: `
+        /**
+         * @see https://example.com/prefix
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+      ],
+      options: [
+        {
+          canonicalForm: 'prefix',
+          wrapBareUrls: true,
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com/prefix}
+         */
+      `,
+    },
+    // wrapBareUrls: enableFixer false reports without changing the URL.
+    {
+      code: `
+        /**
+         * @see https://example.com/report-only
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+          wrapBareUrls: true,
+        },
+      ],
+      output: null,
+    },
+    // wrapBareUrls: Markdown labeled-link behavior is unchanged when enabled.
+    {
+      code: `
+        /**
+         * @see [Docs](https://example.com/labeled)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com/labeled|Docs}
+         */
+      `,
+    },
+    // wrapBareUrls: prefix labeled-link behavior is unchanged when enabled.
+    {
+      code: `
+        /**
+         * @see [Docs]{@link https://example.com/labeled}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com/labeled|Docs}
+         */
+      `,
+    },
+    // wrapBareUrls: pipe labeled-link behavior is unchanged when enabled.
+    {
+      code: `
+        /**
+         * @see {@link https://example.com/labeled|Docs}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the prefix form.',
+        },
+      ],
+      options: [
+        {
+          canonicalForm: 'prefix',
+          wrapBareUrls: true,
+        },
+      ],
+      output: `
+        /**
+         * @see [Docs]{@link https://example.com/labeled}
+         */
+      `,
+    },
+    // wrapBareUrls: labeled-link collision remains report-only when enabled.
+    {
+      code: `
+        /**
+         * @see [See {options}](https://example.com/labeled)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: '@see link cannot be safely normalized.',
+        },
+      ],
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+      output: null,
+    },
+    // wrapBareUrls: labeled enableFixer behavior is unchanged when enabled.
+    {
+      code: `
+        /**
+         * @see [No fix](https://example.com/labeled)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      options: [
+        {
+          enableFixer: false,
+          wrapBareUrls: true,
+        },
+      ],
+      output: null,
+    },
+    // wrapBareUrls adversarial: trailing URL punctuation is preserved as target text.
+    {
+      code: `
+        /**
+         * @see https://example.com/period.
+         * @see https://example.com/comma,
+         * @see https://example.com/paren)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+        {
+          line: 4,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+        {
+          line: 5,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+      ],
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+      output: `
+        /**
+         * @see {@link https://example.com/period.}
+         * @see {@link https://example.com/comma,}
+         * @see {@link https://example.com/paren)}
+         */
+      `,
+    },
+    // wrapBareUrls adversarial: outer whitespace is ignored for recognition and preserved by the fix.
+    {
+      code: '/**\n * @see https://example.com/trailing \n */',
+      errors: [
+        {
+          line: 2,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+      ],
+      ignoreReadme: true,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+      output: '/**\n * @see {@link https://example.com/trailing} \n */',
+    },
+    // wrapBareUrls: a URL on a continuation line is still the whole trimmed description.
+    {
+      code: `
+        /**
+         * @see
+         *   https://example.com/continued
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+      ],
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+      output: `
+        /**
+         * @see
+         *   {@link https://example.com/continued}
+         */
+      `,
+    },
+    // wrapBareUrls adversarial: an HTTP URL with namepath-looking text is still a URL.
+    {
+      code: `
+        /**
+         * @see http:MyClass#method
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected bare @see URL to use a {@link} tag.',
+        },
+      ],
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+      output: `
+        /**
+         * @see {@link http:MyClass#method}
+         */
+      `,
+    },
   ],
   valid: [
     {
@@ -1050,6 +1385,250 @@ export default {
          * @see \\[Escaped](https://example.com)
          */
       `,
+    },
+    // wrapBareUrls: fixed output is idempotent.
+    {
+      code: `
+        /**
+         * @see {@link https://example.com/idempotent}
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls off/on: a URL inside prose remains a no-op.
+    {
+      code: `
+        /**
+         * @see Read https://example.com/docs
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see Read https://example.com/docs
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls on: namepaths remain no-ops (the off case above is unchanged).
+    {
+      code: `
+        /**
+         * @see MyClass#method
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls off/on: FTP URLs remain no-ops.
+    {
+      code: `
+        /**
+         * @see ftp://example.com/file
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see ftp://example.com/file
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls off/on: mailto URLs remain no-ops.
+    {
+      code: `
+        /**
+         * @see mailto:docs@example.com
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see mailto:docs@example.com
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls off/on: file URLs remain no-ops.
+    {
+      code: `
+        /**
+         * @see file:///tmp/docs
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see file:///tmp/docs
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls off/on: protocol-relative URLs remain no-ops.
+    {
+      code: `
+        /**
+         * @see //example.com/docs
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see //example.com/docs
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls off/on: code-spanned URLs remain no-ops.
+    {
+      code: `
+        /**
+         * @see \`https://example.com/docs\`
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see \`https://example.com/docs\`
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls on: already-inline links remain no-ops (the off case above is unchanged).
+    {
+      code: `
+        /**
+         * @see {@link https://example.com/docs}
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls off/on: empty descriptions remain no-ops.
+    {
+      code: `
+        /**
+         * @see
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls adversarial: internal whitespace prevents whole-URL recognition.
+    {
+      code: `
+        /**
+         * @see https://example.com/one two
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls adversarial: schemes are intentionally case-sensitive.
+    {
+      code: `
+        /**
+         * @see HTTP://example.com/docs
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls adversarial: two URLs are not a whole-description single URL.
+    {
+      code: `
+        /**
+         * @see https://example.com/one https://example.com/two
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls adversarial: Markdown autolink syntax remains unchanged.
+    {
+      code: `
+        /**
+         * @see <https://example.com/docs>
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
+    },
+    // wrapBareUrls adversarial: already-encoded delimiters are not double-encoded.
+    {
+      code: `
+        /**
+         * @see {@link https://example.com/%7C}
+         */
+      `,
+      options: [
+        {
+          wrapBareUrls: true,
+        },
+      ],
     },
   ],
 };

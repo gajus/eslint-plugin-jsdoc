@@ -10,6 +10,7 @@ const pipeLinkAttemptRegex = /\{@link[^\}\r\n]*\|[^\}\r\n]*(?:\}|$)/v;
 
 const scopedPackageNameRegex = /^@[\w.\-]+\/[\w.\-]+/v;
 const markdownCodeSpanRegex = /(?<!\\)(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)/gv;
+const bareHttpUrlRegex = /^https?:\S+$/v;
 
 /**
  * @param {'pipe'|'prefix'} canonicalForm
@@ -34,6 +35,42 @@ const cannotSafelyFormatLink = (canonicalForm, label) => {
  */
 const encodeLinkTarget = (target) => {
   return encodeURI(target).replaceAll(/%25(?=[\dA-F]{2})/giv, '%');
+};
+
+/**
+ * @param {string} description
+ * @param {boolean} enabled
+ * @returns {string|null}
+ */
+const getBareHttpUrl = (description, enabled) => {
+  if (!enabled) {
+    return null;
+  }
+
+  const trimmedDescription = description.trim();
+
+  return bareHttpUrlRegex.test(trimmedDescription) &&
+    URL.canParse(trimmedDescription) ?
+    trimmedDescription : null;
+};
+
+/**
+ * @param {string} target
+ * @returns {string}
+ */
+const formatBareUrl = (target) => {
+  return `{@link ${encodeLinkTarget(target)}}`;
+};
+
+/**
+ * @param {string|undefined} bareUrl
+ * @param {'pipe'|'prefix'} canonicalForm
+ * @returns {string}
+ */
+const getExpectedMessage = (bareUrl, canonicalForm) => {
+  return bareUrl ?
+    'Expected bare @see URL to use a {@link} tag.' :
+    `Expected @see link to use the ${canonicalForm} form.`;
 };
 
 /**
@@ -107,6 +144,7 @@ export default iterateJsdoc(({
   const {
     canonicalForm = 'pipe',
     enableFixer = true,
+    wrapBareUrls = false,
   } = context.options[0] || {};
 
   const descriptionMatcher = canonicalForm === 'pipe' ?
@@ -115,6 +153,8 @@ export default iterateJsdoc(({
 
   /** @type {import('comment-parser').Spec[]} */
   const fixableTags = [];
+  /** @type {Map<import('comment-parser').Spec, string>} */
+  const bareUrlTags = new Map();
 
   for (const tag of jsdoc.tags) {
     if (tag.tag !== 'see') {
@@ -129,6 +169,12 @@ export default iterateJsdoc(({
 
     let hasAmbiguousLink = false;
     let hasNoncanonicalLink = false;
+    const bareUrl = getBareHttpUrl(rawDescription, wrapBareUrls);
+
+    if (bareUrl) {
+      bareUrlTags.set(tag, bareUrl);
+      hasNoncanonicalLink = true;
+    }
 
     for (const match of rawDescription.matchAll(markdownLinkRegex)) {
       const label = match[1];
@@ -208,8 +254,10 @@ export default iterateJsdoc(({
     reportIdx,
     tag,
   ] of fixableTags.entries()) {
+    const bareUrl = bareUrlTags.get(tag);
+
     utils.reportJSDoc(
-      `Expected @see link to use the ${canonicalForm} form.`,
+      getExpectedMessage(bareUrl, canonicalForm),
       {
         line: tag.source[0].number,
       },
@@ -223,6 +271,26 @@ export default iterateJsdoc(({
                 firstTokens.postName + firstTokens.description;
               firstTokens.name = '';
               firstTokens.postName = '';
+            }
+
+            const fixableBareUrl = bareUrlTags.get(fixableTag);
+
+            if (fixableBareUrl) {
+              for (const source of fixableTag.source) {
+                if (!source.tokens.description.includes(fixableBareUrl)) {
+                  continue;
+                }
+
+                source.tokens.description = source.tokens.description.replace(
+                  fixableBareUrl,
+                  () => {
+                    return formatBareUrl(fixableBareUrl);
+                  },
+                );
+                break;
+              }
+
+              continue;
             }
 
             for (
@@ -272,6 +340,10 @@ export default iterateJsdoc(({
           },
           enableFixer: {
             description: 'Whether to enable the fixer. Defaults to `true`.',
+            type: 'boolean',
+          },
+          wrapBareUrls: {
+            description: 'Whether to wrap an `@see` description containing only a lowercase `http:` or `https:` URL (for example, `@see https://example.com`) in a plain `{@link https://example.com}`. Defaults to `false`.',
             type: 'boolean',
           },
         },
