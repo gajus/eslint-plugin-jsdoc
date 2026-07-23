@@ -6841,5 +6841,31 @@ function quux (foo) {
         },
       ],
     },
+    {
+      code: `
+        /** Foo here */
+        export class Foo {
+            /** with string */
+            constructor(arg1: string);
+            /** with number */
+            constructor(arg1: number);
+
+            constructor(arg1: string | number) {
+                // implementation
+            }
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          publicOnly: true,
+          require: {
+            MethodDefinition: true,
+          },
+        },
+      ],
+    },
   ],
 });
