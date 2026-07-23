@@ -2189,5 +2189,18 @@ class Foo {
   }
 }
 // "jsdoc/require-jsdoc": ["error"|"warn", {"require":{"FunctionDeclaration":true,"MethodDefinition":true}}]
+
+/** Foo here */
+export class Foo {
+    /** with string */
+    constructor(arg1: string);
+    /** with number */
+    constructor(arg1: number);
+
+    constructor(arg1: string | number) {
+        // implementation
+    }
+}
+// "jsdoc/require-jsdoc": ["error"|"warn", {"publicOnly":true,"require":{"MethodDefinition":true}}]
 ````
 
