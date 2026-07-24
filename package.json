@@ -5,7 +5,7 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "~0.89.0",
+    "@es-joy/jsdoccomment": "~0.90.0",
     "@es-joy/resolve.exports": "1.2.0",
     "are-docs-informative": "^0.0.2",
     "comment-parser": "1.4.7",
@@ -59,7 +59,7 @@
     "glob": "^13.0.6",
     "globals": "^17.7.0",
     "husky": "^9.1.7",
-    "jsdoc-type-pratt-parser": "^7.2.0",
+    "jsdoc-type-pratt-parser": "^7.3.0",
     "json-schema": "^0.4.0",
     "json-schema-to-typescript": "^15.0.4",
     "lint-staged": "^17.2.0",

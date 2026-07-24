@@ -6,8 +6,9 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - eslint@10.6.0
-  - '@es-joy/jsdoccomment@0.88.0 || 0.89.0'
+  - '@es-joy/jsdoccomment@0.88.0 || 0.89.0 || 0.90.0'
   - lint-staged@17.2.0
+  - jsdoc-type-pratt-parser@7.3.0
 
 overrides:
   yargs@^17: 17.7.3
