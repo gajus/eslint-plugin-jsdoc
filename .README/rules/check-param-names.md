@@ -7,11 +7,22 @@ the function declaration.
 
 ## Fixer
 
-Auto-removes `@param` duplicates (based on identical names).
+With `enableFixer`, reorders non-nested `@param` definitions whose names match
+the function signature but appear in a different order. The whole tag block is
+moved, including multiline descriptions and any text after the final tag.
+Destructured and nested parameters are reported without an automatic fix.
 
-Note that this option will remove duplicates of the same name even if
-the definitions do not match in other ways (e.g., the second param will
-be removed even if it has a different type or description).
+The fixer also auto-removes `@param` duplicates (based on identical names).
+This can be disabled with `duplicateParams`. Duplicate removal does not compare
+the rest of the definitions, so the second tag is removed even if it has a
+different type or description.
+
+## Suggestions
+
+Set `extraParams` to `true` to offer a suggestion that removes an `@param`
+without a corresponding function parameter. Set `badParamNames` to `true` to
+offer a suggestion that renames a mismatched `@param` to the corresponding
+function parameter name.
 
 ## Destructuring
 
@@ -47,7 +58,7 @@ may appear that there is an actual property named `extra`.
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `disableExtraPropertyReporting`, `disableMissingParamChecks`, `enableFixer`, `useDefaultObjectProperties`|
+|Options|`allowExtraTrailingParamDocs`, `badParamNames`, `badParamOrder`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `disableExtraPropertyReporting`, `disableMissingParamChecks`, `duplicateParams`, `enableFixer`, `extraParams`, `useDefaultObjectProperties`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|

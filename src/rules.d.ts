@@ -144,6 +144,16 @@ export interface Rules {
            */
           allowExtraTrailingParamDocs?: boolean;
           /**
+           * Whether to offer a suggestion to rename a mismatched `@param` to the
+           * corresponding function parameter name. Defaults to `false`.
+           */
+          badParamNames?: boolean;
+          /**
+           * Whether to report `@param` definitions whose names match the function
+           * parameters but appear in a different order. Defaults to `true`.
+           */
+          badParamOrder?: boolean;
+          /**
            * Whether to check destructured properties. Defaults to `true`.
            */
           checkDestructured?: boolean;
@@ -206,14 +216,23 @@ export interface Rules {
            */
           disableMissingParamChecks?: boolean;
           /**
-           * Set to `true` to auto-remove `@param` duplicates (based on identical
-           * names).
+           * Whether to report duplicate `@param` definitions. Defaults to `true`.
+           */
+          duplicateParams?: boolean;
+          /**
+           * Set to `true` to reorder non-nested `@param` definitions to match the
+           * function signature and to auto-remove duplicates (based on identical names).
            *
            * Note that this option will remove duplicates of the same name even if
            * the definitions do not match in other ways (e.g., the second param will
            * be removed even if it has a different type or description).
            */
           enableFixer?: boolean;
+          /**
+           * Whether to offer a suggestion to remove an `@param` that has no
+           * corresponding function parameter. Defaults to `false`.
+           */
+          extraParams?: boolean;
           /**
            * Set to `true` if you wish to avoid reporting of child property documentation
            * where instead of destructuring, a whole plain object is supplied as default
