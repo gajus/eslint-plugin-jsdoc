@@ -130,6 +130,27 @@ const config = [
 export default config;
 ```
 
+If you are using `defineConfig`, you can build as follows:
+
+```js
+import jsdoc from 'eslint-plugin-jsdoc';
+import {defineConfig} from 'eslint/config';
+
+export default defineConfig([
+  {
+    name: 'jsdoc-js', // Useful with `eslint --inspect-config`
+    files: ['**/*.{js,mjs,cjs}'],
+    plugins: {
+      jsdoc
+    },
+    rules: {
+      ...jsdoc.configs['flat/recommended'].rules
+    }
+  }
+]);
+```
+
+
 The general starting rulesets you can extend from in flat config are:
 
 - `jsdoc.configs['flat/recommended']`: Recommended starting rules for enforcing proper tag values, that common tags exist, and that tags are formatted and styled consistently
