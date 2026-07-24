@@ -171,6 +171,7 @@
     "create-rule": "node ./src/bin/generateRule.js",
     "create-options": "node ./src/bin/generateOptions.js",
     "install-offline": "CI=1 pnpm install --prefer-offline --no-frozen-lockfile",
+    "inspect-config": "eslint --inspect-config",
     "lint": "eslint",
     "lint-fix": "eslint --fix",
     "prepare": "husky",

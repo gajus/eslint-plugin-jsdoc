@@ -21,9 +21,17 @@ export default [
     ignores: [
       'coverage',
       'dist',
+      '.ignore/**',
+      '**/*.d.ts',
     ],
+    name: 'ignores',
   },
-  ...canonical,
+  ...canonical.map((cfg) => {
+    return {
+      name: 'canonical',
+      ...cfg,
+    };
+  }),
   // ...canonicalJsdoc,
   jsdoc({
     config: 'flat/recommended',
@@ -32,18 +40,13 @@ export default [
     config: 'examples-and-default-expressions',
   }),
   {
-    // Must be by itself
-    ignores: [
-      'dist/**', '.ignore/**', '**/*.d.ts',
-    ],
-  },
-  {
     ...common,
     languageOptions: {
       ecmaVersion: 'latest',
       globals: globals.node,
       sourceType: 'module',
     },
+    name: 'overrides',
     rules: {
       '@stylistic/array-element-newline': 0,
       '@stylistic/no-extra-parens': 0,
@@ -92,6 +95,7 @@ export default [
       },
       sourceType: 'script',
     },
+    name: 'npm-check-updates',
     rules: {
       'canonical/filename-match-regex': 0,
       'import/no-commonjs': 0,
@@ -111,6 +115,7 @@ export default [
       globals: globals.mocha,
       sourceType: 'module',
     },
+    name: 'jsdoc/testing',
     rules: {
       'no-restricted-syntax': 0,
       'unicorn/prevent-abbreviations': 0,
