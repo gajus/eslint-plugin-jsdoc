@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["es2024"],
+    "types": ["node"],
     "moduleResolution": "Bundler",
     "module": "ESNext",
     "allowJs": true,
