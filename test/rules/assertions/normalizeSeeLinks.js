@@ -22,7 +22,7 @@ export default {
          */
       `,
     },
-    // `\}` truncates pipe-label text in @es-joy/jsdoccomment.
+    // jsdoccomment 0.89 and later round-trip an escaped pipe-label delimiter.
     {
       code: `
         /**
@@ -32,12 +32,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@see link cannot be safely normalized.',
+          message: 'Expected @see link to use the pipe form.',
         },
       ],
-      output: null,
+      name: 'escapes a closing brace when emitting a pipe label',
+      output: `
+        /**
+         * @see {@link https://example.com/api|See {options\\}}
+         */
+      `,
     },
-    // `\}` truncates pipe-label text in @es-joy/jsdoccomment.
     {
       code: `
         /**
@@ -47,10 +51,58 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@see link cannot be safely normalized.',
+          message: 'Expected @see link to use the pipe form.',
         },
       ],
-      output: null,
+      name: 'escapes a closing brace in the middle of a pipe label',
+      output: `
+        /**
+         * @see {@link https://example.com|a\\}b}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [a\\}b](https://example.com)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      name: 'normalizes a pre-escaped markdown label without double escaping',
+      output: `
+        /**
+         * @see {@link https://example.com|a\\}b}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [A\\]B](https://example.com)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the prefix form.',
+        },
+      ],
+      name: 'normalizes a pre-escaped markdown prefix label without double escaping',
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+      output: `
+        /**
+         * @see [A\\]B]{@link https://example.com}
+         */
+      `,
     },
     {
       code: `
@@ -90,7 +142,7 @@ export default {
       ],
       output: null,
     },
-    // `\]` prevents prefix-form parsing in @es-joy/jsdoccomment.
+    // jsdoccomment 0.89 and later round-trip an escaped prefix-label delimiter.
     {
       code: `
         /**
@@ -100,15 +152,20 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@see link cannot be safely normalized.',
+          message: 'Expected @see link to use the prefix form.',
         },
       ],
+      name: 'escapes a closing bracket when emitting a prefix label',
       options: [
         {
           canonicalForm: 'prefix',
         },
       ],
-      output: null,
+      output: `
+        /**
+         * @see [A\\]B]{@link https://example.com}
+         */
+      `,
     },
     // A blank label has no intended text the fixer can preserve.
     {
@@ -312,22 +369,111 @@ export default {
          */
       `,
     },
-    // An existing `\}` still truncates pipe-label text in the parser.
     {
       code: `
         /**
-         * @see [a\\}b](https://example.com)
+         * @see {@link https://example.com|a\\}b}
          */
       `,
       errors: [
         {
           line: 3,
-          message: '@see link cannot be safely normalized.',
+          message: 'Expected @see link to use the prefix form.',
         },
       ],
-      output: null,
+      name: 're-emits a pre-escaped pipe label without double escaping',
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+      output: `
+        /**
+         * @see [a}b]{@link https://example.com}
+         */
+      `,
     },
-    // Nested and repeated braces still contain an unparseable pipe-label `}`.
+    {
+      code: `
+        /**
+         * @see [A\\]B]{@link https://example.com}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      name: 're-emits a pre-escaped prefix label without double escaping',
+      output: `
+        /**
+         * @see {@link https://example.com|A]B}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com|A]B\\}C}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the prefix form.',
+        },
+      ],
+      name: 're-escapes a mixed delimiter label for prefix form',
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+      output: `
+        /**
+         * @see [A\\]B}C]{@link https://example.com}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [A}B\\]C]{@link https://example.com}
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      name: 're-escapes a mixed delimiter label for pipe form',
+      output: `
+        /**
+         * @see {@link https://example.com|A\\}B]C}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [Trailing\\\\](https://example.com)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      name: 'escapes a label ending in a lone backslash',
+      output: `
+        /**
+         * @see {@link https://example.com|Trailing\\\\}
+         */
+      `,
+    },
     {
       code: `
         /**
@@ -337,12 +483,16 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@see link cannot be safely normalized.',
+          message: 'Expected @see link to use the pipe form.',
         },
       ],
-      output: null,
+      name: 'escapes each closing brace in a nested pipe label',
+      output: `
+        /**
+         * @see {@link https://example.com|See {{one\\} and {two\\}\\}}
+         */
+      `,
     },
-    // The extra pipe is safe, but the closing brace still truncates the label.
     {
       code: `
         /**
@@ -352,10 +502,15 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@see link cannot be safely normalized.',
+          message: 'Expected @see link to use the pipe form.',
         },
       ],
-      output: null,
+      name: 'preserves an extra pipe while escaping a closing brace',
+      output: `
+        /**
+         * @see {@link https://example.com|A\\}B|C}
+         */
+      `,
     },
     {
       code: `
@@ -946,7 +1101,7 @@ export default {
          */
       `,
     },
-    // wrapBareUrls: labeled-link collision remains report-only when enabled.
+    // wrapBareUrls does not alter delimiter-collision escaping.
     {
       code: `
         /**
@@ -956,15 +1111,20 @@ export default {
       errors: [
         {
           line: 3,
-          message: '@see link cannot be safely normalized.',
+          message: 'Expected @see link to use the pipe form.',
         },
       ],
+      name: 'escapes a colliding label when bare URL wrapping is enabled',
       options: [
         {
           wrapBareUrls: true,
         },
       ],
-      output: null,
+      output: `
+        /**
+         * @see {@link https://example.com/labeled|See {options\\}}
+         */
+      `,
     },
     // wrapBareUrls: labeled enableFixer behavior is unchanged when enabled.
     {
@@ -1092,6 +1252,64 @@ export default {
     },
   ],
   valid: [
+    {
+      code: `
+        /**
+         * @see {@link https://example.com/api|See {options\\}}
+         */
+      `,
+      name: 'accepts a fixed pipe label with an escaped closing brace',
+    },
+    {
+      code: `
+        /**
+         * @see [A\\]B]{@link https://example.com}
+         */
+      `,
+      name: 'accepts a fixed prefix label with an escaped closing bracket',
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @see [A\\]B}C]{@link https://example.com}
+         */
+      `,
+      name: 'accepts a mixed delimiter label fixed to prefix form',
+      options: [
+        {
+          canonicalForm: 'prefix',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com|A\\}B]C}
+         */
+      `,
+      name: 'accepts a mixed delimiter label fixed to pipe form',
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com|Trailing\\\\}
+         */
+      `,
+      name: 'accepts a fixed label ending in a lone backslash',
+    },
+    {
+      code: `
+        /**
+         * @see {@link https://example.com|See {{one\\} and {two\\}\\}}
+         */
+      `,
+      name: 'accepts a fixed pipe label with repeated escaped braces',
+    },
     {
       code: `
         /**

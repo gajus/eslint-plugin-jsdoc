@@ -9,6 +9,24 @@ only a lowercase `http:` or `https:` URL in a plain, no-label `{@link}` tag.
 This option defaults to `false`, and its output is independent of
 `canonicalForm` because there is no label to position.
 
+Labels that contain the destination form's closing delimiter are fixable. For
+pipe form, the fixer escapes `}` in the label:
+
+```js
+/** @see [See {options}](https://example.com/api) */
+/** @see {@link https://example.com/api|See {options\}} */
+```
+
+For prefix form, the fixer escapes `]` in the label:
+
+```js
+/** @see {@link https://example.com|A]B} */
+/** @see [A\]B]{@link https://example.com} */
+```
+
+This behavior relies on `@es-joy/jsdoccomment` 0.89.0 or later, which
+round-trips context-specific escaped label delimiters.
+
 <a name="user-content-normalize-see-links-options"></a>
 <a name="normalize-see-links-options"></a>
 ## Options
@@ -57,12 +75,23 @@ The following patterns are considered problems:
 /**
  * @see [See {options}](https://example.com/api)
  */
-// Message: @see link cannot be safely normalized.
+// Message: Expected @see link to use the pipe form.
 
 /**
  * @see [a}b](https://example.com)
  */
-// Message: @see link cannot be safely normalized.
+// Message: Expected @see link to use the pipe form.
+
+/**
+ * @see [a\}b](https://example.com)
+ */
+// Message: Expected @see link to use the pipe form.
+
+/**
+ * @see [A\]B](https://example.com)
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+// Message: Expected @see link to use the prefix form.
 
 /**
  * @see [Foo](https://example.com/a|b)
@@ -79,7 +108,7 @@ The following patterns are considered problems:
  * @see {@link https://example.com|A]B}
  */
 // "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
-// Message: @see link cannot be safely normalized.
+// Message: Expected @see link to use the prefix form.
 
 /**
  * @see [ ]{@link https://example.com}
@@ -137,19 +166,41 @@ The following patterns are considered problems:
 // Message: Expected @see link to use the prefix form.
 
 /**
- * @see [a\}b](https://example.com)
+ * @see {@link https://example.com|a\}b}
  */
-// Message: @see link cannot be safely normalized.
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+// Message: Expected @see link to use the prefix form.
+
+/**
+ * @see [A\]B]{@link https://example.com}
+ */
+// Message: Expected @see link to use the pipe form.
+
+/**
+ * @see {@link https://example.com|A]B\}C}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+// Message: Expected @see link to use the prefix form.
+
+/**
+ * @see [A}B\]C]{@link https://example.com}
+ */
+// Message: Expected @see link to use the pipe form.
+
+/**
+ * @see [Trailing\\](https://example.com)
+ */
+// Message: Expected @see link to use the pipe form.
 
 /**
  * @see [See {{one} and {two}}](https://example.com)
  */
-// Message: @see link cannot be safely normalized.
+// Message: Expected @see link to use the pipe form.
 
 /**
  * @see [A}B|C](https://example.com)
  */
-// Message: @see link cannot be safely normalized.
+// Message: Expected @see link to use the pipe form.
 
 /**
  * @see [Read the guide](https://example.com/read)
@@ -321,7 +372,7 @@ const value: string = 'value';
  * @see [See {options}](https://example.com/labeled)
  */
 // "jsdoc/normalize-see-links": ["error"|"warn", {"wrapBareUrls":true}]
-// Message: @see link cannot be safely normalized.
+// Message: Expected @see link to use the pipe form.
 
 /**
  * @see [No fix](https://example.com/labeled)
@@ -360,6 +411,32 @@ const value: string = 'value';
 The following patterns are not considered problems:
 
 ````ts
+/**
+ * @see {@link https://example.com/api|See {options\}}
+ */
+
+/**
+ * @see [A\]B]{@link https://example.com}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+
+/**
+ * @see [A\]B}C]{@link https://example.com}
+ */
+// "jsdoc/normalize-see-links": ["error"|"warn", {"canonicalForm":"prefix"}]
+
+/**
+ * @see {@link https://example.com|A\}B]C}
+ */
+
+/**
+ * @see {@link https://example.com|Trailing\\}
+ */
+
+/**
+ * @see {@link https://example.com|See {{one\} and {two\}\}}
+ */
+
 /**
  * @see {@link https://api.example.com/v1?ids=1%7C2%7C3|Docs}
  */
