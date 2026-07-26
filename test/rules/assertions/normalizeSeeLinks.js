@@ -22,6 +22,46 @@ export default {
          */
       `,
     },
+    {
+      code: `
+        /**
+         * @see [Unicode](https://example.com/päth)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      ignoreReadme: true,
+      name: 'preserves non-ASCII characters in link targets',
+      output: `
+        /**
+         * @see {@link https://example.com/päth|Unicode}
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @see [Caret](https://example.com/a^b)
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @see link to use the pipe form.',
+        },
+      ],
+      ignoreReadme: true,
+      name: 'preserves encodeURI-only ASCII characters in link targets',
+      output: `
+        /**
+         * @see {@link https://example.com/a^b|Caret}
+         */
+      `,
+    },
     // jsdoccomment 0.89 and later round-trip an escaped pipe-label delimiter.
     {
       code: `
