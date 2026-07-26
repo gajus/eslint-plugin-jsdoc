@@ -138,8 +138,9 @@ const validateParameterNames = (
   ]) => {
     return tag.name.trim();
   });
+  const documentsThis = actualParamNames.includes('this');
   const simpleFunctionParameterNames = functionParameterNames.filter((parameter) => {
-    return parameter !== 'this';
+    return documentsThis || parameter !== 'this';
   }).map(getSimpleParameterName);
   const hasOnlySimpleParameterNames = simpleFunctionParameterNames.every((name) => {
     return name !== undefined;
@@ -200,7 +201,7 @@ const validateParameterNames = (
     }
 
     let functionParameterName = functionParameterNames[index - dotted + thisOffset];
-    if (functionParameterName === 'this' && tag.name.trim() !== 'this') {
+    if (!documentsThis && functionParameterName === 'this' && tag.name.trim() !== 'this') {
       ++thisOffset;
       functionParameterName = functionParameterNames[index - dotted + thisOffset];
     }
@@ -408,7 +409,7 @@ const validateParameterNames = (
 
         return item;
       }).filter((item) => {
-        return item !== 'this';
+        return documentsThis || item !== 'this';
       });
       const message = `Expected @${targetTagName} names to be "${
         expectedNames.map((expectedName) => {

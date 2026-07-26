@@ -47,6 +47,44 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
           /**
+           * @param bar number to return
+           * @param this desc
+           * @returns number returned back to caller
+           */
+          function foo(this: T, bar: number): number {
+            console.log(this.name);
+            return bar;
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "this, bar". Got "bar, this".',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+          /**
+           * @param this desc
+           * @param bar number to return
+           * @returns number returned back to caller
+           */
+          function foo(this: T, bar: number): number {
+            console.log(this.name);
+            return bar;
+          }
+      `,
+    },
+    {
+      code: `
+          /**
            * @param foo
            * @param extra
            */
@@ -2150,6 +2188,27 @@ export default /** @type {import('../index.js').TestCases} */ ({
       languageOptions: {
         parser: typescriptEslintParser,
       },
+    },
+    {
+      code: `
+        /**
+         * @param bar number to return
+         * @param this desc
+         * @returns number returned back to caller
+         */
+        function foo(this: T, bar: number): number {
+          console.log(this.name);
+          return bar;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          badParamOrder: false,
+        },
+      ],
     },
     {
       code: `
