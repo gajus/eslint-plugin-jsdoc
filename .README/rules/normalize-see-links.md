@@ -22,9 +22,6 @@ For prefix form, the fixer escapes `]` in the label:
 /** @see [A\]B]{@link https://example.com} */
 ```
 
-This behavior relies on `@es-joy/jsdoccomment` 0.89.0 or later, which
-round-trips context-specific escaped label delimiters.
-
 ## Options
 
 {"gitdown": "options"}
