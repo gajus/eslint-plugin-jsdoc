@@ -245,6 +245,18 @@ function quux (first, second, third) {
 // Message: Expected @param names to be "first, second, third". Got "first, third, second".
 
 /**
+ * @param bar number to return
+ * @param this desc
+ * @returns number returned back to caller
+ */
+function foo(this: T, bar: number): number {
+  console.log(this.name);
+  return bar;
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
+// Message: Expected @param names to be "this, bar". Got "bar, this".
+
+/**
  * @param foo
  * @param extra
  */
@@ -1247,6 +1259,17 @@ function foo(this: T, bar: number): number {
   console.log(this.name);
   return bar;
 }
+
+/**
+ * @param bar number to return
+ * @param this desc
+ * @returns number returned back to caller
+ */
+function foo(this: T, bar: number): number {
+  console.log(this.name);
+  return bar;
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"badParamOrder":false}]
 
 /**
  * Documentation
