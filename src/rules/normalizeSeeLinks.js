@@ -1,8 +1,8 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
-const markdownLinkRegex = /(?<!\\)\[([^`\]\r\n]+)\]\(([^`\(\)\s]+)\)/gv;
-const prefixLinkRegex = /(?<!\\)\[([^\]\r\n]+)\]\{@link\s+([^\}\s\|]+)\}/gv;
-const pipeLinkRegex = /\{@link\s+([^\}\s\|]+)\s*\|\s*([^\}\r\n]+)\}/gv;
+const markdownLinkRegex = /(?<!\\)\[((?:[^\\`\]\r\n]|\\[^\r\n])+)\]\(([^`\(\)\s]+)\)/gv;
+const prefixLinkRegex = /(?<!\\)\[((?:[^\\\]\r\n]|\\[^\r\n])+)\]\{@link\s+([^\}\s\|]+)\}/gv;
+const pipeLinkRegex = /\{@link\s+([^\}\s\|]+)\s*\|\s*((?:[^\\\}\r\n]|\\[^\r\n])+)\}/gv;
 
 const markdownLinkAttemptRegex = /(?<!\\)\[[^\]\r\n]*\]\([^\r\n]*(?:\)|$)/v;
 const prefixLinkAttemptRegex = /(?<!\\)\[[^\]\r\n]*\]\{@link[^\}\r\n]*(?:\}|$)/v;
@@ -13,20 +13,33 @@ const markdownCodeSpanRegex = /(?<!\\)(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)/gv;
 const bareHttpUrlRegex = /^https?:\S+$/v;
 
 /**
- * @param {'pipe'|'prefix'} canonicalForm
  * @param {string} label
  * @returns {boolean}
  */
-const cannotSafelyFormatLink = (canonicalForm, label) => {
-  if (!label.trim()) {
-    return true;
-  }
+const cannotSafelyFormatLink = (label) => {
+  return !label.trim();
+};
 
-  if (canonicalForm === 'pipe') {
-    return label.includes('}');
-  }
+/**
+ * @param {'pipe'|'prefix'} canonicalForm
+ * @param {string} label
+ * @param {'markdown'|'pipe'|'prefix'} sourceForm
+ * @returns {string}
+ */
+const escapeLinkLabel = (canonicalForm, label, sourceForm) => {
+  const sourceEscapePattern = sourceForm === 'pipe' ?
+    /\\([\\\}])/gv :
+    (sourceForm === 'prefix' ?
+      /\\([\\\]])/gv :
+      /\\([\\\}\]])/gv);
+  const targetEscapePattern = canonicalForm === 'pipe' ?
+    /\\(?=$|[\\\}])|\}/gv :
+    /\\(?=$|[\\\]])|\]/gv;
+  const decodedLabel = label.trim().replaceAll(sourceEscapePattern, '$1');
 
-  return label.includes(']');
+  return decodedLabel.replaceAll(targetEscapePattern, (character) => {
+    return `\\${character}`;
+  });
 };
 
 /**
@@ -95,15 +108,17 @@ const isInsideMarkdownCodeSpan = (description, index) => {
 /**
  * @param {'pipe'|'prefix'} canonicalForm
  * @param {string} label
+ * @param {'markdown'|'pipe'|'prefix'} sourceForm
  * @param {string} target
  * @returns {string}
  */
-const formatLink = (canonicalForm, label, target) => {
+const formatLink = (canonicalForm, label, sourceForm, target) => {
   const encodedTarget = encodeLinkTarget(target);
+  const escapedLabel = escapeLinkLabel(canonicalForm, label, sourceForm);
 
   return canonicalForm === 'pipe' ?
-    `{@link ${encodedTarget}|${label.trim()}}` :
-    `[${label.trim()}]{@link ${encodedTarget}}`;
+    `{@link ${encodedTarget}|${escapedLabel}}` :
+    `[${escapedLabel}]{@link ${encodedTarget}}`;
 };
 
 /**
@@ -115,7 +130,7 @@ const normalizeDescription = (description, canonicalForm) => {
   const markdownNormalized = description.replaceAll(
     new RegExp(markdownLinkRegex, 'gv'),
     (_match, label, target) => {
-      return formatLink(canonicalForm, label, target);
+      return formatLink(canonicalForm, label, 'markdown', target);
     },
   );
 
@@ -123,7 +138,7 @@ const normalizeDescription = (description, canonicalForm) => {
     return markdownNormalized.replaceAll(
       new RegExp(prefixLinkRegex, 'gv'),
       (_match, label, target) => {
-        return formatLink(canonicalForm, label, target);
+        return formatLink(canonicalForm, label, 'prefix', target);
       },
     );
   }
@@ -131,7 +146,7 @@ const normalizeDescription = (description, canonicalForm) => {
   return markdownNormalized.replaceAll(
     new RegExp(pipeLinkRegex, 'gv'),
     (_match, target, label) => {
-      return formatLink(canonicalForm, label, target);
+      return formatLink(canonicalForm, label, 'pipe', target);
     },
   );
 };
@@ -183,7 +198,7 @@ export default iterateJsdoc(({
       if (
         isInsideMarkdownCodeSpan(rawDescription, match.index) ||
         scopedPackageNameRegex.test(target) ||
-        cannotSafelyFormatLink(canonicalForm, label)
+        cannotSafelyFormatLink(label)
       ) {
         hasAmbiguousLink = true;
       } else {
@@ -201,10 +216,7 @@ export default iterateJsdoc(({
         continue;
       }
 
-      if (cannotSafelyFormatLink(
-        canonicalForm,
-        inlineTag.text,
-      )) {
+      if (cannotSafelyFormatLink(inlineTag.text)) {
         hasAmbiguousLink = true;
         continue;
       }
