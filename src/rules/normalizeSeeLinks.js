@@ -47,7 +47,11 @@ const escapeLinkLabel = (canonicalForm, label, sourceForm) => {
  * @returns {string}
  */
 const encodeLinkTarget = (target) => {
-  return encodeURI(target).replaceAll(/%25(?=[\dA-F]{2})/giv, '%');
+  return target
+    .replaceAll(/%(?![\dA-F]{2})/giv, '%25')
+    .replaceAll('|', '%7C')
+    .replaceAll('{', '%7B')
+    .replaceAll('}', '%7D');
 };
 
 /**
