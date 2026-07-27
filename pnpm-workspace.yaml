@@ -11,6 +11,33 @@ minimumReleaseAgeExclude:
   - jsdoc-type-pratt-parser@7.3.0
   - playwright-core@1.62.0
   - playwright@1.62.0
+  - '@rollup/rollup-android-arm-eabi@4.62.3'
+  - '@rollup/rollup-android-arm64@4.62.3'
+  - '@rollup/rollup-darwin-arm64@4.62.3'
+  - '@rollup/rollup-darwin-x64@4.62.3'
+  - '@rollup/rollup-freebsd-arm64@4.62.3'
+  - '@rollup/rollup-freebsd-x64@4.62.3'
+  - '@rollup/rollup-linux-arm-gnueabihf@4.62.3'
+  - '@rollup/rollup-linux-arm-musleabihf@4.62.3'
+  - '@rollup/rollup-linux-arm64-gnu@4.62.3'
+  - '@rollup/rollup-linux-arm64-musl@4.62.3'
+  - '@rollup/rollup-linux-loong64-gnu@4.62.3'
+  - '@rollup/rollup-linux-loong64-musl@4.62.3'
+  - '@rollup/rollup-linux-ppc64-gnu@4.62.3'
+  - '@rollup/rollup-linux-ppc64-musl@4.62.3'
+  - '@rollup/rollup-linux-riscv64-gnu@4.62.3'
+  - '@rollup/rollup-linux-riscv64-musl@4.62.3'
+  - '@rollup/rollup-linux-s390x-gnu@4.62.3'
+  - '@rollup/rollup-linux-x64-gnu@4.62.3'
+  - '@rollup/rollup-linux-x64-musl@4.62.3'
+  - '@rollup/rollup-openbsd-x64@4.62.3'
+  - '@rollup/rollup-openharmony-arm64@4.62.3'
+  - '@rollup/rollup-win32-arm64-msvc@4.62.3'
+  - '@rollup/rollup-win32-ia32-msvc@4.62.3'
+  - '@rollup/rollup-win32-x64-gnu@4.62.3'
+  - '@rollup/rollup-win32-x64-msvc@4.62.3'
+  - globals@17.8.0
+  - rollup@4.62.3
 
 overrides:
   yargs@^17: 17.7.3
