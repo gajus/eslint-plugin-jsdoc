@@ -32,6 +32,10 @@ export default iterateJsdoc(({
 
     utils.reportJSDoc(`Missing JSDoc @${targetTagName} declaration.`, null, () => {
       if (enableFixer) {
+        if (jsdoc.source.length === 1) {
+          utils.makeMultiline();
+        }
+
         utils.addTag(targetTagName);
       }
     });
