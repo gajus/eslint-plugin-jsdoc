@@ -417,6 +417,29 @@ function quux () {
         const sleep = (ms: number): Promise<unknown> => {};
       `,
     },
+    {
+      code: `
+        /** Calculates 3D Euclidean distance between two positions */
+        export function getDistance(a, b) {
+          return Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
+        }
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Missing JSDoc @example declaration.',
+        },
+      ],
+      output: `
+        /**
+         * Calculates 3D Euclidean distance between two positions
+         * @example
+         */
+        export function getDistance(a, b) {
+          return Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
+        }
+      `,
+    },
   ],
   valid: [
     {

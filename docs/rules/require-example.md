@@ -248,6 +248,12 @@ function quux (someParam) {
 const sleep = (ms: number): Promise<unknown> => {};
 // "jsdoc/require-example": ["error"|"warn", {"contexts":["any"]}]
 // Message: Missing JSDoc @example declaration.
+
+/** Calculates 3D Euclidean distance between two positions */
+export function getDistance(a, b) {
+  return Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
+}
+// Message: Missing JSDoc @example declaration.
 ````
 
 
