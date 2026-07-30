@@ -42,13 +42,13 @@ jobs:
       fail-fast: false
       matrix:
         node_js_version:
-          - '22.14.0'
-          - '24'
+          - '22.22.2'
+          - '24.15.0'
           - '26'
         eslint_version:
           - '10'
         include:
-          - node_js_version: '22.14.0'
+          - node_js_version: '22.22.2'
             eslint_version: '9'
   build:
     runs-on: ubuntu-latest

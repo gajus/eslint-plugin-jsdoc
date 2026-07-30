@@ -19,7 +19,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: '24.15.0'
           registry-url: 'https://registry.npmjs.org/'
       - run: pnpm install
       - run: pnpm build

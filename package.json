@@ -5,12 +5,12 @@
     "url": "http://gajus.com"
   },
   "dependencies": {
-    "@es-joy/jsdoccomment": "~0.91.0",
+    "@es-joy/jsdoccomment": "~0.92.0",
     "@es-joy/resolve.exports": "1.2.0",
-    "are-docs-informative": "^0.0.2",
+    "are-docs-informative": "^0.1.1",
     "comment-parser": "1.4.7",
     "debug": "^4.4.3",
-    "escape-string-regexp": "^4.0.0",
+    "escape-string-regexp": "^5.0.0",
     "espree": "^11.2.0",
     "esquery": "^1.7.0",
     "html-entities": "^2.6.0",
@@ -23,7 +23,6 @@
   "description": "JSDoc linting rules for ESLint.",
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
-    "@babel/cli": "8.0.4",
     "@babel/core": "8.0.1",
     "@babel/eslint-parser": "8.0.1",
     "@babel/plugin-transform-flow-strip-types": "8.0.1",
@@ -32,7 +31,6 @@
     "@es-joy/jsdoc-eslint-parser": "^0.27.0",
     "@eslint/core": "^1.2.1",
     "@hkdobrev/run-if-changed": "^0.9.0",
-    "@rollup/plugin-node-resolve": "^16.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/github": "^12.0.9",
     "@semantic-release/npm": "^13.1.5",
@@ -47,7 +45,6 @@
     "@types/spdx-expression-parse": "^4.0.0",
     "@typescript-eslint/types": "8.65.0",
     "babel-plugin-add-module-exports": "^1.0.4",
-    "babel-plugin-istanbul": "^8.0.0",
     "babel-plugin-transform-import-meta": "^3.0.0",
     "c8": "^12.0.0",
     "camelcase": "^9.0.0",
@@ -59,7 +56,7 @@
     "glob": "^13.0.6",
     "globals": "^17.9.0",
     "husky": "^9.1.7",
-    "jsdoc-type-pratt-parser": "^8.0.0",
+    "jsdoc-type-pratt-parser": "^9.0.0",
     "json-schema": "^0.4.0",
     "json-schema-to-typescript": "^15.0.4",
     "lint-staged": "^17.3.0",
@@ -68,7 +65,6 @@
     "playwright": "^1.62.1",
     "replace": "^1.2.2",
     "rimraf": "^6.1.3",
-    "rollup": "^4.62.4",
     "semantic-release": "^25.0.8",
     "sinon": "^22.1.0",
     "ts-api-utils": "^2.5.0",
@@ -76,7 +72,7 @@
     "typescript-eslint": "8.65.0"
   },
   "engines": {
-    "node": "^22.13.0 || >=24"
+    "node": "^22.22.2 || >=24.15.0"
   },
   "keywords": [
     "eslint",
@@ -88,38 +84,19 @@
     "*.js": "eslint --fix"
   },
   "type": "module",
-  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./src/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/index.cjs.d.cts",
-        "default": "./dist/index-cjs.cjs"
-      }
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.js"
     },
     "./getJsdocProcessorPlugin.js": {
-      "import": {
-        "types": "./dist/getJsdocProcessorPlugin.d.ts",
-        "default": "./src/getJsdocProcessorPlugin.js"
-      },
-      "require": {
-        "types": "./dist/cjs/getJsdocProcessorPlugin.d.cts",
-        "default": "./dist/getJsdocProcessorPlugin.cjs"
-      }
+      "types": "./dist/getJsdocProcessorPlugin.d.ts",
+      "default": "./src/getJsdocProcessorPlugin.js"
     },
     "./iterateJsdoc.js": {
-      "import": {
-        "types": "./dist/iterateJsdoc.d.ts",
-        "default": "./src/iterateJsdoc.js"
-      },
-      "require": {
-        "types": "./dist/cjs/iterateJsdoc.d.cts",
-        "default": "./dist/iterateJsdoc.cjs"
-      }
+      "types": "./dist/iterateJsdoc.d.ts",
+      "default": "./src/iterateJsdoc.js"
     }
   },
   "name": "eslint-plugin-jsdoc",
@@ -162,10 +139,8 @@
     "ruleTypes": "node ./src/bin/generateRuleTypes.js",
     "tsc": "tsc",
     "tsc-build": "tsc -p tsconfig-prod.json",
-    "tsc-cjs": "tsc -p tsconfig-cjs.json",
-    "rollup": "rollup -c",
-    "build": "node ./src/bin/buildEntryFileForTS.js && rimraf ./dist && mkdir dist && pnpm rollup && NODE_ENV=production babel ./src --out-file-extension .cjs --out-dir ./dist --copy-files --source-maps --ignore ./src/bin/*.js --no-copy-ignored && replace 'to-valid-identifier' '../to-valid-identifier.cjs' 'dist' -r --include=\"*.cjs\" && replace 'require\\(\"\\.(.*?)\\.[^.]*?\"\\)' 'require(\".$1.cjs\")' 'dist' -r --include=\"*.cjs\" && pnpm tsc-build && pnpm tsc-cjs",
-    "attw": "attw --pack .",
+    "build": "rimraf ./dist && mkdir dist && pnpm tsc-build && cp src/rules.d.ts dist/rules.d.ts",
+    "attw": "attw --profile esm-only --pack .",
     "check-docs": "node ./src/bin/generateDocs.js --check",
     "create-docs": "pnpm run create-options && node ./src/bin/generateDocs.js && pnpm ruleTypes",
     "create-rule": "node ./src/bin/generateRule.js",
@@ -175,7 +150,7 @@
     "lint": "eslint",
     "lint-fix": "eslint --fix",
     "prepare": "husky",
-    "test-no-cov": "BABEL_ENV=test mocha",
+    "test-no-cov": "mocha",
     "test": "c8 pnpm run test-no-cov",
     "test-cov": "TIMING=1 c8 --reporter text pnpm run test-no-cov",
     "test-index": "pnpm run test-no-cov test/rules/index.js"
