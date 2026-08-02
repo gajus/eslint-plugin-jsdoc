@@ -169,6 +169,7 @@ describe('jsdocUtils', () => {
   });
   describe('parseClosureTemplateTag()', () => {
     it('splits multiple template names on top-level commas', () => {
+      // @ts-expect-error Testing
       expect(jsdocUtils.parseClosureTemplateTag({
         name: 'S, T',
       })).to.deep.equal([
@@ -176,6 +177,7 @@ describe('jsdocUtils', () => {
       ]);
     });
     it('returns a single template name', () => {
+      // @ts-expect-error Testing
       expect(jsdocUtils.parseClosureTemplateTag({
         name: 'T',
       })).to.deep.equal([
@@ -183,6 +185,7 @@ describe('jsdocUtils', () => {
       ]);
     });
     it('splits multiple defaulted names within the optional wrapper', () => {
+      // @ts-expect-error Testing
       expect(jsdocUtils.parseClosureTemplateTag({
         name: '[T=string, U=number]',
       })).to.deep.equal([
@@ -190,6 +193,7 @@ describe('jsdocUtils', () => {
       ]);
     });
     it('keeps commas inside a generic-type default', () => {
+      // @ts-expect-error Testing
       expect(jsdocUtils.parseClosureTemplateTag({
         name: '[T=Record<string, unknown>]',
       })).to.deep.equal([
@@ -197,6 +201,7 @@ describe('jsdocUtils', () => {
       ]);
     });
     it('keeps commas inside an object-type default', () => {
+      // @ts-expect-error Testing
       expect(jsdocUtils.parseClosureTemplateTag({
         name: '[T={a: string, b: number}]',
       })).to.deep.equal([
@@ -204,6 +209,7 @@ describe('jsdocUtils', () => {
       ]);
     });
     it('keeps commas inside a function-type default', () => {
+      // @ts-expect-error Testing
       expect(jsdocUtils.parseClosureTemplateTag({
         name: '[T=(a: string, b: number) => void]',
       })).to.deep.equal([
@@ -211,6 +217,7 @@ describe('jsdocUtils', () => {
       ]);
     });
     it('does not let an unbalanced closer push depth below zero', () => {
+      // @ts-expect-error Testing
       expect(jsdocUtils.parseClosureTemplateTag({
         name: 'A>, B',
       })).to.deep.equal([
