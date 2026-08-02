@@ -89,9 +89,11 @@ import semver from 'semver';
  * @typedef {"recommended" | "stylistic" | "contents" | "logical" | "requirements"} ConfigGroups
  * @typedef {"" | "-typescript" | "-typescript-flavor"} ConfigVariants
  * @typedef {"" | "-error"} ErrorLevelVariants
+ * @typedef {`flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}` |
+ *   "flat/recommended-tsdoc" | "flat/recommended-tsdoc-error"} FlatConfigNames
  * @type {import('eslint').ESLint.Plugin & {
  *   configs: Record<
- *       `flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`,
+ *       FlatConfigNames,
  *       import('eslint').Linter.Config
  *     > &
  *     Record<
@@ -766,7 +768,7 @@ export default index;
 /**
  * @type {((
  *   cfg?: import('eslint').Linter.Config & {
- *     config?: `flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`,
+ *     config?: FlatConfigNames,
  *     mergeSettings?: boolean,
  *     settings?: Partial<import('./iterateJsdoc.js').Settings>,
  *     rules?: {[key in keyof import('./rules.d.ts').Rules]?: import('eslint').Linter.RuleEntry<import('./rules.d.ts').Rules[key]>},
