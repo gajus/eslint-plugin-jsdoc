@@ -19,7 +19,7 @@ export default index;
 /**
  * @type {((
  *   cfg?: import('eslint').Linter.Config & {
- *     config?: `flat/${import('./index-cjs.js').ConfigGroups}${import('./index-cjs.js').ConfigVariants}${import('./index-cjs.js').ErrorLevelVariants}`,
+ *     config?: import('./index-cjs.js').FlatConfigNames,
  *     mergeSettings?: boolean,
  *     settings?: Partial<import('./iterateJsdoc.js').Settings>,
  *     rules?: {[key in keyof import('./rules.d.ts').Rules]?: import('eslint').Linter.RuleEntry<import('./rules.d.ts').Rules[key]>},

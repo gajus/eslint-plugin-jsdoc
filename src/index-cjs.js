@@ -83,9 +83,11 @@ import semver from 'semver';
  * @typedef {"recommended" | "stylistic" | "contents" | "logical" | "requirements"} ConfigGroups
  * @typedef {"" | "-typescript" | "-typescript-flavor"} ConfigVariants
  * @typedef {"" | "-error"} ErrorLevelVariants
+ * @typedef {`flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}` |
+ *   "flat/recommended-tsdoc" | "flat/recommended-tsdoc-error"} FlatConfigNames
  * @type {import('eslint').ESLint.Plugin & {
  *   configs: Record<
- *       `flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}`,
+ *      FlatConfigNames,
  *       import('eslint').Linter.Config
  *     > &
  *     Record<
