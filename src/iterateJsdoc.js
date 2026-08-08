@@ -118,6 +118,13 @@ import esquery from 'esquery';
  */
 
 /**
+ * @typedef {{
+ *   desc: string,
+ *   handler: (fixer: import('eslint').Rule.RuleFixer) => import('eslint').Rule.Fix|void
+ * }[]} JsdocSuggestions
+ */
+
+/**
  * @callback ReportJSDoc
  * @param {string} msg
  * @param {null|import('comment-parser').Spec|{line: Integer, column?: Integer}} [tag]
@@ -126,6 +133,7 @@ import esquery from 'esquery';
  * @param {undefined|{
  *   [key: string]: string
  * }} [data]
+ * @param {JsdocSuggestions} [suggestions]
  */
 
 /**
@@ -698,6 +706,7 @@ const getBasicUtils = (context, {
  * @param {undefined|{
  *   [key: string]: string
  * }} [data]
+ * @param {import('eslint').Rule.SuggestionReportDescriptor[]} [suggest]
  * @returns {void}
  */
 
@@ -808,24 +817,42 @@ const getUtils = (
   };
 
   /** @type {ReportJSDoc} */
-  utils.reportJSDoc = (msg, tag, handler, specRewire, data) => {
-    report(msg, handler ? /** @type {import('eslint').Rule.ReportFixer} */ (
-      fixer,
-    ) => {
-      const extraFix = handler(fixer);
+  utils.reportJSDoc = (msg, tag, handler, specRewire, data, suggestions) => {
+    /**
+     * @param {(fixer: import('eslint').Rule.RuleFixer) => import('eslint').Rule.Fix|void} fixHandler
+     * @returns {import('eslint').Rule.ReportFixer}
+     */
+    const makeFix = (fixHandler) => {
+      return (fixer) => {
+        const extraFix = fixHandler(fixer);
 
-      const replacement = utils.stringify(jsdoc, specRewire);
+        const replacement = utils.stringify(jsdoc, specRewire);
 
-      if (!replacement) {
-        const text = sourceCode.getText();
-        const lastLineBreakPos = text.slice(
-          0, jsdocNode.range[0],
-        ).search(/\n[ \t]*$/v);
-        if (lastLineBreakPos > -1) {
+        if (!replacement) {
+          const text = sourceCode.getText();
+          const lastLineBreakPos = text.slice(
+            0, jsdocNode.range[0],
+          ).search(/\n[ \t]*$/v);
+          if (lastLineBreakPos > -1) {
+            return [
+              fixer.removeRange([
+                lastLineBreakPos, jsdocNode.range[1],
+              ]),
+              /* c8 ignore next 2 -- Guard */
+              ...(extraFix ? [
+                extraFix,
+              ] : []),
+            ];
+          }
+
           return [
-            fixer.removeRange([
-              lastLineBreakPos, jsdocNode.range[1],
-            ]),
+            fixer.removeRange(
+              (/\s/v).test(text.charAt(jsdocNode.range[1])) ?
+                [
+                  jsdocNode.range[0], jsdocNode.range[1] + 1,
+                ] :
+                jsdocNode.range,
+            ),
             /* c8 ignore next 2 -- Guard */
             ...(extraFix ? [
               extraFix,
@@ -834,27 +861,29 @@ const getUtils = (
         }
 
         return [
-          fixer.removeRange(
-            (/\s/v).test(text.charAt(jsdocNode.range[1])) ?
-              [
-                jsdocNode.range[0], jsdocNode.range[1] + 1,
-              ] :
-              jsdocNode.range,
-          ),
-          /* c8 ignore next 2 -- Guard */
+          fixer.replaceText(jsdocNode, replacement),
           ...(extraFix ? [
             extraFix,
           ] : []),
         ];
-      }
+      };
+    };
 
-      return [
-        fixer.replaceText(jsdocNode, replacement),
-        ...(extraFix ? [
-          extraFix,
-        ] : []),
-      ];
-    } : null, tag, data);
+    report(
+      msg,
+      handler ? makeFix(handler) : null,
+      tag,
+      data,
+      suggestions?.map(({
+        desc,
+        handler: suggestionHandler,
+      }) => {
+        return {
+          desc,
+          fix: makeFix(suggestionHandler),
+        };
+      }),
+    );
   };
 
   /** @type {GetRegexFromString} */
@@ -1911,7 +1940,9 @@ const getSettings = (context) => {
 /** @type {MakeReport} */
 const makeReport = (context, commentNode) => {
   /** @type {Report} */
-  const report = (message, fix = null, jsdocLoc = null, data = undefined) => {
+  const report = (
+    message, fix = null, jsdocLoc = null, data = undefined, suggest = undefined,
+  ) => {
     let loc;
 
     if (jsdocLoc) {
@@ -1953,6 +1984,7 @@ const makeReport = (context, commentNode) => {
       loc,
       message,
       node: commentNode,
+      suggest,
     });
   };
 
