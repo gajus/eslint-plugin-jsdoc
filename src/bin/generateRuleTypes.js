@@ -1,4 +1,6 @@
-import index from '../index.js';
+import {
+  rules,
+} from '../index.js';
 import {
   compile,
 } from 'json-schema-to-typescript';
@@ -13,7 +15,7 @@ for (const [
   rule,
 ] of Object.entries(
   /** @type {Record<string, import('@eslint/core').RuleDefinition<import('@eslint/core').RuleDefinitionTypeOptions>>} */ (
-      index.rules
+      rules
     ),
   )
 ) {

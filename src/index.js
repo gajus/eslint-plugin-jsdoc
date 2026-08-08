@@ -762,6 +762,25 @@ index.configs['flat/recommended-mixed'] = [
 
 export default index;
 
+// Named exports (rather than only properties of the default export) so that
+//   Node's `require(esm)` interop exposes `.rules`/`.configs` directly, as
+//   needed by legacy `plugin:jsdoc/*` config resolution in CJS.
+/** @type {import('eslint').ESLint.Plugin['rules']} */
+export const rules = index.rules;
+
+/**
+ * @type {Record<
+ *      FlatConfigNames,
+ *       import('eslint').Linter.Config
+ *     > &
+ *     Record<
+ *       "examples"|"default-expressions"|"examples-and-default-expressions",
+ *       import('eslint').Linter.Config[]
+ *     > &
+ *     Record<"flat/recommended-mixed", import('eslint').Linter.Config[]>
+  } */
+export const configs = index.configs;
+
 /**
  * @type {((
  *   cfg?: import('eslint').Linter.Config & {

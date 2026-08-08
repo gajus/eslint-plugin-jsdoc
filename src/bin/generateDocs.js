@@ -1,7 +1,10 @@
 /**
  * This script is used to inline assertions into the README.md documents.
  */
-import plugin from '../index.js';
+import {
+  configs,
+  rules,
+} from '../index.js';
 import decamelize from 'decamelize';
 import Gitdown from 'gitdown';
 import {
@@ -166,18 +169,18 @@ const generateDocs = async () => {
       });
       schemas.push(
         /** @type {import('json-schema').JSONSchema4[]} */
-        (plugin.rules?.[decamelized].meta?.schema),
+        (rules?.[decamelized].meta?.schema),
       );
-      const ruleDescription = plugin.rules?.[decamelized]?.meta?.docs?.description;
+      const ruleDescription = rules?.[decamelized]?.meta?.docs?.description;
       if (ruleDescription === undefined) {
         throw new Error(`Rule ${assertionName} missing description`);
       }
 
-      const fixable = plugin.rules?.[decamelized]?.meta?.fixable ?? null;
+      const fixable = rules?.[decamelized]?.meta?.fixable ?? null;
 
-      const recommended = plugin.configs['flat/recommended'].rules?.['jsdoc/' + decamelized] !== 'off';
-      const tsRecommended = plugin.configs['flat/recommended-typescript'].rules?.['jsdoc/' + decamelized] !== 'off';
-      const tsRecommendedFlavor = plugin.configs['flat/recommended-typescript-flavor'].rules?.['jsdoc/' + decamelized] !== 'off';
+      const recommended = configs['flat/recommended'].rules?.['jsdoc/' + decamelized] !== 'off';
+      const tsRecommended = configs['flat/recommended-typescript'].rules?.['jsdoc/' + decamelized] !== 'off';
+      const tsRecommendedFlavor = configs['flat/recommended-typescript-flavor'].rules?.['jsdoc/' + decamelized] !== 'off';
 
       tableRows.push({
         decamelized,
