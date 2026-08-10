@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "lib": ["es2023"],
-    "moduleResolution": "Bundler",
-    "module": "ESNext",
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
     "allowJs": true,
     "checkJs": true,
     "noEmit": false,
