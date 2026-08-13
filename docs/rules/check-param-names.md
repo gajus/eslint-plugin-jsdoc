@@ -44,10 +44,13 @@ different type or description.
 <a name="check-param-names-suggestions"></a>
 ## Suggestions
 
-Set `extraParams` to `true` to offer a suggestion that removes an `@param`
-without a corresponding function parameter. Set `badParamNames` to `true` to
-offer a suggestion that renames a mismatched `@param` to the corresponding
-function parameter name.
+An `@param` without a corresponding function parameter always offers a
+suggestion to remove it. A mismatched `@param` name always offers a suggestion
+to rename it to the corresponding function parameter name.
+
+Set `extraParams` to `true` to auto-apply the extra-parameter removal under
+`--fix`. Set `badParamNames` to `true` to auto-apply the mismatched-name rename
+under `--fix`. Both options default to `false`.
 
 <a name="user-content-check-param-names-destructuring"></a>
 <a name="check-param-names-destructuring"></a>
@@ -95,8 +98,8 @@ their presence within the function signature. Other inconsistencies between
 <a name="check-param-names-options-badparamnames"></a>
 ### <code>badParamNames</code>
 
-Whether to offer a suggestion to rename a mismatched `@param` to the
-corresponding function parameter name. Defaults to `false`.
+Whether to auto-fix a mismatched `@param` name to the corresponding
+function parameter name. A suggestion is always offered. Defaults to `false`.
 
 <a name="user-content-check-param-names-options-badparamorder"></a>
 <a name="check-param-names-options-badparamorder"></a>
@@ -198,8 +201,8 @@ be removed even if it has a different type or description).
 <a name="check-param-names-options-extraparams"></a>
 ### <code>extraParams</code>
 
-Whether to offer a suggestion to remove an `@param` that has no
-corresponding function parameter. Defaults to `false`.
+Whether to auto-remove an `@param` that has no corresponding function
+parameter. A suggestion is always offered. Defaults to `false`.
 
 <a name="user-content-check-param-names-options-usedefaultobjectproperties"></a>
 <a name="check-param-names-options-usedefaultobjectproperties"></a>
@@ -267,12 +270,29 @@ function quux (foo) {
 // Message: @param "extra" does not match an existing function parameter.
 
 /**
+ * @param foo
+ * @param extra
+ */
+function quux (foo) {
+
+}
+// Message: @param "extra" does not match an existing function parameter.
+
+/**
  * @param {string} bar - A value.
  */
 function quux (foo) {
 
 }
 // "jsdoc/check-param-names": ["error"|"warn", {"badParamNames":true}]
+// Message: Expected @param names to be "foo". Got "bar".
+
+/**
+ * @param {string} bar - A value.
+ */
+function quux (foo) {
+
+}
 // Message: Expected @param names to be "foo". Got "bar".
 
 /**

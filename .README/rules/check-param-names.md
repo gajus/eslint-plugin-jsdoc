@@ -19,10 +19,13 @@ different type or description.
 
 ## Suggestions
 
-Set `extraParams` to `true` to offer a suggestion that removes an `@param`
-without a corresponding function parameter. Set `badParamNames` to `true` to
-offer a suggestion that renames a mismatched `@param` to the corresponding
-function parameter name.
+An `@param` without a corresponding function parameter always offers a
+suggestion to remove it. A mismatched `@param` name always offers a suggestion
+to rename it to the corresponding function parameter name.
+
+Set `extraParams` to `true` to auto-apply the extra-parameter removal under
+`--fix`. Set `badParamNames` to `true` to auto-apply the mismatched-name rename
+under `--fix`. Both options default to `false`.
 
 ## Destructuring
 

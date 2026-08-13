@@ -164,7 +164,7 @@ const validateParameterNames = (
   let thisOffset = 0;
 
   return paramTags.some(([
-    paramTagIndex,
+    ,
     tag,
   // eslint-disable-next-line complexity
   ], index) => {
@@ -211,20 +211,25 @@ const validateParameterNames = (
         return false;
       }
 
+      const removeExtraParam = () => {
+        const currentTagIndex = jsdoc.tags.indexOf(tag);
+        if (currentTagIndex !== -1) {
+          utils.removeTag(currentTagIndex);
+        }
+      };
+
       utils.reportJSDoc(
         `@${targetTagName} "${tag.name}" does not match an existing function parameter.`,
         tag,
-        null,
+        extraParams ? removeExtraParam : null,
         false,
         undefined,
-        extraParams ? [
+        [
           {
             desc: `Remove the extra @${targetTagName} "${tag.name}".`,
-            handler: () => {
-              utils.removeTag(Number(paramTagIndex));
-            },
+            handler: removeExtraParam,
           },
-        ] : undefined,
+        ],
       );
 
       return true;
@@ -479,20 +484,22 @@ const validateParameterNames = (
         }
       }
 
+      const renameBadParam = () => {
+        tag.source[0].tokens.name = String(funcParamName);
+      };
+
       utils.reportJSDoc(
         message,
         tag,
-        null,
+        badParamNames ? renameBadParam : null,
         true,
         undefined,
-        badParamNames ? [
+        [
           {
             desc: `Rename @${targetTagName} "${tag.name.trim()}" to "${funcParamName}".`,
-            handler: () => {
-              tag.source[0].tokens.name = String(funcParamName);
-            },
+            handler: renameBadParam,
           },
-        ] : undefined,
+        ],
       );
 
       return true;
@@ -659,8 +666,8 @@ their presence within the function signature. Other inconsistencies between
             type: 'boolean',
           },
           badParamNames: {
-            description: `Whether to offer a suggestion to rename a mismatched \`@param\` to the
-corresponding function parameter name. Defaults to \`false\`.`,
+            description: `Whether to auto-fix a mismatched \`@param\` name to the corresponding
+function parameter name. A suggestion is always offered. Defaults to \`false\`.`,
             type: 'boolean',
           },
           badParamOrder: {
@@ -744,8 +751,8 @@ be removed even if it has a different type or description).`,
             type: 'boolean',
           },
           extraParams: {
-            description: `Whether to offer a suggestion to remove an \`@param\` that has no
-corresponding function parameter. Defaults to \`false\`.`,
+            description: `Whether to auto-remove an \`@param\` that has no corresponding function
+parameter. A suggestion is always offered. Defaults to \`false\`.`,
             type: 'boolean',
           },
           useDefaultObjectProperties: {
