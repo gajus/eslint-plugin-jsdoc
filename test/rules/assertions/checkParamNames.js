@@ -8,6 +8,253 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
           /**
+           * @param {string} first - First value.
+           * @param {string} third - Third value.
+           *   More details about the third value.
+           * @param {string} second - Second value.
+           *
+           * Trailing text for the second value.
+           */
+          function quux (first, second, third) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Expected @param names to be "first, second, third". Got "first, third, second".',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {string} first - First value.
+           * @param {string} second - Second value.
+           *
+           * Trailing text for the second value.
+           * @param {string} third - Third value.
+           *   More details about the third value.
+           */
+          function quux (first, second, third) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param bar number to return
+           * @param this desc
+           * @returns number returned back to caller
+           */
+          function foo(this: T, bar: number): number {
+            console.log(this.name);
+            return bar;
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "this, bar". Got "bar, this".',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: `
+          /**
+           * @param this desc
+           * @param bar number to return
+           * @returns number returned back to caller
+           */
+          function foo(this: T, bar: number): number {
+            console.log(this.name);
+            return bar;
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param extra
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@param "extra" does not match an existing function parameter.',
+          suggestions: [
+            {
+              desc: 'Remove the extra @param "extra".',
+              output: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+            },
+          ],
+        },
+      ],
+      options: [
+        {
+          extraParams: true,
+        },
+      ],
+      output: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param extra
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 4,
+          message: '@param "extra" does not match an existing function parameter.',
+          suggestions: [
+            {
+              desc: 'Remove the extra @param "extra".',
+              output: `
+          /**
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+            },
+          ],
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+          /**
+           * @param {string} bar - A value.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "foo". Got "bar".',
+          suggestions: [
+            {
+              desc: 'Rename @param "bar" to "foo".',
+              output: `
+          /**
+           * @param {string} foo - A value.
+           */
+          function quux (foo) {
+
+          }
+      `,
+            },
+          ],
+        },
+      ],
+      options: [
+        {
+          badParamNames: true,
+        },
+      ],
+      output: `
+          /**
+           * @param {string} foo - A value.
+           */
+          function quux (foo) {
+
+          }
+      `,
+    },
+    {
+      code: `
+          /**
+           * @param {string} bar - A value.
+           */
+          function quux (foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "foo". Got "bar".',
+          suggestions: [
+            {
+              desc: 'Rename @param "bar" to "foo".',
+              output: `
+          /**
+           * @param {string} foo - A value.
+           */
+          function quux (foo) {
+
+          }
+      `,
+            },
+          ],
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param foo.value
+           * @param bar
+           */
+          function quux (bar, foo) {
+
+          }
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected @param names to be "bar, foo". Got "foo, bar".',
+        },
+      ],
+      options: [
+        {
+          enableFixer: true,
+        },
+      ],
+      output: null,
+    },
+    {
+      code: `
+          /**
            * @param Foo
            */
           function quux (foo = 'FOO') {
@@ -18,6 +265,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 3,
           message: 'Expected @param names to be "foo". Got "Foo".',
+          suggestions: 1,
         },
       ],
     },
@@ -34,6 +282,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 3,
           message: 'Expected @arg names to be "foo". Got "Foo".',
+          suggestions: 1,
         },
       ],
       settings: {
@@ -57,6 +306,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 3,
           message: 'Expected @param names to be "foo". Got "Foo".',
+          suggestions: 1,
         },
       ],
     },
@@ -179,6 +429,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
           line: 4,
           message:
             '@param "bar" does not match an existing function parameter.',
+          suggestions: 1,
         },
       ],
     },
@@ -535,6 +786,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: 'Expected @param names to be "property". Got "prop".',
+          suggestions: 1,
         },
       ],
       languageOptions: {
@@ -660,6 +912,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
           line: 4,
           message:
             'Expected @param names to be "error, cde". Got "error, code".',
+          suggestions: 1,
         },
       ],
     },
@@ -901,6 +1154,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: 'Expected @param names to be "root, baz". Got "root, foo".',
+          suggestions: 1,
         },
       ],
       options: [
@@ -1170,6 +1424,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 3,
           message: 'Expected @param names to be "bar". Got "barr".',
+          suggestions: 1,
         },
       ],
       languageOptions: {
@@ -1189,6 +1444,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 3,
           message: 'Expected @param names to be "bar, foo". Got "foo".',
+          suggestions: 1,
         },
       ],
       options: [
@@ -1209,6 +1465,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 3,
           message: 'Expected @param names to be "bar, baz". Got "foo".',
+          suggestions: 1,
         },
       ],
       options: [
@@ -1251,6 +1508,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: '@param "bar" does not match an existing function parameter.',
+          suggestions: 1,
         },
       ],
       options: [
@@ -1272,6 +1530,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: 'Expected @param names to be "paramB". Got "paramA".',
+          suggestions: 1,
         },
       ],
       languageOptions: {
@@ -1292,6 +1551,7 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 4,
           message: 'Expected @param names to be "key, ...params". Got "params".',
+          suggestions: 1,
         },
       ],
       languageOptions: {
@@ -1331,10 +1591,12 @@ export default /** @type {import('../index.js').TestCases} */ ({
         {
           line: 3,
           message: 'Expected @param names to be "name1". Got "wrongNameA".',
+          suggestions: 1,
         },
         {
           line: 5,
           message: 'Expected @param names to be "name2". Got "wrongNameB".',
+          suggestions: 1,
         },
       ],
       languageOptions: {
@@ -1344,6 +1606,40 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
   ],
   valid: [
+    {
+      code: `
+          /**
+           * @param bar
+           * @param foo
+           */
+          function quux (foo, bar) {
+
+          }
+      `,
+      options: [
+        {
+          badParamOrder: false,
+          enableFixer: true,
+        },
+      ],
+    },
+    {
+      code: `
+          /**
+           * @param foo
+           * @param foo
+           */
+          function quux (foo) {
+
+          }
+      `,
+      options: [
+        {
+          duplicateParams: false,
+          enableFixer: true,
+        },
+      ],
+    },
     {
       code: `
           /**
@@ -1982,6 +2278,27 @@ export default /** @type {import('../index.js').TestCases} */ ({
       languageOptions: {
         parser: typescriptEslintParser,
       },
+    },
+    {
+      code: `
+        /**
+         * @param bar number to return
+         * @param this desc
+         * @returns number returned back to caller
+         */
+        function foo(this: T, bar: number): number {
+          console.log(this.name);
+          return bar;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      options: [
+        {
+          badParamOrder: false,
+        },
+      ],
     },
     {
       code: `

@@ -3,15 +3,20 @@
 # <code>check-param-names</code>
 
 * [Fixer](#user-content-check-param-names-fixer)
+* [Suggestions](#user-content-check-param-names-suggestions)
 * [Destructuring](#user-content-check-param-names-destructuring)
 * [Options](#user-content-check-param-names-options)
     * [`allowExtraTrailingParamDocs`](#user-content-check-param-names-options-allowextratrailingparamdocs)
+    * [`badParamNames`](#user-content-check-param-names-options-badparamnames)
+    * [`badParamOrder`](#user-content-check-param-names-options-badparamorder)
     * [`checkDestructured`](#user-content-check-param-names-options-checkdestructured)
     * [`checkRestProperty`](#user-content-check-param-names-options-checkrestproperty)
     * [`checkTypesPattern`](#user-content-check-param-names-options-checktypespattern)
     * [`disableExtraPropertyReporting`](#user-content-check-param-names-options-disableextrapropertyreporting)
     * [`disableMissingParamChecks`](#user-content-check-param-names-options-disablemissingparamchecks)
+    * [`duplicateParams`](#user-content-check-param-names-options-duplicateparams)
     * [`enableFixer`](#user-content-check-param-names-options-enablefixer)
+    * [`extraParams`](#user-content-check-param-names-options-extraparams)
     * [`useDefaultObjectProperties`](#user-content-check-param-names-options-usedefaultobjectproperties)
 * [Context and settings](#user-content-check-param-names-context-and-settings)
 * [Failing examples](#user-content-check-param-names-failing-examples)
@@ -25,11 +30,27 @@ the function declaration.
 <a name="check-param-names-fixer"></a>
 ## Fixer
 
-Auto-removes `@param` duplicates (based on identical names).
+With `enableFixer`, reorders non-nested `@param` definitions whose names match
+the function signature but appear in a different order. The whole tag block is
+moved, including multiline descriptions and any text after the final tag.
+Destructured and nested parameters are reported without an automatic fix.
 
-Note that this option will remove duplicates of the same name even if
-the definitions do not match in other ways (e.g., the second param will
-be removed even if it has a different type or description).
+The fixer also auto-removes `@param` duplicates (based on identical names).
+This can be disabled with `duplicateParams`. Duplicate removal does not compare
+the rest of the definitions, so the second tag is removed even if it has a
+different type or description.
+
+<a name="user-content-check-param-names-suggestions"></a>
+<a name="check-param-names-suggestions"></a>
+## Suggestions
+
+An `@param` without a corresponding function parameter always offers a
+suggestion to remove it. A mismatched `@param` name always offers a suggestion
+to rename it to the corresponding function parameter name.
+
+Set `extraParams` to `true` to auto-apply the extra-parameter removal under
+`--fix`. Set `badParamNames` to `true` to auto-apply the mismatched-name rename
+under `--fix`. Both options default to `false`.
 
 <a name="user-content-check-param-names-destructuring"></a>
 <a name="check-param-names-destructuring"></a>
@@ -72,6 +93,20 @@ If set to `true`, this option will allow extra `@param` definitions (e.g.,
 representing future expected or virtual params) to be present without needing
 their presence within the function signature. Other inconsistencies between
 `@param`'s and present function parameters will still be reported.
+
+<a name="user-content-check-param-names-options-badparamnames"></a>
+<a name="check-param-names-options-badparamnames"></a>
+### <code>badParamNames</code>
+
+Whether to auto-fix a mismatched `@param` name to the corresponding
+function parameter name. A suggestion is always offered. Defaults to `false`.
+
+<a name="user-content-check-param-names-options-badparamorder"></a>
+<a name="check-param-names-options-badparamorder"></a>
+### <code>badParamOrder</code>
+
+Whether to report `@param` definitions whose names match the function
+parameters but appear in a different order. Defaults to `true`.
 
 <a name="user-content-check-param-names-options-checkdestructured"></a>
 <a name="check-param-names-options-checkdestructured"></a>
@@ -145,16 +180,29 @@ that are available and actually used in the function.
 
 Whether to avoid checks for missing `@param` definitions. Defaults to `false`. Change to `true` if you want to be able to omit properties.
 
+<a name="user-content-check-param-names-options-duplicateparams"></a>
+<a name="check-param-names-options-duplicateparams"></a>
+### <code>duplicateParams</code>
+
+Whether to report duplicate `@param` definitions. Defaults to `true`.
+
 <a name="user-content-check-param-names-options-enablefixer"></a>
 <a name="check-param-names-options-enablefixer"></a>
 ### <code>enableFixer</code>
 
-Set to `true` to auto-remove `@param` duplicates (based on identical
-names).
+Set to `true` to reorder non-nested `@param` definitions to match the
+function signature and to auto-remove duplicates (based on identical names).
 
 Note that this option will remove duplicates of the same name even if
 the definitions do not match in other ways (e.g., the second param will
 be removed even if it has a different type or description).
+
+<a name="user-content-check-param-names-options-extraparams"></a>
+<a name="check-param-names-options-extraparams"></a>
+### <code>extraParams</code>
+
+Whether to auto-remove an `@param` that has no corresponding function
+parameter. A suggestion is always offered. Defaults to `false`.
 
 <a name="user-content-check-param-names-options-usedefaultobjectproperties"></a>
 <a name="check-param-names-options-usedefaultobjectproperties"></a>
@@ -173,7 +221,7 @@ are present and can therefore be documented. Defaults to `false`.
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
-|Options|`allowExtraTrailingParamDocs`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `disableExtraPropertyReporting`, `disableMissingParamChecks`, `enableFixer`, `useDefaultObjectProperties`|
+|Options|`allowExtraTrailingParamDocs`, `badParamNames`, `badParamOrder`, `checkDestructured`, `checkRestProperty`, `checkTypesPattern`, `disableExtraPropertyReporting`, `disableMissingParamChecks`, `duplicateParams`, `enableFixer`, `extraParams`, `useDefaultObjectProperties`|
 |Tags|`param`|
 |Aliases|`arg`, `argument`|
 |Recommended|true|
@@ -185,6 +233,79 @@ are present and can therefore be documented. Defaults to `false`.
 The following patterns are considered problems:
 
 ````ts
+/**
+ * @param {string} first - First value.
+ * @param {string} third - Third value.
+ *   More details about the third value.
+ * @param {string} second - Second value.
+ *
+ * Trailing text for the second value.
+ */
+function quux (first, second, third) {
+
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
+// Message: Expected @param names to be "first, second, third". Got "first, third, second".
+
+/**
+ * @param bar number to return
+ * @param this desc
+ * @returns number returned back to caller
+ */
+function foo(this: T, bar: number): number {
+  console.log(this.name);
+  return bar;
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
+// Message: Expected @param names to be "this, bar". Got "bar, this".
+
+/**
+ * @param foo
+ * @param extra
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"extraParams":true}]
+// Message: @param "extra" does not match an existing function parameter.
+
+/**
+ * @param foo
+ * @param extra
+ */
+function quux (foo) {
+
+}
+// Message: @param "extra" does not match an existing function parameter.
+
+/**
+ * @param {string} bar - A value.
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"badParamNames":true}]
+// Message: Expected @param names to be "foo". Got "bar".
+
+/**
+ * @param {string} bar - A value.
+ */
+function quux (foo) {
+
+}
+// Message: Expected @param names to be "foo". Got "bar".
+
+/**
+ * @param foo
+ * @param foo.value
+ * @param bar
+ */
+function quux (bar, foo) {
+
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"enableFixer":true}]
+// Message: Expected @param names to be "bar, foo". Got "foo, bar".
+
 /**
  * @param Foo
  */
@@ -744,6 +865,24 @@ The following patterns are not considered problems:
 
 ````ts
 /**
+ * @param bar
+ * @param foo
+ */
+function quux (foo, bar) {
+
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"badParamOrder":false,"enableFixer":true}]
+
+/**
+ * @param foo
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"duplicateParams":false,"enableFixer":true}]
+
+/**
  *
  */
 function quux (foo) {
@@ -1140,6 +1279,17 @@ function foo(this: T, bar: number): number {
   console.log(this.name);
   return bar;
 }
+
+/**
+ * @param bar number to return
+ * @param this desc
+ * @returns number returned back to caller
+ */
+function foo(this: T, bar: number): number {
+  console.log(this.name);
+  return bar;
+}
+// "jsdoc/check-param-names": ["error"|"warn", {"badParamOrder":false}]
 
 /**
  * Documentation
