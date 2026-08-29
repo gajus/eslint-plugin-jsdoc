@@ -144,8 +144,8 @@ export interface Rules {
            */
           allowExtraTrailingParamDocs?: boolean;
           /**
-           * Whether to offer a suggestion to rename a mismatched `@param` to the
-           * corresponding function parameter name. Defaults to `false`.
+           * Whether to auto-fix a mismatched `@param` name to the corresponding
+           * function parameter name. A suggestion is always offered. Defaults to `false`.
            */
           badParamNames?: boolean;
           /**
@@ -229,8 +229,8 @@ export interface Rules {
            */
           enableFixer?: boolean;
           /**
-           * Whether to offer a suggestion to remove an `@param` that has no
-           * corresponding function parameter. Defaults to `false`.
+           * Whether to auto-remove an `@param` that has no corresponding function
+           * parameter. A suggestion is always offered. Defaults to `false`.
            */
           extraParams?: boolean;
           /**
@@ -1308,6 +1308,26 @@ export interface Rules {
            * importing types unless used in code.
            */
           markVariablesAsUsed?: boolean;
+        }
+      ];
+
+  /** Reports redundant @type tags that match or broaden the naturally inferred TypeScript type. */
+  "jsdoc/no-unnecessary-type-assertion": 
+    | []
+    | [
+        {
+          /**
+           * Whether to check `const` type assertions as redundant
+           */
+          checkLiteralConstAssertions?: boolean;
+          /**
+           * Whether to treat `any` type casts as redundant
+           */
+          treatAnyAsRedundant?: boolean;
+          /**
+           * An array list of types to ignore
+           */
+          typesToIgnore?: string[];
         }
       ];
 

@@ -88,7 +88,7 @@ export default iterateJsdoc(({
     await fs.writeFile(rulePath, ruleTemplate);
   }
 
-  const ruleTestTemplate = `export default {
+  const ruleTestTemplate = `export default /** @type {import('../index.js').TestCases} */ ({
   invalid: [
     {
       code: \`
@@ -107,7 +107,7 @@ export default iterateJsdoc(({
       \`,
     },
   ],
-};
+});
 `;
 
   const ruleTestPath = `./test/rules/assertions/${camelCasedRuleName}.js`;

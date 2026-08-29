@@ -7,6 +7,7 @@
   "dependencies": {
     "@es-joy/jsdoccomment": "~0.95.1",
     "@es-joy/resolve.exports": "1.2.0",
+    "@typescript-eslint/utils": "^8.68.0",
     "are-docs-informative": "^0.1.1",
     "comment-parser": "1.4.8",
     "debug": "^4.4.3",
