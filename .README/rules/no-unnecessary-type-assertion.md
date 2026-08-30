@@ -4,6 +4,10 @@ JavaScript-based TypeScript type assertions (`@type`) are helpful when you have 
 they become redundant when the type is equal to or more broad than the type which
 TypeScript infers for the expression.
 
+An assertion on an `any` expression (for instance a property read off
+`JSON.parse(s)`) is never reported: `any` is assignable to every type, so a
+concrete assertion on it is narrowing rather than redundant.
+
 Checks both a leading `@type` on a `VariableDeclaration` (e.g.
 `/** @type {number} */ const x = 5;`) and an inline JSDoc cast around a
 parenthesized expression (e.g. `const x = /** @type {number} */ (5);`).

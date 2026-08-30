@@ -767,6 +767,49 @@ export default /** @type {import('../index.js').TestCases} */ ({
       filename: 'dummy.js',
       languageOptions,
     },
+    {
+      code: `
+        /**
+         * @typedef {"Int8Array"|"Uint8Array"|"Uint8ClampedArray"|
+         *   "Int16Array"|"Uint16Array"|"Int32Array"|"Uint32Array"|
+         *   "Float32Array"|"Float64Array"|"BigInt64Array"|
+         *   "BigUint64Array"} TypedArray
+         */
+
+        /**
+         * @param {string} s
+         */
+        const parse = (s) => {
+          const bufferSourceClass = 'someClass';
+          const o = JSON.parse(s);
+          return getTypedArray(
+            /** @type {TypedArray} */ (o.typedArray ?? bufferSourceClass)
+          );
+        };
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /**
+         * @param {string} s
+         */
+        const setter = (s) => {
+          const o = JSON.parse(s);
+          typedArray.set(...(
+            /**
+             * @type {[
+             *   array: Array<bigint> & Array<number>,
+             *   offset?: number | undefined
+             * ]}
+             */ (o.set)
+          ));
+        };
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
   ],
 });
 

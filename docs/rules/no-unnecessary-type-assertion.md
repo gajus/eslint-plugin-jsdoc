@@ -6,6 +6,10 @@ JavaScript-based TypeScript type assertions (`@type`) are helpful when you have 
 they become redundant when the type is equal to or more broad than the type which
 TypeScript infers for the expression.
 
+An assertion on an `any` expression (for instance a property read off
+`JSON.parse(s)`) is never reported: `any` is assignable to every type, so a
+concrete assertion on it is narrowing rather than redundant.
+
 Checks both a leading `@type` on a `VariableDeclaration` (e.g.
 `/** @type {number} */ const x = 5;`) and an inline JSDoc cast around a
 parenthesized expression (e.g. `const x = /** @type {number} */ (5);`).
@@ -366,5 +370,38 @@ let match = null;
 const mtch = /** @type {RegExpMatchArray} */ (
   /** @type {unknown} */ (match)
 );
+
+/**
+ * @typedef {"Int8Array"|"Uint8Array"|"Uint8ClampedArray"|
+ *   "Int16Array"|"Uint16Array"|"Int32Array"|"Uint32Array"|
+ *   "Float32Array"|"Float64Array"|"BigInt64Array"|
+ *   "BigUint64Array"} TypedArray
+ */
+
+/**
+ * @param {string} s
+ */
+const parse = (s) => {
+  const bufferSourceClass = 'someClass';
+  const o = JSON.parse(s);
+  return getTypedArray(
+    /** @type {TypedArray} */ (o.typedArray ?? bufferSourceClass)
+  );
+};
+
+/**
+ * @param {string} s
+ */
+const setter = (s) => {
+  const o = JSON.parse(s);
+  typedArray.set(...(
+    /**
+     * @type {[
+     *   array: Array<bigint> & Array<number>,
+     *   offset?: number | undefined
+     * ]}
+     */ (o.set)
+  ));
+};
 ````
 

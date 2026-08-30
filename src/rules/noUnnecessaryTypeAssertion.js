@@ -225,6 +225,17 @@ export default iterateJsdoc(({
       return false;
     }
 
+    // An `any` expression (e.g. a property of `JSON.parse(s)`) is assignable to
+    // everything, so a concrete assertion on it is genuinely narrowing rather
+    // than redundant. (`@type {any}` on `any` still falls through to the
+    // `treatAnyAsRedundant` handling above/below.)
+    if (
+      (rawInferredType.flags & ts.TypeFlags.Any) !== 0 &&
+      (rawAssertedType.flags & ts.TypeFlags.Any) === 0
+    ) {
+      return false;
+    }
+
     const isObjectOrArray = (rawInferredType.flags & ts.TypeFlags.Object) !== 0;
 
     if (!isObjectOrArray) {
