@@ -27,6 +27,11 @@ infer those arguments, so the inferred and asserted types always coincide and a
 real narrowing (to `NodeListOf<HTMLElement>`, say) cannot be told apart from a
 redundant one.
 
+The `unknown` half of a "cast through `unknown`"
+(`/** @type {Foo} */ (/** @type {unknown} */ (x))`) is likewise never reported:
+it is the bridge that lets the outer assertion reach an otherwise-incompatible
+type, so it is load-bearing despite `unknown` being broader than everything.
+
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
 JavaScript + JSDoc files. Note also that this rule runs fairly slowly.**
@@ -196,6 +201,9 @@ foo(/** @type {number[]} */ ([1, 2]));
 const d = /** @type {Date} */ (new Date());
 // Message: The @type tag declaring "Date" is redundant as TypeScript infers it automatically.
 
+const u = /** @type {unknown} */ (5);
+// Message: The @type tag declaring "unknown" is redundant as TypeScript infers it automatically.
+
 let a;
 a = /** @type {5} */ (5);
 // Message: The @type tag declaring "5" is redundant as TypeScript infers it automatically.
@@ -352,5 +360,11 @@ const q = (sel) => {
 const p = /** @type {Promise<number>} */ (Promise.resolve(5));
 
 const m = /** @type {Map<string, number>} */ (new Map());
+
+let match = null;
+// ...
+const mtch = /** @type {RegExpMatchArray} */ (
+  /** @type {unknown} */ (match)
+);
 ````
 

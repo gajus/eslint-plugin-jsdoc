@@ -318,6 +318,22 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+        const u = /** @type {unknown} */ (5);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "unknown" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        const u = 5;
+      `,
+    },
+    {
+      code: `
         let a;
         a = /** @type {5} */ (5);
       `,
@@ -736,6 +752,17 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
         const m = /** @type {Map<string, number>} */ (new Map());
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        let match = null;
+        // ...
+        const mtch = /** @type {RegExpMatchArray} */ (
+          /** @type {unknown} */ (match)
+        );
       `,
       filename: 'dummy.js',
       languageOptions,

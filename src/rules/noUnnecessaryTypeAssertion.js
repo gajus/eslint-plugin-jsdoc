@@ -347,6 +347,17 @@ export default iterateJsdoc(({
     return;
   }
 
+  // The `unknown` half of a "cast through `unknown`"
+  // (`/** @type {T} */ (/** @type {unknown} */ (x))`) is the load-bearing
+  // bridge that lets the outer assertion reach an otherwise-incompatible type;
+  // it is never redundant, even though `unknown` is broader than everything.
+  if (assertedTypeStr === 'unknown' && ts.isParenthesizedExpression(paren.parent)) {
+    const outerTypeTag = ts.getJSDocTypeTag(paren.parent);
+    if (outerTypeTag && outerTypeTag.pos >= paren.parent.pos) {
+      return;
+    }
+  }
+
   const parent = /** @type {any} */ (node.parent);
   const declaration = parent.type === 'VariableDeclarator' ? parent.parent : null;
 
