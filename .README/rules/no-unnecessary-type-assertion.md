@@ -6,6 +6,9 @@ TypeScript infers for the expression.
 
 Currently only supports `VariableDeclaration`.
 
+The fixer removes the redundant `@type` tag, deleting the whole JSDoc block if
+nothing else is left in it.
+
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
 JavaScript + JSDoc files. Note also that this rule runs fairly slowly.**
@@ -34,6 +37,7 @@ export default [
       'jsdoc/no-unnecessary-type-assertion': ['error', {
         // You can change these defaults
         checkLiteralConstAssertions: false,
+        enableFixer: true,
         treatAnyAsRedundant: false,
         typesToIgnore: [],
       }]
@@ -51,7 +55,7 @@ export default [
 |Context|`VariableDeclaration`|
 |Tags|`type`|
 |Recommended|false|
-|Options|`checkLiteralConstAssertions`, `treatAnyAsRedundant`, `typesToIgnore`|
+|Options|`checkLiteralConstAssertions`, `enableFixer`, `treatAnyAsRedundant`, `typesToIgnore`|
 
 ## Failing examples
 

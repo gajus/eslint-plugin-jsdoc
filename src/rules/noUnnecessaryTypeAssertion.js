@@ -62,9 +62,10 @@ const isLiteralType = (type) => {
 
 export default iterateJsdoc(({
   context,
+  jsdoc,
   node: nde,
-  report,
   utils,
+// eslint-disable-next-line complexity -- Numerous type/option permutations
 }) => {
   /* c8 ignore next 4 -- Guard */
   // Already handled
@@ -82,9 +83,40 @@ export default iterateJsdoc(({
   const {
     // https://typescript-eslint.io/rules/no-unnecessary-type-assertion/
     checkLiteralConstAssertions = false,
+    enableFixer = true,
     treatAnyAsRedundant = false,
     typesToIgnore = [],
   } = context.options[0] ?? {};
+
+  /**
+   * Removes the redundant `@type` tag, deleting the whole JSDoc block if it
+   * is left empty.
+   * @returns {void}
+   */
+  const removeType = () => {
+    utils.removeTag(jsdoc.tags.indexOf(/** @type {any} */ (types[0])), {
+      removeEmptyBlock: true,
+    });
+
+    // `removeTag` only drops the enclosing block for a single-line comment; for
+    // a multi-line block whose sole content was the `@type` tag, clear what is
+    // left (only the delimiter lines) so the now-empty comment is removed too.
+    const blockIsEmpty = jsdoc.source.every(({
+      tokens: {
+        description,
+        name,
+        tag,
+        type,
+      },
+    }) => {
+      return !tag && !type && !name && !description.trim();
+    });
+    if (blockIsEmpty) {
+      jsdoc.source.splice(0);
+    }
+  };
+
+  const fixer = enableFixer ? removeType : null;
 
   const node =
     /**
@@ -202,10 +234,11 @@ export default iterateJsdoc(({
 
     if (assertedTypeStr === 'const') {
       if (checkLiteralConstAssertions && isLiteralType(rawInferredType)) {
-        report(
+        utils.reportJSDoc(
           'The @type tag declaring "{{ type }}" is redundant as TypeScript infers it automatically for literals.',
-          null,
           types[0],
+          fixer,
+          true,
           {
             type: assertedTypeStr,
           },
@@ -220,10 +253,11 @@ export default iterateJsdoc(({
       (treatAnyAsRedundant || assertedTypeStr !== 'any') &&
       !typesToIgnore.includes(assertedTypeStr)
     ) {
-      report(
+      utils.reportJSDoc(
         'The @type tag declaring "{{ type }}" is redundant as TypeScript infers it automatically.',
-        null,
         types[0],
+        fixer,
+        true,
         {
           type: assertedTypeStr,
         },
@@ -236,12 +270,17 @@ export default iterateJsdoc(({
     docs: {
       description: 'Reports redundant @type tags that match or broaden the naturally inferred TypeScript type.',
     },
+    fixable: 'code',
     schema: [
       {
         additionalProperties: false,
         properties: {
           checkLiteralConstAssertions: {
             description: 'Whether to check `const` type assertions as redundant',
+            type: 'boolean',
+          },
+          enableFixer: {
+            description: 'Whether to enable the fixer that removes the redundant `@type` tag (and the JSDoc block if it becomes empty). Defaults to `true`.',
             type: 'boolean',
           },
           treatAnyAsRedundant: {

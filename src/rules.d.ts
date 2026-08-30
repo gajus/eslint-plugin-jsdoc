@@ -1321,6 +1321,10 @@ export interface Rules {
            */
           checkLiteralConstAssertions?: boolean;
           /**
+           * Whether to enable the fixer that removes the redundant `@type` tag (and the JSDoc block if it becomes empty). Defaults to `true`.
+           */
+          enableFixer?: boolean;
+          /**
            * Whether to treat `any` type casts as redundant
            */
           treatAnyAsRedundant?: boolean;

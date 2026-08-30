@@ -8,6 +8,9 @@ TypeScript infers for the expression.
 
 Currently only supports `VariableDeclaration`.
 
+The fixer removes the redundant `@type` tag, deleting the whole JSDoc block if
+nothing else is left in it.
+
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
 JavaScript + JSDoc files. Note also that this rule runs fairly slowly.**
@@ -36,6 +39,7 @@ export default [
       'jsdoc/no-unnecessary-type-assertion': ['error', {
         // You can change these defaults
         checkLiteralConstAssertions: false,
+        enableFixer: true,
         treatAnyAsRedundant: false,
         typesToIgnore: [],
       }]
@@ -56,6 +60,12 @@ A single options object has the following properties.
 
 Whether to check `const` type assertions as redundant
 
+<a name="user-content-no-unnecessary-type-assertion-options-enablefixer"></a>
+<a name="no-unnecessary-type-assertion-options-enablefixer"></a>
+### <code>enableFixer</code>
+
+Whether to enable the fixer that removes the redundant `@type` tag (and the JSDoc block if it becomes empty). Defaults to `true`.
+
 <a name="user-content-no-unnecessary-type-assertion-options-treatanyasredundant"></a>
 <a name="no-unnecessary-type-assertion-options-treatanyasredundant"></a>
 ### <code>treatAnyAsRedundant</code>
@@ -74,7 +84,7 @@ An array list of types to ignore
 |Context|`VariableDeclaration`|
 |Tags|`type`|
 |Recommended|false|
-|Options|`checkLiteralConstAssertions`, `treatAnyAsRedundant`, `typesToIgnore`|
+|Options|`checkLiteralConstAssertions`, `enableFixer`, `treatAnyAsRedundant`, `typesToIgnore`|
 
 <a name="user-content-no-unnecessary-type-assertion-failing-examples"></a>
 <a name="no-unnecessary-type-assertion-failing-examples"></a>
@@ -84,6 +94,13 @@ The following patterns are considered problems:
 
 ````ts
 /**
+ * @type {5}
+ */
+const a = 5;
+// Message: The @type tag declaring "5" is redundant as TypeScript infers it automatically.
+
+/**
+ * This is a special comment.
  * @type {5}
  */
 const a = 5;
@@ -146,6 +163,24 @@ const a = /** @type {any} */ (5);
 const b = a;
 // "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"treatAnyAsRedundant":true}]
 // Message: The @type tag declaring "any" is redundant as TypeScript infers it automatically.
+
+/** @type {{prop: string}} */
+const mapPaths = {prop: "text"};
+// Message: The @type tag declaring "{prop: string}" is redundant as TypeScript infers it automatically.
+
+/**
+ * Keep me.
+ * @type {string}
+ */
+const a = 'hello';
+// Message: The @type tag declaring "string" is redundant as TypeScript infers it automatically.
+
+/**
+ * @type {string}
+ */
+const a = 'hello';
+// "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"enableFixer":false}]
+// Message: The @type tag declaring "string" is redundant as TypeScript infers it automatically.
 ````
 
 
@@ -212,5 +247,14 @@ function quux (b) {
   const a = b;
 }
 // "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"checkLiteralConstAssertions":true}]
+
+/** @type {string[]} */
+const mapPaths = [];
+
+/** @type {{prop?: string}} */
+const mapPaths = {};
+
+/** @type {{prop?: string}} */
+const mapPaths = {prop: "text"};
 ````
 

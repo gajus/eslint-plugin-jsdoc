@@ -31,6 +31,32 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       filename: 'dummy.js',
       languageOptions,
+      output: `
+        const a = 5;
+      `,
+    },
+    {
+      code: `
+        /**
+         * This is a special comment.
+         * @type {5}
+         */
+        const a = 5;
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The @type tag declaring "5" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        /**
+         * This is a special comment.
+         */
+        const a = 5;
+      `,
     },
     {
       code: `
@@ -47,6 +73,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       filename: 'dummy.js',
       languageOptions,
+      output: `
+        const a = 'hello';
+      `,
     },
     {
       code: `
@@ -70,6 +99,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           ],
         },
       ],
+      output: `
+        const a = 'hello';
+      `,
     },
     {
       code: `
@@ -91,6 +123,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           checkLiteralConstAssertions: true,
         },
       ],
+      output: `
+        const a = 'hello';
+      `,
     },
     {
       code: `
@@ -112,6 +147,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           checkLiteralConstAssertions: true,
         },
       ],
+      output: `
+        const a = true;
+      `,
     },
     {
       code: `
@@ -138,6 +176,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
           checkLiteralConstAssertions: true,
         },
       ],
+      output: `
+        /**
+         * @param {"a"|15} b
+         */
+        function quux (b) {
+          const a = b;
+        }
+      `,
     },
     {
       code: `
@@ -159,6 +205,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       filename: 'dummy.js',
       languageOptions,
+      output: `
+        /**
+         * @param {true} a
+         */
+        function quux (a) {
+          const b = a;
+        }
+      `,
     },
     {
       code: `
@@ -181,6 +235,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
           treatAnyAsRedundant: true,
         },
       ],
+      output: `
+        const a = /** @type {any} */ (5);
+        const b = a;
+      `,
     },
     {
       code: `
@@ -195,6 +253,53 @@ export default /** @type {import('../index.js').TestCases} */ ({
       ],
       filename: 'dummy.js',
       languageOptions,
+      output: `
+        const mapPaths = {prop: "text"};
+      `,
+    },
+    {
+      code: `
+        /**
+         * Keep me.
+         * @type {string}
+         */
+        const a = 'hello';
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'The @type tag declaring "string" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        /**
+         * Keep me.
+         */
+        const a = 'hello';
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {string}
+         */
+        const a = 'hello';
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "string" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          enableFixer: false,
+        },
+      ],
     },
   ],
   valid: [
