@@ -182,6 +182,20 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /** @type {{prop: string}} */
+        const mapPaths = {prop: "text"};
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "{prop: string}" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+    },
   ],
   valid: [
     {
@@ -298,5 +312,30 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /** @type {string[]} */
+        const mapPaths = [];
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /** @type {{prop?: string}} */
+        const mapPaths = {};
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /** @type {{prop?: string}} */
+        const mapPaths = {prop: "text"};
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
   ],
 });
+
