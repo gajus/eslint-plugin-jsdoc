@@ -155,6 +155,57 @@ export default iterateJsdoc(({
     'The @type tag declaring "{{ type }}" is redundant as TypeScript infers it automatically.';
 
   /**
+   * Whether `inferredType` is a generic reference carrying `any` type arguments
+   * that `assertedType` replaces with concrete ones (e.g. an untyped
+   * `document.querySelectorAll(sel)` giving `NodeListOf<any>`, asserted as
+   * `NodeListOf<HTMLElement>`, or `new Map()` giving `Map<any, any>`). Such an
+   * assertion supplies real type information, so it is not redundant even though
+   * `any` leaves the two types mutually assignable.
+   * @param {any} inferredType `ts.Type`
+   * @param {any} assertedType `ts.Type`
+   * @returns {boolean}
+   */
+  const tightensAnyTypeArgument = (inferredType, assertedType) => {
+    // Only ever called for an object type, which always carries `objectFlags`.
+    if ((inferredType.objectFlags & ts.ObjectFlags.Reference) === 0) {
+      return false;
+    }
+
+    const assertedTypeArguments = checker.getTypeArguments(assertedType);
+
+    return checker.getTypeArguments(inferredType).some((inferredTypeArgument, index) => {
+      return (inferredTypeArgument.flags & ts.TypeFlags.Any) !== 0 &&
+        assertedTypeArguments[index] !== undefined &&
+        (assertedTypeArguments[index].flags & ts.TypeFlags.Any) === 0;
+    });
+  };
+
+  /**
+   * A generic call/`new` expression takes its type arguments partly from the
+   * surrounding contextual type, which under a `@type` (a cast, or a
+   * declaration) is the asserted type itself. `getTypeAtLocation` then just
+   * echoes the asserted type back, so a genuine tightening looks redundant
+   * (`document.querySelectorAll(sel)` is really `NodeListOf<Element>`, not the
+   * asserted `NodeListOf<HTMLElement>`). The uncontaminated type cannot be
+   * recovered here, so such expressions are left alone.
+   * @param {any} tsExpression `ts.Node`
+   * @returns {boolean}
+   */
+  const isGenericCall = (tsExpression) => {
+    if (!ts.isCallExpression(tsExpression) && !ts.isNewExpression(tsExpression)) {
+      return false;
+    }
+
+    const signature = /** @type {any} */ (
+      checker.getResolvedSignature(tsExpression)
+    );
+    return Boolean(
+      signature &&
+      (signature.typeParameters ?? signature.target?.typeParameters)?.length,
+    );
+  };
+
+  /**
    * Whether the JSDoc-asserted type adds nothing over the type TypeScript
    * already infers for the expression it is attached to.
    * @param {any} rawInferredType `ts.Type`
@@ -209,6 +260,10 @@ export default iterateJsdoc(({
       return false;
     }
 
+    if (tightensAnyTypeArgument(rawInferredType, rawAssertedType)) {
+      return false;
+    }
+
     // Objects: strip the literal-initialization flags, then require structural
     // equivalence in both directions, so `{prop: string}` vs `{prop: string}` is
     // redundant while `{prop?: string}` vs `{prop: string}` fails backward.
@@ -256,9 +311,12 @@ export default iterateJsdoc(({
       return;
     }
 
-    const declInferredType = checker.getTypeAtLocation(
-      services.esTreeNodeToTSNodeMap.get(decl.init),
-    );
+    const declInitTsNode = services.esTreeNodeToTSNodeMap.get(decl.init);
+    if (isGenericCall(declInitTsNode)) {
+      return;
+    }
+
+    const declInferredType = checker.getTypeAtLocation(declInitTsNode);
     const declAssertedType = checker.getTypeFromTypeNode(jsdocTypeNode);
 
     if (isRedundantAssertion(declInferredType, declAssertedType)) {
@@ -282,6 +340,10 @@ export default iterateJsdoc(({
   /* c8 ignore next 4 -- Defensive: `getJSDocTypeTag` can also surface a `@type`
      inherited from an enclosing statement, whose position precedes the paren */
   if (!typeTag || typeTag.pos < paren.pos) {
+    return;
+  }
+
+  if (isGenericCall(exprTsNode)) {
     return;
   }
 

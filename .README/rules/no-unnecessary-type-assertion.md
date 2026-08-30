@@ -18,6 +18,13 @@ fixed) on a `const` declarator, where the literal type is inferred anyway;
 elsewhere (a `let`/`var` binding, a `return`, an object-property value, etc.) the
 cast suppresses widening, so it is doing real work and is left alone.
 
+Generic `call()`/`new` expressions whose type arguments are inferred (e.g.
+`document.querySelectorAll(sel)`, which defaults to `NodeListOf<Element>`) are
+never reported: the `@type` supplies the contextual type TypeScript uses to
+infer those arguments, so the inferred and asserted types always coincide and a
+real narrowing (to `NodeListOf<HTMLElement>`, say) cannot be told apart from a
+redundant one.
+
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
 JavaScript + JSDoc files. Note also that this rule runs fairly slowly.**

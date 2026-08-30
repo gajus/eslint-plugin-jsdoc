@@ -20,6 +20,13 @@ fixed) on a `const` declarator, where the literal type is inferred anyway;
 elsewhere (a `let`/`var` binding, a `return`, an object-property value, etc.) the
 cast suppresses widening, so it is doing real work and is left alone.
 
+Generic `call()`/`new` expressions whose type arguments are inferred (e.g.
+`document.querySelectorAll(sel)`, which defaults to `NodeListOf<Element>`) are
+never reported: the `@type` supplies the contextual type TypeScript uses to
+infer those arguments, so the inferred and asserted types always coincide and a
+real narrowing (to `NodeListOf<HTMLElement>`, say) cannot be told apart from a
+redundant one.
+
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
 JavaScript + JSDoc files. Note also that this rule runs fairly slowly.**
@@ -186,6 +193,9 @@ const b = a;
 foo(/** @type {number[]} */ ([1, 2]));
 // Message: The @type tag declaring "number[]" is redundant as TypeScript infers it automatically.
 
+const d = /** @type {Date} */ (new Date());
+// Message: The @type tag declaring "Date" is redundant as TypeScript infers it automatically.
+
 let a;
 a = /** @type {5} */ (5);
 // Message: The @type tag declaring "5" is redundant as TypeScript infers it automatically.
@@ -321,5 +331,26 @@ const mapPaths = {prop: "text"};
 
 /** @type {string} */
 const a = 5, b = 'x';
+
+/**
+ * @param {string} sel
+ * @returns {HTMLElement[]}
+ */
+const $$ = (sel) => [...(/** @type {NodeListOf<HTMLElement>} */ (
+  document.querySelectorAll(sel)
+))];
+
+/**
+ * @param {string} sel
+ */
+const q = (sel) => {
+  /** @type {NodeListOf<HTMLElement>} */
+  const els = document.querySelectorAll(sel);
+  return els;
+};
+
+const p = /** @type {Promise<number>} */ (Promise.resolve(5));
+
+const m = /** @type {Map<string, number>} */ (new Map());
 ````
 

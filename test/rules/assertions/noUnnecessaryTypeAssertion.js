@@ -302,6 +302,22 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+        const d = /** @type {Date} */ (new Date());
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "Date" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        const d = new Date();
+      `,
+    },
+    {
+      code: `
         let a;
         a = /** @type {5} */ (5);
       `,
@@ -679,6 +695,47 @@ export default /** @type {import('../index.js').TestCases} */ ({
       code: `
         /** @type {string} */
         const a = 5, b = 'x';
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /**
+         * @param {string} sel
+         * @returns {HTMLElement[]}
+         */
+        const $$ = (sel) => [...(/** @type {NodeListOf<HTMLElement>} */ (
+          document.querySelectorAll(sel)
+        ))];
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /**
+         * @param {string} sel
+         */
+        const q = (sel) => {
+          /** @type {NodeListOf<HTMLElement>} */
+          const els = document.querySelectorAll(sel);
+          return els;
+        };
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const p = /** @type {Promise<number>} */ (Promise.resolve(5));
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const m = /** @type {Map<string, number>} */ (new Map());
       `,
       filename: 'dummy.js',
       languageOptions,
