@@ -168,6 +168,10 @@ const b = a;
 const mapPaths = {prop: "text"};
 // Message: The @type tag declaring "{prop: string}" is redundant as TypeScript infers it automatically.
 
+/** @type {string} */
+const a = 'x', b = 2;
+// Message: The @type tag declaring "string" is redundant as TypeScript infers it automatically.
+
 /**
  * Keep me.
  * @type {string}
@@ -256,5 +260,8 @@ const mapPaths = {};
 
 /** @type {{prop?: string}} */
 const mapPaths = {prop: "text"};
+
+/** @type {string} */
+const a = 5, b = 'x';
 ````
 

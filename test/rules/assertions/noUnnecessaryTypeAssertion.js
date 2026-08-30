@@ -259,6 +259,23 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+        /** @type {string} */
+        const a = 'x', b = 2;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "string" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        const a = 'x', b = 2;
+      `,
+    },
+    {
+      code: `
         /**
          * Keep me.
          * @type {string}
@@ -437,6 +454,14 @@ export default /** @type {import('../index.js').TestCases} */ ({
       code: `
         /** @type {{prop?: string}} */
         const mapPaths = {prop: "text"};
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /** @type {string} */
+        const a = 5, b = 'x';
       `,
       filename: 'dummy.js',
       languageOptions,

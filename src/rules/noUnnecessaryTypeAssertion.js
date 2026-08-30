@@ -150,6 +150,9 @@ export default iterateJsdoc(({
   // 3. For this example, let's assume we are checking VariableDeclarators
   // e.g., `/** @type {number} */ const x = 5;`
   if (node?.type === 'VariableDeclaration') {
+    // A leading `@type` tag only influences the first declarator (TypeScript
+    // leaves the rest to their own inferred types), so checking `[0]` fully
+    // determines whether the tag is redundant even for `const a = 1, b = 2;`.
     const decl = node.declarations[0];
 
     /* c8 ignore next 4 -- How to cover? */
