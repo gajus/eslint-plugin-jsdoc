@@ -34,6 +34,11 @@ The `unknown` half of a "cast through `unknown`"
 it is the bridge that lets the outer assertion reach an otherwise-incompatible
 type, so it is load-bearing despite `unknown` being broader than everything.
 
+A cast whose comment sits on an inner parenthesized sub-expression that is then
+a member or argument of the outer cast's operand
+(`/** @type {DOMException} */ (reader.error).message`) is skipped entirely,
+since removing or unwrapping it would target the wrong expression.
+
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
 JavaScript + JSDoc files. Note also that this rule runs fairly slowly.**

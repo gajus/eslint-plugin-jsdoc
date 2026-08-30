@@ -354,6 +354,16 @@ export default iterateJsdoc(({
     return;
   }
 
+  // The `@type` TypeScript resolves for `paren` must be the very comment being
+  // iterated. When the comment actually sits on an inner parenthesized
+  // sub-expression that is then a member/argument of the paren's operand
+  // (`/** @type {DOMException} */ (reader.error).message`), `paren` is a
+  // different, outer cast carrying a different comment, so measuring or fixing
+  // against it would target the wrong expression (and drop the inner cast).
+  if (typeTag.parent.end !== jsdocNode.range[1]) {
+    return;
+  }
+
   if (isGenericCall(exprTsNode)) {
     return;
   }

@@ -810,6 +810,31 @@ export default /** @type {import('../index.js').TestCases} */ ({
       filename: 'dummy.js',
       languageOptions,
     },
+    {
+      code: `
+        const reader = new FileReader();
+        reader.addEventListener(
+          'error',
+          async function () {
+            await dialogs.alert(/** @type {string} */ (
+              /** @type {DOMException} */ (reader.error).message
+            ));
+          }
+        );
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const parsed = JSON.parse('{}');
+        const z = /** @type {string} */ (
+          /** @type {{y: string}} */ (parsed).y
+        );
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
   ],
 });
 
