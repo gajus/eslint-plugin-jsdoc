@@ -216,6 +216,15 @@ class TestClass {
 var a = []; // Test comment
 // "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["VariableDeclarator"]}]
 // Message: Line comments should be JSDoc-style.
+
+/*
+ * Seniority levels that participate in distribution, in display
+ * order. `custom` is never a real distribution key. Every test shown in this
+ * modal can recruit each of these levels, so all three are always editable.
+ */
+const SENIORITY_ORDER = ['senior', 'middle', 'specialist'];
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contexts":["any"],"lineOrBlockStyle":"block"}]
+// Message: Block comments should be JSDoc-style.
 ````
 
 

@@ -503,6 +503,38 @@ export default /** @type {import('../index.js').TestCases} */ ({
         var a = []; ` + `
       `,
     },
+    {
+      code: `
+        /*
+         * Seniority levels that participate in distribution, in display
+         * order. \`custom\` is never a real distribution key. Every test shown in this
+         * modal can recruit each of these levels, so all three are always editable.
+         */
+        const SENIORITY_ORDER = ['senior', 'middle', 'specialist'];
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Block comments should be JSDoc-style.',
+        },
+      ],
+      options: [
+        {
+          contexts: [
+            'any',
+          ],
+          lineOrBlockStyle: 'block',
+        },
+      ],
+      output: `
+        /**
+         * Seniority levels that participate in distribution, in display
+         * order. \`custom\` is never a real distribution key. Every test shown in this
+         * modal can recruit each of these levels, so all three are always editable.
+         */
+        const SENIORITY_ORDER = ['senior', 'middle', 'specialist'];
+      `,
+    },
   ],
   valid: [
     {

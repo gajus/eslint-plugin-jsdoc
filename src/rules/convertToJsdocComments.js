@@ -186,6 +186,31 @@ export default {
     };
 
     /**
+     * Builds the opening portion of the JSDoc comment, i.e. everything before
+     * the closing delimiter.
+     * @param {string} indent
+     * @param {Token} comment
+     * @param {boolean|undefined} inlineCommentBlock
+     * @returns {string}
+     */
+    const getCommentOpening = (indent, comment, inlineCommentBlock) => {
+      if (inlineCommentBlock || enforceJsdocLineStyle === 'single') {
+        return `/** ${comment.value.trim()} `;
+      }
+
+      const body = comment.value.trimEnd();
+
+      // When the comment's text already begins on its own line (e.g. a
+      // multi-line block comment), there is no need for the fixer to add a
+      // leading blank `*` line.
+      if ((/^[ \t]*\n/v).test(body)) {
+        return `/**${body.replace(/^[ \t]+/v, '')}\n${indent}`;
+      }
+
+      return `/**\n${indent}*${body}\n${indent}`;
+    };
+
+    /**
      * @type {import('../iterateJsdoc.js').CheckJsdoc}
      */
     const checkNonJsdoc = (_info, _handler, node) => {
@@ -205,11 +230,7 @@ export default {
 
       /** @type {AddComment} */
       const addComment = (inlineCommentBlock, commentToAdd, indent, lines, fixer) => {
-        const insertion = (
-          inlineCommentBlock || enforceJsdocLineStyle === 'single' ?
-            `/** ${commentToAdd.value.trim()} ` :
-            `/**\n${indent}*${commentToAdd.value.trimEnd()}\n${indent}`
-        ) +
+        const insertion = getCommentOpening(indent, commentToAdd, inlineCommentBlock) +
             `*/${'\n'.repeat((lines || 1) - 1)}`;
 
         return fixer.replaceText(
@@ -242,11 +263,7 @@ export default {
 
       /** @type {AddComment} */
       const addComment = (inlineCommentBlock, commentToAdd, indent, lines, fixer) => {
-        const insertion = (
-          inlineCommentBlock || enforceJsdocLineStyle === 'single' ?
-            `/** ${commentToAdd.value.trim()} ` :
-            `/**\n${indent}*${commentToAdd.value.trimEnd()}\n${indent}`
-        ) +
+        const insertion = getCommentOpening(indent, commentToAdd, inlineCommentBlock) +
             `*/${'\n'.repeat((lines || 1) - 1)}${lines ? `\n${indent.slice(1)}` : ' '}`;
 
         return [
@@ -268,12 +285,16 @@ export default {
       ...getContextObject(
         enforcedContexts(context, true, settings),
         checkNonJsdoc,
+        undefined,
+        true,
       ),
       ...getContextObject(
         contextsAfter,
         (_info, _handler, node) => {
           checkNonJsdocAfter(node, contextsAfter);
         },
+        undefined,
+        true,
       ),
       ...getContextObject(
         contextsBeforeAndAfter,
@@ -283,6 +304,8 @@ export default {
             checkNonJsdocAfter(node, contextsBeforeAndAfter);
           }
         },
+        undefined,
+        true,
       ),
     };
   },

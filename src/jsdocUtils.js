@@ -1655,9 +1655,10 @@ const enforcedContexts = (context, defaultContexts, settings) => {
  * @param {import('./iterateJsdoc.js').Context[]} contexts
  * @param {import('./iterateJsdoc.js').CheckJsdoc} checkJsdoc
  * @param {import('@es-joy/jsdoccomment').CommentHandler} [handler]
+ * @param {boolean} [convertAny]
  * @returns {import('eslint').Rule.RuleListener}
  */
-const getContextObject = (contexts, checkJsdoc, handler) => {
+const getContextObject = (contexts, checkJsdoc, handler, convertAny) => {
   /** @type {import('eslint').Rule.RuleListener} */
   const properties = {};
 
@@ -1696,11 +1697,16 @@ const getContextObject = (contexts, checkJsdoc, handler) => {
         value = checkJsdoc.bind(null, selInfo, null);
       }
     } else {
+      property = prop;
+
+      if (convertAny && property === 'any') {
+        property = ':not(Program)';
+      }
+
       const selInfo = {
         lastIndex: idx,
-        selector: prop,
+        selector: property,
       };
-      property = prop;
       value = checkJsdoc.bind(null, selInfo, null);
     }
 
