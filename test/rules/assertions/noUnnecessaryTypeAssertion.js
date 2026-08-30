@@ -224,6 +224,10 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       errors: [
         {
+          line: 2,
+          message: 'The @type tag declaring "any" is redundant as TypeScript infers it automatically.',
+        },
+        {
           line: 4,
           message: 'The @type tag declaring "any" is redundant as TypeScript infers it automatically.',
         },
@@ -236,9 +240,149 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
       output: `
-        const a = /** @type {any} */ (5);
+        const a = 5;
         const b = a;
       `,
+    },
+    {
+      code: `
+        const a = /** @type {5} */ (5);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "5" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        const a = 5;
+      `,
+    },
+    {
+      code: `
+        const a = /** @type {boolean} */ (true);
+        /**
+         * @type {true}
+         */
+        const b = a;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "boolean" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        const a = true;
+        /**
+         * @type {true}
+         */
+        const b = a;
+      `,
+    },
+    {
+      code: `
+        foo(/** @type {number[]} */ ([1, 2]));
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "number[]" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        foo([1, 2]);
+      `,
+    },
+    {
+      code: `
+        let a;
+        a = /** @type {5} */ (5);
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "5" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        let a;
+        a = 5;
+      `,
+    },
+    {
+      code: `
+        const a = /** @type {const} */ (5);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "const" is redundant as TypeScript infers it automatically for literals.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          checkLiteralConstAssertions: true,
+        },
+      ],
+    },
+    {
+      code: `
+        const arr = [1];
+        arr[/** @type {0} */ (0)];
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "0" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const a = globalThis.b ? /** @type {5} */ (5) : 6;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "5" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      output: `
+        const a = globalThis.b ? 5 : 6;
+      `,
+    },
+    {
+      code: `
+        const a = /** @type {5} */ (5);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "5" is redundant as TypeScript infers it automatically.',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          enableFixer: false,
+        },
+      ],
     },
     {
       code: `
@@ -322,17 +466,6 @@ export default /** @type {import('../index.js').TestCases} */ ({
   valid: [
     {
       code: `
-        const a = /** @type {boolean} */ (true);
-        /**
-         * @type {true}
-         */
-        const b = a;
-      `,
-      filename: 'dummy.js',
-      languageOptions,
-    },
-    {
-      code: `
         /**
          * @param {boolean} a
          */
@@ -342,6 +475,44 @@ export default /** @type {import('../index.js').TestCases} */ ({
            */
           const b = a;
         }
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const a = /** @type {string} */ (5);
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const a = /** @type {any} */ (5);
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const a = /** @type {5} */ (5);
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          typesToIgnore: [
+            '5',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @type {() => void}
+         */
+        function quux () {}
       `,
       filename: 'dummy.js',
       languageOptions,

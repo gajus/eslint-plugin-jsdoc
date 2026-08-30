@@ -6,10 +6,15 @@ JavaScript-based TypeScript type assertions (`@type`) are helpful when you have 
 they become redundant when the type is equal to or more broad than the type which
 TypeScript infers for the expression.
 
-Currently only supports `VariableDeclaration`.
+Checks both a leading `@type` on a `VariableDeclaration` (e.g.
+`/** @type {number} */ const x = 5;`) and an inline JSDoc cast around a
+parenthesized expression (e.g. `const x = /** @type {number} */ (5);`).
 
-The fixer removes the redundant `@type` tag, deleting the whole JSDoc block if
-nothing else is left in it.
+For a `VariableDeclaration` the fixer removes the redundant `@type` tag,
+deleting the whole JSDoc block if nothing else is left in it. For an inline
+cast the fixer removes the comment and unwraps the parentheses
+(`const x = /** @type {5} */ (5);` becomes `const x = 5;`); it is skipped
+where the parentheses are load-bearing for precedence or Automatic Semicolon Insertion (ASI).
 
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
@@ -81,7 +86,7 @@ An array list of types to ignore
 
 |||
 |---|---|
-|Context|`VariableDeclaration`|
+|Context|`VariableDeclaration`; inline `/** @type */` casts|
 |Tags|`type`|
 |Recommended|false|
 |Options|`checkLiteralConstAssertions`, `enableFixer`, `treatAnyAsRedundant`, `typesToIgnore`|
@@ -164,6 +169,38 @@ const b = a;
 // "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"treatAnyAsRedundant":true}]
 // Message: The @type tag declaring "any" is redundant as TypeScript infers it automatically.
 
+const a = /** @type {5} */ (5);
+// Message: The @type tag declaring "5" is redundant as TypeScript infers it automatically.
+
+const a = /** @type {boolean} */ (true);
+/**
+ * @type {true}
+ */
+const b = a;
+// Message: The @type tag declaring "boolean" is redundant as TypeScript infers it automatically.
+
+foo(/** @type {number[]} */ ([1, 2]));
+// Message: The @type tag declaring "number[]" is redundant as TypeScript infers it automatically.
+
+let a;
+a = /** @type {5} */ (5);
+// Message: The @type tag declaring "5" is redundant as TypeScript infers it automatically.
+
+const a = /** @type {const} */ (5);
+// "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"checkLiteralConstAssertions":true}]
+// Message: The @type tag declaring "const" is redundant as TypeScript infers it automatically for literals.
+
+const arr = [1];
+arr[/** @type {0} */ (0)];
+// Message: The @type tag declaring "0" is redundant as TypeScript infers it automatically.
+
+const a = globalThis.b ? /** @type {5} */ (5) : 6;
+// Message: The @type tag declaring "5" is redundant as TypeScript infers it automatically.
+
+const a = /** @type {5} */ (5);
+// "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"enableFixer":false}]
+// Message: The @type tag declaring "5" is redundant as TypeScript infers it automatically.
+
 /** @type {{prop: string}} */
 const mapPaths = {prop: "text"};
 // Message: The @type tag declaring "{prop: string}" is redundant as TypeScript infers it automatically.
@@ -196,12 +233,6 @@ const a = 'hello';
 The following patterns are not considered problems:
 
 ````ts
-const a = /** @type {boolean} */ (true);
-/**
- * @type {true}
- */
-const b = a;
-
 /**
  * @param {boolean} a
  */
@@ -211,6 +242,18 @@ function quux (a) {
    */
   const b = a;
 }
+
+const a = /** @type {string} */ (5);
+
+const a = /** @type {any} */ (5);
+
+const a = /** @type {5} */ (5);
+// "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"typesToIgnore":["5"]}]
+
+/**
+ * @type {() => void}
+ */
+function quux () {}
 
 /**
  * @type {string}

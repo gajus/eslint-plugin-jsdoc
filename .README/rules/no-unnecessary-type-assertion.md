@@ -4,10 +4,15 @@ JavaScript-based TypeScript type assertions (`@type`) are helpful when you have 
 they become redundant when the type is equal to or more broad than the type which
 TypeScript infers for the expression.
 
-Currently only supports `VariableDeclaration`.
+Checks both a leading `@type` on a `VariableDeclaration` (e.g.
+`/** @type {number} */ const x = 5;`) and an inline JSDoc cast around a
+parenthesized expression (e.g. `const x = /** @type {number} */ (5);`).
 
-The fixer removes the redundant `@type` tag, deleting the whole JSDoc block if
-nothing else is left in it.
+For a `VariableDeclaration` the fixer removes the redundant `@type` tag,
+deleting the whole JSDoc block if nothing else is left in it. For an inline
+cast the fixer removes the comment and unwraps the parentheses
+(`const x = /** @type {5} */ (5);` becomes `const x = 5;`); it is skipped
+where the parentheses are load-bearing for precedence or Automatic Semicolon Insertion (ASI).
 
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
@@ -52,7 +57,7 @@ export default [
 
 |||
 |---|---|
-|Context|`VariableDeclaration`|
+|Context|`VariableDeclaration`; inline `/** @type */` casts|
 |Tags|`type`|
 |Recommended|false|
 |Options|`checkLiteralConstAssertions`, `enableFixer`, `treatAnyAsRedundant`, `typesToIgnore`|

@@ -63,7 +63,10 @@ const isLiteralType = (type) => {
 export default iterateJsdoc(({
   context,
   jsdoc,
+  jsdocNode,
   node: nde,
+  report,
+  sourceCode,
   utils,
 // eslint-disable-next-line complexity -- Numerous type/option permutations
 }) => {
@@ -145,10 +148,89 @@ export default iterateJsdoc(({
   // const services = ESLintUtils.getParserServices(context);
   const checker = services.program.getTypeChecker();
 
-  // Todo: Support more than just VariableDeclaration!
+  const assertedTypeStr = types[0].type;
 
-  // 3. For this example, let's assume we are checking VariableDeclarators
-  // e.g., `/** @type {number} */ const x = 5;`
+  const message = assertedTypeStr === 'const' ?
+    'The @type tag declaring "{{ type }}" is redundant as TypeScript infers it automatically for literals.' :
+    'The @type tag declaring "{{ type }}" is redundant as TypeScript infers it automatically.';
+
+  /**
+   * Whether the JSDoc-asserted type adds nothing over the type TypeScript
+   * already infers for the expression it is attached to.
+   * @param {any} rawInferredType `ts.Type`
+   * @param {any} rawAssertedType `ts.Type`
+   * @returns {boolean}
+   */
+  const isRedundantAssertion = (rawInferredType, rawAssertedType) => {
+    if (assertedTypeStr === 'const') {
+      return checkLiteralConstAssertions && isLiteralType(rawInferredType);
+    }
+
+    if (!treatAnyAsRedundant && assertedTypeStr === 'any') {
+      return false;
+    }
+
+    if (typesToIgnore.includes(assertedTypeStr)) {
+      return false;
+    }
+
+    const isObjectOrArray = (rawInferredType.flags & ts.TypeFlags.Object) !== 0;
+
+    if (!isObjectOrArray) {
+      // Primitives and individual literal values ("text" -> string) use unidirectional verification
+      return checker.isTypeAssignableTo(rawInferredType, rawAssertedType);
+    }
+
+    if (checker.isArrayType(rawInferredType)) {
+      const [
+        elementType,
+      ] = checker.getTypeArguments(/** @type {import('typescript').TypeReference} */ (
+        rawInferredType
+      ));
+      // A default placeholder such as `[]` -> `never[]` carries no structure to compare
+      if (elementType &&
+        (elementType.flags & (ts.TypeFlags.Never | ts.TypeFlags.Undefined | ts.TypeFlags.Any)) !== 0
+      ) {
+        return false;
+      }
+
+      // Arrays: standard structural bidirectional assignment matches string[] vs string[]
+      return checker.isTypeAssignableTo(rawInferredType, rawAssertedType) &&
+        checker.isTypeAssignableTo(rawAssertedType, rawInferredType);
+    }
+
+    // An explicit ObjectLiteral mask with zero keys is a default `{}` placeholder
+    const {
+      objectFlags,
+    } = /** @type {import('typescript').ObjectType} */ (rawInferredType);
+    if ((objectFlags & ts.ObjectFlags.EmptyObjectLiteral) !== 0 ||
+      checker.getPropertiesOfType(rawInferredType).length === 0
+    ) {
+      return false;
+    }
+
+    // Objects: strip the literal-initialization flags, then require structural
+    // equivalence in both directions, so `{prop: string}` vs `{prop: string}` is
+    // redundant while `{prop?: string}` vs `{prop: string}` fails backward.
+    const inferredBaseType = checker.getBaseTypeOfLiteralType(rawInferredType);
+    const assertedBaseType = checker.getBaseTypeOfLiteralType(rawAssertedType);
+
+    return checker.isTypeAssignableTo(inferredBaseType, assertedBaseType) &&
+      checker.isTypeAssignableTo(assertedBaseType, inferredBaseType);
+  };
+
+  // Positions where a bare expression of any precedence is valid and equivalent
+  // to the parenthesized form, so a redundant `/** @type {T} */ (expr)` cast can
+  // be unwrapped to `expr` without changing meaning.
+  const unwrappableParentTypes = new Set([
+    'ArrayExpression',
+    'AssignmentExpression',
+    'ReturnStatement',
+    'ThrowStatement',
+    'VariableDeclarator',
+  ]);
+
+  // 3. `/** @type {T} */ const x = 5;`
   if (node?.type === 'VariableDeclaration') {
     // A leading `@type` tag only influences the first declarator (TypeScript
     // leaves the rest to their own inferred types), so checking `[0]` fully
@@ -160,9 +242,6 @@ export default iterateJsdoc(({
       // No initializer, type is likely `any`, so @type isn't redundant
       return;
     }
-
-    const tsNode = services.esTreeNodeToTSNodeMap.get(decl.init);
-    const assertedTypeStr = types[0].type;
 
     // Resolve the `@type` tag through the real TypeNode that TypeScript already
     // parsed and bound as part of the program. Re-parsing the type string into
@@ -177,96 +256,84 @@ export default iterateJsdoc(({
       return;
     }
 
-    // 1. Fetch the raw types from the abstract syntax tree
-    const rawInferredType = checker.getTypeAtLocation(tsNode);
-    const rawAssertedType = checker.getTypeFromTypeNode(jsdocTypeNode);
+    const declInferredType = checker.getTypeAtLocation(
+      services.esTreeNodeToTSNodeMap.get(decl.init),
+    );
+    const declAssertedType = checker.getTypeFromTypeNode(jsdocTypeNode);
 
-    // 2. Safely categorize the structure and isolate empty placeholder shapes
-    const isObjectOrArray = (rawInferredType.flags & ts.TypeFlags.Object) !== 0;
-
-    let isDefaultPlaceholder = false;
-    if (isObjectOrArray) {
-      if (checker.isArrayType(rawInferredType)) {
-        const [
-          elementType,
-        ] = checker.getTypeArguments(/** @type {import('typescript').TypeReference} */ (
-          rawInferredType
-        ));
-        if (elementType) {
-          // Catches [] -> never[] safely before any widening
-          isDefaultPlaceholder = (elementType.flags & (ts.TypeFlags.Never | ts.TypeFlags.Undefined | ts.TypeFlags.Any)) !== 0;
-        }
-      } else {
-        // If the expression has an explicit ObjectLiteral mask with zero keys, it's a default {} placeholder
-        const {
-          objectFlags,
-        } = /** @type {import('typescript').ObjectType} */ (rawInferredType);
-        isDefaultPlaceholder = ((objectFlags & ts.ObjectFlags.EmptyObjectLiteral) !== 0 ||
-                            checker.getPropertiesOfType(rawInferredType).length === 0);
-      }
+    if (isRedundantAssertion(declInferredType, declAssertedType)) {
+      utils.reportJSDoc(message, types[0], fixer, true, {
+        type: assertedTypeStr,
+      });
     }
 
-    // 3. Execute the core redundancy validation rules
-    let isRedundant = false;
-
-    if (isObjectOrArray) {
-      if (checker.isArrayType(rawInferredType)) {
-        // Arrays: standard structural bidirectional assignment matches string[] vs string[]
-        const isAssignableForward = checker.isTypeAssignableTo(rawInferredType, rawAssertedType);
-        const isAssignableBackward = checker.isTypeAssignableTo(rawAssertedType, rawInferredType);
-        isRedundant = isAssignableForward && isAssignableBackward;
-      } else {
-        // Objects: Strip the literal initialization flags on the structural wrapper
-        const inferredBaseType = checker.getBaseTypeOfLiteralType(rawInferredType);
-        const assertedBaseType = checker.getBaseTypeOfLiteralType(rawAssertedType);
-
-        // Forward check: Expression fits seamlessly into the JSDoc target
-        const isAssignableForward = checker.isTypeAssignableTo(inferredBaseType, assertedBaseType);
-
-        // Backward check: Target structurally satisfies the widened expression
-        // This evaluates `{prop: string}` vs `{prop: string}` as TRUE for redundancy,
-        // while checking `{prop?: string}` vs `{prop: string}` safely fails backward assignment.
-        const isAssignableBackward = checker.isTypeAssignableTo(assertedBaseType, inferredBaseType);
-
-        isRedundant = isAssignableForward && isAssignableBackward;
-      }
-    } else {
-      // Primitives and individual literal values ("text" -> string) use unidirectional verification
-      isRedundant = checker.isTypeAssignableTo(rawInferredType, rawAssertedType);
-    }
-
-    if (assertedTypeStr === 'const') {
-      if (checkLiteralConstAssertions && isLiteralType(rawInferredType)) {
-        utils.reportJSDoc(
-          'The @type tag declaring "{{ type }}" is redundant as TypeScript infers it automatically for literals.',
-          types[0],
-          fixer,
-          true,
-          {
-            type: assertedTypeStr,
-          },
-        );
-      }
-
-      return;
-    }
-
-    if (
-      isRedundant && !isDefaultPlaceholder &&
-      (treatAnyAsRedundant || assertedTypeStr !== 'any') &&
-      !typesToIgnore.includes(assertedTypeStr)
-    ) {
-      utils.reportJSDoc(
-        'The @type tag declaring "{{ type }}" is redundant as TypeScript infers it automatically.',
-        types[0],
-        fixer,
-        true,
-        {
-          type: assertedTypeStr,
-        },
-      );
-    }
+    return;
   }
+
+  // 4. Inline cast: `/** @type {T} */ (expr)` (TypeScript's JSDoc assertion).
+  const exprTsNode = services.esTreeNodeToTSNodeMap.get(node);
+  const paren = exprTsNode?.parent;
+  if (!paren || !ts.isParenthesizedExpression(paren)) {
+    return;
+  }
+
+  const typeTag = ts.getJSDocTypeTag(paren);
+
+  /* c8 ignore next 4 -- Defensive: `getJSDocTypeTag` can also surface a `@type`
+     inherited from an enclosing statement, whose position precedes the paren */
+  if (!typeTag || typeTag.pos < paren.pos) {
+    return;
+  }
+
+  const castInferredType = checker.getTypeAtLocation(exprTsNode);
+  const castAssertedType = checker.getTypeFromTypeNode(typeTag.typeExpression.type);
+
+  if (!isRedundantAssertion(castInferredType, castAssertedType)) {
+    return;
+  }
+
+  const parent = /** @type {any} */ (node.parent);
+  const canUnwrap = enableFixer &&
+    // `as const` narrowing can be load-bearing (e.g. on a `let`); leave it be.
+    assertedTypeStr !== 'const' && (
+    unwrappableParentTypes.has(parent.type) ||
+    (parent.type === 'ConditionalExpression' && parent.test !== node) ||
+    ((parent.type === 'CallExpression' || parent.type === 'NewExpression') &&
+      parent.callee !== node)
+  );
+
+  report(
+    message,
+    canUnwrap ?
+      /**
+       * @param {import('eslint').Rule.RuleFixer} ruleFixer
+       * @returns {import('eslint').Rule.Fix}
+       */
+      (ruleFixer) => {
+        const closeParen = /** @type {import('eslint').AST.Token} */ (
+          sourceCode.getTokenAfter(/** @type {any} */ (node), {
+            filter: ({
+              type,
+              value,
+            }) => {
+              return type === 'Punctuator' && value === ')';
+            },
+          })
+        );
+
+        return ruleFixer.replaceTextRange(
+          [
+            jsdocNode.range[0], closeParen.range[1],
+          ],
+          sourceCode.getText(/** @type {any} */ (node)),
+        );
+      } :
+      null,
+    types[0],
+    {
+      type: assertedTypeStr,
+    },
+  );
 }, {
   iterateAllJsdocs: true,
   meta: {
