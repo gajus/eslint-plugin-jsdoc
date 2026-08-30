@@ -335,6 +335,9 @@ export default /** @type {import('../index.js').TestCases} */ ({
           checkLiteralConstAssertions: true,
         },
       ],
+      output: `
+        const a = 5;
+      `,
     },
     {
       code: `
@@ -516,6 +519,49 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       filename: 'dummy.js',
       languageOptions,
+    },
+    {
+      code: `
+        let a = /** @type {5} */ (5);
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        let a = /** @type {const} */ (5);
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          checkLiteralConstAssertions: true,
+        },
+      ],
+    },
+    {
+      code: `
+        foo(/** @type {const} */ (5));
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          checkLiteralConstAssertions: true,
+        },
+      ],
+    },
+    {
+      code: `
+        const f = () => /** @type {const} */ (5);
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          checkLiteralConstAssertions: true,
+        },
+      ],
     },
     {
       code: `

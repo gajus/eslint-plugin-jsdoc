@@ -285,17 +285,31 @@ export default iterateJsdoc(({
     return;
   }
 
-  const castInferredType = checker.getTypeAtLocation(exprTsNode);
+  const parent = /** @type {any} */ (node.parent);
+  const declaration = parent.type === 'VariableDeclarator' ? parent.parent : null;
+
+  // A `/** @type {const} */` cast only fails to do real work on a `const`
+  // declarator, which already infers the literal type. Anywhere else (`let`, a
+  // return, an object-property value, some generic call arguments, …) it
+  // suppresses widening, so it is not redundant.
+  if (assertedTypeStr === 'const' && declaration?.kind !== 'const') {
+    return;
+  }
+
+  // For a mutable binding (`let`/`var`) TypeScript widens the initializer, so a
+  // narrowing cast such as `/** @type {5} */` is doing real work; widen the
+  // uncast type to match before judging redundancy.
+  const mutableBinding = Boolean(declaration) && declaration.kind !== 'const';
+  const castInferredType = mutableBinding ?
+    checker.getBaseTypeOfLiteralType(checker.getTypeAtLocation(exprTsNode)) :
+    checker.getTypeAtLocation(exprTsNode);
   const castAssertedType = checker.getTypeFromTypeNode(typeTag.typeExpression.type);
 
   if (!isRedundantAssertion(castInferredType, castAssertedType)) {
     return;
   }
 
-  const parent = /** @type {any} */ (node.parent);
-  const canUnwrap = enableFixer &&
-    // `as const` narrowing can be load-bearing (e.g. on a `let`); leave it be.
-    assertedTypeStr !== 'const' && (
+  const canUnwrap = enableFixer && (
     unwrappableParentTypes.has(parent.type) ||
     (parent.type === 'ConditionalExpression' && parent.test !== node) ||
     ((parent.type === 'CallExpression' || parent.type === 'NewExpression') &&

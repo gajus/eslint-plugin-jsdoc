@@ -12,7 +12,11 @@ For a `VariableDeclaration` the fixer removes the redundant `@type` tag,
 deleting the whole JSDoc block if nothing else is left in it. For an inline
 cast the fixer removes the comment and unwraps the parentheses
 (`const x = /** @type {5} */ (5);` becomes `const x = 5;`); it is skipped
-where the parentheses are load-bearing for precedence or Automatic Semicolon Insertion (ASI).
+where the parentheses are load-bearing for precedence or Automatic Semicolon
+Insertion (ASI). An inline `/** @type {const} */` cast is only reported (and
+fixed) on a `const` declarator, where the literal type is inferred anyway;
+elsewhere (a `let`/`var` binding, a `return`, an object-property value, etc.) the
+cast suppresses widening, so it is doing real work and is left alone.
 
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
