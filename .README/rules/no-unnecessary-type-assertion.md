@@ -6,9 +6,9 @@ TypeScript infers for the expression.
 
 Currently only supports `VariableDeclaration`.
 
-**Note that this rule requires that the `typescript` package is installed. You must
-also install and point to the `typescript-eslint` parser, targeting your JavaScript +
-JSDoc files.**
+**Note that this experimental rule requires that the `typescript` package is installed.
+You must also install and point to the `typescript-eslint` parser, targeting your
+JavaScript + JSDoc files. Note also that this rule runs fairly slowly.**
 
 ```js
 // eslint.config.js
@@ -24,7 +24,7 @@ export default [
       parserOptions: {
         projectService: {
           allowDefaultProject: [
-            '**/*.js',
+            '*.js',
           ],
         },
         tsconfigRootDir: import.meta.dirname,

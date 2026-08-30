@@ -4,6 +4,8 @@ import {
   createRequire,
 } from 'module';
 
+let warned = false;
+
 /** @type {any} */
 let ts;
 
@@ -94,11 +96,15 @@ export default iterateJsdoc(({
      * @type {import('@typescript-eslint/utils').ParserServices}
      */ (context.sourceCode.parserServices);
 
-  /* c8 ignore next 6 -- Guard */
+  /* c8 ignore next 10 -- Guard */
   if (!services || !services.program) {
-    // Cannot proceed without type-aware linting enabled
-    // eslint-disable-next-line no-console -- Feedback
-    console.warn('⚠️ You must point ESLint to the `typescript-eslint` parser using `languageOptions`. See the documentation for `jsdoc/no-unnecessary-type-assertion`.');
+    if (!warned) {
+      // Cannot proceed without type-aware linting enabled
+      // eslint-disable-next-line no-console -- Feedback
+      console.warn('⚠️ You must point ESLint to the `typescript-eslint` parser using `languageOptions`. See the documentation for `jsdoc/no-unnecessary-type-assertion`.');
+      warned = true;
+    }
+
     return;
   }
 
