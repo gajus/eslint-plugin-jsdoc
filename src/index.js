@@ -89,7 +89,7 @@ import semver from 'semver';
  * @typedef {"" | "-error"} ErrorLevelVariants
  * @typedef {`flat/${ConfigGroups}${ConfigVariants}${ErrorLevelVariants}` |
  *   "flat/recommended-tsdoc" | "flat/recommended-tsdoc-error"} FlatConfigNames
- * @type {import('eslint').ESLint.Plugin & {
+ * @typedef {import('eslint').ESLint.Plugin & {
  *   configs: Record<
  *      FlatConfigNames,
  *       import('eslint').Linter.Config
@@ -99,10 +99,10 @@ import semver from 'semver';
  *       import('eslint').Linter.Config[]
  *     > &
  *     Record<"flat/recommended-mixed", import('eslint').Linter.Config[]>
- * }}
+ * }} JsdocPlugin
  */
-const index = {};
-index.configs = {};
+const index = /** @type {JsdocPlugin} */ ({});
+index.configs = /** @type {typeof index.configs} */ ({});
 index.rules = {
   'check-access': checkAccess,
   'check-alignment': checkAlignment,

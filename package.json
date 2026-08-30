@@ -69,7 +69,7 @@
     "semantic-release": "^25.0.9",
     "sinon": "^22.1.0",
     "ts-api-utils": "^2.5.0",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "typescript-eslint": "8.67.0"
   },
   "engines": {
@@ -139,6 +139,7 @@
   "scripts": {
     "ruleTypes": "node ./src/bin/generateRuleTypes.js",
     "tsc": "tsc",
+    "tsc:ts7": "npx -y -p typescript@^7 -c \"tsc\"",
     "tsc-build": "tsc -p tsconfig-prod.json",
     "build": "rimraf ./dist && mkdir dist && pnpm tsc-build && cp src/rules.d.ts dist/rules.d.ts",
     "attw": "attw --profile esm-only --pack .",

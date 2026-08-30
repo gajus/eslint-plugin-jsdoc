@@ -44,9 +44,14 @@ const checkNativeTypes = (preferredTypes, typeNodeName, preferred, parentNode, i
             parentNode
           )?.left?.type === 'JsdocTypeName' &&
           /**
-           * @type {import('jsdoc-type-pratt-parser').GenericResult}
+           * @type {import('jsdoc-type-pratt-parser').NameResult}
            */
-          (parentNode)?.left?.value === 'Object'
+          (
+            /**
+             * @type {import('jsdoc-type-pratt-parser').GenericResult}
+             */
+            (parentNode)?.left
+          )?.value === 'Object'
         )
       )
     ) {

@@ -192,10 +192,10 @@ import esquery from 'esquery';
  */
 
 /**
- * @callback ChangeTag
- * @param {import('comment-parser').Spec} tag
- * @param {...Partial<import('comment-parser').Tokens>} tokens
- * @returns {void}
+ * @typedef {(
+ *   tag: import('comment-parser').Spec,
+ *   ...tokens: Partial<import('comment-parser').Tokens>[]
+ * ) => void} ChangeTag
  */
 
 /**
@@ -624,8 +624,7 @@ const getBasicUtils = (context, {
   mode,
   tagNamePreference,
 }) => {
-  /** @type {BasicUtils} */
-  const utils = {};
+  const utils = /** @type {BasicUtils} */ ({});
 
   for (const method of [
     'isNameOrNamepathDefiningTag',

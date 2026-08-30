@@ -368,9 +368,7 @@ const getFunctionParameterNames = (
                   /** @type {import('estree').Identifier} */ (
                     param.key
                   ).name,
-                  /** @type {import('estree').AssignmentPattern} */ (
-                    param.value
-                  ).right.properties.map((prop) => {
+                  param.value.right.properties.map((prop) => {
                     return /** @type {string} */ (getParamName(
                       /** @type {import('estree').Property} */
                       (prop),

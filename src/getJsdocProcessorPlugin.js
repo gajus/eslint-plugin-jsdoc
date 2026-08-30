@@ -81,9 +81,6 @@ const getLinesCols = (text) => {
 };
 
 /**
- * @typedef {number} Integer
- */
-/**
  * @typedef {object} JsdocProcessorOptions
  * @property {boolean} [captionRequired] Require captions for example tags
  * @property {Integer} [paddedIndent] See docs

@@ -152,6 +152,7 @@ export default iterateJsdoc(({
         return;
       }
 
+      /** @type {import('jsdoc-type-pratt-parser').NonRootResult} */
       let currentNode = nde;
 
       /** @type {string[]} */
