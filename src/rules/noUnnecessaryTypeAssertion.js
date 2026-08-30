@@ -220,6 +220,45 @@ export default iterateJsdoc(({
   };
 
   /**
+   * Whether `type` carries no real structure to compare against — `any`,
+   * `never`, `null`, `undefined`, an empty array (`[]` -> `never[]`), an empty
+   * object (`{}`), or an array whose element type is itself such a placeholder
+   * (`any[]`). An assertion onto a placeholder is always supplying real type
+   * information, so it is not redundant.
+   * @param {any} type `ts.Type`
+   * @returns {boolean}
+   */
+  const isPlaceholderType = (type) => {
+    if ((type.flags & (
+      ts.TypeFlags.Any | ts.TypeFlags.Never |
+      ts.TypeFlags.Null | ts.TypeFlags.Undefined
+    )) !== 0) {
+      return true;
+    }
+
+    if ((type.flags & ts.TypeFlags.Object) === 0) {
+      return false;
+    }
+
+    if (checker.isArrayType(type)) {
+      const [
+        elementType,
+      ] = checker.getTypeArguments(/** @type {import('typescript').TypeReference} */ (
+        type
+      ));
+      return !elementType || (elementType.flags & (
+        ts.TypeFlags.Never | ts.TypeFlags.Undefined | ts.TypeFlags.Any
+      )) !== 0;
+    }
+
+    const {
+      objectFlags,
+    } = /** @type {import('typescript').ObjectType} */ (type);
+    return (objectFlags & ts.ObjectFlags.EmptyObjectLiteral) !== 0 ||
+      checker.getPropertiesOfType(type).length === 0;
+  };
+
+  /**
    * Whether the JSDoc-asserted type adds nothing over the type TypeScript
    * already infers for the expression it is attached to.
    * @param {any} rawInferredType `ts.Type`
@@ -250,6 +289,13 @@ export default iterateJsdoc(({
       return false;
     }
 
+    // A union such as `never[] | {}` (from `cond ? [] : {}`) reaches the
+    // primitive path below; if every constituent is a structureless placeholder
+    // the assertion is supplying the real shape, so it is not redundant.
+    if (rawInferredType.isUnion() && rawInferredType.types.every(isPlaceholderType)) {
+      return false;
+    }
+
     const isObjectOrArray = (rawInferredType.flags & ts.TypeFlags.Object) !== 0;
 
     if (!isObjectOrArray) {
@@ -257,32 +303,14 @@ export default iterateJsdoc(({
       return checker.isTypeAssignableTo(rawInferredType, rawAssertedType);
     }
 
-    if (checker.isArrayType(rawInferredType)) {
-      const [
-        elementType,
-      ] = checker.getTypeArguments(/** @type {import('typescript').TypeReference} */ (
-        rawInferredType
-      ));
-      // A default placeholder such as `[]` -> `never[]` carries no structure to compare
-      if (elementType &&
-        (elementType.flags & (ts.TypeFlags.Never | ts.TypeFlags.Undefined | ts.TypeFlags.Any)) !== 0
-      ) {
-        return false;
-      }
+    if (isPlaceholderType(rawInferredType)) {
+      return false;
+    }
 
+    if (checker.isArrayType(rawInferredType)) {
       // Arrays: standard structural bidirectional assignment matches string[] vs string[]
       return checker.isTypeAssignableTo(rawInferredType, rawAssertedType) &&
         checker.isTypeAssignableTo(rawAssertedType, rawInferredType);
-    }
-
-    // An explicit ObjectLiteral mask with zero keys is a default `{}` placeholder
-    const {
-      objectFlags,
-    } = /** @type {import('typescript').ObjectType} */ (rawInferredType);
-    if ((objectFlags & ts.ObjectFlags.EmptyObjectLiteral) !== 0 ||
-      checker.getPropertiesOfType(rawInferredType).length === 0
-    ) {
-      return false;
     }
 
     if (tightensAnyTypeArgument(rawInferredType, rawAssertedType)) {

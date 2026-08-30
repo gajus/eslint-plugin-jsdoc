@@ -854,6 +854,38 @@ export default /** @type {import('../index.js').TestCases} */ ({
       filename: 'dummy.js',
       languageOptions,
     },
+    {
+      code: `
+        /** @type {{[key: (string|number)]: any}} */
+        const retObj = this.array && !this.record ? [] : {};
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /** @type {({[key: string]: any})|any[]} */
+        const ret = someString === 'object' ? {} : [];
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const list = /** @type {string[] | undefined} */ (
+          Math.random() ? [] : undefined
+        );
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const a = /* @type {number} */ (3 + 5);
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
   ],
 });
 

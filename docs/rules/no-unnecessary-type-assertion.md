@@ -8,7 +8,10 @@ TypeScript infers for the expression.
 
 An assertion on an `any` expression (for instance a property read off
 `JSON.parse(s)`) is never reported: `any` is assignable to every type, so a
-concrete assertion on it is narrowing rather than redundant.
+concrete assertion on it is narrowing rather than redundant. The same holds for
+structureless placeholders — `never`, `null`, `undefined`, an empty array or
+object, `any[]`, and unions built only from those (e.g. `never[] | {}` from
+`cond ? [] : {}`) — where the assertion is supplying the real shape.
 
 Checks both a leading `@type` on a `VariableDeclaration` (e.g.
 `/** @type {number} */ const x = 5;`) and an inline JSDoc cast around a
@@ -434,5 +437,17 @@ const newType = /** @type {"arrayReference"|"objectReference"} */ (
 const aType = 'array';
 /** @type {"arrayReference"|"objectReference"} */
 const newType = `${aType}Reference`;
+
+/** @type {{[key: (string|number)]: any}} */
+const retObj = this.array && !this.record ? [] : {};
+
+/** @type {({[key: string]: any})|any[]} */
+const ret = someString === 'object' ? {} : [];
+
+const list = /** @type {string[] | undefined} */ (
+  Math.random() ? [] : undefined
+);
+
+const a = /* @type {number} */ (3 + 5);
 ````
 
