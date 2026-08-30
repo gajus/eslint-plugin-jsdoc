@@ -206,6 +206,20 @@ export default iterateJsdoc(({
   };
 
   /**
+   * A template literal with interpolations widens to `string` on its own, but a
+   * surrounding `@type` (a cast, or a declaration) contextually narrows it to a
+   * template-literal type, so `getTypeAtLocation` echoes the asserted literal
+   * back and a genuine narrowing (`\`${x}Reference\`` really being `string`,
+   * asserted as `AvailableType`) looks redundant.
+   * @param {any} estreeExpression
+   * @returns {boolean}
+   */
+  const isInterpolatedTemplateLiteral = (estreeExpression) => {
+    return estreeExpression?.type === 'TemplateLiteral' &&
+      estreeExpression.expressions.length > 0;
+  };
+
+  /**
    * Whether the JSDoc-asserted type adds nothing over the type TypeScript
    * already infers for the expression it is attached to.
    * @param {any} rawInferredType `ts.Type`
@@ -323,7 +337,7 @@ export default iterateJsdoc(({
     }
 
     const declInitTsNode = services.esTreeNodeToTSNodeMap.get(decl.init);
-    if (isGenericCall(declInitTsNode)) {
+    if (isGenericCall(declInitTsNode) || isInterpolatedTemplateLiteral(decl.init)) {
       return;
     }
 
@@ -364,7 +378,7 @@ export default iterateJsdoc(({
     return;
   }
 
-  if (isGenericCall(exprTsNode)) {
+  if (isGenericCall(exprTsNode) || isInterpolatedTemplateLiteral(node)) {
     return;
   }
 

@@ -835,6 +835,25 @@ export default /** @type {import('../index.js').TestCases} */ ({
       filename: 'dummy.js',
       languageOptions,
     },
+    {
+      code: `
+        const aType = 'array';
+        const newType = /** @type {"arrayReference"|"objectReference"} */ (
+          \`\${aType}Reference\`
+        );
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const aType = 'array';
+        /** @type {"arrayReference"|"objectReference"} */
+        const newType = \`\${aType}Reference\`;
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
   ],
 });
 

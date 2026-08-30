@@ -29,7 +29,9 @@ Generic `call()`/`new` expressions whose type arguments are inferred (e.g.
 never reported: the `@type` supplies the contextual type TypeScript uses to
 infer those arguments, so the inferred and asserted types always coincide and a
 real narrowing (to `NodeListOf<HTMLElement>`, say) cannot be told apart from a
-redundant one.
+redundant one. Template literals with interpolations (`` `${x}Reference` ``) are
+skipped for the same reason — they widen to `string` on their own, but the
+assertion contextually narrows them to a template-literal type.
 
 The `unknown` half of a "cast through `unknown`"
 (`/** @type {Foo} */ (/** @type {unknown} */ (x))`) is likewise never reported:
@@ -423,5 +425,14 @@ const parsed = JSON.parse('{}');
 const z = /** @type {string} */ (
   /** @type {{y: string}} */ (parsed).y
 );
+
+const aType = 'array';
+const newType = /** @type {"arrayReference"|"objectReference"} */ (
+  `${aType}Reference`
+);
+
+const aType = 'array';
+/** @type {"arrayReference"|"objectReference"} */
+const newType = `${aType}Reference`;
 ````
 
