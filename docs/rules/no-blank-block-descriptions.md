@@ -48,6 +48,23 @@ function functionWithClearName(x) {}
  */
 function functionWithClearName() {}
 // Message: There should be no extra blank lines in block descriptions not followed by tags.
+
+/**
+ *
+ * Some text
+ * @param {number} x
+ */
+function functionWithClearName(x) {}
+// Message: There should be no blank lines in block descriptions followed by tags.
+
+/**
+ *
+ * Seniority levels that participate in distribution, in display
+ * order. `custom` is never a real distribution key. Every test shown in this
+ * modal can recruit each of these levels, so all three are always editable.
+ */
+const SENIORITY_ORDER = ['senior', 'middle', 'specialist'];
+// Message: There should be no extra blank lines in block descriptions not followed by tags.
 ````
 
 

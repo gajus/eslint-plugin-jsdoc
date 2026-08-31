@@ -1,60 +1,115 @@
 import iterateJsdoc from '../iterateJsdoc.js';
 
-const anyWhitespaceLines = /^\s*$/v;
-const atLeastTwoLinesWhitespace = /^[ \t]*\n[ \t]*\n\s*$/v;
+const anyWhitespaceLine = /^\s*$/v;
 
 export default iterateJsdoc(({
   jsdoc,
   utils,
 }) => {
-  const {
-    description,
-    descriptions,
-    lastDescriptionLine,
-  } = utils.getDescription();
+  const hasTags = Boolean(jsdoc.tags.length);
 
-  const regex = jsdoc.tags.length ?
-    anyWhitespaceLines :
-    atLeastTwoLinesWhitespace;
+  // Gather the block-description lines (those before the first tag or the
+  //   closing delimiter).
+  let startIdx = -1;
 
-  if (descriptions.length && regex.test(description)) {
-    if (jsdoc.tags.length) {
-      utils.reportJSDoc(
-        'There should be no blank lines in block descriptions followed by tags.',
-        {
-          line: lastDescriptionLine,
-        },
-        () => {
-          utils.setBlockDescription(() => {
-            // Remove all lines
-            return [];
-          });
-        },
-      );
-    } else {
-      utils.reportJSDoc(
-        'There should be no extra blank lines in block descriptions not followed by tags.',
-        {
-          line: lastDescriptionLine,
-        },
-        () => {
-          utils.setBlockDescription((info, seedTokens) => {
-            return [
-              // Keep the starting line
-              {
-                number: 0,
-                source: '',
-                tokens: seedTokens({
-                  ...info,
-                  description: '',
-                }),
-              },
-            ];
-          });
-        },
-      );
+  /**
+   * @type {string[]}
+   */
+  const descLines = [];
+  jsdoc.source.some(({
+    tokens: {
+      delimiter,
+      description,
+      end,
+      tag,
+    },
+  }, idx) => {
+    if (delimiter === '/**') {
+      return false;
     }
+
+    if (tag || end) {
+      return true;
+    }
+
+    if (startIdx === -1) {
+      startIdx = idx;
+    }
+
+    descLines.push(description);
+
+    return false;
+  });
+
+  if (!descLines.length) {
+    return;
   }
+
+  let leadingBlankCount = 0;
+  while (
+    leadingBlankCount < descLines.length &&
+    anyWhitespaceLine.test(descLines[leadingBlankCount])
+  ) {
+    leadingBlankCount++;
+  }
+
+  const allBlank = leadingBlankCount === descLines.length;
+
+  /**
+   * Rebuilds the kept description lines after dropping `dropCount` leading
+   *   blank lines.
+   * @param {import('../iterateJsdoc.js').Integer} dropCount
+   * @returns {() => void}
+   */
+  const dropLeadingBlankLines = (dropCount) => {
+    return () => {
+      utils.setBlockDescription((info, seedTokens, descriptions, postDelimiters) => {
+        return descriptions.slice(dropCount).map((description, idx) => {
+          return {
+            number: 0,
+            source: '',
+            tokens: seedTokens({
+              ...info,
+              description,
+              postDelimiter: description ? postDelimiters[idx + dropCount] : '',
+            }),
+          };
+        });
+      });
+    };
+  };
+
+  if (hasTags) {
+    if (!leadingBlankCount) {
+      return;
+    }
+
+    utils.reportJSDoc(
+      'There should be no blank lines in block descriptions followed by tags.',
+      {
+        line: startIdx + leadingBlankCount - 1,
+      },
+      dropLeadingBlankLines(leadingBlankCount),
+    );
+
+    return;
+  }
+
+  // Without tags, only the extra (removable) leading blank lines are a problem;
+  //   a single leading blank line with no following content is allowed.
+  const removeCount = allBlank ? descLines.length - 1 : leadingBlankCount;
+
+  if (removeCount < 1) {
+    return;
+  }
+
+  utils.reportJSDoc(
+    'There should be no extra blank lines in block descriptions not followed by tags.',
+    {
+      line: startIdx + removeCount,
+    },
+    dropLeadingBlankLines(removeCount),
+  );
 }, {
   iterateAllJsdocs: true,
   meta: {
