@@ -63,6 +63,9 @@ export default [
       parser: typescriptEslintParser,
       parserOptions: {
         projectService: {
+          // If you need more aggressive testing and don't mind slower speed, set this
+          //   property to a reasonable value
+          // maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 500,
           allowDefaultProject: [
             '*.js',
           ],
