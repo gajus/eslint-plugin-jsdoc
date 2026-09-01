@@ -2338,6 +2338,13 @@ const iterateAllJsdocs = (iterator, ruleConfig, contexts, additiveCommentContext
         // @ts-expect-error ESLint < 10
         sourceCode = context.getSourceCode(),
       } = context;
+
+      // Custom languages provide their own `SourceCode` implementations.
+      // JSDoc traversal requires the JavaScript token API.
+      if (typeof sourceCode.getTokenBefore !== 'function') {
+        return {};
+      }
+
       settings = getSettings(context);
       if (!settings) {
         return {};
