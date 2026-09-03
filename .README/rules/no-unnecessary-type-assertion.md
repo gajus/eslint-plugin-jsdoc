@@ -44,6 +44,16 @@ a member or argument of the outer cast's operand
 (`/** @type {DOMException} */ (reader.error).message`) is skipped entirely,
 since removing or unwrapping it would target the wrong expression.
 
+A non-`const` tuple `@type` on an array literal
+(`/** @type {['foo']} */ (['foo'])`) is never reported as redundant: the array
+literal only takes the tuple type *from* the assertion (without it the literal
+widens to `string[]`), so the assertion is doing real work even though the
+contextually-typed expression echoes the asserted tuple straight back. This is
+the pre-TypeScript-4.5 stand-in for a `const` assertion. Enable the
+`preferConstToLiteralTuples` option to instead report such assertions when every
+tuple element is a literal and (under `enableFixer`) rewrite them to the
+equivalent, more concise `/** @type {const} */`.
+
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
 JavaScript + JSDoc files. Note also that this rule runs fairly slowly.**
@@ -76,6 +86,7 @@ export default [
         // You can change these defaults
         checkLiteralConstAssertions: false,
         enableFixer: true,
+        preferConstToLiteralTuples: false,
         treatAnyAsRedundant: false,
         typesToIgnore: [],
       }]
@@ -93,7 +104,7 @@ export default [
 |Context|`VariableDeclaration`; inline `/** @type */` casts|
 |Tags|`type`|
 |Recommended|false|
-|Options|`checkLiteralConstAssertions`, `enableFixer`, `treatAnyAsRedundant`, `typesToIgnore`|
+|Options|`checkLiteralConstAssertions`, `enableFixer`, `preferConstToLiteralTuples`, `treatAnyAsRedundant`, `typesToIgnore`|
 
 ## Failing examples
 

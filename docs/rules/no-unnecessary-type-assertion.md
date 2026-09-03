@@ -46,6 +46,16 @@ a member or argument of the outer cast's operand
 (`/** @type {DOMException} */ (reader.error).message`) is skipped entirely,
 since removing or unwrapping it would target the wrong expression.
 
+A non-`const` tuple `@type` on an array literal
+(`/** @type {['foo']} */ (['foo'])`) is never reported as redundant: the array
+literal only takes the tuple type *from* the assertion (without it the literal
+widens to `string[]`), so the assertion is doing real work even though the
+contextually-typed expression echoes the asserted tuple straight back. This is
+the pre-TypeScript-4.5 stand-in for a `const` assertion. Enable the
+`preferConstToLiteralTuples` option to instead report such assertions when every
+tuple element is a literal and (under `enableFixer`) rewrite them to the
+equivalent, more concise `/** @type {const} */`.
+
 **Note that this experimental rule requires that the `typescript` package is installed.
 You must also install and point to the `typescript-eslint` parser, targeting your
 JavaScript + JSDoc files. Note also that this rule runs fairly slowly.**
@@ -78,6 +88,7 @@ export default [
         // You can change these defaults
         checkLiteralConstAssertions: false,
         enableFixer: true,
+        preferConstToLiteralTuples: false,
         treatAnyAsRedundant: false,
         typesToIgnore: [],
       }]
@@ -104,6 +115,12 @@ Whether to check `const` type assertions as redundant
 
 Whether to enable the fixer that removes the redundant `@type` tag (and the JSDoc block if it becomes empty). Defaults to `true`.
 
+<a name="user-content-no-unnecessary-type-assertion-options-preferconsttoliteraltuples"></a>
+<a name="no-unnecessary-type-assertion-options-preferconsttoliteraltuples"></a>
+### <code>preferConstToLiteralTuples</code>
+
+Whether to report a non-`const` literal-tuple assertion on an array literal (e.g. `/** @type {['foo']} */ (['foo'])`) and fix it to the equivalent, more concise `/** @type {const} */` assertion. Defaults to `false`.
+
 <a name="user-content-no-unnecessary-type-assertion-options-treatanyasredundant"></a>
 <a name="no-unnecessary-type-assertion-options-treatanyasredundant"></a>
 ### <code>treatAnyAsRedundant</code>
@@ -122,7 +139,7 @@ An array list of types to ignore
 |Context|`VariableDeclaration`; inline `/** @type */` casts|
 |Tags|`type`|
 |Recommended|false|
-|Options|`checkLiteralConstAssertions`, `enableFixer`, `treatAnyAsRedundant`, `typesToIgnore`|
+|Options|`checkLiteralConstAssertions`, `enableFixer`, `preferConstToLiteralTuples`, `treatAnyAsRedundant`, `typesToIgnore`|
 
 <a name="user-content-no-unnecessary-type-assertion-failing-examples"></a>
 <a name="no-unnecessary-type-assertion-failing-examples"></a>
@@ -261,6 +278,25 @@ const a = 'hello';
 const a = 'hello';
 // "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"enableFixer":false}]
 // Message: The @type tag declaring "string" is redundant as TypeScript infers it automatically.
+
+const arr = /** @type {['foo']} */ (['foo']);
+// "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"preferConstToLiteralTuples":true}]
+// Message: The @type tag declaring "['foo']" is better written as the "const" assertion `/** @type {const} */` (TypeScript 4.5+).
+
+/**
+ * @type {['foo', 1]}
+ */
+const arr = ['foo', 1];
+// "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"preferConstToLiteralTuples":true}]
+// Message: The @type tag declaring "['foo', 1]" is better written as the "const" assertion `/** @type {const} */` (TypeScript 4.5+).
+
+foo(/** @type {['foo']} */ (['foo']));
+// "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"preferConstToLiteralTuples":true}]
+// Message: The @type tag declaring "['foo']" is better written as the "const" assertion `/** @type {const} */` (TypeScript 4.5+).
+
+const arr = /** @type {['foo']} */ (['foo']);
+// "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"enableFixer":false,"preferConstToLiteralTuples":true}]
+// Message: The @type tag declaring "['foo']" is better written as the "const" assertion `/** @type {const} */` (TypeScript 4.5+).
 ````
 
 
@@ -452,5 +488,15 @@ const list = /** @type {string[] | undefined} */ (
 );
 
 const a = /* @type {number} */ (3 + 5);
+
+const arr = /** @type {['foo']} */ (['foo']);
+
+/**
+ * @type {['foo']}
+ */
+const arr = ['foo'];
+
+const arr = /** @type {[string]} */ (['foo']);
+// "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"preferConstToLiteralTuples":true}]
 ````
 

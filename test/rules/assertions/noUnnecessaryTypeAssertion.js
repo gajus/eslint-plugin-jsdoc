@@ -497,6 +497,94 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        const arr = /** @type {['foo']} */ (['foo']);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "[\'foo\']" is better written as the "const" assertion `/** @type {const} */` (TypeScript 4.5+).',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          preferConstToLiteralTuples: true,
+        },
+      ],
+      output: `
+        const arr = /** @type {const} */ (['foo']);
+      `,
+    },
+    {
+      code: `
+        /**
+         * @type {['foo', 1]}
+         */
+        const arr = ['foo', 1];
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'The @type tag declaring "[\'foo\', 1]" is better written as the "const" assertion `/** @type {const} */` (TypeScript 4.5+).',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          preferConstToLiteralTuples: true,
+        },
+      ],
+      output: `
+        /**
+         * @type {const}
+         */
+        const arr = ['foo', 1];
+      `,
+    },
+    {
+      code: `
+        foo(/** @type {['foo']} */ (['foo']));
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "[\'foo\']" is better written as the "const" assertion `/** @type {const} */` (TypeScript 4.5+).',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          preferConstToLiteralTuples: true,
+        },
+      ],
+      output: `
+        foo(/** @type {const} */ (['foo']));
+      `,
+    },
+    {
+      code: `
+        const arr = /** @type {['foo']} */ (['foo']);
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The @type tag declaring "[\'foo\']" is better written as the "const" assertion `/** @type {const} */` (TypeScript 4.5+).',
+        },
+      ],
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          enableFixer: false,
+          preferConstToLiteralTuples: true,
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -885,6 +973,35 @@ export default /** @type {import('../index.js').TestCases} */ ({
       `,
       filename: 'dummy.js',
       languageOptions,
+    },
+    {
+      code: `
+        const arr = /** @type {['foo']} */ (['foo']);
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /**
+         * @type {['foo']}
+         */
+        const arr = ['foo'];
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const arr = /** @type {[string]} */ (['foo']);
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+      options: [
+        {
+          preferConstToLiteralTuples: true,
+        },
+      ],
     },
   ],
 });

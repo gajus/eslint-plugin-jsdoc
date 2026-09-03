@@ -87,6 +87,7 @@ export default iterateJsdoc(({
     // https://typescript-eslint.io/rules/no-unnecessary-type-assertion/
     checkLiteralConstAssertions = false,
     enableFixer = true,
+    preferConstToLiteralTuples = false,
     treatAnyAsRedundant = false,
     typesToIgnore = [],
   } = context.options[0] ?? {};
@@ -153,6 +154,24 @@ export default iterateJsdoc(({
   const message = assertedTypeStr === 'const' ?
     'The @type tag declaring "{{ type }}" is redundant as TypeScript infers it automatically for literals.' :
     'The @type tag declaring "{{ type }}" is redundant as TypeScript infers it automatically.';
+
+  const preferConstMessage =
+    'The @type tag declaring "{{ type }}" is better written as the "const" assertion `/** @type {const} */` (TypeScript 4.5+).';
+
+  /**
+   * Rewrites the reported `@type` tag's type to `const`.
+   * @returns {void}
+   */
+  const convertToConst = () => {
+    for (const {
+      tokens,
+    } of /** @type {import('comment-parser').Spec} */ (types[0]).source) {
+      if (tokens.type) {
+        tokens.type = '{const}';
+        break;
+      }
+    }
+  };
 
   /**
    * Whether `inferredType` is a generic reference carrying `any` type arguments
@@ -327,6 +346,52 @@ export default iterateJsdoc(({
       checker.isTypeAssignableTo(assertedBaseType, inferredBaseType);
   };
 
+  /**
+   * A non-`const` tuple type annotation on an array literal (asserting `['foo']`
+   * onto `['foo']`) turns the literal's inferred `T[]` into a tuple; since the
+   * literal only takes that tuple type *from* the assertion, the assertion is
+   * never genuinely redundant even though the contextually-typed expression
+   * echoes the asserted tuple straight back. It is the pre-TypeScript-4.5
+   * stand-in for a `const` assertion.
+   * @param {any} assertedType `ts.Type`
+   * @param {import('@typescript-eslint/utils').TSESTree.Node | null | undefined} operand
+   * @returns {boolean}
+   */
+  const isTupleConversionIdiom = (assertedType, operand) => {
+    return assertedTypeStr !== 'const' &&
+      operand?.type === 'ArrayExpression' &&
+      checker.isTupleType(assertedType);
+  };
+
+  /**
+   * Whether every element of `tupleType` is a literal type, so a `const`
+   * assertion would reproduce the same element types (`['foo', 1]` but not
+   * `[string]`).
+   * @param {any} tupleType `ts.Type`
+   * @returns {boolean}
+   */
+  const tupleElementsAllLiteral = (tupleType) => {
+    const elements = checker.getTypeArguments(tupleType);
+    return elements.length > 0 && elements.every(isLiteralType);
+  };
+
+  /**
+   * Reports an array-literal tuple assertion, offering (under `enableFixer`) a
+   * rewrite to the equivalent, more concise `const` assertion.
+   * @returns {void}
+   */
+  const reportPreferConst = () => {
+    utils.reportJSDoc(
+      preferConstMessage,
+      types[0],
+      enableFixer ? convertToConst : null,
+      false,
+      {
+        type: assertedTypeStr,
+      },
+    );
+  };
+
   // Positions where a bare expression of any precedence is valid and equivalent
   // to the parenthesized form, so a redundant `/** @type {T} */ (expr)` cast can
   // be unwrapped to `expr` without changing meaning.
@@ -371,6 +436,14 @@ export default iterateJsdoc(({
 
     const declInferredType = checker.getTypeAtLocation(declInitTsNode);
     const declAssertedType = checker.getTypeFromTypeNode(jsdocTypeNode);
+
+    if (isTupleConversionIdiom(declAssertedType, decl.init)) {
+      if (preferConstToLiteralTuples && tupleElementsAllLiteral(declAssertedType)) {
+        reportPreferConst();
+      }
+
+      return;
+    }
 
     if (isRedundantAssertion(declInferredType, declAssertedType)) {
       utils.reportJSDoc(message, types[0], fixer, true, {
@@ -441,6 +514,14 @@ export default iterateJsdoc(({
     checker.getTypeAtLocation(exprTsNode);
   const castAssertedType = checker.getTypeFromTypeNode(typeTag.typeExpression.type);
 
+  if (isTupleConversionIdiom(castAssertedType, node)) {
+    if (preferConstToLiteralTuples && tupleElementsAllLiteral(castAssertedType)) {
+      reportPreferConst();
+    }
+
+    return;
+  }
+
   if (!isRedundantAssertion(castInferredType, castAssertedType)) {
     return;
   }
@@ -501,6 +582,10 @@ export default iterateJsdoc(({
           },
           enableFixer: {
             description: 'Whether to enable the fixer that removes the redundant `@type` tag (and the JSDoc block if it becomes empty). Defaults to `true`.',
+            type: 'boolean',
+          },
+          preferConstToLiteralTuples: {
+            description: 'Whether to report a non-`const` literal-tuple assertion on an array literal (e.g. `/** @type {[\'foo\']} */ ([\'foo\'])`) and fix it to the equivalent, more concise `/** @type {const} */` assertion. Defaults to `false`.',
             type: 'boolean',
           },
           treatAnyAsRedundant: {

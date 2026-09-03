@@ -1325,6 +1325,10 @@ export interface Rules {
            */
           enableFixer?: boolean;
           /**
+           * Whether to report a non-`const` literal-tuple assertion on an array literal (e.g. `/** @type {['foo']} * / (['foo'])`) and fix it to the equivalent, more concise `/** @type {const} * /` assertion. Defaults to `false`.
+           */
+          preferConstToLiteralTuples?: boolean;
+          /**
            * Whether to treat `any` type casts as redundant
            */
           treatAnyAsRedundant?: boolean;
