@@ -872,6 +872,265 @@ describe('`getJsdocProcessorPlugin`', () => {
     ]);
   });
 
+  it('returns text and files and postprocesses messages by filename', () => {
+    const options = {};
+    const firstFilename = 'first.js';
+    const firstText = `
+/**
+ * @example alert('a');
+ */
+    `;
+    const secondFilename = 'second.js';
+    const secondText = `
+
+
+
+  /**
+   * @example alert('b');
+   */
+    `;
+
+    const plugin = getJsdocProcessorPlugin(options);
+
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    const firstResults = plugin.processors.examples.preprocess(
+      firstText, firstFilename,
+    );
+    expect(firstResults).to.deep.equal([
+      firstText,
+      {
+        filename: 'first.md/*.js',
+        text: 'alert(\'a\');',
+      },
+    ]);
+
+    const secondResults = plugin.processors.examples.preprocess(
+      secondText, secondFilename,
+    );
+    expect(secondResults).to.deep.equal([
+      secondText,
+      {
+        filename: 'second.md/*.js',
+        text: 'alert(\'b\');',
+      },
+    ]);
+
+    if (!plugin.processors || typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    const secondPostResults = plugin.processors.examples.postprocess(
+      [
+        [], [
+          {
+            column: 1,
+            endColumn: 11,
+            endLine: 1,
+            line: 1,
+            message: 'Unexpected alert.',
+            ruleId: 'no-alert',
+            severity: 2,
+          },
+        ],
+      ], secondFilename,
+    );
+    expect(secondPostResults).to.deep.equal([
+      {
+        column: 6,
+        endColumn: 16,
+        endLine: 7,
+        line: 6,
+        message: '@example error (no-alert): Unexpected alert.',
+        ruleId: 'no-alert',
+        severity: 2,
+      },
+    ]);
+
+    const firstPostResults = plugin.processors.examples.postprocess(
+      [
+        [], [
+          {
+            column: 1,
+            endColumn: 11,
+            endLine: 1,
+            line: 1,
+            message: 'Unexpected alert.',
+            ruleId: 'no-alert',
+            severity: 2,
+          },
+        ],
+      ], firstFilename,
+    );
+    expect(firstPostResults).to.deep.equal([
+      {
+        column: 4,
+        endColumn: 14,
+        endLine: 4,
+        line: 3,
+        message: '@example error (no-alert): Unexpected alert.',
+        ruleId: 'no-alert',
+        severity: 2,
+      },
+    ]);
+  });
+
+  it('returns text and files and postprocesses after processing its own example file', () => {
+    const options = {};
+    const filename = 'something.js';
+    const text = `
+/**
+ * @example alert('a');
+ */
+    `;
+    const exampleFilename = 'something.md/*.js';
+    const exampleText = 'alert(\'a\');';
+
+    const plugin = getJsdocProcessorPlugin(options);
+
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    if (!plugin.processors || typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    for (let pass = 0; pass < 2; pass++) {
+      const results = plugin.processors.examples.preprocess(
+        text, filename,
+      );
+      expect(results).to.deep.equal([
+        text,
+        {
+          filename: exampleFilename,
+          text: exampleText,
+        },
+      ]);
+
+      // ESLint may run the processor on the example file itself (when its
+      //   name matches the same config) before postprocessing the parent
+      const exampleResults = plugin.processors.examples.preprocess(
+        exampleText, exampleFilename,
+      );
+      expect(exampleResults).to.deep.equal([
+        exampleText,
+      ]);
+
+      const examplePostResults = plugin.processors.examples.postprocess(
+        [
+          [],
+        ], exampleFilename,
+      );
+      expect(examplePostResults).to.deep.equal([]);
+
+      const postResults = plugin.processors.examples.postprocess(
+        [
+          [], [
+            {
+              column: 1,
+              endColumn: 11,
+              endLine: 1,
+              line: 1,
+              message: 'Unexpected alert.',
+              ruleId: 'no-alert',
+              severity: 2,
+            },
+          ],
+        ], filename,
+      );
+      expect(postResults).to.deep.equal([
+        {
+          column: 4,
+          endColumn: 14,
+          endLine: 4,
+          line: 3,
+          message: '@example error (no-alert): Unexpected alert.',
+          ruleId: 'no-alert',
+          severity: 2,
+        },
+      ]);
+    }
+  });
+
+  it('returns text and files and postprocesses without fixes or suggestions', () => {
+    const options = {};
+    const filename = 'something.js';
+    const text = `
+/**
+ * @example alert('a');
+ */
+    `;
+
+    const plugin = getJsdocProcessorPlugin(options);
+
+    if (!plugin.processors || typeof plugin.processors.examples.preprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    const results = plugin.processors.examples.preprocess(
+      text, filename,
+    );
+    expect(results).to.deep.equal([
+      text,
+      {
+        filename: 'something.md/*.js',
+        text: 'alert(\'a\');',
+      },
+    ]);
+
+    if (!plugin.processors || typeof plugin.processors.examples.postprocess !== 'function') {
+      throw new Error('No processors');
+    }
+
+    const postResults = plugin.processors.examples.postprocess(
+      [
+        [], [
+          {
+            column: 1,
+            endColumn: 11,
+            endLine: 1,
+            fix: {
+              range: [
+                0, 11,
+              ],
+              text: '',
+            },
+            line: 1,
+            message: 'Unexpected alert.',
+            ruleId: 'no-alert',
+            severity: 2,
+            suggestions: [
+              {
+                desc: 'Remove the alert.',
+                fix: {
+                  range: [
+                    0, 11,
+                  ],
+                  text: '',
+                },
+                messageId: 'removeAlert',
+              },
+            ],
+          },
+        ],
+      ], filename,
+    );
+    expect(postResults).to.deep.equal([
+      {
+        column: 4,
+        endColumn: 14,
+        endLine: 4,
+        line: 3,
+        message: '@example error (no-alert): Unexpected alert.',
+        ruleId: 'no-alert',
+        severity: 2,
+      },
+    ]);
+  });
+
   it('returns text and files, with `checkExamples: false`', () => {
     const options = {
       checkExamples: false,
