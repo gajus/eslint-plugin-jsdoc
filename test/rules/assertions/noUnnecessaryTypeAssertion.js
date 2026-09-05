@@ -1026,5 +1026,51 @@ export default /** @type {import('../index.js').TestCases} */ ({
       filename: 'dummy.js',
       languageOptions,
     },
+    {
+      code: `
+        /**
+         * @type {{
+         *   main: (...arg: string[]) => string[]
+         * }}
+         */
+        const keyRange = {
+          main (...args) {
+            return args;
+          },
+        };
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const keyRange = /** @type {{
+          main: (...arg: string[]) => string[]
+        }} */ ({
+          main (...args) {
+            return args;
+          },
+        });
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        const base = {};
+
+        /**
+         * @type {{
+         *   run: (arg: string) => string
+         * }}
+         */
+        const keyRange = {
+          ...base,
+          run: (arg) => arg,
+        };
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
   ],
 });

@@ -365,7 +365,7 @@ export default iterateJsdoc(({
 
   /**
    * An array-literal annotation whose element type is a literal (or union of
-   * literals) — `/** @type {ViewType[]} *\/` on `['single-panel', 'user']` —
+   * literals) — `type {ViewType[]}` on `['single-panel', 'user']` —
    * narrows the element type that the bare literal would widen (`string[]` ->
    * `ViewType[]`). Like the tuple idiom, the literal takes that element type
    * only *from* the annotation, so the contextually-typed initializer echoes
@@ -383,6 +383,29 @@ export default iterateJsdoc(({
       elementType,
     ] = checker.getTypeArguments(assertedType);
     return isLiteralType(elementType);
+  };
+
+  /**
+   * Whether `operand` is an object literal carrying a method or function-valued
+   * property. Under a surrounding `@type` object annotation such a function is
+   * contextually typed by the annotation — its otherwise-implicit-`any`
+   * parameters (and hence its signature) come straight from it — so
+   * `getTypeAtLocation` echoes the asserted object shape back and a genuine
+   * typing looks redundant. As elsewhere in this rule the uncontaminated type
+   * cannot be recovered here, so such literals are left alone (at the cost of
+   * missing the rare object annotation that only restates a fully
+   * self-evident method signature).
+   * @param {import('@typescript-eslint/utils').TSESTree.Node | null | undefined} operand
+   * @returns {boolean}
+   */
+  const hasContextuallyTypedFunctionMember = (operand) => {
+    return operand?.type === 'ObjectExpression' &&
+      operand.properties.some((property) => {
+        return property.type === 'Property' && (
+          property.value.type === 'FunctionExpression' ||
+          property.value.type === 'ArrowFunctionExpression'
+        );
+      });
   };
 
   /**
@@ -467,7 +490,10 @@ export default iterateJsdoc(({
       return;
     }
 
-    if (narrowsArrayLiteralElement(declAssertedType, decl.init)) {
+    if (
+      narrowsArrayLiteralElement(declAssertedType, decl.init) ||
+      hasContextuallyTypedFunctionMember(decl.init)
+    ) {
       return;
     }
 
@@ -548,7 +574,10 @@ export default iterateJsdoc(({
     return;
   }
 
-  if (narrowsArrayLiteralElement(castAssertedType, node)) {
+  if (
+    narrowsArrayLiteralElement(castAssertedType, node) ||
+    hasContextuallyTypedFunctionMember(node)
+  ) {
     return;
   }
 

@@ -511,5 +511,36 @@ const viewTypes = ['single-panel', 'panels-dialogs', 'user'];
  */
 
 const viewTypes = /** @type {ViewType[]} */ (['single-panel', 'panels-dialogs', 'user']);
+
+/**
+ * @type {{
+ *   main: (...arg: string[]) => string[]
+ * }}
+ */
+const keyRange = {
+  main (...args) {
+    return args;
+  },
+};
+
+const keyRange = /** @type {{
+  main: (...arg: string[]) => string[]
+}} */ ({
+  main (...args) {
+    return args;
+  },
+});
+
+const base = {};
+
+/**
+ * @type {{
+ *   run: (arg: string) => string
+ * }}
+ */
+const keyRange = {
+  ...base,
+  run: (arg) => arg,
+};
 ````
 

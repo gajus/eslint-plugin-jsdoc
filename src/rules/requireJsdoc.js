@@ -34,7 +34,6 @@ import {
 /** @type {import('json-schema').JSONSchema4} */
 const OPTIONS_SCHEMA = {
   additionalProperties: false,
-  description: 'Has the following optional keys.\n',
   properties: {
     checkAllFunctionExpressions: {
       default: false,

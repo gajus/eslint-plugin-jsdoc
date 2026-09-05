@@ -41,9 +41,6 @@ to insert.
 
 A single options object has the following properties.
 
-Has the following optional keys.
-
-
 <a name="user-content-require-jsdoc-options-checkallfunctionexpressions"></a>
 <a name="require-jsdoc-options-checkallfunctionexpressions"></a>
 ### <code>checkAllFunctionExpressions</code>
