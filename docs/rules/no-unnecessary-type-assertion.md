@@ -498,5 +498,18 @@ const arr = ['foo'];
 
 const arr = /** @type {[string]} */ (['foo']);
 // "jsdoc/no-unnecessary-type-assertion": ["error"|"warn", {"preferConstToLiteralTuples":true}]
+
+/**
+ * @typedef {"single-panel"|"panels-dialogs"|"user"} ViewType
+ */
+
+/** @type {ViewType[]} */
+const viewTypes = ['single-panel', 'panels-dialogs', 'user'];
+
+/**
+ * @typedef {"single-panel"|"panels-dialogs"|"user"} ViewType
+ */
+
+const viewTypes = /** @type {ViewType[]} */ (['single-panel', 'panels-dialogs', 'user']);
 ````
 

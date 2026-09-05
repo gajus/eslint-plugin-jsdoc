@@ -364,6 +364,28 @@ export default iterateJsdoc(({
   };
 
   /**
+   * An array-literal annotation whose element type is a literal (or union of
+   * literals) — `/** @type {ViewType[]} *\/` on `['single-panel', 'user']` —
+   * narrows the element type that the bare literal would widen (`string[]` ->
+   * `ViewType[]`). Like the tuple idiom, the literal takes that element type
+   * only *from* the annotation, so the contextually-typed initializer echoes
+   * the asserted array straight back and the genuine narrowing looks redundant.
+   * @param {any} assertedType `ts.Type`
+   * @param {import('@typescript-eslint/utils').TSESTree.Node | null | undefined} operand
+   * @returns {boolean}
+   */
+  const narrowsArrayLiteralElement = (assertedType, operand) => {
+    if (operand?.type !== 'ArrayExpression' || !checker.isArrayType(assertedType)) {
+      return false;
+    }
+
+    const [
+      elementType,
+    ] = checker.getTypeArguments(assertedType);
+    return isLiteralType(elementType);
+  };
+
+  /**
    * Whether every element of `tupleType` is a literal type, so a `const`
    * assertion would reproduce the same element types (`['foo', 1]` but not
    * `[string]`).
@@ -445,6 +467,10 @@ export default iterateJsdoc(({
       return;
     }
 
+    if (narrowsArrayLiteralElement(declAssertedType, decl.init)) {
+      return;
+    }
+
     if (isRedundantAssertion(declInferredType, declAssertedType)) {
       utils.reportJSDoc(message, types[0], fixer, true, {
         type: assertedTypeStr,
@@ -519,6 +545,10 @@ export default iterateJsdoc(({
       reportPreferConst();
     }
 
+    return;
+  }
+
+  if (narrowsArrayLiteralElement(castAssertedType, node)) {
     return;
   }
 

@@ -1003,6 +1003,28 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         * @typedef {"single-panel"|"panels-dialogs"|"user"} ViewType
+         */
+
+        /** @type {ViewType[]} */
+        const viewTypes = ['single-panel', 'panels-dialogs', 'user'];
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
+    {
+      code: `
+        /**
+         * @typedef {"single-panel"|"panels-dialogs"|"user"} ViewType
+         */
+
+        const viewTypes = /** @type {ViewType[]} */ (['single-panel', 'panels-dialogs', 'user']);
+      `,
+      filename: 'dummy.js',
+      languageOptions,
+    },
   ],
 });
-
