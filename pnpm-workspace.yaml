@@ -8,7 +8,7 @@ minimumReleaseAgeExclude:
   - '@types/semver@7.8.0'
   - globals@17.9.0
   - '@es-joy/jsdoc-eslint-parser@0.28.0'
-  - '@es-joy/jsdoccomment@0.93.0 || 0.93.1 || 0.93.2 || 0.94.0 || 0.95.0 || 0.95.1'
+  - '@es-joy/jsdoccomment@0.93.0 || 0.93.1 || 0.93.2 || 0.94.0 || 0.95.0 || 0.95.1 || 0.97.0'
   - '@types/node@26.2.0'
   - comment-parser@1.4.8
   - eslint@10.8.1
@@ -24,6 +24,9 @@ minimumReleaseAgeExclude:
   - '@typescript-eslint/utils@8.67.0'
   - '@typescript-eslint/visitor-keys@8.67.0'
   - typescript-eslint@8.67.0
+  - lint-staged@17.5.0
+  - playwright-core@1.63.0
+  - playwright@1.63.0
 
 overrides:
   yargs@^17: 17.7.3
