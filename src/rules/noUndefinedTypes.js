@@ -483,32 +483,34 @@ export default iterateJsdoc(({
     .concat(/** @type {string[]} */ (definedPreferredTypes))
     .concat((() => {
       // Other class members are not in scope, but we need them (e.g., for a
-      //   sibling property or method referenced by `{@link}`), and we grab
-      //   them here
+      //   sibling property or method referenced by `{@link}`, or a member
+      //   referenced by `{@link}` from the class's own JSDoc block), and we
+      //   grab them here
+      /** @type {import('estree').ClassBody|undefined} */
+      let classBody;
+      /** @type {string|undefined} */
+      let className;
       if (node?.type === 'MethodDefinition' || node?.type === 'PropertyDefinition') {
-        return /** @type {import('estree').ClassBody} */ (node.parent).body.flatMap((methodOrProp) => {
-          if (methodOrProp.type === 'MethodDefinition') {
-            // eslint-disable-next-line unicorn/no-lonely-if -- Pattern
-            if (methodOrProp.key.type === 'Identifier') {
-              return [
-                methodOrProp.key.name,
-                `${/** @type {import('estree').ClassDeclaration} */ (
-                  node.parent?.parent
-                )?.id?.name}.${methodOrProp.key.name}`,
-              ];
-            }
-          }
+        classBody = /** @type {import('estree').ClassBody} */ (node.parent);
+        className = /** @type {import('estree').ClassDeclaration} */ (
+          node.parent?.parent
+        )?.id?.name;
+      } else if (node?.type === 'ClassDeclaration' || node?.type === 'ClassExpression') {
+        classBody = node.body;
+        className = node.id?.name;
+      }
 
-          if (methodOrProp.type === 'PropertyDefinition') {
-            // eslint-disable-next-line unicorn/no-lonely-if -- Pattern
-            if (methodOrProp.key.type === 'Identifier') {
-              return [
-                methodOrProp.key.name,
-                `${/** @type {import('estree').ClassDeclaration} */ (
-                  node.parent?.parent
-                )?.id?.name}.${methodOrProp.key.name}`,
-              ];
-            }
+      if (classBody) {
+        return classBody.body.flatMap((methodOrProp) => {
+          if (
+            (methodOrProp.type === 'MethodDefinition' ||
+            methodOrProp.type === 'PropertyDefinition') &&
+            methodOrProp.key.type === 'Identifier'
+          ) {
+            return [
+              methodOrProp.key.name,
+              `${className}.${methodOrProp.key.name}`,
+            ];
           }
           /* c8 ignore next 2 -- Not yet built */
 

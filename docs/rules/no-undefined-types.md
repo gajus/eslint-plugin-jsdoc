@@ -1010,6 +1010,21 @@ class MyClass {
 }
 // Settings: {"jsdoc":{"mode":"typescript"}}
 
+/** xyz {@link property} */
+class MyClass {
+  property = true;
+}
+
+/** xyz {@link property} and {@link MyClass.property} */
+class MyClass {
+  public property: boolean;
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+const MyClass = /** xyz {@link property} */ class {
+  property = true;
+};
+
 /* globals SomeGlobal, AnotherGlobal */
 import * as Ably from "ably"
 import Testing, { another as Another, stillMore as StillMore } from "testing"
