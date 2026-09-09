@@ -482,8 +482,10 @@ export default iterateJsdoc(({
     .concat(tsModuleVariables)
     .concat(/** @type {string[]} */ (definedPreferredTypes))
     .concat((() => {
-      // Other methods are not in scope, but we need them, and we grab them here
-      if (node?.type === 'MethodDefinition') {
+      // Other class members are not in scope, but we need them (e.g., for a
+      //   sibling property or method referenced by `{@link}`), and we grab
+      //   them here
+      if (node?.type === 'MethodDefinition' || node?.type === 'PropertyDefinition') {
         return /** @type {import('estree').ClassBody} */ (node.parent).body.flatMap((methodOrProp) => {
           if (methodOrProp.type === 'MethodDefinition') {
             // eslint-disable-next-line unicorn/no-lonely-if -- Pattern
