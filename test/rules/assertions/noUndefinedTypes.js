@@ -1739,6 +1739,37 @@ export default /** @type {import('../index.js').TestCases} */ ({
     },
     {
       code: `
+        class MyClass {
+          property = true;
+
+          /** xyz {@link property} */
+          otherProperty = false;
+        }
+      `,
+      languageOptions: {
+        ecmaVersion: 2_022,
+      },
+    },
+    {
+      code: `
+        class MyClass {
+          property: boolean;
+
+          /** xyz {@link property} and {@link MyClass.property} */
+          otherProperty: boolean;
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+      settings: {
+        jsdoc: {
+          mode: 'typescript',
+        },
+      },
+    },
+    {
+      code: `
         /* globals SomeGlobal, AnotherGlobal */
         import * as Ably from "ably"
         import Testing, { another as Another, stillMore as StillMore } from "testing"

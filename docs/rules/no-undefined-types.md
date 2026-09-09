@@ -995,6 +995,21 @@ class Foo {
   }
 }
 
+class MyClass {
+  property = true;
+
+  /** xyz {@link property} */
+  otherProperty = false;
+}
+
+class MyClass {
+  property: boolean;
+
+  /** xyz {@link property} and {@link MyClass.property} */
+  otherProperty: boolean;
+}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
 /* globals SomeGlobal, AnotherGlobal */
 import * as Ably from "ably"
 import Testing, { another as Another, stillMore as StillMore } from "testing"
