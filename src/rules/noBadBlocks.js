@@ -21,6 +21,11 @@ export default iterateJsdoc(({
         'ts-expect-error',
         'ts-ignore',
         'ts-nocheck',
+        'license',
+        'license-end',
+        'licstart',
+        'licend',
+        'source',
       ],
       preventAllMultiAsteriskBlocks = false,
     } = {},
@@ -105,8 +110,11 @@ export default iterateJsdoc(({
             description: `An array of directives that will not be reported if present at the beginning of
 a multi-comment block and at-sign \`/* @\`.
 
-Defaults to \`['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck']\`
-(some directives [used by TypeScript](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html#ts-check)).`,
+Defaults to \`['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck',
+'license', 'license-end', 'licstart', 'licend', 'source',]\`
+
+(directives that are either [used by TypeScript](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html#ts-check)
+or by the [LibreJS standard](https://www.gnu.org/software/librejs/free-your-javascript.html)).`,
             items: {
               type: 'string',
             },
