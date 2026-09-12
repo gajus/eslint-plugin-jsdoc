@@ -45,7 +45,8 @@ export default {
 
     const {
       allowedPrefixes = [
-        '@ts-', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-',
+        '@ts-', '@license', '@license-end',
+        'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-',
       ],
       contexts = settings.contexts || [],
       contextsAfter = /** @type {string[]} */ ([]),
@@ -399,7 +400,7 @@ export default {
           allowedPrefixes: {
             description: `An array of prefixes to allow at the beginning of a comment.
 
-Defaults to \`['@ts-', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-']\`.
+Defaults to \`['@ts-', '@license', '@license-end', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-']\`.
 
 Supplying your own value overrides the defaults.`,
             items: {
