@@ -535,6 +535,108 @@ export default /** @type {import('../index.js').TestCases} */ ({
         const SENIORITY_ORDER = ['senior', 'middle', 'specialist'];
       `,
     },
+    {
+      code: `
+        // one
+        // two
+        // three
+        type Foo = string;
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      languageOptions: {
+        parser: typescriptEslintParser,
+        sourceType: 'module',
+      },
+      options: [
+        {
+          contexts: [
+            'TSTypeAliasDeclaration',
+          ],
+        },
+      ],
+      output: `
+        /**
+         * one
+         * two
+         * three
+         */
+        type Foo = string;
+      `,
+    },
+    {
+      code: `
+        // one
+        // two
+        // three
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      options: [
+        {
+          enforceJsdocLineStyle: 'single',
+        },
+      ],
+      output: `
+        /** one two three */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        // separate paragraph
+
+        // one
+        // two
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      output: `
+        // separate paragraph
+
+        /**
+         * one
+         * two
+         */
+        function quux () {}
+      `,
+    },
+    {
+      code: `
+        // eslint-disable-next-line no-magic-numbers
+        // one
+        // two
+        function quux () {}
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Line comments should be JSDoc-style.',
+        },
+      ],
+      output: `
+        // eslint-disable-next-line no-magic-numbers
+        /**
+         * one
+         * two
+         */
+        function quux () {}
+      `,
+    },
   ],
   valid: [
     {

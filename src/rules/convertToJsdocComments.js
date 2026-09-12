@@ -163,8 +163,11 @@ export default {
      * @param {import('eslint').Rule.Node} node
      * @param {AddComment} addComment
      * @param {import('../iterateJsdoc.js').Context[]} ctxts
+     * @param {Token} [locComment] Comment to anchor the report location to,
+     *   e.g., the first comment of a stacked group of line comments, so the
+     *   report does not read as though only the last line were at fault.
      */
-    const reportings = (comment, node, addComment, ctxts) => {
+    const reportings = (comment, node, addComment, ctxts, locComment) => {
       const fixer = getFixer(node, comment, addComment, ctxts);
 
       if (comment.type === 'Block') {
@@ -181,33 +184,89 @@ export default {
           return;
         }
 
-        report('lineCommentsJsdocStyle', comment, node, fixer);
+        report('lineCommentsJsdocStyle', locComment ?? comment, node, fixer);
       }
     };
 
     /**
-     * Builds the opening portion of the JSDoc comment, i.e. everything before
-     * the closing delimiter.
-     * @param {string} indent
+     * Walks backward from a `//` comment which immediately precedes a node,
+     * collecting any directly adjacent (no intervening blank line) `//`
+     * comments stacked above it, so that the fixer can convert the whole
+     * run into a single JSDoc block instead of leaving all but the last
+     * line behind.
      * @param {Token} comment
+     * @returns {Token[]}
+     */
+    const getPrecedingLineCommentGroup = (comment) => {
+      const group = [
+        comment,
+      ];
+      let current = comment;
+
+      for (;;) {
+        const prev = /** @type {Token|null} */ (
+          sourceCode.getTokenBefore(
+            /** @type {import('eslint').AST.Token} */ (current),
+            {
+              includeComments: true,
+            },
+          )
+        );
+
+        if (
+          !prev ||
+          prev.type !== 'Line' ||
+          // @ts-expect-error Ok
+          prev.loc.end.line !== current.loc.start.line - 1 ||
+          /** @type {string[]} */
+          (allowedPrefixes).some((prefix) => {
+            return prev.value.trimStart().startsWith(prefix);
+          })
+        ) {
+          break;
+        }
+
+        group.unshift(prev);
+        current = prev;
+      }
+
+      return group;
+    };
+
+    /**
+     * Builds the opening portion of the JSDoc comment, i.e. everything before
+     * the closing delimiter. When more than one comment is supplied (e.g., a
+     * stacked group of `//` lines), each is rendered on its own JSDoc line.
+     * @param {string} indent
+     * @param {Token[]} comments
      * @param {boolean|undefined} inlineCommentBlock
      * @returns {string}
      */
-    const getCommentOpening = (indent, comment, inlineCommentBlock) => {
+    const getCommentOpening = (indent, comments, inlineCommentBlock) => {
       if (inlineCommentBlock || enforceJsdocLineStyle === 'single') {
-        return `/** ${comment.value.trim()} `;
+        return `/** ${comments.map((comment) => {
+          return comment.value.trim();
+        }).join(' ')} `;
       }
 
-      const body = comment.value.trimEnd();
+      if (comments.length === 1) {
+        const body = comments[0].value.trimEnd();
 
-      // When the comment's text already begins on its own line (e.g. a
-      // multi-line block comment), there is no need for the fixer to add a
-      // leading blank `*` line.
-      if ((/^[ \t]*\n/v).test(body)) {
-        return `/**${body.replace(/^[ \t]+/v, '')}\n${indent}`;
+        // When the comment's text already begins on its own line (e.g. a
+        // multi-line block comment), there is no need for the fixer to add a
+        // leading blank `*` line.
+        if ((/^[ \t]*\n/v).test(body)) {
+          return `/**${body.replace(/^[ \t]+/v, '')}\n${indent}`;
+        }
+
+        return `/**\n${indent}*${body}\n${indent}`;
       }
 
-      return `/**\n${indent}*${body}\n${indent}`;
+      const inner = comments.map((comment) => {
+        return `${indent}*${comment.value.trimEnd()}`;
+      }).join('\n');
+
+      return `/**\n${inner}\n${indent}`;
     };
 
     /**
@@ -228,19 +287,29 @@ export default {
 
       reportingNonJsdoc = true;
 
+      const commentGroup = comment.type === 'Line' ?
+        getPrecedingLineCommentGroup(/** @type {Token} */ (comment)) :
+        [
+          /** @type {Token} */ (comment),
+        ];
+
       /** @type {AddComment} */
       const addComment = (inlineCommentBlock, commentToAdd, indent, lines, fixer) => {
-        const insertion = getCommentOpening(indent, commentToAdd, inlineCommentBlock) +
+        const insertion = getCommentOpening(indent, commentGroup, inlineCommentBlock) +
             `*/${'\n'.repeat((lines || 1) - 1)}`;
 
-        return fixer.replaceText(
-          /** @type {import('eslint').AST.Token} */
-          (commentToAdd),
+        return fixer.replaceTextRange(
+          [
+            /* c8 ignore next -- Guard */
+            commentGroup[0].range?.[0] ?? 0,
+            /* c8 ignore next -- Guard */
+            commentToAdd.range?.[1] ?? 0,
+          ],
           insertion,
         );
       };
 
-      reportings(comment, node, addComment, contexts);
+      reportings(comment, node, addComment, contexts, commentGroup[0]);
     };
 
     /**
@@ -263,7 +332,9 @@ export default {
 
       /** @type {AddComment} */
       const addComment = (inlineCommentBlock, commentToAdd, indent, lines, fixer) => {
-        const insertion = getCommentOpening(indent, commentToAdd, inlineCommentBlock) +
+        const insertion = getCommentOpening(indent, [
+          /** @type {Token} */ (commentToAdd),
+        ], inlineCommentBlock) +
             `*/${'\n'.repeat((lines || 1) - 1)}${lines ? `\n${indent.slice(1)}` : ' '}`;
 
         return [

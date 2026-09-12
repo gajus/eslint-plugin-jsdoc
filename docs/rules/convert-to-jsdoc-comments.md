@@ -225,6 +225,33 @@ var a = []; // Test comment
 const SENIORITY_ORDER = ['senior', 'middle', 'specialist'];
 // "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contexts":["any"],"lineOrBlockStyle":"block"}]
 // Message: Block comments should be JSDoc-style.
+
+// one
+// two
+// three
+type Foo = string;
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contexts":["TSTypeAliasDeclaration"]}]
+// Message: Line comments should be JSDoc-style.
+
+// one
+// two
+// three
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
+// Message: Line comments should be JSDoc-style.
+
+// separate paragraph
+
+// one
+// two
+function quux () {}
+// Message: Line comments should be JSDoc-style.
+
+// eslint-disable-next-line no-magic-numbers
+// one
+// two
+function quux () {}
+// Message: Line comments should be JSDoc-style.
 ````
 
 
