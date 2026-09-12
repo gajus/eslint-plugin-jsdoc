@@ -25,7 +25,7 @@ A single options object has the following properties.
 
 An array of prefixes to allow at the beginning of a comment.
 
-Defaults to `['@ts-', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-']`.
+Defaults to `['@ts-', '@license', '@license-end', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-']`.
 
 Supplying your own value overrides the defaults.
 
