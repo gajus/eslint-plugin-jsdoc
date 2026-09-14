@@ -69,6 +69,7 @@ import requireYieldsCheck from './rules/requireYieldsCheck.js';
 import sortTags from './rules/sortTags.js';
 import tagLines from './rules/tagLines.js';
 import textEscaping from './rules/textEscaping.js';
+import tsBanTsComment from './rules/tsBanTsComment.js';
 import tsMethodSignatureStyle from './rules/tsMethodSignatureStyle.js';
 import tsNoEmptyObjectType from './rules/tsNoEmptyObjectType.js';
 import tsNoUnnecessaryTemplateExpression from './rules/tsNoUnnecessaryTemplateExpression.js';
@@ -270,6 +271,7 @@ index.rules = {
   'sort-tags': sortTags,
   'tag-lines': tagLines,
   'text-escaping': textEscaping,
+  'ts-ban-ts-comment': tsBanTsComment,
   'ts-method-signature-style': tsMethodSignatureStyle,
   'ts-no-empty-object-type': tsNoEmptyObjectType,
   'ts-no-unnecessary-template-expression': tsNoUnnecessaryTemplateExpression,
@@ -367,6 +369,7 @@ const createRecommendedRuleset = (warnOrError, flatName) => {
       'jsdoc/sort-tags': 'off',
       'jsdoc/tag-lines': warnOrError,
       'jsdoc/text-escaping': 'off',
+      'jsdoc/ts-ban-ts-comment': 'off',
       'jsdoc/ts-method-signature-style': 'off',
       'jsdoc/ts-no-empty-object-type': warnOrError,
       'jsdoc/ts-no-unnecessary-template-expression': 'off',
@@ -440,6 +443,7 @@ const createRecommendedTypeScriptFlavorRuleset = (warnOrError, flatName) => {
       ...ruleset.rules,
       /* eslint-disable @stylistic/indent -- Extra indent to avoid use by auto-rule-editing */
         'jsdoc/no-undefined-types': 'off',
+        'jsdoc/ts-ban-ts-comment': warnOrError,
       /* eslint-enable @stylistic/indent */
     },
   };

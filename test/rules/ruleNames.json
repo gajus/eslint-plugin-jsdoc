@@ -70,6 +70,7 @@
   "sort-tags",
   "tag-lines",
   "text-escaping",
+  "ts-ban-ts-comment",
   "ts-method-signature-style",
   "ts-no-empty-object-type",
   "ts-no-unnecessary-template-expression",

@@ -3065,6 +3065,66 @@ export interface Rules {
         }
       ];
 
+  /** Disallows (or requires descriptions for) `@ts-<directive>` comments, mirroring `@typescript-eslint/ban-ts-comment`. */
+  "jsdoc/ts-ban-ts-comment": 
+    | []
+    | [
+        {
+          /**
+           * A minimum character length for descriptions when `allow-with-description` is enabled. Defaults to `3`.
+           */
+          minimumDescriptionLength?: number;
+          /**
+           * Whether (and how) to allow `@ts-check` directives.
+           */
+          "ts-check"?:
+            | boolean
+            | "allow-with-description"
+            | {
+                /**
+                 * A regular expression indicating the format the directive should follow
+                 */
+                descriptionFormat?: string;
+              };
+          /**
+           * Whether (and how) to allow `@ts-expect-error` directives.
+           */
+          "ts-expect-error"?:
+            | boolean
+            | "allow-with-description"
+            | {
+                /**
+                 * A regular expression indicating the format the directive should follow
+                 */
+                descriptionFormat?: string;
+              };
+          /**
+           * Whether (and how) to allow `@ts-ignore` directives.
+           */
+          "ts-ignore"?:
+            | boolean
+            | "allow-with-description"
+            | {
+                /**
+                 * A regular expression indicating the format the directive should follow
+                 */
+                descriptionFormat?: string;
+              };
+          /**
+           * Whether (and how) to allow `@ts-nocheck` directives.
+           */
+          "ts-nocheck"?:
+            | boolean
+            | "allow-with-description"
+            | {
+                /**
+                 * A regular expression indicating the format the directive should follow
+                 */
+                descriptionFormat?: string;
+              };
+        }
+      ];
+
   /** Prefers either function properties or method signatures */
   "jsdoc/ts-method-signature-style": 
     | []
