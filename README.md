@@ -552,6 +552,7 @@ non-default-recommended fixer).
 ||:wrench:| [sort-tags](./docs/rules/sort-tags.md#readme) | Sorts tags by a specified sequence according to tag name, optionally adding line breaks between tag groups. |
 |:heavy_check_mark:|:wrench:| [tag-lines](./docs/rules/tag-lines.md#readme) | Enforces lines (or no lines) before, after, or between tags. |
 ||:wrench:| [text-escaping](./docs/rules/text-escaping.md#readme) | Auto-escape certain characters that are input within block and tag descriptions. |
+|Off in TS; On in TS flavor|| [ts-ban-ts-comment](./docs/rules/ts-ban-ts-comment.md#readme) | Disallows (or requires descriptions for) `@ts-<directive>` comments, mirroring `@typescript-eslint/ban-ts-comment`. |
 ||:wrench:| [ts-method-signature-style](./docs/rules/ts-method-signature-style.md#readme) | Prefers either function properties or method signatures |
 |:heavy_check_mark:|| [ts-no-empty-object-type](./docs/rules/ts-no-empty-object-type.md#readme) | Warns against use of the empty object type |
 ||:wrench:| [ts-no-unnecessary-template-expression](./docs/rules/ts-no-unnecessary-template-expression.md#readme) | Catches unnecessary template expressions such as string expressions within a template literal. |
