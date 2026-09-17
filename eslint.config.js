@@ -85,29 +85,6 @@ export default [
   {
     ...common,
     files: [
-      '.ncurc.cjs',
-    ],
-    languageOptions: {
-      parserOptions: {
-        ecmaFeatures: {
-          impliedStrict: false,
-        },
-      },
-      sourceType: 'script',
-    },
-    name: 'npm-check-updates',
-    rules: {
-      'canonical/filename-match-regex': 0,
-      'import/no-commonjs': 0,
-      strict: [
-        'error',
-        'global',
-      ],
-    },
-  },
-  {
-    ...common,
-    files: [
       'test/**/*.js',
     ],
     languageOptions: {
