@@ -487,7 +487,7 @@ export default iterateJsdoc(({
         nodeToCheck = /** @type {import('estree').ClassDeclaration & import('eslint').Rule.NodeParentExtension} */ (
           /** @type {import('estree').ExportNamedDeclaration & import('eslint').Rule.NodeParentExtension} */
           (nodeToCheck)?.declaration
-        ) ?? null;
+        );
       }
 
       // Other class members are not in scope, but we need them (e.g., for a
