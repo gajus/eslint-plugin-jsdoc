@@ -746,6 +746,22 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /** xyz {@link property} */
+        export default function () {}
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'The type \'property\' is undefined.',
+        },
+      ],
+      languageOptions: {
+        ecmaVersion: 2_022,
+      },
+    },
+
   ],
   valid: [
     {
@@ -2272,6 +2288,28 @@ export default /** @type {import('../index.js').TestCases} */ ({
             return Iterator.from(its.flat());
         };
       `,
+    },
+    {
+      code: `
+        /** xyz {@link property} */
+        export class MyClass {
+          public property: boolean
+        }
+      `,
+      languageOptions: {
+        parser: typescriptEslintParser,
+      },
+    },
+    {
+      code: `
+        /** xyz {@link property} */
+        export default class MyClass {
+          property = true;
+        }
+      `,
+      languageOptions: {
+        ecmaVersion: 2_022,
+      },
     },
   ],
 });
