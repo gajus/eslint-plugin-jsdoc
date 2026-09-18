@@ -427,6 +427,10 @@ const a = 's';
 const b = 's';
 // "jsdoc/no-undefined-types": ["error"|"warn", {"definedTypes":["MyNamespace"]}]
 // Message: The type 'MyNamespace.OtherType' is undefined.
+
+/** xyz {@link property} */
+export default function () {}
+// Message: The type 'property' is undefined.
 ````
 
 
@@ -1308,5 +1312,15 @@ const b = (foo: number) => {};
 const concatIteratorJSDoc = (...its) => {
     return Iterator.from(its.flat());
 };
+
+/** xyz {@link property} */
+export class MyClass {
+  public property: boolean
+}
+
+/** xyz {@link property} */
+export default class MyClass {
+  property = true;
+}
 ````
 

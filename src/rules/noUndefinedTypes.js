@@ -482,6 +482,14 @@ export default iterateJsdoc(({
     .concat(tsModuleVariables)
     .concat(/** @type {string[]} */ (definedPreferredTypes))
     .concat((() => {
+      let nodeToCheck = node;
+      if (node?.type === 'ExportNamedDeclaration' || node?.type === 'ExportDefaultDeclaration') {
+        nodeToCheck = /** @type {import('estree').ClassDeclaration & import('eslint').Rule.NodeParentExtension} */ (
+          /** @type {import('estree').ExportNamedDeclaration & import('eslint').Rule.NodeParentExtension} */
+          (nodeToCheck)?.declaration
+        ) ?? null;
+      }
+
       // Other class members are not in scope, but we need them (e.g., for a
       //   sibling property or method referenced by `{@link}`, or a member
       //   referenced by `{@link}` from the class's own JSDoc block), and we
@@ -490,14 +498,14 @@ export default iterateJsdoc(({
       let classBody;
       /** @type {string|undefined} */
       let className;
-      if (node?.type === 'MethodDefinition' || node?.type === 'PropertyDefinition') {
-        classBody = /** @type {import('estree').ClassBody} */ (node.parent);
+      if (nodeToCheck?.type === 'MethodDefinition' || nodeToCheck?.type === 'PropertyDefinition') {
+        classBody = /** @type {import('estree').ClassBody} */ (nodeToCheck.parent);
         className = /** @type {import('estree').ClassDeclaration} */ (
-          node.parent?.parent
+          nodeToCheck.parent?.parent
         )?.id?.name;
-      } else if (node?.type === 'ClassDeclaration' || node?.type === 'ClassExpression') {
-        classBody = node.body;
-        className = node.id?.name;
+      } else if (nodeToCheck?.type === 'ClassDeclaration' || nodeToCheck?.type === 'ClassExpression') {
+        classBody = nodeToCheck.body;
+        className = nodeToCheck.id?.name;
       }
 
       if (classBody) {
