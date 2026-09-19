@@ -10,23 +10,10 @@ let warned = false;
 /** @type {any} */
 let ts;
 
+let tsAttempted = false;
+
 // 1. Create a require function bound to the current file's URL
 const require = createRequire(import.meta.url);
-
-try {
-  // 2. Attempt to import the package synchronously
-  ts = require('typescript');
-/* c8 ignore next 10 -- Guard */
-} catch (error) {
-  // 3. Fall back gracefully if it is not installed
-  if (/** @type {{code?: string}} */ (error).code !== 'MODULE_NOT_FOUND') {
-    // Re-throw if it's a different error (e.g., syntax error inside the package)
-    throw error;
-  }
-
-  // eslint-disable-next-line no-console -- Warning user
-  console.warn('⚠️ typescript is not installed. `jsdoc/no-unnecessary-type-assertion` will not work. To disable this warning, you must disable the rule.');
-}
 
 // Helper to check for standard literals and boolean/enum/template literals
 /**
@@ -70,9 +57,30 @@ export default iterateJsdoc(({
   utils,
 // eslint-disable-next-line complexity -- Numerous type/option permutations
 }) => {
-  /* c8 ignore next 4 -- Guard */
   // Already handled
   if (!ts) {
+    /* c8 ignore next 3 -- Guard (only reachable if `typescript` failed to load on a prior call) */
+    if (tsAttempted) {
+      return;
+    }
+
+    try {
+      // 2. Attempt to import the package synchronously
+      ts = require('typescript');
+    /* c8 ignore next 10 -- Guard */
+    } catch (error) {
+      // 3. Fall back gracefully if it is not installed
+      if (/** @type {{code?: string}} */ (error).code !== 'MODULE_NOT_FOUND') {
+        // Re-throw if it's a different error (e.g., syntax error inside the package)
+        throw error;
+      }
+
+      // eslint-disable-next-line no-console -- Warning user
+      console.warn('⚠️ typescript is not installed. `jsdoc/no-unnecessary-type-assertion` will not work. To disable this warning, you must disable the rule.');
+    } finally {
+      tsAttempted = true;
+    }
+
     return;
   }
 
