@@ -265,7 +265,7 @@ and specify `eslint-plugin-jsdoc` as a plugin.
 
 Finally, enable all of the rules that you would like to use.
 
-```javascript
+```json5
 {
     "rules": {
         "jsdoc/check-access": 1, // Recommended
