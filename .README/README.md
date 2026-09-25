@@ -271,6 +271,9 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/no-restricted-syntax": 1,
         "jsdoc/no-types": 1, // Recommended for TS configs
         "jsdoc/no-undefined-types": 1, // Recommended for non-TS configs
+        "jsdoc/no-unnecessary-type-assertion": 1,
+        "jsdoc/normalize-see-links": 1,
+        "jsdoc/prefer-import-tag": 1,
         "jsdoc/reject-any-type": 1, // Recommended
         "jsdoc/reject-function-type": 1, // Recommended
         "jsdoc/require-asterisk-prefix": 1,
@@ -295,6 +298,7 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/require-returns-description": 1, // Recommended
         "jsdoc/require-returns-type": 1, // Recommended in non-TS configs
         "jsdoc/require-returns": 1, // Recommended
+        "jsdoc/require-tags": 1,
         "jsdoc/require-template": 1,
         "jsdoc/require-template-description": 1,
         "jsdoc/require-throws": 1,
@@ -307,9 +311,11 @@ Finally, enable all of the rules that you would like to use.
         "jsdoc/sort-tags": 1,
         "jsdoc/tag-lines": 1, // Recommended
         "jsdoc/text-escaping": 1,
+        "jsdoc/ts-ban-ts-comment": 1,
         "jsdoc/ts-method-signature-style": 1,
-        "jsdoc/ts-prefer-function-type": 1,
+        "jsdoc/ts-no-empty-object-type": 1, // Recommended
         "jsdoc/ts-no-unnecessary-template-expression": 1,
+        "jsdoc/ts-prefer-function-type": 1,
         "jsdoc/type-formatting": 1,
         "jsdoc/valid-types": 1 // Recommended
     }
