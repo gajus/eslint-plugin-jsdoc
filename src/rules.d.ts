@@ -52,6 +52,10 @@ export interface Rules {
            */
           allowIndentedSections?: boolean;
           /**
+           * Allows there to be no space after asterisks and before content.
+           */
+          allowNoSpaceAfterAsterisk?: boolean;
+          /**
            * Array of tags (e.g., `['example', 'description']`) whose content will be
            * "hidden" from the `check-indentation` rule. Defaults to `['example']`.
            *

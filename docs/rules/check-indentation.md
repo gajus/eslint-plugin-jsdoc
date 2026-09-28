@@ -4,6 +4,7 @@
 
 * [Options](#user-content-check-indentation-options)
     * [`allowIndentedSections`](#user-content-check-indentation-options-allowindentedsections)
+    * [`allowNoSpaceAfterAsterisk`](#user-content-check-indentation-options-allownospaceafterasterisk)
     * [`excludeTags`](#user-content-check-indentation-options-excludetags)
 * [Context and settings](#user-content-check-indentation-context-and-settings)
 * [Failing examples](#user-content-check-indentation-failing-examples)
@@ -37,6 +38,12 @@ A single options object has the following properties.
 ### <code>allowIndentedSections</code>
 
 Allows indentation of nested sections on subsequent lines (like bullet lists)
+
+<a name="user-content-check-indentation-options-allownospaceafterasterisk"></a>
+<a name="check-indentation-options-allownospaceafterasterisk"></a>
+### <code>allowNoSpaceAfterAsterisk</code>
+
+Allows there to be no space after asterisks and before content.
 
 <a name="user-content-check-indentation-options-excludetags"></a>
 <a name="check-indentation-options-excludetags"></a>
@@ -72,7 +79,7 @@ report a padding issue:
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|false|
-|Options|`allowIndentedSections`, `excludeTags`|
+|Options|`allowIndentedSections`, `allowNoSpaceAfterAsterisk`, `excludeTags`|
 
 <a name="user-content-check-indentation-failing-examples"></a>
 <a name="check-indentation-failing-examples"></a>
@@ -211,6 +218,45 @@ function quux () {
 /**  Indented on first line
  */
 // "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+// Message: There must be no indentation.
+
+/**
+ *text
+ */
+// Message: There must be a space after the asterisk.
+
+/**
+ *@constant
+ */
+// Message: There must be a space after the asterisk.
+
+/**
+ *@param {number} val
+ */
+// Message: There must be a space after the asterisk.
+
+/**
+ * @param {number} a
+ *@returns {void}
+ */
+// Message: There must be a space after the asterisk.
+
+/**
+ *@constant
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+// Message: There must be a space after the asterisk.
+
+/**
+ *text
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+// Message: There must be a space after the asterisk.
+
+/**
+ *   foo
+ *@constant
+ */
 // Message: There must be no indentation.
 ````
 
@@ -378,5 +424,25 @@ function MyDecorator(options: { myOptions: number }) {
  * More content
  */
 // "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
+
+/**
+ * @constant
+ */
+
+/**
+ * @param {number} a
+ *@returns {void}
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowNoSpaceAfterAsterisk":true}]
+
+/**
+ *@constant
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true,"allowNoSpaceAfterAsterisk":true}]
+
+/**
+ *text
+ */
+// "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true,"allowNoSpaceAfterAsterisk":true}]
 ````
 
