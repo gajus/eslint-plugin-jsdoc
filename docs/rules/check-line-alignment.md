@@ -100,6 +100,7 @@ main description. If `false` or unset, will be set to a single space.
 
 Use this to change the tags which are sought for alignment changes. Defaults to an array of
 `['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return', 'template']`.
+Add the value "-any" to the array if you want alignment to apply to all tags.
 
 <a name="user-content-check-line-alignment-options-wrapindent"></a>
 <a name="check-line-alignment-options-wrapindent"></a>
@@ -290,6 +291,19 @@ const config = {
  * @property {Object.<string, Class>} dolor
  */
 // "jsdoc/check-line-alignment": ["error"|"warn", "always",{"tags":["typedef","property"]}]
+// Message: Expected JSDoc block lines to be aligned.
+
+/**
+ * My object.
+ *
+ * @typedef {Object} MyObject
+ *
+ * @property {{a: number, b: string, c}} lorem Description.
+ * @property {Object.<string, Class>} sit Description multi words.
+ * @property {Object.<string, Class>} amet Description} weird {multi} {{words}}.
+ * @property {Object.<string, Class>} dolor
+ */
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"tags":["-any"]}]
 // Message: Expected JSDoc block lines to be aligned.
 
 /**
@@ -612,6 +626,20 @@ function quux () {}
 function quux () {}
 // "jsdoc/check-line-alignment": ["error"|"warn", "never",{"wrapIndent":""}]
 // Message: Expected wrap indent
+
+/**
+ * @typedef   {object} CustomType
+ * @property {string} property
+ */
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"tags":["typedef","property"]}]
+// Message: Expected JSDoc block lines to not be aligned.
+
+/**
+ * @typedef   {object} CustomType
+ * @property {string} property
+ */
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"tags":["-any"]}]
+// Message: Expected JSDoc block lines to not be aligned.
 ````
 
 
@@ -623,6 +651,18 @@ function quux () {}
 The following patterns are not considered problems:
 
 ````ts
+/**
+ * @typedef {object} CustomType
+ * @property {string} property
+ */
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"tags":["typedef","property"]}]
+
+/**
+ * @typedef {object} CustomType
+ * @property {string} property
+ */
+// "jsdoc/check-line-alignment": ["error"|"warn", "never",{"tags":["-any"]}]
+
 /**
  * Function description.
  *
@@ -758,6 +798,18 @@ const config = {
  * @property {Object.<string, Class>}    dolor
  */
 // "jsdoc/check-line-alignment": ["error"|"warn", "always",{"tags":["typedef","property"]}]
+
+/**
+ * My object.
+ *
+ * @typedef  {Object}                    MyObject
+ *
+ * @property {{a: number, b: string, c}} lorem    Description.
+ * @property {Object.<string, Class>}    sit      Description multi words.
+ * @property {Object.<string, Class>}    amet     Description} weird {multi} {{words}}.
+ * @property {Object.<string, Class>}    dolor
+ */
+// "jsdoc/check-line-alignment": ["error"|"warn", "always",{"tags":["-any"]}]
 
 /**
  * My object.

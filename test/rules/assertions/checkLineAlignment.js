@@ -472,6 +472,45 @@ export default /** @type {import('../index.js').TestCases} */ ({
     {
       code: `
         /**
+         * My object.
+         *
+         * @typedef {Object} MyObject
+         *
+         * @property {{a: number, b: string, c}} lorem Description.
+         * @property {Object.<string, Class>} sit Description multi words.
+         * @property {Object.<string, Class>} amet Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>} dolor
+         */
+      `,
+      errors: [
+        {
+          line: 2,
+          message: 'Expected JSDoc block lines to be aligned.',
+        },
+      ],
+      options: [
+        'always', {
+          tags: [
+            '-any',
+          ],
+        },
+      ],
+      output: `
+        /**
+         * My object.
+         *
+         * @typedef  {Object}                    MyObject
+         *
+         * @property {{a: number, b: string, c}} lorem    Description.
+         * @property {Object.<string, Class>}    sit      Description multi words.
+         * @property {Object.<string, Class>}    amet     Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>}    dolor
+         */
+      `,
+    },
+    {
+      code: `
+        /**
          * My function.
          *
          * @param {string} lorem  Description.
@@ -1468,8 +1507,92 @@ export default /** @type {import('../index.js').TestCases} */ ({
       function quux () {}
       `,
     },
+    {
+      code: `
+        /**
+         * @typedef   {object} CustomType
+         * @property {string} property
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block lines to not be aligned.',
+        },
+      ],
+      options: [
+        'never', {
+          tags: [
+            'typedef', 'property',
+          ],
+        },
+      ],
+      output: `
+        /**
+         * @typedef {object} CustomType
+         * @property {string} property
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @typedef   {object} CustomType
+         * @property {string} property
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'Expected JSDoc block lines to not be aligned.',
+        },
+      ],
+      options: [
+        'never', {
+          tags: [
+            '-any',
+          ],
+        },
+      ],
+      output: `
+        /**
+         * @typedef {object} CustomType
+         * @property {string} property
+         */
+      `,
+    },
   ],
   valid: [
+    {
+      code: `
+        /**
+         * @typedef {object} CustomType
+         * @property {string} property
+         */
+      `,
+      options: [
+        'never', {
+          tags: [
+            'typedef', 'property',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @typedef {object} CustomType
+         * @property {string} property
+         */
+      `,
+      options: [
+        'never', {
+          tags: [
+            '-any',
+          ],
+        },
+      ],
+    },
     {
       code: `
         /**
@@ -1683,6 +1806,27 @@ export default /** @type {import('../index.js').TestCases} */ ({
         'always', {
           tags: [
             'typedef', 'property',
+          ],
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * My object.
+         *
+         * @typedef  {Object}                    MyObject
+         *
+         * @property {{a: number, b: string, c}} lorem    Description.
+         * @property {Object.<string, Class>}    sit      Description multi words.
+         * @property {Object.<string, Class>}    amet     Description} weird {multi} {{words}}.
+         * @property {Object.<string, Class>}    dolor
+         */
+      `,
+      options: [
+        'always', {
+          tags: [
+            '-any',
           ],
         },
       ],
