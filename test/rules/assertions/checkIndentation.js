@@ -268,6 +268,109 @@ export default /** @type {import('../index.js').TestCases} */ ({
         },
       ],
     },
+    {
+      code: `
+        /**
+         *text
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a space after the asterisk.',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *@constant
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a space after the asterisk.',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *@param {number} val
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a space after the asterisk.',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @param {number} a
+         *@returns {void}
+         */
+      `,
+      errors: [
+        {
+          line: 4,
+          message: 'There must be a space after the asterisk.',
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *@constant
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a space after the asterisk.',
+        },
+      ],
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *text
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be a space after the asterisk.',
+        },
+      ],
+      options: [
+        {
+          allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *   foo
+         *@constant
+         */
+      `,
+      errors: [
+        {
+          line: 3,
+          message: 'There must be no indentation.',
+        },
+      ],
+    },
   ],
   valid: [
     {
@@ -521,6 +624,52 @@ export default /** @type {import('../index.js').TestCases} */ ({
       options: [
         {
           allowIndentedSections: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         * @constant
+         */
+      `,
+    },
+    {
+      code: `
+        /**
+         * @param {number} a
+         *@returns {void}
+         */
+      `,
+      options: [
+        {
+          allowNoSpaceAfterAsterisk: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *@constant
+         */
+      `,
+      options: [
+        {
+          allowIndentedSections: true,
+          allowNoSpaceAfterAsterisk: true,
+        },
+      ],
+    },
+    {
+      code: `
+        /**
+         *text
+         */
+      `,
+      options: [
+        {
+          allowIndentedSections: true,
+          allowNoSpaceAfterAsterisk: true,
         },
       ],
     },

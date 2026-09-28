@@ -29,7 +29,7 @@ the following description is not reported:
 |Context|everywhere|
 |Tags|N/A|
 |Recommended|false|
-|Options|`allowIndentedSections`, `excludeTags`|
+|Options|`allowIndentedSections`, `allowNoSpaceAfterAsterisk`, `excludeTags`|
 
 ## Failing examples
 
