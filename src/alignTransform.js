@@ -66,6 +66,10 @@ const zeroWidth = {
  * @returns {boolean}
  */
 const shouldAlign = (tags, index, source) => {
+  if (tags.includes('-any')) {
+    return true;
+  }
+
   const tag = source[index].tokens.tag.replace('@', '');
   const includesTag = tags.includes(tag);
 

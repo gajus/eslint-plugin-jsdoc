@@ -311,7 +311,10 @@ export default iterateJsdoc(({
     return;
   }
 
-  const foundTags = utils.getPresentTags(applicableTags);
+  const foundTags = applicableTags.includes('-any') ?
+    utils.filterTags(Boolean) :
+    utils.getPresentTags(applicableTags);
+
   if (context.options[0] !== 'any') {
     for (const tag of foundTags) {
       checkNotAlignedPerTag(
@@ -433,7 +436,8 @@ main description. If \`false\` or unset, will be set to a single space.`,
           },
           tags: {
             description: `Use this to change the tags which are sought for alignment changes. Defaults to an array of
-\`['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return', 'template']\`.`,
+\`['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return', 'template']\`.
+Add the value "-any" to the array if you want alignment to apply to all tags.`,
             items: {
               type: 'string',
             },
