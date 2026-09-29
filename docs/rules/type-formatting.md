@@ -199,7 +199,7 @@ or `double`. Defaults to 'double'.
 <a name="type-formatting-options-trailingpunctuationmultilineonly"></a>
 ### <code>trailingPunctuationMultilineOnly</code>
 
-If `objectFieldSeparatorTrailingPunctuation` is set, this will determine whether the trailing puncutation is only added when the type is multiline
+If `objectFieldSeparatorTrailingPunctuation` is set, this will determine whether the trailing punctuation is only added when the type is multiline
 
 <a name="user-content-type-formatting-options-typebracketspacing"></a>
 <a name="type-formatting-options-typebracketspacing"></a>

@@ -184,7 +184,7 @@ aliases) are as follows:
 - `@throws` (over `@exception`)
 - `@yields` (over `@yield`)
 
-This setting is utilized by the the rule for tag name checking
+This setting is utilized by the rule for tag name checking
 (`check-tag-names`) as well as in the `@param` and `@require` rules:
 
 - `check-param-names`

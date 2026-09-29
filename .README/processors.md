@@ -151,7 +151,7 @@ export default [
       // ...jsdoc.configs.examples[1].rules
 
       // Due to https://github.com/gajus/eslint-plugin-jsdoc/issues/1377 ,
-      //   `typescript-eslint` type-checked rules must currently be disbaled
+      //   `typescript-eslint` type-checked rules must currently be disabled
       ...ts.configs.disableTypeChecked.rules
     }
   }
