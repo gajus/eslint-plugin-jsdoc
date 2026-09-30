@@ -63,6 +63,7 @@ a string \`tag\` property and \`context\` string property.`,
                 type: 'string',
               },
               {
+                additionalProperties: false,
                 properties: {
                   context: {
                     type: 'string',
