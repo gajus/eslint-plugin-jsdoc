@@ -14,3 +14,4 @@ node_modules
 !.README
 !.releaserc
 !.vscode
+.DS_Store

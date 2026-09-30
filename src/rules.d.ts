@@ -2527,7 +2527,6 @@ export interface Rules {
             | {
                 context?: string;
                 tag?: string;
-                [k: string]: unknown;
               }
           )[];
         }
