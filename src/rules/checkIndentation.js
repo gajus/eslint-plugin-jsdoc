@@ -25,16 +25,6 @@ const maskCodeBlocks = (str) => {
   });
 };
 
-/**
- * @param {string[]} lines
- * @param {number} lineIndex
- * @returns {number}
- */
-const getLineNumber = (lines, lineIndex) => {
-  const precedingText = lines.slice(0, lineIndex).join('\n');
-  return precedingText.split('\n').length;
-};
-
 export default iterateJsdoc(({
   context,
   jsdocNode,
@@ -75,7 +65,7 @@ export default iterateJsdoc(({
       // Check for no space between the asterisk prefix and content
       if (!allowNoSpaceAfterAsterisk && /^(?:\/?\**|[\t ]*)\*[^\s*\/]/v.test(line)) {
         report('There must be a space after the asterisk.', null, {
-          line: getLineNumber(lines, lineIndex),
+          line: lineIndex,
         });
         return;
       }
@@ -91,7 +81,7 @@ export default iterateJsdoc(({
         // If this is a tag line with indentation, always report
         if (/^@\w+/v.test(afterIndent)) {
           report('There must be no indentation.', null, {
-            line: getLineNumber(lines, lineIndex),
+            line: lineIndex,
           });
           return;
         }
@@ -99,7 +89,7 @@ export default iterateJsdoc(({
         // If we haven't seen any content yet (main description first line) and there's content, report
         if (!hasSeenContent && afterIndent.trim().length > 0) {
           report('There must be no indentation.', null, {
-            line: getLineNumber(lines, lineIndex),
+            line: lineIndex,
           });
           return;
         }
@@ -112,7 +102,7 @@ export default iterateJsdoc(({
           } else if (indentAmount < currentSectionIndent) {
             // Indentation is less than the established level (inconsistent)
             report('There must be no indentation.', null, {
-              line: getLineNumber(lines, lineIndex),
+              line: lineIndex,
             });
             return;
           }
